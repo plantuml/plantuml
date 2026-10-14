@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.Run;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.stats.StatsUtils;
 import net.sourceforge.plantuml.swing.ClipboardLoop;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public enum CliFlag {
 	
@@ -86,7 +87,12 @@ public enum CliFlag {
 
 	@CliFlagDoc(value = "Check Graphviz installation", level = 0)
 	TEST_DOT("--check-graphviz", aliases(DEPRECATED("-testdot")), Arity.UNARY_IMMEDIATE_ACTION,
-			OptionPrint::printCheckGraphviz),
+			() -> {
+				if (TeaVM.isC())
+					Run.notAvailableInC("The Graphviz check (--check-graphviz): the C build does not use Graphviz");
+				else
+					OptionPrint.printCheckGraphviz();
+			}),
 
 	@CliFlagDoc(value = "Start internal HTTP server for rendering (default port : 8080)", usage = "--http-server[:<port>]", level = 0)
 	PICOWEB("--http-server", aliases(DEPRECATED("-picoweb")), Arity.UNARY_OPTIONAL_COLON),
@@ -202,9 +208,19 @@ public enum CliFlag {
 
 	// Other
 
-	CLIPBOARD("--clipboard", Arity.UNARY_IMMEDIATE_ACTION, ClipboardLoop::runOnce), //
+	CLIPBOARD("--clipboard", Arity.UNARY_IMMEDIATE_ACTION, () -> {
+		if (TeaVM.isC())
+			Run.notAvailableInC("The clipboard (--clipboard)");
+		else
+			ClipboardLoop.runOnce();
+	}), //
 
-	CLIPBOARDLOOP("--clipboardloop", Arity.UNARY_IMMEDIATE_ACTION, ClipboardLoop::runLoop), //
+	CLIPBOARDLOOP("--clipboardloop", Arity.UNARY_IMMEDIATE_ACTION, () -> {
+		if (TeaVM.isC())
+			Run.notAvailableInC("The clipboard (--clipboardloop)");
+		else
+			ClipboardLoop.runLoop();
+	}), //
 
 	@CliFlagDoc("Generate intermediate Svek files")
 	DEBUG_SVEK("-debugsvek", aliases("-debug_svek"), Arity.UNARY_BOOLEAN),
@@ -215,10 +231,18 @@ public enum CliFlag {
 	@CliFlagDoc("Override %filename% variable")
 	FILENAME("-filename", Arity.BINARY_NEXT_ARGUMENT_VALUE),
 
-	HEADLESS("-headless", Arity.UNARY_BOOLEAN, () -> System.setProperty("java.awt.headless", "true")),
+	HEADLESS("-headless", Arity.UNARY_BOOLEAN, () -> {
+		if (!TeaVM.isC())
+			System.setProperty("java.awt.headless", "true");
+	}),
 
 	@CliFlagDoc("List fonts available on your system")
-	PRINT_FONTS("-printfonts", Arity.UNARY_IMMEDIATE_ACTION, Run::printFonts),
+	PRINT_FONTS("-printfonts", Arity.UNARY_IMMEDIATE_ACTION, () -> {
+		if (TeaVM.isC())
+			Run.notAvailableInC("The list of the fonts (-printfonts)");
+		else
+			Run.printFonts();
+	}),
 
 	@CliFlagDoc("Print standard library information")
 	STD_LIB("-stdlib", Arity.UNARY_IMMEDIATE_ACTION, Stdlib::printStdLib),
@@ -228,7 +252,12 @@ public enum CliFlag {
 	@CliFlagDoc("Report syntax errors from stdin without generating images")
 	SYNTAX("-syntax", Arity.UNARY_BOOLEAN),
 
-	LICENSE("-license", aliases("-licence"), Arity.UNARY_IMMEDIATE_ACTION, OptionPrint::printLicense),
+	LICENSE("-license", aliases("-licence"), Arity.UNARY_IMMEDIATE_ACTION, () -> {
+		if (TeaVM.isC())
+			Run.notAvailableInC("The license text (-license)");
+		else
+			OptionPrint.printLicense();
+	}),
 
 	WORD("-word", Arity.UNARY_BOOLEAN, () -> GlobalConfig.getInstance().put(GlobalConfigKey.WORD, true)),
 
@@ -305,24 +334,48 @@ public enum CliFlag {
 			() -> GlobalConfig.getInstance().put(GlobalConfigKey.ENABLE_STATS, true)),
 
 	@CliFlagDoc(value = "Export collected statistics to an HTML report and exit", level = 1)
-	DUMPHTMLSTATS("--export-stats-html", Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::outHtml),
+	DUMPHTMLSTATS("--export-stats-html", Arity.UNARY_IMMEDIATE_ACTION, () -> {
+		if (TeaVM.isC())
+			Run.notAvailableInC("The statistics (--export-stats-html)");
+		else
+			StatsUtils.outHtml();
+	}),
 
 	@CliFlagDoc(value = "Export collected statistics to a text report and exit", level = 1)
-	DUMPSTATS("--export-stats", Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::dumpStats),
+	DUMPSTATS("--export-stats", Arity.UNARY_IMMEDIATE_ACTION, () -> {
+		if (TeaVM.isC())
+			Run.notAvailableInC("The statistics (--export-stats)");
+		else
+			StatsUtils.dumpStats();
+	}),
 
 	@CliFlagDoc(value = "Output general statistics in HTML format", level = 1)
 	HTML_STATS("--html-stats", aliases(DEPRECATED("-htmlstats")), Arity.UNARY_BOOLEAN,
-			() -> StatsUtils.setHtmlStats(true)),
+			() -> {
+				if (!TeaVM.isC())
+					StatsUtils.setHtmlStats(true);
+			}),
 
 	@CliFlagDoc(value = "Output general statistics in XML format", level = 1)
-	XML_STATS("--xml-stats", aliases(DEPRECATED("-xmlstats")), Arity.UNARY_BOOLEAN, () -> StatsUtils.setXmlStats(true)),
+	XML_STATS("--xml-stats", aliases(DEPRECATED("-xmlstats")), Arity.UNARY_BOOLEAN, () -> {
+		if (!TeaVM.isC())
+			StatsUtils.setXmlStats(true);
+	}),
 
 	@CliFlagDoc(value = "Generate statistics in real time during processing", level = 1)
 	REALTIME_STATS("--realtime-stats", aliases(DEPRECATED("-realtimestats")), Arity.UNARY_BOOLEAN,
-			() -> StatsUtils.setRealTimeStats(true)),
+			() -> {
+				if (!TeaVM.isC())
+					StatsUtils.setRealTimeStats(true);
+			}),
 
 	@CliFlagDoc(value = "Continuously print usage statistics during execution", level = 1)
-	LOOP_STATS("--loop-stats", aliases(DEPRECATED("-loopstats")), Arity.UNARY_IMMEDIATE_ACTION, StatsUtils::loopStats);
+	LOOP_STATS("--loop-stats", aliases(DEPRECATED("-loopstats")), Arity.UNARY_IMMEDIATE_ACTION, () -> {
+				if (TeaVM.isC())
+					Run.notAvailableInC("The statistics (--loop-stats)");
+				else
+					StatsUtils.loopStats();
+			});
 
 	private final String flag;
 	private final List<String> aliases;
@@ -419,7 +472,13 @@ public enum CliFlag {
 		return tmp.equalsIgnoreCase(flag);
 	}
 
+	// The TeaVM C build cannot read annotations by reflection: CliFlagDocTable holds
+	// the same values as plain code (see CliFlagDocTableTest)
+
 	public String getFlagDoc() {
+		if (TeaVM.isC())
+			return CliFlagDocTable.doc(this);
+
 		try {
 			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);
 			if (annotation != null && !annotation.value().isEmpty())
@@ -432,6 +491,9 @@ public enum CliFlag {
 	}
 
 	public String getNewgroup() {
+		if (TeaVM.isC())
+			return CliFlagDocTable.newGroup(this);
+
 		try {
 			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);
 			if (annotation != null && !annotation.value().isEmpty())
@@ -444,18 +506,13 @@ public enum CliFlag {
 	}
 
 	public String getUsage() {
-		try {
-			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);
-			if (annotation != null && !annotation.usage().isEmpty()) {
-				final String usage = annotation.usage();
-				if (usage.startsWith("--"))
-					return "     " + usage;
-				return " " + usage;
-			}
-
-		} catch (NoSuchFieldException e) {
-			// Should never happen for enum constants
+		final String usage = TeaVM.isC() ? CliFlagDocTable.usage(this) : getUsageFromAnnotation();
+		if (usage != null) {
+			if (usage.startsWith("--"))
+				return "     " + usage;
+			return " " + usage;
 		}
+
 		for (String alias : aliases)
 			if (alias.length() == 2)
 				return " " + alias + ", " + getFlag();
@@ -463,7 +520,22 @@ public enum CliFlag {
 		return "     " + getFlag();
 	}
 
+	private String getUsageFromAnnotation() {
+		try {
+			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);
+			if (annotation != null && !annotation.usage().isEmpty())
+				return annotation.usage();
+
+		} catch (NoSuchFieldException e) {
+			// Should never happen for enum constants
+		}
+		return null;
+	}
+
 	public int getFlagLevel() {
+		if (TeaVM.isC())
+			return CliFlagDocTable.level(this);
+
 		try {
 			final CliFlagDoc annotation = CliFlag.class.getField(this.name()).getAnnotation(CliFlagDoc.class);
 			if (annotation != null)
@@ -476,6 +548,9 @@ public enum CliFlag {
 	}
 
 	public String getDefaultValue() {
+		if (TeaVM.isC())
+			return CliFlagDocTable.defaultValue(this);
+
 		try {
 			final CliDefaultValue annotation = CliFlag.class.getField(this.name()).getAnnotation(CliDefaultValue.class);
 			if (annotation != null && !annotation.value().isEmpty())

@@ -76,6 +76,11 @@ public abstract class UgDiagram extends AbstractDiagram {
 	final public ImageData exportDiagram(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
+		// ::comment when JAVA8
+		if (TeaVM.isC())
+			return exportDiagramC(os, index, fileFormatOption);
+		// ::done
+
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		ImageData specialResult = null;
 		if (fileFormat.isXmi())
@@ -114,6 +119,25 @@ public abstract class UgDiagram extends AbstractDiagram {
 			}
 		}
 	}
+
+	// ::comment when JAVA8
+	/**
+	 * What {@link #exportDiagram} does in the TeaVM C build. There is no AWT there,
+	 * and TeaVM compiles every method a reachable method calls, whatever the file
+	 * format: the special formats (XMI, SCXML, GraphML, text) and the crash report
+	 * are left out, and {@link TextBlockExporter#exportTo} only writes SVG and PNG.
+	 * The other formats are refused by the command line before the diagram is
+	 * exported, see {@code Run}.
+	 */
+	private ImageData exportDiagramC(OutputStream os, int index, FileFormatOption fileFormatOption) {
+		try {
+			return getExporter(index, fileFormatOption).exportTo(os);
+		} catch (Throwable e) {
+			Logme.error(e);
+			return ImageDataSimple.error(e);
+		}
+	}
+	// ::done
 
 	public boolean isHandwritten() {
 		if (getPreprocessingArtifact().getOption().isTrue(OptionKey.HANDWRITTEN))

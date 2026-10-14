@@ -348,7 +348,9 @@ public enum FileFormat {
 
 	public boolean equalsMetadata(String currentMetadata, SFile existingFile) {
 		try {
-			if (this == PNG) {
+			// The C build cannot read the metadata of a PNG file (it needs ImageIO): the
+			// file is generated again
+			if (this == PNG && !TeaVM.isC()) {
 				final MetadataTag tag = new MetadataTag(existingFile, "plantuml");
 				final String previousMetadata = tag.getData();
 				final boolean sameMetadata = currentMetadata.equals(previousMetadata);

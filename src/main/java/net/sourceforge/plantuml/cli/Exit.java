@@ -35,6 +35,11 @@
  */
 package net.sourceforge.plantuml.cli;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+// ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.c.NativeExit;
+// ::done
+
 public final class Exit {
 
 	private Exit() {
@@ -43,6 +48,16 @@ public final class Exit {
 	public static final String DISABLE_PROPERTY = "plantuml.noSystemExit";
 
 	public static void exit(int status) {
+		// ::comment when JAVA8
+		if (TeaVM.isC()) {
+			// No System.exit in the classlib of the TeaVM C backend
+			System.out.flush();
+			System.err.flush();
+			NativeExit.exit(status);
+			return;
+		}
+		// ::done
+
 		if (Boolean.getBoolean(DISABLE_PROPERTY))
 			throw new ExitRequest(status);
 

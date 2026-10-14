@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.cli.Exit;
 import net.sourceforge.plantuml.cli.ExitStatus;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
+import net.sourceforge.plantuml.cli.HelpPrint;
 import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
@@ -83,6 +84,7 @@ import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.swing.MainWindow;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.Obfuscate;
 import net.sourceforge.plantuml.version.Version;
@@ -93,32 +95,14 @@ public class Run {
 
 	public static void main(String[] argsArray)
 			throws NoPlantumlCompressionException, IOException, InterruptedException {
-		System.setProperty("log4j.debug", "false");
+		if (!TeaVM.isC())
+			System.setProperty("log4j.debug", "false");
 
 		final long start = System.currentTimeMillis();
-		if (argsArray.length > 0 && argsArray[0].equalsIgnoreCase("-headless"))
-			System.setProperty("java.awt.headless", "true");
 
-		final String display = System.getenv("DISPLAY");
-		final String waylandDisplay = System.getenv("WAYLAND_DISPLAY");
-
-		if (display == null && waylandDisplay != null)
-			Log.info(() -> "Wayland detected; X11 compatibility may be required via XWayland.");
-		else if (display != null)
-			Log.info(() -> "X11 display available: " + display);
-		else
-			Log.info(() -> "No display detected; you may need the -headless flag.");
-
-		if (GraphicsEnvironment.isHeadless()) {
-			Log.info(() -> "Forcing -Djava.awt.headless=true");
-			System.setProperty("java.awt.headless", "true");
-		}
-
-		final String javaAwtHeadless = System.getProperty("java.awt.headless");
-		if (javaAwtHeadless == null)
-			Log.info(() -> "java.awt.headless not set");
-		else
-			Log.info(() -> "java.awt.headless set as '" + javaAwtHeadless + "'");
+		// No AWT in the C build, hence no display to detect
+		if (!TeaVM.isC())
+			detectDisplay(argsArray);
 
 		final ExitStatus exit = ExitStatus.init();
 		CliOptions option = null;
@@ -148,38 +132,61 @@ public class Run {
 			}
 
 			if (option.flags.isTrue(CliFlag.FTP)) {
-				goFtp(option);
+				if (TeaVM.isC())
+					notAvailableInC("The FTP server (--ftp-server)");
+				else
+					goFtp(option);
 				return;
 			}
 
 			final List<String> remainingArgs = option.flags.getRemainingArgs();
 
-			ProgressBar.setEnable(option.isTrue(CliFlag.PROGRESS));
+			if (!TeaVM.isC())
+				ProgressBar.setEnable(option.isTrue(CliFlag.PROGRESS));
 
 			Log.info(() -> "SecurityProfile " + SecurityUtils.getSecurityProfile());
 			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.VERBOSE)) {
 				Log.info(() -> "PlantUML Version " + Version.versionString());
-				Log.info(() -> "GraphicsEnvironment.isHeadless() " + GraphicsEnvironment.isHeadless());
+				if (!TeaVM.isC())
+					Log.info(() -> "GraphicsEnvironment.isHeadless() " + GraphicsEnvironment.isHeadless());
 			}
 
 			if (option.isTrue(CliFlag.ENCODE_SPRITE)) {
-				encodeSprite(remainingArgs);
+				if (TeaVM.isC())
+					notAvailableInC("Sprite encoding (--encode-sprite)");
+				else
+					encodeSprite(remainingArgs);
 				return;
 			}
 
 			if (option.isTrue(CliFlag.PICOWEB) && option.getPicowebPort() != -1) {
-				goPicoweb(option);
+				if (TeaVM.isC())
+					notAvailableInC("The HTTP server (--http-server)");
+				else
+					goPicoweb(option);
 				return;
 			}
 
-			forceOpenJdkResourceLoad();
+			if (!TeaVM.isC())
+				forceOpenJdkResourceLoad();
 
 			if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.GUI)) {
-				runGui(option);
+				if (TeaVM.isC()) {
+					// Without arguments the JVM build opens the GUI: the help is the useful answer here
+					if (option.isTrue(CliFlag.GUI))
+						notAvailableInC("The graphical user interface (--gui)");
+					else
+						HelpPrint.printHelp();
+				} else
+					runGui(option);
 				return;
 			}
 
 			if (option.isTrue(CliFlag.PIPE) || option.isTrue(CliFlag.PIPEMAP) || option.isTrue(CliFlag.SYNTAX)) {
+				if (option.isTrue(CliFlag.PIPE) && refuseFormatInC(option, exit)) {
+					exit.eventuallyExit();
+					return;
+				}
 				new Pipe(option, System.out, System.in, charset).managePipe(exit);
 				exit.eventuallyExit();
 				return;
@@ -207,7 +214,7 @@ public class Run {
 
 				return;
 			}
-			if (option.isTrue(CliFlag.SPLASH))
+			if (!TeaVM.isC() && option.isTrue(CliFlag.SPLASH))
 				Splash.createSplash();
 
 			final Run runner = new Run(option, exit, charset);
@@ -243,6 +250,42 @@ public class Run {
 
 		exit.eventuallyExit();
 
+	}
+
+	private static void detectDisplay(String[] argsArray) {
+		if (argsArray.length > 0 && argsArray[0].equalsIgnoreCase("-headless"))
+			System.setProperty("java.awt.headless", "true");
+
+		final String display = System.getenv("DISPLAY");
+		final String waylandDisplay = System.getenv("WAYLAND_DISPLAY");
+
+		if (display == null && waylandDisplay != null)
+			Log.info(() -> "Wayland detected; X11 compatibility may be required via XWayland.");
+		else if (display != null)
+			Log.info(() -> "X11 display available: " + display);
+		else
+			Log.info(() -> "No display detected; you may need the -headless flag.");
+
+		if (GraphicsEnvironment.isHeadless()) {
+			Log.info(() -> "Forcing -Djava.awt.headless=true");
+			System.setProperty("java.awt.headless", "true");
+		}
+
+		final String javaAwtHeadless = System.getProperty("java.awt.headless");
+		if (javaAwtHeadless == null)
+			Log.info(() -> "java.awt.headless not set");
+		else
+			Log.info(() -> "java.awt.headless set as '" + javaAwtHeadless + "'");
+	}
+
+	/**
+	 * The C build is a subset of the Java one (see {@code src/teavm-c/README.md}):
+	 * the options that need a GUI, a server, AWT or a process are accepted by the
+	 * command line, but they only print this message. The calls are guarded by
+	 * {@link TeaVM#isC()}, so that TeaVM does not compile what they would call.
+	 */
+	public static void notAvailableInC(String feature) {
+		System.err.println(feature + " is not available in the C build");
 	}
 
 	private final CliOptions option;
@@ -323,6 +366,17 @@ public class Run {
 	}
 
 	private void processInParallel(FileTask task) throws InterruptedException {
+		if (TeaVM.isC()) {
+			// No thread pool in the C build: one file after the other
+			for (File f : files)
+				try {
+					task.processFile(f);
+				} catch (IOException | InterruptedException e) {
+					Logme.error(e);
+				}
+			return;
+		}
+
 		Log.info(() -> "Using several threads: " + option.getNbThreads());
 		final ExecutorService executor = Executors.newFixedThreadPool(option.getNbThreads());
 
@@ -345,6 +399,9 @@ public class Run {
 		sourceFileReader.updateStatus(exitStatus);
 
 		if (option.isTrue(CliFlag.CHECK_ONLY))
+			return;
+
+		if (refuseFormatInC(option, exitStatus))
 			return;
 
 		if (option.getFileFormatOption().getFileFormat() == FileFormat.PREPROC
@@ -517,11 +574,16 @@ public class Run {
 	}
 
 	private static void incDone(boolean error) {
+		// No splash screen nor progress bar in the C build
+		if (TeaVM.isC())
+			return;
 		Splash.incDone(error);
 		ProgressBar.incDone(error);
 	}
 
 	private static void incTotal(int nb) {
+		if (TeaVM.isC())
+			return;
 		Splash.incTotal(nb);
 		ProgressBar.incTotal(nb);
 	}
@@ -546,10 +608,34 @@ public class Run {
 		return sourceFileReader;
 	}
 
+	/**
+	 * The formats the C build writes: SVG and PNG (see
+	 * {@code UgDiagram#exportDiagram}), and the preprocessed source.
+	 */
+	private static boolean isAvailableInC(FileFormat format) {
+		return format == FileFormat.SVG || format == FileFormat.PNG || format == FileFormat.PREPROC;
+	}
+
+	/**
+	 * In the C build, tells that the output format is not available (and records
+	 * the error) so that the caller stops before exporting the diagram.
+	 */
+	private static boolean refuseFormatInC(CliOptions option, ExitStatus exitStatus) {
+		final FileFormat format = option.getFileFormatOption().getFileFormat();
+		if (!TeaVM.isC() || isAvailableInC(format))
+			return false;
+
+		notAvailableInC("The output format " + format);
+		exitStatus.goesHasErrors();
+		return true;
+	}
+
 	private void extractPreprocessingSource(final ISourceFileReader sourceFileReader) throws IOException {
 
 		final FileFormat format = option.getFileFormatOption().getFileFormat();
-		final Obfuscate obfuscate = format == FileFormat.OBFUSCATE ? new LanguageDescriptor().getObfuscate() : null;
+		final Obfuscate obfuscate = format == FileFormat.OBFUSCATE && !TeaVM.isC()
+				? new LanguageDescriptor().getObfuscate()
+				: null;
 
 		for (BlockUml blockUml : sourceFileReader.getBlocks()) {
 			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)
@@ -589,6 +675,8 @@ public class Run {
 			final String decoded = extractMetadataFromSvg(svg);
 			if (decoded != null)
 				System.out.println(decoded);
+		} else if (TeaVM.isC()) {
+			notAvailableInC("The extraction of the source from a PNG file (--extract-source)");
 		} else {
 			final String data = new MetadataTag(f, "plantuml").getData();
 			System.out.println(data);

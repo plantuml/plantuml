@@ -112,7 +112,7 @@ jobs:
           Write-Host "Size: $((Get-Item $exe).Length) bytes"
           $src = "@startmindmap`n* Root`n** Alpha`n** Beta`n@endmindmap`n"
           [System.IO.File]::WriteAllText("mindmap.puml", $src)
-          & $exe mindmap.puml mindmap.svg
+          & $exe -tsvg mindmap.puml
           if ($LASTEXITCODE -ne 0) { throw "plantuml-c.exe exited with code $LASTEXITCODE" }
           if ((Test-Path mindmap.svg) -eq $false) { throw "No SVG was written" }
           $svg = Get-Content -Raw mindmap.svg
@@ -126,7 +126,7 @@ jobs:
         shell: pwsh
         run: |
           $exe = "c-sources/bin/Release/plantuml-c.exe"
-          & $exe mindmap.puml mindmap.png
+          & $exe -tpng mindmap.puml
           if ($LASTEXITCODE -ne 0) { throw "plantuml-c.exe exited with code $LASTEXITCODE" }
           if ((Test-Path mindmap.png) -eq $false) { throw "No PNG was written" }
           $bytes = [System.IO.File]::ReadAllBytes("mindmap.png")
@@ -137,6 +137,27 @@ jobs:
             Write-Host "::error::The output is not the expected PNG"
             exit 1
           }
+
+      # The executable has the entry point of the JVM (Run): same help, same flags
+      - name: Smoke test (help)
+        shell: pwsh
+        run: |
+          $exe = "c-sources/bin/Release/plantuml-c.exe"
+          $help = (& $exe --help) -join "`n"
+          if ($LASTEXITCODE -ne 0) { throw "plantuml-c.exe exited with code $LASTEXITCODE" }
+          Write-Host $help
+          if ($help -notmatch "Show help and usage information" -or $help -notmatch "Generate SVG images") {
+            Write-Host "::error::The help is not the expected one"
+            exit 1
+          }
+
+      - name: Smoke test (exit code)
+        shell: pwsh
+        run: |
+          $exe = "c-sources/bin/Release/plantuml-c.exe"
+          & $exe no-such-file.puml
+          # 50: no file found, as on the JVM
+          if ($LASTEXITCODE -ne 50) { throw "Expected the exit code 50, got $LASTEXITCODE" }
 
       - name: Upload the SVG and the PNG
         uses: actions/upload-artifact@v7

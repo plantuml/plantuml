@@ -31,7 +31,7 @@ can only get asynchronously is handled by rendering again
 a resource is discarded, the resource is loaded with JavaScript callbacks, and
 the diagram is rendered again from its source. Do not add a thread, a
 `wait()`, a `sleep()` or an `@Async` method on a path the TeaVM entry points
-(`PlantUMLBrowser`, `PlantUMLHeadless`, `MainC`) can reach; guard such code with
+(`PlantUMLBrowser`, `PlantUMLHeadless`, and `Run` for the C build) can reach; guard such code with
 `TeaVM.isTeaVM()` (or `isJavaScript()` / `isC()`) so that TeaVM drops it.
 
 ## What is counted

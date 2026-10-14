@@ -96,6 +96,9 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.teavm.TeaVM;
+// ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.c.PngCanvas;
+// ::done
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
 import net.sourceforge.plantuml.url.CMapData;
 import net.sourceforge.plantuml.url.Url;
@@ -160,6 +163,11 @@ public class TextBlockExporter {
 	 * @throws IOException if an I/O error occurs
 	 */
 	public ImageData exportTo(OutputStream os) throws IOException {
+		// ::comment when JAVA8
+		if (TeaVM.isC())
+			return exportToC(os);
+		// ::done
+
 		final XDimension2D dim = calculateFinalDimension();
 
 		if (fileFormatOption.getFileFormat() == FileFormat.NULL)
@@ -169,6 +177,28 @@ public class TextBlockExporter {
 		checkScaleFactor(scaleFactor);
 		return draw(createUGraphic(dim, scaleFactor), os, dim, scaleFactor);
 	}
+
+	// ::comment when JAVA8
+	/**
+	 * What {@link #exportTo} does in the TeaVM C build. There is no AWT there, and
+	 * TeaVM compiles every method a reachable method calls, whatever the file
+	 * format: {@link #createUGraphic} (all the formats) must not be reachable.
+	 * Only SVG and PNG (drawn by plutovg) are available.
+	 */
+	private ImageData exportToC(OutputStream os) throws IOException {
+		final FileFormat format = fileFormatOption.getFileFormat();
+		if (format == FileFormat.NULL)
+			return new ImageDataSimple(0, 0);
+
+		if (format == FileFormat.SVG)
+			return exportSvgTo(os);
+
+		if (format == FileFormat.PNG)
+			return exportPngTo(os, PngCanvas::new);
+
+		throw new UnsupportedOperationException("Format " + format + " is not available in the C build");
+	}
+	// ::done
 
 	/**
 	 * Exports the {@link TextBlock} as SVG, exactly as {@link #exportTo} does, but

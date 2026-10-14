@@ -81,6 +81,9 @@ teavm {
 	}
 	// Experimental: Java to C (gradlew generateC), see src/teavm-c/README.md
 	c {
+		// The entry point is the one of the JVM (net.sourceforge.plantuml.Run), so that the
+		// C executable has the same help and the same flags (what the C build cannot do is
+		// guarded by TeaVM.isC(), see src/teavm-c/README.md).
 		// -PteavmCMainClass=PngDemoC generates another entry point (see src/teavm-c/README.md).
 		// A simple name is looked up in the teavm.c packages: PowerShell splits an
 		// unquoted argument at its first dot, so a full name needs quotes there.
@@ -92,7 +95,7 @@ teavm {
 					.map { it + name }
 					.firstOrNull { project.file("src/main/java/" + it.replace('.', '/') + ".java").exists() }
 					?: throw GradleException("teavmCMainClass: no class $name in the teavm.c packages")
-		}.orElse("net.sourceforge.plantuml.teavm.c.MainC"))
+		}.orElse("net.sourceforge.plantuml.Run"))
 		// Easier to read while experimenting
 		obfuscated.set(false)
 		shortFileNames.set(false)

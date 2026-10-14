@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.cli;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,14 +63,12 @@ public class HelpPrint {
 	}
 
 	static public void printHelp() {
-		final String charset = Charset.defaultCharset().displayName();
 		printHeader();
 		getHelpTable(0).printMe(System.out);
 		printFooter();
 	}
 
 	static public void printHelpMore() {
-		final String charset = Charset.defaultCharset().displayName();
 		printHeader();
 		getHelpTable(1).printMe(System.out);
 		printFooter();

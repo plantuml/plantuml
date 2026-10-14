@@ -4,13 +4,38 @@ TeaVM can compile Java bytecode to C (in addition to JavaScript). The C
 backend ships with its own runtime and garbage collector, so the result is a
 native executable with no JVM.
 
-Current step: `MainC` renders **mindmap diagrams only, in SVG or PNG**. It
-reads the PlantUML source from a file (or the standard input) and writes the SVG
-in a file (or the standard output), or the PNG when the output file name ends
-with `.png`: `plantuml-c [input.puml [output.svg|output.png]]`. Prefer the
-files on Windows, whose console encodes the standard streams. On a diagram error:
-a message on stderr and nothing on stdout. Other diagram
-types are commented out in `PSystemBuilderC` and will be added one by one.
+Current step: the executable has the entry point of the JVM
+(`net.sourceforge.plantuml.Run`), so it has the same command line and the same
+help (`plantuml-c --help`). It renders **mindmap diagrams only, in SVG or PNG**
+(PNG is the default format, as on the JVM): `plantuml-c [options] file.puml`
+writes `file.png` (or `file.svg` with `-tsvg`) next to the source, or in the
+`-o` directory, and `plantuml-c -tsvg -pipe < file.puml > file.svg` reads the
+standard input. Prefer the files on Windows, whose console encodes the standard
+streams. Other diagram types are commented out in `PSystemBuilderC` and will be
+added one by one.
+
+What the C build cannot do is guarded by `TeaVM.isC()`, so that TeaVM does not
+compile (and links nothing of) it. The flags exist and are parsed as on the JVM,
+but they only print "... is not available in the C build":
+
+- the GUI (it is also what `plantuml-c` without arguments would start on the
+  JVM: the C build prints the help instead), `--ftp-server`, `--http-server`,
+  `--clipboard`, `-printfonts`, `-license`, the statistics, `--encode-sprite`,
+  `--check-graphviz` (there is no Graphviz: Smetana computes the layout);
+- the output formats other than SVG, PNG and `--preproc` (they need AWT or
+  other libraries);
+- the extraction of the source of a PNG file (`--extract-source`; it works for
+  an SVG file) and the check of the metadata of a PNG file (`--skip-fresh`: the
+  PNG is always generated again).
+
+The splash screen, the progress bar and `--threads` are ignored (the files are
+processed one after the other), and the PNG is not split (`split` pages).
+The exit codes of the help are those of the JVM (`exit` of the C library, as
+`System.exit` does not exist in the classlib of the TeaVM C backend).
+
+The help is the one of the JVM: it is built from the annotations of `CliFlag`,
+which TeaVM cannot read, so `CliFlagDocTable` holds their values as plain code
+(`CliFlagDocTableTest` fails when they differ).
 
 The SVG should be byte for byte the one `java -jar plantuml.jar -tsvg` writes on
 Windows (same version of PlantUML): same export code, and text measured as Java
@@ -65,7 +90,7 @@ This has to be done again in every new PowerShell window. Then:
 ```
 cmake -S build\generated\teavm\c -B build\c-native -G Ninja
 cmake --build build\c-native
-build\generated\teavm\c\bin\plantuml-c.exe mindmap.puml mindmap.svg
+build\generated\teavm\c\bin\plantuml-c.exe -tsvg mindmap.puml
 ```
 
 If `Launch-VsDevShell.ps1` or `vcvarsall.bat` is missing, the Build Tools
@@ -77,13 +102,13 @@ installation is incomplete (for instance after an interrupted download): use
 ```
 cmake -S build/generated/teavm/c -B build/c-native
 cmake --build build/c-native
-build/generated/teavm/c/bin/plantuml-c mindmap.puml mindmap.svg
+build/generated/teavm/c/bin/plantuml-c -tsvg mindmap.puml
 ```
 
 ## Continuous integration
 
 `.github/workflows/teavm-c.yml` runs on every push to `master-c`: it generates
-the C sources once on Linux, then builds and smoke-tests (small mindmap to SVG) `plantuml-c.exe` on
+the C sources once on Linux, then builds and smoke-tests (small mindmap to SVG and PNG, help, exit code) `plantuml-c.exe` on
 Windows x64 and Windows ARM64. The executables are available as workflow
 artifacts (`plantuml-c-windows-x64`, `plantuml-c-windows-arm64`).
 
@@ -211,11 +236,11 @@ TTF files and the measured widths (any OS), and the whole bounder against
   in C (Smetana is always used for the layout).
 - Text measurement: no AWT and no canvas, so `StringBounderEmbeddedFont` (see
   above), which measures as Java does on Windows.
-- Export: `UgDiagram.exportSvg` runs the same code as `-tsvg`
-  (`TextBlockExporter.exportSvgTo`), without referencing the drivers of the
-  other formats, which need AWT (TeaVM compiles every method a reachable method
+- Export: `TextBlockExporter.exportTo` (and so `UgDiagram.exportDiagram`) only
+  writes SVG and PNG in C, without referencing the drivers of the other
+  formats, which need AWT (TeaVM compiles every method a reachable method
   calls).
-- Input: `MainC` reads the file with `ReadLineReader`, as the command line does
+- Input: the command line reads the file with `ReadLineReader`, as on the JVM
   (byte order mark removed, U+2013 replaced by `-`).
 - Async code: TeaVM turns a method into "async" code (fibers) when it can reach
   an `@Async` method of its classlib, and its coroutine transformation then fails
@@ -223,7 +248,7 @@ TTF files and the measured widths (any OS), and the whole bounder against
   a problem (without `Thread.start`, TeaVM ignores monitors). The culprit was
   `java.net.URL.openStream()` (XHR connection, JavaScript only): `SURL.openStream`
   returns `null` in C. Any new use of `java.net.URL`, `Thread.sleep`,
-  `Object.wait`... on the path from `MainC` will bring the problem back.
+  `Object.wait`... on the path from `Run` will bring the problem back.
   The JavaScript build uses no coroutine either (no worker thread, no `@Async`:
   see `PendingResources`), and `tools/teavm-coroutines/check_no_coroutines.py`
   fails the CI when either output contains one again.

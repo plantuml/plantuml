@@ -59,7 +59,7 @@ The **subject** is a succinct description of the change and follows these guidel
 | 🎨      | Improving code structure/style             |
 | ♻️      | Refactoring code                           |
 | ⚡️      | Improving performance                      |
-| ✅      | Adding or updating tests                   |
+| ✅      | Adding or updating tests (unit tests, Vega non-regression files) |
 | 🔧      | Changes to configuration files             |
 | 🚀      | Deployment-related changes                 |
 | 🔒      | Fixing security issues                     |
@@ -79,6 +79,7 @@ The **subject** is a succinct description of the change and follows these guidel
 | 📊      | Add or update logs, metrics, and traces   |
 | 🍵      | Work about TeaVM                          |
 | 💻      | Work about clide                          |
+| 🧪      | Test tooling and checks (e.g. browser-test scripts, test harness) |
 
 
 #### Guidelines for Using Gitmoji

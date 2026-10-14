@@ -138,6 +138,10 @@ public class OptionPrint {
 		for (String v : interestingValues())
 			System.out.println(v);
 
+		// The C build does not use Graphviz (the layout is computed by Smetana)
+		if (TeaVM.isC())
+			return;
+
 		System.out.println();
 		final ReportLog result = new ReportLog();
 		final int errorCode = GraphvizUtils.addDotStatus(result, false);

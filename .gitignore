@@ -44,3 +44,6 @@ build/
 tmp
 node_modules/
 other
+
+# Executable copied by compilec.bat
+/plantuml-c.exe

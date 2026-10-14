@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.file.FileGroup;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class CliOptions {
@@ -99,7 +100,7 @@ public class CliOptions {
 		flags = CliParsed.parse(arg);
 
 		final String limitSize = defines().get("PLANTUML_LIMIT_SIZE");
-		if (limitSize != null)
+		if (limitSize != null && !TeaVM.isC())
 			System.setProperty("PLANTUML_LIMIT_SIZE", limitSize);
 
 		for (String key : flags.getMap(CliFlag.INCLUDE, CliFlag.INCLUDE_LONG).keySet())

@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.png.PngSplitter;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.SplitParam;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemUtils {
@@ -211,7 +212,8 @@ public class PSystemUtils {
 		if (imageData.containsCMapData() && system instanceof TitledDiagram)
 			((TitledDiagram) system).exportCmap(suggestedFile, 0, imageData);
 
-		if (system instanceof TitledDiagram && fileFormatOption.getFileFormat() == FileFormat.PNG)
+		// The C build does not split the PNG (it needs ImageIO)
+		if (!TeaVM.isC() && system instanceof TitledDiagram && fileFormatOption.getFileFormat() == FileFormat.PNG)
 			return splitPng((TitledDiagram) system, suggestedFile, imageData, fileFormatOption);
 
 		return singletonList(new FileImageData(outputFile, imageData));

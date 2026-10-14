@@ -39,6 +39,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -46,6 +47,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -441,11 +443,14 @@ public class SFile implements Comparable<SFile>, InputFile {
 	}
 
 	public PrintWriter createPrintWriter() throws FileNotFoundException {
-		return new PrintWriter(internal);
+		// Same as new PrintWriter(File), but built from stream/writer constructors
+		// that exist in the TeaVM C classlib (PrintWriter(File) does not).
+		return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(internal))));
 	}
 
 	public PrintWriter createPrintWriter(String charset) throws FileNotFoundException, UnsupportedEncodingException {
-		return new PrintWriter(internal, charset);
+		return new PrintWriter(
+				new BufferedWriter(new OutputStreamWriter(new FileOutputStream(internal), charset)));
 	}
 
 	public FileOutputStream createFileOutputStream() throws FileNotFoundException {
