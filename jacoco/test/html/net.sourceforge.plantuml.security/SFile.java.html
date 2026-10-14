@@ -39,6 +39,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -46,6 +47,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -79,169 +81,169 @@ import net.sourceforge.plantuml.nio.NFolderRegular;
  */
 public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 
-<span class="fc" id="L82">	public static final String separator = File.separator;</span>
+<span class="fc" id="L84">	public static final String separator = File.separator;</span>
 
-<span class="fc" id="L84">	public static final String pathSeparator = File.pathSeparator;</span>
+<span class="fc" id="L86">	public static final String pathSeparator = File.pathSeparator;</span>
 
-<span class="fc" id="L86">	public static final char separatorChar = File.separatorChar;</span>
+<span class="fc" id="L88">	public static final char separatorChar = File.separatorChar;</span>
 
 	private final File internal;
 
 	@Override
 	public String toString() {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">				|| SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET_WITH_DOTSVG</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">				|| SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)</span>
-<span class="nc" id="L95">			return super.toString();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				|| SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET_WITH_DOTSVG</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">				|| SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)</span>
+<span class="nc" id="L97">			return super.toString();</span>
 		try {
-<span class="nc" id="L97">			return internal.getCanonicalPath();</span>
-<span class="nc" id="L98">		} catch (IOException e) {</span>
-<span class="nc" id="L99">			return internal.getAbsolutePath();</span>
+<span class="nc" id="L99">			return internal.getCanonicalPath();</span>
+<span class="nc" id="L100">		} catch (IOException e) {</span>
+<span class="nc" id="L101">			return internal.getAbsolutePath();</span>
 		}
 	}
 
 	public SFile(String nameOrPath) {
-<span class="fc" id="L104">		this(new File(nameOrPath));</span>
-<span class="fc" id="L105">	}</span>
+<span class="fc" id="L106">		this(new File(nameOrPath));</span>
+<span class="fc" id="L107">	}</span>
 
 	public SFile(String dirname, String name) {
-<span class="nc" id="L108">		this(new File(dirname, name));</span>
-<span class="nc" id="L109">	}</span>
+<span class="nc" id="L110">		this(new File(dirname, name));</span>
+<span class="nc" id="L111">	}</span>
 
 	public SFile(SFile basedir, String name) {
-<span class="fc" id="L112">		this(new File(basedir.internal, name));</span>
-<span class="fc" id="L113">	}</span>
+<span class="fc" id="L114">		this(new File(basedir.internal, name));</span>
+<span class="fc" id="L115">	}</span>
 
 	public SFile(URI uri) {
-<span class="fc" id="L116">		this(new File(uri));</span>
-<span class="fc" id="L117">	}</span>
+<span class="fc" id="L118">		this(new File(uri));</span>
+<span class="fc" id="L119">	}</span>
 
-<span class="fc" id="L119">	private SFile(File internal) {</span>
-<span class="fc" id="L120">		this.internal = internal;</span>
-<span class="fc" id="L121">	}</span>
+<span class="fc" id="L121">	private SFile(File internal) {</span>
+<span class="fc" id="L122">		this.internal = internal;</span>
+<span class="fc" id="L123">	}</span>
 
 	public static SFile fromFile(File internal) {
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (internal == null)</span>
-<span class="nc" id="L125">			return null;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (internal == null)</span>
+<span class="nc" id="L127">			return null;</span>
 
-<span class="fc" id="L127">		return new SFile(internal);</span>
+<span class="fc" id="L129">		return new SFile(internal);</span>
 	}
 
 	public SFile file(String name) {
-<span class="fc" id="L131">		return new SFile(this, name);</span>
+<span class="fc" id="L133">		return new SFile(this, name);</span>
 	}
 
 	public boolean exists() {
-<span class="pc bpc" id="L135" title="1 of 4 branches missed.">		if (internal != null &amp;&amp; isFileOk())</span>
-<span class="fc" id="L136">			return internal.exists();</span>
-<span class="fc" id="L137">		return false;</span>
+<span class="pc bpc" id="L137" title="1 of 4 branches missed.">		if (internal != null &amp;&amp; isFileOk())</span>
+<span class="fc" id="L138">			return internal.exists();</span>
+<span class="fc" id="L139">		return false;</span>
 	}
 
 	public SFile getCanonicalFile() throws IOException {
-<span class="fc" id="L141">		return new SFile(internal.getCanonicalFile());</span>
+<span class="fc" id="L143">		return new SFile(internal.getCanonicalFile());</span>
 	}
 
 	public boolean isAbsolute() {
-<span class="pc bpc" id="L145" title="2 of 4 branches missed.">		return internal != null &amp;&amp; internal.isAbsolute();</span>
+<span class="pc bpc" id="L147" title="2 of 4 branches missed.">		return internal != null &amp;&amp; internal.isAbsolute();</span>
 	}
 
 	public boolean isDirectory() {
-<span class="pc bpc" id="L149" title="1 of 6 branches missed.">		return internal != null &amp;&amp; internal.exists() &amp;&amp; internal.isDirectory();</span>
+<span class="pc bpc" id="L151" title="1 of 6 branches missed.">		return internal != null &amp;&amp; internal.exists() &amp;&amp; internal.isDirectory();</span>
 	}
 
 	public String getName() {
-<span class="fc" id="L153">		return internal.getName();</span>
+<span class="fc" id="L155">		return internal.getName();</span>
 	}
 
 	public boolean isFile() {
-<span class="nc bnc" id="L157" title="All 4 branches missed.">		return internal != null &amp;&amp; internal.isFile();</span>
+<span class="nc bnc" id="L159" title="All 4 branches missed.">		return internal != null &amp;&amp; internal.isFile();</span>
 	}
 
 	public long lastModified() {
-<span class="nc" id="L161">		return internal.lastModified();</span>
+<span class="nc" id="L163">		return internal.lastModified();</span>
 	}
 
 	public int compareTo(SFile other) {
-<span class="nc" id="L165">		return this.internal.compareTo(other.internal);</span>
+<span class="nc" id="L167">		return this.internal.compareTo(other.internal);</span>
 	}
 
 	public long length() {
-<span class="fc" id="L169">		return internal.length();</span>
+<span class="fc" id="L171">		return internal.length();</span>
 	}
 
 	public boolean canWrite() {
-<span class="fc" id="L173">		return internal.canWrite();</span>
+<span class="fc" id="L175">		return internal.canWrite();</span>
 	}
 
 	public void setWritable(boolean b) {
-<span class="fc" id="L177">		internal.setWritable(b);</span>
-<span class="fc" id="L178">	}</span>
+<span class="fc" id="L179">		internal.setWritable(b);</span>
+<span class="fc" id="L180">	}</span>
 
 	public void delete() {
-<span class="fc" id="L181">		internal.delete();</span>
-<span class="fc" id="L182">	}</span>
+<span class="fc" id="L183">		internal.delete();</span>
+<span class="fc" id="L184">	}</span>
 
 	public String[] list() {
-<span class="fc" id="L185">		return internal.list();</span>
+<span class="fc" id="L187">		return internal.list();</span>
 	}
 
 	public SFile getAbsoluteFile() {
-<span class="fc" id="L189">		return new SFile(internal.getAbsoluteFile());</span>
+<span class="fc" id="L191">		return new SFile(internal.getAbsoluteFile());</span>
 	}
 
 	public SFile getParentFile() {
-<span class="fc" id="L193">		return new SFile(internal.getParentFile());</span>
+<span class="fc" id="L195">		return new SFile(internal.getParentFile());</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L198">		return internal.hashCode();</span>
+<span class="nc" id="L200">		return internal.hashCode();</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc" id="L203">		return internal.equals(((SFile) obj).internal);</span>
+<span class="nc" id="L205">		return internal.equals(((SFile) obj).internal);</span>
 	}
 
 	public String getAbsolutePath() {
-<span class="fc" id="L207">		return internal.getAbsolutePath();</span>
+<span class="fc" id="L209">		return internal.getAbsolutePath();</span>
 	}
 
 	public String getPrintablePath() {
-<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
 			try {
-<span class="nc" id="L213">				return internal.getCanonicalPath();</span>
-<span class="nc" id="L214">			} catch (IOException e) {</span>
-<span class="nc" id="L215">				Logme.error(e);</span>
+<span class="nc" id="L215">				return internal.getCanonicalPath();</span>
+<span class="nc" id="L216">			} catch (IOException e) {</span>
+<span class="nc" id="L217">				Logme.error(e);</span>
 			}
 		}
-<span class="fc" id="L218">		return &quot;&quot;;</span>
+<span class="fc" id="L220">		return &quot;&quot;;</span>
 	}
 
 	public boolean canRead() {
-<span class="fc bfc" id="L222" title="All 2 branches covered.">		if (exists())</span>
-<span class="fc" id="L223">			return internal.canRead();</span>
-<span class="fc" id="L224">		return false;</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		if (exists())</span>
+<span class="fc" id="L225">			return internal.canRead();</span>
+<span class="fc" id="L226">		return false;</span>
 	}
 
 	public void deleteOnExit() {
-<span class="nc" id="L228">		internal.deleteOnExit();</span>
-<span class="nc" id="L229">	}</span>
+<span class="nc" id="L230">		internal.deleteOnExit();</span>
+<span class="nc" id="L231">	}</span>
 
 	public void mkdirs() {
-<span class="fc" id="L232">		internal.mkdirs();</span>
-<span class="fc" id="L233">	}</span>
+<span class="fc" id="L234">		internal.mkdirs();</span>
+<span class="fc" id="L235">	}</span>
 
 	public static SFile createTempFile(String prefix, String suffix) throws IOException {
-<span class="nc" id="L236">		return new SFile(File.createTempFile(prefix, suffix));</span>
+<span class="nc" id="L238">		return new SFile(File.createTempFile(prefix, suffix));</span>
 	}
 
 	public URI toURI() {
-<span class="fc" id="L240">		return internal.toURI();</span>
+<span class="fc" id="L242">		return internal.toURI();</span>
 	}
 
 	public boolean renameTo(SFile dest) {
-<span class="fc" id="L244">		return internal.renameTo(dest.internal);</span>
+<span class="fc" id="L246">		return internal.renameTo(dest.internal);</span>
 	}
 
 	/**
@@ -249,57 +251,57 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 	 */
 	public boolean isFileOk() {
 		// ::comment when __TEAVM__
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)</span>
 			// In SANDBOX, we cannot read any files
-<span class="nc" id="L254">			return false;</span>
+<span class="nc" id="L256">			return false;</span>
 
 		// In any case SFile should not access the security folders
 		// (the files must be handled internally)
 		try {
-<span class="fc bfc" id="L259" title="All 2 branches covered.">			if (isDenied())</span>
-<span class="fc" id="L260">				return false;</span>
-<span class="nc" id="L261">		} catch (IOException e) {</span>
-<span class="nc" id="L262">			return false;</span>
-<span class="fc" id="L263">		}</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">			if (isDenied())</span>
+<span class="fc" id="L262">				return false;</span>
+<span class="nc" id="L263">		} catch (IOException e) {</span>
+<span class="nc" id="L264">			return false;</span>
+<span class="fc" id="L265">		}</span>
 		// Files in &quot;plantuml.include.path&quot; and &quot;plantuml.allowlist.path&quot; are ok.
-<span class="fc bfc" id="L265" title="All 2 branches covered.">		if (isInAllowList(SecurityUtils.getPath(NFolder.PATHS_INCLUDES)))</span>
-<span class="fc" id="L266">			return true;</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">		if (isInAllowList(SecurityUtils.getPath(NFolder.PATHS_INCLUDES)))</span>
+<span class="fc" id="L268">			return true;</span>
 
-<span class="pc bpc" id="L268" title="1 of 2 branches missed.">		if (isInAllowList(SecurityUtils.getPath(NFolder.ALLOWLIST_LOCAL_PATHS)))</span>
-<span class="nc" id="L269">			return true;</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">		if (isInAllowList(SecurityUtils.getPath(NFolder.ALLOWLIST_LOCAL_PATHS)))</span>
+<span class="nc" id="L271">			return true;</span>
 
-<span class="pc bpc" id="L271" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET)</span>
-<span class="nc" id="L272">			return false;</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET)</span>
+<span class="nc" id="L274">			return false;</span>
 
-<span class="pc bpc" id="L274" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET_WITH_DOTSVG)</span>
-<span class="nc" id="L275">			return false;</span>
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET_WITH_DOTSVG)</span>
+<span class="nc" id="L277">			return false;</span>
 
-<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)</span>
-<span class="nc" id="L278">			return false;</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.ALLOWLIST)</span>
+<span class="nc" id="L280">			return false;</span>
 
-<span class="pc bpc" id="L280" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.INSECURE) {</span>
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() != SecurityProfile.INSECURE) {</span>
 			// For INSECURE, we did not do those checks
-<span class="fc" id="L282">			final String path = getCleanPathSecure();</span>
-<span class="pc bpc" id="L283" title="3 of 6 branches missed.">			if (path.startsWith(&quot;/etc/&quot;) || path.startsWith(&quot;/dev/&quot;) || path.startsWith(&quot;/boot/&quot;)</span>
-<span class="pc bpc" id="L284" title="2 of 4 branches missed.">					|| path.startsWith(&quot;/proc/&quot;) || path.startsWith(&quot;/sys/&quot;))</span>
-<span class="nc" id="L285">				return false;</span>
+<span class="fc" id="L284">			final String path = getCleanPathSecure();</span>
+<span class="pc bpc" id="L285" title="3 of 6 branches missed.">			if (path.startsWith(&quot;/etc/&quot;) || path.startsWith(&quot;/dev/&quot;) || path.startsWith(&quot;/boot/&quot;)</span>
+<span class="pc bpc" id="L286" title="2 of 4 branches missed.">					|| path.startsWith(&quot;/proc/&quot;) || path.startsWith(&quot;/sys/&quot;))</span>
+<span class="nc" id="L287">				return false;</span>
 
-<span class="pc bpc" id="L287" title="1 of 2 branches missed.">			if (path.startsWith(&quot;//&quot;))</span>
-<span class="nc" id="L288">				return false;</span>
+<span class="pc bpc" id="L289" title="1 of 2 branches missed.">			if (path.startsWith(&quot;//&quot;))</span>
+<span class="nc" id="L290">				return false;</span>
 
 		}
 		// ::done
-<span class="fc" id="L292">		return true;</span>
+<span class="fc" id="L294">		return true;</span>
 	}
 
 	private boolean isInAllowList(List&lt;SFile&gt; allowlist) {
-<span class="fc" id="L296">		final String path = getCleanPathSecure();</span>
-<span class="fc bfc" id="L297" title="All 2 branches covered.">		for (SFile allow : allowlist)</span>
-<span class="fc bfc" id="L298" title="All 2 branches covered.">			if (path.startsWith(allow.getCleanPathSecure()))</span>
+<span class="fc" id="L298">		final String path = getCleanPathSecure();</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">		for (SFile allow : allowlist)</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">			if (path.startsWith(allow.getCleanPathSecure()))</span>
 				// File directory is in the allowlist
-<span class="fc" id="L300">				return true;</span>
+<span class="fc" id="L302">				return true;</span>
 
-<span class="fc" id="L302">		return false;</span>
+<span class="fc" id="L304">		return false;</span>
 	}
 
 	/**
@@ -311,10 +313,10 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 	 */
 	// ::comment when __TEAVM__
 	private boolean isDenied() throws IOException {
-<span class="fc" id="L314">		final SFile securityPath = SecurityUtils.getSecurityPath();</span>
-<span class="fc bfc" id="L315" title="All 2 branches covered.">		if (securityPath == null)</span>
-<span class="fc" id="L316">			return false;</span>
-<span class="fc" id="L317">		return getSanitizedPath().startsWith(securityPath.getSanitizedPath());</span>
+<span class="fc" id="L316">		final SFile securityPath = SecurityUtils.getSecurityPath();</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">		if (securityPath == null)</span>
+<span class="fc" id="L318">			return false;</span>
+<span class="fc" id="L319">		return getSanitizedPath().startsWith(securityPath.getSanitizedPath());</span>
 	}
 	// ::done
 
@@ -330,14 +332,14 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 	 * @see Path#normalize()
 	 */
 	private Path getSanitizedPath() throws IOException {
-<span class="fc" id="L333">		return Paths.get(new File(getCleanPathSecure()).getCanonicalPath()).normalize();</span>
+<span class="fc" id="L335">		return Paths.get(new File(getCleanPathSecure()).getCanonicalPath()).normalize();</span>
 	}
 
 	private String getCleanPathSecure() {
-<span class="fc" id="L337">		String result = internal.getAbsolutePath();</span>
-<span class="fc" id="L338">		result = result.replace(&quot;\0&quot;, &quot;&quot;);</span>
-<span class="fc" id="L339">		result = result.replace(&quot;\\\\&quot;, &quot;/&quot;);</span>
-<span class="fc" id="L340">		return result;</span>
+<span class="fc" id="L339">		String result = internal.getAbsolutePath();</span>
+<span class="fc" id="L340">		result = result.replace(&quot;\0&quot;, &quot;&quot;);</span>
+<span class="fc" id="L341">		result = result.replace(&quot;\\\\&quot;, &quot;/&quot;);</span>
+<span class="fc" id="L342">		return result;</span>
 	}
 
 	// Reading
@@ -346,137 +348,140 @@ public class SFile implements Comparable&lt;SFile&gt;, InputFile {
 		// https://www.experts-exchange.com/questions/26171948/Why-are-ImageIO-read-images-losing-their-transparency.html
 		// https://stackoverflow.com/questions/18743790/can-java-load-images-with-transparency
 
-<span class="nc bnc" id="L349" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc bnc" id="L350" title="All 2 branches missed.">			if (isFileOk())</span>
+<span class="nc bnc" id="L351" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc bnc" id="L352" title="All 2 branches missed.">			if (isFileOk())</span>
 				try {
-<span class="nc bnc" id="L352" title="All 2 branches missed.">					if (internal.getName().endsWith(&quot;.webp&quot;))</span>
-<span class="nc" id="L353">						return readWebp();</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">					if (internal.getName().endsWith(&quot;.webp&quot;))</span>
+<span class="nc" id="L355">						return readWebp();</span>
 					else
-<span class="nc" id="L355">						return SecurityUtils.readRasterImage(new ImageIcon(this.getAbsolutePath()));</span>
-<span class="nc" id="L356">				} catch (Exception e) {</span>
-<span class="nc" id="L357">					Logme.error(e);</span>
+<span class="nc" id="L357">						return SecurityUtils.readRasterImage(new ImageIcon(this.getAbsolutePath()));</span>
+<span class="nc" id="L358">				} catch (Exception e) {</span>
+<span class="nc" id="L359">					Logme.error(e);</span>
 				}
 		}
-<span class="nc" id="L360">		return null;</span>
+<span class="nc" id="L362">		return null;</span>
 	}
 
 	// ::comment when __TEAVM__
 	private PortableImage readWebp() throws IOException {
-<span class="nc" id="L365">		try (InputStream is = openFile()) {</span>
-<span class="nc" id="L366">			final int riff = read32(is);</span>
-<span class="nc bnc" id="L367" title="All 2 branches missed.">			if (riff != 0x46464952)</span>
-<span class="nc" id="L368">				return null;</span>
-<span class="nc" id="L369">			final int len1 = read32(is);</span>
-<span class="nc" id="L370">			final int webp = read32(is);</span>
-<span class="nc bnc" id="L371" title="All 2 branches missed.">			if (webp != 0x50424557)</span>
-<span class="nc" id="L372">				return null;</span>
-<span class="nc" id="L373">			final int vp8_ = read32(is);</span>
-<span class="nc bnc" id="L374" title="All 2 branches missed.">			if (vp8_ != 0x20385056)</span>
-<span class="nc" id="L375">				return null;</span>
-<span class="nc" id="L376">			final int len2 = read32(is);</span>
-<span class="nc bnc" id="L377" title="All 2 branches missed.">			if (len1 != len2 + 12)</span>
-<span class="nc" id="L378">				return null;</span>
+<span class="nc" id="L367">		try (InputStream is = openFile()) {</span>
+<span class="nc" id="L368">			final int riff = read32(is);</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">			if (riff != 0x46464952)</span>
+<span class="nc" id="L370">				return null;</span>
+<span class="nc" id="L371">			final int len1 = read32(is);</span>
+<span class="nc" id="L372">			final int webp = read32(is);</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">			if (webp != 0x50424557)</span>
+<span class="nc" id="L374">				return null;</span>
+<span class="nc" id="L375">			final int vp8_ = read32(is);</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">			if (vp8_ != 0x20385056)</span>
+<span class="nc" id="L377">				return null;</span>
+<span class="nc" id="L378">			final int len2 = read32(is);</span>
+<span class="nc bnc" id="L379" title="All 2 branches missed.">			if (len1 != len2 + 12)</span>
+<span class="nc" id="L380">				return null;</span>
 
-<span class="nc" id="L380">			return getImageFromWebpButHeader(is);</span>
-<span class="nc bnc" id="L381" title="All 8 branches missed.">		}</span>
+<span class="nc" id="L382">			return getImageFromWebpButHeader(is);</span>
+<span class="nc bnc" id="L383" title="All 8 branches missed.">		}</span>
 	}
 
 	private int read32(InputStream is) throws IOException {
-<span class="nc" id="L385">		return (is.read() &lt;&lt; 0) + (is.read() &lt;&lt; 8) + (is.read() &lt;&lt; 16) + (is.read() &lt;&lt; 24);</span>
+<span class="nc" id="L387">		return (is.read() &lt;&lt; 0) + (is.read() &lt;&lt; 8) + (is.read() &lt;&lt; 16) + (is.read() &lt;&lt; 24);</span>
 	}
 
 	public static PortableImage getImageFromWebpButHeader(InputStream is) {
-<span class="nc bnc" id="L389" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L390">			return null;</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L392">			return null;</span>
 		try {
-<span class="nc" id="L392">			final Class&lt;?&gt; clVP8Decoder = Class.forName(&quot;net.sourceforge.plantuml.webp.VP8Decoder&quot;);</span>
-<span class="nc" id="L393">			final Object vp8Decoder = clVP8Decoder.getDeclaredConstructor().newInstance();</span>
+<span class="nc" id="L394">			final Class&lt;?&gt; clVP8Decoder = Class.forName(&quot;net.sourceforge.plantuml.webp.VP8Decoder&quot;);</span>
+<span class="nc" id="L395">			final Object vp8Decoder = clVP8Decoder.getDeclaredConstructor().newInstance();</span>
 			// final VP8Decoder vp8Decoder = new VP8Decoder();
-<span class="nc" id="L395">			final Method decodeFrame = clVP8Decoder.getMethod(&quot;decodeFrame&quot;, ImageInputStream.class);</span>
-<span class="nc" id="L396">			final ImageInputStream iis = SImageIO.createImageInputStream(is);</span>
-<span class="nc" id="L397">			decodeFrame.invoke(vp8Decoder, iis);</span>
+<span class="nc" id="L397">			final Method decodeFrame = clVP8Decoder.getMethod(&quot;decodeFrame&quot;, ImageInputStream.class);</span>
+<span class="nc" id="L398">			final ImageInputStream iis = SImageIO.createImageInputStream(is);</span>
+<span class="nc" id="L399">			decodeFrame.invoke(vp8Decoder, iis);</span>
 			// vp8Decoder.decodeFrame(iis);
-<span class="nc" id="L399">			iis.close();</span>
-<span class="nc" id="L400">			final Object frame = clVP8Decoder.getMethod(&quot;getFrame&quot;).invoke(vp8Decoder);</span>
-<span class="nc" id="L401">			return PortableImageFactory</span>
-<span class="nc" id="L402">					.build((BufferedImage) frame.getClass().getMethod(&quot;getBufferedImage&quot;).invoke(frame));</span>
+<span class="nc" id="L401">			iis.close();</span>
+<span class="nc" id="L402">			final Object frame = clVP8Decoder.getMethod(&quot;getFrame&quot;).invoke(vp8Decoder);</span>
+<span class="nc" id="L403">			return PortableImageFactory</span>
+<span class="nc" id="L404">					.build((BufferedImage) frame.getClass().getMethod(&quot;getBufferedImage&quot;).invoke(frame));</span>
 			// final VP8Frame frame = vp8Decoder.getFrame();
 			// return frame.getBufferedImage();
-<span class="nc" id="L405">		} catch (Exception e) {</span>
-<span class="nc" id="L406">			Logme.error(e);</span>
-<span class="nc" id="L407">			return null;</span>
+<span class="nc" id="L407">		} catch (Exception e) {</span>
+<span class="nc" id="L408">			Logme.error(e);</span>
+<span class="nc" id="L409">			return null;</span>
 		}
 	}
 	// ::done
 
 	public BufferedReader openBufferedReader() {
-<span class="pc bpc" id="L413" title="1 of 2 branches missed.">		if (isFileOk()) {</span>
+<span class="pc bpc" id="L415" title="1 of 2 branches missed.">		if (isFileOk()) {</span>
 			try {
-<span class="fc" id="L415">				return new BufferedReader(new FileReader(internal));</span>
-<span class="nc" id="L416">			} catch (FileNotFoundException e) {</span>
-<span class="nc" id="L417">				Logme.error(e);</span>
+<span class="fc" id="L417">				return new BufferedReader(new FileReader(internal));</span>
+<span class="nc" id="L418">			} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L419">				Logme.error(e);</span>
 			}
 		}
-<span class="nc" id="L420">		return null;</span>
+<span class="nc" id="L422">		return null;</span>
 	}
 
 	public File conv() {
-<span class="fc" id="L424">		return internal;</span>
+<span class="fc" id="L426">		return internal;</span>
 	}
 
 	public InputStream openFile() {
-<span class="pc bpc" id="L428" title="1 of 2 branches missed.">		if (isFileOk())</span>
+<span class="pc bpc" id="L430" title="1 of 2 branches missed.">		if (isFileOk())</span>
 			try {
-<span class="fc" id="L430">				return new BufferedInputStream(new FileInputStream(internal));</span>
-<span class="nc" id="L431">			} catch (FileNotFoundException e) {</span>
-<span class="nc" id="L432">				Logme.error(e);</span>
+<span class="fc" id="L432">				return new BufferedInputStream(new FileInputStream(internal));</span>
+<span class="nc" id="L433">			} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L434">				Logme.error(e);</span>
 			}
-<span class="nc" id="L434">		return null;</span>
+<span class="nc" id="L436">		return null;</span>
 	}
 
 	// ::comment when __TEAVM__
 	// Writing
 	public BufferedOutputStream createBufferedOutputStream() throws FileNotFoundException {
-<span class="fc" id="L440">		return new BufferedOutputStream(new FileOutputStream(internal));</span>
+<span class="fc" id="L442">		return new BufferedOutputStream(new FileOutputStream(internal));</span>
 	}
 
 	public PrintWriter createPrintWriter() throws FileNotFoundException {
-<span class="fc" id="L444">		return new PrintWriter(internal);</span>
+		// Same as new PrintWriter(File), but built from stream/writer constructors
+		// that exist in the TeaVM C classlib (PrintWriter(File) does not).
+<span class="fc" id="L448">		return new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(internal))));</span>
 	}
 
 	public PrintWriter createPrintWriter(String charset) throws FileNotFoundException, UnsupportedEncodingException {
-<span class="fc" id="L448">		return new PrintWriter(internal, charset);</span>
+<span class="fc" id="L452">		return new PrintWriter(</span>
+				new BufferedWriter(new OutputStreamWriter(new FileOutputStream(internal), charset)));
 	}
 
 	public FileOutputStream createFileOutputStream() throws FileNotFoundException {
-<span class="nc" id="L452">		return new FileOutputStream(internal);</span>
+<span class="nc" id="L457">		return new FileOutputStream(internal);</span>
 	}
 
 	public PrintStream createPrintStream() throws FileNotFoundException {
-<span class="nc" id="L456">		return new PrintStream(internal);</span>
+<span class="nc" id="L461">		return new PrintStream(internal);</span>
 	}
 
 	public PrintStream createPrintStream(Charset charset) throws FileNotFoundException, UnsupportedEncodingException {
-<span class="nc" id="L460">		return new PrintStream(internal, charset.name());</span>
+<span class="nc" id="L465">		return new PrintStream(internal, charset.name());</span>
 	}
 
 	public Path toPath() throws IOException {
-<span class="pc bpc" id="L464" title="1 of 2 branches missed.">		if (isFileOk())</span>
-<span class="fc" id="L465">			return getSanitizedPath();</span>
-<span class="nc" id="L466">		return null;</span>
+<span class="pc bpc" id="L469" title="1 of 2 branches missed.">		if (isFileOk())</span>
+<span class="fc" id="L470">			return getSanitizedPath();</span>
+<span class="nc" id="L471">		return null;</span>
 	}
 	// ::done
 
 	@Override
 	public InputStream newInputStream() {
-<span class="fc" id="L472">		return openFile();</span>
+<span class="fc" id="L477">		return openFile();</span>
 	}
 
 	@Override
 	public NFolder getParentFolder() throws IOException {
-<span class="pc bpc" id="L477" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L478">			throw new UnsupportedOperationException(&quot;TEAVM96521&quot;);</span>
-<span class="fc" id="L479">		return new NFolderRegular(getSanitizedPath().getParent());</span>
+<span class="pc bpc" id="L482" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L483">			throw new UnsupportedOperationException(&quot;TEAVM96521&quot;);</span>
+<span class="fc" id="L484">		return new NFolderRegular(getSanitizedPath().getParent());</span>
 	}
 
 }

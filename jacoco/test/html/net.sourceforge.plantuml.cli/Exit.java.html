@@ -35,6 +35,11 @@
  */
 package net.sourceforge.plantuml.cli;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+// ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.c.NativeExit;
+// ::done
+
 public final class Exit {
 
 	private Exit() {
@@ -43,19 +48,29 @@ public final class Exit {
 	public static final String DISABLE_PROPERTY = &quot;plantuml.noSystemExit&quot;;
 
 	public static void exit(int status) {
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">		if (Boolean.getBoolean(DISABLE_PROPERTY))</span>
-<span class="fc" id="L47">			throw new ExitRequest(status);</span>
+		// ::comment when JAVA8
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (TeaVM.isC()) {</span>
+			// No System.exit in the classlib of the TeaVM C backend
+<span class="nc" id="L54">			System.out.flush();</span>
+<span class="nc" id="L55">			System.err.flush();</span>
+<span class="nc" id="L56">			NativeExit.exit(status);</span>
+<span class="nc" id="L57">			return;</span>
+		}
+		// ::done
 
-<span class="nc" id="L49">		System.exit(status);</span>
-<span class="nc" id="L50">	}</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (Boolean.getBoolean(DISABLE_PROPERTY))</span>
+<span class="fc" id="L62">			throw new ExitRequest(status);</span>
+
+<span class="nc" id="L64">		System.exit(status);</span>
+<span class="nc" id="L65">	}</span>
 
 	public static final class ExitRequest extends RuntimeException {
 		public final int status;
 
 		public ExitRequest(int status) {
-<span class="fc" id="L56">			super(&quot;System.exit(&quot; + status + &quot;) intercepted&quot;);</span>
-<span class="fc" id="L57">			this.status = status;</span>
-<span class="fc" id="L58">		}</span>
+<span class="fc" id="L71">			super(&quot;System.exit(&quot; + status + &quot;) intercepted&quot;);</span>
+<span class="fc" id="L72">			this.status = status;</span>
+<span class="fc" id="L73">		}</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

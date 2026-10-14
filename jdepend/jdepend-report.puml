@@ -927,14 +927,15 @@ Total Classes: 9
 "net.sourceforge.plantuml.classdiagram.command" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.classdiagram.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.cli" %lighten("red", 75) {
-Total Classes: 12
+class "net.sourceforge.plantuml.cli" %lighten("red", 76) {
+Total Classes: 14
 }
 "net.sourceforge.plantuml.cli" --> "java.io"
 "net.sourceforge.plantuml.cli" --> "java.lang"
 "net.sourceforge.plantuml.cli" --> "java.lang.annotation"
-"net.sourceforge.plantuml.cli" --> "java.nio.charset"
 "net.sourceforge.plantuml.cli" --> "java.util"
+"net.sourceforge.plantuml.cli" --> "net.sourceforge.plantuml.teavm"
+"net.sourceforge.plantuml.cli" --> "net.sourceforge.plantuml.teavm.c"
 
 class "net.sourceforge.plantuml.code" %lighten("red", 93) {
 Total Classes: 25
@@ -3285,8 +3286,8 @@ Total Classes: 2
 "net.sourceforge.plantuml.teavm" --> "java.lang"
 "net.sourceforge.plantuml.teavm" --> "java.util"
 
-class "net.sourceforge.plantuml.teavm.c" %lighten("red", 100) {
-Total Classes: 3
+class "net.sourceforge.plantuml.teavm.c" %lighten("red", 94) {
+Total Classes: 4
 }
 "net.sourceforge.plantuml.teavm.c" --> "java.lang"
 "net.sourceforge.plantuml.teavm.c" --> "java.nio.charset"

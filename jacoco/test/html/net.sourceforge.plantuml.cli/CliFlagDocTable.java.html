@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CliFlagDocTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.cli</a> &gt; <span class="el_source">CliFlagDocTable.java</span></div><h1>CliFlagDocTable.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+
+package net.sourceforge.plantuml.cli;
+
+/**
+ * The values of {@link CliFlagDoc} and {@link CliDefaultValue} of every {@link CliFlag}, as plain
+ * code: the TeaVM C build cannot read these annotations (no reflection on fields), but it prints
+ * the same help as the JVM and needs the default values to parse the command line.
+ *
+ * &lt;p&gt;
+ * Generated from the annotations of {@link CliFlag}: when you add or change one, update this class
+ * as well ({@code CliFlagDocTableTest} fails otherwise).
+ */
+final class CliFlagDocTable {
+
+	private CliFlagDocTable() {
+	}
+
+	/** The description of the flag, or null when it is not documented (not in the help). */
+	static String doc(CliFlag flag) {
+<span class="fc bfc" id="L55" title="All 71 branches covered.">		switch (flag) {</span>
+		case HELP:
+<span class="fc" id="L57">			return &quot;Show help and usage information&quot;;</span>
+		case HELP_MORE:
+<span class="fc" id="L59">			return &quot;Show extended help (advanced options)&quot;;</span>
+		case VERSION:
+<span class="fc" id="L61">			return &quot;Show PlantUML and Java version&quot;;</span>
+		case AUTHOR:
+<span class="fc" id="L63">			return &quot;Show information about PlantUML authors&quot;;</span>
+		case GUI:
+<span class="fc" id="L65">			return &quot;Launch the graphical user interface&quot;;</span>
+		case DARK_MODE:
+<span class="fc" id="L67">			return &quot;Render diagrams in dark mode&quot;;</span>
+		case VERBOSE:
+<span class="fc" id="L69">			return &quot;Enable verbose logging&quot;;</span>
+		case DURATION:
+<span class="fc" id="L71">			return &quot;Print total processing time&quot;;</span>
+		case PROGRESS:
+<span class="fc" id="L73">			return &quot;Show a textual progress bar&quot;;</span>
+		case SPLASH:
+<span class="fc" id="L75">			return &quot;Show splash screen with progress bar&quot;;</span>
+		case TEST_DOT:
+<span class="fc" id="L77">			return &quot;Check Graphviz installation&quot;;</span>
+		case PICOWEB:
+<span class="fc" id="L79">			return &quot;Start internal HTTP server for rendering (default port : 8080)&quot;;</span>
+		case EXCLUDE:
+<span class="fc" id="L81">			return &quot;Exclude input files matching the given pattern&quot;;</span>
+		case PIPE:
+<span class="fc" id="L83">			return &quot;Read source from stdin, write result to stdout&quot;;</span>
+		case PIPE_IMAGE_INDEX:
+<span class="fc" id="L85">			return &quot;Generate the Nth image with pipe option&quot;;</span>
+		case DEFINE:
+<span class="fc" id="L87">			return &quot;Define a preprocessing variable (equivalent to '!define &lt;var&gt; &lt;value&gt;')&quot;;</span>
+		case INCLUDE:
+<span class="fc" id="L89">			return &quot;Include external file (as with '!include &lt;file&gt;')&quot;;</span>
+		case PRAGMA:
+<span class="fc" id="L91">			return &quot;Set pragma (equivalent to '!pragma &lt;key&gt; &lt;value&gt;')&quot;;</span>
+		case SKINPARAM:
+<span class="fc" id="L93">			return &quot;Set skin parameter (equivalent to 'skinparam &lt;key&gt; &lt;value&gt;')&quot;;</span>
+		case THEME:
+<span class="fc" id="L95">			return &quot;Apply a theme&quot;;</span>
+		case CONFIG:
+<span class="fc" id="L97">			return &quot;Specify configuration file&quot;;</span>
+		case CHARSET:
+<span class="fc" id="L99">			return &quot;Use a specific input charset&quot;;</span>
+		case CHECK_ONLY:
+<span class="fc" id="L101">			return &quot;Check diagram syntax without generating images&quot;;</span>
+		case FAIL_FAST:
+<span class="fc" id="L103">			return &quot;Stop at the first syntax error&quot;;</span>
+		case FAIL_FAST2:
+<span class="fc" id="L105">			return &quot;Pre-check syntax of all inputs and stop faster on error&quot;;</span>
+		case NO_ERROR_IMAGE:
+<span class="fc" id="L107">			return &quot;Do not generate error images for diagrams with syntax errors&quot;;</span>
+		case TIMEOUT:
+<span class="fc" id="L109">			return &quot;Set Graphviz processing timeout (in seconds)&quot;;</span>
+		case IGNORE_STARTUML_FILENAME:
+<span class="fc" id="L111">			return &quot;Ignore '@startuml &lt;name&gt;' and always derive output filenames from input files&quot;;</span>
+		case NB_THREAD:
+<span class="fc" id="L113">			return &quot;Use &lt;n&gt; threads for processing  (auto = available processors)&quot;;</span>
+		case LOOP:
+<span class="fc" id="L115">			return &quot;Runs the generation process &lt;n&gt; times, useful for performance testing&quot;;</span>
+		case RETRIEVE_METADATA:
+<span class="fc" id="L117">			return &quot;Extract embedded PlantUML source from PNG or SVG metadata&quot;;</span>
+		case NO_METADATA:
+<span class="fc" id="L119">			return &quot;Do not include metadata in generated files&quot;;</span>
+		case CHECK_METADATA:
+<span class="fc" id="L121">			return &quot;Skip PNG/SVG files that are already up-to-date (using metadata)&quot;;</span>
+		case ENCODE_SPRITE:
+<span class="fc" id="L123">			return &quot;Encode a sprite definition from an image file&quot;;</span>
+		case COMPUTE_URL:
+<span class="fc" id="L125">			return &quot;Generate an encoded PlantUML URL from a source file&quot;;</span>
+		case DECODE_URL:
+<span class="fc" id="L127">			return &quot;Decode a PlantUML encoded URL back to its source&quot;;</span>
+		case LANGUAGE:
+<span class="fc" id="L129">			return &quot;Print the list of PlantUML language keywords&quot;;</span>
+		case GRAPHVIZ_DOT:
+<span class="fc" id="L131">			return &quot;Specify the path to the Graphviz 'dot' executable&quot;;</span>
+		case FTP:
+<span class="fc" id="L133">			return &quot;Start a local FTP server for diagram rendering (rarely used)&quot;;</span>
+		case OUTPUT_DIR:
+<span class="fc" id="L135">			return &quot;Generate output files in the specified directory&quot;;</span>
+		case OVERWRITE:
+<span class="fc" id="L137">			return &quot;Allow overwriting of read-only output files&quot;;</span>
+		case DEBUG_SVEK:
+<span class="fc" id="L139">			return &quot;Generate intermediate Svek files&quot;;</span>
+		case FILE_DIR:
+<span class="fc" id="L141">			return &quot;Pretend input files are located in given directory&quot;;</span>
+		case FILENAME:
+<span class="fc" id="L143">			return &quot;Override %filename% variable&quot;;</span>
+		case PRINT_FONTS:
+<span class="fc" id="L145">			return &quot;List fonts available on your system&quot;;</span>
+		case STD_LIB:
+<span class="fc" id="L147">			return &quot;Print standard library information&quot;;</span>
+		case SYNTAX:
+<span class="fc" id="L149">			return &quot;Report syntax errors from stdin without generating images&quot;;</span>
+		case FORMAT:
+<span class="fc" id="L151">			return &quot;Set the output format for generated diagrams\n(e.g. png, svg, pdf, eps, latex, txt, utxt, obfuscate, preproc...)&quot;;</span>
+		case T_EPS:
+<span class="fc" id="L153">			return &quot;Generate images in EPS format&quot;;</span>
+		case T_HTML:
+<span class="fc" id="L155">			return &quot;Generate HTML files for class diagrams&quot;;</span>
+		case T_LATEX:
+<span class="fc" id="L157">			return &quot;Generate LaTeX/TikZ output&quot;;</span>
+		case T_LATEX_NOPREAMBLE:
+<span class="fc" id="L159">			return &quot;Generate LaTeX/TikZ output without preamble&quot;;</span>
+		case OBFUSCATE:
+<span class="fc" id="L161">			return &quot;Replace text in diagrams with obfuscated strings to share diagrams safely&quot;;</span>
+		case T_PDF:
+<span class="fc" id="L163">			return &quot;Generate PDF images&quot;;</span>
+		case T_PNG:
+<span class="fc" id="L165">			return &quot;Generate PNG images (default)&quot;;</span>
+		case PREPROCESS:
+<span class="fc" id="L167">			return &quot;Generate the preprocessed source after applying !include, !define... (no rendering)&quot;;</span>
+		case T_SCXML:
+<span class="fc" id="L169">			return &quot;Generate SCXML files for state diagrams&quot;;</span>
+		case T_SVG:
+<span class="fc" id="L171">			return &quot;Generate SVG images&quot;;</span>
+		case T_TXT:
+<span class="fc" id="L173">			return &quot;Generate ASCII art diagrams&quot;;</span>
+		case T_UTXT:
+<span class="fc" id="L175">			return &quot;Generate ASCII art diagrams using Unicode characters&quot;;</span>
+		case T_VDX:
+<span class="fc" id="L177">			return &quot;Generate VDX files&quot;;</span>
+		case T_XMI:
+<span class="fc" id="L179">			return &quot;Generate XMI files for class diagrams&quot;;</span>
+		case DISABLE_STATS:
+<span class="fc" id="L181">			return &quot;Disable statistics collection (default behavior)&quot;;</span>
+		case ENABLE_STATS:
+<span class="fc" id="L183">			return &quot;Enable statistics collection&quot;;</span>
+		case DUMPHTMLSTATS:
+<span class="fc" id="L185">			return &quot;Export collected statistics to an HTML report and exit&quot;;</span>
+		case DUMPSTATS:
+<span class="fc" id="L187">			return &quot;Export collected statistics to a text report and exit&quot;;</span>
+		case HTML_STATS:
+<span class="fc" id="L189">			return &quot;Output general statistics in HTML format&quot;;</span>
+		case XML_STATS:
+<span class="fc" id="L191">			return &quot;Output general statistics in XML format&quot;;</span>
+		case REALTIME_STATS:
+<span class="fc" id="L193">			return &quot;Generate statistics in real time during processing&quot;;</span>
+		case LOOP_STATS:
+<span class="fc" id="L195">			return &quot;Continuously print usage statistics during execution&quot;;</span>
+		default:
+<span class="fc" id="L197">			return null;</span>
+		}
+	}
+
+	/** The title of the group of the help the flag starts, or an empty string. */
+	static String newGroup(CliFlag flag) {
+<span class="fc bfc" id="L203" title="All 8 branches covered.">		switch (flag) {</span>
+		case EXCLUDE:
+<span class="fc" id="L205">			return &quot;Input &amp; preprocessing&quot;;</span>
+		case CHECK_ONLY:
+<span class="fc" id="L207">			return &quot;Execution control&quot;;</span>
+		case RETRIEVE_METADATA:
+<span class="fc" id="L209">			return &quot;Metadata &amp; assets&quot;;</span>
+		case OUTPUT_DIR:
+<span class="fc" id="L211">			return &quot;Output control&quot;;</span>
+		case FORMAT:
+<span class="fc" id="L213">			return &quot;Output format (choose one)&quot;;</span>
+		case T_EPS:
+<span class="fc" id="L215">			return &quot;Available formats&quot;;</span>
+		case DISABLE_STATS:
+<span class="fc" id="L217">			return &quot;Statistics&quot;;</span>
+		default:
+<span class="fc" id="L219">			return &quot;&quot;;</span>
+		}
+	}
+
+	/** The usage text of the flag, as written in its annotation, or null. */
+	static String usage(CliFlag flag) {
+<span class="fc bfc" id="L225" title="All 18 branches covered.">		switch (flag) {</span>
+		case PICOWEB:
+<span class="fc" id="L227">			return &quot;--http-server[:&lt;port&gt;]&quot;;</span>
+		case EXCLUDE:
+<span class="fc" id="L229">			return &quot;--exclude &lt;pattern&gt;&quot;;</span>
+		case DEFINE:
+<span class="fc" id="L231">			return &quot;-d, --define &lt;VAR&gt;=&lt;value&gt;&quot;;</span>
+		case INCLUDE:
+<span class="fc" id="L233">			return &quot;-I, --include &lt;file&gt;&quot;;</span>
+		case PRAGMA:
+<span class="fc" id="L235">			return &quot;-P, --pragma &lt;key&gt;=&lt;value&gt;&quot;;</span>
+		case SKINPARAM:
+<span class="fc" id="L237">			return &quot;--skinparam &lt;key&gt;=&lt;value&gt;&quot;;</span>
+		case THEME:
+<span class="fc" id="L239">			return &quot;--theme &lt;name&gt;&quot;;</span>
+		case CONFIG:
+<span class="fc" id="L241">			return &quot;--config &lt;file&gt;&quot;;</span>
+		case CHARSET:
+<span class="fc" id="L243">			return &quot;--charset &lt;name&gt;&quot;;</span>
+		case TIMEOUT:
+<span class="fc" id="L245">			return &quot;--graphviz-timeout &lt;seconds&gt;&quot;;</span>
+		case NB_THREAD:
+<span class="fc" id="L247">			return &quot;--threads &lt;n|auto&gt;&quot;;</span>
+		case LOOP:
+<span class="fc" id="L249">			return &quot;--loop &lt;n&gt;&quot;;</span>
+		case ENCODE_SPRITE:
+<span class="fc" id="L251">			return &quot;--sprite &lt;4|8|16[z]&gt; &lt;file&gt;&quot;;</span>
+		case DECODE_URL:
+<span class="fc" id="L253">			return &quot;--decode-url &lt;string&gt;&quot;;</span>
+		case GRAPHVIZ_DOT:
+<span class="fc" id="L255">			return &quot;--dot-path &lt;path-to-dot-exe&gt;&quot;;</span>
+		case OUTPUT_DIR:
+<span class="fc" id="L257">			return &quot;--output-dir &lt;dir&gt;&quot;;</span>
+		case FORMAT:
+<span class="fc" id="L259">			return &quot;-f, --format &lt;name&gt;&quot;;</span>
+		default:
+<span class="fc" id="L261">			return null;</span>
+		}
+	}
+
+	/** The level of the flag in the help (-1 when it is not documented). */
+	static int level(CliFlag flag) {
+<span class="fc bfc" id="L267" title="All 71 branches covered.">		switch (flag) {</span>
+		case HELP:
+<span class="fc" id="L269">			return 0;</span>
+		case HELP_MORE:
+<span class="fc" id="L271">			return 0;</span>
+		case VERSION:
+<span class="fc" id="L273">			return 0;</span>
+		case AUTHOR:
+<span class="fc" id="L275">			return 0;</span>
+		case GUI:
+<span class="fc" id="L277">			return 0;</span>
+		case DARK_MODE:
+<span class="fc" id="L279">			return 0;</span>
+		case VERBOSE:
+<span class="fc" id="L281">			return 0;</span>
+		case DURATION:
+<span class="fc" id="L283">			return 0;</span>
+		case PROGRESS:
+<span class="fc" id="L285">			return 0;</span>
+		case SPLASH:
+<span class="fc" id="L287">			return 0;</span>
+		case TEST_DOT:
+<span class="fc" id="L289">			return 0;</span>
+		case PICOWEB:
+<span class="fc" id="L291">			return 0;</span>
+		case EXCLUDE:
+<span class="fc" id="L293">			return 1;</span>
+		case PIPE:
+<span class="fc" id="L295">			return 0;</span>
+		case PIPE_IMAGE_INDEX:
+<span class="fc" id="L297">			return 999;</span>
+		case DEFINE:
+<span class="fc" id="L299">			return 0;</span>
+		case INCLUDE:
+<span class="fc" id="L301">			return 1;</span>
+		case PRAGMA:
+<span class="fc" id="L303">			return 1;</span>
+		case SKINPARAM:
+<span class="fc" id="L305">			return 1;</span>
+		case THEME:
+<span class="fc" id="L307">			return 1;</span>
+		case CONFIG:
+<span class="fc" id="L309">			return 1;</span>
+		case CHARSET:
+<span class="fc" id="L311">			return 1;</span>
+		case CHECK_ONLY:
+<span class="fc" id="L313">			return 0;</span>
+		case FAIL_FAST:
+<span class="fc" id="L315">			return 0;</span>
+		case FAIL_FAST2:
+<span class="fc" id="L317">			return 0;</span>
+		case NO_ERROR_IMAGE:
+<span class="fc" id="L319">			return 0;</span>
+		case TIMEOUT:
+<span class="fc" id="L321">			return 1;</span>
+		case IGNORE_STARTUML_FILENAME:
+<span class="fc" id="L323">			return 1;</span>
+		case NB_THREAD:
+<span class="fc" id="L325">			return 1;</span>
+		case LOOP:
+<span class="fc" id="L327">			return 1;</span>
+		case RETRIEVE_METADATA:
+<span class="fc" id="L329">			return 0;</span>
+		case NO_METADATA:
+<span class="fc" id="L331">			return 1;</span>
+		case CHECK_METADATA:
+<span class="fc" id="L333">			return 0;</span>
+		case ENCODE_SPRITE:
+<span class="fc" id="L335">			return 0;</span>
+		case COMPUTE_URL:
+<span class="fc" id="L337">			return 1;</span>
+		case DECODE_URL:
+<span class="fc" id="L339">			return 1;</span>
+		case LANGUAGE:
+<span class="fc" id="L341">			return 1;</span>
+		case GRAPHVIZ_DOT:
+<span class="fc" id="L343">			return 1;</span>
+		case FTP:
+<span class="fc" id="L345">			return 1;</span>
+		case OUTPUT_DIR:
+<span class="fc" id="L347">			return 1;</span>
+		case OVERWRITE:
+<span class="fc" id="L349">			return 1;</span>
+		case DEBUG_SVEK:
+<span class="fc" id="L351">			return 999;</span>
+		case FILE_DIR:
+<span class="fc" id="L353">			return 999;</span>
+		case FILENAME:
+<span class="fc" id="L355">			return 999;</span>
+		case PRINT_FONTS:
+<span class="fc" id="L357">			return 999;</span>
+		case STD_LIB:
+<span class="fc" id="L359">			return 999;</span>
+		case SYNTAX:
+<span class="fc" id="L361">			return 999;</span>
+		case FORMAT:
+<span class="fc" id="L363">			return 0;</span>
+		case T_EPS:
+<span class="fc" id="L365">			return 0;</span>
+		case T_HTML:
+<span class="fc" id="L367">			return 1;</span>
+		case T_LATEX:
+<span class="fc" id="L369">			return 0;</span>
+		case T_LATEX_NOPREAMBLE:
+<span class="fc" id="L371">			return 1;</span>
+		case OBFUSCATE:
+<span class="fc" id="L373">			return 0;</span>
+		case T_PDF:
+<span class="fc" id="L375">			return 1;</span>
+		case T_PNG:
+<span class="fc" id="L377">			return 0;</span>
+		case PREPROCESS:
+<span class="fc" id="L379">			return 0;</span>
+		case T_SCXML:
+<span class="fc" id="L381">			return 1;</span>
+		case T_SVG:
+<span class="fc" id="L383">			return 0;</span>
+		case T_TXT:
+<span class="fc" id="L385">			return 0;</span>
+		case T_UTXT:
+<span class="fc" id="L387">			return 0;</span>
+		case T_VDX:
+<span class="fc" id="L389">			return 1;</span>
+		case T_XMI:
+<span class="fc" id="L391">			return 1;</span>
+		case DISABLE_STATS:
+<span class="fc" id="L393">			return 1;</span>
+		case ENABLE_STATS:
+<span class="fc" id="L395">			return 1;</span>
+		case DUMPHTMLSTATS:
+<span class="fc" id="L397">			return 1;</span>
+		case DUMPSTATS:
+<span class="fc" id="L399">			return 1;</span>
+		case HTML_STATS:
+<span class="fc" id="L401">			return 1;</span>
+		case XML_STATS:
+<span class="fc" id="L403">			return 1;</span>
+		case REALTIME_STATS:
+<span class="fc" id="L405">			return 1;</span>
+		case LOOP_STATS:
+<span class="fc" id="L407">			return 1;</span>
+		default:
+<span class="fc" id="L409">			return -1;</span>
+		}
+	}
+
+	/** The default value of the flag, or null. */
+	static String defaultValue(CliFlag flag) {
+<span class="fc bfc" id="L415" title="All 4 branches covered.">		switch (flag) {</span>
+		case PIPE_IMAGE_INDEX:
+<span class="fc" id="L417">			return &quot;0&quot;;</span>
+		case CHARSET:
+<span class="fc" id="L419">			return &quot;UTF-8&quot;;</span>
+		case LOOP:
+<span class="fc" id="L421">			return &quot;1&quot;;</span>
+		default:
+<span class="fc" id="L423">			return null;</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

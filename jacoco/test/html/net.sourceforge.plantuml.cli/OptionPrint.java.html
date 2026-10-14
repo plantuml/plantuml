@@ -138,52 +138,56 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc bnc" id="L138" title="All 2 branches missed.">		for (String v : interestingValues())</span>
 <span class="nc" id="L139">			System.out.println(v);</span>
 
-<span class="nc" id="L141">		System.out.println();</span>
-<span class="nc" id="L142">		final ReportLog result = new ReportLog();</span>
-<span class="nc" id="L143">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		for (String s : result)</span>
-<span class="nc" id="L145">			System.out.println(s);</span>
+		// The C build does not use Graphviz (the layout is computed by Smetana)
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (TeaVM.isC())</span>
+<span class="nc" id="L143">			return;</span>
 
-<span class="nc" id="L147">		Exit.exit(errorCode);</span>
-<span class="nc" id="L148">	}</span>
+<span class="nc" id="L145">		System.out.println();</span>
+<span class="nc" id="L146">		final ReportLog result = new ReportLog();</span>
+<span class="nc" id="L147">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		for (String s : result)</span>
+<span class="nc" id="L149">			System.out.println(s);</span>
+
+<span class="nc" id="L151">		Exit.exit(errorCode);</span>
+<span class="nc" id="L152">	}</span>
 
 	private static String hostname;
 
 	public static synchronized String getHostName() {
-<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (hostname == null)</span>
-<span class="nc" id="L154">			hostname = getHostNameSlow();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (hostname == null)</span>
+<span class="nc" id="L158">			hostname = getHostNameSlow();</span>
 
-<span class="nc" id="L156">		return hostname;</span>
+<span class="nc" id="L160">		return hostname;</span>
 	}
 
 	private static String getHostNameSlow() {
 		try {
-<span class="nc" id="L161">			final InetAddress addr = InetAddress.getLocalHost();</span>
-<span class="nc" id="L162">			return addr.getHostName();</span>
-<span class="nc" id="L163">		} catch (Throwable e) {</span>
-<span class="nc" id="L164">			final Map&lt;String, String&gt; env = System.getenv();</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">			if (env.containsKey(&quot;COMPUTERNAME&quot;))</span>
-<span class="nc" id="L166">				return env.get(&quot;COMPUTERNAME&quot;);</span>
-<span class="nc bnc" id="L167" title="All 2 branches missed.">			else if (env.containsKey(&quot;HOSTNAME&quot;))</span>
-<span class="nc" id="L168">				return env.get(&quot;HOSTNAME&quot;);</span>
+<span class="nc" id="L165">			final InetAddress addr = InetAddress.getLocalHost();</span>
+<span class="nc" id="L166">			return addr.getHostName();</span>
+<span class="nc" id="L167">		} catch (Throwable e) {</span>
+<span class="nc" id="L168">			final Map&lt;String, String&gt; env = System.getenv();</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			if (env.containsKey(&quot;COMPUTERNAME&quot;))</span>
+<span class="nc" id="L170">				return env.get(&quot;COMPUTERNAME&quot;);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">			else if (env.containsKey(&quot;HOSTNAME&quot;))</span>
+<span class="nc" id="L172">				return env.get(&quot;HOSTNAME&quot;);</span>
 
 		}
-<span class="nc" id="L171">		return &quot;Unknown Computer&quot;;</span>
+<span class="nc" id="L175">		return &quot;Unknown Computer&quot;;</span>
 	}
 
 	private static String format(final long value) {
-<span class="nc" id="L175">		return String.format(Locale.US, &quot;%,d&quot;, value);</span>
+<span class="nc" id="L179">		return String.format(Locale.US, &quot;%,d&quot;, value);</span>
 	}
 
 	public static void printAbout() {
-<span class="nc bnc" id="L179" title="All 2 branches missed.">		for (String s : PSystemVersion.getAuthorsStrings(false))</span>
-<span class="nc" id="L180">			System.out.println(s);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		for (String s : PSystemVersion.getAuthorsStrings(false))</span>
+<span class="nc" id="L184">			System.out.println(s);</span>
 
-<span class="nc" id="L182">	}</span>
+<span class="nc" id="L186">	}</span>
 
 	public static void printListKeywords() {
-<span class="nc" id="L185">		new LanguageDescriptor().print(System.out);</span>
-<span class="nc" id="L186">	}</span>
+<span class="nc" id="L189">		new LanguageDescriptor().print(System.out);</span>
+<span class="nc" id="L190">	}</span>
 	// ::done
 
 }
