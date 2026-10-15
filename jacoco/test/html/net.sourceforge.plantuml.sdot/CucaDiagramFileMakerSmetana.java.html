@@ -405,7 +405,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 <span class="pc bpc" id="L405" title="1 of 2 branches missed.">		if (g.getGroupType() == GroupType.CONCURRENT_STATE)</span>
 <span class="nc" id="L406">			return;</span>
 
-<span class="pc bpc" id="L408" title="1 of 2 branches missed.">		if (g.isPacked() == false) {</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">		if (g.isPacked() == false) {</span>
 <span class="fc" id="L409">			final ClusterHeader clusterHeader = new ClusterHeader(g, diagram, stringBounder);</span>
 <span class="fc" id="L410">			clusterManager.openCluster(g, clusterHeader);</span>
 		}
@@ -413,7 +413,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 <span class="fc" id="L413">		this.printEntities(stringBounder, g.leafs());</span>
 <span class="fc" id="L414">		this.printAllSubgroups(stringBounder, g);</span>
 
-<span class="pc bpc" id="L416" title="1 of 2 branches missed.">		if (g.isPacked() == false)</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">		if (g.isPacked() == false)</span>
 <span class="fc" id="L417">			clusterManager.closeCluster();</span>
 
 <span class="fc" id="L419">	}</span>
@@ -662,10 +662,10 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 <span class="fc" id="L662">	}</span>
 
 	private void exportGroup(Globals zz, ST_Agraph_s graph, Entity group) {
-<span class="pc bpc" id="L665" title="1 of 2 branches missed.">		if (group.isPacked()) {</span>
-<span class="nc" id="L666">			this.exportEntities(zz, graph, group.leafs());</span>
-<span class="nc" id="L667">			this.exportGroups(zz, graph, group);</span>
-<span class="nc" id="L668">			return;</span>
+<span class="fc bfc" id="L665" title="All 2 branches covered.">		if (group.isPacked()) {</span>
+<span class="fc" id="L666">			this.exportEntities(zz, graph, group.leafs());</span>
+<span class="fc" id="L667">			this.exportGroups(zz, graph, group);</span>
+<span class="fc" id="L668">			return;</span>
 		}
 <span class="fc" id="L670">		final Cluster cluster = getBibliotekon().getCluster(group);</span>
 <span class="pc bpc" id="L671" title="1 of 2 branches missed.">		if (cluster == null) {</span>

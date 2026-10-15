@@ -516,9 +516,9 @@ public class Display implements Iterable&lt;CharSequence&gt;, AsciiBlock {
 	}
 
 	public Display appendFirstLine(String appended) {
-<span class="nc" id="L519">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
-<span class="nc" id="L520">		result.displayData.set(0, appended + result.displayData.get(0));</span>
-<span class="nc" id="L521">		return result;</span>
+<span class="fc" id="L519">		final Display result = new Display(this.showStereotype, this, this.defaultCreoleMode);</span>
+<span class="fc" id="L520">		result.displayData.set(0, appended + result.displayData.get(0));</span>
+<span class="fc" id="L521">		return result;</span>
 	}
 
 	public Display add(CharSequence s) {

@@ -651,7 +651,7 @@ import net.sourceforge.plantuml.utils.Position;
 <span class="fc" id="L651">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L652" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; child : quark.getChildren()) {</span>
 <span class="fc" id="L653">			final Entity data = child.getData();</span>
-<span class="pc bpc" id="L654" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup() == false)</span>
+<span class="fc bfc" id="L654" title="All 4 branches covered.">			if (data != null &amp;&amp; data.isGroup() == false)</span>
 <span class="fc" id="L655">				result.add(data);</span>
 <span class="fc" id="L656">		}</span>
 <span class="fc" id="L657">		return MyCollections.unmodifiableCollection(result);</span>
@@ -716,26 +716,26 @@ import net.sourceforge.plantuml.utils.Position;
 	}
 
 	public boolean canBePacked() {
-<span class="nc bnc" id="L719" title="All 2 branches missed.">		if (isPacked())</span>
-<span class="nc" id="L720">			return false;</span>
-<span class="nc bnc" id="L721" title="All 2 branches missed.">		if (countChildren() != 1)</span>
+<span class="fc bfc" id="L719" title="All 2 branches covered.">		if (isPacked())</span>
+<span class="fc" id="L720">			return false;</span>
+<span class="pc bpc" id="L721" title="1 of 2 branches missed.">		if (countChildren() != 1)</span>
 <span class="nc" id="L722">			return false;</span>
-<span class="nc bnc" id="L723" title="All 2 branches missed.">		if (leafs().size() != 0)</span>
-<span class="nc" id="L724">			return false;</span>
-<span class="nc bnc" id="L725" title="All 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
+<span class="fc bfc" id="L723" title="All 2 branches covered.">		if (leafs().size() != 0)</span>
+<span class="fc" id="L724">			return false;</span>
+<span class="pc bpc" id="L725" title="1 of 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
 <span class="nc bnc" id="L726" title="All 2 branches missed.">			if (link.contains(this))</span>
 <span class="nc" id="L727">				return false;</span>
 
-<span class="nc" id="L729">		final Entity child = groups().iterator().next();</span>
-<span class="nc bnc" id="L730" title="All 2 branches missed.">		if (child.countChildren() == 0)</span>
+<span class="fc" id="L729">		final Entity child = groups().iterator().next();</span>
+<span class="pc bpc" id="L730" title="1 of 2 branches missed.">		if (child.countChildren() == 0)</span>
 <span class="nc" id="L731">			return false;</span>
 
-<span class="nc" id="L733">		return true;</span>
+<span class="fc" id="L733">		return true;</span>
 	}
 
 	public final void setPacked(boolean packed) {
-<span class="nc" id="L737">		this.packed = true;</span>
-<span class="nc" id="L738">	}</span>
+<span class="fc" id="L737">		this.packed = true;</span>
+<span class="fc" id="L738">	}</span>
 
 	public final boolean isPacked() {
 <span class="fc" id="L741">		return packed;</span>

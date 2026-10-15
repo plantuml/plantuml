@@ -278,7 +278,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 
 <span class="fc bfc" id="L279" title="All 2 branches covered.">		final boolean firstPackageDoesExist = first != null;</span>
 
-<span class="pc bpc" id="L281" title="2 of 6 branches missed.">		if (firstPackageDoesExist &amp;&amp; first.getData() != null &amp;&amp; first.getData().isGroup() == false)</span>
+<span class="pc bpc" id="L281" title="1 of 6 branches missed.">		if (firstPackageDoesExist &amp;&amp; first.getData() != null &amp;&amp; first.getData().isGroup() == false)</span>
 <span class="nc" id="L282">			return Failable.error(&quot;Not a package: &quot; + full.substring(0, x));</span>
 
 <span class="fc bfc" id="L284" title="All 2 branches covered.">		if (firstPackageDoesExist)</span>
@@ -897,7 +897,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="fc bfc" id="L897" title="All 2 branches covered.">			if (quark.isRoot())</span>
 <span class="fc" id="L898">				continue;</span>
 <span class="fc" id="L899">			final Entity data = quark.getData();</span>
-<span class="pc bpc" id="L900" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup() == false)</span>
+<span class="fc bfc" id="L900" title="All 4 branches covered.">			if (data != null &amp;&amp; data.isGroup() == false)</span>
 <span class="fc" id="L901">				result.add(data);</span>
 <span class="fc" id="L902">		}</span>
 <span class="fc" id="L903">		return MyCollections.unmodifiableCollection(result);</span>
@@ -921,7 +921,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="fc" id="L921">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L922" title="All 2 branches covered.">		for (Quark&lt;Entity&gt; quark : quarks()) {</span>
 <span class="fc" id="L923">			final Entity data = quark.getData();</span>
-<span class="pc bpc" id="L924" title="1 of 4 branches missed.">			if (data != null &amp;&amp; data.isGroup())</span>
+<span class="fc bfc" id="L924" title="All 4 branches covered.">			if (data != null &amp;&amp; data.isGroup())</span>
 <span class="fc" id="L925">				result.add(data);</span>
 <span class="fc" id="L926">		}</span>
 <span class="fc" id="L927">		return MyCollections.unmodifiableCollection(result);</span>
