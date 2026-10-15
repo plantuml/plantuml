@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="208px" preserveAspectRatio="none" style="width:228px;height:208px;background:#FFFFFF;" version="1.1" viewBox="0 0 228 208" width="228px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster App-->
+    <g class="cluster" data-qualified-name="App" data-source-line="3" id="ent0002">
+      <path d="M78.5,4 L104.438,4 A3.75,3.75 0 0 1 106.938,6.5 L113.938,24 L209.5,24 A2.5,2.5 0 0 1 212,26.5 L212,181.5 A2.5,2.5 0 0 1 209.5,184 L78.5,184 A2.5,2.5 0 0 1 76,181.5 L76,6.5 A2.5,2.5 0 0 1 78.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="76" x2="113.938" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.938" x="80" y="16.889">App</text>
+    </g>
+    <!--cluster Entity-->
+    <g class="cluster" data-qualified-name="App.Entity" data-source-line="3" id="ent0003">
+      <path d="M94.5,45 L130.5,45 A3.75,3.75 0 0 1 133,47.5 L140,65 L193.5,65 A2.5,2.5 0 0 1 196,67.5 L196,165.5 A2.5,2.5 0 0 1 193.5,168 L94.5,168 A2.5,2.5 0 0 1 92,165.5 L92,47.5 A2.5,2.5 0 0 1 94.5,45" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="92" x2="140" y1="65" y2="65"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35" x="96" y="57.889">Entity</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="6" id="ent0005">
+      <path d="M6,107 L6,130 A0,0 0 0 0 6,130 L59.5,130 A0,0 0 0 0 59.5,130 L59.5,125 L108.369,119 L59.5,117 L59.5,117 L49.5,107 L6,107 A0,0 0 0 0 6,107" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M49.5,107 L49.5,117 L59.5,117 L49.5,107" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="32.5" x="12" y="122.111">a note</text>
+    </g>
+    <!--class A-->
+    <g class="entity" data-qualified-name="App.Entity.A" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="66" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.35" x="108.5" y="86"/>
+      <ellipse cx="123.5" cy="104" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="118.5" y="109">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="43.35" x="135.5" y="100.333">«Entity»</text>
+      <text fill="#000" font-size="14" x="152.494" y="113.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="109.5" x2="178.85" y1="122" y2="122"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="119.5" cy="134.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="29.575" x="128.5" y="136.889">id : int</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="109.5" x2="178.85" y1="144" y2="144"/>
+    </g>
+  </g>
+</svg>

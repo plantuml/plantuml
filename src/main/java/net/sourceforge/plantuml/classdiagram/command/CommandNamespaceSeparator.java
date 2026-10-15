@@ -62,7 +62,9 @@ public class CommandNamespaceSeparator extends SingleLineCommand2<TitledDiagram>
 	// single-character separator here: at this point in the grammar it
 	// cannot be confused with a relation label ("A --> B : label"), so it
 	// does not need to be excluded (issue #2801).
-	private static final String SEPARATOR_CHAR_SINGLE = "[^%pLN%s_$#\\\\{}<>%g]";
+	// A single backslash must stay allowed (PHP namespaces, issue #2938): do
+	// not add it to the excluded characters, CommandLinkClass does not exclude it.
+	private static final String SEPARATOR_CHAR_SINGLE = "[^%pLN%s_$#{}<>%g]";
 	private static final String SEPARATOR = "((?:none|null)|" + CommandLinkClass.SEPARATOR_CHAR_DOUBLE + "|"
 			+ SEPARATOR_CHAR_SINGLE + ")";
 

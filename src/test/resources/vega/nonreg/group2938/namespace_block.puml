@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (2 entities)
+---
+@startuml
+set separator \ 
+
+namespace App\Entity {
+	class A
+	class B
+}
+App\Entity\A --> App\Entity\B
+
+@enduml

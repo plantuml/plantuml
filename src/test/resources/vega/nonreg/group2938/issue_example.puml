@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (1 entities)
+---
+@startuml
+set separator \ 
+!pragma useIntermediatePackages false
+
+class App\Entity\ImageRequest {
++ id : ?int = null
+}
+
+@enduml

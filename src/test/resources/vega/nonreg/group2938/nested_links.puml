@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (3 entities)
+---
+@startuml
+set separator \ 
+
+class App\Entity\A
+class App\Entity\B
+class App\Other\C
+App\Entity\A --> App\Entity\B
+App\Entity\B --> App\Other\C : uses
+
+@enduml

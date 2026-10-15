@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (2 entities)
+---
+@startuml
+set separator \ 
+
+class App\Entity\A <<Entity>> {
++ id : int
+}
+note right of App\Entity\A : a note
+
+@enduml

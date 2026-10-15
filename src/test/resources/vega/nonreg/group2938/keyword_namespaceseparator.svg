@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="274px" preserveAspectRatio="none" style="width:128px;height:274px;background:#FFFFFF;" version="1.1" viewBox="0 0 128 274" width="128px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster App-->
+    <g class="cluster" data-qualified-name="App" data-source-line="3" id="ent0002">
+      <path d="M16.5,4 L42.438,4 A3.75,3.75 0 0 1 44.938,6.5 L51.938,24 L117.5,24 A2.5,2.5 0 0 1 120,26.5 L120,247.5 A2.5,2.5 0 0 1 117.5,250 L16.5,250 A2.5,2.5 0 0 1 14,247.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="51.938" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.938" x="18" y="16.889">App</text>
+    </g>
+    <!--cluster Entity-->
+    <g class="cluster" data-qualified-name="App.Entity" data-source-line="3" id="ent0003">
+      <path d="M32.5,45 L68.5,45 A3.75,3.75 0 0 1 71,47.5 L78,65 L101.5,65 A2.5,2.5 0 0 1 104,67.5 L104,231.5 A2.5,2.5 0 0 1 101.5,234 L32.5,234 A2.5,2.5 0 0 1 30,231.5 L30,47.5 A2.5,2.5 0 0 1 32.5,45" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="78" y1="65" y2="65"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35" x="34" y="57.889">Entity</text>
+    </g>
+    <!--class A-->
+    <g class="entity" data-qualified-name="App.Entity.A" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="46.5" y="86"/>
+      <ellipse cx="61.5" cy="102" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="56.5" y="107">C</text>
+      <text fill="#000" font-size="14" x="75.5" y="105.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47.5" x2="86.863" y1="118" y2="118"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47.5" x2="86.863" y1="126" y2="126"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="App.Entity.B" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="46.5" y="170"/>
+      <ellipse cx="61.5" cy="186" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="56.5" y="191">C</text>
+      <text fill="#000" font-size="14" x="75.5" y="189.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47.5" x2="86.863" y1="202" y2="202"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47.5" x2="86.863" y1="210" y2="210"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="67,169.947,71,160.947,67,164.947,63,160.947,67,169.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M67,134.279 C67,145.453 67,153.802 67,164.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>
