@@ -14,6 +14,11 @@
 //   - Wasm GC is required (Chrome 119+, Firefox 120+, Safari 18.2+, Node 22+).
 //     Use isWasmGCSupported() to fall back to plantuml.js on older runtimes.
 //
+// If the engine crashes (a Wasm trap, a stack overflow on a very long statement),
+// the pending renderToString() requests fail with an explicit message, the
+// elements waiting for a render() show that message, and the next call loads a
+// fresh instance. This also works when the file is loaded in a worker.
+//
 // The companion files (viz-global.js, themes.js, <lib>.min.js...) are shared
 // with the JS build and must sit next to this file, as for plantuml.js.
 
@@ -38,23 +43,48 @@ let enginePromise = null;
 // renderToString() requests whose callbacks have not been called yet.
 const pending = new Set();
 
-// A Wasm trap (e.g. an integer division by zero: TeaVM's Wasm GC backend does
-// not turn it into an ArithmeticException) cannot be caught by Java code. It
-// escapes as a WebAssembly.RuntimeError from a TeaVM event-loop callback and
-// leaves the instance unusable: every later request would hang forever. So
-// fail the pending requests and drop the instance: the next call loads a
-// fresh one.
-function onWasmTrap(error) {
-	if (typeof WebAssembly === "undefined" || error instanceof WebAssembly.RuntimeError === false)
-		return;
-	enginePromise = null;
-	// Copy first: each fail() removes its request from the set.
-	for (const request of [...pending])
-		request.fail("PlantUML Wasm engine crashed (" + error.message + "); it has been reset.");
+// render() requests into a DOM element that have not produced anything yet. The
+// engine does not tell when a render() is done, so a request is considered
+// pending as long as the first child of its element is the one it had when the
+// request was made (a finished rendering, even an error message, replaces it).
+const pendingElements = new Set();
+
+function prunePendingElements() {
+	for (const entry of [...pendingElements])
+		if (entry.element.firstChild !== entry.before || entry.element.isConnected === false)
+			pendingElements.delete(entry);
 }
 
-if (typeof window !== "undefined" && typeof window.addEventListener === "function")
-	window.addEventListener("error", ev => onWasmTrap(ev.error));
+// An error that escapes from the engine cannot be caught by Java code, and
+// leaves the instance unusable, so that every later request would hang forever:
+//   - a Wasm trap (WebAssembly.RuntimeError), e.g. an integer division by zero,
+//     which TeaVM's Wasm GC backend does not turn into an ArithmeticException;
+//   - a stack overflow of the host (RangeError, or InternalError in Firefox: "too
+//     much recursion"), which is not a WebAssembly.RuntimeError either.
+// So any error that reaches the global scope while a request is waiting for its
+// answer is treated as fatal: the pending requests fail with an explicit
+// message, and the instance is dropped, the next call loading a fresh one.
+// Errors raised while nothing is pending are not the engine's business.
+function onEngineError(error) {
+	prunePendingElements();
+	if (pending.size === 0 && pendingElements.size === 0)
+		return;
+	enginePromise = null;
+	const reason = error && error.message ? error.message : String(error);
+	const message = "PlantUML Wasm engine crashed (" + reason + "); it has been reset.";
+	// Copy first: each fail() removes its request from the set.
+	for (const request of [...pending])
+		request.fail(message);
+	for (const entry of [...pendingElements]) {
+		pendingElements.delete(entry);
+		entry.element.textContent = message;
+	}
+}
+
+// globalThis, not window: the same file runs in a page and in a (module) worker,
+// and a worker has no window.
+if (typeof globalThis.addEventListener === "function")
+	globalThis.addEventListener("error", ev => onEngineError(ev.error ?? ev.message));
 
 function engine() {
 	if (enginePromise === null) {
@@ -96,6 +126,12 @@ export async function ready() {
  */
 export async function render(lines, elementId, options) {
 	const e = await engine();
+	// Only in a page: a worker has no DOM element to render into.
+	const element = typeof document === "undefined" ? null : document.getElementById(elementId);
+	if (element !== null) {
+		prunePendingElements();
+		pendingElements.add({ element, before: element.firstChild });
+	}
 	e.render(lines, elementId, options ?? null);
 }
 
