@@ -100,13 +100,10 @@ public class PSystemBuilderJs {
 		factories.add(new PSystemVersionFactory());
 		factories.add(new PSystemSaltFactory());
 		factories.add(new GanttDiagramFactory());
-		// factories.add(new PSystemDotFactory(DiagramType.UML));
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
 		factories.add(new NwDiagramFactory());
-		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 		factories.add(new PSystemSudokuFactory());
-		// ::done
 		factories.add(new PSystemCreoleFactory());
 		factories.add(new TimingDiagramFactory());
 		factories.add(new ChartDiagramFactory());
@@ -115,9 +112,6 @@ public class PSystemBuilderJs {
 		factories.add(new YamlDiagramFactory());
 		factories.add(new PSystemEbnfFactory());
 		factories.add(new PSystemRegexFactory());
-		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
-		factories.add(new PSystemSudokuFactory());
-		// ::done
 	}
 
 	public static PSystemBuilderJs getInstance() {
