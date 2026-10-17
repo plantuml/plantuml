@@ -108,12 +108,12 @@ jobs:
       - name: Smoke test (mindmap to SVG)
         shell: pwsh
         run: |
-          $exe = "c-sources/bin/Release/plantuml-c.exe"
+          $exe = "c-sources/bin/Release/plantuml.exe"
           Write-Host "Size: $((Get-Item $exe).Length) bytes"
           $src = "@startmindmap`n* Root`n** Alpha`n** Beta`n@endmindmap`n"
           [System.IO.File]::WriteAllText("mindmap.puml", $src)
           & $exe -tsvg mindmap.puml
-          if ($LASTEXITCODE -ne 0) { throw "plantuml-c.exe exited with code $LASTEXITCODE" }
+          if ($LASTEXITCODE -ne 0) { throw "plantuml.exe exited with code $LASTEXITCODE" }
           if ((Test-Path mindmap.svg) -eq $false) { throw "No SVG was written" }
           $svg = Get-Content -Raw mindmap.svg
           Write-Host $svg
@@ -125,9 +125,9 @@ jobs:
       - name: Smoke test (mindmap to PNG)
         shell: pwsh
         run: |
-          $exe = "c-sources/bin/Release/plantuml-c.exe"
+          $exe = "c-sources/bin/Release/plantuml.exe"
           & $exe -tpng mindmap.puml
-          if ($LASTEXITCODE -ne 0) { throw "plantuml-c.exe exited with code $LASTEXITCODE" }
+          if ($LASTEXITCODE -ne 0) { throw "plantuml.exe exited with code $LASTEXITCODE" }
           if ((Test-Path mindmap.png) -eq $false) { throw "No PNG was written" }
           $bytes = [System.IO.File]::ReadAllBytes("mindmap.png")
           Write-Host "PNG: $($bytes.Length) bytes"
@@ -142,9 +142,9 @@ jobs:
       - name: Smoke test (help)
         shell: pwsh
         run: |
-          $exe = "c-sources/bin/Release/plantuml-c.exe"
+          $exe = "c-sources/bin/Release/plantuml.exe"
           $help = (& $exe --help) -join "`n"
-          if ($LASTEXITCODE -ne 0) { throw "plantuml-c.exe exited with code $LASTEXITCODE" }
+          if ($LASTEXITCODE -ne 0) { throw "plantuml.exe exited with code $LASTEXITCODE" }
           Write-Host $help
           if ($help -notmatch "Show help and usage information" -or $help -notmatch "Generate SVG images") {
             Write-Host "::error::The help is not the expected one"
@@ -154,7 +154,7 @@ jobs:
       - name: Smoke test (exit code)
         shell: pwsh
         run: |
-          $exe = "c-sources/bin/Release/plantuml-c.exe"
+          $exe = "c-sources/bin/Release/plantuml.exe"
           & $exe no-such-file.puml
           # 50: no file found, as on the JVM
           if ($LASTEXITCODE -ne 50) { throw "Expected the exit code 50, got $LASTEXITCODE" }
@@ -172,5 +172,5 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: plantuml-c-windows-${{ matrix.arch }}
-          path: c-sources/bin/Release/plantuml-c.exe
+          path: c-sources/bin/Release/plantuml.exe
           retention-days: 30
