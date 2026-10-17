@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="130px" preserveAspectRatio="none" style="width:207px;height:130px;background:#FFFFFF;" version="1.1" viewBox="0 0 207 130" width="207px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="S" data-source-line="1" id="part1-lifeline">
+      <g>
+        <title>S</title>
+        <rect fill="#000" fill-opacity="0" height="51" width="8" x="18.181" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="21.681" x2="21.681" y1="39" y2="90"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="S" data-source-line="1" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="10"/>
+      <text fill="#000" font-size="14" x="17" y="27.889">S</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="S" data-source-line="1" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="90"/>
+      <text fill="#000" font-size="14" x="17" y="107.889">S</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part1" data-source-line="1" id="msg1">
+      <line style="stroke:#181818;stroke-width:1;" x1="21.681" x2="63.681" y1="53" y2="53"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="63.681" x2="63.681" y1="53" y2="66"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="22.681" x2="63.681" y1="66" y2="66"/>
+      <polygon fill="#181818" points="32.681,62,22.681,66,32.681,70,28.681,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <path d="M76.681,52 L76.681,75 L117.681,75 L117.681,62 L107.681,52 L76.681,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M107.681,52 L107.681,62 L117.681,62 L107.681,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="20.881" x="82.681" y="67.111">first</text>
+    <path d="M128.563,52 L128.563,75 L190.563,75 L190.563,62 L180.563,52 L128.563,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M180.563,52 L180.563,62 L190.563,62 L180.563,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="41.925" x="134.563" y="67.111">second</text>
+  </g>
+</svg>

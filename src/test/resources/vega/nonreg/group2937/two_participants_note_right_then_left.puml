@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+S1 -> S2:
+
+note right
+right text
+end note
+
+note left
+left text
+end note
+@enduml
