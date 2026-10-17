@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="130px" preserveAspectRatio="none" style="width:195px;height:130px;background:#FFFFFF;" version="1.1" viewBox="0 0 195 130" width="195px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="S" data-source-line="1" id="part1-lifeline">
+      <g>
+        <title>S</title>
+        <rect fill="#000" fill-opacity="0" height="51" width="8" x="131.306" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="134.806" x2="134.806" y1="39" y2="90"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="S" data-source-line="1" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="123.125" y="10"/>
+      <text fill="#000" font-size="14" x="130.125" y="27.889">S</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="S" data-source-line="1" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="123.125" y="90"/>
+      <text fill="#000" font-size="14" x="130.125" y="107.889">S</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part1" data-source-line="1" id="msg1">
+      <line style="stroke:#181818;stroke-width:1;" x1="134.806" x2="176.806" y1="53" y2="53"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="176.806" x2="176.806" y1="53" y2="66"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="135.806" x2="176.806" y1="66" y2="66"/>
+      <polygon fill="#181818" points="145.806,62,135.806,66,145.806,70,141.806,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <path d="M87.925,52 L87.925,75 L128.925,75 L128.925,62 L118.925,52 L87.925,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M118.925,52 L118.925,62 L128.925,62 L118.925,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="20.881" x="93.925" y="67.111">first</text>
+    <path d="M15,52 L15,75 L77,75 L77,62 L67,52 L15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M67,52 L67,62 L77,62 L67,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="41.925" x="21" y="67.111">second</text>
+  </g>
+</svg>
