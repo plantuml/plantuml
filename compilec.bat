@@ -21,21 +21,21 @@ echo === 2/3 Configuring CMake (%PLATFORM%) with %CMAKE% ===
 "%CMAKE%" -S build\generated\teavm\c -B build\c-build -A %PLATFORM%
 if errorlevel 1 goto :error
 
-echo === 3/3 Building plantuml-c.exe ===
+echo === 3/3 Building plantuml.exe ===
 "%CMAKE%" --build build\c-build --config Release
 if errorlevel 1 goto :error
 
 set "EXE="
-for /r "build\generated\teavm\c\bin" %%f in (plantuml-c.exe) do if exist "%%f" set "EXE=%%f"
+for /r "build\generated\teavm\c\bin" %%f in (plantuml.exe) do if exist "%%f" set "EXE=%%f"
 if "%EXE%"=="" goto :error
 
 rem Copy the executable to the repository root (the current directory)
-copy /y "%EXE%" "%~dp0plantuml-c.exe" >nul
+copy /y "%EXE%" "%~dp0plantuml.exe" >nul
 if errorlevel 1 goto :error
 
 echo.
-echo Done: %~dp0plantuml-c.exe
-echo Try:  plantuml-c.exe --help
+echo Done: %~dp0plantuml.exe
+echo Try:  plantuml.exe --help
 exit /b 0
 
 :error
