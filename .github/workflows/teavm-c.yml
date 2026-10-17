@@ -103,7 +103,7 @@ jobs:
 
       - name: Build
         shell: pwsh
-        run: cmake --build c-build --config Release
+        run: cmake --build c-build --config Release --parallel
 
       - name: Smoke test (mindmap to SVG)
         shell: pwsh
