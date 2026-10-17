@@ -55,9 +55,40 @@ into the target element later. See
 [GITHUB_INTEGRATION.md](./GITHUB_INTEGRATION.md) for details and a full
 GitHub-style integration example.
 
+## WebAssembly build (experimental)
+
+The same engine is also shipped compiled to WebAssembly (Wasm GC).
+`plantuml-wasm.js` exports the same `render()` and `renderToString()` as
+`plantuml.js`, so switching is a one-line change:
+
+```js
+import { render, isWasmGCSupported } from "@npmName@/plantuml-wasm.js";
+// or: import { render } from "https://unpkg.com/@npmName@@@npmVersion@/plantuml-wasm.js";
+```
+
+- It needs a runtime with Wasm GC: Chrome 119+, Firefox 120+, Safari 18.2+
+  (a browser is needed, not bare Node.js, as for `plantuml.js`). Test `isWasmGCSupported()` and fall back to `plantuml.js` on older
+  ones. `ready()` fetches and compiles the module ahead of the first render.
+- It is usually faster than the JS engine, by an amount that depends on the
+  browser and on the diagram: measure it on yours.
+- `plantuml-wasm.js`, `plantuml.wasm` and `plantuml.wasm-runtime.js` must stay
+  side by side: the wrapper imports the runtime and fetches the module by
+  relative URL. Serve `plantuml.wasm` as `application/wasm`. The companion
+  files (`viz-global.js`, `themes.js`...) are the same as for `plantuml.js`.
+- The engine builds functions at load time: a Content Security Policy needs
+  `'wasm-unsafe-eval'` **and** `'unsafe-eval'` in `script-src`.
+- If the engine crashes (for example on a very long statement which overflows
+  the stack of the browser), the pending `renderToString()` calls fail with an
+  explicit message, the elements waiting for `render()` show it, and the next
+  call loads a fresh instance. This also works in a Web Worker.
+- Not supported yet: loading from a `Blob` URL or from a classic Web Worker
+  (the relative imports above do not resolve there).
+
 ## What's included
 
 - `plantuml.js` -- the engine
+- `plantuml-wasm.js`, `plantuml.wasm`, `plantuml.wasm-runtime.js` -- the
+  WebAssembly flavour of the engine (see above)
 - `viz-global.js` -- Graphviz / Viz.js layout engine (required)
 - `themes.js` -- the bundled `!theme` definitions, fetched on demand from the
   same directory as the page; serve it next to the engine, or register

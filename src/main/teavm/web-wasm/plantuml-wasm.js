@@ -11,7 +11,9 @@
 //   - the .wasm module is fetched and compiled lazily, on the first call (or
 //     explicitly with ready()), so render() / renderToString() may start a
 //     little later on the very first call;
-//   - Wasm GC is required (Chrome 119+, Firefox 120+, Safari 18.2+, Node 22+).
+//   - Wasm GC is required (Chrome 119+, Firefox 120+, Safari 18.2+). Like
+//     plantuml.js, the engine loads its resources through <script> tags, so it
+//     needs a browser, not bare Node.js.
 //     Use isWasmGCSupported() to fall back to plantuml.js on older runtimes.
 //
 // If the engine crashes (a Wasm trap, a stack overflow on a very long statement),

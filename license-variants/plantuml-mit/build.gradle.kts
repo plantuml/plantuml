@@ -28,6 +28,23 @@ teavm {
 		obfuscated.set(true)
 		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)
 	}
+
+	// Experimental WebAssembly (Wasm GC) build of the very same entry point,
+	// published next to plantuml.js (never instead of it): same API, see
+	// src/main/teavm/web-wasm/plantuml-wasm.js. Same settings as the root project.
+	wasmGC {
+		mainClass.set("net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser")
+		targetFileName.set("plantuml.wasm")
+		obfuscated.set(true)
+		// BALANCED, like the JS build: AGGRESSIVE crashes TeaVM 0.16.0 (see the root
+		// build.gradle.kts).
+		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)
+		// Keep Java semantics (bounds checks, NPE, ClassCastException).
+		strict.set(true)
+		// Emit plantuml.wasm-runtime.js as an ES module exporting load().
+		copyRuntime.set(true)
+		modularRuntime.set(true)
+	}
 }
 
 // ============================================
@@ -55,12 +72,21 @@ teavm {
 // (ibm/tupadr3/material*/awslib*...) are deliberately excluded to keep the
 // tarball small.
 //
+// The package also ships the experimental Wasm GC engine (plantuml.wasm, its
+// ES module runtime plantuml.wasm-runtime.js, and the plantuml-wasm.js wrapper
+// with the same API as plantuml.js). Building it takes a while: pass
+// -PnpmWasm=false to skip it (CI jobs which only need plantuml.js). A package
+// assembled that way must not be published: its package.json and README still
+// describe the Wasm files.
+//
 // Usage:
 //   gradlew :plantuml-mit:npmPackage           # assemble build/npm-plantuml
 //   cd license-variants/plantuml-mit/build/npm-plantuml
 //   npm publish --access public                # done manually by the maintainer
 //
 val teavmJsOutputDir = layout.buildDirectory.dir("generated/teavm/js")
+val teavmWasmOutputDir = layout.buildDirectory.dir("generated/teavm/wasm-gc")
+val npmWasm = (project.findProperty("npmWasm") as String?)?.trim() != "false"
 
 tasks.register("npmPackage") {
 	description = "Assembles a publishable npm package for the MIT TeaVM JS engine (issue #2715)."
@@ -70,6 +96,10 @@ tasks.register("npmPackage") {
 	// processResources is not needed: the bundle's companion files are copied
 	// directly from the root src/main/teavm tree below.
 	dependsOn("generateJavaScript")
+	// buildWasmGC produces plantuml.wasm and plantuml.wasm-runtime.js in
+	// build/generated/teavm/wasm-gc.
+	if (npmWasm)
+		dependsOn("buildWasmGC")
 
 	val outputDir = layout.buildDirectory.dir("npm-plantuml")
 
@@ -156,6 +186,21 @@ tasks.register("npmPackage") {
 			into(pkgDir)
 		}
 
+		// Wasm GC engine: the .wasm and its runtime come from this subproject, the
+		// wrapper (same API as plantuml.js) from the shared teavm sources. The
+		// wrapper imports "./plantuml.wasm-runtime.js" and fetches "./plantuml.wasm"
+		// by relative URL, so the three files must stay side by side.
+		if (npmWasm)
+			copy {
+				from(teavmWasmOutputDir) {
+					include("plantuml.wasm", "plantuml.wasm-runtime.js")
+				}
+				from(teavmSrcDir.dir("web-wasm")) {
+					include("plantuml-wasm.js")
+				}
+				into(pkgDir)
+			}
+
 		// LICENSE file. npm auto-includes a file named LICENSE if present in the
 		// package dir; since the whole point of this release is the MIT license,
 		// ship the full text (copied from mit-license.txt, renamed to LICENSE).
@@ -184,6 +229,15 @@ tasks.register("npmPackage") {
 		println("  dir     : ${pkgDir.absolutePath}")
 		println("  name    : $npmName")
 		println("  version : $npmVersion  (from gradle '$gradleVersion')")
+		if (npmWasm) {
+			val wasm = File(pkgDir, "plantuml.wasm")
+			if (wasm.exists())
+				println("  wasm    : plantuml.wasm %.2f MB".format(wasm.length().toDouble() / (1024.0 * 1024.0)))
+			else
+				println("  WARNING : plantuml.wasm not found in ${pkgDir.absolutePath}")
+		} else {
+			println("  NOTE    : -PnpmWasm=false: no Wasm files, DO NOT PUBLISH this package")
+		}
 		if (isPrerelease) {
 			println("  NOTE    : prerelease -> publish with:  npm publish --tag beta --access public")
 		} else {
