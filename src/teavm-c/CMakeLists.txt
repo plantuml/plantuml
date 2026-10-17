@@ -19,6 +19,11 @@ if (MSVC)
 	# TeaVM's runtime detects Windows through _MSC_VER: use MSVC or clang-cl.
 	# A GNU-style clang/gcc on Windows defines __GNUC__ and takes the POSIX path.
 	add_compile_options(/utf-8 /bigobj /W0)
+	# One cl.exe per core for the hundreds of generated .c files of the single
+	# executable (MSBuild's own parallelism only works between projects).
+	if (NOT CMAKE_C_COMPILER_ID STREQUAL "Clang")
+		add_compile_options(/MP)
+	endif()
 else()
 	set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O2")
 	add_compile_options(-w)
@@ -30,8 +35,33 @@ endif()
 # all.txt lists every generated .c file (all.c is the same set as a single unit)
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/all.txt)
 file(STRINGS ${PROJECT_SOURCE_DIR}/all.txt TEAVM_GEN_FILE_LIST)
+
+# Some generated files have the same name once the case is ignored (Boolean.c and
+# boolean.c, the two Command.c...). The Visual Studio generator gives each of them its
+# own ObjectFileName, and MSBuild then runs one cl.exe per such file, one after the
+# other, without /MP (80 files: about 2 minutes 40 on 12 cores). So the files are dealt
+# into groups in which no name is used twice; a group is an object library, compiled
+# in parallel, and its files need no ObjectFileName.
+set(TEAVM_GEN_GROUPS 1)
 foreach(F IN LISTS TEAVM_GEN_FILE_LIST)
-	list(APPEND TEAVM_GEN_SOURCES ${PROJECT_SOURCE_DIR}/${F})
+	if (F STREQUAL "")
+		continue()
+	endif()
+	get_filename_component(NAME "${F}" NAME)
+	string(TOLOWER "${NAME}" KEY)
+	set(G 1)
+	while (TRUE)
+		list(FIND TEAVM_GEN_KEYS_${G} "${KEY}" FOUND)
+		if (FOUND EQUAL -1)
+			break()
+		endif()
+		math(EXPR G "${G} + 1")
+	endwhile()
+	list(APPEND TEAVM_GEN_KEYS_${G} "${KEY}")
+	list(APPEND TEAVM_GEN_SOURCES_${G} "${PROJECT_SOURCE_DIR}/${F}")
+	if (G GREATER TEAVM_GEN_GROUPS)
+		set(TEAVM_GEN_GROUPS ${G})
+	endif()
 endforeach()
 
 # PNG output: plutovg (vendored, static) for rasterisation, a C facade called
@@ -67,8 +97,16 @@ target_include_directories(miniz PUBLIC native/miniz)
 target_compile_definitions(miniz PUBLIC MINIZ_NO_STDIO MINIZ_NO_TIME MINIZ_NO_ARCHIVE_APIS
 	MINIZ_NO_ZLIB_COMPATIBLE_NAMES)
 
-add_executable(plantuml ${TEAVM_GEN_SOURCES} native/plantuml_canvas.c native/plantuml_png.c ${FONT_SOURCES})
-# The generated C includes "plantuml_canvas.h" (@Include of NativeCanvas)
+set(TEAVM_GEN_OBJECTS)
+foreach(G RANGE 1 ${TEAVM_GEN_GROUPS})
+	add_library(plantuml_gen_${G} OBJECT ${TEAVM_GEN_SOURCES_${G}})
+	# The generated C includes "plantuml_canvas.h" (@Include of NativeCanvas)
+	target_include_directories(plantuml_gen_${G} PRIVATE native)
+	list(APPEND TEAVM_GEN_OBJECTS $<TARGET_OBJECTS:plantuml_gen_${G}>)
+endforeach()
+message(STATUS "Generated C: ${TEAVM_GEN_GROUPS} groups of files with distinct names")
+
+add_executable(plantuml ${TEAVM_GEN_OBJECTS} native/plantuml_canvas.c native/plantuml_png.c ${FONT_SOURCES})
 target_include_directories(plantuml PRIVATE native)
 
 if (WIN32)
