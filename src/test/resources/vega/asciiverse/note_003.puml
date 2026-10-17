@@ -1,0 +1,13 @@
+---
+output: svg, debug, atxt, utxt
+expected-description: (3 participants)
+---
+@startuml
+a -> b : hello
+note over a, b : over a and b, wider than the gap
+b -> c : hi
+note over c, b : reversed
+note across : across everyone
+hnote over a : hnote
+rnote right of c : rnote
+@enduml

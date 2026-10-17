@@ -91,6 +91,20 @@ public final class InfinitePlan {
 		plan.get(dy).setStringAt(dx, s);
 	}
 
+	// Erases the width x height rectangle starting at the current position
+	// into opaque blanks: they print as spaces, but getCharAt() does not report
+	// them as ' ', and drawing a space over one leaves it opaque (see
+	// InfiniteString.setCharAt()). So a later pass that only draws into empty
+	// cells (the lifelines, see PlayingSpaceWithParticipants.asciiDraw())
+	// leaves the rectangle alone, and whatever was drawn there before is gone:
+	// this is how a box hides what lies behind it, like a note drawn over a
+	// lifeline in the pixel rendering.
+	public void opacify(int width, int height) {
+		for (int j = 0; j < height; j++)
+			for (int i = 0; i < width; i++)
+				move(i, j).drawChar(InfiniteString.OPAQUE_BLANK);
+	}
+
 //	public void fillRect(char c, int x, int y, int width, int height) {
 //		for (int i = 0; i < width; i++)
 //			for (int j = 0; j < height; j++)

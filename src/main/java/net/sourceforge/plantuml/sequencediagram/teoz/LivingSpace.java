@@ -415,12 +415,16 @@ public class LivingSpace {
 		this.asciiMarginAfter = Math.max(asciiMarginAfter, margin);
 	}
 
+	// Live, like getPosALive()/getPosELive() above, and for the same reason:
+	// LivingSpaces.asciiAddConstraints() reads these before the tiles'
+	// asciiAddConstraints() grow the margins (see NoteTile), so a margin
+	// baked in at call time would always be 0
 	public Real getAsciiPosA() {
-		return getAsciiPosB().addFixed(-asciiMarginBefore);
+		return RealUtils.withLiveOffset(getAsciiPosB(), () -> -asciiMarginBefore);
 	}
 
 	public Real getAsciiPosE() {
-		return getAsciiPosD().addFixed(asciiMarginAfter);
+		return RealUtils.withLiveOffset(getAsciiPosD(), () -> asciiMarginAfter);
 	}
 
 	public Real getAsciiLifeColumn() {

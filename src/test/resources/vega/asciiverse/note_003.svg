@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="312px" preserveAspectRatio="none" style="width:224px;height:312px;background:#FFFFFF;" version="1.1" viewBox="0 0 224 312" width="224px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="a" data-source-line="1" id="part1-lifeline">
+      <g>
+        <title>a</title>
+        <rect fill="#000" fill-opacity="0" height="233" width="8" x="76.788" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="80.288" x2="80.288" y1="39" y2="272"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="b" data-source-line="1" id="part2-lifeline">
+      <g>
+        <title>b</title>
+        <rect fill="#000" fill-opacity="0" height="233" width="8" x="128.331" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="131.831" x2="131.831" y1="39" y2="272"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="c" data-source-line="3" id="part3-lifeline">
+      <g>
+        <title>c</title>
+        <rect fill="#000" fill-opacity="0" height="233" width="8" x="162.488" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="165.988" x2="165.988" y1="39" y2="272"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="a" data-source-line="1" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="69.394" y="10"/>
+      <text fill="#000" font-size="14" x="76.394" y="27.889">a</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="b" data-source-line="1" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="120.938" y="10"/>
+      <text fill="#000" font-size="14" x="127.938" y="27.889">b</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part3" data-qualified-name="c" data-source-line="3" id="part3-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="155.488" y="10"/>
+      <text fill="#000" font-size="14" x="162.488" y="27.889">c</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="a" data-source-line="1" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="69.394" y="272"/>
+      <text fill="#000" font-size="14" x="76.394" y="289.889">a</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="b" data-source-line="1" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="120.938" y="272"/>
+      <text fill="#000" font-size="14" x="127.938" y="289.889">b</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="c" data-source-line="3" id="part3-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="155.488" y="272"/>
+      <text fill="#000" font-size="14" x="162.488" y="289.889">c</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="1" id="msg1">
+      <polygon fill="#181818" points="119.831,62,129.831,66,119.831,70,123.831,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="80.288" x2="125.831" y1="66" y2="66"/>
+      <text fill="#000" font-size="13" textLength="27.544" x="87.288" y="61.111">hello</text>
+    </g>
+    <path d="M15,79 L15,102 L197,102 L197,89 L187,79 L15,79" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M187,79 L187,89 L197,89 L187,79" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="161.119" x="21" y="94.111">over a and b, wider than the gap</text>
+    <g class="message" data-entity-1="part2" data-entity-2="part3" data-source-line="3" id="msg2">
+      <polygon fill="#181818" points="153.988,122,163.988,126,153.988,130,157.988,126" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="131.831" x2="159.988" y1="126" y2="126"/>
+      <text fill="#000" font-size="13" textLength="10.156" x="138.831" y="121.111">hi</text>
+    </g>
+    <path d="M113.141,139 L113.141,162 L184.141,162 L184.141,149 L174.141,139 L113.141,139" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M174.141,139 L174.141,149 L184.141,149 L174.141,139" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="50.537" x="119.141" y="154.111">reversed</text>
+    <path d="M66.772,172 L66.772,195 L178.772,195 L178.772,182 L168.772,172 L66.772,172" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M168.772,172 L168.772,182 L178.772,182 L168.772,172" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="91.731" x="72.772" y="187.111">across everyone</text>
+    <polygon fill="#FEFFDD" points="62.038,205,98.038,205,108.038,215,98.038,226,62.038,226,52.038,215,62.038,205" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="32.5" x="64.038" y="219.111">hnote</text>
+    <rect fill="#FEFFDD" height="21" style="stroke:#181818;stroke-width:0.5;" width="37" x="170.988" y="236"/>
+    <text fill="#000" font-size="13" textLength="29.575" x="174.988" y="250.111">rnote</text>
+  </g>
+</svg>

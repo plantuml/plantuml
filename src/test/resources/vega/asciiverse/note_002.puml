@@ -1,0 +1,14 @@
+---
+output: svg, debug, atxt, utxt
+expected-description: (3 participants)
+---
+@startuml
+note over Alice: A note
+Alice -> Bob : hello
+note over Bob : a note wider than Bob
+Bob -> Carol : hi
+note over Carol
+multi-line
+note
+end note
+@enduml
