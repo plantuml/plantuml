@@ -36,7 +36,6 @@ if errorlevel 1 goto :error
 echo.
 echo Done: %~dp0plantuml-c.exe
 echo Try:  plantuml-c.exe --help
-echo       plantuml-c.exe -tsvg mindmap.puml
 exit /b 0
 
 :error
