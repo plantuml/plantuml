@@ -461,102 +461,31 @@ public class PlantUMLBrowser {
 	}
 
 	/**
-	 * Human-readable description of a rendering failure, never {@code null}, also
-	 * printed with its stack trace to the browser console.
-	 *
-	 * <p>
-	 * Deliberately avoids {@code Throwable.toString()},
-	 * {@code printStackTrace()} and {@code getClass()}: on the Wasm GC build,
-	 * {@code getClass().getName()} on the exception thrown by Smetana returned
-	 * {@code null} (obfuscated build), then trapped with "dereferencing a null
-	 * pointer" (non-obfuscated build), which a {@code catch} cannot intercept.
-	 * The exception type is therefore found with {@code instanceof}.
+	 * Human-readable description of a rendering failure, never {@code null}.
 	 *
 	 * <p>
 	 * {@code Throwable} (not only {@code Exception}) is caught by the callers so
 	 * that an {@code Error} (e.g. {@code StackOverflowError}) reports a message
-	 * instead of silently killing the worker thread.
+	 * instead of silently killing the worker thread. With {@code PLANTUML_DEBUG},
+	 * the stack trace is also printed to the browser console.
 	 */
 	private static String describe(Throwable e) {
 		// Not possible in Java, but seen on the Wasm GC build: TeaVM 0.16.0
 		// miscompiled some try/finally blocks into a "throw null".
-		if (e == null) {
-			consoleError("Rendering error: null exception (TeaVM miscompilation?)");
+		if (e == null)
 			return "Rendering error: null exception";
-		}
-		final StringBuilder sb = new StringBuilder();
-		appendThrowable(sb, e);
-		Throwable cause = e.getCause();
-		int depth = 0;
-		while (cause != null && cause != e && depth++ < 5) {
-			sb.append("\nCaused by: ");
-			appendThrowable(sb, cause);
-			cause = cause.getCause();
-		}
-		final String result = sb.toString();
-		consoleError(result);
 
+		if (BrowserLog.isDebug())
+			e.printStackTrace();
+
+		// With an obfuscated build, toString() may return null when the class name is
+		// not kept and the exception has no message.
+		final String s = e.toString();
+		if (s != null)
+			return s;
 		final String message = e.getMessage();
-		return typeName(e) + (message == null ? "" : ": " + message);
+		return "Rendering error (" + (message == null ? "no message" : message) + ")";
 	}
-
-	private static void appendThrowable(StringBuilder sb, Throwable e) {
-		sb.append(typeName(e));
-		final String message = e.getMessage();
-		if (message != null)
-			sb.append(": ").append(message);
-		try {
-			final StackTraceElement[] trace = e.getStackTrace();
-			if (trace != null)
-				for (StackTraceElement element : trace)
-					sb.append("\n\tat ").append(element.getClassName()).append('.')
-							.append(element.getMethodName()).append('(').append(element.getFileName())
-							.append(':').append(element.getLineNumber()).append(')');
-		} catch (Exception ignored) {
-			sb.append("\n\t(no stack trace)");
-		}
-	}
-
-	private static String typeName(Throwable e) {
-		if (e instanceof NullPointerException)
-			return "java.lang.NullPointerException";
-		if (e instanceof ArrayIndexOutOfBoundsException)
-			return "java.lang.ArrayIndexOutOfBoundsException";
-		if (e instanceof IndexOutOfBoundsException)
-			return "java.lang.IndexOutOfBoundsException";
-		if (e instanceof ClassCastException)
-			return "java.lang.ClassCastException";
-		if (e instanceof ArithmeticException)
-			return "java.lang.ArithmeticException";
-		if (e instanceof NumberFormatException)
-			return "java.lang.NumberFormatException";
-		if (e instanceof IllegalArgumentException)
-			return "java.lang.IllegalArgumentException";
-		if (e instanceof IllegalStateException)
-			return "java.lang.IllegalStateException";
-		if (e instanceof UnsupportedOperationException)
-			return "java.lang.UnsupportedOperationException";
-		if (e instanceof java.util.NoSuchElementException)
-			return "java.util.NoSuchElementException";
-		if (e instanceof java.util.ConcurrentModificationException)
-			return "java.util.ConcurrentModificationException";
-		if (e instanceof RuntimeException)
-			return "RuntimeException (subclass)";
-		if (e instanceof java.io.IOException)
-			return "IOException (or subclass)";
-		if (e instanceof Exception)
-			return "Exception (subclass)";
-		if (e instanceof StackOverflowError)
-			return "java.lang.StackOverflowError";
-		if (e instanceof OutOfMemoryError)
-			return "java.lang.OutOfMemoryError";
-		if (e instanceof Error)
-			return "Error (subclass)";
-		return "Throwable";
-	}
-
-	@JSBody(params = "s", script = "console.error(s);")
-	private static native void consoleError(String s);
 
 	// =========================================================================
 	// JavaScript interop utilities
