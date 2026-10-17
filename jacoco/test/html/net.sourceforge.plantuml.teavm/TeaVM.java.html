@@ -75,8 +75,13 @@ package net.sourceforge.plantuml.teavm;
 
 	/**
 	 * Platform marker resolved to {@code true} only when TeaVM compiles to
-	 * JavaScript. Use it to guard code that needs a browser or a JavaScript engine
-	 * ({@code @JSBody}, DOM, canvas, viz.js...).
+	 * JavaScript, and {@code false} for the Wasm GC build. To guard code that needs
+	 * a browser or a JavaScript host ({@code @JSBody}, DOM, canvas, viz.js...) and
+	 * must also work in the Wasm GC build, write
+	 * {@code TeaVM.isTeaVM() &amp;&amp; TeaVM.isC() == false} directly in the condition:
+	 * TeaVM only prunes the unreachable branch (and its classes, e.g.
+	 * {@code java.security.MessageDigest}) when the markers appear in the method
+	 * itself, not behind a helper method.
 	 *
 	 * Note: TeaVM requires platform markers to be static methods returning
 	 * {@code boolean}; this is why there is one method per target rather than a
@@ -89,7 +94,7 @@ package net.sourceforge.plantuml.teavm;
 	@org.teavm.interop.PlatformMarker(org.teavm.interop.Platforms.JAVASCRIPT)
 	// ::done
 	public static boolean isJavaScript() {
-<span class="fc" id="L92">		return false;</span>
+<span class="nc" id="L97">		return false;</span>
 	}
 
 	/**
@@ -103,7 +108,7 @@ package net.sourceforge.plantuml.teavm;
 	@org.teavm.interop.PlatformMarker(org.teavm.interop.Platforms.C)
 	// ::done
 	public static boolean isC() {
-<span class="fc" id="L106">		return false;</span>
+<span class="fc" id="L111">		return false;</span>
 	}
 
 	/**
@@ -119,7 +124,7 @@ package net.sourceforge.plantuml.teavm;
 	 * &lt;/pre&gt;
 	 */
 	public static boolean a() {
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		return !isTeaVM();</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		return !isTeaVM();</span>
 	}
 
 }

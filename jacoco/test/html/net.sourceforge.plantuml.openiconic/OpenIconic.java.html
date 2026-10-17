@@ -72,7 +72,7 @@ public class OpenIconic {
 
 	public static OpenIconic retrieve(String name) {
 		// ::comment when JAVA8
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (TeaVM.isJavaScript())</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">		if (TeaVM.isTeaVM() &amp;&amp; TeaVM.isC() == false)</span>
 <span class="nc" id="L76">			return retrieveFromJs(name);</span>
 <span class="nc bnc" id="L77" title="All 2 branches missed.">		if (TeaVM.isC())</span>
 <span class="nc" id="L78">			return null;</span>

@@ -136,7 +136,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isJavaScript()" class="member-name-link">isJavaScript</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Platform marker resolved to <code>true</code> only when TeaVM compiles to
- JavaScript.</div>
+ JavaScript, and <code>false</code> for the Wasm GC build.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isTeaVM()" class="member-name-link">isTeaVM</a>()</code></div>
@@ -210,8 +210,13 @@ loadScripts(document, 'script');</script>
 <h3>isJavaScript</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isJavaScript</span>()</div>
 <div class="block">Platform marker resolved to <code>true</code> only when TeaVM compiles to
- JavaScript. Use it to guard code that needs a browser or a JavaScript engine
- (<code>@JSBody</code>, DOM, canvas, viz.js...).
+ JavaScript, and <code>false</code> for the Wasm GC build. To guard code that needs
+ a browser or a JavaScript host (<code>@JSBody</code>, DOM, canvas, viz.js...) and
+ must also work in the Wasm GC build, write
+ <code>TeaVM.isTeaVM() &amp;&amp; TeaVM.isC() == false</code> directly in the condition:
+ TeaVM only prunes the unreachable branch (and its classes, e.g.
+ <code>java.security.MessageDigest</code>) when the markers appear in the method
+ itself, not behind a helper method.
 
  Note: TeaVM requires platform markers to be static methods returning
  <code>boolean</code>; this is why there is one method per target rather than a

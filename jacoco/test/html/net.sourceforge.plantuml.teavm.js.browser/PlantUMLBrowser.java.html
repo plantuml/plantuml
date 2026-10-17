@@ -184,7 +184,7 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 <span class="nc" id="L184">					removeAllChildren(out);</span>
 <span class="nc" id="L185">					appendSvgElement(out, svg.getSvgRoot());</span>
 				} else {
-<span class="nc" id="L187">					out.setTextContent(String.valueOf(failure));</span>
+<span class="nc" id="L187">					out.setTextContent(describe(failure));</span>
 				}
 			}
 <span class="nc" id="L190">			BrowserLog.jsStatusDuration();</span>
@@ -240,7 +240,7 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 <span class="nc bnc" id="L240" title="All 2 branches missed.">			if (svg != null)</span>
 <span class="nc" id="L241">				PlantUMLBrowser.deliver(onSuccess, svg);</span>
 			else
-<span class="nc" id="L243">				PlantUMLBrowser.deliver(onError, String.valueOf(failure));</span>
+<span class="nc" id="L243">				PlantUMLBrowser.deliver(onError, describe(failure));</span>
 <span class="nc" id="L244">		}</span>
 
 		@Override
@@ -459,6 +459,104 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 <span class="nc" id="L459">			RenderQueue.consoleError(&quot;PlantUML: callback threw: &quot; + t);</span>
 <span class="nc" id="L460">		}</span>
 <span class="nc" id="L461">	}</span>
+
+	/**
+	 * Human-readable description of a rendering failure, never {@code null}, also
+	 * printed with its stack trace to the browser console.
+	 *
+	 * &lt;p&gt;
+	 * Deliberately avoids {@code Throwable.toString()},
+	 * {@code printStackTrace()} and {@code getClass()}: on the Wasm GC build,
+	 * {@code getClass().getName()} on the exception thrown by Smetana returned
+	 * {@code null} (obfuscated build), then trapped with &quot;dereferencing a null
+	 * pointer&quot; (non-obfuscated build), which a {@code catch} cannot intercept.
+	 * The exception type is therefore found with {@code instanceof}.
+	 *
+	 * &lt;p&gt;
+	 * {@code Throwable} (not only {@code Exception}) is caught by the callers so
+	 * that an {@code Error} (e.g. {@code StackOverflowError}) reports a message
+	 * instead of silently killing the worker thread.
+	 */
+	private static String describe(Throwable e) {
+		// Not possible in Java, but seen on the Wasm GC build: TeaVM 0.16.0
+		// miscompiled some try/finally blocks into a &quot;throw null&quot;.
+<span class="nc bnc" id="L483" title="All 2 branches missed.">		if (e == null) {</span>
+<span class="nc" id="L484">			consoleError(&quot;Rendering error: null exception (TeaVM miscompilation?)&quot;);</span>
+<span class="nc" id="L485">			return &quot;Rendering error: null exception&quot;;</span>
+		}
+<span class="nc" id="L487">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L488">		appendThrowable(sb, e);</span>
+<span class="nc" id="L489">		Throwable cause = e.getCause();</span>
+<span class="nc" id="L490">		int depth = 0;</span>
+<span class="nc bnc" id="L491" title="All 6 branches missed.">		while (cause != null &amp;&amp; cause != e &amp;&amp; depth++ &lt; 5) {</span>
+<span class="nc" id="L492">			sb.append(&quot;\nCaused by: &quot;);</span>
+<span class="nc" id="L493">			appendThrowable(sb, cause);</span>
+<span class="nc" id="L494">			cause = cause.getCause();</span>
+		}
+<span class="nc" id="L496">		final String result = sb.toString();</span>
+<span class="nc" id="L497">		consoleError(result);</span>
+
+<span class="nc" id="L499">		final String message = e.getMessage();</span>
+<span class="nc bnc" id="L500" title="All 2 branches missed.">		return typeName(e) + (message == null ? &quot;&quot; : &quot;: &quot; + message);</span>
+	}
+
+	private static void appendThrowable(StringBuilder sb, Throwable e) {
+<span class="nc" id="L504">		sb.append(typeName(e));</span>
+<span class="nc" id="L505">		final String message = e.getMessage();</span>
+<span class="nc bnc" id="L506" title="All 2 branches missed.">		if (message != null)</span>
+<span class="nc" id="L507">			sb.append(&quot;: &quot;).append(message);</span>
+		try {
+<span class="nc" id="L509">			final StackTraceElement[] trace = e.getStackTrace();</span>
+<span class="nc bnc" id="L510" title="All 2 branches missed.">			if (trace != null)</span>
+<span class="nc bnc" id="L511" title="All 2 branches missed.">				for (StackTraceElement element : trace)</span>
+<span class="nc" id="L512">					sb.append(&quot;\n\tat &quot;).append(element.getClassName()).append('.')</span>
+<span class="nc" id="L513">							.append(element.getMethodName()).append('(').append(element.getFileName())</span>
+<span class="nc" id="L514">							.append(':').append(element.getLineNumber()).append(')');</span>
+<span class="nc" id="L515">		} catch (Exception ignored) {</span>
+<span class="nc" id="L516">			sb.append(&quot;\n\t(no stack trace)&quot;);</span>
+<span class="nc" id="L517">		}</span>
+<span class="nc" id="L518">	}</span>
+
+	private static String typeName(Throwable e) {
+<span class="nc bnc" id="L521" title="All 2 branches missed.">		if (e instanceof NullPointerException)</span>
+<span class="nc" id="L522">			return &quot;java.lang.NullPointerException&quot;;</span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">		if (e instanceof ArrayIndexOutOfBoundsException)</span>
+<span class="nc" id="L524">			return &quot;java.lang.ArrayIndexOutOfBoundsException&quot;;</span>
+<span class="nc bnc" id="L525" title="All 2 branches missed.">		if (e instanceof IndexOutOfBoundsException)</span>
+<span class="nc" id="L526">			return &quot;java.lang.IndexOutOfBoundsException&quot;;</span>
+<span class="nc bnc" id="L527" title="All 2 branches missed.">		if (e instanceof ClassCastException)</span>
+<span class="nc" id="L528">			return &quot;java.lang.ClassCastException&quot;;</span>
+<span class="nc bnc" id="L529" title="All 2 branches missed.">		if (e instanceof ArithmeticException)</span>
+<span class="nc" id="L530">			return &quot;java.lang.ArithmeticException&quot;;</span>
+<span class="nc bnc" id="L531" title="All 2 branches missed.">		if (e instanceof NumberFormatException)</span>
+<span class="nc" id="L532">			return &quot;java.lang.NumberFormatException&quot;;</span>
+<span class="nc bnc" id="L533" title="All 2 branches missed.">		if (e instanceof IllegalArgumentException)</span>
+<span class="nc" id="L534">			return &quot;java.lang.IllegalArgumentException&quot;;</span>
+<span class="nc bnc" id="L535" title="All 2 branches missed.">		if (e instanceof IllegalStateException)</span>
+<span class="nc" id="L536">			return &quot;java.lang.IllegalStateException&quot;;</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">		if (e instanceof UnsupportedOperationException)</span>
+<span class="nc" id="L538">			return &quot;java.lang.UnsupportedOperationException&quot;;</span>
+<span class="nc bnc" id="L539" title="All 2 branches missed.">		if (e instanceof java.util.NoSuchElementException)</span>
+<span class="nc" id="L540">			return &quot;java.util.NoSuchElementException&quot;;</span>
+<span class="nc bnc" id="L541" title="All 2 branches missed.">		if (e instanceof java.util.ConcurrentModificationException)</span>
+<span class="nc" id="L542">			return &quot;java.util.ConcurrentModificationException&quot;;</span>
+<span class="nc bnc" id="L543" title="All 2 branches missed.">		if (e instanceof RuntimeException)</span>
+<span class="nc" id="L544">			return &quot;RuntimeException (subclass)&quot;;</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">		if (e instanceof java.io.IOException)</span>
+<span class="nc" id="L546">			return &quot;IOException (or subclass)&quot;;</span>
+<span class="nc bnc" id="L547" title="All 2 branches missed.">		if (e instanceof Exception)</span>
+<span class="nc" id="L548">			return &quot;Exception (subclass)&quot;;</span>
+<span class="nc bnc" id="L549" title="All 2 branches missed.">		if (e instanceof StackOverflowError)</span>
+<span class="nc" id="L550">			return &quot;java.lang.StackOverflowError&quot;;</span>
+<span class="nc bnc" id="L551" title="All 2 branches missed.">		if (e instanceof OutOfMemoryError)</span>
+<span class="nc" id="L552">			return &quot;java.lang.OutOfMemoryError&quot;;</span>
+<span class="nc bnc" id="L553" title="All 2 branches missed.">		if (e instanceof Error)</span>
+<span class="nc" id="L554">			return &quot;Error (subclass)&quot;;</span>
+<span class="nc" id="L555">		return &quot;Throwable&quot;;</span>
+	}
+
+	@JSBody(params = &quot;s&quot;, script = &quot;console.error(s);&quot;)
+	private static native void consoleError(String s);
 
 	// =========================================================================
 	// JavaScript interop utilities

@@ -486,7 +486,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		// The browser build renders the diagram again once the Viz.js instance is
 		// ready (PendingResources): an attempt made before is discarded, so it stops
 		// here instead of computing a layout for nothing.
-<span class="pc bpc" id="L489" title="3 of 4 branches missed.">		if (TeaVM.isJavaScript() &amp;&amp; maker instanceof CucaDiagramFileMakerTeaVM</span>
+<span class="pc bpc" id="L489" title="5 of 6 branches missed.">		if (TeaVM.isTeaVM() &amp;&amp; TeaVM.isC() == false &amp;&amp; maker instanceof CucaDiagramFileMakerTeaVM</span>
 <span class="nc bnc" id="L490" title="All 2 branches missed.">				&amp;&amp; net.sourceforge.plantuml.teavm.js.GraphVizEngineJs.isAvailable() == false)</span>
 <span class="nc" id="L491">			throw new IOException(&quot;Viz is loading&quot;);</span>
 		// ::done

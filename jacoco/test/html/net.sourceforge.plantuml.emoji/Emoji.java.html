@@ -110,7 +110,7 @@ public class Emoji {
 
 	public static Emoji retrieve(String name) {
 		// ::comment when JAVA8
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (TeaVM.isJavaScript())</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">		if (TeaVM.isTeaVM() &amp;&amp; TeaVM.isC() == false)</span>
 <span class="nc" id="L114">			return retrieveFromJs(name.toLowerCase());</span>
 <span class="nc bnc" id="L115" title="All 2 branches missed.">		else if (TeaVM.isC())</span>
 <span class="nc" id="L116">			return null;</span>
