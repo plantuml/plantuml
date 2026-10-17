@@ -67,8 +67,9 @@ import { render, isWasmGCSupported } from "@npmName@/plantuml-wasm.js";
 ```
 
 - It needs a runtime with Wasm GC: Chrome 119+, Firefox 120+, Safari 18.2+
-  (a browser is needed, not bare Node.js, as for `plantuml.js`). Test `isWasmGCSupported()` and fall back to `plantuml.js` on older
-  ones. `ready()` fetches and compiles the module ahead of the first render.
+  (a browser is needed, not bare Node.js, as for `plantuml.js`). Test
+  `isWasmGCSupported()` and fall back to `plantuml.js` on older ones.
+  `ready()` fetches and compiles the module ahead of the first render.
 - It is usually faster than the JS engine, by an amount that depends on the
   browser and on the diagram: measure it on yours.
 - `plantuml-wasm.js`, `plantuml.wasm` and `plantuml.wasm-runtime.js` must stay
@@ -81,8 +82,28 @@ import { render, isWasmGCSupported } from "@npmName@/plantuml-wasm.js";
   the stack of the browser), the pending `renderToString()` calls fail with an
   explicit message, the elements waiting for `render()` show it, and the next
   call loads a fresh instance. This also works in a Web Worker.
-- Not supported yet: loading from a `Blob` URL or from a classic Web Worker
-  (the relative imports above do not resolve there).
+- By default the module is fetched from `plantuml.wasm` next to
+  `plantuml-wasm.js`. `ready()` also accepts the module from elsewhere, or with
+  an integrity check (the first call decides, before anything is loaded):
+
+  ```js
+  import { ready, renderToString } from "@npmName@/plantuml-wasm.js";
+
+  // Subresource Integrity: the load fails if the file does not match.
+  await ready({ integrity: "sha384-..." });
+
+  // Or give the bytes yourself (ArrayBuffer, typed array, Blob, Response, or a
+  // Promise of one): downloaded from your own storage, checked with your own
+  // code, or embedded in your bundle. Then no URL is needed for the module.
+  await ready({ wasm: fetch("/assets/plantuml.wasm") });
+  ```
+
+  The integrity is only checked when the module is fetched by URL; check the
+  bytes yourself if you pass them. After a crash, the fresh instance comes from
+  the same source.
+- Not supported yet: importing `plantuml-wasm.js` itself from a `Blob` URL or a
+  classic Web Worker (its relative imports do not resolve there). The engine's
+  other files (`viz-global.js`...) are still loaded as for `plantuml.js`.
 
 ## What's included
 

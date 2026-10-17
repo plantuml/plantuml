@@ -7,14 +7,17 @@
 //   1. runs 'npm pack' on it and unpacks the tarball like an installation would,
 //   2. checks that every file listed in "exports" is really in the tarball,
 //   3. serves the unpacked package over HTTP and renders diagrams with
-//      plantuml-wasm.js in a headless Chrome/Chromium/Edge.
+//      plantuml-wasm.js in a headless Chrome/Chromium/Edge, once for each way of
+//      giving it the module: by URL, as bytes, as a Blob, with a good integrity
+//      and with a wrong one (which must be refused).
 // No dependency is needed except Node 18+, npm and one of those browsers (set
 // the CHROME environment variable to use a specific executable).
 //
 // Node.js itself cannot run the engine: it loads its resources (viz-global.js,
 // themes.js...) through <script> tags, so a browser is required.
 
-import { execFileSync, execFile } from "node:child_process";
+import { execSync, execFileSync, spawn } from "node:child_process";
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import http from "node:http";
 import os from "node:os";
@@ -33,9 +36,9 @@ if (!fs.existsSync(path.join(pkgDir, "package.json"))) {
 
 // --- 1. pack and unpack --------------------------------------------------
 const work = fs.mkdtempSync(path.join(os.tmpdir(), "plantuml-core-wasm-"));
-const npm = process.platform === "win32" ? "npm.cmd" : "npm";
 console.log("Packing " + pkgDir);
-const packed = execFileSync(npm, ["pack", "--json", "--pack-destination", work], { cwd: pkgDir, shell: process.platform === "win32" });
+// One command string: 'npm' is npm.cmd on Windows, which needs a shell.
+const packed = execSync(`npm pack --json --pack-destination "${work}"`, { cwd: pkgDir });
 const tgz = path.join(work, JSON.parse(packed)[0].filename);
 const root = path.join(work, "site");
 const install = path.join(root, "node_modules", "@plantuml", "core");
@@ -57,9 +60,27 @@ fs.writeFileSync(path.join(root, "index.html"), `<!doctype html><meta charset="u
 import { render, renderToString, ready, isWasmGCSupported } from "/node_modules/@plantuml/core/plantuml-wasm.js";
 const log = [];
 const result = document.getElementById("result");
+const report = text => { result.textContent = text; fetch("/result", { method: "POST", body: text }); };
 try {
   log.push("wasmgc=" + isWasmGCSupported());
-  await ready();
+  const mode = new URLSearchParams(location.search).get("mode") ?? "url";
+  const sri = new URLSearchParams(location.search).get("sri");
+  const wasmUrl = "/node_modules/@plantuml/core/plantuml.wasm";
+  log.push("mode=" + mode);
+  if (mode === "bytes")
+    await ready({ wasm: (await fetch(wasmUrl)).arrayBuffer() });
+  else if (mode === "blob")
+    await ready({ wasm: await (await fetch(wasmUrl)).blob() });
+  else if (mode === "integrity")
+    await ready({ wasm: wasmUrl, integrity: sri });
+  else if (mode === "badintegrity") {
+    let refused = false;
+    try { await ready({ wasm: wasmUrl, integrity: sri }); } catch (e) { refused = true; }
+    if (!refused) throw new Error("a wrong integrity was accepted");
+    report("PASS " + log.join(", ") + ", wrong integrity refused");
+    throw "done";
+  } else
+    await ready();
   const svg = await new Promise((ok, ko) => renderToString(["@startuml", "Alice -> Bob: hello", "@enduml"], ok, ko));
   if (!svg.includes("<svg")) throw new Error("renderToString: no <svg>");
   log.push("renderToString=" + svg.length + " chars");
@@ -70,12 +91,19 @@ try {
   log.push("render=ok");
   const bad = await new Promise(ok => renderToString(["@startuml", "this is not (valid", "@enduml"], ok, ok));
   log.push("invalid source answered=" + (typeof bad === "string"));
-  result.textContent = "PASS " + log.join(", ");
-} catch (e) { result.textContent = "FAIL " + e + " [" + log.join(", ") + "]"; }
+  report("PASS " + log.join(", "));
+} catch (e) { if (e !== "done") report("FAIL " + e + " [" + log.join(", ") + "]"); }
 </script>`);
 
 const types = { ".js": "text/javascript", ".html": "text/html", ".wasm": "application/wasm", ".json": "application/json" };
+let onResult = () => {};
 const server = http.createServer((req, res) => {
+	if (req.method === "POST" && req.url === "/result") {
+		let body = "";
+		req.on("data", chunk => body += chunk);
+		req.on("end", () => { res.writeHead(204); res.end(); onResult(body); });
+		return;
+	}
 	const file = path.join(root, decodeURIComponent(req.url.split("?")[0]).replace(/^\/$/, "/index.html"));
 	if (!file.startsWith(root)) { res.writeHead(403); return res.end(); }
 	fs.readFile(file, (err, data) => {
@@ -102,15 +130,27 @@ if (!browser) {
 	console.log("No Chrome/Chromium/Edge found (set CHROME). Serving on " + url + " -- open it: it must show 'PASS'. Ctrl+C to stop.");
 } else {
 	console.log("Rendering with " + browser);
-	const args = ["--headless=new", "--disable-gpu", "--no-sandbox", "--virtual-time-budget=60000",
-		"--user-data-dir=" + path.join(work, "profile"), "--dump-dom", url];
-	// Asynchronous: the HTTP server above runs in this very process.
-	const stdout = await new Promise(resolve =>
-		execFile(browser, args, { timeout: 120000, maxBuffer: 64 << 20 }, (err, out) => resolve(out ?? "")));
-	const line = /<pre id="result">([^<]*)<\/pre>/.exec(stdout)?.[1] ?? "no answer from the page";
-	check(line.startsWith("PASS"), line);
+	const sha384 = "sha384-" + createHash("sha384").update(fs.readFileSync(path.join(install, "plantuml.wasm"))).digest("base64");
+	const wrongSha384 = "sha384-" + createHash("sha384").update("not the module").digest("base64");
+	const runs = [["url", ""], ["bytes", ""], ["blob", ""], ["integrity", sha384], ["badintegrity", wrongSha384]];
+	for (const [mode, sri] of runs) {
+		const args = ["--headless=new", "--disable-gpu", "--no-sandbox", "--no-first-run",
+			"--user-data-dir=" + path.join(work, "profile-" + mode),
+			url + "?mode=" + mode + "&sri=" + encodeURIComponent(sri)];
+		// The page POSTs its verdict to this server (the HTTP server runs in this
+		// very process, so the browser must be started asynchronously).
+		const child = spawn(browser, args, { stdio: "ignore" });
+		const line = await new Promise(resolve => {
+			const timer = setTimeout(() => resolve("no answer from the page after 90 s"), 90000);
+			onResult = body => { clearTimeout(timer); resolve(body); };
+			child.on("error", err => { clearTimeout(timer); resolve("cannot start the browser: " + err.message); });
+		});
+		child.kill();
+		check(line.startsWith("PASS"), line);
+	}
 	server.close();
-	fs.rmSync(work, { recursive: true, force: true });
+	await new Promise(r => setTimeout(r, 1000)); // let the browser release its profile
+	fs.rmSync(work, { recursive: true, force: true, maxRetries: 5 });
 	console.log(failures.length === 0 ? "\nALL OK" : "\n" + failures.length + " FAILURE(S)");
 	process.exit(failures.length === 0 ? 0 : 1);
 }

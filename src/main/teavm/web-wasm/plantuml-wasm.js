@@ -26,7 +26,14 @@
 
 import { load } from "./plantuml.wasm-runtime.js";
 
-const WASM_URL = new URL("./plantuml.wasm", import.meta.url).href;
+const DEFAULT_WASM_URL = new URL("./plantuml.wasm", import.meta.url).href;
+
+// Where the module comes from: a URL (string), or its bytes (ArrayBuffer or typed
+// array) when the host fetched, verified or embedded them itself. Set by ready();
+// kept for the whole life of the page, so that a fresh instance, loaded after a
+// crash, comes from the same source.
+let wasmSource = DEFAULT_WASM_URL;
+let wasmIntegrity = null;
 
 // Readable Java stack traces (classes, methods, lines) instead of
 // "Throwable$FakeClass.fakeMethod": opt in with '?wasmdebug' in the page URL.
@@ -88,10 +95,23 @@ function onEngineError(error) {
 if (typeof globalThis.addEventListener === "function")
 	globalThis.addEventListener("error", ev => onEngineError(ev.error ?? ev.message));
 
+// With an integrity (Subresource Integrity syntax, e.g. "sha384-..."), the module
+// is fetched here, with that check, instead of being streamed by the runtime: a
+// mismatch makes the load fail.
+async function wasmToLoad() {
+	if (wasmIntegrity !== null && typeof wasmSource === "string") {
+		const response = await fetch(wasmSource, { integrity: wasmIntegrity });
+		if (!response.ok)
+			throw new Error("HTTP " + response.status + " for " + wasmSource);
+		return response.arrayBuffer();
+	}
+	return wasmSource;
+}
+
 function engine() {
 	if (enginePromise === null) {
 		const options = WASM_DEBUG ? { stackDeobfuscator: { enabled: true } } : {};
-		enginePromise = load(WASM_URL, options).then(teavm => teavm.exports);
+		enginePromise = wasmToLoad().then(source => load(source, options)).then(teavm => teavm.exports);
 		// Allow a retry after a failed load (network error, unsupported runtime...).
 		enginePromise.catch(() => { enginePromise = null; });
 	}
@@ -115,8 +135,36 @@ export function isWasmGCSupported() {
  * Fetches and instantiates the Wasm module. Optional: render() and
  * renderToString() call it implicitly. Useful to preload, or to measure the
  * load time separately from the rendering time.
+ *
+ * The optional argument says where the module comes from. It is taken into
+ * account by the first call only, before the module is loaded; later calls
+ * (and the implicit ones) reuse it, also when the engine has to be reloaded
+ * after a crash.
+ *   - wasm: the URL of plantuml.wasm (string or URL), or its bytes (ArrayBuffer,
+ *     typed array), or a Blob or Response (or a Promise of any of these). The
+ *     default is plantuml.wasm next to this file. Passing the bytes is how to
+ *     load the module in an environment where this file cannot reach it by URL:
+ *     a Blob URL, a classic worker, a bundle that embeds it, a host that
+ *     downloads and checks it itself.
+ *   - integrity: a Subresource Integrity value, such as "sha384-..." (see
+ *     MDN: Subresource Integrity), checked when the module is fetched from a URL.
+ *     It does not apply to bytes you pass: check those yourself.
  */
-export async function ready() {
+export async function ready(options) {
+	if (enginePromise === null && options && options.wasm !== undefined) {
+		let wasm = await options.wasm;
+		if (wasm instanceof URL)
+			wasm = wasm.href;
+		else if (typeof Response !== "undefined" && wasm instanceof Response)
+			wasm = await wasm.arrayBuffer();
+		else if (typeof Blob !== "undefined" && wasm instanceof Blob)
+			wasm = await wasm.arrayBuffer();
+		if (typeof wasm !== "string" && !(wasm instanceof ArrayBuffer) && !ArrayBuffer.isView(wasm))
+			throw new TypeError("ready({ wasm }): expected a URL, bytes, a Blob or a Response");
+		wasmSource = wasm;
+	}
+	if (enginePromise === null && options && options.integrity !== undefined)
+		wasmIntegrity = options.integrity;
 	await engine();
 }
 
