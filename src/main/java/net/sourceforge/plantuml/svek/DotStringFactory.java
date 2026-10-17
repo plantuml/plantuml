@@ -571,20 +571,153 @@ public final class DotStringFactory implements Moveable {
 		if (yGap > 30.0) // Not connected through this label
 			return;
 
+		// Graphviz may leave or reach the label from its left or right side, at
+		// mid-height: move the incoming end onto the top or bottom border facing
+		// where the edge comes from, so the realigned stem does not run through the
+		// label text.
+		final XPoint2D inEndAligned = new XPoint2D(inEnd.getX(), labelBorderY(labelNode, inStart));
+
 		// Rebuild incoming edge with corner to align at label center
-		final net.sourceforge.plantuml.klimt.shape.DotPath newPathIn = rebuildPathWithCorner(inStart, inEnd,
-				labelCenterX, labelCenterY, true);
+		final net.sourceforge.plantuml.klimt.shape.DotPath newPathIn = rebuildPathWithCorner(inStart, inEndAligned,
+				labelCenterX, jogY(inEndAligned.getY(), inStart.getY()), true);
 		if (newPathIn != null) {
 			edgeIn.replaceDotPath(newPathIn);
 		}
 
-		// Rebuild outgoing edge with corner to align at label center
-		final net.sourceforge.plantuml.klimt.shape.DotPath newPathOut = rebuildPathWithCorner(outStart, outEnd,
-				labelCenterX, labelCenterY, false);
+		// When the edge runs through the label, from one side to the other, the
+		// outgoing end goes on the opposite border. A loop, back to the side it came
+		// from, leaves the label from its left or right side instead, so it neither
+		// runs along the incoming stem nor through the text.
+		final boolean through = (inStart.getY() < labelCenterY) != (outEnd.getY() < labelCenterY);
+		final net.sourceforge.plantuml.klimt.shape.DotPath newPathOut;
+		if (through) {
+			final XPoint2D outStartAligned = new XPoint2D(outStart.getX(), labelBorderY(labelNode, outEnd));
+			newPathOut = rebuildPathWithCorner(outStartAligned, outEnd, labelCenterX,
+					jogY(outStartAligned.getY(), outEnd.getY()), false);
+		} else {
+			newPathOut = rebuildLoopFromLabelSide(pathOut, labelNode);
+		}
 		if (newPathOut != null) {
 			edgeOut.replaceDotPath(newPathOut);
 		}
 	}
+
+	/**
+	 * Rebuild the outgoing path of a loop so it leaves the label horizontally,
+	 * from the side facing its end, at mid-height, and reaches its end along the
+	 * same axis as the original last segment, so it stays perpendicular to the
+	 * border of the target. Returns null when no such route is found.
+	 */
+	private net.sourceforge.plantuml.klimt.shape.DotPath rebuildLoopFromLabelSide(
+			net.sourceforge.plantuml.klimt.shape.DotPath pathOut, SvekNode labelNode) {
+		final XPoint2D end = pathOut.getEndPoint();
+		final List<XCubicCurve2D> beziers = pathOut.getBeziers();
+		final XCubicCurve2D last = beziers.get(beziers.size() - 1);
+		final boolean verticalEnd = Math.abs(last.x1 - last.x2) < Math.abs(last.y1 - last.y2);
+
+		final double minX = labelNode.getMinX();
+		final double maxX = minX + labelNode.getWidth();
+		final double centerX = minX + labelNode.getWidth() / 2.0;
+		final double minY = labelNode.getMinY();
+		final double maxY = minY + labelNode.getHeight();
+		final double centerY = minY + labelNode.getHeight() / 2.0;
+
+		final boolean left = end.getX() < centerX;
+		final double sideX = left ? minX : maxX;
+		final double outward = left ? -1 : 1;
+		final double laneX = sideX + outward * LOOP_LANE;
+		// Is the end beyond the lane, on the side the loop leaves from?
+		final boolean endOutside = (end.getX() - laneX) * outward >= 0;
+
+		final List<XPoint2D> points = new ArrayList<>();
+		points.add(new XPoint2D(sideX, centerY));
+		if (verticalEnd) {
+			if (endOutside) {
+				points.add(new XPoint2D(end.getX(), centerY));
+			} else {
+				final SvekNode target = nodeAt(end, labelNode);
+				if (target != null && laneX > target.getMinX() + LOOP_CORNER
+						&& laneX < target.getMinX() + target.getWidth() - LOOP_CORNER) {
+					// Move the end along the border of the target, onto the lane.
+					points.add(new XPoint2D(laneX, centerY));
+					points.add(new XPoint2D(laneX, end.getY()));
+					return polyline(points);
+				}
+				final double borderY = end.getY() < centerY ? minY : maxY;
+				final double middleY = (borderY + end.getY()) / 2.0;
+				points.add(new XPoint2D(laneX, centerY));
+				points.add(new XPoint2D(laneX, middleY));
+				points.add(new XPoint2D(end.getX(), middleY));
+			}
+		} else {
+			if (endOutside == false)
+				return null;
+			final double middleX = (sideX + end.getX()) / 2.0;
+			points.add(new XPoint2D(middleX, centerY));
+			points.add(new XPoint2D(middleX, end.getY()));
+		}
+		points.add(end);
+		return polyline(points);
+	}
+
+	/** Gap between a label and the lane a loop leaving its side turns into. */
+	private static final double LOOP_LANE = 8;
+
+	/** Room kept from the rounded corners of the state a loop goes back to. */
+	private static final double LOOP_CORNER = 15;
+
+	/** The node, other than {@code except}, whose border {@code pt} is on. */
+	private SvekNode nodeAt(XPoint2D pt, SvekNode except) {
+		final double touch = 1.0;
+		for (SvekNode node : getBibliotekon().allNodes()) {
+			if (node == except)
+				continue;
+			final double minX = node.getMinX();
+			final double minY = node.getMinY();
+			if (pt.getX() >= minX - touch && pt.getX() <= minX + node.getWidth() + touch && pt.getY() >= minY - touch
+					&& pt.getY() <= minY + node.getHeight() + touch)
+				return node;
+		}
+		return null;
+	}
+
+	private static net.sourceforge.plantuml.klimt.shape.DotPath polyline(List<XPoint2D> points) {
+		final List<XCubicCurve2D> beziers = new ArrayList<>();
+		for (int i = 0; i + 1 < points.size(); i++) {
+			final XPoint2D a = points.get(i);
+			final XPoint2D b = points.get(i + 1);
+			if (a.distance(b) < 0.01)
+				continue;
+			beziers.add(new XCubicCurve2D(a.getX(), a.getY(), a.getX(), a.getY(), b.getX(), b.getY(), b.getX(),
+					b.getY()));
+		}
+		return net.sourceforge.plantuml.klimt.shape.DotPath.fromBeziers(beziers);
+	}
+
+	/**
+	 * The Y of the top or bottom border of the label, whichever faces
+	 * {@code other}.
+	 */
+	private static double labelBorderY(SvekNode labelNode, XPoint2D other) {
+		final double centerY = labelNode.getMinY() + labelNode.getHeight() / 2.0;
+		if (other.getY() < centerY)
+			return labelNode.getMinY();
+		return labelNode.getMinY() + labelNode.getHeight();
+	}
+
+	/**
+	 * The Y of the horizontal jog of a rebuilt path: {@code JOG} away from the
+	 * label border {@code fromY}, towards {@code toY}, but no further than half
+	 * way so the jog cannot overshoot the other end.
+	 */
+	private static double jogY(double fromY, double toY) {
+		final double jog = Math.min(JOG, Math.abs(toY - fromY) / 2.0);
+		if (toY < fromY)
+			return fromY - jog;
+		return fromY + jog;
+	}
+
+	private static final double JOG = 20;
 
 	/**
 	 * Rebuild a path with a horizontal corner to route through the target X
@@ -593,7 +726,7 @@ public final class DotStringFactory implements Moveable {
 	 * obscuring the label.
 	 */
 	private net.sourceforge.plantuml.klimt.shape.DotPath rebuildPathWithCorner(XPoint2D start, XPoint2D end,
-			double targetX, double targetY, boolean isIncoming) {
+			double targetX, double horizontalY, boolean isIncoming) {
 
 		final double startX = start.getX();
 		final double startY = start.getY();
@@ -614,8 +747,6 @@ public final class DotStringFactory implements Moveable {
 
 		if (isIncoming) {
 			// Incoming edge: vertical → horizontal → vertical (aligned at targetX)
-			final double horizontalY = endY - 20;
-
 			// Segment 1: vertical from start down to horizontal routing level
 			beziers.add(new XCubicCurve2D(startX, startY, startX, startY, startX, horizontalY, startX, horizontalY));
 
@@ -629,8 +760,6 @@ public final class DotStringFactory implements Moveable {
 
 		} else {
 			// Outgoing edge: vertical (aligned at targetX) → horizontal → vertical
-			final double horizontalY = startY + 20;
-
 			// Segment 1: vertical aligned segment at targetX from startY (path starts at
 			// targetX)
 			beziers.add(
