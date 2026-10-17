@@ -25,6 +25,10 @@ Usage (from anywhere):
     python tools/vega-c/run_vega_c.py mindmap               # paths containing "mindmap"
     python tools/vega-c/run_vega_c.py --exe path\to\plantuml.exe -j 8 --diff
 
+Each test is also run with `-tpng` (unless --no-png): there is no reference file,
+it only checks that the executable does not crash, hang, or write something that
+is not a PNG file. The PNG results are reported apart from the pass / fail above.
+
 Results go to <repo>/build/vega-c/ (git-ignored): report.json, summary.txt,
 with --diff one .diff file per failed test, and output/ with the files
 the executable wrote (svg, png...), in the same folders as the tests.
@@ -67,6 +71,10 @@ ERROR_EXPECTATION_KEYS = (
 )
 
 PASS, FAIL, ERROR, TIMEOUT, SKIPPED = "pass", "fail", "error", "timeout", "skipped"
+
+# Result of the PNG run (which only checks that the executable does not crash)
+PNG_OK, PNG_CRASH, PNG_TIMEOUT, PNG_NO_OUTPUT, PNG_INVALID = "ok", "crash", "timeout", "no-output", "invalid"
+PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 
 
 # ---------------------------------------------------------------------------
@@ -192,7 +200,40 @@ def keep_files(outdir, relative):
             shutil.copyfile(produced, target / produced.name)
 
 
-def run_one(puml, exe, timeout, workdir):
+def run_png(puml, exe, timeout, workdir, relative):
+    """Runs `plantuml.exe -tpng`: there is no reference file, the only question is
+    whether it crashes, hangs, or writes something that is not a PNG file."""
+    outdir = Path(tempfile.mkdtemp(prefix="vega-c-", dir=workdir))
+    try:
+        command = [str(exe), "-tpng", "-o", str(outdir), str(puml)]
+        try:
+            proc = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+                                  stderr=subprocess.PIPE, timeout=timeout, cwd=str(puml.parent))
+        except subprocess.TimeoutExpired:
+            return {"status": PNG_TIMEOUT, "message": "no answer after %ss" % timeout}
+        stderr = proc.stderr.decode("utf-8", errors="replace").strip()
+        if proc.returncode < 0 or proc.returncode > 255:
+            return {"status": PNG_CRASH, "message": "exit code %d %s" % (proc.returncode, stderr[:300])}
+        produced = produced_files(outdir, puml, ".png")
+        if not produced:
+            return {"status": PNG_NO_OUTPUT, "message": "exit code %d %s" % (proc.returncode, stderr[:300])}
+        for png in produced:
+            if not png.read_bytes().startswith(PNG_SIGNATURE):
+                return {"status": PNG_INVALID, "message": "%s is not a PNG file" % png.name}
+        return {"status": PNG_OK, "message": ""}
+    finally:
+        keep_files(outdir, relative)
+        shutil.rmtree(outdir, ignore_errors=True)
+
+
+def run_one(puml, exe, timeout, workdir, with_png):
+    result = run_checks(puml, exe, timeout, workdir)
+    if with_png:
+        result["png"] = run_png(puml, exe, timeout, workdir, result["file"])
+    return result
+
+
+def run_checks(puml, exe, timeout, workdir):
     relative = puml.relative_to(VEGA_DIR).as_posix()
     result = {"file": relative, "status": SKIPPED, "message": "", "duration_ms": 0}
     header = read_header(puml)
@@ -305,6 +346,7 @@ def main(argv=None):
     parser.add_argument("--timeout", type=float, default=60, help="seconds per test and per format (default: %(default)s)")
     parser.add_argument("--diff", action="store_true", help="write a .diff file for each failed test")
     parser.add_argument("--out", default=str(OUT_DIR), help="folder of the reports (default: %(default)s)")
+    parser.add_argument("--no-png", action="store_true", help="do not run the PNG generation")
     parser.add_argument("--strict", action="store_true", help="exit code 1 when a test fails (default: always 0)")
     parser.add_argument("-v", "--verbose", action="store_true", help="print every test, not only the failures")
     args = parser.parse_args(argv)
@@ -337,7 +379,7 @@ def main(argv=None):
     started = time.time()
     try:
         with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, args.jobs)) as pool:
-            futures = {pool.submit(run_one, f, exe, args.timeout, workdir): f for f in files}
+            futures = {pool.submit(run_one, f, exe, args.timeout, workdir, not args.no_png): f for f in files}
             for done, future in enumerate(concurrent.futures.as_completed(futures), 1):
                 try:
                     result = future.result()
@@ -356,6 +398,10 @@ def main(argv=None):
     results.sort(key=lambda r: r["file"])
     counts = {s: sum(1 for r in results if r["status"] == s) for s in (PASS, FAIL, ERROR, TIMEOUT, SKIPPED)}
 
+    png_labels = (PNG_OK, PNG_CRASH, PNG_TIMEOUT, PNG_NO_OUTPUT, PNG_INVALID)
+    png_counts = {s: sum(1 for r in results if r.get("png", {}).get("status") == s) for s in png_labels}
+    png_bad = [r for r in results if r.get("png", {}).get("status", PNG_OK) != PNG_OK]
+
     if args.diff:
         for r in results:
             if r.get("diff"):
@@ -365,7 +411,8 @@ def main(argv=None):
     for r in results:
         r.pop("diff", None)
 
-    report = {"executable": str(exe), "summary": dict(counts, total=len(results)), "tests": results}
+    report = {"executable": str(exe), "summary": dict(counts, total=len(results)),
+              "png": png_counts, "tests": results}
     (OUT_DIR / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
 
     lines = [
@@ -376,21 +423,35 @@ def main(argv=None):
         "  Crashed:  %d" % counts[ERROR],
         "  Timeout:  %d" % counts[TIMEOUT],
         "  Skipped:  %d" % counts[SKIPPED],
-        "  Time:     %.1fs" % (time.time() - started),
-        "",
     ]
+    if not args.no_png:
+        lines += [
+            "PNG (only checks that the executable does not crash):",
+            "  Written:   %d" % png_counts[PNG_OK],
+            "  Crashed:   %d" % png_counts[PNG_CRASH],
+            "  Timeout:   %d" % png_counts[PNG_TIMEOUT],
+            "  No output: %d" % png_counts[PNG_NO_OUTPUT],
+            "  Not a PNG: %d" % png_counts[PNG_INVALID],
+        ]
+    lines += ["", "Time: %.1fs" % (time.time() - started)]
+    head = len(lines)
+    lines.append("")
     for label, status in (("Passed", PASS), ("Failed", FAIL), ("Crashed", ERROR), ("Timeout", TIMEOUT)):
         selected = [r for r in results if r["status"] == status]
         if selected:
             lines.append("%s:" % label)
             lines += ["  - %s%s" % (r["file"], "" if status == PASS else "  " + r["message"][:120]) for r in selected]
             lines.append("")
+    if png_bad:
+        lines.append("PNG problems:")
+        lines += ["  - %s  [%s] %s" % (r["file"], r["png"]["status"], r["png"]["message"][:120]) for r in png_bad]
+        lines.append("")
     (OUT_DIR / "summary.txt").write_text("\n".join(lines), encoding="utf-8")
 
     print()
-    print("\n".join(lines[:8]))
+    print("\n".join(lines[:head]))
     print("Reports: %s" % OUT_DIR)
-    return 1 if args.strict and (counts[FAIL] or counts[ERROR] or counts[TIMEOUT]) else 0
+    return 1 if args.strict and (counts[FAIL] or counts[ERROR] or counts[TIMEOUT] or png_bad) else 0
 
 
 if __name__ == "__main__":

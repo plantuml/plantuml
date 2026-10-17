@@ -21,6 +21,12 @@ reports, it does not judge. The exit code is 0 unless `--strict` is given.
 | `output: preproc` | `plantuml.exe --preproc`, compared with `<name>.preproc` |
 | other formats, tests that expect an error | `skipped` |
 
+Every test is also run with `plantuml.exe -tpng` (`--no-png` to skip it). There is
+no reference file: it only checks that the executable does not crash, does not
+hang, and writes a file that starts like a PNG. This is reported apart from
+the results above (`png` in `report.json`, "PNG problems" in `summary.txt`), and
+it also covers the tests that are `skipped` above.
+
 The other expectations of the YAML header (`expected-description`,
 `expected-stderr`...) are not checked. A test that crashes the executable is
 `error`, one that does not answer in `--timeout` seconds is `timeout`.
@@ -29,6 +35,6 @@ Everything goes to `build/vega-c/` (emptied at each run, git-ignored), never to
 `src/test/resources`, so that it cannot be mixed up with the `vega.json` of the
 JVM tests:
 
-- `output/`: the files written by `plantuml.exe` (svg...), in the same folders as the tests
+- `output/`: the files written by `plantuml.exe` (svg, png...), in the same folders as the tests
 - `summary.txt` and `report.json`
 - `diffs/`: with `--diff`, one `.diff` per failed test
