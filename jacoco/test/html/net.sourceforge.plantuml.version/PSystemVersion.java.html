@@ -121,145 +121,147 @@ public class PSystemVersion extends PlainStringsDiagram {
 		try {
 <span class="fc" id="L122">			final InputStream is = PSystemVersion.class.getResourceAsStream(name);</span>
 <span class="fc" id="L123">			final PortableImage image = SImageIO.read(is);</span>
-<span class="fc" id="L124">			is.close();</span>
-<span class="fc" id="L125">			return image;</span>
-<span class="nc" id="L126">		} catch (IOException e) {</span>
-<span class="nc" id="L127">			Logme.error(e);</span>
+			// getResourceAsStream() returns null under TeaVM
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (is != null)</span>
+<span class="fc" id="L126">				is.close();</span>
+<span class="fc" id="L127">			return image;</span>
+<span class="nc" id="L128">		} catch (IOException e) {</span>
+<span class="nc" id="L129">			Logme.error(e);</span>
 		}
-<span class="nc" id="L129">		return PortableImageFactory.build(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L131">		return PortableImageFactory.build(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
 	}
 
 	private static BufferedImage transparentIcon;
 
 	public static BufferedImage getPlantumlSmallIcon2() {
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (transparentIcon != null) {</span>
-<span class="nc" id="L136">			return transparentIcon;</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		if (transparentIcon != null) {</span>
+<span class="nc" id="L138">			return transparentIcon;</span>
 		}
-<span class="nc" id="L138">		final PortableImage ico = getPlantumlSmallIcon();</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (ico == null) {</span>
-<span class="nc" id="L140">			return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="nc" id="L140">		final PortableImage ico = getPlantumlSmallIcon();</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (ico == null) {</span>
+<span class="nc" id="L142">			return new BufferedImage(10, 10, BufferedImage.TYPE_INT_ARGB);</span>
 		}
-<span class="nc" id="L142">		transparentIcon = new BufferedImage(ico.getWidth(), ico.getHeight(), BufferedImage.TYPE_INT_ARGB_PRE);</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		for (int i = 0; i &lt; ico.getWidth(); i++) {</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">			for (int j = 0; j &lt; ico.getHeight(); j++) {</span>
-<span class="nc" id="L145">				final int col = ico.getRGB(i, j);</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">				if (col != ico.getRGB(0, 0)) {</span>
-<span class="nc" id="L147">					transparentIcon.setRGB(i, j, col);</span>
+<span class="nc" id="L144">		transparentIcon = new BufferedImage(ico.getWidth(), ico.getHeight(), BufferedImage.TYPE_INT_ARGB_PRE);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		for (int i = 0; i &lt; ico.getWidth(); i++) {</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">			for (int j = 0; j &lt; ico.getHeight(); j++) {</span>
+<span class="nc" id="L147">				final int col = ico.getRGB(i, j);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">				if (col != ico.getRGB(0, 0)) {</span>
+<span class="nc" id="L149">					transparentIcon.setRGB(i, j, col);</span>
 				}
 			}
 		}
-<span class="nc" id="L151">		return transparentIcon;</span>
+<span class="nc" id="L153">		return transparentIcon;</span>
 	}
 	// ::done
 
 	public static PSystemVersion createShowVersion(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L156">		final ReportLog strings = new ReportLog();</span>
-<span class="nc" id="L157">		strings.add(&quot;&lt;b&gt;PlantUML&lt;/b&gt; \&quot;\&quot;&quot; + Version.versionString() + &quot;\&quot;\&quot;&quot;);</span>
-<span class="nc" id="L158">		strings.add(&quot;&lt;b&gt;Git Commit&lt;/b&gt; \&quot;\&quot;&quot; + CompilationInfo.COMMIT + &quot;\&quot;\&quot;&quot;);</span>
-<span class="nc" id="L159">		strings.add(&quot;&lt;b&gt;Build Time&lt;/b&gt; \&quot;\&quot;&quot; + Version.compileTimeString() + &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L158">		final ReportLog strings = new ReportLog();</span>
+<span class="nc" id="L159">		strings.add(&quot;&lt;b&gt;PlantUML&lt;/b&gt; \&quot;\&quot;&quot; + Version.versionString() + &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L160">		strings.add(&quot;&lt;b&gt;Git Commit&lt;/b&gt; \&quot;\&quot;&quot; + CompilationInfo.COMMIT + &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L161">		strings.add(&quot;&lt;b&gt;Build Time&lt;/b&gt; \&quot;\&quot;&quot; + Version.compileTimeString() + &quot;\&quot;\&quot;&quot;);</span>
 
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L162">			strings.add(&quot;&lt;b&gt;License&lt;/b&gt; \&quot;\&quot;&quot; + License.getCurrent() + &quot;\&quot;\&quot;&quot;);</span>
-<span class="nc" id="L163">			strings.checkOldVersionWarning();</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
-<span class="nc" id="L165">				strings.add(&quot;Loaded from &quot; + Version.getJarPath());</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L164">			strings.add(&quot;&lt;b&gt;License&lt;/b&gt; \&quot;\&quot;&quot; + License.getCurrent() + &quot;\&quot;\&quot;&quot;);</span>
+<span class="nc" id="L165">			strings.checkOldVersionWarning();</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE) {</span>
+<span class="nc" id="L167">				strings.add(&quot;Loaded from &quot; + Version.getJarPath());</span>
 
-<span class="nc bnc" id="L167" title="All 2 branches missed.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {</span>
-<span class="nc" id="L168">					strings.add(&quot;Word Mode&quot;);</span>
-<span class="nc" id="L169">					strings.add(&quot;Current Dir: &quot; + new SFile(&quot;.&quot;).getAbsolutePath());</span>
-<span class="nc" id="L170">					strings.add(&quot;plantuml.include.path: &quot; + PreprocessorUtils.getenv(NFolder.PATHS_INCLUDES));</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">				if (GlobalConfig.getInstance().boolValue(GlobalConfigKey.WORD)) {</span>
+<span class="nc" id="L170">					strings.add(&quot;Word Mode&quot;);</span>
+<span class="nc" id="L171">					strings.add(&quot;Current Dir: &quot; + new SFile(&quot;.&quot;).getAbsolutePath());</span>
+<span class="nc" id="L172">					strings.add(&quot;plantuml.include.path: &quot; + PreprocessorUtils.getenv(NFolder.PATHS_INCLUDES));</span>
 				}
 			}
-<span class="nc" id="L173">			strings.add(&quot; &quot;);</span>
+<span class="nc" id="L175">			strings.add(&quot; &quot;);</span>
 
-<span class="nc" id="L175">			GraphvizUtils.addDotStatus(strings, true);</span>
-<span class="nc" id="L176">			strings.add(&quot; &quot;);</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">			for (String name : OptionPrint.interestingProperties())</span>
-<span class="nc" id="L178">				strings.add(name);</span>
+<span class="nc" id="L177">			GraphvizUtils.addDotStatus(strings, true);</span>
+<span class="nc" id="L178">			strings.add(&quot; &quot;);</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">			for (String name : OptionPrint.interestingProperties())</span>
+<span class="nc" id="L180">				strings.add(name);</span>
 
-<span class="nc bnc" id="L180" title="All 2 branches missed.">			for (String v : OptionPrint.interestingValues())</span>
-<span class="nc" id="L181">				strings.add(v);</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">			for (String v : OptionPrint.interestingValues())</span>
+<span class="nc" id="L183">				strings.add(v);</span>
 		}
 
-<span class="nc" id="L184">		return new PSystemVersion(source, true, strings.asList(), preprocessing);</span>
+<span class="nc" id="L186">		return new PSystemVersion(source, true, strings.asList(), preprocessing);</span>
 	}
 
 	// :: comment when __TEAVM__
 	public static PSystemVersion createStdLib(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L189">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L190">		Stdlib.addInfoVersion(strings, true);</span>
-<span class="fc" id="L191">		strings.add(&quot; &quot;);</span>
+<span class="fc" id="L191">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L192">		Stdlib.addInfoVersion(strings, true);</span>
+<span class="fc" id="L193">		strings.add(&quot; &quot;);</span>
 
-<span class="fc" id="L193">		return new PSystemVersion(source, true, strings, preprocessing);</span>
+<span class="fc" id="L195">		return new PSystemVersion(source, true, strings, preprocessing);</span>
 	}
 	// ::done
 
 	public static PSystemVersion createShowAuthors(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L198">		final List&lt;String&gt; strings = getAuthorsStrings(true);</span>
-<span class="nc" id="L199">		return new PSystemVersion(source, true, strings, preprocessing);</span>
+<span class="nc" id="L200">		final List&lt;String&gt; strings = getAuthorsStrings(true);</span>
+<span class="nc" id="L201">		return new PSystemVersion(source, true, strings, preprocessing);</span>
 	}
 
 	public static List&lt;String&gt; getAuthorsStrings(boolean withTag) {
-<span class="nc" id="L203">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L204">		add(strings, &quot;&lt;b&gt;PlantUML version &quot; + Version.versionString() + &quot;&lt;/b&gt; (&quot; + Version.compileTimeString() + &quot;)&quot;,</span>
+<span class="nc" id="L205">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L206">		add(strings, &quot;&lt;b&gt;PlantUML version &quot; + Version.versionString() + &quot;&lt;/b&gt; (&quot; + Version.compileTimeString() + &quot;)&quot;,</span>
 				withTag);
 		// :: comment when __TEAVM__
-<span class="nc" id="L207">		add(strings, &quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;, withTag);</span>
-<span class="nc" id="L208">		add(strings, &quot; &quot;, withTag);</span>
+<span class="nc" id="L209">		add(strings, &quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;, withTag);</span>
+<span class="nc" id="L210">		add(strings, &quot; &quot;, withTag);</span>
 		// ::done
-<span class="nc" id="L210">		add(strings, &quot;&lt;u&gt;Original idea&lt;/u&gt;: Arnaud Roques&quot;, withTag);</span>
-<span class="nc" id="L211">		add(strings, &quot;&lt;u&gt;Word Macro&lt;/u&gt;: Alain Bertucat &amp; Matthieu Sabatier&quot;, withTag);</span>
-<span class="nc" id="L212">		add(strings, &quot;&lt;u&gt;Word Add-in&lt;/u&gt;: Adriaan van den Brand&quot;, withTag);</span>
-<span class="nc" id="L213">		add(strings, &quot;&lt;u&gt;J2V8 &amp; viz.js integration&lt;/u&gt;: Andreas Studer&quot;, withTag);</span>
-<span class="nc" id="L214">		add(strings, &quot;&lt;u&gt;Official Eclipse Plugin&lt;/u&gt;: Hallvard Tr\u00E6tteberg&quot;, withTag);</span>
-<span class="nc" id="L215">		add(strings, &quot;&lt;u&gt;Original Eclipse Plugin&lt;/u&gt;: Claude Durif &amp; Anne Pecoil&quot;, withTag);</span>
-<span class="nc" id="L216">		add(strings, &quot;&lt;u&gt;Servlet &amp; XWiki&lt;/u&gt;: Maxime Sinclair&quot;, withTag);</span>
-<span class="nc" id="L217">		add(strings, &quot;&lt;u&gt;Docker&lt;/u&gt;: David Ducatel&quot;, withTag);</span>
-<span class="nc" id="L218">		add(strings, &quot;&lt;u&gt;AWS lib&lt;/u&gt;: Chris Passarello&quot;, withTag);</span>
-<span class="nc" id="L219">		add(strings, &quot;&lt;u&gt;Stdlib Icons&lt;/u&gt;: tupadr3&quot;, withTag);</span>
-<span class="nc" id="L220">		add(strings, &quot;&lt;u&gt;Site design&lt;/u&gt;: Raphael Cotisson&quot;, withTag);</span>
-<span class="nc" id="L221">		add(strings, &quot;&lt;u&gt;Logo&lt;/u&gt;: Benjamin Croizet&quot;, withTag);</span>
-<span class="nc" id="L222">		add(strings, &quot;&lt;u&gt;Web Assembly&lt;/u&gt;: Sakir Temel&quot;, withTag);</span>
+<span class="nc" id="L212">		add(strings, &quot;&lt;u&gt;Original idea&lt;/u&gt;: Arnaud Roques&quot;, withTag);</span>
+<span class="nc" id="L213">		add(strings, &quot;&lt;u&gt;Word Macro&lt;/u&gt;: Alain Bertucat &amp; Matthieu Sabatier&quot;, withTag);</span>
+<span class="nc" id="L214">		add(strings, &quot;&lt;u&gt;Word Add-in&lt;/u&gt;: Adriaan van den Brand&quot;, withTag);</span>
+<span class="nc" id="L215">		add(strings, &quot;&lt;u&gt;J2V8 &amp; viz.js integration&lt;/u&gt;: Andreas Studer&quot;, withTag);</span>
+<span class="nc" id="L216">		add(strings, &quot;&lt;u&gt;Official Eclipse Plugin&lt;/u&gt;: Hallvard Tr\u00E6tteberg&quot;, withTag);</span>
+<span class="nc" id="L217">		add(strings, &quot;&lt;u&gt;Original Eclipse Plugin&lt;/u&gt;: Claude Durif &amp; Anne Pecoil&quot;, withTag);</span>
+<span class="nc" id="L218">		add(strings, &quot;&lt;u&gt;Servlet &amp; XWiki&lt;/u&gt;: Maxime Sinclair&quot;, withTag);</span>
+<span class="nc" id="L219">		add(strings, &quot;&lt;u&gt;Docker&lt;/u&gt;: David Ducatel&quot;, withTag);</span>
+<span class="nc" id="L220">		add(strings, &quot;&lt;u&gt;AWS lib&lt;/u&gt;: Chris Passarello&quot;, withTag);</span>
+<span class="nc" id="L221">		add(strings, &quot;&lt;u&gt;Stdlib Icons&lt;/u&gt;: tupadr3&quot;, withTag);</span>
+<span class="nc" id="L222">		add(strings, &quot;&lt;u&gt;Site design&lt;/u&gt;: Raphael Cotisson&quot;, withTag);</span>
+<span class="nc" id="L223">		add(strings, &quot;&lt;u&gt;Logo&lt;/u&gt;: Benjamin Croizet&quot;, withTag);</span>
+<span class="nc" id="L224">		add(strings, &quot;&lt;u&gt;Web Assembly&lt;/u&gt;: Sakir Temel&quot;, withTag);</span>
 
-<span class="nc" id="L224">		add(strings, &quot; &quot;, withTag);</span>
-<span class="nc" id="L225">		add(strings, &quot;https://plantuml.com&quot;, withTag);</span>
 <span class="nc" id="L226">		add(strings, &quot; &quot;, withTag);</span>
-<span class="nc" id="L227">		return strings;</span>
+<span class="nc" id="L227">		add(strings, &quot;https://plantuml.com&quot;, withTag);</span>
+<span class="nc" id="L228">		add(strings, &quot; &quot;, withTag);</span>
+<span class="nc" id="L229">		return strings;</span>
 	}
 
 	private static void add(List&lt;String&gt; result, String s, boolean withTag) {
-<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (withTag == false)</span>
-<span class="nc" id="L232">			s = s.replaceAll(&quot;\\&lt;/?\\w+\\&gt;&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		if (withTag == false)</span>
+<span class="nc" id="L234">			s = s.replaceAll(&quot;\\&lt;/?\\w+\\&gt;&quot;, &quot;&quot;);</span>
 
-<span class="nc" id="L234">		result.add(s);</span>
+<span class="nc" id="L236">		result.add(s);</span>
 
-<span class="nc" id="L236">	}</span>
+<span class="nc" id="L238">	}</span>
 
 	// ::comment when __TEAVM__
 	public static PSystemVersion createTestDot(UmlSource source, PreprocessingArtifact preprocessing)
 			throws IOException {
-<span class="nc" id="L241">		final ReportLog strings = new ReportLog();</span>
-<span class="nc" id="L242">		strings.add(Version.fullDescription());</span>
-<span class="nc" id="L243">		GraphvizUtils.addDotStatus(strings, true);</span>
-<span class="nc" id="L244">		return new PSystemVersion(source, false, strings.asList(), preprocessing);</span>
+<span class="nc" id="L243">		final ReportLog strings = new ReportLog();</span>
+<span class="nc" id="L244">		strings.add(Version.fullDescription());</span>
+<span class="nc" id="L245">		GraphvizUtils.addDotStatus(strings, true);</span>
+<span class="nc" id="L246">		return new PSystemVersion(source, false, strings.asList(), preprocessing);</span>
 	}
 
 	public static PSystemVersion createKeyDistributor(UmlSource source, PreprocessingArtifact preprocessing)
 			throws IOException {
-<span class="nc" id="L249">		final LicenseInfo license = LicenseInfo.retrieveDistributor();</span>
-<span class="nc" id="L250">		PortableImage im = null;</span>
-<span class="nc" id="L251">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">		if (license == null) {</span>
-<span class="nc" id="L253">			strings.add(&quot;No license found&quot;);</span>
+<span class="nc" id="L251">		final LicenseInfo license = LicenseInfo.retrieveDistributor();</span>
+<span class="nc" id="L252">		PortableImage im = null;</span>
+<span class="nc" id="L253">		final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">		if (license == null) {</span>
+<span class="nc" id="L255">			strings.add(&quot;No license found&quot;);</span>
 		} else {
-<span class="nc" id="L255">			strings.add(license.getOwner());</span>
-<span class="nc" id="L256">			strings.add(license.getContext());</span>
-<span class="nc" id="L257">			strings.add(license.getGenerationDate().toString());</span>
-<span class="nc" id="L258">			strings.add(license.getExpirationDate().toString());</span>
-<span class="nc" id="L259">			strings.add(license.getKeyStart() + &quot;...&quot;);</span>
-<span class="nc" id="L260">			im = LicenseInfo.retrieveDistributorImage(license);</span>
+<span class="nc" id="L257">			strings.add(license.getOwner());</span>
+<span class="nc" id="L258">			strings.add(license.getContext());</span>
+<span class="nc" id="L259">			strings.add(license.getGenerationDate().toString());</span>
+<span class="nc" id="L260">			strings.add(license.getExpirationDate().toString());</span>
+<span class="nc" id="L261">			strings.add(license.getKeyStart() + &quot;...&quot;);</span>
+<span class="nc" id="L262">			im = LicenseInfo.retrieveDistributorImage(license);</span>
 		}
-<span class="nc" id="L262">		return new PSystemVersion(source, strings, im, preprocessing);</span>
+<span class="nc" id="L264">		return new PSystemVersion(source, strings, im, preprocessing);</span>
 	}
 	// ::done
 
@@ -275,11 +277,11 @@ public class PSystemVersion extends PlainStringsDiagram {
 //	}
 
 	public DiagramDescription getDescription() {
-<span class="fc" id="L278">		return new DiagramDescription(&quot;(Version)&quot;);</span>
+<span class="fc" id="L280">		return new DiagramDescription(&quot;(Version)&quot;);</span>
 	}
 
 	public List&lt;String&gt; getLines() {
-<span class="nc" id="L282">		return MyCollections.unmodifiableList(strings);</span>
+<span class="nc" id="L284">		return MyCollections.unmodifiableList(strings);</span>
 	}
 
 }
