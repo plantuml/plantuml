@@ -121,7 +121,9 @@ public class PSystemVersion extends PlainStringsDiagram {
 		try {
 			final InputStream is = PSystemVersion.class.getResourceAsStream(name);
 			final PortableImage image = SImageIO.read(is);
-			is.close();
+			// getResourceAsStream() returns null under TeaVM
+			if (is != null)
+				is.close();
 			return image;
 		} catch (IOException e) {
 			Logme.error(e);

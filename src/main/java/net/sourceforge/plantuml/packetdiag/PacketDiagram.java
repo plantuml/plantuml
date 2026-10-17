@@ -397,10 +397,21 @@ public class PacketDiagram extends TitledDiagram {
 			idxStream = IntStream.iterate(colWidth, i -> i - 1).limit(colWidth + 1);
 		}
 		this.packetIndicators = idxStream.mapToObj(i -> {
-			boolean full = i % fullLengthInterval == 0;
-			boolean numbered = i % scaleInterval == 0;
+			boolean full = remainder(i, fullLengthInterval) == 0;
+			boolean numbered = remainder(i, scaleInterval) == 0;
 			return new PacketIndicator(full, numbered, i, getStyle(), getSkinParam());
 		}).collect(Collectors.toList());
+	}
+
+	/**
+	 * Same as {@code a % b}, but a zero divisor always throws the
+	 * {@link ArithmeticException} of the JVM: TeaVM's Wasm GC backend turns an
+	 * integer remainder by zero into a trap, which Java code cannot catch.
+	 */
+	private static int remainder(int a, int b) {
+		if (b == 0)
+			throw new ArithmeticException("/ by zero");
+		return a % b;
 	}
 
 	/**
