@@ -26,7 +26,8 @@ Usage (from anywhere):
     python tools/vega-c/run_vega_c.py --exe path\to\plantuml.exe -j 8 --diff
 
 Results go to <repo>/build/vega-c/ (git-ignored): report.json, summary.txt,
-and with --diff one .diff file per failed test.
+with --diff one .diff file per failed test, and output/ with the files
+the executable wrote (svg, png...), in the same folders as the tests.
 """
 
 import argparse
@@ -177,7 +178,21 @@ def unified_diff(expected, actual, name):
         fromfile="expected/" + name, tofile="actual/" + name))
 
 
-def run_one(puml, exe, timeout, workdir, keep_outputs):
+def keep_files(outdir, relative):
+    """Copies what the executable wrote to <out>/output/<folder of the test>/.
+
+    The executable writes in a private folder per test, so that two tests of the
+    same folder (foo.puml and foo_bar.puml) cannot be mixed up; the files are
+    copied from there once the run is over.
+    """
+    target = OUT_DIR / "output" / Path(relative).parent
+    for produced in outdir.iterdir():
+        if produced.is_file():
+            target.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(produced, target / produced.name)
+
+
+def run_one(puml, exe, timeout, workdir):
     relative = puml.relative_to(VEGA_DIR).as_posix()
     result = {"file": relative, "status": SKIPPED, "message": "", "duration_ms": 0}
     header = read_header(puml)
@@ -247,11 +262,8 @@ def run_one(puml, exe, timeout, workdir, keep_outputs):
                 if actual != expected:
                     problems.append("[%s] output differs from %s" % (fmt, reference.name))
                     diffs.append(unified_diff(expected, actual, reference.name))
-                    if keep_outputs:
-                        target = OUT_DIR / "actual" / Path(relative).parent
-                        target.mkdir(parents=True, exist_ok=True)
-                        shutil.copyfile(actual_file, target / actual_file.name)
         finally:
+            keep_files(outdir, relative)
             shutil.rmtree(outdir, ignore_errors=True)
 
     result["duration_ms"] = int((time.time() - start) * 1000)
@@ -291,7 +303,7 @@ def main(argv=None):
     parser.add_argument("--vega-dir", default=str(VEGA_DIR), help="folder of the tests (default: %(default)s)")
     parser.add_argument("-j", "--jobs", type=int, default=os.cpu_count() or 1, help="parallel runs (default: %(default)s)")
     parser.add_argument("--timeout", type=float, default=60, help="seconds per test and per format (default: %(default)s)")
-    parser.add_argument("--diff", action="store_true", help="write a .diff file for each failed test, and keep the actual outputs")
+    parser.add_argument("--diff", action="store_true", help="write a .diff file for each failed test")
     parser.add_argument("--out", default=str(OUT_DIR), help="folder of the reports (default: %(default)s)")
     parser.add_argument("--strict", action="store_true", help="exit code 1 when a test fails (default: always 0)")
     parser.add_argument("-v", "--verbose", action="store_true", help="print every test, not only the failures")
@@ -325,7 +337,7 @@ def main(argv=None):
     started = time.time()
     try:
         with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, args.jobs)) as pool:
-            futures = {pool.submit(run_one, f, exe, args.timeout, workdir, args.diff): f for f in files}
+            futures = {pool.submit(run_one, f, exe, args.timeout, workdir): f for f in files}
             for done, future in enumerate(concurrent.futures.as_completed(futures), 1):
                 try:
                     result = future.result()
