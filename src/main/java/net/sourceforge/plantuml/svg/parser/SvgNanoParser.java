@@ -293,7 +293,10 @@ public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
 		final Matcher m = P_TEXT.matcher(s);
 		if (m.find()) {
 			final String text = m.group(1);
-			final HColor color = HColorSet.instance().getColorOrWhite(fontColor);
+			// No fill on the text, on its groups or in its style: the default of SVG is
+			// black. (This parser does not apply <style> rules, so a sprite which colors
+			// its text only through CSS ends here.)
+			final HColor color = fontColor == null ? HColors.BLACK : HColorSet.instance().getColorOrWhite(fontColor);
 			String fontFamily = getTextFontFamily(s, stackG);
 			if (fontFamily == null)
 				fontFamily = "SansSerif";
