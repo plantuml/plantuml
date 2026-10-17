@@ -25,6 +25,10 @@ The other expectations of the YAML header (`expected-description`,
 `expected-stderr`...) are not checked. A test that crashes the executable is
 `error`, one that does not answer in `--timeout` seconds is `timeout`.
 
-The reports are written to `build/vega-c/` (`summary.txt`, `report.json`,
-`diffs/` and `actual/` with `--diff`), never to `src/test/resources`, so that
-they cannot be mixed up with the `vega.json` of the JVM tests.
+Everything goes to `build/vega-c/` (emptied at each run, git-ignored), never to
+`src/test/resources`, so that it cannot be mixed up with the `vega.json` of the
+JVM tests:
+
+- `output/`: the files written by `plantuml.exe` (svg...), in the same folders as the tests
+- `summary.txt` and `report.json`
+- `diffs/`: with `--diff`, one `.diff` per failed test
