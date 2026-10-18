@@ -106,8 +106,9 @@ public class ChartDiagram extends TitledDiagram {
 		if (orientation == Orientation.HORIZONTAL) {
 			// For horizontal: pass h-axis numeric as yAxis, v-axis labels as xAxisLabels
 			// This way bars grow along the correct axis
-			return new ChartRenderer(getSkinParam(), yAxisLabels, yAxis.getTitle(), null, xAxisLabelPosition, series,
-					xAxis, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode, orientation, annotations);
+			return new ChartRenderer(getSkinParam(), getCategories(yAxisLabels), yAxis.getTitle(), null,
+					xAxisLabelPosition, series, xAxis, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode,
+					orientation, annotations);
 		}
 
 		// For vertical: h-axis=categories (xAxisLabels), v-axis=numeric (yAxis)
@@ -116,8 +117,28 @@ public class ChartDiagram extends TitledDiagram {
 		final String hAxisTitle = (xAxis != null && xAxis.getTitle() != null && !xAxis.getTitle().isEmpty())
 				? xAxis.getTitle()
 				: xAxisTitle;
-		return new ChartRenderer(getSkinParam(), xAxisLabels, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series,
+		// A numeric h-axis range (h-axis 0 --> 10) is kept as it is
+		final List<String> categories = xAxis.isAutoScale() ? getCategories(xAxisLabels) : xAxisLabels;
+		return new ChartRenderer(getSkinParam(), categories, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series,
 				xAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
+	}
+
+	// When no labels are given for the category axis (h-axis, or v-axis for a horizontal
+	// chart), index-based data is drawn against the categories 1, 2, ..., n, n being the
+	// number of values in the longest series, as if "h-axis [1, 2, ..., n]" had been written
+	private List<String> getCategories(List<String> labels) {
+		if (!labels.isEmpty() || series.isEmpty() || series.get(0).hasExplicitXValues())
+			return labels;
+
+		int count = 0;
+		for (ChartSeries s : series)
+			count = Math.max(count, s.getValues().size());
+
+		final List<String> categories = new ArrayList<>();
+		for (int i = 1; i <= count; i++)
+			categories.add(Integer.toString(i));
+
+		return categories;
 	}
 
 	// Command methods

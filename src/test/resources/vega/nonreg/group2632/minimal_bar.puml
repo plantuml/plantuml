@@ -1,0 +1,7 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+bar [25, 62, 58, 70]
+@endchart
