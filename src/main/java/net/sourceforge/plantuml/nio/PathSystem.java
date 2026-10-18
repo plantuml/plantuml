@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.c.HttpC;
 import net.sourceforge.plantuml.teavm.js.browser.BrowserLog;
 import net.sourceforge.plantuml.teavm.js.browser.FileLoaderJs;
+import net.sourceforge.plantuml.teavm.js.browser.PendingResources;
 import net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs;
 //::done
 
@@ -150,6 +151,26 @@ public class PathSystem {
 					: file instanceof InputFileBytes ? ((InputFileBytes) file).getId() : null;
 
 		return FileLoaderJs.getId(file);
+		// ::done
+	}
+
+	/**
+	 * Whether the running rendering of the browser engine has already missed a
+	 * resource it has to ask JavaScript for (a file of the host, a support
+	 * script, a stdlib bundle): it is then an attempt that will be discarded and
+	 * rendered again once the resources are there (see
+	 * <code>PendingResources</code>). An include that fails in such an attempt
+	 * is skipped rather than stopping the preprocessing, so that the includes
+	 * after it are still read, and every file of one level is asked for in the
+	 * same round. Always <code>false</code> on the JVM.
+	 */
+	public static boolean isDiscardedTeaVMAttempt() {
+		// ::revert when JAVA8
+		// return false;
+		if (TeaVM.isTeaVM() == false || TeaVM.isC())
+			return false;
+
+		return PendingResources.hasMissing();
 		// ::done
 	}
 
