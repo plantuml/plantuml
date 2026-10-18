@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.asciiart.Wcwidth;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.MyCollections;
@@ -542,11 +543,43 @@ public class StringUtils {
 					final int rounded = (int) floor + 1;
 					return buildFixedDecimal(rounded, decimal, negative);
 				}
+				// Near-tie. The String.format of the C build does not round like the JVM one
+				// (46.9625 gives 46.962 instead of 46.963), so the JVM rule is applied by hand.
+				if (TeaVM.isC()) {
+					final String viaDigits = roundHalfUpOnShortestDigits(abs, decimal, negative);
+					if (viaDigits != null)
+						return viaDigits;
+				}
 			}
 		}
 
 		final String s = String.format(Locale.ROOT, "%." + decimal + "f", x);
 		return trimZeros(s);
+	}
+
+	// What String.format("%.nf") does on the JVM: the shortest decimal representation of
+	// the double is rounded half up. Returns null when this representation cannot be used
+	// (exponent notation), so that the caller falls back on String.format.
+	private static String roundHalfUpOnShortestDigits(double abs, int decimal, boolean negative) {
+		final String repr = Double.toString(abs);
+		final int dot = repr.indexOf('.');
+		if (dot < 0 || repr.indexOf('E') >= 0 || repr.indexOf('e') >= 0)
+			return null;
+
+		final String intPart = repr.substring(0, dot);
+		final String fracPart = repr.substring(dot + 1);
+		final StringBuilder digits = new StringBuilder(intPart);
+		for (int i = 0; i < decimal; i++)
+			digits.append(i < fracPart.length() ? fracPart.charAt(i) : '0');
+
+		long rounded = Long.parseLong(digits.toString());
+		if (fracPart.length() > decimal && fracPart.charAt(decimal) >= '5')
+			rounded++;
+
+		if (rounded > Integer.MAX_VALUE)
+			return null;
+
+		return buildFixedDecimal((int) rounded, decimal, negative);
 	}
 
 	// Builds "[-]intPart[.fracPart]" from an already-rounded, non-negative int
