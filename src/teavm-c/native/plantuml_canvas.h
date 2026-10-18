@@ -75,6 +75,10 @@ int32_t plantuml_canvas_set_font(int64_t canvas, int32_t font_id, double size);
 double plantuml_canvas_text_width(int64_t canvas, const uint16_t* text, int32_t length);
 /* metrics[0] = ascent (> 0), metrics[1] = descent (> 0), metrics[2] = line gap */
 void plantuml_canvas_font_metrics(int64_t canvas, double* metrics);
+/* Box of the ink of the text with the current font, drawn with its baseline at
+ * (0, 0), y going down: bounds[0] = x, bounds[1] = y of the top (< 0 above the
+ * baseline), bounds[2] = width, bounds[3] = height */
+void plantuml_canvas_text_bounds(int64_t canvas, const uint16_t* text, int32_t length, double* bounds);
 /* Draws the text with its baseline at y, like Graphics2D.drawString(), rotated
  * by angle (radians, clockwise on screen) around (x, y) */
 void plantuml_canvas_fill_text(int64_t canvas, const uint16_t* text, int32_t length, double x, double y,
