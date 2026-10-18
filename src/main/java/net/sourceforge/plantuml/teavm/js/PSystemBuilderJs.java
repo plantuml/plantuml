@@ -91,6 +91,7 @@ public class PSystemBuilderJs {
 	private PSystemFactory lastFactory;
 
 	private PSystemBuilderJs() {
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
 		factories.add(new ActivityDiagramFactory());
@@ -112,6 +113,7 @@ public class PSystemBuilderJs {
 		factories.add(new YamlDiagramFactory());
 		factories.add(new PSystemEbnfFactory());
 		factories.add(new PSystemRegexFactory());
+		// ::done
 	}
 
 	public static PSystemBuilderJs getInstance() {
