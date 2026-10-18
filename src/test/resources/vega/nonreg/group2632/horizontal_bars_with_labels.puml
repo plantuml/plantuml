@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+orientation horizontal
+v-axis [1, 2, 3]
+h-axis 0 --> 40
+bar [10, , 30] labels
+@endchart

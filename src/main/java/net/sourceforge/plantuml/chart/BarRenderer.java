@@ -136,6 +136,8 @@ public class BarRenderer {
 		final UStroke stroke = UStroke.withThickness(lineThickness);
 
 		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
+			if (values.get(i) == null)
+				continue;
 			final double value = values.get(i);
 			final double x = i * categoryWidth + barOffset;
 
@@ -205,6 +207,8 @@ public class BarRenderer {
 		final UStroke stroke = UStroke.withThickness(lineThickness);
 
 		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
+			if (values.get(i) == null)
+				continue;
 			final double value = values.get(i);
 			final double y = i * categoryHeight + barOffset;
 			final double barWidth = Math.abs((value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotWidth);
@@ -247,7 +251,7 @@ public class BarRenderer {
 				final HColor color = colors.get(seriesIndex);
 				final List<Double> values = series.getValues();
 
-				if (categoryIndex >= values.size())
+				if (categoryIndex >= values.size() || values.get(categoryIndex) == null)
 					continue;
 
 				final double value = values.get(categoryIndex);
@@ -334,7 +338,7 @@ public class BarRenderer {
 				final HColor color = colors.get(seriesIndex);
 				final List<Double> values = series.getValues();
 
-				if (categoryIndex >= values.size())
+				if (categoryIndex >= values.size() || values.get(categoryIndex) == null)
 					continue;
 
 				final double value = values.get(categoryIndex);

@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+h-axis [1, 2, 3]
+stackMode grouped
+bar [10, , 30]
+bar [5, 6, ]
+@endchart

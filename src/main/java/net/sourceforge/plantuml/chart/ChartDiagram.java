@@ -247,8 +247,9 @@ public class ChartDiagram extends TitledDiagram {
 
 		// Auto-scale y-axes if needed
 		final ChartAxis axis = series.isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
-		for (double value : series.getValues()) {
-			axis.includeValue(value);
+		for (Double value : series.getValues()) {
+			if (value != null)
+				axis.includeValue(value);
 		}
 
 		return CommandExecutionResult.ok();

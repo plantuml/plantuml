@@ -99,6 +99,9 @@ public class LineRenderer {
 
 			// Draw line segments
 			for (int i = 0; i < Math.min(values.size() - 1, categoryCount - 1); i++) {
+				// No segment touches a missing value, so the line has a gap there
+				if (values.get(i) == null || values.get(i + 1) == null)
+					continue;
 				final double value1 = values.get(i);
 				final double value2 = values.get(i + 1);
 
