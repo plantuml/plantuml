@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
@@ -57,7 +58,8 @@ import net.sourceforge.plantuml.style.ISkinParam;
 
 public class CommunicationTileSelfNoteLeft extends AbstractTile {
 
-	private final CommunicationTileSelf tile;
+	private final Tile tile;
+	private final LivingSpace livingSpace1;
 	private final AbstractMessage message;
 	private final Rose skin;
 	private final ISkinParam skinParam;
@@ -73,10 +75,11 @@ public class CommunicationTileSelfNoteLeft extends AbstractTile {
 		return tile.getContactPointRelative();
 	}
 
-	public CommunicationTileSelfNoteLeft(CommunicationTileSelf tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
-																			  Note noteOnMessage, YGauge currentY) {
+	public CommunicationTileSelfNoteLeft(Tile tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
+			LivingSpace livingSpace1, Note noteOnMessage, YGauge currentY) {
 		super(((AbstractTile) tile).getStringBounder(), currentY);
 		this.tile = tile;
+		this.livingSpace1 = livingSpace1;
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
@@ -120,7 +123,7 @@ public class CommunicationTileSelfNoteLeft extends AbstractTile {
 		// The wrapped tile self-translates to its own gauge; the note's prologue is
 		// applied AFTERWARDS, to the note only (the wrapper's min is identical to the
 		// inner tile's, so both land on the same row -- the note never moves the arrow)
-		tile.drawU(ug);
+		((UDrawable) tile).drawU(ug);
 		final Real p = getNotePosition(stringBounder);
 		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 
@@ -151,7 +154,6 @@ public class CommunicationTileSelfNoteLeft extends AbstractTile {
 	// registration is safe.
 	private void ensureOwnBoxClearsNote() {
 		final StringBounder stringBounder = getStringBounder();
-		final LivingSpace livingSpace1 = tile.getLivingSpace1();
 		final double overflowLeft = livingSpace1.getPosB(stringBounder).getCurrentValue()
 				- getMinX().getCurrentValue();
 		if (overflowLeft > 0)
