@@ -17,7 +17,7 @@ reports, it does not judge. The exit code is 0 unless `--strict` is given.
 
 | Test | Result |
 |---|---|
-| `output: svg` | `plantuml.exe -tsvg`, compared with `<name>.svg` (or `<name>-N.svg`) once both are parsed and pretty-printed, as `SvgCleaner` does for the JVM |
+| `output: svg` | `plantuml.exe --svg-vega` (the deterministic SVG of the JVM Vega tests), compared with `<name>.svg` (or `<name>-N.svg`) once both are parsed and pretty-printed, as `SvgCleaner` does for the JVM |
 | `output: preproc` | `plantuml.exe --preproc`, compared with `<name>.preproc` |
 | other formats, tests that expect an error | `skipped` |
 

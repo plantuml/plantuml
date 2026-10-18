@@ -12,7 +12,7 @@ are expected to fail. The script only reports; it does not decide what is a
 regression.
 
 What is checked, per test file:
-  * output: svg      -> `plantuml.exe -tsvg`, compared (XML-normalised, as SvgCleaner
+  * output: svg      -> `plantuml.exe --svg-vega`, compared (XML-normalised, as SvgCleaner
                         does in the Java tests) with <name>.svg / <name>-N.svg
   * output: preproc  -> `plantuml.exe --preproc`, compared with <name>.preproc
   * any other output format, or a test that expects an error (expected-exception,
@@ -57,7 +57,7 @@ YAML_DELIMITER = "---"
 # output format of the YAML header -> (command line flags, extension of the produced
 # and of the reference file)
 SUPPORTED_FORMATS = {
-    "svg": (["-tsvg"], ".svg"),
+    "svg": (["--svg-vega"], ".svg"),
     "preproc": (["--preproc"], ".preproc"),
 }
 
@@ -75,6 +75,9 @@ PASS, FAIL, ERROR, TIMEOUT, SKIPPED = "pass", "fail", "error", "timeout", "skipp
 # Result of the PNG run (which only checks that the executable does not crash)
 PNG_OK, PNG_CRASH, PNG_TIMEOUT, PNG_NO_OUTPUT, PNG_INVALID = "ok", "crash", "timeout", "no-output", "invalid"
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
+
+# Prefix of the temporary copy of a test without its YAML header (see write_source_copy)
+COPY_PREFIX = "~vega-c-"
 
 
 # ---------------------------------------------------------------------------
@@ -110,6 +113,30 @@ def read_header(path):
             value = re.sub(r"\s+#.*$", "", match.group(2))
             result[match.group(1)] = value
     return result
+
+
+def write_source_copy(path):
+    """Writes next to the test a copy without the YAML header, and returns its path.
+
+    The Java tests give PlantUML only the lines after the header (VegaInputFile.parse),
+    so the line numbers of the output (data-source-line) start at 1. The copy is in
+    the same folder as the test, so that the relative !include keep working.
+    """
+    lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+    kept = []
+    inside = False
+    done = False
+    for line in lines:
+        if not done and line.strip() == YAML_DELIMITER:
+            if inside:
+                done = True
+            inside = not done
+            continue
+        if not inside:
+            kept.append(line)
+    copy = path.with_name(COPY_PREFIX + path.name)
+    copy.write_text("\n".join(kept) + "\n", encoding="utf-8", newline="\n")
+    return copy
 
 
 def output_formats(header):
@@ -197,7 +224,8 @@ def keep_files(outdir, relative):
     for produced in outdir.iterdir():
         if produced.is_file():
             target.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(produced, target / produced.name)
+            name = produced.name[len(COPY_PREFIX):] if produced.name.startswith(COPY_PREFIX) else produced.name
+            shutil.copyfile(produced, target / name)
 
 
 def run_png(puml, exe, timeout, workdir, relative):
@@ -252,6 +280,14 @@ def run_checks(puml, exe, timeout, workdir):
         result["message"] = "decimal option: not supported by this script"
         return result
 
+    source = write_source_copy(puml)
+    try:
+        return check_formats(puml, source, supported, exe, timeout, workdir, relative, result)
+    finally:
+        source.unlink()
+
+
+def check_formats(puml, source, supported, exe, timeout, workdir, relative, result):
     start = time.time()
     problems = []
     diffs = []
@@ -260,7 +296,7 @@ def run_checks(puml, exe, timeout, workdir):
         flags, extension = SUPPORTED_FORMATS[fmt]
         outdir = Path(tempfile.mkdtemp(prefix="vega-c-", dir=workdir))
         try:
-            command = [str(exe)] + flags + ["-o", str(outdir), str(puml)]
+            command = [str(exe)] + flags + ["-o", str(outdir), str(source)]
             try:
                 proc = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
                                       stderr=subprocess.PIPE, timeout=timeout, cwd=str(puml.parent))
@@ -270,7 +306,7 @@ def run_checks(puml, exe, timeout, workdir):
                 result["duration_ms"] = int((time.time() - start) * 1000)
                 return result
 
-            produced = produced_files(outdir, puml, extension)
+            produced = produced_files(outdir, source, extension)
             stderr = proc.stderr.decode("utf-8", errors="replace").strip()
             if proc.returncode < 0 or proc.returncode > 255:
                 # a crash: a signal, or an NTSTATUS code such as 0xC0000005 on Windows

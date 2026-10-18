@@ -611,7 +611,8 @@ public class Run {
 	 * {@code UgDiagram#exportDiagram}), and the preprocessed source.
 	 */
 	private static boolean isAvailableInC(FileFormat format) {
-		return format == FileFormat.SVG || format == FileFormat.PNG || format == FileFormat.PREPROC;
+		return format == FileFormat.SVG || format == FileFormat.SVG_DETERMINISTIC || format == FileFormat.PNG
+				|| format == FileFormat.PREPROC;
 	}
 
 	/**
