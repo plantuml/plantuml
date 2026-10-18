@@ -73,6 +73,18 @@ import net.sourceforge.plantuml.teavm.js.GraphVizEngineJs;
  * theme chosen by a variable, the bundle a stdlib library links to. Parsing and
  * rendering rebuild everything from the source lines, so a discarded attempt
  * leaves nothing behind but what is kept here.
+ * <p>
+ * An attempt that has missed a resource does not stop at the include that
+ * missed it: once {@link #hasMissing()} is true, an include, an includesub or
+ * a theme that cannot be read is skipped (see
+ * {@link net.sourceforge.plantuml.nio.PathSystem#isDiscardedTeaVMAttempt()}),
+ * so the attempt goes on and asks for the files of the following includes as
+ * well. Every file of one level is thus loaded in the same round, and a
+ * diagram of many includes side by side takes one more rendering, not one per
+ * file. The price is that a round may ask for a file the delivered rendering
+ * does not use: when an <code>!if</code> depends on a value set in a file that
+ * is not there yet, the attempt takes the branch it sees, and its includes are
+ * asked for too.
  *
  * <h2>What is kept, and for how long</h2>
  *
@@ -97,8 +109,9 @@ public final class PendingResources {
 
 	/**
 	 * How many times a request may be rendered again because resources were
-	 * missing. Each round loads every resource the attempt asked for, so this is
-	 * a depth (nested includes, links between libraries), not a count of files.
+	 * missing. Each round loads every resource the attempt asked for, and an
+	 * attempt reads on past the includes it could not read, so this is a depth
+	 * (nested includes, links between libraries), not a count of files.
 	 */
 	public static final int MAX_ROUNDS = 20;
 

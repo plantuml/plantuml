@@ -175,6 +175,12 @@ diagram is rendered again. The check pins that:
 - a callback is never called before `renderToString` returns;
 - an include chain 13 files deep renders, one level per round, and the host is asked once per
   file during a rendering, and again at the next one (so an edited file is seen);
+- the includes of one level are asked for in the same round: 60 includes side by side take one
+  round, and 30 files that each include another take two (issue #2943: a rendering used to stop
+  at the first missing include, so each file took a round of its own and more than 20 includes
+  failed);
+- a file chosen by an `!if` on a value from a file not loaded yet renders with the right branch;
+  the other branch's file is asked for once, and its failure is not reported;
 - rendering again is invisible: the same source gives the same SVG, a console warning is written
   once rather than once per round, and `render()` writes its target only with the final result;
 - `render()` keeps "latest wins" while a request waits for its resources (the engine built with

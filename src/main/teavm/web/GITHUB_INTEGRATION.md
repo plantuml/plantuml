@@ -383,10 +383,21 @@ enforce a shorter timeout of its own and call `err` when it expires.
 The engine never waits for the loader. It renders the diagram, notes the files
 it did not have yet, asks the loader for them, and renders the diagram again
 once every answer is in, as many times as the include depth requires (at most
-20). So during one rendering the loader is called once per file (path, `from`
-and kind), and it is called again at the next rendering, which is how an
-edited file is seen. Nothing of a discarded rendering reaches the page: not
-the drawing, not its console warnings.
+20). A rendering that has missed a file reads on past the includes it cannot
+read yet, so all the includes of one level are asked for together: a diagram
+that includes 60 files side by side takes two renderings, and one that
+includes a file which includes another takes three, whatever the number of
+files at each level. So during one rendering the loader is called once per
+file (path, `from` and kind), and it is called again at the next rendering,
+which is how an edited file is seen. Nothing of a discarded rendering reaches
+the page: not the drawing, not its console warnings.
+
+Reading on has one consequence for the loader: it may be asked for a file
+that the final rendering does not use. When an `!if` depends on a variable
+set in a file that has not arrived yet, the first rendering takes the branch
+it sees and asks for the files included there; the next rendering, with the
+file in hand, takes the other branch. The extra file is asked for once, and a
+failure to load it is not reported, since no delivered rendering includes it.
 
 The loader is only asked for local names. Standard-library includes, URL
 includes, `!includedef` and a `!theme` from a library or a URL keep their

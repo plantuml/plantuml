@@ -531,8 +531,11 @@ public class TContext {
 			if (sub == null)
 				sub = subs.get(what);
 
-			if (sub == null)
+			if (sub == null) {
+				if (skipsFailedInclude())
+					return;
 				throw new EaterException("cannot include " + what, s);
+			}
 
 			executeLinesInternal(memory, sub.lines(), null);
 		} finally {
@@ -583,9 +586,19 @@ public class TContext {
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException {
 		final EaterTheme eater = new EaterTheme(s.getTrimmed(), pathSystem);
 		eater.analyze(this, memory);
-		final Theme theme = eater.getTheme();
-		if (theme == null)
+		final Theme theme;
+		try {
+			theme = eater.getTheme();
+		} catch (EaterException e) {
+			if (skipsFailedInclude())
+				return;
+			throw e;
+		}
+		if (theme == null) {
+			if (skipsFailedInclude())
+				return;
 			throw new EaterException("No such theme " + eater.getName(), s);
+		}
 
 		final PathSystem saveImportedFiles = this.pathSystem;
 		this.pathSystem = eater.getNewImportedFiles();
@@ -764,7 +777,26 @@ public class TContext {
 					Logme.error(e);
 				}
 		}
+		if (skipsFailedInclude())
+			return;
 		throw new EaterException("cannot include " + what, s);
+	}
+
+	/**
+	 * Whether an include, an includesub or a theme that could not be read is
+	 * skipped instead of stopping the preprocessing. Only in the browser engine,
+	 * and only once the running rendering has missed a resource it has to ask
+	 * JavaScript for: that rendering is going to be discarded and done again
+	 * when the resources are there (see <code>PendingResources</code>), so what
+	 * it computes does not matter, but reading on lets it ask for the files of
+	 * the following includes too. Without it, a diagram of N includes would take
+	 * N renderings, one per file, instead of one per include level.
+	 * <p>
+	 * The failure itself is reported by the rendering that is kept, which has
+	 * missed nothing and therefore skips nothing.
+	 */
+	private static boolean skipsFailedInclude() {
+		return PathSystem.isDiscardedTeaVMAttempt();
 	}
 
 	public boolean isLegacyDefine(String functionName) {
