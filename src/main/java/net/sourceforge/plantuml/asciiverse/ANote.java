@@ -75,6 +75,13 @@ public final class ANote implements AsciiBlock {
 
 	@Override
 	public void asciiDraw(InfinitePlan plan) {
+		// A note hides what lies behind it, as in the pixel rendering:
+		// neither what was drawn there before nor a lifeline drawn afterwards
+		// may show through its blank cells. Done first, so that the border and
+		// the folded corner below are drawn over it.
+		if (width > 2 && height > 2)
+			plan.move(1, 1).opacify(width - 2, height - 2);
+
 		// isUnicode isn't stored on the object: like every other draw decision
 		// (column, row), it's read off whatever `plan` this block is
 		// asked to draw against, rather than fixed at construction. A caller

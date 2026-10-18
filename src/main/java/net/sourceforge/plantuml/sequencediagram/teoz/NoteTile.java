@@ -41,6 +41,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.ANote;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -325,6 +329,142 @@ public class NoteTile extends AbstractTile implements Tile {
 			return RealUtils.max(result, x2);
 		}
 		return result;
+	}
+
+	// ===================== ASCII =====================
+	//
+	// ASCII counterpart of getX()/getUsedWidth()/drawU(), so that a
+	// standalone note ("note left of", "note right of", "note over",
+	// "note over A, B", "note across", and their hnote/rnote variants, all
+	// drawn as the same folded-corner box) no longer reaches the
+	// AsciiBlock "not migrated" default and crashes the whole txt/utxt
+	// export. LEFT and RIGHT use the very same placement as the notes
+	// attached to a message (CommunicationTileNoteLeft/Right), so both
+	// kinds of note line up, and like them (and like the pixel rendering)
+	// they do not push the neighboring participant away. OVER and
+	// OVER_SEVERAL do, as in pixels (see asciiAddConstraints()).
+
+	private AsciiBlock asciiNoteText() {
+		return note.getDisplay().marginLR(1, 3);
+	}
+
+	// The note box alone, no margin, as drawn for OVER and OVER_SEVERAL
+	private int asciiBoxWidth() {
+		return new ANote(asciiNoteText()).asciiDimension().getWidth();
+	}
+
+	// The note box plus the margins LEFT and RIGHT draw it with, exactly
+	// like CommunicationTileNoteLeft/Right
+	private int asciiSideNoteWidth() {
+		return new ANote(asciiNoteText()).marginLR(2, 2).asciiDimension().getWidth();
+	}
+
+	private boolean isAsciiOverSeveral() {
+		return note.getPosition() == NotePosition.OVER_SEVERAL && livingSpace1 != livingSpace2;
+	}
+
+	// The participants under an OVER_SEVERAL note, leftmost first: "note
+	// over B, A" names them in reverse order
+	private LivingSpace asciiLeftSpace() {
+		if (livingSpace1.getAsciiPosB().getCurrentValue() <= livingSpace2.getAsciiPosB().getCurrentValue())
+			return livingSpace1;
+
+		return livingSpace2;
+	}
+
+	private LivingSpace asciiRightSpace() {
+		return asciiLeftSpace() == livingSpace1 ? livingSpace2 : livingSpace1;
+	}
+
+	@Override
+	public void asciiAddConstraints() {
+		final NotePosition position = note.getPosition();
+		if (isAsciiOverSeveral()) {
+			// The box spans its two participants' boxes (see asciiDraw()):
+			// make that span at least as wide as the note itself
+			final Real left = asciiLeftSpace().getAsciiPosB();
+			asciiRightSpace().getAsciiPosD().ensureBiggerThan(left.addFixed(asciiBoxWidth()));
+		} else if (position != NotePosition.LEFT && position != NotePosition.RIGHT) {
+			// Like the pixel rendering, a note over a participant pushes its
+			// neighbors away instead of covering their lifelines: whatever the
+			// box reaches past the participant's own box becomes that
+			// participant's margin, which LivingSpaces.asciiAddConstraints()
+			// keeps clear of the next participant
+			final int participantWidth = livingSpace1.getParticipant().asciiDimension().getWidth();
+			final int width = asciiBoxWidth();
+			final int left = participantWidth / 2 - width / 2;
+			if (left < 0)
+				livingSpace1.ensureAsciiMarginBefore(-left);
+			if (left + width > participantWidth)
+				livingSpace1.ensureAsciiMarginAfter(left + width - participantWidth);
+		}
+	}
+
+	@Override
+	public Real getAsciiMinX() {
+		final NotePosition position = note.getPosition();
+		if (isAsciiOverSeveral())
+			return asciiLeftSpace().getAsciiPosB();
+
+		final Real column = livingSpace1.getAsciiLifeColumn();
+		if (position == NotePosition.LEFT)
+			return column.addFixed(-(asciiSideNoteWidth() + 1));
+
+		if (position == NotePosition.RIGHT)
+			return column;
+
+		return column.addFixed(-(asciiBoxWidth() / 2));
+	}
+
+	@Override
+	public Real getAsciiMaxX() {
+		final NotePosition position = note.getPosition();
+		if (isAsciiOverSeveral())
+			return asciiRightSpace().getAsciiPosD().addFixed(-1);
+
+		final Real column = livingSpace1.getAsciiLifeColumn();
+		if (position == NotePosition.LEFT)
+			return column;
+
+		if (position == NotePosition.RIGHT)
+			return column.addFixed(asciiSideNoteWidth() + 1);
+
+		final int width = asciiBoxWidth();
+		return column.addFixed(width - width / 2 - 1);
+	}
+
+	// The box itself, plus one blank row below it: the same breathing room a
+	// message leaves after its arrow (see CommunicationTile.asciiDimension()),
+	// so that the next message's label, or the footbox, does not touch the
+	// note's bottom border.
+	@Override
+	public ADimension2D asciiDimension() {
+		final ADimension2D box = new ANote(asciiNoteText()).asciiDimension();
+		final int width = (int) (getAsciiMaxX().getCurrentValue() - getAsciiMinX().getCurrentValue()) + 1;
+		return new ADimension2D(width, box.getHeight() + 1);
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		final NotePosition position = note.getPosition();
+		final int column = (int) livingSpace1.getAsciiLifeColumn().getCurrentValue();
+		if (position == NotePosition.LEFT) {
+			final AsciiBlock noteBox = plan.createNoteBox(asciiNoteText()).marginLR(2, 2);
+			noteBox.asciiDraw(plan.move(column - asciiSideNoteWidth() - 1, 0));
+		} else if (position == NotePosition.RIGHT) {
+			final AsciiBlock noteBox = plan.createNoteBox(asciiNoteText()).marginLR(2, 2);
+			noteBox.asciiDraw(plan.move(column + 2, 0));
+		} else if (isAsciiOverSeveral()) {
+			// Like getUsedWidth() in pixels: from the left participant's box
+			// to the right participant's one; asciiAddConstraints() made sure
+			// the note itself fits in there
+			final int left = (int) asciiLeftSpace().getAsciiPosB().getCurrentValue();
+			final int right = (int) asciiRightSpace().getAsciiPosD().getCurrentValue();
+			final int extra = Math.max(0, right - left - asciiBoxWidth());
+			plan.createNoteBox(note.getDisplay().marginLR(1, 3 + extra)).asciiDraw(plan.move(left, 0));
+		} else {
+			plan.createNoteBox(asciiNoteText()).asciiDraw(plan.move(column - asciiBoxWidth() / 2, 0));
+		}
 	}
 
 }

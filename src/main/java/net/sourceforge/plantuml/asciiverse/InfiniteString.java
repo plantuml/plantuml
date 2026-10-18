@@ -51,6 +51,12 @@ package net.sourceforge.plantuml.asciiverse;
 // in positiveChars.
 public class InfiniteString {
 
+	// A cell that is not empty but prints as a space (see
+	// InfinitePlan.opacify()): getString() renders it as ' ', getCharAt()
+	// returns it as is, and setCharAt() does not turn it back into a plain
+	// ' ' (a space is no ink).
+	static final char OPAQUE_BLANK = '\u0000';
+
 	private final StringBuilder positiveChars = new StringBuilder();
 	private final StringBuilder negativeChars = new StringBuilder();
 
@@ -67,6 +73,9 @@ public class InfiniteString {
 	}
 
 	public void setCharAt(int position, char ch) {
+		if (ch == ' ' && getCharAt(position) == OPAQUE_BLANK)
+			return;
+
 		if (position >= 0) {
 			ensureLength(position + 1);
 			positiveChars.setCharAt(position, ch);
@@ -124,7 +133,7 @@ public class InfiniteString {
 	// getCharAt() does.
 	public String getString(int startingPosition) {
 		if (startingPosition >= 0)
-			return positiveChars.substring(startingPosition);
+			return positiveChars.substring(startingPosition).replace(OPAQUE_BLANK, ' ');
 
 		final int negLength = -startingPosition;
 		final StringBuilder result = new StringBuilder(negLength + positiveChars.length());
@@ -134,6 +143,6 @@ public class InfiniteString {
 			result.append(negIndex < negativeChars.length() ? negativeChars.charAt(negIndex) : ' ');
 
 		result.append(positiveChars);
-		return result.toString();
+		return result.toString().replace(OPAQUE_BLANK, ' ');
 	}
 }

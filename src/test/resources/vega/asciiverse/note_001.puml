@@ -1,0 +1,11 @@
+---
+output: svg, debug, atxt, utxt
+expected-description: (2 participants)
+---
+@startuml
+' https://github.com/plantuml/plantuml/issues/2164
+a -> b
+note left of a : note
+a -> b
+note right of a : note
+@enduml

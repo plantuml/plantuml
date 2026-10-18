@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="263px" preserveAspectRatio="none" style="width:199px;height:263px;background:#FFFFFF;" version="1.1" viewBox="0 0 199 263" width="199px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="1" id="part1-lifeline">
+      <g>
+        <title>Alice</title>
+        <rect fill="#000" fill-opacity="0" height="184" width="8" x="38.981" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="42.481" x2="42.481" y1="39" y2="223"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="2" id="part2-lifeline">
+      <g>
+        <title>Bob</title>
+        <rect fill="#000" fill-opacity="0" height="184" width="8" x="90.675" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="94.175" x2="94.175" y1="39" y2="223"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="Carol" data-source-line="4" id="part3-lifeline">
+      <g>
+        <title>Carol</title>
+        <rect fill="#000" fill-opacity="0" height="184" width="8" x="143.9" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="147.4" x2="147.4" y1="39" y2="223"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="1" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="20.256" y="10"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="27.256" y="27.889">Alice</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="2" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="74.706" y="10"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="81.706" y="27.889">Bob</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part3" data-qualified-name="Carol" data-source-line="4" id="part3-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.513" x="123.644" y="10"/>
+      <text fill="#000" font-size="14" textLength="33.513" x="130.644" y="27.889">Carol</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="1" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="20.256" y="223"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="27.256" y="240.889">Alice</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="2" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="74.706" y="223"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="81.706" y="240.889">Bob</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="Carol" data-source-line="4" id="part3-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.513" x="123.644" y="223"/>
+      <text fill="#000" font-size="14" textLength="33.513" x="130.644" y="240.889">Carol</text>
+    </g>
+    <path d="M15,52 L15,75 L69,75 L69,62 L59,52 L15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M59,52 L59,62 L69,62 L59,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="33.963" x="21" y="67.111">A note</text>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="2" id="msg1">
+      <polygon fill="#181818" points="82.175,95,92.175,99,82.175,103,86.175,99" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="42.481" x2="88.175" y1="99" y2="99"/>
+      <text fill="#000" font-size="13" textLength="27.544" x="49.481" y="94.111">hello</text>
+    </g>
+    <path d="M27.653,112 L27.653,135 L160.653,135 L160.653,122 L150.653,112 L27.653,112" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M150.653,112 L150.653,122 L160.653,122 L150.653,112" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="112.044" x="33.653" y="127.111">a note wider than Bob</text>
+    <g class="message" data-entity-1="part2" data-entity-2="part3" data-source-line="4" id="msg2">
+      <polygon fill="#181818" points="135.4,155,145.4,159,135.4,163,139.4,159" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="94.175" x2="141.4" y1="159" y2="159"/>
+      <text fill="#000" font-size="13" textLength="10.156" x="101.175" y="154.111">hi</text>
+    </g>
+    <path d="M110.859,172 L110.859,208 L183.859,208 L183.859,182 L173.859,172 L110.859,172" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M173.859,172 L173.859,182 L183.859,182 L173.859,172" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="52.081" x="116.859" y="187.111">multi-line</text>
+    <text fill="#000" font-size="13" textLength="25.269" x="116.859" y="200.111">note</text>
+  </g>
+</svg>
