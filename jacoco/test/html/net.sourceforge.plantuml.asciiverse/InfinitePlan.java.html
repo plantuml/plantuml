@@ -91,6 +91,20 @@ public final class InfinitePlan {
 <span class="fc" id="L91">		plan.get(dy).setStringAt(dx, s);</span>
 <span class="fc" id="L92">	}</span>
 
+	// Erases the width x height rectangle starting at the current position
+	// into opaque blanks: they print as spaces, but getCharAt() does not report
+	// them as ' ', and drawing a space over one leaves it opaque (see
+	// InfiniteString.setCharAt()). So a later pass that only draws into empty
+	// cells (the lifelines, see PlayingSpaceWithParticipants.asciiDraw())
+	// leaves the rectangle alone, and whatever was drawn there before is gone:
+	// this is how a box hides what lies behind it, like a note drawn over a
+	// lifeline in the pixel rendering.
+	public void opacify(int width, int height) {
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (int j = 0; j &lt; height; j++)</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			for (int i = 0; i &lt; width; i++)</span>
+<span class="fc" id="L105">				move(i, j).drawChar(InfiniteString.OPAQUE_BLANK);</span>
+<span class="fc" id="L106">	}</span>
+
 //	public void fillRect(char c, int x, int y, int width, int height) {
 //		for (int i = 0; i &lt; width; i++)
 //			for (int j = 0; j &lt; height; j++)
@@ -98,17 +112,17 @@ public final class InfinitePlan {
 //	}
 
 	private void ensureSize(int yAbsolute) {
-<span class="fc bfc" id="L101" title="All 2 branches covered.">		while (yAbsolute &gt;= plan.size())</span>
-<span class="fc" id="L102">			plan.add(new InfiniteString());</span>
-<span class="fc" id="L103">	}</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		while (yAbsolute &gt;= plan.size())</span>
+<span class="fc" id="L116">			plan.add(new InfiniteString());</span>
+<span class="fc" id="L117">	}</span>
 
 	public char getCharAt(int x, int y) {
-<span class="fc" id="L106">		x += dx;</span>
-<span class="fc" id="L107">		y += dy;</span>
-<span class="pc bpc" id="L108" title="2 of 4 branches missed.">		if (y &lt; 0 || y &gt;= plan.size())</span>
-<span class="nc" id="L109">			return ' ';</span>
+<span class="fc" id="L120">		x += dx;</span>
+<span class="fc" id="L121">		y += dy;</span>
+<span class="pc bpc" id="L122" title="2 of 4 branches missed.">		if (y &lt; 0 || y &gt;= plan.size())</span>
+<span class="nc" id="L123">			return ' ';</span>
 
-<span class="fc" id="L111">		return plan.get(y).getCharAt(x);</span>
+<span class="fc" id="L125">		return plan.get(y).getCharAt(x);</span>
 	}
 
 	// Every line is rendered from the same startingPosition, found here as
@@ -129,18 +143,18 @@ public final class InfinitePlan {
 	// charset per the JLS, so this exception is not actually reachable, only
 	// declared.
 	public void exportTxt(OutputStream os) throws UnsupportedEncodingException {
-<span class="fc" id="L132">		final PrintStream ps = SecurityUtils.createPrintStream(os, false, StandardCharsets.UTF_8);</span>
-<span class="fc" id="L133">		int startingPosition = 0;</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		for (InfiniteString line : plan)</span>
-<span class="fc" id="L135">			startingPosition = Math.min(startingPosition, line.getLeftmostPosition());</span>
+<span class="fc" id="L146">		final PrintStream ps = SecurityUtils.createPrintStream(os, false, StandardCharsets.UTF_8);</span>
+<span class="fc" id="L147">		int startingPosition = 0;</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		for (InfiniteString line : plan)</span>
+<span class="fc" id="L149">			startingPosition = Math.min(startingPosition, line.getLeftmostPosition());</span>
 
-<span class="fc bfc" id="L137" title="All 2 branches covered.">		for (InfiniteString line : plan)</span>
-<span class="fc" id="L138">			ps.println(line.getString(startingPosition));</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		for (InfiniteString line : plan)</span>
+<span class="fc" id="L152">			ps.println(line.getString(startingPosition));</span>
 
-<span class="fc" id="L140">	}</span>
+<span class="fc" id="L154">	}</span>
 
 	public TextStringBounder getStringBounder() {
-<span class="nc" id="L143">		return stringBounder;</span>
+<span class="nc" id="L157">		return stringBounder;</span>
 	}
 
 	// Character set: centralizes the ASCII vs Unicode (box-drawing) choice for
@@ -151,15 +165,15 @@ public final class InfinitePlan {
 	// asciiart.UmlCharAreaImpl (drawBoxSimpleUnicode) rather than reused from
 	// it, since that package is slated for removal.
 	public boolean isUnicode() {
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		return stringBounder.getFileFormat() == FileFormat.UTXT;</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">		return stringBounder.getFileFormat() == FileFormat.UTXT;</span>
 	}
 
 	public char getHLineChar() {
-<span class="fc bfc" id="L158" title="All 2 branches covered.">		return isUnicode() ? '\u2500' : '-'; // ─ or -</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		return isUnicode() ? '\u2500' : '-'; // ─ or -</span>
 	}
 
 	public char getVLineChar() {
-<span class="fc bfc" id="L162" title="All 2 branches covered.">		return isUnicode() ? '\u2502' : '|'; // │ or |</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		return isUnicode() ? '\u2502' : '|'; // │ or |</span>
 	}
 
 	// The two lifeline/box-border junction characters: a T pointing down
@@ -172,11 +186,11 @@ public final class InfinitePlan {
 	// read for the character, not reused as code, since the source
 	// (legacy asciiart) is slated for removal.
 	private char getTDownChar() {
-<span class="fc bfc" id="L175" title="All 2 branches covered.">		return isUnicode() ? '┬' : '+';</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		return isUnicode() ? '┬' : '+';</span>
 	}
 
 	private char getTUpChar() {
-<span class="fc bfc" id="L179" title="All 2 branches covered.">		return isUnicode() ? '┴' : '+';</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		return isUnicode() ? '┴' : '+';</span>
 	}
 
 	// Mutes the cell at the current position into the correct lifeline
@@ -187,12 +201,12 @@ public final class InfinitePlan {
 	// plain borders and lines, so callers (PlayingSpaceWithParticipants's
 	// lifeline-fill pass) never hardcode a junction character themselves.
 	public void muteLifelineBelowBox() {
-<span class="fc" id="L190">		muteChar(getHLineChar(), getTDownChar(), ' ', getVLineChar());</span>
-<span class="fc" id="L191">	}</span>
+<span class="fc" id="L204">		muteChar(getHLineChar(), getTDownChar(), ' ', getVLineChar());</span>
+<span class="fc" id="L205">	}</span>
 
 	public void muteLifelineAboveBox() {
-<span class="fc" id="L194">		muteChar(getHLineChar(), getTUpChar(), ' ', getVLineChar());</span>
-<span class="fc" id="L195">	}</span>
+<span class="fc" id="L208">		muteChar(getHLineChar(), getTUpChar(), ' ', getVLineChar());</span>
+<span class="fc" id="L209">	}</span>
 
 	// Straight, unconditional fills over an inclusive range — the ASCII
 	// counterpart of a UGraphic hline/vline. Callers that need to preserve
@@ -200,12 +214,12 @@ public final class InfinitePlan {
 	// getCharAt() themselves before calling drawChar() directly, as
 	// PlayingSpaceWithParticipants's lifeline-fill pass currently does.
 	public void drawHLine(int xFrom, int xTo, int y) {
-<span class="fc" id="L203">		fillHLine(getHLineChar(), xFrom, xTo, y);</span>
-<span class="fc" id="L204">	}</span>
+<span class="fc" id="L217">		fillHLine(getHLineChar(), xFrom, xTo, y);</span>
+<span class="fc" id="L218">	}</span>
 
 	public void drawVLine(int yFrom, int yTo, int x) {
-<span class="fc" id="L207">		fillVLine(getVLineChar(), yFrom, yTo, x);</span>
-<span class="fc" id="L208">	}</span>
+<span class="fc" id="L221">		fillVLine(getVLineChar(), yFrom, yTo, x);</span>
+<span class="fc" id="L222">	}</span>
 
 	// Dashed variant, for dotted arrows (return messages, async replies...).
 	// Idea copied from the legacy asciiart.ComponentTextArrow.drawU(), which
@@ -213,17 +227,17 @@ public final class InfinitePlan {
 	// ArrowConfiguration.isDotted(); reimplemented here as &quot;only draw every
 	// other cell&quot; in the first place, same visual result, no code reused.
 	public void drawHLine(int xFrom, int xTo, int y, boolean dotted) {
-<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (dotted == false) {</span>
-<span class="fc" id="L217">			drawHLine(xFrom, xTo, y);</span>
-<span class="fc" id="L218">			return;</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		if (dotted == false) {</span>
+<span class="fc" id="L231">			drawHLine(xFrom, xTo, y);</span>
+<span class="fc" id="L232">			return;</span>
 		}
 
-<span class="fc" id="L221">		final char c = getHLineChar();</span>
-<span class="fc" id="L222">		int idx = 0;</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">		for (int i = xFrom; i &lt;= xTo; i++, idx++)</span>
-<span class="fc bfc" id="L224" title="All 2 branches covered.">			if (idx % 2 == 0)</span>
-<span class="fc" id="L225">				move(i, y).drawChar(c);</span>
-<span class="fc" id="L226">	}</span>
+<span class="fc" id="L235">		final char c = getHLineChar();</span>
+<span class="fc" id="L236">		int idx = 0;</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">		for (int i = xFrom; i &lt;= xTo; i++, idx++)</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">			if (idx % 2 == 0)</span>
+<span class="fc" id="L239">				move(i, y).drawChar(c);</span>
+<span class="fc" id="L240">	}</span>
 
 	// Char-parameterized versions of the two above: used internally wherever
 	// a border needs a character other than the plain box/lifeline one
@@ -233,14 +247,14 @@ public final class InfinitePlan {
 	// directly instead of every InfinitePlan drawing primitive needing a
 	// public wrapper.
 	void fillHLine(char c, int xFrom, int xTo, int y) {
-<span class="fc bfc" id="L236" title="All 2 branches covered.">		for (int i = xFrom; i &lt;= xTo; i++)</span>
-<span class="fc" id="L237">			move(i, y).drawChar(c);</span>
-<span class="fc" id="L238">	}</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		for (int i = xFrom; i &lt;= xTo; i++)</span>
+<span class="fc" id="L251">			move(i, y).drawChar(c);</span>
+<span class="fc" id="L252">	}</span>
 
 	void fillVLine(char c, int yFrom, int yTo, int x) {
-<span class="fc bfc" id="L241" title="All 2 branches covered.">		for (int j = yFrom; j &lt;= yTo; j++)</span>
-<span class="fc" id="L242">			move(x, j).drawChar(c);</span>
-<span class="fc" id="L243">	}</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		for (int j = yFrom; j &lt;= yTo; j++)</span>
+<span class="fc" id="L256">			move(x, j).drawChar(c);</span>
+<span class="fc" id="L257">	}</span>
 
 	// Public (not package-private): originally relaxed from `private` only for
 	// AGroupFrame's own custom-drawn top border (its bottom border and sides
@@ -253,11 +267,11 @@ public final class InfinitePlan {
 	// principle as getHLineChar()/getVLineChar(): InfinitePlan owns every
 	// format-dependent character choice, callers never hardcode one.
 	public char getTopLeftChar() {
-<span class="fc bfc" id="L256" title="All 2 branches covered.">		return isUnicode() ? '\u250c' : ','; // ┌ or ,</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">		return isUnicode() ? '\u250c' : ','; // ┌ or ,</span>
 	}
 
 	public char getTopRightChar() {
-<span class="fc bfc" id="L260" title="All 2 branches covered.">		return isUnicode() ? '\u2510' : '.'; // ┐ or .</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">		return isUnicode() ? '\u2510' : '.'; // ┐ or .</span>
 	}
 
 	// Public, not package-private, for the same reason as
@@ -265,40 +279,40 @@ public final class InfinitePlan {
 	// AGroupFrame's plain (non-tab) frame shape (the one a partition uses),
 	// widened for CommunicationTileSelf's loop-box corners.
 	public char getBottomLeftChar() {
-<span class="fc bfc" id="L268" title="All 2 branches covered.">		return isUnicode() ? '\u2514' : '`'; // └ or `</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">		return isUnicode() ? '\u2514' : '`'; // └ or `</span>
 	}
 
 	public char getBottomRightChar() {
-<span class="fc bfc" id="L272" title="All 2 branches covered.">		return isUnicode() ? '\u2518' : '\''; // ┘ or '</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">		return isUnicode() ? '\u2518' : '\''; // ┘ or '</span>
 	}
 
 	public void drawBox(int width, int height) {
-<span class="pc bpc" id="L276" title="2 of 4 branches missed.">		if (width &lt;= 0 || height &lt;= 0)</span>
-<span class="nc" id="L277">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L290" title="2 of 4 branches missed.">		if (width &lt;= 0 || height &lt;= 0)</span>
+<span class="nc" id="L291">			throw new IllegalArgumentException();</span>
 
 		// top border
-<span class="fc" id="L280">		drawChar(getTopLeftChar());</span>
-<span class="pc bpc" id="L281" title="1 of 2 branches missed.">		if (width &gt; 2)</span>
-<span class="fc" id="L282">			drawHLine(1, width - 2, 0);</span>
-<span class="pc bpc" id="L283" title="1 of 2 branches missed.">		if (width &gt; 1)</span>
-<span class="fc" id="L284">			move(width - 1, 0).drawChar(getTopRightChar());</span>
+<span class="fc" id="L294">		drawChar(getTopLeftChar());</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">		if (width &gt; 2)</span>
+<span class="fc" id="L296">			drawHLine(1, width - 2, 0);</span>
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		if (width &gt; 1)</span>
+<span class="fc" id="L298">			move(width - 1, 0).drawChar(getTopRightChar());</span>
 
 		// sides
-<span class="pc bpc" id="L287" title="1 of 2 branches missed.">		if (height &gt; 2) {</span>
-<span class="fc" id="L288">			drawVLine(1, height - 2, 0);</span>
-<span class="pc bpc" id="L289" title="1 of 2 branches missed.">			if (width &gt; 1)</span>
-<span class="fc" id="L290">				drawVLine(1, height - 2, width - 1);</span>
+<span class="pc bpc" id="L301" title="1 of 2 branches missed.">		if (height &gt; 2) {</span>
+<span class="fc" id="L302">			drawVLine(1, height - 2, 0);</span>
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">			if (width &gt; 1)</span>
+<span class="fc" id="L304">				drawVLine(1, height - 2, width - 1);</span>
 		}
 
 		// bottom border
-<span class="pc bpc" id="L294" title="1 of 2 branches missed.">		if (height &gt; 1) {</span>
-<span class="fc" id="L295">			move(0, height - 1).drawChar(getBottomLeftChar());</span>
-<span class="pc bpc" id="L296" title="1 of 2 branches missed.">			if (width &gt; 2)</span>
-<span class="fc" id="L297">				drawHLine(1, width - 2, height - 1);</span>
-<span class="pc bpc" id="L298" title="1 of 2 branches missed.">			if (width &gt; 1)</span>
-<span class="fc" id="L299">				move(width - 1, height - 1).drawChar(getBottomRightChar());</span>
+<span class="pc bpc" id="L308" title="1 of 2 branches missed.">		if (height &gt; 1) {</span>
+<span class="fc" id="L309">			move(0, height - 1).drawChar(getBottomLeftChar());</span>
+<span class="pc bpc" id="L310" title="1 of 2 branches missed.">			if (width &gt; 2)</span>
+<span class="fc" id="L311">				drawHLine(1, width - 2, height - 1);</span>
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">			if (width &gt; 1)</span>
+<span class="fc" id="L313">				move(width - 1, height - 1).drawChar(getBottomRightChar());</span>
 		}
-<span class="fc" id="L301">	}</span>
+<span class="fc" id="L315">	}</span>
 
 	// Returns an AsciiBlock rather than drawing eagerly: the actual shape
 	// (ASCII dog-ear vs. Unicode double-line box) lives in ANote, so that the
@@ -314,7 +328,7 @@ public final class InfinitePlan {
 	// lines — see Display.asciiDraw()), and ANote derives its own width/height
 	// from text.asciiDimension() internally — nothing to compute here.
 	public AsciiBlock createNoteBox(AsciiBlock text) {
-<span class="fc" id="L317">		return new ANote(text);</span>
+<span class="fc" id="L331">		return new ANote(text);</span>
 	}
 
 }

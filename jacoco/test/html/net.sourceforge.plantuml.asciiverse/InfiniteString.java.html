@@ -51,31 +51,40 @@ package net.sourceforge.plantuml.asciiverse;
 // in positiveChars.
 <span class="fc" id="L52">public class InfiniteString {</span>
 
-<span class="fc" id="L54">	private final StringBuilder positiveChars = new StringBuilder();</span>
-<span class="fc" id="L55">	private final StringBuilder negativeChars = new StringBuilder();</span>
+	// A cell that is not empty but prints as a space (see
+	// InfinitePlan.opacify()): getString() renders it as ' ', getCharAt()
+	// returns it as is, and setCharAt() does not turn it back into a plain
+	// ' ' (a space is no ink).
+	static final char OPAQUE_BLANK = '\u0000';
+
+<span class="fc" id="L60">	private final StringBuilder positiveChars = new StringBuilder();</span>
+<span class="fc" id="L61">	private final StringBuilder negativeChars = new StringBuilder();</span>
 
 	private void ensureLength(int length) {
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		while (positiveChars.length() &lt; length)</span>
-<span class="fc" id="L59">			positiveChars.append(' ');</span>
-
-<span class="fc" id="L61">	}</span>
-
-	private void ensureNegativeLength(int length) {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		while (negativeChars.length() &lt; length)</span>
-<span class="fc" id="L65">			negativeChars.append(' ');</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		while (positiveChars.length() &lt; length)</span>
+<span class="fc" id="L65">			positiveChars.append(' ');</span>
 
 <span class="fc" id="L67">	}</span>
 
+	private void ensureNegativeLength(int length) {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		while (negativeChars.length() &lt; length)</span>
+<span class="fc" id="L71">			negativeChars.append(' ');</span>
+
+<span class="fc" id="L73">	}</span>
+
 	public void setCharAt(int position, char ch) {
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (position &gt;= 0) {</span>
-<span class="fc" id="L71">			ensureLength(position + 1);</span>
-<span class="fc" id="L72">			positiveChars.setCharAt(position, ch);</span>
+<span class="fc bfc" id="L76" title="All 4 branches covered.">		if (ch == ' ' &amp;&amp; getCharAt(position) == OPAQUE_BLANK)</span>
+<span class="fc" id="L77">			return;</span>
+
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (position &gt;= 0) {</span>
+<span class="fc" id="L80">			ensureLength(position + 1);</span>
+<span class="fc" id="L81">			positiveChars.setCharAt(position, ch);</span>
 		} else {
-<span class="fc" id="L74">			final int negIndex = -position - 1;</span>
-<span class="fc" id="L75">			ensureNegativeLength(negIndex + 1);</span>
-<span class="fc" id="L76">			negativeChars.setCharAt(negIndex, ch);</span>
+<span class="fc" id="L83">			final int negIndex = -position - 1;</span>
+<span class="fc" id="L84">			ensureNegativeLength(negIndex + 1);</span>
+<span class="fc" id="L85">			negativeChars.setCharAt(negIndex, ch);</span>
 		}
-<span class="fc" id="L78">	}</span>
+<span class="fc" id="L87">	}</span>
 
 	public void setStringAt(int position, String s) {
 		// Delegates to setCharAt() one character at a time rather than
@@ -83,23 +92,23 @@ package net.sourceforge.plantuml.asciiverse;
 		// negative and cross into positive territory (or vice versa) in a
 		// single call, and reusing setCharAt() keeps that split in exactly
 		// one place instead of duplicating the position &gt;= 0 test here.
-<span class="fc bfc" id="L86" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++)</span>
-<span class="fc" id="L87">			setCharAt(position + i, s.charAt(i));</span>
-<span class="fc" id="L88">	}</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++)</span>
+<span class="fc" id="L96">			setCharAt(position + i, s.charAt(i));</span>
+<span class="fc" id="L97">	}</span>
 
 	public char getCharAt(int position) {
-<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (position &gt;= 0) {</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">			if (position &gt;= positiveChars.length())</span>
-<span class="fc" id="L93">				return ' ';</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (position &gt;= 0) {</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">			if (position &gt;= positiveChars.length())</span>
+<span class="fc" id="L102">				return ' ';</span>
 
-<span class="fc" id="L95">			return positiveChars.charAt(position);</span>
+<span class="fc" id="L104">			return positiveChars.charAt(position);</span>
 		}
 
-<span class="fc" id="L98">		final int negIndex = -position - 1;</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (negIndex &gt;= negativeChars.length())</span>
-<span class="fc" id="L100">			return ' ';</span>
+<span class="fc" id="L107">		final int negIndex = -position - 1;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (negIndex &gt;= negativeChars.length())</span>
+<span class="fc" id="L109">			return ' ';</span>
 
-<span class="fc" id="L102">		return negativeChars.charAt(negIndex);</span>
+<span class="fc" id="L111">		return negativeChars.charAt(negIndex);</span>
 	}
 
 	// The leftmost position ever written to on this line, as a value &lt;= 0:
@@ -111,7 +120,7 @@ package net.sourceforge.plantuml.asciiverse;
 	// neighbors', and every line must be rendered from the same column for the
 	// output to stay aligned.
 	public int getLeftmostPosition() {
-<span class="fc" id="L114">		return -negativeChars.length();</span>
+<span class="fc" id="L123">		return -negativeChars.length();</span>
 	}
 
 	// Renders the line from startingPosition (inclusive) to the end of
@@ -123,18 +132,18 @@ package net.sourceforge.plantuml.asciiverse;
 	// further left than any line did) reads back as a space, same as
 	// getCharAt() does.
 	public String getString(int startingPosition) {
-<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (startingPosition &gt;= 0)</span>
-<span class="fc" id="L127">			return positiveChars.substring(startingPosition);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (startingPosition &gt;= 0)</span>
+<span class="fc" id="L136">			return positiveChars.substring(startingPosition).replace(OPAQUE_BLANK, ' ');</span>
 
-<span class="fc" id="L129">		final int negLength = -startingPosition;</span>
-<span class="fc" id="L130">		final StringBuilder result = new StringBuilder(negLength + positiveChars.length());</span>
+<span class="fc" id="L138">		final int negLength = -startingPosition;</span>
+<span class="fc" id="L139">		final StringBuilder result = new StringBuilder(negLength + positiveChars.length());</span>
 		// Walk from the leftmost requested position (highest negIndex) up to
 		// -1 (negIndex 0), i.e. left to right, matching reading order.
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (int negIndex = negLength - 1; negIndex &gt;= 0; negIndex--)</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">			result.append(negIndex &lt; negativeChars.length() ? negativeChars.charAt(negIndex) : ' ');</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		for (int negIndex = negLength - 1; negIndex &gt;= 0; negIndex--)</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">			result.append(negIndex &lt; negativeChars.length() ? negativeChars.charAt(negIndex) : ' ');</span>
 
-<span class="fc" id="L136">		result.append(positiveChars);</span>
-<span class="fc" id="L137">		return result.toString();</span>
+<span class="fc" id="L145">		result.append(positiveChars);</span>
+<span class="fc" id="L146">		return result.toString().replace(OPAQUE_BLANK, ' ');</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

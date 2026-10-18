@@ -404,31 +404,35 @@ public class LivingSpace {
 	private int asciiMarginAfter;
 
 	public void ensureAsciiMarginBefore(int margin) {
-<span class="nc bnc" id="L407" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">		if (margin &lt; 0)</span>
 <span class="nc" id="L408">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L409">		this.asciiMarginBefore = Math.max(asciiMarginBefore, margin);</span>
-<span class="nc" id="L410">	}</span>
+<span class="fc" id="L409">		this.asciiMarginBefore = Math.max(asciiMarginBefore, margin);</span>
+<span class="fc" id="L410">	}</span>
 
 	public void ensureAsciiMarginAfter(int margin) {
-<span class="nc bnc" id="L413" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="pc bpc" id="L413" title="1 of 2 branches missed.">		if (margin &lt; 0)</span>
 <span class="nc" id="L414">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L415">		this.asciiMarginAfter = Math.max(asciiMarginAfter, margin);</span>
-<span class="nc" id="L416">	}</span>
+<span class="fc" id="L415">		this.asciiMarginAfter = Math.max(asciiMarginAfter, margin);</span>
+<span class="fc" id="L416">	}</span>
 
+	// Live, like getPosALive()/getPosELive() above, and for the same reason:
+	// LivingSpaces.asciiAddConstraints() reads these before the tiles'
+	// asciiAddConstraints() grow the margins (see NoteTile), so a margin
+	// baked in at call time would always be 0
 	public Real getAsciiPosA() {
-<span class="fc" id="L419">		return getAsciiPosB().addFixed(-asciiMarginBefore);</span>
+<span class="fc" id="L423">		return RealUtils.withLiveOffset(getAsciiPosB(), () -&gt; -asciiMarginBefore);</span>
 	}
 
 	public Real getAsciiPosE() {
-<span class="fc" id="L423">		return getAsciiPosD().addFixed(asciiMarginAfter);</span>
+<span class="fc" id="L427">		return RealUtils.withLiveOffset(getAsciiPosD(), () -&gt; asciiMarginAfter);</span>
 	}
 
 	public Real getAsciiLifeColumn() {
-<span class="fc" id="L427">		return getAsciiPosC();</span>
+<span class="fc" id="L431">		return getAsciiPosC();</span>
 	}
 
 	public Real getAsciiLeftColumn() {
-<span class="fc" id="L431">		return getAsciiPosB();</span>
+<span class="fc" id="L435">		return getAsciiPosB();</span>
 	}
 
 }
