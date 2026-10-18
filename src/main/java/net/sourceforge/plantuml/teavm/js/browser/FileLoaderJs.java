@@ -110,10 +110,14 @@ import net.sourceforge.plantuml.nio.NFolder;
  * itself: which files may be read is decided by the host.
  * <p>
  * The engine never waits for the host: the diagram is rendered, the include
- * fails while its file is not there yet, and the diagram is rendered again
- * once the host has answered (see {@link PendingResources}). So the loader is
- * called once per file, kind and <code>from</code> during one rendering, before
- * the rendering whose result is delivered, and again at the next rendering.
+ * is skipped while its file is not there yet (the rendering goes on, so the
+ * files of the following includes are asked for in the same round), and the
+ * diagram is rendered again once the host has answered (see
+ * {@link PendingResources}). So the loader is called once per file, kind and
+ * <code>from</code> during one rendering, before the rendering whose result is
+ * delivered, and again at the next rendering. It may also be asked for a file
+ * that the delivered rendering does not use, when an <code>!if</code> depends
+ * on a file that was not there yet.
  * <p>
  * The same shape as <code>PLANTUML_STDLIB_LOADER</code> in
  * {@link ScriptLoaderJs}. With no loader set, a local include fails, and

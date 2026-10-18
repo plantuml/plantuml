@@ -15,6 +15,11 @@
 // - each round discovers one more level: an include chain of any depth up to
 //   the limit renders, and the host is asked once per file during a rendering
 //   (and again at the next rendering, so an edited file is seen);
+// - a rendering reads on past an include whose file is not there yet, so the
+//   includes of one level are asked for in the same round: many includes side
+//   by side take one round, not one per file (issue #2943);
+// - a file chosen by an !if on a value from a file not loaded yet gives the
+//   right branch, and the other branch's file, asked for once, is not reported;
 // - rendering again is invisible: the same source gives the same SVG, a
 //   failure that is reported on the console is reported once, not once per
 //   round, and render() only writes the target with the final result;
@@ -50,12 +55,30 @@ window.__files = {};
 for (let i = 0; i < 30; i++)
   window.__files['/p/chain' + i + '.puml'] = (i > 0 ? '!include chain' + (i - 1) + '.puml\\n' : '') + 'A' + i + ' -> B' + i + ' : level' + i;
 window.__files['/p/broken.puml'] = '!include does-not-exist.puml\\nX -> Y : broken';
+// "wideN.puml" stands alone; "fanN.puml" includes "leafN.puml".
+for (let i = 1; i <= 60; i++) {
+  window.__files['/p/wide' + i + '.puml'] = 'W' + i + ' -> V' + i + ' : wide' + i;
+  window.__files['/p/fan' + i + '.puml'] = '!include leaf' + i + '.puml';
+  window.__files['/p/leaf' + i + '.puml'] = 'L' + i + ' -> M' + i + ' : leaf' + i;
+}
+// flag.puml sets the variable picked.puml depends on; ghost.puml does not exist.
+window.__files['/p/flag.puml'] = '!$picked = "yes"';
+window.__files['/p/picked.puml'] = 'P -> Q : pickedBranch';
 window.__loads = [];
+// Loading rounds: the loader is called for every file of a round in the same
+// JavaScript task, so calls in one task count as one round.
+window.__rounds = 0;
+window.__inRound = false;
 window.__delay = 5;
 window.__hang = false;
 globalThis.PLANTUML_FILE_LOADER = function(p, from, ok, err) {
   const full = '/p/' + p;
   window.__loads.push(full);
+  if (!window.__inRound) {
+    window.__inRound = true;
+    window.__rounds++;
+    setTimeout(() => { window.__inRound = false; }, 0);
+  }
   if (window.__hang && p === 'hang.puml') return;
   setTimeout(() => window.__files[full] !== undefined ? ok(full, window.__files[full]) : err('no such file ' + full), window.__delay);
 };
@@ -89,6 +112,8 @@ const { check, finish } = createCheckReporter();
   });
   const run = (lines, opts) => page.evaluate(([l, o]) => window.__h.withTimeout(window.__h.rts(l, o), 120000), [lines, opts || null]);
   const loads = () => page.evaluate(() => { const l = window.__loads; window.__loads = []; return l; });
+  const rounds = () => page.evaluate(() => { const r = window.__rounds; window.__rounds = 0; return r; });
+  const includes = (prefix, n) => ['@startuml', ...Array.from({ length: n }, (_, i) => `!include ${prefix}${i + 1}.puml`), '@enduml'];
   const chain = n => ['@startuml', `!include chain${n}.puml`, '@enduml'];
 
   // 1. Never answered from the call itself, even with everything at hand.
@@ -106,6 +131,42 @@ const { check, finish } = createCheckReporter();
   await run(chain(12));
   const againLoads = await loads();
   check('the next rendering asks the host again (an edited file is seen)', againLoads.length === 13, againLoads.join(','));
+
+  // 2b. Many includes on one level (issue #2943): one round, not one per file.
+  for (const n of [21, 60]) {
+    await loads(); await rounds();
+    const wide = await run(includes('wide', n));
+    const wideLoads = await loads();
+    const wideRounds = await rounds();
+    check(`${n} includes side by side render`,
+      !!wide.ok && wide.ok.includes('wide1') && wide.ok.includes('wide' + n), String(wide.err || '').slice(0, 200));
+    check(`${n} includes side by side are asked for in one round`,
+      wideRounds === 1 && wideLoads.length === n && new Set(wideLoads).size === n,
+      `${wideRounds} round(s), ${wideLoads.length} load(s)`);
+  }
+  await loads(); await rounds();
+  const fan = await run(includes('fan', 30));
+  const fanLoads = await loads();
+  const fanRounds = await rounds();
+  check('30 includes that each include a file render',
+    !!fan.ok && fan.ok.includes('leaf1') && fan.ok.includes('leaf30'), String(fan.err || '').slice(0, 200));
+  check('30 includes that each include a file take two rounds, one per level',
+    fanRounds === 2 && fanLoads.length === 60 && new Set(fanLoads).size === 60,
+    `${fanRounds} round(s), ${fanLoads.length} load(s)`);
+
+  // 2c. An !if on a value from a file that is not there yet.
+  const warnsBeforeIf = consoleMessages.length;
+  await loads();
+  const branch = await run(['@startuml', '!include flag.puml', '!if %variable_exists("$picked")', '!include picked.puml',
+    '!else', '!include ghost.puml', '!endif', '@enduml']);
+  const branchLoads = await loads();
+  check('an !if on a value from a file loaded later takes the right branch',
+    !!branch.ok && branch.ok.includes('pickedBranch') && !/cannot include/.test(branch.ok), String(branch.err || branch.ok).slice(0, 200));
+  check('the file of the other branch is asked for once',
+    branchLoads.filter(l => l === '/p/ghost.puml').length === 1, branchLoads.join(','));
+  check('the file of the other branch is not reported',
+    consoleMessages.slice(warnsBeforeIf).every(m => !/ghost\.puml/.test(m.text)),
+    consoleMessages.slice(warnsBeforeIf).map(m => m.text).join(' | '));
 
   // 3. Rendering again is invisible.
   const full = ['@startuml', '!theme cerulean', '!include chain3.puml', 'class Foo', 'Foo --> Bar : <:smile:> <&heart>', '@enduml'];

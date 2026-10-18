@@ -175,6 +175,15 @@ const renderedAs = r => r.thrown || (r.svg ? (isErrorImage(r.svg) ? 'error image
   : 'svg without the expected content') : 'no svg: ' + r.text.slice(0, 120));
 const calls = r => JSON.stringify(r.loaderCalls || []);
 const locations = r => JSON.stringify((r.loaderCalls || []).map(({ path, from }) => ({ path, from })));
+// Same (path, from) pairs, the same number of times each, in any order: the
+// host is asked round by round (the files of one include level together), and
+// the order of the requests is not specified.
+const sameLocations = (r, expected) => {
+  const key = ({ path, from }) => JSON.stringify({ path, from });
+  const actual = (r.loaderCalls || []).map(key).sort();
+  const wanted = expected.map(key).sort();
+  return actual.length === wanted.length && actual.every((k, i) => k === wanted[i]);
+};
 
 (async () => {
   const port = await startServer(server);
@@ -311,7 +320,7 @@ const locations = r => JSON.stringify((r.loaderCalls || []).map(({ path, from })
   r = await renderOn(hook.page, diagram('!includesub common/subs.puml!PART', '!include greeting.puml'), opts);
   check('!includesub uses the delivered file as from and restores its caller afterwards',
     renders(r, 'Hello from leaf', 'Hello from greeting')
-    && locations(r) === JSON.stringify([
+    && sameLocations(r, [
       { path: 'common/subs.puml', from: null },
       { path: '../parts/leaf.puml', from: '/project/docs/common/subs.puml' },
       { path: 'greeting.puml', from: null },
@@ -338,7 +347,7 @@ const locations = r => JSON.stringify((r.loaderCalls || []).map(({ path, from })
   r = await renderOn(hook.page, diagram('!include common/themed.puml', '!include greeting.puml'), opts);
   check('a local theme keeps the calling file as from and restores the diagram afterwards',
     renders(r, 'Hello from theme caller', 'Hello after theme', 'Hello from greeting')
-    && !r.svg.includes('WRONG_THEME_FOLDER') && locations(r) === JSON.stringify([
+    && !r.svg.includes('WRONG_THEME_FOLDER') && sameLocations(r, [
       { path: 'common/themed.puml', from: null },
       { path: '../themes/puml-theme-including.puml', from: '/project/docs/common/themed.puml' },
       { path: 'greeting.puml', from: '/project/docs/common/themed.puml' },
