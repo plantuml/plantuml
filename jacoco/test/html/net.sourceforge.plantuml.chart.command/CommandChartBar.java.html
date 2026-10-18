@@ -94,55 +94,60 @@ public class CommandChartBar extends SingleLineCommand2&lt;ChartDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L97">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L98">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L99">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="nc" id="L100">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L97">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L98">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="fc" id="L99">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="fc" id="L100">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
 
-<span class="nc" id="L102">		final List&lt;Double&gt; values = parseValues(data);</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (values == null)</span>
+<span class="fc" id="L102">		final List&lt;Double&gt; values = parseValues(data);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (values == null)</span>
 <span class="nc" id="L104">			return CommandExecutionResult.error(&quot;Invalid number format in bar data&quot;);</span>
 
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		final String seriesName = name != null ? name : &quot;bar&quot; + diagram.getSeries().size();</span>
-<span class="nc" id="L107">		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.BAR, values);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		final String seriesName = name != null ? name : &quot;bar&quot; + diagram.getSeries().size();</span>
+<span class="fc" id="L107">		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.BAR, values);</span>
 
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (stereo != null) {</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (stereo != null) {</span>
 <span class="nc" id="L110">			series.setStereotype(Stereotype.build(stereo));</span>
 		}
 
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (colorStr != null) {</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (colorStr != null) {</span>
 <span class="nc" id="L114">			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr);</span>
 <span class="nc" id="L115">			series.setColor(color);</span>
 		}
 
 		// Check if LABELS keyword was present
-<span class="nc" id="L119">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (labelsStr != null) {</span>
-<span class="nc" id="L121">			series.setShowLabels(true);</span>
+<span class="fc" id="L119">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (labelsStr != null) {</span>
+<span class="fc" id="L121">			series.setShowLabels(true);</span>
 		}
 
-<span class="nc" id="L124">		return diagram.addSeries(series);</span>
+<span class="fc" id="L124">		return diagram.addSeries(series);</span>
 	}
 
 	private List&lt;Double&gt; parseValues(String data) {
-<span class="nc" id="L128">		final List&lt;Double&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L129" title="All 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="fc" id="L128">		final List&lt;Double&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L129" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
 <span class="nc" id="L130">			return result;</span>
 
-<span class="nc" id="L132">		final String[] parts = data.split(&quot;,&quot;);</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		for (String part : parts) {</span>
+<span class="fc" id="L132">		final String[] parts = data.split(&quot;,&quot;);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (String part : parts) {</span>
+			// An empty slot, as in [25, , 50], is a missing value: it is not drawn
+<span class="fc bfc" id="L135" title="All 2 branches covered.">			if (part.trim().isEmpty()) {</span>
+<span class="fc" id="L136">				result.add(null);</span>
+<span class="fc" id="L137">				continue;</span>
+			}
 			try {
-<span class="nc" id="L135">				result.add(Double.parseDouble(part.trim()));</span>
-<span class="nc" id="L136">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L137">				return null;</span>
-<span class="nc" id="L138">			}</span>
+<span class="fc" id="L140">				result.add(Double.parseDouble(part.trim()));</span>
+<span class="nc" id="L141">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L142">				return null;</span>
+<span class="fc" id="L143">			}</span>
 		}
-<span class="nc" id="L140">		return result;</span>
+<span class="fc" id="L145">		return result;</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="nc" id="L145">		return FIRST_TOKENS;</span>
+<span class="fc" id="L150">		return FIRST_TOKENS;</span>
 	}
 
 }

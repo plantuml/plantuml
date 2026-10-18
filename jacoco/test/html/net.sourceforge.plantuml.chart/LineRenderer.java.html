@@ -53,22 +53,22 @@ public class LineRenderer {
 	private final ChartAxis xAxis;
 
 	public LineRenderer(ISkinParam skinParam, double plotWidth, double plotHeight, int categoryCount,
-<span class="nc" id="L56">			ChartAxis axis, ChartAxis xAxis) {</span>
-<span class="nc" id="L57">		this.skinParam = skinParam;</span>
-<span class="nc" id="L58">		this.plotWidth = plotWidth;</span>
-<span class="nc" id="L59">		this.plotHeight = plotHeight;</span>
-<span class="nc" id="L60">		this.categoryCount = categoryCount;</span>
-<span class="nc" id="L61">		this.axis = axis;</span>
-<span class="nc" id="L62">		this.xAxis = xAxis;</span>
-<span class="nc" id="L63">	}</span>
+<span class="fc" id="L56">			ChartAxis axis, ChartAxis xAxis) {</span>
+<span class="fc" id="L57">		this.skinParam = skinParam;</span>
+<span class="fc" id="L58">		this.plotWidth = plotWidth;</span>
+<span class="fc" id="L59">		this.plotHeight = plotHeight;</span>
+<span class="fc" id="L60">		this.categoryCount = categoryCount;</span>
+<span class="fc" id="L61">		this.axis = axis;</span>
+<span class="fc" id="L62">		this.xAxis = xAxis;</span>
+<span class="fc" id="L63">	}</span>
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
-<span class="nc bnc" id="L66" title="All 4 branches missed.">		if (categoryCount == 0 &amp;&amp; !series.hasExplicitXValues())</span>
+<span class="pc bpc" id="L66" title="3 of 4 branches missed.">		if (categoryCount == 0 &amp;&amp; !series.hasExplicitXValues())</span>
 <span class="nc" id="L67">			return;</span>
 
-<span class="nc" id="L69">		final List&lt;Double&gt; values = series.getValues();</span>
+<span class="fc" id="L69">		final List&lt;Double&gt; values = series.getValues();</span>
 
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (series.hasExplicitXValues()) {</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (series.hasExplicitXValues()) {</span>
 			// Coordinate-pair mode: use explicit x-values
 <span class="nc" id="L73">			final List&lt;Double&gt; xValues = series.getXValues();</span>
 
@@ -95,24 +95,27 @@ public class LineRenderer {
 			}
 <span class="nc" id="L96">		} else {</span>
 			// Index-based mode: use category positioning
-<span class="nc" id="L98">			final double categoryWidth = plotWidth / categoryCount;</span>
+<span class="fc" id="L98">			final double categoryWidth = plotWidth / categoryCount;</span>
 
 			// Draw line segments
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			for (int i = 0; i &lt; Math.min(values.size() - 1, categoryCount - 1); i++) {</span>
-<span class="nc" id="L102">				final double value1 = values.get(i);</span>
-<span class="nc" id="L103">				final double value2 = values.get(i + 1);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">			for (int i = 0; i &lt; Math.min(values.size() - 1, categoryCount - 1); i++) {</span>
+				// No segment touches a missing value, so the line has a gap there
+<span class="fc bfc" id="L103" title="All 4 branches covered.">				if (values.get(i) == null || values.get(i + 1) == null)</span>
+<span class="fc" id="L104">					continue;</span>
+<span class="fc" id="L105">				final double value1 = values.get(i);</span>
+<span class="fc" id="L106">				final double value2 = values.get(i + 1);</span>
 
-<span class="nc" id="L105">				final double x1 = (i + 0.5) * categoryWidth;</span>
-<span class="nc" id="L106">				final double y1 = plotHeight - (value1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="fc" id="L108">				final double x1 = (i + 0.5) * categoryWidth;</span>
+<span class="fc" id="L109">				final double y1 = plotHeight - (value1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
-<span class="nc" id="L108">				final double x2 = (i + 1.5) * categoryWidth;</span>
-<span class="nc" id="L109">				final double y2 = plotHeight - (value2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="fc" id="L111">				final double x2 = (i + 1.5) * categoryWidth;</span>
+<span class="fc" id="L112">				final double y2 = plotHeight - (value2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
-<span class="nc" id="L111">				final ULine line = new ULine(x2 - x1, y2 - y1);</span>
-<span class="nc" id="L112">				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
+<span class="fc" id="L114">				final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="fc" id="L115">				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
 			}
 		}
-<span class="nc" id="L115">	}</span>
+<span class="fc" id="L118">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

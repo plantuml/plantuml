@@ -42,12 +42,12 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 
 public class ChartSeries {
 
-<span class="nc" id="L45">	public enum SeriesType {</span>
-<span class="nc" id="L46">		BAR, LINE, AREA, SCATTER</span>
+<span class="fc" id="L45">	public enum SeriesType {</span>
+<span class="fc" id="L46">		BAR, LINE, AREA, SCATTER</span>
 	}
 
-<span class="nc" id="L49">	public enum MarkerShape {</span>
-<span class="nc" id="L50">		CIRCLE, SQUARE, TRIANGLE</span>
+<span class="fc" id="L49">	public enum MarkerShape {</span>
+<span class="fc" id="L50">		CIRCLE, SQUARE, TRIANGLE</span>
 	}
 
 	private final String name;
@@ -60,15 +60,15 @@ public class ChartSeries {
 	private MarkerShape markerShape;
 	private Stereotype stereotype;
 
-<span class="nc" id="L63">	public ChartSeries(String name, SeriesType type, List&lt;Double&gt; values) {</span>
-<span class="nc" id="L64">		this.name = name;</span>
-<span class="nc" id="L65">		this.type = type;</span>
-<span class="nc" id="L66">		this.values = new ArrayList&lt;&gt;(values);</span>
-<span class="nc" id="L67">		this.xValues = null; // Index-based mode</span>
-<span class="nc" id="L68">		this.useSecondaryAxis = false;</span>
-<span class="nc" id="L69">		this.showLabels = false;</span>
-<span class="nc" id="L70">		this.markerShape = MarkerShape.CIRCLE; // Default marker shape</span>
-<span class="nc" id="L71">	}</span>
+<span class="fc" id="L63">	public ChartSeries(String name, SeriesType type, List&lt;Double&gt; values) {</span>
+<span class="fc" id="L64">		this.name = name;</span>
+<span class="fc" id="L65">		this.type = type;</span>
+<span class="fc" id="L66">		this.values = new ArrayList&lt;&gt;(values);</span>
+<span class="fc" id="L67">		this.xValues = null; // Index-based mode</span>
+<span class="fc" id="L68">		this.useSecondaryAxis = false;</span>
+<span class="fc" id="L69">		this.showLabels = false;</span>
+<span class="fc" id="L70">		this.markerShape = MarkerShape.CIRCLE; // Default marker shape</span>
+<span class="fc" id="L71">	}</span>
 
 <span class="nc" id="L73">	public ChartSeries(String name, SeriesType type, List&lt;Double&gt; xValues, List&lt;Double&gt; yValues) {</span>
 <span class="nc" id="L74">		this.name = name;</span>
@@ -85,11 +85,11 @@ public class ChartSeries {
 	}
 
 	public SeriesType getType() {
-<span class="nc" id="L88">		return type;</span>
+<span class="fc" id="L88">		return type;</span>
 	}
 
 	public List&lt;Double&gt; getValues() {
-<span class="nc" id="L92">		return values;</span>
+<span class="fc" id="L92">		return values;</span>
 	}
 
 	public List&lt;Double&gt; getXValues() {
@@ -97,11 +97,11 @@ public class ChartSeries {
 	}
 
 	public boolean hasExplicitXValues() {
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		return xValues != null;</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		return xValues != null;</span>
 	}
 
 	public HColor getColor() {
-<span class="nc" id="L104">		return color;</span>
+<span class="fc" id="L104">		return color;</span>
 	}
 
 	public void setColor(HColor color) {
@@ -109,7 +109,7 @@ public class ChartSeries {
 <span class="nc" id="L109">	}</span>
 
 	public boolean isUseSecondaryAxis() {
-<span class="nc" id="L112">		return useSecondaryAxis;</span>
+<span class="fc" id="L112">		return useSecondaryAxis;</span>
 	}
 
 	public void setUseSecondaryAxis(boolean useSecondaryAxis) {
@@ -117,12 +117,12 @@ public class ChartSeries {
 <span class="nc" id="L117">	}</span>
 
 	public boolean isShowLabels() {
-<span class="nc" id="L120">		return showLabels;</span>
+<span class="fc" id="L120">		return showLabels;</span>
 	}
 
 	public void setShowLabels(boolean showLabels) {
-<span class="nc" id="L124">		this.showLabels = showLabels;</span>
-<span class="nc" id="L125">	}</span>
+<span class="fc" id="L124">		this.showLabels = showLabels;</span>
+<span class="fc" id="L125">	}</span>
 
 	public MarkerShape getMarkerShape() {
 <span class="nc" id="L128">		return markerShape;</span>
@@ -133,7 +133,7 @@ public class ChartSeries {
 <span class="nc" id="L133">	}</span>
 
 	public Stereotype getStereotype() {
-<span class="nc" id="L136">		return stereotype;</span>
+<span class="fc" id="L136">		return stereotype;</span>
 	}
 
 	public void setStereotype(Stereotype stereotype) {

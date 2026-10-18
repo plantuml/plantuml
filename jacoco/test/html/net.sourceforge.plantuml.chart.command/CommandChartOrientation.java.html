@@ -76,26 +76,26 @@ public class CommandChartOrientation extends SingleLineCommand2&lt;ChartDiagram&
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L79">		final String orientationStr = arg.get(&quot;ORIENTATION&quot;, 0);</span>
+<span class="fc" id="L79">		final String orientationStr = arg.get(&quot;ORIENTATION&quot;, 0);</span>
 
 		ChartDiagram.Orientation orientation;
-<span class="nc bnc" id="L82" title="All 3 branches missed.">		switch (orientationStr.toLowerCase()) {</span>
+<span class="pc bpc" id="L82" title="2 of 3 branches missed.">		switch (orientationStr.toLowerCase()) {</span>
 		case &quot;vertical&quot;:
 <span class="nc" id="L84">			orientation = ChartDiagram.Orientation.VERTICAL;</span>
 <span class="nc" id="L85">			break;</span>
 		case &quot;horizontal&quot;:
-<span class="nc" id="L87">			orientation = ChartDiagram.Orientation.HORIZONTAL;</span>
-<span class="nc" id="L88">			break;</span>
+<span class="fc" id="L87">			orientation = ChartDiagram.Orientation.HORIZONTAL;</span>
+<span class="fc" id="L88">			break;</span>
 		default:
 <span class="nc" id="L90">			return CommandExecutionResult.error(&quot;Invalid orientation: &quot; + orientationStr);</span>
 		}
 
-<span class="nc" id="L93">		return diagram.setOrientation(orientation);</span>
+<span class="fc" id="L93">		return diagram.setOrientation(orientation);</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="nc" id="L98">		return FIRST_TOKENS;</span>
+<span class="fc" id="L98">		return FIRST_TOKENS;</span>
 	}
 
 }

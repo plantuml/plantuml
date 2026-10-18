@@ -94,16 +94,16 @@ public class CommandChartHAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L97">		final String title = arg.get(&quot;TITLE&quot;, 0);</span>
-<span class="nc" id="L98">		final String minStr = arg.get(&quot;RANGE&quot;, 0);</span>
-<span class="nc" id="L99">		final String maxStr = arg.get(&quot;RANGE&quot;, 1);</span>
-<span class="nc" id="L100">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="nc" id="L101">		final String spacingStr = arg.get(&quot;SPACING&quot;, 0);</span>
-<span class="nc" id="L102">		final String labelRightStr = arg.get(&quot;LABELRIGHT&quot;, 0);</span>
-<span class="nc" id="L103">		final String gridStr = arg.get(&quot;GRID&quot;, 0);</span>
+<span class="fc" id="L97">		final String title = arg.get(&quot;TITLE&quot;, 0);</span>
+<span class="fc" id="L98">		final String minStr = arg.get(&quot;RANGE&quot;, 0);</span>
+<span class="fc" id="L99">		final String maxStr = arg.get(&quot;RANGE&quot;, 1);</span>
+<span class="fc" id="L100">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="fc" id="L101">		final String spacingStr = arg.get(&quot;SPACING&quot;, 0);</span>
+<span class="fc" id="L102">		final String labelRightStr = arg.get(&quot;LABELRIGHT&quot;, 0);</span>
+<span class="fc" id="L103">		final String gridStr = arg.get(&quot;GRID&quot;, 0);</span>
 
 		// Parse tick spacing if present (do this first, before any returns)
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (spacingStr != null) {</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (spacingStr != null) {</span>
 			try {
 <span class="nc" id="L108">				final int spacing = Integer.parseInt(spacingStr);</span>
 <span class="nc bnc" id="L109" title="All 2 branches missed.">				if (spacing &lt;= 0) {</span>
@@ -116,53 +116,53 @@ public class CommandChartHAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 		}
 
 		// Set label position if label-right option is present (do this before any returns)
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (labelRightStr != null) {</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (labelRightStr != null) {</span>
 <span class="nc" id="L120">			diagram.setXAxisLabelPosition(ChartAxis.LabelPosition.RIGHT);</span>
 		}
 
 		// Enable grid if grid option is present (do this before any returns)
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (gridStr != null) {</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (gridStr != null) {</span>
 <span class="nc" id="L125">			diagram.setXGridMode(ChartDiagram.GridMode.MAJOR);</span>
 		}
 
 		// If numeric range is provided, this is for horizontal bar chart mode
-<span class="nc bnc" id="L129" title="All 4 branches missed.">		if (minStr != null &amp;&amp; maxStr != null) {</span>
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">		if (minStr != null &amp;&amp; maxStr != null) {</span>
 			try {
-<span class="nc" id="L131">				final double min = Double.parseDouble(minStr);</span>
-<span class="nc" id="L132">				final double max = Double.parseDouble(maxStr);</span>
-<span class="nc" id="L133">				return diagram.setXAxis(title, min, max);</span>
+<span class="fc" id="L131">				final double min = Double.parseDouble(minStr);</span>
+<span class="fc" id="L132">				final double max = Double.parseDouble(maxStr);</span>
+<span class="fc" id="L133">				return diagram.setXAxis(title, min, max);</span>
 <span class="nc" id="L134">			} catch (NumberFormatException e) {</span>
 <span class="nc" id="L135">				return CommandExecutionResult.error(&quot;Invalid number format in axis range&quot;);</span>
 			}
 		}
 
 		// Otherwise, parse as labels
-<span class="nc" id="L140">		final List&lt;String&gt; labels = parseLabels(data);</span>
-<span class="nc" id="L141">		diagram.setXAxisTitle(title);</span>
+<span class="fc" id="L140">		final List&lt;String&gt; labels = parseLabels(data);</span>
+<span class="fc" id="L141">		diagram.setXAxisTitle(title);</span>
 
-<span class="nc" id="L143">		return diagram.setXAxisLabels(labels);</span>
+<span class="fc" id="L143">		return diagram.setXAxisLabels(labels);</span>
 	}
 
 	private List&lt;String&gt; parseLabels(String data) {
-<span class="nc" id="L147">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L148" title="All 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="fc" id="L147">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L148" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
 <span class="nc" id="L149">			return result;</span>
 
 		// Split by comma, handling quoted strings
-<span class="nc" id="L152">		final String[] parts = data.split(&quot;,&quot;);</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (String part : parts) {</span>
-<span class="nc" id="L154">			String label = part.trim();</span>
+<span class="fc" id="L152">		final String[] parts = data.split(&quot;,&quot;);</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (String part : parts) {</span>
+<span class="fc" id="L154">			String label = part.trim();</span>
 			// Remove quotes if present
-<span class="nc bnc" id="L156" title="All 4 branches missed.">			if (label.startsWith(&quot;\&quot;&quot;) &amp;&amp; label.endsWith(&quot;\&quot;&quot;))</span>
+<span class="pc bpc" id="L156" title="3 of 4 branches missed.">			if (label.startsWith(&quot;\&quot;&quot;) &amp;&amp; label.endsWith(&quot;\&quot;&quot;))</span>
 <span class="nc" id="L157">				label = label.substring(1, label.length() - 1);</span>
-<span class="nc" id="L158">			result.add(label);</span>
+<span class="fc" id="L158">			result.add(label);</span>
 		}
-<span class="nc" id="L160">		return result;</span>
+<span class="fc" id="L160">		return result;</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="nc" id="L165">		return FIRST_TOKENS;</span>
+<span class="fc" id="L165">		return FIRST_TOKENS;</span>
 	}
 
 }

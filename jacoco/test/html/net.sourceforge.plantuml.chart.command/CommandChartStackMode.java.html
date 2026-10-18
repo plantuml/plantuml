@@ -76,26 +76,26 @@ public class CommandChartStackMode extends SingleLineCommand2&lt;ChartDiagram&gt
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L79">		final String mode = arg.get(&quot;MODE&quot;, 0);</span>
+<span class="fc" id="L79">		final String mode = arg.get(&quot;MODE&quot;, 0);</span>
 
 		ChartDiagram.StackMode stackMode;
-<span class="nc bnc" id="L82" title="All 3 branches missed.">		switch (mode.toLowerCase()) {</span>
+<span class="pc bpc" id="L82" title="1 of 3 branches missed.">		switch (mode.toLowerCase()) {</span>
 		case &quot;grouped&quot;:
-<span class="nc" id="L84">			stackMode = ChartDiagram.StackMode.GROUPED;</span>
-<span class="nc" id="L85">			break;</span>
+<span class="fc" id="L84">			stackMode = ChartDiagram.StackMode.GROUPED;</span>
+<span class="fc" id="L85">			break;</span>
 		case &quot;stacked&quot;:
-<span class="nc" id="L87">			stackMode = ChartDiagram.StackMode.STACKED;</span>
-<span class="nc" id="L88">			break;</span>
+<span class="fc" id="L87">			stackMode = ChartDiagram.StackMode.STACKED;</span>
+<span class="fc" id="L88">			break;</span>
 		default:
 <span class="nc" id="L90">			return CommandExecutionResult.error(&quot;Invalid stack mode: &quot; + mode);</span>
 		}
 
-<span class="nc" id="L93">		return diagram.setStackMode(stackMode);</span>
+<span class="fc" id="L93">		return diagram.setStackMode(stackMode);</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="nc" id="L98">		return FIRST_TOKENS;</span>
+<span class="fc" id="L98">		return FIRST_TOKENS;</span>
 	}
 
 }
