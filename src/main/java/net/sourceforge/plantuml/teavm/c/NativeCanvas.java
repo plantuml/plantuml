@@ -126,6 +126,9 @@ final class NativeCanvas {
 	@Import(name = "plantuml_canvas_font_metrics")
 	static native void fontMetrics(long canvas, double[] metrics);
 
+	@Import(name = "plantuml_canvas_text_bounds")
+	static native void textBounds(long canvas, char[] text, int length, double[] bounds);
+
 	@Import(name = "plantuml_canvas_fill_text")
 	static native void fillText(long canvas, char[] text, int length, double x, double y, double angle);
 

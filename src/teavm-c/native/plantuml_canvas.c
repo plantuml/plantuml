@@ -222,6 +222,18 @@ void plantuml_canvas_font_metrics(int64_t handle, double* metrics) {
 	metrics[2] = line_gap;
 }
 
+void plantuml_canvas_text_bounds(int64_t handle, const uint16_t* text, int32_t length, double* bounds) {
+	plantuml_canvas_t* c = CANVAS(handle);
+	plutovg_rect_t extents = { 0, 0, 0, 0 };
+	if (c->face != NULL)
+		plutovg_font_face_text_extents(c->face, c->font_size, text, length, PLUTOVG_TEXT_ENCODING_UTF16, &extents);
+	/* plutovg gives the box with y going down from the baseline, as Java2D */
+	bounds[0] = extents.x;
+	bounds[1] = extents.y;
+	bounds[2] = extents.w;
+	bounds[3] = extents.h;
+}
+
 void plantuml_canvas_fill_text(int64_t handle, const uint16_t* text, int32_t length, double x, double y,
 		double angle) {
 	plantuml_canvas_t* c = CANVAS(handle);
