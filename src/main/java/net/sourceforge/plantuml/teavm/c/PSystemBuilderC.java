@@ -90,27 +90,29 @@ public class PSystemBuilderC {
 	private PSystemFactory lastFactory;
 
 	private PSystemBuilderC() {
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
-//		factories.add(new ActivityDiagramFactory());
-//		factories.add(new DescriptionDiagramFactory());
-//		factories.add(new StateDiagramFactory());
-//		factories.add(new ActivityDiagramFactory3());
-//		factories.add(new PSystemVersionFactory());
-//		factories.add(new PSystemSaltFactory());
-//		factories.add(new GanttDiagramFactory());
+		factories.add(new ActivityDiagramFactory());
+		factories.add(new DescriptionDiagramFactory());
+		factories.add(new StateDiagramFactory());
+		factories.add(new ActivityDiagramFactory3());
+		factories.add(new PSystemVersionFactory());
+		factories.add(new PSystemSaltFactory());
+		factories.add(new GanttDiagramFactory());
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
 		factories.add(new NwDiagramFactory());
 		factories.add(new PSystemSudokuFactory());
-//		factories.add(new PSystemCreoleFactory());
-//		factories.add(new TimingDiagramFactory());
-//		factories.add(new ChartDiagramFactory());
-//		factories.add(new PacketDiagramFactory());
-//		factories.add(new JsonDiagramFactory());
-//		factories.add(new YamlDiagramFactory());
-//		factories.add(new PSystemEbnfFactory());
-//		factories.add(new PSystemRegexFactory());
+		factories.add(new PSystemCreoleFactory());
+		factories.add(new TimingDiagramFactory());
+		factories.add(new ChartDiagramFactory());
+		factories.add(new PacketDiagramFactory());
+		factories.add(new JsonDiagramFactory());
+		factories.add(new YamlDiagramFactory());
+		factories.add(new PSystemEbnfFactory());
+		factories.add(new PSystemRegexFactory());
+		// ::done
 	}
 
 	public static PSystemBuilderC getInstance() {
