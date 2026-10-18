@@ -102,13 +102,13 @@ import net.sourceforge.plantuml.utils.MyCollections;
 <span class="fc bfc" id="L102" title="All 2 branches covered.">			for (Note noteOnMessage : msg.getNoteOnMessages()) {</span>
 <span class="fc" id="L103">				final NotePosition notePosition = noteOnMessage.getPosition();</span>
 <span class="fc bfc" id="L104" title="All 4 branches covered.">				if (notePosition == NotePosition.LEFT &amp;&amp; msg.isSelfMessage())</span>
-<span class="fc" id="L105">					result = new CommunicationTileSelfNoteLeft((CommunicationTileSelf) result, msg, skin, skinParam,</span>
+<span class="fc" id="L105">					result = new CommunicationTileSelfNoteLeft(result, msg, skin, skinParam, livingSpace1,</span>
 							noteOnMessage, currentY);
 <span class="fc bfc" id="L107" title="All 2 branches covered.">				else if (notePosition == NotePosition.LEFT)</span>
 <span class="fc" id="L108">					result = new CommunicationTileNoteLeft(result, msg, skin, skinParam,</span>
 <span class="pc bpc" id="L109" title="1 of 2 branches missed.">							reverse ? livingSpace2 : livingSpace1, noteOnMessage, currentY);</span>
 <span class="pc bpc" id="L110" title="1 of 4 branches missed.">				else if (notePosition == NotePosition.RIGHT &amp;&amp; msg.isSelfMessage())</span>
-<span class="fc" id="L111">					result = new CommunicationTileSelfNoteRight((CommunicationTileSelf) result, msg, skin, skinParam,</span>
+<span class="fc" id="L111">					result = new CommunicationTileSelfNoteRight(result, msg, skin, skinParam, livingSpace1,</span>
 							noteOnMessage, currentY);
 <span class="pc bpc" id="L113" title="1 of 2 branches missed.">				else if (notePosition == NotePosition.RIGHT)</span>
 <span class="fc" id="L114">					result = new CommunicationTileNoteRight(result, msg, skin, skinParam,</span>
