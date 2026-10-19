@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+h-axis 5 -> 55
+v-axis 30 -> 75
+h-axis [10, 25, 40, 55]
+line [45, 62, 58, 70] interpolate
+@endchart

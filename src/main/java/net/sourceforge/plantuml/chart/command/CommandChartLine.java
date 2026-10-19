@@ -83,6 +83,10 @@ public class CommandChartLine extends SingleLineCommand2<ChartDiagram> {
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf(1, "LABELS", "(labels)"))), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf(1, "INTERPOLATE", "(interpolate)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
@@ -143,6 +147,10 @@ public class CommandChartLine extends SingleLineCommand2<ChartDiagram> {
 		if (labelsStr != null) {
 			series.setShowLabels(true);
 		}
+
+		// Check if the line should be a smooth curve through its points
+		if (arg.get("INTERPOLATE", 0) != null)
+			series.setInterpolate(true);
 
 		return diagram.addSeries(series);
 	}
