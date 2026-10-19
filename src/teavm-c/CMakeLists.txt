@@ -91,6 +91,19 @@ foreach(STYLE regular bold italic bold_italic)
 	list(APPEND FONT_SOURCES ${OUTPUT})
 endforeach()
 
+# Files embedded in the executable (themes), found by Java through
+# plantuml_resources.c. Gradle copies them from src/main/resources into
+# native/resources, and the names below are their paths under src/main/resources.
+include(native/embed_resources.cmake)
+file(GLOB THEME_FILES CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/native/resources/themes/*.puml)
+set(RESOURCE_PAIRS)
+foreach(THEME_FILE IN LISTS THEME_FILES)
+	get_filename_component(THEME_NAME ${THEME_FILE} NAME)
+	list(APPEND RESOURCE_PAIRS "themes/${THEME_NAME}=${THEME_FILE}")
+endforeach()
+set(RESOURCES_SOURCE ${CMAKE_CURRENT_BINARY_DIR}/embedded_resources.c)
+plantuml_embed_resources(${RESOURCES_SOURCE} ${RESOURCE_PAIRS})
+
 # miniz (vendored amalgamation, MIT): deflate of the PNG encoder only
 add_library(miniz STATIC native/miniz/miniz.c)
 target_include_directories(miniz PUBLIC native/miniz)
@@ -106,7 +119,8 @@ foreach(G RANGE 1 ${TEAVM_GEN_GROUPS})
 endforeach()
 message(STATUS "Generated C: ${TEAVM_GEN_GROUPS} groups of files with distinct names")
 
-add_executable(plantuml ${TEAVM_GEN_OBJECTS} native/plantuml_canvas.c native/plantuml_png.c ${FONT_SOURCES})
+add_executable(plantuml ${TEAVM_GEN_OBJECTS} native/plantuml_canvas.c native/plantuml_png.c native/plantuml_resources.c
+	${RESOURCES_SOURCE} ${FONT_SOURCES})
 target_include_directories(plantuml PRIVATE native)
 
 if (WIN32)

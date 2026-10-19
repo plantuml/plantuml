@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.teavm.TeaVM;
 // ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.c.EmbeddedFiles;
 import net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs;
 // ::done
 import net.sourceforge.plantuml.text.StringLocated;
@@ -86,7 +87,7 @@ public class ThemeUtils {
 			// regular "Cannot load theme" error instead of silently ignoring the
 			// directive.
 			if (from == null)
-				return (TeaVM.isTeaVM() && TeaVM.isC() == false) ? loadJsTheme(name) : null;
+				return TeaVM.isC() ? loadEmbeddedTheme(name) : loadJsTheme(name);
 			if (isLocalFolder(from) == false)
 				return null;
 		}
@@ -117,6 +118,19 @@ public class ThemeUtils {
 	}
 
 	// ::comment when JAVA8
+	/**
+	 * Loads a bundled theme in the C build, from the files embedded in the
+	 * executable (the same themes/ folder as the JVM classpath).
+	 */
+	private static Theme loadEmbeddedTheme(String name) {
+		final String res = THEME_PATH + "/" + getFilename(name);
+		final byte[] content = EmbeddedFiles.read(res);
+		if (content == null)
+			return null;
+
+		return new Theme(ReadLineReader.create(content, "<" + res + ">"));
+	}
+
 	/**
 	 * Loads a bundled theme in the browser build, from the PLANTUML_THEMES map
 	 * published by themes.js.
