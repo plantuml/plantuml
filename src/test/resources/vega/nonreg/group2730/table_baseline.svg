@@ -20,21 +20,21 @@
     <rect fill="#EEE" height="16" rx="5" ry="5" style="stroke:#000;stroke-width:2.5;" width="76" x="211.2" y="42.5"/>
     <text fill="#000" font-size="12" textLength="49.95" x="224.225" y="53.833">Browse...</text>
     <line style="stroke:#000;stroke-width:1;" x1="6" x2="70.7" y1="6" y2="6"/>
-    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="291.7" y1="22" y2="22"/>
-    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="291.7" y1="6" y2="6"/>
     <line style="stroke:#000;stroke-width:1;" x1="6" x2="70.7" y1="63" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="291.7" y1="6" y2="6"/>
     <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="291.7" y1="63" y2="63"/>
-    <line style="stroke:#000;stroke-width:1;" x1="6" x2="70.7" y1="38" y2="38"/>
     <line style="stroke:#000;stroke-width:1;" x1="6" x2="70.7" y1="22" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="291.7" y1="22" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="70.7" y1="38" y2="38"/>
     <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="291.7" y1="38" y2="38"/>
     <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="6" y2="22"/>
-    <line style="stroke:#000;stroke-width:1;" x1="291.7" x2="291.7" y1="38" y2="63"/>
-    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="70.7" y1="22" y2="38"/>
-    <line style="stroke:#000;stroke-width:1;" x1="291.7" x2="291.7" y1="22" y2="38"/>
-    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="70.7" y1="6" y2="22"/>
     <line style="stroke:#000;stroke-width:1;" x1="291.7" x2="291.7" y1="6" y2="22"/>
-    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="38" y2="63"/>
     <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="22" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="291.7" x2="291.7" y1="22" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="38" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="291.7" x2="291.7" y1="38" y2="63"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="70.7" y1="6" y2="22"/>
+    <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="70.7" y1="22" y2="38"/>
     <line style="stroke:#000;stroke-width:1;" x1="70.7" x2="70.7" y1="38" y2="63"/>
   </g>
 </svg>
