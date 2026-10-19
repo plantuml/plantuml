@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.InputFile;
+import net.sourceforge.plantuml.nio.InputFileIo;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Environment;
 import net.sourceforge.plantuml.preproc.DiagramDetector;
@@ -457,6 +458,10 @@ public class TContext {
 	}
 
 	private void executeImport(TMemory memory, StringLocated s) throws EaterException {
+		if (TeaVM.isC()) {
+			executeImportInC(memory, s);
+			return;
+		}
 		if (!TeaVM.isTeaVM()) {
 			final EaterImport _import = new EaterImport(s.getTrimmed());
 			_import.analyze(this, memory);
@@ -480,6 +485,29 @@ public class TContext {
 		}
 		throw new EaterException("Cannot import", s);
 	}
+
+	// ::comment when JAVA8
+	/**
+	 * The C build imports an archive found like an included file (relative to the
+	 * folder of the diagram), with java.io.
+	 */
+	private void executeImportInC(TMemory memory, StringLocated s) throws EaterException {
+		final EaterImport _import = new EaterImport(s.getTrimmed());
+		_import.analyze(this, memory);
+
+		final String what = applyFunctionsAndVariables(memory, new StringLocated(_import.getWhat(), s.getLocation()));
+		try {
+			final InputFile found = pathSystem.getInputFile(what);
+			if (found instanceof InputFileIo) {
+				pathSystem.addImportFile(((InputFileIo) found).getFile());
+				return;
+			}
+		} catch (IOException e) {
+			throw new EaterException("Cannot import " + e.getMessage(), s);
+		}
+		throw new EaterException("Cannot import", s);
+	}
+	// ::done
 
 	private void executeLog(TMemory memory, StringLocated s) throws EaterException {
 		final EaterLog log = new EaterLog(s.getTrimmed());
