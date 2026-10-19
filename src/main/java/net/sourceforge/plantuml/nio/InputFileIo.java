@@ -62,6 +62,10 @@ public class InputFileIo implements InputFile {
 		return new NFolderIo(file.getAbsoluteFile().getParentFile());
 	}
 
+	public File getFile() {
+		return file;
+	}
+
 	/**
 	 * What identifies this file when the same one is included twice.
 	 */
