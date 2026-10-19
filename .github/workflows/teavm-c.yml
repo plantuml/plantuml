@@ -158,6 +158,8 @@ jobs:
           & $exe no-such-file.puml
           # 50: no file found, as on the JVM
           if ($LASTEXITCODE -ne 50) { throw "Expected the exit code 50, got $LASTEXITCODE" }
+          # The expected non-zero code must not become the exit code of the step
+          $global:LASTEXITCODE = 0
 
       - name: Upload the SVG and the PNG
         uses: actions/upload-artifact@v7
