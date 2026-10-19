@@ -158,6 +158,11 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 	from("src/teavm-c/native") {
 		into("native")
 	}
+	// Files that Java reads at run time (EmbeddedFiles), embedded by CMake
+	from("src/main/resources/themes") {
+		include("*.puml")
+		into("native/resources/themes")
+	}
 	into(layout.buildDirectory.dir("generated/teavm/c"))
 }
 tasks.matching { it.name == "generateC" }.configureEach {
