@@ -370,17 +370,37 @@ public class PathSystem {
 
 	// ::comment when JAVA8
 	/**
-	 * The C build reads a local file from the folder of the diagram, with java.io.
-	 * A URL, a standard-library path and an archive are not available there.
+	 * The C build reads a local file from the folder of the diagram, with java.io,
+	 * or from an archive given to !import. A URL and a standard-library path are
+	 * not available there.
 	 */
 	private InputFile getInputFileInC(String path) {
 		if (path.startsWith("http://") || path.startsWith("https://")
 				|| (path.startsWith("<") && path.endsWith(">")))
 			return null;
 
-		if (currentFolder instanceof NFolderIo)
-			return ((NFolderIo) currentFolder).getInputFile(path);
+		if (currentFolder instanceof NFolderIo) {
+			final InputFile result = ((NFolderIo) currentFolder).getInputFile(path);
+			if (result != null)
+				return result;
+		} else if (currentFolder instanceof NFolderZip) {
+			// Inside an archive (a file included from an !import): relative to it
+			try {
+				if (((NFolderZip) currentFolder).contains(path))
+					return ((NFolderZip) currentFolder).getInputFile(path);
+			} catch (IOException e) {
+				return null;
+			}
+		}
 
+		// Then the archives given to !import, with the path relative to their root
+		try {
+			for (NFolderZip imported : importedFolders)
+				if (imported.contains(path))
+					return imported.getInputFile(path);
+		} catch (IOException e) {
+			return null;
+		}
 		return null;
 	}
 	// ::done
@@ -390,7 +410,11 @@ public class PathSystem {
 	}
 
 	public void addImportFile(SFile file) {
-		final NFolderZip zip = new NFolderZip(file.conv());
+		addImportFile(file.conv());
+	}
+
+	public void addImportFile(File file) {
+		final NFolderZip zip = new NFolderZip(file);
 		for (NFolderZip already : importedFolders)
 			if (already.toString().equals(zip.toString()))
 				return;
