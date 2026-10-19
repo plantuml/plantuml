@@ -77,7 +77,7 @@ public final class EmbeddedResourcesGenerator {
 	 * Reads a skin file, stripping line and block comments and blank lines, and
 	 * returns the cleaned content joined by newlines.
 	 */
-	private static String readCleanedSkin(String path) throws IOException {
+	static String readCleanedSkin(String path) throws IOException {
 		final File skinFile = new File(path);
 		if (!skinFile.isFile())
 			throw new IOException("File not found: " + skinFile.getAbsolutePath());
