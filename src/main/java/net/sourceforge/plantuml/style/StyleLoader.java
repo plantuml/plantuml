@@ -146,7 +146,7 @@ public final class StyleLoader {
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
 
 		if (TeaVM.isTeaVM()) {
-			return EmbeddedResources.openPlantumlSkin();
+			return EmbeddedResources.openSkin(filename);
 		} else {
 			InputStream is = null;
 
