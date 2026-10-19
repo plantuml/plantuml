@@ -10,16 +10,16 @@
     <line style="stroke:#000;stroke-width:1;" x1="82.05" x2="82.05" y1="31" y2="33"/>
     <text fill="#000" font-size="12" textLength="71.25" x="86.05" y="31.333">Second|Third</text>
     <line style="stroke:#000;stroke-width:1;" x1="6" x2="36.05" y1="6" y2="6"/>
-    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="159.3" y1="20" y2="20"/>
-    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="159.3" y1="6" y2="6"/>
     <line style="stroke:#000;stroke-width:1;" x1="6" x2="36.05" y1="38" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="159.3" y1="6" y2="6"/>
     <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="159.3" y1="38" y2="38"/>
     <line style="stroke:#000;stroke-width:1;" x1="6" x2="36.05" y1="20" y2="20"/>
+    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="159.3" y1="20" y2="20"/>
     <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="6" y2="20"/>
-    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="36.05" y1="20" y2="38"/>
-    <line style="stroke:#000;stroke-width:1;" x1="159.3" x2="159.3" y1="20" y2="38"/>
-    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="36.05" y1="6" y2="20"/>
     <line style="stroke:#000;stroke-width:1;" x1="159.3" x2="159.3" y1="6" y2="20"/>
     <line style="stroke:#000;stroke-width:1;" x1="6" x2="6" y1="20" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="159.3" x2="159.3" y1="20" y2="38"/>
+    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="36.05" y1="6" y2="20"/>
+    <line style="stroke:#000;stroke-width:1;" x1="36.05" x2="36.05" y1="20" y2="38"/>
   </g>
 </svg>
