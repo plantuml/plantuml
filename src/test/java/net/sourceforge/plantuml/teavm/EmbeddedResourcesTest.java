@@ -1,6 +1,7 @@
 package net.sourceforge.plantuml.teavm;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -32,15 +33,22 @@ class EmbeddedResourcesTest {
 	}
 
 	@Test
-	void embeddedPlantumlSkinIsUpToDate() throws IOException {
-		final String expected = EmbeddedResourcesGenerator.readCleanedSkin("src/main/resources/skin/plantuml.skin");
-		assertEquals(expected, read(EmbeddedResources.openPlantumlSkin()), HOW_TO_FIX);
+	void embeddedSkinsAreUpToDate() throws IOException {
+		for (String name : EmbeddedResourcesGenerator.SKIN_NAMES) {
+			final String expected = EmbeddedResourcesGenerator.readCleanedSkin("src/main/resources/skin/" + name + ".skin");
+			assertEquals(expected, read(EmbeddedResources.openSkin(name + ".skin")), name + ": " + HOW_TO_FIX);
+		}
 	}
 
 	@Test
-	void embeddedStrictSkinIsUpToDate() throws IOException {
-		final String expected = EmbeddedResourcesGenerator.readCleanedSkin("src/main/resources/skin/strictuml.skin");
-		assertEquals(expected, read(EmbeddedResources.openStrictSkin()), HOW_TO_FIX);
+	void shortcutsMatchOpenSkin() throws IOException {
+		assertEquals(read(EmbeddedResources.openSkin("plantuml.skin")), read(EmbeddedResources.openPlantumlSkin()));
+		assertEquals(read(EmbeddedResources.openSkin("strictuml.skin")), read(EmbeddedResources.openStrictSkin()));
+	}
+
+	@Test
+	void unknownSkinIsNull() {
+		assertNull(EmbeddedResources.openSkin("nonexistent.skin"));
 	}
 
 }
