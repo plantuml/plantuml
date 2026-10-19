@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.nio;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -77,7 +78,8 @@ public class PathSystem {
 	public static PathSystem fetch() {
 		// ::comment when JAVA8
 		if (TeaVM.isTeaVM())
-			return new PathSystem(null, new ArrayList<NFolderZip>(), true);
+			return new PathSystem(TeaVM.isC() ? new NFolderIo(new File(".")) : null, new ArrayList<NFolderZip>(),
+					true);
 		// ::done
 		return new PathSystem(new NFolderRegular(Paths.get("")), new ArrayList<NFolderZip>(), true);
 	}
@@ -141,7 +143,7 @@ public class PathSystem {
 		// ::revert when JAVA8
 		// return null;
 		if (TeaVM.isC())
-			return null;
+			return file instanceof InputFileIo ? ((InputFileIo) file).getId() : null;
 
 		return FileLoaderJs.getId(file);
 		// ::done
@@ -240,6 +242,8 @@ public class PathSystem {
 
 	public PathSystem changeCurrentDirectory(NFolder newCurrentDir) {
 		// ::comment when JAVA8
+		if (TeaVM.isC())
+			return new PathSystem(newCurrentDir, importedFolders, hostFiles);
 		if (TeaVM.isTeaVM())
 			return this;
 		// ::done
@@ -249,6 +253,9 @@ public class PathSystem {
 
 	public PathSystem changeCurrentDirectory(SFile newCurrentDir) throws IOException {
 		// ::comment when JAVA8
+		if (TeaVM.isC())
+			return newCurrentDir == null ? this
+					: new PathSystem(new NFolderIo(newCurrentDir.conv()), importedFolders, hostFiles);
 		if (TeaVM.isTeaVM())
 			return this;
 		// ::done
@@ -298,7 +305,9 @@ public class PathSystem {
 		// standard-library path keep their own routes (TContext handles both
 		// before coming here), and the engine's own files have no host to ask.
 		if (TeaVM.isTeaVM()) {
-			if (TeaVM.isC() || hostFiles == false || path.startsWith("http://") || path.startsWith("https://")
+			if (TeaVM.isC())
+				return getInputFileInC(path);
+			if (hostFiles == false || path.startsWith("http://") || path.startsWith("https://")
 					|| (path.startsWith("<") && path.endsWith(">")))
 				return null;
 			return FileLoaderJs.getInputFile(path, currentFolder, kind);
@@ -358,6 +367,23 @@ public class PathSystem {
 		// missing entry when read
 		return result;
 	}
+
+	// ::comment when JAVA8
+	/**
+	 * The C build reads a local file from the folder of the diagram, with java.io.
+	 * A URL, a standard-library path and an archive are not available there.
+	 */
+	private InputFile getInputFileInC(String path) {
+		if (path.startsWith("http://") || path.startsWith("https://")
+				|| (path.startsWith("<") && path.endsWith(">")))
+			return null;
+
+		if (currentFolder instanceof NFolderIo)
+			return ((NFolderIo) currentFolder).getInputFile(path);
+
+		return null;
+	}
+	// ::done
 
 	public static void main(String[] args) {
 		System.out.println(PathSystem.fetch());
