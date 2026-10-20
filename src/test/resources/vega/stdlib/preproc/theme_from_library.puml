@@ -1,0 +1,6 @@
+---
+output: preproc
+---
+@startuml
+!theme archimate-standard from <archimate/themes>
+@enduml

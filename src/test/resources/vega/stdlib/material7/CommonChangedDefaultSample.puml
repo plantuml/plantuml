@@ -1,0 +1,108 @@
+---
+output: svg
+---
+@startuml
+
+' text alignment has to be changed (to right) before common is included
+!$MDI_ALIGNMENT = "right"
+
+' other default values are typically set before other includes too (like themes,...)
+' but in this sample the changes are done in the different packages for better visibility
+' !$MDI_DEFAULT_LABEL = "*"
+' !$MDI_DEFAULT_SHAPE = "rectangle"
+' !$MDI_DEFAULT_COLOR = ""
+' !$MDI_DEFAULT_STEREOTYPE = ""
+
+!include <material7.4.47/common>
+
+' after include the concrete constants can be used too (like in the samples below)
+' !$MDI_DEFAULT_LABEL = $MDI_LABEL_ALIAS
+' !$MDI_DEFAULT_SHAPE = "rectangle"
+' !$MDI_DEFAULT_COLOR = $MDI_COLOR_NONE
+' !$MDI_DEFAULT_STEREOTYPE = $MDI_STEREOTYPE_NONE
+
+!include <material7.4.47/AccountUser/AccountAlert>
+!include <material7.4.47/Emoji/all>
+
+left to right direction
+
+' only helper for package labels with quotes
+!function $quote()
+  !return '<U+0022>'
+!endfunction
+
+note as N
+  right text alignment is activated via !%dollar()MDI_ALIGNMENT="right" (see line 4)
+end note
+
+package "%dollar()MdiAccountAlert() samples" {
+
+  package "deactivate labels with !%dollar()MDI_DEFAULT_LABEL = %dollar()MDI_LABEL_NONE" {
+   !$MDI_DEFAULT_LABEL = $MDI_LABEL_NONE
+   $MdiAccountAlert(labelNone)
+  }
+  package "labels based on alias with !%dollar()MDI_DEFAULT_LABEL = %dollar()MDI_LABEL_ALIAS" {
+   !$MDI_DEFAULT_LABEL = $MDI_LABEL_ALIAS
+   $MdiAccountAlert(labelAlias)
+  }
+  !$MDI_DEFAULT_LABEL = $MDI_LABEL_ALIAS
+
+  package "hide shapes with !%dollar()MDI_DEFAULT_SHAPE = %dollar()MDI_SHAPE_NONE" {
+   !$MDI_DEFAULT_SHAPE = $MDI_SHAPE_NONE
+   $MdiAccountAlert(shapeNone)
+  }
+  package "database shapes with !%dollar()MDI_DEFAULT_SHAPE = $quote()database$quote()" {
+   !$MDI_DEFAULT_SHAPE = "database"
+   $MdiAccountAlert(shapeDatabase)
+  }
+  !$MDI_DEFAULT_SHAPE = "rectangle"
+  
+  package "unchanged color with !%dollar()MDI_DEFAULT_COLOR = %dollar()MDI_COLOR_NONE" {
+   !$MDI_DEFAULT_COLOR = $MDI_COLOR_NONE
+   $MdiAccountAlert(colorNone)
+  }
+  package "blue color with !%dollar()MDI_DEFAULT_COLOR = $quote()blue$quote()" {
+   !$MDI_DEFAULT_COLOR = "blue"
+   $MdiAccountAlert(colorBlue)
+  }
+  package "RGB color with !%dollar()MDI_DEFAULT_COLOR = #00FF00" {
+   !$MDI_DEFAULT_COLOR = "#00FF00"
+   $MdiAccountAlert(colorRgbGreen)
+  }
+  !$MDI_DEFAULT_COLOR = $MDI_COLOR_NONE
+
+  package "no stereotype with !%dollar()MDI_DEFAULT_STEREOTYPE = %dollar()MDI_STEREOTYPE_NONE" {
+   !$MDI_DEFAULT_STEREOTYPE = $MDI_STEREOTYPE_NONE
+   $MdiAccountAlert(stereoNone)
+  }
+
+  package "sprite based stereotype with !%dollar()MDI_DEFAULT_STEREOTYPE = %dollar()MDI_STEREOTYPE_SPRITE" {
+   !$MDI_DEFAULT_STEREOTYPE = $MDI_STEREOTYPE_SPRITE
+   $MdiAccountAlert(stereoSprite)
+  }
+
+  package "Abcd stereotype with !%dollar()MDI_DEFAULT_STEREOTYPE = $quote()Abcd$quote()" {
+   !$MDI_DEFAULT_STEREOTYPE = "Abcd"
+   $MdiAccountAlert(stereoAbcd)
+  }
+  !$MDI_DEFAULT_STEREOTYPE = $MDI_STEREOTYPE_NONE
+}
+
+package "%dollar()MdiAccountAlertImg() samples" {
+
+  package "unchanged color with !%dollar()MDI_DEFAULT_COLOR = %dollar()MDI_COLOR_NONE" as NoneImg {
+   !$MDI_DEFAULT_COLOR = $MDI_COLOR_NONE
+   label "$MdiAccountAlertImg()" as colorNoneImg
+  }
+  package "blue color with !%dollar()MDI_DEFAULT_COLOR = $quote()blue$quote()" as BlueImg {
+   !$MDI_DEFAULT_COLOR = "blue"
+   label "$MdiAccountAlertImg()" as colorBlueImg
+  }
+  package "RGB color with !%dollar()MDI_DEFAULT_COLOR = #00FF00" as RgbImg {
+   !$MDI_DEFAULT_COLOR = "#00FF00"
+   label "$MdiAccountAlertImg()" as colorRgbGreenImg
+  }
+  !$MDI_DEFAULT_COLOR = $MDI_COLOR_NONE
+}
+
+@enduml

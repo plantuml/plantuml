@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+!include <edgy/edgy2>
+!include <edgy/_examples_/example_code>
+@enduml

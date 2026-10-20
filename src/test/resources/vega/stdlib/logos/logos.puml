@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+!include <logos/flask>
+!include <logos/kafka>
+!include <logos/kotlin>
+!include <logos/cassandra>
+
+title Logos
+
+rectangle "<$flask>\nFlask" as flask
+rectangle "<$kafka>\nKafka" as kafka
+rectangle "<$kotlin>\nKotlin" as kotlin
+rectangle "<$cassandra>\nCassandra" as cassandra
+
+flask --> kafka
+kotlin --> kafka
+kafka --> cassandra
+@enduml

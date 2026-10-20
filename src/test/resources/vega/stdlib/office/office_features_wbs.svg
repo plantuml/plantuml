@@ -1,0 +1,319 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="890px" preserveAspectRatio="none" style="width:1211px;height:890px;background:#FFFFFF;" version="1.1" viewBox="0 0 1211 890" width="1211px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="3">
+      <a href="https://workbreakdownstructure.com" target="_top" title="https://workbreakdownstructure.com" xlink:actuate="onRequest" xlink:href="https://workbreakdownstructure.com" xlink:show="new" xlink:title="https://workbreakdownstructure.com" xlink:type="simple">
+        <text fill="#00F" font-family="Dejavu Serif" font-size="10" text-decoration="underline" textLength="113.875" x="10" y="17.778">Work Breakdown Structure</text>
+      </a>
+    </g>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="60.05" y1="121.769" y2="141.769"/>
+    <rect fill="#FFC" height="44" style="stroke:#181818;stroke-width:1.5;" width="80.1" x="20" y="141.769"/>
+    <path d="M35,152.769 C32.79,152.769 31,154.559 31,156.769 C31,158.979 32.79,160.769 35,160.769 C37.21,160.769 39,158.979 39,156.769 C39,154.559 37.21,152.769 35,152.769 M37,154.549 L37.72,155.269 L34.5,158.489 L32.78,156.769 L33.5,156.049 L34.5,157.049 L37,154.549" fill="#000"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="50.1" x="40" y="161.103">Helpdesk</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="30" y="173.103"> </text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="207.769" y2="207.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="51.975" x="70.05" y="211.103">Customer</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="122.025" y="211.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="60" x="122.025" y="211.103">satisfaction</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="182.025" y="211.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.325" x="182.025" y="211.103">survey</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="236.769" y2="236.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="53.4" x="70.05" y="240.103">Approvals</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="123.45" y="240.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="19.35" x="123.45" y="240.103">(via</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="142.8" y="240.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="32.7" x="142.8" y="240.103">email)</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="265.769" y2="265.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="42" x="70.05" y="269.103">Incident</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="112.05" y="269.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="112.05" y="269.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="294.769" y2="294.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="44.7" x="70.05" y="298.103">Request</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="114.75" y="298.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="114.75" y="298.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="323.769" y2="323.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="44.7" x="70.05" y="327.103">Problem</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="114.75" y="327.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="114.75" y="327.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="352.769" y2="352.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="42.075" x="70.05" y="356.103">Change</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="112.125" y="356.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="112.125" y="356.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="381.769" y2="381.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="52.65" x="70.05" y="385.103">Recurrent</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="122.7" y="385.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="33.975" x="122.7" y="385.103">tickets</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="410.769" y2="410.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="32.025" x="70.05" y="414.103">Tasks</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="102.075" y="414.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="13.95" x="102.075" y="414.103">for</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="116.025" y="414.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="33.975" x="116.025" y="414.103">tickets</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="439.769" y2="439.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="53.325" x="70.05" y="443.103">Automatic</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="123.375" y="443.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="38.025" x="123.375" y="443.103">actions</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="468.769" y2="468.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="42.075" x="70.05" y="472.103">Canned</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="112.125" y="472.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="55.35" x="112.125" y="472.103">responses</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="497.769" y2="497.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="32.025" x="70.05" y="501.103">Ticket</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="102.075" y="501.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="51.975" x="102.075" y="501.103">templates</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="526.769" y2="526.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="70.05" y="530.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="105.45" y="530.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="42" x="105.45" y="530.103">projects</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="555.769" y2="555.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="22.725" x="70.05" y="559.103">SLA</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="92.775" y="559.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="92.775" y="559.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="584.769" y2="584.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="70.05" y="588.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="105.45" y="588.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="33.975" x="105.45" y="588.103">tickets</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="613.769" y2="613.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="59.475" x="70.05" y="617.103">Knowledge</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="129.525" y="617.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="27.375" x="129.525" y="617.103">Base</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="642.769" y2="642.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="70.05" y="646.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="105.45" y="646.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="36.675" x="105.45" y="646.103">budget</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="671.769" y2="671.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="70.05" y="675.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="105.45" y="675.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="34.65" x="105.45" y="675.103">assets</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="700.769" y2="700.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="65.4" x="70.05" y="704.103">Notifications</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="729.769" y2="729.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="62.7" x="70.05" y="733.103">Self-service</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="758.769" y2="758.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="30" x="70.05" y="762.103">Track</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="100.05" y="762.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="22.65" x="100.05" y="762.103">time</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="787.769" y2="787.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="52.05" x="70.05" y="791.103">Dasboard</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="816.769" y2="816.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="42" x="70.05" y="820.103">Reports</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="70.05" y1="845.769" y2="845.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="33.975" x="70.05" y="849.103">Forms</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="60.05" y1="185.769" y2="845.769"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="273.05" y1="121.769" y2="141.769"/>
+    <rect fill="#FFC" height="44" style="stroke:#181818;stroke-width:1.5;" width="65.4" x="240.35" y="141.769"/>
+    <path d="M255.35,152.769 C253.14,152.769 251.35,154.559 251.35,156.769 C251.35,158.979 253.14,160.769 255.35,160.769 C257.56,160.769 259.35,158.979 259.35,156.769 C259.35,154.559 257.56,152.769 255.35,152.769 M257.35,154.549 L258.07,155.269 L254.85,158.489 L253.13,156.769 L253.85,156.049 L254.85,157.049 L257.35,154.549" fill="#000"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="260.35" y="161.103">CMDB</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="250.35" y="173.103"> </text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="213.769" y2="213.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="75.375" x="283.05" y="211.103">Administrative</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="358.425" y="211.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="20.025" x="358.425" y="211.103">and</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="378.45" y="211.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="44.1" x="378.45" y="211.103">financial</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="59.325" x="283.05" y="223.103">information</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="248.769" y2="248.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="49.275" x="283.05" y="252.103">Inventory</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="332.325" y="252.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="59.325" x="332.325" y="252.103">(agentless)</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="277.769" y2="277.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="48.6" x="283.05" y="281.103">Warranty</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="331.65" y="281.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="59.325" x="331.65" y="281.103">information</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="306.769" y2="306.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="47.325" x="283.05" y="310.103">Software</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="330.375" y="310.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="330.375" y="310.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="335.769" y2="335.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="41.4" x="283.05" y="339.103">License</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="324.45" y="339.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="324.45" y="339.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="364.769" y2="364.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="53.325" x="283.05" y="368.103">Automatic</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="336.375" y="368.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="38.025" x="336.375" y="368.103">actions</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="393.769" y2="393.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="34.05" x="283.05" y="397.103">Native</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="317.1" y="397.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="48.675" x="317.1" y="397.103">inventory</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="422.769" y2="422.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="283.05" y="426.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="318.45" y="426.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="47.4" x="318.45" y="426.103">incidents</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="451.769" y2="451.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="283.05" y="455.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="318.45" y="455.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="58.65" x="318.45" y="455.103">documents</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="480.769" y2="480.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.925" x="283.05" y="484.103">Impact</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="318.975" y="484.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="43.425" x="318.975" y="484.103">analysis</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="509.769" y2="509.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="27.375" x="283.05" y="513.103">Rack</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="310.425" y="513.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="310.425" y="513.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="538.769" y2="538.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="283.05" y="542.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="318.45" y="542.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="49.35" x="318.45" y="542.103">problems</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="567.769" y2="567.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="283.05" y="571.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="318.45" y="571.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="45.975" x="318.45" y="571.103">requests</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="596.769" y2="596.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="30" x="283.05" y="600.103">Asset</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="313.05" y="600.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="42.75" x="313.05" y="600.103">lifecycle</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="625.769" y2="625.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="283.05" y="629.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="318.45" y="629.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="33.975" x="318.45" y="629.103">tickets</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="654.769" y2="654.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="283.05" y="658.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="318.45" y="658.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="45.375" x="318.45" y="658.103">changes</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="683.769" y2="683.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="58.725" x="283.05" y="687.103">Antiviruses</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="712.769" y2="712.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="58.725" x="283.05" y="716.103">Dashboard</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="741.769" y2="741.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="47.4" x="283.05" y="745.103">Domains</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="283.05" y1="770.769" y2="770.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="42" x="283.05" y="774.103">Reports</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="273.05" x2="273.05" y1="185.769" y2="770.769"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="490.538" x2="490.538" y1="121.769" y2="141.769"/>
+    <rect fill="#FFC" height="44" style="stroke:#181818;stroke-width:1.5;" width="89.975" x="445.55" y="141.769"/>
+    <path d="M460.55,152.769 C458.34,152.769 456.55,154.559 456.55,156.769 C456.55,158.979 458.34,160.769 460.55,160.769 C462.76,160.769 464.55,158.979 464.55,156.769 C464.55,154.559 462.76,152.769 460.55,152.769 M462.55,154.549 L463.27,155.269 L460.05,158.489 L458.33,156.769 L459.05,156.049 L460.05,157.049 L462.55,154.549" fill="#000"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="37.35" x="465.55" y="161.103">Project</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="455.55" y="173.103">Management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="490.538" x2="500.538" y1="207.769" y2="207.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="500.538" y="211.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="535.938" y="211.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="58.65" x="535.938" y="211.103">documents</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="490.538" x2="500.538" y1="236.769" y2="236.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.925" x="500.538" y="240.103">Impact</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="536.463" y="240.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="43.425" x="536.463" y="240.103">analysis</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="490.538" x2="500.538" y1="265.769" y2="265.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="30.675" x="500.538" y="269.103">Team</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="531.213" y="269.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="531.213" y="269.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="490.538" x2="500.538" y1="294.769" y2="294.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="32.025" x="500.538" y="298.103">Tasks</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="532.563" y="298.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="42" x="532.563" y="298.103">tracking</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="490.538" x2="500.538" y1="323.769" y2="323.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="59.475" x="500.538" y="327.103">Knowledge</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="560.013" y="327.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="27.375" x="560.013" y="327.103">Base</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="490.538" x2="500.538" y1="352.769" y2="352.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="500.538" y="356.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="535.938" y="356.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="34.65" x="535.938" y="356.103">assets</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="490.538" x2="500.538" y1="381.769" y2="381.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="41.4" x="500.538" y="385.103">Kanban</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="490.538" x2="500.538" y1="410.769" y2="410.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="40.725" x="500.538" y="414.103">GANTT</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="490.538" x2="490.538" y1="185.769" y2="410.769"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="669.175" x2="669.175" y1="121.769" y2="141.769"/>
+    <rect fill="#FFC" height="44" style="stroke:#181818;stroke-width:1.5;" width="89.975" x="624.188" y="141.769"/>
+    <path d="M639.188,152.769 C636.978,152.769 635.188,154.559 635.188,156.769 C635.188,158.979 636.978,160.769 639.188,160.769 C641.398,160.769 643.188,158.979 643.188,156.769 C643.188,154.559 641.398,152.769 639.188,152.769 M641.188,154.549 L641.908,155.269 L638.688,158.489 L636.968,156.769 L637.688,156.049 L638.688,157.049 L641.188,154.549" fill="#000"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="48.15" x="644.188" y="161.103">Financial</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="634.188" y="173.103">Management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="669.175" x2="679.175" y1="207.769" y2="207.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="50.1" x="679.175" y="211.103">Suppliers</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="729.275" y="211.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="729.275" y="211.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="669.175" x2="679.175" y1="236.769" y2="236.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="45.3" x="679.175" y="240.103">Contract</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="724.475" y="240.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="724.475" y="240.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="669.175" x2="679.175" y1="265.769" y2="265.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="41.325" x="679.175" y="269.103">Contact</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="720.5" y="269.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="720.5" y="269.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="669.175" x2="679.175" y1="294.769" y2="294.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="41.4" x="679.175" y="298.103">License</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="720.575" y="298.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="720.575" y="298.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="669.175" x2="679.175" y1="323.769" y2="323.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="38.025" x="679.175" y="327.103">Budget</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="717.2" y="327.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="717.2" y="327.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="669.175" x2="679.175" y1="352.769" y2="352.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="35.4" x="679.175" y="356.103">Linked</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="714.575" y="356.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="33.975" x="714.575" y="356.103">tickets</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="669.175" x2="669.175" y1="185.769" y2="352.769"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="867.238" x2="867.238" y1="121.769" y2="141.769"/>
+    <rect fill="#FFC" height="44" style="stroke:#181818;stroke-width:1.5;" width="89.975" x="822.25" y="141.769"/>
+    <path d="M837.25,152.769 C835.04,152.769 833.25,154.559 833.25,156.769 C833.25,158.979 835.04,160.769 837.25,160.769 C839.46,160.769 841.25,158.979 841.25,156.769 C841.25,154.559 839.46,152.769 837.25,152.769 M839.25,154.549 L839.97,155.269 L836.75,158.489 L835.03,156.769 L835.75,156.049 L836.75,157.049 L839.25,154.549" fill="#000"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="25.35" x="842.25" y="161.103">User</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="69.975" x="832.25" y="173.103">management</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="867.238" x2="877.238" y1="207.769" y2="207.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="38.7" x="877.238" y="211.103">Access</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="915.938" y="211.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="915.938" y="211.103">&amp;</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="923.963" y="211.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="57.975" x="923.963" y="211.103">restrictions</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="981.938" y="211.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="33.975" x="981.938" y="211.103">(rules)</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="867.238" x2="877.238" y1="236.769" y2="236.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="32.625" x="877.238" y="240.103">Oauth</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="909.863" y="240.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="25.35" x="909.863" y="240.103">SSO</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="935.213" y="240.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="57.45" x="935.213" y="240.103">application</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="867.238" x2="877.238" y1="265.769" y2="265.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="62.7" x="877.238" y="269.103">Self-service</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="939.938" y="269.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="30" x="939.938" y="269.103">mode</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="867.238" x2="877.238" y1="294.769" y2="294.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="39.375" x="877.238" y="298.103">Entities</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="867.238" x2="877.238" y1="323.769" y2="323.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="31.425" x="877.238" y="327.103">LDAP</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="867.238" x2="867.238" y1="185.769" y2="323.769"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="1082.263" x2="1082.263" y1="121.769" y2="141.769"/>
+    <rect fill="#FFC" height="44" style="stroke:#181818;stroke-width:1.5;" width="86.7" x="1038.913" y="141.769"/>
+    <path d="M1053.913,152.769 C1051.702,152.769 1049.913,154.559 1049.913,156.769 C1049.913,158.979 1051.702,160.769 1053.913,160.769 C1056.123,160.769 1057.913,158.979 1057.913,156.769 C1057.913,154.559 1056.123,152.769 1053.913,152.769 M1055.913,154.549 L1056.633,155.269 L1053.413,158.489 L1051.692,156.769 L1052.413,156.049 L1053.413,157.049 L1055.913,154.549" fill="#000"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="56.7" x="1058.913" y="161.103">Customize</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="1048.913" y="173.103"> </text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="1082.262" x2="1092.262" y1="207.769" y2="207.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="33.375" x="1092.262" y="211.103">Select</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="1125.637" y="211.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="26.025" x="1125.637" y="211.103">color</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="1151.663" y="211.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="36" x="1151.663" y="211.103">palette</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="1082.262" x2="1092.262" y1="236.769" y2="236.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="33.375" x="1092.262" y="240.103">Select</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="1125.637" y="240.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="26.7" x="1125.637" y="240.103">page</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="1152.337" y="240.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="32.025" x="1152.337" y="240.103">layout</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="1082.262" x2="1092.262" y1="265.769" y2="265.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="33.375" x="1092.262" y="269.103">Select</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="1125.637" y="269.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="49.425" x="1125.637" y="269.103">language</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="1082.262" x2="1092.262" y1="294.769" y2="294.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="21.375" x="1092.262" y="298.103">Add</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="1113.637" y="298.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="23.325" x="1113.637" y="298.103">your</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="1136.962" y="298.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="22.725" x="1136.962" y="298.103">logo</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="1082.262" x2="1092.262" y1="323.769" y2="323.769"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="19.35" x="1092.262" y="327.103">API</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" x="1111.612" y="327.103"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" textLength="19.95" x="1111.612" y="327.103">rest</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="1082.262" x2="1082.262" y1="185.769" y2="323.769"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="60.05" x2="1082.263" y1="121.769" y2="121.769"/>
+    <rect fill="#C2F0FF" height="70.769" style="stroke:#181818;stroke-width:1.5;" width="82.55" x="529.881" y="31"/>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="28.65" x="539.881" y="50.333">ITSM</text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" x="568.531" y="50.333"> </text>
+    <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="33.9" x="568.531" y="50.333">[GLPI]</text>
+    <image height="39" width="44" x="539.881" xlink:href="data:image/png;base64,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" y="53"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="571.156" x2="571.156" y1="101.769" y2="121.769"/>
+    <g class="caption" data-source-line="4">
+      <text fill="#000" font-family="Dejavu Serif" font-size="14" textLength="55.212" x="577.225" y="874.658">Features</text>
+    </g>
+  </g>
+</svg>

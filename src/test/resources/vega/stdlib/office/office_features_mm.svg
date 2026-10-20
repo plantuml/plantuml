@@ -1,0 +1,308 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="593px" preserveAspectRatio="none" style="width:807px;height:593px;background:#FFFFFF;" version="1.1" viewBox="0 0 807 593" width="807px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="4">
+      <text fill="#888" font-size="10" textLength="41.125" x="10" y="17.778">MindMap</text>
+    </g>
+    <rect fill="#C2F0FF" height="93.231" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="71.692" x="348.383" y="246.385"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="33.425" x="358.383" y="267.274">ITSM</text>
+    <text fill="#000" font-size="14" textLength="39.55" x="358.383" y="281.274">[GLPI]</text>
+    <image height="45" width="52" x="358.383" xlink:href="data:image/png;base64,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" y="284.385"/>
+    <rect fill="#FFC" height="48" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="89.783" x="470.076" y="181"/>
+    <path d="M485.742,192.167 C483.164,192.167 481.076,194.255 481.076,196.833 C481.076,199.412 483.164,201.5 485.742,201.5 C488.321,201.5 490.409,199.412 490.409,196.833 C490.409,194.255 488.321,192.167 485.742,192.167 M488.076,194.243 L488.916,195.083 L485.159,198.84 L483.152,196.833 L483.992,195.993 L485.159,197.16 L488.076,194.243" fill="#000"/>
+    <text fill="#000" font-size="14" textLength="58.45" x="491.409" y="201.889">Helpdesk</text>
+    <text fill="#000" font-size="14" x="480.076" y="215.889"> </text>
+    <text fill="#000" font-size="14" textLength="60.637" x="612.859" y="32.889">Customer</text>
+    <text fill="#000" font-size="14" x="673.496" y="32.889"> </text>
+    <text fill="#000" font-size="14" textLength="70" x="673.496" y="32.889">satisfaction</text>
+    <text fill="#000" font-size="14" x="743.496" y="32.889"> </text>
+    <text fill="#000" font-size="14" textLength="41.213" x="743.496" y="32.889">survey</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,29 599.859,29 L609.859,29" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="62.3" x="612.859" y="48.889">Approvals</text>
+    <text fill="#000" font-size="14" x="675.159" y="48.889"> </text>
+    <text fill="#000" font-size="14" textLength="22.575" x="675.159" y="48.889">(via</text>
+    <text fill="#000" font-size="14" x="697.734" y="48.889"> </text>
+    <text fill="#000" font-size="14" textLength="38.15" x="697.734" y="48.889">email)</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,45 599.859,45 L609.859,45" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="49" x="612.859" y="64.889">Incident</text>
+    <text fill="#000" font-size="14" x="661.859" y="64.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="661.859" y="64.889">management</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,61 599.859,61 L609.859,61" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="612.859" y="80.889">Request</text>
+    <text fill="#000" font-size="14" x="665.009" y="80.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="665.009" y="80.889">management</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,77 599.859,77 L609.859,77" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="52.15" x="612.859" y="96.889">Problem</text>
+    <text fill="#000" font-size="14" x="665.009" y="96.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="665.009" y="96.889">management</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,93 599.859,93 L609.859,93" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="37.363" x="612.859" y="112.889">Tasks</text>
+    <text fill="#000" font-size="14" x="650.221" y="112.889"> </text>
+    <text fill="#000" font-size="14" textLength="16.275" x="650.221" y="112.889">for</text>
+    <text fill="#000" font-size="14" x="666.496" y="112.889"> </text>
+    <text fill="#000" font-size="14" textLength="39.637" x="666.496" y="112.889">tickets</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,109 599.859,109 L609.859,109" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="49.087" x="612.859" y="128.889">Change</text>
+    <text fill="#000" font-size="14" x="661.946" y="128.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="661.946" y="128.889">management</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,125 599.859,125 L609.859,125" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="61.425" x="612.859" y="144.889">Recurrent</text>
+    <text fill="#000" font-size="14" x="674.284" y="144.889"> </text>
+    <text fill="#000" font-size="14" textLength="39.637" x="674.284" y="144.889">tickets</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,141 599.859,141 L609.859,141" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="62.212" x="612.859" y="160.889">Automatic</text>
+    <text fill="#000" font-size="14" x="675.071" y="160.889"> </text>
+    <text fill="#000" font-size="14" textLength="44.363" x="675.071" y="160.889">actions</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,157 599.859,157 L609.859,157" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="49.087" x="612.859" y="176.889">Canned</text>
+    <text fill="#000" font-size="14" x="661.946" y="176.889"> </text>
+    <text fill="#000" font-size="14" textLength="64.575" x="661.946" y="176.889">responses</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,173 599.859,173 L609.859,173" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="37.363" x="612.859" y="192.889">Ticket</text>
+    <text fill="#000" font-size="14" x="650.221" y="192.889"> </text>
+    <text fill="#000" font-size="14" textLength="60.637" x="650.221" y="192.889">templates</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,189 599.859,189 L609.859,189" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="612.859" y="208.889">Linked</text>
+    <text fill="#000" font-size="14" x="654.159" y="208.889"> </text>
+    <text fill="#000" font-size="14" textLength="49" x="654.159" y="208.889">projects</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,205 599.859,205 L609.859,205" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="612.859" y="224.889">Linked</text>
+    <text fill="#000" font-size="14" x="654.159" y="224.889"> </text>
+    <text fill="#000" font-size="14" textLength="39.637" x="654.159" y="224.889">tickets</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,221 599.859,221 L609.859,221" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="69.388" x="612.859" y="240.889">Knowledge</text>
+    <text fill="#000" font-size="14" x="682.246" y="240.889"> </text>
+    <text fill="#000" font-size="14" textLength="31.938" x="682.246" y="240.889">Base</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,237 599.859,237 L609.859,237" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="26.513" x="612.859" y="256.889">SLA</text>
+    <text fill="#000" font-size="14" x="639.371" y="256.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="639.371" y="256.889">management</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,253 599.859,253 L609.859,253" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="612.859" y="272.889">Linked</text>
+    <text fill="#000" font-size="14" x="654.159" y="272.889"> </text>
+    <text fill="#000" font-size="14" textLength="42.788" x="654.159" y="272.889">budget</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,269 599.859,269 L609.859,269" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="612.859" y="288.889">Linked</text>
+    <text fill="#000" font-size="14" x="654.159" y="288.889"> </text>
+    <text fill="#000" font-size="14" textLength="40.425" x="654.159" y="288.889">assets</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,285 599.859,285 L609.859,285" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="76.3" x="612.859" y="304.889">Notifications</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,301 599.859,301 L609.859,301" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="73.15" x="612.859" y="320.889">Self-service</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,317 599.859,317 L609.859,317" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="35" x="612.859" y="336.889">Track</text>
+    <text fill="#000" font-size="14" x="647.859" y="336.889"> </text>
+    <text fill="#000" font-size="14" textLength="26.425" x="647.859" y="336.889">time</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,333 599.859,333 L609.859,333" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="60.725" x="612.859" y="352.889">Dasboard</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,349 599.859,349 L609.859,349" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="49" x="612.859" y="368.889">Reports</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,365 599.859,365 L609.859,365" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="39.638" x="612.859" y="384.889">Forms</text>
+    <path d="M559.859,205 L569.859,205 C584.859,205 584.859,381 599.859,381 L609.859,381" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M420.076,293 L430.076,293 C445.076,293 445.076,205 460.076,205 L470.076,205" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFC" height="48" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="101.638" x="470.076" y="413"/>
+    <path d="M485.742,424.167 C483.164,424.167 481.076,426.255 481.076,428.833 C481.076,431.412 483.164,433.5 485.742,433.5 C488.321,433.5 490.409,431.412 490.409,428.833 C490.409,426.255 488.321,424.167 485.742,424.167 M488.076,426.243 L488.916,427.083 L485.159,430.84 L483.152,428.833 L483.992,427.993 L485.159,429.16 L488.076,426.243" fill="#000"/>
+    <text fill="#000" font-size="14" textLength="56.175" x="491.409" y="433.889">Financial</text>
+    <text fill="#000" font-size="14" textLength="81.638" x="480.076" y="447.889">Management</text>
+    <text fill="#000" font-size="14" textLength="58.45" x="624.713" y="400.889">Suppliers</text>
+    <text fill="#000" font-size="14" x="683.163" y="400.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="683.163" y="400.889">management</text>
+    <path d="M571.713,437 L581.713,437 C596.713,437 596.713,397 611.713,397 L621.713,397" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="52.85" x="624.713" y="416.889">Contract</text>
+    <text fill="#000" font-size="14" x="677.563" y="416.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="677.563" y="416.889">management</text>
+    <path d="M571.713,437 L581.713,437 C596.713,437 596.713,413 611.713,413 L621.713,413" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="48.212" x="624.713" y="432.889">Contact</text>
+    <text fill="#000" font-size="14" x="672.926" y="432.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="672.926" y="432.889">management</text>
+    <path d="M571.713,437 L581.713,437 C596.713,437 596.713,429 611.713,429 L621.713,429" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="48.3" x="624.713" y="448.889">License</text>
+    <text fill="#000" font-size="14" x="673.013" y="448.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="673.013" y="448.889">management</text>
+    <path d="M571.713,437 L581.713,437 C596.713,437 596.713,445 611.713,445 L621.713,445" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="44.363" x="624.713" y="464.889">Budget</text>
+    <text fill="#000" font-size="14" x="669.076" y="464.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="669.076" y="464.889">management</text>
+    <path d="M571.713,437 L581.713,437 C596.713,437 596.713,461 611.713,461 L621.713,461" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="624.713" y="480.889">Linked</text>
+    <text fill="#000" font-size="14" x="666.013" y="480.889"> </text>
+    <text fill="#000" font-size="14" textLength="39.637" x="666.013" y="480.889">tickets</text>
+    <path d="M571.713,437 L581.713,437 C596.713,437 596.713,477 611.713,477 L621.713,477" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M420.076,293 L430.076,293 C445.076,293 445.076,437 460.076,437 L470.076,437" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFC" height="48" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="101.638" x="470.076" y="501"/>
+    <path d="M485.742,512.167 C483.164,512.167 481.076,514.255 481.076,516.833 C481.076,519.412 483.164,521.5 485.742,521.5 C488.321,521.5 490.409,519.412 490.409,516.833 C490.409,514.255 488.321,512.167 485.742,512.167 M488.076,514.243 L488.916,515.083 L485.159,518.84 L483.152,516.833 L483.992,515.993 L485.159,517.16 L488.076,514.243" fill="#000"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="491.409" y="521.889">User</text>
+    <text fill="#000" font-size="14" textLength="81.638" x="480.076" y="535.889">management</text>
+    <text fill="#000" font-size="14" textLength="45.15" x="624.713" y="496.889">Access</text>
+    <text fill="#000" font-size="14" x="669.863" y="496.889"> </text>
+    <text fill="#000" font-size="14" x="669.863" y="496.889">&amp;</text>
+    <text fill="#000" font-size="14" x="679.226" y="496.889"> </text>
+    <text fill="#000" font-size="14" textLength="67.638" x="679.226" y="496.889">restrictions</text>
+    <text fill="#000" font-size="14" x="746.863" y="496.889"> </text>
+    <text fill="#000" font-size="14" textLength="39.637" x="746.863" y="496.889">(rules)</text>
+    <path d="M571.713,525 L581.713,525 C596.713,525 596.713,493 611.713,493 L621.713,493" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="38.063" x="624.713" y="512.889">Oauth</text>
+    <text fill="#000" font-size="14" x="662.776" y="512.889"> </text>
+    <text fill="#000" font-size="14" textLength="29.575" x="662.776" y="512.889">SSO</text>
+    <text fill="#000" font-size="14" x="692.351" y="512.889"> </text>
+    <text fill="#000" font-size="14" textLength="67.025" x="692.351" y="512.889">application</text>
+    <path d="M571.713,525 L581.713,525 C596.713,525 596.713,509 611.713,509 L621.713,509" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="73.15" x="624.713" y="528.889">Self-service</text>
+    <text fill="#000" font-size="14" x="697.863" y="528.889"> </text>
+    <text fill="#000" font-size="14" textLength="35" x="697.863" y="528.889">mode</text>
+    <path d="M571.713,525 L581.713,525 C596.713,525 596.713,525 611.713,525 L621.713,525" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="45.938" x="624.713" y="544.889">Entities</text>
+    <path d="M571.713,525 L581.713,525 C596.713,525 596.713,541 611.713,541 L621.713,541" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="36.663" x="624.713" y="560.889">LDAP</text>
+    <path d="M571.713,525 L581.713,525 C596.713,525 596.713,557 611.713,557 L621.713,557" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M420.076,293 L430.076,293 C445.076,293 445.076,525 460.076,525 L470.076,525" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFC" height="48" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="72.633" x="225.75" y="165"/>
+    <path d="M241.417,176.167 C238.838,176.167 236.75,178.255 236.75,180.833 C236.75,183.412 238.838,185.5 241.417,185.5 C243.995,185.5 246.083,183.412 246.083,180.833 C246.083,178.255 243.995,176.167 241.417,176.167 M243.75,178.243 L244.59,179.083 L240.833,182.84 L238.827,180.833 L239.667,179.993 L240.833,181.16 L243.75,178.243" fill="#000"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="247.083" y="185.889">CMDB</text>
+    <text fill="#000" font-size="14" x="235.75" y="199.889"> </text>
+    <text fill="#000" font-size="14" textLength="87.938" x="10" y="33.889">Administrative</text>
+    <text fill="#000" font-size="14" x="97.938" y="33.889"> </text>
+    <text fill="#000" font-size="14" textLength="23.363" x="97.938" y="33.889">and</text>
+    <text fill="#000" font-size="14" x="121.3" y="33.889"> </text>
+    <text fill="#000" font-size="14" textLength="51.45" x="121.3" y="33.889">financial</text>
+    <text fill="#000" font-size="14" textLength="69.213" x="10" y="47.889">information</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,37 185.75,37 L175.75,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="57.487" x="46.05" y="63.889">Inventory</text>
+    <text fill="#000" font-size="14" x="103.538" y="63.889"> </text>
+    <text fill="#000" font-size="14" textLength="69.212" x="103.538" y="63.889">(agentless)</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,60 185.75,60 L175.75,60" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="56.7" x="46.838" y="79.889">Warranty</text>
+    <text fill="#000" font-size="14" x="103.538" y="79.889"> </text>
+    <text fill="#000" font-size="14" textLength="69.213" x="103.538" y="79.889">information</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,76 185.75,76 L175.75,76" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="55.212" x="35.9" y="95.889">Software</text>
+    <text fill="#000" font-size="14" x="91.112" y="95.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="91.112" y="95.889">management</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,92 185.75,92 L175.75,92" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="48.3" x="42.813" y="111.889">License</text>
+    <text fill="#000" font-size="14" x="91.113" y="111.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="91.113" y="111.889">management</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,108 185.75,108 L175.75,108" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="62.212" x="66.175" y="127.889">Automatic</text>
+    <text fill="#000" font-size="14" x="128.388" y="127.889"> </text>
+    <text fill="#000" font-size="14" textLength="44.363" x="128.388" y="127.889">actions</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,124 185.75,124 L175.75,124" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="39.725" x="76.238" y="143.889">Native</text>
+    <text fill="#000" font-size="14" x="115.963" y="143.889"> </text>
+    <text fill="#000" font-size="14" textLength="56.787" x="115.963" y="143.889">inventory</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,140 185.75,140 L175.75,140" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="76.15" y="159.889">Linked</text>
+    <text fill="#000" font-size="14" x="117.45" y="159.889"> </text>
+    <text fill="#000" font-size="14" textLength="55.3" x="117.45" y="159.889">incidents</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,156 185.75,156 L175.75,156" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="63.025" y="175.889">Linked</text>
+    <text fill="#000" font-size="14" x="104.325" y="175.889"> </text>
+    <text fill="#000" font-size="14" textLength="68.425" x="104.325" y="175.889">documents</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,172 185.75,172 L175.75,172" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.913" x="80.175" y="191.889">Impact</text>
+    <text fill="#000" font-size="14" x="122.087" y="191.889"> </text>
+    <text fill="#000" font-size="14" textLength="50.663" x="122.087" y="191.889">analysis</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,188 185.75,188 L175.75,188" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="31.938" x="59.175" y="207.889">Rack</text>
+    <text fill="#000" font-size="14" x="91.112" y="207.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="91.112" y="207.889">management</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,204 185.75,204 L175.75,204" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="73.875" y="223.889">Linked</text>
+    <text fill="#000" font-size="14" x="115.175" y="223.889"> </text>
+    <text fill="#000" font-size="14" textLength="57.575" x="115.175" y="223.889">problems</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,220 185.75,220 L175.75,220" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="77.813" y="239.889">Linked</text>
+    <text fill="#000" font-size="14" x="119.113" y="239.889"> </text>
+    <text fill="#000" font-size="14" textLength="53.637" x="119.113" y="239.889">requests</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,236 185.75,236 L175.75,236" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="35" x="87.875" y="255.889">Asset</text>
+    <text fill="#000" font-size="14" x="122.875" y="255.889"> </text>
+    <text fill="#000" font-size="14" textLength="49.875" x="122.875" y="255.889">lifecycle</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,252 185.75,252 L175.75,252" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="91.813" y="271.889">Linked</text>
+    <text fill="#000" font-size="14" x="133.113" y="271.889"> </text>
+    <text fill="#000" font-size="14" textLength="39.637" x="133.113" y="271.889">tickets</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,268 185.75,268 L175.75,268" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="78.513" y="287.889">Linked</text>
+    <text fill="#000" font-size="14" x="119.813" y="287.889"> </text>
+    <text fill="#000" font-size="14" textLength="52.937" x="119.813" y="287.889">changes</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,284 185.75,284 L175.75,284" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="68.513" x="104.238" y="303.889">Antiviruses</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,300 185.75,300 L175.75,300" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="68.513" x="104.238" y="319.889">Dashboard</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,316 185.75,316 L175.75,316" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="49" x="123.75" y="335.889">Reports</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,332 185.75,332 L175.75,332" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="55.3" x="117.45" y="351.889">Domains</text>
+    <path d="M225.75,189 L215.75,189 C200.75,189 200.75,348 185.75,348 L175.75,348" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M348.383,293 L338.383,293 C323.383,293 323.383,189 308.383,189 L298.383,189" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFC" height="48" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="101.638" x="196.746" y="396"/>
+    <path d="M212.412,407.167 C209.834,407.167 207.746,409.255 207.746,411.833 C207.746,414.412 209.834,416.5 212.412,416.5 C214.991,416.5 217.079,414.412 217.079,411.833 C217.079,409.255 214.991,407.167 212.412,407.167 M214.746,409.243 L215.586,410.083 L211.829,413.84 L209.822,411.833 L210.662,410.993 L211.829,412.16 L214.746,409.243" fill="#000"/>
+    <text fill="#000" font-size="14" textLength="43.575" x="218.079" y="416.889">Project</text>
+    <text fill="#000" font-size="14" textLength="81.638" x="206.746" y="430.889">Management</text>
+    <text fill="#000" font-size="14" textLength="41.3" x="34.021" y="367.889">Linked</text>
+    <text fill="#000" font-size="14" x="75.321" y="367.889"> </text>
+    <text fill="#000" font-size="14" textLength="68.425" x="75.321" y="367.889">documents</text>
+    <path d="M196.746,420 L186.746,420 C171.746,420 171.746,364 156.746,364 L146.746,364" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.913" x="51.171" y="383.889">Impact</text>
+    <text fill="#000" font-size="14" x="93.083" y="383.889"> </text>
+    <text fill="#000" font-size="14" textLength="50.663" x="93.083" y="383.889">analysis</text>
+    <path d="M196.746,420 L186.746,420 C171.746,420 171.746,380 156.746,380 L146.746,380" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="35.788" x="26.321" y="399.889">Team</text>
+    <text fill="#000" font-size="14" x="62.108" y="399.889"> </text>
+    <text fill="#000" font-size="14" textLength="81.638" x="62.108" y="399.889">management</text>
+    <path d="M196.746,420 L186.746,420 C171.746,420 171.746,396 156.746,396 L146.746,396" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="37.363" x="57.383" y="415.889">Tasks</text>
+    <text fill="#000" font-size="14" x="94.746" y="415.889"> </text>
+    <text fill="#000" font-size="14" textLength="49" x="94.746" y="415.889">tracking</text>
+    <path d="M196.746,420 L186.746,420 C171.746,420 171.746,412 156.746,412 L146.746,412" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="69.388" x="42.421" y="431.889">Knowledge</text>
+    <text fill="#000" font-size="14" x="111.808" y="431.889"> </text>
+    <text fill="#000" font-size="14" textLength="31.938" x="111.808" y="431.889">Base</text>
+    <path d="M196.746,420 L186.746,420 C171.746,420 171.746,428 156.746,428 L146.746,428" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="62.021" y="447.889">Linked</text>
+    <text fill="#000" font-size="14" x="103.321" y="447.889"> </text>
+    <text fill="#000" font-size="14" textLength="40.425" x="103.321" y="447.889">assets</text>
+    <path d="M196.746,420 L186.746,420 C171.746,420 171.746,444 156.746,444 L146.746,444" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="48.3" x="95.446" y="463.889">Kanban</text>
+    <path d="M196.746,420 L186.746,420 C171.746,420 171.746,460 156.746,460 L146.746,460" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="47.512" x="96.233" y="479.889">GANTT</text>
+    <path d="M196.746,420 L186.746,420 C171.746,420 171.746,476 156.746,476 L146.746,476" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M348.383,293 L338.383,293 C323.383,293 323.383,420 308.383,420 L298.383,420" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#FFC" height="48" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="97.483" x="200.9" y="500"/>
+    <path d="M216.567,511.167 C213.988,511.167 211.9,513.255 211.9,515.833 C211.9,518.412 213.988,520.5 216.567,520.5 C219.145,520.5 221.233,518.412 221.233,515.833 C221.233,513.255 219.145,511.167 216.567,511.167 M218.9,513.243 L219.74,514.083 L215.983,517.84 L213.977,515.833 L214.817,514.993 L215.983,516.16 L218.9,513.243" fill="#000"/>
+    <text fill="#000" font-size="14" textLength="66.15" x="222.233" y="520.889">Customize</text>
+    <text fill="#000" font-size="14" x="210.9" y="534.889"> </text>
+    <text fill="#000" font-size="14" textLength="38.938" x="36.6" y="495.889">Select</text>
+    <text fill="#000" font-size="14" x="75.538" y="495.889"> </text>
+    <text fill="#000" font-size="14" textLength="30.362" x="75.538" y="495.889">color</text>
+    <text fill="#000" font-size="14" x="105.9" y="495.889"> </text>
+    <text fill="#000" font-size="14" textLength="42" x="105.9" y="495.889">palette</text>
+    <path d="M200.9,524 L190.9,524 C175.9,524 175.9,492 160.9,492 L150.9,492" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="38.938" x="40.45" y="511.889">Select</text>
+    <text fill="#000" font-size="14" x="79.388" y="511.889"> </text>
+    <text fill="#000" font-size="14" textLength="31.15" x="79.388" y="511.889">page</text>
+    <text fill="#000" font-size="14" x="110.538" y="511.889"> </text>
+    <text fill="#000" font-size="14" textLength="37.363" x="110.538" y="511.889">layout</text>
+    <path d="M200.9,524 L190.9,524 C175.9,524 175.9,508 160.9,508 L150.9,508" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="38.938" x="51.3" y="527.889">Select</text>
+    <text fill="#000" font-size="14" x="90.238" y="527.889"> </text>
+    <text fill="#000" font-size="14" textLength="57.662" x="90.238" y="527.889">language</text>
+    <path d="M200.9,524 L190.9,524 C175.9,524 175.9,524 160.9,524 L150.9,524" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="69.238" y="543.889">Add</text>
+    <text fill="#000" font-size="14" x="94.175" y="543.889"> </text>
+    <text fill="#000" font-size="14" textLength="27.213" x="94.175" y="543.889">your</text>
+    <text fill="#000" font-size="14" x="121.388" y="543.889"> </text>
+    <text fill="#000" font-size="14" textLength="26.512" x="121.388" y="543.889">logo</text>
+    <path d="M200.9,524 L190.9,524 C175.9,524 175.9,540 160.9,540 L150.9,540" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="102.05" y="559.889">API</text>
+    <text fill="#000" font-size="14" x="124.625" y="559.889"> </text>
+    <text fill="#000" font-size="14" textLength="23.275" x="124.625" y="559.889">rest</text>
+    <path d="M200.9,524 L190.9,524 C175.9,524 175.9,556 160.9,556 L150.9,556" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M348.383,293 L338.383,293 C323.383,293 323.383,524 308.383,524 L298.383,524" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <g class="caption" data-source-line="6">
+      <text fill="#000" font-size="14" textLength="143.325" x="331.088" y="576.889">'ITSM' system's features</text>
+    </g>
+  </g>
+</svg>

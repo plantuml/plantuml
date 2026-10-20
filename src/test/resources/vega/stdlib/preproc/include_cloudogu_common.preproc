@@ -1,0 +1,211 @@
+@startuml
+
+
+hide stereotype
+
+
+skinparam Activity {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #ffffff
+  DiamondBackgroundColor #23a3dd
+  DiamondBorderColor #16688d
+  DiamondFontColor #ffffff
+}
+
+skinparam Actor {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Agent {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Arrow {
+  Color #000000
+}
+
+skinparam Artifact {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Class {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam ClassAttribute {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Cloud {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Component {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Control {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Database {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Domain {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Entity {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam File {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Folder {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Interface {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Machine {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Node {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #FFFFFF
+}
+
+skinparam Note {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Object {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam ObjectAttribute {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Package {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Participant {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Partition {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Queue {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Rectangle {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Requirement {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Sequence {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam SequenceGroup {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam SequenceReference {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Stack {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam State {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Storage {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #000000
+}
+
+skinparam Usecase {
+  BackgroundColor #23a3dd
+  BorderColor #16688d
+  FontColor #FFFFFF
+}
+@enduml
