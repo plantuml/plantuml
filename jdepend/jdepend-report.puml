@@ -2312,7 +2312,7 @@ Total Classes: 11
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.klimt.geom" %lighten("red", 26) {
-Total Classes: 34
+Total Classes: 35
 }
 "net.sourceforge.plantuml.klimt.geom" --> "java.awt.geom"
 "net.sourceforge.plantuml.klimt.geom" --> "java.lang"

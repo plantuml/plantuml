@@ -139,8 +139,8 @@ public class ChartRenderer {
 <span class="fc" id="L139">		double height = MARGIN + TITLE_SPACE + getPlotHeight() + AXIS_LABEL_SPACE + MARGIN;</span>
 
 		// Add space for X-axis title if present
-<span class="pc bpc" id="L142" title="1 of 4 branches missed.">		if (xAxisTitle != null &amp;&amp; !xAxisTitle.isEmpty()) {</span>
-<span class="nc" id="L143">			height += 20; // Extra space for X-axis title</span>
+<span class="fc bfc" id="L142" title="All 4 branches covered.">		if (xAxisTitle != null &amp;&amp; !xAxisTitle.isEmpty()) {</span>
+<span class="fc" id="L143">			height += 20; // Extra space for X-axis title</span>
 		}
 
 		// Add space for legend
@@ -182,7 +182,7 @@ public class ChartRenderer {
 <span class="fc" id="L182">		double xAxisY = topMargin + plotHeight;</span>
 <span class="pc bpc" id="L183" title="1 of 4 branches missed.">		if (orientation != ChartDiagram.Orientation.HORIZONTAL &amp;&amp; yAxis != null) {</span>
 			// Check if Y-axis range includes zero
-<span class="pc bpc" id="L185" title="2 of 4 branches missed.">			if (yAxis.getMin() &lt;= 0 &amp;&amp; yAxis.getMax() &gt;= 0) {</span>
+<span class="pc bpc" id="L185" title="1 of 4 branches missed.">			if (yAxis.getMin() &lt;= 0 &amp;&amp; yAxis.getMax() &gt;= 0) {</span>
 				// Calculate Y position of zero
 <span class="fc" id="L187">				final double zeroRatio = (0 - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin());</span>
 <span class="fc" id="L188">				xAxisY = topMargin + plotHeight * (1.0 - zeroRatio);</span>
@@ -193,7 +193,7 @@ public class ChartRenderer {
 <span class="fc" id="L193">		double yAxisX = leftMargin;</span>
 <span class="pc bpc" id="L194" title="1 of 4 branches missed.">		if (orientation != ChartDiagram.Orientation.HORIZONTAL &amp;&amp; xAxis != null) {</span>
 			// Check if X-axis range includes zero
-<span class="pc bpc" id="L196" title="2 of 4 branches missed.">			if (xAxis.getMin() &lt;= 0 &amp;&amp; xAxis.getMax() &gt;= 0) {</span>
+<span class="pc bpc" id="L196" title="1 of 4 branches missed.">			if (xAxis.getMin() &lt;= 0 &amp;&amp; xAxis.getMax() &gt;= 0) {</span>
 				// Calculate X position of zero
 <span class="fc" id="L198">				final double zeroX = xAxis.valueToPixel(0, 0, plotWidth);</span>
 <span class="fc" id="L199">				yAxisX = leftMargin + zeroX;</span>
@@ -480,7 +480,7 @@ public class ChartRenderer {
 
 		// Draw labels (only if we have categorical x-axis labels)
 <span class="fc" id="L482">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="pc bpc" id="L483" title="1 of 2 branches missed.">		if (!xAxisLabels.isEmpty()) {</span>
+<span class="fc bfc" id="L483" title="All 2 branches covered.">		if (!xAxisLabels.isEmpty()) {</span>
 <span class="fc" id="L484">			final double categoryWidth = width / xAxisLabels.size();</span>
 
 		// Get grid style
@@ -575,44 +575,44 @@ public class ChartRenderer {
 <span class="nc" id="L575">				titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));</span>
 			}
 		}
-<span class="pc bnc" id="L578" title="All 2 branches missed.">		} else if (xAxis != null) {</span>
+<span class="pc bpc" id="L578" title="1 of 2 branches missed.">		} else if (xAxis != null) {</span>
 			// Draw numeric x-axis ticks for coordinate-pair mode
-<span class="nc" id="L580">			final double range = xAxis.getMax() - xAxis.getMin();</span>
+<span class="fc" id="L580">			final double range = xAxis.getMax() - xAxis.getMin();</span>
 			final double tickInterval;
 
-<span class="nc bnc" id="L583" title="All 4 branches missed.">			if (xAxisTickSpacing != null &amp;&amp; xAxisTickSpacing &gt; 0) {</span>
+<span class="pc bpc" id="L583" title="3 of 4 branches missed.">			if (xAxisTickSpacing != null &amp;&amp; xAxisTickSpacing &gt; 0) {</span>
 				// Spacing directly specifies the tick interval
 <span class="nc" id="L585">				tickInterval = xAxisTickSpacing;</span>
 			} else {
 				// Default: approximately 10 ticks
-<span class="nc" id="L588">				tickInterval = range / 10.0;</span>
+<span class="fc" id="L588">				tickInterval = range / 10.0;</span>
 			}
 
 			// Find the starting tick value (round down to nearest multiple of tickInterval)
-<span class="nc" id="L592">			final double startValue = Math.floor(xAxis.getMin() / tickInterval) * tickInterval;</span>
+<span class="fc" id="L592">			final double startValue = Math.floor(xAxis.getMin() / tickInterval) * tickInterval;</span>
 
 			// Draw ticks and labels from start to end
-<span class="nc bnc" id="L595" title="All 2 branches missed.">			for (double value = startValue; value &lt;= xAxis.getMax() + tickInterval * 0.01; value += tickInterval) {</span>
+<span class="fc bfc" id="L595" title="All 2 branches covered.">			for (double value = startValue; value &lt;= xAxis.getMax() + tickInterval * 0.01; value += tickInterval) {</span>
 				// Skip if outside axis range
-<span class="nc bnc" id="L597" title="All 4 branches missed.">				if (value &lt; xAxis.getMin() - tickInterval * 0.01 || value &gt; xAxis.getMax() + tickInterval * 0.01)</span>
+<span class="pc bpc" id="L597" title="2 of 4 branches missed.">				if (value &lt; xAxis.getMin() - tickInterval * 0.01 || value &gt; xAxis.getMax() + tickInterval * 0.01)</span>
 <span class="nc" id="L598">					continue;</span>
 
-<span class="nc" id="L600">				final double x = xAxis.valueToPixel(value, 0, width);</span>
+<span class="fc" id="L600">				final double x = xAxis.valueToPixel(value, 0, width);</span>
 
 				// Draw tick mark
-<span class="nc" id="L603">				ug.apply(UTranslate.dx(x)).draw(ULine.vline(TICK_SIZE));</span>
+<span class="fc" id="L603">				ug.apply(UTranslate.dx(x)).draw(ULine.vline(TICK_SIZE));</span>
 
 				// Draw label
-<span class="nc" id="L606">				final String label = formatAxisValue(value);</span>
-<span class="nc" id="L607">				final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
-<span class="nc" id="L608">						.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
-<span class="nc" id="L609">				final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc" id="L610">				textBlock.drawU(ug.apply(UTranslate.dx(x - textWidth / 2).compose(UTranslate.dy(TICK_SIZE + 5))));</span>
+<span class="fc" id="L606">				final String label = formatAxisValue(value);</span>
+<span class="fc" id="L607">				final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
+<span class="fc" id="L608">						.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="fc" id="L609">				final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L610">				textBlock.drawU(ug.apply(UTranslate.dx(x - textWidth / 2).compose(UTranslate.dy(TICK_SIZE + 5))));</span>
 			}
 
 			// Draw X-axis title if present
-<span class="nc bnc" id="L614" title="All 4 branches missed.">			if (xAxisTitle != null &amp;&amp; !xAxisTitle.isEmpty()) {</span>
-<span class="nc bnc" id="L615" title="All 2 branches missed.">				if (xAxisLabelPosition == ChartAxis.LabelPosition.RIGHT) {</span>
+<span class="pc bpc" id="L614" title="2 of 4 branches missed.">			if (xAxisTitle != null &amp;&amp; !xAxisTitle.isEmpty()) {</span>
+<span class="pc bpc" id="L615" title="1 of 2 branches missed.">				if (xAxisLabelPosition == ChartAxis.LabelPosition.RIGHT) {</span>
 					// Draw at the right end of the axis
 <span class="nc" id="L617">					final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)</span>
 <span class="nc" id="L618">							.create(fontConfig, HorizontalAlignment.LEFT, skinParam);</span>
@@ -620,11 +620,11 @@ public class ChartRenderer {
 <span class="nc" id="L620">					titleBlock.drawU(ug.apply(UTranslate.dx(width + 10).compose(UTranslate.dy(-textHeight / 2))));</span>
 <span class="nc" id="L621">				} else {</span>
 					// Draw centered below the axis (default)
-<span class="nc" id="L623">					final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)</span>
-<span class="nc" id="L624">							.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
-<span class="nc" id="L625">					final double titleWidth = titleBlock.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc" id="L626">					final double titleY = TICK_SIZE + 25; // Position below the labels</span>
-<span class="nc" id="L627">					titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));</span>
+<span class="fc" id="L623">					final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)</span>
+<span class="fc" id="L624">							.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="fc" id="L625">					final double titleWidth = titleBlock.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L626">					final double titleY = TICK_SIZE + 25; // Position below the labels</span>
+<span class="fc" id="L627">					titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));</span>
 				}
 			}
 		} // Close the if (!xAxisLabels.isEmpty()) / else if
@@ -775,8 +775,8 @@ public class ChartRenderer {
 
 	private void drawSeries(UGraphic ug, double plotWidth, double plotHeight) {
 		// Check if we have series to render
-<span class="pc bpc" id="L778" title="2 of 4 branches missed.">		boolean hasCoordinatePairs = !series.isEmpty() &amp;&amp; series.get(0).hasExplicitXValues();</span>
-<span class="pc bpc" id="L779" title="4 of 6 branches missed.">		if ((xAxisLabels.isEmpty() &amp;&amp; !hasCoordinatePairs) || series.isEmpty())</span>
+<span class="pc bpc" id="L778" title="1 of 4 branches missed.">		boolean hasCoordinatePairs = !series.isEmpty() &amp;&amp; series.get(0).hasExplicitXValues();</span>
+<span class="pc bpc" id="L779" title="2 of 6 branches missed.">		if ((xAxisLabels.isEmpty() &amp;&amp; !hasCoordinatePairs) || series.isEmpty())</span>
 <span class="nc" id="L780">			return;</span>
 
 		// Separate bar series from other series for grouped/stacked rendering
@@ -852,7 +852,7 @@ public class ChartRenderer {
 				}
 <span class="nc" id="L853">				areaColors.add(color);</span>
 <span class="pc bfc" id="L854" title="All 2 branches covered.">			} else if (s.getType() != ChartSeries.SeriesType.BAR) {</span>
-<span class="pc bpc" id="L855" title="3 of 4 branches missed.">				final ChartAxis axis = s.isUseSecondaryAxis() &amp;&amp; y2Axis != null ? y2Axis : yAxis;</span>
+<span class="pc bpc" id="L855" title="1 of 4 branches missed.">				final ChartAxis axis = s.isUseSecondaryAxis() &amp;&amp; y2Axis != null ? y2Axis : yAxis;</span>
 
 				// Get series-specific style based on type (with stereotype support)
 				Style seriesStyle;
@@ -869,7 +869,7 @@ public class ChartRenderer {
 
 				// Extract series color - priority: explicit color &gt; style color &gt; default color
 <span class="fc" id="L871">				HColor color = s.getColor();</span>
-<span class="pc bpc" id="L872" title="1 of 2 branches missed.">				if (color == null) {</span>
+<span class="fc bfc" id="L872" title="All 2 branches covered.">				if (color == null) {</span>
 					// Try to get color from style
 <span class="fc" id="L874">					color = seriesStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 <span class="pc bpc" id="L875" title="1 of 2 branches missed.">					if (color == null) {</span>
@@ -1028,11 +1028,11 @@ public class ChartRenderer {
 
 	private String formatAxisValue(double value) {
 		// Format axis tick labels
-<span class="nc bnc" id="L1031" title="All 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
+<span class="pc bpc" id="L1031" title="1 of 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
 <span class="nc" id="L1032">			return String.format(&quot;%.2e&quot;, value);</span>
-<span class="nc bnc" id="L1033" title="All 2 branches missed.">		if (value == (long) value)</span>
-<span class="nc" id="L1034">			return String.format(&quot;%d&quot;, (long) value);</span>
-<span class="nc" id="L1035">		return String.format(&quot;%.1f&quot;, value);</span>
+<span class="fc bfc" id="L1033" title="All 2 branches covered.">		if (value == (long) value)</span>
+<span class="fc" id="L1034">			return String.format(&quot;%d&quot;, (long) value);</span>
+<span class="fc" id="L1035">		return String.format(&quot;%.1f&quot;, value);</span>
 	}
 
 	private StyleQuery getScatterStyleQuery() {

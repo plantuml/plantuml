@@ -77,8 +77,8 @@ public class ChartAxis {
 	}
 
 	public void setTitle(String title) {
-<span class="nc" id="L80">		this.title = title;</span>
-<span class="nc" id="L81">	}</span>
+<span class="fc" id="L80">		this.title = title;</span>
+<span class="fc" id="L81">	}</span>
 
 	public double getMin() {
 <span class="fc" id="L84">		return min;</span>
@@ -99,7 +99,7 @@ public class ChartAxis {
 <span class="fc" id="L99">	}</span>
 
 	public boolean isAutoScale() {
-<span class="nc" id="L102">		return autoScale;</span>
+<span class="fc" id="L102">		return autoScale;</span>
 	}
 
 	public void setAutoScale(boolean autoScale) {
@@ -119,7 +119,7 @@ public class ChartAxis {
 	 * Update axis range to include the given value
 	 */
 	public void includeValue(double value) {
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (autoScale) {</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (autoScale) {</span>
 <span class="pc bpc" id="L123" title="1 of 2 branches missed.">			if (value &lt; min)</span>
 <span class="nc" id="L124">				min = value;</span>
 <span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (value &gt; max)</span>

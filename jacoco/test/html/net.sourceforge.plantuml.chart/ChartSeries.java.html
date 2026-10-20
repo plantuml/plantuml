@@ -57,87 +57,98 @@ public class ChartSeries {
 	private HColor color;
 	private boolean useSecondaryAxis;
 	private boolean showLabels;
+	private boolean interpolate;
 	private MarkerShape markerShape;
 	private Stereotype stereotype;
 
-<span class="fc" id="L63">	public ChartSeries(String name, SeriesType type, List&lt;Double&gt; values) {</span>
-<span class="fc" id="L64">		this.name = name;</span>
-<span class="fc" id="L65">		this.type = type;</span>
-<span class="fc" id="L66">		this.values = new ArrayList&lt;&gt;(values);</span>
-<span class="fc" id="L67">		this.xValues = null; // Index-based mode</span>
-<span class="fc" id="L68">		this.useSecondaryAxis = false;</span>
-<span class="fc" id="L69">		this.showLabels = false;</span>
-<span class="fc" id="L70">		this.markerShape = MarkerShape.CIRCLE; // Default marker shape</span>
-<span class="fc" id="L71">	}</span>
+<span class="fc" id="L64">	public ChartSeries(String name, SeriesType type, List&lt;Double&gt; values) {</span>
+<span class="fc" id="L65">		this.name = name;</span>
+<span class="fc" id="L66">		this.type = type;</span>
+<span class="fc" id="L67">		this.values = new ArrayList&lt;&gt;(values);</span>
+<span class="fc" id="L68">		this.xValues = null; // Index-based mode</span>
+<span class="fc" id="L69">		this.useSecondaryAxis = false;</span>
+<span class="fc" id="L70">		this.showLabels = false;</span>
+<span class="fc" id="L71">		this.interpolate = false;</span>
+<span class="fc" id="L72">		this.markerShape = MarkerShape.CIRCLE; // Default marker shape</span>
+<span class="fc" id="L73">	}</span>
 
-<span class="nc" id="L73">	public ChartSeries(String name, SeriesType type, List&lt;Double&gt; xValues, List&lt;Double&gt; yValues) {</span>
-<span class="nc" id="L74">		this.name = name;</span>
-<span class="nc" id="L75">		this.type = type;</span>
-<span class="nc" id="L76">		this.xValues = new ArrayList&lt;&gt;(xValues);</span>
-<span class="nc" id="L77">		this.values = new ArrayList&lt;&gt;(yValues);</span>
-<span class="nc" id="L78">		this.useSecondaryAxis = false;</span>
-<span class="nc" id="L79">		this.showLabels = false;</span>
-<span class="nc" id="L80">		this.markerShape = MarkerShape.CIRCLE; // Default marker shape</span>
-<span class="nc" id="L81">	}</span>
+<span class="fc" id="L75">	public ChartSeries(String name, SeriesType type, List&lt;Double&gt; xValues, List&lt;Double&gt; yValues) {</span>
+<span class="fc" id="L76">		this.name = name;</span>
+<span class="fc" id="L77">		this.type = type;</span>
+<span class="fc" id="L78">		this.xValues = new ArrayList&lt;&gt;(xValues);</span>
+<span class="fc" id="L79">		this.values = new ArrayList&lt;&gt;(yValues);</span>
+<span class="fc" id="L80">		this.useSecondaryAxis = false;</span>
+<span class="fc" id="L81">		this.showLabels = false;</span>
+<span class="fc" id="L82">		this.interpolate = false;</span>
+<span class="fc" id="L83">		this.markerShape = MarkerShape.CIRCLE; // Default marker shape</span>
+<span class="fc" id="L84">	}</span>
 
 	public String getName() {
-<span class="nc" id="L84">		return name;</span>
+<span class="nc" id="L87">		return name;</span>
 	}
 
 	public SeriesType getType() {
-<span class="fc" id="L88">		return type;</span>
+<span class="fc" id="L91">		return type;</span>
 	}
 
 	public List&lt;Double&gt; getValues() {
-<span class="fc" id="L92">		return values;</span>
+<span class="fc" id="L95">		return values;</span>
 	}
 
 	public List&lt;Double&gt; getXValues() {
-<span class="nc" id="L96">		return xValues;</span>
+<span class="fc" id="L99">		return xValues;</span>
 	}
 
 	public boolean hasExplicitXValues() {
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		return xValues != null;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		return xValues != null;</span>
 	}
 
 	public HColor getColor() {
-<span class="fc" id="L104">		return color;</span>
+<span class="fc" id="L107">		return color;</span>
 	}
 
 	public void setColor(HColor color) {
-<span class="nc" id="L108">		this.color = color;</span>
-<span class="nc" id="L109">	}</span>
+<span class="fc" id="L111">		this.color = color;</span>
+<span class="fc" id="L112">	}</span>
 
 	public boolean isUseSecondaryAxis() {
-<span class="fc" id="L112">		return useSecondaryAxis;</span>
+<span class="fc" id="L115">		return useSecondaryAxis;</span>
 	}
 
 	public void setUseSecondaryAxis(boolean useSecondaryAxis) {
-<span class="nc" id="L116">		this.useSecondaryAxis = useSecondaryAxis;</span>
-<span class="nc" id="L117">	}</span>
+<span class="fc" id="L119">		this.useSecondaryAxis = useSecondaryAxis;</span>
+<span class="fc" id="L120">	}</span>
 
 	public boolean isShowLabels() {
-<span class="fc" id="L120">		return showLabels;</span>
+<span class="fc" id="L123">		return showLabels;</span>
 	}
 
 	public void setShowLabels(boolean showLabels) {
-<span class="fc" id="L124">		this.showLabels = showLabels;</span>
-<span class="fc" id="L125">	}</span>
+<span class="fc" id="L127">		this.showLabels = showLabels;</span>
+<span class="fc" id="L128">	}</span>
+
+	public boolean isInterpolate() {
+<span class="fc" id="L131">		return interpolate;</span>
+	}
+
+	public void setInterpolate(boolean interpolate) {
+<span class="fc" id="L135">		this.interpolate = interpolate;</span>
+<span class="fc" id="L136">	}</span>
 
 	public MarkerShape getMarkerShape() {
-<span class="nc" id="L128">		return markerShape;</span>
+<span class="nc" id="L139">		return markerShape;</span>
 	}
 
 	public void setMarkerShape(MarkerShape markerShape) {
-<span class="nc" id="L132">		this.markerShape = markerShape;</span>
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L143">		this.markerShape = markerShape;</span>
+<span class="nc" id="L144">	}</span>
 
 	public Stereotype getStereotype() {
-<span class="fc" id="L136">		return stereotype;</span>
+<span class="fc" id="L147">		return stereotype;</span>
 	}
 
 	public void setStereotype(Stereotype stereotype) {
-<span class="nc" id="L140">		this.stereotype = stereotype;</span>
-<span class="nc" id="L141">	}</span>
+<span class="nc" id="L151">		this.stereotype = stereotype;</span>
+<span class="nc" id="L152">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

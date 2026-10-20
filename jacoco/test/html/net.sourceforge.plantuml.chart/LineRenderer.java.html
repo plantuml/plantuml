@@ -34,12 +34,18 @@
  */
 package net.sourceforge.plantuml.chart;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.NaturalSpline;
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 
@@ -53,69 +59,103 @@ public class LineRenderer {
 	private final ChartAxis xAxis;
 
 	public LineRenderer(ISkinParam skinParam, double plotWidth, double plotHeight, int categoryCount,
-<span class="fc" id="L56">			ChartAxis axis, ChartAxis xAxis) {</span>
-<span class="fc" id="L57">		this.skinParam = skinParam;</span>
-<span class="fc" id="L58">		this.plotWidth = plotWidth;</span>
-<span class="fc" id="L59">		this.plotHeight = plotHeight;</span>
-<span class="fc" id="L60">		this.categoryCount = categoryCount;</span>
-<span class="fc" id="L61">		this.axis = axis;</span>
-<span class="fc" id="L62">		this.xAxis = xAxis;</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L62">			ChartAxis axis, ChartAxis xAxis) {</span>
+<span class="fc" id="L63">		this.skinParam = skinParam;</span>
+<span class="fc" id="L64">		this.plotWidth = plotWidth;</span>
+<span class="fc" id="L65">		this.plotHeight = plotHeight;</span>
+<span class="fc" id="L66">		this.categoryCount = categoryCount;</span>
+<span class="fc" id="L67">		this.axis = axis;</span>
+<span class="fc" id="L68">		this.xAxis = xAxis;</span>
+<span class="fc" id="L69">	}</span>
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
-<span class="pc bpc" id="L66" title="3 of 4 branches missed.">		if (categoryCount == 0 &amp;&amp; !series.hasExplicitXValues())</span>
-<span class="nc" id="L67">			return;</span>
+<span class="pc bpc" id="L72" title="1 of 4 branches missed.">		if (categoryCount == 0 &amp;&amp; !series.hasExplicitXValues())</span>
+<span class="nc" id="L73">			return;</span>
 
-<span class="fc" id="L69">		final List&lt;Double&gt; values = series.getValues();</span>
-
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (series.hasExplicitXValues()) {</span>
-			// Coordinate-pair mode: use explicit x-values
-<span class="nc" id="L73">			final List&lt;Double&gt; xValues = series.getXValues();</span>
-
-			// Safety check
-<span class="nc bnc" id="L76" title="All 2 branches missed.">			if (xAxis == null) {</span>
-<span class="nc" id="L77">				System.err.println(&quot;ERROR: xAxis is null in coordinate-pair mode!&quot;);</span>
-<span class="nc" id="L78">				return;</span>
-			}
-
-			// Draw line segments
-<span class="nc bnc" id="L82" title="All 2 branches missed.">			for (int i = 0; i &lt; values.size() - 1; i++) {</span>
-<span class="nc" id="L83">				final double xVal1 = xValues.get(i);</span>
-<span class="nc" id="L84">				final double yVal1 = values.get(i);</span>
-<span class="nc" id="L85">				final double xVal2 = xValues.get(i + 1);</span>
-<span class="nc" id="L86">				final double yVal2 = values.get(i + 1);</span>
-
-<span class="nc" id="L88">				final double x1 = xAxis.valueToPixel(xVal1, 0, plotWidth);</span>
-<span class="nc" id="L89">				final double y1 = plotHeight - (yVal1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
-<span class="nc" id="L90">				final double x2 = xAxis.valueToPixel(xVal2, 0, plotWidth);</span>
-<span class="nc" id="L91">				final double y2 = plotHeight - (yVal2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
-
-<span class="nc" id="L93">				final ULine line = new ULine(x2 - x1, y2 - y1);</span>
-<span class="nc" id="L94">				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
-			}
-<span class="nc" id="L96">		} else {</span>
-			// Index-based mode: use category positioning
-<span class="fc" id="L98">			final double categoryWidth = plotWidth / categoryCount;</span>
-
-			// Draw line segments
-<span class="fc bfc" id="L101" title="All 2 branches covered.">			for (int i = 0; i &lt; Math.min(values.size() - 1, categoryCount - 1); i++) {</span>
-				// No segment touches a missing value, so the line has a gap there
-<span class="fc bfc" id="L103" title="All 4 branches covered.">				if (values.get(i) == null || values.get(i + 1) == null)</span>
-<span class="fc" id="L104">					continue;</span>
-<span class="fc" id="L105">				final double value1 = values.get(i);</span>
-<span class="fc" id="L106">				final double value2 = values.get(i + 1);</span>
-
-<span class="fc" id="L108">				final double x1 = (i + 0.5) * categoryWidth;</span>
-<span class="fc" id="L109">				final double y1 = plotHeight - (value1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
-
-<span class="fc" id="L111">				final double x2 = (i + 1.5) * categoryWidth;</span>
-<span class="fc" id="L112">				final double y2 = plotHeight - (value2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
-
-<span class="fc" id="L114">				final ULine line = new ULine(x2 - x1, y2 - y1);</span>
-<span class="fc" id="L115">				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (series.isInterpolate()) {</span>
+<span class="fc" id="L76">			final List&lt;XCubicCurve2D&gt; curves = NaturalSpline.through(points(series));</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			if (curves.isEmpty() == false) {</span>
+<span class="fc" id="L78">				final UPath curve = UPath.none();</span>
+<span class="fc" id="L79">				curve.moveTo(curves.get(0).getP1());</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">				for (XCubicCurve2D bezier : curves)</span>
+<span class="fc" id="L81">					curve.cubicTo(bezier.ctrlx1, bezier.ctrly1, bezier.ctrlx2, bezier.ctrly2, bezier.x2, bezier.y2);</span>
+<span class="fc" id="L82">				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(HColors.none().bg()).draw(curve);</span>
+<span class="fc" id="L83">				return;</span>
 			}
 		}
-<span class="fc" id="L118">	}</span>
+
+<span class="fc" id="L87">		final List&lt;Double&gt; values = series.getValues();</span>
+
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (series.hasExplicitXValues()) {</span>
+			// Coordinate-pair mode: use explicit x-values
+<span class="fc" id="L91">			final List&lt;Double&gt; xValues = series.getXValues();</span>
+
+			// Safety check
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			if (xAxis == null) {</span>
+<span class="nc" id="L95">				System.err.println(&quot;ERROR: xAxis is null in coordinate-pair mode!&quot;);</span>
+<span class="nc" id="L96">				return;</span>
+			}
+
+			// Draw line segments
+<span class="fc bfc" id="L100" title="All 2 branches covered.">			for (int i = 0; i &lt; values.size() - 1; i++) {</span>
+<span class="fc" id="L101">				final double xVal1 = xValues.get(i);</span>
+<span class="fc" id="L102">				final double yVal1 = values.get(i);</span>
+<span class="fc" id="L103">				final double xVal2 = xValues.get(i + 1);</span>
+<span class="fc" id="L104">				final double yVal2 = values.get(i + 1);</span>
+
+<span class="fc" id="L106">				final double x1 = xAxis.valueToPixel(xVal1, 0, plotWidth);</span>
+<span class="fc" id="L107">				final double y1 = plotHeight - (yVal1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="fc" id="L108">				final double x2 = xAxis.valueToPixel(xVal2, 0, plotWidth);</span>
+<span class="fc" id="L109">				final double y2 = plotHeight - (yVal2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+
+<span class="fc" id="L111">				final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="fc" id="L112">				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
+			}
+<span class="fc" id="L114">		} else {</span>
+			// Index-based mode: use category positioning
+<span class="fc" id="L116">			final double categoryWidth = plotWidth / categoryCount;</span>
+
+			// Draw line segments
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			for (int i = 0; i &lt; Math.min(values.size() - 1, categoryCount - 1); i++) {</span>
+				// No segment touches a missing value, so the line has a gap there
+<span class="fc bfc" id="L121" title="All 4 branches covered.">				if (values.get(i) == null || values.get(i + 1) == null)</span>
+<span class="fc" id="L122">					continue;</span>
+<span class="fc" id="L123">				final double value1 = values.get(i);</span>
+<span class="fc" id="L124">				final double value2 = values.get(i + 1);</span>
+
+<span class="fc" id="L126">				final double x1 = (i + 0.5) * categoryWidth;</span>
+<span class="fc" id="L127">				final double y1 = plotHeight - (value1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+
+<span class="fc" id="L129">				final double x2 = (i + 1.5) * categoryWidth;</span>
+<span class="fc" id="L130">				final double y2 = plotHeight - (value2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+
+<span class="fc" id="L132">				final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="fc" id="L133">				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
+			}
+		}
+<span class="fc" id="L136">	}</span>
+
+	// The points of the series in pixels, leaving out missing values
+	private List&lt;XPoint2D&gt; points(ChartSeries series) {
+<span class="fc" id="L140">		final List&lt;XPoint2D&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L141">		final List&lt;Double&gt; values = series.getValues();</span>
+<span class="fc" id="L142">		final double range = axis.getMax() - axis.getMin();</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (series.hasExplicitXValues()) {</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">			if (xAxis == null)</span>
+<span class="nc" id="L145">				return result;</span>
+<span class="fc" id="L146">			final List&lt;Double&gt; xValues = series.getXValues();</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">			for (int i = 0; i &lt; values.size(); i++)</span>
+<span class="fc" id="L148">				result.add(new XPoint2D(xAxis.valueToPixel(xValues.get(i), 0, plotWidth),</span>
+<span class="fc" id="L149">						plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight));</span>
+<span class="fc" id="L150">		} else {</span>
+<span class="fc" id="L151">			final double categoryWidth = plotWidth / categoryCount;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++)</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">				if (values.get(i) != null)</span>
+<span class="fc" id="L154">					result.add(new XPoint2D((i + 0.5) * categoryWidth,</span>
+<span class="fc" id="L155">							plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight));</span>
+		}
+<span class="fc" id="L157">		return result;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
