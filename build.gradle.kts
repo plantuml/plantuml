@@ -164,9 +164,9 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 		into("native/resources/themes")
 	}
 	// The standard library: its list, and for each library its description, its
-	// puml files and its json files (see src/teavm-c/README.md for the others)
+	// puml, json, sprite and svg files; image.spm (raster images, 2.7 MB) is left out
 	from("src/main/resources/stdlib") {
-		include("home.spm", "*/info.spm", "*/puml.spm", "*/json.spm")
+		include("home.spm", "*/info.spm", "*/puml.spm", "*/json.spm", "*/sprite.spm", "*/svg.spm")
 		into("native/resources/stdlib")
 	}
 	into(layout.buildDirectory.dir("generated/teavm/c"))
