@@ -57,6 +57,7 @@ public class ChartSeries {
 	private HColor color;
 	private boolean useSecondaryAxis;
 	private boolean showLabels;
+	private boolean interpolate;
 	private MarkerShape markerShape;
 	private Stereotype stereotype;
 
@@ -67,6 +68,7 @@ public class ChartSeries {
 		this.xValues = null; // Index-based mode
 		this.useSecondaryAxis = false;
 		this.showLabels = false;
+		this.interpolate = false;
 		this.markerShape = MarkerShape.CIRCLE; // Default marker shape
 	}
 
@@ -77,6 +79,7 @@ public class ChartSeries {
 		this.values = new ArrayList<>(yValues);
 		this.useSecondaryAxis = false;
 		this.showLabels = false;
+		this.interpolate = false;
 		this.markerShape = MarkerShape.CIRCLE; // Default marker shape
 	}
 
@@ -122,6 +125,14 @@ public class ChartSeries {
 
 	public void setShowLabels(boolean showLabels) {
 		this.showLabels = showLabels;
+	}
+
+	public boolean isInterpolate() {
+		return interpolate;
+	}
+
+	public void setInterpolate(boolean interpolate) {
+		this.interpolate = interpolate;
 	}
 
 	public MarkerShape getMarkerShape() {

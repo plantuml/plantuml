@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+h-axis "x" 0 --> 5
+line [(1, 2), (1, 4), (3, 1)] interpolate
+@endchart

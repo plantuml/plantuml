@@ -34,12 +34,18 @@
  */
 package net.sourceforge.plantuml.chart;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.NaturalSpline;
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 
@@ -65,6 +71,18 @@ public class LineRenderer {
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
 		if (categoryCount == 0 && !series.hasExplicitXValues())
 			return;
+
+		if (series.isInterpolate()) {
+			final List<XCubicCurve2D> curves = NaturalSpline.through(points(series));
+			if (curves.isEmpty() == false) {
+				final UPath curve = UPath.none();
+				curve.moveTo(curves.get(0).getP1());
+				for (XCubicCurve2D bezier : curves)
+					curve.cubicTo(bezier.ctrlx1, bezier.ctrly1, bezier.ctrlx2, bezier.ctrly2, bezier.x2, bezier.y2);
+				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(HColors.none().bg()).draw(curve);
+				return;
+			}
+		}
 
 		final List<Double> values = series.getValues();
 
@@ -115,6 +133,28 @@ public class LineRenderer {
 				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);
 			}
 		}
+	}
+
+	// The points of the series in pixels, leaving out missing values
+	private List<XPoint2D> points(ChartSeries series) {
+		final List<XPoint2D> result = new ArrayList<>();
+		final List<Double> values = series.getValues();
+		final double range = axis.getMax() - axis.getMin();
+		if (series.hasExplicitXValues()) {
+			if (xAxis == null)
+				return result;
+			final List<Double> xValues = series.getXValues();
+			for (int i = 0; i < values.size(); i++)
+				result.add(new XPoint2D(xAxis.valueToPixel(xValues.get(i), 0, plotWidth),
+						plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight));
+		} else {
+			final double categoryWidth = plotWidth / categoryCount;
+			for (int i = 0; i < Math.min(values.size(), categoryCount); i++)
+				if (values.get(i) != null)
+					result.add(new XPoint2D((i + 0.5) * categoryWidth,
+							plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight));
+		}
+		return result;
 	}
 
 }
