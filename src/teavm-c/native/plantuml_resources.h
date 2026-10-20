@@ -35,6 +35,14 @@ int32_t plantuml_resource_size(int32_t index);
 /* Copies the resource at this index into dest (plantuml_resource_size bytes) */
 void plantuml_resource_copy(int32_t index, int8_t* dest);
 
+/* Decompresses the Brotli resource at this index (the .spm files of the
+ * standard library) into a buffer kept by C. Returns its size, or -1 if the
+ * index is wrong or the data is not valid Brotli. The buffer stays until
+ * plantuml_resource_copy_decoded, which copies it into dest (the size returned
+ * above) and frees it. Not reentrant. */
+int32_t plantuml_resource_decode_brotli(int32_t index);
+void plantuml_resource_copy_decoded(int8_t* dest);
+
 #ifdef __cplusplus
 }
 #endif

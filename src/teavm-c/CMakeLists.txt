@@ -91,18 +91,25 @@ foreach(STYLE regular bold italic bold_italic)
 	list(APPEND FONT_SOURCES ${OUTPUT})
 endforeach()
 
-# Files embedded in the executable (themes), found by Java through
-# plantuml_resources.c. Gradle copies them from src/main/resources into
+# Files embedded in the executable (themes, standard library), found by Java
+# through plantuml_resources.c. Gradle copies them from src/main/resources into
 # native/resources, and the names below are their paths under src/main/resources.
 include(native/embed_resources.cmake)
-file(GLOB THEME_FILES CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/native/resources/themes/*.puml)
+file(GLOB_RECURSE RESOURCE_FILES CONFIGURE_DEPENDS
+	${PROJECT_SOURCE_DIR}/native/resources/themes/*.puml
+	${PROJECT_SOURCE_DIR}/native/resources/stdlib/*.spm)
 set(RESOURCE_PAIRS)
-foreach(THEME_FILE IN LISTS THEME_FILES)
-	get_filename_component(THEME_NAME ${THEME_FILE} NAME)
-	list(APPEND RESOURCE_PAIRS "themes/${THEME_NAME}=${THEME_FILE}")
+foreach(RESOURCE_FILE IN LISTS RESOURCE_FILES)
+	file(RELATIVE_PATH RESOURCE_NAME ${PROJECT_SOURCE_DIR}/native/resources ${RESOURCE_FILE})
+	list(APPEND RESOURCE_PAIRS "${RESOURCE_NAME}=${RESOURCE_FILE}")
 endforeach()
 set(RESOURCES_SOURCE ${CMAKE_CURRENT_BINARY_DIR}/embedded_resources.c)
 plantuml_embed_resources(${RESOURCES_SOURCE} ${RESOURCE_PAIRS})
+
+# Brotli decoder (vendored, MIT): the .spm files of the standard library
+file(GLOB BROTLI_SOURCES native/brotli/dec/*.c native/brotli/common/*.c)
+add_library(brotlidec STATIC ${BROTLI_SOURCES})
+target_include_directories(brotlidec PUBLIC native/brotli/include)
 
 # miniz (vendored amalgamation, MIT): deflate of the PNG encoder only
 add_library(miniz STATIC native/miniz/miniz.c)
@@ -124,9 +131,9 @@ add_executable(plantuml ${TEAVM_GEN_OBJECTS} native/plantuml_canvas.c native/pla
 target_include_directories(plantuml PRIVATE native)
 
 if (WIN32)
-	target_link_libraries(plantuml plutovg miniz)
+	target_link_libraries(plantuml plutovg miniz brotlidec)
 elseif (APPLE)
-	target_link_libraries(plantuml plutovg miniz m)
+	target_link_libraries(plantuml plutovg miniz brotlidec m)
 else()
-	target_link_libraries(plantuml plutovg miniz m rt)
+	target_link_libraries(plantuml plutovg miniz brotlidec m rt)
 endif()

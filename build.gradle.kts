@@ -163,6 +163,12 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 		include("*.puml")
 		into("native/resources/themes")
 	}
+	// The standard library: its list, and for each library its description, its
+	// puml files and its json files (see src/teavm-c/README.md for the others)
+	from("src/main/resources/stdlib") {
+		include("home.spm", "*/info.spm", "*/puml.spm", "*/json.spm")
+		into("native/resources/stdlib")
+	}
 	into(layout.buildDirectory.dir("generated/teavm/c"))
 }
 tasks.matching { it.name == "generateC" }.configureEach {
