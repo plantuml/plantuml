@@ -64,4 +64,26 @@ public final class EmbeddedFiles {
 		return result;
 	}
 
+	/**
+	 * The content of the embedded file of this name, which is compressed with
+	 * Brotli (a .spm file of the standard library), decompressed; or null if there
+	 * is no such file, or it is not valid Brotli.
+	 * <p>
+	 * C decompresses it straight from the embedded bytes, which never go through
+	 * the Java heap.
+	 */
+	public static byte[] readBrotli(String name) {
+		final int index = NativeResources.find(name.toCharArray(), name.length());
+		if (index < 0)
+			return null;
+
+		final int size = NativeResources.decodeBrotli(index);
+		if (size < 0)
+			return null;
+
+		final byte[] result = new byte[size];
+		NativeResources.copyDecoded(result);
+		return result;
+	}
+
 }

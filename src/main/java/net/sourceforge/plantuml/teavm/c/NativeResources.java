@@ -65,4 +65,10 @@ final class NativeResources {
 	@Import(name = "plantuml_resource_copy")
 	static native void copy(int index, byte[] dest);
 
+	@Import(name = "plantuml_resource_decode_brotli")
+	static native int decodeBrotli(int index);
+
+	@Import(name = "plantuml_resource_copy_decoded")
+	static native void copyDecoded(byte[] dest);
+
 }

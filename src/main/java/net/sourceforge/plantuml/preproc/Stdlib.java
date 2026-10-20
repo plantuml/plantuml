@@ -117,7 +117,8 @@ public class Stdlib {
 		if (last == -1)
 			return null;
 
-		if (TeaVM.isTeaVM())
+		// The browser build gets its libraries from scripts; the C build embeds the .spm files
+		if (TeaVM.isTeaVM() && TeaVM.isC() == false)
 			return PathSystem.fetch().getTeaVMStdlibJson(fullname);
 
 		try {

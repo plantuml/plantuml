@@ -113,8 +113,10 @@ public class PathSystem {
 	public InputStream getTeaVMStdlibInputStream(String path) {
 		// ::revert when JAVA8
 		// return null;
-		if (TeaVM.isC())
-			return null;
+		if (TeaVM.isC()) {
+			final byte[] content = Stdlib.getPumlResource(path.substring(1, path.length() - 1));
+			return content == null ? null : new ByteArrayInputStream(content);
+		}
 		final String full = path.substring(1, path.length() - 1).toLowerCase();
 		final int slash = full.indexOf('/');
 		if (slash == -1)
