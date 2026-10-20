@@ -12,6 +12,10 @@ import org.teavm.jso.dom.html.HTMLCanvasElement;
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.typedarrays.Int8Array;
 import org.teavm.jso.typedarrays.Uint8ClampedArray;
+
+import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.c.PngImageC;
+import net.sourceforge.plantuml.utils.Base64Coder;
 // ::done
 
 /**
@@ -166,6 +170,10 @@ class PortableImageTeaVM implements PortableImage {
 	public String toPngDataUrl() {
 		if (pngDataUrl != null)
 			return pngDataUrl;
+
+		if (TeaVM.isC())
+			return "data:image/png;base64,"
+					+ new String(Base64Coder.encode(PngImageC.encode(pixels, width, height, imageType == TYPE_INT_RGB)));
 
 		HTMLDocument doc = HTMLDocument.current();
 		HTMLCanvasElement canvas = (HTMLCanvasElement) doc.createElement("canvas");

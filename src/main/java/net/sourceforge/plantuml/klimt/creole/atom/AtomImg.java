@@ -130,25 +130,11 @@ public class AtomImg extends AbstractAtom implements Atom {
 			}
 		}
 
+		if (src.startsWith(DATA_IMAGE_PNG_SPM) && (TeaVM.isC() || !TeaVM.isTeaVM()))
+			return buildFromStdlib(src, fc, scale, url);
+
 		if (TeaVM.isTeaVM())
 			return AtomTextUtils.createLegacy("[img TBD42102]", fc);
-
-		if (src.startsWith(DATA_IMAGE_PNG_SPM)) {
-			final String data = src.substring(DATA_IMAGE_PNG_SPM.length(), src.length());
-			final int x = data.indexOf('/');
-			if (x == -1)
-				return AtomTextUtils.createLegacy("ERROR DATA IMAGE", fc);
-			try {
-				final Stdlib lib = Stdlib.retrieve(data.substring(0, x));
-				final int num = Integer.parseInt(data.substring(x + 1));
-				final PortableImage image = lib.readDataImagePng(num).getNow();
-				return new AtomImg(image, scale, url, null);
-
-			} catch (Exception e) {
-				return AtomTextUtils.createLegacy("ERROR " + e.toString(), fc);
-			}
-
-		}
 
 		if (src.startsWith(DATA_IMAGE_SVG_BASE64)) {
 			final String data = src.substring(DATA_IMAGE_SVG_BASE64.length(), src.length());
@@ -196,6 +182,23 @@ public class AtomImg extends AbstractAtom implements Atom {
 				return AtomTextUtils.createLegacy("ERROR " + e.toString(), fc);
 
 			return AtomTextUtils.createLegacy("ERROR", fc);
+		}
+	}
+
+	/** A raster image of the standard library (image.spm). */
+	private static Atom buildFromStdlib(String src, final FontConfiguration fc, double scale, Url url) {
+		final String data = src.substring(DATA_IMAGE_PNG_SPM.length(), src.length());
+		final int x = data.indexOf('/');
+		if (x == -1)
+			return AtomTextUtils.createLegacy("ERROR DATA IMAGE", fc);
+		try {
+			final Stdlib lib = Stdlib.retrieve(data.substring(0, x));
+			final int num = Integer.parseInt(data.substring(x + 1));
+			final PortableImage image = lib.readDataImagePng(num).getNow();
+			return new AtomImg(image, scale, url, null);
+
+		} catch (Exception e) {
+			return AtomTextUtils.createLegacy("ERROR " + e.toString(), fc);
 		}
 	}
 
