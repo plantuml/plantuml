@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!include <awslib14/AWSCommon>
+!include <awslib14/Analytics/Athena>
+!include <awslib14/Analytics/CloudSearch>
+
+left to right direction
+
+Athena(athena, "Athena", "")
+CloudSearch(search, "CloudSearch", "")
+
+athena --> search
+@enduml

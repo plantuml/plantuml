@@ -1041,6 +1041,11 @@ public class SvgGraphics {
 	}
 
 	private String toBase64(PortableImage image) throws IOException {
+		if (TeaVM.isC()) {
+			// No javax.imageio in the C build: the image is encoded in C
+			final String url = image.toPngDataUrl();
+			return url.substring(url.indexOf(',') + 1);
+		}
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		SImageIO.write(image, "png", baos);
 		final byte data[] = baos.toByteArray();
