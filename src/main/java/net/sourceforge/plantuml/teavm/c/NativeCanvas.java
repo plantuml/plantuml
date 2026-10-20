@@ -138,4 +138,10 @@ final class NativeCanvas {
 	@Import(name = "plantuml_canvas_copy_png")
 	static native void copyPng(long canvas, byte[] dest);
 
+	@Import(name = "plantuml_png_image_encode")
+	static native int encodeImage(int[] argb, int width, int height, int opaque);
+
+	@Import(name = "plantuml_png_image_copy")
+	static native void copyImage(byte[] dest);
+
 }

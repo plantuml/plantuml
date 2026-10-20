@@ -259,8 +259,10 @@ library) are embedded in the executable, since the C build has no classpath:
 
 - Gradle (`copyNativeSources`) copies them from `src/main/resources` into
   `native/resources`, next to the generated C: `themes/*.puml`, and in
-  `stdlib/` the list (`home.spm`) and, for each library, `info.spm`, `puml.spm`
-  and `json.spm`. The sprites and svg of the libraries are not embedded yet.
+  `stdlib/` the list (`home.spm`) and, for each library, `info.spm`, `puml.spm`,
+  `json.spm`, `sprite.spm`, `svg.spm` and `image.spm` (about 7 MB,
+  Brotli-compressed). A raster image is written to the SVG as a PNG encoded in
+  C (`PngImageC`).
 - CMake (`native/embed_resources.cmake`) lists them, and `native/embed_tool.c`,
   a small program built and run by CMake, turns them into a C table. (A CMake
   script would take minutes for the megabytes of the standard library.)
@@ -271,7 +273,8 @@ library) are embedded in the executable, since the C build has no classpath:
   of Google (MIT, unmodified, see its README), and
   `EmbeddedFiles.readBrotli(name)` decompresses a file straight from the
   embedded bytes. `SpmChannel` uses it in C, so `!include <lib/file>`,
-  `!theme x from <lib>`, `%` JSON of a library and the list of libraries work as
+  `!theme x from <lib>`, `%` JSON of a library, the sprites (`<tupadr3/...>`,
+  `<aws/...>`) and the list of libraries work as
   on the JVM. The Java Brotli decoder (and its dictionary) is not in the C build.
 
 To embed more files, add `name=path` pairs to `RESOURCE_PAIRS` in

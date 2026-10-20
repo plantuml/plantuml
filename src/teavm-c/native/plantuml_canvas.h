@@ -91,6 +91,12 @@ void plantuml_canvas_fill_text(int64_t canvas, const uint16_t* text, int32_t len
 int32_t plantuml_canvas_encode_png(int64_t canvas, int32_t opaque);
 void plantuml_canvas_copy_png(int64_t canvas, int8_t* dest);
 
+/* PNG of a raster image given as ARGB pixels (not premultiplied), row by row.
+ * Returns the size in bytes (or -1); png_image_copy then copies the bytes into
+ * dest and releases them. */
+int32_t plantuml_png_image_encode(const int32_t* argb, int32_t width, int32_t height, int32_t opaque);
+void plantuml_png_image_copy(int8_t* dest);
+
 #ifdef __cplusplus
 }
 #endif
