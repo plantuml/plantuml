@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="351px" preserveAspectRatio="none" style="width:300px;height:351px;background:#FFFFFF;" version="1.1" viewBox="0 0 300 351" width="300px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Image sample\nwith C4 and new Style (!NEW_C4_STYLE = 1)-->
+    <g class="cluster" data-qualified-name="Image sample.nwith C4 and new Style ..NEW_C4_STYLE . 1." data-source-line="17" id="ent0001">
+      <path d="M16.5,4 L280.437,4 A3.75,3.75 0 0 1 282.937,6.5 L289.937,38 L289.5,38 A2.5,2.5 0 0 1 292,40.5 L292,324.5 A2.5,2.5 0 0 1 289.5,327 L16.5,327 A2.5,2.5 0 0 1 14,324.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="289.937" y1="38" y2="38"/>
+      <text fill="#000" font-size="14" textLength="84" x="107.469" y="16.889">Image sample</text>
+      <text fill="#000" font-size="14" textLength="262.937" x="18" y="30.889">with C4 and new Style (!NEW_C4_STYLE = 1)</text>
+    </g>
+    <!--entity A-->
+    <g class="entity" data-qualified-name="Image sample.nwith C4 and new Style ..NEW_C4_STYLE . 1..A" data-source-line="181" id="ent0002">
+      <rect fill="#FFF" height="99.692" rx="12.5" ry="12.5" style="stroke:#073B6F;stroke-width:0.5;" width="81.4" x="112.5" y="59"/>
+      <text fill="#08427B" font-size="12" font-style="italic" textLength="50.025" x="128.188" y="78.333">«person»</text>
+      <path d="M148.892,89.615 A8.615,8.615 0 0 1 157.508,98.231 A8.615,8.615 0 0 1 148.892,106.846 A8.615,8.615 0 0 1 140.277,98.231 A8.615,8.615 0 0 1 148.892,89.615 M148.892,111.154 C158.412,111.154 166.123,115.009 166.123,119.769 L166.123,124.077 L131.662,124.077 L131.662,119.769 C131.662,115.009 139.372,111.154 148.892,111.154 M170.431,106.846 L170.431,96.077 L174.738,96.077 L174.738,109 L170.431,109 M170.431,117.615 L170.431,113.308 L174.738,113.308 L174.738,117.615 L170.431,117.615" fill="#08427B"/>
+      <text fill="#08427B" font-size="16" font-weight="700" textLength="50.7" x="122.5" y="145.137">Person</text>
+      <text fill="#08427B" font-size="16" font-weight="700" x="173.2" y="145.137"> </text>
+      <text fill="#08427B" font-size="16" font-weight="700" x="173.2" y="145.137">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="Image sample.nwith C4 and new Style ..NEW_C4_STYLE . 1..B" data-source-line="181" id="ent0003">
+      <rect fill="#FFF" height="99.692" rx="12.5" ry="12.5" style="stroke:#073B6F;stroke-width:0.5;" width="81.4" x="112.5" y="211"/>
+      <text fill="#08427B" font-size="12" font-style="italic" textLength="50.025" x="128.188" y="230.333">«person»</text>
+      <path d="M153.2,237.308 A21.538,21.538 0 0 0 131.662,258.846 A21.538,21.538 0 0 0 153.2,280.385 A21.538,21.538 0 0 0 174.738,258.846 A21.538,21.538 0 0 0 153.2,237.308 M142.431,253.462 A3.231,3.231 0 0 1 145.662,250.231 A3.231,3.231 0 0 1 148.892,253.462 A3.231,3.231 0 0 1 145.662,256.692 A3.231,3.231 0 0 1 142.431,253.462 M161.815,267.462 L144.585,267.462 L144.585,263.154 L161.815,263.154 L161.815,267.462 M160.738,256.692 A3.231,3.231 0 0 1 157.508,253.462 A3.231,3.231 0 0 1 160.738,250.231 A3.231,3.231 0 0 1 163.969,253.462 A3.231,3.231 0 0 1 160.738,256.692" fill="#08427B"/>
+      <text fill="#08427B" font-size="16" font-weight="700" textLength="50.7" x="122.5" y="297.137">Person</text>
+      <text fill="#08427B" font-size="16" font-weight="700" x="173.2" y="297.137"> </text>
+      <text fill="#08427B" font-size="16" font-weight="700" x="173.2" y="297.137">B</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#666" points="153,210.774,156,202.774,150,202.774,153,210.774" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M153,159.116 C153,175.691 153,186.19 153,202.774" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="26.775" x="155" y="188.333">Calls</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+@startuml
+
+
+
+
+
+skinparam defaultTextAlignment center
+
+skinparam PackageTitleAlignment Left
+
+skinparam wrapWidth 200
+skinparam maxMessageSize 150
+
+skinparam rectangle {
+    StereotypeFontSize 12
+}
+
+skinparam Arrow {
+    Color #666666
+    FontColor #666666
+    FontSize 12
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@enduml

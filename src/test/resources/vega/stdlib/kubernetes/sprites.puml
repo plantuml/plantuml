@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!include <kubernetes/k8s-sprites-unlabeled-25pct>
+
+rectangle "<$master>" as master
+rectangle "<$etcd>" as etcd
+rectangle "<$node>" as node
+
+master --> etcd
+master --> node
+@enduml

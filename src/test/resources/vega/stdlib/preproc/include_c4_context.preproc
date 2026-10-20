@@ -1,0 +1,888 @@
+@startuml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam defaultTextAlignment center
+
+skinparam wrapWidth 200
+skinparam maxMessageSize 150
+
+skinparam LegendFontColor #FFFFFF
+skinparam LegendBackgroundColor transparent
+skinparam LegendBorderColor transparent
+
+skinparam rectangle<<legendArea>> {
+    backgroundcolor transparent
+    bordercolor transparent
+}
+
+skinparam rectangle {
+    StereotypeFontSize 12
+}
+
+skinparam database {
+    StereotypeFontSize 12
+}
+
+skinparam queue {
+    StereotypeFontSize 12
+}
+
+skinparam participant {
+    StereotypeFontSize 12
+}
+
+skinparam arrow {
+    Color #666666
+    FontColor #666666
+    FontSize 12
+}
+
+skinparam person {
+    StereotypeFontSize 12
+}
+
+skinparam actor {
+    StereotypeFontSize 12
+    style awesome
+}
+
+
+skinparam rectangle<<boundary>> {
+    StereotypeFontSize 6
+    StereotypeFontColor transparent
+    BorderStyle dashed
+}
+
+skinparam package {
+    StereotypeFontSize 6
+    StereotypeFontColor transparent
+    FontStyle plain
+    BackgroundColor transparent
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+skinparam rectangle<<boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam database<<boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam queue<<boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam person<<boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam actor<<boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam participant<<boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam sequencebox<<boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam package<<boundary>>StereotypeFontColor transparent
+skinparam rectangle<<boundary>>StereotypeFontColor transparent
+
+
+    
+
+    
+
+
+skinparam rectangle<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam database<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam queue<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam person<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam actor<<enterprise_boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam participant<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam sequencebox<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam package<<enterprise_boundary>>StereotypeFontColor transparent
+skinparam rectangle<<enterprise_boundary>>StereotypeFontColor transparent
+
+
+
+    
+
+    
+
+
+skinparam rectangle<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam database<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam queue<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam person<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam actor<<system_boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam participant<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam sequencebox<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam package<<system_boundary>>StereotypeFontColor transparent
+skinparam rectangle<<system_boundary>>StereotypeFontColor transparent
+
+
+
+    
+
+    
+
+
+skinparam rectangle<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam database<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam queue<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam person<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam actor<<container_boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam participant<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam sequencebox<<container_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam package<<container_boundary>>StereotypeFontColor transparent
+skinparam rectangle<<container_boundary>>StereotypeFontColor transparent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam rectangle<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+    RoundCorner 0
+    DiagonalCorner 0
+}
+skinparam database<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam queue<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam person<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam actor<<person>> {
+    StereotypeFontColor #08427B
+    FontColor #08427B
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam participant<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam sequencebox<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+
+
+
+
+
+skinparam rectangle<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+    RoundCorner 0
+    DiagonalCorner 0
+}
+skinparam database<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam queue<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam person<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam actor<<external_person>> {
+    StereotypeFontColor #686868
+    FontColor #686868
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam participant<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam sequencebox<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+
+
+
+
+
+skinparam rectangle<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+    RoundCorner 0
+    DiagonalCorner 0
+}
+skinparam database<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam queue<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam person<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam actor<<system>> {
+    StereotypeFontColor #1168BD
+    FontColor #1168BD
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam participant<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam sequencebox<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+
+
+
+
+
+skinparam rectangle<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+    RoundCorner 0
+    DiagonalCorner 0
+}
+skinparam database<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam queue<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam person<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam actor<<external_system>> {
+    StereotypeFontColor #999999
+    FontColor #999999
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam participant<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam sequencebox<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+
+
+
+
+
+    
+
+
+skinparam rectangle<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    RoundCorner 0
+    DiagonalCorner 0
+    BorderStyle dashed
+}
+skinparam database<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam queue<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam person<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam actor<<system_boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam participant<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam sequencebox<<system_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam package<<system_boundary>>StereotypeFontColor transparent
+skinparam rectangle<<system_boundary>>StereotypeFontColor transparent
+
+
+
+
+
+    
+
+
+skinparam rectangle<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    RoundCorner 0
+    DiagonalCorner 0
+    BorderStyle dashed
+}
+skinparam database<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam queue<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam person<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam actor<<enterprise_boundary>> {
+    FontColor transparent
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam participant<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam sequencebox<<enterprise_boundary>> {
+    FontColor #444444
+    BackgroundColor transparent
+    BorderColor #444444
+    BorderStyle dashed
+}
+skinparam package<<enterprise_boundary>>StereotypeFontColor transparent
+skinparam rectangle<<enterprise_boundary>>StereotypeFontColor transparent
+
+
+
+
+
+
+
+sprite $person #c4#c4_context:person
+
+sprite $person2 #c4#c4_context:person2
+
+sprite $robot #c4#c4_context:robot
+
+sprite $robot2 #c4#c4_context:robot2
+
+
+
+
+
+
+
+skinparam rectangle<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+    RoundCorner 0
+    DiagonalCorner 0
+}
+skinparam database<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam queue<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam person<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam actor<<person>> {
+    StereotypeFontColor #08427B
+    FontColor #08427B
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam participant<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam sequencebox<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+
+
+
+
+
+
+skinparam rectangle<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+    RoundCorner 0
+    DiagonalCorner 0
+}
+skinparam database<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam queue<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam person<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam actor<<external_person>> {
+    StereotypeFontColor #686868
+    FontColor #686868
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam participant<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam sequencebox<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@enduml
