@@ -273,3 +273,44 @@ void plantuml_canvas_copy_png(int64_t handle, int8_t* dest) {
 	if (c->png_size > 0)
 		memcpy(dest, c->png, c->png_size);
 }
+
+static unsigned char* image_png = NULL;
+static size_t image_png_size = 0;
+
+int32_t plantuml_png_image_encode(const int32_t* argb, int32_t width, int32_t height, int32_t opaque) {
+	free(image_png);
+	image_png = NULL;
+	image_png_size = 0;
+	if (width <= 0 || height <= 0)
+		return -1;
+	const size_t count = (size_t) width * (size_t) height;
+	uint32_t* pixels = (uint32_t*) malloc(count * sizeof(uint32_t));
+	if (pixels == NULL)
+		return -1;
+	/* The encoder takes premultiplied pixels, like the surface of plutovg */
+	for (size_t i = 0; i < count; i++) {
+		const uint32_t p = (uint32_t) argb[i];
+		const uint32_t a = p >> 24;
+		const uint32_t r = (((p >> 16) & 0xFF) * a + 127) / 255;
+		const uint32_t g = (((p >> 8) & 0xFF) * a + 127) / 255;
+		const uint32_t b = ((p & 0xFF) * a + 127) / 255;
+		pixels[i] = (a << 24) | (r << 16) | (g << 8) | b;
+	}
+	unsigned char* png;
+	size_t size;
+	const int failed = plantuml_png_encode(pixels, width, height, width * 4, opaque, &png, &size);
+	free(pixels);
+	if (failed != 0 || size > 0x7FFFFFFF)
+		return -1;
+	image_png = png;
+	image_png_size = size;
+	return (int32_t) size;
+}
+
+void plantuml_png_image_copy(int8_t* dest) {
+	if (image_png_size > 0)
+		memcpy(dest, image_png, image_png_size);
+	free(image_png);
+	image_png = NULL;
+	image_png_size = 0;
+}

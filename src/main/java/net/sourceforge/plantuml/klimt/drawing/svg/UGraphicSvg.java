@@ -129,7 +129,7 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		registerDriver(UPixel.class, new DriverPixelSvg());
 		registerDriver(UPolygon.class, new DriverPolygonSvg());
 		registerDriver(UEllipse.class, new DriverEllipseSvg());
-		if (!TeaVM.isTeaVM())
+		if (!TeaVM.isTeaVM() || TeaVM.isC())
 			registerDriver(UImage.class, new DriverImagePng());
 		registerDriver(UImageSvg.class, new DriverImageSvgSvg());
 		ignoreShape(UImageTikz.class);

@@ -260,9 +260,9 @@ library) are embedded in the executable, since the C build has no classpath:
 - Gradle (`copyNativeSources`) copies them from `src/main/resources` into
   `native/resources`, next to the generated C: `themes/*.puml`, and in
   `stdlib/` the list (`home.spm`) and, for each library, `info.spm`, `puml.spm`,
-  `json.spm`, `sprite.spm` and `svg.spm` (about 4.3 MB, Brotli-compressed). The
-  raster images (`image.spm`, 2.7 MB) are not embedded: `readDataImagePng` fails
-  in the C build.
+  `json.spm`, `sprite.spm`, `svg.spm` and `image.spm` (about 7 MB,
+  Brotli-compressed). A raster image is written to the SVG as a PNG encoded in
+  C (`PngImageC`).
 - CMake (`native/embed_resources.cmake`) lists them, and `native/embed_tool.c`,
   a small program built and run by CMake, turns them into a C table. (A CMake
   script would take minutes for the megabytes of the standard library.)
