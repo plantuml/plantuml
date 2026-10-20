@@ -458,10 +458,12 @@ public class TContext {
 	}
 
 	private void executeImport(TMemory memory, StringLocated s) throws EaterException {
+		// ::comment when JAVA8
 		if (TeaVM.isC()) {
 			executeImportInC(memory, s);
 			return;
 		}
+		// ::done
 		if (!TeaVM.isTeaVM()) {
 			final EaterImport _import = new EaterImport(s.getTrimmed());
 			_import.analyze(this, memory);
