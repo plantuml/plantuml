@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!include <eip/EIP-PlantUML>
+
+MsgChannel(channel1, "Channel 1")
+MsgChannel(channel2, "Channel 2")
+Message(msg, "Message")
+
+Send(channel1, msg)
+Send(msg, channel2)
+@enduml

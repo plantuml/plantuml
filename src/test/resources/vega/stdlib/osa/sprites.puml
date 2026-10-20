@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!include <osa/user/green/developer/developer>
+!include <osa/database/database>
+!include <osa/desktop/desktop>
+
+rectangle "<$developer>\nDeveloper" as dev
+rectangle "<$desktop>\nDesktop" as desktop
+rectangle "<$database>\nDatabase" as db
+
+dev --> desktop
+desktop --> db
+@enduml

@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="866px" preserveAspectRatio="none" style="width:2132px;height:866px;background:#FFFFFF;" version="1.1" viewBox="0 0 2132 866" width="2132px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster $MdiAccountAlert() samples (and unchanged default values)\nwith required common.puml-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml" data-source-line="20" id="ent0001">
+      <path d="M16.5,333 L373.1,333 A3.75,3.75 0 0 1 375.6,335.5 L382.6,367 L2121.5,367 A2.5,2.5 0 0 1 2124,369.5 L2124,839.5 A2.5,2.5 0 0 1 2121.5,842 L16.5,842 A2.5,2.5 0 0 1 14,839.5 L14,335.5 A2.5,2.5 0 0 1 16.5,333" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="382.6" y1="367" y2="367"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="355.6" x="18" y="345.889">$MdiAccountAlert() samples (and unchanged default values)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="164.15" x="113.725" y="359.889">with required common.puml</text>
+    </g>
+    <!--cluster $MdiAccountAlertImg() samples (and unchanged default values)\nwith required common.puml-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlertImg.. samples .and unchanged default values..nwith required common.puml" data-source-line="48" id="ent0016">
+      <path d="M243.5,4 L623.375,4 A3.75,3.75 0 0 1 625.875,6.5 L632.875,38 L1267.5,38 A2.5,2.5 0 0 1 1270,40.5 L1270,314.5 A2.5,2.5 0 0 1 1267.5,317 L243.5,317 A2.5,2.5 0 0 1 241,314.5 L241,6.5 A2.5,2.5 0 0 1 243.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="241" x2="632.875" y1="38" y2="38"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="378.875" x="245" y="16.889">$MdiAccountAlertImg() samples (and unchanged default values)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="164.15" x="352.362" y="30.889">with required common.puml</text>
+    </g>
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.N2" data-source-line="23" id="ent0002">
+      <path d="M30,771 L30,794 L914.85,794 L914.85,781 L904.85,771 L30,771" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M904.85,771 L904.85,781 L914.85,781 L904.85,771" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="863.85" x="36" y="786.111">samples with $MdiAccountAlert($alias, $label=$MDI_DEFAULT, $shape=$MDI_DEFAULT, $color=$MDI_DEFAULT, $scale=1, $stereo=$MDI_DEFAULT)</text>
+    </g>
+    <!--entity defaultAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.defaultAccount" data-source-line="27" id="ent0003">
+      <rect fill="#F1F1F1" height="85.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.575" x="416" y="667"/>
+      <path d="M467.98,685.615 A8.615,8.615 0 0 1 476.595,694.231 A8.615,8.615 0 0 1 467.98,702.846 A8.615,8.615 0 0 1 459.364,694.231 A8.615,8.615 0 0 1 467.98,685.615 M467.98,707.154 C477.5,707.154 485.211,711.009 485.211,715.769 L485.211,720.077 L450.749,720.077 L450.749,715.769 C450.749,711.009 458.46,707.154 467.98,707.154 M489.518,702.846 L489.518,692.077 L493.826,692.077 L493.826,705 L489.518,705 M489.518,713.615 L489.518,709.308 L493.826,709.308 L493.826,713.615 L489.518,713.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="92.575" x="426" y="739.581">defaultAccount</text>
+    </g>
+    <!--entity labelAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.labelAccount" data-source-line="29" id="ent0004">
+      <rect fill="#F1F1F1" height="85.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="136.113" x="404.5" y="563"/>
+      <path d="M468.249,581.615 A8.615,8.615 0 0 1 476.864,590.231 A8.615,8.615 0 0 1 468.249,598.846 A8.615,8.615 0 0 1 459.633,590.231 A8.615,8.615 0 0 1 468.249,581.615 M468.249,603.154 C477.769,603.154 485.479,607.009 485.479,611.769 L485.479,616.077 L451.018,616.077 L451.018,611.769 C451.018,607.009 458.729,603.154 468.249,603.154 M489.787,598.846 L489.787,588.077 L494.095,588.077 L494.095,601 L489.787,601 M489.787,609.615 L489.787,605.308 L494.095,605.308 L494.095,609.615 L489.787,609.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="116.113" x="414.5" y="635.581">with changed $label</text>
+    </g>
+    <!--entity nolabelAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.nolabelAccount" data-source-line="30" id="ent0005">
+      <rect fill="#F1F1F1" height="71.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.692" x="436.5" y="473"/>
+      <path d="M468.038,491.615 A8.615,8.615 0 0 1 476.654,500.231 A8.615,8.615 0 0 1 468.038,508.846 A8.615,8.615 0 0 1 459.423,500.231 A8.615,8.615 0 0 1 468.038,491.615 M468.038,513.154 C477.558,513.154 485.269,517.009 485.269,521.769 L485.269,526.077 L450.808,526.077 L450.808,521.769 C450.808,517.009 458.518,513.154 468.038,513.154 M489.577,508.846 L489.577,498.077 L493.885,498.077 L493.885,511 L489.577,511 M489.577,519.615 L489.577,515.308 L493.885,515.308 L493.885,519.615 L489.577,519.615" fill="#000"/>
+    </g>
+    <!--entity aliaslabelAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.aliaslabelAccount" data-source-line="31" id="ent0006">
+      <rect fill="#F1F1F1" height="85.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.113" x="1062" y="740"/>
+      <path d="M1122.249,758.615 A8.615,8.615 0 0 1 1130.864,767.231 A8.615,8.615 0 0 1 1122.249,775.846 A8.615,8.615 0 0 1 1113.633,767.231 A8.615,8.615 0 0 1 1122.249,758.615 M1122.249,780.154 C1131.769,780.154 1139.479,784.009 1139.479,788.769 L1139.479,793.077 L1105.018,793.077 L1105.018,788.769 C1105.018,784.009 1112.729,780.154 1122.249,780.154 M1143.787,775.846 L1143.787,765.077 L1148.095,765.077 L1148.095,778 L1143.787,778 M1143.787,786.615 L1143.787,782.308 L1148.095,782.308 L1148.095,786.615 L1143.787,786.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="109.113" x="1072" y="812.581">aliaslabelAccount</text>
+    </g>
+    <!--entity shapeDatabaseAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.shapeDatabaseAccount" data-source-line="33" id="ent0007">
+      <path d="M991,636.5 C991,626.5 1126.606,626.5 1126.606,626.5 C1126.606,626.5 1262.213,626.5 1262.213,636.5 L1262.213,711.192 C1262.213,721.192 1126.606,721.192 1126.606,721.192 C1126.606,721.192 991,721.192 991,711.192 L991,636.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M991,636.5 C991,646.5 1126.606,646.5 1126.606,646.5 C1126.606,646.5 1262.213,646.5 1262.213,636.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M1122.299,659.115 A8.615,8.615 0 0 1 1130.914,667.731 A8.615,8.615 0 0 1 1122.299,676.346 A8.615,8.615 0 0 1 1113.683,667.731 A8.615,8.615 0 0 1 1122.299,659.115 M1122.299,680.654 C1131.819,680.654 1139.529,684.509 1139.529,689.269 L1139.529,693.577 L1105.068,693.577 L1105.068,689.269 C1105.068,684.509 1112.779,680.654 1122.299,680.654 M1143.837,676.346 L1143.837,665.577 L1148.145,665.577 L1148.145,678.5 L1143.837,678.5 M1143.837,687.115 L1143.837,682.808 L1148.145,682.808 L1148.145,687.115 L1143.837,687.115" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="251.213" x="1001" y="713.081">with changed $label and $shape=database</text>
+    </g>
+    <!--entity shapeNoneIsLabelAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.shapeNoneIsLabelAccount" data-source-line="34" id="ent0008">
+      <path d="M1122.067,540.615 A8.615,8.615 0 0 1 1130.683,549.231 A8.615,8.615 0 0 1 1122.067,557.846 A8.615,8.615 0 0 1 1113.452,549.231 A8.615,8.615 0 0 1 1122.067,540.615 M1122.067,562.154 C1131.587,562.154 1139.298,566.009 1139.298,570.769 L1139.298,575.077 L1104.837,575.077 L1104.837,570.769 C1104.837,566.009 1112.547,562.154 1122.067,562.154 M1143.606,557.846 L1143.606,547.077 L1147.913,547.077 L1147.913,560 L1143.606,560 M1143.606,568.615 L1143.606,564.308 L1147.913,564.308 L1147.913,568.615 L1143.606,568.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="330.75" x="961" y="594.581">with changed $label and $shape=$MDI_SHAPE_NONE</text>
+    </g>
+    <!--entity colorRedAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.colorRedAccount" data-source-line="36" id="ent0009">
+      <rect fill="#F1F1F1" height="85.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="226.063" x="1013.5" y="418"/>
+      <path d="M1122.224,436.615 A8.615,8.615 0 0 1 1130.839,445.231 A8.615,8.615 0 0 1 1122.224,453.846 A8.615,8.615 0 0 1 1113.608,445.231 A8.615,8.615 0 0 1 1122.224,436.615 M1122.224,458.154 C1131.744,458.154 1139.454,462.009 1139.454,466.769 L1139.454,471.077 L1104.993,471.077 L1104.993,466.769 C1104.993,462.009 1112.704,458.154 1122.224,458.154 M1143.762,453.846 L1143.762,443.077 L1148.07,443.077 L1148.07,456 L1143.762,456 M1143.762,464.615 L1143.762,460.308 L1148.07,460.308 L1148.07,464.615 L1143.762,464.615" fill="#F00"/>
+      <text fill="#000" font-size="14" textLength="206.063" x="1023.5" y="490.581">with changed $label and $color=red</text>
+    </g>
+    <!--entity colorBlueAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.colorBlueAccount" data-source-line="38" id="ent0010">
+      <rect fill="#F1F1F1" height="85.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="241.638" x="1373" y="740"/>
+      <path d="M1489.511,758.615 A8.615,8.615 0 0 1 1498.126,767.231 A8.615,8.615 0 0 1 1489.511,775.846 A8.615,8.615 0 0 1 1480.896,767.231 A8.615,8.615 0 0 1 1489.511,758.615 M1489.511,780.154 C1499.031,780.154 1506.742,784.009 1506.742,788.769 L1506.742,793.077 L1472.28,793.077 L1472.28,788.769 C1472.28,784.009 1479.991,780.154 1489.511,780.154 M1511.05,775.846 L1511.05,765.077 L1515.357,765.077 L1515.357,778 L1511.05,778 M1511.05,786.615 L1511.05,782.308 L1515.357,782.308 L1515.357,786.615 L1511.05,786.615" fill="#00F"/>
+      <text fill="#000" font-size="14" textLength="221.638" x="1383" y="812.581">with changed $label and $color=green</text>
+    </g>
+    <!--entity scaleSmallAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.scaleSmallAccount" data-source-line="40" id="ent0011">
+      <rect fill="#F1F1F1" height="59.846" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="227.638" x="1380" y="662"/>
+      <path d="M1491.665,676.308 A4.308,4.308 0 0 1 1495.973,680.615 A4.308,4.308 0 0 1 1491.665,684.923 A4.308,4.308 0 0 1 1487.357,680.615 A4.308,4.308 0 0 1 1491.665,676.308 M1491.665,687.077 C1496.425,687.077 1500.28,689.005 1500.28,691.385 L1500.28,693.538 L1483.05,693.538 L1483.05,691.385 C1483.05,689.005 1486.905,687.077 1491.665,687.077 M1502.434,684.923 L1502.434,679.538 L1504.588,679.538 L1504.588,686 L1502.434,686 M1502.434,690.308 L1502.434,688.154 L1504.588,688.154 L1504.588,690.308 L1502.434,690.308" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="207.638" x="1390" y="708.735">with changed $label and $scale=0.5</text>
+    </g>
+    <!--entity scaleLargeAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.scaleLargeAccount" data-source-line="41" id="ent0012">
+      <rect fill="#F1F1F1" height="137.385" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="227.638" x="1380" y="506.5"/>
+      <path d="M1485.203,533.731 A17.231,17.231 0 0 1 1502.434,550.962 A17.231,17.231 0 0 1 1485.203,568.192 A17.231,17.231 0 0 1 1467.973,550.962 A17.231,17.231 0 0 1 1485.203,533.731 M1485.203,576.808 C1504.243,576.808 1519.665,584.518 1519.665,594.038 L1519.665,602.654 L1450.742,602.654 L1450.742,594.038 C1450.742,584.518 1466.163,576.808 1485.203,576.808 M1528.28,568.192 L1528.28,546.654 L1536.896,546.654 L1536.896,572.5 L1528.28,572.5 M1528.28,589.731 L1528.28,581.115 L1536.896,581.115 L1536.896,589.731 L1528.28,589.731" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="207.638" x="1390" y="630.774">with changed $label and $scale=2.0</text>
+    </g>
+    <!--entity stereotypeWithoutAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.stereotypeWithoutAccount" data-source-line="43" id="ent0013">
+      <rect fill="#F1F1F1" height="99.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="312.338" x="1338" y="388"/>
+      <path d="M1489.861,406.615 A8.615,8.615 0 0 1 1498.476,415.231 A8.615,8.615 0 0 1 1489.861,423.846 A8.615,8.615 0 0 1 1481.246,415.231 A8.615,8.615 0 0 1 1489.861,406.615 M1489.861,428.154 C1499.381,428.154 1507.092,432.009 1507.092,436.769 L1507.092,441.077 L1472.63,441.077 L1472.63,436.769 C1472.63,432.009 1480.341,428.154 1489.861,428.154 M1511.4,423.846 L1511.4,413.077 L1515.707,413.077 L1515.707,426 L1511.4,426 M1511.4,434.615 L1511.4,430.308 L1515.707,430.308 L1515.707,434.615 L1511.4,434.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="139.475" x="1424.431" y="460.581">with changed $label and</text>
+      <text fill="#000" font-size="14" textLength="292.338" x="1348" y="474.581">(without) $stereo=$MDI_STEREOTYPE_NONE</text>
+    </g>
+    <!--entity stereotypeFixAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.stereotypeFixAccount" data-source-line="44" id="ent0014">
+      <rect fill="#F1F1F1" height="113.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="169.713" x="1812" y="712"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="47.512" x="1873.1" y="732.889">«Abcd»</text>
+      <path d="M1892.549,744.615 A8.615,8.615 0 0 1 1901.164,753.231 A8.615,8.615 0 0 1 1892.549,761.846 A8.615,8.615 0 0 1 1883.933,753.231 A8.615,8.615 0 0 1 1892.549,744.615 M1892.549,766.154 C1902.069,766.154 1909.779,770.009 1909.779,774.769 L1909.779,779.077 L1875.318,779.077 L1875.318,774.769 C1875.318,770.009 1883.029,766.154 1892.549,766.154 M1914.087,761.846 L1914.087,751.077 L1918.395,751.077 L1918.395,764 L1914.087,764 M1914.087,772.615 L1914.087,768.308 L1918.395,768.308 L1918.395,772.615 L1914.087,772.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="139.475" x="1827.119" y="798.581">with changed $label and</text>
+      <text fill="#000" font-size="14" textLength="149.713" x="1822" y="812.581">(concrete) $stereo=Abcd</text>
+    </g>
+    <!--entity stereotypeAliasAccount-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples .and unchanged default values..nwith required common.puml.stereotypeAliasAccount" data-source-line="45" id="ent0015">
+      <rect fill="#F1F1F1" height="113.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="422.063" x="1686" y="580"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="117.513" x="1838.275" y="600.889">«mdiAccountAlert»</text>
+      <path d="M1892.724,612.615 A8.615,8.615 0 0 1 1901.339,621.231 A8.615,8.615 0 0 1 1892.724,629.846 A8.615,8.615 0 0 1 1884.108,621.231 A8.615,8.615 0 0 1 1892.724,612.615 M1892.724,634.154 C1902.244,634.154 1909.954,638.009 1909.954,642.769 L1909.954,647.077 L1875.493,647.077 L1875.493,642.769 C1875.493,638.009 1883.204,634.154 1892.724,634.154 M1914.262,629.846 L1914.262,619.077 L1918.57,619.077 L1918.57,632 L1914.262,632 M1914.262,640.615 L1914.262,636.308 L1918.57,636.308 L1918.57,640.615 L1914.262,640.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="139.475" x="1827.294" y="666.581">with changed $label and</text>
+      <text fill="#000" font-size="14" textLength="402.063" x="1696" y="680.581">(dynamic, based on sprite) $stereo=$MDI_STEREOTYPE_SPRITE</text>
+    </g>
+    <g class="entity" data-qualified-name=".MdiAccountAlertImg.. samples .and unchanged default values..nwith required common.puml.N1" data-source-line="51" id="ent0017">
+      <path d="M257,246 L257,269 L687.744,269 L687.744,256 L677.744,246 L257,246" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M677.744,246 L677.744,256 L687.744,256 L677.744,246" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="409.744" x="263" y="261.111">samples with $MdiAccountAlertImg($color = $MDI_DEFAULT, $scale = "1")</text>
+    </g>
+    <!--entity defaultImg-->
+    <g class="entity" data-qualified-name=".MdiAccountAlertImg.. samples .and unchanged default values..nwith required common.puml.defaultImg" data-source-line="54" id="ent0018">
+      <text fill="#000" font-size="14" textLength="249.725" x="347.5" y="162.889">$MdiAccountAlertImg() with default values</text>
+      <path d="M468.055,174.615 A8.615,8.615 0 0 1 476.67,183.231 A8.615,8.615 0 0 1 468.055,191.846 A8.615,8.615 0 0 1 459.439,183.231 A8.615,8.615 0 0 1 468.055,174.615 M468.055,196.154 C477.575,196.154 485.286,200.009 485.286,204.769 L485.286,209.077 L450.824,209.077 L450.824,204.769 C450.824,200.009 458.535,196.154 468.055,196.154 M489.593,191.846 L489.593,181.077 L493.901,181.077 L493.901,194 L489.593,194 M489.593,202.615 L489.593,198.308 L493.901,198.308 L493.901,202.615 L489.593,202.615" fill="#000"/>
+    </g>
+    <!--entity redImg-->
+    <g class="entity" data-qualified-name=".MdiAccountAlertImg.. samples .and unchanged default values..nwith required common.puml.redImg" data-source-line="56" id="ent0019">
+      <text fill="#000" font-size="14" textLength="233.8" x="1009.5" y="235.889">$MdiAccountAlertImg() with $color=red</text>
+      <path d="M1122.092,247.615 A8.615,8.615 0 0 1 1130.708,256.231 A8.615,8.615 0 0 1 1122.092,264.846 A8.615,8.615 0 0 1 1113.477,256.231 A8.615,8.615 0 0 1 1122.092,247.615 M1122.092,269.154 C1131.612,269.154 1139.323,273.009 1139.323,277.769 L1139.323,282.077 L1104.862,282.077 L1104.862,277.769 C1104.862,273.009 1112.572,269.154 1122.092,269.154 M1143.631,264.846 L1143.631,254.077 L1147.938,254.077 L1147.938,267 L1143.631,267 M1143.631,275.615 L1143.631,271.308 L1147.938,271.308 L1147.938,275.615 L1143.631,275.615" fill="#F00"/>
+    </g>
+    <!--entity scaleImg-->
+    <g class="entity" data-qualified-name=".MdiAccountAlertImg.. samples .and unchanged default values..nwith required common.puml.scaleImg" data-source-line="58" id="ent0020">
+      <text fill="#000" font-size="14" textLength="235.375" x="1009" y="80.389">$MdiAccountAlertImg() with $scale=2.0</text>
+      <path d="M1118.072,100.731 A17.231,17.231 0 0 1 1135.303,117.962 A17.231,17.231 0 0 1 1118.072,135.192 A17.231,17.231 0 0 1 1100.841,117.962 A17.231,17.231 0 0 1 1118.072,100.731 M1118.072,143.808 C1137.112,143.808 1152.534,151.518 1152.534,161.038 L1152.534,169.654 L1083.611,169.654 L1083.611,161.038 C1083.611,151.518 1099.032,143.808 1118.072,143.808 M1161.149,135.192 L1161.149,113.654 L1169.764,113.654 L1169.764,139.5 L1161.149,139.5 M1161.149,156.731 L1161.149,148.115 L1169.764,148.115 L1169.764,156.731 L1161.149,156.731" fill="#000"/>
+    </g>
+  </g>
+</svg>

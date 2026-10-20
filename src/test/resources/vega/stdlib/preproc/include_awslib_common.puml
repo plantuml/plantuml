@@ -1,0 +1,6 @@
+---
+output: preproc
+---
+@startuml
+!include <awslib/AWSCommon>
+@enduml

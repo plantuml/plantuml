@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+
+' Activate new C4 style
+!NEW_C4_STYLE = 1
+!include <C4/C4_Container>
+
+' No common.puml loaded, text alignment remains left
+'   If common.puml should be included (which is typically not required in C4 context) 
+'   then any text alignment of ../common.puml can be avoided via `!$MDI_ALIGNMENT=""` 
+'   before the include
+' !$MDI_ALIGNMENT=""
+' !include <material7.4.47/common>
+
+!include <material7.4.47/AccountUser/AccountAlert>
+!include <material7.4.47/Emoji/all>
+
+!$text="Image sample\nwith C4 and new Style (!NEW"+"_C4_STYLE = 1)"
+package "$text" {
+
+  Person(A, $sprite="mdiAccountAlert", $label="Person A")
+  Person(B, $sprite="mdiEmoticonNeutral", $label="Person B")
+
+  Rel(A, B, "Calls")
+}
+
+@enduml

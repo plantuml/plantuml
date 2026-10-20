@@ -1,0 +1,248 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="638px" preserveAspectRatio="none" style="width:949px;height:638px;background:#FFFFFF;" version="1.1" viewBox="0 0 949 638" width="949px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="10">
+      <a href="https://c4model.com" target="_top" title="https://c4model.com" xlink:actuate="onRequest" xlink:href="https://c4model.com" xlink:show="new" xlink:title="https://c4model.com" xlink:type="simple">
+        <text fill="#00F" font-size="10" text-decoration="underline" textLength="105.063" x="0" y="7.778">C4M: Container Diagram</text>
+      </a>
+    </g>
+    <!--cluster itsm-->
+    <g class="cluster" data-qualified-name="itsm" data-source-line="1690" id="ent0006">
+      <rect fill="none" height="424" style="stroke:#444;stroke-width:1;stroke-dasharray:7,7;" width="610.5" x="323" y="23"/>
+      <text fill="#444" font-size="16" font-weight="700" textLength="38.2" x="609.15" y="57.444">ITSM</text>
+      <text fill="#444" font-size="12" font-weight="700" textLength="44.55" x="605.975" y="70.333">[system]</text>
+    </g>
+    <!--entity client-->
+    <g class="entity" data-qualified-name="client" data-source-line="181" id="ent0001">
+      <rect fill="#08427B" height="157.692" style="stroke:#073B6F;stroke-width:0.5;" width="178.2" x="19.5" y="444"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="50.025" x="83.587" y="463.333">«person»</text>
+      <image height="52" width="52" x="82.754" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAAGWElEQVR4Xu2YC0xTVxjHdWabBXQ63eZ0W9S5GeYwM9PNmDgNIKIwJejAFzIVx5xOMep0AkWQN/ISHxVUUEEUQRGhVMrLElEBgSsw3iBwpRRKoRQuD6Fn57iwmHMp3EJDi/Gf/NLmy73n/L/ennO+746bqG8/7k2CFhjr0AKqYM4vnjs2OV0nfCLSiTBuDhGVShCRyfmE3w0BYetzm9Dd5nt8khF7On6fKqAFRsISm6DDHtdS0wT5VZVltU1AJJGBVhkFZFQXaOvoAo0t7aCqvhlkl9SRwXFPHhodvHhtuonzInyckUALDIcpxk5zf/OOcU3ILK6uF0tBb18fGEqStg6Q9U+d7BiHK5i/xccQH3O40ALKgpI5xkkMIirqGzq7X+K+h1QFKQZuV1MEetv9jfGxhwMtoCy7vaK9i2saRb19ctwrY6G/IftiUvo8S+81+PjKQgsow4+2Z/ZkFtYIu3qUfzK4CqsawG6vGI6OkeM0fB5loAUYMn7yavbMywnZQml7J+5t2IpOe5a1aGegxQDzMYYWYALLwOHd73YE2MNdTIqbGomeCyXgyNmEEHw+ZaAFmKCzypFlH8yjpO1duKcRKzwpL36aifMCfE6m0AJM+GC1Eystt4Lq7unF/YxY/OxysGzPuRh8TqbQAkyAWzWroVlG9cmHv7MpUk4JCSzZEaOb0NQ1J1hUVw+Fm1GFiAoh2OF+621C/dACTEB/OVirUUxKHGWVWfAc/Hw0bHQTgmcQ646giBpOqTOUkrLKwFLbs6ObENq2j57nUqo8VJHQrnkxPmv0t214sE6Yv9lnfeWLZnHfCGo4XCU1jWCvb+zoH6z9nI99RLbIVPeUbqYQWXrWfqNf+vSDitP03Eoh3PFwb0orv7we/Ooepbbi9H+sXG94QzOinpfDrxpQd/vXOW767I2e6m0fEKjB2+cXy35cWFPd0dmNex1SBVVCcPwCT6C79ZRmNHj9bHWJPHL7QWH184YW0M3gaYla2sGDvKpnsHWP/2KDh+a04K+z0Nr/sP0FXlrSk7Ji2LB11opaQFNrO2hpo4BESoF6cRsoq2sCj4pqivyjMgSwBbGAR8AUfJyRQAuogllmbutW2YXwDp2JJ05HPyQu3csigu8+IZwv84ktzpHEZ+buxlqGDlr4faqAFhjr0AJMQV2rtqEjC1UNk4z+Q9vQYSJL334Cfq0itAwc3u+/H31qQ2DsPTjGePxaptACTEDJfL3Zm21uf7XxYNA9yiU0mXK/mkpZsCNK4ALfhl+vCAO7YB4qodC9sPWmNjldpxbbBN35cO0JPfxaptACgzHTzE33GIdLPi6qJYXiNqlYSslbYaWA3orKIHDh9xbXNEqi0wrI48E80oIdTq7YxyldvOs0d4lNEN/QLoT8MyCWDOflknBzIJtaOrpQPYjuRZ/NcPMQSdo7CyqFooCoDHKp7Rk+7mEoaIGB+HS9q4G1WxSRXVJXil7vDtZ69/b2ARnV/WpbrhW1gqp6SV8FKaYgnfA7EDa3vfoBBqsBX8IxJDC5Z5UNnX43BA8+MnX5Afp4B/c1ELQAzjfbfE1OhqUUlpNiRq94VSk0H/wBeiL5eTlfbfb5A65RbdwfDi3wOvO3+Jg5h/KfovNEXZLL5eiJyu9mFJXNs/RaCTeNibhPRgnNWOeqfyAw7j56Mpog9HbWKzwt9XNz9zm4V0YJGR+65MDPKmvDB1an6hpbwQb7a5dhAzgX9ztoQh+buixzvZKSIJZ24GOqXVEpBPjWym8l7nnQhJbv5XgmZJao9DWvqoTqQpMjob/Dg3gq7lthQgcC4kLKYRGpqdofcFcAj5KluG+FCfnfzAhBZ4mm6uztRwAeJ+a47wETQttiKDcnDB9EkxSTXgBgicQsoWlrTywMv5/LxQfRJAmIagDX+ZuTUG4pCfT3B79NSGP1xiWUAdfQT0zXEKxodTixj68M1iKoWxH8PLBoZyCzhBBWJ2+GPC19gY+jEero6gG23jFhn6w7qYv7VpjQ7I0ey//mJCaW1mpWtdAMa8ugmIf1C6x8TbUMHVi4b4UJIXS3+q7Y6X7LA3aMgiuJT0Fkcr7auJ6cLz93J/OFXWCci952v12TjdgzcL9DJoRABeAsMzfThdYBXvBkVhvf2wR5fmnptV/b0FEH94hDC4x1aIGxzr9XBgujsWOPcQAAAABJRU5ErkJggg==" y="466"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="63.2" x="42.75" y="530.137">Personal</text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="105.95" y="530.137"> </text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="68.5" x="105.95" y="530.137">Company</text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="71.2" x="73" y="546.137">Employee</text>
+      <text fill="#FFF" font-size="14" x="108.6" y="560.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="60.637" x="29.5" y="574.581">Customer</text>
+      <text fill="#FFF" font-size="14" x="90.137" y="574.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="11.638" x="90.137" y="574.581">of</text>
+      <text fill="#FFF" font-size="14" x="101.775" y="574.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="19.425" x="101.775" y="574.581">the</text>
+      <text fill="#FFF" font-size="14" x="121.2" y="574.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="66.5" x="121.2" y="574.581">company's</text>
+      <text fill="#FFF" font-size="14" textLength="45.938" x="58.025" y="588.581">internal</text>
+      <text fill="#FFF" font-size="14" x="103.963" y="588.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="55.212" x="103.963" y="588.581">services.</text>
+    </g>
+    <!--entity support-->
+    <g class="entity" data-qualified-name="support" data-source-line="197" id="ent0002">
+      <rect fill="#686868" height="127.692" style="stroke:#8A8A8A;stroke-width:0.5;" width="151.338" x="33" y="296"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="99.375" x="58.981" y="315.333">«external_person»</text>
+      <image height="52" width="52" x="82.823" xlink:href="data:image/png;base64,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" y="318"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="56" x="80.669" y="382.137">Support</text>
+      <text fill="#FFF" font-size="14" x="108.669" y="396.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="60.637" x="43" y="410.581">Customer</text>
+      <text fill="#FFF" font-size="14" x="103.637" y="410.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="44.363" x="103.637" y="410.581">service</text>
+      <text fill="#FFF" font-size="14" x="148" y="410.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="26.338" x="148" y="410.581">staff</text>
+    </g>
+    <!--entity engineer-->
+    <g class="entity" data-qualified-name="engineer" data-source-line="197" id="ent0003">
+      <rect fill="#686868" height="127.692" style="stroke:#8A8A8A;stroke-width:0.5;" width="205.063" x="6" y="150"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="99.375" x="58.844" y="169.333">«external_person»</text>
+      <image height="52" width="52" x="82.685" xlink:href="data:image/png;base64,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" y="172"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="64.1" x="76.481" y="236.137">Engineer</text>
+      <text fill="#FFF" font-size="14" x="108.531" y="250.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="88.725" x="16" y="264.581">Administration</text>
+      <text fill="#FFF" font-size="14" x="104.725" y="264.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="23.363" x="104.725" y="264.581">and</text>
+      <text fill="#FFF" font-size="14" x="128.088" y="264.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="46.637" x="128.088" y="264.581">support</text>
+      <text fill="#FFF" font-size="14" x="174.725" y="264.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="26.338" x="174.725" y="264.581">staff</text>
+    </g>
+    <!--entity email-->
+    <g class="entity" data-qualified-name="email" data-source-line="218" id="ent0004">
+      <rect fill="#999" height="116.923" style="stroke:#8A8A8A;stroke-width:0.5;" width="219.938" x="334.5" y="476.5"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="100.65" x="394.144" y="495.833">«external_system»</text>
+      <image height="41" width="52" x="418.623" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAApCAYAAAB6MAquAAABvUlEQVR4Xu2Wz0oCURSHhYqewDbuglpV66xNm9aFzxCto0Xv4K5NC50ZFVFQrI2MqKkMTIr4b6DZifkAuYl2bWL63cWE3GsozJT32l18MJw5cM4393DnBGKxWGCVYAKi8/3QaDTuO53Oc6/XEw5d168YISIzHA6d0WgkHPV6PcoIEVPystvtkoRJpVJ54R3Lst7H47GD6fpZiMhkMploIpE4551ms/k4V4iYk2Q3zjOmaSpCCKmqupvL5W6q1SpDMpkMunnCCKHpCJp3SLM02Wz2wM2TQstCCkmhPwZCZ+jjA/180kBo380TRgisaZp2hKvbosGVvuPmiSRE2IjH41s0iK+7OaIJzUUK8Y4UmkZRlFA6nb4uFApRP8EVvUfXWhRPQoiFi8XiK/IcP8nn8xG61qJ4FToulUpvtm07foJTWo4QRm4bf+lbXdcf/ARjfEjXWhRPQjwihabB2rGJ/SqUSqV+FdQOklp0/Vl4EkKxk1qtxqzzftNqtZ7w4U7p+rOQQtOs3MjxiBTiHSnEO/9TqN1uT8rl8h0WxwveGQwG5lwh+kcnAjOFDMPQIGX0+33hwGldMkKrAhMQnS/ICrUWRGxWtwAAAABJRU5ErkJggg==" y="498.5"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="43.6" x="397.369" y="551.868">e-Mail</text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="440.969" y="551.868"> </text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="50.6" x="440.969" y="551.868">system</text>
+      <text fill="#FFF" font-size="14" x="444.469" y="566.312"> </text>
+      <text fill="#FFF" font-size="14" textLength="24.15" x="344.5" y="580.312">The</text>
+      <text fill="#FFF" font-size="14" x="368.65" y="580.312"> </text>
+      <text fill="#FFF" font-size="14" textLength="45.938" x="368.65" y="580.312">internal</text>
+      <text fill="#FFF" font-size="14" x="414.588" y="580.312"> </text>
+      <text fill="#FFF" font-size="14" textLength="43.575" x="414.588" y="580.312">Zimbra</text>
+      <text fill="#FFF" font-size="14" x="458.163" y="580.312"> </text>
+      <text fill="#FFF" font-size="14" textLength="38.15" x="458.163" y="580.312">e-mail</text>
+      <text fill="#FFF" font-size="14" x="496.313" y="580.312"> </text>
+      <text fill="#FFF" font-size="14" textLength="48.125" x="496.313" y="580.312">system.</text>
+    </g>
+    <!--entity ipa-->
+    <g class="entity" data-qualified-name="ipa" data-source-line="218" id="ent0005">
+      <rect fill="#999" height="141.692" style="stroke:#8A8A8A;stroke-width:0.5;" width="219.15" x="714.5" y="463"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="100.65" x="773.75" y="482.333">«external_system»</text>
+      <image height="52" width="42" x="803.075" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAA0CAYAAAD8H6qwAAADv0lEQVR4Xu2ZS0wTURSGCSYaFm7UGBOWxp2wItGYaFxoojFuTEjcuOtSF25IBBPjxogm7ksZHqWlBPqgpZRCA9OWQikPy6M8CnQnidGFiBETWYz/MWnTnjrttL0lmAzJF4bOMPebc+49995OjdForPkfyPvgpJI5kCTpbiAQ8CwtLa2I+InH4yvBYHDFarVKvNFyyByQZCKR+Lm7u6ukUqmKoftsbW0p09PTMm+0HDIHFElRktksLi6KFaV08UZEoIumwZ9KNBotmbW1teMVlWU5hhFrKhUMnpz7VF00EomYXS7Xo1KZm5tzHauoKHRR0eiiotFFRaOLikYXFY0uKhpdVDS6qGgWFhZItNZkMp3t6emp7+7uru/o6DjFRYpRVdHt7W1ldnZWhtj5/v7+to2NDSUejysQvkzyXKYQVRVdXV1VRkZGZIg1YC91RJ/Rdwdut/tXZ2fnVS5TiKqJ7uzs0L7LB6EL2PQ1UHTT52in2tfX18hlClE1UUoxNnsOCDXNzMwks89RVMfGxpLor01cSI2qiFI0w+Gwt7e398nw8LAnmUzmXbO8vKyg397mQmpURXR+fv7b4ODgG4g8jMViP/h5gh4mEAiE0X+vc6l/IVyUogcBJ6L5bHR0NEDf6PFr0lBfdTgcL1G6LnExjqooouIbHx9vKQM3otk6MDBgQDTz5DiTk5NxPNQ9LsZRFaVG+cVakCTpBhp+7vP57IWimQbNKk6n8zVq7UV+r2wyB1w0Go3avV6voRRsNttjpPEKItqCjORJqSHLctRsNj/gcppES2Vzc1NBFP0YHE+RDXN23SwGRRWTwFtE9RwXFC6KWrmHUd6MaLaXEs00KGch1FzVqKqKUv9KJBKaQXF/jwJ+MxgMdnEJLVBG/H6/Ua2vqoriCb8PDQ190gok70PWRDMSl9AKsvIFUX3FJQuKTkxMtGFg1BUDEajD/9fi9+mpqamuUvomh6KKdrvoXppFMR//xuxxWAyk+hDl6BZWSTaslv6ukCoBtfcIfd2mWVQL1I9Rku4gAmeQNoeI1z+0ZsXM5hAqilQr6JuNHo9HQjT3+flyoIfF9mUf1SPnjV9FoohmMwp1O9K1R4sMfr5cKFOhUChnr1WWKD015mgF02U91pWR9fX1ivtmNnR/LAO/2u32D3mi9EaDT4lqYOAYEEkDBtELpOmzyGimoeqBaTyFYFzLES0HLOM+ovMLjWY2WAYeYBtjqVgUg8iCfdEBf3snCvRTmgBaKxaltFgslnf87Z0osmepvMZPKn8AZGyaW2fIZz8AAAAASUVORK5CYII=" y="485"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="51.5" x="751.675" y="549.137">Identity</text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="803.175" y="549.137"> </text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="93.3" x="803.175" y="549.137">management</text>
+      <text fill="#FFF" font-size="14" x="824.075" y="563.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="51.363" x="730.319" y="577.581">FreeIPA</text>
+      <text fill="#FFF" font-size="14" x="781.681" y="577.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="10.15" x="781.681" y="577.581">is</text>
+      <text fill="#FFF" font-size="14" x="791.831" y="577.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="15.575" x="791.831" y="577.581">an</text>
+      <text fill="#FFF" font-size="14" x="807.406" y="577.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="62.212" x="807.406" y="577.581">integrated</text>
+      <text fill="#FFF" font-size="14" x="869.619" y="577.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="48.212" x="869.619" y="577.581">security</text>
+      <text fill="#FFF" font-size="14" textLength="69.213" x="724.5" y="591.581">information</text>
+      <text fill="#FFF" font-size="14" x="793.713" y="591.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="81.638" x="793.713" y="591.581">management</text>
+      <text fill="#FFF" font-size="14" x="875.35" y="591.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="48.3" x="875.35" y="591.581">solution</text>
+    </g>
+    <!--entity web-->
+    <g class="entity" data-qualified-name="itsm.web" data-source-line="71" id="ent0007">
+      <rect fill="#438DD5" height="147.231" style="stroke:#3C7FC0;stroke-width:0.5;" width="211.363" x="339" y="283.5"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="62.7" x="413.331" y="302.833">«container»</text>
+      <image height="45" width="52" x="418.835" xlink:href="data:image/png;base64,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" y="305.5"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="32.9" x="389.031" y="363.175">Web</text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="421.931" y="363.175"> </text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="78.4" x="421.931" y="363.175">Application</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="37.35" x="410.706" y="376.064">[Nginx,</text>
+      <text fill="#FFF" font-size="12" font-style="italic" x="448.056" y="376.064"> </text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="30.6" x="448.056" y="376.064">GLPI]</text>
+      <text fill="#FFF" font-size="14" x="444.681" y="389.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="50.663" x="349" y="403.62">Delivers</text>
+      <text fill="#FFF" font-size="14" x="399.663" y="403.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="19.425" x="399.663" y="403.62">the</text>
+      <text fill="#FFF" font-size="14" x="419.088" y="403.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="32.638" x="419.088" y="403.62">static</text>
+      <text fill="#FFF" font-size="14" x="451.725" y="403.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="45.85" x="451.725" y="403.62">content</text>
+      <text fill="#FFF" font-size="14" x="497.575" y="403.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="23.363" x="497.575" y="403.62">and</text>
+      <text fill="#FFF" font-size="14" x="520.938" y="403.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="19.425" x="520.938" y="403.62">the</text>
+      <text fill="#FFF" font-size="14" textLength="47.338" x="382.425" y="417.62">Internet</text>
+      <text fill="#FFF" font-size="14" x="429.763" y="417.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="49.088" x="429.763" y="417.62">banking</text>
+      <text fill="#FFF" font-size="14" x="478.85" y="417.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="28.087" x="478.85" y="417.62">SPA</text>
+    </g>
+    <!--entity pl-->
+    <g class="entity" data-qualified-name="itsm.pl" data-source-line="71" id="ent0008">
+      <rect fill="#438DD5" height="139.692" style="stroke:#3C7FC0;stroke-width:0.5;" width="177.85" x="355.5" y="98"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="62.7" x="413.075" y="117.333">«container»</text>
+      <image height="52" width="52" x="418.579" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAAFeklEQVR4Xu2abUxbZRSA8SNDTYwmU5OZYBaNP11mTIwuUUw25tYt0+GMuk3FfYBzRAVj9gcywtQECGUFChmFCqxAy8eAAV0pUGCoAzbYCrS3lH4ApbTQTwIhEAfXc4idl3s7h+29WBZ+PD968572Pj3ve9733Nyw3ZmasIcJxoWNzqoPPIE28nupSZbZbFULVbaQht8yqU6QjaoPC3Vf+RXiCYhIvnJSXtvvmlUMekilxhvSKIY8ZO1tF5naYDFG5+liGUKYmSsg0zE8Q24kqvtcZKJsNI0hhNPsGmSGHhDqtBFe8kKjhSmE81Kp2XhCyC/yiU2hkGZTiE4rLESoiGTlLSfZNOAmVfCZPmY9CUoIq4qk27H0bYVp8ESxQQ0VRl19yzmL1+lj14ughJoGPEunig22PXzNk77YH6vMVbKbzvk2gjl+PQhYSKXzktJep+eDXAJ35sd9sUh8uamirMfxZ7ufOK4JWAiBDC0eE+k7IUPhVKE9fO2Ws2UmMUxHRgzXBCXUovUuC1qtcx/CoRCknqJKvZ+lfRakhKU31lcqKCGcUteGPMtZLVbrkfzhk1F8zTNUqf0CYltsqTGr4LqdEcsVQQn5wHMfxBg/LdDHRvG1W1dLaV+CCpiRo7Ix4riAFSGkGcbntNmIY4X6uL1ZmheoUvsuarfHiA3pgtbJlXH0WDZhTQjBviS/wz5wusSQA5l5nS71pXgk42LLJCOOTVgVQlq1XrKgc8oTd9lYBFJvUKWgUEQcLxxJSVNMyLnKFOtCCFQ/8tJ1u+drP1JYDaEq8qDnsiuGvMts71WcCCErUp129zcSY/nBbOIdqhRUw6eP5OvOpyusHfJBz2K7jhkfKJwJIShV9NsUCftRE6yh16hSwKMHsrW7MxTW9vo77nk8edDjA4FTIQSlRF1T3thSg5SXTeykSYUdEBBRkCmznKWWn3MhBAtFYdfU3c+L9M10ISRGPNILB9olelwgcC6E6wMq2mJ+h80I6+bej/nAIvGFeOQKCLHylIlTIZS5ese9dKHBosL14kcm/LBQFwPFw8rG7yGcCjWo3WTK1XElVDmUeWyVTKYm/GiBXlXe45iDKblMjw0UzoSqoCX/odL8M+xDz9HbCyjbW48X6hUVPY4F6G5Zk0E4EZJ0T5PQlqfwBNrnqSIIT0C8mlhp1kh6pue5aNVZF8rrsJHQMiTDjW+jyxzKJXYm1Y711va7Vp5H0GPZgDUhBYwXtttIaBWSYRN9kS4Dx523kuvGOutuuxixbMKKEJ6yYXMk4TSdAjKrMgOtRMRnBfqTqQ2Wlpp+JyOWbYIS+rtjvXu+frwOmrukvVnMNQP90ccZzRNDXGfGR1BCeKzJVFoXDuYQ70IZ3kIVgYKwCzbMs9gqNA6478Xg2qmBNSS76SAv33gwZd0OsrrPSa71aBSwEG6acKicg8wI/ci8CQfSClhTM43qf2TwKWtFr8N1rnpMlCA1i85ITA8kvswkOlc9WpvbNumh34M/AhbC0zHcnA2atu0Q84gvFjtVaBkqxb9PzaAANQYfFf/UaBmgyq8F+I2X40oNv+KZkH4fdIIQmiFr+lyzMK3SMCOwfiIO5erehn+0oeSP6Vm6DIJTL7XRMrJPoN1Bv+n7AZvyE1BoXoHqeQLWK+M76QQshOA/ltduW/5OaiJOlRjSk+rG7f+2+PHxsLTXuRBfbuz65NLwjrVwVKTff0ZiLIa1yvg+fwQlFCi4/jBba2UtmfHxvwhxyaZQqLMpFOr4FeIrrer/UllCCb9CiTKzGnsW+uBQ576vxuBbTfgiEB4KuWrE2KYKZJLrLfKP8ocjGUJIdJ4uDjKVhu/OYBpDnQTITHTe8HtUh1VCDwOMCxudvwD13ieWyr6UHwAAAABJRU5ErkJggg==" y="120"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="59.5" x="414.675" y="184.137">FastCGI</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="60.675" x="414.088" y="197.026">[PHP-FPM]</text>
+      <text fill="#FFF" font-size="14" x="444.425" y="210.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="52.063" x="365.5" y="224.581">FastCGI</text>
+      <text fill="#FFF" font-size="14" x="417.563" y="224.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="50.575" x="417.563" y="224.581">Process</text>
+      <text fill="#FFF" font-size="14" x="468.138" y="224.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="55.212" x="468.138" y="224.581">Manager</text>
+    </g>
+    <!--entity db-->
+    <g class="entity" data-qualified-name="itsm.db" data-source-line="75" id="ent0009">
+      <path d="M730.5,263.5 C730.5,253.5 824.106,253.5 824.106,253.5 C824.106,253.5 917.713,253.5 917.713,263.5 L917.713,420.192 C917.713,430.192 824.106,430.192 824.106,430.192 C824.106,430.192 730.5,430.192 730.5,420.192 L730.5,263.5" fill="#438DD5" style="stroke:#3C7FC0;stroke-width:0.5;"/>
+      <path d="M730.5,263.5 C730.5,273.5 824.106,273.5 824.106,273.5 C824.106,273.5 917.713,273.5 917.713,263.5" fill="none" style="stroke:#3C7FC0;stroke-width:0.5;"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="62.7" x="792.756" y="286.833">«container»</text>
+      <image height="52" width="40" x="804.183" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAA0CAYAAAD46nqNAAAEJklEQVR4Xu2Za0xTVxzA/bDFD/vkkiUmmmhcYvzEFz8bE53zgUN3kahRmE6GI2SORTQkMiGLOpjysK1FKC2F8ixj8hBqC22pwgoiyzpte1vaUksf9KXFGDWIOf6PCQRufdzLvetIdj/8ktt77/n/f/ecnnPPP3fF9lLziuVM3InlxvzBgUryt0s9k0aFMWRSjkZY0zQSNhWrfIOpYvI8NSkT5g9KNT5jt+nRrI6cRgM29ughDsR7+Wuvt5ealAnzB/iJcVBqIjbgeLLBoJ6alAnzB3hYqAm4oO7P0P9UsPlu+IlA6w8wpe1e5GlCBC/2eNWEmCxgCky22wkRFGgD9TmNLoIpVYapGwkR5ApekC28IFt4QbbwgmzhBdnCC7KFF1wKanMMtY1FYw3DYdsVtV9BTcoETgVvPXiM/vgr6oe9pCmr3ilPEVmP7RORWXuuWpL2CqxJ8HsRXwmtSclwbVeFZdOOMvMqqhynguoHsdnLal/0ULU9d2eF5VNIvuZglS0tu8HpOK10o/OdHlSs8i6iqGsSnWlzo5xG5+SRGntuiohcA7KffVFmXsmpIC4vz914SIJUKvTUlh+bXR0KYyjuvg+hHA2j/N/dQylCazJIfsyZIAwryqxzHDxcbb9+TRd4obXGZpdSY+sBLTn9SjoYDKZdt4k4E2wfi6ITcgdxvNYhkd4Jxl1nisIYfpUhHe/nXBD+P2tPNU/IaodCb2Yy9b4P0WeJ4WUJ5bZM9EOszzkX/EY2npdV72hIl9qzYcgz8trcneV9PlxjIxXMcGo7/BDKexEk1PlRfvtDw3f1zuz0GnvGoSpbxdfXyNOcC55qdklEuoAPlhn9L90eTX6725WndD+DXr1zUuGMK1G/b3ASPzS5OmCWT8O9vqIuj768z6+B2toG8brfK3jzn0eodTRCC/HAFDpaYyd+apmQtMJMxEPVZcLtw3jIZioHppyQWPI2xPqAqXYo+LwFernz7yjSQK+23I0gWJ7evIHeKSjQBXpzmlxn6XCiznl2r9C6cU6Q2sNM+RcEHYkXZDPE1IRMoSXIhLlJwgsuvAmG2I/P0aHaMGVKl45vT6gg7D4K4IX9CV0gxkcJFbzU4+1IFZM5dCAAeDVtSKigjozN9ltjM3SAtjPfyh37EyrIhP9kkjCBF8TATsIEuwi0FHBtATtgvEORNA6zF2wcCSP4Ty8WTK0kCShyMpcCtM2EWbyeENu2lKh8KlzdUZPSBe8bSzX+Maj6khcJcgW8k7f+3OFprTYEH6vu0xdVg5h8KPQE1l91hmx8/1y8uARcsPuqZfMxmSMfREtKbnnl+AuUUOsPwb4QLUSoC0TLND4jlKCSwk5PCdTSBckC67aFseKCc83Ocss6/AUKFvRCqPokCzlQabsApSrxZbl5NbXdHHEnlhuvAfyoZGf48UBLAAAAAElFTkSuQmCC" y="289.5"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="68.5" x="789.856" y="353.637">Database</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="53.325" x="797.444" y="366.526">[MariaDB]</text>
+      <text fill="#FFF" font-size="14" x="824.106" y="380.081"> </text>
+      <text fill="#FFF" font-size="14" textLength="40.425" x="755.681" y="394.081">Stores</text>
+      <text fill="#FFF" font-size="14" x="796.106" y="394.081"> </text>
+      <text fill="#FFF" font-size="14" textLength="27.213" x="796.106" y="394.081">user</text>
+      <text fill="#FFF" font-size="14" x="823.319" y="394.081"> </text>
+      <text fill="#FFF" font-size="14" textLength="69.213" x="823.319" y="394.081">registration</text>
+      <text fill="#FFF" font-size="14" textLength="73.063" x="751" y="408.081">information,</text>
+      <text fill="#FFF" font-size="14" x="824.063" y="408.081"> </text>
+      <text fill="#FFF" font-size="14" textLength="45.938" x="824.063" y="408.081">hashed</text>
+      <text fill="#FFF" font-size="14" x="870" y="408.081"> </text>
+      <text fill="#FFF" font-size="14" textLength="27.213" x="870" y="408.081">auth</text>
+      <text fill="#FFF" font-size="14" textLength="71.575" x="740.5" y="422.081">credentials,</text>
+      <text fill="#FFF" font-size="14" x="812.075" y="422.081"> </text>
+      <text fill="#FFF" font-size="14" textLength="43.575" x="812.075" y="422.081">access</text>
+      <text fill="#FFF" font-size="14" x="855.65" y="422.081"> </text>
+      <text fill="#FFF" font-size="14" textLength="29.575" x="855.65" y="422.081">logs,</text>
+      <text fill="#FFF" font-size="14" x="885.225" y="422.081"> </text>
+      <text fill="#FFF" font-size="14" textLength="22.488" x="885.225" y="422.081">etc.</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="dependency" id="lnk10">
+      <polygon fill="#666" points="338.765,409.054,330.266,409.928,332.937,415.301,338.765,409.054" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M197.691,479.168 C240.984,457.652 286.281,435.139 331.601,412.614" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="27.375" x="258.338" y="408.333">Uses</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="46.05" x="249" y="420.333">[HTTPS]</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk11">
+      <polygon fill="#666" points="338.789,357.941,330.763,355.012,330.817,361.012,338.789,357.941" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M184.04,359.33 C229.606,358.921 280.582,358.463 330.79,358.012" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="27.375" x="258.338" y="342.333">Uses</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="46.05" x="249" y="354.333">[HTTPS]</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0007" data-link-type="dependency" id="lnk12">
+      <polygon fill="#666" points="338.947,312.236,332.773,306.33,330.412,311.845,338.947,312.236" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M211.071,257.487 C251.567,274.825 290.806,291.625 331.592,309.087" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="27.375" x="258.338" y="252.333">Uses</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="46.05" x="249" y="264.333">[HTTPS]</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="dependency" id="lnk13">
+      <polygon fill="#666" points="730.373,345.681,722.26,343.001,722.498,348.996,730.373,345.681" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M550.153,352.842 C606.668,350.596 667.831,348.166 722.379,345.998" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="34.725" x="574.5" y="331.333">Reads</text>
+      <text fill="#666" font-size="12" font-weight="700" x="609.225" y="331.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="23.925" x="609.225" y="331.333">from</text>
+      <text fill="#666" font-size="12" font-weight="700" x="633.15" y="331.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="20.025" x="633.15" y="331.333">and</text>
+      <text fill="#666" font-size="12" font-weight="700" x="653.175" y="331.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="31.35" x="653.175" y="331.333">writes</text>
+      <text fill="#666" font-size="12" font-weight="700" x="684.525" y="331.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="9.975" x="684.525" y="331.333">to</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="31.275" x="601.5" y="343.333">[sync,</text>
+      <text fill="#666" font-size="12" font-style="italic" x="632.775" y="343.333"> </text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="34.725" x="632.775" y="343.333">JDBC]</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="dependency" id="lnk15">
+      <polygon fill="#666" points="444.5,476.223,447.5,468.223,441.5,468.223,444.5,476.223" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M444.5,468.223 C444.5,453.641 444.5,445.83 444.5,430.636" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="34.05" x="377" y="450.833">Sends</text>
+      <text fill="#666" font-size="12" font-weight="700" x="411.05" y="450.833"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="38.7" x="411.05" y="450.833">e-mails</text>
+      <text fill="#666" font-size="12" font-weight="700" x="449.75" y="450.833"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="28.725" x="449.75" y="450.833">using</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="39.975" x="407.75" y="462.833">[SMTP]</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="dependency" id="lnk16">
+      <polygon fill="#666" points="444.5,238.007,441.5,246.007,447.5,246.007,444.5,238.007" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M444.5,283.386 C444.5,268.461 444.5,260.804 444.5,246.007" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="22.05" x="385" y="258.083">Run</text>
+      <text fill="#666" font-size="12" font-weight="700" x="407.05" y="258.083"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="63.45" x="407.05" y="258.083">applications</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="41.25" x="407.125" y="270.083">[socket]</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="dependency" id="lnk17">
+      <polygon fill="#666" points="714.193,482.983,708.223,476.871,705.676,482.303,714.193,482.983" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M550.153,406.069 C601.213,430.01 655.349,455.393 706.95,479.587" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="27.375" x="620.838" y="402.333">Uses</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="46.05" x="611.5" y="414.333">[LDAPS]</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk19">
+      <polygon fill="#666" points="197.691,526.169,205.579,529.454,205.794,523.458,197.691,526.169" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M205.686,526.456 C247.626,527.963 290.175,529.491 334.496,531.084" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="34.05" x="231" y="522.333">Sends</text>
+      <text fill="#666" font-size="12" font-weight="700" x="265.05" y="522.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="38.7" x="265.05" y="522.333">e-mails</text>
+      <text fill="#666" font-size="12" font-weight="700" x="303.75" y="522.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="9.975" x="303.75" y="522.333">to</text>
+    </g>
+    <g class="caption" data-source-line="11">
+      <text fill="#000" font-size="14" textLength="157.413" x="392.544" y="626.889">'ITSM' system's containers</text>
+    </g>
+  </g>
+</svg>
