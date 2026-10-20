@@ -232,7 +232,7 @@ TTF files and the measured widths (any OS), and the whole bounder against
 - `TeaVM.isTeaVM()` is true for every TeaVM target, C included. Code that only
   exists in a browser (`@JSBody`, DOM, viz.js, script and file loaders) must be
   guarded by `TeaVM.isJavaScript()`; `TeaVM.isC()` selects the C behavior. Emoji,
-  OpenIconic, `!include` of a library and Graphviz are not available in C (Smetana is always used for the layout).
+  OpenIconic, the sprites and svg of the standard library and Graphviz are not available in C (Smetana is always used for the layout).
 - Text measurement: no AWT and no canvas, so `StringBounderEmbeddedFont` (see
   above), which measures as Java does on Windows.
 - Export: `TextBlockExporter.exportTo` (and so `UgDiagram.exportDiagram`) only
@@ -252,19 +252,27 @@ TTF files and the measured widths (any OS), and the whole bounder against
   see `PendingResources`), and `tools/teavm-coroutines/check_no_coroutines.py`
   fails the CI when either output contains one again.
 
-## Embedded files (themes)
+## Embedded files (themes, standard library)
 
-Files that Java reads at run time (today the bundled `!theme` files, later the
-standard library) are embedded in the executable, since the C build has no
-classpath:
+Files that Java reads at run time (the bundled `!theme` files and the standard
+library) are embedded in the executable, since the C build has no classpath:
 
-- Gradle (`copyNativeSources`) copies `src/main/resources/themes/*.puml` into
-  `native/resources/themes` next to the generated C.
-- CMake (`native/embed_resources.cmake`) turns them into a C table at
-  configure time, as it does for the fonts.
+- Gradle (`copyNativeSources`) copies them from `src/main/resources` into
+  `native/resources`, next to the generated C: `themes/*.puml`, and in
+  `stdlib/` the list (`home.spm`) and, for each library, `info.spm`, `puml.spm`
+  and `json.spm`. The sprites and svg of the libraries are not embedded yet.
+- CMake (`native/embed_resources.cmake`) lists them, and `native/embed_tool.c`,
+  a small program built and run by CMake, turns them into a C table. (A CMake
+  script would take minutes for the megabytes of the standard library.)
 - `native/plantuml_resources.c` looks a file up by its path under
   `src/main/resources` (for instance `themes/puml-theme-amiga.puml`), and Java
   reads it with `EmbeddedFiles.read(name)` (binding: `NativeResources`).
+- The `.spm` files are compressed with Brotli. `native/brotli/` is the C decoder
+  of Google (MIT, unmodified, see its README), and
+  `EmbeddedFiles.readBrotli(name)` decompresses a file straight from the
+  embedded bytes. `SpmChannel` uses it in C, so `!include <lib/file>`,
+  `!theme x from <lib>`, `%` JSON of a library and the list of libraries work as
+  on the JVM. The Java Brotli decoder (and its dictionary) is not in the C build.
 
 To embed more files, add `name=path` pairs to `RESOURCE_PAIRS` in
 `CMakeLists.txt` and have Gradle copy them.
