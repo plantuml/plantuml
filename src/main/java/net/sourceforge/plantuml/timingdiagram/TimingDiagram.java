@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -158,6 +159,8 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 			final Panels panels = player.panels();
 			panels.drawLeftPanel(ugPlayer, part1MaxWidth);
 			panels.drawRightPanel(ugPlayer.apply(widthPart1));
+			ruler.drawBreaks(ugPlayer.apply(widthPart1), panels.getFullHeight(stringBounder),
+					getBreakBackColor(player));
 		}
 
 		ug = ug.apply(widthPart1);
@@ -167,6 +170,15 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 			drawMessages(ug, timeMessage);
 
 		drawHighlightsLines(ug);
+	}
+
+	private HColor getBreakBackColor(Player player) {
+		if (player.getGeneralBackgroundColor() != null)
+			return player.getGeneralBackgroundColor();
+		final HColor back = getSkinParam().getBackgroundColor();
+		if (back == null || back.isTransparent())
+			return HColors.WHITE;
+		return back;
 	}
 
 	private void drawHorizontalSeparator(UGraphic ug) {
@@ -398,6 +410,16 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 		this.highlights.add(new Highlight(getSkinParam(), tickFrom, tickTo, caption, colors));
 		return CommandExecutionResult.ok();
 
+	}
+
+	public CommandExecutionResult addBreak(TimeTick from, TimeTick to) {
+		if (from == null || to == null)
+			return CommandExecutionResult.error("Unknown time");
+		if (from.compareTo(to) >= 0)
+			return CommandExecutionResult.error("A break must end after it starts");
+		if (ruler.addBreak(from, to) == false)
+			return CommandExecutionResult.error("Breaks cannot overlap");
+		return CommandExecutionResult.ok();
 	}
 
 	public void goCompactMode() {
