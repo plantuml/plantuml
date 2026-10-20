@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="2215px" preserveAspectRatio="none" style="width:645px;height:2215px;background:#FFFFFF;" version="1.1" viewBox="0 0 645 2215" width="645px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster $MdiAccountAlert() samples-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples" data-source-line="34" id="ent0002">
+      <path d="M8.5,504 L180.65,504 A3.75,3.75 0 0 1 183.15,506.5 L190.15,524 L626.5,524 A2.5,2.5 0 0 1 629,526.5 L629,2156.5 A2.5,2.5 0 0 1 626.5,2159 L8.5,2159 A2.5,2.5 0 0 1 6,2156.5 L6,506.5 A2.5,2.5 0 0 1 8.5,504" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="6" x2="190.15" y1="524" y2="524"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="171.15" x="10" y="516.889">$MdiAccountAlert() samples</text>
+    </g>
+    <!--cluster deactivate labels with !$MDI_DEFAULT_LABEL = $MDI_LABEL_NONE-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples.deactivate labels with ..MDI_DEFAULT_LABEL . .MDI_LABEL_NONE" data-source-line="36" id="ent0003">
+      <path d="M98.5,545 L526.762,545 A3.75,3.75 0 0 1 529.262,547.5 L536.262,565 L536.5,565 A2.5,2.5 0 0 1 539,567.5 L539,671.5 A2.5,2.5 0 0 1 536.5,674 L98.5,674 A2.5,2.5 0 0 1 96,671.5 L96,547.5 A2.5,2.5 0 0 1 98.5,545" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="96" x2="536.262" y1="565" y2="565"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="427.262" x="100" y="557.889">deactivate labels with !$MDI_DEFAULT_LABEL = $MDI_LABEL_NONE</text>
+    </g>
+    <!--cluster labels based on alias with !$MDI_DEFAULT_LABEL = $MDI_LABEL_ALIAS-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples.labels based on alias with ..MDI_DEFAULT_LABEL . .MDI_LABEL_ALIAS" data-source-line="40" id="ent0005">
+      <path d="M89.5,690 L535.787,690 A3.75,3.75 0 0 1 538.287,692.5 L545.287,710 L545.5,710 A2.5,2.5 0 0 1 548,712.5 L548,830.5 A2.5,2.5 0 0 1 545.5,833 L89.5,833 A2.5,2.5 0 0 1 87,830.5 L87,692.5 A2.5,2.5 0 0 1 89.5,690" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="87" x2="545.287" y1="710" y2="710"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="445.287" x="91" y="702.889">labels based on alias with !$MDI_DEFAULT_LABEL = $MDI_LABEL_ALIAS</text>
+    </g>
+    <!--cluster hide shapes with !$MDI_DEFAULT_SHAPE = $MDI_SHAPE_NONE-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples.hide shapes with ..MDI_DEFAULT_SHAPE . .MDI_SHAPE_NONE" data-source-line="46" id="ent0007">
+      <path d="M108.5,849 L515.85,849 A3.75,3.75 0 0 1 518.35,851.5 L525.35,869 L525.5,869 A2.5,2.5 0 0 1 528,871.5 L528,989.5 A2.5,2.5 0 0 1 525.5,992 L108.5,992 A2.5,2.5 0 0 1 106,989.5 L106,851.5 A2.5,2.5 0 0 1 108.5,849" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="106" x2="525.35" y1="869" y2="869"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="406.35" x="110" y="861.889">hide shapes with !$MDI_DEFAULT_SHAPE = $MDI_SHAPE_NONE</text>
+    </g>
+    <!--cluster database shapes with !$MDI_DEFAULT_SHAPE = <U+0022>database<U+0022>-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples.database shapes with ..MDI_DEFAULT_SHAPE . .U.0022.database.U.0022." data-source-line="50" id="ent0009">
+      <path d="M128.5,1008 L497.35,1008 A3.75,3.75 0 0 1 499.85,1010.5 L506.85,1028 L506.5,1028 A2.5,2.5 0 0 1 509,1030.5 L509,1158.5 A2.5,2.5 0 0 1 506.5,1161 L128.5,1161 A2.5,2.5 0 0 1 126,1158.5 L126,1010.5 A2.5,2.5 0 0 1 128.5,1008" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="126" x2="506.85" y1="1028" y2="1028"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="367.85" x="130" y="1020.889">database shapes with !$MDI_DEFAULT_SHAPE = "database"</text>
+    </g>
+    <!--cluster unchanged color with !$MDI_DEFAULT_COLOR = $MDI_COLOR_NONE-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples.unchanged color with ..MDI_DEFAULT_COLOR . .MDI_COLOR_NONE" data-source-line="56" id="ent0011">
+      <path d="M92.5,1177 L532.225,1177 A3.75,3.75 0 0 1 534.725,1179.5 L541.725,1197 L541.5,1197 A2.5,2.5 0 0 1 544,1199.5 L544,1317.5 A2.5,2.5 0 0 1 541.5,1320 L92.5,1320 A2.5,2.5 0 0 1 90,1317.5 L90,1179.5 A2.5,2.5 0 0 1 92.5,1177" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="90" x2="541.725" y1="1197" y2="1197"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="438.725" x="94" y="1189.889">unchanged color with !$MDI_DEFAULT_COLOR = $MDI_COLOR_NONE</text>
+    </g>
+    <!--cluster blue color with !$MDI_DEFAULT_COLOR = <U+0022>blue<U+0022>-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples.blue color with ..MDI_DEFAULT_COLOR . .U.0022.blue.U.0022." data-source-line="60" id="ent0013">
+      <path d="M165.5,1336 L459.625,1336 A3.75,3.75 0 0 1 462.125,1338.5 L469.125,1356 L469.5,1356 A2.5,2.5 0 0 1 472,1358.5 L472,1476.5 A2.5,2.5 0 0 1 469.5,1479 L165.5,1479 A2.5,2.5 0 0 1 163,1476.5 L163,1338.5 A2.5,2.5 0 0 1 165.5,1336" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="163" x2="469.125" y1="1356" y2="1356"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="293.125" x="167" y="1348.889">blue color with !$MDI_DEFAULT_COLOR = "blue"</text>
+    </g>
+    <!--cluster RGB color with !$MDI_DEFAULT_COLOR = #00FF00-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples.RGB color with ..MDI_DEFAULT_COLOR . .00FF00" data-source-line="64" id="ent0015">
+      <path d="M154,1495 L471.575,1495 A3.75,3.75 0 0 1 474.075,1497.5 L481.075,1515 L481,1515 A2.5,2.5 0 0 1 483.5,1517.5 L483.5,1635.5 A2.5,2.5 0 0 1 481,1638 L154,1638 A2.5,2.5 0 0 1 151.5,1635.5 L151.5,1497.5 A2.5,2.5 0 0 1 154,1495" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="151.5" x2="481.075" y1="1515" y2="1515"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="316.575" x="155.5" y="1507.889">RGB color with !$MDI_DEFAULT_COLOR = #00FF00</text>
+    </g>
+    <!--cluster no stereotype with !$MDI_DEFAULT_STEREOTYPE = $MDI_STEREOTYPE_NONE-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples.no stereotype with ..MDI_DEFAULT_STEREOTYPE . .MDI_STEREOTYPE_NONE" data-source-line="70" id="ent0017">
+      <path d="M57.5,1654 L567.488,1654 A3.75,3.75 0 0 1 569.988,1656.5 L576.988,1674 L576.5,1674 A2.5,2.5 0 0 1 579,1676.5 L579,1794.5 A2.5,2.5 0 0 1 576.5,1797 L57.5,1797 A2.5,2.5 0 0 1 55,1794.5 L55,1656.5 A2.5,2.5 0 0 1 57.5,1654" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="55" x2="576.988" y1="1674" y2="1674"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="508.988" x="59" y="1666.889">no stereotype with !$MDI_DEFAULT_STEREOTYPE = $MDI_STEREOTYPE_NONE</text>
+    </g>
+    <!--cluster sprite based stereotype with !$MDI_DEFAULT_STEREOTYPE = $MDI_STEREOTYPE_SPRITE-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples.sprite based stereotype with ..MDI_DEFAULT_STEREOTYPE . .MDI_STEREOTYPE_SPRITE" data-source-line="75" id="ent0019">
+      <path d="M24.5,1813 L601.425,1813 A3.75,3.75 0 0 1 603.925,1815.5 L610.925,1833 L610.5,1833 A2.5,2.5 0 0 1 613,1835.5 L613,1967.5 A2.5,2.5 0 0 1 610.5,1970 L24.5,1970 A2.5,2.5 0 0 1 22,1967.5 L22,1815.5 A2.5,2.5 0 0 1 24.5,1813" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="610.925" y1="1833" y2="1833"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="575.925" x="26" y="1825.889">sprite based stereotype with !$MDI_DEFAULT_STEREOTYPE = $MDI_STEREOTYPE_SPRITE</text>
+    </g>
+    <!--cluster Abcd stereotype with !$MDI_DEFAULT_STEREOTYPE = <U+0022>Abcd<U+0022>-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlert.. samples.Abcd stereotype with ..MDI_DEFAULT_STEREOTYPE . .U.0022.Abcd.U.0022." data-source-line="80" id="ent0021">
+      <path d="M120,1986 L504.425,1986 A3.75,3.75 0 0 1 506.925,1988.5 L513.925,2006 L514,2006 A2.5,2.5 0 0 1 516.5,2008.5 L516.5,2140.5 A2.5,2.5 0 0 1 514,2143 L120,2143 A2.5,2.5 0 0 1 117.5,2140.5 L117.5,1988.5 A2.5,2.5 0 0 1 120,1986" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="117.5" x2="513.925" y1="2006" y2="2006"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="383.425" x="121.5" y="1998.889">Abcd stereotype with !$MDI_DEFAULT_STEREOTYPE = "Abcd"</text>
+    </g>
+    <!--cluster $MdiAccountAlertImg() samples-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlertImg.. samples" data-source-line="87" id="ent0023">
+      <path d="M76.5,12 L271.925,12 A3.75,3.75 0 0 1 274.425,14.5 L281.425,32 L557.5,32 A2.5,2.5 0 0 1 560,34.5 L560,485.5 A2.5,2.5 0 0 1 557.5,488 L76.5,488 A2.5,2.5 0 0 1 74,485.5 L74,14.5 A2.5,2.5 0 0 1 76.5,12" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="74" x2="281.425" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="194.425" x="78" y="24.889">$MdiAccountAlertImg() samples</text>
+    </g>
+    <!--cluster NoneImg-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlertImg.. samples.NoneImg" data-source-line="89" id="ent0024">
+      <path d="M92.5,53 L532.225,53 A3.75,3.75 0 0 1 534.725,55.5 L541.725,73 L541.5,73 A2.5,2.5 0 0 1 544,75.5 L544,179.5 A2.5,2.5 0 0 1 541.5,182 L92.5,182 A2.5,2.5 0 0 1 90,179.5 L90,55.5 A2.5,2.5 0 0 1 92.5,53" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="90" x2="541.725" y1="73" y2="73"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="438.725" x="94" y="65.889">unchanged color with !$MDI_DEFAULT_COLOR = $MDI_COLOR_NONE</text>
+    </g>
+    <!--cluster BlueImg-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlertImg.. samples.BlueImg" data-source-line="93" id="ent0026">
+      <path d="M165.5,198 L459.625,198 A3.75,3.75 0 0 1 462.125,200.5 L469.125,218 L469.5,218 A2.5,2.5 0 0 1 472,220.5 L472,324.5 A2.5,2.5 0 0 1 469.5,327 L165.5,327 A2.5,2.5 0 0 1 163,324.5 L163,200.5 A2.5,2.5 0 0 1 165.5,198" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="163" x2="469.125" y1="218" y2="218"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="293.125" x="167" y="210.889">blue color with !$MDI_DEFAULT_COLOR = "blue"</text>
+    </g>
+    <!--cluster RgbImg-->
+    <g class="cluster" data-qualified-name=".MdiAccountAlertImg.. samples.RgbImg" data-source-line="97" id="ent0028">
+      <path d="M153.5,343 L471.075,343 A3.75,3.75 0 0 1 473.575,345.5 L480.575,363 L480.5,363 A2.5,2.5 0 0 1 483,365.5 L483,469.5 A2.5,2.5 0 0 1 480.5,472 L153.5,472 A2.5,2.5 0 0 1 151,469.5 L151,345.5 A2.5,2.5 0 0 1 153.5,343" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="151" x2="480.575" y1="363" y2="363"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="316.575" x="155" y="355.889">RGB color with !$MDI_DEFAULT_COLOR = #00FF00</text>
+    </g>
+    <g class="entity" data-qualified-name="N" data-source-line="31" id="ent0001">
+      <path d="M107.5,2175 L107.5,2198 L526.137,2198 L526.137,2185 L516.137,2175 L107.5,2175" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M516.137,2175 L516.137,2185 L526.137,2185 L516.137,2175" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="397.637" x="113.5" y="2190.111">right text alignment is activated via !$MDI_ALIGNMENT="right" (see line 4)</text>
+    </g>
+    <!--entity labelNone-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples.deactivate labels with ..MDI_DEFAULT_LABEL . .MDI_LABEL_NONE.labelNone" data-source-line="38" id="ent0004">
+      <rect fill="#F1F1F1" height="71.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.692" x="281" y="586"/>
+      <path d="M312.538,604.615 A8.615,8.615 0 0 1 321.154,613.231 A8.615,8.615 0 0 1 312.538,621.846 A8.615,8.615 0 0 1 303.923,613.231 A8.615,8.615 0 0 1 312.538,604.615 M312.538,626.154 C322.058,626.154 329.769,630.009 329.769,634.769 L329.769,639.077 L295.308,639.077 L295.308,634.769 C295.308,630.009 303.018,626.154 312.538,626.154 M334.077,621.846 L334.077,611.077 L338.385,611.077 L338.385,624 L334.077,624 M334.077,632.615 L334.077,628.308 L338.385,628.308 L338.385,632.615 L334.077,632.615" fill="#000"/>
+    </g>
+    <!--entity labelAlias-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples.labels based on alias with ..MDI_DEFAULT_LABEL . .MDI_LABEL_ALIAS.labelAlias" data-source-line="42" id="ent0006">
+      <rect fill="#F1F1F1" height="85.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="80.112" x="277" y="731"/>
+      <path d="M316.959,749.615 A8.615,8.615 0 0 1 325.574,758.231 A8.615,8.615 0 0 1 316.959,766.846 A8.615,8.615 0 0 1 308.343,758.231 A8.615,8.615 0 0 1 316.959,749.615 M316.959,771.154 C326.479,771.154 334.189,775.009 334.189,779.769 L334.189,784.077 L299.728,784.077 L299.728,779.769 C299.728,775.009 307.439,771.154 316.959,771.154 M338.497,766.846 L338.497,756.077 L342.805,756.077 L342.805,769 L338.497,769 M338.497,777.615 L338.497,773.308 L342.805,773.308 L342.805,777.615 L338.497,777.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="60.112" x="287" y="803.581">labelAlias</text>
+    </g>
+    <!--entity shapeNone-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples.hide shapes with ..MDI_DEFAULT_SHAPE . .MDI_SHAPE_NONE.shapeNone" data-source-line="48" id="ent0008">
+      <path d="M322.509,908.615 A8.615,8.615 0 0 1 331.124,917.231 A8.615,8.615 0 0 1 322.509,925.846 A8.615,8.615 0 0 1 313.893,917.231 A8.615,8.615 0 0 1 322.509,908.615 M322.509,930.154 C332.029,930.154 339.739,934.009 339.739,938.769 L339.739,943.077 L305.278,943.077 L305.278,938.769 C305.278,934.009 312.989,930.154 322.509,930.154 M344.047,925.846 L344.047,915.077 L348.355,915.077 L348.355,928 L344.047,928 M344.047,936.615 L344.047,932.308 L348.355,932.308 L348.355,936.615 L344.047,936.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="71.663" x="281" y="962.581">shapeNone</text>
+    </g>
+    <!--entity shapeDatabase-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples.database shapes with ..MDI_DEFAULT_SHAPE . .U.0022.database.U.0022..shapeDatabase" data-source-line="52" id="ent0010">
+      <path d="M258,1059.5 C258,1049.5 317.044,1049.5 317.044,1049.5 C317.044,1049.5 376.088,1049.5 376.088,1059.5 L376.088,1134.192 C376.088,1144.192 317.044,1144.192 317.044,1144.192 C317.044,1144.192 258,1144.192 258,1134.192 L258,1059.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M258,1059.5 C258,1069.5 317.044,1069.5 317.044,1069.5 C317.044,1069.5 376.088,1069.5 376.088,1059.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M335.934,1082.115 A8.615,8.615 0 0 1 344.549,1090.731 A8.615,8.615 0 0 1 335.934,1099.346 A8.615,8.615 0 0 1 327.318,1090.731 A8.615,8.615 0 0 1 335.934,1082.115 M335.934,1103.654 C345.454,1103.654 353.164,1107.509 353.164,1112.269 L353.164,1116.577 L318.703,1116.577 L318.703,1112.269 C318.703,1107.509 326.414,1103.654 335.934,1103.654 M357.472,1099.346 L357.472,1088.577 L361.78,1088.577 L361.78,1101.5 L357.472,1101.5 M357.472,1110.115 L357.472,1105.808 L361.78,1105.808 L361.78,1110.115 L357.472,1110.115" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="98.088" x="268" y="1136.081">shapeDatabase</text>
+    </g>
+    <!--entity colorNone-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples.unchanged color with ..MDI_DEFAULT_COLOR . .MDI_COLOR_NONE.colorNone" data-source-line="58" id="ent0012">
+      <rect fill="#F1F1F1" height="85.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83.875" x="275" y="1218"/>
+      <path d="M318.721,1236.615 A8.615,8.615 0 0 1 327.337,1245.231 A8.615,8.615 0 0 1 318.721,1253.846 A8.615,8.615 0 0 1 310.106,1245.231 A8.615,8.615 0 0 1 318.721,1236.615 M318.721,1258.154 C328.241,1258.154 335.952,1262.009 335.952,1266.769 L335.952,1271.077 L301.49,1271.077 L301.49,1266.769 C301.49,1262.009 309.201,1258.154 318.721,1258.154 M340.26,1253.846 L340.26,1243.077 L344.567,1243.077 L344.567,1256 L340.26,1256 M340.26,1264.615 L340.26,1260.308 L344.567,1260.308 L344.567,1264.615 L340.26,1264.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="63.875" x="285" y="1290.581">colorNone</text>
+    </g>
+    <!--entity colorBlue-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples.blue color with ..MDI_DEFAULT_COLOR . .U.0022.blue.U.0022..colorBlue" data-source-line="62" id="ent0014">
+      <rect fill="#F1F1F1" height="85.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.45" x="278" y="1377"/>
+      <path d="M316.296,1395.615 A8.615,8.615 0 0 1 324.912,1404.231 A8.615,8.615 0 0 1 316.296,1412.846 A8.615,8.615 0 0 1 307.681,1404.231 A8.615,8.615 0 0 1 316.296,1395.615 M316.296,1417.154 C325.816,1417.154 333.527,1421.009 333.527,1425.769 L333.527,1430.077 L299.065,1430.077 L299.065,1425.769 C299.065,1421.009 306.776,1417.154 316.296,1417.154 M337.835,1412.846 L337.835,1402.077 L342.142,1402.077 L342.142,1415 L337.835,1415 M337.835,1423.615 L337.835,1419.308 L342.142,1419.308 L342.142,1423.615 L337.835,1423.615" fill="#00F"/>
+      <text fill="#000" font-size="14" textLength="58.45" x="288" y="1449.581">colorBlue</text>
+    </g>
+    <!--entity colorRgbGreen-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples.RGB color with ..MDI_DEFAULT_COLOR . .00FF00.colorRgbGreen" data-source-line="66" id="ent0016">
+      <rect fill="#F1F1F1" height="85.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114.938" x="259.5" y="1536"/>
+      <path d="M334.284,1554.615 A8.615,8.615 0 0 1 342.899,1563.231 A8.615,8.615 0 0 1 334.284,1571.846 A8.615,8.615 0 0 1 325.668,1563.231 A8.615,8.615 0 0 1 334.284,1554.615 M334.284,1576.154 C343.804,1576.154 351.514,1580.009 351.514,1584.769 L351.514,1589.077 L317.053,1589.077 L317.053,1584.769 C317.053,1580.009 324.764,1576.154 334.284,1576.154 M355.822,1571.846 L355.822,1561.077 L360.13,1561.077 L360.13,1574 L355.822,1574 M355.822,1582.615 L355.822,1578.308 L360.13,1578.308 L360.13,1582.615 L355.822,1582.615" fill="#0F0"/>
+      <text fill="#000" font-size="14" textLength="94.938" x="269.5" y="1608.581">colorRgbGreen</text>
+    </g>
+    <!--entity stereoNone-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples.no stereotype with ..MDI_DEFAULT_STEREOTYPE . .MDI_STEREOTYPE_NONE.stereoNone" data-source-line="72" id="ent0018">
+      <rect fill="#F1F1F1" height="85.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92.363" x="271" y="1695"/>
+      <path d="M323.209,1713.615 A8.615,8.615 0 0 1 331.824,1722.231 A8.615,8.615 0 0 1 323.209,1730.846 A8.615,8.615 0 0 1 314.593,1722.231 A8.615,8.615 0 0 1 323.209,1713.615 M323.209,1735.154 C332.729,1735.154 340.439,1739.009 340.439,1743.769 L340.439,1748.077 L305.978,1748.077 L305.978,1743.769 C305.978,1739.009 313.689,1735.154 323.209,1735.154 M344.747,1730.846 L344.747,1720.077 L349.055,1720.077 L349.055,1733 L344.747,1733 M344.747,1741.615 L344.747,1737.308 L349.055,1737.308 L349.055,1741.615 L344.747,1741.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="72.363" x="281" y="1767.581">stereoNone</text>
+    </g>
+    <!--entity stereoSprite-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples.sprite based stereotype with ..MDI_DEFAULT_STEREOTYPE . .MDI_STEREOTYPE_SPRITE.stereoSprite" data-source-line="77" id="ent0020">
+      <rect fill="#F1F1F1" height="99.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="139.513" x="247" y="1854"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="117.513" x="258" y="1874.889">«mdiAccountAlert»</text>
+      <path d="M346.359,1886.615 A8.615,8.615 0 0 1 354.974,1895.231 A8.615,8.615 0 0 1 346.359,1903.846 A8.615,8.615 0 0 1 337.743,1895.231 A8.615,8.615 0 0 1 346.359,1886.615 M346.359,1908.154 C355.879,1908.154 363.589,1912.009 363.589,1916.769 L363.589,1921.077 L329.128,1921.077 L329.128,1916.769 C329.128,1912.009 336.839,1908.154 346.359,1908.154 M367.897,1903.846 L367.897,1893.077 L372.205,1893.077 L372.205,1906 L367.897,1906 M367.897,1914.615 L367.897,1910.308 L372.205,1910.308 L372.205,1914.615 L367.897,1914.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="75.425" x="301.088" y="1940.581">stereoSprite</text>
+    </g>
+    <!--entity stereoAbcd-->
+    <g class="entity" data-qualified-name=".MdiAccountAlert.. samples.Abcd stereotype with ..MDI_DEFAULT_STEREOTYPE . .U.0022.Abcd.U.0022..stereoAbcd" data-source-line="82" id="ent0022">
+      <rect fill="#F1F1F1" height="99.692" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.788" x="271.5" y="2027"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="47.512" x="303.775" y="2047.889">«Abcd»</text>
+      <path d="M322.134,2059.615 A8.615,8.615 0 0 1 330.749,2068.231 A8.615,8.615 0 0 1 322.134,2076.846 A8.615,8.615 0 0 1 313.518,2068.231 A8.615,8.615 0 0 1 322.134,2059.615 M322.134,2081.154 C331.654,2081.154 339.364,2085.009 339.364,2089.769 L339.364,2094.077 L304.903,2094.077 L304.903,2089.769 C304.903,2085.009 312.614,2081.154 322.134,2081.154 M343.672,2076.846 L343.672,2066.077 L347.98,2066.077 L347.98,2079 L343.672,2079 M343.672,2087.615 L343.672,2083.308 L347.98,2083.308 L347.98,2087.615 L343.672,2087.615" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="70.788" x="281.5" y="2113.581">stereoAbcd</text>
+    </g>
+    <!--entity colorNoneImg-->
+    <g class="entity" data-qualified-name=".MdiAccountAlertImg.. samples.NoneImg.colorNoneImg" data-source-line="91" id="ent0025">
+      <path d="M312.538,112.615 A8.615,8.615 0 0 1 321.154,121.231 A8.615,8.615 0 0 1 312.538,129.846 A8.615,8.615 0 0 1 303.923,121.231 A8.615,8.615 0 0 1 312.538,112.615 M312.538,134.154 C322.058,134.154 329.769,138.009 329.769,142.769 L329.769,147.077 L295.308,147.077 L295.308,142.769 C295.308,138.009 303.018,134.154 312.538,134.154 M334.077,129.846 L334.077,119.077 L338.385,119.077 L338.385,132 L334.077,132 M334.077,140.615 L334.077,136.308 L338.385,136.308 L338.385,140.615 L334.077,140.615" fill="#000"/>
+    </g>
+    <!--entity colorBlueImg-->
+    <g class="entity" data-qualified-name=".MdiAccountAlertImg.. samples.BlueImg.colorBlueImg" data-source-line="95" id="ent0027">
+      <path d="M312.538,257.615 A8.615,8.615 0 0 1 321.154,266.231 A8.615,8.615 0 0 1 312.538,274.846 A8.615,8.615 0 0 1 303.923,266.231 A8.615,8.615 0 0 1 312.538,257.615 M312.538,279.154 C322.058,279.154 329.769,283.009 329.769,287.769 L329.769,292.077 L295.308,292.077 L295.308,287.769 C295.308,283.009 303.018,279.154 312.538,279.154 M334.077,274.846 L334.077,264.077 L338.385,264.077 L338.385,277 L334.077,277 M334.077,285.615 L334.077,281.308 L338.385,281.308 L338.385,285.615 L334.077,285.615" fill="#00F"/>
+    </g>
+    <!--entity colorRgbGreenImg-->
+    <g class="entity" data-qualified-name=".MdiAccountAlertImg.. samples.RgbImg.colorRgbGreenImg" data-source-line="99" id="ent0029">
+      <path d="M312.538,402.615 A8.615,8.615 0 0 1 321.154,411.231 A8.615,8.615 0 0 1 312.538,419.846 A8.615,8.615 0 0 1 303.923,411.231 A8.615,8.615 0 0 1 312.538,402.615 M312.538,424.154 C322.058,424.154 329.769,428.009 329.769,432.769 L329.769,437.077 L295.308,437.077 L295.308,432.769 C295.308,428.009 303.018,424.154 312.538,424.154 M334.077,419.846 L334.077,409.077 L338.385,409.077 L338.385,422 L334.077,422 M334.077,430.615 L334.077,426.308 L338.385,426.308 L338.385,430.615 L334.077,430.615" fill="#0F0"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,64 @@
+---
+output: svg
+---
+@startuml
+!include <archimate/Archimate>
+!include <osa2/Common>
+!foreach $item in %splitstr('User_Hardware_Misc_Server_Site', '_')
+    !include <osa2/$item/all.puml>
+!endfor
+hide stereotype
+
+'. Mary is a Developer in the Product team. She has a Windows 10 PC and an Android phone.
+'. Bob is a Manager in the Accounts team. He has Mac and an iPhone.
+'. Ivan is an IT guy who looks after the server.
+'. They connect to the network hub, and via a firewall to the Internet.
+
+' Users
+together {
+    osa_user_green_developer(Mary, "Mary", "Product team", "Developer")
+    osa_user_green_operations(Ivan, "Ivan", "IT Team", "Server Admin")
+    osa_user_green_business_manager(Bob, "Bob", "Accounts team", "Manager")
+    note left : Look at Bob
+}
+
+' Devices
+together {
+    osa_desktop(pc, "192.168.1.10", "Windows 10", "PC")
+    osa_laptop(mac, "192.168.1.12", "Mac", "Mac")
+    osa_iPhone(iphone, "Dynamic IP", "iPhone 11", "Phone")
+    osa_iPhone(android, "Dynamic IP", "Android 10", "Phone")
+    osa_server(server, "192.168.1.100", "Ubuntu Server 20.04 LTS", "Server")
+}
+
+
+' Network
+osa_device_wireless_router(wifiAP, "192.168.1.1", "Network")
+osa_hub(hub, "Office hub", "Hub")
+osa_firewall(firewall, "51.37.24.103", "Network")
+osa_cloud(cloud, "Internet", "Network")
+
+Rel_Serving(Mary, pc, 'source code')
+Rel_Serving(Mary, android, 'social media')
+Rel_Serving(Bob, mac, 'financial info')
+Rel_Serving(Bob, iphone, 'phone calls')
+Rel_Serving(Ivan, server, configuration)
+Rel_Serving(iphone, wifiAP)
+Rel_Serving(android, wifiAP)
+Rel_Serving(wifiAP, hub)
+Rel_Serving(server, hub)
+Rel_Serving(mac, hub)
+Rel_Serving(pc, hub)
+Rel_Serving(hub, firewall)
+Rel_Serving(firewall, cloud)
+
+legend
+    |= Color |= Type |= Description |
+    | <size:11><back:#Red>Mary           </back></size>|    <color:Red><$osa_user_green_developer*.4></color> | Mary details... This is a stdlib sprite |
+    | <size:11><back:#DarkGreen>Ivan           </back></size>|    <color:DarkGreen><$osa_user_green_operations*.4></color> | Ivan details... |
+    | <size:11><back:#Orange>Bob           </back></size>|    <color:Orange><$osa_user_green_business_manager*.4></color> | Bob details... |
+    | <size:11><back:#Purple>Box           </back></size>|    <color:Purple><&box></color> | A Box. This is an openiconic sprite |
+endlegend
+
+footer %filename() rendered with PlantUML version %version()\nThe Hitchhiker’s Guide to PlantUML
+@enduml

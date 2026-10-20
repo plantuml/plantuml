@@ -1,0 +1,6 @@
+---
+output: preproc
+---
+@startuml
+!include <osa2/Common>
+@enduml

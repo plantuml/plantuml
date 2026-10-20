@@ -1,0 +1,6 @@
+---
+output: preproc
+---
+@startuml
+!include <C4/C4_Context>
+@enduml

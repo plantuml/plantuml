@@ -1,0 +1,169 @@
+@startuml
+
+
+
+skinparam maxMessageSize 150
+
+skinparam StereotypeAlignment right
+
+skinparam lineType curve
+
+
+
+
+
+
+<style>
+    archimate {
+        RoundCorner 1
+    }
+    arrow {
+        LineColor #Black
+        FontColor #Black
+        FontSize 10
+    }
+    element {
+        FontName Verdana
+        FontSize 12
+        MaximumWidth 600
+        MinimumWidth 120
+        HorizontalAlignment center
+        stereotype {
+            HorizontalAlignment right
+        }
+    }
+    folder {
+        .group {
+            BackgroundColor #LightGrey
+            Shadowing 2
+            stereotype {
+                FontSize 1
+                FontColor transparent
+            }
+
+        }
+        .grouping {
+            LineColor #444444
+            LineStyle 8-5
+            Shadowing 2
+            stereotype {
+                FontSize 1
+                FontColor transparent
+            }
+        }
+    }
+    rectangle {
+        .boundary {
+            LineColor #444444
+            LineStyle 8-5
+            Shadowing 0
+            stereotype {
+                FontSize 1
+                FontColor transparent
+            }
+        }
+        RoundCorner 1
+    }
+    root {
+        BackgroundColor #white
+    }
+    .application-event {
+        RoundCorner 25
+    }
+    .application-function {
+        RoundCorner 25
+    }
+    .application-interaction {
+        RoundCorner 25
+    }
+    .application-process {
+        RoundCorner 25
+    }
+    .application-service {
+        RoundCorner 25
+    }
+    .business-event {
+        RoundCorner 25
+    }
+    .business-function {
+        RoundCorner 25
+    }
+    .business-interaction {
+        RoundCorner 25
+    }
+    .business-process {
+        RoundCorner 25
+    }
+    .business-service {
+        RoundCorner 25
+    }
+    .implementation-event {
+        RoundCorner 25
+    }
+    .implementation-workpackage {
+        RoundCorner 25
+    }
+    .motivation-assessment {
+        DiagonalCorner 12
+    }
+    .motivation-constraint {
+        DiagonalCorner 12
+    }
+    .motivation-driver {
+        DiagonalCorner 12
+    }
+    .motivation-goal {
+        DiagonalCorner 12
+    }
+    .motivation-meaning {
+        DiagonalCorner 12
+    }
+    .motivation-outcome {
+        DiagonalCorner 12
+    }
+    .motivation-principle {
+        DiagonalCorner 12
+    }
+    .motivation-requirement {
+        DiagonalCorner 12
+    }
+    .motivation-stakeholder {
+        DiagonalCorner 12
+    }
+    .motivation-value {
+        DiagonalCorner 12
+    }
+    .service-special {
+        RoundCorner 80
+        stereotype {
+            FontSize 1
+            FontColor transparent
+        }
+    }
+    .strategy-capability {
+        RoundCorner 25
+    }
+    .strategy-courseofaction {
+        RoundCorner 25
+    }
+    .strategy-valuestream {
+        RoundCorner 25
+    }
+    .technology-event {
+        RoundCorner 25
+    }
+    .technology-function {
+        RoundCorner 25
+    }
+    .technology-interaction {
+        RoundCorner 25
+    }
+    .technology-process {
+        RoundCorner 25
+    }
+    .technology-service {
+        RoundCorner 25
+    }
+
+</style>
+@enduml
