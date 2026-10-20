@@ -214,8 +214,10 @@ public class BarRenderer {
 			final double barWidth = Math.abs((value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotWidth);
 			final double x = 0; // Start from left
 
-			final URectangle rect = URectangle.build(barWidth, barHeight);
-			ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
+			if (barHeight > 0) {
+				final URectangle rect = URectangle.build(barWidth, barHeight);
+				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
+			}
 
 			// Draw label if enabled
 			if (series.isShowLabels()) {
@@ -279,8 +281,10 @@ public class BarRenderer {
 					lineColor = color; // Use fill color if no line color specified
 				}
 
-				final URectangle rect = URectangle.build(barWidth, barHeight);
-				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
+				if (barHeight > 0) {
+					final URectangle rect = URectangle.build(barWidth, barHeight);
+					ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
+				}
 
 				// Draw label if enabled
 				if (series.isShowLabels()) {
@@ -366,8 +370,10 @@ public class BarRenderer {
 					lineColor = color; // Use fill color if no line color specified
 				}
 
-				final URectangle rect = URectangle.build(barWidth, barHeight);
-				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
+				if (barHeight > 0) {
+					final URectangle rect = URectangle.build(barWidth, barHeight);
+					ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
+				}
 
 				// Draw label if enabled
 				if (series.isShowLabels()) {
