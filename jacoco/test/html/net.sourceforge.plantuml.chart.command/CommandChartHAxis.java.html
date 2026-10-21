@@ -145,8 +145,8 @@ public class CommandChartHAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
 	private List&lt;String&gt; parseLabels(String data) {
 <span class="fc" id="L147">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L148" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
-<span class="nc" id="L149">			return result;</span>
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="fc" id="L149">			return result;</span>
 
 		// Split by comma, handling quoted strings
 <span class="fc" id="L152">		final String[] parts = data.split(&quot;,&quot;);</span>

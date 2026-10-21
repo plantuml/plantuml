@@ -559,8 +559,8 @@ public class ChartRenderer {
 		}
 
 		// Draw X-axis title if present
-<span class="pc bpc" id="L562" title="3 of 4 branches missed.">		if (xAxisTitle != null &amp;&amp; !xAxisTitle.isEmpty()) {</span>
-<span class="nc bnc" id="L563" title="All 2 branches missed.">			if (xAxisLabelPosition == ChartAxis.LabelPosition.RIGHT) {</span>
+<span class="pc bpc" id="L562" title="1 of 4 branches missed.">		if (xAxisTitle != null &amp;&amp; !xAxisTitle.isEmpty()) {</span>
+<span class="pc bpc" id="L563" title="1 of 2 branches missed.">			if (xAxisLabelPosition == ChartAxis.LabelPosition.RIGHT) {</span>
 				// Draw at the right end of the axis
 <span class="nc" id="L565">				final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)</span>
 <span class="nc" id="L566">						.create(fontConfig, HorizontalAlignment.LEFT, skinParam);</span>
@@ -568,11 +568,11 @@ public class ChartRenderer {
 <span class="nc" id="L568">				titleBlock.drawU(ug.apply(UTranslate.dx(width + 10).compose(UTranslate.dy(-textHeight / 2))));</span>
 <span class="nc" id="L569">			} else {</span>
 				// Draw centered below the axis (default)
-<span class="nc" id="L571">				final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)</span>
-<span class="nc" id="L572">						.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
-<span class="nc" id="L573">				final double titleWidth = titleBlock.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc" id="L574">				final double titleY = TICK_SIZE + 25; // Position below the labels</span>
-<span class="nc" id="L575">				titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));</span>
+<span class="fc" id="L571">				final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)</span>
+<span class="fc" id="L572">						.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="fc" id="L573">				final double titleWidth = titleBlock.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L574">				final double titleY = TICK_SIZE + 25; // Position below the labels</span>
+<span class="fc" id="L575">				titleBlock.drawU(ug.apply(UTranslate.dx(width / 2 - titleWidth / 2).compose(UTranslate.dy(titleY))));</span>
 			}
 		}
 <span class="pc bpc" id="L578" title="1 of 2 branches missed.">		} else if (xAxis != null) {</span>
