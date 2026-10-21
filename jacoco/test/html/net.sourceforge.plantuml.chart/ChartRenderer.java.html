@@ -193,7 +193,7 @@ public class ChartRenderer {
 <span class="fc" id="L193">		double yAxisX = leftMargin;</span>
 <span class="pc bpc" id="L194" title="1 of 4 branches missed.">		if (orientation != ChartDiagram.Orientation.HORIZONTAL &amp;&amp; xAxis != null) {</span>
 			// Check if X-axis range includes zero
-<span class="pc bpc" id="L196" title="1 of 4 branches missed.">			if (xAxis.getMin() &lt;= 0 &amp;&amp; xAxis.getMax() &gt;= 0) {</span>
+<span class="fc bfc" id="L196" title="All 4 branches covered.">			if (xAxis.getMin() &lt;= 0 &amp;&amp; xAxis.getMax() &gt;= 0) {</span>
 				// Calculate X position of zero
 <span class="fc" id="L198">				final double zeroX = xAxis.valueToPixel(0, 0, plotWidth);</span>
 <span class="fc" id="L199">				yAxisX = leftMargin + zeroX;</span>
@@ -394,13 +394,13 @@ public class ChartRenderer {
 		}
 
 		// Draw axis title
-<span class="pc bpc" id="L397" title="2 of 4 branches missed.">		if (axis.getTitle() != null &amp;&amp; !axis.getTitle().isEmpty()) {</span>
-<span class="nc bnc" id="L398" title="All 2 branches missed.">			if (axis.getLabelPosition() == ChartAxis.LabelPosition.TOP) {</span>
+<span class="pc bpc" id="L397" title="1 of 4 branches missed.">		if (axis.getTitle() != null &amp;&amp; !axis.getTitle().isEmpty()) {</span>
+<span class="pc bpc" id="L398" title="1 of 2 branches missed.">			if (axis.getLabelPosition() == ChartAxis.LabelPosition.TOP) {</span>
 				// Draw horizontally at top
 <span class="nc" id="L400">				drawHorizontalAxisTitle(ug, axis.getTitle(), height, leftSide, fontColor, true, fontConfig);</span>
 			} else {
 				// Draw vertically (default)
-<span class="nc" id="L403">				drawVerticalText(ug, axis.getTitle(), height, leftSide, fontColor, fontConfig);</span>
+<span class="fc" id="L403">				drawVerticalText(ug, axis.getTitle(), height, leftSide, fontColor, fontConfig);</span>
 			}
 		}
 <span class="fc" id="L406">	}</span>
@@ -410,27 +410,27 @@ public class ChartRenderer {
 		// Use the provided font configuration (same as tick labels)
 		// Left axis (Y): 90 degrees (reads from bottom to top)
 		// Right axis (Y2): 270 degrees (reads from top to bottom)
-<span class="nc bnc" id="L413" title="All 2 branches missed.">		final int orientation = leftSide ? 90 : 270;</span>
-<span class="nc" id="L414">		final UText utext = UText.build(text, axisFontConfig).withOrientation(orientation);</span>
+<span class="pc bpc" id="L413" title="1 of 2 branches missed.">		final int orientation = leftSide ? 90 : 270;</span>
+<span class="fc" id="L414">		final UText utext = UText.build(text, axisFontConfig).withOrientation(orientation);</span>
 
 		// Calculate dimensions of the text using the axis font
-<span class="nc" id="L417">		final UFont font = axisFontConfig.getFont();</span>
-<span class="nc" id="L418">		final double textWidth = ug.getStringBounder().calculateDimension(font, text).getWidth();</span>
-<span class="nc" id="L419">		final double textHeight = ug.getStringBounder().calculateDimension(font, text).getHeight();</span>
+<span class="fc" id="L417">		final UFont font = axisFontConfig.getFont();</span>
+<span class="fc" id="L418">		final double textWidth = ug.getStringBounder().calculateDimension(font, text).getWidth();</span>
+<span class="fc" id="L419">		final double textHeight = ug.getStringBounder().calculateDimension(font, text).getHeight();</span>
 
 		// Position the rotated text centered vertically along the axis
 		// When rotated 90°, the baseline is the rotation point
 		// The text width becomes the vertical span after rotation
 		// To center: baseline should be at (height/2 + textWidth/2) for 90° or (height/2 - textWidth/2) for 270°
 		// Add extra spacing (10 pixels) to move labels further from the axis
-<span class="nc" id="L426">		final double extraSpacing = 10;</span>
-<span class="nc bnc" id="L427" title="All 2 branches missed.">		final double xPos = leftSide ? -AXIS_LABEL_SPACE + textHeight / 2 - extraSpacing : AXIS_LABEL_SPACE - textHeight / 2 + extraSpacing;</span>
+<span class="fc" id="L426">		final double extraSpacing = 10;</span>
+<span class="pc bpc" id="L427" title="1 of 2 branches missed.">		final double xPos = leftSide ? -AXIS_LABEL_SPACE + textHeight / 2 - extraSpacing : AXIS_LABEL_SPACE - textHeight / 2 + extraSpacing;</span>
 		// For 90° (left): baseline at top of text, so position at center + half width to center the text
 		// For 270° (right): baseline at bottom of text, so position at center - half width to center the text
-<span class="nc bnc" id="L430" title="All 2 branches missed.">		final double yPos = leftSide ? (height / 2 + textWidth / 2) : (height / 2 - textWidth / 2);</span>
+<span class="pc bpc" id="L430" title="1 of 2 branches missed.">		final double yPos = leftSide ? (height / 2 + textWidth / 2) : (height / 2 - textWidth / 2);</span>
 
-<span class="nc" id="L432">		ug.apply(UTranslate.dx(xPos).compose(UTranslate.dy(yPos))).draw(utext);</span>
-<span class="nc" id="L433">	}</span>
+<span class="fc" id="L432">		ug.apply(UTranslate.dx(xPos).compose(UTranslate.dy(yPos))).draw(utext);</span>
+<span class="fc" id="L433">	}</span>
 
 	private void drawHorizontalAxisTitle(UGraphic ug, String text, double height, boolean leftSide, HColor fontColor,
 			boolean isVerticalAxis, FontConfiguration axisFontConfig) {
@@ -594,7 +594,7 @@ public class ChartRenderer {
 			// Draw ticks and labels from start to end
 <span class="fc bfc" id="L595" title="All 2 branches covered.">			for (double value = startValue; value &lt;= xAxis.getMax() + tickInterval * 0.01; value += tickInterval) {</span>
 				// Skip if outside axis range
-<span class="pc bpc" id="L597" title="2 of 4 branches missed.">				if (value &lt; xAxis.getMin() - tickInterval * 0.01 || value &gt; xAxis.getMax() + tickInterval * 0.01)</span>
+<span class="pc bpc" id="L597" title="1 of 4 branches missed.">				if (value &lt; xAxis.getMin() - tickInterval * 0.01 || value &gt; xAxis.getMax() + tickInterval * 0.01)</span>
 <span class="nc" id="L598">					continue;</span>
 
 <span class="fc" id="L600">				final double x = xAxis.valueToPixel(value, 0, width);</span>
@@ -611,7 +611,7 @@ public class ChartRenderer {
 			}
 
 			// Draw X-axis title if present
-<span class="pc bpc" id="L614" title="2 of 4 branches missed.">			if (xAxisTitle != null &amp;&amp; !xAxisTitle.isEmpty()) {</span>
+<span class="pc bpc" id="L614" title="1 of 4 branches missed.">			if (xAxisTitle != null &amp;&amp; !xAxisTitle.isEmpty()) {</span>
 <span class="pc bpc" id="L615" title="1 of 2 branches missed.">				if (xAxisLabelPosition == ChartAxis.LabelPosition.RIGHT) {</span>
 					// Draw at the right end of the axis
 <span class="nc" id="L617">					final TextBlock titleBlock = Display.getWithNewlines(skinParam.getPragma(), xAxisTitle)</span>
@@ -856,13 +856,13 @@ public class ChartRenderer {
 
 				// Get series-specific style based on type (with stereotype support)
 				Style seriesStyle;
-<span class="pc bpc" id="L859" title="2 of 3 branches missed.">				switch (s.getType()) {</span>
+<span class="pc bpc" id="L859" title="1 of 3 branches missed.">				switch (s.getType()) {</span>
 					case LINE:
 <span class="fc" id="L861">						seriesStyle = getLineStyle(s);</span>
 <span class="fc" id="L862">						break;</span>
 					case SCATTER:
-<span class="nc" id="L864">						seriesStyle = getScatterStyle(s);</span>
-<span class="nc" id="L865">						break;</span>
+<span class="fc" id="L864">						seriesStyle = getScatterStyle(s);</span>
+<span class="fc" id="L865">						break;</span>
 					default:
 <span class="nc" id="L867">						seriesStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());</span>
 				}
@@ -878,14 +878,14 @@ public class ChartRenderer {
 					}
 				}
 
-<span class="pc bpc" id="L881" title="1 of 2 branches missed.">				if (s.getType() == ChartSeries.SeriesType.LINE) {</span>
+<span class="fc bfc" id="L881" title="All 2 branches covered.">				if (s.getType() == ChartSeries.SeriesType.LINE) {</span>
 <span class="fc" id="L882">					final LineRenderer lineRenderer = new LineRenderer(skinParam, plotWidth, plotHeight,</span>
 <span class="fc" id="L883">							xAxisLabels.size(), axis, xAxis);</span>
 <span class="fc" id="L884">					lineRenderer.draw(ug, s, color);</span>
-<span class="pc bnc" id="L885" title="All 2 branches missed.">				} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {</span>
-<span class="nc" id="L886">					final ScatterRenderer scatterRenderer = new ScatterRenderer(skinParam, plotWidth, plotHeight,</span>
-<span class="nc" id="L887">							xAxisLabels.size(), axis, xAxis);</span>
-<span class="nc" id="L888">					scatterRenderer.draw(ug, s, color);</span>
+<span class="pc bpc" id="L885" title="1 of 2 branches missed.">				} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {</span>
+<span class="fc" id="L886">					final ScatterRenderer scatterRenderer = new ScatterRenderer(skinParam, plotWidth, plotHeight,</span>
+<span class="fc" id="L887">							xAxisLabels.size(), axis, xAxis);</span>
+<span class="fc" id="L888">					scatterRenderer.draw(ug, s, color);</span>
 				}
 			}
 <span class="fc" id="L891">		}</span>
@@ -1036,12 +1036,12 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getScatterStyleQuery() {
-<span class="nc" id="L1039">		return StyleQueries.CHARTDIAG_SCATTER;</span>
+<span class="fc" id="L1039">		return StyleQueries.CHARTDIAG_SCATTER;</span>
 	}
 
 	private Style getScatterStyle(ChartSeries series) {
-<span class="nc" id="L1043">		StyleQuery query = getScatterStyleQuery();</span>
-<span class="nc bnc" id="L1044" title="All 2 branches missed.">		if (series.getStereotype() != null) {</span>
+<span class="fc" id="L1043">		StyleQuery query = getScatterStyleQuery();</span>
+<span class="pc bpc" id="L1044" title="1 of 2 branches missed.">		if (series.getStereotype() != null) {</span>
 			// Use withTOBECHANGED for element-level stereotype styling
 <span class="nc" id="L1046">			Style style = skinParam.getCurrentStyleBuilder()</span>
 <span class="nc" id="L1047">					.getMergedStyle(query.withStereotype(series.getStereotype()));</span>
@@ -1056,7 +1056,7 @@ public class ChartRenderer {
 
 <span class="nc" id="L1057">			return stereoStyle;</span>
 		}
-<span class="nc" id="L1059">		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);</span>
+<span class="fc" id="L1059">		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);</span>
 	}
 
 	private StyleQuery getAxisStyleSignature(boolean horizontal) {

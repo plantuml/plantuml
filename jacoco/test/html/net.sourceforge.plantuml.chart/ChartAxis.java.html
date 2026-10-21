@@ -62,15 +62,15 @@ public class ChartAxis {
 <span class="fc" id="L62">		this.labelPosition = LabelPosition.DEFAULT;</span>
 <span class="fc" id="L63">	}</span>
 
-<span class="nc" id="L65">	public ChartAxis(String title, double min, double max) {</span>
-<span class="nc" id="L66">		this.title = title;</span>
-<span class="nc" id="L67">		this.min = min;</span>
-<span class="nc" id="L68">		this.max = max;</span>
-<span class="nc" id="L69">		this.autoScale = false;</span>
-<span class="nc" id="L70">		this.customTicks = null;</span>
-<span class="nc" id="L71">		this.tickSpacing = null;</span>
-<span class="nc" id="L72">		this.labelPosition = LabelPosition.DEFAULT;</span>
-<span class="nc" id="L73">	}</span>
+<span class="fc" id="L65">	public ChartAxis(String title, double min, double max) {</span>
+<span class="fc" id="L66">		this.title = title;</span>
+<span class="fc" id="L67">		this.min = min;</span>
+<span class="fc" id="L68">		this.max = max;</span>
+<span class="fc" id="L69">		this.autoScale = false;</span>
+<span class="fc" id="L70">		this.customTicks = null;</span>
+<span class="fc" id="L71">		this.tickSpacing = null;</span>
+<span class="fc" id="L72">		this.labelPosition = LabelPosition.DEFAULT;</span>
+<span class="fc" id="L73">	}</span>
 
 	public String getTitle() {
 <span class="fc" id="L76">		return title;</span>
@@ -120,8 +120,8 @@ public class ChartAxis {
 	 */
 	public void includeValue(double value) {
 <span class="fc bfc" id="L122" title="All 2 branches covered.">		if (autoScale) {</span>
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">			if (value &lt; min)</span>
-<span class="nc" id="L124">				min = value;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">			if (value &lt; min)</span>
+<span class="fc" id="L124">				min = value;</span>
 <span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (value &gt; max)</span>
 <span class="nc" id="L126">				max = value;</span>
 		}
@@ -173,7 +173,7 @@ public class ChartAxis {
 	 * Get label position
 	 */
 	public LabelPosition getLabelPosition() {
-<span class="nc" id="L176">		return labelPosition;</span>
+<span class="fc" id="L176">		return labelPosition;</span>
 	}
 
 	/**

@@ -101,25 +101,25 @@ public class CommandChartScatter extends SingleLineCommand2&lt;ChartDiagram&gt; 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L104">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L105">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L106">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="nc" id="L107">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc" id="L108">		final String markerStr = arg.get(&quot;MARKER&quot;, 0);</span>
+<span class="fc" id="L104">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L105">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="fc" id="L106">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="fc" id="L107">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L108">		final String markerStr = arg.get(&quot;MARKER&quot;, 0);</span>
 
 		// Check if data contains coordinate pairs (x,y) format
 		final ChartSeries series;
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		final String seriesName = name != null ? name : &quot;scatter&quot; + diagram.getSeries().size();</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		final String seriesName = name != null ? name : &quot;scatter&quot; + diagram.getSeries().size();</span>
 
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (data.contains(&quot;(&quot;)) {</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (data.contains(&quot;(&quot;)) {</span>
 			// Parse coordinate pairs
-<span class="nc" id="L116">			final List&lt;Double&gt; xValues = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L117">			final List&lt;Double&gt; yValues = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (!parseCoordinatePairs(data, xValues, yValues))</span>
+<span class="fc" id="L116">			final List&lt;Double&gt; xValues = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L117">			final List&lt;Double&gt; yValues = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (!parseCoordinatePairs(data, xValues, yValues))</span>
 <span class="nc" id="L119">				return CommandExecutionResult.error(&quot;Invalid coordinate pair format in scatter data&quot;);</span>
 
-<span class="nc" id="L121">			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, xValues, yValues);</span>
-<span class="nc" id="L122">		} else {</span>
+<span class="fc" id="L121">			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, xValues, yValues);</span>
+<span class="fc" id="L122">		} else {</span>
 			// Parse traditional y-values only
 <span class="nc" id="L124">			final List&lt;Double&gt; values = parseValues(data);</span>
 <span class="nc bnc" id="L125" title="All 2 branches missed.">			if (values == null)</span>
@@ -128,17 +128,17 @@ public class CommandChartScatter extends SingleLineCommand2&lt;ChartDiagram&gt; 
 <span class="nc" id="L128">			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, values);</span>
 		}
 
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (stereo != null) {</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (stereo != null) {</span>
 <span class="nc" id="L132">			series.setStereotype(Stereotype.build(stereo));</span>
 		}
 
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (colorStr != null) {</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (colorStr != null) {</span>
 <span class="nc" id="L136">			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr);</span>
 <span class="nc" id="L137">			series.setColor(color);</span>
 		}
 
 		// Set marker shape if specified
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (markerStr != null) {</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (markerStr != null) {</span>
 <span class="nc bnc" id="L142" title="All 3 branches missed.">			switch (markerStr.toLowerCase()) {</span>
 			case &quot;square&quot;:
 <span class="nc" id="L144">				series.setMarkerShape(ChartSeries.MarkerShape.SQUARE);</span>
@@ -154,18 +154,18 @@ public class CommandChartScatter extends SingleLineCommand2&lt;ChartDiagram&gt; 
 		}
 
 		// Check if this scatter should use the secondary v-axis
-<span class="nc" id="L157">		final String secondaryAxisStr = arg.get(&quot;V2&quot;, 0);</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (secondaryAxisStr != null) {</span>
+<span class="fc" id="L157">		final String secondaryAxisStr = arg.get(&quot;V2&quot;, 0);</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (secondaryAxisStr != null) {</span>
 <span class="nc" id="L159">			series.setUseSecondaryAxis(true);</span>
 		}
 
 		// Check if labels keyword was present
-<span class="nc" id="L163">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (labelsStr != null) {</span>
+<span class="fc" id="L163">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (labelsStr != null) {</span>
 <span class="nc" id="L165">			series.setShowLabels(true);</span>
 		}
 
-<span class="nc" id="L168">		return diagram.addSeries(series);</span>
+<span class="fc" id="L168">		return diagram.addSeries(series);</span>
 	}
 
 	private List&lt;Double&gt; parseValues(String data) {
@@ -185,34 +185,34 @@ public class CommandChartScatter extends SingleLineCommand2&lt;ChartDiagram&gt; 
 	}
 
 	private boolean parseCoordinatePairs(String data, List&lt;Double&gt; xValues, List&lt;Double&gt; yValues) {
-<span class="nc bnc" id="L188" title="All 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="pc bpc" id="L188" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
 <span class="nc" id="L189">			return false;</span>
 
 		// Match pattern: (x,y) or (x, y)
 		// Split by closing paren followed by comma and opening paren
-<span class="nc" id="L193">		final String cleaned = data.replaceAll(&quot;\\s+&quot;, &quot;&quot;); // Remove all whitespace</span>
-<span class="nc" id="L194">		final String[] pairs = cleaned.split(&quot;\\),\\(&quot;);</span>
+<span class="fc" id="L193">		final String cleaned = data.replaceAll(&quot;\\s+&quot;, &quot;&quot;); // Remove all whitespace</span>
+<span class="fc" id="L194">		final String[] pairs = cleaned.split(&quot;\\),\\(&quot;);</span>
 
-<span class="nc bnc" id="L196" title="All 2 branches missed.">		for (String pair : pairs) {</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		for (String pair : pairs) {</span>
 			// Clean up the pair - remove leading/trailing parens and brackets
-<span class="nc" id="L198">			String trimmedPair = pair.trim();</span>
-<span class="nc" id="L199">			trimmedPair = trimmedPair.replaceAll(&quot;^[\\[\\(]+&quot;, &quot;&quot;); // Remove leading [ or (</span>
-<span class="nc" id="L200">			trimmedPair = trimmedPair.replaceAll(&quot;[\\]\\)]+$&quot;, &quot;&quot;); // Remove trailing ] or )</span>
+<span class="fc" id="L198">			String trimmedPair = pair.trim();</span>
+<span class="fc" id="L199">			trimmedPair = trimmedPair.replaceAll(&quot;^[\\[\\(]+&quot;, &quot;&quot;); // Remove leading [ or (</span>
+<span class="fc" id="L200">			trimmedPair = trimmedPair.replaceAll(&quot;[\\]\\)]+$&quot;, &quot;&quot;); // Remove trailing ] or )</span>
 
-<span class="nc" id="L202">			final String[] coords = trimmedPair.split(&quot;,&quot;);</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">			if (coords.length != 2)</span>
+<span class="fc" id="L202">			final String[] coords = trimmedPair.split(&quot;,&quot;);</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">			if (coords.length != 2)</span>
 <span class="nc" id="L204">				return false;</span>
 
 			try {
-<span class="nc" id="L207">				final double x = Double.parseDouble(coords[0].trim());</span>
-<span class="nc" id="L208">				final double y = Double.parseDouble(coords[1].trim());</span>
-<span class="nc" id="L209">				xValues.add(x);</span>
-<span class="nc" id="L210">				yValues.add(y);</span>
+<span class="fc" id="L207">				final double x = Double.parseDouble(coords[0].trim());</span>
+<span class="fc" id="L208">				final double y = Double.parseDouble(coords[1].trim());</span>
+<span class="fc" id="L209">				xValues.add(x);</span>
+<span class="fc" id="L210">				yValues.add(y);</span>
 <span class="nc" id="L211">			} catch (NumberFormatException e) {</span>
 <span class="nc" id="L212">				return false;</span>
-<span class="nc" id="L213">			}</span>
+<span class="fc" id="L213">			}</span>
 		}
-<span class="nc" id="L215">		return true;</span>
+<span class="fc" id="L215">		return true;</span>
 	}
 
 	@Override
