@@ -1,0 +1,10 @@
+---
+expected-status: 400
+expected-description: (Error)
+expected-error-line: 2
+expected-error-message: h-axis range must be given before coordinate pair data (Assumed diagram type: chart)
+---
+@startchart
+scatter [(10, 45), (25, 62)]
+h-axis 0 -> 100
+@endchart

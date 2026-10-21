@@ -103,11 +103,12 @@ public class ChartDiagram extends TitledDiagram {
 		// For horizontal bars: xAxis=numeric (horizontal), yAxisLabels=categories
 		// (vertical)
 		// We need to pass to renderer properly based on what it expects
+		final ChartAxis hAxis = getHAxis();
 		if (orientation == Orientation.HORIZONTAL) {
 			// For horizontal: pass h-axis numeric as yAxis, v-axis labels as xAxisLabels
 			// This way bars grow along the correct axis
 			return new ChartRenderer(getSkinParam(), getCategories(yAxisLabels), yAxis.getTitle(), null,
-					xAxisLabelPosition, series, xAxis, xAxis, null, legendPosition, yGridMode, xGridMode, stackMode,
+					xAxisLabelPosition, series, hAxis, hAxis, null, legendPosition, yGridMode, xGridMode, stackMode,
 					orientation, annotations);
 		}
 
@@ -120,7 +121,7 @@ public class ChartDiagram extends TitledDiagram {
 		// A numeric h-axis range (h-axis 0 --> 10) is kept as it is
 		final List<String> categories = xAxis.isAutoScale() ? getCategories(xAxisLabels) : xAxisLabels;
 		return new ChartRenderer(getSkinParam(), categories, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series,
-				xAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
+				hAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
 	}
 
 	// When no labels are given for the category axis (h-axis, or v-axis for a horizontal
@@ -141,9 +142,39 @@ public class ChartDiagram extends TitledDiagram {
 		return categories;
 	}
 
+	// When no h-axis range is given, coordinate-pair data is drawn against a numeric h-axis
+	// from the smallest to the largest x value, as if "h-axis min -> max" had been written.
+	// If all x values are equal, the h-axis goes from x - 1 to x + 1
+	private ChartAxis getHAxis() {
+		if (xAxis.isAutoScale() == false || hasCoordinatePairs() == false)
+			return xAxis;
+
+		double min = Double.POSITIVE_INFINITY;
+		double max = Double.NEGATIVE_INFINITY;
+		for (ChartSeries s : series)
+			for (double x : s.getXValues()) {
+				min = Math.min(min, x);
+				max = Math.max(max, x);
+			}
+
+		if (min == max) {
+			min = min - 1;
+			max = max + 1;
+		}
+		return new ChartAxis(xAxis.getTitle(), min, max);
+	}
+
+	private boolean hasCoordinatePairs() {
+		return series.isEmpty() == false && series.get(0).hasExplicitXValues();
+	}
+
 	// Command methods
 
 	public CommandExecutionResult setXAxisLabels(List<String> labels) {
+		if (labels.isEmpty() == false && xAxis.isAutoScale() && hasCoordinatePairs())
+			return CommandExecutionResult.error(
+					"Coordinate pair notation requires numeric h-axis (e.g., h-axis \"x\" -5 --> 5), not categorical labels");
+
 		this.xAxisLabels.clear();
 		this.xAxisLabels.addAll(labels);
 		return CommandExecutionResult.ok();
@@ -170,6 +201,10 @@ public class ChartDiagram extends TitledDiagram {
 	}
 
 	public CommandExecutionResult setXAxis(String title, Double min, Double max) {
+		// Coordinate pairs given without a range have not been checked against one
+		if ((min != null || max != null) && xAxis.isAutoScale() && hasCoordinatePairs())
+			return CommandExecutionResult.error("h-axis range must be given before coordinate pair data");
+
 		if (title != null)
 			xAxis.setTitle(title);
 		if (min != null)
@@ -226,8 +261,8 @@ public class ChartDiagram extends TitledDiagram {
 						"Coordinate pair notation requires numeric h-axis (e.g., h-axis \"x\" -5 --> 5), not categorical labels");
 			}
 
-			// Coordinate pairs require h-axis to be explicitly set
-			if (xAxis.isAutoScale() || xAxis.getMax() == xAxis.getMin()) {
+			// Without an h-axis range, the h-axis spans the x values (see getHAxis())
+			if (xAxis.isAutoScale() == false && xAxis.getMax() == xAxis.getMin()) {
 				return CommandExecutionResult
 						.error("Coordinate pair notation requires explicit h-axis range (e.g., h-axis \"x\" -5 --> 5)");
 			}
@@ -243,7 +278,7 @@ public class ChartDiagram extends TitledDiagram {
 
 			// Validate x-coordinates fall within axis range
 			for (double x : series.getXValues()) {
-				if (x < xAxis.getMin() || x > xAxis.getMax()) {
+				if (xAxis.isAutoScale() == false && (x < xAxis.getMin() || x > xAxis.getMax())) {
 					return CommandExecutionResult.error("X-coordinate " + x + " is outside h-axis range ["
 							+ xAxis.getMin() + ", " + xAxis.getMax() + "]");
 				}

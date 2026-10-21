@@ -1,0 +1,10 @@
+---
+expected-status: 400
+expected-description: (Error)
+expected-error-line: 2
+expected-error-message: Coordinate pair notation requires numeric h-axis (e.g., h-axis "x" -5 --> 5), not categorical labels (Assumed diagram type: chart)
+---
+@startchart
+scatter [(10, 45), (25, 62)]
+h-axis [A, B]
+@endchart
