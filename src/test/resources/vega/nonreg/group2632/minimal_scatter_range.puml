@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+h-axis "Time" 10 -> 30
+v-axis 0 --> 200
+scatter [45, 162, 58, 70]
+@endchart

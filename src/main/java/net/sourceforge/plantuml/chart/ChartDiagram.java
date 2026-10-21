@@ -120,8 +120,9 @@ public class ChartDiagram extends TitledDiagram {
 				: xAxisTitle;
 		// A numeric h-axis range (h-axis 0 --> 10) is kept as it is
 		final List<String> categories = xAxis.isAutoScale() ? getCategories(xAxisLabels) : xAxisLabels;
-		return new ChartRenderer(getSkinParam(), categories, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series,
-				hAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
+		return new ChartRenderer(getSkinParam(), categories, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition,
+				getPlottedSeries(), hAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation,
+				annotations);
 	}
 
 	// When no labels are given for the category axis (h-axis, or v-axis for a horizontal
@@ -162,6 +163,30 @@ public class ChartDiagram extends TitledDiagram {
 			max = max + 1;
 		}
 		return new ChartAxis(xAxis.getTitle(), min, max);
+	}
+
+	// When an h-axis range is given without h-axis labels, index-based values are spread evenly
+	// across the range, the first at the start and the last at the end, as if they had been
+	// written as coordinate pairs. The i-th value of every series is at the same x, n being the
+	// number of values in the longest series. A single value is drawn in the middle of the range
+	private List<ChartSeries> getPlottedSeries() {
+		if (xAxis.isAutoScale() || xAxisLabels.isEmpty() == false || series.isEmpty() || hasCoordinatePairs())
+			return series;
+
+		int count = 0;
+		for (ChartSeries s : series)
+			count = Math.max(count, s.getValues().size());
+
+		final double min = xAxis.getMin();
+		final double max = xAxis.getMax();
+		final List<ChartSeries> result = new ArrayList<>();
+		for (ChartSeries s : series) {
+			final List<Double> xValues = new ArrayList<>();
+			for (int i = 0; i < s.getValues().size(); i++)
+				xValues.add(count == 1 ? (min + max) / 2 : min + (max - min) * i / (count - 1));
+			result.add(s.withXValues(xValues));
+		}
+		return result;
 	}
 
 	private boolean hasCoordinatePairs() {

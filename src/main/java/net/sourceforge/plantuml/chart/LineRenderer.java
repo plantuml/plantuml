@@ -110,6 +110,9 @@ public class LineRenderer {
 
 			// Draw line segments
 			for (int i = 0; i < values.size() - 1; i++) {
+				// A missing value (spread over an h-axis range, see ChartDiagram) leaves a gap
+				if (values.get(i) == null || values.get(i + 1) == null)
+					continue;
 				final double xVal1 = xValues.get(i);
 				final double yVal1 = values.get(i);
 				final double xVal2 = xValues.get(i + 1);
@@ -157,8 +160,9 @@ public class LineRenderer {
 				return result;
 			final List<Double> xValues = series.getXValues();
 			for (int i = 0; i < values.size(); i++)
-				result.add(new XPoint2D(xAxis.valueToPixel(xValues.get(i), 0, plotWidth),
-						plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight));
+				if (values.get(i) != null)
+					result.add(new XPoint2D(xAxis.valueToPixel(xValues.get(i), 0, plotWidth),
+							plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight));
 		} else {
 			final double categoryWidth = plotWidth / categoryCount;
 			for (int i = 0; i < Math.min(values.size(), categoryCount); i++)
