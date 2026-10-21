@@ -1,0 +1,10 @@
+---
+expected-status: 400
+expected-description: (Error)
+expected-error-line: 2
+expected-error-message: All series must use the same data format (either all coordinate pairs or all index-based) (Assumed diagram type: chart)
+---
+@startchart
+scatter [(10, 45), (25, 62)]
+bar [1, 2]
+@endchart

@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+v-axis "y" 0 --> 20
+line [(-20, 5), (-5, 12), (10, 8)]
+@endchart

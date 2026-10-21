@@ -1,0 +1,7 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+scatter [(-3, 10), (-3, 20)]
+@endchart
