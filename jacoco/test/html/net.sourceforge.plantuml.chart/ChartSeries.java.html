@@ -86,80 +86,93 @@ public class ChartSeries {
 <span class="fc" id="L86">		this.markerShape = MarkerShape.CIRCLE; // Default marker shape</span>
 <span class="fc" id="L87">	}</span>
 
+	// The same series with the given x values, as if its values had been written as coordinate pairs
+	public ChartSeries withXValues(List&lt;Double&gt; xValues) {
+<span class="fc" id="L91">		final ChartSeries result = new ChartSeries(name, type, xValues, values);</span>
+<span class="fc" id="L92">		result.color = color;</span>
+<span class="fc" id="L93">		result.useSecondaryAxis = useSecondaryAxis;</span>
+<span class="fc" id="L94">		result.showLabels = showLabels;</span>
+<span class="fc" id="L95">		result.interpolate = interpolate;</span>
+<span class="fc" id="L96">		result.connect = connect;</span>
+<span class="fc" id="L97">		result.markerShape = markerShape;</span>
+<span class="fc" id="L98">		result.stereotype = stereotype;</span>
+<span class="fc" id="L99">		return result;</span>
+	}
+
 	public String getName() {
-<span class="nc" id="L90">		return name;</span>
+<span class="nc" id="L103">		return name;</span>
 	}
 
 	public SeriesType getType() {
-<span class="fc" id="L94">		return type;</span>
+<span class="fc" id="L107">		return type;</span>
 	}
 
 	public List&lt;Double&gt; getValues() {
-<span class="fc" id="L98">		return values;</span>
+<span class="fc" id="L111">		return values;</span>
 	}
 
 	public List&lt;Double&gt; getXValues() {
-<span class="fc" id="L102">		return xValues;</span>
+<span class="fc" id="L115">		return xValues;</span>
 	}
 
 	public boolean hasExplicitXValues() {
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		return xValues != null;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		return xValues != null;</span>
 	}
 
 	public HColor getColor() {
-<span class="fc" id="L110">		return color;</span>
+<span class="fc" id="L123">		return color;</span>
 	}
 
 	public void setColor(HColor color) {
-<span class="fc" id="L114">		this.color = color;</span>
-<span class="fc" id="L115">	}</span>
+<span class="fc" id="L127">		this.color = color;</span>
+<span class="fc" id="L128">	}</span>
 
 	public boolean isUseSecondaryAxis() {
-<span class="fc" id="L118">		return useSecondaryAxis;</span>
+<span class="fc" id="L131">		return useSecondaryAxis;</span>
 	}
 
 	public void setUseSecondaryAxis(boolean useSecondaryAxis) {
-<span class="fc" id="L122">		this.useSecondaryAxis = useSecondaryAxis;</span>
-<span class="fc" id="L123">	}</span>
+<span class="fc" id="L135">		this.useSecondaryAxis = useSecondaryAxis;</span>
+<span class="fc" id="L136">	}</span>
 
 	public boolean isShowLabels() {
-<span class="fc" id="L126">		return showLabels;</span>
+<span class="fc" id="L139">		return showLabels;</span>
 	}
 
 	public void setShowLabels(boolean showLabels) {
-<span class="fc" id="L130">		this.showLabels = showLabels;</span>
-<span class="fc" id="L131">	}</span>
+<span class="fc" id="L143">		this.showLabels = showLabels;</span>
+<span class="fc" id="L144">	}</span>
 
 	public boolean isInterpolate() {
-<span class="fc" id="L134">		return interpolate;</span>
+<span class="fc" id="L147">		return interpolate;</span>
 	}
 
 	public void setInterpolate(boolean interpolate) {
-<span class="fc" id="L138">		this.interpolate = interpolate;</span>
-<span class="fc" id="L139">	}</span>
+<span class="fc" id="L151">		this.interpolate = interpolate;</span>
+<span class="fc" id="L152">	}</span>
 
 	public boolean isConnect() {
-<span class="fc" id="L142">		return connect;</span>
+<span class="fc" id="L155">		return connect;</span>
 	}
 
 	public void setConnect(boolean connect) {
-<span class="fc" id="L146">		this.connect = connect;</span>
-<span class="fc" id="L147">	}</span>
+<span class="fc" id="L159">		this.connect = connect;</span>
+<span class="fc" id="L160">	}</span>
 
 	public MarkerShape getMarkerShape() {
-<span class="fc" id="L150">		return markerShape;</span>
+<span class="fc" id="L163">		return markerShape;</span>
 	}
 
 	public void setMarkerShape(MarkerShape markerShape) {
-<span class="nc" id="L154">		this.markerShape = markerShape;</span>
-<span class="nc" id="L155">	}</span>
+<span class="nc" id="L167">		this.markerShape = markerShape;</span>
+<span class="nc" id="L168">	}</span>
 
 	public Stereotype getStereotype() {
-<span class="fc" id="L158">		return stereotype;</span>
+<span class="fc" id="L171">		return stereotype;</span>
 	}
 
 	public void setStereotype(Stereotype stereotype) {
-<span class="nc" id="L162">		this.stereotype = stereotype;</span>
-<span class="nc" id="L163">	}</span>
+<span class="nc" id="L175">		this.stereotype = stereotype;</span>
+<span class="nc" id="L176">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

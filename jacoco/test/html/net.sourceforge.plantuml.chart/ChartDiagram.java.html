@@ -120,283 +120,308 @@ public class ChartDiagram extends TitledDiagram {
 <span class="fc" id="L120">				: xAxisTitle;</span>
 		// A numeric h-axis range (h-axis 0 --&gt; 10) is kept as it is
 <span class="fc bfc" id="L122" title="All 2 branches covered.">		final List&lt;String&gt; categories = xAxis.isAutoScale() ? getCategories(xAxisLabels) : xAxisLabels;</span>
-<span class="fc" id="L123">		return new ChartRenderer(getSkinParam(), categories, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition, series,</span>
-				hAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation, annotations);
+<span class="fc" id="L123">		return new ChartRenderer(getSkinParam(), categories, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition,</span>
+<span class="fc" id="L124">				getPlottedSeries(), hAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation,</span>
+				annotations);
 	}
 
 	// When no labels are given for the category axis (h-axis, or v-axis for a horizontal
 	// chart), index-based data is drawn against the categories 1, 2, ..., n, n being the
 	// number of values in the longest series, as if &quot;h-axis [1, 2, ..., n]&quot; had been written
 	private List&lt;String&gt; getCategories(List&lt;String&gt; labels) {
-<span class="pc bpc" id="L131" title="1 of 6 branches missed.">		if (!labels.isEmpty() || series.isEmpty() || series.get(0).hasExplicitXValues())</span>
-<span class="fc" id="L132">			return labels;</span>
+<span class="pc bpc" id="L132" title="1 of 6 branches missed.">		if (!labels.isEmpty() || series.isEmpty() || series.get(0).hasExplicitXValues())</span>
+<span class="fc" id="L133">			return labels;</span>
 
-<span class="fc" id="L134">		int count = 0;</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		for (ChartSeries s : series)</span>
-<span class="fc" id="L136">			count = Math.max(count, s.getValues().size());</span>
+<span class="fc" id="L135">		int count = 0;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (ChartSeries s : series)</span>
+<span class="fc" id="L137">			count = Math.max(count, s.getValues().size());</span>
 
-<span class="fc" id="L138">		final List&lt;String&gt; categories = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (int i = 1; i &lt;= count; i++)</span>
-<span class="fc" id="L140">			categories.add(Integer.toString(i));</span>
+<span class="fc" id="L139">		final List&lt;String&gt; categories = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">		for (int i = 1; i &lt;= count; i++)</span>
+<span class="fc" id="L141">			categories.add(Integer.toString(i));</span>
 
-<span class="fc" id="L142">		return categories;</span>
+<span class="fc" id="L143">		return categories;</span>
 	}
 
 	// When no h-axis range is given, coordinate-pair data is drawn against a numeric h-axis
 	// from the smallest to the largest x value, as if &quot;h-axis min -&gt; max&quot; had been written.
 	// If all x values are equal, the h-axis goes from x - 1 to x + 1
 	private ChartAxis getHAxis() {
-<span class="fc bfc" id="L149" title="All 4 branches covered.">		if (xAxis.isAutoScale() == false || hasCoordinatePairs() == false)</span>
-<span class="fc" id="L150">			return xAxis;</span>
+<span class="fc bfc" id="L150" title="All 4 branches covered.">		if (xAxis.isAutoScale() == false || hasCoordinatePairs() == false)</span>
+<span class="fc" id="L151">			return xAxis;</span>
 
-<span class="fc" id="L152">		double min = Double.POSITIVE_INFINITY;</span>
-<span class="fc" id="L153">		double max = Double.NEGATIVE_INFINITY;</span>
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		for (ChartSeries s : series)</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">			for (double x : s.getXValues()) {</span>
-<span class="fc" id="L156">				min = Math.min(min, x);</span>
-<span class="fc" id="L157">				max = Math.max(max, x);</span>
-<span class="fc" id="L158">			}</span>
+<span class="fc" id="L153">		double min = Double.POSITIVE_INFINITY;</span>
+<span class="fc" id="L154">		double max = Double.NEGATIVE_INFINITY;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		for (ChartSeries s : series)</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">			for (double x : s.getXValues()) {</span>
+<span class="fc" id="L157">				min = Math.min(min, x);</span>
+<span class="fc" id="L158">				max = Math.max(max, x);</span>
+<span class="fc" id="L159">			}</span>
 
-<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (min == max) {</span>
-<span class="fc" id="L161">			min = min - 1;</span>
-<span class="fc" id="L162">			max = max + 1;</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (min == max) {</span>
+<span class="fc" id="L162">			min = min - 1;</span>
+<span class="fc" id="L163">			max = max + 1;</span>
 		}
-<span class="fc" id="L164">		return new ChartAxis(xAxis.getTitle(), min, max);</span>
+<span class="fc" id="L165">		return new ChartAxis(xAxis.getTitle(), min, max);</span>
+	}
+
+	// When an h-axis range is given without h-axis labels, index-based values are spread evenly
+	// across the range, the first at the start and the last at the end, as if they had been
+	// written as coordinate pairs. The i-th value of every series is at the same x, n being the
+	// number of values in the longest series. A single value is drawn in the middle of the range
+	private List&lt;ChartSeries&gt; getPlottedSeries() {
+<span class="pc bpc" id="L173" title="1 of 8 branches missed.">		if (xAxis.isAutoScale() || xAxisLabels.isEmpty() == false || series.isEmpty() || hasCoordinatePairs())</span>
+<span class="fc" id="L174">			return series;</span>
+
+<span class="fc" id="L176">		int count = 0;</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		for (ChartSeries s : series)</span>
+<span class="fc" id="L178">			count = Math.max(count, s.getValues().size());</span>
+
+<span class="fc" id="L180">		final double min = xAxis.getMin();</span>
+<span class="fc" id="L181">		final double max = xAxis.getMax();</span>
+<span class="fc" id="L182">		final List&lt;ChartSeries&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">		for (ChartSeries s : series) {</span>
+<span class="fc" id="L184">			final List&lt;Double&gt; xValues = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">			for (int i = 0; i &lt; s.getValues().size(); i++)</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">				xValues.add(count == 1 ? (min + max) / 2 : min + (max - min) * i / (count - 1));</span>
+<span class="fc" id="L187">			result.add(s.withXValues(xValues));</span>
+<span class="fc" id="L188">		}</span>
+<span class="fc" id="L189">		return result;</span>
 	}
 
 	private boolean hasCoordinatePairs() {
-<span class="fc bfc" id="L168" title="All 4 branches covered.">		return series.isEmpty() == false &amp;&amp; series.get(0).hasExplicitXValues();</span>
+<span class="fc bfc" id="L193" title="All 4 branches covered.">		return series.isEmpty() == false &amp;&amp; series.get(0).hasExplicitXValues();</span>
 	}
 
 	// Command methods
 
 	public CommandExecutionResult setXAxisLabels(List&lt;String&gt; labels) {
-<span class="fc bfc" id="L174" title="All 6 branches covered.">		if (labels.isEmpty() == false &amp;&amp; xAxis.isAutoScale() &amp;&amp; hasCoordinatePairs())</span>
-<span class="fc" id="L175">			return CommandExecutionResult.error(</span>
+<span class="fc bfc" id="L199" title="All 6 branches covered.">		if (labels.isEmpty() == false &amp;&amp; xAxis.isAutoScale() &amp;&amp; hasCoordinatePairs())</span>
+<span class="fc" id="L200">			return CommandExecutionResult.error(</span>
 					&quot;Coordinate pair notation requires numeric h-axis (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5), not categorical labels&quot;);
 
-<span class="fc" id="L178">		this.xAxisLabels.clear();</span>
-<span class="fc" id="L179">		this.xAxisLabels.addAll(labels);</span>
-<span class="fc" id="L180">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L203">		this.xAxisLabels.clear();</span>
+<span class="fc" id="L204">		this.xAxisLabels.addAll(labels);</span>
+<span class="fc" id="L205">		return CommandExecutionResult.ok();</span>
 	}
 
 	public void setXAxisTitle(String title) {
-<span class="fc" id="L184">		this.xAxisTitle = title;</span>
-<span class="fc" id="L185">	}</span>
+<span class="fc" id="L209">		this.xAxisTitle = title;</span>
+<span class="fc" id="L210">	}</span>
 
 	public void setXAxisLabelPosition(ChartAxis.LabelPosition position) {
-<span class="nc" id="L188">		this.xAxisLabelPosition = position;</span>
-<span class="nc" id="L189">	}</span>
+<span class="nc" id="L213">		this.xAxisLabelPosition = position;</span>
+<span class="nc" id="L214">	}</span>
 
 	public ChartAxis.LabelPosition getXAxisLabelPosition() {
-<span class="nc" id="L192">		return xAxisLabelPosition;</span>
+<span class="nc" id="L217">		return xAxisLabelPosition;</span>
 	}
 
 	public void setXAxisTickSpacing(Integer spacing) {
-<span class="nc" id="L196">		this.xAxisTickSpacing = spacing;</span>
-<span class="nc" id="L197">	}</span>
+<span class="nc" id="L221">		this.xAxisTickSpacing = spacing;</span>
+<span class="nc" id="L222">	}</span>
 
 	public Integer getXAxisTickSpacing() {
-<span class="nc" id="L200">		return xAxisTickSpacing;</span>
+<span class="nc" id="L225">		return xAxisTickSpacing;</span>
 	}
 
 	public CommandExecutionResult setXAxis(String title, Double min, Double max) {
 		// Coordinate pairs given without a range have not been checked against one
-<span class="pc bpc" id="L205" title="4 of 8 branches missed.">		if ((min != null || max != null) &amp;&amp; xAxis.isAutoScale() &amp;&amp; hasCoordinatePairs())</span>
-<span class="fc" id="L206">			return CommandExecutionResult.error(&quot;h-axis range must be given before coordinate pair data&quot;);</span>
+<span class="pc bpc" id="L230" title="4 of 8 branches missed.">		if ((min != null || max != null) &amp;&amp; xAxis.isAutoScale() &amp;&amp; hasCoordinatePairs())</span>
+<span class="fc" id="L231">			return CommandExecutionResult.error(&quot;h-axis range must be given before coordinate pair data&quot;);</span>
 
-<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (title != null)</span>
-<span class="fc" id="L209">			xAxis.setTitle(title);</span>
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (min != null)</span>
-<span class="fc" id="L211">			xAxis.setMin(min);</span>
-<span class="pc bpc" id="L212" title="1 of 2 branches missed.">		if (max != null)</span>
-<span class="fc" id="L213">			xAxis.setMax(max);</span>
-<span class="fc" id="L214">		return CommandExecutionResult.ok();</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (title != null)</span>
+<span class="fc" id="L234">			xAxis.setTitle(title);</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">		if (min != null)</span>
+<span class="fc" id="L236">			xAxis.setMin(min);</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">		if (max != null)</span>
+<span class="fc" id="L238">			xAxis.setMax(max);</span>
+<span class="fc" id="L239">		return CommandExecutionResult.ok();</span>
 	}
 
 	public ChartAxis getXAxis() {
-<span class="nc" id="L218">		return xAxis;</span>
+<span class="nc" id="L243">		return xAxis;</span>
 	}
 
 	public CommandExecutionResult setYAxis(String title, Double min, Double max) {
-<span class="fc bfc" id="L222" title="All 2 branches covered.">		if (title != null)</span>
-<span class="fc" id="L223">			yAxis.setTitle(title);</span>
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (min != null)</span>
-<span class="fc" id="L225">			yAxis.setMin(min);</span>
-<span class="pc bpc" id="L226" title="1 of 2 branches missed.">		if (max != null)</span>
-<span class="fc" id="L227">			yAxis.setMax(max);</span>
-<span class="fc" id="L228">		return CommandExecutionResult.ok();</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">		if (title != null)</span>
+<span class="fc" id="L248">			yAxis.setTitle(title);</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (min != null)</span>
+<span class="fc" id="L250">			yAxis.setMin(min);</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (max != null)</span>
+<span class="fc" id="L252">			yAxis.setMax(max);</span>
+<span class="fc" id="L253">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setYAxisLabels(List&lt;String&gt; labels) {
-<span class="fc" id="L232">		this.yAxisLabels.clear();</span>
-<span class="fc" id="L233">		this.yAxisLabels.addAll(labels);</span>
-<span class="fc" id="L234">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L257">		this.yAxisLabels.clear();</span>
+<span class="fc" id="L258">		this.yAxisLabels.addAll(labels);</span>
+<span class="fc" id="L259">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setY2Axis(String title, Double min, Double max) {
-<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (y2Axis == null)</span>
-<span class="nc" id="L239">			y2Axis = new ChartAxis();</span>
-<span class="nc bnc" id="L240" title="All 2 branches missed.">		if (title != null)</span>
-<span class="nc" id="L241">			y2Axis.setTitle(title);</span>
-<span class="nc bnc" id="L242" title="All 2 branches missed.">		if (min != null)</span>
-<span class="nc" id="L243">			y2Axis.setMin(min);</span>
-<span class="nc bnc" id="L244" title="All 2 branches missed.">		if (max != null)</span>
-<span class="nc" id="L245">			y2Axis.setMax(max);</span>
-<span class="nc" id="L246">		return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (y2Axis == null)</span>
+<span class="nc" id="L264">			y2Axis = new ChartAxis();</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (title != null)</span>
+<span class="nc" id="L266">			y2Axis.setTitle(title);</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (min != null)</span>
+<span class="nc" id="L268">			y2Axis.setMin(min);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">		if (max != null)</span>
+<span class="nc" id="L270">			y2Axis.setMax(max);</span>
+<span class="nc" id="L271">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult addSeries(ChartSeries series) {
 		// Validation for coordinate-pair notation
-<span class="fc bfc" id="L251" title="All 2 branches covered.">		if (series.hasExplicitXValues()) {</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">		if (series.hasExplicitXValues()) {</span>
 			// Coordinate pairs only allowed for line and scatter charts
-<span class="pc bpc" id="L253" title="1 of 4 branches missed.">			if (series.getType() != ChartSeries.SeriesType.LINE &amp;&amp; series.getType() != ChartSeries.SeriesType.SCATTER) {</span>
-<span class="nc" id="L254">				return CommandExecutionResult</span>
-<span class="nc" id="L255">						.error(&quot;Coordinate pair notation (x:y) is only supported for line and scatter charts&quot;);</span>
+<span class="pc bpc" id="L278" title="1 of 4 branches missed.">			if (series.getType() != ChartSeries.SeriesType.LINE &amp;&amp; series.getType() != ChartSeries.SeriesType.SCATTER) {</span>
+<span class="nc" id="L279">				return CommandExecutionResult</span>
+<span class="nc" id="L280">						.error(&quot;Coordinate pair notation (x:y) is only supported for line and scatter charts&quot;);</span>
 			}
 
 			// Coordinate pairs require numeric h-axis (not categorical labels)
-<span class="pc bpc" id="L259" title="1 of 2 branches missed.">			if (!xAxisLabels.isEmpty()) {</span>
-<span class="nc" id="L260">				return CommandExecutionResult.error(</span>
+<span class="pc bpc" id="L284" title="1 of 2 branches missed.">			if (!xAxisLabels.isEmpty()) {</span>
+<span class="nc" id="L285">				return CommandExecutionResult.error(</span>
 						&quot;Coordinate pair notation requires numeric h-axis (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5), not categorical labels&quot;);
 			}
 
 			// Without an h-axis range, the h-axis spans the x values (see getHAxis())
-<span class="pc bpc" id="L265" title="1 of 4 branches missed.">			if (xAxis.isAutoScale() == false &amp;&amp; xAxis.getMax() == xAxis.getMin()) {</span>
-<span class="nc" id="L266">				return CommandExecutionResult</span>
-<span class="nc" id="L267">						.error(&quot;Coordinate pair notation requires explicit h-axis range (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5)&quot;);</span>
+<span class="pc bpc" id="L290" title="1 of 4 branches missed.">			if (xAxis.isAutoScale() == false &amp;&amp; xAxis.getMax() == xAxis.getMin()) {</span>
+<span class="nc" id="L291">				return CommandExecutionResult</span>
+<span class="nc" id="L292">						.error(&quot;Coordinate pair notation requires explicit h-axis range (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5)&quot;);</span>
 			}
 
 			// All series must use the same format
-<span class="fc bfc" id="L271" title="All 2 branches covered.">			if (!this.series.isEmpty()) {</span>
-<span class="fc" id="L272">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
-<span class="pc bpc" id="L273" title="1 of 2 branches missed.">				if (firstHasX != series.hasExplicitXValues()) {</span>
-<span class="nc" id="L274">					return CommandExecutionResult.error(</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">			if (!this.series.isEmpty()) {</span>
+<span class="fc" id="L297">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">				if (firstHasX != series.hasExplicitXValues()) {</span>
+<span class="nc" id="L299">					return CommandExecutionResult.error(</span>
 							&quot;All series must use the same data format (either all coordinate pairs or all index-based)&quot;);
 				}
 			}
 
 			// Validate x-coordinates fall within axis range
-<span class="fc bfc" id="L280" title="All 2 branches covered.">			for (double x : series.getXValues()) {</span>
-<span class="pc bpc" id="L281" title="2 of 6 branches missed.">				if (xAxis.isAutoScale() == false &amp;&amp; (x &lt; xAxis.getMin() || x &gt; xAxis.getMax())) {</span>
-<span class="nc" id="L282">					return CommandExecutionResult.error(&quot;X-coordinate &quot; + x + &quot; is outside h-axis range [&quot;</span>
-<span class="nc" id="L283">							+ xAxis.getMin() + &quot;, &quot; + xAxis.getMax() + &quot;]&quot;);</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">			for (double x : series.getXValues()) {</span>
+<span class="pc bpc" id="L306" title="2 of 6 branches missed.">				if (xAxis.isAutoScale() == false &amp;&amp; (x &lt; xAxis.getMin() || x &gt; xAxis.getMax())) {</span>
+<span class="nc" id="L307">					return CommandExecutionResult.error(&quot;X-coordinate &quot; + x + &quot; is outside h-axis range [&quot;</span>
+<span class="nc" id="L308">							+ xAxis.getMin() + &quot;, &quot; + xAxis.getMax() + &quot;]&quot;);</span>
 				}
-<span class="fc" id="L285">			}</span>
+<span class="fc" id="L310">			}</span>
 
 			// Auto-scale x-axis to include all x-values
-<span class="fc bfc" id="L288" title="All 2 branches covered.">			for (double x : series.getXValues()) {</span>
-<span class="fc" id="L289">				xAxis.includeValue(x);</span>
-<span class="fc" id="L290">			}</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">			for (double x : series.getXValues()) {</span>
+<span class="fc" id="L314">				xAxis.includeValue(x);</span>
+<span class="fc" id="L315">			}</span>
 		} else {
 			// Index-based mode: ensure consistency
-<span class="fc bfc" id="L293" title="All 2 branches covered.">			if (!this.series.isEmpty()) {</span>
-<span class="fc" id="L294">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
-<span class="fc bfc" id="L295" title="All 2 branches covered.">				if (firstHasX != series.hasExplicitXValues()) {</span>
-<span class="fc" id="L296">					return CommandExecutionResult.error(</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">			if (!this.series.isEmpty()) {</span>
+<span class="fc" id="L319">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">				if (firstHasX != series.hasExplicitXValues()) {</span>
+<span class="fc" id="L321">					return CommandExecutionResult.error(</span>
 							&quot;All series must use the same data format (either all coordinate pairs or all index-based)&quot;);
 				}
 			}
 		}
 
-<span class="fc" id="L302">		this.series.add(series);</span>
+<span class="fc" id="L327">		this.series.add(series);</span>
 
 		// Auto-scale y-axes if needed
-<span class="pc bpc" id="L305" title="1 of 4 branches missed.">		final ChartAxis axis = series.isUseSecondaryAxis() &amp;&amp; y2Axis != null ? y2Axis : yAxis;</span>
-<span class="fc bfc" id="L306" title="All 2 branches covered.">		for (Double value : series.getValues()) {</span>
-<span class="fc bfc" id="L307" title="All 2 branches covered.">			if (value != null)</span>
-<span class="fc" id="L308">				axis.includeValue(value);</span>
-<span class="fc" id="L309">		}</span>
+<span class="pc bpc" id="L330" title="1 of 4 branches missed.">		final ChartAxis axis = series.isUseSecondaryAxis() &amp;&amp; y2Axis != null ? y2Axis : yAxis;</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">		for (Double value : series.getValues()) {</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">			if (value != null)</span>
+<span class="fc" id="L333">				axis.includeValue(value);</span>
+<span class="fc" id="L334">		}</span>
 
-<span class="fc" id="L311">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L336">		return CommandExecutionResult.ok();</span>
 	}
 
 	public List&lt;String&gt; getXAxisLabels() {
-<span class="nc" id="L315">		return xAxisLabels;</span>
+<span class="nc" id="L340">		return xAxisLabels;</span>
 	}
 
 	public List&lt;ChartSeries&gt; getSeries() {
-<span class="fc" id="L319">		return series;</span>
+<span class="fc" id="L344">		return series;</span>
 	}
 
 	public ChartAxis getYAxis() {
-<span class="nc" id="L323">		return yAxis;</span>
+<span class="nc" id="L348">		return yAxis;</span>
 	}
 
 	public ChartAxis getY2Axis() {
-<span class="nc" id="L327">		return y2Axis;</span>
+<span class="nc" id="L352">		return y2Axis;</span>
 	}
 
 	public CommandExecutionResult setLegendPosition(LegendPosition position) {
-<span class="nc" id="L331">		this.legendPosition = position;</span>
-<span class="nc" id="L332">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L356">		this.legendPosition = position;</span>
+<span class="nc" id="L357">		return CommandExecutionResult.ok();</span>
 	}
 
 	public LegendPosition getLegendPosition() {
-<span class="nc" id="L336">		return legendPosition;</span>
+<span class="nc" id="L361">		return legendPosition;</span>
 	}
 
 	public CommandExecutionResult setGridMode(GridMode mode) {
-<span class="nc" id="L340">		this.xGridMode = mode;</span>
-<span class="nc" id="L341">		this.yGridMode = mode;</span>
-<span class="nc" id="L342">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L365">		this.xGridMode = mode;</span>
+<span class="nc" id="L366">		this.yGridMode = mode;</span>
+<span class="nc" id="L367">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setXGridMode(GridMode mode) {
-<span class="nc" id="L346">		this.xGridMode = mode;</span>
-<span class="nc" id="L347">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L371">		this.xGridMode = mode;</span>
+<span class="nc" id="L372">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setYGridMode(GridMode mode) {
-<span class="nc" id="L351">		this.yGridMode = mode;</span>
-<span class="nc" id="L352">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L376">		this.yGridMode = mode;</span>
+<span class="nc" id="L377">		return CommandExecutionResult.ok();</span>
 	}
 
 	public GridMode getXGridMode() {
-<span class="nc" id="L356">		return xGridMode;</span>
+<span class="nc" id="L381">		return xGridMode;</span>
 	}
 
 	public GridMode getYGridMode() {
-<span class="nc" id="L360">		return yGridMode;</span>
+<span class="nc" id="L385">		return yGridMode;</span>
 	}
 
 	public CommandExecutionResult setStackMode(StackMode mode) {
-<span class="fc" id="L364">		this.stackMode = mode;</span>
-<span class="fc" id="L365">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L389">		this.stackMode = mode;</span>
+<span class="fc" id="L390">		return CommandExecutionResult.ok();</span>
 	}
 
 	public StackMode getStackMode() {
-<span class="nc" id="L369">		return stackMode;</span>
+<span class="nc" id="L394">		return stackMode;</span>
 	}
 
 	public CommandExecutionResult setOrientation(Orientation orientation) {
-<span class="fc" id="L373">		this.orientation = orientation;</span>
-<span class="fc" id="L374">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L398">		this.orientation = orientation;</span>
+<span class="fc" id="L399">		return CommandExecutionResult.ok();</span>
 	}
 
 	public Orientation getOrientation() {
-<span class="nc" id="L378">		return orientation;</span>
+<span class="nc" id="L403">		return orientation;</span>
 	}
 
 	public CommandExecutionResult addAnnotation(ChartAnnotation annotation) {
-<span class="nc" id="L382">		this.annotations.add(annotation);</span>
-<span class="nc" id="L383">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L407">		this.annotations.add(annotation);</span>
+<span class="nc" id="L408">		return CommandExecutionResult.ok();</span>
 	}
 
 	public List&lt;ChartAnnotation&gt; getAnnotations() {
-<span class="nc" id="L387">		return annotations;</span>
+<span class="nc" id="L412">		return annotations;</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
-<span class="fc" id="L392">		return new TextBlock() {</span>
+<span class="fc" id="L417">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L395">				drawMe(ug);</span>
-<span class="fc" id="L396">			}</span>
+<span class="fc" id="L420">				drawMe(ug);</span>
+<span class="fc" id="L421">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L399">				return getRenderer().calculateDimension(stringBounder);</span>
+<span class="fc" id="L424">				return getRenderer().calculateDimension(stringBounder);</span>
 			}
 		};
 	}

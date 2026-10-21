@@ -110,63 +110,67 @@ public class LineRenderer {
 
 			// Draw line segments
 <span class="fc bfc" id="L112" title="All 2 branches covered.">			for (int i = 0; i &lt; values.size() - 1; i++) {</span>
-<span class="fc" id="L113">				final double xVal1 = xValues.get(i);</span>
-<span class="fc" id="L114">				final double yVal1 = values.get(i);</span>
-<span class="fc" id="L115">				final double xVal2 = xValues.get(i + 1);</span>
-<span class="fc" id="L116">				final double yVal2 = values.get(i + 1);</span>
+				// A missing value (spread over an h-axis range, see ChartDiagram) leaves a gap
+<span class="fc bfc" id="L114" title="All 4 branches covered.">				if (values.get(i) == null || values.get(i + 1) == null)</span>
+<span class="fc" id="L115">					continue;</span>
+<span class="fc" id="L116">				final double xVal1 = xValues.get(i);</span>
+<span class="fc" id="L117">				final double yVal1 = values.get(i);</span>
+<span class="fc" id="L118">				final double xVal2 = xValues.get(i + 1);</span>
+<span class="fc" id="L119">				final double yVal2 = values.get(i + 1);</span>
 
-<span class="fc" id="L118">				final double x1 = xAxis.valueToPixel(xVal1, 0, plotWidth);</span>
-<span class="fc" id="L119">				final double y1 = plotHeight - (yVal1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
-<span class="fc" id="L120">				final double x2 = xAxis.valueToPixel(xVal2, 0, plotWidth);</span>
-<span class="fc" id="L121">				final double y2 = plotHeight - (yVal2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="fc" id="L121">				final double x1 = xAxis.valueToPixel(xVal1, 0, plotWidth);</span>
+<span class="fc" id="L122">				final double y1 = plotHeight - (yVal1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="fc" id="L123">				final double x2 = xAxis.valueToPixel(xVal2, 0, plotWidth);</span>
+<span class="fc" id="L124">				final double y2 = plotHeight - (yVal2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
-<span class="fc" id="L123">				final ULine line = new ULine(x2 - x1, y2 - y1);</span>
-<span class="fc" id="L124">				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
+<span class="fc" id="L126">				final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="fc" id="L127">				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
 			}
-<span class="fc" id="L126">		} else {</span>
+<span class="fc" id="L129">		} else {</span>
 			// Index-based mode: use category positioning
-<span class="fc" id="L128">			final double categoryWidth = plotWidth / categoryCount;</span>
+<span class="fc" id="L131">			final double categoryWidth = plotWidth / categoryCount;</span>
 
 			// Draw line segments
-<span class="fc bfc" id="L131" title="All 2 branches covered.">			for (int i = 0; i &lt; Math.min(values.size() - 1, categoryCount - 1); i++) {</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			for (int i = 0; i &lt; Math.min(values.size() - 1, categoryCount - 1); i++) {</span>
 				// No segment touches a missing value, so the line has a gap there
-<span class="fc bfc" id="L133" title="All 4 branches covered.">				if (values.get(i) == null || values.get(i + 1) == null)</span>
-<span class="fc" id="L134">					continue;</span>
-<span class="fc" id="L135">				final double value1 = values.get(i);</span>
-<span class="fc" id="L136">				final double value2 = values.get(i + 1);</span>
+<span class="fc bfc" id="L136" title="All 4 branches covered.">				if (values.get(i) == null || values.get(i + 1) == null)</span>
+<span class="fc" id="L137">					continue;</span>
+<span class="fc" id="L138">				final double value1 = values.get(i);</span>
+<span class="fc" id="L139">				final double value2 = values.get(i + 1);</span>
 
-<span class="fc" id="L138">				final double x1 = (i + 0.5) * categoryWidth;</span>
-<span class="fc" id="L139">				final double y1 = plotHeight - (value1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="fc" id="L141">				final double x1 = (i + 0.5) * categoryWidth;</span>
+<span class="fc" id="L142">				final double y1 = plotHeight - (value1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
-<span class="fc" id="L141">				final double x2 = (i + 1.5) * categoryWidth;</span>
-<span class="fc" id="L142">				final double y2 = plotHeight - (value2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="fc" id="L144">				final double x2 = (i + 1.5) * categoryWidth;</span>
+<span class="fc" id="L145">				final double y2 = plotHeight - (value2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
-<span class="fc" id="L144">				final ULine line = new ULine(x2 - x1, y2 - y1);</span>
-<span class="fc" id="L145">				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
+<span class="fc" id="L147">				final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="fc" id="L148">				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);</span>
 			}
 		}
-<span class="fc" id="L148">	}</span>
+<span class="fc" id="L151">	}</span>
 
 	// The points of the series in pixels, leaving out missing values
 	private List&lt;XPoint2D&gt; points(ChartSeries series) {
-<span class="fc" id="L152">		final List&lt;XPoint2D&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L153">		final List&lt;Double&gt; values = series.getValues();</span>
-<span class="fc" id="L154">		final double range = axis.getMax() - axis.getMin();</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (series.hasExplicitXValues()) {</span>
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">			if (xAxis == null)</span>
-<span class="nc" id="L157">				return result;</span>
-<span class="fc" id="L158">			final List&lt;Double&gt; xValues = series.getXValues();</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">			for (int i = 0; i &lt; values.size(); i++)</span>
-<span class="fc" id="L160">				result.add(new XPoint2D(xAxis.valueToPixel(xValues.get(i), 0, plotWidth),</span>
-<span class="fc" id="L161">						plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight));</span>
-<span class="fc" id="L162">		} else {</span>
-<span class="fc" id="L163">			final double categoryWidth = plotWidth / categoryCount;</span>
-<span class="fc bfc" id="L164" title="All 2 branches covered.">			for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++)</span>
-<span class="fc bfc" id="L165" title="All 2 branches covered.">				if (values.get(i) != null)</span>
-<span class="fc" id="L166">					result.add(new XPoint2D((i + 0.5) * categoryWidth,</span>
-<span class="fc" id="L167">							plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight));</span>
+<span class="fc" id="L155">		final List&lt;XPoint2D&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L156">		final List&lt;Double&gt; values = series.getValues();</span>
+<span class="fc" id="L157">		final double range = axis.getMax() - axis.getMin();</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (series.hasExplicitXValues()) {</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">			if (xAxis == null)</span>
+<span class="nc" id="L160">				return result;</span>
+<span class="fc" id="L161">			final List&lt;Double&gt; xValues = series.getXValues();</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">			for (int i = 0; i &lt; values.size(); i++)</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">				if (values.get(i) != null)</span>
+<span class="fc" id="L164">					result.add(new XPoint2D(xAxis.valueToPixel(xValues.get(i), 0, plotWidth),</span>
+<span class="fc" id="L165">							plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight));</span>
+<span class="fc" id="L166">		} else {</span>
+<span class="fc" id="L167">			final double categoryWidth = plotWidth / categoryCount;</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">			for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++)</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">				if (values.get(i) != null)</span>
+<span class="fc" id="L170">					result.add(new XPoint2D((i + 0.5) * categoryWidth,</span>
+<span class="fc" id="L171">							plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight));</span>
 		}
-<span class="fc" id="L169">		return result;</span>
+<span class="fc" id="L173">		return result;</span>
 	}
 
 }
