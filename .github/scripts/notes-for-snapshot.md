@@ -4,7 +4,7 @@
 <details open>
 <summary><strong>JavaScript</strong></summary>
 
-| Distribution | Artefact | Command Line |
+| Distribution | Artifact | Command Line |
 |---|---|---|
 | ![JS](https://img.shields.io/badge/JavaScript-zip-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) | [js-plantuml-SNAPSHOT.zip](https://github.com/plantuml/plantuml/releases/download/snapshot/js-plantuml-SNAPSHOT.zip) | |
 | ![npm](https://img.shields.io/badge/npm-package-CB3837?style=for-the-badge&logo=npm&logoColor=white) | [@plantuml/core](https://www.npmjs.com/package/@plantuml/core) | `npm install @plantuml/core` |
@@ -16,7 +16,7 @@
 <details open>
 <summary><strong>Native binaries by OS</strong></summary>
 
-| OS | Arch | File |
+| OS | Arch. | File |
 |---|---|---|
 | ![Linux](https://img.shields.io/badge/Linux-AMD64-FCC624?style=for-the-badge&logo=linux&logoColor=black) | amd64 | [native-plantuml-linux-amd64-SNAPSHOT.zip](https://github.com/plantuml/plantuml/releases/download/snapshot/native-plantuml-linux-amd64-SNAPSHOT.zip) |
 | ![Linux](https://img.shields.io/badge/Linux-ARM64-FCC624?style=for-the-badge&logo=linux&logoColor=black) | arm64 | [native-plantuml-linux-arm64-SNAPSHOT.zip](https://github.com/plantuml/plantuml/releases/download/snapshot/native-plantuml-linux-arm64-SNAPSHOT.zip) |
