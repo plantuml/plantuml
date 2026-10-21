@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="431px" preserveAspectRatio="none" style="width:501px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 431" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="303.889">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">40</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">60</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">80</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">100</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" x="66.106" y="380.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="110" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="100.288" y="380.889">0.1</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="150" x2="150" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="140.288" y="380.889">0.2</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="190" x2="190" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="180.288" y="380.889">0.3</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="230" x2="230" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="220.288" y="380.889">0.4</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="270" x2="270" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="260.288" y="380.889">0.5</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="310" x2="310" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="300.288" y="380.889">0.6</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="350" x2="350" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="340.288" y="380.889">0.7</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="390" x2="390" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="380.288" y="380.889">0.8</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="430" x2="430" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="420.287" y="380.889">0.9</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="470" x2="470" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="460.287" y="380.889">1.0</text>
+    <line style="stroke:#181818;stroke-width:2;" x1="70" x2="110" y1="348" y2="321"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="110" x2="150" y1="321" y2="267"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="150" x2="190" y1="267" y2="186"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="190" x2="230" y1="186" y2="108"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="230" x2="270" y1="108" y2="75"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="270" x2="310" y1="75" y2="108"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="310" x2="350" y1="108" y2="186"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="350" x2="390" y1="186" y2="267"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="390" x2="430" y1="267" y2="321"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="430" x2="470" y1="321" y2="348"/>
+  </g>
+</svg>

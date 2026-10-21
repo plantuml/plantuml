@@ -86,6 +86,19 @@ public class ChartSeries {
 		this.markerShape = MarkerShape.CIRCLE; // Default marker shape
 	}
 
+	// The same series with the given x values, as if its values had been written as coordinate pairs
+	public ChartSeries withXValues(List<Double> xValues) {
+		final ChartSeries result = new ChartSeries(name, type, xValues, values);
+		result.color = color;
+		result.useSecondaryAxis = useSecondaryAxis;
+		result.showLabels = showLabels;
+		result.interpolate = interpolate;
+		result.connect = connect;
+		result.markerShape = markerShape;
+		result.stereotype = stereotype;
+		return result;
+	}
+
 	public String getName() {
 		return name;
 	}

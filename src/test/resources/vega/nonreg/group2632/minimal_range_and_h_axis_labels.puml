@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+h-axis 0 -> 100
+h-axis [a, b, c, d]
+line [25, 62, 58, 70]
+@endchart
