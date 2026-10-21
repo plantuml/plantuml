@@ -92,6 +92,8 @@ cat <<-EOF >notes.txt
   ⏱  _Snapshot taken the ${DATE_TIME_UTC}_
 EOF
 
+cat .github/scripts/notes-for-snapshot.md >> notes.txt
+
 gh release create \
   --prerelease \
   --target "${GITHUB_SHA}" \
