@@ -58,6 +58,7 @@ public class ChartSeries {
 	private boolean useSecondaryAxis;
 	private boolean showLabels;
 	private boolean interpolate;
+	private boolean connect;
 	private MarkerShape markerShape;
 	private Stereotype stereotype;
 
@@ -69,6 +70,7 @@ public class ChartSeries {
 		this.useSecondaryAxis = false;
 		this.showLabels = false;
 		this.interpolate = false;
+		this.connect = false;
 		this.markerShape = MarkerShape.CIRCLE; // Default marker shape
 	}
 
@@ -80,6 +82,7 @@ public class ChartSeries {
 		this.useSecondaryAxis = false;
 		this.showLabels = false;
 		this.interpolate = false;
+		this.connect = false;
 		this.markerShape = MarkerShape.CIRCLE; // Default marker shape
 	}
 
@@ -133,6 +136,14 @@ public class ChartSeries {
 
 	public void setInterpolate(boolean interpolate) {
 		this.interpolate = interpolate;
+	}
+
+	public boolean isConnect() {
+		return connect;
+	}
+
+	public void setConnect(boolean connect) {
+		this.connect = connect;
 	}
 
 	public MarkerShape getMarkerShape() {

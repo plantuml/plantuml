@@ -84,6 +84,18 @@ public class LineRenderer {
 			}
 		}
 
+		// A missing value is skipped: the values on both sides of it are joined by one segment
+		if (series.isConnect()) {
+			final List<XPoint2D> points = points(series);
+			for (int i = 0; i < points.size() - 1; i++) {
+				final XPoint2D p1 = points.get(i);
+				final XPoint2D p2 = points.get(i + 1);
+				final ULine line = new ULine(p2.x - p1.x, p2.y - p1.y);
+				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(p1.x).compose(UTranslate.dy(p1.y))).draw(line);
+			}
+			return;
+		}
+
 		final List<Double> values = series.getValues();
 
 		if (series.hasExplicitXValues()) {

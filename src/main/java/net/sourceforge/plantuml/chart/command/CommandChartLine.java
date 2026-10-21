@@ -87,6 +87,10 @@ public class CommandChartLine extends SingleLineCommand2<ChartDiagram> {
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf(1, "INTERPOLATE", "(interpolate)"))), //
+				new RegexOptional( //
+						new RegexConcat( //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf(1, "CONNECT", "(connect)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
@@ -151,6 +155,10 @@ public class CommandChartLine extends SingleLineCommand2<ChartDiagram> {
 		// Check if the line should be a smooth curve through its points
 		if (arg.get("INTERPOLATE", 0) != null)
 			series.setInterpolate(true);
+
+		// Check if the line should join the values on both sides of a missing one
+		if (arg.get("CONNECT", 0) != null)
+			series.setConnect(true);
 
 		return diagram.addSeries(series);
 	}

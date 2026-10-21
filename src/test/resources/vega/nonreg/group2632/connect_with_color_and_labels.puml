@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+h-axis [1, 2, 3, 4]
+line [10, 20, , 40] #ff0000 labels connect
+@endchart
