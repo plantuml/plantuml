@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+h-axis "Quarter"
+bar [25, 62, 58]
+line [30, 40, 35, 60] #red
+@endchart
