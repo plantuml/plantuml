@@ -67,9 +67,13 @@ public enum SpmChannel {
 //	}
 
 	public InputStream getInternalInputStream(String libname) throws IOException {
-		// Keeps the Brotli decoder and its big dictionary out of the TeaVM C build
-		if (TeaVM.isC())
-			throw new IOException("The standard library is not available in the TeaVM C build");
+		// No TeaVM build ships the .spm files: the browser engines get the standard
+		// library from <lib>.min.js bundles or PLANTUML_STDLIB_LOADER instead. Failing
+		// here for every TeaVM target, and not only C, keeps the Brotli decoder and its
+		// big dictionary out of plantuml.js and plantuml.wasm, whatever path reaches
+		// Stdlib (a local !theme, %get_stdlib, a sprite...).
+		if (TeaVM.isTeaVM())
+			throw new IOException("The standard library is not available in the TeaVM build");
 
 		final String path = "stdlib/" + libname + "/" + getFileName();
 		return new BrotliInputStream(inputStream(path));
