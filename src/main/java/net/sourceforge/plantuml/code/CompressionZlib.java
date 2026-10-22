@@ -43,16 +43,14 @@ import net.sourceforge.plantuml.code.deflate.Decompressor;
 
 public class CompressionZlib implements Compression {
 
-	// ::comment when __TEAVM__
-	private static boolean USE_ZOPFLI = false;
-	// ::done
+	// A compile-time constant, so that javac drops the Zopfli branch below and
+	// Zopfli stays out of the TeaVM output
+	private static final boolean USE_ZOPFLI = false;
 	private static final int COMPRESSION_LEVEL = 9;
 
 	public byte[] compress(byte[] in) {
-		// ::comment when __TEAVM__
 		if (USE_ZOPFLI)
 			return new CompressionZopfliZlib().compress(in);
-		// ::done
 
 		if (in.length == 0)
 			return null;
