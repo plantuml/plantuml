@@ -67,19 +67,23 @@ import net.sourceforge.plantuml.preproc.Stdlib;
 //	}
 
 	public InputStream getInternalInputStream(String libname) throws IOException {
-		// Keeps the Brotli decoder and its big dictionary out of the TeaVM C build
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (TeaVM.isC())</span>
-<span class="nc" id="L72">			throw new IOException(&quot;The standard library is not available in the TeaVM C build&quot;);</span>
+		// No TeaVM build ships the .spm files: the browser engines get the standard
+		// library from &lt;lib&gt;.min.js bundles or PLANTUML_STDLIB_LOADER instead. Failing
+		// here for every TeaVM target, and not only C, keeps the Brotli decoder and its
+		// big dictionary out of plantuml.js and plantuml.wasm, whatever path reaches
+		// Stdlib (a local !theme, %get_stdlib, a sprite...).
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L76">			throw new IOException(&quot;The standard library is not available in the TeaVM build&quot;);</span>
 
-<span class="fc" id="L74">		final String path = &quot;stdlib/&quot; + libname + &quot;/&quot; + getFileName();</span>
-<span class="fc" id="L75">		return new BrotliInputStream(inputStream(path));</span>
+<span class="fc" id="L78">		final String path = &quot;stdlib/&quot; + libname + &quot;/&quot; + getFileName();</span>
+<span class="fc" id="L79">		return new BrotliInputStream(inputStream(path));</span>
 	}
 
 	public static InputStream inputStream(String path) throws IOException {
-<span class="fc" id="L79">		InputStream result = Stdlib.class.getResourceAsStream(&quot;/&quot; + path);</span>
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="nc" id="L81">			result = new BufferedInputStream(new FileInputStream(path));</span>
-<span class="fc" id="L82">		return result;</span>
+<span class="fc" id="L83">		InputStream result = Stdlib.class.getResourceAsStream(&quot;/&quot; + path);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L85">			result = new BufferedInputStream(new FileInputStream(path));</span>
+<span class="fc" id="L86">		return result;</span>
 	}
 
 }
