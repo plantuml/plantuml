@@ -50,8 +50,6 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class UGraphicCompressOnXorY extends UGraphicDelegator {
-    // ::remove file when __HAXE__
-
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate)
 			return new UGraphicCompressOnXorY(mode, getUg(), compressionTransform,

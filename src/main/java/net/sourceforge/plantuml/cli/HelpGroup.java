@@ -44,8 +44,6 @@ import java.util.TreeSet;
 public class HelpGroup implements Iterable<CliFlag> {
 
 	
-	// ::remove file when __HAXE__
-
 	private static final Comparator<CliFlag> COMPARATOR = new Comparator<CliFlag>() {
 
 		private String clean(String s) {

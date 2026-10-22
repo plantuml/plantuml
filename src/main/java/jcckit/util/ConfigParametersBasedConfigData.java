@@ -27,7 +27,6 @@ package jcckit.util;
  *  @author Franz-Josef Elmer
  */
 public class ConfigParametersBasedConfigData implements ConfigData {
-    // ::remove folder when __HAXE__
   private ConfigParameters _config;
   private ConfigParameters _defaultConfig;
 

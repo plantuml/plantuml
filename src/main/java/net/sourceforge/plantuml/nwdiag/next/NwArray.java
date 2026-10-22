@@ -35,8 +35,6 @@
 package net.sourceforge.plantuml.nwdiag.next;
 
 public class NwArray {
-    // ::remove folder when __HAXE__
-
 	private final NServerDraw data[][];
 
 	public NwArray(int lines, int cols) {

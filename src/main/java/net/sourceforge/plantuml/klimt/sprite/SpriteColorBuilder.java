@@ -44,8 +44,6 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SpriteColorBuilder {
-	// ::remove folder when __HAXE__
-
 	private final static ColorPalette COLOR_PALETTE = new ColorPalette();
 
 	public static Sprite buildSprite(List<CharSequence> strings) {

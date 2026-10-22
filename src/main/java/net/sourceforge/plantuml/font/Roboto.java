@@ -42,8 +42,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class Roboto {
-    // ::remove folder when __HAXE__
-
 	private final static String[] names = new String[] { "Roboto-BlackItalic.ttf", "Roboto-Black.ttf",
 			"Roboto-BoldItalic.ttf", "Roboto-Bold.ttf", "RobotoCondensed-BoldItalic.ttf", "RobotoCondensed-Bold.ttf",
 			"RobotoCondensed-Italic.ttf", "RobotoCondensed-LightItalic.ttf", "RobotoCondensed-Light.ttf",

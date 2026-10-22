@@ -7,8 +7,6 @@ import java.util.Locale;
  * {@link Color} with hue, saturation and brightness.
  */
 public class ColorHSB extends Color {
-	// ::remove file when __HAXE__
-	
 	
 	private final float hue;
 	private final float saturation;

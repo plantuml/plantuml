@@ -40,8 +40,6 @@ import java.util.List;
 
 public class HelpPrint {
 	
-	// ::remove file when __HAXE__
-
 	private static void printHeader() {
 		System.out.println("plantuml - generate diagrams from plain text");
 		System.out.println();

@@ -54,8 +54,6 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.svek.image.Opale;
 
 final public class ComponentRoseNote extends AbstractTextualComponent implements Stencil {
-	// ::remove folder when __HAXE__
-
 	private final double paddingX;
 	private final double paddingY;
 	private final Fashion symbolContext;

@@ -43,8 +43,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
 
 public class UGraphicStencil extends AbstractUGraphicHorizontalLine {
-    // ::remove file when __HAXE__
-
 	private final Stencil stencil;
 	private final UStroke defaultStroke;
 

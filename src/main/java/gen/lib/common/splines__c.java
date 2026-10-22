@@ -112,8 +112,6 @@ import smetana.core.ZType;
 import smetana.core.__ptr__;
 
 public class splines__c {
-    // ::remove folder when __HAXE__
-
 
 
 //3 6izm0fbkejw7odmiw4zaw1ycp

@@ -36,6 +36,4 @@
 package net.sourceforge.plantuml.emoji.data;
 
 public class Dummy {
-    // ::remove folder when __HAXE__
-
 }

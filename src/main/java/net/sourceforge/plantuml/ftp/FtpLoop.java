@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
 class FtpLoop implements Runnable {
-    // ::remove folder when __HAXE__
 	enum Mode {
 		ACTIF, PASSIF
 	};

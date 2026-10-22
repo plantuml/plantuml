@@ -26,8 +26,6 @@ package zext.plantuml.com.google.zxing.common.reedsolomon;
  * @author Sean Owen
  */
 final class GF256Poly {
-    // ::remove folder when __HAXE__
-
   private final GF256 field;
   private final int[] coefficients;
 

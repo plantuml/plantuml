@@ -48,8 +48,6 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class SourceFileReader extends SourceFileReaderAbstract implements ISourceFileReader {
 	
-	// ::remove file when __HAXE__
-
 	private File outputDirectory;
 
 	public SourceFileReader(boolean ignoreSuggestedName, File file) throws IOException {

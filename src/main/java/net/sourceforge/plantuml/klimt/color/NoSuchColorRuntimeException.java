@@ -36,6 +36,4 @@
 package net.sourceforge.plantuml.klimt.color;
 
 public class NoSuchColorRuntimeException extends RuntimeException {
-	// ::remove file when __HAXE__
-
 }

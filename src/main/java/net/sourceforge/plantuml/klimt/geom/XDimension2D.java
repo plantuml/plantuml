@@ -35,9 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.geom;
 
-// ::comment when __HAXE__
 import java.awt.Dimension;
-// ::done
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.utils.MathUtils;
@@ -97,13 +95,11 @@ public class XDimension2D {
 		return new XDimension2D(width, height);
 	}
 
-	// ::comment when __HAXE__
 	public XDimension2D mergeTB(XDimension2D b, XDimension2D c) {
 		final double width = MathUtils.max(this.getWidth(), b.getWidth(), c.getWidth());
 		final double height = this.getHeight() + b.getHeight() + c.getHeight();
 		return new XDimension2D(width, height);
 	}
-	// ::done
 
 	public XDimension2D mergeLR(XDimension2D right) {
 		final double height = Math.max(this.getHeight(), right.getHeight());
@@ -126,7 +122,6 @@ public class XDimension2D {
 		return new XDimension2D(w, h);
 	}
 
-	// ::comment when __HAXE__
 	public static XDimension2D fromDimension(Dimension dimension) {
 		return new XDimension2D(dimension.getWidth(), dimension.getHeight());
 	}
@@ -136,7 +131,6 @@ public class XDimension2D {
 		final double height = top1.getHeight() + top2.getHeight() + bottom.getHeight();
 		return new XDimension2D(width, height);
 	}
-	// ::done
 
 	public static XDimension2D max(XDimension2D dim1, XDimension2D dim2) {
 		return dim1.atLeast(dim2.getWidth(), dim2.getHeight());

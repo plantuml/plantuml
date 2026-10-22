@@ -43,8 +43,6 @@ import java.util.Set;
 import net.sourceforge.plantuml.text.BackSlash;
 
 public class CMapData {
-    // ::remove file when __HAXE__
-
 	private final StringBuilder stringBuilder = new StringBuilder();
 
 	public String asString(String nameId) {

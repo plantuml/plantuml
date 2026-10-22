@@ -57,8 +57,6 @@ import net.sourceforge.plantuml.utils.Log;
 
 // Used by the Eclipse Plugin, so do not change package location.
 public class FileUtils {
-	// ::remove file when __HAXE__
-
 	private static AtomicInteger counter;
 
 	public static void resetCounter() {

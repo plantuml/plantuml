@@ -59,7 +59,6 @@ public enum FontPosition {
 		return font.withSize((float) size);
 	}
 
-	// ::comment when __HAXE__
 	public String getHtmlTag() {
 		if (this == EXPOSANT)
 			return "sup";
@@ -69,6 +68,5 @@ public enum FontPosition {
 
 		throw new UnsupportedOperationException();
 	}
-	// ::done
 
 }

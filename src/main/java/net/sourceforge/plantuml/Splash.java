@@ -57,8 +57,6 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class Splash extends Window implements MouseListener, MouseMotionListener {
 	
-	// ::remove file when __HAXE__
-
 	private static final XColor LINK_NORMAL = XColor.BLUE;
 	private static final XColor LINK_HOVER = new XColor(127, 0, 127);
 

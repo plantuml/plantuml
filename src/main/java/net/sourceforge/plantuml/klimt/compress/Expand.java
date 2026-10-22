@@ -36,8 +36,6 @@
 package net.sourceforge.plantuml.klimt.compress;
 
 public class Expand implements Comparable<Expand> {
-    // ::remove file when __HAXE__
-
 	private final double position;
 	private final double extend;
 	private final ExpandType type;

@@ -42,8 +42,6 @@ import net.sourceforge.plantuml.gantt.OpenClose;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 
 public final class TimeScaleDailyHideClosed implements TimeScale {
-	// ::remove folder when __HAXE__
-
 	private final double cellWidth;
 	private final TimePoint startingDay;
 	private TimePoint biggest;

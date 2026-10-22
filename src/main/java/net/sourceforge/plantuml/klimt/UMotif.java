@@ -46,8 +46,6 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class UMotif {
-	// ::remove file when __HAXE__
-
 	private final List<XPoint2D> points = new ArrayList<>();
 
 	public UMotif(int... data) {

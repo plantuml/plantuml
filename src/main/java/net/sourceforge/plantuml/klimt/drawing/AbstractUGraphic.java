@@ -65,8 +65,6 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public abstract class AbstractUGraphic<O> extends AbstractCommonUGraphic {
-	// ::remove file when __HAXE__
-
 	private /* final */ O graphic;
 	private /* final */ MinMaxMutable minmax;
 

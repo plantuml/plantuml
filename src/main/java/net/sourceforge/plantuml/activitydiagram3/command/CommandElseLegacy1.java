@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandElseLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 
 	private static final Collection<String> FIRST_TOKENS = Arrays.asList("else");
-    // ::remove folder when __HAXE__
 
 	public CommandElseLegacy1() {
 		super(getRegexConcat());

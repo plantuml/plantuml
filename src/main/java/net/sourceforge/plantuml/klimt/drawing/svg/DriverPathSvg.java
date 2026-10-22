@@ -45,8 +45,6 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.drawing.g2d.DriverShadowedG2d;
 
 public class DriverPathSvg extends DriverShadowedG2d implements UDriver<UPath, SvgGraphics> {
-	// ::remove file when __HAXE__
-
 	public void draw(UPath shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final UClip clip = param.getClip();
 		if (clip != null && clip.isInside(x, y, shape) == false)

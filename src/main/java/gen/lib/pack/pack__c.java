@@ -58,8 +58,6 @@ import smetana.core.CString;
 import smetana.core.Globals;
 
 public class pack__c {
-    // ::remove folder when __HAXE__
-
 
 
 /* parsePackModeInfo;

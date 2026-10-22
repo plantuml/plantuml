@@ -46,8 +46,6 @@ import net.sourceforge.plantuml.error.PSystemError;
 
 public class StdrptV2 implements Stdrpt {
 	
-	// ::remove file when __HAXE__
-
 	public void finalMessage() {
 	}
 

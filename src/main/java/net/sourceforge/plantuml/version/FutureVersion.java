@@ -47,8 +47,6 @@ import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
 public class FutureVersion {
-	// ::remove folder when __HAXE__
-	
 	
 	public static String versionString() {
 		readVersionTxtIfNeeded();

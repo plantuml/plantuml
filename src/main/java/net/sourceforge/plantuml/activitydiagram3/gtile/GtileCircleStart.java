@@ -49,8 +49,6 @@ import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class GtileCircleStart extends AbstractGtile {
-	// ::remove folder when __HAXE__
-
 	private static final int SIZE = 20;
 
 	private final HColor backColor;

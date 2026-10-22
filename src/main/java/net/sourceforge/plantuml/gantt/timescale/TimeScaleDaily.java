@@ -41,8 +41,6 @@ import net.sourceforge.plantuml.gantt.core.PrintScale;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 
 public final class TimeScaleDaily implements TimeScale {
-	// ::remove folder when __HAXE__
-
 	private final TimeScaleWink basic;
 	private final double delta;
 

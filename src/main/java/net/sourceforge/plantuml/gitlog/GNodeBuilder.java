@@ -44,8 +44,6 @@ import java.util.Map;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class GNodeBuilder {
-	// ::remove folder when __HAXE__
-
 	private final List<GNode> all = new ArrayList<>();
 
 	public GNodeBuilder(List<Commit> allCommits) {

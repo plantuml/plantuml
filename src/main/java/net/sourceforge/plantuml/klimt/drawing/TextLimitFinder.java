@@ -49,8 +49,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public class TextLimitFinder extends UGraphicNo {
-    // ::remove file when __HAXE__
-
 	private final MinMaxMutable minmax;
 
 	@Override

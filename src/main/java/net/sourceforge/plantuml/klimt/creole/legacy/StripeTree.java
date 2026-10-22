@@ -52,8 +52,6 @@ import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class StripeTree implements Stripe {
-	// ::remove folder when __HAXE__
-
 	private FontConfiguration fontConfiguration;
 	final private ISkinSimple skinParam;
 	final private AtomTree tree;

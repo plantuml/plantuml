@@ -62,8 +62,6 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemUtils {
 	
-	// ::remove file when __HAXE__
-
 	public static List<FileImageData> exportDiagrams(Diagram system, SuggestedFile suggested,
 			FileFormatOption fileFormatOption) throws IOException {
 		return exportDiagrams(system, suggested, fileFormatOption, false);

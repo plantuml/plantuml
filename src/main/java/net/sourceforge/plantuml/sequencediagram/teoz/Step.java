@@ -39,8 +39,6 @@ import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class Step {
-	// ::remove folder when __HAXE__
-
 	private final double value;
 	private final boolean destroy;
 	private final int indent;

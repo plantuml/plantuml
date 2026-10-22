@@ -118,7 +118,6 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		return result;
 	}
 
-	// ::comment when __HAXE__
 	public UPath rotate(double theta) {
 		final UPath result = new UPath(comment, codeLine);
 		for (USegment seg : segments)
@@ -134,7 +133,6 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 
 		return result;
 	}
-	// ::done
 
 	public void moveTo(XPoint2D pt) {
 		moveTo(pt.getX(), pt.getY());
@@ -203,12 +201,10 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 		return minmax.getMinY();
 	}
 
-	// ::comment when __HAXE__
 	@Override
 	public String toString() {
 		return segments.toString();
 	}
-	// ::done
 
 	public Iterator<USegment> iterator() {
 		return segments.iterator();

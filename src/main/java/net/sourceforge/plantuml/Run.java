@@ -91,8 +91,6 @@ import net.sourceforge.plantuml.version.Version;
 
 public class Run {
 
-	// ::remove file when __HAXE__
-
 	public static void main(String[] argsArray)
 			throws NoPlantumlCompressionException, IOException, InterruptedException {
 		if (!TeaVM.isC())

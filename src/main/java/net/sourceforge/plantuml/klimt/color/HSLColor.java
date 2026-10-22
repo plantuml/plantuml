@@ -23,7 +23,6 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
  * a color by adjusting the luminance value.
  */
 public class HSLColor {
-	// ::remove file when __HAXE__
 	private XColor rgb;
 	private float[] hsl;
 	private float alpha;

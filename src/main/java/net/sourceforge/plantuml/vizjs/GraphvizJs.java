@@ -50,8 +50,6 @@ import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.log.Logme;
 
 public class GraphvizJs implements Graphviz {
-    // ::remove folder when __HAXE__
-	
 
 	private final static ExecutorService executorService = Executors
 			.newSingleThreadScheduledExecutor(new ThreadFactory() {

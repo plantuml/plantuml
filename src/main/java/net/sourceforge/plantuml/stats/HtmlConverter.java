@@ -47,8 +47,6 @@ import net.sourceforge.plantuml.stats.api.StatsTable;
 import net.sourceforge.plantuml.text.BackSlash;
 
 public class HtmlConverter {
-    // ::remove folder when __HAXE__
-
 	private final DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 
 	private final Stats stats;

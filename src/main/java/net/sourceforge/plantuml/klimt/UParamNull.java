@@ -39,8 +39,6 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 
 public class UParamNull implements UParam {
-	// ::remove file when __HAXE__
-
 	public UClip getClip() {
 		return null;
 	}

@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt.geom;
 
-// ::done
 import java.util.Arrays;
 
-// ::comment when __HAXE__
 import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 
 public class USegment {
@@ -51,12 +49,10 @@ public class USegment {
 		this.pathType = pathType;
 	}
 
-	// ::comment when __HAXE__
 	@Override
 	public String toString() {
 		return pathType.toString() + " " + Arrays.toString(coord);
 	}
-	// ::done
 
 	public final double[] getCoord() {
 		return coord;
@@ -113,6 +109,5 @@ public class USegment {
 
 		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);
 	}
-	// ::done
 
 }

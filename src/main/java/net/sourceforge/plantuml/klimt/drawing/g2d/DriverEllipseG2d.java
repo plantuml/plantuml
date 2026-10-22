@@ -52,8 +52,6 @@ import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 
 public class DriverEllipseG2d extends DriverShadowedG2d implements UDriver<UEllipse, Graphics2D> {
-    // ::remove folder when __HAXE__
-
 	private final double dpiFactor;
 	private final EnsureVisible visible;
 

@@ -59,8 +59,6 @@ import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public final class BlockUmlBuilder implements DefinitionsContainer {
-	// ::remove file when __HAXE__
-
 	private final List<BlockUml> blocks = new ArrayList<>();
 	private Set<File> usedFiles = new HashSet<>();
 	private final PathSystem pathSystem;

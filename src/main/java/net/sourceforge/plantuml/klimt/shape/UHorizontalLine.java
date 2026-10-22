@@ -44,8 +44,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class UHorizontalLine implements UShape {
-    // ::remove file when __HAXE__
-
 	private final double skipAtStart;
 	private final double skipAtEnd;
 	private final TextBlock title;

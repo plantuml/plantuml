@@ -42,8 +42,6 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class DriverPolygonSvg implements UDriver<UPolygon, SvgGraphics> {
-    // ::remove file when __HAXE__
-
 	public void draw(UPolygon shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final double points[] = shape.getPointArray(x, y);
 		if (TeaVM.a()) assert points.length % 2 == 0;

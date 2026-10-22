@@ -46,8 +46,6 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class SlotSet implements Iterable<Slot> {
-    // ::remove file when __HAXE__
-
 	private final List<Slot> all = new ArrayList<>();
 
 	public SlotSet filter(double start, double end) {

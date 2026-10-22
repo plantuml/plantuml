@@ -134,8 +134,6 @@ public class HColors {
 		return TRANSPARENT;
 	}
 
-	// ::comment when __HAXE__
-
 	public static HColor noGradient(HColor color) {
 		if (color instanceof HColorGradient)
 			return ((HColorGradient) color).getColor1();
@@ -169,7 +167,6 @@ public class HColors {
 	public static HColor middle(HColor c1, HColor c2) {
 		return new HColorMiddle(c1, c2);
 	}
-	// ::done
 
 	public static HColorGradient gradient(HColor color1, HColor color2, char policy) {
 		return new HColorGradient(color1, color2, policy);

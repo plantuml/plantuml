@@ -64,8 +64,6 @@ import net.sourceforge.plantuml.utils.MyCollections;
 
 public class CliOptions {
 
-	// ::remove file when __HAXE__
-
 	private final List<String> config = new ArrayList<>();
 
 	private File outputDir = null;

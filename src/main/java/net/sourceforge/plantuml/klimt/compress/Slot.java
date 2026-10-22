@@ -36,8 +36,6 @@
 package net.sourceforge.plantuml.klimt.compress;
 
 public class Slot implements Comparable<Slot> {
-	// ::remove file when __HAXE__
-
 	private final double start;
 	private final double end;
 

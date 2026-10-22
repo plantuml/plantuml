@@ -41,8 +41,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemDonorsFactory extends PSystemSingleLineFactory {
-    // ::remove folder when __HAXE__
-	
 
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {

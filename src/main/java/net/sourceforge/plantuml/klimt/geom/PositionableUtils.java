@@ -38,8 +38,6 @@ package net.sourceforge.plantuml.klimt.geom;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class PositionableUtils {
-	// ::remove file when __HAXE__
-
 	static private XRectangle2D convert(Positionable positionable) {
 		final XPoint2D position = positionable.getPosition();
 		final XDimension2D size = positionable.getSize();

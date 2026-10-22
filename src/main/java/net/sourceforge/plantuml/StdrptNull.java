@@ -44,8 +44,6 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class StdrptNull implements Stdrpt {
 	
-	// ::remove file when __HAXE__
-
 	public void printInfo(final PrintStream output, final Diagram sys) {
 	}
 

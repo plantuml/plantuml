@@ -25,8 +25,6 @@ import zext.plantuml.com.google.zxing.FormatException;
  * @author bbrown@google.com (Brian Brown)
  */
 public final class Version {
-    // ::remove folder when __HAXE__
-
   private static final Version[] VERSIONS = buildVersions();
 
   private final int versionNumber;

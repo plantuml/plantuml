@@ -38,8 +38,6 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
 public class IntricatedPoint {
-    // ::remove folder when __HAXE__
-
 	private final XPoint2D pta;
 	private final XPoint2D ptb;
 

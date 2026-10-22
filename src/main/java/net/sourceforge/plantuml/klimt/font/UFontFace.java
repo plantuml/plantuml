@@ -185,8 +185,6 @@ public class UFontFace {
 		return new UFontFace(this.style, newWeight);
 	}
 
-	// ::remove folder when __HAXE__
-
 	/**
 	 * Maps a CSS numeric weight (100-900) to the corresponding
 	 * {@link TextAttribute#WEIGHT} float constant.
@@ -223,8 +221,6 @@ public class UFontFace {
 			attrs.put(TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE);
 		return baseFont.deriveFont(attrs);
 	}
-
-	// ::done
 
 	/**
 	 * Returns a CSS-compatible {@code font-weight} string for SVG output.

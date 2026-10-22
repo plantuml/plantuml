@@ -24,7 +24,6 @@ package jcckit.graphic;
  *  @author Franz-Josef Elmer
  */
 public class Oval extends Rectangle {
-    // ::remove folder when __HAXE__
   /**
    *  Creates a new instance.
    *  @param center The position of the center of this element.

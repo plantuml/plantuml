@@ -48,8 +48,6 @@ import net.sourceforge.plantuml.salt.element.ElementRadioCheckbox;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class ElementFactoryCheckboxOff implements ElementFactory {
-    // ::remove folder when __HAXE__
-
 	final private DataSource dataSource;
 	final private ISkinSimple spriteContainer;
 

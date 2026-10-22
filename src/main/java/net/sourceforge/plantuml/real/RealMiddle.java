@@ -36,8 +36,6 @@
 package net.sourceforge.plantuml.real;
 
 class RealMiddle extends AbstractReal implements Real {
-    // ::remove folder when __HAXE__
-
 	private final RealMoveable p1;
 	private final RealMoveable p2;
 	private final double delta;

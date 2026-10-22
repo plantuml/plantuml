@@ -1,8 +1,6 @@
 package net.sourceforge.plantuml.klimt.geom;
 
-// ::comment when __HAXE__
 import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
-// ::done
 
 public class XPoint2D {
 
@@ -19,7 +17,6 @@ public class XPoint2D {
 		this.y = y;
 	}
 
-	// ::comment when __HAXE__
 	@Override
 	public boolean equals(Object obj) {
 		final XPoint2D other = (XPoint2D) obj;
@@ -34,7 +31,6 @@ public class XPoint2D {
 	public XPoint2D transform(XAffineTransform rotate) {
 		return rotate.transform(this);
 	}
-	// ::done
 
 	public final double getX() {
 		return x;

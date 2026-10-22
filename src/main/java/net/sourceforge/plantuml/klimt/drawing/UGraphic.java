@@ -73,7 +73,5 @@ public interface UGraphic {
 
 	public HColor getDefaultBackground();
 
-	// ::comment when __HAXE__
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException;
-	// ::done
 }

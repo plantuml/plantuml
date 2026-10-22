@@ -42,8 +42,6 @@ import com.plantuml.ubrex.builder.UBrexPart;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class UBrexColorParser {
-	// ::remove file when __HAXE__
-
 	// private static final String COLOR_REGEXP = "#\\w+[-\\\\|/]?\\w+";
 	private static final String COLOR_REGEXP = "# 〇+〴w 〇?〘 「-\\|/」 〇+〴w 〙";
 

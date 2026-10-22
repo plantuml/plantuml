@@ -51,8 +51,6 @@ import net.sourceforge.plantuml.gantt.time.TimePoint;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class Solver {
-	// ::remove folder when __HAXE__
-
 	private final Map<TaskAttribute, PValue> values = new LinkedHashMap<TaskAttribute, PValue>();
 
 //	public Solver(NGMAllocation allocation) {

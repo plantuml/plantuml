@@ -44,8 +44,6 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.utils.Log;
 
 public class DriverImagePng implements UDriver<UImage, SvgGraphics> {
-    // ::remove file when __HAXE__
-
 	public void draw(UImage image, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 		final UClip clip = param.getClip();
 		if (clip != null) {

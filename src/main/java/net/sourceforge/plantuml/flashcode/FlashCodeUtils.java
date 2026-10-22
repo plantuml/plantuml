@@ -41,8 +41,6 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 
 
 public interface FlashCodeUtils {
-    // ::remove folder when __HAXE__
-
 	public PortableImage exportFlashcode(String s, XColor fore, XColor back);
 
 }

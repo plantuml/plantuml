@@ -36,8 +36,6 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.utils.Log;
 
 public class NumberAnalyzed2 implements INumberAnalyzed {
-    // ::remove folder when __HAXE__
-
 	private static final int SLIDING_WINDOW = 512;
 
 	private final AtomicLong nb = new AtomicLong();

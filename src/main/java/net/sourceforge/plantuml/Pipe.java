@@ -62,8 +62,6 @@ import net.sourceforge.plantuml.security.SFile;
 
 public class Pipe {
 
-	// ::remove file when __HAXE__
-
 	private final CliOptions option;
 	private final BufferedReader br;
 	private final PrintStream ps;

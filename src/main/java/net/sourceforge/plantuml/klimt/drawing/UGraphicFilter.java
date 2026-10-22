@@ -42,8 +42,6 @@ import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UShape;
 
 public class UGraphicFilter extends UGraphicDelegator {
-    // ::remove file when __HAXE__
-
 	public UGraphic apply(UChange translate) {
 		throw new UnsupportedOperationException();
 	}

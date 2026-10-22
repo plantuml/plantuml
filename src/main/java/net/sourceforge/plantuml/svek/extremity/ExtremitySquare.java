@@ -43,8 +43,6 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 class ExtremitySquare extends Extremity {
-    // ::remove folder when __HAXE__
-
 	private final HColor backgroundColor;
 	private final XPoint2D dest;
 	private final double radius = 5;

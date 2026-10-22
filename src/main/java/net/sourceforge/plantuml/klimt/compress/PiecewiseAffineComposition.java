@@ -36,8 +36,6 @@
 package net.sourceforge.plantuml.klimt.compress;
 
 public class PiecewiseAffineComposition implements PiecewiseAffineTransform {
-    // ::remove file when __HAXE__
-
 	private final PiecewiseAffineComposition first;
 	private final PiecewiseAffineComposition second;
 

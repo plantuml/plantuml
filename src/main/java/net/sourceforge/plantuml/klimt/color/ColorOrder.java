@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.klimt.color;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public enum ColorOrder {
-	// ::remove file when __HAXE__
 	RGB, RBG, GRB, GBR, BRG, BGR;
 
 	public XColor getColor(XColor color) {

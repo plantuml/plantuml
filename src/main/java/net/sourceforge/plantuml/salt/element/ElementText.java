@@ -48,8 +48,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class ElementText extends AbstractElement {
-    // ::remove folder when __HAXE__
-
 	private final TextBlock block;
 	private final boolean show;
 	private final String text;

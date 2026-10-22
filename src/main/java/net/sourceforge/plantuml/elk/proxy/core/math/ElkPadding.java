@@ -4,8 +4,6 @@ import net.sourceforge.plantuml.elk.proxy.ElkObjectProxy;
 import net.sourceforge.plantuml.elk.proxy.Reflect;
 
 public class ElkPadding implements ElkObjectProxy {
-    // ::remove folder when __HAXE__
-
 	public final Object obj;
 
 	public ElkPadding(double top, double right, double bottom, double left) {

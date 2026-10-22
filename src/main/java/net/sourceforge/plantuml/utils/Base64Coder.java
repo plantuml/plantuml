@@ -45,8 +45,6 @@ package net.sourceforge.plantuml.utils;
 //::done
 
 public class Base64Coder {
-	// ::remove file when __HAXE__
-
 
 	// The line separator string of the operating system.
 	private static final String systemLineSeparator = System.getProperty("line.separator");

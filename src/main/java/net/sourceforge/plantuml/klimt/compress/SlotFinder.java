@@ -56,8 +56,6 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public class SlotFinder extends UGraphicNo {
-    // ::remove file when __HAXE__
-
 	@Override
 	public UGraphic apply(UChange change) {
 		if (!instanceOfAny(change, UBackground.class, HColor.class, UStroke.class, UTranslate.class))

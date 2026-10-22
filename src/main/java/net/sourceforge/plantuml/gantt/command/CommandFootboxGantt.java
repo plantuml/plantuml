@@ -50,7 +50,6 @@ public class CommandFootboxGantt extends SingleLineCommand2<GanttDiagram> {
 
 	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
 			"footbox", "hide", "hidefootbox", "show", "showfootbox");
-	// ::remove folder when __HAXE__
 
 	public CommandFootboxGantt() {
 		super(CommandFootbox.HIDE_SHOW_FOOTBOX);

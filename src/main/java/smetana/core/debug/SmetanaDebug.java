@@ -51,7 +51,6 @@ public final class SmetanaDebug {
 	// carries no cost for it (label building via safeName() is expensive: it
 	// throws and catches an exception for every virtual node).
 	static public final boolean TRACE_ON = false;
-	// ::remove folder when __HAXE__
 	static private final Map<String, String> methods = new LinkedHashMap<String, String>();
 
 	static private java.io.PrintWriter traceWriter;

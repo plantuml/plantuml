@@ -47,8 +47,6 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class StdrptV1 implements Stdrpt {
 	
-	// ::remove file when __HAXE__
-
 	public void printInfo(final PrintStream output, Diagram sys) {
 		if (sys instanceof PSystemWelcome)
 			sys = null;

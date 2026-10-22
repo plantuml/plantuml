@@ -48,8 +48,6 @@ import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Sub {
-	// ::remove folder when __HAXE__
-
 	private final String name;
 	private final List<StringLocated> lines = new ArrayList<>();
 //	private boolean indentationDone = false;

@@ -41,8 +41,6 @@ import java.util.List;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class HclSource implements Iterable<Character> {
-    // ::remove folder when __HAXE__
-
 	final private List<Character> all = new ArrayList<>();
 
 	public void add(String line) {

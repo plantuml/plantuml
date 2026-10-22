@@ -41,8 +41,6 @@ public class UStroke implements UChange {
 	private final double dashSpace;
 	private final double thickness;
 
-	// ::comment when __HAXE__
-
 	@Override
 	public int hashCode() {
 		return Double.hashCode(dashVisible) + Double.hashCode(dashSpace) + Double.hashCode(thickness);
@@ -54,8 +52,6 @@ public class UStroke implements UChange {
 		return this.dashVisible == other.dashVisible && this.dashSpace == other.dashSpace
 				&& this.thickness == other.thickness;
 	}
-
-	// ::done
 
 	@Override
 	public String toString() {

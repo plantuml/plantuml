@@ -50,8 +50,6 @@ import smetana.core.UnsupportedStarStruct;
 import smetana.core.__ptr__;
 
 public class ST_Agrec_s extends UnsupportedStarStruct {
-    // ::remove folder when __HAXE__
-
 	public CString name;
 	public ST_Agrec_s next;
 	/* following this would be any programmer-defined data */

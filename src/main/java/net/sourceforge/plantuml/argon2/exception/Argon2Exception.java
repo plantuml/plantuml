@@ -7,7 +7,6 @@ package net.sourceforge.plantuml.argon2.exception;
 
 /* dislike checked exceptions */
 class Argon2Exception extends RuntimeException {
-    // ::remove folder when __HAXE__
 	Argon2Exception(String message) {
 		super(message);
 	}

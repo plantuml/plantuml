@@ -51,7 +51,6 @@ public class CommandProperty extends SingleLineCommand2<NwDiagram> {
 
 	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
 			"address", "color", "description", "width");
-    // ::remove folder when __HAXE__
 
 	public CommandProperty() {
 		super(getRegexConcat());

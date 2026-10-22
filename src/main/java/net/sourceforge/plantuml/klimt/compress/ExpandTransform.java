@@ -39,8 +39,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class ExpandTransform implements PiecewiseAffineTransform {
-    // ::remove file when __HAXE__
-
 	private final Set<Expand> all = new TreeSet<>();
 
 	@Override

@@ -37,8 +37,6 @@
 package net.sourceforge.plantuml.svek;
 
 public enum SingleStrategy {
-    // ::remove folder when __HAXE__
-
 	SQUARE, HLINE, VLINE;
 
 //	private Collection<Link> generateLinks(List<ILeaf> standalones) {

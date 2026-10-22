@@ -79,7 +79,6 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
 			"&", "/", "hnote", "hnoteleft", "hnoteover", "hnoteright", "note", "noteleft",
 			"noteover", "noteright", "rnote", "rnoteleft", "rnoteover", "rnoteright");
-	// ::remove folder when __HAXE__
 
 	private IRegex getRegexConcatMultiLine() {
 		return RegexConcat.build(FactorySequenceNoteCommand.class.getName() + "multi", RegexLeaf.start(), //

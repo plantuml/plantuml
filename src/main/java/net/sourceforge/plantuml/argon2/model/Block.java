@@ -13,8 +13,6 @@ import java.util.Arrays;
 import net.sourceforge.plantuml.argon2.Util;
 
 public class Block {
-    // ::remove folder when __HAXE__
-
 	/* 128 * 8 Byte QWords */
 	public long[] v;
 

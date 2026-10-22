@@ -46,8 +46,6 @@ import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
 
 public class UnusedSpace {
-	// ::remove file when __HAXE__
-
 	static class Point {
 		final private double x;
 		final private double y;

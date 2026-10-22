@@ -81,8 +81,6 @@ public class ColorUtils {
 		return getGrayScaleInternal(diffRed, diffGreen, diffBlue);
 	}
 
-	// ::comment when __HAXE__
-
 	/*
 	 * This code is still experimental. If you can improve it, please go ahead :-)
 	 * 
@@ -176,6 +174,5 @@ public class ColorUtils {
 
 		return result;
 	}
-	// ::done
 
 }

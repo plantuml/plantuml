@@ -150,7 +150,6 @@ public class FontConfiguration {
 
 	private final int tabSize;
 
-	// ::comment when __HAXE__
 	public String toStringDebug() {
 		return getFont().toString() + " " + styles.toString();
 		// return getFont().toStringDebug() + " " + styles.toString();
@@ -223,8 +222,6 @@ public class FontConfiguration {
 	public String toString() {
 		return styles.toString() + " " + currentColor;
 	}
-
-	// ::done
 
 	public static FontConfiguration create(UFont font, HColor color, HColor hyperlinkColor,
 			UStroke hyperlinkUnderlineStroke) {

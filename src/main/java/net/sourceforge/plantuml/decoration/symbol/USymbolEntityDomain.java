@@ -41,8 +41,6 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.EntityDomain;
 
 class USymbolEntityDomain extends USymbolSimpleAbstract {
-    // ::remove folder when __HAXE__
-
 	@Override
 	public SName[] getSNames() {
 		return new SName[] { SName.entity };

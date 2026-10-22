@@ -64,7 +64,6 @@ public class HColorSimple extends HColor {
 		return sb.toString();
 	}
 
-	// ::comment when __HAXE__
 	@Override
 	public String asString() {
 		if (isTransparent())
@@ -121,7 +120,6 @@ public class HColorSimple extends HColor {
 	public HColor reverse() {
 		return HColorSimple.create(ColorOrder.RGB.getReverse(color));
 	}
-	// ::done
 
 	@Override
 	public boolean isDark() {
@@ -156,7 +154,6 @@ public class HColorSimple extends HColor {
 		return HColorSimple.create(ColorUtils.getGrayScaleColor(color));
 	}
 
-	// ::comment when __HAXE__
 	public HColor asMonochrome(HColorSimple colorForMonochrome, double minGray, double maxGray) {
 		final XColor tmp = ColorUtils.getGrayScaleColor(color);
 		final int gray = tmp.getGreen();
@@ -204,8 +201,6 @@ public class HColorSimple extends HColor {
 	private static float linear(float factor, float x, float y) {
 		return x + (y - x) * factor;
 	}
-
-	// ::done
 
 	@Override
 	public HColor opposite() {

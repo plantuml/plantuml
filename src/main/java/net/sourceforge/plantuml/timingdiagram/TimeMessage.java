@@ -50,8 +50,6 @@ import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
 
 public class TimeMessage extends WithLinkType {
-    // ::remove folder when __HAXE__
-
 	private final TickInPlayer tickInPlayer1;
 	private final TickInPlayer tickInPlayer2;
 	private final Display label;

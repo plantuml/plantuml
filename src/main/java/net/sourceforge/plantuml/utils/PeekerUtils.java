@@ -38,8 +38,6 @@ package net.sourceforge.plantuml.utils;
 import java.util.List;
 
 public abstract class PeekerUtils {
-	// ::remove file when __HAXE__
-
 	private PeekerUtils() {
 
 	}

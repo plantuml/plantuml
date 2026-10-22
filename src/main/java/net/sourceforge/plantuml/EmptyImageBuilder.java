@@ -52,8 +52,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.utils.Log;
 
 public class EmptyImageBuilder {
-	// ::remove file when __HAXE__
-
 	private final PortableImage im;
 
 	// ::comment when __TEAVM__

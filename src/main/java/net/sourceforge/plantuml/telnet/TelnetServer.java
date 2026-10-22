@@ -39,8 +39,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class TelnetServer {
-    // ::remove folder when __HAXE__
-	
 	public static void main(String args[]) throws Exception {
 		final ServerSocket server = new ServerSocket(4242);
 		while (true) {

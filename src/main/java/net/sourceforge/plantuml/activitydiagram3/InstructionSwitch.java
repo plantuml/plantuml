@@ -59,8 +59,6 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class InstructionSwitch extends WithNote implements Instruction, InstructionCollection {
-	// ::remove folder when __HAXE__
-
 	private final List<Branch> switches = new ArrayList<>();
 
 	private final Instruction parent;

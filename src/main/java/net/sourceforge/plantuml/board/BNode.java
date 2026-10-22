@@ -40,8 +40,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BNode {
-    // ::remove folder when __HAXE__
-
 	private final String name;
 	private final int stage;
 	private int x = -1;

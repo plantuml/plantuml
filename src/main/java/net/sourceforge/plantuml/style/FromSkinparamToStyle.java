@@ -47,8 +47,6 @@ import net.sourceforge.plantuml.style.value.ValueImpl;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FromSkinparamToStyle {
-	// ::remove file when __HAXE__
-
 	static class Data {
 		final private SName[] styleNames;
 		final private PName propertyName;

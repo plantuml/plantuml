@@ -38,8 +38,6 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 
 public interface CodeIterator {
-	// ::remove folder when __HAXE__
-
 	public StringLocated peek() throws EaterException;
 
 	public void next() throws EaterException;

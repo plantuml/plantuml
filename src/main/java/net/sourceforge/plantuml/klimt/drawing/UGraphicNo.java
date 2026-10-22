@@ -49,8 +49,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.url.Url;
 
 public abstract class UGraphicNo implements UGraphic {
-	// ::remove file when __HAXE__
-
 	private final StringBounder stringBounder;
 	private final UTranslate translate;
 

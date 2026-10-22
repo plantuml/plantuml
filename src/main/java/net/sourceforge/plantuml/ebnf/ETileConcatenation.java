@@ -43,8 +43,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class ETileConcatenation extends ETile {
-    // ::remove folder when __HAXE__
-
 	private final double marginx = 20;
 	private final List<ETile> tiles = new ArrayList<>();
 

@@ -38,8 +38,6 @@ package net.sourceforge.plantuml.skin;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class Area {
-    // ::remove folder when __HAXE__
-
 	private final XDimension2D dimensionToUse;
 	private double deltaX1;
 	private double liveDeltaSize = 0.0;

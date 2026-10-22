@@ -26,7 +26,6 @@ import jcckit.util.ConfigParameters;
  *  @author Franz-Josef Elmer
  */
 public class DataCurve extends DataContainer implements DataElement {
-    // ::remove folder when __HAXE__
   /** Config parameter key. */
   public static final String X_KEY = "x",
                              Y_KEY = "y",

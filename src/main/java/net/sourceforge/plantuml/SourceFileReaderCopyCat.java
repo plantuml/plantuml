@@ -45,8 +45,6 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class SourceFileReaderCopyCat extends SourceFileReaderAbstract implements ISourceFileReader {
 	
-	// ::remove file when __HAXE__
-
 	private final File outputDirectory;
 
 	public SourceFileReaderCopyCat(boolean ignoreSuggestedName, Defines defines, final File file, File outputDirectory,

@@ -40,8 +40,6 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
 public class Fashion {
-	// ::remove file when __HAXE__
-
 	private final HColor backColor;
 	private final HColor foreColor;
 	private final UStroke stroke;

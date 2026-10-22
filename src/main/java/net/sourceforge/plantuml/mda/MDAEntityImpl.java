@@ -39,8 +39,6 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.api.mda.option2.MDAEntity;
 
 public class MDAEntityImpl implements MDAEntity {
-    // ::remove folder when __HAXE__
-
 	private final Entity leaf;
 
 	public MDAEntityImpl(Entity leaf) {

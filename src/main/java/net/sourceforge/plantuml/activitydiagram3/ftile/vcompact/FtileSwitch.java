@@ -65,8 +65,6 @@ import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 class FtileSwitch extends AbstractFtile {
-    // ::remove folder when __HAXE__
-
 	private final double xSeparation = 20;
 
 	private final List<Ftile> tiles;

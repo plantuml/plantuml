@@ -43,8 +43,6 @@ import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.url.Url;
 
 public class AtomSprite extends AbstractAtom implements Atom {
-	// ::remove folder when __HAXE__
-
 	private final Sprite sprite;
 	private final double scale;
 	private final Url url;

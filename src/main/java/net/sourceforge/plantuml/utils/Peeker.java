@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.utils;
 
 public interface Peeker<O> {
-	// ::remove file when __HAXE__
 	O peek(int ahead);
 
 	void jump();

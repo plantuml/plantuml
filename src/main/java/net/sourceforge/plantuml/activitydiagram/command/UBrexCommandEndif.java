@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class UBrexCommandEndif extends UBrexSingleLineCommand2<ActivityDiagram> {
 
 	private static final Collection<String> FIRST_TOKENS = Arrays.asList("end", "endif");
-	// ::remove folder when __HAXE__
 
 	public UBrexCommandEndif() {
 		super(getRegexConcat());

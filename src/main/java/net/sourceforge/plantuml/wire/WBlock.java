@@ -57,8 +57,6 @@ import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public class WBlock {
-    // ::remove folder when __HAXE__
-
 	private final static int STARTING_Y = 10;
 
 	private final String name;

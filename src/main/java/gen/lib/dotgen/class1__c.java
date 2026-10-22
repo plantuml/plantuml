@@ -80,8 +80,6 @@ import smetana.core.CString;
 import smetana.core.Globals;
 
 public class class1__c {
-    // ::remove folder when __HAXE__
-
 
 @Reviewed(when = "13/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/class1.c", name="nonconstraint_edge", key="2luyof8ca7ewf9r08z3os3lk7", definition="int nonconstraint_edge(edge_t * e)")

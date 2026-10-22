@@ -71,7 +71,6 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public final class CommandFactoryNote implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
 
 	private static final Collection<String> FIRST_TOKENS = Arrays.asList("note");
-	// ::remove folder when __HAXE__
 
 	public final static CommandFactoryNote ME = new CommandFactoryNote();
 
