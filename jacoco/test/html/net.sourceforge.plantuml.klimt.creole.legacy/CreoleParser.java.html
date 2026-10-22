@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class CreoleParser implements SheetBuilder {
 
@@ -68,44 +69,43 @@ public class CreoleParser implements SheetBuilder {
 	private final FontConfiguration stereotype;
 
 	public CreoleParser(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
-<span class="fc" id="L71">			ISkinSimple skinParam, CreoleMode creoleMode, FontConfiguration stereotype) {</span>
-<span class="fc" id="L72">		this.stereotype = stereotype;</span>
-<span class="fc" id="L73">		this.creoleMode = creoleMode;</span>
-<span class="fc" id="L74">		this.fontConfiguration = fontConfiguration;</span>
-<span class="fc" id="L75">		this.skinParam = Objects.requireNonNull(skinParam);</span>
-<span class="fc" id="L76">		this.horizontalAlignment = horizontalAlignment;</span>
-<span class="fc" id="L77">	}</span>
+<span class="fc" id="L72">			ISkinSimple skinParam, CreoleMode creoleMode, FontConfiguration stereotype) {</span>
+<span class="fc" id="L73">		this.stereotype = stereotype;</span>
+<span class="fc" id="L74">		this.creoleMode = creoleMode;</span>
+<span class="fc" id="L75">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L76">		this.skinParam = Objects.requireNonNull(skinParam);</span>
+<span class="fc" id="L77">		this.horizontalAlignment = horizontalAlignment;</span>
+<span class="fc" id="L78">	}</span>
 
 	private List&lt;Stripe&gt; createStripes(String line, CreoleContext context, Stripe lastStripe,
 			FontConfiguration fontConfiguration) {
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (lastStripe instanceof StripeRaw) {</span>
-<span class="fc" id="L82">			final StripeRaw code = (StripeRaw) lastStripe;</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			if (code.isTerminated()) {</span>
-<span class="nc" id="L84">				lastStripe = null;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (lastStripe instanceof StripeRaw) {</span>
+<span class="fc" id="L83">			final StripeRaw code = (StripeRaw) lastStripe;</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">			if (code.isTerminated()) {</span>
+<span class="nc" id="L85">				lastStripe = null;</span>
 			} else {
-<span class="fc" id="L86">				final boolean terminated = code.addAndCheckTermination(line);</span>
-<span class="fc" id="L87">				return null;</span>
+<span class="fc" id="L87">				final boolean terminated = code.addAndCheckTermination(line);</span>
+<span class="fc" id="L88">				return null;</span>
 			}
 		}
 
-<span class="fc bfc" id="L91" title="All 4 branches covered.">		if (lastStripe instanceof StripeTable &amp;&amp; isTableLine(line)) {</span>
-<span class="fc" id="L92">			final StripeTable table = (StripeTable) lastStripe;</span>
-<span class="fc" id="L93">			table.analyzeAndAddLine(line);</span>
-<span class="fc" id="L94">			return null;</span>
-<span class="pc bpc" id="L95" title="3 of 4 branches missed.">		} else if (lastStripe instanceof StripeTree &amp;&amp; Parser.isTreeStart(StringUtils.trim2(line))) {</span>
-<span class="nc" id="L96">			final StripeTree tree = (StripeTree) lastStripe;</span>
-<span class="nc" id="L97">			tree.analyzeAndAdd(line);</span>
-<span class="nc" id="L98">			return null;</span>
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		} else if (isTableLine(line)) {</span>
-<span class="fc" id="L100">			return Arrays.asList(new StripeTable(fontConfiguration, skinParam, line));</span>
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		} else if (Parser.isTreeStart(line)) {</span>
-<span class="nc" id="L102">			return Arrays.asList(new StripeTree(fontConfiguration, skinParam, line));</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		} else if (Parser.isCodeStart(line)) {</span>
-<span class="fc" id="L104">			return Arrays.asList(new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED)));</span>
-			// ::comment when __TEAVM__
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		} else if (Parser.isLatexStart(line)) {</span>
-<span class="nc" id="L107">			return Arrays.asList(new StripeLatex(fontConfiguration));</span>
-			// ::done
+<span class="fc bfc" id="L92" title="All 4 branches covered.">		if (lastStripe instanceof StripeTable &amp;&amp; isTableLine(line)) {</span>
+<span class="fc" id="L93">			final StripeTable table = (StripeTable) lastStripe;</span>
+<span class="fc" id="L94">			table.analyzeAndAddLine(line);</span>
+<span class="fc" id="L95">			return null;</span>
+<span class="pc bpc" id="L96" title="3 of 4 branches missed.">		} else if (lastStripe instanceof StripeTree &amp;&amp; Parser.isTreeStart(StringUtils.trim2(line))) {</span>
+<span class="nc" id="L97">			final StripeTree tree = (StripeTree) lastStripe;</span>
+<span class="nc" id="L98">			tree.analyzeAndAdd(line);</span>
+<span class="nc" id="L99">			return null;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		} else if (isTableLine(line)) {</span>
+<span class="fc" id="L101">			return Arrays.asList(new StripeTable(fontConfiguration, skinParam, line));</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		} else if (Parser.isTreeStart(line)) {</span>
+<span class="nc" id="L103">			return Arrays.asList(new StripeTree(fontConfiguration, skinParam, line));</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		} else if (Parser.isCodeStart(line)) {</span>
+<span class="fc" id="L105">			return Arrays.asList(new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED)));</span>
+<span class="pc bpc" id="L106" title="2 of 4 branches missed.">		} else if (TeaVM.isTeaVM() == false &amp;&amp; Parser.isLatexStart(line)) {</span>
+			// Not in the browser, see CommandCreoleBuilder
+<span class="nc" id="L108">			return Arrays.asList(new StripeLatex(fontConfiguration));</span>
 		}
 <span class="fc bfc" id="L110" title="All 2 branches covered.">		final HorizontalAlignment align = lastStripe instanceof StripeSimple</span>
 <span class="fc" id="L111">				? ((StripeSimple) lastStripe).getCellAlignment()</span>
