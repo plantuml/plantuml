@@ -168,6 +168,11 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 		include("*.min.css", "*.min.js")
 		into("native/resources/svg")
 	}
+	// The SVG sprites of the stereotypes (archimate)
+	from("src/main/resources/sprites") {
+		include("**/*.svg")
+		into("native/resources/sprites")
+	}
 	// The standard library: its list, and for each library its description, its
 	// puml, json, sprite and svg files; image.spm (raster images)
 	from("src/main/resources/stdlib") {
