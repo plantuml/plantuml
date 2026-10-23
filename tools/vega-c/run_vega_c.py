@@ -243,7 +243,15 @@ def png_fingerprint(base64_text):
                     index = line[x]
                     alpha = transparency[index] if transparency and index < len(transparency) else 255
                     rgba += palette[3 * index:3 * index + 3] + bytes([alpha])
-        return "png:%dx%d:%s" % (width, height, hashlib.sha1(bytes(rgba)).hexdigest())
+        # The hash tells whether two images are the same; the most frequent
+        # colors help to see why they are not
+        counts = {}
+        for i in range(0, len(rgba), 4):
+            key = bytes(rgba[i:i + 4]).hex()
+            counts[key] = counts.get(key, 0) + 1
+        top = sorted(counts.items(), key=lambda item: (-item[1], item[0]))[:4]
+        return "png:%dx%d:%s:%d colors:%s" % (width, height, hashlib.sha1(bytes(rgba)).hexdigest(),
+                                              len(counts), ",".join("%s*%d" % item for item in top))
     except Exception:
         return None
 
