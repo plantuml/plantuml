@@ -92,3 +92,20 @@ void plantuml_resource_copy_decoded(int8_t* dest) {
 	decoded = NULL;
 	decoded_size = 0;
 }
+
+int32_t plantuml_resource_read_decoded(int32_t offset, int32_t length, int8_t* dest) {
+	size_t count;
+	if (decoded == NULL || offset < 0 || length <= 0 || (size_t)offset >= decoded_size)
+		return 0;
+	count = decoded_size - (size_t)offset;
+	if (count > (size_t)length)
+		count = (size_t)length;
+	memcpy(dest, decoded + offset, count);
+	return (int32_t)count;
+}
+
+void plantuml_resource_release_decoded(void) {
+	free(decoded);
+	decoded = NULL;
+	decoded_size = 0;
+}
