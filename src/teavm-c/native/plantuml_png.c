@@ -262,20 +262,25 @@ static void unpremultiply(uint32_t* pixels, int width, int height, int stride_pi
 }
 
 static int png_encode(uint32_t* pixels, int width, int height, int stride, int opaque, int premultiplied,
-		unsigned char** png, size_t* png_size);
+		int lossless, unsigned char** png, size_t* png_size);
 
 int plantuml_png_encode(uint32_t* pixels, int width, int height, int stride, int opaque, unsigned char** png,
 		size_t* png_size) {
-	return png_encode(pixels, width, height, stride, opaque, 1, png, png_size);
+	return png_encode(pixels, width, height, stride, opaque, 1, 0, png, png_size);
 }
 
 int plantuml_png_encode_straight(uint32_t* pixels, int width, int height, int stride, int opaque,
 		unsigned char** png, size_t* png_size) {
-	return png_encode(pixels, width, height, stride, opaque, 0, png, png_size);
+	return png_encode(pixels, width, height, stride, opaque, 0, 0, png, png_size);
+}
+
+int plantuml_png_encode_lossless(uint32_t* pixels, int width, int height, int stride, int opaque,
+		unsigned char** png, size_t* png_size) {
+	return png_encode(pixels, width, height, stride, opaque, 0, 1, png, png_size);
 }
 
 static int png_encode(uint32_t* pixels, int width, int height, int stride, int opaque, int premultiplied,
-		unsigned char** png, size_t* png_size) {
+		int lossless, unsigned char** png, size_t* png_size) {
 	const int stride_pixels = stride / 4;
 	if (premultiplied)
 		unpremultiply(pixels, width, height, stride_pixels, opaque);
@@ -286,7 +291,7 @@ static int png_encode(uint32_t* pixels, int width, int height, int stride, int o
 	/* As PngIO: a palette only for an opaque image, QuantifyPacked28 otherwise */
 	plantuml_palette_t palette;
 	palette.cube_to_palette = NULL;
-	const int indexed = opaque && plantuml_quantify555(pixels, width, height, stride_pixels, &palette);
+	const int indexed = !lossless && opaque && plantuml_quantify555(pixels, width, height, stride_pixels, &palette);
 
 	const int bpp = indexed ? 1 : opaque ? 3 : 4;
 	const int length = width * bpp;
@@ -357,7 +362,7 @@ static int png_encode(uint32_t* pixels, int width, int height, int stride, int o
 				row[x] = (unsigned char) plantuml_quantify555_index(&palette, argb);
 				continue;
 			}
-			const uint32_t packed = plantuml_compress_packed_argb(argb);
+			const uint32_t packed = lossless ? argb : plantuml_compress_packed_argb(argb);
 			unsigned char* p = row + (size_t) x * bpp;
 			p[0] = (unsigned char) (packed >> 16);
 			p[1] = (unsigned char) (packed >> 8);

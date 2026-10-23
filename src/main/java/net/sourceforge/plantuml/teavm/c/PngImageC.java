@@ -35,8 +35,9 @@
 package net.sourceforge.plantuml.teavm.c;
 
 /**
- * Encodes a raster image (ARGB pixels) as a PNG in C, with the same encoder as
- * the PNG output (src/teavm-c/native/plantuml_png.h). Only call it when
+ * Encodes a raster image (ARGB pixels) as a PNG in C, losslessly (no palette,
+ * no packing of the channels), as javax.imageio does for an image embedded in an
+ * SVG (src/teavm-c/native/plantuml_png.h). Only call it when
  * {@code TeaVM.isC()}.
  */
 public final class PngImageC {
@@ -47,8 +48,7 @@ public final class PngImageC {
 
 	/**
 	 * @param argb   the pixels, row by row, as 0xAARRGGBB (not premultiplied)
-	 * @param opaque whether the alpha channel is ignored; the colors of an opaque
-	 *               image are also reduced to a palette of 255 (lossy)
+	 * @param opaque whether the alpha channel is ignored (RGB instead of RGBA)
 	 */
 	public static byte[] encode(int[] argb, int width, int height, boolean opaque) {
 		final int size = NativeCanvas.encodeImage(argb, width, height, opaque ? 1 : 0);

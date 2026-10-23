@@ -291,7 +291,7 @@ int32_t plantuml_png_image_encode(const int32_t* argb, int32_t width, int32_t he
 		pixels[i] = (uint32_t) argb[i];
 	unsigned char* png;
 	size_t size;
-	const int failed = plantuml_png_encode_straight(pixels, width, height, width * 4, opaque, &png, &size);
+	const int failed = plantuml_png_encode_lossless(pixels, width, height, width * 4, opaque, &png, &size);
 	free(pixels);
 	if (failed != 0 || size > 0x7FFFFFFF)
 		return -1;
