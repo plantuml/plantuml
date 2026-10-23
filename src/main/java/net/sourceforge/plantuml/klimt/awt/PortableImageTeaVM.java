@@ -231,56 +231,89 @@ class PortableImageTeaVM implements PortableImage {
 		final int[] dstPixels = new int[dstW * dstH];
 
 		if (interpolationType == 2)
-			scaleBilinear(pixels, width, height, dstPixels, dstW, dstH);
+			scaleBilinear(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);
 		else
-			scaleNearestNeighbor(pixels, width, height, dstPixels, dstW, dstH);
+			scaleNearestNeighbor(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);
 
 		return new PortableImageTeaVM(dstW, dstH, imageType, dstPixels);
 	}
 
 	/**
-	 * Nearest-neighbor scaling - fast but can be blocky.
+	 * Nearest-neighbor scaling. It reproduces the result of
+	 * <code>AffineTransformOp(TYPE_NEAREST_NEIGHBOR)</code>: the source pixel is
+	 * taken at the center of each destination pixel, using 16.16 fixed-point
+	 * coordinates. Destination pixels whose center falls outside of the source
+	 * stay transparent.
 	 */
-	private static void scaleNearestNeighbor(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
+	private static void scaleNearestNeighbor(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH,
+			double scale) {
+		final double inv = 1.0 / scale;
+		final long dx = (long) Math.floor(inv * 65536.0);
+		final long x0 = (long) Math.floor(0.5 * inv * 65536.0);
 		for (int y = 0; y < dstH; y++) {
-			final int srcY = y * srcH / dstH;
+			if ((y + 0.5) / scale >= srcH)
+				break;
+			final int srcY = (int) (((long) Math.floor((y + 0.5) * inv * 65536.0)) >> 16);
 			for (int x = 0; x < dstW; x++) {
-				final int srcX = x * srcW / dstW;
+				if ((x + 0.5) / scale >= srcW)
+					break;
+				final int srcX = (int) ((x0 + x * dx) >> 16);
 				dst[y * dstW + x] = src[srcY * srcW + srcX];
 			}
 		}
 	}
 
 	/**
-	 * Bilinear interpolation scaling - smoother results.
+	 * Bilinear scaling. It reproduces (almost) bit for bit the result of the
+	 * <code>AffineTransformOp(TYPE_BILINEAR)</code> used by the JVM version:
+	 * samples are taken at the pixel centers with 16.16 fixed-point coordinates,
+	 * the vertical interpolation is done first, each stage is rounded to 8 bits
+	 * (the pixels on the border are truncated, not rounded), the abscissa is
+	 * accumulated from the first column with a non-negative source position, and the channels
+	 * (alpha included) are interpolated independently. Destination pixels whose
+	 * center falls outside of the source stay transparent.
 	 */
-	private static void scaleBilinear(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
-		final double xRatio = (double) (srcW - 1) / dstW;
-		final double yRatio = (double) (srcH - 1) / dstH;
+	private static void scaleBilinear(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH,
+			double scale) {
+		final double inv = 1.0 / scale;
+		final long dx = (long) Math.floor(inv * 65536.0);
+		// The abscissa is computed exactly on the first destination column whose
+		// source position is not negative, then increased by a constant step.
+		int xLeft = 0;
+		while ((xLeft + 0.5) * inv - 0.5 < 0)
+			xLeft++;
+		final long xStart = (long) Math.floor(((xLeft + 0.5) * inv - 0.5) * 65536.0) - xLeft * dx;
 
 		for (int y = 0; y < dstH; y++) {
-			final double srcYf = y * yRatio;
-			final int y0 = (int) srcYf;
-			final int y1 = Math.min(y0 + 1, srcH - 1);
-			final double yFrac = srcYf - y0;
+			if ((y + 0.5) / scale >= srcH)
+				break;
+			final long yy = (long) Math.floor(((y + 0.5) * inv - 0.5) * 65536.0);
+			final int y0 = (int) (yy >> 16);
+			final int yf = (int) (yy & 0xFFFF);
+			final int ya = Math.max(0, Math.min(srcH - 1, y0));
+			final int yb = Math.max(0, Math.min(srcH - 1, y0 + 1));
 
 			for (int x = 0; x < dstW; x++) {
-				final double srcXf = x * xRatio;
-				final int x0 = (int) srcXf;
-				final int x1 = Math.min(x0 + 1, srcW - 1);
-				final double xFrac = srcXf - x0;
+				if ((x + 0.5) / scale >= srcW)
+					break;
+				final long xx = xStart + x * dx;
+				final int x0 = (int) (xx >> 16);
+				final int xf = (int) (xx & 0xFFFF);
+				final int xa = Math.max(0, Math.min(srcW - 1, x0));
+				final int xb = Math.max(0, Math.min(srcW - 1, x0 + 1));
 
-				// Get 4 neighboring pixels
-				final int c00 = src[y0 * srcW + x0];
-				final int c10 = src[y0 * srcW + x1];
-				final int c01 = src[y1 * srcW + x0];
-				final int c11 = src[y1 * srcW + x1];
+				final boolean onBorder = x0 < 0 || y0 < 0 || x0 + 1 > srcW - 1 || y0 + 1 > srcH - 1;
+				final int round = onBorder ? 0 : 32768;
 
-				// Interpolate each channel
-				final int a = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 24);
-				final int r = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 16);
-				final int g = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 8);
-				final int b = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 0);
+				final int c00 = src[ya * srcW + xa];
+				final int c10 = src[ya * srcW + xb];
+				final int c01 = src[yb * srcW + xa];
+				final int c11 = src[yb * srcW + xb];
+
+				final int a = interpolateChannel(c00, c10, c01, c11, xf, yf, round, 24);
+				final int r = interpolateChannel(c00, c10, c01, c11, xf, yf, round, 16);
+				final int g = interpolateChannel(c00, c10, c01, c11, xf, yf, round, 8);
+				final int b = interpolateChannel(c00, c10, c01, c11, xf, yf, round, 0);
 
 				dst[y * dstW + x] = (a << 24) | (r << 16) | (g << 8) | b;
 			}
@@ -288,19 +321,17 @@ class PortableImageTeaVM implements PortableImage {
 	}
 
 	/**
-	 * Bilinear interpolation for a single color channel.
+	 * Bilinear interpolation for a single channel (fractions on 16 bits).
 	 */
-	private static int interpolateChannel(int c00, int c10, int c01, int c11, double xFrac, double yFrac, int shift) {
-		final int v00 = (c00 >> shift) & 0xFF;
-		final int v10 = (c10 >> shift) & 0xFF;
-		final int v01 = (c01 >> shift) & 0xFF;
-		final int v11 = (c11 >> shift) & 0xFF;
+	private static int interpolateChannel(int c00, int c10, int c01, int c11, int xf, int yf, int round, int shift) {
+		final int v00 = (c00 >>> shift) & 0xFF;
+		final int v10 = (c10 >>> shift) & 0xFF;
+		final int v01 = (c01 >>> shift) & 0xFF;
+		final int v11 = (c11 >>> shift) & 0xFF;
 
-		final double top = v00 + xFrac * (v10 - v00);
-		final double bottom = v01 + xFrac * (v11 - v01);
-		final double result = top + yFrac * (bottom - top);
-
-		return Math.min(255, Math.max(0, (int) Math.round(result)));
+		final int left = v00 + (int) ((((long) (v01 - v00)) * yf + round) >> 16);
+		final int right = v10 + (int) ((((long) (v11 - v10)) * yf + round) >> 16);
+		return left + (int) ((((long) (right - left)) * xf + round) >> 16);
 	}
 
 	@Override
