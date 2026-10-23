@@ -250,7 +250,6 @@ public class SFile implements Comparable<SFile>, InputFile {
 	 * Check SecurityProfile to see if this file can be open.
 	 */
 	public boolean isFileOk() {
-		// ::comment when __TEAVM__
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.SANDBOX)
 			// In SANDBOX, we cannot read any files
 			return false;
@@ -290,7 +289,6 @@ public class SFile implements Comparable<SFile>, InputFile {
 				return false;
 
 		}
-		// ::done
 		return true;
 	}
 
@@ -311,14 +309,12 @@ public class SFile implements Comparable<SFile>, InputFile {
 	 * @throws IOException If an I/O error occurs, which is possible because the
 	 *                     check the pathname may require filesystem queries
 	 */
-	// ::comment when __TEAVM__
 	private boolean isDenied() throws IOException {
 		final SFile securityPath = SecurityUtils.getSecurityPath();
 		if (securityPath == null)
 			return false;
 		return getSanitizedPath().startsWith(securityPath.getSanitizedPath());
 	}
-	// ::done
 
 	/**
 	 * Returns a sanitized, canonical and normalized Path to a file.
@@ -362,7 +358,6 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return null;
 	}
 
-	// ::comment when __TEAVM__
 	private PortableImage readWebp() throws IOException {
 		try (InputStream is = openFile()) {
 			final int riff = read32(is);
@@ -409,7 +404,6 @@ public class SFile implements Comparable<SFile>, InputFile {
 			return null;
 		}
 	}
-	// ::done
 
 	public BufferedReader openBufferedReader() {
 		if (isFileOk()) {
@@ -436,7 +430,6 @@ public class SFile implements Comparable<SFile>, InputFile {
 		return null;
 	}
 
-	// ::comment when __TEAVM__
 	// Writing
 	public BufferedOutputStream createBufferedOutputStream() throws FileNotFoundException {
 		return new BufferedOutputStream(new FileOutputStream(internal));
@@ -470,7 +463,6 @@ public class SFile implements Comparable<SFile>, InputFile {
 			return getSanitizedPath();
 		return null;
 	}
-	// ::done
 
 	@Override
 	public InputStream newInputStream() {

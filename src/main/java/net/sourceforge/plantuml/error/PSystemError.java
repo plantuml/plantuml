@@ -291,15 +291,6 @@ public abstract class PSystemError extends UgDiagram {
 		return result;
 	}
 
-	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
-		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())
-			return source;
-
-		final TextBlock message = getMessageAdopt();
-		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);
-		return result;
-	}
-
 	private TextBlock addMessageArecibo(final TextBlock source) throws IOException {
 		final UImage message = new UImage(
 				new PixelImage(PSystemVersion.getArecibo(), AffineTransformType.TYPE_BILINEAR));

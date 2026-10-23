@@ -58,9 +58,7 @@ public final class ProtectedCommand<S extends Diagram> implements Command<S> {
 			final CommandExecutionResult result = cmd.execute(system, lines, currentPass);
 			// if (result.isOk()) {
 			// // TRACECOMMAND
-			// ::uncomment when __TEAVM__
 			// // System.err.println("CMD = " + cmd.getClass() + " " + currentPass);
-			// ::done
 			// }
 			return result;
 		} catch (Throwable t) {

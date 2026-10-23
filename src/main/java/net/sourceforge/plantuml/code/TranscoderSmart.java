@@ -43,7 +43,6 @@ public class TranscoderSmart implements Transcoder {
 			new CompressionZlib());
 	private final Transcoder hexOnly = TranscoderImpl.utf8(new AsciiEncoderHex(), new DiagramSourceCompressor(),
 			new CompressionNone());
-	// ::comment when __TEAVM__
 	// Legacy encoder
 	private final Transcoder oldOne = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),
 			new CompressionHuffman());
@@ -51,7 +50,6 @@ public class TranscoderSmart implements Transcoder {
 			new CompressionZip());
 	private final Transcoder gzip = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),
 			new CompressionGZip());
-	// ::done
 
 	public String decode(String code) throws NoPlantumlCompressionException {
 		// Work in progress
@@ -60,7 +58,6 @@ public class TranscoderSmart implements Transcoder {
 		if (code.startsWith("~0"))
 			return zlib.decode(code.substring(2));
 
-		// ::comment when __TEAVM__
 		if (code.startsWith("~1"))
 			return oldOne.decode(code.substring(2));
 
@@ -72,17 +69,12 @@ public class TranscoderSmart implements Transcoder {
 
 		if (code.startsWith("~zip~"))
 			return zip.decode(code.substring(5));
-		// ::done
 
-		// ::comment when __TEAVM__
 		try {
-			// ::done
 			return zlib.decode(code);
-			// ::comment when __TEAVM__
 		} catch (Exception ex) {
 			return oldOne.decode(code);
 		}
-		// ::done
 		// return zlib.decode(code);
 	}
 

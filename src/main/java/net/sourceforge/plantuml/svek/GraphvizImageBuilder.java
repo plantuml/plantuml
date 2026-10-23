@@ -336,7 +336,6 @@ public final class GraphvizImageBuilder {
 		return single;
 	}
 
-	// ::comment when __TEAVM__
 	private IEntityImage error(File dotExe) {
 		final List<String> msg = new ArrayList<>();
 		msg.add("Dot Executable: " + dotExe);
@@ -354,7 +353,6 @@ public final class GraphvizImageBuilder {
 		msg.add(" ");
 		return GraphicStrings.createForError(msg, false);
 	}
-	// ::done
 
 	private void printEntities(StringBounder stringBounder, Collection<Entity> entities2) {
 		for (Entity ent : entities2) {

@@ -269,7 +269,6 @@ public enum FileFormat {
 		}
 	}
 
-	// ::comment when __TEAVM__
 	static public XDimension2D getJavaDimension(UFont font, String text) {
 		if (text.length() == 0)
 			return new XDimension2D(0, 0);
@@ -382,6 +381,5 @@ public enum FileFormat {
 		}
 		return false;
 	}
-	// ::done
 
 }

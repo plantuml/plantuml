@@ -120,10 +120,8 @@ public class CommandCreoleBuilder {
 		addCommand(CommandCreoleFontFamilyChange.createEol());
 		addCommand(CommandCreoleMonospaced.create());
 		addCommand(CommandCreoleUrl.create());
-		// ::comment when __TEAVM__
 		if (SecurityUtils.allowSvgText())
 			addCommand(CommandCreoleSvgAttributeChange.create());
-		// ::done
 
 	}
 

@@ -60,7 +60,6 @@ public class FutureImage {
 	}
 
 	public PortableImage getNow() {
-		// ::comment when __TEAVM__
 		synchronized (this) {
 			if (image == null) {
 				image = PortableImageFactory.build(width, height, PortableImage.TYPE_INT_ARGB);
@@ -78,7 +77,6 @@ public class FutureImage {
 			}
 
 		}
-		// ::done
 		return image;
 	}
 

@@ -73,13 +73,11 @@ public class ClusterDotString {
 
 	void printInternal(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder, DotMode dotMode,
 			GraphvizVersion graphvizVersion, DiagramType type) {
-		// ::comment when __TEAVM__
 		if (cluster.diagram.getPragma().isTrue(PragmaKey.KERMOR)) {
 			new ClusterDotStringKermor(cluster, skinParam).printInternal(sb, lines, stringBounder, dotMode,
 					graphvizVersion, type);
 			return;
 		}
-		// ::done
 		final boolean packed = isPacked();
 
 		if (packed) {

@@ -40,7 +40,6 @@ public class TranscoderUtil {
 		return new TranscoderSmart();
 	}
 
-	// ::comment when __TEAVM__
 	public static Transcoder getDefaultTranscoderProtected() {
 		return new TranscoderSmartProtected();
 	}
@@ -49,6 +48,5 @@ public class TranscoderUtil {
 	public static Transcoder getDefaultTranscoderProtectedPure() {
 		return getDefaultTranscoderProtected();
 	}
-	// ::done
 
 }

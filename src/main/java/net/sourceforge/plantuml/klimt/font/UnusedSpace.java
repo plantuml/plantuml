@@ -83,8 +83,6 @@ public class UnusedSpace {
 
 	private UnusedSpace(UFont font, char c) {
 
-		// ::comment when __TEAVM__
-
 		final PortableImage im = PortableImageFactory.build(2 * HALF_SIZE, 2 * HALF_SIZE, PortableImage.TYPE_INT_RGB);
 		final Graphics2D g2d = im.createGraphics();
 		final String text = "" + c;
@@ -127,7 +125,6 @@ public class UnusedSpace {
 					this.meanY2 = j / 4.0 - HALF_SIZE;
 				}
 			}
-		// ::done
 
 	}
 

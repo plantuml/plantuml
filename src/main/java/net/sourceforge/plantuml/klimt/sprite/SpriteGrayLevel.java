@@ -81,7 +81,6 @@ public enum SpriteGrayLevel {
 		return nbColor;
 	}
 
-	// ::comment when __TEAVM__
 	public List<String> encode(PortableImage img) {
 		if (this == GRAY_16)
 			return encode16(img);
@@ -94,7 +93,6 @@ public enum SpriteGrayLevel {
 
 		throw new UnsupportedOperationException();
 	}
-	// ::done
 
 	private List<String> encode16(PortableImage img) {
 		final int width = img.getWidth();
@@ -244,7 +242,6 @@ public enum SpriteGrayLevel {
 		return result;
 	}
 
-	// ::comment when __TEAVM__
 	public List<String> encodeZ(PortableImage img) {
 		final int width = img.getWidth();
 		final int height = img.getHeight();
@@ -287,7 +284,6 @@ public enum SpriteGrayLevel {
 		}
 		return MyCollections.unmodifiableList(result);
 	}
-	// ::done
 
 	public Sprite buildSpriteZ(int width, int height, String compressed) {
 		final byte comp[] = new AsciiEncoder().decode(compressed);

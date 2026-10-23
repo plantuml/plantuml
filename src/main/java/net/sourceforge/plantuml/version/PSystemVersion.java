@@ -88,7 +88,6 @@ public class PSystemVersion extends PlainStringsDiagram {
 		this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;
 	}
 
-	// ::comment when __TEAVM__
 	public static PortableImage getPlantumlImage() {
 		return getImage("logo.png");
 	}
@@ -152,7 +151,6 @@ public class PSystemVersion extends PlainStringsDiagram {
 		}
 		return transparentIcon;
 	}
-	// ::done
 
 	public static PSystemVersion createShowVersion(UmlSource source, PreprocessingArtifact preprocessing) {
 		final ReportLog strings = new ReportLog();
@@ -186,7 +184,6 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return new PSystemVersion(source, true, strings.asList(), preprocessing);
 	}
 
-	// :: comment when __TEAVM__
 	public static PSystemVersion createStdLib(UmlSource source, PreprocessingArtifact preprocessing) {
 		final List<String> strings = new ArrayList<>();
 		Stdlib.addInfoVersion(strings, true);
@@ -194,7 +191,6 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 		return new PSystemVersion(source, true, strings, preprocessing);
 	}
-	// ::done
 
 	public static PSystemVersion createShowAuthors(UmlSource source, PreprocessingArtifact preprocessing) {
 		final List<String> strings = getAuthorsStrings(true);
@@ -205,10 +201,8 @@ public class PSystemVersion extends PlainStringsDiagram {
 		final List<String> strings = new ArrayList<>();
 		add(strings, "<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")",
 				withTag);
-		// :: comment when __TEAVM__
 		add(strings, "(" + License.getCurrent() + " source distribution)", withTag);
 		add(strings, " ", withTag);
-		// ::done
 		add(strings, "<u>Original idea</u>: Arnaud Roques", withTag);
 		add(strings, "<u>Word Macro</u>: Alain Bertucat & Matthieu Sabatier", withTag);
 		add(strings, "<u>Word Add-in</u>: Adriaan van den Brand", withTag);
@@ -237,7 +231,6 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 	}
 
-	// ::comment when __TEAVM__
 	public static PSystemVersion createTestDot(UmlSource source, PreprocessingArtifact preprocessing)
 			throws IOException {
 		final ReportLog strings = new ReportLog();
@@ -263,7 +256,6 @@ public class PSystemVersion extends PlainStringsDiagram {
 		}
 		return new PSystemVersion(source, strings, im, preprocessing);
 	}
-	// ::done
 
 //	public static PSystemVersion createPath(UmlSource source) throws IOException {
 //		final List<String> strings = new ArrayList<>();

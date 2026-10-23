@@ -231,7 +231,6 @@ public class SURL {
 		}
 	}
 
-	// ::comment when __TEAVM__
 	/**
 	 * Regex to remove the UserInfo part from a URL.
 	 */
@@ -726,5 +725,4 @@ public class SURL {
 
 		return url;
 	}
-	// ::done
 }

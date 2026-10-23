@@ -267,7 +267,6 @@ public class XAffineTransform {
 	// Conversion
 	// ------------------------------------------------------------------------
 
-	// ::comment when __TEAVM__
 	/**
 	 * Creates a new {@link java.awt.geom.AffineTransform} with the same matrix
 	 * values.
@@ -277,7 +276,6 @@ public class XAffineTransform {
 	public java.awt.geom.AffineTransform toAffineTransform() {
 		return new java.awt.geom.AffineTransform(m00, m10, m01, m11, m02, m12);
 	}
-	// ::done
 
 	@Override
 	public String toString() {

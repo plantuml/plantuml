@@ -108,7 +108,6 @@ public class FileUtils {
 		return readSvg(br, true, true);
 	}
 
-	// ::comment when __TEAVM__
 	static public File createTempFileLegacy(String prefix, String suffix) throws IOException {
 		if (suffix.startsWith(".") == false)
 			throw new IllegalArgumentException();
@@ -231,7 +230,5 @@ public class FileUtils {
 
 		return new String(baos.toByteArray(), StandardCharsets.UTF_8);
 	}
-
-	// ::done
 
 }

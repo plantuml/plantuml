@@ -679,57 +679,46 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                         TeaVM JavaScript Generation                             │
+│                           TeaVM JavaScript Generation                           │
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                 │
-│   Source: src/main/java/                                                        │
+│ Source: src/main/java/ is compiled as is by the TeaVM Gradle plugin.            │
+│ No preprocessing step: SJPP is not run for TeaVM.                               │
 │                                                                                 │
-│   ┌──────────────────────┐                                                      │
-│   │  syncSourcesForTeaVM │  Copy sources to build/sources/teavm-sjpp/java       │
-│   └──────────┬───────────┘                                                      │
-│              │                                                                  │
-│              ▼                                                                  │
-│   ┌──────────────────────┐                                                      │
-│   │  preprocessForTeaVM  │  Run SJPP preprocessor with __TEAVM__ define         │
-│   │                      │  Output: build/generated/teavm-sjpp/                 │
-│   │  (uses sjpp.jar)     │                                                      │
-│   └──────────┬───────────┘                                                      │
-│              │                                                                  │
-│              ▼                                                                  │
-│   ┌────────────────────────────────┐                                            │
-│   │ generateTeavmEmbeddedResources │  Embed plantuml.skin as Base64 in Java     │
-│   │                                │  Output: EmbeddedResources.java            │
-│   └──────────┬─────────────────────┘                                            │
-│              │                                                                  │
-│              ▼                                                                  │
-│   ┌──────────────────────┐                                                      │
-│   │   compileTeavmJava   │  Compile preprocessed sources (Java 11 target)       │
-│   │                      │  Uses teavm sourceSet                                │
-│   └──────────┬───────────┘                                                      │
-│              │                                                                  │
-│              ▼                                                                  │
-│   ┌──────────────────────┐                                                      │
-│   │  generateJavaScript  │  Run TeaVM compiler                                  │
-│   │                      │  Entry: PlantUMLBrowser                              │
-│   │  (TeaVMRunner)       │  Output: build/teavm/js/classes.js                   │
-│   └──────────┬───────────┘                                                      │
-│              │                                                                  │
-│              ▼                                                                  │
-│   ┌──────────────────────┐                                                      │
-│   │       teavm          │  Copy HTML template and viz-global.js                │
-│   │                      │  Output: build/teavm/js/                             │
-│   └──────────┬───────────┘                                                      │
-│              │                                                                  │
-│              ▼                                                                  │
-│   ┌──────────────────────┐                                                      │
-│   │      teavmZip        │  Create distributable ZIP                            │
-│   │                      │  Output: build/libs/js-plantuml-{ver}.zip            │
-│   └──────────────────────┘                                                      │
+│ ┌──────────────────────┐                                                        │
+│ │  generateJavaScript  │  Run TeaVM compiler (plugin task)                      │
+│ │                      │  Entry: PlantUMLBrowser                                │
+│ │                      │  Output: build/generated/teavm/js/plantuml.js          │
+│ └──────────┬───────────┘                                                        │
+│            │                                                                    │
+│            ▼                                                                    │
+│ ┌──────────────────────┐                                                        │
+│ │        teavm         │  Copy the companion files from src/main/teavm          │
+│ │                      │  (web/, generated/, stdlib/, vendor/), flat,           │
+│ │                      │  next to plantuml.js                                   │
+│ └──────────┬───────────┘                                                        │
+│            │                                                                    │
+│            ▼                                                                    │
+│ ┌──────────────────────┐                                                        │
+│ │       teavmZip       │  Create distributable ZIP                              │
+│ │                      │  Output: build/libs/js-plantuml-{ver}.zip              │
+│ └──────────────────────┘                                                        │
 │                                                                                 │
-│   Contents of js-plantuml-{ver}.zip:                                            │
-│     • classes.js ........ Compiled JavaScript                                   │
-│     • index.html ........ Demo page                                             │
-│     • viz-global.js ..... GraphViz library for DOT diagrams                     │
+│ Contents of js-plantuml-{ver}.zip (see src/main/teavm/README.md):               │
+│   • plantuml.js ............ Compiled JavaScript (the engine)                   │
+│   • *.html, main.js ........ Demo pages and scripts, preview/, vendor/          │
+│   • themes.js, emoji.js .... Generated by PlantUML itself                       │
+│   • <lib>.min.js ........... Stdlib bundles (from plantuml-stdlib)              │
+│   • viz-global.js .......... GraphViz library for DOT diagrams                  │
+│                                                                                 │
+│ Related tasks:                                                                  │
+│   • teavmWasm ..... Experimental Wasm GC engine (buildWasmGC), copied next to   │
+│                     plantuml.js: plantuml.wasm and its runtime                  │
+│   • generateC ..... Experimental C backend (see src/teavm-c/README.md)          │
+│   • npmPackage .... npm package of the JS engine                                │
+│                                                                                 │
+│ EmbeddedResources.java (plantuml/strictuml skins as Base64) is committed in     │
+│ src/main/java/net/sourceforge/plantuml/teavm/; it is not rebuilt by Gradle.     │
 │                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```

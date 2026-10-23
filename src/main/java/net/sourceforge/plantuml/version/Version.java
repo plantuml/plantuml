@@ -90,7 +90,6 @@ public class Version {
 				.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss 'UTC'"));
 	}
 
-	// ::comment when __TEAVM__
 	public static String getJarPath() {
 		try {
 			final ClassLoader loader = Version.class.getClassLoader();
@@ -109,6 +108,5 @@ public class Version {
 			return t.toString();
 		}
 	}
-	// ::done
 
 }

@@ -122,7 +122,6 @@ public class SourceStringReader {
 		return outputImage(os, 0);
 	}
 
-	// ::comment when __TEAVM__
 	/**
 	 * @deprecated Use {@link #outputImage(SFile)} instead
 	 */
@@ -136,7 +135,6 @@ public class SourceStringReader {
 			return outputImage(os, 0);
 		}
 	}
-	// ::done
 
 	/**
 	 * @deprecated Use {@link #outputImage(OutputStream, FileFormatOption)} instead

@@ -88,7 +88,6 @@ public class PreprocessorUtils {
 		return null;
 	}
 
-	// ::comment when __TEAVM__
 	public static ReadLine getReaderNonstandardInclude(StringLocated s, String filename) {
 		if (filename.endsWith(".puml") == false)
 			filename = filename + ".puml";
@@ -160,6 +159,5 @@ public class PreprocessorUtils {
 
 		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());
 	}
-	// ::done
 
 }
