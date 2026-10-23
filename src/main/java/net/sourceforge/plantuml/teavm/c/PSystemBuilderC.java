@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.gantt.GanttDiagramFactory;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
 import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
+import net.sourceforge.plantuml.klimt.sprite.ListSpriteDiagramFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
@@ -114,6 +115,7 @@ public class PSystemBuilderC {
 		factories.add(new PSystemEbnfFactory());
 		factories.add(new PSystemRegexFactory());
 		factories.add(new ChenEerDiagramFactory());
+		factories.add(new ListSpriteDiagramFactory());
 		// ::done
 	}
 
