@@ -173,7 +173,7 @@ class PortableImageTeaVM implements PortableImage {
 
 		if (TeaVM.isC())
 			return "data:image/png;base64,"
-					+ new String(Base64Coder.encode(PngImageC.encode(pixels, width, height, imageType == TYPE_INT_RGB)));
+					+ new String(Base64Coder.encode(PngImageC.encode(pixels, width, height, false)));
 
 		HTMLDocument doc = HTMLDocument.current();
 		HTMLCanvasElement canvas = (HTMLCanvasElement) doc.createElement("canvas");

@@ -47,7 +47,8 @@ public final class PngImageC {
 
 	/**
 	 * @param argb   the pixels, row by row, as 0xAARRGGBB (not premultiplied)
-	 * @param opaque whether the alpha channel is ignored
+	 * @param opaque whether the alpha channel is ignored; the colors of an opaque
+	 *               image are also reduced to a palette of 255 (lossy)
 	 */
 	public static byte[] encode(int[] argb, int width, int height, boolean opaque) {
 		final int size = NativeCanvas.encodeImage(argb, width, height, opaque ? 1 : 0);
