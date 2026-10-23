@@ -133,6 +133,14 @@ add_executable(plantuml ${TEAVM_GEN_OBJECTS} native/plantuml_canvas.c native/pla
 	${RESOURCES_SOURCE} ${FONT_SOURCES})
 target_include_directories(plantuml PRIVATE native)
 
+# Windows gives the main thread 1 MB of stack only. The regular expressions of
+# the Java runtime recurse for each character of a long path (a 13 KB sprite
+# overflowed it): reserve 64 MB (the other systems already give 8 MB).
+if (MSVC)
+	target_link_options(plantuml PRIVATE /STACK:67108864)
+elseif (WIN32)
+	target_link_options(plantuml PRIVATE -Wl,--stack,67108864)
+endif()
 if (WIN32)
 	target_link_libraries(plantuml plutovg miniz brotlidec)
 elseif (APPLE)
