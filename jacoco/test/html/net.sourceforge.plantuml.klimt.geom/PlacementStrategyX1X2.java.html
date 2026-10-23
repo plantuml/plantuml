@@ -42,25 +42,23 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public class PlacementStrategyX1X2 extends AbstractPlacementStrategy {
-	// ::remove file when __HAXE__
-
 	public PlacementStrategyX1X2(StringBounder stringBounder) {
-<span class="nc" id="L48">		super(stringBounder);</span>
-<span class="nc" id="L49">	}</span>
+<span class="nc" id="L46">		super(stringBounder);</span>
+<span class="nc" id="L47">	}</span>
 
 	public Map&lt;TextBlock, XPoint2D&gt; getPositions(double width, double height) {
-<span class="nc" id="L52">		final double usedWidth = getSumWidth();</span>
+<span class="nc" id="L50">		final double usedWidth = getSumWidth();</span>
 		// double maxHeight = getMaxHeight();
 
-<span class="nc" id="L55">		final double space = (width - usedWidth) / (getDimensions().size() + 1);</span>
-<span class="nc" id="L56">		final Map&lt;TextBlock, XPoint2D&gt; result = new LinkedHashMap&lt;&gt;();</span>
-<span class="nc" id="L57">		double x = space;</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, XDimension2D&gt; ent : getDimensions().entrySet()) {</span>
-<span class="nc" id="L59">			final double y = (height - ent.getValue().getHeight()) / 2;</span>
-<span class="nc" id="L60">			result.put(ent.getKey(), new XPoint2D(x, y));</span>
-<span class="nc" id="L61">			x += ent.getValue().getWidth() + space;</span>
-<span class="nc" id="L62">		}</span>
-<span class="nc" id="L63">		return result;</span>
+<span class="nc" id="L53">		final double space = (width - usedWidth) / (getDimensions().size() + 1);</span>
+<span class="nc" id="L54">		final Map&lt;TextBlock, XPoint2D&gt; result = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc" id="L55">		double x = space;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, XDimension2D&gt; ent : getDimensions().entrySet()) {</span>
+<span class="nc" id="L57">			final double y = (height - ent.getValue().getHeight()) / 2;</span>
+<span class="nc" id="L58">			result.put(ent.getKey(), new XPoint2D(x, y));</span>
+<span class="nc" id="L59">			x += ent.getValue().getWidth() + space;</span>
+<span class="nc" id="L60">		}</span>
+<span class="nc" id="L61">		return result;</span>
 	}
 
 }

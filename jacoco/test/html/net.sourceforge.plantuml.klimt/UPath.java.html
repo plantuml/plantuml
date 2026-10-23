@@ -118,129 +118,125 @@ public class UPath extends AbstractShadowable implements Iterable&lt;USegment&gt
 <span class="fc" id="L118">		return result;</span>
 	}
 
-	// ::comment when __HAXE__
 	public UPath rotate(double theta) {
-<span class="nc" id="L123">		final UPath result = new UPath(comment, codeLine);</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		for (USegment seg : segments)</span>
-<span class="nc" id="L125">			result.addInternal(seg.rotate(theta));</span>
+<span class="nc" id="L122">		final UPath result = new UPath(comment, codeLine);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		for (USegment seg : segments)</span>
+<span class="nc" id="L124">			result.addInternal(seg.rotate(theta));</span>
 
-<span class="nc" id="L127">		return result;</span>
+<span class="nc" id="L126">		return result;</span>
 	}
 
 	public UPath affine(XAffineTransform transform, double angle, double scale) {
-<span class="fc" id="L131">		final UPath result = new UPath(comment, codeLine);</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">		for (USegment seg : segments)</span>
-<span class="fc" id="L133">			result.addInternal(seg.affine(transform, angle, scale));</span>
+<span class="fc" id="L130">		final UPath result = new UPath(comment, codeLine);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		for (USegment seg : segments)</span>
+<span class="fc" id="L132">			result.addInternal(seg.affine(transform, angle, scale));</span>
 
-<span class="fc" id="L135">		return result;</span>
+<span class="fc" id="L134">		return result;</span>
 	}
-	// ::done
 
 	public void moveTo(XPoint2D pt) {
-<span class="fc" id="L140">		moveTo(pt.getX(), pt.getY());</span>
-<span class="fc" id="L141">	}</span>
+<span class="fc" id="L138">		moveTo(pt.getX(), pt.getY());</span>
+<span class="fc" id="L139">	}</span>
 
 	public void lineTo(XPoint2D pt) {
-<span class="fc" id="L144">		lineTo(pt.getX(), pt.getY());</span>
-<span class="fc" id="L145">	}</span>
+<span class="fc" id="L142">		lineTo(pt.getX(), pt.getY());</span>
+<span class="fc" id="L143">	}</span>
 
 	public void moveTo(double x, double y) {
-<span class="fc" id="L148">		final double last[] = getLastCoord();</span>
-<span class="pc bpc" id="L149" title="1 of 6 branches missed.">		if (last != null &amp;&amp; last[0] == x &amp;&amp; last[1] == y)</span>
-<span class="nc" id="L150">			return;</span>
-<span class="fc" id="L151">		add(new double[] { x, y }, USegmentType.SEG_MOVETO);</span>
-<span class="fc" id="L152">	}</span>
+<span class="fc" id="L146">		final double last[] = getLastCoord();</span>
+<span class="pc bpc" id="L147" title="1 of 6 branches missed.">		if (last != null &amp;&amp; last[0] == x &amp;&amp; last[1] == y)</span>
+<span class="nc" id="L148">			return;</span>
+<span class="fc" id="L149">		add(new double[] { x, y }, USegmentType.SEG_MOVETO);</span>
+<span class="fc" id="L150">	}</span>
 
 	public void lineTo(double x, double y) {
-<span class="fc" id="L155">		add(new double[] { x, y }, USegmentType.SEG_LINETO);</span>
-<span class="fc" id="L156">	}</span>
+<span class="fc" id="L153">		add(new double[] { x, y }, USegmentType.SEG_LINETO);</span>
+<span class="fc" id="L154">	}</span>
 
 	public void cubicTo(XPoint2D p1, XPoint2D p2, XPoint2D p) {
-<span class="fc" id="L159">		cubicTo(p1.getX(), p1.getY(), p2.getX(), p2.getY(), p.getX(), p.getY());</span>
-<span class="fc" id="L160">	}</span>
+<span class="fc" id="L157">		cubicTo(p1.getX(), p1.getY(), p2.getX(), p2.getY(), p.getX(), p.getY());</span>
+<span class="fc" id="L158">	}</span>
 
 	public void cubicTo(double ctrlx1, double ctrly1, double ctrlx2, double ctrly2, double x2, double y2) {
-<span class="fc" id="L163">		add(new double[] { ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2 }, USegmentType.SEG_CUBICTO);</span>
-<span class="fc" id="L164">	}</span>
+<span class="fc" id="L161">		add(new double[] { ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2 }, USegmentType.SEG_CUBICTO);</span>
+<span class="fc" id="L162">	}</span>
 
 	public void quadTo(double ctrlx, double ctrly, double x2, double y2) {
-<span class="nc" id="L167">		add(new double[] { ctrlx, ctrly, ctrlx, ctrly, x2, y2 }, USegmentType.SEG_CUBICTO);</span>
-<span class="nc" id="L168">	}</span>
+<span class="nc" id="L165">		add(new double[] { ctrlx, ctrly, ctrlx, ctrly, x2, y2 }, USegmentType.SEG_CUBICTO);</span>
+<span class="nc" id="L166">	}</span>
 
 	public void quadTo(XPoint2D ctrl, XPoint2D pt) {
-<span class="nc" id="L171">		quadTo(ctrl.getX(), ctrl.getY(), pt.getX(), pt.getY());</span>
-<span class="nc" id="L172">	}</span>
+<span class="nc" id="L169">		quadTo(ctrl.getX(), ctrl.getY(), pt.getX(), pt.getY());</span>
+<span class="nc" id="L170">	}</span>
 
 	public void arcTo(double rx, double ry, double x_axis_rotation, double large_arc_flag, double sweep_flag, double x,
 			double y) {
-<span class="fc" id="L176">		add(new double[] { rx, ry, x_axis_rotation, large_arc_flag, sweep_flag, x, y }, USegmentType.SEG_ARCTO);</span>
+<span class="fc" id="L174">		add(new double[] { rx, ry, x_axis_rotation, large_arc_flag, sweep_flag, x, y }, USegmentType.SEG_ARCTO);</span>
 		// lineTo(x, y);
-<span class="fc" id="L178">	}</span>
+<span class="fc" id="L176">	}</span>
 
 	public void arcTo(XPoint2D pt, double radius, double large_arc_flag, double sweep_flag) {
-<span class="fc" id="L181">		add(new double[] { radius, radius, 0, large_arc_flag, sweep_flag, pt.getX(), pt.getY() },</span>
+<span class="fc" id="L179">		add(new double[] { radius, radius, 0, large_arc_flag, sweep_flag, pt.getX(), pt.getY() },</span>
 				USegmentType.SEG_ARCTO);
 		// lineTo(x, y);
-<span class="fc" id="L184">	}</span>
+<span class="fc" id="L182">	}</span>
 
 	public void closePath() {
 		// System.err.println(&quot;CLOSE_PATH&quot;);
-<span class="fc" id="L188">	}</span>
+<span class="fc" id="L186">	}</span>
 
 	public double getMaxX() {
-<span class="fc" id="L191">		return minmax.getMaxX();</span>
+<span class="fc" id="L189">		return minmax.getMaxX();</span>
 	}
 
 	public double getMaxY() {
-<span class="fc" id="L195">		return minmax.getMaxY();</span>
+<span class="fc" id="L193">		return minmax.getMaxY();</span>
 	}
 
 	public double getMinX() {
-<span class="fc" id="L199">		return minmax.getMinX();</span>
+<span class="fc" id="L197">		return minmax.getMinX();</span>
 	}
 
 	public double getMinY() {
-<span class="fc" id="L203">		return minmax.getMinY();</span>
+<span class="fc" id="L201">		return minmax.getMinY();</span>
 	}
 
-	// ::comment when __HAXE__
 	@Override
 	public String toString() {
-<span class="nc" id="L209">		return segments.toString();</span>
+<span class="nc" id="L206">		return segments.toString();</span>
 	}
-	// ::done
 
 	public Iterator&lt;USegment&gt; iterator() {
-<span class="fc" id="L214">		return segments.iterator();</span>
+<span class="fc" id="L210">		return segments.iterator();</span>
 	}
 
 	public final String getComment() {
-<span class="fc" id="L218">		return comment;</span>
+<span class="fc" id="L214">		return comment;</span>
 	}
 
 	public final String getCodeLine() {
-<span class="fc" id="L222">		return codeLine;</span>
+<span class="fc" id="L218">		return codeLine;</span>
 	}
 
 	public void setIgnoreForCompressionOnX() {
-<span class="fc" id="L226">		this.ignoreForCompressionOnX = true;</span>
-<span class="fc" id="L227">	}</span>
+<span class="fc" id="L222">		this.ignoreForCompressionOnX = true;</span>
+<span class="fc" id="L223">	}</span>
 
 	public void setIgnoreForCompressionOnY() {
-<span class="nc" id="L230">		this.ignoreForCompressionOnY = true;</span>
-<span class="nc" id="L231">	}</span>
+<span class="nc" id="L226">		this.ignoreForCompressionOnY = true;</span>
+<span class="nc" id="L227">	}</span>
 
 	public void drawWhenCompressed(UGraphic ug, CompressionMode mode) {
-<span class="fc" id="L234">	}</span>
+<span class="fc" id="L230">	}</span>
 
 	public boolean isIgnoreForCompressionOn(CompressionMode mode) {
-<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (mode == CompressionMode.ON_X) {</span>
-<span class="fc" id="L238">			return ignoreForCompressionOnX;</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (mode == CompressionMode.ON_X) {</span>
+<span class="fc" id="L234">			return ignoreForCompressionOnX;</span>
 		}
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">		if (mode == CompressionMode.ON_Y) {</span>
-<span class="fc" id="L241">			return ignoreForCompressionOnY;</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">		if (mode == CompressionMode.ON_Y) {</span>
+<span class="fc" id="L237">			return ignoreForCompressionOnY;</span>
 		}
-<span class="nc" id="L243">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L239">		throw new IllegalArgumentException();</span>
 	}
 
 	// public boolean isEmpty() {
@@ -249,7 +245,7 @@ public class UPath extends AbstractShadowable implements Iterable&lt;USegment&gt
 
 	@Override
 	public UShapeKind getShapeKind() {
-<span class="fc" id="L252">		return UShapeKind.PATH;</span>
+<span class="fc" id="L248">		return UShapeKind.PATH;</span>
 	}
 
 }

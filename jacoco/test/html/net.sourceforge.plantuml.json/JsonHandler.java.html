@@ -58,8 +58,6 @@ package net.sourceforge.plantuml.json;
  * @see JsonParser
  */
 <span class="fc" id="L60">public abstract class JsonHandler&lt;A, O&gt; {</span>
-    // ::remove folder when __HAXE__
-
 	JsonParser parser;
 
 	/**
@@ -68,7 +66,7 @@ package net.sourceforge.plantuml.json;
 	 * @return the current parser location
 	 */
 	protected Location getLocation() {
-<span class="nc" id="L71">		return parser.getLocation();</span>
+<span class="nc" id="L69">		return parser.getLocation();</span>
 	}
 
 	/**
@@ -76,14 +74,14 @@ package net.sourceforge.plantuml.json;
 	 * This method will be called when reading the first character of the literal.
 	 */
 	public void startNull() {
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L77">	}</span>
 
 	/**
 	 * Indicates the end of a &lt;code&gt;null&lt;/code&gt; literal in the JSON input. This
 	 * method will be called after reading the last character of the literal.
 	 */
 	public void endNull() {
-<span class="nc" id="L86">	}</span>
+<span class="nc" id="L84">	}</span>
 
 	/**
 	 * Indicates the beginning of a boolean literal (&lt;code&gt;true&lt;/code&gt; or
@@ -91,7 +89,7 @@ package net.sourceforge.plantuml.json;
 	 * reading the first character of the literal.
 	 */
 	public void startBoolean() {
-<span class="fc" id="L94">	}</span>
+<span class="fc" id="L92">	}</span>
 
 	/**
 	 * Indicates the end of a boolean literal (&lt;code&gt;true&lt;/code&gt; or
@@ -101,7 +99,7 @@ package net.sourceforge.plantuml.json;
 	 * @param value the parsed boolean value
 	 */
 	public void endBoolean(boolean value) {
-<span class="nc" id="L104">	}</span>
+<span class="nc" id="L102">	}</span>
 
 	/**
 	 * Indicates the beginning of a string in the JSON input. This method will be
@@ -109,7 +107,7 @@ package net.sourceforge.plantuml.json;
 	 * (&lt;code&gt;'&amp;quot;'&lt;/code&gt;).
 	 */
 	public void startString() {
-<span class="fc" id="L112">	}</span>
+<span class="fc" id="L110">	}</span>
 
 	/**
 	 * Indicates the end of a string in the JSON input. This method will be called
@@ -118,14 +116,14 @@ package net.sourceforge.plantuml.json;
 	 * @param string the parsed string
 	 */
 	public void endString(String string) {
-<span class="nc" id="L121">	}</span>
+<span class="nc" id="L119">	}</span>
 
 	/**
 	 * Indicates the beginning of a number in the JSON input. This method will be
 	 * called when reading the first character of the number.
 	 */
 	public void startNumber() {
-<span class="fc" id="L128">	}</span>
+<span class="fc" id="L126">	}</span>
 
 	/**
 	 * Indicates the end of a number in the JSON input. This method will be called
@@ -134,7 +132,7 @@ package net.sourceforge.plantuml.json;
 	 * @param string the parsed number string
 	 */
 	public void endNumber(String string) {
-<span class="nc" id="L137">	}</span>
+<span class="nc" id="L135">	}</span>
 
 	/**
 	 * Indicates the beginning of an array in the JSON input. This method will be
@@ -150,7 +148,7 @@ package net.sourceforge.plantuml.json;
 	 * @return a handler for this array, or &lt;code&gt;null&lt;/code&gt; if not needed
 	 */
 	public A startArray() {
-<span class="nc" id="L153">		return null;</span>
+<span class="nc" id="L151">		return null;</span>
 	}
 
 	/**
@@ -161,7 +159,7 @@ package net.sourceforge.plantuml.json;
 	 *              &lt;code&gt;null&lt;/code&gt; if not provided
 	 */
 	public void endArray(A array) {
-<span class="nc" id="L164">	}</span>
+<span class="nc" id="L162">	}</span>
 
 	/**
 	 * Indicates the beginning of an array element in the JSON input. This method
@@ -173,7 +171,7 @@ package net.sourceforge.plantuml.json;
 	 *              &lt;code&gt;null&lt;/code&gt; if not provided
 	 */
 	public void startArrayValue(A array) {
-<span class="fc" id="L176">	}</span>
+<span class="fc" id="L174">	}</span>
 
 	/**
 	 * Indicates the end of an array element in the JSON input. This method will be
@@ -186,7 +184,7 @@ package net.sourceforge.plantuml.json;
 	 *              &lt;code&gt;null&lt;/code&gt; if not provided
 	 */
 	public void endArrayValue(A array) {
-<span class="nc" id="L189">	}</span>
+<span class="nc" id="L187">	}</span>
 
 	/**
 	 * Indicates the beginning of an object in the JSON input. This method will be
@@ -204,7 +202,7 @@ package net.sourceforge.plantuml.json;
 	 * @return a handler for this object, or &lt;code&gt;null&lt;/code&gt; if not needed
 	 */
 	public O startObject() {
-<span class="nc" id="L207">		return null;</span>
+<span class="nc" id="L205">		return null;</span>
 	}
 
 	/**
@@ -215,7 +213,7 @@ package net.sourceforge.plantuml.json;
 	 *               null if not provided
 	 */
 	public void endObject(O object) {
-<span class="nc" id="L218">	}</span>
+<span class="nc" id="L216">	}</span>
 
 	/**
 	 * Indicates the beginning of the name of an object member in the JSON input.
@@ -226,7 +224,7 @@ package net.sourceforge.plantuml.json;
 	 *               &lt;code&gt;null&lt;/code&gt; if not provided
 	 */
 	public void startObjectName(O object) {
-<span class="fc" id="L229">	}</span>
+<span class="fc" id="L227">	}</span>
 
 	/**
 	 * Indicates the end of an object member name in the JSON input. This method
@@ -238,7 +236,7 @@ package net.sourceforge.plantuml.json;
 	 * @param name   the parsed member name
 	 */
 	public void endObjectName(O object, String name) {
-<span class="fc" id="L241">	}</span>
+<span class="fc" id="L239">	}</span>
 
 	/**
 	 * Indicates the beginning of the name of an object member in the JSON input.
@@ -250,7 +248,7 @@ package net.sourceforge.plantuml.json;
 	 * @param name   the member name
 	 */
 	public void startObjectValue(O object, String name) {
-<span class="fc" id="L253">	}</span>
+<span class="fc" id="L251">	}</span>
 
 	/**
 	 * Indicates the end of an object member value in the JSON input. This method
@@ -264,7 +262,7 @@ package net.sourceforge.plantuml.json;
 	 * @param name   the parsed member name
 	 */
 	public void endObjectValue(O object, String name) {
-<span class="nc" id="L267">	}</span>
+<span class="nc" id="L265">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

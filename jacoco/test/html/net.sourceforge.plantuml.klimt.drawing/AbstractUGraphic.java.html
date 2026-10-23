@@ -65,8 +65,6 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public abstract class AbstractUGraphic&lt;O&gt; extends AbstractCommonUGraphic {
-	// ::remove file when __HAXE__
-
 	private /* final */ O graphic;
 	private /* final */ MinMaxMutable minmax;
 
@@ -107,18 +105,18 @@ public abstract class AbstractUGraphic&lt;O&gt; extends AbstractCommonUGraphic {
 
 	@SuppressWarnings(&quot;unchecked&quot;)
 	private static &lt;O&gt; UDriver&lt;?, O&gt;[] newDriverArray() {
-<span class="fc" id="L110">		return new UDriver[UShapeKind.COUNT];</span>
+<span class="fc" id="L108">		return new UDriver[UShapeKind.COUNT];</span>
 	}
 
 	protected AbstractUGraphic(StringBounder stringBounder) {
-<span class="fc" id="L114">		super(stringBounder);</span>
-<span class="fc" id="L115">	}</span>
+<span class="fc" id="L112">		super(stringBounder);</span>
+<span class="fc" id="L113">	}</span>
 
 	public void copy(HColor defaultBackground, ColorMapper colorMapper, O graphic) {
-<span class="fc" id="L118">		basicCopy(defaultBackground, colorMapper);</span>
-<span class="fc" id="L119">		this.graphic = graphic;</span>
-<span class="fc" id="L120">		this.minmax = MinMaxMutable.getEmpty(true);</span>
-<span class="fc" id="L121">	}</span>
+<span class="fc" id="L116">		basicCopy(defaultBackground, colorMapper);</span>
+<span class="fc" id="L117">		this.graphic = graphic;</span>
+<span class="fc" id="L118">		this.minmax = MinMaxMutable.getEmpty(true);</span>
+<span class="fc" id="L119">	}</span>
 
 	/**
 	 * Makes this UGraphic a copy of {@code other}, sharing its driver table rather
@@ -130,31 +128,31 @@ public abstract class AbstractUGraphic&lt;O&gt; extends AbstractCommonUGraphic {
 	 * registerDriver refuses to run after this point.
 	 */
 	protected void copy(AbstractUGraphic&lt;O&gt; other) {
-<span class="fc" id="L133">		basicCopy(other);</span>
-<span class="fc" id="L134">		this.graphic = other.graphic;</span>
-<span class="fc" id="L135">		this.minmax = other.minmax;</span>
-<span class="fc" id="L136">		this.drivers = other.drivers;</span>
-<span class="fc" id="L137">		this.driversShared = true;</span>
-<span class="fc" id="L138">	}</span>
+<span class="fc" id="L131">		basicCopy(other);</span>
+<span class="fc" id="L132">		this.graphic = other.graphic;</span>
+<span class="fc" id="L133">		this.minmax = other.minmax;</span>
+<span class="fc" id="L134">		this.drivers = other.drivers;</span>
+<span class="fc" id="L135">		this.driversShared = true;</span>
+<span class="fc" id="L136">	}</span>
 
 	protected final O getGraphicObject() {
-<span class="fc" id="L141">		return graphic;</span>
+<span class="fc" id="L139">		return graphic;</span>
 	}
 
 	protected boolean manageHiddenAutomatically() {
-<span class="nc" id="L145">		return true;</span>
+<span class="nc" id="L143">		return true;</span>
 	}
 
 	final protected &lt;SHAPE extends UShape&gt; void registerDriver(Class&lt;SHAPE&gt; cl, UDriver&lt;SHAPE, O&gt; driver) {
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (driversShared)</span>
-<span class="nc" id="L150">			throw new IllegalStateException(</span>
-<span class="nc" id="L151">					&quot;Drivers are registered once, on the UGraphic a copy chain starts from: &quot; + getClass().getName());</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (driversShared)</span>
+<span class="nc" id="L148">			throw new IllegalStateException(</span>
+<span class="nc" id="L149">					&quot;Drivers are registered once, on the UGraphic a copy chain starts from: &quot; + getClass().getName());</span>
 
-<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (this.drivers == null)</span>
-<span class="fc" id="L154">			this.drivers = newDriverArray();</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (this.drivers == null)</span>
+<span class="fc" id="L152">			this.drivers = newDriverArray();</span>
 
-<span class="fc" id="L156">		this.drivers[UShapeKind.of(cl).ordinal()] = driver;</span>
-<span class="fc" id="L157">	}</span>
+<span class="fc" id="L154">		this.drivers[UShapeKind.of(cl).ordinal()] = driver;</span>
+<span class="fc" id="L155">	}</span>
 
 	/**
 	 * Adopts a driver table built elsewhere, instead of filling one through
@@ -166,9 +164,9 @@ public abstract class AbstractUGraphic&lt;O&gt; extends AbstractCommonUGraphic {
 	 * copy(AbstractUGraphic).
 	 */
 	protected final void useDrivers(UDriver&lt;?, O&gt;[] shared) {
-<span class="nc" id="L169">		this.drivers = shared;</span>
-<span class="nc" id="L170">		this.driversShared = true;</span>
-<span class="nc" id="L171">	}</span>
+<span class="nc" id="L167">		this.drivers = shared;</span>
+<span class="nc" id="L168">		this.driversShared = true;</span>
+<span class="nc" id="L169">	}</span>
 
 	/**
 	 * The do-nothing driver of {@link #ignoreShape}, for a backend filling a table
@@ -176,196 +174,196 @@ public abstract class AbstractUGraphic&lt;O&gt; extends AbstractCommonUGraphic {
 	 */
 	@SuppressWarnings(&quot;unchecked&quot;)
 	protected static &lt;SHAPE extends UShape, O&gt; UDriver&lt;SHAPE, O&gt; noopDriver() {
-<span class="nc" id="L179">		return (UDriver&lt;SHAPE, O&gt;) NOOP_DRIVER;</span>
+<span class="nc" id="L177">		return (UDriver&lt;SHAPE, O&gt;) NOOP_DRIVER;</span>
 	}
 
-<span class="fc" id="L182">	private static final UDriver&lt;?, ?&gt; NOOP_DRIVER = new UDriver&lt;UShape, Object&gt;() {</span>
+<span class="fc" id="L180">	private static final UDriver&lt;?, ?&gt; NOOP_DRIVER = new UDriver&lt;UShape, Object&gt;() {</span>
 		@Override
 		public void draw(UShape shape, double x, double y, ColorMapper mapper, UParam param, Object object) {
-<span class="nc" id="L185">		}</span>
+<span class="nc" id="L183">		}</span>
 	};
 
 	@SuppressWarnings(&quot;unchecked&quot;)
 	final protected &lt;SHAPE extends UShape&gt; void ignoreShape(Class&lt;SHAPE&gt; cl) {
-<span class="fc" id="L190">		registerDriver(cl, (UDriver&lt;SHAPE, O&gt;) NOOP_DRIVER);</span>
-<span class="fc" id="L191">	}</span>
+<span class="fc" id="L188">		registerDriver(cl, (UDriver&lt;SHAPE, O&gt;) NOOP_DRIVER);</span>
+<span class="fc" id="L189">	}</span>
 
 	public final &lt;SHAPE extends UShape&gt; void draw(SHAPE shape) {
-<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (shape instanceof SpecialText) {</span>
-<span class="fc" id="L195">			((SpecialText) shape).getTitle().drawU(this);</span>
-<span class="fc" id="L196">			return;</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">		if (shape instanceof SpecialText) {</span>
+<span class="fc" id="L193">			((SpecialText) shape).getTitle().drawU(this);</span>
+<span class="fc" id="L194">			return;</span>
 		}
-<span class="fc bfc" id="L198" title="All 2 branches covered.">		if (shape instanceof UEmpty)</span>
-<span class="fc" id="L199">			return;</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (shape instanceof UEmpty)</span>
+<span class="fc" id="L197">			return;</span>
 
-<span class="fc bfc" id="L201" title="All 2 branches covered.">		if (shape instanceof UComment) {</span>
-<span class="fc" id="L202">			drawComment((UComment) shape);</span>
-<span class="fc" id="L203">			return;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (shape instanceof UComment) {</span>
+<span class="fc" id="L200">			drawComment((UComment) shape);</span>
+<span class="fc" id="L201">			return;</span>
 		}
 
-<span class="fc" id="L206">		updateMinMax(shape);</span>
+<span class="fc" id="L204">		updateMinMax(shape);</span>
 
 		// UShapeKind.UNKNOWN is what every shape no driver handles reports, and nothing
 		// is ever
 		// registered in that slot, so an unhandled shape finds null here exactly as an
 		// unregistered Class used to.
 		@SuppressWarnings(&quot;unchecked&quot;)
-<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		final UDriver&lt;SHAPE, O&gt; driver = drivers == null ? null</span>
-<span class="fc" id="L214">				: (UDriver&lt;SHAPE, O&gt;) drivers[shape.getShapeKind().ordinal()];</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		final UDriver&lt;SHAPE, O&gt; driver = drivers == null ? null</span>
+<span class="fc" id="L212">				: (UDriver&lt;SHAPE, O&gt;) drivers[shape.getShapeKind().ordinal()];</span>
 
-<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		if (driver == null)</span>
-<span class="nc" id="L217">			throw new UnsupportedOperationException(shape.getClass().toString() + &quot; &quot; + this.getClass());</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">		if (driver == null)</span>
+<span class="nc" id="L215">			throw new UnsupportedOperationException(shape.getClass().toString() + &quot; &quot; + this.getClass());</span>
 
-<span class="pc bpc" id="L219" title="1 of 4 branches missed.">		if (getParam().isHidden() &amp;&amp; manageHiddenAutomatically())</span>
-<span class="nc" id="L220">			return;</span>
+<span class="pc bpc" id="L217" title="1 of 4 branches missed.">		if (getParam().isHidden() &amp;&amp; manageHiddenAutomatically())</span>
+<span class="nc" id="L218">			return;</span>
 
-<span class="fc" id="L222">		beforeDraw();</span>
-<span class="fc" id="L223">		driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), graphic);</span>
-<span class="fc" id="L224">		afterDraw();</span>
-<span class="fc" id="L225">	}</span>
+<span class="fc" id="L220">		beforeDraw();</span>
+<span class="fc" id="L221">		driver.draw(shape, getTranslateX(), getTranslateY(), getColorMapper(), getParam(), graphic);</span>
+<span class="fc" id="L222">		afterDraw();</span>
+<span class="fc" id="L223">	}</span>
 
 	private void updateMinMax(UShape shape) {
-<span class="fc bfc" id="L228" title="All 4 branches covered.">		if (matchesProperty(&quot;SPECIALTXT&quot;) &amp;&amp; shape instanceof AtomText) {</span>
-<span class="fc" id="L229">			return;</span>
+<span class="fc bfc" id="L226" title="All 4 branches covered.">		if (matchesProperty(&quot;SPECIALTXT&quot;) &amp;&amp; shape instanceof AtomText) {</span>
+<span class="fc" id="L227">			return;</span>
 		}
 
-<span class="fc" id="L232">		final double x = getTranslate().getDx();</span>
-<span class="fc" id="L233">		final double y = getTranslate().getDy();</span>
-<span class="fc bfc" id="L234" title="All 2 branches covered.">		if (shape instanceof UText) {</span>
-<span class="fc" id="L235">			drawText(x, y, (UText) shape);</span>
-<span class="fc bfc" id="L236" title="All 2 branches covered.">		} else if (shape instanceof ULine) {</span>
-<span class="fc" id="L237">			drawULine(x, y, (ULine) shape);</span>
-<span class="fc bfc" id="L238" title="All 2 branches covered.">		} else if (shape instanceof UEllipse) {</span>
-<span class="fc" id="L239">			drawEllipse(x, y, (UEllipse) shape);</span>
-<span class="fc bfc" id="L240" title="All 2 branches covered.">		} else if (shape instanceof UPolygon) {</span>
-<span class="fc" id="L241">			drawUPolygon(x, y, (UPolygon) shape);</span>
-<span class="fc bfc" id="L242" title="All 2 branches covered.">		} else if (shape instanceof UPath) {</span>
-<span class="fc" id="L243">			drawUPath(x, y, (UPath) shape);</span>
-<span class="fc bfc" id="L244" title="All 2 branches covered.">		} else if (shape instanceof URectangle) {</span>
-<span class="fc" id="L245">			drawRectangle(x, y, (URectangle) shape);</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">		} else if (shape instanceof DotPath) {</span>
-<span class="fc" id="L247">			drawDotPath(x, y, (DotPath) shape);</span>
-<span class="fc bfc" id="L248" title="All 2 branches covered.">		} else if (shape instanceof UImage) {</span>
-<span class="fc" id="L249">			drawImage(x, y, (UImage) shape);</span>
-<span class="fc bfc" id="L250" title="All 2 branches covered.">		} else if (shape instanceof UImageSvg) {</span>
-<span class="fc" id="L251">			drawImageSvg(x, y, (UImageSvg) shape);</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">		} else if (shape instanceof UImageTikz) {</span>
-<span class="fc" id="L253">			drawImageTikz(x, y, (UImageTikz) shape);</span>
-<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		} else if (shape instanceof UComment) {</span>
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		} else if (shape instanceof UEmpty) {</span>
-<span class="nc" id="L256">			drawEmpty(x, y, (UEmpty) shape);</span>
-<span class="pc bpc" id="L257" title="1 of 2 branches missed.">		} else if (shape instanceof TextBlock) {</span>
-<span class="nc" id="L258">			final TextBlock tb = (TextBlock) shape;</span>
-<span class="nc" id="L259">			tb.drawU(this);</span>
-<span class="pc bpc" id="L260" title="1 of 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
+<span class="fc" id="L230">		final double x = getTranslate().getDx();</span>
+<span class="fc" id="L231">		final double y = getTranslate().getDy();</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">		if (shape instanceof UText) {</span>
+<span class="fc" id="L233">			drawText(x, y, (UText) shape);</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">		} else if (shape instanceof ULine) {</span>
+<span class="fc" id="L235">			drawULine(x, y, (ULine) shape);</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">		} else if (shape instanceof UEllipse) {</span>
+<span class="fc" id="L237">			drawEllipse(x, y, (UEllipse) shape);</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">		} else if (shape instanceof UPolygon) {</span>
+<span class="fc" id="L239">			drawUPolygon(x, y, (UPolygon) shape);</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		} else if (shape instanceof UPath) {</span>
+<span class="fc" id="L241">			drawUPath(x, y, (UPath) shape);</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">		} else if (shape instanceof URectangle) {</span>
+<span class="fc" id="L243">			drawRectangle(x, y, (URectangle) shape);</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">		} else if (shape instanceof DotPath) {</span>
+<span class="fc" id="L245">			drawDotPath(x, y, (DotPath) shape);</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">		} else if (shape instanceof UImage) {</span>
+<span class="fc" id="L247">			drawImage(x, y, (UImage) shape);</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		} else if (shape instanceof UImageSvg) {</span>
+<span class="fc" id="L249">			drawImageSvg(x, y, (UImageSvg) shape);</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		} else if (shape instanceof UImageTikz) {</span>
+<span class="fc" id="L251">			drawImageTikz(x, y, (UImageTikz) shape);</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		} else if (shape instanceof UComment) {</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		} else if (shape instanceof UEmpty) {</span>
+<span class="nc" id="L254">			drawEmpty(x, y, (UEmpty) shape);</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		} else if (shape instanceof TextBlock) {</span>
+<span class="nc" id="L256">			final TextBlock tb = (TextBlock) shape;</span>
+<span class="nc" id="L257">			tb.drawU(this);</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
 			// To be done
-<span class="nc bnc" id="L262" title="All 2 branches missed.">		} else if (shape instanceof CenteredText) {</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		} else if (shape instanceof CenteredText) {</span>
 			// Ignored
-<span class="nc bnc" id="L264" title="All 2 branches missed.">		} else if (shape instanceof SpecialText) {</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		} else if (shape instanceof SpecialText) {</span>
 			// Ignored
-<span class="nc bnc" id="L266" title="All 2 branches missed.">		} else if (shape instanceof CopyForegroundColorToBackgroundColor) {</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		} else if (shape instanceof CopyForegroundColorToBackgroundColor) {</span>
 			// Ignored
-<span class="nc bnc" id="L268" title="All 2 branches missed.">		} else if (shape instanceof UPixel) {</span>
-<span class="nc" id="L269">			addPoint(x, y);</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		} else if (shape instanceof UPixel) {</span>
+<span class="nc" id="L267">			addPoint(x, y);</span>
 		} else {
-<span class="nc" id="L271">			throw new UnsupportedOperationException(shape.getClass().getName());</span>
+<span class="nc" id="L269">			throw new UnsupportedOperationException(shape.getClass().getName());</span>
 		}
-<span class="fc" id="L273">	}</span>
+<span class="fc" id="L271">	}</span>
 
 	private void addPoint(double x, double y) {
-<span class="fc bfc" id="L276" title="All 4 branches covered.">		if (getClip() == null || getClip().isInside(x, y))</span>
-<span class="fc" id="L277">			minmax.addPoint(x, y);</span>
+<span class="fc bfc" id="L274" title="All 4 branches covered.">		if (getClip() == null || getClip().isInside(x, y))</span>
+<span class="fc" id="L275">			minmax.addPoint(x, y);</span>
 
-<span class="fc" id="L279">	}</span>
+<span class="fc" id="L277">	}</span>
 
 	private void drawEmpty(double x, double y, UEmpty shape) {
-<span class="nc" id="L282">		addPoint(x, y);</span>
-<span class="nc" id="L283">		addPoint(x + shape.getWidth(), y + shape.getHeight());</span>
-<span class="nc" id="L284">	}</span>
+<span class="nc" id="L280">		addPoint(x, y);</span>
+<span class="nc" id="L281">		addPoint(x + shape.getWidth(), y + shape.getHeight());</span>
+<span class="nc" id="L282">	}</span>
 
 	private void drawUPath(double x, double y, UPath shape) {
-<span class="fc" id="L287">		addPoint(x + shape.getMinX(), y + shape.getMinY());</span>
-<span class="fc" id="L288">		addPoint(x + shape.getMaxX(), y + shape.getMaxY());</span>
-<span class="fc" id="L289">	}</span>
+<span class="fc" id="L285">		addPoint(x + shape.getMinX(), y + shape.getMinY());</span>
+<span class="fc" id="L286">		addPoint(x + shape.getMaxX(), y + shape.getMaxY());</span>
+<span class="fc" id="L287">	}</span>
 
 	private final static double HACK_X_FOR_POLYGON = 10;
 
 	private void drawUPolygon(double x, double y, UPolygon shape) {
-<span class="pc bpc" id="L294" title="1 of 2 branches missed.">		if (shape.getPoints().size() == 0)</span>
-<span class="nc" id="L295">			return;</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">		if (shape.getPoints().size() == 0)</span>
+<span class="nc" id="L293">			return;</span>
 
-<span class="fc" id="L297">		addPoint(x + shape.getMinX() - HACK_X_FOR_POLYGON, y + shape.getMinY());</span>
-<span class="fc" id="L298">		addPoint(x + shape.getMaxX() + HACK_X_FOR_POLYGON, y + shape.getMaxY());</span>
-<span class="fc" id="L299">	}</span>
+<span class="fc" id="L295">		addPoint(x + shape.getMinX() - HACK_X_FOR_POLYGON, y + shape.getMinY());</span>
+<span class="fc" id="L296">		addPoint(x + shape.getMaxX() + HACK_X_FOR_POLYGON, y + shape.getMaxY());</span>
+<span class="fc" id="L297">	}</span>
 
 	private void drawULine(double x, double y, ULine shape) {
-<span class="fc" id="L302">		addPoint(x, y);</span>
-<span class="fc" id="L303">		addPoint(x + shape.getDX(), y + shape.getDY());</span>
-<span class="fc" id="L304">	}</span>
+<span class="fc" id="L300">		addPoint(x, y);</span>
+<span class="fc" id="L301">		addPoint(x + shape.getDX(), y + shape.getDY());</span>
+<span class="fc" id="L302">	}</span>
 
 	private void drawRectangle(double x, double y, URectangle shape) {
-<span class="fc" id="L307">		addPoint(x - 1, y - 1);</span>
-<span class="fc" id="L308">		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,</span>
-<span class="fc" id="L309">				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);</span>
-<span class="fc" id="L310">	}</span>
+<span class="fc" id="L305">		addPoint(x - 1, y - 1);</span>
+<span class="fc" id="L306">		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,</span>
+<span class="fc" id="L307">				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);</span>
+<span class="fc" id="L308">	}</span>
 
 	private void drawDotPath(double x, double y, DotPath shape) {
-<span class="fc" id="L313">		final MinMax shapeMinMax = shape.getMinMax();</span>
-<span class="fc" id="L314">		addPoint(x + shapeMinMax.getMinX(), y + shapeMinMax.getMinY());</span>
-<span class="fc" id="L315">		addPoint(x + shapeMinMax.getMaxX(), y + shapeMinMax.getMaxY());</span>
-<span class="fc" id="L316">	}</span>
+<span class="fc" id="L311">		final MinMax shapeMinMax = shape.getMinMax();</span>
+<span class="fc" id="L312">		addPoint(x + shapeMinMax.getMinX(), y + shapeMinMax.getMinY());</span>
+<span class="fc" id="L313">		addPoint(x + shapeMinMax.getMaxX(), y + shapeMinMax.getMaxY());</span>
+<span class="fc" id="L314">	}</span>
 
 	private void drawImage(double x, double y, UImage shape) {
-<span class="fc" id="L319">		addPoint(x, y);</span>
-<span class="fc" id="L320">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
-<span class="fc" id="L321">	}</span>
+<span class="fc" id="L317">		addPoint(x, y);</span>
+<span class="fc" id="L318">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
+<span class="fc" id="L319">	}</span>
 
 	private void drawImageSvg(double x, double y, UImageSvg shape) {
-<span class="fc" id="L324">		addPoint(x, y);</span>
-<span class="fc" id="L325">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
-<span class="fc" id="L326">	}</span>
+<span class="fc" id="L322">		addPoint(x, y);</span>
+<span class="fc" id="L323">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
+<span class="fc" id="L324">	}</span>
 
 	private void drawImageTikz(double x, double y, UImageTikz shape) {
-<span class="fc" id="L329">		addPoint(x, y);</span>
-<span class="fc" id="L330">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
-<span class="fc" id="L331">	}</span>
+<span class="fc" id="L327">		addPoint(x, y);</span>
+<span class="fc" id="L328">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
+<span class="fc" id="L329">	}</span>
 
 	private void drawEllipse(double x, double y, UEllipse shape) {
-<span class="fc" id="L334">		addPoint(x, y);</span>
-<span class="fc" id="L335">		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,</span>
-<span class="fc" id="L336">				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);</span>
-<span class="fc" id="L337">	}</span>
+<span class="fc" id="L332">		addPoint(x, y);</span>
+<span class="fc" id="L333">		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,</span>
+<span class="fc" id="L334">				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);</span>
+<span class="fc" id="L335">	}</span>
 
 	private void drawText(double x, double y, UText text) {
-<span class="fc" id="L340">		final XDimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),</span>
-<span class="fc" id="L341">				text.getText());</span>
-<span class="fc" id="L342">		y -= dim.getHeight() - 1.5;</span>
-<span class="fc" id="L343">		addPoint(x, y);</span>
-<span class="fc" id="L344">		addPoint(x, y + dim.getHeight());</span>
-<span class="fc" id="L345">		addPoint(x + dim.getWidth(), y);</span>
-<span class="fc" id="L346">		addPoint(x + dim.getWidth(), y + dim.getHeight());</span>
-<span class="fc" id="L347">	}</span>
+<span class="fc" id="L338">		final XDimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),</span>
+<span class="fc" id="L339">				text.getText());</span>
+<span class="fc" id="L340">		y -= dim.getHeight() - 1.5;</span>
+<span class="fc" id="L341">		addPoint(x, y);</span>
+<span class="fc" id="L342">		addPoint(x, y + dim.getHeight());</span>
+<span class="fc" id="L343">		addPoint(x + dim.getWidth(), y);</span>
+<span class="fc" id="L344">		addPoint(x + dim.getWidth(), y + dim.getHeight());</span>
+<span class="fc" id="L345">	}</span>
 
 	protected void drawComment(UComment shape) {
-<span class="fc" id="L350">	}</span>
+<span class="fc" id="L348">	}</span>
 
 	protected void beforeDraw() {
-<span class="fc" id="L353">	}</span>
+<span class="fc" id="L351">	}</span>
 
 	protected void afterDraw() {
-<span class="fc" id="L356">	}</span>
+<span class="fc" id="L354">	}</span>
 
 	final public double getMaxX() {
-<span class="nc" id="L359">		return minmax.getMaxX();</span>
+<span class="nc" id="L357">		return minmax.getMaxX();</span>
 	}
 
 	final public double getMaxY() {
-<span class="nc" id="L363">		return minmax.getMaxY();</span>
+<span class="nc" id="L361">		return minmax.getMaxY();</span>
 	}
 
 	final public void resetMax() {
-<span class="nc" id="L367">		minmax.reset();</span>
-<span class="nc" id="L368">	}</span>
+<span class="nc" id="L365">		minmax.reset();</span>
+<span class="nc" id="L366">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

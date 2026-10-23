@@ -36,46 +36,44 @@
 package net.sourceforge.plantuml.klimt.compress;
 
 public class Expand implements Comparable&lt;Expand&gt; {
-    // ::remove file when __HAXE__
-
 	private final double position;
 	private final double extend;
 	private final ExpandType type;
 
-<span class="nc" id="L45">	public Expand(ExpandType type, double position, double extend) {</span>
-<span class="nc bnc" id="L46" title="All 2 branches missed.">		if (extend &lt;= 0) {</span>
-<span class="nc" id="L47">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L43">	public Expand(ExpandType type, double position, double extend) {</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		if (extend &lt;= 0) {</span>
+<span class="nc" id="L45">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L49">		this.type = type;</span>
-<span class="nc" id="L50">		this.position = position;</span>
-<span class="nc" id="L51">		this.extend = extend;</span>
-<span class="nc" id="L52">	}</span>
+<span class="nc" id="L47">		this.type = type;</span>
+<span class="nc" id="L48">		this.position = position;</span>
+<span class="nc" id="L49">		this.extend = extend;</span>
+<span class="nc" id="L50">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L56">		return &quot;(&quot; + position + &quot;==&gt;+&quot; + extend + &quot; &quot; + type + &quot;)&quot;;</span>
+<span class="nc" id="L54">		return &quot;(&quot; + position + &quot;==&gt;+&quot; + extend + &quot; &quot; + type + &quot;)&quot;;</span>
 	}
 
 	public int compareTo(Expand other) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (this.position &lt; other.position) {</span>
-<span class="nc" id="L61">			return -1;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (this.position &lt; other.position) {</span>
+<span class="nc" id="L59">			return -1;</span>
 		}
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (this.position &gt; other.position) {</span>
-<span class="nc" id="L64">			return 1;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		if (this.position &gt; other.position) {</span>
+<span class="nc" id="L62">			return 1;</span>
 		}
-<span class="nc" id="L66">		return 0;</span>
+<span class="nc" id="L64">		return 0;</span>
 	}
 
 	public final double getPosition() {
-<span class="nc" id="L70">		return position;</span>
+<span class="nc" id="L68">		return position;</span>
 	}
 
 	public final double getExtend() {
-<span class="nc" id="L74">		return extend;</span>
+<span class="nc" id="L72">		return extend;</span>
 	}
 
 	public final ExpandType getType() {
-<span class="nc" id="L78">		return type;</span>
+<span class="nc" id="L76">		return type;</span>
 	}
 
 }

@@ -40,22 +40,20 @@ import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class ULineHand {
-    // ::remove folder when __HAXE__
-
 	private UPath path;
 
-<span class="fc" id="L47">	public ULineHand(ULine line, Random rnd) {</span>
-<span class="fc" id="L48">		final double endX = line.getDX();</span>
-<span class="fc" id="L49">		final double endY = line.getDY();</span>
-<span class="fc" id="L50">		final HandJiggle jiggle = new HandJiggle(0, 0, 2.0, rnd);</span>
-<span class="fc" id="L51">		jiggle.lineTo(endX, endY);</span>
+<span class="fc" id="L45">	public ULineHand(ULine line, Random rnd) {</span>
+<span class="fc" id="L46">		final double endX = line.getDX();</span>
+<span class="fc" id="L47">		final double endY = line.getDY();</span>
+<span class="fc" id="L48">		final HandJiggle jiggle = new HandJiggle(0, 0, 2.0, rnd);</span>
+<span class="fc" id="L49">		jiggle.lineTo(endX, endY);</span>
 
-<span class="fc" id="L53">		this.path = jiggle.toUPath();</span>
+<span class="fc" id="L51">		this.path = jiggle.toUPath();</span>
 
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L53">	}</span>
 
 	public UPath getHanddrawn() {
-<span class="fc" id="L58">		return this.path;</span>
+<span class="fc" id="L56">		return this.path;</span>
 	}
 
 }

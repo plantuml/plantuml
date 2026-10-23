@@ -30,12 +30,10 @@ import zext.plantuml.com.google.zxing.common.BitMatrix;
  * @author Sean Owen
  */
 abstract class DataMask {
-    // ::remove folder when __HAXE__
-
   /**
    * See ISO 18004:2006 6.8.1
    */
-<span class="nc" id="L38">  private static final DataMask[] DATA_MASKS = {</span>
+<span class="nc" id="L36">  private static final DataMask[] DATA_MASKS = {</span>
       new DataMask000(),
       new DataMask001(),
       new DataMask010(),
@@ -57,14 +55,14 @@ abstract class DataMask {
    * @param dimension dimension of QR Code, represented by bits, being unmasked
    */
   final void unmaskBitMatrix(BitMatrix bits, int dimension) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">    for (int i = 0; i &lt; dimension; i++) {</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">      for (int j = 0; j &lt; dimension; j++) {</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (isMasked(i, j)) {</span>
-<span class="nc" id="L63">          bits.flip(j, i);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">    for (int i = 0; i &lt; dimension; i++) {</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">      for (int j = 0; j &lt; dimension; j++) {</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (isMasked(i, j)) {</span>
+<span class="nc" id="L61">          bits.flip(j, i);</span>
         }
       }
     }
-<span class="nc" id="L67">  }</span>
+<span class="nc" id="L65">  }</span>
 
   abstract boolean isMasked(int i, int j);
 
@@ -74,10 +72,10 @@ abstract class DataMask {
    * @return {@link DataMask} encapsulating the data mask pattern
    */
   static DataMask forReference(int reference) {
-<span class="nc bnc" id="L77" title="All 4 branches missed.">    if (reference &lt; 0 || reference &gt; 7) {</span>
-<span class="nc" id="L78">      throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">    if (reference &lt; 0 || reference &gt; 7) {</span>
+<span class="nc" id="L76">      throw new IllegalArgumentException();</span>
     }
-<span class="nc" id="L80">    return DATA_MASKS[reference];</span>
+<span class="nc" id="L78">    return DATA_MASKS[reference];</span>
   }
 
   /**
@@ -85,7 +83,7 @@ abstract class DataMask {
    */
   private static class DataMask000 extends DataMask {
     boolean isMasked(int i, int j) {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">      return ((i + j) &amp; 0x01) == 0;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">      return ((i + j) &amp; 0x01) == 0;</span>
     }
   }
 
@@ -94,7 +92,7 @@ abstract class DataMask {
    */
   private static class DataMask001 extends DataMask {
     boolean isMasked(int i, int j) {
-<span class="nc bnc" id="L97" title="All 2 branches missed.">      return (i &amp; 0x01) == 0;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">      return (i &amp; 0x01) == 0;</span>
     }
   }
 
@@ -103,7 +101,7 @@ abstract class DataMask {
    */
   private static class DataMask010 extends DataMask {
     boolean isMasked(int i, int j) {
-<span class="nc bnc" id="L106" title="All 2 branches missed.">      return j % 3 == 0;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">      return j % 3 == 0;</span>
     }
   }
 
@@ -112,7 +110,7 @@ abstract class DataMask {
    */
   private static class DataMask011 extends DataMask {
     boolean isMasked(int i, int j) {
-<span class="nc bnc" id="L115" title="All 2 branches missed.">      return (i + j) % 3 == 0;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">      return (i + j) % 3 == 0;</span>
     }
   }
 
@@ -121,7 +119,7 @@ abstract class DataMask {
    */
   private static class DataMask100 extends DataMask {
     boolean isMasked(int i, int j) {
-<span class="nc bnc" id="L124" title="All 2 branches missed.">      return (((i &gt;&gt;&gt; 1) + (j /3)) &amp; 0x01) == 0;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">      return (((i &gt;&gt;&gt; 1) + (j /3)) &amp; 0x01) == 0;</span>
     }
   }
 
@@ -130,8 +128,8 @@ abstract class DataMask {
    */
   private static class DataMask101 extends DataMask {
     boolean isMasked(int i, int j) {
-<span class="nc" id="L133">      int temp = i * j;</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">      return (temp &amp; 0x01) + (temp % 3) == 0;</span>
+<span class="nc" id="L131">      int temp = i * j;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">      return (temp &amp; 0x01) + (temp % 3) == 0;</span>
     }
   }
 
@@ -140,8 +138,8 @@ abstract class DataMask {
    */
   private static class DataMask110 extends DataMask {
     boolean isMasked(int i, int j) {
-<span class="nc" id="L143">      int temp = i * j;</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">      return (((temp &amp; 0x01) + (temp % 3)) &amp; 0x01) == 0;</span>
+<span class="nc" id="L141">      int temp = i * j;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">      return (((temp &amp; 0x01) + (temp % 3)) &amp; 0x01) == 0;</span>
     }
   }
 
@@ -150,7 +148,7 @@ abstract class DataMask {
    */
   private static class DataMask111 extends DataMask {
     boolean isMasked(int i, int j) {
-<span class="nc bnc" id="L153" title="All 2 branches missed.">      return ((((i + j) &amp; 0x01) + ((i * j) % 3)) &amp; 0x01) == 0;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">      return ((((i + j) &amp; 0x01) + ((i * j) % 3)) &amp; 0x01) == 0;</span>
     }
   }
 }

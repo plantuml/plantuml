@@ -60,7 +60,6 @@ import smetana.core.ZType;
 import smetana.core.size_t;
 
 <span class="nc" id="L62">public class dtopen__c {</span>
-    // ::remove folder when __HAXE__
 //1 9k44uhd5foylaeoekf3llonjq
 // extern Dtmethod_t* 	Dtset
 
@@ -136,29 +135,29 @@ import smetana.core.size_t;
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/cdt/dtopen.c&quot;, name=&quot;dtopen&quot;, key=&quot;34nbfbdgwe34hb4vmfr5p6kbh&quot;, definition=&quot;Dt_t* dtopen(Dtdisc_t* disc, Dtmethod_t* meth)&quot;)
 public static ST_dt_s dtopen(Globals zz, ST_dtdisc_s disc, ST_dtmethod_s meth) {
-<span class="fc" id="L139">ENTERING(&quot;34nbfbdgwe34hb4vmfr5p6kbh&quot;,&quot;dtopen&quot;);</span>
+<span class="fc" id="L138">ENTERING(&quot;34nbfbdgwe34hb4vmfr5p6kbh&quot;,&quot;dtopen&quot;);</span>
 try {
-<span class="fc" id="L141">	ST_dt_s		dt = null;</span>
+<span class="fc" id="L140">	ST_dt_s		dt = null;</span>
 	int		e;
 	ST_dtdata_s	data;
-<span class="pc bpc" id="L144" title="2 of 4 branches missed.">	if((disc) == null || (meth) == null)</span>
-<span class="nc" id="L145">		return null;</span>
+<span class="pc bpc" id="L143" title="2 of 4 branches missed.">	if((disc) == null || (meth) == null)</span>
+<span class="nc" id="L144">		return null;</span>
 	/* allocate space for dictionary */
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">	if((dt = new ST_dt_s()) == null)</span>
-<span class="nc" id="L148">		return null;</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">	if((dt = new ST_dt_s()) == null)</span>
+<span class="nc" id="L147">		return null;</span>
 //	/* initialize all absolutely private data */
-<span class="fc" id="L150">	dt.searchf = null;</span>
-<span class="fc" id="L151">	dt.meth = null;</span>
-<span class="fc" id="L152">	dt.disc = null;</span>
-<span class="fc" id="L153">	dtdisc(zz, dt,disc,0);</span>
-<span class="fc" id="L154">	dt.type = 0;</span>
-<span class="fc" id="L155">	dt.nview = 0;</span>
-<span class="fc" id="L156">	dt.view = null;</span>
-<span class="fc" id="L157">	dt.walk = null;</span>
-<span class="fc" id="L158">	dt.user = null;</span>
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">	if(disc.eventf!=null)</span>
+<span class="fc" id="L149">	dt.searchf = null;</span>
+<span class="fc" id="L150">	dt.meth = null;</span>
+<span class="fc" id="L151">	dt.disc = null;</span>
+<span class="fc" id="L152">	dtdisc(zz, dt,disc,0);</span>
+<span class="fc" id="L153">	dt.type = 0;</span>
+<span class="fc" id="L154">	dt.nview = 0;</span>
+<span class="fc" id="L155">	dt.view = null;</span>
+<span class="fc" id="L156">	dt.walk = null;</span>
+<span class="fc" id="L157">	dt.user = null;</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">	if(disc.eventf!=null)</span>
 	{	/* if shared/persistent dictionary, get existing data */
-<span class="nc" id="L161">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L160">		throw new UnsupportedOperationException();</span>
 //		data = ((Dtdata_t*)0);
 //		if((e = (*disc-&gt;eventf)(dt,1,(void*)(&amp;data),disc)) &lt; 0)
 //			goto err_open;
@@ -183,28 +182,28 @@ try {
 //		}
 	}
 	/* allocate sharable data */
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">	if(((data = (ST_dtdata_s) (dt.memoryf.exe(zz, dt,null,new size_t(ZType.ST_dtdata_s),disc)) ))==null)</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">	if(((data = (ST_dtdata_s) (dt.memoryf.exe(zz, dt,null,new size_t(ZType.ST_dtdata_s),disc)) ))==null)</span>
 	{ err_open:
-<span class="nc" id="L188">		Memory.free(dt);</span>
-<span class="nc" id="L189">		return (null);</span>
+<span class="nc" id="L187">		Memory.free(dt);</span>
+<span class="nc" id="L188">		return (null);</span>
 	}
-<span class="fc" id="L191">	data.type = meth.type;</span>
-<span class="fc" id="L192">	data.here = null;</span>
-<span class="fc" id="L193">	data._htab = null;</span>
-<span class="fc" id="L194">	data.ntab = 0;</span>
-<span class="fc" id="L195">	data.size = 0;</span>
-<span class="fc" id="L196">	data.loop = 0;</span>
-<span class="fc" id="L197">	data.minp = 0;</span>
+<span class="fc" id="L190">	data.type = meth.type;</span>
+<span class="fc" id="L191">	data.here = null;</span>
+<span class="fc" id="L192">	data._htab = null;</span>
+<span class="fc" id="L193">	data.ntab = 0;</span>
+<span class="fc" id="L194">	data.size = 0;</span>
+<span class="fc" id="L195">	data.loop = 0;</span>
+<span class="fc" id="L196">	data.minp = 0;</span>
 //done:
-<span class="fc" id="L199">	dt.data = data;</span>
-<span class="fc" id="L200">	dt.searchf = meth.searchf;</span>
-<span class="fc" id="L201">	dt.meth = meth;</span>
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">	if(disc.eventf!=null)</span>
-<span class="nc" id="L203">		throw new UnsupportedOperationException();</span>
+<span class="fc" id="L198">	dt.data = data;</span>
+<span class="fc" id="L199">	dt.searchf = meth.searchf;</span>
+<span class="fc" id="L200">	dt.meth = meth;</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">	if(disc.eventf!=null)</span>
+<span class="nc" id="L202">		throw new UnsupportedOperationException();</span>
 //		(*disc-&gt;eventf)(dt, 5, (void*)dt, disc);
-<span class="fc" id="L205">	return dt;</span>
+<span class="fc" id="L204">	return dt;</span>
 } finally {
-<span class="fc" id="L207">LEAVING(&quot;34nbfbdgwe34hb4vmfr5p6kbh&quot;,&quot;dtopen&quot;);</span>
+<span class="fc" id="L206">LEAVING(&quot;34nbfbdgwe34hb4vmfr5p6kbh&quot;,&quot;dtopen&quot;);</span>
 }
 }
 

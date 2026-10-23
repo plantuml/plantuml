@@ -42,41 +42,39 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
 
 public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {
-	// ::remove file when __HAXE__
-
-<span class="fc" id="L47">	private UTranslate translate = UTranslate.none();</span>
+<span class="fc" id="L45">	private UTranslate translate = UTranslate.none();</span>
 
 	public UGraphic apply(UChange change) {
 		final AbstractUGraphicHorizontalLine result;
-<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (change instanceof UTranslate) {</span>
-<span class="fc" id="L52">			result = copy(getUg());</span>
-<span class="fc" id="L53">			result.translate = this.translate.compose((UTranslate) change);</span>
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		} else if (change instanceof UClip) {</span>
-<span class="nc" id="L55">			final UClip clip = ((UClip) change).translate(translate);</span>
-<span class="nc" id="L56">			result = copy(getUg().apply(clip));</span>
-<span class="nc" id="L57">			result.translate = this.translate;</span>
-<span class="nc" id="L58">		} else {</span>
-<span class="fc" id="L59">			result = copy(getUg().apply(change));</span>
-<span class="fc" id="L60">			result.translate = this.translate;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		if (change instanceof UTranslate) {</span>
+<span class="fc" id="L50">			result = copy(getUg());</span>
+<span class="fc" id="L51">			result.translate = this.translate.compose((UTranslate) change);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		} else if (change instanceof UClip) {</span>
+<span class="nc" id="L53">			final UClip clip = ((UClip) change).translate(translate);</span>
+<span class="nc" id="L54">			result = copy(getUg().apply(clip));</span>
+<span class="nc" id="L55">			result.translate = this.translate;</span>
+<span class="nc" id="L56">		} else {</span>
+<span class="fc" id="L57">			result = copy(getUg().apply(change));</span>
+<span class="fc" id="L58">			result.translate = this.translate;</span>
 		}
-<span class="fc" id="L62">		return result;</span>
+<span class="fc" id="L60">		return result;</span>
 	}
 
 	protected abstract AbstractUGraphicHorizontalLine copy(UGraphic ug);
 
 	protected AbstractUGraphicHorizontalLine(UGraphic ug) {
-<span class="fc" id="L68">		super(ug);</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L66">		super(ug);</span>
+<span class="fc" id="L67">	}</span>
 
 	protected abstract void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate);
 
 	public void draw(UShape shape) {
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (shape instanceof UHorizontalLine)</span>
-<span class="fc" id="L75">			drawHline(getUg(), (UHorizontalLine) shape, UTranslate.dy(translate.getDy()));</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (shape instanceof UHorizontalLine)</span>
+<span class="fc" id="L73">			drawHline(getUg(), (UHorizontalLine) shape, UTranslate.dy(translate.getDy()));</span>
 		else
-<span class="fc" id="L77">			getUg().apply(translate).draw(shape);</span>
+<span class="fc" id="L75">			getUg().apply(translate).draw(shape);</span>
 
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L77">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

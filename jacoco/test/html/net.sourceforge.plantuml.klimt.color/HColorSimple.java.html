@@ -64,179 +64,174 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L64">		return sb.toString();</span>
 	}
 
-	// ::comment when __HAXE__
 	@Override
 	public String asString() {
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (isTransparent())</span>
-<span class="fc" id="L71">			return &quot;transparent&quot;;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (isTransparent())</span>
+<span class="fc" id="L70">			return &quot;transparent&quot;;</span>
 
-<span class="fc" id="L73">		final int red = color.getRed();</span>
-<span class="fc" id="L74">		final int green = color.getGreen();</span>
-<span class="fc" id="L75">		final int blue = color.getBlue();</span>
-<span class="fc" id="L76">		final int alpha = color.getAlpha();</span>
+<span class="fc" id="L72">		final int red = color.getRed();</span>
+<span class="fc" id="L73">		final int green = color.getGreen();</span>
+<span class="fc" id="L74">		final int blue = color.getBlue();</span>
+<span class="fc" id="L75">		final int alpha = color.getAlpha();</span>
 
-<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (alpha == 255)</span>
-<span class="fc" id="L79">			return String.format(&quot;#%02X%02X%02X&quot;, red, green, blue);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (alpha == 255)</span>
+<span class="fc" id="L78">			return String.format(&quot;#%02X%02X%02X&quot;, red, green, blue);</span>
 
-<span class="fc" id="L81">		return String.format(&quot;#%02x%02x%02x%02x&quot;, alpha, red, green, blue);</span>
+<span class="fc" id="L80">		return String.format(&quot;#%02x%02x%02x%02x&quot;, alpha, red, green, blue);</span>
 	}
 
 	@Override
 	public boolean equals(Object other) {
-<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (other instanceof HColorSimple == false)</span>
-<span class="fc" id="L87">			return false;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (other instanceof HColorSimple == false)</span>
+<span class="fc" id="L86">			return false;</span>
 
-<span class="fc" id="L89">		return this.color.equals(((HColorSimple) other).color);</span>
+<span class="fc" id="L88">		return this.color.equals(((HColorSimple) other).color);</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L94">		return color.hashCode();</span>
+<span class="fc" id="L93">		return color.hashCode();</span>
 	}
 
 	@Override
 	public HColor lighten(int ratio) {
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L100">			return this;</span>
-<span class="fc" id="L101">		final float[] hsl = new HSLColor(color).getHSL();</span>
-<span class="fc" id="L102">		hsl[2] += hsl[2] * (ratio / 100.0);</span>
-<span class="fc" id="L103">		return HColorSimple.create(new HSLColor(hsl).getRGB());</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L99">			return this;</span>
+<span class="fc" id="L100">		final float[] hsl = new HSLColor(color).getHSL();</span>
+<span class="fc" id="L101">		hsl[2] += hsl[2] * (ratio / 100.0);</span>
+<span class="fc" id="L102">		return HColorSimple.create(new HSLColor(hsl).getRGB());</span>
 	}
 
 	@Override
 	public HColor darken(int ratio) {
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
-<span class="nc" id="L109">			return this;</span>
-<span class="fc" id="L110">		final float[] hsl = new HSLColor(color).getHSL();</span>
-<span class="fc" id="L111">		hsl[2] -= hsl[2] * (ratio / 100.0);</span>
-<span class="fc" id="L112">		return HColorSimple.create(new HSLColor(hsl).getRGB());</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L108">			return this;</span>
+<span class="fc" id="L109">		final float[] hsl = new HSLColor(color).getHSL();</span>
+<span class="fc" id="L110">		hsl[2] -= hsl[2] * (ratio / 100.0);</span>
+<span class="fc" id="L111">		return HColorSimple.create(new HSLColor(hsl).getRGB());</span>
 	}
 
 	@Override
 	public HColor reverseHsluv() {
-<span class="fc" id="L117">		return HColorSimple.create(ColorUtils.reverseHsluv(color));</span>
+<span class="fc" id="L116">		return HColorSimple.create(ColorUtils.reverseHsluv(color));</span>
 	}
 
 	@Override
 	public HColor reverse() {
-<span class="fc" id="L122">		return HColorSimple.create(ColorOrder.RGB.getReverse(color));</span>
+<span class="fc" id="L121">		return HColorSimple.create(ColorOrder.RGB.getReverse(color));</span>
 	}
-	// ::done
 
 	@Override
 	public boolean isDark() {
-<span class="fc bfc" id="L128" title="All 2 branches covered.">		return ColorUtils.getGrayScale(color) &lt; 128;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		return ColorUtils.getGrayScale(color) &lt; 128;</span>
 	}
 
 	@Override
 	public boolean isTransparent() {
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		return color.getAlpha() == 0;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		return color.getAlpha() == 0;</span>
 	}
 
 	@Override
 	public TransparentFillBehavior transparentFillBehavior() {
-<span class="fc" id="L138">		return transparentFillBehavior;</span>
+<span class="fc" id="L136">		return transparentFillBehavior;</span>
 	}
 
 	public static HColorSimple create(XColor c) {
-<span class="fc" id="L142">		return new HColorSimple(c, null, WITH_FILL_NONE);</span>
+<span class="fc" id="L140">		return new HColorSimple(c, null, WITH_FILL_NONE);</span>
 	}
 
-<span class="fc" id="L145">	private HColorSimple(XColor c, HColor dark, TransparentFillBehavior transparentFillBehavior) {</span>
-<span class="fc" id="L146">		this.color = c;</span>
-<span class="fc" id="L147">		this.dark = dark;</span>
-<span class="fc" id="L148">		this.transparentFillBehavior = transparentFillBehavior;</span>
-<span class="fc" id="L149">	}</span>
+<span class="fc" id="L143">	private HColorSimple(XColor c, HColor dark, TransparentFillBehavior transparentFillBehavior) {</span>
+<span class="fc" id="L144">		this.color = c;</span>
+<span class="fc" id="L145">		this.dark = dark;</span>
+<span class="fc" id="L146">		this.transparentFillBehavior = transparentFillBehavior;</span>
+<span class="fc" id="L147">	}</span>
 
 	public XColor getAwtColor() {
-<span class="fc" id="L152">		return color;</span>
+<span class="fc" id="L150">		return color;</span>
 	}
 
 	public HColor asMonochrome() {
-<span class="nc" id="L156">		return HColorSimple.create(ColorUtils.getGrayScaleColor(color));</span>
+<span class="nc" id="L154">		return HColorSimple.create(ColorUtils.getGrayScaleColor(color));</span>
 	}
 
-	// ::comment when __HAXE__
 	public HColor asMonochrome(HColorSimple colorForMonochrome, double minGray, double maxGray) {
-<span class="fc" id="L161">		final XColor tmp = ColorUtils.getGrayScaleColor(color);</span>
-<span class="fc" id="L162">		final int gray = tmp.getGreen();</span>
-<span class="pc bpc" id="L163" title="2 of 4 branches missed.">		if (TeaVM.a()) assert gray == tmp.getBlue();</span>
-<span class="pc bpc" id="L164" title="2 of 4 branches missed.">		if (TeaVM.a()) assert gray == tmp.getRed();</span>
+<span class="fc" id="L158">		final XColor tmp = ColorUtils.getGrayScaleColor(color);</span>
+<span class="fc" id="L159">		final int gray = tmp.getGreen();</span>
+<span class="pc bpc" id="L160" title="2 of 4 branches missed.">		if (TeaVM.a()) assert gray == tmp.getBlue();</span>
+<span class="pc bpc" id="L161" title="2 of 4 branches missed.">		if (TeaVM.a()) assert gray == tmp.getRed();</span>
 
-<span class="fc" id="L166">		final double coef = (gray - minGray) / 256.0;</span>
-<span class="fc" id="L167">		final XColor result = ColorUtils.grayToColor(coef, colorForMonochrome.color);</span>
-<span class="fc" id="L168">		return HColorSimple.create(result);</span>
+<span class="fc" id="L163">		final double coef = (gray - minGray) / 256.0;</span>
+<span class="fc" id="L164">		final XColor result = ColorUtils.grayToColor(coef, colorForMonochrome.color);</span>
+<span class="fc" id="L165">		return HColorSimple.create(result);</span>
 	}
 
 	@Override
 	public XColor toColor(ColorMapper mapper) {
-<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (this.isTransparent())</span>
-<span class="fc" id="L174">			return getAwtColor();</span>
-<span class="fc" id="L175">		return mapper.fromColorSimple(this);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (this.isTransparent())</span>
+<span class="fc" id="L171">			return getAwtColor();</span>
+<span class="fc" id="L172">		return mapper.fromColorSimple(this);</span>
 	}
 
 	public static HColorSimple unlinear(HColorSimple color1, HColorSimple color2, int completionInt) {
-<span class="nc" id="L179">		final HSLColor col1 = new HSLColor(color1.color);</span>
-<span class="nc" id="L180">		final HSLColor col2 = new HSLColor(color2.color);</span>
+<span class="nc" id="L176">		final HSLColor col1 = new HSLColor(color1.color);</span>
+<span class="nc" id="L177">		final HSLColor col2 = new HSLColor(color2.color);</span>
 
-<span class="nc" id="L182">		final float[] hsl1 = col1.getHSL();</span>
-<span class="nc" id="L183">		final float[] hsl2 = col2.getHSL();</span>
+<span class="nc" id="L179">		final float[] hsl1 = col1.getHSL();</span>
+<span class="nc" id="L180">		final float[] hsl2 = col2.getHSL();</span>
 
-<span class="nc bnc" id="L185" title="All 2 branches missed.">		if (completionInt &gt; 100)</span>
-<span class="nc" id="L186">			completionInt = 100;</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (completionInt &gt; 100)</span>
+<span class="nc" id="L183">			completionInt = 100;</span>
 
-<span class="nc" id="L188">		float completion = (float) (completionInt / 100.0);</span>
-<span class="nc" id="L189">		completion = completion * completion * completion;</span>
-<span class="nc" id="L190">		final float[] hsl = linear(completion, hsl1, hsl2);</span>
+<span class="nc" id="L185">		float completion = (float) (completionInt / 100.0);</span>
+<span class="nc" id="L186">		completion = completion * completion * completion;</span>
+<span class="nc" id="L187">		final float[] hsl = linear(completion, hsl1, hsl2);</span>
 
-<span class="nc" id="L192">		final HSLColor col = new HSLColor(hsl);</span>
+<span class="nc" id="L189">		final HSLColor col = new HSLColor(hsl);</span>
 
-<span class="nc" id="L194">		return HColorSimple.create(col.getRGB());</span>
+<span class="nc" id="L191">		return HColorSimple.create(col.getRGB());</span>
 	}
 
 	private static float[] linear(float factor, float[] hsl1, float[] hsl2) {
-<span class="nc" id="L198">		final float h = linear(factor, hsl1[0], hsl2[0]);</span>
-<span class="nc" id="L199">		final float s = linear(factor, hsl1[1], hsl2[1]);</span>
-<span class="nc" id="L200">		final float l = linear(factor, hsl1[2], hsl2[2]);</span>
-<span class="nc" id="L201">		return new float[] { h, s, l };</span>
+<span class="nc" id="L195">		final float h = linear(factor, hsl1[0], hsl2[0]);</span>
+<span class="nc" id="L196">		final float s = linear(factor, hsl1[1], hsl2[1]);</span>
+<span class="nc" id="L197">		final float l = linear(factor, hsl1[2], hsl2[2]);</span>
+<span class="nc" id="L198">		return new float[] { h, s, l };</span>
 	}
 
 	private static float linear(float factor, float x, float y) {
-<span class="nc" id="L205">		return x + (y - x) * factor;</span>
+<span class="nc" id="L202">		return x + (y - x) * factor;</span>
 	}
-
-	// ::done
 
 	@Override
 	public HColor opposite() {
-<span class="nc" id="L212">		final XColor mono = ColorUtils.getGrayScaleColor(color);</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">		final int grayScale = 255 - mono.getGreen() &gt; 127 ? 255 : 0;</span>
-<span class="nc" id="L214">		return HColorSimple.create(new XColor(grayScale, grayScale, grayScale));</span>
+<span class="nc" id="L207">		final XColor mono = ColorUtils.getGrayScaleColor(color);</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		final int grayScale = 255 - mono.getGreen() &gt; 127 ? 255 : 0;</span>
+<span class="nc" id="L209">		return HColorSimple.create(new XColor(grayScale, grayScale, grayScale));</span>
 	}
 
 	public int distanceTo(HColorSimple other) {
-<span class="nc" id="L218">		return ColorUtils.distance(this.color, other.color);</span>
+<span class="nc" id="L213">		return ColorUtils.distance(this.color, other.color);</span>
 	}
 
 	public boolean isGray() {
-<span class="pc bpc" id="L222" title="3 of 4 branches missed.">		return color.getRed() == color.getGreen() &amp;&amp; color.getGreen() == color.getBlue();</span>
+<span class="pc bpc" id="L217" title="3 of 4 branches missed.">		return color.getRed() == color.getGreen() &amp;&amp; color.getGreen() == color.getBlue();</span>
 	}
 
 	@Override
 	public HColor withDark(HColor dark) {
-<span class="fc" id="L227">		return new HColorSimple(color, dark, transparentFillBehavior);</span>
+<span class="fc" id="L222">		return new HColorSimple(color, dark, transparentFillBehavior);</span>
 	}
 
 	@Override
 	public HColor withTransparentFillBehavior(TransparentFillBehavior transparentFillBehavior) {
-<span class="fc" id="L232">		return new HColorSimple(color, dark, transparentFillBehavior);</span>
+<span class="fc" id="L227">		return new HColorSimple(color, dark, transparentFillBehavior);</span>
 	}
 
 	@Override
 	public HColor darkSchemeTheme() {
-<span class="pc bpc" id="L237" title="1 of 2 branches missed.">		if (dark == null)</span>
-<span class="nc" id="L238">			return this;</span>
-<span class="fc" id="L239">		return dark;</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (dark == null)</span>
+<span class="nc" id="L233">			return this;</span>
+<span class="fc" id="L234">		return dark;</span>
 	}
 
 }

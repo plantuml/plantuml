@@ -14,53 +14,51 @@ import net.sourceforge.plantuml.argon2.Util;
 import net.sourceforge.plantuml.argon2.model.Instance;
 
 <span class="nc" id="L16">public class Initialize {</span>
-    // ::remove folder when __HAXE__
-
 	public static void initialize(Instance instance, Argon2 argon2) {
-<span class="nc" id="L20">		byte[] initialHash = Functions.initialHash(Util.intToLittleEndianBytes(argon2.getLanes()),</span>
-<span class="nc" id="L21">				Util.intToLittleEndianBytes(argon2.getOutputLength()), Util.intToLittleEndianBytes(argon2.getMemory()),</span>
-<span class="nc" id="L22">				Util.intToLittleEndianBytes(argon2.getIterations()), Util.intToLittleEndianBytes(argon2.getVersion()),</span>
-<span class="nc" id="L23">				Util.intToLittleEndianBytes(argon2.getType().ordinal()),</span>
-<span class="nc" id="L24">				Util.intToLittleEndianBytes(argon2.getPasswordLength()), argon2.getPassword(),</span>
-<span class="nc" id="L25">				Util.intToLittleEndianBytes(argon2.getSaltLength()), argon2.getSalt(),</span>
-<span class="nc" id="L26">				Util.intToLittleEndianBytes(argon2.getSecretLength()), argon2.getSecret(),</span>
-<span class="nc" id="L27">				Util.intToLittleEndianBytes(argon2.getAdditionalLength()), argon2.getAdditional());</span>
-<span class="nc" id="L28">		fillFirstBlocks(instance, initialHash);</span>
-<span class="nc" id="L29">	}</span>
+<span class="nc" id="L18">		byte[] initialHash = Functions.initialHash(Util.intToLittleEndianBytes(argon2.getLanes()),</span>
+<span class="nc" id="L19">				Util.intToLittleEndianBytes(argon2.getOutputLength()), Util.intToLittleEndianBytes(argon2.getMemory()),</span>
+<span class="nc" id="L20">				Util.intToLittleEndianBytes(argon2.getIterations()), Util.intToLittleEndianBytes(argon2.getVersion()),</span>
+<span class="nc" id="L21">				Util.intToLittleEndianBytes(argon2.getType().ordinal()),</span>
+<span class="nc" id="L22">				Util.intToLittleEndianBytes(argon2.getPasswordLength()), argon2.getPassword(),</span>
+<span class="nc" id="L23">				Util.intToLittleEndianBytes(argon2.getSaltLength()), argon2.getSalt(),</span>
+<span class="nc" id="L24">				Util.intToLittleEndianBytes(argon2.getSecretLength()), argon2.getSecret(),</span>
+<span class="nc" id="L25">				Util.intToLittleEndianBytes(argon2.getAdditionalLength()), argon2.getAdditional());</span>
+<span class="nc" id="L26">		fillFirstBlocks(instance, initialHash);</span>
+<span class="nc" id="L27">	}</span>
 
 	/**
 	 * (H0 || 0 || i) 72 byte -&gt; 1024 byte (H0 || 1 || i) 72 byte -&gt; 1024 byte
 	 */
 	private static void fillFirstBlocks(Instance instance, byte[] initialHash) {
 
-<span class="nc" id="L36">		final byte[] zeroBytes = { 0, 0, 0, 0 };</span>
-<span class="nc" id="L37">		final byte[] oneBytes = { 1, 0, 0, 0 };</span>
+<span class="nc" id="L34">		final byte[] zeroBytes = { 0, 0, 0, 0 };</span>
+<span class="nc" id="L35">		final byte[] oneBytes = { 1, 0, 0, 0 };</span>
 
-<span class="nc" id="L39">		byte[] initialHashWithZeros = getInitialHashLong(initialHash, zeroBytes);</span>
-<span class="nc" id="L40">		byte[] initialHashWithOnes = getInitialHashLong(initialHash, oneBytes);</span>
+<span class="nc" id="L37">		byte[] initialHashWithZeros = getInitialHashLong(initialHash, zeroBytes);</span>
+<span class="nc" id="L38">		byte[] initialHashWithOnes = getInitialHashLong(initialHash, oneBytes);</span>
 
-<span class="nc bnc" id="L42" title="All 2 branches missed.">		for (int i = 0; i &lt; instance.getLanes(); i++) {</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">		for (int i = 0; i &lt; instance.getLanes(); i++) {</span>
 
-<span class="nc" id="L44">			byte[] iBytes = Util.intToLittleEndianBytes(i);</span>
+<span class="nc" id="L42">			byte[] iBytes = Util.intToLittleEndianBytes(i);</span>
 
-<span class="nc" id="L46">			System.arraycopy(iBytes, 0, initialHashWithZeros, ARGON2_PREHASH_DIGEST_LENGTH + 4, 4);</span>
-<span class="nc" id="L47">			System.arraycopy(iBytes, 0, initialHashWithOnes, ARGON2_PREHASH_DIGEST_LENGTH + 4, 4);</span>
+<span class="nc" id="L44">			System.arraycopy(iBytes, 0, initialHashWithZeros, ARGON2_PREHASH_DIGEST_LENGTH + 4, 4);</span>
+<span class="nc" id="L45">			System.arraycopy(iBytes, 0, initialHashWithOnes, ARGON2_PREHASH_DIGEST_LENGTH + 4, 4);</span>
 
-<span class="nc" id="L49">			byte[] blockhashBytes = Functions.blake2bLong(initialHashWithZeros, ARGON2_BLOCK_SIZE);</span>
-<span class="nc" id="L50">			instance.memory[i * instance.getLaneLength() + 0].fromBytes(blockhashBytes);</span>
+<span class="nc" id="L47">			byte[] blockhashBytes = Functions.blake2bLong(initialHashWithZeros, ARGON2_BLOCK_SIZE);</span>
+<span class="nc" id="L48">			instance.memory[i * instance.getLaneLength() + 0].fromBytes(blockhashBytes);</span>
 
-<span class="nc" id="L52">			blockhashBytes = Functions.blake2bLong(initialHashWithOnes, ARGON2_BLOCK_SIZE);</span>
-<span class="nc" id="L53">			instance.memory[i * instance.getLaneLength() + 1].fromBytes(blockhashBytes);</span>
+<span class="nc" id="L50">			blockhashBytes = Functions.blake2bLong(initialHashWithOnes, ARGON2_BLOCK_SIZE);</span>
+<span class="nc" id="L51">			instance.memory[i * instance.getLaneLength() + 1].fromBytes(blockhashBytes);</span>
 		}
-<span class="nc" id="L55">	}</span>
+<span class="nc" id="L53">	}</span>
 
 	private static byte[] getInitialHashLong(byte[] initialHash, byte[] appendix) {
-<span class="nc" id="L58">		byte[] initialHashLong = new byte[ARGON2_PREHASH_SEED_LENGTH];</span>
+<span class="nc" id="L56">		byte[] initialHashLong = new byte[ARGON2_PREHASH_SEED_LENGTH];</span>
 
-<span class="nc" id="L60">		System.arraycopy(initialHash, 0, initialHashLong, 0, ARGON2_PREHASH_DIGEST_LENGTH);</span>
-<span class="nc" id="L61">		System.arraycopy(appendix, 0, initialHashLong, ARGON2_PREHASH_DIGEST_LENGTH, 4);</span>
+<span class="nc" id="L58">		System.arraycopy(initialHash, 0, initialHashLong, 0, ARGON2_PREHASH_DIGEST_LENGTH);</span>
+<span class="nc" id="L59">		System.arraycopy(appendix, 0, initialHashLong, ARGON2_PREHASH_DIGEST_LENGTH, 4);</span>
 
-<span class="nc" id="L63">		return initialHashLong;</span>
+<span class="nc" id="L61">		return initialHashLong;</span>
 	}
 
 }

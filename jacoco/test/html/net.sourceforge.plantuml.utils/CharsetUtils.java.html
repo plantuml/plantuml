@@ -3,16 +3,14 @@
 import java.nio.charset.Charset;
 
 <span class="nc" id="L5">public class CharsetUtils {</span>
-	// ::remove file when __HAXE__
-
 	public static Charset charsetOrDefault(String charsetName) {
 
-<span class="fc bfc" id="L10" title="All 2 branches covered.">		if (charsetName == null) {</span>
-<span class="pc" id="L11">			Log.info(() -&gt; &quot;Using default charset&quot;);</span>
-<span class="fc" id="L12">			return Charset.defaultCharset();</span>
+<span class="fc bfc" id="L8" title="All 2 branches covered.">		if (charsetName == null) {</span>
+<span class="pc" id="L9">			Log.info(() -&gt; &quot;Using default charset&quot;);</span>
+<span class="fc" id="L10">			return Charset.defaultCharset();</span>
 		} else {
-<span class="fc" id="L14">			Log.info(() -&gt; &quot;Using charset &quot; + charsetName);</span>
-<span class="fc" id="L15">			return Charset.forName(charsetName);</span>
+<span class="fc" id="L12">			Log.info(() -&gt; &quot;Using charset &quot; + charsetName);</span>
+<span class="fc" id="L13">			return Charset.forName(charsetName);</span>
 		}
 	}
 }

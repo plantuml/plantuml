@@ -36,51 +36,49 @@
 package net.sourceforge.plantuml.salt;
 
 public class Cell {
-    // ::remove folder when __HAXE__
-
 	private int minRow;
 	private int maxRow;
 	private int minCol;
 	private int maxCol;
 
-<span class="fc" id="L46">	public Cell(int row, int col) {</span>
-<span class="fc" id="L47">		minRow = row;</span>
-<span class="fc" id="L48">		maxRow = row;</span>
-<span class="fc" id="L49">		minCol = col;</span>
-<span class="fc" id="L50">		maxCol = col;</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L44">	public Cell(int row, int col) {</span>
+<span class="fc" id="L45">		minRow = row;</span>
+<span class="fc" id="L46">		maxRow = row;</span>
+<span class="fc" id="L47">		minCol = col;</span>
+<span class="fc" id="L48">		maxCol = col;</span>
+<span class="fc" id="L49">	}</span>
 
 	public void mergeLeft() {
-<span class="nc" id="L54">		maxCol++;</span>
-<span class="nc" id="L55">	}</span>
+<span class="nc" id="L52">		maxCol++;</span>
+<span class="nc" id="L53">	}</span>
 
 	public int getMinRow() {
-<span class="fc" id="L58">		return minRow;</span>
+<span class="fc" id="L56">		return minRow;</span>
 	}
 
 	public int getMaxRow() {
-<span class="fc" id="L62">		return maxRow;</span>
+<span class="fc" id="L60">		return maxRow;</span>
 	}
 
 	public int getMinCol() {
-<span class="fc" id="L66">		return minCol;</span>
+<span class="fc" id="L64">		return minCol;</span>
 	}
 
 	public int getMaxCol() {
-<span class="fc" id="L70">		return maxCol;</span>
+<span class="fc" id="L68">		return maxCol;</span>
 	}
 
 	public int getNbRows() {
-<span class="fc" id="L74">		return maxRow - minRow + 1;</span>
+<span class="fc" id="L72">		return maxRow - minRow + 1;</span>
 	}
 
 	public int getNbCols() {
-<span class="fc" id="L78">		return maxCol - minCol + 1;</span>
+<span class="fc" id="L76">		return maxCol - minCol + 1;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L83">		return &quot;(&quot; + minRow + &quot;,&quot; + minCol + &quot;)-(&quot; + maxRow + &quot;,&quot; + maxCol + &quot;)&quot;;</span>
+<span class="nc" id="L81">		return &quot;(&quot; + minRow + &quot;,&quot; + minCol + &quot;)-(&quot; + maxRow + &quot;,&quot; + maxCol + &quot;)&quot;;</span>
 	}
 
 }

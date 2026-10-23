@@ -37,9 +37,7 @@
 package net.sourceforge.plantuml.svek;
 
 <span class="nc" id="L39">public enum SingleStrategy {</span>
-    // ::remove folder when __HAXE__
-
-<span class="nc" id="L42">	SQUARE, HLINE, VLINE;</span>
+<span class="nc" id="L40">	SQUARE, HLINE, VLINE;</span>
 
 //	private Collection&lt;Link&gt; generateLinks(List&lt;ILeaf&gt; standalones) {
 //		return putInSquare(standalones);
@@ -68,12 +66,12 @@ package net.sourceforge.plantuml.svek;
 //	}
 
 	static int computeBranch(int size) {
-<span class="nc" id="L71">		final double sqrt = Math.sqrt(size);</span>
-<span class="nc" id="L72">		final int r = (int) sqrt;</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (r * r == size) {</span>
-<span class="nc" id="L74">			return r;</span>
+<span class="nc" id="L69">		final double sqrt = Math.sqrt(size);</span>
+<span class="nc" id="L70">		final int r = (int) sqrt;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (r * r == size) {</span>
+<span class="nc" id="L72">			return r;</span>
 		}
-<span class="nc" id="L76">		return r + 1;</span>
+<span class="nc" id="L74">		return r + 1;</span>
 	}
 
 }

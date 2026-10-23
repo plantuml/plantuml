@@ -39,8 +39,6 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.utils.Direction;
 
 <span class="fc" id="L41">public abstract class Arrows {</span>
-	// ::remove file when __HAXE__
-
 	public abstract UPolygon asToUp();
 
 	public abstract UPolygon asToDown();
@@ -50,19 +48,19 @@ import net.sourceforge.plantuml.utils.Direction;
 	public abstract UPolygon asToLeft();
 
 	public final UPolygon asTo(Direction direction) {
-<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (direction == Direction.UP)</span>
-<span class="fc" id="L54">			return asToUp();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (direction == Direction.UP)</span>
+<span class="fc" id="L52">			return asToUp();</span>
 
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (direction == Direction.DOWN)</span>
-<span class="fc" id="L57">			return asToDown();</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (direction == Direction.DOWN)</span>
+<span class="fc" id="L55">			return asToDown();</span>
 
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (direction == Direction.LEFT)</span>
-<span class="nc" id="L60">			return asToLeft();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (direction == Direction.LEFT)</span>
+<span class="nc" id="L58">			return asToLeft();</span>
 
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (direction == Direction.RIGHT)</span>
-<span class="nc" id="L63">			return asToRight();</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (direction == Direction.RIGHT)</span>
+<span class="nc" id="L61">			return asToRight();</span>
 
-<span class="nc" id="L65">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L63">		throw new IllegalArgumentException();</span>
 	}
 
 }

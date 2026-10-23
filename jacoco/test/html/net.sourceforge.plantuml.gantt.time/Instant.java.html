@@ -38,48 +38,46 @@ package net.sourceforge.plantuml.gantt.time;
 import net.sourceforge.plantuml.gantt.PValue;
 
 public class Instant implements Comparable&lt;Instant&gt;, PValue {
-	// ::remove folder when __HAXE__
-
 	private final long ms;
 
 	public static Instant create(long ms) {
-<span class="nc" id="L46">		return new Instant(ms);</span>
+<span class="nc" id="L44">		return new Instant(ms);</span>
 	}
 
 	public static Instant today() {
-<span class="nc" id="L50">		return create(System.currentTimeMillis());</span>
+<span class="nc" id="L48">		return create(System.currentTimeMillis());</span>
 	}
 
-<span class="nc" id="L53">	private Instant(long ms) {</span>
-<span class="nc" id="L54">		this.ms = ms;</span>
-<span class="nc" id="L55">	}</span>
+<span class="nc" id="L51">	private Instant(long ms) {</span>
+<span class="nc" id="L52">		this.ms = ms;</span>
+<span class="nc" id="L53">	}</span>
 
 	public final long getMillis() {
-<span class="nc" id="L58">		return ms;</span>
+<span class="nc" id="L56">		return ms;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L63">		return &quot;&quot; + ms;</span>
+<span class="nc" id="L61">		return &quot;&quot; + ms;</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L68">		return toLong().hashCode();</span>
+<span class="nc" id="L66">		return toLong().hashCode();</span>
 	}
 
 	private Long toLong() {
-<span class="nc" id="L72">		return Long.valueOf(ms);</span>
+<span class="nc" id="L70">		return Long.valueOf(ms);</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc" id="L77">		final Instant other = (Instant) obj;</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		return this.ms == other.ms;</span>
+<span class="nc" id="L75">		final Instant other = (Instant) obj;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		return this.ms == other.ms;</span>
 	}
 
 	public int compareTo(Instant other) {
-<span class="nc" id="L82">		return toLong().compareTo(other.toLong());</span>
+<span class="nc" id="L80">		return toLong().compareTo(other.toLong());</span>
 	}
 
 }

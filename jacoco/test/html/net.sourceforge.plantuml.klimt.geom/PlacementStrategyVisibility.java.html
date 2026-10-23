@@ -43,32 +43,30 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public class PlacementStrategyVisibility extends AbstractPlacementStrategy {
-	// ::remove file when __HAXE__
-
 	private final int col2;
 
 	public PlacementStrategyVisibility(StringBounder stringBounder, int col2) {
-<span class="fc" id="L51">		super(stringBounder);</span>
-<span class="fc" id="L52">		this.col2 = col2;</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L49">		super(stringBounder);</span>
+<span class="fc" id="L50">		this.col2 = col2;</span>
+<span class="fc" id="L51">	}</span>
 
 	public Map&lt;TextBlock, XPoint2D&gt; getPositions(double width, double height) {
-<span class="fc" id="L56">		final Map&lt;TextBlock, XPoint2D&gt; result = new LinkedHashMap&lt;&gt;();</span>
-<span class="fc" id="L57">		double y = 0;</span>
-<span class="fc" id="L58">		for (final Iterator&lt;Map.Entry&lt;TextBlock, XDimension2D&gt;&gt; it = getDimensions().entrySet().iterator(); it</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">				.hasNext();) {</span>
-<span class="fc" id="L60">			final Map.Entry&lt;TextBlock, XDimension2D&gt; ent1 = it.next();</span>
-<span class="fc" id="L61">			final Map.Entry&lt;TextBlock, XDimension2D&gt; ent2 = it.next();</span>
+<span class="fc" id="L54">		final Map&lt;TextBlock, XPoint2D&gt; result = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L55">		double y = 0;</span>
+<span class="fc" id="L56">		for (final Iterator&lt;Map.Entry&lt;TextBlock, XDimension2D&gt;&gt; it = getDimensions().entrySet().iterator(); it</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">				.hasNext();) {</span>
+<span class="fc" id="L58">			final Map.Entry&lt;TextBlock, XDimension2D&gt; ent1 = it.next();</span>
+<span class="fc" id="L59">			final Map.Entry&lt;TextBlock, XDimension2D&gt; ent2 = it.next();</span>
 
-<span class="fc" id="L63">			final double height1 = ent1.getValue().getHeight();</span>
-<span class="fc" id="L64">			final double height2 = ent2.getValue().getHeight();</span>
-<span class="fc" id="L65">			final double maxHeight12 = Math.max(height1, height2);</span>
+<span class="fc" id="L61">			final double height1 = ent1.getValue().getHeight();</span>
+<span class="fc" id="L62">			final double height2 = ent2.getValue().getHeight();</span>
+<span class="fc" id="L63">			final double maxHeight12 = Math.max(height1, height2);</span>
 
-<span class="fc" id="L67">			result.put(ent1.getKey(), new XPoint2D(0, 2 + y + (maxHeight12 - height1) / 2));</span>
-<span class="fc" id="L68">			result.put(ent2.getKey(), new XPoint2D(col2, y + (maxHeight12 - height2) / 2));</span>
-<span class="fc" id="L69">			y += maxHeight12;</span>
-<span class="fc" id="L70">		}</span>
-<span class="fc" id="L71">		return result;</span>
+<span class="fc" id="L65">			result.put(ent1.getKey(), new XPoint2D(0, 2 + y + (maxHeight12 - height1) / 2));</span>
+<span class="fc" id="L66">			result.put(ent2.getKey(), new XPoint2D(col2, y + (maxHeight12 - height2) / 2));</span>
+<span class="fc" id="L67">			y += maxHeight12;</span>
+<span class="fc" id="L68">		}</span>
+<span class="fc" id="L69">		return result;</span>
 	}
 
 }

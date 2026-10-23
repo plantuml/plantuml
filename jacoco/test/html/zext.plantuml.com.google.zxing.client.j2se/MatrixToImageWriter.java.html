@@ -28,8 +28,6 @@ import zext.plantuml.com.google.zxing.common.BitMatrix;
  * @author Sean Owen
  */
 public final class MatrixToImageWriter {
-    // ::remove folder when __HAXE__
-
   private static final int BLACK = 0xFF000000;
   private static final int WHITE = 0xFFFFFFFF;
 
@@ -40,15 +38,15 @@ public final class MatrixToImageWriter {
    * as white, and &quot;true&quot; bits are rendered as black.
    */
   public static BufferedImage toBufferedImage(BitMatrix matrix, int fore, int back) {
-<span class="fc" id="L43">    int width = matrix.getWidth();</span>
-<span class="fc" id="L44">    int height = matrix.getHeight();</span>
-<span class="fc" id="L45">    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">    for (int x = 0; x &lt; width; x++) {</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">      for (int y = 0; y &lt; height; y++) {</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        image.setRGB(x, y, matrix.get(x, y) ? fore : back);</span>
+<span class="fc" id="L41">    int width = matrix.getWidth();</span>
+<span class="fc" id="L42">    int height = matrix.getHeight();</span>
+<span class="fc" id="L43">    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">    for (int x = 0; x &lt; width; x++) {</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">      for (int y = 0; y &lt; height; y++) {</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        image.setRGB(x, y, matrix.get(x, y) ? fore : back);</span>
       }
     }
-<span class="fc" id="L51">    return image;</span>
+<span class="fc" id="L49">    return image;</span>
   }
 
 //  /**

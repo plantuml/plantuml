@@ -36,18 +36,16 @@
 package net.sourceforge.plantuml.klimt.compress;
 
 public class PiecewiseAffineComposition implements PiecewiseAffineTransform {
-    // ::remove file when __HAXE__
-
 	private final PiecewiseAffineComposition first;
 	private final PiecewiseAffineComposition second;
 
-<span class="nc" id="L44">	public PiecewiseAffineComposition(PiecewiseAffineComposition first, PiecewiseAffineComposition second) {</span>
-<span class="nc" id="L45">		this.first = first;</span>
-<span class="nc" id="L46">		this.second = second;</span>
-<span class="nc" id="L47">	}</span>
+<span class="nc" id="L42">	public PiecewiseAffineComposition(PiecewiseAffineComposition first, PiecewiseAffineComposition second) {</span>
+<span class="nc" id="L43">		this.first = first;</span>
+<span class="nc" id="L44">		this.second = second;</span>
+<span class="nc" id="L45">	}</span>
 
 	public double transform(double v) {
-<span class="nc" id="L50">		return second.transform(first.transform(v));</span>
+<span class="nc" id="L48">		return second.transform(first.transform(v));</span>
 	}
 
 }

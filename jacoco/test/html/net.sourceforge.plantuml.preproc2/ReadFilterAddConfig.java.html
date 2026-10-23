@@ -44,40 +44,38 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public class ReadFilterAddConfig implements ReadFilter {
-    // ::remove folder when __HAXE__
-
 	private final List&lt;String&gt; config;
 
-<span class="fc" id="L51">	public ReadFilterAddConfig(List&lt;String&gt; config) {</span>
-<span class="fc" id="L52">		this.config = config;</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L49">	public ReadFilterAddConfig(List&lt;String&gt; config) {</span>
+<span class="fc" id="L50">		this.config = config;</span>
+<span class="fc" id="L51">	}</span>
 
 	public ReadLine applyFilter(final ReadLine raw) {
 
-<span class="fc" id="L57">		return new ReadLine() {</span>
+<span class="fc" id="L55">		return new ReadLine() {</span>
 
 			private ReadLine inserted;
 
 			public void close() throws IOException {
-<span class="fc" id="L62">				raw.close();</span>
-<span class="fc" id="L63">			}</span>
+<span class="fc" id="L60">				raw.close();</span>
+<span class="fc" id="L61">			}</span>
 
 			public StringLocated readLine() throws IOException {
-<span class="fc" id="L66">				StringLocated result = null;</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">				if (inserted != null) {</span>
-<span class="fc" id="L68">					result = inserted.readLine();</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">					if (result == null) {</span>
-<span class="fc" id="L70">						inserted.close();</span>
-<span class="fc" id="L71">						inserted = null;</span>
+<span class="fc" id="L64">				StringLocated result = null;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">				if (inserted != null) {</span>
+<span class="fc" id="L66">					result = inserted.readLine();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">					if (result == null) {</span>
+<span class="fc" id="L68">						inserted.close();</span>
+<span class="fc" id="L69">						inserted = null;</span>
 					} else {
-<span class="fc" id="L73">						return result;</span>
+<span class="fc" id="L71">						return result;</span>
 					}
 				}
-<span class="fc" id="L76">				result = raw.readLine();</span>
-<span class="fc bfc" id="L77" title="All 6 branches covered.">				if (result != null &amp;&amp; StartUtils.isStartDirective(result.getString()) &amp;&amp; config.size() &gt; 0) {</span>
-<span class="fc" id="L78">					inserted = new ReadFilterQuoteComment().applyFilter(new ReadLineList(config, result.getLocation()));</span>
+<span class="fc" id="L74">				result = raw.readLine();</span>
+<span class="fc bfc" id="L75" title="All 6 branches covered.">				if (result != null &amp;&amp; StartUtils.isStartDirective(result.getString()) &amp;&amp; config.size() &gt; 0) {</span>
+<span class="fc" id="L76">					inserted = new ReadFilterQuoteComment().applyFilter(new ReadLineList(config, result.getLocation()));</span>
 				}
-<span class="fc" id="L80">				return result;</span>
+<span class="fc" id="L78">				return result;</span>
 			}
 		};
 	}

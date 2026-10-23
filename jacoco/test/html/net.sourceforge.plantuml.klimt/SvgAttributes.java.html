@@ -64,29 +64,27 @@ public class SvgAttributes {
 
 	public static SvgAttributes build(String args) {
 <span class="nc" id="L66">		final SvgAttributes result = new SvgAttributes();</span>
-		// ::comment when __HAXE__
-<span class="nc" id="L68">		final Matcher2 m = p.matcher(args, 0);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		while (m.find())</span>
-<span class="nc" id="L70">			result.attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));</span>
-		// ::done
+<span class="nc" id="L67">		final Matcher2 m = p.matcher(args, 0);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		while (m.find())</span>
+<span class="nc" id="L69">			result.attributes.put(m.group(1), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(m.group(2)));</span>
 
-<span class="nc" id="L73">		return result;</span>
+<span class="nc" id="L71">		return result;</span>
 	}
 
 	public Map&lt;String, String&gt; attributes() {
-<span class="fc" id="L77">		return MyCollections.unmodifiableMap(attributes);</span>
+<span class="fc" id="L75">		return MyCollections.unmodifiableMap(attributes);</span>
 	}
 
 	public SvgAttributes add(String key, String value) {
-<span class="nc" id="L81">		final SvgAttributes result = cloneMe();</span>
-<span class="nc" id="L82">		result.attributes.put(key, value);</span>
-<span class="nc" id="L83">		return result;</span>
+<span class="nc" id="L79">		final SvgAttributes result = cloneMe();</span>
+<span class="nc" id="L80">		result.attributes.put(key, value);</span>
+<span class="nc" id="L81">		return result;</span>
 	}
 
 	public SvgAttributes add(SvgAttributes toBeAdded) {
-<span class="nc" id="L87">		final SvgAttributes result = cloneMe();</span>
-<span class="nc" id="L88">		result.attributes.putAll(toBeAdded.attributes);</span>
-<span class="nc" id="L89">		return result;</span>
+<span class="nc" id="L85">		final SvgAttributes result = cloneMe();</span>
+<span class="nc" id="L86">		result.attributes.putAll(toBeAdded.attributes);</span>
+<span class="nc" id="L87">		return result;</span>
 	}
 
 }

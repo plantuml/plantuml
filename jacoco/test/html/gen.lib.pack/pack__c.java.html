@@ -58,8 +58,6 @@ import smetana.core.CString;
 import smetana.core.Globals;
 
 <span class="nc" id="L60">public class pack__c {</span>
-    // ::remove folder when __HAXE__
-
 
 
 /* parsePackModeInfo;
@@ -69,46 +67,46 @@ import smetana.core.Globals;
 @Reviewed(when = &quot;12/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/pack/pack.c&quot;, name=&quot;parsePackModeInfo&quot;, key=&quot;dyb1n3lhbi0wnr9kvmu6onux9&quot;, definition=&quot;pack_mode  parsePackModeInfo(char* p, pack_mode dflt, pack_info* pinfo)&quot;)
 public static EN_pack_mode parsePackModeInfo(CString p, EN_pack_mode dflt, ST_pack_info pinfo) {
-<span class="fc" id="L72">ENTERING(&quot;dyb1n3lhbi0wnr9kvmu6onux9&quot;,&quot;parsePackModeInfo&quot;);</span>
+<span class="fc" id="L70">ENTERING(&quot;dyb1n3lhbi0wnr9kvmu6onux9&quot;,&quot;parsePackModeInfo&quot;);</span>
 try {
     float v;
     int i;
     //assert (pinfo);
-<span class="fc" id="L77">    pinfo.flags = 0;</span>
-<span class="fc" id="L78">    pinfo.mode = dflt;</span>
-<span class="fc" id="L79">    pinfo.sz = 0;</span>
-<span class="fc" id="L80">    pinfo.vals = null;</span>
-<span class="pc bpc" id="L81" title="3 of 4 branches missed.">    if (p!=null &amp;&amp; p.charAt(0)!='\0') {</span>
-<span class="nc" id="L82">UNSUPPORTED(&quot;2ybrtqq8efxouph8wjbrnowxz&quot;); // 	switch (*p) {</span>
-<span class="nc" id="L83">UNSUPPORTED(&quot;2v5u3irq50r1n2ccuna0y09lk&quot;); // 	case 'a':</span>
-<span class="nc" id="L84">UNSUPPORTED(&quot;4o68zbwd6291pxryyntjh2432&quot;); // 	    if ((!strncmp(p,&quot;array&quot;,(sizeof(&quot;array&quot;)/sizeof(char) - 1)))) {</span>
-<span class="nc" id="L85">UNSUPPORTED(&quot;3cxht114gc0fn4wl8xjy515bv&quot;); // 		pinfo-&gt;mode = l_array;</span>
-<span class="nc" id="L86">UNSUPPORTED(&quot;edkaa80od81ojkn7d4h0q1zbu&quot;); // 		p += (sizeof(&quot;array&quot;)/sizeof(char) - 1);</span>
-<span class="nc" id="L87">UNSUPPORTED(&quot;106zhcf9a6frvafctbbgrbws3&quot;); // 		p = chkFlags (p, pinfo);</span>
-<span class="nc" id="L88">UNSUPPORTED(&quot;epac8gmlq3r1q3g6lh3fb9nzh&quot;); // 		if ((sscanf (p, &quot;%d&quot;, &amp;i)&gt;0) &amp;&amp; (i &gt; 0))</span>
-<span class="nc" id="L89">UNSUPPORTED(&quot;2e563kaxakuuou2t5kqvv33w5&quot;); // 		    pinfo-&gt;sz = i;</span>
-<span class="nc" id="L90">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
-<span class="nc" id="L91">UNSUPPORTED(&quot;38dve3snq2grkwui6y1tpc6r1&quot;); // 	    else if ((!strncmp(p,&quot;aspect&quot;,(sizeof(&quot;aspect&quot;)/sizeof(char) - 1)))) {</span>
-<span class="nc" id="L92">UNSUPPORTED(&quot;ems4wqj0nbd0vi3sttf36tnir&quot;); // 		pinfo-&gt;mode = l_aspect;</span>
-<span class="nc" id="L93">UNSUPPORTED(&quot;3ckdfsy55ba8os2xhymh002al&quot;); // 		if ((sscanf (p + (sizeof(&quot;array&quot;)/sizeof(char) - 1), &quot;%f&quot;, &amp;v)&gt;0) &amp;&amp; (v &gt; 0))</span>
-<span class="nc" id="L94">UNSUPPORTED(&quot;1i6xlg2sfqvjqjdu811xm5398&quot;); // 		    pinfo-&gt;aspect = v;</span>
-<span class="nc" id="L95">UNSUPPORTED(&quot;7e1uy5mzei37p66t8jp01r3mk&quot;); // 		else</span>
-<span class="nc" id="L96">UNSUPPORTED(&quot;b3tzhasiwa1p83l47nhl6k5x8&quot;); // 		    pinfo-&gt;aspect = 1;</span>
-<span class="nc" id="L97">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
-<span class="nc" id="L98">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
-<span class="nc" id="L99">UNSUPPORTED(&quot;f3lyz2cejs6yn5fyckhn7ba1&quot;); // 	case 'c':</span>
-<span class="nc" id="L100">UNSUPPORTED(&quot;d6yjom2gtqleeq1vf5l72eazl&quot;); // 	    if ((*(p)==*(&quot;cluster&quot;)&amp;&amp;!strcmp(p,&quot;cluster&quot;)))</span>
-<span class="nc" id="L101">UNSUPPORTED(&quot;2xe2y3s32q27l74dshw3831hu&quot;); // 		pinfo-&gt;mode = l_clust;</span>
-<span class="nc" id="L102">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
-<span class="nc" id="L103">UNSUPPORTED(&quot;e00kor2k58i044hvvxytt9dhg&quot;); // 	case 'g':</span>
-<span class="nc" id="L104">UNSUPPORTED(&quot;8vzhimdinzz48u15tcx34gzgs&quot;); // 	    if ((*(p)==*(&quot;graph&quot;)&amp;&amp;!strcmp(p,&quot;graph&quot;)))</span>
-<span class="nc" id="L105">UNSUPPORTED(&quot;coafx7pn3ah1ulp0o7a0z119r&quot;); // 		pinfo-&gt;mode = l_graph;</span>
-<span class="nc" id="L106">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
-<span class="nc" id="L107">UNSUPPORTED(&quot;f187wptsr73liavtlyoyfovp3&quot;); // 	case 'n':</span>
-<span class="nc" id="L108">UNSUPPORTED(&quot;aqi1ed010xc3cj8xoye8vqkqe&quot;); // 	    if ((*(p)==*(&quot;node&quot;)&amp;&amp;!strcmp(p,&quot;node&quot;)))</span>
-<span class="nc" id="L109">UNSUPPORTED(&quot;epewq8yin5pr1meeofxvntjes&quot;); // 		pinfo-&gt;mode = l_node;</span>
-<span class="nc" id="L110">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
-<span class="nc" id="L111">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="fc" id="L75">    pinfo.flags = 0;</span>
+<span class="fc" id="L76">    pinfo.mode = dflt;</span>
+<span class="fc" id="L77">    pinfo.sz = 0;</span>
+<span class="fc" id="L78">    pinfo.vals = null;</span>
+<span class="pc bpc" id="L79" title="3 of 4 branches missed.">    if (p!=null &amp;&amp; p.charAt(0)!='\0') {</span>
+<span class="nc" id="L80">UNSUPPORTED(&quot;2ybrtqq8efxouph8wjbrnowxz&quot;); // 	switch (*p) {</span>
+<span class="nc" id="L81">UNSUPPORTED(&quot;2v5u3irq50r1n2ccuna0y09lk&quot;); // 	case 'a':</span>
+<span class="nc" id="L82">UNSUPPORTED(&quot;4o68zbwd6291pxryyntjh2432&quot;); // 	    if ((!strncmp(p,&quot;array&quot;,(sizeof(&quot;array&quot;)/sizeof(char) - 1)))) {</span>
+<span class="nc" id="L83">UNSUPPORTED(&quot;3cxht114gc0fn4wl8xjy515bv&quot;); // 		pinfo-&gt;mode = l_array;</span>
+<span class="nc" id="L84">UNSUPPORTED(&quot;edkaa80od81ojkn7d4h0q1zbu&quot;); // 		p += (sizeof(&quot;array&quot;)/sizeof(char) - 1);</span>
+<span class="nc" id="L85">UNSUPPORTED(&quot;106zhcf9a6frvafctbbgrbws3&quot;); // 		p = chkFlags (p, pinfo);</span>
+<span class="nc" id="L86">UNSUPPORTED(&quot;epac8gmlq3r1q3g6lh3fb9nzh&quot;); // 		if ((sscanf (p, &quot;%d&quot;, &amp;i)&gt;0) &amp;&amp; (i &gt; 0))</span>
+<span class="nc" id="L87">UNSUPPORTED(&quot;2e563kaxakuuou2t5kqvv33w5&quot;); // 		    pinfo-&gt;sz = i;</span>
+<span class="nc" id="L88">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L89">UNSUPPORTED(&quot;38dve3snq2grkwui6y1tpc6r1&quot;); // 	    else if ((!strncmp(p,&quot;aspect&quot;,(sizeof(&quot;aspect&quot;)/sizeof(char) - 1)))) {</span>
+<span class="nc" id="L90">UNSUPPORTED(&quot;ems4wqj0nbd0vi3sttf36tnir&quot;); // 		pinfo-&gt;mode = l_aspect;</span>
+<span class="nc" id="L91">UNSUPPORTED(&quot;3ckdfsy55ba8os2xhymh002al&quot;); // 		if ((sscanf (p + (sizeof(&quot;array&quot;)/sizeof(char) - 1), &quot;%f&quot;, &amp;v)&gt;0) &amp;&amp; (v &gt; 0))</span>
+<span class="nc" id="L92">UNSUPPORTED(&quot;1i6xlg2sfqvjqjdu811xm5398&quot;); // 		    pinfo-&gt;aspect = v;</span>
+<span class="nc" id="L93">UNSUPPORTED(&quot;7e1uy5mzei37p66t8jp01r3mk&quot;); // 		else</span>
+<span class="nc" id="L94">UNSUPPORTED(&quot;b3tzhasiwa1p83l47nhl6k5x8&quot;); // 		    pinfo-&gt;aspect = 1;</span>
+<span class="nc" id="L95">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L96">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L97">UNSUPPORTED(&quot;f3lyz2cejs6yn5fyckhn7ba1&quot;); // 	case 'c':</span>
+<span class="nc" id="L98">UNSUPPORTED(&quot;d6yjom2gtqleeq1vf5l72eazl&quot;); // 	    if ((*(p)==*(&quot;cluster&quot;)&amp;&amp;!strcmp(p,&quot;cluster&quot;)))</span>
+<span class="nc" id="L99">UNSUPPORTED(&quot;2xe2y3s32q27l74dshw3831hu&quot;); // 		pinfo-&gt;mode = l_clust;</span>
+<span class="nc" id="L100">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L101">UNSUPPORTED(&quot;e00kor2k58i044hvvxytt9dhg&quot;); // 	case 'g':</span>
+<span class="nc" id="L102">UNSUPPORTED(&quot;8vzhimdinzz48u15tcx34gzgs&quot;); // 	    if ((*(p)==*(&quot;graph&quot;)&amp;&amp;!strcmp(p,&quot;graph&quot;)))</span>
+<span class="nc" id="L103">UNSUPPORTED(&quot;coafx7pn3ah1ulp0o7a0z119r&quot;); // 		pinfo-&gt;mode = l_graph;</span>
+<span class="nc" id="L104">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L105">UNSUPPORTED(&quot;f187wptsr73liavtlyoyfovp3&quot;); // 	case 'n':</span>
+<span class="nc" id="L106">UNSUPPORTED(&quot;aqi1ed010xc3cj8xoye8vqkqe&quot;); // 	    if ((*(p)==*(&quot;node&quot;)&amp;&amp;!strcmp(p,&quot;node&quot;)))</span>
+<span class="nc" id="L107">UNSUPPORTED(&quot;epewq8yin5pr1meeofxvntjes&quot;); // 		pinfo-&gt;mode = l_node;</span>
+<span class="nc" id="L108">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L109">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
     }
     //if (Verbose) {
 	//fprintf (stderr, &quot;pack info:\n&quot;);
@@ -118,9 +116,9 @@ try {
 	//fprintf (stderr, &quot;  size   %d\n&quot;, pinfo-&gt;sz);
 	//fprintf (stderr, &quot;  flags  %d\n&quot;, pinfo-&gt;flags);
     //}
-<span class="fc" id="L121">    return pinfo.mode;</span>
+<span class="fc" id="L119">    return pinfo.mode;</span>
 } finally {
-<span class="fc" id="L123">LEAVING(&quot;dyb1n3lhbi0wnr9kvmu6onux9&quot;,&quot;parsePackModeInfo&quot;);</span>
+<span class="fc" id="L121">LEAVING(&quot;dyb1n3lhbi0wnr9kvmu6onux9&quot;,&quot;parsePackModeInfo&quot;);</span>
 }
 }
 
@@ -134,11 +132,11 @@ try {
 @Reviewed(when = &quot;12/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/pack/pack.c&quot;, name=&quot;getPackModeInfo&quot;, key=&quot;bnxqpsmvz6tyekstfjte4pzwj&quot;, definition=&quot;pack_mode  getPackModeInfo(Agraph_t * g, pack_mode dflt, pack_info* pinfo)&quot;)
 public static EN_pack_mode getPackModeInfo(Globals zz, ST_Agraph_s g, EN_pack_mode dflt, ST_pack_info pinfo) {
-<span class="fc" id="L137">ENTERING(&quot;bnxqpsmvz6tyekstfjte4pzwj&quot;,&quot;getPackModeInfo&quot;);</span>
+<span class="fc" id="L135">ENTERING(&quot;bnxqpsmvz6tyekstfjte4pzwj&quot;,&quot;getPackModeInfo&quot;);</span>
 try {
-<span class="fc" id="L139">    return parsePackModeInfo (agget(zz, g, new CString(&quot;packmode&quot;)), dflt, pinfo);</span>
+<span class="fc" id="L137">    return parsePackModeInfo (agget(zz, g, new CString(&quot;packmode&quot;)), dflt, pinfo);</span>
 } finally {
-<span class="fc" id="L141">LEAVING(&quot;bnxqpsmvz6tyekstfjte4pzwj&quot;,&quot;getPackModeInfo&quot;);</span>
+<span class="fc" id="L139">LEAVING(&quot;bnxqpsmvz6tyekstfjte4pzwj&quot;,&quot;getPackModeInfo&quot;);</span>
 }
 }
 
@@ -154,20 +152,20 @@ try {
 @Reviewed(when = &quot;12/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/pack/pack.c&quot;, name=&quot;getPack&quot;, key=&quot;ata97fmix5q1oikrmk5pezvrf&quot;, definition=&quot;int getPack(Agraph_t * g, int not_def, int dflt)&quot;)
 public static int getPack(Globals zz, ST_Agraph_s g, int not_def, int dflt) {
-<span class="fc" id="L157">ENTERING(&quot;ata97fmix5q1oikrmk5pezvrf&quot;,&quot;getPack&quot;);</span>
+<span class="fc" id="L155">ENTERING(&quot;ata97fmix5q1oikrmk5pezvrf&quot;,&quot;getPack&quot;);</span>
 try {
     CString p;
     int i;
-<span class="fc" id="L161">    int v = not_def;</span>
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">    if ((p = agget(zz, g, new CString(&quot;pack&quot;)))!=null) {</span>
-<span class="nc" id="L163">UNSUPPORTED(&quot;enpqar7c7okvibe7xhe0vjtfn&quot;); // 	if ((sscanf(p, &quot;%d&quot;, &amp;i) == 1) &amp;&amp; (i &gt;= 0))</span>
-<span class="nc" id="L164">UNSUPPORTED(&quot;3puzxwczcmpxvlw8cvmeyio74&quot;); // 	    v = i;</span>
-<span class="nc" id="L165">UNSUPPORTED(&quot;65w8fxtw319slbg2c6nvtmow8&quot;); // 	else if ((*p == 't') || (*p == 'T'))</span>
-<span class="nc" id="L166">UNSUPPORTED(&quot;5lifdir9mxnvpi8ur34qo0jej&quot;); // 	    v = dflt;</span>
+<span class="fc" id="L159">    int v = not_def;</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">    if ((p = agget(zz, g, new CString(&quot;pack&quot;)))!=null) {</span>
+<span class="nc" id="L161">UNSUPPORTED(&quot;enpqar7c7okvibe7xhe0vjtfn&quot;); // 	if ((sscanf(p, &quot;%d&quot;, &amp;i) == 1) &amp;&amp; (i &gt;= 0))</span>
+<span class="nc" id="L162">UNSUPPORTED(&quot;3puzxwczcmpxvlw8cvmeyio74&quot;); // 	    v = i;</span>
+<span class="nc" id="L163">UNSUPPORTED(&quot;65w8fxtw319slbg2c6nvtmow8&quot;); // 	else if ((*p == 't') || (*p == 'T'))</span>
+<span class="nc" id="L164">UNSUPPORTED(&quot;5lifdir9mxnvpi8ur34qo0jej&quot;); // 	    v = dflt;</span>
     }
-<span class="fc" id="L168">    return v;</span>
+<span class="fc" id="L166">    return v;</span>
 } finally {
-<span class="fc" id="L170">LEAVING(&quot;ata97fmix5q1oikrmk5pezvrf&quot;,&quot;getPack&quot;);</span>
+<span class="fc" id="L168">LEAVING(&quot;ata97fmix5q1oikrmk5pezvrf&quot;,&quot;getPack&quot;);</span>
 }
 }
 
@@ -177,18 +175,18 @@ try {
 @Reviewed(when = &quot;12/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/pack/pack.c&quot;, name=&quot;getPackInfo&quot;, key=&quot;ce4a70w8ddkj4l9efi74h61s6&quot;, definition=&quot;pack_mode  getPackInfo(Agraph_t * g, pack_mode dflt, int dfltMargin, pack_info* pinfo)&quot;)
 public static EN_pack_mode getPackInfo(Globals zz, ST_Agraph_s g, EN_pack_mode dflt, int dfltMargin, ST_pack_info pinfo) {
-<span class="fc" id="L180">ENTERING(&quot;ce4a70w8ddkj4l9efi74h61s6&quot;,&quot;getPackInfo&quot;);</span>
+<span class="fc" id="L178">ENTERING(&quot;ce4a70w8ddkj4l9efi74h61s6&quot;,&quot;getPackInfo&quot;);</span>
 try {
-<span class="fc" id="L182">    pinfo.margin = getPack(zz, g, dfltMargin, dfltMargin);</span>
+<span class="fc" id="L180">    pinfo.margin = getPack(zz, g, dfltMargin, dfltMargin);</span>
     //if (Verbose) {
 	//fprintf (stderr, &quot;  margin %d\n&quot;, pinfo-&gt;margin);
     //}
-<span class="fc" id="L186">    pinfo.doSplines = 0;</span>
-<span class="fc" id="L187">    pinfo.fixed = null;</span>
-<span class="fc" id="L188">    getPackModeInfo(zz, g, dflt, pinfo);</span>
-<span class="fc" id="L189">    return pinfo.mode;</span>
+<span class="fc" id="L184">    pinfo.doSplines = 0;</span>
+<span class="fc" id="L185">    pinfo.fixed = null;</span>
+<span class="fc" id="L186">    getPackModeInfo(zz, g, dflt, pinfo);</span>
+<span class="fc" id="L187">    return pinfo.mode;</span>
 } finally {
-<span class="fc" id="L191">LEAVING(&quot;ce4a70w8ddkj4l9efi74h61s6&quot;,&quot;getPackInfo&quot;);</span>
+<span class="fc" id="L189">LEAVING(&quot;ce4a70w8ddkj4l9efi74h61s6&quot;,&quot;getPackInfo&quot;);</span>
 }
 }
 

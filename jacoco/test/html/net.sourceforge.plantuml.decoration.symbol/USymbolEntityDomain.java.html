@@ -41,16 +41,14 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.svek.EntityDomain;
 
 <span class="fc" id="L43">class USymbolEntityDomain extends USymbolSimpleAbstract {</span>
-    // ::remove folder when __HAXE__
-
 	@Override
 	public SName[] getSNames() {
-<span class="nc" id="L48">		return new SName[] { SName.entity };</span>
+<span class="nc" id="L46">		return new SName[] { SName.entity };</span>
 	}
 
 	@Override
 	protected TextBlock getDrawing(final Fashion symbolContext) {
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		return new EntityDomain(symbolContext.withDeltaShadow(symbolContext.isShadowing() ? 4.0 : 0.0));</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		return new EntityDomain(symbolContext.withDeltaShadow(symbolContext.isShadowing() ? 4.0 : 0.0));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

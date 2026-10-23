@@ -36,11 +36,10 @@ import jcckit.graphic.GraphPoint;
  *  @author Franz-Josef Elmer
  */
 public class Transformation {
-    // ::remove folder when __HAXE__
   private final double _scale, _x0, _y0;
   
   public String toString() {
-<span class="nc" id="L43">		return &quot;_scale=&quot; + _scale + &quot; _x0=&quot; + _x0 + &quot; _y0=&quot; + _y0;</span>
+<span class="nc" id="L42">		return &quot;_scale=&quot; + _scale + &quot; _x0=&quot; + _x0 + &quot; _y0=&quot; + _y0;</span>
 	}
 
   /**
@@ -54,41 +53,41 @@ public class Transformation {
    *  @param verticalAnchor Vertical anchor of the paper in the canvas.
    */
   public Transformation(int width, int height, ClippingRectangle paper,
-<span class="nc" id="L57">                        Anchor horizontalAnchor, Anchor verticalAnchor) {</span>
-<span class="nc" id="L58">    double pWidth = paper.getMaxX() - paper.getMinX();</span>
-<span class="nc" id="L59">    double pHeight = paper.getMaxY() - paper.getMinY();</span>
-<span class="nc" id="L60">    _scale = Math.min(width / pWidth, height / pHeight);</span>
-<span class="nc" id="L61">    _x0 = 0.5 * horizontalAnchor.getFactor() * (width - _scale * pWidth)</span>
-<span class="nc" id="L62">          - _scale * paper.getMinX();</span>
-<span class="nc" id="L63">    _y0 = 0.5 * verticalAnchor.getFactor() * (_scale * pHeight - height)</span>
-<span class="nc" id="L64">          + height + _scale * + paper.getMinY();</span>
-<span class="nc" id="L65">  }</span>
+<span class="nc" id="L56">                        Anchor horizontalAnchor, Anchor verticalAnchor) {</span>
+<span class="nc" id="L57">    double pWidth = paper.getMaxX() - paper.getMinX();</span>
+<span class="nc" id="L58">    double pHeight = paper.getMaxY() - paper.getMinY();</span>
+<span class="nc" id="L59">    _scale = Math.min(width / pWidth, height / pHeight);</span>
+<span class="nc" id="L60">    _x0 = 0.5 * horizontalAnchor.getFactor() * (width - _scale * pWidth)</span>
+<span class="nc" id="L61">          - _scale * paper.getMinX();</span>
+<span class="nc" id="L62">    _y0 = 0.5 * verticalAnchor.getFactor() * (_scale * pHeight - height)</span>
+<span class="nc" id="L63">          + height + _scale * + paper.getMinY();</span>
+<span class="nc" id="L64">  }</span>
 
   /** Transforms the device-independent x coordinate into Java coordinates. */
   public int transformX(double x) {
-<span class="nc" id="L69">    return trim(_scale * x + _x0);</span>
+<span class="nc" id="L68">    return trim(_scale * x + _x0);</span>
   }
 
   /** Transforms the device-independent y coordinate into Java coordinates. */
   public int transformY(double y) {
-<span class="nc" id="L74">    return trim(_y0 - _scale * y);</span>
+<span class="nc" id="L73">    return trim(_y0 - _scale * y);</span>
   }
 
   /** Transforms the device-independent width into Java width. */
   public int transformWidth(double width) {
-<span class="nc" id="L79">    return trim(_scale * width + 0.5);</span>
+<span class="nc" id="L78">    return trim(_scale * width + 0.5);</span>
   }
 
   /** Transforms the device-independent height into Java height. */
   public int transformHeight(double height) {
-<span class="nc" id="L84">    return trim(_scale * height + 0.5);</span>
+<span class="nc" id="L83">    return trim(_scale * height + 0.5);</span>
   }
   
   private static int trim(double number)
   {
-<span class="nc bnc" id="L89" title="All 2 branches missed.">    return number &gt; Short.MAX_VALUE </span>
-<span class="nc" id="L90">              ? Short.MAX_VALUE </span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">              : (number &lt; Short.MIN_VALUE ? Short.MIN_VALUE : (int) number); </span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">    return number &gt; Short.MAX_VALUE </span>
+<span class="nc" id="L89">              ? Short.MAX_VALUE </span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">              : (number &lt; Short.MIN_VALUE ? Short.MIN_VALUE : (int) number); </span>
   }
 
   /**
@@ -96,14 +95,14 @@ public class Transformation {
    *  coordinates.
    */
   public GraphPoint transformBack(int x, int y) {
-<span class="nc" id="L99">    return new GraphPoint((x - _x0) / _scale, (_y0 - y) / _scale);</span>
+<span class="nc" id="L98">    return new GraphPoint((x - _x0) / _scale, (_y0 - y) / _scale);</span>
   }
 
 public void apply(Graphics2D g) {
-<span class="nc" id="L103">	g.translate(_x0, _y0);</span>
-<span class="nc" id="L104">	g.scale(_scale, -_scale);</span>
+<span class="nc" id="L102">	g.translate(_x0, _y0);</span>
+<span class="nc" id="L103">	g.scale(_scale, -_scale);</span>
 	
-<span class="nc" id="L106">}</span>
+<span class="nc" id="L105">}</span>
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

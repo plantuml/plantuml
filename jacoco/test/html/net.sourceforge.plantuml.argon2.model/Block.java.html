@@ -13,69 +13,67 @@ import java.util.Arrays;
 import net.sourceforge.plantuml.argon2.Util;
 
 <span class="nc" id="L15">public class Block {</span>
-    // ::remove folder when __HAXE__
-
 	/* 128 * 8 Byte QWords */
 	public long[] v;
 
-<span class="nc" id="L21">	public Block() {</span>
-<span class="nc" id="L22">		v = new long[ARGON2_QWORDS_IN_BLOCK];</span>
-<span class="nc" id="L23">	}</span>
+<span class="nc" id="L19">	public Block() {</span>
+<span class="nc" id="L20">		v = new long[ARGON2_QWORDS_IN_BLOCK];</span>
+<span class="nc" id="L21">	}</span>
 
 	public void fromBytes(byte[] input) {
-<span class="nc bnc" id="L26" title="All 2 branches missed.">		assert (input.length == ARGON2_BLOCK_SIZE);</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">		assert (input.length == ARGON2_BLOCK_SIZE);</span>
 
-<span class="nc bnc" id="L28" title="All 2 branches missed.">		for (int i = 0; i &lt; v.length; i++) {</span>
-<span class="nc" id="L29">			byte[] slice = Arrays.copyOfRange(input, i * 8, (i + 1) * 8);</span>
-<span class="nc" id="L30">			v[i] = Util.littleEndianBytesToLong(slice);</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">		for (int i = 0; i &lt; v.length; i++) {</span>
+<span class="nc" id="L27">			byte[] slice = Arrays.copyOfRange(input, i * 8, (i + 1) * 8);</span>
+<span class="nc" id="L28">			v[i] = Util.littleEndianBytesToLong(slice);</span>
 		}
-<span class="nc" id="L32">	}</span>
+<span class="nc" id="L30">	}</span>
 
 	public byte[] toBytes() {
-<span class="nc" id="L35">		byte[] result = new byte[ARGON2_BLOCK_SIZE];</span>
+<span class="nc" id="L33">		byte[] result = new byte[ARGON2_BLOCK_SIZE];</span>
 
-<span class="nc bnc" id="L37" title="All 2 branches missed.">		for (int i = 0; i &lt; v.length; i++) {</span>
-<span class="nc" id="L38">			byte[] bytes = Util.longToLittleEndianBytes(v[i]);</span>
-<span class="nc" id="L39">			System.arraycopy(bytes, 0, result, i * bytes.length, bytes.length);</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">		for (int i = 0; i &lt; v.length; i++) {</span>
+<span class="nc" id="L36">			byte[] bytes = Util.longToLittleEndianBytes(v[i]);</span>
+<span class="nc" id="L37">			System.arraycopy(bytes, 0, result, i * bytes.length, bytes.length);</span>
 		}
 
-<span class="nc" id="L42">		return result;</span>
+<span class="nc" id="L40">		return result;</span>
 	}
 
 	public void copyBlock(Block other) {
-<span class="nc" id="L46">		System.arraycopy(other.v, 0, v, 0, v.length);</span>
-<span class="nc" id="L47">	}</span>
+<span class="nc" id="L44">		System.arraycopy(other.v, 0, v, 0, v.length);</span>
+<span class="nc" id="L45">	}</span>
 
 	public void xor(Block b1, Block b2) {
-<span class="nc bnc" id="L50" title="All 2 branches missed.">		for (int i = 0; i &lt; v.length; i++) {</span>
-<span class="nc" id="L51">			v[i] = b1.v[i] ^ b2.v[i];</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		for (int i = 0; i &lt; v.length; i++) {</span>
+<span class="nc" id="L49">			v[i] = b1.v[i] ^ b2.v[i];</span>
 		}
-<span class="nc" id="L53">	}</span>
+<span class="nc" id="L51">	}</span>
 
 	public void xor(Block b1, Block b2, Block b3) {
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		for (int i = 0; i &lt; v.length; i++) {</span>
-<span class="nc" id="L57">			v[i] = b1.v[i] ^ b2.v[i] ^ b3.v[i];</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		for (int i = 0; i &lt; v.length; i++) {</span>
+<span class="nc" id="L55">			v[i] = b1.v[i] ^ b2.v[i] ^ b3.v[i];</span>
 		}
-<span class="nc" id="L59">	}</span>
+<span class="nc" id="L57">	}</span>
 
 	public void xorWith(Block other) {
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		for (int i = 0; i &lt; v.length; i++) {</span>
-<span class="nc" id="L63">			v[i] = v[i] ^ other.v[i];</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		for (int i = 0; i &lt; v.length; i++) {</span>
+<span class="nc" id="L61">			v[i] = v[i] ^ other.v[i];</span>
 		}
-<span class="nc" id="L65">	}</span>
+<span class="nc" id="L63">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L69">		StringBuilder result = new StringBuilder();</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		for (long value : v) {</span>
-<span class="nc" id="L71">			result.append(Util.bytesToHexString(Util.longToLittleEndianBytes(value)));</span>
+<span class="nc" id="L67">		StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		for (long value : v) {</span>
+<span class="nc" id="L69">			result.append(Util.bytesToHexString(Util.longToLittleEndianBytes(value)));</span>
 		}
 
-<span class="nc" id="L74">		return result.toString();</span>
+<span class="nc" id="L72">		return result.toString();</span>
 	}
 
 	void clear() {
-<span class="nc" id="L78">		Arrays.fill(v, 0);</span>
-<span class="nc" id="L79">	}</span>
+<span class="nc" id="L76">		Arrays.fill(v, 0);</span>
+<span class="nc" id="L77">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

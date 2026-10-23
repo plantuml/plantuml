@@ -44,8 +44,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class UHorizontalLine implements UShape {
-    // ::remove file when __HAXE__
-
 	private final double skipAtStart;
 	private final double skipAtEnd;
 	private final TextBlock title;
@@ -54,26 +52,26 @@ public class UHorizontalLine implements UShape {
 	private final double defaultThickness;
 
 	private UHorizontalLine(double defaultThickness, double skipAtStart, double skipAtEnd, TextBlock title,
-<span class="fc" id="L57">			boolean blankTitle, char style) {</span>
-<span class="fc" id="L58">		this.defaultThickness = defaultThickness;</span>
-<span class="fc" id="L59">		this.skipAtEnd = skipAtEnd;</span>
-<span class="fc" id="L60">		this.skipAtStart = skipAtStart;</span>
-<span class="fc" id="L61">		this.title = title;</span>
-<span class="fc" id="L62">		this.blankTitle = blankTitle;</span>
-<span class="fc" id="L63">		this.style = style;</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L55">			boolean blankTitle, char style) {</span>
+<span class="fc" id="L56">		this.defaultThickness = defaultThickness;</span>
+<span class="fc" id="L57">		this.skipAtEnd = skipAtEnd;</span>
+<span class="fc" id="L58">		this.skipAtStart = skipAtStart;</span>
+<span class="fc" id="L59">		this.title = title;</span>
+<span class="fc" id="L60">		this.blankTitle = blankTitle;</span>
+<span class="fc" id="L61">		this.style = style;</span>
+<span class="fc" id="L62">	}</span>
 
 	public static UHorizontalLine infinite(double defaultThickness, double skipAtStart, double skipAtEnd, char style) {
-<span class="fc" id="L67">		return new UHorizontalLine(defaultThickness, skipAtStart, skipAtEnd, null, false, style);</span>
+<span class="fc" id="L65">		return new UHorizontalLine(defaultThickness, skipAtStart, skipAtEnd, null, false, style);</span>
 	}
 
 	public static UHorizontalLine infinite(double defaultThickness, double skipAtStart, double skipAtEnd,
 			TextBlock title, char style) {
-<span class="fc" id="L72">		return new UHorizontalLine(defaultThickness, skipAtStart, skipAtEnd, title, false, style);</span>
+<span class="fc" id="L70">		return new UHorizontalLine(defaultThickness, skipAtStart, skipAtEnd, title, false, style);</span>
 	}
 
 	public boolean isDouble() {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		return style == '=';</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		return style == '=';</span>
 	}
 
 	// static public UHorizontalLine infinite(UStroke stroke) {
@@ -81,107 +79,107 @@ public class UHorizontalLine implements UShape {
 	// }
 
 	public void drawLineInternal(final UGraphic ug, Stencil stencil, double y, UStroke defaultStroke) {
-<span class="fc" id="L84">		stencil = addSkip(stencil);</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		final UStroke strokeToUse = style == '\0' ? defaultStroke : getStroke();</span>
-<span class="fc" id="L86">		final UGraphic ugStroke = ug.apply(strokeToUse);</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (title == null) {</span>
-<span class="fc" id="L88">			drawHLine(stencil, y, ugStroke);</span>
-<span class="fc" id="L89">			return;</span>
+<span class="fc" id="L82">		stencil = addSkip(stencil);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		final UStroke strokeToUse = style == '\0' ? defaultStroke : getStroke();</span>
+<span class="fc" id="L84">		final UGraphic ugStroke = ug.apply(strokeToUse);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (title == null) {</span>
+<span class="fc" id="L86">			drawHLine(stencil, y, ugStroke);</span>
+<span class="fc" id="L87">			return;</span>
 		}
-<span class="fc" id="L91">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L92">		drawHLine(firstHalf(stencil, dimTitle.getWidth()), y, ugStroke);</span>
-<span class="fc" id="L93">		final double startingX = stencil.getStartingX(ug.getStringBounder(), y);</span>
-<span class="fc" id="L94">		final double endingX = stencil.getEndingX(ug.getStringBounder(), y);</span>
-<span class="fc" id="L95">		drawTitleInternal(ug, startingX, endingX, y, false);</span>
-<span class="fc" id="L96">		drawHLine(secondHalf(stencil, dimTitle.getWidth()), y, ugStroke);</span>
-<span class="fc" id="L97">	}</span>
+<span class="fc" id="L89">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L90">		drawHLine(firstHalf(stencil, dimTitle.getWidth()), y, ugStroke);</span>
+<span class="fc" id="L91">		final double startingX = stencil.getStartingX(ug.getStringBounder(), y);</span>
+<span class="fc" id="L92">		final double endingX = stencil.getEndingX(ug.getStringBounder(), y);</span>
+<span class="fc" id="L93">		drawTitleInternal(ug, startingX, endingX, y, false);</span>
+<span class="fc" id="L94">		drawHLine(secondHalf(stencil, dimTitle.getWidth()), y, ugStroke);</span>
+<span class="fc" id="L95">	}</span>
 
 	private Stencil addSkip(final Stencil stencil) {
-<span class="fc" id="L100">		return new Stencil() {</span>
+<span class="fc" id="L98">		return new Stencil() {</span>
 			public double getStartingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L102">				return stencil.getStartingX(stringBounder, y) + skipAtStart;</span>
+<span class="fc" id="L100">				return stencil.getStartingX(stringBounder, y) + skipAtStart;</span>
 			}
 
 			public double getEndingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L106">				return stencil.getEndingX(stringBounder, y) - skipAtEnd;</span>
+<span class="fc" id="L104">				return stencil.getEndingX(stringBounder, y) - skipAtEnd;</span>
 			}
 		};
 	}
 
 	private static Stencil firstHalf(final Stencil stencil, final double widthTitle) {
-<span class="fc" id="L112">		return new Stencil() {</span>
+<span class="fc" id="L110">		return new Stencil() {</span>
 			public double getStartingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L114">				return stencil.getStartingX(stringBounder, y);</span>
+<span class="fc" id="L112">				return stencil.getStartingX(stringBounder, y);</span>
 			}
 
 			public double getEndingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L118">				final double start = stencil.getStartingX(stringBounder, y);</span>
-<span class="fc" id="L119">				final double end = stencil.getEndingX(stringBounder, y);</span>
-<span class="fc" id="L120">				final double len = (end - start - widthTitle) / 2;</span>
-<span class="fc" id="L121">				return start + len;</span>
+<span class="fc" id="L116">				final double start = stencil.getStartingX(stringBounder, y);</span>
+<span class="fc" id="L117">				final double end = stencil.getEndingX(stringBounder, y);</span>
+<span class="fc" id="L118">				final double len = (end - start - widthTitle) / 2;</span>
+<span class="fc" id="L119">				return start + len;</span>
 			}
 		};
 	}
 
 	private static Stencil secondHalf(final Stencil stencil, final double widthTitle) {
-<span class="fc" id="L127">		return new Stencil() {</span>
+<span class="fc" id="L125">		return new Stencil() {</span>
 			public double getStartingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L129">				final double start = stencil.getStartingX(stringBounder, y);</span>
-<span class="fc" id="L130">				final double end = stencil.getEndingX(stringBounder, y);</span>
-<span class="fc" id="L131">				final double len = (end - start - widthTitle) / 2;</span>
-<span class="fc" id="L132">				return end - len;</span>
+<span class="fc" id="L127">				final double start = stencil.getStartingX(stringBounder, y);</span>
+<span class="fc" id="L128">				final double end = stencil.getEndingX(stringBounder, y);</span>
+<span class="fc" id="L129">				final double len = (end - start - widthTitle) / 2;</span>
+<span class="fc" id="L130">				return end - len;</span>
 			}
 
 			public double getEndingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L136">				return stencil.getEndingX(stringBounder, y);</span>
+<span class="fc" id="L134">				return stencil.getEndingX(stringBounder, y);</span>
 			}
 		};
 	}
 
 	private void drawHLine(Stencil stencil, double y, final UGraphic ug) {
-<span class="fc" id="L142">		drawSimpleHline(ug, stencil, y);</span>
-<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (style == '=')</span>
-<span class="fc" id="L144">			drawSimpleHline(ug, stencil, y + 2);</span>
+<span class="fc" id="L140">		drawSimpleHline(ug, stencil, y);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (style == '=')</span>
+<span class="fc" id="L142">			drawSimpleHline(ug, stencil, y + 2);</span>
 
-<span class="fc" id="L146">	}</span>
+<span class="fc" id="L144">	}</span>
 
 	private static void drawSimpleHline(UGraphic ug, Stencil stencil, double y) {
-<span class="fc" id="L149">		final double startingX = stencil.getStartingX(ug.getStringBounder(), y);</span>
-<span class="fc" id="L150">		final double endingX = stencil.getEndingX(ug.getStringBounder(), y);</span>
-<span class="fc" id="L151">		ug.apply(new UTranslate(startingX, y)).draw(ULine.hline(endingX - startingX));</span>
-<span class="fc" id="L152">	}</span>
+<span class="fc" id="L147">		final double startingX = stencil.getStartingX(ug.getStringBounder(), y);</span>
+<span class="fc" id="L148">		final double endingX = stencil.getEndingX(ug.getStringBounder(), y);</span>
+<span class="fc" id="L149">		ug.apply(new UTranslate(startingX, y)).draw(ULine.hline(endingX - startingX));</span>
+<span class="fc" id="L150">	}</span>
 
 	public void drawTitleInternal(UGraphic ug, double startingX, double endingX, double y, boolean clearArea) {
-<span class="pc bpc" id="L155" title="2 of 4 branches missed.">		if (title == null || blankTitle) {</span>
-<span class="nc" id="L156">			return;</span>
+<span class="pc bpc" id="L153" title="2 of 4 branches missed.">		if (title == null || blankTitle) {</span>
+<span class="nc" id="L154">			return;</span>
 		}
-<span class="fc" id="L158">		final double widthToUse = endingX - startingX;</span>
-<span class="fc" id="L159">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L160">		final double space = (widthToUse - dimTitle.getWidth()) / 2;</span>
-<span class="fc" id="L161">		final double x1 = startingX + space;</span>
-<span class="fc" id="L162">		final double y1 = y - dimTitle.getHeight() / 2 - 0.5;</span>
-<span class="fc" id="L163">		ug = ug.apply(new UTranslate(x1, y1));</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (clearArea) {</span>
-<span class="nc" id="L165">			ug.apply(getStroke()).draw(URectangle.build(dimTitle));</span>
+<span class="fc" id="L156">		final double widthToUse = endingX - startingX;</span>
+<span class="fc" id="L157">		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L158">		final double space = (widthToUse - dimTitle.getWidth()) / 2;</span>
+<span class="fc" id="L159">		final double x1 = startingX + space;</span>
+<span class="fc" id="L160">		final double y1 = y - dimTitle.getHeight() / 2 - 0.5;</span>
+<span class="fc" id="L161">		ug = ug.apply(new UTranslate(x1, y1));</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (clearArea) {</span>
+<span class="nc" id="L163">			ug.apply(getStroke()).draw(URectangle.build(dimTitle));</span>
 		}
-<span class="fc" id="L167">		title.drawU(ug);</span>
-<span class="fc" id="L168">	}</span>
+<span class="fc" id="L165">		title.drawU(ug);</span>
+<span class="fc" id="L166">	}</span>
 
 	public void drawMe(UGraphic ug) {
-<span class="fc" id="L171">		ug.draw(this);</span>
-<span class="fc" id="L172">	}</span>
+<span class="fc" id="L169">		ug.draw(this);</span>
+<span class="fc" id="L170">	}</span>
 
 	public UStroke getStroke() {
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (style == '\0')</span>
-<span class="nc" id="L176">			throw new IllegalStateException();</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">		else if (style == '=')</span>
-<span class="fc" id="L178">			return UStroke.simple();</span>
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		else if (style == '.')</span>
-<span class="nc" id="L180">			return new UStroke(1, 2, 1);</span>
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		else if (style == '-')</span>
-<span class="fc" id="L182">			return UStroke.simple();</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (style == '\0')</span>
+<span class="nc" id="L174">			throw new IllegalStateException();</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		else if (style == '=')</span>
+<span class="fc" id="L176">			return UStroke.simple();</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		else if (style == '.')</span>
+<span class="nc" id="L178">			return new UStroke(1, 2, 1);</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		else if (style == '-')</span>
+<span class="fc" id="L180">			return UStroke.simple();</span>
 		else
-<span class="nc" id="L184">			return UStroke.withThickness(defaultThickness);</span>
+<span class="nc" id="L182">			return UStroke.withThickness(defaultThickness);</span>
 
 	}
 

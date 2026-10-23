@@ -39,14 +39,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 <span class="nc" id="L41">public class TelnetServer {</span>
-    // ::remove folder when __HAXE__
-	
 	public static void main(String args[]) throws Exception {
-<span class="nc" id="L45">		final ServerSocket server = new ServerSocket(4242);</span>
+<span class="nc" id="L43">		final ServerSocket server = new ServerSocket(4242);</span>
 		while (true) {
-<span class="nc" id="L47">			final Socket socket = server.accept();</span>
-<span class="nc" id="L48">			new AcceptTelnetClient(socket);</span>
-<span class="nc" id="L49">		}</span>
+<span class="nc" id="L45">			final Socket socket = server.accept();</span>
+<span class="nc" id="L46">			new AcceptTelnetClient(socket);</span>
+<span class="nc" id="L47">		}</span>
 	}
 
 }

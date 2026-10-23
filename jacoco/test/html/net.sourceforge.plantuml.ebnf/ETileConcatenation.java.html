@@ -43,78 +43,76 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 <span class="nc" id="L45">public class ETileConcatenation extends ETile {</span>
-    // ::remove folder when __HAXE__
-
-<span class="nc" id="L48">	private final double marginx = 20;</span>
-<span class="nc" id="L49">	private final List&lt;ETile&gt; tiles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L46">	private final double marginx = 20;</span>
+<span class="nc" id="L47">	private final List&lt;ETile&gt; tiles = new ArrayList&lt;&gt;();</span>
 
 	@Override
 	public void push(ETile tile) {
-<span class="nc" id="L53">		tiles.add(0, tile);</span>
-<span class="nc" id="L54">	}</span>
+<span class="nc" id="L51">		tiles.add(0, tile);</span>
+<span class="nc" id="L52">	}</span>
 
 	public void pushLast(ETile tile) {
-<span class="nc" id="L57">		tiles.add(tile);</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L55">		tiles.add(tile);</span>
+<span class="nc" id="L56">	}</span>
 
 	public void overideFirst(ETile tile) {
-<span class="nc" id="L61">		tiles.set(0, tile);</span>
-<span class="nc" id="L62">	}</span>
+<span class="nc" id="L59">		tiles.set(0, tile);</span>
+<span class="nc" id="L60">	}</span>
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L66">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L64">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L68">		final double fullLinePos = getH1(stringBounder);</span>
-<span class="nc" id="L69">		double x = 0;</span>
-<span class="nc" id="L70">		drawHline(ug, fullLinePos, 0, x);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		for (int i = 0; i &lt; tiles.size(); i++) {</span>
-<span class="nc" id="L72">			final ETile tile = tiles.get(i);</span>
-<span class="nc" id="L73">			final double linePos = tile.getH1(stringBounder);</span>
-<span class="nc" id="L74">			tile.drawU(ug.apply(new UTranslate(x, fullLinePos - linePos)));</span>
-<span class="nc" id="L75">			x += tile.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">			if (i != tiles.size() - 1) {</span>
-<span class="nc" id="L77">				drawHlineDirected(ug, fullLinePos, x, x + marginx, 0.5, 25);</span>
-<span class="nc" id="L78">				x += marginx;</span>
+<span class="nc" id="L66">		final double fullLinePos = getH1(stringBounder);</span>
+<span class="nc" id="L67">		double x = 0;</span>
+<span class="nc" id="L68">		drawHline(ug, fullLinePos, 0, x);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		for (int i = 0; i &lt; tiles.size(); i++) {</span>
+<span class="nc" id="L70">			final ETile tile = tiles.get(i);</span>
+<span class="nc" id="L71">			final double linePos = tile.getH1(stringBounder);</span>
+<span class="nc" id="L72">			tile.drawU(ug.apply(new UTranslate(x, fullLinePos - linePos)));</span>
+<span class="nc" id="L73">			x += tile.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (i != tiles.size() - 1) {</span>
+<span class="nc" id="L75">				drawHlineDirected(ug, fullLinePos, x, x + marginx, 0.5, 25);</span>
+<span class="nc" id="L76">				x += marginx;</span>
 			}
 		}
 
-<span class="nc" id="L82">	}</span>
+<span class="nc" id="L80">	}</span>
 
 	@Override
 	public double getH1(StringBounder stringBounder) {
-<span class="nc" id="L86">		double result = 0;</span>
+<span class="nc" id="L84">		double result = 0;</span>
 
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		for (ETile tile : tiles)</span>
-<span class="nc" id="L89">			result = Math.max(result, tile.getH1(stringBounder));</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		for (ETile tile : tiles)</span>
+<span class="nc" id="L87">			result = Math.max(result, tile.getH1(stringBounder));</span>
 
-<span class="nc" id="L91">		return result;</span>
+<span class="nc" id="L89">		return result;</span>
 	}
 
 	@Override
 	public double getH2(StringBounder stringBounder) {
-<span class="nc" id="L96">		double result = 0;</span>
+<span class="nc" id="L94">		double result = 0;</span>
 
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (ETile tile : tiles)</span>
-<span class="nc" id="L99">			result = Math.max(result, tile.getH2(stringBounder));</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (ETile tile : tiles)</span>
+<span class="nc" id="L97">			result = Math.max(result, tile.getH2(stringBounder));</span>
 
-<span class="nc" id="L101">		return result;</span>
+<span class="nc" id="L99">		return result;</span>
 	}
 
 	@Override
 	public double getWidth(StringBounder stringBounder) {
-<span class="nc" id="L106">		double width = 0;</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		for (int i = 0; i &lt; tiles.size(); i++) {</span>
-<span class="nc" id="L108">			final ETile tile = tiles.get(i);</span>
-<span class="nc" id="L109">			width += tile.getWidth(stringBounder);</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (i != tiles.size() - 1)</span>
-<span class="nc" id="L111">				width += marginx;</span>
+<span class="nc" id="L104">		double width = 0;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (int i = 0; i &lt; tiles.size(); i++) {</span>
+<span class="nc" id="L106">			final ETile tile = tiles.get(i);</span>
+<span class="nc" id="L107">			width += tile.getWidth(stringBounder);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (i != tiles.size() - 1)</span>
+<span class="nc" id="L109">				width += marginx;</span>
 		}
-<span class="nc" id="L113">		return width;</span>
+<span class="nc" id="L111">		return width;</span>
 	}
 
 	public ETile getFirst() {
-<span class="nc" id="L117">		return tiles.get(0);</span>
+<span class="nc" id="L115">		return tiles.get(0);</span>
 	}
 
 }

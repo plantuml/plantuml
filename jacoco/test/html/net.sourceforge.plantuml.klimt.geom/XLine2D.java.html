@@ -145,16 +145,14 @@ public class XLine2D implements UDrawable {
 <span class="fc" id="L145">		return null;</span>
 	}
 
-	// ::comment when __HAXE__
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L150">		ug = ug.apply(new UTranslate(x1, y1));</span>
-<span class="fc" id="L151">		final ULine line = new ULine(x2 - x1, y2 - y1);</span>
-<span class="fc" id="L152">		ug.draw(line);</span>
-<span class="fc" id="L153">	}</span>
-	// ::done
+<span class="fc" id="L149">		ug = ug.apply(new UTranslate(x1, y1));</span>
+<span class="fc" id="L150">		final ULine line = new ULine(x2 - x1, y2 - y1);</span>
+<span class="fc" id="L151">		ug.draw(line);</span>
+<span class="fc" id="L152">	}</span>
 
 	public double getAngle() {
-<span class="fc" id="L157">		return Math.atan2(y2 - y1, x2 - x1);</span>
+<span class="fc" id="L155">		return Math.atan2(y2 - y1, x2 - x1);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

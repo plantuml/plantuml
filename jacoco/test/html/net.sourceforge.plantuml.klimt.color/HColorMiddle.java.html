@@ -38,39 +38,37 @@ package net.sourceforge.plantuml.klimt.color;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 
 public class HColorMiddle extends HColor {
-	// ::remove file when __HAXE__
-
 	private final HColor color1;
 	private final HColor color2;
 
-<span class="fc" id="L46">	HColorMiddle(HColor c1, HColor c2) {</span>
-<span class="fc" id="L47">		this.color1 = c1;</span>
-<span class="fc" id="L48">		this.color2 = c2;</span>
-<span class="fc" id="L49">	}</span>
+<span class="fc" id="L44">	HColorMiddle(HColor c1, HColor c2) {</span>
+<span class="fc" id="L45">		this.color1 = c1;</span>
+<span class="fc" id="L46">		this.color2 = c2;</span>
+<span class="fc" id="L47">	}</span>
 
 	public final HColor getColor1() {
-<span class="fc" id="L52">		return color1;</span>
+<span class="fc" id="L50">		return color1;</span>
 	}
 
 	public final HColor getColor2() {
-<span class="nc" id="L56">		return color2;</span>
+<span class="nc" id="L54">		return color2;</span>
 	}
 
 	@Override
 	public XColor toColor(ColorMapper mapper) {
-<span class="fc" id="L61">		final XColor cc1 = color1.toColor(mapper);</span>
-<span class="fc" id="L62">		final XColor cc2 = color2.toColor(mapper);</span>
-<span class="fc" id="L63">		final int r1 = cc1.getRed();</span>
-<span class="fc" id="L64">		final int g1 = cc1.getGreen();</span>
-<span class="fc" id="L65">		final int b1 = cc1.getBlue();</span>
-<span class="fc" id="L66">		final int r2 = cc2.getRed();</span>
-<span class="fc" id="L67">		final int g2 = cc2.getGreen();</span>
-<span class="fc" id="L68">		final int b2 = cc2.getBlue();</span>
+<span class="fc" id="L59">		final XColor cc1 = color1.toColor(mapper);</span>
+<span class="fc" id="L60">		final XColor cc2 = color2.toColor(mapper);</span>
+<span class="fc" id="L61">		final int r1 = cc1.getRed();</span>
+<span class="fc" id="L62">		final int g1 = cc1.getGreen();</span>
+<span class="fc" id="L63">		final int b1 = cc1.getBlue();</span>
+<span class="fc" id="L64">		final int r2 = cc2.getRed();</span>
+<span class="fc" id="L65">		final int g2 = cc2.getGreen();</span>
+<span class="fc" id="L66">		final int b2 = cc2.getBlue();</span>
 
-<span class="fc" id="L70">		final int r = (r1 + r2) / 2;</span>
-<span class="fc" id="L71">		final int g = (g1 + g2) / 2;</span>
-<span class="fc" id="L72">		final int b = (b1 + b2) / 2;</span>
-<span class="fc" id="L73">		return new XColor(r, g, b);</span>
+<span class="fc" id="L68">		final int r = (r1 + r2) / 2;</span>
+<span class="fc" id="L69">		final int g = (g1 + g2) / 2;</span>
+<span class="fc" id="L70">		final int b = (b1 + b2) / 2;</span>
+<span class="fc" id="L71">		return new XColor(r, g, b);</span>
 	}
 
 }

@@ -41,15 +41,13 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 <span class="fc" id="L43">public class PSystemDonorsFactory extends PSystemSingleLineFactory {</span>
-    // ::remove folder when __HAXE__
-	
 
 	@Override
 	protected Diagram executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
-<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (line.matches(&quot;(?i)^(donors)\\s*$&quot;)) </span>
-<span class="nc" id="L50">			return PSystemDonors.create(source, preprocessing);</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (line.matches(&quot;(?i)^(donors)\\s*$&quot;)) </span>
+<span class="nc" id="L48">			return PSystemDonors.create(source, preprocessing);</span>
 		
-<span class="fc" id="L52">		return null;</span>
+<span class="fc" id="L50">		return null;</span>
 	}
 
 }

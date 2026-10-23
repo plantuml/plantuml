@@ -42,23 +42,21 @@ import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
 <span class="fc" id="L44">public class DriverPolygonSvg implements UDriver&lt;UPolygon, SvgGraphics&gt; {</span>
-    // ::remove file when __HAXE__
-
 	public void draw(UPolygon shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
-<span class="fc" id="L48">		final double points[] = shape.getPointArray(x, y);</span>
-<span class="pc bpc" id="L49" title="2 of 4 branches missed.">		if (TeaVM.a()) assert points.length % 2 == 0;</span>
-<span class="fc" id="L50">		final UClip clip = param.getClip();</span>
-<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (clip != null)</span>
-<span class="fc bfc" id="L52" title="All 2 branches covered.">			for (int j = 0; j &lt; points.length; j += 2)</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">				if (clip.isInside(points[j], points[j + 1]) == false)</span>
-<span class="fc" id="L54">					return;</span>
+<span class="fc" id="L46">		final double points[] = shape.getPointArray(x, y);</span>
+<span class="pc bpc" id="L47" title="2 of 4 branches missed.">		if (TeaVM.a()) assert points.length % 2 == 0;</span>
+<span class="fc" id="L48">		final UClip clip = param.getClip();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		if (clip != null)</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">			for (int j = 0; j &lt; points.length; j += 2)</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">				if (clip.isInside(points[j], points[j + 1]) == false)</span>
+<span class="fc" id="L52">					return;</span>
 
-<span class="fc" id="L56">		DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
-<span class="fc" id="L57">		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
+<span class="fc" id="L54">		DriverRectangleSvg.applyFillColor(svg, mapper, param);</span>
+<span class="fc" id="L55">		DriverRectangleSvg.applyStrokeColor(svg, mapper, param);</span>
 
-<span class="fc" id="L59">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+<span class="fc" id="L57">		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
-<span class="fc" id="L61">		svg.svgPolygon(shape.getDeltaShadow(), points);</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L59">		svg.svgPolygon(shape.getDeltaShadow(), points);</span>
+<span class="fc" id="L60">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

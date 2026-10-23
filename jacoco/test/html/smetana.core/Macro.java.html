@@ -76,19 +76,17 @@ import h.ST_textlabel_t;
 import smetana.core.debug.SmetanaDebug;
 
 <span class="nc" id="L78">final public class Macro {</span>
-	// ::remove folder when __HAXE__
-
 	public static void UNSURE_ABOUT(String comment) {
-<span class="nc" id="L82">		System.err.println(&quot;UNSURE_ABOUT: &quot; + comment);</span>
-<span class="nc" id="L83">	}</span>
+<span class="nc" id="L80">		System.err.println(&quot;UNSURE_ABOUT: &quot; + comment);</span>
+<span class="nc" id="L81">	}</span>
 
 	public static __ptr__ UNSUPPORTED(String comment) {
-<span class="nc" id="L86">		SmetanaDebug.LIST_METHODS();</span>
-<span class="nc" id="L87">		throw new UnsupportedOperationException(comment);</span>
+<span class="nc" id="L84">		SmetanaDebug.LIST_METHODS();</span>
+<span class="nc" id="L85">		throw new UnsupportedOperationException(comment);</span>
 	}
 
 	public static int UNSUPPORTED_INT(String comment) {
-<span class="nc" id="L91">		throw new UnsupportedOperationException(comment);</span>
+<span class="nc" id="L89">		throw new UnsupportedOperationException(comment);</span>
 	}
 
 	// Graphviz
@@ -100,329 +98,329 @@ import smetana.core.debug.SmetanaDebug;
 	public final static int AGEDGE = AGOUTEDGE;
 
 	public static void AGTYPE(ST_Agobj_s obj, int v) {
-<span class="fc" id="L103">		obj.tag.objtype = v;</span>
-<span class="fc" id="L104">	}</span>
+<span class="fc" id="L101">		obj.tag.objtype = v;</span>
+<span class="fc" id="L102">	}</span>
 
 	public static void AGID(ST_Agobj_s obj, int v) {
-<span class="fc" id="L107">		obj.tag.id = v;</span>
-<span class="fc" id="L108">	}</span>
+<span class="fc" id="L105">		obj.tag.id = v;</span>
+<span class="fc" id="L106">	}</span>
 
 	public static void AGSEQ(ST_Agobj_s obj, int v) {
-<span class="fc" id="L111">		obj.tag.seq = v;</span>
-<span class="fc" id="L112">	}</span>
+<span class="fc" id="L109">		obj.tag.seq = v;</span>
+<span class="fc" id="L110">	}</span>
 
 	public static void AGDATA(ST_Agobj_s obj, ST_Agrec_s v) {
-<span class="fc" id="L115">		obj.data = v;</span>
-<span class="fc" id="L116">	}</span>
+<span class="fc" id="L113">		obj.data = v;</span>
+<span class="fc" id="L114">	}</span>
 
 	// #define AGIN2OUT(e) ((e)-1)
 	public static ST_Agedge_s AGIN2OUT(ST_Agedge_s e) {
-<span class="fc" id="L120">		return e.plus_(-1);</span>
+<span class="fc" id="L118">		return e.plus_(-1);</span>
 	}
 
 	// #define AGOUT2IN(e) ((e)+1)
 	public static ST_Agedge_s AGOUT2IN(ST_Agedge_s e) {
-<span class="fc" id="L125">		return e.plus_(1);</span>
+<span class="fc" id="L123">		return e.plus_(1);</span>
 	}
 
 	// #define AGOPP(e) ((AGTYPE(e)==AGINEDGE)?AGIN2OUT(e):AGOUT2IN(e))
 	public static ST_Agedge_s AGOPP(ST_Agedge_s e) {
-<span class="fc bfc" id="L130" title="All 2 branches covered.">		return e.tag.objtype == AGINEDGE ? AGIN2OUT(e) : AGOUT2IN(e);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		return e.tag.objtype == AGINEDGE ? AGIN2OUT(e) : AGOUT2IN(e);</span>
 	}
 
 	// #define AGMKOUT(e) (AGTYPE(e) == AGOUTEDGE? (e): AGIN2OUT(e))
 	public static ST_Agedge_s AGMKOUT(ST_Agedge_s e) {
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		return e.tag.objtype == AGOUTEDGE ? e : AGIN2OUT(e);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		return e.tag.objtype == AGOUTEDGE ? e : AGIN2OUT(e);</span>
 	}
 
 	// #define AGMKIN(e) (AGTYPE(e) == AGINEDGE? (e): AGOUT2IN(e))
 	public static ST_Agedge_s AGMKIN(ST_Agedge_s e) {
-<span class="fc bfc" id="L140" title="All 2 branches covered.">		return e.tag.objtype == AGINEDGE ? e : AGOUT2IN(e);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		return e.tag.objtype == AGINEDGE ? e : AGOUT2IN(e);</span>
 	}
 
 	// #define AGTAIL(e) (AGMKIN(e)-&gt;node)
 	public static ST_Agnode_s AGTAIL(ST_Agedge_s e) {
-<span class="fc" id="L145">		return AGMKIN(e).node;</span>
+<span class="fc" id="L143">		return AGMKIN(e).node;</span>
 	}
 
 	public static ST_Agnode_s M_agtail(ST_Agedge_s e) {
-<span class="fc" id="L149">		return AGMKIN(e).node;</span>
+<span class="fc" id="L147">		return AGMKIN(e).node;</span>
 	}
 
 	public static void M_agtail(ST_Agedge_s e, ST_Agnode_s v) {
-<span class="fc" id="L153">		AGMKIN(e).node = v;</span>
-<span class="fc" id="L154">	}</span>
+<span class="fc" id="L151">		AGMKIN(e).node = v;</span>
+<span class="fc" id="L152">	}</span>
 
 	// #define AGHEAD(e) (AGMKOUT(e)-&gt;node)
 	public static ST_Agnode_s AGHEAD(ST_Agedge_s e) {
-<span class="fc" id="L158">		return AGMKOUT(e).node;</span>
+<span class="fc" id="L156">		return AGMKOUT(e).node;</span>
 	}
 
 	private static ST_Agnode_s M_aghead(ST_Agedge_s e) {
-<span class="fc" id="L162">		return AGMKOUT(e).node;</span>
+<span class="fc" id="L160">		return AGMKOUT(e).node;</span>
 	}
 
 	public static void M_aghead(ST_Agedge_s e, ST_Agnode_s v) {
-<span class="fc" id="L166">		AGMKOUT(e).node = v;</span>
-<span class="fc" id="L167">	}</span>
+<span class="fc" id="L164">		AGMKOUT(e).node = v;</span>
+<span class="fc" id="L165">	}</span>
 
 	public static int LENGTH(ST_Agedge_s e) {
-<span class="fc" id="L170">		return ND_rank(M_aghead(e)) - ND_rank(M_agtail(e));</span>
+<span class="fc" id="L168">		return ND_rank(M_aghead(e)) - ND_rank(M_agtail(e));</span>
 	}
 
 	public static int SLACK(ST_Agedge_s e) {
-<span class="fc" id="L174">		return LENGTH(e) - ED_minlen(e);</span>
+<span class="fc" id="L172">		return LENGTH(e) - ED_minlen(e);</span>
 	}
 
 	public static boolean SEQ(int a, int b, int c) {
-<span class="fc bfc" id="L178" title="All 4 branches covered.">		return ((a) &lt;= (b)) &amp;&amp; ((b) &lt;= (c));</span>
+<span class="fc bfc" id="L176" title="All 4 branches covered.">		return ((a) &lt;= (b)) &amp;&amp; ((b) &lt;= (c));</span>
 	}
 
 	public static boolean TREE_EDGE(ST_Agedge_s e) {
-<span class="fc bfc" id="L182" title="All 2 branches covered.">		return ED_tree_index(e) &gt;= 0;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		return ED_tree_index(e) &gt;= 0;</span>
 	}
 
 	// #define GD_parent(g) (((Agraphinfo_t*)AGDATA(g))-&gt;parent)
 	public static __ptr__ GD_parent(ST_Agraph_s g) {
-<span class="fc" id="L187">		return ((ST_Agraphinfo_t) g.data).parent;</span>
+<span class="fc" id="L185">		return ((ST_Agraphinfo_t) g.data).parent;</span>
 	}
 
 	public static void GD_parent(ST_Agraph_s g, ST_Agraph_s v) {
-<span class="fc" id="L191">		((ST_Agraphinfo_t) g.data).parent = v;</span>
-<span class="fc" id="L192">	}</span>
+<span class="fc" id="L189">		((ST_Agraphinfo_t) g.data).parent = v;</span>
+<span class="fc" id="L190">	}</span>
 
 	// #define GD_level(g) (((Agraphinfo_t*)AGDATA(g))-&gt;level)
 	// #define GD_drawing(g) (((Agraphinfo_t*)AGDATA(g))-&gt;drawing)
 	public static ST_layout_t GD_drawing(ST_Agraph_s g) {
-<span class="fc" id="L197">		return ((ST_Agraphinfo_t) g.data).drawing;</span>
+<span class="fc" id="L195">		return ((ST_Agraphinfo_t) g.data).drawing;</span>
 	}
 
 	public static void GD_drawing(ST_Agraph_s g, ST_layout_t v) {
-<span class="fc" id="L201">		((ST_Agraphinfo_t) g.data).drawing = v;</span>
-<span class="fc" id="L202">	}</span>
+<span class="fc" id="L199">		((ST_Agraphinfo_t) g.data).drawing = v;</span>
+<span class="fc" id="L200">	}</span>
 
 	// #define GD_bb(g) (((Agraphinfo_t*)AGDATA(g))-&gt;bb)
 	public static ST_boxf GD_bb(ST_Agraph_s g) {
-<span class="fc" id="L206">		return ((ST_Agraphinfo_t) g.data).bb;</span>
+<span class="fc" id="L204">		return ((ST_Agraphinfo_t) g.data).bb;</span>
 	}
 
 	// #define GD_gvc(g) (((Agraphinfo_t*)AGDATA(g))-&gt;gvc)
 	public static ST_GVC_s GD_gvc(ST_Agraph_s g) {
-<span class="fc" id="L211">		return ((ST_Agraphinfo_t) g.data).gvc;</span>
+<span class="fc" id="L209">		return ((ST_Agraphinfo_t) g.data).gvc;</span>
 	}
 
 	public static void GD_gvc(ST_Agraph_s g, ST_GVC_s v) {
-<span class="fc" id="L215">		((ST_Agraphinfo_t) g.data).gvc = v;</span>
-<span class="fc" id="L216">	}</span>
+<span class="fc" id="L213">		((ST_Agraphinfo_t) g.data).gvc = v;</span>
+<span class="fc" id="L214">	}</span>
 
 	// #define GD_cleanup(g) (((Agraphinfo_t*)AGDATA(g))-&gt;cleanup)
 	public static __ptr__ GD_cleanup(ST_Agraph_s g) {
-<span class="fc" id="L220">		return ((ST_Agraphinfo_t) g.data).cleanup;</span>
+<span class="fc" id="L218">		return ((ST_Agraphinfo_t) g.data).cleanup;</span>
 	}
 
 	public static void GD_cleanup(ST_Agraph_s g, CFunction data) {
-<span class="nc" id="L224">		((ST_Agraphinfo_t) g.data).cleanup = data;</span>
-<span class="nc" id="L225">	}</span>
+<span class="nc" id="L222">		((ST_Agraphinfo_t) g.data).cleanup = data;</span>
+<span class="nc" id="L223">	}</span>
 
 	// #define GD_dist(g) (((Agraphinfo_t*)AGDATA(g))-&gt;dist)
 	// #define GD_alg(g) (((Agraphinfo_t*)AGDATA(g))-&gt;alg)
 	// #define GD_border(g) (((Agraphinfo_t*)AGDATA(g))-&gt;border)
 	public static ST_pointf[] GD_border(ST_Agraph_s g) {
-<span class="fc" id="L231">		return ((ST_Agraphinfo_t) g.data).border;</span>
+<span class="fc" id="L229">		return ((ST_Agraphinfo_t) g.data).border;</span>
 	}
 
 	// #define GD_cl_cnt(g) (((Agraphinfo_t*)AGDATA(g))-&gt;cl_nt)
 	// #define GD_clust(g) (((Agraphinfo_t*)AGDATA(g))-&gt;clust)
 	public static CArrayOfStar&lt;ST_Agraph_s&gt; GD_clust(ST_Agraph_s g) {
-<span class="fc" id="L237">		return ((ST_Agraphinfo_t) g.data).clust;</span>
+<span class="fc" id="L235">		return ((ST_Agraphinfo_t) g.data).clust;</span>
 	}
 
 	public static void GD_clust(ST_Agraph_s g, CArrayOfStar&lt;ST_Agraph_s&gt; v) {
-<span class="fc" id="L241">		((ST_Agraphinfo_t) g.data).clust = v;</span>
-<span class="fc" id="L242">	}</span>
+<span class="fc" id="L239">		((ST_Agraphinfo_t) g.data).clust = v;</span>
+<span class="fc" id="L240">	}</span>
 
 	// #define GD_dotroot(g) (((Agraphinfo_t*)AGDATA(g))-&gt;dotroot)
 	public static ST_Agraph_s GD_dotroot(ST_Agraph_s g) {
-<span class="fc" id="L246">		return ((ST_Agraphinfo_t) g.data).dotroot;</span>
+<span class="fc" id="L244">		return ((ST_Agraphinfo_t) g.data).dotroot;</span>
 	}
 
 	public static void GD_dotroot(ST_Agraph_s g, ST_Agraph_s v) {
-<span class="fc" id="L250">		((ST_Agraphinfo_t) g.data).dotroot = v;</span>
-<span class="fc" id="L251">	}</span>
+<span class="fc" id="L248">		((ST_Agraphinfo_t) g.data).dotroot = v;</span>
+<span class="fc" id="L249">	}</span>
 
 	// #define GD_comp(g) (((Agraphinfo_t*)AGDATA(g))-&gt;comp)
 	public static ST_nlist_t GD_comp(ST_Agraph_s g) {
-<span class="fc" id="L255">		return ((ST_Agraphinfo_t) g.data).comp;</span>
+<span class="fc" id="L253">		return ((ST_Agraphinfo_t) g.data).comp;</span>
 	}
 
 	// #define GD_exact_ranksep(g) (((Agraphinfo_t*)AGDATA(g))-&gt;exact_ranksep)
 	public static int GD_exact_ranksep(ST_Agraph_s g) {
-<span class="fc" id="L260">		return ((ST_Agraphinfo_t) g.data).exact_ranksep;</span>
+<span class="fc" id="L258">		return ((ST_Agraphinfo_t) g.data).exact_ranksep;</span>
 	}
 
 	public static void GD_exact_ranksep(ST_Agraph_s g, int v) {
-<span class="nc" id="L264">		((ST_Agraphinfo_t) g.data).exact_ranksep = v;</span>
-<span class="nc" id="L265">	}</span>
+<span class="nc" id="L262">		((ST_Agraphinfo_t) g.data).exact_ranksep = v;</span>
+<span class="nc" id="L263">	}</span>
 
 	// #define GD_expanded(g) (((Agraphinfo_t*)AGDATA(g))-&gt;expanded)
 	public static boolean GD_expanded(ST_Agraph_s g) {
-<span class="fc" id="L269">		return ((ST_Agraphinfo_t) g.data).expanded;</span>
+<span class="fc" id="L267">		return ((ST_Agraphinfo_t) g.data).expanded;</span>
 	}
 
 	public static void GD_expanded(ST_Agraph_s g, boolean v) {
-<span class="fc" id="L273">		((ST_Agraphinfo_t) g.data).expanded = v;</span>
-<span class="fc" id="L274">	}</span>
+<span class="fc" id="L271">		((ST_Agraphinfo_t) g.data).expanded = v;</span>
+<span class="fc" id="L272">	}</span>
 
 	// #define GD_flags(g) (((Agraphinfo_t*)AGDATA(g))-&gt;flags)
 	public static int GD_flags(ST_Agraph_s g) {
-<span class="fc" id="L278">		return ((ST_Agraphinfo_t) g.data).flags;</span>
+<span class="fc" id="L276">		return ((ST_Agraphinfo_t) g.data).flags;</span>
 	}
 
 	public static void GD_flags(ST_Agraph_s g, int v) {
-<span class="fc" id="L282">		((ST_Agraphinfo_t) g.data).flags = v;</span>
-<span class="fc" id="L283">	}</span>
+<span class="fc" id="L280">		((ST_Agraphinfo_t) g.data).flags = v;</span>
+<span class="fc" id="L281">	}</span>
 
 	// #define GD_gui_state(g) (((Agraphinfo_t*)AGDATA(g))-&gt;gui_state)
 	// #define GD_charset(g) (((Agraphinfo_t*)AGDATA(g))-&gt;charset)
 	public static int GD_charset(ST_Agraph_s g) {
-<span class="fc" id="L288">		return ((ST_Agraphinfo_t) g.data).charset;</span>
+<span class="fc" id="L286">		return ((ST_Agraphinfo_t) g.data).charset;</span>
 	}
 
 	public static void GD_charset(ST_Agraph_s g, int v) {
-<span class="fc" id="L292">		((ST_Agraphinfo_t) g.data).charset = v;</span>
-<span class="fc" id="L293">	}</span>
+<span class="fc" id="L290">		((ST_Agraphinfo_t) g.data).charset = v;</span>
+<span class="fc" id="L291">	}</span>
 
 	// #define GD_has_labels(g) (((Agraphinfo_t*)AGDATA(g))-&gt;has_labels)
 	public static int GD_has_labels(ST_Agraph_s g) {
-<span class="fc" id="L297">		return ((ST_Agraphinfo_t) g.data).has_labels;</span>
+<span class="fc" id="L295">		return ((ST_Agraphinfo_t) g.data).has_labels;</span>
 	}
 
 	public static void GD_has_labels(ST_Agraph_s g, int v) {
-<span class="fc" id="L301">		((ST_Agraphinfo_t) g.data).has_labels = v;</span>
-<span class="fc" id="L302">	}</span>
+<span class="fc" id="L299">		((ST_Agraphinfo_t) g.data).has_labels = v;</span>
+<span class="fc" id="L300">	}</span>
 
 	// #define GD_has_images(g) (((Agraphinfo_t*)AGDATA(g))-&gt;has_images)
 	// #define GD_has_flat_edges(g) (((Agraphinfo_t*)AGDATA(g))-&gt;has_flat_edges)
 	public static int GD_has_flat_edges(ST_Agraph_s g) {
-<span class="fc" id="L307">		return ((ST_Agraphinfo_t) g.data).has_flat_edges;</span>
+<span class="fc" id="L305">		return ((ST_Agraphinfo_t) g.data).has_flat_edges;</span>
 	}
 
 	public static void GD_has_flat_edges(ST_Agraph_s g, boolean v) {
-<span class="pc bpc" id="L311" title="1 of 2 branches missed.">		((ST_Agraphinfo_t) g.data).has_flat_edges = v ? 1 : 0;</span>
-<span class="fc" id="L312">	}</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">		((ST_Agraphinfo_t) g.data).has_flat_edges = v ? 1 : 0;</span>
+<span class="fc" id="L310">	}</span>
 
 	// #define GD_has_sourcerank(g) (((Agraphinfo_t*)AGDATA(g))-&gt;has_sourcerank)
 	// #define GD_has_sinkrank(g) (((Agraphinfo_t*)AGDATA(g))-&gt;has_sinkrank)
 	// #define GD_ht1(g) (((Agraphinfo_t*)AGDATA(g))-&gt;ht1)
 	public static double GD_ht1(ST_Agraph_s g) {
-<span class="fc" id="L318">		return ((ST_Agraphinfo_t) g.data).ht1;</span>
+<span class="fc" id="L316">		return ((ST_Agraphinfo_t) g.data).ht1;</span>
 	}
 
 	public static void GD_ht1(ST_Agraph_s g, double v) {
-<span class="fc" id="L322">		((ST_Agraphinfo_t) g.data).ht1 = v;</span>
-<span class="fc" id="L323">	}</span>
+<span class="fc" id="L320">		((ST_Agraphinfo_t) g.data).ht1 = v;</span>
+<span class="fc" id="L321">	}</span>
 
 	// #define GD_ht2(g) (((Agraphinfo_t*)AGDATA(g))-&gt;ht2)
 	public static double GD_ht2(ST_Agraph_s g) {
-<span class="fc" id="L327">		return ((ST_Agraphinfo_t) g.data).ht2;</span>
+<span class="fc" id="L325">		return ((ST_Agraphinfo_t) g.data).ht2;</span>
 	}
 
 	public static void GD_ht2(ST_Agraph_s g, double v) {
-<span class="fc" id="L331">		((ST_Agraphinfo_t) g.data).ht2 = v;</span>
-<span class="fc" id="L332">	}</span>
+<span class="fc" id="L329">		((ST_Agraphinfo_t) g.data).ht2 = v;</span>
+<span class="fc" id="L330">	}</span>
 
 	// #define GD_inleaf(g) (((Agraphinfo_t*)AGDATA(g))-&gt;inleaf)
 	// #define GD_installed(g) (((Agraphinfo_t*)AGDATA(g))-&gt;installed)
 	public static int GD_installed(ST_Agraph_s g) {
-<span class="fc" id="L337">		return ((ST_Agraphinfo_t) g.data).installed;</span>
+<span class="fc" id="L335">		return ((ST_Agraphinfo_t) g.data).installed;</span>
 	}
 
 	public static void GD_installed(ST_Agraph_s g, int v) {
-<span class="fc" id="L341">		((ST_Agraphinfo_t) g.data).installed = v;</span>
-<span class="fc" id="L342">	}</span>
+<span class="fc" id="L339">		((ST_Agraphinfo_t) g.data).installed = v;</span>
+<span class="fc" id="L340">	}</span>
 
 	// #define GD_label(g) (((Agraphinfo_t*)AGDATA(g))-&gt;label)
 	public static ST_textlabel_t GD_label(ST_Agraph_s g) {
-<span class="fc" id="L346">		return ((ST_Agraphinfo_t) g.data).label;</span>
+<span class="fc" id="L344">		return ((ST_Agraphinfo_t) g.data).label;</span>
 	}
 
 	public static void GD_label(ST_Agraph_s g, ST_textlabel_t v) {
-<span class="fc" id="L350">		((ST_Agraphinfo_t) g.data).label = v;</span>
-<span class="fc" id="L351">	}</span>
+<span class="fc" id="L348">		((ST_Agraphinfo_t) g.data).label = v;</span>
+<span class="fc" id="L349">	}</span>
 
 	// #define GD_leader(g) (((Agraphinfo_t*)AGDATA(g))-&gt;leader)
 	public static ST_Agnode_s GD_leader(ST_Agraph_s g) {
-<span class="fc" id="L355">		return ((ST_Agraphinfo_t) g.data).leader;</span>
+<span class="fc" id="L353">		return ((ST_Agraphinfo_t) g.data).leader;</span>
 	}
 
 	public static void GD_leader(ST_Agraph_s g, ST_Agnode_s v) {
-<span class="fc" id="L359">		((ST_Agraphinfo_t) g.data).leader = v;</span>
-<span class="fc" id="L360">	}</span>
+<span class="fc" id="L357">		((ST_Agraphinfo_t) g.data).leader = v;</span>
+<span class="fc" id="L358">	}</span>
 
 	// #define GD_rankdir2(g) (((Agraphinfo_t*)AGDATA(g))-&gt;rankdir)
 	public static int GD_rankdir2(ST_Agraph_s g) {
-<span class="nc" id="L364">		return ((ST_Agraphinfo_t) g.data).rankdir;</span>
+<span class="nc" id="L362">		return ((ST_Agraphinfo_t) g.data).rankdir;</span>
 	}
 
 	public static void GD_rankdir2(ST_Agraph_s g, int v) {
-<span class="fc" id="L368">		((ST_Agraphinfo_t) g.data).rankdir = v;</span>
-<span class="fc" id="L369">	}</span>
+<span class="fc" id="L366">		((ST_Agraphinfo_t) g.data).rankdir = v;</span>
+<span class="fc" id="L367">	}</span>
 
 	// #define GD_rankdir(g) (((Agraphinfo_t*)AGDATA(g))-&gt;rankdir &amp; 0x3)
 	public static int GD_rankdir(ST_Agraph_s g) {
-<span class="fc" id="L373">		return ((ST_Agraphinfo_t) g.data).rankdir &amp; 0x3;</span>
+<span class="fc" id="L371">		return ((ST_Agraphinfo_t) g.data).rankdir &amp; 0x3;</span>
 	}
 
 	// #define GD_flip(g) (GD_rankdir(g) &amp; 1)
 	public static boolean GD_flip(ST_Agraph_s g) {
-<span class="fc bfc" id="L378" title="All 2 branches covered.">		return (GD_rankdir(g) &amp; 1) != 0;</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">		return (GD_rankdir(g) &amp; 1) != 0;</span>
 	}
 
 	// #define GD_realrankdir(g) ((((Agraphinfo_t*)AGDATA(g))-&gt;rankdir) &gt;&gt; 2)
 	public static int GD_realrankdir(ST_Agraph_s g) {
-<span class="fc" id="L383">		return ((ST_Agraphinfo_t) g.data).rankdir &gt;&gt; 2;</span>
+<span class="fc" id="L381">		return ((ST_Agraphinfo_t) g.data).rankdir &gt;&gt; 2;</span>
 	}
 
 	// #define GD_realflip(g) (GD_realrankdir(g) &amp; 1)
 	public static int GD_realflip(ST_Agraph_s g) {
-<span class="fc" id="L388">		return GD_realrankdir(g) &amp; 1;</span>
+<span class="fc" id="L386">		return GD_realrankdir(g) &amp; 1;</span>
 	}
 
 	// #define GD_ln(g) (((Agraphinfo_t*)AGDATA(g))-&gt;ln)
 	public static ST_Agnode_s GD_ln(ST_Agraph_s g) {
-<span class="fc" id="L393">		return ((ST_Agraphinfo_t) g.data).ln;</span>
+<span class="fc" id="L391">		return ((ST_Agraphinfo_t) g.data).ln;</span>
 	}
 
 	public static void GD_ln(ST_Agraph_s g, ST_Agnode_s v) {
-<span class="fc" id="L397">		((ST_Agraphinfo_t) g.data).ln = v;</span>
-<span class="fc" id="L398">	}</span>
+<span class="fc" id="L395">		((ST_Agraphinfo_t) g.data).ln = v;</span>
+<span class="fc" id="L396">	}</span>
 
 	// #define GD_maxrank(g) (((Agraphinfo_t*)AGDATA(g))-&gt;maxrank)
 	public static int GD_maxrank(ST_Agraph_s g) {
-<span class="fc" id="L402">		return ((ST_Agraphinfo_t) g.data).maxrank;</span>
+<span class="fc" id="L400">		return ((ST_Agraphinfo_t) g.data).maxrank;</span>
 	}
 
 	public static void GD_maxrank(ST_Agraph_s g, int v) {
-<span class="fc" id="L406">		((ST_Agraphinfo_t) g.data).maxrank = v;</span>
-<span class="fc" id="L407">	}</span>
+<span class="fc" id="L404">		((ST_Agraphinfo_t) g.data).maxrank = v;</span>
+<span class="fc" id="L405">	}</span>
 
 	// #define GD_maxset(g) (((Agraphinfo_t*)AGDATA(g))-&gt;maxset)
 	public static __ptr__ GD_maxset(ST_Agraph_s g) {
-<span class="fc" id="L411">		return ((ST_Agraphinfo_t) g.data).maxset;</span>
+<span class="fc" id="L409">		return ((ST_Agraphinfo_t) g.data).maxset;</span>
 	}
 
 	// #define GD_minrank(g) (((Agraphinfo_t*)AGDATA(g))-&gt;minrank)
 	public static int GD_minrank(ST_Agraph_s g) {
-<span class="fc" id="L416">		return ((ST_Agraphinfo_t) g.data).minrank;</span>
+<span class="fc" id="L414">		return ((ST_Agraphinfo_t) g.data).minrank;</span>
 	}
 
 	public static void GD_minrank(ST_Agraph_s g, int v) {
-<span class="fc" id="L420">		((ST_Agraphinfo_t) g.data).minrank = v;</span>
-<span class="fc" id="L421">	}</span>
+<span class="fc" id="L418">		((ST_Agraphinfo_t) g.data).minrank = v;</span>
+<span class="fc" id="L419">	}</span>
 
 	// #define GD_minset(g) (((Agraphinfo_t*)AGDATA(g))-&gt;minset)
 	public static __ptr__ GD_minset(ST_Agraph_s g) {
-<span class="fc" id="L425">		return ((ST_Agraphinfo_t) g.data).minset;</span>
+<span class="fc" id="L423">		return ((ST_Agraphinfo_t) g.data).minset;</span>
 	}
 
 	// #define GD_minrep(g) (((Agraphinfo_t*)AGDATA(g))-&gt;minrep)
@@ -430,42 +428,42 @@ import smetana.core.debug.SmetanaDebug;
 	// #define GD_move(g) (((Agraphinfo_t*)AGDATA(g))-&gt;move)
 	// #define GD_n_cluster(g) (((Agraphinfo_t*)AGDATA(g))-&gt;n_cluster)
 	public static int GD_n_cluster(ST_Agraph_s g) {
-<span class="fc" id="L433">		return ((ST_Agraphinfo_t) g.data).n_cluster;</span>
+<span class="fc" id="L431">		return ((ST_Agraphinfo_t) g.data).n_cluster;</span>
 	}
 
 	public static void GD_n_cluster(ST_Agraph_s g, int v) {
-<span class="fc" id="L437">		((ST_Agraphinfo_t) g.data).n_cluster = v;</span>
-<span class="fc" id="L438">	}</span>
+<span class="fc" id="L435">		((ST_Agraphinfo_t) g.data).n_cluster = v;</span>
+<span class="fc" id="L436">	}</span>
 
 	// #define GD_n_nodes(g) (((Agraphinfo_t*)AGDATA(g))-&gt;n_nodes)
 	public static int GD_n_nodes(ST_Agraph_s g) {
-<span class="fc" id="L442">		return ((ST_Agraphinfo_t) g.data).n_nodes;</span>
+<span class="fc" id="L440">		return ((ST_Agraphinfo_t) g.data).n_nodes;</span>
 	}
 
 	public static void GD_n_nodes(ST_Agraph_s g, int v) {
-<span class="fc" id="L446">		((ST_Agraphinfo_t) g.data).n_nodes = v;</span>
-<span class="fc" id="L447">	}</span>
+<span class="fc" id="L444">		((ST_Agraphinfo_t) g.data).n_nodes = v;</span>
+<span class="fc" id="L445">	}</span>
 
 	// #define GD_ndim(g) (((Agraphinfo_t*)AGDATA(g))-&gt;ndim)
 	// #define GD_odim(g) (((Agraphinfo_t*)AGDATA(g))-&gt;odim)
 	// #define GD_neato_nlist(g) (((Agraphinfo_t*)AGDATA(g))-&gt;neato_nlist)
 	// #define GD_nlist(g) (((Agraphinfo_t*)AGDATA(g))-&gt;nlist)
 	public static ST_Agnode_s GD_nlist(ST_Agraph_s g) {
-<span class="fc" id="L454">		return ((ST_Agraphinfo_t) g.data).nlist;</span>
+<span class="fc" id="L452">		return ((ST_Agraphinfo_t) g.data).nlist;</span>
 	}
 
 	public static void GD_nlist(ST_Agraph_s g, ST_Agnode_s v) {
-<span class="fc" id="L458">		((ST_Agraphinfo_t) g.data).nlist = v;</span>
-<span class="fc" id="L459">	}</span>
+<span class="fc" id="L456">		((ST_Agraphinfo_t) g.data).nlist = v;</span>
+<span class="fc" id="L457">	}</span>
 
 	// #define GD_nodesep(g) (((Agraphinfo_t*)AGDATA(g))-&gt;nodesep)
 	public static int GD_nodesep(ST_Agraph_s g) {
-<span class="fc" id="L463">		return ((ST_Agraphinfo_t) g.data).nodesep;</span>
+<span class="fc" id="L461">		return ((ST_Agraphinfo_t) g.data).nodesep;</span>
 	}
 
 	public static void GD_nodesep(ST_Agraph_s g, int v) {
-<span class="fc" id="L467">		((ST_Agraphinfo_t) g.data).nodesep = v;</span>
-<span class="fc" id="L468">	}</span>
+<span class="fc" id="L465">		((ST_Agraphinfo_t) g.data).nodesep = v;</span>
+<span class="fc" id="L466">	}</span>
 
 	// #define GD_outleaf(g) (((Agraphinfo_t*)AGDATA(g))-&gt;outleaf)
 	// #define GD_rank(g) (((Agraphinfo_t*)AGDATA(g))-&gt;rank)
@@ -473,78 +471,78 @@ import smetana.core.debug.SmetanaDebug;
 //		JUtilsDebug.LOG(&quot;## get GD_rank for &quot; + g);
 //		JUtilsDebug.LOG(&quot;&quot; + ((ST_Agraphinfo_t) AGDATA(g)).rank);
 //		JUtilsDebug.LOG(&quot;&quot;);
-<span class="fc" id="L476">		return ((ST_Agraphinfo_t) g.data).rank;</span>
+<span class="fc" id="L474">		return ((ST_Agraphinfo_t) g.data).rank;</span>
 	}
 
 	public static void GD_rank(ST_Agraph_s g, CArray&lt;ST_rank_t&gt; v) {
 //		JUtilsDebug.LOG(&quot;!! set GD_rank for &quot; + g);
 //		JUtilsDebug.LOG(&quot;&quot; + v);
 //		JUtilsDebug.LOG(&quot;&quot;);
-<span class="fc" id="L483">		((ST_Agraphinfo_t) g.data).rank = v;</span>
-<span class="fc" id="L484">	}</span>
+<span class="fc" id="L481">		((ST_Agraphinfo_t) g.data).rank = v;</span>
+<span class="fc" id="L482">	}</span>
 
 	// #define GD_rankleader(g) (((Agraphinfo_t*)AGDATA(g))-&gt;rankleader)
 	public static CArrayOfStar&lt;ST_Agnode_s&gt; GD_rankleader(ST_Agraph_s g) {
-<span class="fc" id="L488">		return ((ST_Agraphinfo_t) g.data).rankleader;</span>
+<span class="fc" id="L486">		return ((ST_Agraphinfo_t) g.data).rankleader;</span>
 	}
 
 	public static void GD_rankleader(ST_Agraph_s g, CArrayOfStar&lt;ST_Agnode_s&gt; v) {
-<span class="fc" id="L492">		((ST_Agraphinfo_t) g.data).rankleader = v;</span>
-<span class="fc" id="L493">	}</span>
+<span class="fc" id="L490">		((ST_Agraphinfo_t) g.data).rankleader = v;</span>
+<span class="fc" id="L491">	}</span>
 
 	// #define GD_ranksep(g) (((Agraphinfo_t*)AGDATA(g))-&gt;ranksep)
 	public static int GD_ranksep(ST_Agraph_s g) {
-<span class="fc" id="L497">		return ((ST_Agraphinfo_t) g.data).ranksep;</span>
+<span class="fc" id="L495">		return ((ST_Agraphinfo_t) g.data).ranksep;</span>
 	}
 
 	public static void GD_ranksep(ST_Agraph_s g, int v) {
-<span class="fc" id="L501">		((ST_Agraphinfo_t) g.data).ranksep = v;</span>
-<span class="fc" id="L502">	}</span>
+<span class="fc" id="L499">		((ST_Agraphinfo_t) g.data).ranksep = v;</span>
+<span class="fc" id="L500">	}</span>
 
 	// #define GD_rn(g) (((Agraphinfo_t*)AGDATA(g))-&gt;rn)
 	public static ST_Agnode_s GD_rn(ST_Agraph_s g) {
-<span class="fc" id="L506">		return ((ST_Agraphinfo_t) g.data).rn;</span>
+<span class="fc" id="L504">		return ((ST_Agraphinfo_t) g.data).rn;</span>
 	}
 
 	public static void GD_rn(ST_Agraph_s g, ST_Agnode_s v) {
-<span class="fc" id="L510">		((ST_Agraphinfo_t) g.data).rn = v;</span>
-<span class="fc" id="L511">	}</span>
+<span class="fc" id="L508">		((ST_Agraphinfo_t) g.data).rn = v;</span>
+<span class="fc" id="L509">	}</span>
 
 	// #define GD_set_type(g) (((Agraphinfo_t*)AGDATA(g))-&gt;set_type)
 	public static int GD_set_type(ST_Agraph_s g) {
-<span class="nc" id="L515">		return ((ST_Agraphinfo_t) g.data).set_type;</span>
+<span class="nc" id="L513">		return ((ST_Agraphinfo_t) g.data).set_type;</span>
 	}
 
 	public static void GD_set_type(ST_Agraph_s g, int v) {
-<span class="nc" id="L519">		((ST_Agraphinfo_t) g.data).set_type = v;</span>
-<span class="nc" id="L520">	}</span>
+<span class="nc" id="L517">		((ST_Agraphinfo_t) g.data).set_type = v;</span>
+<span class="nc" id="L518">	}</span>
 
 	// #define GD_label_pos(g) (((Agraphinfo_t*)AGDATA(g))-&gt;label_pos)
 	public static int GD_label_pos(ST_Agraph_s g) {
-<span class="fc" id="L524">		return ((ST_Agraphinfo_t) g.data).label_pos;</span>
+<span class="fc" id="L522">		return ((ST_Agraphinfo_t) g.data).label_pos;</span>
 	}
 
 	public static void GD_label_pos(ST_Agraph_s g, int v) {
-<span class="fc" id="L528">		((ST_Agraphinfo_t) g.data).label_pos = v;</span>
-<span class="fc" id="L529">	}</span>
+<span class="fc" id="L526">		((ST_Agraphinfo_t) g.data).label_pos = v;</span>
+<span class="fc" id="L527">	}</span>
 
 	// #define GD_showboxes(g) (((Agraphinfo_t*)AGDATA(g))-&gt;showboxes)
 	public static int GD_showboxes(ST_Agraph_s g) {
-<span class="nc" id="L533">		return ((ST_Agraphinfo_t) g.data).showboxes;</span>
+<span class="nc" id="L531">		return ((ST_Agraphinfo_t) g.data).showboxes;</span>
 	}
 
 	public static void GD_showboxes(ST_Agraph_s g, int v) {
-<span class="fc" id="L537">		((ST_Agraphinfo_t) g.data).showboxes = v;</span>
-<span class="fc" id="L538">	}</span>
+<span class="fc" id="L535">		((ST_Agraphinfo_t) g.data).showboxes = v;</span>
+<span class="fc" id="L536">	}</span>
 
 	// #define GD_fontnames(g) (((Agraphinfo_t*)AGDATA(g))-&gt;fontnames)
 	public static int GD_fontnames(ST_Agraph_s g) {
-<span class="nc" id="L542">		return ((ST_Agraphinfo_t) g.data).fontnames;</span>
+<span class="nc" id="L540">		return ((ST_Agraphinfo_t) g.data).fontnames;</span>
 	}
 
 	public static void GD_fontnames(ST_Agraph_s g, int v) {
-<span class="fc" id="L546">		((ST_Agraphinfo_t) g.data).fontnames = v;</span>
-<span class="fc" id="L547">	}</span>
+<span class="fc" id="L544">		((ST_Agraphinfo_t) g.data).fontnames = v;</span>
+<span class="fc" id="L545">	}</span>
 
 	// #define GD_spring(g) (((Agraphinfo_t*)AGDATA(g))-&gt;spring)
 	// #define GD_sum_t(g) (((Agraphinfo_t*)AGDATA(g))-&gt;sum_t)
@@ -552,362 +550,362 @@ import smetana.core.debug.SmetanaDebug;
 
 	// #define ND_id(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;id)
 	public static int ND_id(ST_Agnode_s n) {
-<span class="fc" id="L555">		return ((ST_Agnodeinfo_t) n.data).id;</span>
+<span class="fc" id="L553">		return ((ST_Agnodeinfo_t) n.data).id;</span>
 	}
 
 	// #define ND_alg(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;alg)
 	public static __ptr__ ND_alg(ST_Agnode_s n) {
-<span class="fc" id="L560">		return ((ST_Agnodeinfo_t) n.data).alg;</span>
+<span class="fc" id="L558">		return ((ST_Agnodeinfo_t) n.data).alg;</span>
 	}
 
 	public static void ND_alg(ST_Agnode_s n, ST_Agedge_s value) {
-<span class="nc" id="L564">		((ST_Agnodeinfo_t) n.data).alg = value;</span>
-<span class="nc" id="L565">	}</span>
+<span class="nc" id="L562">		((ST_Agnodeinfo_t) n.data).alg = value;</span>
+<span class="nc" id="L563">	}</span>
 
 	// #define ND_UF_parent(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;UF_parent)
 	public static ST_Agnode_s ND_UF_parent(ST_Agobj_s n) {
-<span class="fc" id="L569">		return ((ST_Agnodeinfo_t) n.data).UF_parent;</span>
+<span class="fc" id="L567">		return ((ST_Agnodeinfo_t) n.data).UF_parent;</span>
 	}
 
 	public static void ND_UF_parent(ST_Agobj_s n, ST_Agnode_s v) {
-<span class="fc" id="L573">		((ST_Agnodeinfo_t) n.data).UF_parent = v;</span>
-<span class="fc" id="L574">	}</span>
+<span class="fc" id="L571">		((ST_Agnodeinfo_t) n.data).UF_parent = v;</span>
+<span class="fc" id="L572">	}</span>
 
 	// #define ND_set(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;set)
 	// #define ND_UF_size(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;UF_size)
 	public static int ND_UF_size(ST_Agnode_s n) {
-<span class="fc" id="L579">		return ((ST_Agnodeinfo_t) n.data).UF_size;</span>
+<span class="fc" id="L577">		return ((ST_Agnodeinfo_t) n.data).UF_size;</span>
 	}
 
 	public static void ND_UF_size(ST_Agnode_s n, int v) {
-<span class="fc" id="L583">		((ST_Agnodeinfo_t) n.data).UF_size = v;</span>
-<span class="fc" id="L584">	}</span>
+<span class="fc" id="L581">		((ST_Agnodeinfo_t) n.data).UF_size = v;</span>
+<span class="fc" id="L582">	}</span>
 
 	// #define ND_bb(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;bb)
 	// #define ND_clust(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;clust)
 	public static ST_Agraph_s ND_clust(ST_Agnode_s n) {
-<span class="fc" id="L589">		return ((ST_Agnodeinfo_t) n.data).clust;</span>
+<span class="fc" id="L587">		return ((ST_Agnodeinfo_t) n.data).clust;</span>
 	}
 
 	public static void ND_clust(ST_Agnode_s n, ST_Agraph_s v) {
-<span class="fc" id="L593">		((ST_Agnodeinfo_t) n.data).clust = v;</span>
-<span class="fc" id="L594">	}</span>
+<span class="fc" id="L591">		((ST_Agnodeinfo_t) n.data).clust = v;</span>
+<span class="fc" id="L592">	}</span>
 
 	// #define ND_coord(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;coord)
 	public static ST_pointf ND_coord(ST_Agnode_s n) {
-<span class="fc" id="L598">		return ((ST_Agnodeinfo_t) n.data).coord;</span>
+<span class="fc" id="L596">		return ((ST_Agnodeinfo_t) n.data).coord;</span>
 	}
 
 	// #define ND_dist(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;dist)
 
 	// #define ND_flat_in(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;flat_in)
 	public static ST_elist ND_flat_in(ST_Agnode_s n) {
-<span class="fc" id="L605">		return ((ST_Agnodeinfo_t) n.data).flat_in;</span>
+<span class="fc" id="L603">		return ((ST_Agnodeinfo_t) n.data).flat_in;</span>
 	}
 
 	// #define ND_flat_out(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;flat_out)
 	public static ST_elist ND_flat_out(ST_Agnode_s n) {
-<span class="fc" id="L610">		return ((ST_Agnodeinfo_t) n.data).flat_out;</span>
+<span class="fc" id="L608">		return ((ST_Agnodeinfo_t) n.data).flat_out;</span>
 	}
 
 	// #define ND_gui_state(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;gui_state)
 	// #define ND_has_port(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;has_port)
 	public static boolean ND_has_port(ST_Agnode_s n) {
-<span class="fc" id="L616">		return ((ST_Agnodeinfo_t) n.data).has_port;</span>
+<span class="fc" id="L614">		return ((ST_Agnodeinfo_t) n.data).has_port;</span>
 	}
 
 	public static void ND_has_port(ST_Agnode_s n, boolean v) {
-<span class="fc" id="L620">		((ST_Agnodeinfo_t) n.data).has_port = v;</span>
-<span class="fc" id="L621">	}</span>
+<span class="fc" id="L618">		((ST_Agnodeinfo_t) n.data).has_port = v;</span>
+<span class="fc" id="L619">	}</span>
 
 	// #define ND_rep(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;rep)
 	// #define ND_heapindex(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;heapindex)
 	// #define ND_height(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;height)
 	public static double ND_height(ST_Agnode_s n) {
-<span class="fc" id="L627">		return ((ST_Agnodeinfo_t) n.data).height;</span>
+<span class="fc" id="L625">		return ((ST_Agnodeinfo_t) n.data).height;</span>
 	}
 
 	public static void ND_height(ST_Agnode_s n, double v) {
-<span class="fc" id="L631">		((ST_Agnodeinfo_t) n.data).height = v;</span>
-<span class="fc" id="L632">	}</span>
+<span class="fc" id="L629">		((ST_Agnodeinfo_t) n.data).height = v;</span>
+<span class="fc" id="L630">	}</span>
 
 	// #define ND_hops(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;hops)
 	// #define ND_ht(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;ht)
 	public static double ND_ht(ST_Agnode_s n) {
-<span class="fc" id="L637">		return ((ST_Agnodeinfo_t) n.data).ht;</span>
+<span class="fc" id="L635">		return ((ST_Agnodeinfo_t) n.data).ht;</span>
 	}
 
 	public static void ND_ht(ST_Agnode_s n, double v) {
-<span class="fc" id="L641">		((ST_Agnodeinfo_t) n.data).ht = v;</span>
-<span class="fc" id="L642">	}</span>
+<span class="fc" id="L639">		((ST_Agnodeinfo_t) n.data).ht = v;</span>
+<span class="fc" id="L640">	}</span>
 
 	// #define ND_in(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;in)
 	public static ST_elist ND_in(ST_Agnode_s n) {
-<span class="fc" id="L646">		return ((ST_Agnodeinfo_t) n.data).in;</span>
+<span class="fc" id="L644">		return ((ST_Agnodeinfo_t) n.data).in;</span>
 	}
 
 	public static void ND_in(ST_Agnode_s n, __struct__&lt;ST_elist&gt; v) {
-<span class="fc" id="L650">		((ST_Agnodeinfo_t) n.data).in.___(v);</span>
-<span class="fc" id="L651">	}</span>
+<span class="fc" id="L648">		((ST_Agnodeinfo_t) n.data).in.___(v);</span>
+<span class="fc" id="L649">	}</span>
 
 	// #define ND_inleaf(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;inleaf)
 	public static __ptr__ ND_inleaf(ST_Agnode_s n) {
-<span class="fc" id="L655">		return ((ST_Agnodeinfo_t) n.data).inleaf;</span>
+<span class="fc" id="L653">		return ((ST_Agnodeinfo_t) n.data).inleaf;</span>
 	}
 
 	// #define ND_label(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;label)
 	public static ST_textlabel_t ND_label(ST_Agnode_s n) {
-<span class="fc" id="L660">		return (ST_textlabel_t) ((ST_Agnodeinfo_t) n.data).label;</span>
+<span class="fc" id="L658">		return (ST_textlabel_t) ((ST_Agnodeinfo_t) n.data).label;</span>
 	}
 
 	public static void ND_label(ST_Agnode_s n, ST_textlabel_t v) {
-<span class="fc" id="L664">		((ST_Agnodeinfo_t) n.data).label = v;</span>
-<span class="fc" id="L665">	}</span>
+<span class="fc" id="L662">		((ST_Agnodeinfo_t) n.data).label = v;</span>
+<span class="fc" id="L663">	}</span>
 
 	// #define ND_xlabel(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;xlabel)
 	public static ST_textlabel_t ND_xlabel(ST_Agnode_s n) {
-<span class="fc" id="L669">		return ((ST_Agnodeinfo_t) n.data).xlabel;</span>
+<span class="fc" id="L667">		return ((ST_Agnodeinfo_t) n.data).xlabel;</span>
 	}
 
 	// #define ND_lim(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;lim)
 	public static int ND_lim(ST_Agnode_s n) {
-<span class="fc" id="L674">		return ((ST_Agnodeinfo_t) n.data).lim;</span>
+<span class="fc" id="L672">		return ((ST_Agnodeinfo_t) n.data).lim;</span>
 	}
 
 	public static void ND_lim(ST_Agnode_s n, int v) {
-<span class="fc" id="L678">		((ST_Agnodeinfo_t) n.data).lim = v;</span>
-<span class="fc" id="L679">	}</span>
+<span class="fc" id="L676">		((ST_Agnodeinfo_t) n.data).lim = v;</span>
+<span class="fc" id="L677">	}</span>
 
 	// #define ND_low(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;low)
 	public static int ND_low(ST_Agnode_s n) {
-<span class="fc" id="L683">		return ((ST_Agnodeinfo_t) n.data).low;</span>
+<span class="fc" id="L681">		return ((ST_Agnodeinfo_t) n.data).low;</span>
 	}
 
 	public static void ND_low(ST_Agnode_s n, int v) {
-<span class="fc" id="L687">		((ST_Agnodeinfo_t) n.data).low = v;</span>
-<span class="fc" id="L688">	}</span>
+<span class="fc" id="L685">		((ST_Agnodeinfo_t) n.data).low = v;</span>
+<span class="fc" id="L686">	}</span>
 
 	// #define ND_lw(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;lw)
 	public static double ND_lw(ST_Agnode_s n) {
-<span class="fc" id="L692">		return ((ST_Agnodeinfo_t) n.data).lw;</span>
+<span class="fc" id="L690">		return ((ST_Agnodeinfo_t) n.data).lw;</span>
 	}
 
 	public static void ND_lw(ST_Agnode_s n, double v) {
-<span class="fc" id="L696">		((ST_Agnodeinfo_t) n.data).lw = v;</span>
-<span class="fc" id="L697">	}</span>
+<span class="fc" id="L694">		((ST_Agnodeinfo_t) n.data).lw = v;</span>
+<span class="fc" id="L695">	}</span>
 
 	// #define ND_mark(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;mark)
 	public static int ND_mark(ST_Agnode_s n) {
-<span class="fc" id="L701">		return ((ST_Agnodeinfo_t) n.data).mark;</span>
+<span class="fc" id="L699">		return ((ST_Agnodeinfo_t) n.data).mark;</span>
 	}
 
 	public static void ND_mark(ST_Agnode_s n, int v) {
-<span class="fc" id="L705">		((ST_Agnodeinfo_t) n.data).mark = v;</span>
-<span class="fc" id="L706">	}</span>
+<span class="fc" id="L703">		((ST_Agnodeinfo_t) n.data).mark = v;</span>
+<span class="fc" id="L704">	}</span>
 
 	public static void ND_mark(ST_Agnode_s n, boolean v) {
-<span class="pc bpc" id="L709" title="1 of 2 branches missed.">		((ST_Agnodeinfo_t) n.data).mark = v ? 1 : 0;</span>
-<span class="fc" id="L710">	}</span>
+<span class="pc bpc" id="L707" title="1 of 2 branches missed.">		((ST_Agnodeinfo_t) n.data).mark = v ? 1 : 0;</span>
+<span class="fc" id="L708">	}</span>
 
 	// #define ND_mval(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;mval)
 	public static double ND_mval(ST_Agnode_s n) {
-<span class="fc" id="L714">		return ((ST_Agnodeinfo_t) n.data).mval;</span>
+<span class="fc" id="L712">		return ((ST_Agnodeinfo_t) n.data).mval;</span>
 	}
 
 	public static void ND_mval(ST_Agnode_s n, double v) {
-<span class="fc" id="L718">		((ST_Agnodeinfo_t) n.data).mval = v;</span>
-<span class="fc" id="L719">	}</span>
+<span class="fc" id="L716">		((ST_Agnodeinfo_t) n.data).mval = v;</span>
+<span class="fc" id="L717">	}</span>
 
 	// #define ND_n_cluster(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;n_cluster)
 	// #define ND_next(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;next)
 	public static ST_Agnode_s ND_next(ST_Agnode_s n) {
-<span class="fc" id="L724">		return ((ST_Agnodeinfo_t) n.data).next;</span>
+<span class="fc" id="L722">		return ((ST_Agnodeinfo_t) n.data).next;</span>
 	}
 
 	public static void ND_next(ST_Agnode_s n, ST_Agnode_s v) {
-<span class="fc" id="L728">		((ST_Agnodeinfo_t) n.data).next = v;</span>
-<span class="fc" id="L729">	}</span>
+<span class="fc" id="L726">		((ST_Agnodeinfo_t) n.data).next = v;</span>
+<span class="fc" id="L727">	}</span>
 
 	// #define ND_node_type(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;node_type)
 	public static int ND_node_type(ST_Agnode_s n) {
-<span class="fc" id="L733">		return ((ST_Agnodeinfo_t) n.data).node_type;</span>
+<span class="fc" id="L731">		return ((ST_Agnodeinfo_t) n.data).node_type;</span>
 	}
 
 	public static void ND_node_type(ST_Agnode_s n, int v) {
-<span class="fc" id="L737">		((ST_Agnodeinfo_t) n.data).node_type = v;</span>
-<span class="fc" id="L738">	}</span>
+<span class="fc" id="L735">		((ST_Agnodeinfo_t) n.data).node_type = v;</span>
+<span class="fc" id="L736">	}</span>
 
 	// #define ND_onstack(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;onstack)
 	public static boolean ND_onstack(ST_Agnode_s n) {
-<span class="pc bpc" id="L742" title="1 of 2 branches missed.">		return ((ST_Agnodeinfo_t) n.data).onstack != 0;</span>
+<span class="pc bpc" id="L740" title="1 of 2 branches missed.">		return ((ST_Agnodeinfo_t) n.data).onstack != 0;</span>
 	}
 
 	public static void ND_onstack(ST_Agnode_s n, int v) {
-<span class="fc" id="L746">		((ST_Agnodeinfo_t) n.data).onstack = v;</span>
-<span class="fc" id="L747">	}</span>
+<span class="fc" id="L744">		((ST_Agnodeinfo_t) n.data).onstack = v;</span>
+<span class="fc" id="L745">	}</span>
 
 	public static void ND_onstack(ST_Agnode_s n, boolean v) {
-<span class="pc bpc" id="L750" title="1 of 2 branches missed.">		((ST_Agnodeinfo_t) n.data).onstack = v ? 1 : 0;</span>
-<span class="fc" id="L751">	}</span>
+<span class="pc bpc" id="L748" title="1 of 2 branches missed.">		((ST_Agnodeinfo_t) n.data).onstack = v ? 1 : 0;</span>
+<span class="fc" id="L749">	}</span>
 
 	// #define ND_order(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;order)
 	public static int ND_order(ST_Agnode_s n) {
-<span class="fc" id="L755">		return ((ST_Agnodeinfo_t) n.data).order;</span>
+<span class="fc" id="L753">		return ((ST_Agnodeinfo_t) n.data).order;</span>
 	}
 
 	public static void ND_order(ST_Agnode_s n, int v) {
-<span class="fc" id="L759">		((ST_Agnodeinfo_t) n.data).order = v;</span>
-<span class="fc" id="L760">	}</span>
+<span class="fc" id="L757">		((ST_Agnodeinfo_t) n.data).order = v;</span>
+<span class="fc" id="L758">	}</span>
 
 	// #define ND_other(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;other)
 	public static ST_elist ND_other(ST_Agnode_s n) {
-<span class="fc" id="L764">		return ((ST_Agnodeinfo_t) n.data).other;</span>
+<span class="fc" id="L762">		return ((ST_Agnodeinfo_t) n.data).other;</span>
 	}
 
 	// #define ND_out(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;out)
 	public static ST_elist ND_out(ST_Agnode_s n) {
-<span class="fc" id="L769">		return ((ST_Agnodeinfo_t) n.data).out;</span>
+<span class="fc" id="L767">		return ((ST_Agnodeinfo_t) n.data).out;</span>
 	}
 
 	public static void ND_out(ST_Agnode_s n, __struct__&lt;ST_elist&gt; v) {
-<span class="fc" id="L773">		((ST_Agnodeinfo_t) n.data).out.___(v);</span>
-<span class="fc" id="L774">	}</span>
+<span class="fc" id="L771">		((ST_Agnodeinfo_t) n.data).out.___(v);</span>
+<span class="fc" id="L772">	}</span>
 
 	// #define ND_outleaf(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;outleaf)
 	public static __ptr__ ND_outleaf(ST_Agnode_s n) {
-<span class="fc" id="L778">		return ((ST_Agnodeinfo_t) n.data).outleaf;</span>
+<span class="fc" id="L776">		return ((ST_Agnodeinfo_t) n.data).outleaf;</span>
 	}
 
 	// #define ND_par(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;par)
 	public static ST_Agedge_s ND_par(ST_Agnode_s n) {
-<span class="fc" id="L783">		return ((ST_Agnodeinfo_t) n.data).par;</span>
+<span class="fc" id="L781">		return ((ST_Agnodeinfo_t) n.data).par;</span>
 	}
 
 	public static void ND_par(ST_Agnode_s n, ST_Agedge_s v) {
-<span class="fc" id="L787">		((ST_Agnodeinfo_t) n.data).par = v;</span>
-<span class="fc" id="L788">	}</span>
+<span class="fc" id="L785">		((ST_Agnodeinfo_t) n.data).par = v;</span>
+<span class="fc" id="L786">	}</span>
 
 	// #define ND_pinned(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;pinned)
 	// #define ND_pos(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;pos)
 	// #define ND_prev(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;prev)
 	public static ST_Agnode_s ND_prev(ST_Agnode_s n) {
-<span class="fc" id="L794">		return ((ST_Agnodeinfo_t) n.data).prev;</span>
+<span class="fc" id="L792">		return ((ST_Agnodeinfo_t) n.data).prev;</span>
 	}
 
 	public static void ND_prev(ST_Agnode_s n, ST_Agnode_s v) {
-<span class="fc" id="L798">		((ST_Agnodeinfo_t) n.data).prev = v;</span>
-<span class="fc" id="L799">	}</span>
+<span class="fc" id="L796">		((ST_Agnodeinfo_t) n.data).prev = v;</span>
+<span class="fc" id="L797">	}</span>
 
 	// #define ND_priority(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;priority)
 	public static int ND_priority(ST_Agnode_s n) {
-<span class="fc" id="L803">		return ((ST_Agnodeinfo_t) n.data).priority;</span>
+<span class="fc" id="L801">		return ((ST_Agnodeinfo_t) n.data).priority;</span>
 	}
 
 	public static void ND_priority(ST_Agnode_s n, int v) {
-<span class="fc" id="L807">		((ST_Agnodeinfo_t) n.data).priority = v;</span>
-<span class="fc" id="L808">	}</span>
+<span class="fc" id="L805">		((ST_Agnodeinfo_t) n.data).priority = v;</span>
+<span class="fc" id="L806">	}</span>
 
 	// #define ND_rank(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;rank)
 	public static int ND_rank(ST_Agnode_s n) {
-<span class="fc" id="L812">		return ((ST_Agnodeinfo_t) n.data).rank;</span>
+<span class="fc" id="L810">		return ((ST_Agnodeinfo_t) n.data).rank;</span>
 	}
 
 	public static void ND_rank(ST_Agnode_s n, int v) {
-<span class="fc" id="L816">		((ST_Agnodeinfo_t) n.data).rank = v;</span>
-<span class="fc" id="L817">	}</span>
+<span class="fc" id="L814">		((ST_Agnodeinfo_t) n.data).rank = v;</span>
+<span class="fc" id="L815">	}</span>
 
 	// #define ND_ranktype(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;ranktype)
 	public static int ND_ranktype(ST_Agnode_s n) {
-<span class="fc" id="L821">		return ((ST_Agnodeinfo_t) n.data).ranktype;</span>
+<span class="fc" id="L819">		return ((ST_Agnodeinfo_t) n.data).ranktype;</span>
 	}
 
 	public static void ND_ranktype(ST_Agnode_s n, int v) {
-<span class="fc" id="L825">		((ST_Agnodeinfo_t) n.data).ranktype = v;</span>
-<span class="fc" id="L826">	}</span>
+<span class="fc" id="L823">		((ST_Agnodeinfo_t) n.data).ranktype = v;</span>
+<span class="fc" id="L824">	}</span>
 
 	// #define ND_rw(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;rw)
 	public static double ND_rw(ST_Agnode_s n) {
-<span class="fc" id="L830">		return ((ST_Agnodeinfo_t) n.data).rw;</span>
+<span class="fc" id="L828">		return ((ST_Agnodeinfo_t) n.data).rw;</span>
 	}
 
 	public static void ND_rw(ST_Agnode_s n, double v) {
-<span class="fc" id="L834">		((ST_Agnodeinfo_t) n.data).rw = v;</span>
-<span class="fc" id="L835">	}</span>
+<span class="fc" id="L832">		((ST_Agnodeinfo_t) n.data).rw = v;</span>
+<span class="fc" id="L833">	}</span>
 
 	// #define ND_save_in(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;save_in)
 	public static ST_elist ND_save_in(ST_Agnode_s n) {
-<span class="fc" id="L839">		return ((ST_Agnodeinfo_t) n.data).save_in;</span>
+<span class="fc" id="L837">		return ((ST_Agnodeinfo_t) n.data).save_in;</span>
 	}
 
 	public static void ND_save_in(ST_Agnode_s n, __struct__&lt;ST_elist&gt; v) {
-<span class="fc" id="L843">		((ST_Agnodeinfo_t) n.data).save_in.___(v);</span>
-<span class="fc" id="L844">	}</span>
+<span class="fc" id="L841">		((ST_Agnodeinfo_t) n.data).save_in.___(v);</span>
+<span class="fc" id="L842">	}</span>
 
 	// #define ND_save_out(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;save_out)
 	public static ST_elist ND_save_out(ST_Agnode_s n) {
-<span class="fc" id="L848">		return ((ST_Agnodeinfo_t) n.data).save_out;</span>
+<span class="fc" id="L846">		return ((ST_Agnodeinfo_t) n.data).save_out;</span>
 	}
 
 	public static void ND_save_out(ST_Agnode_s n, __struct__&lt;ST_elist&gt; v) {
-<span class="fc" id="L852">		((ST_Agnodeinfo_t) n.data).save_out.___(v);</span>
-<span class="fc" id="L853">	}</span>
+<span class="fc" id="L850">		((ST_Agnodeinfo_t) n.data).save_out.___(v);</span>
+<span class="fc" id="L851">	}</span>
 
 	// #define ND_shape(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;shape)
 	public static ST_shape_desc ND_shape(ST_Agnode_s n) {
-<span class="fc" id="L857">		return ((ST_Agnodeinfo_t) n.data).shape;</span>
+<span class="fc" id="L855">		return ((ST_Agnodeinfo_t) n.data).shape;</span>
 	}
 
 	public static void ND_shape(ST_Agnode_s n, ST_shape_desc v) {
-<span class="fc" id="L861">		((ST_Agnodeinfo_t) n.data).shape = v;</span>
-<span class="fc" id="L862">	}</span>
+<span class="fc" id="L859">		((ST_Agnodeinfo_t) n.data).shape = v;</span>
+<span class="fc" id="L860">	}</span>
 
 	// #define ND_shape_info(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;shape_info)
 	public static SHAPE_INFO ND_shape_info(ST_Agnode_s n) {
-<span class="fc" id="L866">		return ((ST_Agnodeinfo_t) n.data).shape_info;</span>
+<span class="fc" id="L864">		return ((ST_Agnodeinfo_t) n.data).shape_info;</span>
 	}
 
 	public static void ND_shape_info(ST_Agnode_s n, SHAPE_INFO v) {
-<span class="fc" id="L870">		((ST_Agnodeinfo_t) n.data).shape_info = v;</span>
-<span class="fc" id="L871">	}</span>
+<span class="fc" id="L868">		((ST_Agnodeinfo_t) n.data).shape_info = v;</span>
+<span class="fc" id="L869">	}</span>
 
 	// #define ND_showboxes(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;showboxes)
 	public static int ND_showboxes(ST_Agnode_s n) {
-<span class="nc" id="L875">		return ((ST_Agnodeinfo_t) n.data).showboxes;</span>
+<span class="nc" id="L873">		return ((ST_Agnodeinfo_t) n.data).showboxes;</span>
 	}
 
 	public static void ND_showboxes(ST_Agnode_s n, int v) {
-<span class="fc" id="L879">		((ST_Agnodeinfo_t) n.data).showboxes = v;</span>
-<span class="fc" id="L880">	}</span>
+<span class="fc" id="L877">		((ST_Agnodeinfo_t) n.data).showboxes = v;</span>
+<span class="fc" id="L878">	}</span>
 
 	// #define ND_state(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;state)
 	// #define ND_clustnode(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;clustnode)
 	// #define ND_tree_in(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;tree_in)
 	public static ST_elist ND_tree_in(ST_Agnode_s n) {
-<span class="fc" id="L886">		return ((ST_Agnodeinfo_t) n.data).tree_in;</span>
+<span class="fc" id="L884">		return ((ST_Agnodeinfo_t) n.data).tree_in;</span>
 	}
 
 	// #define ND_tree_out(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;tree_out)
 	public static ST_elist ND_tree_out(ST_Agnode_s n) {
-<span class="fc" id="L891">		return ((ST_Agnodeinfo_t) n.data).tree_out;</span>
+<span class="fc" id="L889">		return ((ST_Agnodeinfo_t) n.data).tree_out;</span>
 	}
 
 	// #define ND_weight_class(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;weight_class)
 	public static int ND_weight_class(ST_Agnode_s n) {
-<span class="fc" id="L896">		return ((ST_Agnodeinfo_t) n.data).weight_class;</span>
+<span class="fc" id="L894">		return ((ST_Agnodeinfo_t) n.data).weight_class;</span>
 	}
 
 	public static void ND_weight_class(ST_Agnode_s n, int v) {
-<span class="fc" id="L900">		((ST_Agnodeinfo_t) n.data).weight_class = v;</span>
-<span class="fc" id="L901">	}</span>
+<span class="fc" id="L898">		((ST_Agnodeinfo_t) n.data).weight_class = v;</span>
+<span class="fc" id="L899">	}</span>
 
 	// #define ND_width(n) (((Agnodeinfo_t*)AGDATA(n))-&gt;width)
 	public static double ND_width(ST_Agnode_s n) {
-<span class="fc" id="L905">		return ((ST_Agnodeinfo_t) n.data).width;</span>
+<span class="fc" id="L903">		return ((ST_Agnodeinfo_t) n.data).width;</span>
 	}
 
 	public static void ND_width(ST_Agnode_s n, double v) {
-<span class="fc" id="L909">		((ST_Agnodeinfo_t) n.data).width = v;</span>
-<span class="fc" id="L910">	}</span>
+<span class="fc" id="L907">		((ST_Agnodeinfo_t) n.data).width = v;</span>
+<span class="fc" id="L908">	}</span>
 
 	// #define ND_xsize(n) (ND_lw(n)+ND_rw(n))
 	// #define ND_ysize(n) (ND_ht(n))
@@ -915,204 +913,204 @@ import smetana.core.debug.SmetanaDebug;
 	// #define ED_alg(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;alg)
 	// #define ED_conc_opp_flag(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;conc_opp_flag)
 	public static boolean ED_conc_opp_flag(ST_Agedge_s e) {
-<span class="fc" id="L918">		return ((ST_Agedgeinfo_t) e.data).conc_opp_flag;</span>
+<span class="fc" id="L916">		return ((ST_Agedgeinfo_t) e.data).conc_opp_flag;</span>
 	}
 
 	public static void ED_conc_opp_flag(ST_Agedge_s e, boolean v) {
-<span class="nc" id="L922">		((ST_Agedgeinfo_t) e.data).conc_opp_flag = v;</span>
-<span class="nc" id="L923">	}</span>
+<span class="nc" id="L920">		((ST_Agedgeinfo_t) e.data).conc_opp_flag = v;</span>
+<span class="nc" id="L921">	}</span>
 
 	// #define ED_count(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;count)
 	public static int ED_count(ST_Agedge_s e) {
-<span class="fc" id="L927">		return ((ST_Agedgeinfo_t) e.data).count;</span>
+<span class="fc" id="L925">		return ((ST_Agedgeinfo_t) e.data).count;</span>
 	}
 
 	public static void ED_count(ST_Agedge_s e, int v) {
-<span class="fc" id="L931">		((ST_Agedgeinfo_t) e.data).count = v;</span>
-<span class="fc" id="L932">	}</span>
+<span class="fc" id="L929">		((ST_Agedgeinfo_t) e.data).count = v;</span>
+<span class="fc" id="L930">	}</span>
 
 	// #define ED_cutvalue(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;cutvalue)
 	public static int ED_cutvalue(ST_Agedge_s e) {
-<span class="fc" id="L936">		return ((ST_Agedgeinfo_t) e.data).cutvalue;</span>
+<span class="fc" id="L934">		return ((ST_Agedgeinfo_t) e.data).cutvalue;</span>
 	}
 
 	public static void ED_cutvalue(ST_Agedge_s e, int v) {
-<span class="fc" id="L940">		((ST_Agedgeinfo_t) e.data).cutvalue = v;</span>
-<span class="fc" id="L941">	}</span>
+<span class="fc" id="L938">		((ST_Agedgeinfo_t) e.data).cutvalue = v;</span>
+<span class="fc" id="L939">	}</span>
 
 	// #define ED_edge_type(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;edge_type)
 	// #define ED_adjacent(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;adjacent)
 	public static int ED_adjacent(ST_Agedge_s e) {
-<span class="fc" id="L946">		return ((ST_Agedgeinfo_t) e.data).adjacent;</span>
+<span class="fc" id="L944">		return ((ST_Agedgeinfo_t) e.data).adjacent;</span>
 	}
 
 	public static void ED_adjacent(ST_Agedge_s e, int v) {
-<span class="fc" id="L950">		((ST_Agedgeinfo_t) e.data).adjacent = v;</span>
-<span class="fc" id="L951">	}</span>
+<span class="fc" id="L948">		((ST_Agedgeinfo_t) e.data).adjacent = v;</span>
+<span class="fc" id="L949">	}</span>
 
 	// #define ED_factor(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;factor)
 	// #define ED_gui_state(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;gui_state)
 	// #define ED_head_label(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;head_label)
 	public static ST_textlabel_t ED_head_label(ST_Agedge_s e) {
-<span class="fc" id="L957">		return ((ST_Agedgeinfo_t) e.data).head_label;</span>
+<span class="fc" id="L955">		return ((ST_Agedgeinfo_t) e.data).head_label;</span>
 	}
 
 	public static void ED_head_label(ST_Agedge_s e, ST_textlabel_t v) {
-<span class="fc" id="L961">		((ST_Agedgeinfo_t) e.data).head_label = v;</span>
-<span class="fc" id="L962">	}</span>
+<span class="fc" id="L959">		((ST_Agedgeinfo_t) e.data).head_label = v;</span>
+<span class="fc" id="L960">	}</span>
 
 	// #define ED_head_port(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;head_port)
 	public static ST_port ED_head_port(ST_Agedge_s e) {
-<span class="fc" id="L966">		return ((ST_Agedgeinfo_t) e.data).head_port;</span>
+<span class="fc" id="L964">		return ((ST_Agedgeinfo_t) e.data).head_port;</span>
 	}
 
 	public static void ED_head_port(ST_Agedge_s e, ST_port v) {
-<span class="fc" id="L970">		((ST_Agedgeinfo_t) e.data).head_port.___(v);</span>
-<span class="fc" id="L971">	}</span>
+<span class="fc" id="L968">		((ST_Agedgeinfo_t) e.data).head_port.___(v);</span>
+<span class="fc" id="L969">	}</span>
 
 	// #define ED_label(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;label)
 	public static ST_textlabel_t ED_label(ST_Agedge_s e) {
-<span class="fc" id="L975">		return (ST_textlabel_t) ((ST_Agedgeinfo_t) e.data).label;</span>
+<span class="fc" id="L973">		return (ST_textlabel_t) ((ST_Agedgeinfo_t) e.data).label;</span>
 	}
 
 	public static void ED_label(ST_Agedge_s e, ST_textlabel_t v) {
-<span class="fc" id="L979">		((ST_Agedgeinfo_t) e.data).label = v;</span>
-<span class="fc" id="L980">	}</span>
+<span class="fc" id="L977">		((ST_Agedgeinfo_t) e.data).label = v;</span>
+<span class="fc" id="L978">	}</span>
 
 	// #define ED_xlabel(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;xlabel)
 	public static ST_textlabel_t ED_xlabel(ST_Agedge_s e) {
-<span class="fc" id="L984">		return (ST_textlabel_t) ((ST_Agedgeinfo_t) e.data).xlabel;</span>
+<span class="fc" id="L982">		return (ST_textlabel_t) ((ST_Agedgeinfo_t) e.data).xlabel;</span>
 	}
 
 	// #define ED_label_ontop(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;label_ontop)
 	public static boolean ED_label_ontop(ST_Agedge_s e) {
-<span class="fc" id="L989">		return ((ST_Agedgeinfo_t) e.data).label_ontop;</span>
+<span class="fc" id="L987">		return ((ST_Agedgeinfo_t) e.data).label_ontop;</span>
 	}
 
 	public static void ED_label_ontop(ST_Agedge_s e, boolean v) {
-<span class="fc" id="L993">		((ST_Agedgeinfo_t) e.data).label_ontop = v;</span>
-<span class="fc" id="L994">	}</span>
+<span class="fc" id="L991">		((ST_Agedgeinfo_t) e.data).label_ontop = v;</span>
+<span class="fc" id="L992">	}</span>
 
 	// #define ED_minlen(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;minlen)
 	public static int ED_minlen(ST_Agedge_s e) {
-<span class="fc" id="L998">		return ((ST_Agedgeinfo_t) e.data).minlen;</span>
+<span class="fc" id="L996">		return ((ST_Agedgeinfo_t) e.data).minlen;</span>
 	}
 
 	public static void ED_minlen(ST_Agedge_s e, int v) {
-<span class="fc" id="L1002">		((ST_Agedgeinfo_t) e.data).minlen = v;</span>
-<span class="fc" id="L1003">	}</span>
+<span class="fc" id="L1000">		((ST_Agedgeinfo_t) e.data).minlen = v;</span>
+<span class="fc" id="L1001">	}</span>
 
 	// #define ED_path(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;path)
 	// #define ED_showboxes(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;showboxes)
 	public static int ED_showboxes(ST_Agedge_s e) {
-<span class="nc" id="L1008">		return ((ST_Agedgeinfo_t) e.data).showboxes;</span>
+<span class="nc" id="L1006">		return ((ST_Agedgeinfo_t) e.data).showboxes;</span>
 	}
 
 	public static void ED_showboxes(ST_Agedge_s e, int v) {
-<span class="fc" id="L1012">		((ST_Agedgeinfo_t) e.data).showboxes = v;</span>
-<span class="fc" id="L1013">	}</span>
+<span class="fc" id="L1010">		((ST_Agedgeinfo_t) e.data).showboxes = v;</span>
+<span class="fc" id="L1011">	}</span>
 
 	// #define ED_spl(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;spl)
 	public static ST_splines ED_spl(ST_Agedge_s e) {
-<span class="fc" id="L1017">		return ((ST_Agedgeinfo_t) e.data).spl;</span>
+<span class="fc" id="L1015">		return ((ST_Agedgeinfo_t) e.data).spl;</span>
 	}
 
 	public static void ED_spl(ST_Agedge_s e, ST_splines v) {
-<span class="fc" id="L1021">		((ST_Agedgeinfo_t) e.data).spl = v;</span>
-<span class="fc" id="L1022">	}</span>
+<span class="fc" id="L1019">		((ST_Agedgeinfo_t) e.data).spl = v;</span>
+<span class="fc" id="L1020">	}</span>
 
 	// #define ED_tail_label(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;tail_label)
 	public static ST_textlabel_t ED_tail_label(ST_Agedge_s e) {
-<span class="fc" id="L1026">		return ((ST_Agedgeinfo_t) e.data).tail_label;</span>
+<span class="fc" id="L1024">		return ((ST_Agedgeinfo_t) e.data).tail_label;</span>
 	}
 
 	public static void ED_tail_label(ST_Agedge_s e, ST_textlabel_t v) {
-<span class="fc" id="L1030">		((ST_Agedgeinfo_t) e.data).tail_label = v;</span>
-<span class="fc" id="L1031">	}</span>
+<span class="fc" id="L1028">		((ST_Agedgeinfo_t) e.data).tail_label = v;</span>
+<span class="fc" id="L1029">	}</span>
 
 	// #define ED_tail_port(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;tail_port)
 	public static ST_port ED_tail_port(ST_Agedge_s e) {
-<span class="fc" id="L1035">		return ((ST_Agedgeinfo_t) e.data).tail_port;</span>
+<span class="fc" id="L1033">		return ((ST_Agedgeinfo_t) e.data).tail_port;</span>
 	}
 
 	public static void ED_tail_port(ST_Agedge_s e, ST_port v) {
-<span class="fc" id="L1039">		((ST_Agedgeinfo_t) e.data).tail_port.___(v);</span>
-<span class="fc" id="L1040">	}</span>
+<span class="fc" id="L1037">		((ST_Agedgeinfo_t) e.data).tail_port.___(v);</span>
+<span class="fc" id="L1038">	}</span>
 
 	// #define ED_to_orig(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;to_orig)
 	public static ST_Agedge_s ED_to_orig(ST_Agedge_s e) {
-<span class="fc" id="L1044">		return ((ST_Agedgeinfo_t) e.data).to_orig;</span>
+<span class="fc" id="L1042">		return ((ST_Agedgeinfo_t) e.data).to_orig;</span>
 	}
 
 	public static void ED_to_orig(ST_Agedge_s e, ST_Agedge_s v) {
-<span class="fc" id="L1048">		((ST_Agedgeinfo_t) e.data).to_orig = v;</span>
-<span class="fc" id="L1049">	}</span>
+<span class="fc" id="L1046">		((ST_Agedgeinfo_t) e.data).to_orig = v;</span>
+<span class="fc" id="L1047">	}</span>
 
 	// #define ED_to_virt(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;to_virt)
 	public static ST_Agedge_s ED_to_virt(ST_Agedge_s e) {
-<span class="fc" id="L1053">		return ((ST_Agedgeinfo_t) e.data).to_virt;</span>
+<span class="fc" id="L1051">		return ((ST_Agedgeinfo_t) e.data).to_virt;</span>
 	}
 
 	public static void ED_to_virt(ST_Agedge_s e, ST_Agedge_s v) {
-<span class="fc" id="L1057">		((ST_Agedgeinfo_t) e.data).to_virt = v;</span>
-<span class="fc" id="L1058">	}</span>
+<span class="fc" id="L1055">		((ST_Agedgeinfo_t) e.data).to_virt = v;</span>
+<span class="fc" id="L1056">	}</span>
 
 	// #define ED_tree_index(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;tree_index)
 	public static int ED_tree_index(ST_Agedge_s e) {
-<span class="fc" id="L1062">		return ((ST_Agedgeinfo_t) e.data).tree_index;</span>
+<span class="fc" id="L1060">		return ((ST_Agedgeinfo_t) e.data).tree_index;</span>
 	}
 
 	public static void ED_tree_index(ST_Agedge_s e, int v) {
-<span class="fc" id="L1066">		((ST_Agedgeinfo_t) e.data).tree_index = v;</span>
-<span class="fc" id="L1067">	}</span>
+<span class="fc" id="L1064">		((ST_Agedgeinfo_t) e.data).tree_index = v;</span>
+<span class="fc" id="L1065">	}</span>
 
 	// #define ED_xpenalty(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;xpenalty)
 	public static int ED_xpenalty(ST_Agedge_s e) {
-<span class="fc" id="L1071">		return ((ST_Agedgeinfo_t) e.data).xpenalty;</span>
+<span class="fc" id="L1069">		return ((ST_Agedgeinfo_t) e.data).xpenalty;</span>
 	}
 
 	public static void ED_xpenalty(ST_Agedge_s e, int v) {
-<span class="fc" id="L1075">		((ST_Agedgeinfo_t) e.data).xpenalty = v;</span>
-<span class="fc" id="L1076">	}</span>
+<span class="fc" id="L1073">		((ST_Agedgeinfo_t) e.data).xpenalty = v;</span>
+<span class="fc" id="L1074">	}</span>
 
 	// #define ED_dist(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;dist)
 	public static double ED_dist(ST_Agedge_s e) {
-<span class="fc" id="L1080">		return ((ST_Agedgeinfo_t) e.data).dist;</span>
+<span class="fc" id="L1078">		return ((ST_Agedgeinfo_t) e.data).dist;</span>
 	}
 
 	public static void ED_dist(ST_Agedge_s e, double v) {
-<span class="fc" id="L1084">		((ST_Agedgeinfo_t) e.data).dist = v;</span>
-<span class="fc" id="L1085">	}</span>
+<span class="fc" id="L1082">		((ST_Agedgeinfo_t) e.data).dist = v;</span>
+<span class="fc" id="L1083">	}</span>
 
 	// #define ED_weight(e) (((Agedgeinfo_t*)AGDATA(e))-&gt;weight)
 	public static int ED_weight(ST_Agedge_s e) {
-<span class="fc" id="L1089">		return ((ST_Agedgeinfo_t) e.data).weight;</span>
+<span class="fc" id="L1087">		return ((ST_Agedgeinfo_t) e.data).weight;</span>
 	}
 
 	public static void ED_weight(ST_Agedge_s e, int v) {
-<span class="fc" id="L1093">		((ST_Agedgeinfo_t) e.data).weight = v;</span>
-<span class="fc" id="L1094">	}</span>
+<span class="fc" id="L1091">		((ST_Agedgeinfo_t) e.data).weight = v;</span>
+<span class="fc" id="L1092">	}</span>
 
 	public static int ED_edge_type(ST_Agedge_s e) {
-<span class="fc" id="L1097">		return ((ST_Agedgeinfo_t) e.data).edge_type;</span>
+<span class="fc" id="L1095">		return ((ST_Agedgeinfo_t) e.data).edge_type;</span>
 	}
 
 	public static void ED_edge_type(ST_Agedge_s e, int v) {
-<span class="fc" id="L1101">		((ST_Agedgeinfo_t) e.data).edge_type = v;</span>
-<span class="fc" id="L1102">	}</span>
+<span class="fc" id="L1099">		((ST_Agedgeinfo_t) e.data).edge_type = v;</span>
+<span class="fc" id="L1100">	}</span>
 
 	public static int[] ALLOC_INT(int size, int[] old) {
-<span class="fc bfc" id="L1105" title="All 2 branches covered.">		if (old == null)</span>
-<span class="fc" id="L1106">			return new int[size];</span>
+<span class="fc bfc" id="L1103" title="All 2 branches covered.">		if (old == null)</span>
+<span class="fc" id="L1104">			return new int[size];</span>
 
-<span class="pc bpc" id="L1108" title="1 of 2 branches missed.">		if (old.length &gt; size)</span>
-<span class="nc" id="L1109">			return old;</span>
+<span class="pc bpc" id="L1106" title="1 of 2 branches missed.">		if (old.length &gt; size)</span>
+<span class="nc" id="L1107">			return old;</span>
 
-<span class="fc" id="L1111">		final int result[] = new int[size];</span>
+<span class="fc" id="L1109">		final int result[] = new int[size];</span>
 
-<span class="fc bfc" id="L1113" title="All 2 branches covered.">		for (int i = 0; i &lt; old.length; i++)</span>
-<span class="fc" id="L1114">			result[i] = old[i];</span>
-<span class="fc" id="L1115">		return result;</span>
+<span class="fc bfc" id="L1111" title="All 2 branches covered.">		for (int i = 0; i &lt; old.length; i++)</span>
+<span class="fc" id="L1112">			result[i] = old[i];</span>
+<span class="fc" id="L1113">		return result;</span>
 //		return (__ptr__) (ptr != null ? JUtils.size_t_array_of_integer(size).realloc(ptr) : JUtils
 //				.size_t_array_of_integer(size).malloc());
 	}
@@ -1126,36 +1124,36 @@ import smetana.core.debug.SmetanaDebug;
 	// L.list[L.size++] = item;
 	// L.list[L.size] = NULL;} while(0)
 	public static void elist_append(ST_Agedge_s item, ST_elist L) {
-<span class="fc" id="L1129">		L.list = CArrayOfStar.&lt;ST_Agedge_s&gt;REALLOC(L.size + 2, L.list, ZType.ST_Agedge_s);</span>
-<span class="fc" id="L1130">		L.list.set_(L.size++, item);</span>
-<span class="fc" id="L1131">		L.list.set_(L.size, null);</span>
-<span class="fc" id="L1132">	}</span>
+<span class="fc" id="L1127">		L.list = CArrayOfStar.&lt;ST_Agedge_s&gt;REALLOC(L.size + 2, L.list, ZType.ST_Agedge_s);</span>
+<span class="fc" id="L1128">		L.list.set_(L.size++, item);</span>
+<span class="fc" id="L1129">		L.list.set_(L.size, null);</span>
+<span class="fc" id="L1130">	}</span>
 
 	// #define alloc_elist(n,L) do {L.size = 0; L.list = N_NEW(n + 1,edge_t*); }
 	// while (0)
 	public static void alloc_elist(int n, ST_elist L) {
-<span class="fc" id="L1137">		L.size = 0;</span>
-<span class="fc" id="L1138">		L.list = CArrayOfStar.&lt;ST_Agedge_s&gt;ALLOC(n + 1, ZType.ST_Agedge_s);</span>
-<span class="fc" id="L1139">	}</span>
+<span class="fc" id="L1135">		L.size = 0;</span>
+<span class="fc" id="L1136">		L.list = CArrayOfStar.&lt;ST_Agedge_s&gt;ALLOC(n + 1, ZType.ST_Agedge_s);</span>
+<span class="fc" id="L1137">	}</span>
 
 	// #define free_list(L) do {if (L.list) free(L.list);} while (0)
 	public static void free_list(ST_elist L) {
-<span class="pc bpc" id="L1143" title="1 of 2 branches missed.">		if (L.list != null)</span>
-<span class="fc" id="L1144">			Memory.free(L.list);</span>
-<span class="fc" id="L1145">	}</span>
+<span class="pc bpc" id="L1141" title="1 of 2 branches missed.">		if (L.list != null)</span>
+<span class="fc" id="L1142">			Memory.free(L.list);</span>
+<span class="fc" id="L1143">	}</span>
 
 	// #define BETWEEN(a,b,c) (((a) &lt;= (b)) &amp;&amp; ((b) &lt;= (c)))
 	public static boolean BETWEEN(double a, double b, double c) {
-<span class="fc bfc" id="L1149" title="All 4 branches covered.">		return (((a) &lt;= (b)) &amp;&amp; ((b) &lt;= (c)));</span>
+<span class="fc bfc" id="L1147" title="All 4 branches covered.">		return (((a) &lt;= (b)) &amp;&amp; ((b) &lt;= (c)));</span>
 	}
 
 	public static boolean BETWEEN(int a, int b, int c) {
-<span class="nc bnc" id="L1153" title="All 4 branches missed.">		return (((a) &lt;= (b)) &amp;&amp; ((b) &lt;= (c)));</span>
+<span class="nc bnc" id="L1151" title="All 4 branches missed.">		return (((a) &lt;= (b)) &amp;&amp; ((b) &lt;= (c)));</span>
 	}
 
 	// #define ROUND(f) ((f&gt;=0)?(int)(f + .5):(int)(f - .5))
 	public static int ROUND(double f) {
-<span class="fc bfc" id="L1158" title="All 2 branches covered.">		return ((f &gt;= 0) ? (int) (f + .5) : (int) (f - .5));</span>
+<span class="fc bfc" id="L1156" title="All 2 branches covered.">		return ((f &gt;= 0) ? (int) (f + .5) : (int) (f - .5));</span>
 	}
 
 	// #define MAKEFWDEDGE(new, old) { \
@@ -1174,21 +1172,21 @@ import smetana.core.debug.SmetanaDebug;
 	// ED_to_orig(newp) = old; \
 
 	public static void MAKEFWDEDGE(ST_Agedge_s new_, ST_Agedge_s old) {
-<span class="fc" id="L1177">		SmetanaDebug.LOG(&quot;MAKEFWDEDGE&quot;);</span>
+<span class="fc" id="L1175">		SmetanaDebug.LOG(&quot;MAKEFWDEDGE&quot;);</span>
 		ST_Agedge_s newp;
 		ST_Agedgeinfo_t info;
-<span class="fc" id="L1180">		newp = new_;</span>
-<span class="fc" id="L1181">		info = (ST_Agedgeinfo_t) newp.base.data;</span>
-<span class="fc" id="L1182">		info.___((ST_Agedgeinfo_t) old.base.data);</span>
-<span class="fc" id="L1183">		newp.___(old);</span>
-<span class="fc" id="L1184">		newp.base.data = info;</span>
-<span class="fc" id="L1185">		M_agtail(newp, AGHEAD(old));</span>
-<span class="fc" id="L1186">		M_aghead(newp, AGTAIL(old));</span>
-<span class="fc" id="L1187">		ED_tail_port(newp, ED_head_port(old));</span>
-<span class="fc" id="L1188">		ED_head_port(newp, ED_tail_port(old));</span>
-<span class="fc" id="L1189">		ED_edge_type(newp, VIRTUAL);</span>
-<span class="fc" id="L1190">		ED_to_orig(newp, old);</span>
-<span class="fc" id="L1191">	}</span>
+<span class="fc" id="L1178">		newp = new_;</span>
+<span class="fc" id="L1179">		info = (ST_Agedgeinfo_t) newp.base.data;</span>
+<span class="fc" id="L1180">		info.___((ST_Agedgeinfo_t) old.base.data);</span>
+<span class="fc" id="L1181">		newp.___(old);</span>
+<span class="fc" id="L1182">		newp.base.data = info;</span>
+<span class="fc" id="L1183">		M_agtail(newp, AGHEAD(old));</span>
+<span class="fc" id="L1184">		M_aghead(newp, AGTAIL(old));</span>
+<span class="fc" id="L1185">		ED_tail_port(newp, ED_head_port(old));</span>
+<span class="fc" id="L1186">		ED_head_port(newp, ED_tail_port(old));</span>
+<span class="fc" id="L1187">		ED_edge_type(newp, VIRTUAL);</span>
+<span class="fc" id="L1188">		ED_to_orig(newp, old);</span>
+<span class="fc" id="L1189">	}</span>
 
 //	// #define ZALLOC(size,ptr,type,osize) (ptr?
 //	// (type*)zrealloc(ptr,size,sizeof(type),osize):(type*)zmalloc((size)*sizeof(type)))
@@ -1221,47 +1219,47 @@ import smetana.core.debug.SmetanaDebug;
 
 	public static double hypot(double x, double y) {
 		double t;
-<span class="fc" id="L1224">		x = Math.abs(x);</span>
-<span class="fc" id="L1225">		y = Math.abs(y);</span>
-<span class="fc" id="L1226">		t = Math.min(x, y);</span>
-<span class="fc" id="L1227">		x = Math.max(x, y);</span>
-<span class="fc" id="L1228">		t = t / x;</span>
-<span class="fc" id="L1229">		return x * Math.sqrt(1 + t * t);</span>
+<span class="fc" id="L1222">		x = Math.abs(x);</span>
+<span class="fc" id="L1223">		y = Math.abs(y);</span>
+<span class="fc" id="L1224">		t = Math.min(x, y);</span>
+<span class="fc" id="L1225">		x = Math.max(x, y);</span>
+<span class="fc" id="L1226">		t = t / x;</span>
+<span class="fc" id="L1227">		return x * Math.sqrt(1 + t * t);</span>
 	}
 
 	// #define SQR(a) ((a) * (a))
 	public static double SQR(double a) {
-<span class="fc" id="L1234">		return a * a;</span>
+<span class="fc" id="L1232">		return a * a;</span>
 	}
 
 	// #define MILLIPOINT .001
 	// #define MICROPOINT .000001
-<span class="fc" id="L1239">	public static double MILLIPOINT = .001;</span>
-<span class="fc" id="L1240">	public static double MICROPOINT = .000001;</span>
+<span class="fc" id="L1237">	public static double MILLIPOINT = .001;</span>
+<span class="fc" id="L1238">	public static double MICROPOINT = .000001;</span>
 
 	// #define APPROXEQPT(p,q,tol) (DIST2((p),(q)) &lt; SQR(tol))
 	public static boolean APPROXEQPT(ST_pointf p, ST_pointf q, double tol) {
-<span class="pc bpc" id="L1244" title="1 of 2 branches missed.">		return (DIST2((p), (q)) &lt; SQR(tol));</span>
+<span class="pc bpc" id="L1242" title="1 of 2 branches missed.">		return (DIST2((p), (q)) &lt; SQR(tol));</span>
 	}
 
 	// #define LEN2(a,b) (SQR(a) + SQR(b))
 	public static double LEN2(double a, double b) {
-<span class="fc" id="L1249">		return (SQR(a) + SQR(b));</span>
+<span class="fc" id="L1247">		return (SQR(a) + SQR(b));</span>
 	}
 
 	// #define LEN(a,b) (sqrt(LEN2((a),(b))))
 	public static double LEN(double a, double b) {
-<span class="nc" id="L1254">		return (Math.sqrt(LEN2((a), (b))));</span>
+<span class="nc" id="L1252">		return (Math.sqrt(LEN2((a), (b))));</span>
 	}
 
 	//
 	// #define DIST2(p,q) (LEN2(((p).x - (q).x),((p).y - (q).y)))
 	public static double DIST2(ST_pointf p, ST_pointf q) {
-<span class="fc" id="L1260">		return (LEN2(((p).x - (q).x), ((p).y - (q).y)));</span>
+<span class="fc" id="L1258">		return (LEN2(((p).x - (q).x), ((p).y - (q).y)));</span>
 	}
 
 	public static double DIST2(ST_point p, ST_point q) {
-<span class="fc" id="L1264">		return (LEN2(((p).x - (q).x), ((p).y - (q).y)));</span>
+<span class="fc" id="L1262">		return (LEN2(((p).x - (q).x), ((p).y - (q).y)));</span>
 	}
 
 	// #define DIST(p,q) (sqrt(DIST2((p),(q))))
@@ -1269,16 +1267,16 @@ import smetana.core.debug.SmetanaDebug;
 	// #define INSIDE(p,b) (BETWEEN((b).LL.x,(p).x,(b).UR.x) &amp;&amp;
 	// BETWEEN((b).LL.y,(p).y,(b).UR.y))
 	public static boolean INSIDE(ST_pointf p, ST_boxf b) {
-<span class="fc bfc" id="L1272" title="All 4 branches covered.">		return (BETWEEN(b.LL.x, p.x, b.UR.x) &amp;&amp; BETWEEN(b.LL.y, p.y, b.UR.y));</span>
+<span class="fc bfc" id="L1270" title="All 4 branches covered.">		return (BETWEEN(b.LL.x, p.x, b.UR.x) &amp;&amp; BETWEEN(b.LL.y, p.y, b.UR.y));</span>
 	}
 
 	public static final double M_PI = Math.PI;
 	// #define SQRT2 1.41421356237309504880
-<span class="fc" id="L1277">	public static final double SQRT2 = Math.sqrt(2);</span>
+<span class="fc" id="L1275">	public static final double SQRT2 = Math.sqrt(2);</span>
 
 	// #define RADIANS(deg) ((deg)/180.0 * M_PI)
 	public static double RADIANS(double deg) {
-<span class="fc" id="L1281">		return ((deg) / 180.0 * M_PI);</span>
+<span class="fc" id="L1279">		return ((deg) / 180.0 * M_PI);</span>
 	}
 
 	// #define DISTSQ(a, b) ( \
@@ -1286,26 +1284,26 @@ import smetana.core.debug.SmetanaDebug;
 	// )
 
 	public static double DISTSQ(ST_pointf a, ST_pointf b) {
-<span class="fc" id="L1289">		return (((a).x - (b).x) * ((a).x - (b).x)) + (((a).y - (b).y) * ((a).y - (b).y));</span>
+<span class="fc" id="L1287">		return (((a).x - (b).x) * ((a).x - (b).x)) + (((a).y - (b).y) * ((a).y - (b).y));</span>
 	}
 
-<span class="fc" id="L1292">	private static final Pattern p = Pattern.compile(&quot;_dim_([.\\d]+)_([\\d.]+)_&quot;);</span>
+<span class="fc" id="L1290">	private static final Pattern p = Pattern.compile(&quot;_dim_([.\\d]+)_([\\d.]+)_&quot;);</span>
 
 	public static void hackInitDimensionFromLabel(ST_pointf size, String label) {
-<span class="fc" id="L1295">		final Matcher m = p.matcher(label);</span>
-<span class="fc bfc" id="L1296" title="All 2 branches covered.">		if (m.matches()) {</span>
-<span class="fc" id="L1297">			final double ww = Double.parseDouble(m.group(1));</span>
-<span class="fc" id="L1298">			final double hh = Double.parseDouble(m.group(2));</span>
-<span class="fc" id="L1299">			size.x = ww;</span>
-<span class="fc" id="L1300">			size.y = hh;</span>
-<span class="fc" id="L1301">			JUtils.LOG2(&quot;Hacking dimension to width=&quot; + ww + &quot; height=&quot; + hh);</span>
-<span class="fc" id="L1302">		} else {</span>
-<span class="fc" id="L1303">			JUtils.LOG2(&quot;Strange label &quot; + label);</span>
+<span class="fc" id="L1293">		final Matcher m = p.matcher(label);</span>
+<span class="fc bfc" id="L1294" title="All 2 branches covered.">		if (m.matches()) {</span>
+<span class="fc" id="L1295">			final double ww = Double.parseDouble(m.group(1));</span>
+<span class="fc" id="L1296">			final double hh = Double.parseDouble(m.group(2));</span>
+<span class="fc" id="L1297">			size.x = ww;</span>
+<span class="fc" id="L1298">			size.y = hh;</span>
+<span class="fc" id="L1299">			JUtils.LOG2(&quot;Hacking dimension to width=&quot; + ww + &quot; height=&quot; + hh);</span>
+<span class="fc" id="L1300">		} else {</span>
+<span class="fc" id="L1301">			JUtils.LOG2(&quot;Strange label &quot; + label);</span>
 		}
-<span class="fc" id="L1305">	}</span>
+<span class="fc" id="L1303">	}</span>
 
 	public static CString createHackInitDimensionFromLabel(int width, int height) {
-<span class="fc" id="L1308">		return new CString(&quot;_dim_&quot; + width + &quot;_&quot; + height + &quot;_&quot;);</span>
+<span class="fc" id="L1306">		return new CString(&quot;_dim_&quot; + width + &quot;_&quot; + height + &quot;_&quot;);</span>
 	}
 
 	// geom.h
@@ -1314,14 +1312,14 @@ import smetana.core.debug.SmetanaDebug;
 
 	// #define PF2P(pf,p) ((p).x = ROUND((pf).x),(p).y = ROUND((pf).y))
 	public static void PF2P(ST_pointf pf, ST_pointf p) {
-<span class="fc" id="L1317">		p.x = ROUND(pf.x);</span>
-<span class="fc" id="L1318">		p.y = ROUND(pf.y);</span>
-<span class="fc" id="L1319">	}</span>
+<span class="fc" id="L1315">		p.x = ROUND(pf.x);</span>
+<span class="fc" id="L1316">		p.y = ROUND(pf.y);</span>
+<span class="fc" id="L1317">	}</span>
 
 	public static void PF2P(ST_pointf pf, ST_point p) {
-<span class="fc" id="L1322">		p.x = ROUND(pf.x);</span>
-<span class="fc" id="L1323">		p.y = ROUND(pf.y);</span>
-<span class="fc" id="L1324">	}</span>
+<span class="fc" id="L1320">		p.x = ROUND(pf.x);</span>
+<span class="fc" id="L1321">		p.y = ROUND(pf.y);</span>
+<span class="fc" id="L1322">	}</span>
 
 	// #define B2BF(b,bf) (P2PF((b).LL,(bf).LL),P2PF((b).UR,(bf).UR))
 	// #define BF2B(bf,b) (PF2P((bf).LL,(b).LL),PF2P((bf).UR,(b).UR))
@@ -1407,23 +1405,23 @@ import smetana.core.debug.SmetanaDebug;
 	public static final int LAYOUT_USES_RANKDIR = (1 &lt;&lt; 0);
 
 	public static void dtinsert(Globals zz, ST_dt_s d, Object o) {
-<span class="fc" id="L1410">		d.searchf.exeSearch(zz, d, o, DT_INSERT);</span>
-<span class="fc" id="L1411">	}</span>
+<span class="fc" id="L1408">		d.searchf.exeSearch(zz, d, o, DT_INSERT);</span>
+<span class="fc" id="L1409">	}</span>
 
 	public static Object dtsearch(Globals zz, ST_dt_s d, Object o) {
-<span class="fc" id="L1414">		return d.searchf.exeSearch(zz, d, o, DT_SEARCH);</span>
+<span class="fc" id="L1412">		return d.searchf.exeSearch(zz, d, o, DT_SEARCH);</span>
 	}
 
 	public static Object dtfirst(Globals zz, ST_dt_s d) {
-<span class="fc" id="L1418">		return d.searchf.exeSearch(zz, d, null, DT_FIRST);</span>
+<span class="fc" id="L1416">		return d.searchf.exeSearch(zz, d, null, DT_FIRST);</span>
 	}
 
 	public static Object dtnext(Globals zz, ST_dt_s d, Object o) {
-<span class="fc" id="L1422">		return d.searchf.exeSearch(zz, d, o, DT_NEXT);</span>
+<span class="fc" id="L1420">		return d.searchf.exeSearch(zz, d, o, DT_NEXT);</span>
 	}
 
 	public static Object dtdelete(Globals zz, ST_dt_s d, Object o) {
-<span class="fc" id="L1426">		return d.searchf.exeSearch(zz, d, o, DT_DELETE);</span>
+<span class="fc" id="L1424">		return d.searchf.exeSearch(zz, d, o, DT_DELETE);</span>
 	}
 
 //	#define dtlink(d,e)	(((Dtlink_t*)(e))-&gt;right)
@@ -1503,25 +1501,25 @@ import smetana.core.debug.SmetanaDebug;
 //	#define rlink(r,x)	((r) = (r)-&gt;left   = (x) )
 //	#define llink(l,x)	((l) = (l)-&gt;right  = (x) )
 	public static void rrotate(ST_dtlink_s x, ST_dtlink_s y) {
-<span class="fc" id="L1506">		x._left = y.right;</span>
-<span class="fc" id="L1507">		y.right = x;</span>
-<span class="fc" id="L1508">	}</span>
+<span class="fc" id="L1504">		x._left = y.right;</span>
+<span class="fc" id="L1505">		y.right = x;</span>
+<span class="fc" id="L1506">	}</span>
 
 	public static void lrotate(ST_dtlink_s x, ST_dtlink_s y) {
-<span class="fc" id="L1511">		x.right = y._left;</span>
-<span class="fc" id="L1512">		y._left = x;</span>
-<span class="fc" id="L1513">	}</span>
+<span class="fc" id="L1509">		x.right = y._left;</span>
+<span class="fc" id="L1510">		y._left = x;</span>
+<span class="fc" id="L1511">	}</span>
 
 	public static ST_dtlink_s rlink____warning(ST_dtlink_s r, ST_dtlink_s x) {
-<span class="fc" id="L1516">		r._left = x;</span>
+<span class="fc" id="L1514">		r._left = x;</span>
 		// r = x; WARNING THIS IS DIFFERENT FROM C: you must use returned value
-<span class="fc" id="L1518">		return x;</span>
+<span class="fc" id="L1516">		return x;</span>
 	}
 
 	public static ST_dtlink_s llink____warning(ST_dtlink_s l, ST_dtlink_s x) {
-<span class="fc" id="L1522">		l.right = x;</span>
+<span class="fc" id="L1520">		l.right = x;</span>
 		// l = x; WARNING THIS IS DIFFERENT FROM C: you must use returned value
-<span class="fc" id="L1524">		return x;</span>
+<span class="fc" id="L1522">		return x;</span>
 	}
 
 	public static final int GVRENDER_PLUGIN = 300; /* a plugin supported language */
@@ -1539,15 +1537,15 @@ import smetana.core.debug.SmetanaDebug;
 //	#define agfindedgeattr(g,a) (agattr(g,AGEDGE,a,NULL))
 
 	public static ST_Agsym_s agfindgraphattr(Globals zz, ST_Agraph_s g, final String a) {
-<span class="fc" id="L1542">		return agattr(zz, g, AGRAPH, new CString(a), null);</span>
+<span class="fc" id="L1540">		return agattr(zz, g, AGRAPH, new CString(a), null);</span>
 	}
 
 	public static ST_Agsym_s agfindnodeattr(Globals zz, ST_Agraph_s g, final String a) {
-<span class="fc" id="L1546">		return agattr(zz, g, AGNODE, new CString(a), null);</span>
+<span class="fc" id="L1544">		return agattr(zz, g, AGNODE, new CString(a), null);</span>
 	}
 
 	public static ST_Agsym_s agfindedgeattr(Globals zz, ST_Agraph_s g, final String a) {
-<span class="fc" id="L1550">		return agattr(zz, g, AGEDGE, new CString(a), null);</span>
+<span class="fc" id="L1548">		return agattr(zz, g, AGEDGE, new CString(a), null);</span>
 	}
 
 	public static final double DEFAULT_NODESEP = 0.25;
@@ -1558,15 +1556,15 @@ import smetana.core.debug.SmetanaDebug;
 	public static final int POINTS_PER_INCH = 72;
 
 	public static int POINTS(double a_inches) {
-<span class="fc" id="L1561">		return ROUND((a_inches) * POINTS_PER_INCH);</span>
+<span class="fc" id="L1559">		return ROUND((a_inches) * POINTS_PER_INCH);</span>
 	}
 
 	public static double INCH2PS(double a_inches) {
-<span class="fc" id="L1565">		return ((a_inches) * (double) POINTS_PER_INCH);</span>
+<span class="fc" id="L1563">		return ((a_inches) * (double) POINTS_PER_INCH);</span>
 	}
 
 	public static double PS2INCH(double a_points) {
-<span class="fc" id="L1569">		return ((a_points) / (double) POINTS_PER_INCH);</span>
+<span class="fc" id="L1567">		return ((a_points) / (double) POINTS_PER_INCH);</span>
 	}
 
 	/* drawing phases */
@@ -1595,22 +1593,22 @@ import smetana.core.debug.SmetanaDebug;
 	public static final int GAP = 4;
 
 	public static void PAD(ST_pointf d) {
-<span class="fc" id="L1598">		XPAD(d);</span>
-<span class="fc" id="L1599">		YPAD(d);</span>
-<span class="fc" id="L1600">	}</span>
+<span class="fc" id="L1596">		XPAD(d);</span>
+<span class="fc" id="L1597">		YPAD(d);</span>
+<span class="fc" id="L1598">	}</span>
 
 	public static void YPAD(ST_pointf d) {
-<span class="fc" id="L1603">		d.y += 2 * GAP;</span>
-<span class="fc" id="L1604">	}</span>
+<span class="fc" id="L1601">		d.y += 2 * GAP;</span>
+<span class="fc" id="L1602">	}</span>
 
 	public static void XPAD(ST_pointf d) {
-<span class="fc" id="L1607">		d.x += 4 * GAP;</span>
-<span class="fc" id="L1608">	}</span>
+<span class="fc" id="L1605">		d.x += 4 * GAP;</span>
+<span class="fc" id="L1606">	}</span>
 
 	public static void UNFLATTEN(ST_dt_s dt) {
-<span class="pc bpc" id="L1611" title="1 of 2 branches missed.">		if ((dt.data.type &amp; DT_FLATTEN) != 0)</span>
-<span class="nc" id="L1612">			dtrestore(dt, null);</span>
-<span class="fc" id="L1613">	}</span>
+<span class="pc bpc" id="L1609" title="1 of 2 branches missed.">		if ((dt.data.type &amp; DT_FLATTEN) != 0)</span>
+<span class="nc" id="L1610">			dtrestore(dt, null);</span>
+<span class="fc" id="L1611">	}</span>
 
 	public static final int CB_INITIALIZE = 100;
 	public static final int CB_UPDATE = 101;
@@ -1621,23 +1619,23 @@ import smetana.core.debug.SmetanaDebug;
 	public static final int CL_CROSS = 1000; /* cost of cluster skeleton edge crossing */
 
 	public static __ptr__ AGCLOS_id(ST_Agraph_s g) {
-<span class="fc" id="L1624">		return g.clos.state.id;</span>
+<span class="fc" id="L1622">		return g.clos.state.id;</span>
 	}
 
 	public static ST_Agiddisc_s AGDISC_id(ST_Agraph_s g) {
-<span class="fc" id="L1628">		return g.clos.disc.id;</span>
+<span class="fc" id="L1626">		return g.clos.disc.id;</span>
 	}
 
 	public static __ptr__ AGCLOS_mem(ST_Agraph_s g) {
-<span class="nc" id="L1632">		return g.clos.state.mem;</span>
+<span class="nc" id="L1630">		return g.clos.state.mem;</span>
 	}
 
 	public static ST_Agmemdisc_s AGDISC_mem(ST_Agraph_s g) {
-<span class="nc" id="L1636">		return g.clos.disc.mem;</span>
+<span class="nc" id="L1634">		return g.clos.disc.mem;</span>
 	}
 
 	public static ST_Agiodisc_s AGDISC_io(ST_Agraph_s g) {
-<span class="nc" id="L1640">		return g.clos.disc.io;</span>
+<span class="nc" id="L1638">		return g.clos.disc.io;</span>
 	}
 
 	public static final double DEFAULT_FONTSIZE = 14.00;
@@ -1660,38 +1658,38 @@ import smetana.core.debug.SmetanaDebug;
 
 	public static final int SHAPE_MASK = (127 &lt;&lt; 24);
 
-<span class="fc" id="L1663">	public static final CString HEAD_ID = new CString(&quot;headport&quot;);</span>
-<span class="fc" id="L1664">	public static final CString TAIL_ID = new CString(&quot;tailport&quot;);</span>
+<span class="fc" id="L1661">	public static final CString HEAD_ID = new CString(&quot;headport&quot;);</span>
+<span class="fc" id="L1662">	public static final CString TAIL_ID = new CString(&quot;tailport&quot;);</span>
 
 	public static __ptr__ _DTKEY(__ptr__ o, FieldOffset ky, int sz) {
 		// return (__ptr__) (sz &lt; 0 ? ((__ptr__)o).addVirtualBytes(ky) :
 		// ((__ptr__)o).addVirtualBytes(ky));
 		// Zero offset means the object itself is the key (every struct's
 		// getTheField returns this for sign 0).
-<span class="pc bpc" id="L1671" title="2 of 4 branches missed.">		if (ky == null || ky.getSign() == 0)</span>
-<span class="nc" id="L1672">			return o;</span>
-<span class="fc" id="L1673">		return (__ptr__) o.getTheField(ky);</span>
+<span class="pc bpc" id="L1669" title="2 of 4 branches missed.">		if (ky == null || ky.getSign() == 0)</span>
+<span class="nc" id="L1670">			return o;</span>
+<span class="fc" id="L1671">		return (__ptr__) o.getTheField(ky);</span>
 	}
 
 	public static int _DTCMP(Globals zz, ST_dt_s dt, __ptr__ k1, __ptr__ k2, final ST_dtdisc_s dc, CFunction cmpf,
 			int sz) {
-<span class="pc bpc" id="L1678" title="1 of 2 branches missed.">		return cmpf != null ? cmpf.exeCmpInt(zz, dt, k1, k2, dc)</span>
-<span class="pc bpc" id="L1679" title="1 of 2 branches missed.">				: (sz &lt;= 0 ? strcmp((CString) k1, (CString) k2) : UNSUPPORTED_INT(&quot;memcmp(ok,nk,sz)&quot;));</span>
+<span class="pc bpc" id="L1676" title="1 of 2 branches missed.">		return cmpf != null ? cmpf.exeCmpInt(zz, dt, k1, k2, dc)</span>
+<span class="pc bpc" id="L1677" title="1 of 2 branches missed.">				: (sz &lt;= 0 ? strcmp((CString) k1, (CString) k2) : UNSUPPORTED_INT(&quot;memcmp(ok,nk,sz)&quot;));</span>
 	}
 
 	public static final int SEARCHSIZE = 30;
 
 	public static ST_Agedge_s agfindedge(Globals zz, ST_Agraph_s g, ST_Agnode_s t, ST_Agnode_s h) {
-<span class="nc" id="L1685">		return agedge(zz, g, t, h, null, false);</span>
+<span class="nc" id="L1683">		return agedge(zz, g, t, h, null, false);</span>
 	}
 
 	public static int flatindex(ST_Agnode_s v) {
-<span class="nc" id="L1689">		return ND_low(v);</span>
+<span class="nc" id="L1687">		return ND_low(v);</span>
 	}
 
 	public static void flatindex(ST_Agnode_s v, int data) {
-<span class="fc" id="L1693">		ND_low(v, data);</span>
-<span class="fc" id="L1694">	}</span>
+<span class="fc" id="L1691">		ND_low(v, data);</span>
+<span class="fc" id="L1692">	}</span>
 
 	public static final int NODECARD = 64;
 	public static final int SMALLBUF = 128;
@@ -1701,21 +1699,21 @@ import smetana.core.debug.SmetanaDebug;
 
 	public static ST_subtree_t ND_subtree(ST_Agnode_s n) {
 		// return (ST_subtree_t) ((ST_Agnodeinfo_t)AGDATA(n)).par;
-<span class="nc" id="L1704">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L1702">		throw new UnsupportedOperationException();</span>
 	}
 
 	public static void ND_subtree_set(ST_Agnode_s n, ST_subtree_t value) {
 		// ((ST_Agnodeinfo_t)AGDATA(n)).par = value;
-<span class="nc" id="L1709">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L1707">		throw new UnsupportedOperationException();</span>
 	}
 
 	// #define streq(a,b) (*(a)==*(b)&amp;&amp;!strcmp(a,b))
 	public static boolean streq(CString a, CString b) {
-<span class="pc bpc" id="L1714" title="2 of 4 branches missed.">		return a.charAt(0) == b.charAt(0) &amp;&amp; strcmp(a, b) == 0;</span>
+<span class="pc bpc" id="L1712" title="2 of 4 branches missed.">		return a.charAt(0) == b.charAt(0) &amp;&amp; strcmp(a, b) == 0;</span>
 	}
 
 	public static boolean streq(CString a, String b) {
-<span class="fc" id="L1718">		return streq(a, new CString(b));</span>
+<span class="fc" id="L1716">		return streq(a, new CString(b));</span>
 	}
 
 	public static final int ARR_NONE = 0;

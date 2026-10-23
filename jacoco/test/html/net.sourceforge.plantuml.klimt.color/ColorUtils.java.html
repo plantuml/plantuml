@@ -81,8 +81,6 @@ import net.sourceforge.plantuml.utils.MathUtils;
 <span class="nc" id="L81">		return getGrayScaleInternal(diffRed, diffGreen, diffBlue);</span>
 	}
 
-	// ::comment when __HAXE__
-
 	/*
 	 * This code is still experimental. If you can improve it, please go ahead :-)
 	 * 
@@ -94,89 +92,88 @@ import net.sourceforge.plantuml.utils.MathUtils;
 	 * 
 	 */
 	public static XColor reverseHsluv(XColor color) {
-<span class="fc" id="L97">		final int red = color.getRed();</span>
-<span class="fc" id="L98">		final int green = color.getGreen();</span>
-<span class="fc" id="L99">		final int blue = color.getBlue();</span>
+<span class="fc" id="L95">		final int red = color.getRed();</span>
+<span class="fc" id="L96">		final int green = color.getGreen();</span>
+<span class="fc" id="L97">		final int blue = color.getBlue();</span>
 
-<span class="fc" id="L101">		final double hsluv[] = HUSLColorConverter.rgbToHsluv(new double[] { red / 256.0, green / 256.0, blue / 256.0 });</span>
+<span class="fc" id="L99">		final double hsluv[] = HUSLColorConverter.rgbToHsluv(new double[] { red / 256.0, green / 256.0, blue / 256.0 });</span>
 
-<span class="fc" id="L103">		final double h = hsluv[0];</span>
-<span class="fc" id="L104">		final double s = hsluv[1];</span>
-<span class="fc" id="L105">		double l = (hsluv[2] + 50) % 100;</span>
-<span class="fc" id="L106">		l += 0.25 * (50 - l);</span>
+<span class="fc" id="L101">		final double h = hsluv[0];</span>
+<span class="fc" id="L102">		final double s = hsluv[1];</span>
+<span class="fc" id="L103">		double l = (hsluv[2] + 50) % 100;</span>
+<span class="fc" id="L104">		l += 0.25 * (50 - l);</span>
 
-<span class="fc" id="L108">		final double rgb[] = HUSLColorConverter.hsluvToRgb(new double[] { h, s, l });</span>
+<span class="fc" id="L106">		final double rgb[] = HUSLColorConverter.hsluvToRgb(new double[] { h, s, l });</span>
 
-<span class="fc" id="L110">		final int red2 = to255(rgb[0]);</span>
-<span class="fc" id="L111">		final int green2 = to255(rgb[1]);</span>
-<span class="fc" id="L112">		final int blue2 = to255(rgb[2]);</span>
+<span class="fc" id="L108">		final int red2 = to255(rgb[0]);</span>
+<span class="fc" id="L109">		final int green2 = to255(rgb[1]);</span>
+<span class="fc" id="L110">		final int blue2 = to255(rgb[2]);</span>
 
-<span class="fc" id="L114">		return new XColor(red2, green2, blue2);</span>
+<span class="fc" id="L112">		return new XColor(red2, green2, blue2);</span>
 	}
 
 	public static XColor grayToColor(double coef, XColor color) {
-<span class="fc" id="L118">		final int red = color.getRed();</span>
-<span class="fc" id="L119">		final int green = color.getGreen();</span>
-<span class="fc" id="L120">		final int blue = color.getBlue();</span>
+<span class="fc" id="L116">		final int red = color.getRed();</span>
+<span class="fc" id="L117">		final int green = color.getGreen();</span>
+<span class="fc" id="L118">		final int blue = color.getBlue();</span>
 
-<span class="fc" id="L122">		final double hsluv[] = HUSLColorConverter.rgbToHsluv(new double[] { red / 256.0, green / 256.0, blue / 256.0 });</span>
+<span class="fc" id="L120">		final double hsluv[] = HUSLColorConverter.rgbToHsluv(new double[] { red / 256.0, green / 256.0, blue / 256.0 });</span>
 
-<span class="fc" id="L124">		final double h = hsluv[0];</span>
-<span class="fc" id="L125">		final double s = hsluv[1];</span>
-<span class="fc" id="L126">		double l = hsluv[2];</span>
+<span class="fc" id="L122">		final double h = hsluv[0];</span>
+<span class="fc" id="L123">		final double s = hsluv[1];</span>
+<span class="fc" id="L124">		double l = hsluv[2];</span>
 
-<span class="fc" id="L128">		l = l + (100 - l) * coef;</span>
+<span class="fc" id="L126">		l = l + (100 - l) * coef;</span>
 
-<span class="fc" id="L130">		final double rgb[] = HUSLColorConverter.hsluvToRgb(new double[] { h, s, l });</span>
+<span class="fc" id="L128">		final double rgb[] = HUSLColorConverter.hsluvToRgb(new double[] { h, s, l });</span>
 
-<span class="fc" id="L132">		final int red2 = to255(rgb[0]);</span>
-<span class="fc" id="L133">		final int green2 = to255(rgb[1]);</span>
-<span class="fc" id="L134">		final int blue2 = to255(rgb[2]);</span>
+<span class="fc" id="L130">		final int red2 = to255(rgb[0]);</span>
+<span class="fc" id="L131">		final int green2 = to255(rgb[1]);</span>
+<span class="fc" id="L132">		final int blue2 = to255(rgb[2]);</span>
 
-<span class="fc" id="L136">		return new XColor(red2, green2, blue2);</span>
+<span class="fc" id="L134">		return new XColor(red2, green2, blue2);</span>
 	}
 
 	public static XColor getReversed(XColor color) {
-<span class="nc" id="L140">		final int red = color.getRed();</span>
-<span class="nc" id="L141">		final int green = color.getGreen();</span>
-<span class="nc" id="L142">		final int blue = color.getBlue();</span>
+<span class="nc" id="L138">		final int red = color.getRed();</span>
+<span class="nc" id="L139">		final int green = color.getGreen();</span>
+<span class="nc" id="L140">		final int blue = color.getBlue();</span>
 
-<span class="nc" id="L144">		final double hsluv[] = HUSLColorConverter.rgbToHsluv(new double[] { red / 256.0, green / 256.0, blue / 256.0 });</span>
+<span class="nc" id="L142">		final double hsluv[] = HUSLColorConverter.rgbToHsluv(new double[] { red / 256.0, green / 256.0, blue / 256.0 });</span>
 
-<span class="nc" id="L146">		final double h = hsluv[0];</span>
-<span class="nc" id="L147">		final double s = hsluv[1];</span>
-<span class="nc" id="L148">		double l = hsluv[2];</span>
+<span class="nc" id="L144">		final double h = hsluv[0];</span>
+<span class="nc" id="L145">		final double s = hsluv[1];</span>
+<span class="nc" id="L146">		double l = hsluv[2];</span>
 
-<span class="nc bnc" id="L150" title="All 4 branches missed.">		if (s &gt; 40 &amp;&amp; s &lt; 60) {</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">			if (l &gt; 50) {</span>
-<span class="nc" id="L152">				l -= 50;</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">			} else if (l &lt; 50) {</span>
-<span class="nc" id="L154">				l += 50;</span>
+<span class="nc bnc" id="L148" title="All 4 branches missed.">		if (s &gt; 40 &amp;&amp; s &lt; 60) {</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (l &gt; 50) {</span>
+<span class="nc" id="L150">				l -= 50;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">			} else if (l &lt; 50) {</span>
+<span class="nc" id="L152">				l += 50;</span>
 			}
 		} else {
-<span class="nc" id="L157">			l = 100 - l;</span>
+<span class="nc" id="L155">			l = 100 - l;</span>
 		}
 
-<span class="nc" id="L160">		final double rgb[] = HUSLColorConverter.hsluvToRgb(new double[] { h, s, l });</span>
+<span class="nc" id="L158">		final double rgb[] = HUSLColorConverter.hsluvToRgb(new double[] { h, s, l });</span>
 
-<span class="nc" id="L162">		final int red2 = to255(rgb[0]);</span>
-<span class="nc" id="L163">		final int green2 = to255(rgb[1]);</span>
-<span class="nc" id="L164">		final int blue2 = to255(rgb[2]);</span>
+<span class="nc" id="L160">		final int red2 = to255(rgb[0]);</span>
+<span class="nc" id="L161">		final int green2 = to255(rgb[1]);</span>
+<span class="nc" id="L162">		final int blue2 = to255(rgb[2]);</span>
 
-<span class="nc" id="L166">		return new XColor(red2, green2, blue2);</span>
+<span class="nc" id="L164">		return new XColor(red2, green2, blue2);</span>
 	}
 
 	private static int to255(final double value) {
-<span class="fc" id="L170">		final int result = (int) (255 * value);</span>
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (result &lt; 0)</span>
-<span class="nc" id="L172">			return 0;</span>
+<span class="fc" id="L168">		final int result = (int) (255 * value);</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (result &lt; 0)</span>
+<span class="nc" id="L170">			return 0;</span>
 
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (result &gt; 255)</span>
-<span class="nc" id="L175">			return 255;</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		if (result &gt; 255)</span>
+<span class="nc" id="L173">			return 255;</span>
 
-<span class="fc" id="L177">		return result;</span>
+<span class="fc" id="L175">		return result;</span>
 	}
-	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

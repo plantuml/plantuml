@@ -38,31 +38,29 @@ package net.sourceforge.plantuml.klimt.compress;
 import java.util.List;
 
 public class CompressionTransform implements PiecewiseAffineTransform {
-    // ::remove file when __HAXE__
-
 	private final List&lt;Slot&gt; all;
 
-<span class="fc" id="L45">	public CompressionTransform(SlotSet slotSet) {</span>
-<span class="fc" id="L46">		this.all = slotSet.getSlots();</span>
-<span class="fc" id="L47">	}</span>
+<span class="fc" id="L43">	public CompressionTransform(SlotSet slotSet) {</span>
+<span class="fc" id="L44">		this.all = slotSet.getSlots();</span>
+<span class="fc" id="L45">	}</span>
 
 	public double transform(double v) {
-<span class="fc" id="L50">		return v - getCompressDelta(v);</span>
+<span class="fc" id="L48">		return v - getCompressDelta(v);</span>
 	}
 
 	private double getCompressDelta(double v) {
-<span class="fc" id="L54">		double result = 0;</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		for (Slot s : all) {</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">			if (s.getStart() &gt; v) {</span>
-<span class="fc" id="L57">				continue;</span>
+<span class="fc" id="L52">		double result = 0;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		for (Slot s : all) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">			if (s.getStart() &gt; v) {</span>
+<span class="fc" id="L55">				continue;</span>
 			}
-<span class="fc bfc" id="L59" title="All 2 branches covered.">			if (v &gt; s.getEnd()) {</span>
-<span class="fc" id="L60">				result += s.size();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">			if (v &gt; s.getEnd()) {</span>
+<span class="fc" id="L58">				result += s.size();</span>
 			} else {
-<span class="fc" id="L62">				result += v - s.getStart();</span>
+<span class="fc" id="L60">				result += v - s.getStart();</span>
 			}
-<span class="fc" id="L64">		}</span>
-<span class="fc" id="L65">		return result;</span>
+<span class="fc" id="L62">		}</span>
+<span class="fc" id="L63">		return result;</span>
 	}
 
 }

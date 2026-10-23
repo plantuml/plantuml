@@ -44,50 +44,48 @@ import java.util.Map;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 public class GNodeBuilder {
-	// ::remove folder when __HAXE__
+<span class="nc" id="L47">	private final List&lt;GNode&gt; all = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L49">	private final List&lt;GNode&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L49">	public GNodeBuilder(List&lt;Commit&gt; allCommits) {</span>
 
-<span class="nc" id="L51">	public GNodeBuilder(List&lt;Commit&gt; allCommits) {</span>
+<span class="nc" id="L51">		final Map&lt;String, GNode&gt; tmp = new LinkedHashMap&lt;String, GNode&gt;();</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		for (Commit commit : allCommits) {</span>
+<span class="nc" id="L53">			final GNode node = new GNode();</span>
+<span class="nc" id="L54">			node.setComment(commit.getComment());</span>
+<span class="nc" id="L55">			node.addText(commit.getName());</span>
+<span class="nc" id="L56">			tmp.put(commit.getName(), node);</span>
+<span class="nc" id="L57">		}</span>
 
-<span class="nc" id="L53">		final Map&lt;String, GNode&gt; tmp = new LinkedHashMap&lt;String, GNode&gt;();</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">		for (Commit commit : allCommits) {</span>
-<span class="nc" id="L55">			final GNode node = new GNode();</span>
-<span class="nc" id="L56">			node.setComment(commit.getComment());</span>
-<span class="nc" id="L57">			node.addText(commit.getName());</span>
-<span class="nc" id="L58">			tmp.put(commit.getName(), node);</span>
-<span class="nc" id="L59">		}</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		for (Commit commit : allCommits)</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			for (Commit parent : commit.getAncestors())</span>
+<span class="nc" id="L61">				GNode.link(tmp.get(commit.getName()), tmp.get(parent.getName()));</span>
 
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		for (Commit commit : allCommits)</span>
-<span class="nc bnc" id="L62" title="All 2 branches missed.">			for (Commit parent : commit.getAncestors())</span>
-<span class="nc" id="L63">				GNode.link(tmp.get(commit.getName()), tmp.get(parent.getName()));</span>
+<span class="nc" id="L63">		this.all.addAll(tmp.values());</span>
 
-<span class="nc" id="L65">		this.all.addAll(tmp.values());</span>
+<span class="nc" id="L65">		merge();</span>
 
-<span class="nc" id="L67">		merge();</span>
-
-<span class="nc" id="L69">	}</span>
+<span class="nc" id="L67">	}</span>
 
 	private void merge() {
 		while (true) {
-<span class="nc" id="L73">			boolean changed = false;</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			for (Iterator&lt;GNode&gt; it = all.iterator(); it.hasNext();) {</span>
-<span class="nc" id="L75">				final GNode node = it.next();</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">				if (node.canEatTheNextOne()) {</span>
-<span class="nc" id="L77">					final GNode removed = node.eatTheNextOne();</span>
-<span class="nc" id="L78">					all.remove(removed);</span>
-<span class="nc" id="L79">					changed = true;</span>
-<span class="nc" id="L80">					break;</span>
+<span class="nc" id="L71">			boolean changed = false;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">			for (Iterator&lt;GNode&gt; it = all.iterator(); it.hasNext();) {</span>
+<span class="nc" id="L73">				final GNode node = it.next();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">				if (node.canEatTheNextOne()) {</span>
+<span class="nc" id="L75">					final GNode removed = node.eatTheNextOne();</span>
+<span class="nc" id="L76">					all.remove(removed);</span>
+<span class="nc" id="L77">					changed = true;</span>
+<span class="nc" id="L78">					break;</span>
 				}
-<span class="nc" id="L82">			}</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (changed == false)</span>
-<span class="nc" id="L84">				return;</span>
+<span class="nc" id="L80">			}</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (changed == false)</span>
+<span class="nc" id="L82">				return;</span>
 
-<span class="nc" id="L86">		}</span>
+<span class="nc" id="L84">		}</span>
 	}
 
 	public Collection&lt;GNode&gt; getAllNodes() {
-<span class="nc" id="L90">		return MyCollections.unmodifiableCollection(all);</span>
+<span class="nc" id="L88">		return MyCollections.unmodifiableCollection(all);</span>
 	}
 
 }

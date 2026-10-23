@@ -43,49 +43,47 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
 
 public class UGraphicStencil extends AbstractUGraphicHorizontalLine {
-    // ::remove file when __HAXE__
-
 	private final Stencil stencil;
 	private final UStroke defaultStroke;
 
 	public static UGraphic create(UGraphic ug, Stencil stencil, UStroke defaultStroke) {
-<span class="fc" id="L52">		return new UGraphicStencil(ug, stencil, defaultStroke);</span>
+<span class="fc" id="L50">		return new UGraphicStencil(ug, stencil, defaultStroke);</span>
 	}
 
 	public static UGraphic create(UGraphic ug, XDimension2D dim) {
-<span class="fc" id="L56">		return new UGraphicStencil(ug, getRectangleStencil(dim), UStroke.simple());</span>
+<span class="fc" id="L54">		return new UGraphicStencil(ug, getRectangleStencil(dim), UStroke.simple());</span>
 	}
 
 	private static Stencil getRectangleStencil(final XDimension2D dim) {
-<span class="fc" id="L60">		return new Stencil() {</span>
+<span class="fc" id="L58">		return new Stencil() {</span>
 			public double getStartingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L62">				return 0;</span>
+<span class="nc" id="L60">				return 0;</span>
 			}
 
 			public double getEndingX(StringBounder stringBounder, double y) {
-<span class="nc" id="L66">				return dim.getWidth();</span>
+<span class="nc" id="L64">				return dim.getWidth();</span>
 			}
 		};
 	}
 
 	private UGraphicStencil(UGraphic ug, Stencil stencil, UStroke defaultStroke) {
-<span class="fc" id="L72">		super(ug);</span>
-<span class="fc" id="L73">		this.stencil = stencil;</span>
-<span class="fc" id="L74">		this.defaultStroke = defaultStroke;</span>
-<span class="fc" id="L75">	}</span>
+<span class="fc" id="L70">		super(ug);</span>
+<span class="fc" id="L71">		this.stencil = stencil;</span>
+<span class="fc" id="L72">		this.defaultStroke = defaultStroke;</span>
+<span class="fc" id="L73">	}</span>
 
 	@Override
 	protected AbstractUGraphicHorizontalLine copy(UGraphic ug) {
-<span class="fc" id="L79">		return new UGraphicStencil(ug, stencil, defaultStroke);</span>
+<span class="fc" id="L77">		return new UGraphicStencil(ug, stencil, defaultStroke);</span>
 	}
 
 	@Override
 	protected void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate) {
-<span class="fc" id="L84">		line.drawLineInternal(ug, stencil, translate.getDy(), defaultStroke);</span>
+<span class="fc" id="L82">		line.drawLineInternal(ug, stencil, translate.getDy(), defaultStroke);</span>
 		// final UDrawable ud = stencil.convert(line, ug.getStringBounder());
 		// ud.drawU(ug.apply(translate));
 		// line.drawLine(ug.apply(translate), startingX, endingX, 0, defaultStroke);
-<span class="fc" id="L88">	}</span>
+<span class="fc" id="L86">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

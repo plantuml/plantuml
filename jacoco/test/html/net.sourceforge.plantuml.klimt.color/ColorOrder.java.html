@@ -38,41 +38,40 @@ package net.sourceforge.plantuml.klimt.color;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 
 <span class="fc" id="L40">public enum ColorOrder {</span>
-	// ::remove file when __HAXE__
-<span class="fc" id="L42">	RGB, RBG, GRB, GBR, BRG, BGR;</span>
+<span class="fc" id="L41">	RGB, RBG, GRB, GBR, BRG, BGR;</span>
 
 	public XColor getColor(XColor color) {
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (this == RGB)</span>
-<span class="fc" id="L46">			return new XColor(color.getRed(), color.getGreen(), color.getBlue());</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">		if (this == RGB)</span>
+<span class="fc" id="L45">			return new XColor(color.getRed(), color.getGreen(), color.getBlue());</span>
 
-<span class="nc bnc" id="L48" title="All 2 branches missed.">		if (this == RBG)</span>
-<span class="nc" id="L49">			return new XColor(color.getRed(), color.getBlue(), color.getGreen());</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (this == RBG)</span>
+<span class="nc" id="L48">			return new XColor(color.getRed(), color.getBlue(), color.getGreen());</span>
 
-<span class="nc bnc" id="L51" title="All 2 branches missed.">		if (this == GRB)</span>
-<span class="nc" id="L52">			return new XColor(color.getGreen(), color.getRed(), color.getBlue());</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">		if (this == GRB)</span>
+<span class="nc" id="L51">			return new XColor(color.getGreen(), color.getRed(), color.getBlue());</span>
 
-<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (this == GBR)</span>
-<span class="nc" id="L55">			return new XColor(color.getGreen(), color.getBlue(), color.getRed());</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (this == GBR)</span>
+<span class="nc" id="L54">			return new XColor(color.getGreen(), color.getBlue(), color.getRed());</span>
 
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (this == BRG)</span>
-<span class="nc" id="L58">			return new XColor(color.getBlue(), color.getRed(), color.getGreen());</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (this == BRG)</span>
+<span class="nc" id="L57">			return new XColor(color.getBlue(), color.getRed(), color.getGreen());</span>
 
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (this == BGR)</span>
-<span class="nc" id="L61">			return new XColor(color.getBlue(), color.getGreen(), color.getRed());</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (this == BGR)</span>
+<span class="nc" id="L60">			return new XColor(color.getBlue(), color.getGreen(), color.getRed());</span>
 
-<span class="nc" id="L63">		throw new IllegalStateException();</span>
+<span class="nc" id="L62">		throw new IllegalStateException();</span>
 	}
 
 	public XColor getReverse(XColor color) {
-<span class="fc" id="L67">		color = this.getColor(color);</span>
-<span class="fc" id="L68">		return new XColor(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());</span>
+<span class="fc" id="L66">		color = this.getColor(color);</span>
+<span class="fc" id="L67">		return new XColor(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue());</span>
 	}
 
 	public static ColorOrder fromString(String order) {
 		try {
-<span class="nc" id="L73">			return ColorOrder.valueOf(order.toUpperCase());</span>
-<span class="nc" id="L74">		} catch (Exception e) {</span>
-<span class="nc" id="L75">			return null;</span>
+<span class="nc" id="L72">			return ColorOrder.valueOf(order.toUpperCase());</span>
+<span class="nc" id="L73">		} catch (Exception e) {</span>
+<span class="nc" id="L74">			return null;</span>
 		}
 	}
 

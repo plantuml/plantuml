@@ -49,18 +49,17 @@ import net.sourceforge.plantuml.security.authentication.SecurityCredentials;
  * @author Aljoscha Rittner
  */
 <span class="fc" id="L51">public class BasicAuthAuthorizeManager implements SecurityAuthorizeManager {</span>
-    // ::remove folder when __HAXE__
 	@Override
 	public SecurityAuthentication create(SecurityCredentials credentials) {
-<span class="fc" id="L55">		String type = credentials.getType();</span>
-<span class="fc" id="L56">		String identifier = credentials.getIdentifier();</span>
-<span class="fc" id="L57">		char[] secret = credentials.getSecret();</span>
-<span class="fc" id="L58">		Map&lt;String, Object&gt; tokens = new HashMap&lt;String, Object&gt;();</span>
-<span class="fc" id="L59">		tokens.put(&quot;identifier&quot;, identifier);</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (secret != null) {</span>
-<span class="fc" id="L61">			tokens.put(&quot;secret&quot;, secret.clone());</span>
+<span class="fc" id="L54">		String type = credentials.getType();</span>
+<span class="fc" id="L55">		String identifier = credentials.getIdentifier();</span>
+<span class="fc" id="L56">		char[] secret = credentials.getSecret();</span>
+<span class="fc" id="L57">		Map&lt;String, Object&gt; tokens = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L58">		tokens.put(&quot;identifier&quot;, identifier);</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (secret != null) {</span>
+<span class="fc" id="L60">			tokens.put(&quot;secret&quot;, secret.clone());</span>
 		}
-<span class="fc" id="L63">		return new SecurityAuthentication(type, tokens);</span>
+<span class="fc" id="L62">		return new SecurityAuthentication(type, tokens);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

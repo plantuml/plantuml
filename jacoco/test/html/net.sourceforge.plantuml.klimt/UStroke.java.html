@@ -41,69 +41,65 @@ public class UStroke implements UChange {
 	private final double dashSpace;
 	private final double thickness;
 
-	// ::comment when __HAXE__
-
 	@Override
 	public int hashCode() {
-<span class="fc" id="L48">		return Double.hashCode(dashVisible) + Double.hashCode(dashSpace) + Double.hashCode(thickness);</span>
+<span class="fc" id="L46">		return Double.hashCode(dashVisible) + Double.hashCode(dashSpace) + Double.hashCode(thickness);</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="fc" id="L53">		final UStroke other = (UStroke) obj;</span>
-<span class="pc bpc" id="L54" title="3 of 6 branches missed.">		return this.dashVisible == other.dashVisible &amp;&amp; this.dashSpace == other.dashSpace</span>
+<span class="fc" id="L51">		final UStroke other = (UStroke) obj;</span>
+<span class="pc bpc" id="L52" title="3 of 6 branches missed.">		return this.dashVisible == other.dashVisible &amp;&amp; this.dashSpace == other.dashSpace</span>
 				&amp;&amp; this.thickness == other.thickness;
 	}
 
-	// ::done
-
 	@Override
 	public String toString() {
-<span class="fc" id="L62">		return &quot;&quot; + dashVisible + &quot;-&quot; + dashSpace + &quot;-&quot; + thickness;</span>
+<span class="fc" id="L58">		return &quot;&quot; + dashVisible + &quot;-&quot; + dashSpace + &quot;-&quot; + thickness;</span>
 	}
 
-<span class="fc" id="L65">	public UStroke(double dashVisible, double dashSpace, double thickness) {</span>
-<span class="fc" id="L66">		this.dashVisible = dashVisible;</span>
-<span class="fc" id="L67">		this.dashSpace = dashSpace;</span>
-<span class="fc" id="L68">		this.thickness = thickness;</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L61">	public UStroke(double dashVisible, double dashSpace, double thickness) {</span>
+<span class="fc" id="L62">		this.dashVisible = dashVisible;</span>
+<span class="fc" id="L63">		this.dashSpace = dashSpace;</span>
+<span class="fc" id="L64">		this.thickness = thickness;</span>
+<span class="fc" id="L65">	}</span>
 
 	public static UStroke withThickness(double thickness) {
-<span class="fc" id="L72">		return new UStroke(0, 0, thickness);</span>
+<span class="fc" id="L68">		return new UStroke(0, 0, thickness);</span>
 	}
 
 	public static UStroke simple() {
-<span class="fc" id="L76">		return new UStroke(0, 0, 1.0);</span>
+<span class="fc" id="L72">		return new UStroke(0, 0, 1.0);</span>
 	}
 
 	public UStroke onlyThickness() {
-<span class="fc" id="L80">		return new UStroke(0, 0, thickness);</span>
+<span class="fc" id="L76">		return new UStroke(0, 0, thickness);</span>
 	}
 
 	public double getDashVisible() {
-<span class="fc" id="L84">		return dashVisible;</span>
+<span class="fc" id="L80">		return dashVisible;</span>
 	}
 
 	public double getDashSpace() {
-<span class="fc" id="L88">		return dashSpace;</span>
+<span class="fc" id="L84">		return dashSpace;</span>
 	}
 
 	public double getThickness() {
-<span class="fc" id="L92">		return thickness;</span>
+<span class="fc" id="L88">		return thickness;</span>
 	}
 
 	public double[] getDasharraySvg() {
-<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (dashVisible == 0)</span>
-<span class="fc" id="L97">			return null;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (dashVisible == 0)</span>
+<span class="fc" id="L93">			return null;</span>
 
-<span class="fc" id="L99">		return new double[] { dashVisible, dashSpace };</span>
+<span class="fc" id="L95">		return new double[] { dashVisible, dashSpace };</span>
 	}
 
 	public String getDashTikz() {
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (dashVisible == 0)</span>
-<span class="fc" id="L104">			return null;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (dashVisible == 0)</span>
+<span class="fc" id="L100">			return null;</span>
 
-<span class="fc" id="L106">		return &quot;on &quot; + dashVisible + &quot;pt off &quot; + dashSpace + &quot;pt&quot;;</span>
+<span class="fc" id="L102">		return &quot;on &quot; + dashVisible + &quot;pt off &quot; + dashSpace + &quot;pt&quot;;</span>
 	}
 
 	// public String getDasharrayEps() {

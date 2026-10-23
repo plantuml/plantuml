@@ -14,29 +14,27 @@ import java.io.Closeable;
 import java.io.IOException;
 
 <span class="fc" id="L16">public class OutputStreamProtected implements Closeable {</span>
-    // ::remove folder when __HAXE__
-
 	public static final int MAX_OUTPUT_SIZE = 1 * 1024 * 1024;
 
-<span class="fc" id="L21">	private final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="fc" id="L22">	private int counter = 0;</span>
+<span class="fc" id="L19">	private final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L20">	private int counter = 0;</span>
 
 	public void close() throws IOException {
-<span class="nc" id="L25">		baos.close();</span>
-<span class="nc" id="L26">	}</span>
+<span class="nc" id="L23">		baos.close();</span>
+<span class="nc" id="L24">	}</span>
 
 	public byte[] toByteArray() {
-<span class="fc" id="L29">		return baos.toByteArray();</span>
+<span class="fc" id="L27">		return baos.toByteArray();</span>
 	}
 
 	public void write(int b) throws IOException {
-<span class="fc" id="L33">		this.counter++;</span>
-<span class="fc" id="L34">		baos.write(b);</span>
-<span class="fc bfc" id="L35" title="All 2 branches covered.">		if (counter &gt; MAX_OUTPUT_SIZE) {</span>
-<span class="fc" id="L36">			throw new IOException(&quot;Too big&quot;);</span>
+<span class="fc" id="L31">		this.counter++;</span>
+<span class="fc" id="L32">		baos.write(b);</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">		if (counter &gt; MAX_OUTPUT_SIZE) {</span>
+<span class="fc" id="L34">			throw new IOException(&quot;Too big&quot;);</span>
 		}
 
-<span class="fc" id="L39">	}</span>
+<span class="fc" id="L37">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

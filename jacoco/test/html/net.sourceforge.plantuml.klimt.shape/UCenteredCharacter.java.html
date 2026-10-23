@@ -40,27 +40,25 @@ import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.font.UFont;
 
 public class UCenteredCharacter implements UShape {
-	// ::remove file when __HAXE__
-
 	private final char c;
 	private final UFont font;
 
-<span class="fc" id="L48">	public UCenteredCharacter(char c, UFont font) {</span>
-<span class="fc" id="L49">		this.c = c;</span>
-<span class="fc" id="L50">		this.font = font;</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L46">	public UCenteredCharacter(char c, UFont font) {</span>
+<span class="fc" id="L47">		this.c = c;</span>
+<span class="fc" id="L48">		this.font = font;</span>
+<span class="fc" id="L49">	}</span>
 
 	public char getChar() {
-<span class="fc" id="L54">		return c;</span>
+<span class="fc" id="L52">		return c;</span>
 	}
 
 	public UFont getFont() {
-<span class="fc" id="L58">		return font;</span>
+<span class="fc" id="L56">		return font;</span>
 	}
 
 	@Override
 	public UShapeKind getShapeKind() {
-<span class="fc" id="L63">		return UShapeKind.CENTERED_CHARACTER;</span>
+<span class="fc" id="L61">		return UShapeKind.CENTERED_CHARACTER;</span>
 	}
 
 }

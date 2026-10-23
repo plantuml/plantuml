@@ -40,17 +40,15 @@ import java.awt.image.AffineTransformOp;
 <span class="fc" id="L40">public enum AffineTransformType {</span>
 <span class="fc" id="L41">	TYPE_NEAREST_NEIGHBOR, TYPE_BILINEAR;</span>
 
-	// ::comment when __HAXE__
 	public int toLegacyInt() {
-<span class="pc bpc" id="L45" title="1 of 3 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L44" title="1 of 3 branches missed.">		switch (this) {</span>
 		case TYPE_BILINEAR:
-<span class="fc" id="L47">			return AffineTransformOp.TYPE_BILINEAR;</span>
+<span class="fc" id="L46">			return AffineTransformOp.TYPE_BILINEAR;</span>
 		case TYPE_NEAREST_NEIGHBOR:
-<span class="fc" id="L49">			return AffineTransformOp.TYPE_NEAREST_NEIGHBOR;</span>
+<span class="fc" id="L48">			return AffineTransformOp.TYPE_NEAREST_NEIGHBOR;</span>
 		}
-<span class="nc" id="L51">		throw new AssertionError();</span>
+<span class="nc" id="L50">		throw new AssertionError();</span>
 	}
-	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -40,68 +40,66 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BNode {
-    // ::remove folder when __HAXE__
-
 	private final String name;
 	private final int stage;
-<span class="nc" id="L47">	private int x = -1;</span>
+<span class="nc" id="L45">	private int x = -1;</span>
 	private BNode parent;
-<span class="nc" id="L49">	private final List&lt;BNode&gt; children = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L47">	private final List&lt;BNode&gt; children = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L51">	public BNode(int stage, String name) {</span>
-<span class="nc" id="L52">		this.name = name;</span>
-<span class="nc" id="L53">		this.stage = stage;</span>
-<span class="nc" id="L54">	}</span>
+<span class="nc" id="L49">	public BNode(int stage, String name) {</span>
+<span class="nc" id="L50">		this.name = name;</span>
+<span class="nc" id="L51">		this.stage = stage;</span>
+<span class="nc" id="L52">	}</span>
 
 	public void addChild(BNode child) {
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (child.stage &lt;= this.stage) {</span>
-<span class="nc" id="L58">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (child.stage &lt;= this.stage) {</span>
+<span class="nc" id="L56">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L60">		this.children.add(child);</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		if (child.parent != null) {</span>
-<span class="nc" id="L62">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L58">		this.children.add(child);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (child.parent != null) {</span>
+<span class="nc" id="L60">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L64">		child.parent = this;</span>
-<span class="nc" id="L65">	}</span>
+<span class="nc" id="L62">		child.parent = this;</span>
+<span class="nc" id="L63">	}</span>
 
 	public final String getName() {
-<span class="nc" id="L68">		return name;</span>
+<span class="nc" id="L66">		return name;</span>
 	}
 
 	public final int getStage() {
-<span class="nc" id="L72">		return stage;</span>
+<span class="nc" id="L70">		return stage;</span>
 	}
 
 	public final BNode getParent() {
-<span class="nc" id="L76">		return parent;</span>
+<span class="nc" id="L74">		return parent;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L81">		return name + &quot;(&quot; + stage + &quot;) [&quot; + x + &quot;]&quot;;</span>
+<span class="nc" id="L79">		return name + &quot;(&quot; + stage + &quot;) [&quot; + x + &quot;]&quot;;</span>
 	}
 
 	public void computeX(AtomicInteger count) {
-<span class="nc" id="L85">		this.x = count.intValue();</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		for (int i = 0; i &lt; children.size(); i++) {</span>
-<span class="nc" id="L87">			final BNode child = children.get(i);</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (i &gt; 0) {</span>
-<span class="nc" id="L89">				count.addAndGet(1);</span>
+<span class="nc" id="L83">		this.x = count.intValue();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		for (int i = 0; i &lt; children.size(); i++) {</span>
+<span class="nc" id="L85">			final BNode child = children.get(i);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (i &gt; 0) {</span>
+<span class="nc" id="L87">				count.addAndGet(1);</span>
 			}
-<span class="nc" id="L91">			child.computeX(count);</span>
+<span class="nc" id="L89">			child.computeX(count);</span>
 		}
-<span class="nc" id="L93">	}</span>
+<span class="nc" id="L91">	}</span>
 
 	public void initBarray(BArray array) {
-<span class="nc" id="L96">		array.put(this);</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (BNode child : children) {</span>
-<span class="nc" id="L98">			child.initBarray(array);</span>
-<span class="nc" id="L99">		}</span>
+<span class="nc" id="L94">		array.put(this);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		for (BNode child : children) {</span>
+<span class="nc" id="L96">			child.initBarray(array);</span>
+<span class="nc" id="L97">		}</span>
 
-<span class="nc" id="L101">	}</span>
+<span class="nc" id="L99">	}</span>
 
 	public final int getX() {
-<span class="nc" id="L104">		return x;</span>
+<span class="nc" id="L102">		return x;</span>
 	}
 
 }

@@ -58,9 +58,8 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SecurityUtils;
 
 <span class="nc" id="L60">class FtpLoop implements Runnable {</span>
-    // ::remove folder when __HAXE__
-<span class="nc" id="L62">	enum Mode {</span>
-<span class="nc" id="L63">		ACTIF, PASSIF</span>
+<span class="nc" id="L61">	enum Mode {</span>
+<span class="nc" id="L62">		ACTIF, PASSIF</span>
 	};
 
 	final private Socket incoming;
@@ -69,16 +68,16 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 	final private PrintWriter pw;
 
 	private FtpConnection connection;
-<span class="nc" id="L72">	private String ipClient = null;</span>
-<span class="nc" id="L73">	private int port = -1;</span>
+<span class="nc" id="L71">	private String ipClient = null;</span>
+<span class="nc" id="L72">	private int port = -1;</span>
 	private Mode mode;
 
-<span class="nc" id="L76">	public FtpLoop(Socket socket, FtpServer ftpServer) throws IOException {</span>
-<span class="nc" id="L77">		this.incoming = socket;</span>
-<span class="nc" id="L78">		this.ftpServer = ftpServer;</span>
-<span class="nc" id="L79">		this.br = new BufferedReader(new InputStreamReader(incoming.getInputStream(), ftpServer.getCharset()));</span>
-<span class="nc" id="L80">		this.pw = SecurityUtils.createPrintWriter(incoming.getOutputStream(), true);</span>
-<span class="nc" id="L81">	}</span>
+<span class="nc" id="L75">	public FtpLoop(Socket socket, FtpServer ftpServer) throws IOException {</span>
+<span class="nc" id="L76">		this.incoming = socket;</span>
+<span class="nc" id="L77">		this.ftpServer = ftpServer;</span>
+<span class="nc" id="L78">		this.br = new BufferedReader(new InputStreamReader(incoming.getInputStream(), ftpServer.getCharset()));</span>
+<span class="nc" id="L79">		this.pw = SecurityUtils.createPrintWriter(incoming.getOutputStream(), true);</span>
+<span class="nc" id="L80">	}</span>
 
 	// http://www.ncftp.com/libncftp/doc/ftp_overview.html
 	// http://www.nsftools.com/tips/RawFTP.htm
@@ -89,250 +88,250 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 	// http://www.excel-downloads.com/forum/104130-telechargement-ftp-via-vba.html
 	// http://www.pcreview.co.uk/forums/ftp-vba-macro-t949945.html
 	private void runInternal() throws IOException, InterruptedException {
-<span class="nc" id="L92">		localLog(&quot;Starting Loop&quot;);</span>
-<span class="nc" id="L93">		myOut(&quot;220 PlantUML&quot;);</span>
+<span class="nc" id="L91">		localLog(&quot;Starting Loop&quot;);</span>
+<span class="nc" id="L92">		myOut(&quot;220 PlantUML&quot;);</span>
 		while (true) {
-<span class="nc" id="L95">			final String s = br.readLine();</span>
-<span class="nc" id="L96">			localLog(&quot;s=&quot; + s);</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (s == null) {</span>
-<span class="nc" id="L98">				pw.close();</span>
-<span class="nc" id="L99">				br.close();</span>
-<span class="nc" id="L100">				return;</span>
+<span class="nc" id="L94">			final String s = br.readLine();</span>
+<span class="nc" id="L95">			localLog(&quot;s=&quot; + s);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (s == null) {</span>
+<span class="nc" id="L97">				pw.close();</span>
+<span class="nc" id="L98">				br.close();</span>
+<span class="nc" id="L99">				return;</span>
 			}
-<span class="nc" id="L102">			final boolean finish = manage(s);</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			if (finish) {</span>
-<span class="nc" id="L104">				return;</span>
+<span class="nc" id="L101">			final boolean finish = manage(s);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (finish) {</span>
+<span class="nc" id="L103">				return;</span>
 			}
-<span class="nc" id="L106">		}</span>
+<span class="nc" id="L105">		}</span>
 	}
 
 	private boolean manage(final String cmd) throws UnknownHostException, IOException, InterruptedException {
-<span class="nc" id="L110">		final String upper = StringUtils.goUpperCase(cmd);</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (upper.startsWith(&quot;USER&quot;)) {</span>
-<span class="nc" id="L112">			myOut(&quot;331 Password required&quot;);</span>
-<span class="nc" id="L113">			final String user = cmd.substring(&quot;USER &quot;.length());</span>
-<span class="nc" id="L114">			connection = ftpServer.getFtpConnexion(user);</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;PASS&quot;)) {</span>
-<span class="nc" id="L116">			myOut(&quot;230 Logged in.&quot;);</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;PWD&quot;)) {</span>
+<span class="nc" id="L109">		final String upper = StringUtils.goUpperCase(cmd);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (upper.startsWith(&quot;USER&quot;)) {</span>
+<span class="nc" id="L111">			myOut(&quot;331 Password required&quot;);</span>
+<span class="nc" id="L112">			final String user = cmd.substring(&quot;USER &quot;.length());</span>
+<span class="nc" id="L113">			connection = ftpServer.getFtpConnexion(user);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;PASS&quot;)) {</span>
+<span class="nc" id="L115">			myOut(&quot;230 Logged in.&quot;);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;PWD&quot;)) {</span>
 			// myOut(&quot;/&quot;);
 			// myOut(&quot;200 OK /&quot;);
-<span class="nc" id="L120">			myOut(&quot;257 \&quot;/\&quot; is current directory.&quot;);</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;CWD&quot;)) {</span>
-<span class="nc" id="L122">			final String dir = cmd.substring(&quot;CWD &quot;.length());</span>
-<span class="nc" id="L123">			myOut(&quot;250 \&quot;&quot; + dir + &quot;\&quot; is new working directory..&quot;);</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;TYPE&quot;)) {</span>
-<span class="nc" id="L125">			myOut(&quot;200 Command okay.&quot;);</span>
+<span class="nc" id="L119">			myOut(&quot;257 \&quot;/\&quot; is current directory.&quot;);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;CWD&quot;)) {</span>
+<span class="nc" id="L121">			final String dir = cmd.substring(&quot;CWD &quot;.length());</span>
+<span class="nc" id="L122">			myOut(&quot;250 \&quot;&quot; + dir + &quot;\&quot; is new working directory..&quot;);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;TYPE&quot;)) {</span>
+<span class="nc" id="L124">			myOut(&quot;200 Command okay.&quot;);</span>
 			// localLog(&quot;type=&quot; + s);
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;PORT&quot;)) {</span>
-<span class="nc" id="L128">			mode = Mode.ACTIF;</span>
-<span class="nc" id="L129">			final StringTokenizer st = new StringTokenizer(cmd, &quot; ,&quot;);</span>
-<span class="nc" id="L130">			st.nextToken();</span>
-<span class="nc" id="L131">			ipClient = st.nextToken() + &quot;.&quot; + st.nextToken() + &quot;.&quot; + st.nextToken() + &quot;.&quot; + st.nextToken();</span>
-<span class="nc" id="L132">			port = Integer.parseInt(st.nextToken()) * 256 + Integer.parseInt(st.nextToken());</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;PORT&quot;)) {</span>
+<span class="nc" id="L127">			mode = Mode.ACTIF;</span>
+<span class="nc" id="L128">			final StringTokenizer st = new StringTokenizer(cmd, &quot; ,&quot;);</span>
+<span class="nc" id="L129">			st.nextToken();</span>
+<span class="nc" id="L130">			ipClient = st.nextToken() + &quot;.&quot; + st.nextToken() + &quot;.&quot; + st.nextToken() + &quot;.&quot; + st.nextToken();</span>
+<span class="nc" id="L131">			port = Integer.parseInt(st.nextToken()) * 256 + Integer.parseInt(st.nextToken());</span>
 			// localLog(&quot;ipClient=&quot; + ipClient);
 			// localLog(&quot;port=&quot; + port);
 
-<span class="nc" id="L136">			myOut(&quot;200 Command okay.&quot;);</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;LIST&quot;)) {</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">			if (mode == Mode.ACTIF) {</span>
-<span class="nc" id="L139">				listActif();</span>
+<span class="nc" id="L135">			myOut(&quot;200 Command okay.&quot;);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;LIST&quot;)) {</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (mode == Mode.ACTIF) {</span>
+<span class="nc" id="L138">				listActif();</span>
 			} else {
-<span class="nc" id="L141">				listPassif();</span>
+<span class="nc" id="L140">				listPassif();</span>
 			}
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;STOR&quot;)) {</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (mode == Mode.ACTIF) {</span>
-<span class="nc" id="L145">				storActif(cmd);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;STOR&quot;)) {</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			if (mode == Mode.ACTIF) {</span>
+<span class="nc" id="L144">				storActif(cmd);</span>
 			} else {
-<span class="nc" id="L147">				storPassif(cmd);</span>
+<span class="nc" id="L146">				storPassif(cmd);</span>
 			}
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;PASV&quot;)) {</span>
-<span class="nc" id="L150">			mode = Mode.PASSIF;</span>
-<span class="nc" id="L151">			port = ftpServer.getFreePort();</span>
-<span class="nc" id="L152">			final int p1 = port / 256;</span>
-<span class="nc" id="L153">			final int p2 = port % 256;</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">			assert port == p1 * 256 + p2;</span>
-<span class="nc" id="L155">			localLog(&quot;adr=&quot; + incoming.getInetAddress().getHostAddress());</span>
-<span class="nc" id="L156">			final String ipServer = ftpServer.getIpServer();</span>
-<span class="nc" id="L157">			localLog(&quot;server=&quot; + ipServer);</span>
-<span class="nc" id="L158">			myOut(&quot;227 Entering Passive Mode (&quot; + ipServer.replace('.', ',') + &quot;,&quot; + p1 + &quot;,&quot; + p2 + &quot;).&quot;);</span>
-<span class="nc" id="L159">			ipClient = ipServer;</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;RETR&quot;)) {</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (mode == Mode.ACTIF) {</span>
-<span class="nc" id="L162">				retrActif(cmd);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;PASV&quot;)) {</span>
+<span class="nc" id="L149">			mode = Mode.PASSIF;</span>
+<span class="nc" id="L150">			port = ftpServer.getFreePort();</span>
+<span class="nc" id="L151">			final int p1 = port / 256;</span>
+<span class="nc" id="L152">			final int p2 = port % 256;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">			assert port == p1 * 256 + p2;</span>
+<span class="nc" id="L154">			localLog(&quot;adr=&quot; + incoming.getInetAddress().getHostAddress());</span>
+<span class="nc" id="L155">			final String ipServer = ftpServer.getIpServer();</span>
+<span class="nc" id="L156">			localLog(&quot;server=&quot; + ipServer);</span>
+<span class="nc" id="L157">			myOut(&quot;227 Entering Passive Mode (&quot; + ipServer.replace('.', ',') + &quot;,&quot; + p1 + &quot;,&quot; + p2 + &quot;).&quot;);</span>
+<span class="nc" id="L158">			ipClient = ipServer;</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;RETR&quot;)) {</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">			if (mode == Mode.ACTIF) {</span>
+<span class="nc" id="L161">				retrActif(cmd);</span>
 			} else {
-<span class="nc" id="L164">				retrPassif(cmd);</span>
+<span class="nc" id="L163">				retrPassif(cmd);</span>
 			}
-<span class="nc bnc" id="L166" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;DELE&quot;)) {</span>
-<span class="nc" id="L167">			final String file = cmd.substring(&quot;DELE &quot;.length());</span>
-<span class="nc" id="L168">			connection.delete(file);</span>
-<span class="nc" id="L169">			myOut(&quot;200 Command okay.&quot;);</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;QUIT&quot;)) {</span>
-<span class="nc" id="L171">			myOut(&quot;221 Goodbye.&quot;);</span>
-<span class="nc" id="L172">			return true;</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;SYST&quot;)) {</span>
-<span class="nc" id="L174">			myOut(&quot;215 UNIX Type: L8.&quot;);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;DELE&quot;)) {</span>
+<span class="nc" id="L166">			final String file = cmd.substring(&quot;DELE &quot;.length());</span>
+<span class="nc" id="L167">			connection.delete(file);</span>
+<span class="nc" id="L168">			myOut(&quot;200 Command okay.&quot;);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;QUIT&quot;)) {</span>
+<span class="nc" id="L170">			myOut(&quot;221 Goodbye.&quot;);</span>
+<span class="nc" id="L171">			return true;</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		} else if (upper.startsWith(&quot;SYST&quot;)) {</span>
+<span class="nc" id="L173">			myOut(&quot;215 UNIX Type: L8.&quot;);</span>
 		} else {
-<span class="nc" id="L176">			myOut(&quot;502 Command not implemented.&quot;);</span>
+<span class="nc" id="L175">			myOut(&quot;502 Command not implemented.&quot;);</span>
 		}
-<span class="nc" id="L178">		return false;</span>
+<span class="nc" id="L177">		return false;</span>
 	}
 
 	private void localLog(String s) {
-<span class="nc" id="L182">	}</span>
+<span class="nc" id="L181">	}</span>
 
 	private void retr(final String fileName, Socket soc)
 			throws UnknownHostException, IOException, InterruptedException {
-<span class="nc" id="L186">		final OutputStream os = soc.getOutputStream();</span>
-<span class="nc" id="L187">		final byte[] data = connection.getData(fileName);</span>
+<span class="nc" id="L185">		final OutputStream os = soc.getOutputStream();</span>
+<span class="nc" id="L186">		final byte[] data = connection.getData(fileName);</span>
 
-<span class="nc bnc" id="L189" title="All 2 branches missed.">		if (data != null) {</span>
-<span class="nc" id="L190">			os.write(data);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (data != null) {</span>
+<span class="nc" id="L189">			os.write(data);</span>
 		}
-<span class="nc" id="L192">		os.flush();</span>
-<span class="nc" id="L193">		os.close();</span>
-<span class="nc" id="L194">		soc.close();</span>
-<span class="nc" id="L195">		myOut(&quot;226 Transfer complete.&quot;);</span>
-<span class="nc" id="L196">	}</span>
+<span class="nc" id="L191">		os.flush();</span>
+<span class="nc" id="L192">		os.close();</span>
+<span class="nc" id="L193">		soc.close();</span>
+<span class="nc" id="L194">		myOut(&quot;226 Transfer complete.&quot;);</span>
+<span class="nc" id="L195">	}</span>
 
 	private void retrPassif(final String s) throws UnknownHostException, IOException, InterruptedException {
-<span class="nc" id="L199">		String fileName = s.substring(&quot;STOR &quot;.length());</span>
-<span class="nc" id="L200">		fileName = removeStartingsSlash(fileName);</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (connection.willExist(fileName) == false) {</span>
-<span class="nc" id="L202">			myOut(&quot;550 No such file.&quot;);</span>
-<span class="nc" id="L203">			return;</span>
+<span class="nc" id="L198">		String fileName = s.substring(&quot;STOR &quot;.length());</span>
+<span class="nc" id="L199">		fileName = removeStartingsSlash(fileName);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (connection.willExist(fileName) == false) {</span>
+<span class="nc" id="L201">			myOut(&quot;550 No such file.&quot;);</span>
+<span class="nc" id="L202">			return;</span>
 		}
-<span class="nc" id="L205">		myOut(&quot;150 Opening&quot;);</span>
-<span class="nc" id="L206">		waitForMe(fileName);</span>
-<span class="nc" id="L207">		final ServerSocket ss = new ServerSocket(port);</span>
-<span class="nc" id="L208">		final Socket incoming = ss.accept();</span>
-<span class="nc" id="L209">		retr(fileName, incoming);</span>
-<span class="nc" id="L210">		ss.close();</span>
-<span class="nc" id="L211">	}</span>
+<span class="nc" id="L204">		myOut(&quot;150 Opening&quot;);</span>
+<span class="nc" id="L205">		waitForMe(fileName);</span>
+<span class="nc" id="L206">		final ServerSocket ss = new ServerSocket(port);</span>
+<span class="nc" id="L207">		final Socket incoming = ss.accept();</span>
+<span class="nc" id="L208">		retr(fileName, incoming);</span>
+<span class="nc" id="L209">		ss.close();</span>
+<span class="nc" id="L210">	}</span>
 
 	private void waitForMe(String fileName) throws InterruptedException {
 		do {
-<span class="nc bnc" id="L215" title="All 2 branches missed.">			if (connection.doesExist(fileName)) {</span>
-<span class="nc" id="L216">				return;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			if (connection.doesExist(fileName)) {</span>
+<span class="nc" id="L215">				return;</span>
 			}
-<span class="nc" id="L218">			Thread.sleep(200L);</span>
-<span class="nc" id="L219">		} while (true);</span>
+<span class="nc" id="L217">			Thread.sleep(200L);</span>
+<span class="nc" id="L218">		} while (true);</span>
 	}
 
 	private void retrActif(final String s) throws UnknownHostException, IOException, InterruptedException {
-<span class="nc" id="L223">		String fileName = s.substring(&quot;STOR &quot;.length());</span>
-<span class="nc" id="L224">		fileName = removeStartingsSlash(fileName);</span>
-<span class="nc bnc" id="L225" title="All 2 branches missed.">		if (connection.willExist(fileName) == false) {</span>
-<span class="nc" id="L226">			myOut(&quot;550 No such file.&quot;);</span>
-<span class="nc" id="L227">			return;</span>
+<span class="nc" id="L222">		String fileName = s.substring(&quot;STOR &quot;.length());</span>
+<span class="nc" id="L223">		fileName = removeStartingsSlash(fileName);</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (connection.willExist(fileName) == false) {</span>
+<span class="nc" id="L225">			myOut(&quot;550 No such file.&quot;);</span>
+<span class="nc" id="L226">			return;</span>
 		}
-<span class="nc" id="L229">		myOut(&quot;150 Opening&quot;);</span>
-<span class="nc" id="L230">		waitForMe(fileName);</span>
-<span class="nc" id="L231">		final Socket soc = new Socket(ipClient, port);</span>
-<span class="nc" id="L232">		retr(fileName, soc);</span>
-<span class="nc" id="L233">	}</span>
+<span class="nc" id="L228">		myOut(&quot;150 Opening&quot;);</span>
+<span class="nc" id="L229">		waitForMe(fileName);</span>
+<span class="nc" id="L230">		final Socket soc = new Socket(ipClient, port);</span>
+<span class="nc" id="L231">		retr(fileName, soc);</span>
+<span class="nc" id="L232">	}</span>
 
 	private void storActif(final String s) throws IOException {
-<span class="nc" id="L236">		final String fileName = removeStartingsSlash(s.substring(&quot;STOR &quot;.length()));</span>
-<span class="nc" id="L237">		myOut(&quot;150 FILE: &quot; + fileName);</span>
-<span class="nc" id="L238">		final Socket soc = new Socket(ipClient, port);</span>
-<span class="nc" id="L239">		stor(fileName, soc);</span>
-<span class="nc" id="L240">	}</span>
+<span class="nc" id="L235">		final String fileName = removeStartingsSlash(s.substring(&quot;STOR &quot;.length()));</span>
+<span class="nc" id="L236">		myOut(&quot;150 FILE: &quot; + fileName);</span>
+<span class="nc" id="L237">		final Socket soc = new Socket(ipClient, port);</span>
+<span class="nc" id="L238">		stor(fileName, soc);</span>
+<span class="nc" id="L239">	}</span>
 
 	private void storPassif(final String s) throws IOException {
-<span class="nc" id="L243">		final String fileName = removeStartingsSlash(s.substring(&quot;STOR &quot;.length()));</span>
-<span class="nc" id="L244">		myOut(&quot;150 FILE: &quot; + fileName);</span>
-<span class="nc" id="L245">		final ServerSocket ss = new ServerSocket(port);</span>
-<span class="nc" id="L246">		final Socket incoming = ss.accept();</span>
-<span class="nc" id="L247">		stor(fileName, incoming);</span>
-<span class="nc" id="L248">		ss.close();</span>
-<span class="nc" id="L249">	}</span>
+<span class="nc" id="L242">		final String fileName = removeStartingsSlash(s.substring(&quot;STOR &quot;.length()));</span>
+<span class="nc" id="L243">		myOut(&quot;150 FILE: &quot; + fileName);</span>
+<span class="nc" id="L244">		final ServerSocket ss = new ServerSocket(port);</span>
+<span class="nc" id="L245">		final Socket incoming = ss.accept();</span>
+<span class="nc" id="L246">		stor(fileName, incoming);</span>
+<span class="nc" id="L247">		ss.close();</span>
+<span class="nc" id="L248">	}</span>
 
 	private String removeStartingsSlash(String fileName) {
-<span class="nc bnc" id="L252" title="All 2 branches missed.">		while (fileName.startsWith(&quot;/&quot;)) {</span>
-<span class="nc" id="L253">			fileName = fileName.substring(1);</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">		while (fileName.startsWith(&quot;/&quot;)) {</span>
+<span class="nc" id="L252">			fileName = fileName.substring(1);</span>
 		}
-<span class="nc" id="L255">		return fileName;</span>
+<span class="nc" id="L254">		return fileName;</span>
 	}
 
 	private void stor(String fileName, Socket socket) throws UnknownHostException, IOException {
-<span class="nc" id="L259">		final InputStream is = socket.getInputStream();</span>
-<span class="nc" id="L260">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L261">		FileUtils.copyToStream(is, baos);</span>
+<span class="nc" id="L258">		final InputStream is = socket.getInputStream();</span>
+<span class="nc" id="L259">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L260">		FileUtils.copyToStream(is, baos);</span>
 
-<span class="nc" id="L263">		myOut(&quot;226 Transfer complete.&quot;);</span>
+<span class="nc" id="L262">		myOut(&quot;226 Transfer complete.&quot;);</span>
 
-<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (&quot;png&quot;.equalsIgnoreCase(fileName)) {</span>
-<span class="nc" id="L266">			connection.setFileFormat(FileFormat.PNG);</span>
-<span class="nc bnc" id="L267" title="All 2 branches missed.">		} else if (&quot;svg&quot;.equalsIgnoreCase(fileName)) {</span>
-<span class="nc" id="L268">			connection.setFileFormat(FileFormat.SVG);</span>
-<span class="nc bnc" id="L269" title="All 2 branches missed.">		} else if (&quot;eps&quot;.equalsIgnoreCase(fileName)) {</span>
-<span class="nc" id="L270">			connection.setFileFormat(FileFormat.EPS);</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (&quot;png&quot;.equalsIgnoreCase(fileName)) {</span>
+<span class="nc" id="L265">			connection.setFileFormat(FileFormat.PNG);</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">		} else if (&quot;svg&quot;.equalsIgnoreCase(fileName)) {</span>
+<span class="nc" id="L267">			connection.setFileFormat(FileFormat.SVG);</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">		} else if (&quot;eps&quot;.equalsIgnoreCase(fileName)) {</span>
+<span class="nc" id="L269">			connection.setFileFormat(FileFormat.EPS);</span>
 		}
 
-<span class="nc bnc" id="L273" title="All 2 branches missed.">		if (fileName.length() &gt; 3) {</span>
-<span class="nc" id="L274">			final String data = new String(baos.toByteArray(), ftpServer.getCharset());</span>
-<span class="nc" id="L275">			final String pngFileName = connection.getFutureFileName(fileName);</span>
-<span class="nc" id="L276">			connection.futureOutgoing(pngFileName);</span>
-<span class="nc" id="L277">			connection.addIncoming(fileName, data);</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">		if (fileName.length() &gt; 3) {</span>
+<span class="nc" id="L273">			final String data = new String(baos.toByteArray(), ftpServer.getCharset());</span>
+<span class="nc" id="L274">			final String pngFileName = connection.getFutureFileName(fileName);</span>
+<span class="nc" id="L275">			connection.futureOutgoing(pngFileName);</span>
+<span class="nc" id="L276">			connection.addIncoming(fileName, data);</span>
 
-<span class="nc" id="L279">			ftpServer.processImage(connection, fileName);</span>
+<span class="nc" id="L278">			ftpServer.processImage(connection, fileName);</span>
 		}
-<span class="nc" id="L281">	}</span>
+<span class="nc" id="L280">	}</span>
 
 	private void listActif() throws UnknownHostException, IOException {
-<span class="nc" id="L284">		myOut(&quot;150 Opening ASCII mode data&quot;);</span>
-<span class="nc" id="L285">		final Socket soc = new Socket(ipClient, port);</span>
-<span class="nc" id="L286">		list(soc);</span>
-<span class="nc" id="L287">	}</span>
+<span class="nc" id="L283">		myOut(&quot;150 Opening ASCII mode data&quot;);</span>
+<span class="nc" id="L284">		final Socket soc = new Socket(ipClient, port);</span>
+<span class="nc" id="L285">		list(soc);</span>
+<span class="nc" id="L286">	}</span>
 
 	private void listPassif() throws UnknownHostException, IOException {
-<span class="nc" id="L290">		myOut(&quot;150 Opening ASCII mode data&quot;);</span>
-<span class="nc" id="L291">		final ServerSocket ss = new ServerSocket(port);</span>
-<span class="nc" id="L292">		final Socket incoming = ss.accept();</span>
-<span class="nc" id="L293">		list(incoming);</span>
-<span class="nc" id="L294">		ss.close();</span>
-<span class="nc" id="L295">	}</span>
+<span class="nc" id="L289">		myOut(&quot;150 Opening ASCII mode data&quot;);</span>
+<span class="nc" id="L290">		final ServerSocket ss = new ServerSocket(port);</span>
+<span class="nc" id="L291">		final Socket incoming = ss.accept();</span>
+<span class="nc" id="L292">		list(incoming);</span>
+<span class="nc" id="L293">		ss.close();</span>
+<span class="nc" id="L294">	}</span>
 
 	private void list(final Socket soc) throws IOException {
-<span class="nc" id="L298">		final PrintWriter listing = SecurityUtils.createPrintWriter(soc.getOutputStream(), true);</span>
-<span class="nc" id="L299">		final Collection&lt;String&gt; files = connection.getFiles();</span>
-<span class="nc bnc" id="L300" title="All 2 branches missed.">		if (files.size() &gt; 0) {</span>
-<span class="nc" id="L301">			int total = 0;</span>
-<span class="nc bnc" id="L302" title="All 2 branches missed.">			for (String n : files) {</span>
-<span class="nc" id="L303">				total += (connection.getSize(n) + 511) / 512;</span>
-<span class="nc" id="L304">			}</span>
-<span class="nc" id="L305">			listing.println(&quot;total &quot; + total);</span>
+<span class="nc" id="L297">		final PrintWriter listing = SecurityUtils.createPrintWriter(soc.getOutputStream(), true);</span>
+<span class="nc" id="L298">		final Collection&lt;String&gt; files = connection.getFiles();</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">		if (files.size() &gt; 0) {</span>
+<span class="nc" id="L300">			int total = 0;</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">			for (String n : files) {</span>
+<span class="nc" id="L302">				total += (connection.getSize(n) + 511) / 512;</span>
+<span class="nc" id="L303">			}</span>
+<span class="nc" id="L304">			listing.println(&quot;total &quot; + total);</span>
 			// localLog(total);
-<span class="nc bnc" id="L307" title="All 2 branches missed.">			for (String n : files) {</span>
-<span class="nc" id="L308">				final String ls = String.format(&quot;%10s %4d %-8s %-8s %8d %3s %2s %5s %s&quot;, &quot;-rw-rw-r--&quot;, 1, &quot;plantuml&quot;,</span>
-<span class="nc" id="L309">						&quot;plantuml&quot;, connection.getSize(n), &quot;Sep&quot;, 28, 2006, n);</span>
-<span class="nc" id="L310">				listing.println(ls);</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">			for (String n : files) {</span>
+<span class="nc" id="L307">				final String ls = String.format(&quot;%10s %4d %-8s %-8s %8d %3s %2s %5s %s&quot;, &quot;-rw-rw-r--&quot;, 1, &quot;plantuml&quot;,</span>
+<span class="nc" id="L308">						&quot;plantuml&quot;, connection.getSize(n), &quot;Sep&quot;, 28, 2006, n);</span>
+<span class="nc" id="L309">				listing.println(ls);</span>
 				// localLog(ls);
-<span class="nc" id="L312">			}</span>
+<span class="nc" id="L311">			}</span>
 		}
-<span class="nc" id="L314">		listing.flush();</span>
-<span class="nc" id="L315">		listing.close();</span>
-<span class="nc" id="L316">		soc.close();</span>
-<span class="nc" id="L317">		myOut(&quot;226 Listing completed.&quot;);</span>
-<span class="nc" id="L318">	}</span>
+<span class="nc" id="L313">		listing.flush();</span>
+<span class="nc" id="L314">		listing.close();</span>
+<span class="nc" id="L315">		soc.close();</span>
+<span class="nc" id="L316">		myOut(&quot;226 Listing completed.&quot;);</span>
+<span class="nc" id="L317">	}</span>
 
 	private void myOut(String s) {
-<span class="nc bnc" id="L321" title="All 2 branches missed.">		if (s.indexOf('\t') != -1) {</span>
-<span class="nc" id="L322">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">		if (s.indexOf('\t') != -1) {</span>
+<span class="nc" id="L321">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L324">		pw.println(s);</span>
-<span class="nc" id="L325">		pw.flush();</span>
-<span class="nc" id="L326">	}</span>
+<span class="nc" id="L323">		pw.println(s);</span>
+<span class="nc" id="L324">		pw.flush();</span>
+<span class="nc" id="L325">	}</span>
 
 	public void run() {
 		try {
-<span class="nc" id="L330">			runInternal();</span>
-<span class="nc" id="L331">		} catch (Throwable t) {</span>
-<span class="nc" id="L332">			Logme.error(t);</span>
-<span class="nc" id="L333">		}</span>
+<span class="nc" id="L329">			runInternal();</span>
+<span class="nc" id="L330">		} catch (Throwable t) {</span>
+<span class="nc" id="L331">			Logme.error(t);</span>
+<span class="nc" id="L332">		}</span>
 
-<span class="nc" id="L335">	}</span>
+<span class="nc" id="L334">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

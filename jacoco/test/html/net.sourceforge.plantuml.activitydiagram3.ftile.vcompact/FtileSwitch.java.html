@@ -65,125 +65,123 @@ import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 class FtileSwitch extends AbstractFtile {
-    // ::remove folder when __HAXE__
-
-<span class="nc" id="L70">	private final double xSeparation = 20;</span>
+<span class="nc" id="L68">	private final double xSeparation = 20;</span>
 
 	private final List&lt;Ftile&gt; tiles;
 
 	private final Rainbow arrowColor;
 
 	private FtileSwitch(List&lt;Double&gt; inlabelSizes, List&lt;Ftile&gt; tiles, Rainbow arrowColor) {
-<span class="nc" id="L77">		super(tiles.get(0).skinParam());</span>
-<span class="nc" id="L78">		this.tiles = new ArrayList&lt;&gt;(tiles);</span>
-<span class="nc" id="L79">		this.arrowColor = arrowColor;</span>
+<span class="nc" id="L75">		super(tiles.get(0).skinParam());</span>
+<span class="nc" id="L76">		this.tiles = new ArrayList&lt;&gt;(tiles);</span>
+<span class="nc" id="L77">		this.arrowColor = arrowColor;</span>
 
-<span class="nc" id="L81">	}</span>
+<span class="nc" id="L79">	}</span>
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L84">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (getSwimlaneIn() != null)</span>
-<span class="nc" id="L86">			result.add(getSwimlaneIn());</span>
+<span class="nc" id="L82">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (getSwimlaneIn() != null)</span>
+<span class="nc" id="L84">			result.add(getSwimlaneIn());</span>
 
-<span class="nc" id="L88">		return MyCollections.unmodifiableSet(result);</span>
+<span class="nc" id="L86">		return MyCollections.unmodifiableSet(result);</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L92">		return tiles.get(0).getSwimlaneIn();</span>
+<span class="nc" id="L90">		return tiles.get(0).getSwimlaneIn();</span>
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L96">		return getSwimlaneIn();</span>
+<span class="nc" id="L94">		return getSwimlaneIn();</span>
 	}
 
 	static Ftile create(Swimlane swimlane, HColor borderColor, HColor backColor, Rainbow arrowColor,
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, List&lt;Branch&gt; thens, FontConfiguration fcArrow,
 			LinkRendering topInlinkRendering, LinkRendering afterEndwhile, FontConfiguration fcTest) {
-<span class="nc" id="L102">		Objects.requireNonNull(afterEndwhile);</span>
-<span class="nc" id="L103">		final List&lt;Ftile&gt; tiles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L100">		Objects.requireNonNull(afterEndwhile);</span>
+<span class="nc" id="L101">		final List&lt;Ftile&gt; tiles = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (Branch branch : thens)</span>
-<span class="nc" id="L106">			tiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		for (Branch branch : thens)</span>
+<span class="nc" id="L104">			tiles.add(new FtileMinWidthCentered(branch.getFtile(), 30));</span>
 
-<span class="nc" id="L108">		List&lt;Double&gt; inlabelSizes = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (Branch branch : thens) {</span>
-<span class="nc" id="L110">			final TextBlock tb1 = branch.getDisplayPositive().create(fcArrow, HorizontalAlignment.LEFT,</span>
-<span class="nc" id="L111">					ftileFactory.skinParam());</span>
-<span class="nc" id="L112">			final TextBlock tbTest = branch.getLabelTest().create(fcTest,</span>
-<span class="nc" id="L113">					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
-<span class="nc" id="L114">					ftileFactory.skinParam());</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">			final HColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();</span>
+<span class="nc" id="L106">		List&lt;Double&gt; inlabelSizes = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		for (Branch branch : thens) {</span>
+<span class="nc" id="L108">			final TextBlock tb1 = branch.getDisplayPositive().create(fcArrow, HorizontalAlignment.LEFT,</span>
+<span class="nc" id="L109">					ftileFactory.skinParam());</span>
+<span class="nc" id="L110">			final TextBlock tbTest = branch.getLabelTest().create(fcTest,</span>
+<span class="nc" id="L111">					ftileFactory.skinParam().getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
+<span class="nc" id="L112">					ftileFactory.skinParam());</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			final HColor diamondColor = branch.getColor() == null ? backColor : branch.getColor();</span>
 
-<span class="nc" id="L117">			FtileDiamondInside2 diamond = new FtileDiamondInside2(tbTest, branch.skinParam(), diamondColor, borderColor,</span>
+<span class="nc" id="L115">			FtileDiamondInside2 diamond = new FtileDiamondInside2(tbTest, branch.skinParam(), diamondColor, borderColor,</span>
 					swimlane);
-<span class="nc" id="L119">			TextBlock tbInlabel = null;</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (Display.isNull(branch.getInlabel())) {</span>
-<span class="nc" id="L121">				inlabelSizes.add(0.0);</span>
+<span class="nc" id="L117">			TextBlock tbInlabel = null;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			if (Display.isNull(branch.getInlabel())) {</span>
+<span class="nc" id="L119">				inlabelSizes.add(0.0);</span>
 			} else {
-<span class="nc" id="L123">				tbInlabel = branch.getInlabel().create(fcArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());</span>
-<span class="nc" id="L124">				inlabelSizes.add(tbInlabel.calculateDimension(ftileFactory.getStringBounder()).getWidth());</span>
-<span class="nc" id="L125">				diamond = diamond.withWest(tbInlabel);</span>
+<span class="nc" id="L121">				tbInlabel = branch.getInlabel().create(fcArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());</span>
+<span class="nc" id="L122">				inlabelSizes.add(tbInlabel.calculateDimension(ftileFactory.getStringBounder()).getWidth());</span>
+<span class="nc" id="L123">				diamond = diamond.withWest(tbInlabel);</span>
 			}
-<span class="nc" id="L127">			diamond = diamond.withNorth(tb1);</span>
-<span class="nc" id="L128">		}</span>
+<span class="nc" id="L125">			diamond = diamond.withNorth(tb1);</span>
+<span class="nc" id="L126">		}</span>
 
-<span class="nc" id="L130">		return new FtileSwitch(inlabelSizes, tiles, arrowColor);</span>
+<span class="nc" id="L128">		return new FtileSwitch(inlabelSizes, tiles, arrowColor);</span>
 
 	}
 
 	@Override
 	public Collection&lt;Ftile&gt; getMyChildren() {
-<span class="nc" id="L136">		final List&lt;Ftile&gt; result = new ArrayList&lt;&gt;(tiles);</span>
-<span class="nc" id="L137">		return MyCollections.unmodifiableList(result);</span>
+<span class="nc" id="L134">		final List&lt;Ftile&gt; result = new ArrayList&lt;&gt;(tiles);</span>
+<span class="nc" id="L135">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	@Override
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (tiles.contains(child))</span>
-<span class="nc" id="L143">			return getTranslate1(child, stringBounder);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (tiles.contains(child))</span>
+<span class="nc" id="L141">			return getTranslate1(child, stringBounder);</span>
 
-<span class="nc" id="L145">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L143">		throw new UnsupportedOperationException();</span>
 	}
 
 	private UTranslate getTranslate1(Ftile tile, StringBounder stringBounder) {
-<span class="nc" id="L149">		double x1 = 0;</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		for (Ftile candidate : tiles) {</span>
-<span class="nc" id="L151">			final FtileGeometry dim1 = candidate.calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">			if (candidate == tile)</span>
-<span class="nc" id="L153">				return new UTranslate(x1, 25);</span>
+<span class="nc" id="L147">		double x1 = 0;</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		for (Ftile candidate : tiles) {</span>
+<span class="nc" id="L149">			final FtileGeometry dim1 = candidate.calculateDimension(stringBounder);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">			if (candidate == tile)</span>
+<span class="nc" id="L151">				return new UTranslate(x1, 25);</span>
 
-<span class="nc" id="L155">			x1 += dim1.getWidth() + xSeparation;</span>
-<span class="nc" id="L156">		}</span>
-<span class="nc" id="L157">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L153">			x1 += dim1.getWidth() + xSeparation;</span>
+<span class="nc" id="L154">		}</span>
+<span class="nc" id="L155">		throw new IllegalArgumentException();</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L161">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		for (Ftile tile : tiles)</span>
-<span class="nc" id="L163">			ug.apply(getTranslate1(tile, stringBounder)).draw(tile);</span>
+<span class="nc" id="L159">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		for (Ftile tile : tiles)</span>
+<span class="nc" id="L161">			ug.apply(getTranslate1(tile, stringBounder)).draw(tile);</span>
 
-<span class="nc" id="L165">	}</span>
+<span class="nc" id="L163">	}</span>
 
 	private FtileGeometry calculateDimensionInternal(StringBounder stringBounder) {
-<span class="nc" id="L168">		XDimension2D result = new XDimension2D(0, 0);</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">		for (Ftile couple : tiles)</span>
-<span class="nc" id="L170">			result = result.mergeLR(couple.calculateDimension(stringBounder));</span>
+<span class="nc" id="L166">		XDimension2D result = new XDimension2D(0, 0);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		for (Ftile couple : tiles)</span>
+<span class="nc" id="L168">			result = result.mergeLR(couple.calculateDimension(stringBounder));</span>
 
-<span class="nc" id="L172">		result = result.delta(xSeparation * (tiles.size() - 1), 100);</span>
+<span class="nc" id="L170">		result = result.delta(xSeparation * (tiles.size() - 1), 100);</span>
 
-<span class="nc" id="L174">		return new FtileGeometry(result, result.getWidth() / 2, 0);</span>
+<span class="nc" id="L172">		return new FtileGeometry(result, result.getWidth() / 2, 0);</span>
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="nc" id="L179">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="nc" id="L177">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
 
-<span class="nc" id="L181">		final List&lt;Ftile&gt; all = new ArrayList&lt;&gt;(tiles);</span>
-<span class="nc bnc" id="L182" title="All 2 branches missed.">		for (Ftile tmp : all)</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">			if (tmp.calculateDimension(stringBounder).hasPointOut())</span>
-<span class="nc" id="L184">				return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());</span>
+<span class="nc" id="L179">		final List&lt;Ftile&gt; all = new ArrayList&lt;&gt;(tiles);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">		for (Ftile tmp : all)</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (tmp.calculateDimension(stringBounder).hasPointOut())</span>
+<span class="nc" id="L182">				return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());</span>
 
-<span class="nc" id="L186">		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0);</span>
+<span class="nc" id="L184">		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0);</span>
 
 	}
 

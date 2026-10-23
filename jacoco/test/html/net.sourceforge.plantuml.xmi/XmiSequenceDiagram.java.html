@@ -7,8 +7,6 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 
 public abstract class XmiSequenceDiagram {
-    // ::remove folder when __HAXE__
-
 	protected final SequenceDiagram diagram;
 
 	public abstract void build();
@@ -16,33 +14,33 @@ public abstract class XmiSequenceDiagram {
 	protected final Document document;
 
 	public XmiSequenceDiagram(SequenceDiagram diagram, Document document) {
-<span class="fc" id="L19">		super();</span>
-<span class="fc" id="L20">		this.diagram = diagram;</span>
-<span class="fc" id="L21">		this.document = document;</span>
-<span class="fc" id="L22">	}</span>
+<span class="fc" id="L17">		super();</span>
+<span class="fc" id="L18">		this.diagram = diagram;</span>
+<span class="fc" id="L19">		this.document = document;</span>
+<span class="fc" id="L20">	}</span>
 
 	protected Element createElement(String tag, String[][] attributes) {
-<span class="fc" id="L25">		return setAttributes(document.createElement(tag), attributes);</span>
+<span class="fc" id="L23">		return setAttributes(document.createElement(tag), attributes);</span>
 	}
 
 	protected Element setAttribute(Element element, String name, String value) {
-<span class="nc" id="L29">		element.setAttribute(name, value);</span>
-<span class="nc" id="L30">		return element;</span>
+<span class="nc" id="L27">		element.setAttribute(name, value);</span>
+<span class="nc" id="L28">		return element;</span>
 	}
 
 	protected Element setAttributes(Element element, String[][] attributes) {
-<span class="fc bfc" id="L34" title="All 2 branches covered.">		for (String[] attr : attributes) {</span>
-<span class="fc" id="L35">			element.setAttribute(attr[0], attr[1]);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		for (String[] attr : attributes) {</span>
+<span class="fc" id="L33">			element.setAttribute(attr[0], attr[1]);</span>
 		}
-<span class="fc" id="L37">		return element;</span>
+<span class="fc" id="L35">		return element;</span>
 	}
 
 	protected String getDisplayString(Display display) {
-<span class="fc" id="L41">		return String.join(&quot;\n&quot;, display.asList());</span>
+<span class="fc" id="L39">		return String.join(&quot;\n&quot;, display.asList());</span>
 	}
 
 	protected String getXmiId(String tag, Object object) {
-<span class="fc" id="L45">		return Integer.toHexString(tag.hashCode()) + &quot;_&quot; + Integer.toHexString(object.hashCode());</span>
+<span class="fc" id="L43">		return Integer.toHexString(tag.hashCode()) + &quot;_&quot; + Integer.toHexString(object.hashCode());</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

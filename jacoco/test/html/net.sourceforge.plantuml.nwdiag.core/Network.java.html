@@ -38,12 +38,10 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.nwdiag.next.NStage;
 
 public class Network implements NStackable {
-    // ::remove folder when __HAXE__
-
 	private final String name;
 	private String description;
 	private HColor color;
-<span class="nc" id="L46">	private boolean visible = true;</span>
+<span class="nc" id="L44">	private boolean visible = true;</span>
 	private String ownAdress;
 	private double y;
 	private boolean fullWidth;
@@ -53,103 +51,103 @@ public class Network implements NStackable {
 
 	@Override
 	public String toString() {
-<span class="nc" id="L56">		return name + &quot; visible=&quot; + visible;</span>
+<span class="nc" id="L54">		return name + &quot; visible=&quot; + visible;</span>
 	}
 
 	private boolean isEven() {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		return nstage.getNumber() % 2 == 0;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		return nstage.getNumber() % 2 == 0;</span>
 	}
 
 	public double magicDelta() {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (isVisible() == false)</span>
-<span class="nc" id="L65">			return 0;</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (isEven())</span>
-<span class="nc" id="L67">			return 2;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (isVisible() == false)</span>
+<span class="nc" id="L63">			return 0;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (isEven())</span>
+<span class="nc" id="L65">			return 2;</span>
 		else
-<span class="nc" id="L69">			return -2;</span>
+<span class="nc" id="L67">			return -2;</span>
 	}
 
 	public NStage getUp() {
-<span class="nc" id="L73">		return up;</span>
+<span class="nc" id="L71">		return up;</span>
 	}
 
-<span class="nc" id="L76">	public Network(NStage up, NStage nstage, String name) {</span>
-<span class="nc" id="L77">		this.up = up;</span>
-<span class="nc" id="L78">		this.name = name;</span>
-<span class="nc" id="L79">		this.nstage = nstage;</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L74">	public Network(NStage up, NStage nstage, String name) {</span>
+<span class="nc" id="L75">		this.up = up;</span>
+<span class="nc" id="L76">		this.name = name;</span>
+<span class="nc" id="L77">		this.nstage = nstage;</span>
+<span class="nc" id="L78">	}</span>
 
 	public final String getOwnAdress() {
-<span class="nc" id="L83">		return ownAdress;</span>
+<span class="nc" id="L81">		return ownAdress;</span>
 	}
 
 	public final void setOwnAdress(String ownAdress) {
-<span class="nc" id="L87">		this.ownAdress = ownAdress;</span>
-<span class="nc" id="L88">	}</span>
+<span class="nc" id="L85">		this.ownAdress = ownAdress;</span>
+<span class="nc" id="L86">	}</span>
 
 	public final String getDisplayName() {
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (this.description == null)</span>
-<span class="nc" id="L92">			return name;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (this.description == null)</span>
+<span class="nc" id="L90">			return name;</span>
 
-<span class="nc" id="L94">		return this.description;</span>
+<span class="nc" id="L92">		return this.description;</span>
 	}
 
 	@Override
 	public void setDescription(String description) {
-<span class="nc" id="L99">		this.description = description;</span>
-<span class="nc" id="L100">	}</span>
+<span class="nc" id="L97">		this.description = description;</span>
+<span class="nc" id="L98">	}</span>
 
 	public final HColor getColor() {
-<span class="nc" id="L103">		return color;</span>
+<span class="nc" id="L101">		return color;</span>
 	}
 
 	@Override
 	public final void setColor(HColor color) {
-<span class="nc" id="L108">		this.color = color;</span>
-<span class="nc" id="L109">	}</span>
+<span class="nc" id="L106">		this.color = color;</span>
+<span class="nc" id="L107">	}</span>
 
 	public final void goInvisible() {
-<span class="nc" id="L112">		this.visible = false;</span>
-<span class="nc" id="L113">	}</span>
+<span class="nc" id="L110">		this.visible = false;</span>
+<span class="nc" id="L111">	}</span>
 
 	public final boolean isVisible() {
-<span class="nc" id="L116">		return visible;</span>
+<span class="nc" id="L114">		return visible;</span>
 	}
 
 	public final double getY() {
-<span class="nc" id="L120">		return y;</span>
+<span class="nc" id="L118">		return y;</span>
 	}
 
 	public final void setY(double y) {
-<span class="nc" id="L124">		this.y = y;</span>
-<span class="nc" id="L125">	}</span>
+<span class="nc" id="L122">		this.y = y;</span>
+<span class="nc" id="L123">	}</span>
 
 	public void setFullWidth(boolean fullWidth) {
-<span class="nc" id="L128">		this.fullWidth = fullWidth;</span>
-<span class="nc" id="L129">	}</span>
+<span class="nc" id="L126">		this.fullWidth = fullWidth;</span>
+<span class="nc" id="L127">	}</span>
 
 	public final boolean isFullWidth() {
-<span class="nc" id="L132">		return fullWidth;</span>
+<span class="nc" id="L130">		return fullWidth;</span>
 	}
 
 	public final NStage getNstage() {
-<span class="nc" id="L136">		return nstage;</span>
+<span class="nc" id="L134">		return nstage;</span>
 	}
 
 	private double xmin;
 	private double xmax;
 
 	public void setMinMax(double xmin, double xmax) {
-<span class="nc" id="L143">		this.xmin = xmin;</span>
-<span class="nc" id="L144">		this.xmax = xmax;</span>
-<span class="nc" id="L145">	}</span>
+<span class="nc" id="L141">		this.xmin = xmin;</span>
+<span class="nc" id="L142">		this.xmax = xmax;</span>
+<span class="nc" id="L143">	}</span>
 
 	public final double getXmin() {
-<span class="nc" id="L148">		return xmin;</span>
+<span class="nc" id="L146">		return xmin;</span>
 	}
 
 	public final double getXmax() {
-<span class="nc" id="L152">		return xmax;</span>
+<span class="nc" id="L150">		return xmax;</span>
 	}
 
 }

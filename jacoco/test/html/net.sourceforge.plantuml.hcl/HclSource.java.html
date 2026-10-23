@@ -41,20 +41,18 @@ import java.util.List;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 <span class="nc" id="L43">public class HclSource implements Iterable&lt;Character&gt; {</span>
-    // ::remove folder when __HAXE__
-
-<span class="nc" id="L46">	final private List&lt;Character&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L44">	final private List&lt;Character&gt; all = new ArrayList&lt;&gt;();</span>
 
 	public void add(String line) {
-<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (line.trim().startsWith(&quot;#&quot;))</span>
-<span class="nc" id="L50">			return;</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">		for (char c : line.toCharArray())</span>
-<span class="nc" id="L52">			all.add(c);</span>
-<span class="nc" id="L53">	}</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (line.trim().startsWith(&quot;#&quot;))</span>
+<span class="nc" id="L48">			return;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		for (char c : line.toCharArray())</span>
+<span class="nc" id="L50">			all.add(c);</span>
+<span class="nc" id="L51">	}</span>
 
 	@Override
 	public Iterator&lt;Character&gt; iterator() {
-<span class="nc" id="L57">		return MyCollections.unmodifiableList(all).iterator();</span>
+<span class="nc" id="L55">		return MyCollections.unmodifiableList(all).iterator();</span>
 	}
 
 }

@@ -24,7 +24,6 @@ package jcckit.graphic;
  *  @author Franz-Josef Elmer
  */
 public class Oval extends Rectangle {
-    // ::remove folder when __HAXE__
   /**
    *  Creates a new instance.
    *  @param center The position of the center of this element.
@@ -34,8 +33,8 @@ public class Oval extends Rectangle {
    */
   public Oval(GraphPoint center, double width, double height,
                    GraphicAttributes attributes) {
-<span class="nc" id="L37">    super(center, width, height, attributes);</span>
-<span class="nc" id="L38">  }</span>
+<span class="nc" id="L36">    super(center, width, height, attributes);</span>
+<span class="nc" id="L37">  }</span>
 
   /**
    *  Renders this oval with the specified {@link Renderer}.
@@ -44,13 +43,13 @@ public class Oval extends Rectangle {
    *          an instance of &lt;tt&gt;OvalRenderer&lt;/tt&gt;.
    */
   public void renderWith(Renderer renderer) {
-<span class="nc bnc" id="L47" title="All 2 branches missed.">    if (renderer instanceof OvalRenderer) {</span>
-<span class="nc" id="L48">      ((OvalRenderer) renderer).render(this);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">    if (renderer instanceof OvalRenderer) {</span>
+<span class="nc" id="L47">      ((OvalRenderer) renderer).render(this);</span>
     } else {
-<span class="nc" id="L50">      throw new IllegalArgumentException(renderer</span>
+<span class="nc" id="L49">      throw new IllegalArgumentException(renderer</span>
                             + &quot; does not implements OvalRenderer.&quot;);
     }
-<span class="nc" id="L53">  }</span>
+<span class="nc" id="L52">  }</span>
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -48,124 +48,122 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class SourceFileReader extends SourceFileReaderAbstract implements ISourceFileReader {
 	
-	// ::remove file when __HAXE__
-
 	private File outputDirectory;
 
 	public SourceFileReader(boolean ignoreSuggestedName, File file) throws IOException {
-<span class="fc" id="L56">		this(ignoreSuggestedName, file, file.getAbsoluteFile().getParentFile());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L54">		this(ignoreSuggestedName, file, file.getAbsoluteFile().getParentFile());</span>
+<span class="fc" id="L55">	}</span>
 
 	public SourceFileReader(boolean ignoreSuggestedName, File file, File outputDirectory, String charset)
 			throws IOException {
-<span class="nc" id="L61">		this(ignoreSuggestedName, Defines.createWithFileName(file), file, outputDirectory,</span>
-<span class="nc" id="L62">				Collections.&lt;String&gt;emptyList(), charset, new FileFormatOption(FileFormat.PNG));</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L59">		this(ignoreSuggestedName, Defines.createWithFileName(file), file, outputDirectory,</span>
+<span class="nc" id="L60">				Collections.&lt;String&gt;emptyList(), charset, new FileFormatOption(FileFormat.PNG));</span>
+<span class="nc" id="L61">	}</span>
 
 	public SourceFileReader(boolean ignoreSuggestedName, final File file, File outputDirectory) throws IOException {
-<span class="fc" id="L66">		this(ignoreSuggestedName, Defines.createWithFileName(file), file, outputDirectory,</span>
-<span class="fc" id="L67">				Collections.&lt;String&gt;emptyList(), null, new FileFormatOption(FileFormat.PNG));</span>
-<span class="fc" id="L68">	}</span>
+<span class="fc" id="L64">		this(ignoreSuggestedName, Defines.createWithFileName(file), file, outputDirectory,</span>
+<span class="fc" id="L65">				Collections.&lt;String&gt;emptyList(), null, new FileFormatOption(FileFormat.PNG));</span>
+<span class="fc" id="L66">	}</span>
 
 	public SourceFileReader(boolean ignoreSuggestedName, final File file, File outputDirectory,
 			FileFormatOption fileFormatOption) throws IOException {
-<span class="nc" id="L72">		this(ignoreSuggestedName, Defines.createWithFileName(file), file, outputDirectory,</span>
-<span class="nc" id="L73">				Collections.&lt;String&gt;emptyList(), null, fileFormatOption);</span>
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L70">		this(ignoreSuggestedName, Defines.createWithFileName(file), file, outputDirectory,</span>
+<span class="nc" id="L71">				Collections.&lt;String&gt;emptyList(), null, fileFormatOption);</span>
+<span class="nc" id="L72">	}</span>
 
 	public SourceFileReader(boolean ignoreSuggestedName, Defines defines, final File file, File outputDirectory,
 			List&lt;String&gt; config, String charset, FileFormatOption fileFormatOption) throws IOException {
-<span class="fc" id="L78">		super(ignoreSuggestedName, file, fileFormatOption, defines, config, charset);</span>
-<span class="fc" id="L79">		FileSystem.getInstance().setCurrentDir(SFile.fromFile(file.getAbsoluteFile().getParentFile()));</span>
-<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (outputDirectory == null)</span>
-<span class="fc" id="L81">			outputDirectory = file.getAbsoluteFile().getParentFile();</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">		else if (outputDirectory.isAbsolute() == false)</span>
-<span class="fc" id="L83">			outputDirectory = FileSystem.getInstance().getFile(outputDirectory.getPath()).conv();</span>
+<span class="fc" id="L76">		super(ignoreSuggestedName, file, fileFormatOption, defines, config, charset);</span>
+<span class="fc" id="L77">		FileSystem.getInstance().setCurrentDir(SFile.fromFile(file.getAbsoluteFile().getParentFile()));</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (outputDirectory == null)</span>
+<span class="fc" id="L79">			outputDirectory = file.getAbsoluteFile().getParentFile();</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		else if (outputDirectory.isAbsolute() == false)</span>
+<span class="fc" id="L81">			outputDirectory = FileSystem.getInstance().getFile(outputDirectory.getPath()).conv();</span>
 
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (outputDirectory.exists() == false)</span>
-<span class="fc" id="L86">			outputDirectory.mkdirs();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (outputDirectory.exists() == false)</span>
+<span class="fc" id="L84">			outputDirectory.mkdirs();</span>
 
-<span class="fc" id="L88">		this.outputDirectory = outputDirectory;</span>
+<span class="fc" id="L86">		this.outputDirectory = outputDirectory;</span>
 
-<span class="fc" id="L90">	}</span>
+<span class="fc" id="L88">	}</span>
 
 	private File getDirIfDirectory(String newName) throws FileNotFoundException {
-<span class="fc" id="L93">		final String newName2 = newName;</span>
-<span class="pc" id="L94">		Log.info(() -&gt; &quot;Checking=&quot; + newName2);</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (endsWithSlashOrAntislash(newName)) {</span>
-<span class="nc" id="L96">			Log.info(() -&gt; &quot;It ends with / so it looks like a directory&quot;);</span>
-<span class="nc" id="L97">			newName = newName.substring(0, newName.length() - 1);</span>
-<span class="nc" id="L98">			File f = new File(newName);</span>
-<span class="nc" id="L99">			final File f2 = f;</span>
-<span class="nc" id="L100">			Log.info(() -&gt; &quot;f=&quot; + f2);</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (f.isAbsolute() == false) {</span>
-<span class="nc" id="L102">				Log.info(() -&gt; &quot;It's relative, so let's change it&quot;);</span>
-<span class="nc" id="L103">				f = new File(outputDirectory, newName);</span>
-<span class="nc" id="L104">				final File f3 = f;</span>
-<span class="nc" id="L105">				Log.info(() -&gt; &quot;f=&quot; + f3);</span>
+<span class="fc" id="L91">		final String newName2 = newName;</span>
+<span class="pc" id="L92">		Log.info(() -&gt; &quot;Checking=&quot; + newName2);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (endsWithSlashOrAntislash(newName)) {</span>
+<span class="nc" id="L94">			Log.info(() -&gt; &quot;It ends with / so it looks like a directory&quot;);</span>
+<span class="nc" id="L95">			newName = newName.substring(0, newName.length() - 1);</span>
+<span class="nc" id="L96">			File f = new File(newName);</span>
+<span class="nc" id="L97">			final File f2 = f;</span>
+<span class="nc" id="L98">			Log.info(() -&gt; &quot;f=&quot; + f2);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (f.isAbsolute() == false) {</span>
+<span class="nc" id="L100">				Log.info(() -&gt; &quot;It's relative, so let's change it&quot;);</span>
+<span class="nc" id="L101">				f = new File(outputDirectory, newName);</span>
+<span class="nc" id="L102">				final File f3 = f;</span>
+<span class="nc" id="L103">				Log.info(() -&gt; &quot;f=&quot; + f3);</span>
 			}
-<span class="nc bnc" id="L107" title="All 2 branches missed.">			if (f.exists() == false) {</span>
-<span class="nc" id="L108">				Log.info(() -&gt; &quot;It does not exist: let's create it&quot;);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (f.exists() == false) {</span>
+<span class="nc" id="L106">				Log.info(() -&gt; &quot;It does not exist: let's create it&quot;);</span>
 				try {
-<span class="nc" id="L110">					f.mkdirs();</span>
-<span class="nc" id="L111">				} catch (Exception e) {</span>
-<span class="nc" id="L112">					Log.info(() -&gt; &quot;Error &quot; + e);</span>
-<span class="nc" id="L113">				}</span>
-<span class="nc bnc" id="L114" title="All 4 branches missed.">				if (f.exists() &amp;&amp; f.isDirectory()) {</span>
-<span class="nc" id="L115">					Log.info(() -&gt; &quot;Creation ok&quot;);</span>
-<span class="nc" id="L116">					return f;</span>
+<span class="nc" id="L108">					f.mkdirs();</span>
+<span class="nc" id="L109">				} catch (Exception e) {</span>
+<span class="nc" id="L110">					Log.info(() -&gt; &quot;Error &quot; + e);</span>
+<span class="nc" id="L111">				}</span>
+<span class="nc bnc" id="L112" title="All 4 branches missed.">				if (f.exists() &amp;&amp; f.isDirectory()) {</span>
+<span class="nc" id="L113">					Log.info(() -&gt; &quot;Creation ok&quot;);</span>
+<span class="nc" id="L114">					return f;</span>
 				}
-<span class="nc" id="L118">				Log.info(() -&gt; &quot;We cannot create it&quot;);</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">			} else if (f.isDirectory() == false) {</span>
-<span class="nc" id="L120">				Log.info(() -&gt; &quot;It exists, but is not a directory: we ignore it&quot;);</span>
-<span class="nc" id="L121">				return null;</span>
+<span class="nc" id="L116">				Log.info(() -&gt; &quot;We cannot create it&quot;);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">			} else if (f.isDirectory() == false) {</span>
+<span class="nc" id="L118">				Log.info(() -&gt; &quot;It exists, but is not a directory: we ignore it&quot;);</span>
+<span class="nc" id="L119">				return null;</span>
 			}
-<span class="nc" id="L123">			return f;</span>
+<span class="nc" id="L121">			return f;</span>
 
 		}
-<span class="fc" id="L126">		File f = new File(newName);</span>
-<span class="fc" id="L127">		final File f4 = f;</span>
-<span class="pc" id="L128">		Log.info(() -&gt; &quot;f=&quot; + f4);</span>
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (f.isAbsolute() == false) {</span>
-<span class="pc" id="L130">			Log.info(() -&gt; &quot;Relative, so let's change it&quot;);</span>
-<span class="fc" id="L131">			f = new File(outputDirectory, newName);</span>
-<span class="fc" id="L132">			final File f5 = f;</span>
-<span class="pc" id="L133">			Log.info(() -&gt; &quot;f=&quot; + f5);</span>
+<span class="fc" id="L124">		File f = new File(newName);</span>
+<span class="fc" id="L125">		final File f4 = f;</span>
+<span class="pc" id="L126">		Log.info(() -&gt; &quot;f=&quot; + f4);</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (f.isAbsolute() == false) {</span>
+<span class="pc" id="L128">			Log.info(() -&gt; &quot;Relative, so let's change it&quot;);</span>
+<span class="fc" id="L129">			f = new File(outputDirectory, newName);</span>
+<span class="fc" id="L130">			final File f5 = f;</span>
+<span class="pc" id="L131">			Log.info(() -&gt; &quot;f=&quot; + f5);</span>
 		}
-<span class="pc bpc" id="L135" title="3 of 4 branches missed.">		if (f.exists() &amp;&amp; f.isDirectory()) {</span>
-<span class="nc" id="L136">			Log.info(() -&gt; &quot;It's an existing directory&quot;);</span>
-<span class="nc" id="L137">			return f;</span>
+<span class="pc bpc" id="L133" title="3 of 4 branches missed.">		if (f.exists() &amp;&amp; f.isDirectory()) {</span>
+<span class="nc" id="L134">			Log.info(() -&gt; &quot;It's an existing directory&quot;);</span>
+<span class="nc" id="L135">			return f;</span>
 		}
-<span class="pc" id="L139">		Log.info(() -&gt; &quot;It's not a directory&quot;);</span>
-<span class="fc" id="L140">		return null;</span>
+<span class="pc" id="L137">		Log.info(() -&gt; &quot;It's not a directory&quot;);</span>
+<span class="fc" id="L138">		return null;</span>
 
 	}
 
 	@Override
 	protected SuggestedFile getSuggestedFile(BlockUml blockUml) throws FileNotFoundException {
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		final String newName = ignoreSuggestedName ? null : blockUml.getFileOrDirname();</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		final String newName = ignoreSuggestedName ? null : blockUml.getFileOrDirname();</span>
 
 		final SuggestedFile suggested;
 
-<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (newName == null) {</span>
-<span class="fc" id="L151">			suggested = getSuggestedFile(outputDirectory, getFileName());</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (newName == null) {</span>
+<span class="fc" id="L149">			suggested = getSuggestedFile(outputDirectory, getFileName());</span>
 		} else {
-<span class="pc" id="L153">			Log.info(() -&gt; &quot;name from block=&quot; + newName);</span>
-<span class="fc" id="L154">			final File dir = getDirIfDirectory(newName);</span>
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">			if (dir == null) {</span>
-<span class="pc" id="L156">				Log.info(() -&gt; newName + &quot; is not taken as a directory&quot;);</span>
-<span class="fc" id="L157">				suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, newName),</span>
-<span class="fc" id="L158">						getFileFormatOption().getFileFormat(), 0);</span>
+<span class="pc" id="L151">			Log.info(() -&gt; &quot;name from block=&quot; + newName);</span>
+<span class="fc" id="L152">			final File dir = getDirIfDirectory(newName);</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">			if (dir == null) {</span>
+<span class="pc" id="L154">				Log.info(() -&gt; newName + &quot; is not taken as a directory&quot;);</span>
+<span class="fc" id="L155">				suggested = SuggestedFile.fromOutputFile(new File(outputDirectory, newName),</span>
+<span class="fc" id="L156">						getFileFormatOption().getFileFormat(), 0);</span>
 			} else {
-<span class="nc" id="L160">				Log.info(() -&gt; &quot;We are going to create files in directory &quot; + dir);</span>
-<span class="nc" id="L161">				suggested = SuggestedFile.fromOutputFile(new File(dir, getFileName()),</span>
-<span class="nc" id="L162">						getFileFormatOption().getFileFormat(), 0);</span>
+<span class="nc" id="L158">				Log.info(() -&gt; &quot;We are going to create files in directory &quot; + dir);</span>
+<span class="nc" id="L159">				suggested = SuggestedFile.fromOutputFile(new File(dir, getFileName()),</span>
+<span class="nc" id="L160">						getFileFormatOption().getFileFormat(), 0);</span>
 			}
 		}
-<span class="fc" id="L165">		Log.info(() -&gt; &quot;We are going to put data in &quot; + suggested);</span>
+<span class="fc" id="L163">		Log.info(() -&gt; &quot;We are going to put data in &quot; + suggested);</span>
 
-<span class="fc" id="L167">		suggested.getParentFile().mkdirs();</span>
-<span class="fc" id="L168">		return suggested;</span>
+<span class="fc" id="L165">		suggested.getParentFile().mkdirs();</span>
+<span class="fc" id="L166">		return suggested;</span>
 	}
 
 }

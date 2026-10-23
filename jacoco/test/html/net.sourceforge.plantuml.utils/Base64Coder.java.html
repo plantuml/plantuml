@@ -45,34 +45,32 @@ package net.sourceforge.plantuml.utils;
 //::done
 
 public class Base64Coder {
-	// ::remove file when __HAXE__
-
 
 	// The line separator string of the operating system.
-<span class="fc" id="L52">	private static final String systemLineSeparator = System.getProperty(&quot;line.separator&quot;);</span>
+<span class="fc" id="L50">	private static final String systemLineSeparator = System.getProperty(&quot;line.separator&quot;);</span>
 
 	// Mapping table from 6-bit nibbles to Base64 characters.
-<span class="fc" id="L55">	private static final char[] map1 = new char[64];</span>
+<span class="fc" id="L53">	private static final char[] map1 = new char[64];</span>
 	static {
-<span class="fc" id="L57">		int i = 0;</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		for (char c = 'A'; c &lt;= 'Z'; c++)</span>
+<span class="fc" id="L55">		int i = 0;</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		for (char c = 'A'; c &lt;= 'Z'; c++)</span>
+<span class="fc" id="L57">			map1[i++] = c;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		for (char c = 'a'; c &lt;= 'z'; c++)</span>
 <span class="fc" id="L59">			map1[i++] = c;</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">		for (char c = 'a'; c &lt;= 'z'; c++)</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		for (char c = '0'; c &lt;= '9'; c++)</span>
 <span class="fc" id="L61">			map1[i++] = c;</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (char c = '0'; c &lt;= '9'; c++)</span>
-<span class="fc" id="L63">			map1[i++] = c;</span>
-<span class="fc" id="L64">		map1[i++] = '+';</span>
-<span class="fc" id="L65">		map1[i++] = '/';</span>
+<span class="fc" id="L62">		map1[i++] = '+';</span>
+<span class="fc" id="L63">		map1[i++] = '/';</span>
 	}
 
 	// Mapping table from Base64 characters to 6-bit nibbles.
-<span class="fc" id="L69">	private static final byte[] map2 = new byte[128];</span>
+<span class="fc" id="L67">	private static final byte[] map2 = new byte[128];</span>
 	static {
-<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (int i = 0; i &lt; map2.length; i++)</span>
-<span class="fc" id="L72">			map2[i] = -1;</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		for (int i = 0; i &lt; 64; i++)</span>
-<span class="fc" id="L74">			map2[map1[i]] = (byte) i;</span>
-<span class="fc" id="L75">	}</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		for (int i = 0; i &lt; map2.length; i++)</span>
+<span class="fc" id="L70">			map2[i] = -1;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (int i = 0; i &lt; 64; i++)</span>
+<span class="fc" id="L72">			map2[map1[i]] = (byte) i;</span>
+<span class="fc" id="L73">	}</span>
 
 	/**
 	 * Encodes a string into Base64 format. No blanks or line breaks are inserted.
@@ -81,7 +79,7 @@ public class Base64Coder {
 	 * @return A String containing the Base64 encoded data.
 	 */
 	public static String encodeString(String s) {
-<span class="nc" id="L84">		return new String(encode(s.getBytes()));</span>
+<span class="nc" id="L82">		return new String(encode(s.getBytes()));</span>
 	}
 
 	/**
@@ -93,7 +91,7 @@ public class Base64Coder {
 	 * @return A String containing the Base64 encoded data, broken into lines.
 	 */
 	public static String encodeLines(byte[] in) {
-<span class="nc" id="L96">		return encodeLines(in, 0, in.length, 76, systemLineSeparator);</span>
+<span class="nc" id="L94">		return encodeLines(in, 0, in.length, 76, systemLineSeparator);</span>
 	}
 
 	/**
@@ -111,20 +109,20 @@ public class Base64Coder {
 	 * @return A String containing the Base64 encoded data, broken into lines.
 	 */
 	public static String encodeLines(byte[] in, int iOff, int iLen, int lineLen, String lineSeparator) {
-<span class="nc" id="L114">		int blockLen = (lineLen * 3) / 4;</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (blockLen &lt;= 0)</span>
-<span class="nc" id="L116">			throw new IllegalArgumentException();</span>
-<span class="nc" id="L117">		int lines = (iLen + blockLen - 1) / blockLen;</span>
-<span class="nc" id="L118">		int bufLen = ((iLen + 2) / 3) * 4 + lines * lineSeparator.length();</span>
-<span class="nc" id="L119">		StringBuilder buf = new StringBuilder(bufLen);</span>
-<span class="nc" id="L120">		int ip = 0;</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		while (ip &lt; iLen) {</span>
-<span class="nc" id="L122">			int l = Math.min(iLen - ip, blockLen);</span>
-<span class="nc" id="L123">			buf.append(encode(in, iOff + ip, l));</span>
-<span class="nc" id="L124">			buf.append(lineSeparator);</span>
-<span class="nc" id="L125">			ip += l;</span>
-<span class="nc" id="L126">		}</span>
-<span class="nc" id="L127">		return buf.toString();</span>
+<span class="nc" id="L112">		int blockLen = (lineLen * 3) / 4;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (blockLen &lt;= 0)</span>
+<span class="nc" id="L114">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L115">		int lines = (iLen + blockLen - 1) / blockLen;</span>
+<span class="nc" id="L116">		int bufLen = ((iLen + 2) / 3) * 4 + lines * lineSeparator.length();</span>
+<span class="nc" id="L117">		StringBuilder buf = new StringBuilder(bufLen);</span>
+<span class="nc" id="L118">		int ip = 0;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		while (ip &lt; iLen) {</span>
+<span class="nc" id="L120">			int l = Math.min(iLen - ip, blockLen);</span>
+<span class="nc" id="L121">			buf.append(encode(in, iOff + ip, l));</span>
+<span class="nc" id="L122">			buf.append(lineSeparator);</span>
+<span class="nc" id="L123">			ip += l;</span>
+<span class="nc" id="L124">		}</span>
+<span class="nc" id="L125">		return buf.toString();</span>
 	}
 
 	/**
@@ -135,7 +133,7 @@ public class Base64Coder {
 	 * @return A character array containing the Base64 encoded data.
 	 */
 	public static char[] encode(byte[] in) {
-<span class="fc" id="L138">		return encode(in, 0, in.length);</span>
+<span class="fc" id="L136">		return encode(in, 0, in.length);</span>
 	}
 
 	/**
@@ -147,7 +145,7 @@ public class Base64Coder {
 	 * @return A character array containing the Base64 encoded data.
 	 */
 	public static char[] encode(byte[] in, int iLen) {
-<span class="nc" id="L150">		return encode(in, 0, iLen);</span>
+<span class="nc" id="L148">		return encode(in, 0, iLen);</span>
 	}
 
 	/**
@@ -161,28 +159,28 @@ public class Base64Coder {
 	 * @return A character array containing the Base64 encoded data.
 	 */
 	public static char[] encode(byte[] in, int iOff, int iLen) {
-<span class="fc" id="L164">		int oDataLen = (iLen * 4 + 2) / 3; // output length without padding</span>
-<span class="fc" id="L165">		int oLen = ((iLen + 2) / 3) * 4; // output length including padding</span>
-<span class="fc" id="L166">		char[] out = new char[oLen];</span>
-<span class="fc" id="L167">		int ip = iOff;</span>
-<span class="fc" id="L168">		int iEnd = iOff + iLen;</span>
-<span class="fc" id="L169">		int op = 0;</span>
-<span class="fc bfc" id="L170" title="All 2 branches covered.">		while (ip &lt; iEnd) {</span>
-<span class="fc" id="L171">			int i0 = in[ip++] &amp; 0xff;</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">			int i1 = ip &lt; iEnd ? in[ip++] &amp; 0xff : 0;</span>
-<span class="fc bfc" id="L173" title="All 2 branches covered.">			int i2 = ip &lt; iEnd ? in[ip++] &amp; 0xff : 0;</span>
-<span class="fc" id="L174">			int o0 = i0 &gt;&gt;&gt; 2;</span>
-<span class="fc" id="L175">			int o1 = ((i0 &amp; 3) &lt;&lt; 4) | (i1 &gt;&gt;&gt; 4);</span>
-<span class="fc" id="L176">			int o2 = ((i1 &amp; 0xf) &lt;&lt; 2) | (i2 &gt;&gt;&gt; 6);</span>
-<span class="fc" id="L177">			int o3 = i2 &amp; 0x3F;</span>
-<span class="fc" id="L178">			out[op++] = map1[o0];</span>
-<span class="fc" id="L179">			out[op++] = map1[o1];</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">			out[op] = op &lt; oDataLen ? map1[o2] : '=';</span>
+<span class="fc" id="L162">		int oDataLen = (iLen * 4 + 2) / 3; // output length without padding</span>
+<span class="fc" id="L163">		int oLen = ((iLen + 2) / 3) * 4; // output length including padding</span>
+<span class="fc" id="L164">		char[] out = new char[oLen];</span>
+<span class="fc" id="L165">		int ip = iOff;</span>
+<span class="fc" id="L166">		int iEnd = iOff + iLen;</span>
+<span class="fc" id="L167">		int op = 0;</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">		while (ip &lt; iEnd) {</span>
+<span class="fc" id="L169">			int i0 = in[ip++] &amp; 0xff;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">			int i1 = ip &lt; iEnd ? in[ip++] &amp; 0xff : 0;</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			int i2 = ip &lt; iEnd ? in[ip++] &amp; 0xff : 0;</span>
+<span class="fc" id="L172">			int o0 = i0 &gt;&gt;&gt; 2;</span>
+<span class="fc" id="L173">			int o1 = ((i0 &amp; 3) &lt;&lt; 4) | (i1 &gt;&gt;&gt; 4);</span>
+<span class="fc" id="L174">			int o2 = ((i1 &amp; 0xf) &lt;&lt; 2) | (i2 &gt;&gt;&gt; 6);</span>
+<span class="fc" id="L175">			int o3 = i2 &amp; 0x3F;</span>
+<span class="fc" id="L176">			out[op++] = map1[o0];</span>
+<span class="fc" id="L177">			out[op++] = map1[o1];</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">			out[op] = op &lt; oDataLen ? map1[o2] : '=';</span>
+<span class="fc" id="L179">			op++;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			out[op] = op &lt; oDataLen ? map1[o3] : '=';</span>
 <span class="fc" id="L181">			op++;</span>
-<span class="fc bfc" id="L182" title="All 2 branches covered.">			out[op] = op &lt; oDataLen ? map1[o3] : '=';</span>
-<span class="fc" id="L183">			op++;</span>
-<span class="fc" id="L184">		}</span>
-<span class="fc" id="L185">		return out;</span>
+<span class="fc" id="L182">		}</span>
+<span class="fc" id="L183">		return out;</span>
 	}
 
 	/**
@@ -195,7 +193,7 @@ public class Base64Coder {
 	 *                                  data.
 	 */
 	public static String decodeString(String s) {
-<span class="nc" id="L198">		return new String(decode(s));</span>
+<span class="nc" id="L196">		return new String(decode(s));</span>
 	}
 
 	/**
@@ -210,14 +208,14 @@ public class Base64Coder {
 	 *                                  data.
 	 */
 	public static byte[] decodeLines(String s) {
-<span class="nc" id="L213">		char[] buf = new char[s.length()];</span>
-<span class="nc" id="L214">		int p = 0;</span>
-<span class="nc bnc" id="L215" title="All 2 branches missed.">		for (int ip = 0; ip &lt; s.length(); ip++) {</span>
-<span class="nc" id="L216">			char c = s.charAt(ip);</span>
-<span class="nc bnc" id="L217" title="All 8 branches missed.">			if (c != ' ' &amp;&amp; c != '\r' &amp;&amp; c != '\n' &amp;&amp; c != '\t')</span>
-<span class="nc" id="L218">				buf[p++] = c;</span>
+<span class="nc" id="L211">		char[] buf = new char[s.length()];</span>
+<span class="nc" id="L212">		int p = 0;</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		for (int ip = 0; ip &lt; s.length(); ip++) {</span>
+<span class="nc" id="L214">			char c = s.charAt(ip);</span>
+<span class="nc bnc" id="L215" title="All 8 branches missed.">			if (c != ' ' &amp;&amp; c != '\r' &amp;&amp; c != '\n' &amp;&amp; c != '\t')</span>
+<span class="nc" id="L216">				buf[p++] = c;</span>
 		}
-<span class="nc" id="L220">		return decode(buf, 0, p);</span>
+<span class="nc" id="L218">		return decode(buf, 0, p);</span>
 	}
 
 	/**
@@ -230,7 +228,7 @@ public class Base64Coder {
 	 *                                  data.
 	 */
 	public static byte[] decode(String s) {
-<span class="fc" id="L233">		return decode(s.toCharArray());</span>
+<span class="fc" id="L231">		return decode(s.toCharArray());</span>
 	}
 
 	/**
@@ -243,7 +241,7 @@ public class Base64Coder {
 	 *                                  data.
 	 */
 	public static byte[] decode(char[] in) {
-<span class="fc" id="L246">		return decode(in, 0, in.length);</span>
+<span class="fc" id="L244">		return decode(in, 0, in.length);</span>
 	}
 
 	/**
@@ -259,38 +257,38 @@ public class Base64Coder {
 	 *                                  data.
 	 */
 	public static byte[] decode(char[] in, int iOff, int iLen) {
-<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (iLen % 4 != 0)</span>
-<span class="nc" id="L263">			throw new IllegalArgumentException(&quot;Length of Base64 encoded input string is not a multiple of 4.&quot;);</span>
-<span class="pc bpc" id="L264" title="1 of 4 branches missed.">		while (iLen &gt; 0 &amp;&amp; in[iOff + iLen - 1] == '=')</span>
-<span class="fc" id="L265">			iLen--;</span>
-<span class="fc" id="L266">		int oLen = (iLen * 3) / 4;</span>
-<span class="fc" id="L267">		byte[] out = new byte[oLen];</span>
-<span class="fc" id="L268">		int ip = iOff;</span>
-<span class="fc" id="L269">		int iEnd = iOff + iLen;</span>
-<span class="fc" id="L270">		int op = 0;</span>
-<span class="fc bfc" id="L271" title="All 2 branches covered.">		while (ip &lt; iEnd) {</span>
-<span class="fc" id="L272">			int i0 = in[ip++];</span>
-<span class="fc" id="L273">			int i1 = in[ip++];</span>
-<span class="fc bfc" id="L274" title="All 2 branches covered.">			int i2 = ip &lt; iEnd ? in[ip++] : 'A';</span>
-<span class="fc bfc" id="L275" title="All 2 branches covered.">			int i3 = ip &lt; iEnd ? in[ip++] : 'A';</span>
-<span class="pc bpc" id="L276" title="4 of 8 branches missed.">			if (i0 &gt; 127 || i1 &gt; 127 || i2 &gt; 127 || i3 &gt; 127)</span>
-<span class="nc" id="L277">				throw new IllegalArgumentException(&quot;Illegal character in Base64 encoded data.&quot;);</span>
-<span class="fc" id="L278">			int b0 = map2[i0];</span>
-<span class="fc" id="L279">			int b1 = map2[i1];</span>
-<span class="fc" id="L280">			int b2 = map2[i2];</span>
-<span class="fc" id="L281">			int b3 = map2[i3];</span>
-<span class="pc bpc" id="L282" title="4 of 8 branches missed.">			if (b0 &lt; 0 || b1 &lt; 0 || b2 &lt; 0 || b3 &lt; 0)</span>
-<span class="nc" id="L283">				throw new IllegalArgumentException(&quot;Illegal character in Base64 encoded data.&quot;);</span>
-<span class="fc" id="L284">			int o0 = (b0 &lt;&lt; 2) | (b1 &gt;&gt;&gt; 4);</span>
-<span class="fc" id="L285">			int o1 = ((b1 &amp; 0xf) &lt;&lt; 4) | (b2 &gt;&gt;&gt; 2);</span>
-<span class="fc" id="L286">			int o2 = ((b2 &amp; 3) &lt;&lt; 6) | b3;</span>
-<span class="fc" id="L287">			out[op++] = (byte) o0;</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">		if (iLen % 4 != 0)</span>
+<span class="nc" id="L261">			throw new IllegalArgumentException(&quot;Length of Base64 encoded input string is not a multiple of 4.&quot;);</span>
+<span class="pc bpc" id="L262" title="1 of 4 branches missed.">		while (iLen &gt; 0 &amp;&amp; in[iOff + iLen - 1] == '=')</span>
+<span class="fc" id="L263">			iLen--;</span>
+<span class="fc" id="L264">		int oLen = (iLen * 3) / 4;</span>
+<span class="fc" id="L265">		byte[] out = new byte[oLen];</span>
+<span class="fc" id="L266">		int ip = iOff;</span>
+<span class="fc" id="L267">		int iEnd = iOff + iLen;</span>
+<span class="fc" id="L268">		int op = 0;</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">		while (ip &lt; iEnd) {</span>
+<span class="fc" id="L270">			int i0 = in[ip++];</span>
+<span class="fc" id="L271">			int i1 = in[ip++];</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">			int i2 = ip &lt; iEnd ? in[ip++] : 'A';</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">			int i3 = ip &lt; iEnd ? in[ip++] : 'A';</span>
+<span class="pc bpc" id="L274" title="4 of 8 branches missed.">			if (i0 &gt; 127 || i1 &gt; 127 || i2 &gt; 127 || i3 &gt; 127)</span>
+<span class="nc" id="L275">				throw new IllegalArgumentException(&quot;Illegal character in Base64 encoded data.&quot;);</span>
+<span class="fc" id="L276">			int b0 = map2[i0];</span>
+<span class="fc" id="L277">			int b1 = map2[i1];</span>
+<span class="fc" id="L278">			int b2 = map2[i2];</span>
+<span class="fc" id="L279">			int b3 = map2[i3];</span>
+<span class="pc bpc" id="L280" title="4 of 8 branches missed.">			if (b0 &lt; 0 || b1 &lt; 0 || b2 &lt; 0 || b3 &lt; 0)</span>
+<span class="nc" id="L281">				throw new IllegalArgumentException(&quot;Illegal character in Base64 encoded data.&quot;);</span>
+<span class="fc" id="L282">			int o0 = (b0 &lt;&lt; 2) | (b1 &gt;&gt;&gt; 4);</span>
+<span class="fc" id="L283">			int o1 = ((b1 &amp; 0xf) &lt;&lt; 4) | (b2 &gt;&gt;&gt; 2);</span>
+<span class="fc" id="L284">			int o2 = ((b2 &amp; 3) &lt;&lt; 6) | b3;</span>
+<span class="fc" id="L285">			out[op++] = (byte) o0;</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">			if (op &lt; oLen)</span>
+<span class="fc" id="L287">				out[op++] = (byte) o1;</span>
 <span class="fc bfc" id="L288" title="All 2 branches covered.">			if (op &lt; oLen)</span>
-<span class="fc" id="L289">				out[op++] = (byte) o1;</span>
-<span class="fc bfc" id="L290" title="All 2 branches covered.">			if (op &lt; oLen)</span>
-<span class="fc" id="L291">				out[op++] = (byte) o2;</span>
-<span class="fc" id="L292">		}</span>
-<span class="fc" id="L293">		return out;</span>
+<span class="fc" id="L289">				out[op++] = (byte) o2;</span>
+<span class="fc" id="L290">		}</span>
+<span class="fc" id="L291">		return out;</span>
 	}
 
 	// Dummy constructor.

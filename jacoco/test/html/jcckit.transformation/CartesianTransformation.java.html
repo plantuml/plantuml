@@ -31,7 +31,6 @@ import jcckit.util.Util;
  *  @author Franz-Josef Elmer
  */
 public class CartesianTransformation implements Transformation {
-    // ::remove folder when __HAXE__
   private final boolean _xLogScale;
   private final double _xOffset;
   private final double _xScale;
@@ -56,43 +55,43 @@ public class CartesianTransformation implements Transformation {
    */
   public CartesianTransformation(boolean xLogScale, boolean yLogScale,
                            DataPoint dataPoint1, GraphPoint graphPoint1,
-<span class="nc" id="L59">                           DataPoint dataPoint2, GraphPoint graphPoint2) {</span>
-<span class="nc" id="L60">    _xLogScale = xLogScale;</span>
-<span class="nc" id="L61">    double d1 = Util.log(dataPoint1.getX(), xLogScale);</span>
-<span class="nc" id="L62">    double dd = Util.log(dataPoint2.getX(), xLogScale) - d1;</span>
-<span class="nc" id="L63">    check(dd, &quot;data&quot;, &quot;x&quot;, d1);</span>
-<span class="nc" id="L64">    _xScale = (graphPoint2.getX() - graphPoint1.getX()) / dd;</span>
-<span class="nc" id="L65">    check(_xScale, &quot;graphical&quot;, &quot;x&quot;, graphPoint1.getX());</span>
-<span class="nc" id="L66">    _xOffset = graphPoint1.getX() - d1 * _xScale;</span>
+<span class="nc" id="L58">                           DataPoint dataPoint2, GraphPoint graphPoint2) {</span>
+<span class="nc" id="L59">    _xLogScale = xLogScale;</span>
+<span class="nc" id="L60">    double d1 = Util.log(dataPoint1.getX(), xLogScale);</span>
+<span class="nc" id="L61">    double dd = Util.log(dataPoint2.getX(), xLogScale) - d1;</span>
+<span class="nc" id="L62">    check(dd, &quot;data&quot;, &quot;x&quot;, d1);</span>
+<span class="nc" id="L63">    _xScale = (graphPoint2.getX() - graphPoint1.getX()) / dd;</span>
+<span class="nc" id="L64">    check(_xScale, &quot;graphical&quot;, &quot;x&quot;, graphPoint1.getX());</span>
+<span class="nc" id="L65">    _xOffset = graphPoint1.getX() - d1 * _xScale;</span>
 
-<span class="nc" id="L68">    _yLogScale = yLogScale;</span>
-<span class="nc" id="L69">    d1 = Util.log(dataPoint1.getY(), yLogScale);</span>
-<span class="nc" id="L70">    dd = Util.log(dataPoint2.getY(), yLogScale) - d1;</span>
-<span class="nc" id="L71">    check(dd, &quot;data&quot;, &quot;y&quot;, d1);</span>
-<span class="nc" id="L72">    _yScale = (graphPoint2.getY() - graphPoint1.getY()) / dd;</span>
-<span class="nc" id="L73">    check(_yScale, &quot;graphical&quot;, &quot;y&quot;, graphPoint1.getY());</span>
-<span class="nc" id="L74">    _yOffset = graphPoint1.getY() - d1 * _yScale;</span>
-<span class="nc" id="L75">  }</span>
+<span class="nc" id="L67">    _yLogScale = yLogScale;</span>
+<span class="nc" id="L68">    d1 = Util.log(dataPoint1.getY(), yLogScale);</span>
+<span class="nc" id="L69">    dd = Util.log(dataPoint2.getY(), yLogScale) - d1;</span>
+<span class="nc" id="L70">    check(dd, &quot;data&quot;, &quot;y&quot;, d1);</span>
+<span class="nc" id="L71">    _yScale = (graphPoint2.getY() - graphPoint1.getY()) / dd;</span>
+<span class="nc" id="L72">    check(_yScale, &quot;graphical&quot;, &quot;y&quot;, graphPoint1.getY());</span>
+<span class="nc" id="L73">    _yOffset = graphPoint1.getY() - d1 * _yScale;</span>
+<span class="nc" id="L74">  }</span>
 
   private void check(double valueToCheck, String type, String axis,
                      double value) {
-<span class="nc bnc" id="L79" title="All 2 branches missed.">    if (valueToCheck == 0) {</span>
-<span class="nc" id="L80">      throw new IllegalArgumentException(&quot;The &quot; + type</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">    if (valueToCheck == 0) {</span>
+<span class="nc" id="L79">      throw new IllegalArgumentException(&quot;The &quot; + type</span>
           + &quot; reference points in &quot; + axis + &quot; must be different; both are &quot;
           + value);
     }
-<span class="nc" id="L84">  }</span>
+<span class="nc" id="L83">  }</span>
 
   public GraphPoint transformToGraph(DataPoint point) {
-<span class="nc" id="L87">    return new GraphPoint(</span>
-<span class="nc" id="L88">        _xOffset + Util.log(point.getX(), _xLogScale) * _xScale,</span>
-<span class="nc" id="L89">        _yOffset + Util.log(point.getY(), _yLogScale) * _yScale);</span>
+<span class="nc" id="L86">    return new GraphPoint(</span>
+<span class="nc" id="L87">        _xOffset + Util.log(point.getX(), _xLogScale) * _xScale,</span>
+<span class="nc" id="L88">        _yOffset + Util.log(point.getY(), _yLogScale) * _yScale);</span>
   }
 
   public DataPoint transformToData(GraphPoint point) {
-<span class="nc" id="L93">    return new DataPoint(</span>
-<span class="nc" id="L94">        Util.exp((point.getX() - _xOffset) / _xScale, _xLogScale),</span>
-<span class="nc" id="L95">        Util.exp((point.getY() - _yOffset) / _yScale, _yLogScale));</span>
+<span class="nc" id="L92">    return new DataPoint(</span>
+<span class="nc" id="L93">        Util.exp((point.getX() - _xOffset) / _xScale, _xLogScale),</span>
+<span class="nc" id="L94">        Util.exp((point.getY() - _yOffset) / _yScale, _yLogScale));</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

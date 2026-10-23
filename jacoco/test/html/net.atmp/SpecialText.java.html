@@ -44,25 +44,23 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEmpty;
 
 public class SpecialText implements UShapeIgnorableForCompression {
-    // ::remove folder when __HAXE__
-
 	private final TextBlock title;
 
-<span class="fc" id="L51">	public SpecialText(TextBlock title) {</span>
-<span class="fc" id="L52">		this.title = title;</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L49">	public SpecialText(TextBlock title) {</span>
+<span class="fc" id="L50">		this.title = title;</span>
+<span class="fc" id="L51">	}</span>
 
 	public boolean isIgnoreForCompressionOn(CompressionMode mode) {
-<span class="fc" id="L56">		return true;</span>
+<span class="fc" id="L54">		return true;</span>
 	}
 
 	public void drawWhenCompressed(UGraphic ug, CompressionMode mode) {
-<span class="fc" id="L60">		final XDimension2D dim = title.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L61">		ug.apply(UTranslate.dx(dim.getWidth())).draw(new UEmpty(1, 1));</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L58">		final XDimension2D dim = title.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L59">		ug.apply(UTranslate.dx(dim.getWidth())).draw(new UEmpty(1, 1));</span>
+<span class="fc" id="L60">	}</span>
 
 	public final TextBlock getTitle() {
-<span class="fc" id="L65">		return title;</span>
+<span class="fc" id="L63">		return title;</span>
 	}
 
 }

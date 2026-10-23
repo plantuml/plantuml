@@ -150,132 +150,129 @@ public class FontConfiguration {
 
 	private final int tabSize;
 
-	// ::comment when __HAXE__
 	public String toStringDebug() {
-<span class="fc" id="L155">		return getFont().toString() + &quot; &quot; + styles.toString();</span>
+<span class="fc" id="L154">		return getFont().toString() + &quot; &quot; + styles.toString();</span>
 		// return getFont().toStringDebug() + &quot; &quot; + styles.toString();
 	}
 
 	@Override
 	public int hashCode() {
-<span class="fc" id="L161">		return currentFont.hashCode()//</span>
-<span class="fc" id="L162">				+ styles.hashCode() //</span>
-<span class="fc" id="L163">				+ currentColor.hashCode()//</span>
-<span class="fc" id="L164">				+ hashCode(extendedColor)//</span>
-<span class="fc" id="L165">				+ hyperlinkColor.hashCode()//</span>
-<span class="fc" id="L166">				+ hashCode(hyperlinkUnderlineStroke)//</span>
-<span class="fc" id="L167">				+ fontPosition.hashCode() //</span>
+<span class="fc" id="L160">		return currentFont.hashCode()//</span>
+<span class="fc" id="L161">				+ styles.hashCode() //</span>
+<span class="fc" id="L162">				+ currentColor.hashCode()//</span>
+<span class="fc" id="L163">				+ hashCode(extendedColor)//</span>
+<span class="fc" id="L164">				+ hyperlinkColor.hashCode()//</span>
+<span class="fc" id="L165">				+ hashCode(hyperlinkUnderlineStroke)//</span>
+<span class="fc" id="L166">				+ fontPosition.hashCode() //</span>
 				+ tabSize;
 	}
 
 	private int hashCode(Object obj) {
-<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (obj == null)</span>
-<span class="fc" id="L173">			return 43;</span>
-<span class="fc" id="L174">		return obj.hashCode();</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		if (obj == null)</span>
+<span class="fc" id="L172">			return 43;</span>
+<span class="fc" id="L173">		return obj.hashCode();</span>
 	}
 
 	private boolean same(Object obj1, Object obj2) {
-<span class="pc bpc" id="L178" title="1 of 4 branches missed.">		if (obj1 == null &amp;&amp; obj2 == null)</span>
-<span class="fc" id="L179">			return true;</span>
-<span class="pc bpc" id="L180" title="2 of 4 branches missed.">		if (obj1 != null &amp;&amp; obj2 != null)</span>
-<span class="fc" id="L181">			return obj1.equals(obj2);</span>
-<span class="nc" id="L182">		return false;</span>
+<span class="pc bpc" id="L177" title="1 of 4 branches missed.">		if (obj1 == null &amp;&amp; obj2 == null)</span>
+<span class="fc" id="L178">			return true;</span>
+<span class="pc bpc" id="L179" title="2 of 4 branches missed.">		if (obj1 != null &amp;&amp; obj2 != null)</span>
+<span class="fc" id="L180">			return obj1.equals(obj2);</span>
+<span class="nc" id="L181">		return false;</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="fc" id="L187">		final FontConfiguration other = (FontConfiguration) obj;</span>
-<span class="pc bpc" id="L188" title="2 of 4 branches missed.">		return currentFont.equals(other.currentFont) &amp;&amp; styles.equals(other.styles)</span>
-<span class="pc bpc" id="L189" title="2 of 4 branches missed.">				&amp;&amp; currentColor.equals(other.currentColor) &amp;&amp; same(extendedColor, other.extendedColor)</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">				&amp;&amp; hyperlinkColor.equals(other.hyperlinkColor)</span>
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">				&amp;&amp; same(hyperlinkUnderlineStroke, other.hyperlinkUnderlineStroke)</span>
-<span class="pc bpc" id="L192" title="2 of 4 branches missed.">				&amp;&amp; fontPosition.equals(other.fontPosition) &amp;&amp; tabSize == other.tabSize;</span>
+<span class="fc" id="L186">		final FontConfiguration other = (FontConfiguration) obj;</span>
+<span class="pc bpc" id="L187" title="2 of 4 branches missed.">		return currentFont.equals(other.currentFont) &amp;&amp; styles.equals(other.styles)</span>
+<span class="pc bpc" id="L188" title="2 of 4 branches missed.">				&amp;&amp; currentColor.equals(other.currentColor) &amp;&amp; same(extendedColor, other.extendedColor)</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">				&amp;&amp; hyperlinkColor.equals(other.hyperlinkColor)</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">				&amp;&amp; same(hyperlinkUnderlineStroke, other.hyperlinkUnderlineStroke)</span>
+<span class="pc bpc" id="L191" title="2 of 4 branches missed.">				&amp;&amp; fontPosition.equals(other.fontPosition) &amp;&amp; tabSize == other.tabSize;</span>
 	}
 
 	public FontConfiguration mute(Colors colors) {
-<span class="nc" id="L196">		final HColor color = Objects.requireNonNull(colors).getColor(ColorType.TEXT);</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (color == null)</span>
-<span class="nc" id="L198">			return this;</span>
+<span class="nc" id="L195">		final HColor color = Objects.requireNonNull(colors).getColor(ColorType.TEXT);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L197">			return this;</span>
 
-<span class="nc" id="L200">		return changeColor(color);</span>
+<span class="nc" id="L199">		return changeColor(color);</span>
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, FontParam fontParam, Stereotype stereo) {
-<span class="fc" id="L204">		return create(SkinParamUtils.getFont(skinParam, fontParam, stereo),</span>
-<span class="fc" id="L205">				SkinParamUtils.getFontColor(skinParam, fontParam, stereo), skinParam.getHyperlinkColor(),</span>
-<span class="fc" id="L206">				skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());</span>
+<span class="fc" id="L203">		return create(SkinParamUtils.getFont(skinParam, fontParam, stereo),</span>
+<span class="fc" id="L204">				SkinParamUtils.getFontColor(skinParam, fontParam, stereo), skinParam.getHyperlinkColor(),</span>
+<span class="fc" id="L205">				skinParam.useUnderlineForHyperlink(), skinParam.getTabSize());</span>
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, Style style) {
-<span class="fc" id="L210">		return create(skinParam, style, null);</span>
+<span class="fc" id="L209">		return create(skinParam, style, null);</span>
 	}
 
 	public static FontConfiguration create(ISkinParam skinParam, Style style, Colors colors) {
-<span class="fc" id="L214">		final HColor hyperlinkColor = style.value(PName.HyperLinkColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L215">		final UStroke hyperlinkUnderlineStroke = skinParam.useUnderlineForHyperlink();</span>
-<span class="fc bfc" id="L216" title="All 2 branches covered.">		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);</span>
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		if (color == null)</span>
-<span class="fc" id="L218">			color = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L219">		return create(style.getUFont(), color, hyperlinkColor, hyperlinkUnderlineStroke, skinParam.getTabSize());</span>
+<span class="fc" id="L213">		final HColor hyperlinkColor = style.value(PName.HyperLinkColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L214">		final UStroke hyperlinkUnderlineStroke = skinParam.useUnderlineForHyperlink();</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		HColor color = colors == null ? null : colors.getColor(ColorType.TEXT);</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">		if (color == null)</span>
+<span class="fc" id="L217">			color = style.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L218">		return create(style.getUFont(), color, hyperlinkColor, hyperlinkUnderlineStroke, skinParam.getTabSize());</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L224">		return styles.toString() + &quot; &quot; + currentColor;</span>
+<span class="nc" id="L223">		return styles.toString() + &quot; &quot; + currentColor;</span>
 	}
-
-	// ::done
 
 	public static FontConfiguration create(UFont font, HColor color, HColor hyperlinkColor,
 			UStroke hyperlinkUnderlineStroke) {
-<span class="fc" id="L231">		return create(font, color, hyperlinkColor, hyperlinkUnderlineStroke, 8);</span>
+<span class="fc" id="L228">		return create(font, color, hyperlinkColor, hyperlinkUnderlineStroke, 8);</span>
 	}
 
 	// ---
 
 	public FontConfiguration forceFont(UFont newFont, HColor htmlColorForStereotype) {
-<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (newFont == null)</span>
-<span class="fc" id="L238">			return add(FontStyle.ITALIC);</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">		if (newFont == null)</span>
+<span class="fc" id="L235">			return add(FontStyle.ITALIC);</span>
 
-<span class="fc" id="L240">		FontConfiguration result = new FontConfiguration(styles, newFont, motherColor, newFont, currentColor,</span>
+<span class="fc" id="L237">		FontConfiguration result = new FontConfiguration(styles, newFont, motherColor, newFont, currentColor,</span>
 				extendedColor, fontPosition, svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		if (htmlColorForStereotype != null)</span>
-<span class="fc" id="L243">			result = result.changeColor(htmlColorForStereotype);</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">		if (htmlColorForStereotype != null)</span>
+<span class="fc" id="L240">			result = result.changeColor(htmlColorForStereotype);</span>
 
-<span class="fc" id="L245">		return result;</span>
+<span class="fc" id="L242">		return result;</span>
 	}
 
 	public FontConfiguration changeAttributes(SvgAttributes toBeAdded) {
-<span class="nc" id="L249">		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, extendedColor,</span>
-<span class="nc" id="L250">				fontPosition, svgAttributes.add(toBeAdded), hyperlinkColor, hyperlinkUnderlineStroke, tabSize);</span>
+<span class="nc" id="L246">		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, extendedColor,</span>
+<span class="nc" id="L247">				fontPosition, svgAttributes.add(toBeAdded), hyperlinkColor, hyperlinkUnderlineStroke, tabSize);</span>
 	}
 
 	private FontConfiguration withHyperlink() {
-<span class="fc" id="L254">		return new FontConfiguration(styles, motherFont, motherColor, currentFont, hyperlinkColor, extendedColor,</span>
+<span class="fc" id="L251">		return new FontConfiguration(styles, motherFont, motherColor, currentFont, hyperlinkColor, extendedColor,</span>
 				fontPosition, svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
 
 	public FontConfiguration changeColor(HColor newHtmlColor) {
-<span class="fc" id="L259">		return new FontConfiguration(styles, motherFont, motherColor, currentFont, newHtmlColor, extendedColor,</span>
+<span class="fc" id="L256">		return new FontConfiguration(styles, motherFont, motherColor, currentFont, newHtmlColor, extendedColor,</span>
 				fontPosition, svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
 
 	public FontConfiguration changeExtendedColor(HColor newExtendedColor) {
-<span class="fc" id="L264">		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, newExtendedColor,</span>
+<span class="fc" id="L261">		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, newExtendedColor,</span>
 				fontPosition, svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
 
 	public FontConfiguration changeSize(float size) {
-<span class="fc" id="L269">		return new FontConfiguration(styles, motherFont, motherColor, currentFont.withSize(size), currentColor,</span>
+<span class="fc" id="L266">		return new FontConfiguration(styles, motherFont, motherColor, currentFont.withSize(size), currentColor,</span>
 				extendedColor, fontPosition, svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
 
 	public FontConfiguration bigger(double delta) {
-<span class="fc" id="L274">		return changeSize((float) (currentFont.getSize() + delta));</span>
+<span class="fc" id="L271">		return changeSize((float) (currentFont.getSize() + delta));</span>
 	}
 
 	public FontConfiguration changeFontPosition(FontPosition fontPosition) {
-<span class="nc" id="L278">		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, extendedColor,</span>
+<span class="nc" id="L275">		return new FontConfiguration(styles, motherFont, motherColor, currentFont, currentColor, extendedColor,</span>
 				fontPosition, svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
 
@@ -288,103 +285,103 @@ public class FontConfiguration {
 	 * @return a new {@code FontConfiguration} with the updated family
 	 */
 	public FontConfiguration changeFamily(String family) {
-<span class="fc" id="L291">		final UFont font = UFontFactory.build(family, currentFont.getFontFace(), currentFont.getSize());</span>
-<span class="fc" id="L292">		return new FontConfiguration(styles, motherFont, motherColor, font, currentColor, extendedColor, fontPosition,</span>
+<span class="fc" id="L288">		final UFont font = UFontFactory.build(family, currentFont.getFontFace(), currentFont.getSize());</span>
+<span class="fc" id="L289">		return new FontConfiguration(styles, motherFont, motherColor, font, currentColor, extendedColor, fontPosition,</span>
 				svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
 
 	public FontConfiguration resetFont() {
-<span class="nc" id="L297">		return new FontConfiguration(styles, motherFont, motherColor, motherFont, motherColor, null,</span>
-<span class="nc" id="L298">				FontPosition.NORMAL, SvgAttributes.empty(), hyperlinkColor, hyperlinkUnderlineStroke, tabSize);</span>
+<span class="nc" id="L294">		return new FontConfiguration(styles, motherFont, motherColor, motherFont, motherColor, null,</span>
+<span class="nc" id="L295">				FontPosition.NORMAL, SvgAttributes.empty(), hyperlinkColor, hyperlinkUnderlineStroke, tabSize);</span>
 	}
 
 	public FontConfiguration add(FontStyle style) {
-<span class="fc" id="L302">		final EnumSet&lt;FontStyle&gt; r = styles.clone();</span>
-<span class="pc bpc" id="L303" title="1 of 2 branches missed.">		if (style == FontStyle.PLAIN)</span>
-<span class="nc" id="L304">			r.clear();</span>
+<span class="fc" id="L299">		final EnumSet&lt;FontStyle&gt; r = styles.clone();</span>
+<span class="pc bpc" id="L300" title="1 of 2 branches missed.">		if (style == FontStyle.PLAIN)</span>
+<span class="nc" id="L301">			r.clear();</span>
 
-<span class="fc" id="L306">		r.add(style);</span>
-<span class="fc" id="L307">		return new FontConfiguration(r, motherFont, motherColor, currentFont, currentColor, extendedColor, fontPosition,</span>
+<span class="fc" id="L303">		r.add(style);</span>
+<span class="fc" id="L304">		return new FontConfiguration(r, motherFont, motherColor, currentFont, currentColor, extendedColor, fontPosition,</span>
 				svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
 
 	public FontConfiguration italic() {
-<span class="fc" id="L312">		return add(FontStyle.ITALIC);</span>
+<span class="fc" id="L309">		return add(FontStyle.ITALIC);</span>
 	}
 
 	public FontConfiguration bold() {
-<span class="fc" id="L316">		return add(FontStyle.BOLD);</span>
+<span class="fc" id="L313">		return add(FontStyle.BOLD);</span>
 	}
 
 	public FontConfiguration unbold() {
-<span class="nc" id="L320">		return remove(FontStyle.BOLD);</span>
+<span class="nc" id="L317">		return remove(FontStyle.BOLD);</span>
 	}
 
 	public FontConfiguration unitalic() {
-<span class="nc" id="L324">		return remove(FontStyle.ITALIC);</span>
+<span class="nc" id="L321">		return remove(FontStyle.ITALIC);</span>
 	}
 
 	public FontConfiguration underline() {
-<span class="fc" id="L328">		return add(FontStyle.UNDERLINE);</span>
+<span class="fc" id="L325">		return add(FontStyle.UNDERLINE);</span>
 	}
 
 	public FontConfiguration wave(HColor color) {
-<span class="fc" id="L332">		return add(FontStyle.WAVE).changeExtendedColor(color);</span>
+<span class="fc" id="L329">		return add(FontStyle.WAVE).changeExtendedColor(color);</span>
 	}
 
 	public FontConfiguration hyperlink() {
-<span class="pc bpc" id="L336" title="1 of 2 branches missed.">		if (hyperlinkUnderlineStroke != null)</span>
-<span class="fc" id="L337">			return add(FontStyle.UNDERLINE).withHyperlink();</span>
+<span class="pc bpc" id="L333" title="1 of 2 branches missed.">		if (hyperlinkUnderlineStroke != null)</span>
+<span class="fc" id="L334">			return add(FontStyle.UNDERLINE).withHyperlink();</span>
 
-<span class="nc" id="L339">		return withHyperlink();</span>
+<span class="nc" id="L336">		return withHyperlink();</span>
 	}
 
 	public FontConfiguration remove(FontStyle style) {
-<span class="nc" id="L343">		final EnumSet&lt;FontStyle&gt; r = styles.clone();</span>
-<span class="nc" id="L344">		r.remove(style);</span>
-<span class="nc" id="L345">		return new FontConfiguration(r, motherFont, motherColor, currentFont, currentColor, extendedColor, fontPosition,</span>
+<span class="nc" id="L340">		final EnumSet&lt;FontStyle&gt; r = styles.clone();</span>
+<span class="nc" id="L341">		r.remove(style);</span>
+<span class="nc" id="L342">		return new FontConfiguration(r, motherFont, motherColor, currentFont, currentColor, extendedColor, fontPosition,</span>
 				svgAttributes, hyperlinkColor, hyperlinkUnderlineStroke, tabSize);
 	}
 
 	public FontConfiguration adjustColorForBackground(UGraphic ug) {
-<span class="fc" id="L350">		HColor backcolor = ug.getParam().getBackcolor();</span>
-<span class="fc bfc" id="L351" title="All 2 branches covered.">		if (backcolor.isTransparent())</span>
-<span class="fc" id="L352">			backcolor = ug.getDefaultBackground();</span>
+<span class="fc" id="L347">		HColor backcolor = ug.getParam().getBackcolor();</span>
+<span class="fc bfc" id="L348" title="All 2 branches covered.">		if (backcolor.isTransparent())</span>
+<span class="fc" id="L349">			backcolor = ug.getDefaultBackground();</span>
 
-<span class="fc" id="L354">		final HColor textColor = getColor().getAppropriateColor(backcolor);</span>
-<span class="fc" id="L355">		return changeColor(textColor);</span>
+<span class="fc" id="L351">		final HColor textColor = getColor().getAppropriateColor(backcolor);</span>
+<span class="fc" id="L352">		return changeColor(textColor);</span>
 	}
 
 	public HColor getColor() {
-<span class="fc" id="L359">		return currentColor;</span>
+<span class="fc" id="L356">		return currentColor;</span>
 	}
 
 	public HColor getExtendedColor() {
-<span class="fc" id="L363">		return extendedColor;</span>
+<span class="fc" id="L360">		return extendedColor;</span>
 	}
 
 	public boolean containsStyle(FontStyle style) {
-<span class="fc" id="L367">		return styles.contains(style);</span>
+<span class="fc" id="L364">		return styles.contains(style);</span>
 	}
 
 	public int getSpace() {
-<span class="fc" id="L371">		return fontPosition.getSpace();</span>
+<span class="fc" id="L368">		return fontPosition.getSpace();</span>
 	}
 
 	public Map&lt;String, String&gt; getAttributes() {
-<span class="fc" id="L375">		return svgAttributes.attributes();</span>
+<span class="fc" id="L372">		return svgAttributes.attributes();</span>
 	}
 
 	public double getSize2D() {
-<span class="fc" id="L379">		return currentFont.getSize2D();</span>
+<span class="fc" id="L376">		return currentFont.getSize2D();</span>
 	}
 
 	public int getTabSize() {
-<span class="fc" id="L383">		return tabSize;</span>
+<span class="fc" id="L380">		return tabSize;</span>
 	}
 
 	public UStroke getUnderlineStroke() {
-<span class="fc" id="L387">		return hyperlinkUnderlineStroke;</span>
+<span class="fc" id="L384">		return hyperlinkUnderlineStroke;</span>
 		// return UStroke.simple();
 		// return new UStroke(3, 5, 2);
 	}

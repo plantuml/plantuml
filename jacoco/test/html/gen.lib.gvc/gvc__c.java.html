@@ -59,27 +59,25 @@ import smetana.core.CString;
 import smetana.core.Globals;
 
 <span class="nc" id="L61">public class gvc__c {</span>
-    // ::remove folder when __HAXE__
-
 
 //3 f3vdhir2c7dz3pvmx9d3m4lx1
 // GVC_t *gvContext(void) 
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/gvc/gvc.c&quot;, name=&quot;&quot;, key=&quot;f3vdhir2c7dz3pvmx9d3m4lx1&quot;, definition=&quot;GVC_t *gvContext(void)&quot;)
 public static ST_GVC_s gvContext(Globals zz, Object... arg_) {
-<span class="fc" id="L70">ENTERING(&quot;f3vdhir2c7dz3pvmx9d3m4lx1&quot;,&quot;gvContext&quot;);</span>
+<span class="fc" id="L68">ENTERING(&quot;f3vdhir2c7dz3pvmx9d3m4lx1&quot;,&quot;gvContext&quot;);</span>
 try {
 	ST_GVC_s gvc;
-<span class="fc" id="L73">    agattr(zz, null, AGNODE, new CString(&quot;label&quot;), new CString(&quot;\\N&quot;));</span>
+<span class="fc" id="L71">    agattr(zz, null, AGNODE, new CString(&quot;label&quot;), new CString(&quot;\\N&quot;));</span>
     /* default to no builtins, demand loading enabled */
-<span class="fc" id="L75">    gvc = (ST_GVC_s) gvNEWcontext(null, (true));</span>
+<span class="fc" id="L73">    gvc = (ST_GVC_s) gvNEWcontext(null, (true));</span>
     /* builtins don't require LTDL */
-<span class="fc" id="L77">    gvc.config_found = 0;</span>
-<span class="fc" id="L78">    gvtextlayout_select(gvc);   /* choose best available textlayout plugin immediately */</span>
-<span class="fc" id="L79">    textfont_dict_open(gvc);    /* initialize font dict */</span>
-<span class="fc" id="L80">    return gvc;</span>
+<span class="fc" id="L75">    gvc.config_found = 0;</span>
+<span class="fc" id="L76">    gvtextlayout_select(gvc);   /* choose best available textlayout plugin immediately */</span>
+<span class="fc" id="L77">    textfont_dict_open(gvc);    /* initialize font dict */</span>
+<span class="fc" id="L78">    return gvc;</span>
 } finally {
-<span class="fc" id="L82">LEAVING(&quot;f3vdhir2c7dz3pvmx9d3m4lx1&quot;,&quot;gvContext&quot;);</span>
+<span class="fc" id="L80">LEAVING(&quot;f3vdhir2c7dz3pvmx9d3m4lx1&quot;,&quot;gvContext&quot;);</span>
 }
 }
 

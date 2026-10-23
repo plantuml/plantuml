@@ -44,65 +44,63 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.stereo.Stereotype;
 
 public class Highlighted {
-    // ::remove folder when __HAXE__
-
 	public static final String HIGHLIGHTED = &quot;#highlight &quot;;
-<span class="fc" id="L50">	private final static Pattern pattern = Pattern.compile(&quot;^([^&lt;&gt;]+)(\\&lt;\\&lt;.*\\&gt;\\&gt;)?$&quot;);</span>
+<span class="fc" id="L48">	private final static Pattern pattern = Pattern.compile(&quot;^([^&lt;&gt;]+)(\\&lt;\\&lt;.*\\&gt;\\&gt;)?$&quot;);</span>
 
 	private final List&lt;String&gt; paths;
 	private final Stereotype stereotype;
 
-<span class="fc" id="L55">	private Highlighted(List&lt;String&gt; paths, Stereotype stereotype) {</span>
-<span class="fc" id="L56">		this.paths = paths;</span>
-<span class="fc" id="L57">		this.stereotype = stereotype;</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L53">	private Highlighted(List&lt;String&gt; paths, Stereotype stereotype) {</span>
+<span class="fc" id="L54">		this.paths = paths;</span>
+<span class="fc" id="L55">		this.stereotype = stereotype;</span>
+<span class="fc" id="L56">	}</span>
 
 	public static boolean matchesDefinition(String line) {
-<span class="fc" id="L61">		return line.startsWith(Highlighted.HIGHLIGHTED);</span>
+<span class="fc" id="L59">		return line.startsWith(Highlighted.HIGHLIGHTED);</span>
 	}
 
 	public static Highlighted build(String line) {
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (matchesDefinition(line) == false)</span>
-<span class="nc" id="L66">			throw new IllegalStateException();</span>
-<span class="fc" id="L67">		line = line.substring(HIGHLIGHTED.length()).trim();</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (matchesDefinition(line) == false)</span>
+<span class="nc" id="L64">			throw new IllegalStateException();</span>
+<span class="fc" id="L65">		line = line.substring(HIGHLIGHTED.length()).trim();</span>
 
-<span class="fc" id="L69">		final Matcher matcher = pattern.matcher(line);</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (matcher.matches() == false)</span>
-<span class="nc" id="L71">			throw new IllegalStateException();</span>
-<span class="fc" id="L72">		final String paths = matcher.group(1).trim();</span>
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		final Stereotype stereotype = matcher.group(2) == null ? null : Stereotype.build(matcher.group(2));</span>
+<span class="fc" id="L67">		final Matcher matcher = pattern.matcher(line);</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (matcher.matches() == false)</span>
+<span class="nc" id="L69">			throw new IllegalStateException();</span>
+<span class="fc" id="L70">		final String paths = matcher.group(1).trim();</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		final Stereotype stereotype = matcher.group(2) == null ? null : Stereotype.build(matcher.group(2));</span>
 
-<span class="fc" id="L75">		return new Highlighted(toList(paths), stereotype);</span>
+<span class="fc" id="L73">		return new Highlighted(toList(paths), stereotype);</span>
 	}
 
 	private static List&lt;String&gt; toList(String paths) {
-<span class="fc" id="L79">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L80" title="All 2 branches covered.">		for (String s : paths.split(&quot;/&quot;))</span>
-<span class="fc" id="L81">			result.add(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s.trim(), &quot;\&quot;&quot;));</span>
+<span class="fc" id="L77">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		for (String s : paths.split(&quot;/&quot;))</span>
+<span class="fc" id="L79">			result.add(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s.trim(), &quot;\&quot;&quot;));</span>
 
-<span class="fc" id="L83">		return result;</span>
+<span class="fc" id="L81">		return result;</span>
 	}
 
 	public Highlighted upOneLevel(String key) {
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (paths.size() &lt;= 1)</span>
-<span class="fc" id="L88">			return null;</span>
-<span class="nc" id="L89">		final String first = paths.get(0);</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (&quot;**&quot;.equals(first))</span>
-<span class="nc" id="L91">			return new Highlighted(paths, stereotype);</span>
-<span class="nc bnc" id="L92" title="All 4 branches missed.">		if (&quot;*&quot;.equals(first) || first.equals(key))</span>
-<span class="nc" id="L93">			return new Highlighted(paths.subList(1, paths.size()), stereotype);</span>
-<span class="nc" id="L94">		return null;</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (paths.size() &lt;= 1)</span>
+<span class="fc" id="L86">			return null;</span>
+<span class="nc" id="L87">		final String first = paths.get(0);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (&quot;**&quot;.equals(first))</span>
+<span class="nc" id="L89">			return new Highlighted(paths, stereotype);</span>
+<span class="nc bnc" id="L90" title="All 4 branches missed.">		if (&quot;*&quot;.equals(first) || first.equals(key))</span>
+<span class="nc" id="L91">			return new Highlighted(paths.subList(1, paths.size()), stereotype);</span>
+<span class="nc" id="L92">		return null;</span>
 
 	}
 
 	public boolean isKeyHighlight(String key) {
-<span class="pc bpc" id="L99" title="5 of 6 branches missed.">		if (paths.size() == 2 &amp;&amp; paths.get(0).equals(&quot;**&quot;) &amp;&amp; paths.get(1).equals(key))</span>
-<span class="nc" id="L100">			return true;</span>
-<span class="pc bpc" id="L101" title="1 of 4 branches missed.">		return paths.size() == 1 &amp;&amp; paths.get(0).equals(key);</span>
+<span class="pc bpc" id="L97" title="5 of 6 branches missed.">		if (paths.size() == 2 &amp;&amp; paths.get(0).equals(&quot;**&quot;) &amp;&amp; paths.get(1).equals(key))</span>
+<span class="nc" id="L98">			return true;</span>
+<span class="pc bpc" id="L99" title="1 of 4 branches missed.">		return paths.size() == 1 &amp;&amp; paths.get(0).equals(key);</span>
 	}
 
 	public final Stereotype getStereotype() {
-<span class="fc" id="L105">		return stereotype;</span>
+<span class="fc" id="L103">		return stereotype;</span>
 	}
 
 }

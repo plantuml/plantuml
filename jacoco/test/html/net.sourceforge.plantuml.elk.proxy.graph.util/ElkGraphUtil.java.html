@@ -6,27 +6,25 @@ import net.sourceforge.plantuml.elk.proxy.graph.ElkLabel;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
 
 <span class="nc" id="L8">public class ElkGraphUtil {</span>
-    // ::remove folder when __HAXE__
-
 	public static ElkLabel createLabel(ElkEdge edge) {
-<span class="fc" id="L12">		return new ElkLabel(Reflect.callStatic2(&quot;org.eclipse.elk.graph.util.ElkGraphUtil&quot;, &quot;createLabel&quot;, edge.obj));</span>
+<span class="fc" id="L10">		return new ElkLabel(Reflect.callStatic2(&quot;org.eclipse.elk.graph.util.ElkGraphUtil&quot;, &quot;createLabel&quot;, edge.obj));</span>
 	}
 
 	public static ElkLabel createLabel(ElkNode node) {
-<span class="fc" id="L16">		return new ElkLabel(Reflect.callStatic2(&quot;org.eclipse.elk.graph.util.ElkGraphUtil&quot;, &quot;createLabel&quot;, node.obj));</span>
+<span class="fc" id="L14">		return new ElkLabel(Reflect.callStatic2(&quot;org.eclipse.elk.graph.util.ElkGraphUtil&quot;, &quot;createLabel&quot;, node.obj));</span>
 	}
 
 	public static ElkNode createNode(ElkNode root) {
-<span class="fc" id="L20">		return new ElkNode(Reflect.callStatic2(&quot;org.eclipse.elk.graph.util.ElkGraphUtil&quot;, &quot;createNode&quot;, root.obj));</span>
+<span class="fc" id="L18">		return new ElkNode(Reflect.callStatic2(&quot;org.eclipse.elk.graph.util.ElkGraphUtil&quot;, &quot;createNode&quot;, root.obj));</span>
 	}
 
 	public static ElkEdge createSimpleEdge(ElkNode node1, ElkNode node2) {
-<span class="fc" id="L24">		return new ElkEdge(Reflect.callStatic2(&quot;org.eclipse.elk.graph.util.ElkGraphUtil&quot;, &quot;createSimpleEdge&quot;, node1.obj,</span>
+<span class="fc" id="L22">		return new ElkEdge(Reflect.callStatic2(&quot;org.eclipse.elk.graph.util.ElkGraphUtil&quot;, &quot;createSimpleEdge&quot;, node1.obj,</span>
 				node2.obj));
 	}
 
 	public static ElkNode createGraph() {
-<span class="fc" id="L29">		return new ElkNode(Reflect.callStatic(&quot;org.eclipse.elk.graph.util.ElkGraphUtil&quot;, &quot;createGraph&quot;));</span>
+<span class="fc" id="L27">		return new ElkNode(Reflect.callStatic(&quot;org.eclipse.elk.graph.util.ElkGraphUtil&quot;, &quot;createGraph&quot;));</span>
 	}
 
 }

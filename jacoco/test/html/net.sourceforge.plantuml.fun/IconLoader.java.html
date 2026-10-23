@@ -48,73 +48,71 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 
 <span class="nc" id="L50">public class IconLoader {</span>
-    // ::remove folder when __HAXE__
-
 	private static final int NUMBER_OF_ICONS = 31;
 
-<span class="fc" id="L55">	private final static Map&lt;String, PortableImage&gt; all = new ConcurrentHashMap&lt;String, PortableImage&gt;();</span>
-<span class="fc" id="L56">	static private final List&lt;String&gt; tmp = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L53">	private final static Map&lt;String, PortableImage&gt; all = new ConcurrentHashMap&lt;String, PortableImage&gt;();</span>
+<span class="fc" id="L54">	static private final List&lt;String&gt; tmp = new ArrayList&lt;&gt;();</span>
 
 	public static PortableImage getRandom() {
 		// return addTransparent(getIcon(&quot;sprite029.png&quot;));
-<span class="fc" id="L60">		return addTransparent(getIcon(getSomeQuote()));</span>
+<span class="fc" id="L58">		return addTransparent(getIcon(getSomeQuote()));</span>
 	}
 
 	private static String getSomeQuote() {
-<span class="fc" id="L64">		synchronized (tmp) {</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">			if (tmp.size() == 0) {</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">				for (int i = 0; i &lt; NUMBER_OF_ICONS; i++)</span>
-<span class="fc" id="L67">					tmp.add(&quot;sprite&quot; + String.format(&quot;%03d&quot;, i) + &quot;.png&quot;);</span>
+<span class="fc" id="L62">		synchronized (tmp) {</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">			if (tmp.size() == 0) {</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">				for (int i = 0; i &lt; NUMBER_OF_ICONS; i++)</span>
+<span class="fc" id="L65">					tmp.add(&quot;sprite&quot; + String.format(&quot;%03d&quot;, i) + &quot;.png&quot;);</span>
 
-<span class="fc" id="L69">				Collections.shuffle(tmp);</span>
+<span class="fc" id="L67">				Collections.shuffle(tmp);</span>
 			}
-<span class="fc" id="L71">			final int size = tmp.size();</span>
-<span class="fc" id="L72">			final String result = tmp.get(size - 1);</span>
-<span class="fc" id="L73">			tmp.remove(size - 1);</span>
-<span class="fc" id="L74">			return result;</span>
+<span class="fc" id="L69">			final int size = tmp.size();</span>
+<span class="fc" id="L70">			final String result = tmp.get(size - 1);</span>
+<span class="fc" id="L71">			tmp.remove(size - 1);</span>
+<span class="fc" id="L72">			return result;</span>
 		}
 	}
 
 	private static PortableImage getIcon(String name) {
-<span class="fc" id="L79">		PortableImage result = all.get(name);</span>
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (result == null) {</span>
-<span class="fc" id="L81">			result = getIconSlow(name);</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			if (result != null)</span>
-<span class="fc" id="L83">				all.put(name, result);</span>
+<span class="fc" id="L77">		PortableImage result = all.get(name);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (result == null) {</span>
+<span class="fc" id="L79">			result = getIconSlow(name);</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">			if (result != null)</span>
+<span class="fc" id="L81">				all.put(name, result);</span>
 
 		}
-<span class="fc" id="L86">		return result;</span>
+<span class="fc" id="L84">		return result;</span>
 	}
 
 	private static PortableImage getIconSlow(String name) {
 		try {
-<span class="fc" id="L91">			final InputStream is = IconLoader.class.getResourceAsStream(name);</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">			if (is == null)</span>
-<span class="nc" id="L93">				return null;</span>
+<span class="fc" id="L89">			final InputStream is = IconLoader.class.getResourceAsStream(name);</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">			if (is == null)</span>
+<span class="nc" id="L91">				return null;</span>
 
-<span class="fc" id="L95">			final PortableImage image = SImageIO.read(is);</span>
-<span class="fc" id="L96">			is.close();</span>
-<span class="fc" id="L97">			return image;</span>
-<span class="nc" id="L98">		} catch (IOException e) {</span>
-<span class="nc" id="L99">			Logme.error(e);</span>
+<span class="fc" id="L93">			final PortableImage image = SImageIO.read(is);</span>
+<span class="fc" id="L94">			is.close();</span>
+<span class="fc" id="L95">			return image;</span>
+<span class="nc" id="L96">		} catch (IOException e) {</span>
+<span class="nc" id="L97">			Logme.error(e);</span>
 		}
-<span class="nc" id="L101">		return null;</span>
+<span class="nc" id="L99">		return null;</span>
 	}
 
 	private static PortableImage addTransparent(PortableImage ico) {
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (ico == null)</span>
-<span class="nc" id="L106">			return null;</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (ico == null)</span>
+<span class="nc" id="L104">			return null;</span>
 
-<span class="fc" id="L108">		final PortableImage transparentIcon = PortableImageFactory.build(ico.getWidth(), ico.getHeight(),</span>
+<span class="fc" id="L106">		final PortableImage transparentIcon = PortableImageFactory.build(ico.getWidth(), ico.getHeight(),</span>
 				PortableImage.TYPE_INT_ARGB_PRE);
-<span class="fc bfc" id="L110" title="All 2 branches covered.">		for (int i = 0; i &lt; ico.getWidth(); i++)</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">			for (int j = 0; j &lt; ico.getHeight(); j++) {</span>
-<span class="fc" id="L112">				final int col = ico.getRGB(i, j);</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">				if (col != ico.getRGB(0, 0))</span>
-<span class="fc" id="L114">					transparentIcon.setRGB(i, j, col);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		for (int i = 0; i &lt; ico.getWidth(); i++)</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">			for (int j = 0; j &lt; ico.getHeight(); j++) {</span>
+<span class="fc" id="L110">				final int col = ico.getRGB(i, j);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">				if (col != ico.getRGB(0, 0))</span>
+<span class="fc" id="L112">					transparentIcon.setRGB(i, j, col);</span>
 			}
 
-<span class="fc" id="L117">		return transparentIcon;</span>
+<span class="fc" id="L115">		return transparentIcon;</span>
 	}
 
 }

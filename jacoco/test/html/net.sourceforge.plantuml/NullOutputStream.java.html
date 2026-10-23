@@ -40,15 +40,13 @@ import java.io.OutputStream;
 
 // Modified by Maxime Sinclair
 <span class="fc" id="L42">public class NullOutputStream extends OutputStream {</span>
-	// ::remove file when __HAXE__
-
 	/**
 	 * Writes to nowhere
 	 */
 	@Override
 	public void write(int b) throws IOException {
 		// Do nothing silently
-<span class="nc" id="L51">	}</span>
+<span class="nc" id="L49">	}</span>
 
 	/**
 	 * Overridden for performance reason
@@ -56,7 +54,7 @@ import java.io.OutputStream;
 	@Override
 	public void write(byte b[]) throws IOException {
 		// Do nothing silently
-<span class="nc" id="L59">	}</span>
+<span class="nc" id="L57">	}</span>
 
 	/**
 	 * Overridden for performance reason
@@ -64,7 +62,7 @@ import java.io.OutputStream;
 	@Override
 	public void write(byte b[], int off, int len) throws IOException {
 		// Do nothing silently
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L65">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

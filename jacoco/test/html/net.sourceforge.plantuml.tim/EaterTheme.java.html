@@ -43,8 +43,6 @@ import net.sourceforge.plantuml.theme.Theme;
 import net.sourceforge.plantuml.theme.ThemeUtils;
 
 public class EaterTheme extends Eater {
-	// ::remove folder when __HAXE__
-	
 	
 	private String realName;
 	private String name;
@@ -53,45 +51,45 @@ public class EaterTheme extends Eater {
 	private final PathSystem pathSystem;
 
 	public EaterTheme(StringLocated s, PathSystem pathSystem) {
-<span class="fc" id="L56">		super(s);</span>
-<span class="fc" id="L57">		this.pathSystem = pathSystem;</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L54">		super(s);</span>
+<span class="fc" id="L55">		this.pathSystem = pathSystem;</span>
+<span class="fc" id="L56">	}</span>
 
 	@Override
 	public void analyze(TContext context, TMemory memory) throws EaterException {
+<span class="fc" id="L60">		skipSpaces();</span>
+<span class="fc" id="L61">		checkAndEatChar(&quot;!theme&quot;);</span>
 <span class="fc" id="L62">		skipSpaces();</span>
-<span class="fc" id="L63">		checkAndEatChar(&quot;!theme&quot;);</span>
-<span class="fc" id="L64">		skipSpaces();</span>
-<span class="fc" id="L65">		this.name = this.eatAllToEnd();</span>
+<span class="fc" id="L63">		this.name = this.eatAllToEnd();</span>
 
-<span class="fc" id="L67">		final int x = this.name.toLowerCase().indexOf(&quot; from &quot;);</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (x != -1) {</span>
-<span class="fc" id="L69">			final String fromTmp = this.name.substring(x + &quot; from &quot;.length()).trim();</span>
-<span class="fc" id="L70">			this.from = context.applyFunctionsAndVariables(memory, new StringLocated(fromTmp, getLineLocation()));</span>
-<span class="fc" id="L71">			this.name = this.name.substring(0, x).trim();</span>
-<span class="fc" id="L72">			this.context = context;</span>
+<span class="fc" id="L65">		final int x = this.name.toLowerCase().indexOf(&quot; from &quot;);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (x != -1) {</span>
+<span class="fc" id="L67">			final String fromTmp = this.name.substring(x + &quot; from &quot;.length()).trim();</span>
+<span class="fc" id="L68">			this.from = context.applyFunctionsAndVariables(memory, new StringLocated(fromTmp, getLineLocation()));</span>
+<span class="fc" id="L69">			this.name = this.name.substring(0, x).trim();</span>
+<span class="fc" id="L70">			this.context = context;</span>
 		}
 
-<span class="fc" id="L75">		this.realName = context.applyFunctionsAndVariables(memory, new StringLocated(this.name, getLineLocation()));</span>
+<span class="fc" id="L73">		this.realName = context.applyFunctionsAndVariables(memory, new StringLocated(this.name, getLineLocation()));</span>
 
-<span class="fc" id="L77">	}</span>
+<span class="fc" id="L75">	}</span>
 
 	public final Theme getTheme() throws EaterException {
 		try {
-<span class="fc" id="L81">			final Theme theme = ThemeUtils.loadTheme(pathSystem, realName, from, getStringLocated());</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">			if (theme == null) {</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">				final String location = (from == null) ? &quot;&quot; : &quot; in &quot; + from;</span>
-<span class="fc" id="L84">				throw new EaterException(&quot;Cannot load theme &quot; + realName + location, getStringLocated());</span>
+<span class="fc" id="L79">			final Theme theme = ThemeUtils.loadTheme(pathSystem, realName, from, getStringLocated());</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			if (theme == null) {</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">				final String location = (from == null) ? &quot;&quot; : &quot; in &quot; + from;</span>
+<span class="fc" id="L82">				throw new EaterException(&quot;Cannot load theme &quot; + realName + location, getStringLocated());</span>
 			}
-<span class="fc" id="L86">			return theme;</span>
-<span class="nc" id="L87">		} catch (IOException e) {</span>
-<span class="nc" id="L88">			Logme.error(e);</span>
-<span class="nc" id="L89">			throw new EaterException(&quot;Cannot load theme &quot; + realName, getStringLocated());</span>
+<span class="fc" id="L84">			return theme;</span>
+<span class="nc" id="L85">		} catch (IOException e) {</span>
+<span class="nc" id="L86">			Logme.error(e);</span>
+<span class="nc" id="L87">			throw new EaterException(&quot;Cannot load theme &quot; + realName, getStringLocated());</span>
 		}
 	}
 
 	public String getName() {
-<span class="nc" id="L94">		return name;</span>
+<span class="nc" id="L92">		return name;</span>
 	}
 
 	/**
@@ -99,11 +97,11 @@ public class EaterTheme extends Eater {
 	 * rather than bundled, from the standard library or from a URL.
 	 */
 	public boolean isFromLocalFolder() {
-<span class="nc" id="L102">		return ThemeUtils.isLocalFolder(from);</span>
+<span class="nc" id="L100">		return ThemeUtils.isLocalFolder(from);</span>
 	}
 
 	public PathSystem getNewImportedFiles() {
-<span class="fc" id="L106">		return pathSystem;</span>
+<span class="fc" id="L104">		return pathSystem;</span>
 	}
 
 }

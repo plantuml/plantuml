@@ -36,66 +36,64 @@
 package net.sourceforge.plantuml.klimt.compress;
 
 public class Slot implements Comparable&lt;Slot&gt; {
-	// ::remove file when __HAXE__
-
 	private final double start;
 	private final double end;
 
-<span class="fc" id="L44">	public Slot(double start, double end) {</span>
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (start &gt;= end)</span>
-<span class="nc" id="L46">			throw new IllegalArgumentException(&quot;start=&quot; + start + &quot; end=&quot; + end);</span>
+<span class="fc" id="L42">	public Slot(double start, double end) {</span>
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">		if (start &gt;= end)</span>
+<span class="nc" id="L44">			throw new IllegalArgumentException(&quot;start=&quot; + start + &quot; end=&quot; + end);</span>
 
-<span class="fc" id="L48">		this.start = start;</span>
-<span class="fc" id="L49">		this.end = end;</span>
-<span class="fc" id="L50">	}</span>
+<span class="fc" id="L46">		this.start = start;</span>
+<span class="fc" id="L47">		this.end = end;</span>
+<span class="fc" id="L48">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L54">		return &quot;(&quot; + start + &quot;,&quot; + end + &quot;)&quot;;</span>
+<span class="nc" id="L52">		return &quot;(&quot; + start + &quot;,&quot; + end + &quot;)&quot;;</span>
 	}
 
 	public double getStart() {
-<span class="fc" id="L58">		return start;</span>
+<span class="fc" id="L56">		return start;</span>
 	}
 
 	public double getEnd() {
-<span class="fc" id="L62">		return end;</span>
+<span class="fc" id="L60">		return end;</span>
 	}
 
 	public double size() {
-<span class="fc" id="L66">		return end - start;</span>
+<span class="fc" id="L64">		return end - start;</span>
 	}
 
 	public boolean contains(double v) {
-<span class="fc bfc" id="L70" title="All 4 branches covered.">		return v &gt;= start &amp;&amp; v &lt;= end;</span>
+<span class="fc bfc" id="L68" title="All 4 branches covered.">		return v &gt;= start &amp;&amp; v &lt;= end;</span>
 	}
 
 	public boolean intersect(Slot other) {
-<span class="pc bpc" id="L74" title="1 of 8 branches missed.">		return contains(other.start) || contains(other.end) || other.contains(start) || other.contains(end);</span>
+<span class="pc bpc" id="L72" title="1 of 8 branches missed.">		return contains(other.start) || contains(other.end) || other.contains(start) || other.contains(end);</span>
 	}
 
 	public Slot merge(Slot other) {
-<span class="fc" id="L78">		return new Slot(Math.min(start, other.start), Math.max(end, other.end));</span>
+<span class="fc" id="L76">		return new Slot(Math.min(start, other.start), Math.max(end, other.end));</span>
 	}
 
 	public Slot intersect(double otherStart, double otherEnd) {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (otherStart &gt;= end)</span>
-<span class="nc" id="L83">			return null;</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (otherStart &gt;= end)</span>
+<span class="nc" id="L81">			return null;</span>
 
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (otherEnd &lt;= start)</span>
-<span class="nc" id="L86">			return null;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (otherEnd &lt;= start)</span>
+<span class="nc" id="L84">			return null;</span>
 
-<span class="nc" id="L88">		return new Slot(Math.max(start, otherStart), Math.min(end, otherEnd));</span>
+<span class="nc" id="L86">		return new Slot(Math.max(start, otherStart), Math.min(end, otherEnd));</span>
 	}
 
 	public int compareTo(Slot other) {
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (this.start &lt; other.start)</span>
-<span class="fc" id="L93">			return -1;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (this.start &lt; other.start)</span>
+<span class="fc" id="L91">			return -1;</span>
 
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (this.start &gt; other.start)</span>
-<span class="fc" id="L96">			return 1;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (this.start &gt; other.start)</span>
+<span class="fc" id="L94">			return 1;</span>
 
-<span class="nc" id="L98">		return 0;</span>
+<span class="nc" id="L96">		return 0;</span>
 	}
 
 }

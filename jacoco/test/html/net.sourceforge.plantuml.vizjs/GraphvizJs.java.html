@@ -50,13 +50,11 @@ import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.log.Logme;
 
 public class GraphvizJs implements Graphviz {
-    // ::remove folder when __HAXE__
-	
 
-<span class="nc" id="L56">	private final static ExecutorService executorService = Executors</span>
-<span class="nc" id="L57">			.newSingleThreadScheduledExecutor(new ThreadFactory() {</span>
+<span class="nc" id="L54">	private final static ExecutorService executorService = Executors</span>
+<span class="nc" id="L55">			.newSingleThreadScheduledExecutor(new ThreadFactory() {</span>
 				public Thread newThread(Runnable runnable) {
-<span class="nc" id="L59">					return new JsThread(runnable);</span>
+<span class="nc" id="L57">					return new JsThread(runnable);</span>
 				}
 			});
 
@@ -65,89 +63,89 @@ public class GraphvizJs implements Graphviz {
 		private final Runnable runnable;
 		private VizJsEngine engine;
 
-<span class="nc" id="L68">		public JsThread(Runnable runnable) {</span>
-<span class="nc" id="L69">			this.runnable = runnable;</span>
-<span class="nc" id="L70">		}</span>
+<span class="nc" id="L66">		public JsThread(Runnable runnable) {</span>
+<span class="nc" id="L67">			this.runnable = runnable;</span>
+<span class="nc" id="L68">		}</span>
 
 		@Override
 		public void run() {
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (engine == null) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">			if (engine == null) {</span>
 				try {
-<span class="nc" id="L76">					this.engine = new VizJsEngine();</span>
-<span class="nc" id="L77">				} catch (Exception e) {</span>
-<span class="nc" id="L78">					Logme.error(e);</span>
-<span class="nc" id="L79">				}</span>
+<span class="nc" id="L74">					this.engine = new VizJsEngine();</span>
+<span class="nc" id="L75">				} catch (Exception e) {</span>
+<span class="nc" id="L76">					Logme.error(e);</span>
+<span class="nc" id="L77">				}</span>
 			}
-<span class="nc" id="L81">			runnable.run();</span>
-<span class="nc" id="L82">		}</span>
+<span class="nc" id="L79">			runnable.run();</span>
+<span class="nc" id="L80">		}</span>
 
 	}
 
 	private final String dotString;
 
-<span class="nc" id="L88">	public GraphvizJs(String dotString) {</span>
-<span class="nc" id="L89">		this.dotString = dotString;</span>
-<span class="nc" id="L90">	}</span>
+<span class="nc" id="L86">	public GraphvizJs(String dotString) {</span>
+<span class="nc" id="L87">		this.dotString = dotString;</span>
+<span class="nc" id="L88">	}</span>
 
 	public ProcessState createFile3(OutputStream os) {
 		try {
-<span class="nc" id="L94">			final String svg = submitJob().get();</span>
-<span class="nc" id="L95">			os.write(svg.getBytes());</span>
-<span class="nc" id="L96">			return ProcessState.TERMINATED_OK();</span>
-<span class="nc" id="L97">		} catch (Exception e) {</span>
-<span class="nc" id="L98">			Logme.error(e);</span>
-<span class="nc" id="L99">			throw new GraphvizJsRuntimeException(e);</span>
+<span class="nc" id="L92">			final String svg = submitJob().get();</span>
+<span class="nc" id="L93">			os.write(svg.getBytes());</span>
+<span class="nc" id="L94">			return ProcessState.TERMINATED_OK();</span>
+<span class="nc" id="L95">		} catch (Exception e) {</span>
+<span class="nc" id="L96">			Logme.error(e);</span>
+<span class="nc" id="L97">			throw new GraphvizJsRuntimeException(e);</span>
 		}
 	}
 
 	private Future&lt;String&gt; submitJob() {
-<span class="nc" id="L104">		return executorService.submit(new Callable&lt;String&gt;() {</span>
+<span class="nc" id="L102">		return executorService.submit(new Callable&lt;String&gt;() {</span>
 			public String call() throws Exception {
-<span class="nc" id="L106">				final JsThread th = (JsThread) Thread.currentThread();</span>
-<span class="nc" id="L107">				final VizJsEngine engine = th.engine;</span>
-<span class="nc" id="L108">				return engine.execute(dotString);</span>
+<span class="nc" id="L104">				final JsThread th = (JsThread) Thread.currentThread();</span>
+<span class="nc" id="L105">				final VizJsEngine engine = th.engine;</span>
+<span class="nc" id="L106">				return engine.execute(dotString);</span>
 			}
 		});
 	}
 
 	public File getDotExe() {
-<span class="nc" id="L114">		return null;</span>
+<span class="nc" id="L112">		return null;</span>
 	}
 
 	public String dotVersion() {
-<span class="nc" id="L118">		return &quot;VizJs&quot;;</span>
+<span class="nc" id="L116">		return &quot;VizJs&quot;;</span>
 	}
 
 	public ExeState getExeState() {
-<span class="nc" id="L122">		return ExeState.OK;</span>
+<span class="nc" id="L120">		return ExeState.OK;</span>
 	}
 
 	public static GraphvizVersion getGraphvizVersion(final boolean modeSafe) {
-<span class="nc" id="L126">		return new GraphvizVersion() {</span>
+<span class="nc" id="L124">		return new GraphvizVersion() {</span>
 			public boolean useShieldForQuantifier() {
-<span class="nc" id="L128">				return true;</span>
+<span class="nc" id="L126">				return true;</span>
 			}
 
 			public boolean useProtectionWhenThereALinkFromOrToGroup() {
-<span class="nc" id="L132">				return true;</span>
+<span class="nc" id="L130">				return true;</span>
 			}
 
 			public boolean useXLabelInsteadOfLabel() {
-<span class="nc" id="L136">				return modeSafe;</span>
+<span class="nc" id="L134">				return modeSafe;</span>
 			}
 
 			public boolean isVizjs() {
-<span class="nc" id="L140">				return true;</span>
+<span class="nc" id="L138">				return true;</span>
 			}
 
 			public boolean ignoreHorizontalLinks() {
-<span class="nc" id="L144">				return false;</span>
+<span class="nc" id="L142">				return false;</span>
 			}
 		};
 	}
 
 	public boolean graphviz244onWindows() {
-<span class="nc" id="L150">		return false;</span>
+<span class="nc" id="L148">		return false;</span>
 	}
 
 }

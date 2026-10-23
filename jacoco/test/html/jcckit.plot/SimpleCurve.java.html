@@ -36,7 +36,6 @@ import jcckit.util.Factory;
  *  @author Franz-Josef Elmer
  */
 public class SimpleCurve implements Curve {
-    // ::remove folder when __HAXE__
   /** Configuration parameter key. */
   public static final String SYMBOL_FACTORY_KEY = &quot;symbolFactory&quot;,
                              WITH_LINE_KEY = &quot;withLine&quot;,
@@ -102,86 +101,86 @@ public class SimpleCurve implements Curve {
    */
   public SimpleCurve(ConfigParameters config, int curveIndex, 
                      int numberOfCurves, ClippingShape clippingShape, 
-<span class="nc" id="L105">                     Legend legend) {</span>
-<span class="nc" id="L106">    _symbolFactory = (SymbolFactory) Factory.createOrGet(</span>
-<span class="nc" id="L107">        config.getNode(SYMBOL_FACTORY_KEY), null);</span>
-<span class="nc" id="L108">    boolean withLine = config.getBoolean(WITH_LINE_KEY, true);</span>
-<span class="nc" id="L109">    LineAttributes lineAttributes = (LineAttributes) Factory.createOrGet(</span>
-<span class="nc" id="L110">        config.getNode(LINE_ATTRIBUTES_KEY),</span>
-<span class="nc" id="L111">        new ShapeAttributes(null, Color.getHSBColor((curveIndex % 6) / 6f, </span>
+<span class="nc" id="L104">                     Legend legend) {</span>
+<span class="nc" id="L105">    _symbolFactory = (SymbolFactory) Factory.createOrGet(</span>
+<span class="nc" id="L106">        config.getNode(SYMBOL_FACTORY_KEY), null);</span>
+<span class="nc" id="L107">    boolean withLine = config.getBoolean(WITH_LINE_KEY, true);</span>
+<span class="nc" id="L108">    LineAttributes lineAttributes = (LineAttributes) Factory.createOrGet(</span>
+<span class="nc" id="L109">        config.getNode(LINE_ATTRIBUTES_KEY),</span>
+<span class="nc" id="L110">        new ShapeAttributes(null, Color.getHSBColor((curveIndex % 6) / 6f, </span>
                                                     1f, 0.8f), 
                             0, null));
-<span class="nc bnc" id="L114" title="All 4 branches missed.">    if (_symbolFactory != null || withLine) {</span>
-<span class="nc" id="L115">      _clippingShape = clippingShape;</span>
-<span class="nc" id="L116">      _completeCurve = new GraphicalComposite(null);</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">      if (withLine) {</span>
-<span class="nc" id="L118">        GraphicalComposite container = new GraphicalComposite(clippingShape);</span>
-<span class="nc" id="L119">        _curve = new Polygon(lineAttributes, false);</span>
-<span class="nc" id="L120">        container.addElement(_curve);</span>
-<span class="nc" id="L121">       _completeCurve.addElement(container);</span>
-<span class="nc" id="L122">      } else {</span>
-<span class="nc" id="L123">        _curve = null;</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">    if (_symbolFactory != null || withLine) {</span>
+<span class="nc" id="L114">      _clippingShape = clippingShape;</span>
+<span class="nc" id="L115">      _completeCurve = new GraphicalComposite(null);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">      if (withLine) {</span>
+<span class="nc" id="L117">        GraphicalComposite container = new GraphicalComposite(clippingShape);</span>
+<span class="nc" id="L118">        _curve = new Polygon(lineAttributes, false);</span>
+<span class="nc" id="L119">        container.addElement(_curve);</span>
+<span class="nc" id="L120">       _completeCurve.addElement(container);</span>
+<span class="nc" id="L121">      } else {</span>
+<span class="nc" id="L122">        _curve = null;</span>
       }
-<span class="nc" id="L125">      _softClipping = config.getBoolean(SOFT_CLIPPING_KEY, true);</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">      if (_symbolFactory != null) {</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">        _symbols = new GraphicalComposite(_softClipping ? null </span>
-<span class="nc" id="L128">                                                        : clippingShape);</span>
-<span class="nc" id="L129">        _completeCurve.addElement(_symbols);</span>
+<span class="nc" id="L124">      _softClipping = config.getBoolean(SOFT_CLIPPING_KEY, true);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">      if (_symbolFactory != null) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        _symbols = new GraphicalComposite(_softClipping ? null </span>
+<span class="nc" id="L127">                                                        : clippingShape);</span>
+<span class="nc" id="L128">        _completeCurve.addElement(_symbols);</span>
       } else {
-<span class="nc" id="L131">        _symbols = null;</span>
+<span class="nc" id="L130">        _symbols = null;</span>
       }
     } else {
-<span class="nc" id="L134">      throw new IllegalArgumentException(</span>
+<span class="nc" id="L133">      throw new IllegalArgumentException(</span>
           &quot;Either a SymbolFactory must exist or withLines == true.&quot;);
     }
-<span class="nc" id="L137">    _hintForNextPoint = _initialHintForNextPoint </span>
-<span class="nc" id="L138">        = (Hint) Factory.createOrGet(</span>
-<span class="nc" id="L139">            config.getNode(INITIAL_HINT_FOR_NEXT_POINT_KEY), null);</span>
-<span class="nc" id="L140">    _legendSymbol = legend.createSymbol(curveIndex, numberOfCurves, </span>
+<span class="nc" id="L136">    _hintForNextPoint = _initialHintForNextPoint </span>
+<span class="nc" id="L137">        = (Hint) Factory.createOrGet(</span>
+<span class="nc" id="L138">            config.getNode(INITIAL_HINT_FOR_NEXT_POINT_KEY), null);</span>
+<span class="nc" id="L139">    _legendSymbol = legend.createSymbol(curveIndex, numberOfCurves, </span>
                                         _symbolFactory, withLine, 
                                         lineAttributes);
-<span class="nc" id="L143">  }</span>
+<span class="nc" id="L142">  }</span>
 
   /**
    * Returns the graphical representation of a curve. 
    * @return always the same instance.
    */
   public GraphicalElement getView() {
-<span class="nc" id="L150">    return _completeCurve;</span>
+<span class="nc" id="L149">    return _completeCurve;</span>
   }
 
   /** Returns the legend symbol. */
   public GraphicalElement getLegendSymbol() {
-<span class="nc" id="L155">    return _legendSymbol;</span>
+<span class="nc" id="L154">    return _legendSymbol;</span>
   }
 
   /** Appends a new point to the curve if inside the clipping shape. */
   public Hint addPoint(GraphPoint point, Hint hintFromPreviousCurve) {
-<span class="nc bnc" id="L160" title="All 2 branches missed.">    if (_curve != null) {</span>
-<span class="nc" id="L161">      _curve.addPoint(point);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">    if (_curve != null) {</span>
+<span class="nc" id="L160">      _curve.addPoint(point);</span>
     }
-<span class="nc" id="L163">    Hint hintForNextCurve = hintFromPreviousCurve;</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">    if (_symbolFactory != null) {</span>
-<span class="nc" id="L165">      Symbol symbol = _symbolFactory.createSymbol(point, _hintForNextPoint,</span>
+<span class="nc" id="L162">    Hint hintForNextCurve = hintFromPreviousCurve;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">    if (_symbolFactory != null) {</span>
+<span class="nc" id="L164">      Symbol symbol = _symbolFactory.createSymbol(point, _hintForNextPoint,</span>
                                                   hintFromPreviousCurve);
-<span class="nc bnc" id="L167" title="All 4 branches missed.">      if (_clippingShape == null || !_softClipping </span>
-<span class="nc bnc" id="L168" title="All 2 branches missed.">          || _clippingShape.isInside(point)) {</span>
-<span class="nc" id="L169">        _symbols.addElement(symbol.getSymbol());</span>
+<span class="nc bnc" id="L166" title="All 4 branches missed.">      if (_clippingShape == null || !_softClipping </span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">          || _clippingShape.isInside(point)) {</span>
+<span class="nc" id="L168">        _symbols.addElement(symbol.getSymbol());</span>
       }
-<span class="nc" id="L171">      _hintForNextPoint = symbol.getHintForNextPoint();</span>
-<span class="nc" id="L172">      hintForNextCurve = symbol.getHintForNextCurve();</span>
+<span class="nc" id="L170">      _hintForNextPoint = symbol.getHintForNextPoint();</span>
+<span class="nc" id="L171">      hintForNextCurve = symbol.getHintForNextCurve();</span>
     }
-<span class="nc" id="L174">    return hintForNextCurve;</span>
+<span class="nc" id="L173">    return hintForNextCurve;</span>
   }
 
   public void removeAllPoints() {
-<span class="nc bnc" id="L178" title="All 2 branches missed.">    if (_curve != null) {</span>
-<span class="nc" id="L179">      _curve.removeAllPoints();</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">    if (_curve != null) {</span>
+<span class="nc" id="L178">      _curve.removeAllPoints();</span>
     }
-<span class="nc bnc" id="L181" title="All 2 branches missed.">    if (_symbols != null) {</span>
-<span class="nc" id="L182">      _symbols.removeAllElements();</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">    if (_symbols != null) {</span>
+<span class="nc" id="L181">      _symbols.removeAllElements();</span>
     }
-<span class="nc" id="L184">    _hintForNextPoint = _initialHintForNextPoint;</span>
-<span class="nc" id="L185">  }</span>
+<span class="nc" id="L183">    _hintForNextPoint = _initialHintForNextPoint;</span>
+<span class="nc" id="L184">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

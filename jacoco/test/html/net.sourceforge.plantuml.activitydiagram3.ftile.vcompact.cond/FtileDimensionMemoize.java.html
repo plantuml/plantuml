@@ -41,24 +41,22 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public abstract class FtileDimensionMemoize extends AbstractFtile {
-	// ::remove folder when __HAXE__
-
 	public FtileDimensionMemoize(ISkinParam skinParam) {
-<span class="fc" id="L47">		super(skinParam);</span>
-<span class="fc" id="L48">	}</span>
+<span class="fc" id="L45">		super(skinParam);</span>
+<span class="fc" id="L46">	}</span>
 
 	private FtileGeometry calculateDimensionInternal;
 
 	protected final FtileGeometry calculateDimensionInternal(StringBounder stringBounder) {
-<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (calculateDimensionInternal == null)</span>
-<span class="fc" id="L54">			calculateDimensionInternal = calculateDimensionInternalSlow(stringBounder);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		if (calculateDimensionInternal == null)</span>
+<span class="fc" id="L52">			calculateDimensionInternal = calculateDimensionInternalSlow(stringBounder);</span>
 
-<span class="fc" id="L56">		return calculateDimensionInternal;</span>
+<span class="fc" id="L54">		return calculateDimensionInternal;</span>
 	}
 
 	protected final void clearCacheDimensionInternal() {
-<span class="nc" id="L60">		calculateDimensionInternal = null;</span>
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L58">		calculateDimensionInternal = null;</span>
+<span class="nc" id="L59">	}</span>
 
 	abstract protected FtileGeometry calculateDimensionInternalSlow(StringBounder stringBounder);
 }

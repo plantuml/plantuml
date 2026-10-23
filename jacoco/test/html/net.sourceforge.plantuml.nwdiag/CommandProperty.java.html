@@ -51,35 +51,34 @@ public class CommandProperty extends SingleLineCommand2&lt;NwDiagram&gt; {
 
 <span class="fc" id="L52">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList( //</span>
 			&quot;address&quot;, &quot;color&quot;, &quot;description&quot;, &quot;width&quot;);
-    // ::remove folder when __HAXE__
 
 	public CommandProperty() {
-<span class="fc" id="L57">		super(getRegexConcat());</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L61">		return RegexConcat.build(CommandProperty.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandProperty.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;(address|color|width|description)&quot;), //
-<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;=&quot;), //
-<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\&quot;?&quot;), //
 				new RegexLeaf(1, &quot;VALUE&quot;, &quot;([^\&quot;]*)&quot;), //
 				new RegexLeaf(&quot;\&quot;?&quot;), //
-<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L72">				RegexLeaf.end());</span>
+<span class="fc" id="L71">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L77">		return diagram.setProperty(arg.get(&quot;NAME&quot;, 0), arg.get(&quot;VALUE&quot;, 0));</span>
+<span class="nc" id="L76">		return diagram.setProperty(arg.get(&quot;NAME&quot;, 0), arg.get(&quot;VALUE&quot;, 0));</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="nc" id="L82">		return FIRST_TOKENS;</span>
+<span class="nc" id="L81">		return FIRST_TOKENS;</span>
 	}
 
 }

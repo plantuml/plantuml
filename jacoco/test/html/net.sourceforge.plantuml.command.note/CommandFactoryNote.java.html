@@ -71,52 +71,51 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public final class CommandFactoryNote implements SingleMultiFactoryCommand&lt;AbstractEntityDiagram&gt; {
 
 <span class="fc" id="L73">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;note&quot;);</span>
-	// ::remove folder when __HAXE__
 
-<span class="fc" id="L76">	public final static CommandFactoryNote ME = new CommandFactoryNote();</span>
+<span class="fc" id="L75">	public final static CommandFactoryNote ME = new CommandFactoryNote();</span>
 
 	private CommandFactoryNote() {
 
 	}
 
-<span class="fc" id="L82">	private final static IRegex multiLine = RegexConcat.build(CommandFactoryNote.class.getName() + &quot;multi&quot;,</span>
-<span class="fc" id="L83">			RegexLeaf.start(), //</span>
+<span class="fc" id="L81">	private final static IRegex multiLine = RegexConcat.build(CommandFactoryNote.class.getName() + &quot;multi&quot;,</span>
+<span class="fc" id="L82">			RegexLeaf.start(), //</span>
 			new RegexLeaf(&quot;note&quot;), //
-<span class="fc" id="L85">			RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L84">			RegexLeaf.spaceOneOrMore(), //</span>
 			new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L87">			RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L86">			RegexLeaf.spaceOneOrMore(), //</span>
 			new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), //
-<span class="fc" id="L89">			RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L90">			new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L91">			StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L92">			ColorParser.exp1(), //</span>
-<span class="fc" id="L93">			RegexLeaf.end() //</span>
+<span class="fc" id="L88">			RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L89">			new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L90">			StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L91">			ColorParser.exp1(), //</span>
+<span class="fc" id="L92">			RegexLeaf.end() //</span>
 	);
 
-<span class="fc" id="L96">	private final static IRegex singleLine = RegexConcat.build(CommandFactoryNote.class.getName() + &quot;single&quot;,</span>
-<span class="fc" id="L97">			RegexLeaf.start(), //</span>
+<span class="fc" id="L95">	private final static IRegex singleLine = RegexConcat.build(CommandFactoryNote.class.getName() + &quot;single&quot;,</span>
+<span class="fc" id="L96">			RegexLeaf.start(), //</span>
 			new RegexLeaf(&quot;note&quot;), //
-<span class="fc" id="L99">			RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L98">			RegexLeaf.spaceOneOrMore(), //</span>
 			new RegexLeaf(&quot;[%g]&quot;), //
 			new RegexLeaf(1, &quot;DISPLAY&quot;, &quot;([^%g]+)&quot;), //
 			new RegexLeaf(&quot;[%g]&quot;), //
-<span class="fc" id="L103">			RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L102">			RegexLeaf.spaceOneOrMore(), //</span>
 			new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L105">			RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L104">			RegexLeaf.spaceOneOrMore(), //</span>
 			new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), //
-<span class="fc" id="L107">			RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L108">			new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L109">			StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L110">			ColorParser.exp1(), //</span>
-<span class="fc" id="L111">			RegexLeaf.end() //</span>
+<span class="fc" id="L106">			RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L107">			new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L108">			StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L109">			ColorParser.exp1(), //</span>
+<span class="fc" id="L110">			RegexLeaf.end() //</span>
 	);
 
 	public Command&lt;AbstractEntityDiagram&gt; createSingleLine() {
-<span class="fc" id="L115">		return new SingleLineCommand2&lt;AbstractEntityDiagram&gt;(singleLine) {</span>
+<span class="fc" id="L114">		return new SingleLineCommand2&lt;AbstractEntityDiagram&gt;(singleLine) {</span>
 
 			@Override
 			public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="fc" id="L119">				return FIRST_TOKENS;</span>
+<span class="fc" id="L118">				return FIRST_TOKENS;</span>
 			}
 
 			@Override
@@ -125,29 +124,29 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand&lt;Ab
 				// 'note &quot;text&quot; as N1' creates a standalone named note, usable
 				// as an endpoint of links; executeArg fails when the name
 				// already exists.
-<span class="nc" id="L128">				return explainInternal(arg, &quot; labelled \&quot;&quot; + arg.get(&quot;DISPLAY&quot;, 0) + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L127">				return explainInternal(arg, &quot; labelled \&quot;&quot; + arg.get(&quot;DISPLAY&quot;, 0) + &quot;\&quot;&quot;);</span>
 			}
 
 			@Override
 			protected CommandExecutionResult executeArg(final AbstractEntityDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L134">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;DISPLAY&quot;, 0));</span>
-<span class="nc" id="L135">				return executeInternal(location, diagram, arg, display);</span>
+<span class="nc" id="L133">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;DISPLAY&quot;, 0));</span>
+<span class="nc" id="L134">				return executeInternal(location, diagram, arg, display);</span>
 			}
 
 		};
 	}
 
-<span class="fc" id="L141">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="fc" id="L142">			() -&gt; Pattern2.cmpile(&quot;^[%s]*end[%s]?note$&quot;));</span>
+<span class="fc" id="L140">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="fc" id="L141">			() -&gt; Pattern2.cmpile(&quot;^[%s]*end[%s]?note$&quot;));</span>
 
 	public Command&lt;AbstractEntityDiagram&gt; createMultiLine(boolean withBracket) {
-<span class="fc" id="L145">		return new CommandMultilines2&lt;AbstractEntityDiagram&gt;(multiLine, MultilinesStrategy.KEEP_STARTING_QUOTE,</span>
-<span class="fc" id="L146">				Trim.BOTH, END) {</span>
+<span class="fc" id="L144">		return new CommandMultilines2&lt;AbstractEntityDiagram&gt;(multiLine, MultilinesStrategy.KEEP_STARTING_QUOTE,</span>
+<span class="fc" id="L145">				Trim.BOTH, END) {</span>
 
 			@Override
 			public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="fc" id="L150">				return FIRST_TOKENS;</span>
+<span class="fc" id="L149">				return FIRST_TOKENS;</span>
 			}
 
 
@@ -156,24 +155,24 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand&lt;Ab
 			protected String explainNow(BlocLines lines) {
 				// Mirror executeNow: the lines between 'note as N1' and 'end
 				// note' are the text of this standalone named note.
-<span class="nc" id="L159">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">				if (line0 == null)</span>
-<span class="nc" id="L161">					return &quot;Creating a named note&quot;;</span>
+<span class="nc" id="L158">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">				if (line0 == null)</span>
+<span class="nc" id="L160">					return &quot;Creating a named note&quot;;</span>
 
-<span class="nc bnc" id="L163" title="All 2 branches missed.">				final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
-<span class="nc" id="L164">				return explainInternal(line0,</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">						&quot; with &quot; + bodyCount + (bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;) + &quot; of text&quot;);</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">				final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc" id="L163">				return explainInternal(line0,</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">						&quot; with &quot; + bodyCount + (bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;) + &quot; of text&quot;);</span>
 			}
 
 			@Override
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram diagram, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
-<span class="fc" id="L172">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="fc" id="L173">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
-<span class="fc" id="L174">				lines = lines.removeEmptyColumns();</span>
-<span class="fc" id="L175">				final Display display = lines.toDisplay();</span>
-<span class="fc" id="L176">				return executeInternal(lines.getLocation(), diagram, line0, display);</span>
+<span class="fc" id="L171">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L172">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="fc" id="L173">				lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L174">				final Display display = lines.toDisplay();</span>
+<span class="fc" id="L175">				return executeInternal(lines.getLocation(), diagram, line0, display);</span>
 			}
 		};
 	}
@@ -185,46 +184,46 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand&lt;Ab
 	 */
 	@Explain
 	private String explainInternal(RegexResult arg, String contentClause) {
-<span class="nc" id="L188">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L189">		sb.append(&quot;Creating the named note '&quot;).append(arg.get(&quot;CODE&quot;, 0)).append(&quot;'&quot;).append(contentClause);</span>
+<span class="nc" id="L187">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L188">		sb.append(&quot;Creating the named note '&quot;).append(arg.get(&quot;CODE&quot;, 0)).append(&quot;'&quot;).append(contentClause);</span>
 
-<span class="nc" id="L191">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L193">			sb.append(&quot;, stereotype &quot;).append(stereotype);</span>
+<span class="nc" id="L190">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L192">			sb.append(&quot;, stereotype &quot;).append(stereotype);</span>
 
-<span class="nc" id="L195">		final String tags = arg.get(&quot;TAGS&quot;, 0);</span>
-<span class="nc bnc" id="L196" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
-<span class="nc" id="L197">			sb.append(&quot;, tagged &quot;).append(tags);</span>
+<span class="nc" id="L194">		final String tags = arg.get(&quot;TAGS&quot;, 0);</span>
+<span class="nc bnc" id="L195" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
+<span class="nc" id="L196">			sb.append(&quot;, tagged &quot;).append(tags);</span>
 
-<span class="nc bnc" id="L199" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
-<span class="nc" id="L200">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L199">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
 
-<span class="nc" id="L202">		return sb.toString();</span>
+<span class="nc" id="L201">		return sb.toString();</span>
 	}
 
 	private CommandExecutionResult executeInternal(LineLocation location, AbstractEntityDiagram diagram,
 			RegexResult arg, Display display) throws NoSuchColorException {
-<span class="fc" id="L207">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="fc" id="L208">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idShort));</span>
+<span class="fc" id="L206">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L207">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idShort));</span>
 
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (quark.getData() != null)</span>
-<span class="nc" id="L211">			return CommandExecutionResult.error(&quot;Note already created: &quot; + quark.getName());</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L210">			return CommandExecutionResult.error(&quot;Note already created: &quot; + quark.getName());</span>
 
-<span class="fc" id="L213">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.NOTE, null);</span>
+<span class="fc" id="L212">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.NOTE, null);</span>
 
-<span class="pc bpc" id="L215" title="2 of 4 branches missed.">		if (TeaVM.a()) assert entity != null;</span>
-<span class="fc" id="L216">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="fc" id="L217">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
-<span class="fc" id="L219">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L220">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (stereotypeString != null) {</span>
-<span class="nc" id="L222">			stereotype = Stereotype.build(stereotypeString);</span>
-<span class="nc" id="L223">			entity.setStereotype(stereotype);</span>
+<span class="pc bpc" id="L214" title="2 of 4 branches missed.">		if (TeaVM.a()) assert entity != null;</span>
+<span class="fc" id="L215">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L216">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="fc" id="L218">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L219">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (stereotypeString != null) {</span>
+<span class="nc" id="L221">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="nc" id="L222">			entity.setStereotype(stereotype);</span>
 		}
 
-<span class="fc" id="L226">		CommandCreateClassMultilines.addTags(entity, arg.get(&quot;TAGS&quot;, 0));</span>
-<span class="fc" id="L227">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L225">		CommandCreateClassMultilines.addTags(entity, arg.get(&quot;TAGS&quot;, 0));</span>
+<span class="fc" id="L226">		return CommandExecutionResult.ok();</span>
 	}
 
 }

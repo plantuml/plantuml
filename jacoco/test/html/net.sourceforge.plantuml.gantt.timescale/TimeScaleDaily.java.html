@@ -41,33 +41,31 @@ import net.sourceforge.plantuml.gantt.core.PrintScale;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 
 public final class TimeScaleDaily implements TimeScale {
-	// ::remove folder when __HAXE__
-
 	private final TimeScaleWink basic;
 	private final double delta;
 
-<span class="fc" id="L49">	public TimeScaleDaily(double size, TimePoint startingDay, double scale, LocalDate zeroDay) {</span>
-<span class="fc" id="L50">		this.basic = new TimeScaleWink(size, scale, PrintScale.DAILY);</span>
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (zeroDay == null)</span>
-<span class="fc" id="L52">			this.delta = basic.getPosition(startingDay);</span>
+<span class="fc" id="L47">	public TimeScaleDaily(double size, TimePoint startingDay, double scale, LocalDate zeroDay) {</span>
+<span class="fc" id="L48">		this.basic = new TimeScaleWink(size, scale, PrintScale.DAILY);</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (zeroDay == null)</span>
+<span class="fc" id="L50">			this.delta = basic.getPosition(startingDay);</span>
 		else
-<span class="nc" id="L54">			this.delta = basic.getPosition(TimePoint.ofStartOfDay(zeroDay));</span>
+<span class="nc" id="L52">			this.delta = basic.getPosition(TimePoint.ofStartOfDay(zeroDay));</span>
 
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L54">	}</span>
 
 	@Override
 	public double getPosition(TimePoint instant) {
-<span class="fc" id="L60">		return basic.getPosition(instant) - delta;</span>
+<span class="fc" id="L58">		return basic.getPosition(instant) - delta;</span>
 	}
 
 	@Override
 	public double getWidth(TimePoint instant) {
-<span class="fc" id="L65">		return basic.getWidth(instant);</span>
+<span class="fc" id="L63">		return basic.getWidth(instant);</span>
 	}
 
 	@Override
 	public boolean isBreaking(TimePoint instant) {
-<span class="nc" id="L70">		return true;</span>
+<span class="nc" id="L68">		return true;</span>
 	}
 
 }

@@ -152,26 +152,24 @@ public class MinMax {
 <span class="fc" id="L152">		return new XDimension2D(maxX - minX, maxY - minY);</span>
 	}
 
-	// ::comment when __HAXE__
 	public void drawGray(UGraphic ug) {
-<span class="nc" id="L157">		draw(ug, HColors.GRAY, HColors.GRAY);</span>
-<span class="nc" id="L158">	}</span>
+<span class="nc" id="L156">		draw(ug, HColors.GRAY, HColors.GRAY);</span>
+<span class="nc" id="L157">	}</span>
 
 	public void draw(UGraphic ug, HColor borderColor, HColor backgroundColor) {
-<span class="nc" id="L161">		ug = ug.apply(borderColor).apply(backgroundColor.bg());</span>
-<span class="nc" id="L162">		ug = ug.apply(new UTranslate(minX, minY));</span>
-<span class="nc" id="L163">		ug.draw(URectangle.build(getWidth(), getHeight()));</span>
-<span class="nc" id="L164">	}</span>
-	// ::done
+<span class="nc" id="L160">		ug = ug.apply(borderColor).apply(backgroundColor.bg());</span>
+<span class="nc" id="L161">		ug = ug.apply(new UTranslate(minX, minY));</span>
+<span class="nc" id="L162">		ug.draw(URectangle.build(getWidth(), getHeight()));</span>
+<span class="nc" id="L163">	}</span>
 
 	public MinMax translate(UTranslate translate) {
-<span class="nc" id="L168">		final double dx = translate.getDx();</span>
-<span class="nc" id="L169">		final double dy = translate.getDy();</span>
-<span class="nc" id="L170">		return new MinMax(minX + dx, minY + dy, maxX + dx, maxY + dy);</span>
+<span class="nc" id="L166">		final double dx = translate.getDx();</span>
+<span class="nc" id="L167">		final double dy = translate.getDy();</span>
+<span class="nc" id="L168">		return new MinMax(minX + dx, minY + dy, maxX + dx, maxY + dy);</span>
 	}
 
 	public MinMax enlarge(double dx, double dy) {
-<span class="fc" id="L174">		return new MinMax(minX, minY, maxX + dx, maxY + dy);</span>
+<span class="fc" id="L172">		return new MinMax(minX, minY, maxX + dx, maxY + dy);</span>
 	}
 
 }

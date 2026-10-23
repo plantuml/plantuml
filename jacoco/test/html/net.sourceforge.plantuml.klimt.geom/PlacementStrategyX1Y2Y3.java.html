@@ -43,46 +43,44 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public class PlacementStrategyX1Y2Y3 extends AbstractPlacementStrategy {
-	// ::remove file when __HAXE__
-
 	public PlacementStrategyX1Y2Y3(StringBounder stringBounder) {
-<span class="nc" id="L49">		super(stringBounder);</span>
-<span class="nc" id="L50">	}</span>
+<span class="nc" id="L47">		super(stringBounder);</span>
+<span class="nc" id="L48">	}</span>
 
 	public Map&lt;TextBlock, XPoint2D&gt; getPositions(double width, double height) {
-<span class="nc" id="L53">		final XDimension2D first = getDimensions().values().iterator().next();</span>
+<span class="nc" id="L51">		final XDimension2D first = getDimensions().values().iterator().next();</span>
 
-<span class="nc" id="L55">		final double maxWidthButFirst = getMaxWidth(butFirst());</span>
-<span class="nc" id="L56">		final double sumHeightButFirst = getSumHeight(butFirst());</span>
+<span class="nc" id="L53">		final double maxWidthButFirst = getMaxWidth(butFirst());</span>
+<span class="nc" id="L54">		final double sumHeightButFirst = getSumHeight(butFirst());</span>
 
-<span class="nc" id="L58">		final double space = (width - first.getWidth() - maxWidthButFirst) / 3;</span>
+<span class="nc" id="L56">		final double space = (width - first.getWidth() - maxWidthButFirst) / 3;</span>
 
-<span class="nc" id="L60">		final Map&lt;TextBlock, XPoint2D&gt; result = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc" id="L58">		final Map&lt;TextBlock, XPoint2D&gt; result = new LinkedHashMap&lt;&gt;();</span>
 		// double x = space * 2;
 
-<span class="nc" id="L63">		final Iterator&lt;Map.Entry&lt;TextBlock, XDimension2D&gt;&gt; it = getDimensions().entrySet().iterator();</span>
-<span class="nc" id="L64">		final Map.Entry&lt;TextBlock, XDimension2D&gt; ent = it.next();</span>
-<span class="nc" id="L65">		double y = (height - ent.getValue().getHeight()) / 2;</span>
-<span class="nc" id="L66">		result.put(ent.getKey(), new XPoint2D(space, y));</span>
+<span class="nc" id="L61">		final Iterator&lt;Map.Entry&lt;TextBlock, XDimension2D&gt;&gt; it = getDimensions().entrySet().iterator();</span>
+<span class="nc" id="L62">		final Map.Entry&lt;TextBlock, XDimension2D&gt; ent = it.next();</span>
+<span class="nc" id="L63">		double y = (height - ent.getValue().getHeight()) / 2;</span>
+<span class="nc" id="L64">		result.put(ent.getKey(), new XPoint2D(space, y));</span>
 
 		// x += ent.getValue().getWidth() + space;
 
-<span class="nc" id="L70">		y = (height - sumHeightButFirst) / 2;</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="nc" id="L72">			final Map.Entry&lt;TextBlock, XDimension2D&gt; ent2 = it.next();</span>
-<span class="nc" id="L73">			final TextBlock textBlock = ent2.getKey();</span>
-<span class="nc" id="L74">			final XDimension2D dim = getDimensions().get(textBlock);</span>
-<span class="nc" id="L75">			final double x = 2 * space + first.getWidth() + (maxWidthButFirst - dim.getWidth()) / 2;</span>
-<span class="nc" id="L76">			result.put(textBlock, new XPoint2D(x, y));</span>
-<span class="nc" id="L77">			y += ent2.getValue().getHeight();</span>
-<span class="nc" id="L78">		}</span>
-<span class="nc" id="L79">		return result;</span>
+<span class="nc" id="L68">		y = (height - sumHeightButFirst) / 2;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L70">			final Map.Entry&lt;TextBlock, XDimension2D&gt; ent2 = it.next();</span>
+<span class="nc" id="L71">			final TextBlock textBlock = ent2.getKey();</span>
+<span class="nc" id="L72">			final XDimension2D dim = getDimensions().get(textBlock);</span>
+<span class="nc" id="L73">			final double x = 2 * space + first.getWidth() + (maxWidthButFirst - dim.getWidth()) / 2;</span>
+<span class="nc" id="L74">			result.put(textBlock, new XPoint2D(x, y));</span>
+<span class="nc" id="L75">			y += ent2.getValue().getHeight();</span>
+<span class="nc" id="L76">		}</span>
+<span class="nc" id="L77">		return result;</span>
 	}
 
 	private Iterator&lt;XDimension2D&gt; butFirst() {
-<span class="nc" id="L83">		final Iterator&lt;XDimension2D&gt; iterator = getDimensions().values().iterator();</span>
-<span class="nc" id="L84">		iterator.next();</span>
-<span class="nc" id="L85">		return iterator;</span>
+<span class="nc" id="L81">		final Iterator&lt;XDimension2D&gt; iterator = getDimensions().values().iterator();</span>
+<span class="nc" id="L82">		iterator.next();</span>
+<span class="nc" id="L83">		return iterator;</span>
 	}
 
 }
