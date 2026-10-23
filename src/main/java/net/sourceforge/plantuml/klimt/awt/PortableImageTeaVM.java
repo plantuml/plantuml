@@ -230,77 +230,13 @@ class PortableImageTeaVM implements PortableImage {
 
 		final int[] dstPixels = new int[dstW * dstH];
 
+		// Same pixels as AffineTransformOp on the JVM (see MlibAffine)
 		if (interpolationType == 2)
-			scaleBilinear(pixels, width, height, dstPixels, dstW, dstH);
+			MlibAffine.bilinear(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);
 		else
-			scaleNearestNeighbor(pixels, width, height, dstPixels, dstW, dstH);
+			MlibAffine.nearest(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);
 
 		return new PortableImageTeaVM(dstW, dstH, imageType, dstPixels);
-	}
-
-	/**
-	 * Nearest-neighbor scaling - fast but can be blocky.
-	 */
-	private static void scaleNearestNeighbor(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
-		for (int y = 0; y < dstH; y++) {
-			final int srcY = y * srcH / dstH;
-			for (int x = 0; x < dstW; x++) {
-				final int srcX = x * srcW / dstW;
-				dst[y * dstW + x] = src[srcY * srcW + srcX];
-			}
-		}
-	}
-
-	/**
-	 * Bilinear interpolation scaling - smoother results.
-	 */
-	private static void scaleBilinear(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
-		final double xRatio = (double) (srcW - 1) / dstW;
-		final double yRatio = (double) (srcH - 1) / dstH;
-
-		for (int y = 0; y < dstH; y++) {
-			final double srcYf = y * yRatio;
-			final int y0 = (int) srcYf;
-			final int y1 = Math.min(y0 + 1, srcH - 1);
-			final double yFrac = srcYf - y0;
-
-			for (int x = 0; x < dstW; x++) {
-				final double srcXf = x * xRatio;
-				final int x0 = (int) srcXf;
-				final int x1 = Math.min(x0 + 1, srcW - 1);
-				final double xFrac = srcXf - x0;
-
-				// Get 4 neighboring pixels
-				final int c00 = src[y0 * srcW + x0];
-				final int c10 = src[y0 * srcW + x1];
-				final int c01 = src[y1 * srcW + x0];
-				final int c11 = src[y1 * srcW + x1];
-
-				// Interpolate each channel
-				final int a = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 24);
-				final int r = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 16);
-				final int g = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 8);
-				final int b = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 0);
-
-				dst[y * dstW + x] = (a << 24) | (r << 16) | (g << 8) | b;
-			}
-		}
-	}
-
-	/**
-	 * Bilinear interpolation for a single color channel.
-	 */
-	private static int interpolateChannel(int c00, int c10, int c01, int c11, double xFrac, double yFrac, int shift) {
-		final int v00 = (c00 >> shift) & 0xFF;
-		final int v10 = (c10 >> shift) & 0xFF;
-		final int v01 = (c01 >> shift) & 0xFF;
-		final int v11 = (c11 >> shift) & 0xFF;
-
-		final double top = v00 + xFrac * (v10 - v00);
-		final double bottom = v01 + xFrac * (v11 - v01);
-		final double result = top + yFrac * (bottom - top);
-
-		return Math.min(255, Math.max(0, (int) Math.round(result)));
 	}
 
 	@Override
