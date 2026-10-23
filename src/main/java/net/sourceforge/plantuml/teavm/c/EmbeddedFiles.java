@@ -65,6 +65,18 @@ public final class EmbeddedFiles {
 	}
 
 	/**
+	 * Like {@link #readBrotli}, but read by parts from C memory, for the files
+	 * too big for the Java heap. The stream must be closed.
+	 */
+	public static java.io.InputStream openBrotli(String name) throws java.io.IOException {
+		final int index = NativeResources.find(name.toCharArray(), name.length());
+		if (index < 0)
+			return null;
+
+		return new EmbeddedBrotliStream(index);
+	}
+
+	/**
 	 * The content of the embedded file of this name, which is compressed with
 	 * Brotli (a .spm file of the standard library), decompressed; or null if there
 	 * is no such file, or it is not valid Brotli.
