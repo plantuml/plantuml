@@ -84,11 +84,13 @@ public enum SpmChannel {
 		// The C build embeds the .spm files, and decompresses them with the Brotli
 		// decoder in C: the Java one and its big dictionary stay out of it
 		if (TeaVM.isC()) {
-			final byte[] data = EmbeddedFiles.readBrotli(path);
-			if (data == null)
+			// Read by parts from C memory: some files are tens of megabytes once
+			// decompressed, more than the heap. The stream must be closed.
+			final InputStream result = EmbeddedFiles.openBrotli(path);
+			if (result == null)
 				throw new IOException("Not available in the standard library of the C build: " + path);
 
-			return new ByteArrayInputStream(data);
+			return result;
 		}
 		// ::done
 		return new BrotliInputStream(inputStream(path));

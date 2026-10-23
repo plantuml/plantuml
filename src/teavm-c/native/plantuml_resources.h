@@ -43,6 +43,13 @@ void plantuml_resource_copy(int32_t index, int8_t* dest);
 int32_t plantuml_resource_decode_brotli(int32_t index);
 void plantuml_resource_copy_decoded(int8_t* dest);
 
+/* The file decoded by plantuml_resource_decode_brotli can also be read by parts
+ * (a big file never goes whole through the Java heap): read_decoded copies up to
+ * length bytes from offset and returns how many (0 at the end), and
+ * release_decoded frees the buffer. */
+int32_t plantuml_resource_read_decoded(int32_t offset, int32_t length, int8_t* dest);
+void plantuml_resource_release_decoded(void);
+
 #ifdef __cplusplus
 }
 #endif

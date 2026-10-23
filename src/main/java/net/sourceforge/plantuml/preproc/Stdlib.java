@@ -76,6 +76,8 @@ public class Stdlib {
 	private final Map<String, StdlibSprite> sprites = new HashMap<>();
 	private final Map<String, ISvgSpriteParser> svgs = new HashMap<>();
 	private final List<FutureImage> images = new ArrayList<>();
+	// The C build keeps only the images, sprites and svg already asked for
+	private final Map<Integer, FutureImage> imagesInC = new HashMap<>();
 
 	private final String name;
 	private final Map<String, String> info = new HashMap<String, String>();
@@ -364,6 +366,9 @@ public class Stdlib {
 	}
 
 	public Sprite readSprite(String name) throws IOException {
+		if (TeaVM.isC())
+			return readSpriteInC(name);
+
 		synchronized (sprites) {
 			if (sprites.size() == 0) {
 				try (InputStream is = getInternalInputStream(SpmChannel.SPRITE);
@@ -386,6 +391,9 @@ public class Stdlib {
 	}
 
 	public Sprite readSvgSprite(String name) throws IOException {
+		if (TeaVM.isC())
+			return readSvgSpriteInC(name);
+
 		synchronized (svgs) {
 			if (svgs.size() == 0) {
 				try (InputStream is = getInternalInputStream(SpmChannel.SVG);
@@ -404,6 +412,9 @@ public class Stdlib {
 	}
 
 	public FutureImage readDataImagePng(int num) throws IOException {
+		if (TeaVM.isC())
+			return readDataImagePngInC(num);
+
 		synchronized (images) {
 			if (images.size() == 0) {
 				try (InputStream is = getInternalInputStream(SpmChannel.IMAGE);
@@ -421,6 +432,116 @@ public class Stdlib {
 			return images.get(num);
 		}
 
+	}
+
+	/*
+	 * The C build has a small heap, and some files are huge once decompressed (the
+	 * sprites of aws: 56 MB; the images of ibm: 74 MB). It scans the file and keeps
+	 * only what is asked for.
+	 */
+
+	private Sprite readSpriteInC(String name) throws IOException {
+		synchronized (sprites) {
+			final StdlibSprite known = sprites.get(name);
+			if (known != null)
+				return known;
+
+			try (InputStream is = getInternalInputStream(SpmChannel.SPRITE);
+					DataInputStream dis = new DataInputStream(is)) {
+				final int nb = dis.readInt();
+				for (int i = 0; i < nb; i++) {
+					final String spriteName = dis.readUTF();
+					final int width = dis.readInt();
+					final int height = dis.readInt();
+					final int length = width * ((height + 1) / 2);
+					if (spriteName.equals(name)) {
+						final StdlibSprite sprite = new StdlibSprite(width, height, FileUtils.readExactly(dis, length));
+						sprites.put(name, sprite);
+						return sprite;
+					}
+					skipFully(dis, length);
+				}
+			}
+			return null;
+		}
+	}
+
+	private Sprite readSvgSpriteInC(String name) throws IOException {
+		synchronized (svgs) {
+			final ISvgSpriteParser known = svgs.get(name);
+			if (known != null)
+				return known;
+
+			try (InputStream is = getInternalInputStream(SpmChannel.SVG);
+					DataInputStream dis = new DataInputStream(is)) {
+				final int nb = dis.readInt();
+				for (int i = 0; i < nb; i++) {
+					final String spriteName = dis.readUTF();
+					final int length = dis.readUnsignedShort();
+					if (spriteName.equals(name)) {
+						// The text is in the modified UTF-8 of DataOutput.writeUTF
+						final byte[] utf = new byte[length + 2];
+						utf[0] = (byte) (length >> 8);
+						utf[1] = (byte) length;
+						dis.readFully(utf, 2, length);
+						final String svg = new DataInputStream(new ByteArrayInputStream(utf)).readUTF();
+						final ISvgSpriteParser parser = SvgSpriteParserFactory.create(svg);
+						svgs.put(name, parser);
+						return parser;
+					}
+					skipFully(dis, length);
+				}
+			}
+			return null;
+		}
+	}
+
+	private FutureImage readDataImagePngInC(int num) throws IOException {
+		synchronized (imagesInC) {
+			final FutureImage known = imagesInC.get(num);
+			if (known != null)
+				return known;
+
+			try (InputStream is = getInternalInputStream(SpmChannel.IMAGE);
+					DataInputStream dis = new DataInputStream(is)) {
+				final int nb = dis.readInt();
+				if (colors.size() == 0)
+					readColorTable(dis);
+				else
+					skipColorTable(dis);
+				for (int i = 0; i < nb; i++) {
+					final int width = dis.readInt();
+					final int height = dis.readInt();
+					final int length = width * height * 2;
+					if (i == num) {
+						final FutureImage image = new FutureImage(colors, width, height,
+								FileUtils.readExactly(dis, length));
+						imagesInC.put(num, image);
+						return image;
+					}
+					skipFully(dis, length);
+				}
+			}
+			return null;
+		}
+	}
+
+	private static void skipColorTable(InputStream is) throws IOException {
+		skipFully(is, read2bytes(is) * 4L);
+	}
+
+	private static void skipFully(InputStream is, long length) throws IOException {
+		long remaining = length;
+		while (remaining > 0) {
+			final long skipped = is.skip(remaining);
+			if (skipped > 0) {
+				remaining -= skipped;
+			} else {
+				if (is.read() < 0)
+					throw new IOException("Unexpected end of file");
+				remaining--;
+			}
+		}
 	}
 
 	private void readColorTable(InputStream is) throws IOException {
