@@ -71,4 +71,10 @@ final class NativeResources {
 	@Import(name = "plantuml_resource_copy_decoded")
 	static native void copyDecoded(byte[] dest);
 
+	@Import(name = "plantuml_resource_read_decoded")
+	static native int readDecoded(int offset, int length, byte[] dest);
+
+	@Import(name = "plantuml_resource_release_decoded")
+	static native void releaseDecoded();
+
 }
