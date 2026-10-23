@@ -287,18 +287,11 @@ int32_t plantuml_png_image_encode(const int32_t* argb, int32_t width, int32_t he
 	uint32_t* pixels = (uint32_t*) malloc(count * sizeof(uint32_t));
 	if (pixels == NULL)
 		return -1;
-	/* The encoder takes premultiplied pixels, like the surface of plutovg */
-	for (size_t i = 0; i < count; i++) {
-		const uint32_t p = (uint32_t) argb[i];
-		const uint32_t a = p >> 24;
-		const uint32_t r = (((p >> 16) & 0xFF) * a + 127) / 255;
-		const uint32_t g = (((p >> 8) & 0xFF) * a + 127) / 255;
-		const uint32_t b = ((p & 0xFF) * a + 127) / 255;
-		pixels[i] = (a << 24) | (r << 16) | (g << 8) | b;
-	}
+	for (size_t i = 0; i < count; i++)
+		pixels[i] = (uint32_t) argb[i];
 	unsigned char* png;
 	size_t size;
-	const int failed = plantuml_png_encode(pixels, width, height, width * 4, opaque, &png, &size);
+	const int failed = plantuml_png_encode_straight(pixels, width, height, width * 4, opaque, &png, &size);
 	free(pixels);
 	if (failed != 0 || size > 0x7FFFFFFF)
 		return -1;
