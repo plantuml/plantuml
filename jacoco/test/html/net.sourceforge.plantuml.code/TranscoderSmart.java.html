@@ -43,53 +43,45 @@ import java.io.IOException;
 			new CompressionZlib());
 <span class="fc" id="L44">	private final Transcoder hexOnly = TranscoderImpl.utf8(new AsciiEncoderHex(), new DiagramSourceCompressor(),</span>
 			new CompressionNone());
-	// ::comment when __TEAVM__
 	// Legacy encoder
-<span class="fc" id="L48">	private final Transcoder oldOne = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),</span>
+<span class="fc" id="L47">	private final Transcoder oldOne = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),</span>
 			new CompressionHuffman());
-<span class="fc" id="L50">	private final Transcoder zip = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),</span>
+<span class="fc" id="L49">	private final Transcoder zip = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),</span>
 			new CompressionZip());
-<span class="fc" id="L52">	private final Transcoder gzip = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),</span>
+<span class="fc" id="L51">	private final Transcoder gzip = TranscoderImpl.utf8(new AsciiEncoder(), new DiagramSourceCompressor(),</span>
 			new CompressionGZip());
-	// ::done
 
 	public String decode(String code) throws NoPlantumlCompressionException {
 		// Work in progress
 		// See https://github.com/plantuml/plantuml/issues/117
 
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~0&quot;))</span>
-<span class="nc" id="L61">			return zlib.decode(code.substring(2));</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~0&quot;))</span>
+<span class="nc" id="L59">			return zlib.decode(code.substring(2));</span>
 
-		// ::comment when __TEAVM__
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~1&quot;))</span>
-<span class="nc" id="L65">			return oldOne.decode(code.substring(2));</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~1&quot;))</span>
+<span class="nc" id="L62">			return oldOne.decode(code.substring(2));</span>
 
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~h&quot;))</span>
-<span class="nc" id="L68">			return hexOnly.decode(code.substring(2));</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~h&quot;))</span>
+<span class="nc" id="L65">			return hexOnly.decode(code.substring(2));</span>
 
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~g&quot;))</span>
-<span class="nc" id="L71">			return gzip.decode(code.substring(2));</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~g&quot;))</span>
+<span class="nc" id="L68">			return gzip.decode(code.substring(2));</span>
 
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~zip~&quot;))</span>
-<span class="nc" id="L74">			return zip.decode(code.substring(5));</span>
-		// ::done
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (code.startsWith(&quot;~zip~&quot;))</span>
+<span class="nc" id="L71">			return zip.decode(code.substring(5));</span>
 
-		// ::comment when __TEAVM__
 		try {
-			// ::done
-<span class="fc" id="L80">			return zlib.decode(code);</span>
-			// ::comment when __TEAVM__
-<span class="fc" id="L82">		} catch (Exception ex) {</span>
-<span class="nc" id="L83">			return oldOne.decode(code);</span>
+<span class="fc" id="L74">			return zlib.decode(code);</span>
+<span class="fc" id="L75">		} catch (Exception ex) {</span>
+<span class="nc" id="L76">			return oldOne.decode(code);</span>
 		}
-		// ::done
 		// return zlib.decode(code);
 	}
 
 	public String encode(String text) throws IOException {
 		// Right now, we still use the legacy encoding.
 		// This will be changed in the incoming months
-<span class="fc" id="L92">		return zlib.encode(text);</span>
+<span class="fc" id="L84">		return zlib.encode(text);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

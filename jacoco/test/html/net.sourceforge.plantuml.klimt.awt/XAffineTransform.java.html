@@ -267,7 +267,6 @@ public class XAffineTransform {
 	// Conversion
 	// ------------------------------------------------------------------------
 
-	// ::comment when __TEAVM__
 	/**
 	 * Creates a new {@link java.awt.geom.AffineTransform} with the same matrix
 	 * values.
@@ -275,13 +274,12 @@ public class XAffineTransform {
 	 * @return a new AffineTransform instance
 	 */
 	public java.awt.geom.AffineTransform toAffineTransform() {
-<span class="nc" id="L278">		return new java.awt.geom.AffineTransform(m00, m10, m01, m11, m02, m12);</span>
+<span class="nc" id="L277">		return new java.awt.geom.AffineTransform(m00, m10, m01, m11, m02, m12);</span>
 	}
-	// ::done
 
 	@Override
 	public String toString() {
-<span class="nc" id="L284">		return &quot;XAffineTransform[[&quot; + m00 + &quot;, &quot; + m01 + &quot;, &quot; + m02 + &quot;], [&quot; + m10 + &quot;, &quot; + m11 + &quot;, &quot; + m12 + &quot;]]&quot;;</span>
+<span class="nc" id="L282">		return &quot;XAffineTransform[[&quot; + m00 + &quot;, &quot; + m01 + &quot;, &quot; + m02 + &quot;], [&quot; + m10 + &quot;, &quot; + m11 + &quot;, &quot; + m12 + &quot;]]&quot;;</span>
 	}
 
 }

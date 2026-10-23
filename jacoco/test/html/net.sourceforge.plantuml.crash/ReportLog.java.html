@@ -46,114 +46,113 @@ import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.MyCollections;
+import net.sourceforge.plantuml.version.LicenseInfo;
 import net.sourceforge.plantuml.version.Version;
 
-<span class="fc" id="L51">public class ReportLog implements Iterable&lt;String&gt; {</span>
+<span class="fc" id="L52">public class ReportLog implements Iterable&lt;String&gt; {</span>
 
-<span class="fc" id="L53">	private final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L54">	private final List&lt;String&gt; strings = new ArrayList&lt;&gt;();</span>
 
 	public void add(String s) {
-<span class="fc" id="L56">		this.strings.add(s);</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L57">		this.strings.add(s);</span>
+<span class="fc" id="L58">	}</span>
 
 	public void addAll(Collection&lt;String&gt; list) {
-<span class="fc bfc" id="L60" title="All 2 branches covered.">		for (String s : list)</span>
-<span class="fc" id="L61">			add(s);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		for (String s : list)</span>
+<span class="fc" id="L62">			add(s);</span>
 
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L64">	}</span>
 
 	@Override
 	public Iterator&lt;String&gt; iterator() {
-<span class="nc" id="L67">		return MyCollections.unmodifiableList(strings).iterator();</span>
+<span class="nc" id="L68">		return MyCollections.unmodifiableList(strings).iterator();</span>
 	}
 
 	public List&lt;String&gt; asList() {
-<span class="fc" id="L71">		return MyCollections.unmodifiableList(strings);</span>
+<span class="fc" id="L72">		return MyCollections.unmodifiableList(strings);</span>
 	}
 
 	public void youShouldSendThisDiagram() {
-<span class="fc" id="L75">		add(&quot;You should send this diagram and this image to &lt;b&gt;plantuml@gmail.com&lt;/b&gt; or&quot;);</span>
-<span class="fc" id="L76">		add(&quot;post to &lt;b&gt;https://plantuml.com/qa&lt;/b&gt; to solve this issue.&quot;);</span>
-<span class="fc" id="L77">		add(&quot;You can try to turn around this issue by simplifing your diagram.&quot;);</span>
-<span class="fc" id="L78">	}</span>
+<span class="fc" id="L76">		add(&quot;You should send this diagram and this image to &lt;b&gt;plantuml@gmail.com&lt;/b&gt; or&quot;);</span>
+<span class="fc" id="L77">		add(&quot;post to &lt;b&gt;https://plantuml.com/qa&lt;/b&gt; to solve this issue.&quot;);</span>
+<span class="fc" id="L78">		add(&quot;You can try to turn around this issue by simplifing your diagram.&quot;);</span>
+<span class="fc" id="L79">	}</span>
 
 	public void checkOldVersionWarning() {
-<span class="fc" id="L81">		checkOldVersionWarning(&quot;&lt;b&gt;&quot;);</span>
-<span class="fc" id="L82">	}</span>
+<span class="fc" id="L82">		checkOldVersionWarning(&quot;&lt;b&gt;&quot;);</span>
+<span class="fc" id="L83">	}</span>
 
 	public void checkOldVersionWarningRaw() {
-<span class="fc" id="L85">		checkOldVersionWarning(&quot;&quot;);</span>
-<span class="fc" id="L86">	}</span>
+<span class="fc" id="L86">		checkOldVersionWarning(&quot;&quot;);</span>
+<span class="fc" id="L87">	}</span>
 
 	public void checkOldVersionWarning(String lineFormating) {
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (Version.versionString().contains(&quot;beta&quot;))</span>
-<span class="nc" id="L90">			return;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (Version.versionString().contains(&quot;beta&quot;))</span>
+<span class="nc" id="L91">			return;</span>
 
-<span class="fc" id="L92">		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;</span>
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (days &gt;= 140) {</span>
-<span class="nc" id="L94">			addEmptyLine();</span>
-<span class="nc" id="L95">			add(lineFormating + &quot;This version of PlantUML is &quot; + days + &quot; days old, so you should&quot;);</span>
-<span class="nc" id="L96">			add(lineFormating + &quot;consider upgrading from https://plantuml.com/download&quot;);</span>
+<span class="fc" id="L93">		final long days = (System.currentTimeMillis() - Version.compileTime()) / 1000L / 3600 / 24;</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (days &gt;= 140) {</span>
+<span class="nc" id="L95">			addEmptyLine();</span>
+<span class="nc" id="L96">			add(lineFormating + &quot;This version of PlantUML is &quot; + days + &quot; days old, so you should&quot;);</span>
+<span class="nc" id="L97">			add(lineFormating + &quot;consider upgrading from https://plantuml.com/download&quot;);</span>
 		}
-<span class="fc" id="L98">	}</span>
+<span class="fc" id="L99">	}</span>
 
 	public void addEmptyLine() {
-<span class="fc" id="L101">		add(&quot; &quot;);</span>
-<span class="fc" id="L102">	}</span>
+<span class="fc" id="L102">		add(&quot; &quot;);</span>
+<span class="fc" id="L103">	}</span>
 
 	public void anErrorHasOccurred(Throwable exception, String fullDiagramText) {
 		
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (exception == null)</span>
-<span class="nc" id="L107">			add(&quot;An error has occurred!&quot;);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (exception == null)</span>
+<span class="nc" id="L108">			add(&quot;An error has occurred!&quot;);</span>
 		else
-<span class="fc" id="L109">			add(&quot;An error has occurred : &quot; + exception);</span>
+<span class="fc" id="L110">			add(&quot;An error has occurred : &quot; + exception);</span>
 		// The quotes would add some 27 KB to the TeaVM output: the browser report
 		// goes without them
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM() == false) {</span>
-<span class="fc" id="L113">			final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());</span>
-<span class="fc" id="L114">			add(&quot;&lt;i&gt;&quot; + quote);</span>
-		}
-<span class="fc" id="L116">		addEmptyLine();</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM() == false)</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid() == false)</span>
+<span class="fc" id="L115">				add(&quot;&lt;i&gt;&quot; + StringUtils.rot(QuoteUtils.getSomeQuote()));</span>
+		
+<span class="fc" id="L117">		addEmptyLine();</span>
 
-<span class="fc" id="L118">		add(&quot;PlantUML (&quot; + Version.versionString() + &quot;) has crashed.&quot;);</span>
-<span class="fc" id="L119">		addEmptyLine();</span>
-<span class="fc" id="L120">		checkOldVersionWarning();</span>
-<span class="fc" id="L121">		add(&quot;Diagram size: &quot; + lines(fullDiagramText) + &quot; lines / &quot; + fullDiagramText.length() + &quot; characters.&quot;);</span>
-<span class="fc" id="L122">		addEmptyLine();</span>
-<span class="fc" id="L123">	}</span>
+<span class="fc" id="L119">		add(&quot;PlantUML (&quot; + Version.versionString() + &quot;) has crashed.&quot;);</span>
+<span class="fc" id="L120">		addEmptyLine();</span>
+<span class="fc" id="L121">		checkOldVersionWarning();</span>
+<span class="fc" id="L122">		add(&quot;Diagram size: &quot; + lines(fullDiagramText) + &quot; lines / &quot; + fullDiagramText.length() + &quot; characters.&quot;);</span>
+<span class="fc" id="L123">		addEmptyLine();</span>
+<span class="fc" id="L124">	}</span>
 
 	private int lines(String text) {
-<span class="fc" id="L126">		int result = 0;</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++)</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">			if (text.charAt(i) == BackSlash.CHAR_NEWLINE)</span>
-<span class="fc" id="L129">				result++;</span>
+<span class="fc" id="L127">		int result = 0;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++)</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			if (text.charAt(i) == BackSlash.CHAR_NEWLINE)</span>
+<span class="fc" id="L130">				result++;</span>
 
-<span class="fc" id="L131">		return result;</span>
+<span class="fc" id="L132">		return result;</span>
 	}
 
 	public void pleaseCheckYourGraphVizVersion() {
-<span class="nc" id="L135">		addEmptyLine();</span>
-<span class="nc" id="L136">		add(&quot;Please go to https://plantuml.com/graphviz-dot to check your GraphViz version.&quot;);</span>
-<span class="nc" id="L137">		addEmptyLine();</span>
-<span class="nc" id="L138">	}</span>
+<span class="nc" id="L136">		addEmptyLine();</span>
+<span class="nc" id="L137">		add(&quot;Please go to https://plantuml.com/graphviz-dot to check your GraphViz version.&quot;);</span>
+<span class="nc" id="L138">		addEmptyLine();</span>
+<span class="nc" id="L139">	}</span>
 
 	public void thisMayBeCaused() {
-<span class="nc" id="L141">		add(&quot;This may be caused by :&quot;);</span>
-<span class="nc" id="L142">		add(&quot; - a bug in PlantUML&quot;);</span>
-<span class="nc" id="L143">		add(&quot; - a problem in GraphViz&quot;);</span>
-<span class="nc" id="L144">	}</span>
+<span class="nc" id="L142">		add(&quot;This may be caused by :&quot;);</span>
+<span class="nc" id="L143">		add(&quot; - a bug in PlantUML&quot;);</span>
+<span class="nc" id="L144">		add(&quot; - a problem in GraphViz&quot;);</span>
+<span class="nc" id="L145">	}</span>
 
 	public void addDecodeHint() {
-<span class="fc" id="L147">		addEmptyLine();</span>
-<span class="fc" id="L148">		add(&quot; Diagram source: (Use http://zxing.org/w/decode.jspx to decode the qrcode)&quot;);</span>
-<span class="fc" id="L149">	}</span>
+<span class="fc" id="L148">		addEmptyLine();</span>
+<span class="fc" id="L149">		add(&quot; Diagram source: (Use http://zxing.org/w/decode.jspx to decode the qrcode)&quot;);</span>
+<span class="fc" id="L150">	}</span>
 
 	public void addProperties() {
-		// ::comment when __TEAVM__
 <span class="fc" id="L153">		addAll(OptionPrint.interestingProperties());</span>
 <span class="fc" id="L154">		addAll(OptionPrint.interestingValues());</span>
-		// ::done
-<span class="fc" id="L156">	}</span>
+<span class="fc" id="L155">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

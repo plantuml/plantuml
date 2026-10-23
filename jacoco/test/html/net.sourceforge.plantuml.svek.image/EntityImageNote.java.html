@@ -204,169 +204,163 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 <span class="fc" id="L205">		final UGraphic ug2 = UGraphicStencil.create(ug, this, UStroke.simple());</span>
 <span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (opaleLink != null) {</span>
-			// ::comment when __TEAVM__
-<span class="fc" id="L208">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L207">			final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="fc" id="L210">			final SmetanaEdge smetanaEdged = smetanaPathes.get(opaleLink);</span>
-<span class="fc" id="L211">			final UTranslate move = new UTranslate(-node.getMinX(), -node.getMinY());</span>
+<span class="fc" id="L209">			final SmetanaEdge smetanaEdged = smetanaPathes.get(opaleLink);</span>
+<span class="fc" id="L210">			final UTranslate move = new UTranslate(-node.getMinX(), -node.getMinY());</span>
 
-<span class="fc" id="L213">			final XPoint2D startPoint = move.getTranslated(smetanaEdged.getStartPoint());</span>
-<span class="fc" id="L214">			final XPoint2D endPoint = move.getTranslated(smetanaEdged.getEndPoint());</span>
+<span class="fc" id="L212">			final XPoint2D startPoint = move.getTranslated(smetanaEdged.getStartPoint());</span>
+<span class="fc" id="L213">			final XPoint2D endPoint = move.getTranslated(smetanaEdged.getEndPoint());</span>
 
-<span class="fc" id="L216">			final UTranslate force1 = getMagneticBorder().getForceAt(stringBounder, smetanaEdged.getStartPoint());</span>
-<span class="fc" id="L217">			final UTranslate force2 = other.getMagneticBorder().getForceAt(stringBounder, smetanaEdged.getEndPoint());</span>
+<span class="fc" id="L215">			final UTranslate force1 = getMagneticBorder().getForceAt(stringBounder, smetanaEdged.getStartPoint());</span>
+<span class="fc" id="L216">			final UTranslate force2 = other.getMagneticBorder().getForceAt(stringBounder, smetanaEdged.getEndPoint());</span>
 
-<span class="fc" id="L219">			final double textWidth = getTextWidth(stringBounder);</span>
-<span class="fc" id="L220">			final double textHeight = getTextHeight(stringBounder);</span>
-<span class="fc" id="L221">			final XPoint2D center = new XPoint2D(textWidth / 2, textHeight / 2);</span>
+<span class="fc" id="L218">			final double textWidth = getTextWidth(stringBounder);</span>
+<span class="fc" id="L219">			final double textHeight = getTextHeight(stringBounder);</span>
+<span class="fc" id="L220">			final XPoint2D center = new XPoint2D(textWidth / 2, textHeight / 2);</span>
 
-<span class="fc" id="L223">			XPoint2D pp1 = force2.getTranslated(startPoint);</span>
-<span class="fc" id="L224">			XPoint2D pp2 = force1.getTranslated(endPoint);</span>
-<span class="fc bfc" id="L225" title="All 2 branches covered.">			if (pp1.distance(center) &lt; pp2.distance(center)) {</span>
-<span class="fc" id="L226">				pp1 = force1.getTranslated(endPoint);</span>
-<span class="fc" id="L227">				pp2 = force2.getTranslated(startPoint);</span>
+<span class="fc" id="L222">			XPoint2D pp1 = force2.getTranslated(startPoint);</span>
+<span class="fc" id="L223">			XPoint2D pp2 = force1.getTranslated(endPoint);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">			if (pp1.distance(center) &lt; pp2.distance(center)) {</span>
+<span class="fc" id="L225">				pp1 = force1.getTranslated(endPoint);</span>
+<span class="fc" id="L226">				pp2 = force2.getTranslated(startPoint);</span>
 			}
 
-<span class="fc" id="L230">			final Direction strategy = getOpaleStrategy(textWidth, textHeight, pp2);</span>
-<span class="fc" id="L231">			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, getStroke());</span>
-<span class="fc" id="L232">			opale.setRoundCorner(getRoundCorner());</span>
-<span class="fc" id="L233">			opale.setOpale(strategy, pp2, pp1);</span>
-<span class="fc" id="L234">			final UGraphic stroked = applyStroke(ug2);</span>
-<span class="fc" id="L235">			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors()));</span>
-			// ::done
-<span class="pc bnc" id="L237" title="All 4 branches missed.">		} else if (opaleLine == null || opaleLine.isOpale() == false) {</span>
-<span class="nc" id="L238">			drawNormal(ug2);</span>
+<span class="fc" id="L229">			final Direction strategy = getOpaleStrategy(textWidth, textHeight, pp2);</span>
+<span class="fc" id="L230">			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, getStroke());</span>
+<span class="fc" id="L231">			opale.setRoundCorner(getRoundCorner());</span>
+<span class="fc" id="L232">			opale.setOpale(strategy, pp2, pp1);</span>
+<span class="fc" id="L233">			final UGraphic stroked = applyStroke(ug2);</span>
+<span class="fc" id="L234">			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors()));</span>
+<span class="pc bnc" id="L235" title="All 4 branches missed.">		} else if (opaleLine == null || opaleLine.isOpale() == false) {</span>
+<span class="nc" id="L236">			drawNormal(ug2);</span>
 		} else {
-<span class="nc" id="L240">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L241">			DotPath path = opaleLine.getDotPath();</span>
+<span class="nc" id="L238">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L239">			DotPath path = opaleLine.getDotPath();</span>
 
-<span class="nc" id="L243">			final UTranslate force1 = getMagneticBorder().getForceAt(stringBounder, path.getStartPoint());</span>
-<span class="nc" id="L244">			final UTranslate force2 = other.getMagneticBorder().getForceAt(stringBounder, path.getEndPoint());</span>
+<span class="nc" id="L241">			final UTranslate force1 = getMagneticBorder().getForceAt(stringBounder, path.getStartPoint());</span>
+<span class="nc" id="L242">			final UTranslate force2 = other.getMagneticBorder().getForceAt(stringBounder, path.getEndPoint());</span>
 
-<span class="nc" id="L246">			path.moveDelta(-node.getMinX(), -node.getMinY());</span>
+<span class="nc" id="L244">			path.moveDelta(-node.getMinX(), -node.getMinY());</span>
 
-<span class="nc" id="L248">			final double textWidth = getTextWidth(stringBounder);</span>
-<span class="nc" id="L249">			final double textHeight = getTextHeight(stringBounder);</span>
-<span class="nc" id="L250">			final XPoint2D center = new XPoint2D(textWidth / 2, textHeight / 2);</span>
-<span class="nc bnc" id="L251" title="All 2 branches missed.">			if (path.getStartPoint().distance(center) &gt; path.getEndPoint().distance(center))</span>
-<span class="nc" id="L252">				path = path.reverse();</span>
+<span class="nc" id="L246">			final double textWidth = getTextWidth(stringBounder);</span>
+<span class="nc" id="L247">			final double textHeight = getTextHeight(stringBounder);</span>
+<span class="nc" id="L248">			final XPoint2D center = new XPoint2D(textWidth / 2, textHeight / 2);</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">			if (path.getStartPoint().distance(center) &gt; path.getEndPoint().distance(center))</span>
+<span class="nc" id="L250">				path = path.reverse();</span>
 
-<span class="nc" id="L254">			final Direction strategy = getOpaleStrategy(textWidth, textHeight, path.getStartPoint());</span>
-<span class="nc" id="L255">			final XPoint2D pp1 = force1.getTranslated(path.getStartPoint());</span>
-<span class="nc" id="L256">			final XPoint2D pp2 = force2.getTranslated(path.getEndPoint());</span>
+<span class="nc" id="L252">			final Direction strategy = getOpaleStrategy(textWidth, textHeight, path.getStartPoint());</span>
+<span class="nc" id="L253">			final XPoint2D pp1 = force1.getTranslated(path.getStartPoint());</span>
+<span class="nc" id="L254">			final XPoint2D pp2 = force2.getTranslated(path.getEndPoint());</span>
 
-<span class="nc" id="L258">			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, getStroke());</span>
-<span class="nc" id="L259">			opale.setRoundCorner(getRoundCorner());</span>
-<span class="nc" id="L260">			opale.setOpale(strategy, pp1, pp2);</span>
-<span class="nc" id="L261">			final UGraphic stroked = applyStroke(ug2);</span>
-<span class="nc" id="L262">			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors()));</span>
+<span class="nc" id="L256">			final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, getStroke());</span>
+<span class="nc" id="L257">			opale.setRoundCorner(getRoundCorner());</span>
+<span class="nc" id="L258">			opale.setOpale(strategy, pp1, pp2);</span>
+<span class="nc" id="L259">			final UGraphic stroked = applyStroke(ug2);</span>
+<span class="nc" id="L260">			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors()));</span>
 		}
-<span class="pc bpc" id="L264" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L265">			ug.closeUrl();</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L263">			ug.closeUrl();</span>
 
-<span class="fc" id="L267">		ug.closeGroup();</span>
-<span class="fc" id="L268">	}</span>
+<span class="fc" id="L265">		ug.closeGroup();</span>
+<span class="fc" id="L266">	}</span>
 
 	private double getRoundCorner() {
-<span class="fc" id="L271">		return getSkinParam().getRoundCorner(CornerParam.DEFAULT, null);</span>
+<span class="fc" id="L269">		return getSkinParam().getRoundCorner(CornerParam.DEFAULT, null);</span>
 	}
 
 	private void drawNormal(UGraphic ug) {
-<span class="nc" id="L275">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L276">		final UPath polygon = Opale.getPolygonNormal(getTextWidth(stringBounder), getTextHeight(stringBounder),</span>
-<span class="nc" id="L277">				getRoundCorner());</span>
+<span class="nc" id="L273">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L274">		final UPath polygon = Opale.getPolygonNormal(getTextWidth(stringBounder), getTextHeight(stringBounder),</span>
+<span class="nc" id="L275">				getRoundCorner());</span>
 
-<span class="nc" id="L279">		polygon.setDeltaShadow(this.shadowing);</span>
+<span class="nc" id="L277">		polygon.setDeltaShadow(this.shadowing);</span>
 
-<span class="nc" id="L281">		ug = ug.apply(noteBackgroundColor.bg()).apply(borderColor);</span>
-<span class="nc" id="L282">		final UGraphic stroked = applyStroke(ug);</span>
-<span class="nc" id="L283">		stroked.draw(polygon);</span>
-<span class="nc" id="L284">		ug.draw(Opale.getCorner(getTextWidth(stringBounder), getRoundCorner()));</span>
+<span class="nc" id="L279">		ug = ug.apply(noteBackgroundColor.bg()).apply(borderColor);</span>
+<span class="nc" id="L280">		final UGraphic stroked = applyStroke(ug);</span>
+<span class="nc" id="L281">		stroked.draw(polygon);</span>
+<span class="nc" id="L282">		ug.draw(Opale.getCorner(getTextWidth(stringBounder), getRoundCorner()));</span>
 
-<span class="nc" id="L286">		getTextBlock().drawU(ug.apply(new UTranslate(marginX1, marginY)));</span>
-<span class="nc" id="L287">	}</span>
+<span class="nc" id="L284">		getTextBlock().drawU(ug.apply(new UTranslate(marginX1, marginY)));</span>
+<span class="nc" id="L285">	}</span>
 
 	private UGraphic applyStroke(UGraphic ug) {
-<span class="fc" id="L290">		return ug.apply(style.getStroke());</span>
+<span class="fc" id="L288">		return ug.apply(style.getStroke());</span>
 
 	}
 
 	private UStroke getStroke() {
-<span class="fc" id="L295">		return style.getStroke();</span>
+<span class="fc" id="L293">		return style.getStroke();</span>
 	}
 
 	private Direction getOpaleStrategy(double width, double height, XPoint2D pt) {
-<span class="fc" id="L299">		final double d1 = getOrthoDistance(new XLine2D(width, 0, width, height), pt);</span>
-<span class="fc" id="L300">		final double d2 = getOrthoDistance(new XLine2D(0, height, width, height), pt);</span>
-<span class="fc" id="L301">		final double d3 = getOrthoDistance(new XLine2D(0, 0, 0, height), pt);</span>
-<span class="fc" id="L302">		final double d4 = getOrthoDistance(new XLine2D(0, 0, width, 0), pt);</span>
-<span class="pc bpc" id="L303" title="1 of 6 branches missed.">		if (d3 &lt;= d1 &amp;&amp; d3 &lt;= d2 &amp;&amp; d3 &lt;= d4)</span>
-<span class="fc" id="L304">			return Direction.LEFT;</span>
+<span class="fc" id="L297">		final double d1 = getOrthoDistance(new XLine2D(width, 0, width, height), pt);</span>
+<span class="fc" id="L298">		final double d2 = getOrthoDistance(new XLine2D(0, height, width, height), pt);</span>
+<span class="fc" id="L299">		final double d3 = getOrthoDistance(new XLine2D(0, 0, 0, height), pt);</span>
+<span class="fc" id="L300">		final double d4 = getOrthoDistance(new XLine2D(0, 0, width, 0), pt);</span>
+<span class="pc bpc" id="L301" title="1 of 6 branches missed.">		if (d3 &lt;= d1 &amp;&amp; d3 &lt;= d2 &amp;&amp; d3 &lt;= d4)</span>
+<span class="fc" id="L302">			return Direction.LEFT;</span>
 
-<span class="pc bpc" id="L306" title="2 of 6 branches missed.">		if (d1 &lt;= d2 &amp;&amp; d1 &lt;= d3 &amp;&amp; d1 &lt;= d4)</span>
-<span class="fc" id="L307">			return Direction.RIGHT;</span>
+<span class="pc bpc" id="L304" title="2 of 6 branches missed.">		if (d1 &lt;= d2 &amp;&amp; d1 &lt;= d3 &amp;&amp; d1 &lt;= d4)</span>
+<span class="fc" id="L305">			return Direction.RIGHT;</span>
 
-<span class="pc bpc" id="L309" title="5 of 6 branches missed.">		if (d4 &lt;= d1 &amp;&amp; d4 &lt;= d2 &amp;&amp; d4 &lt;= d3)</span>
-<span class="nc" id="L310">			return Direction.UP;</span>
+<span class="pc bpc" id="L307" title="5 of 6 branches missed.">		if (d4 &lt;= d1 &amp;&amp; d4 &lt;= d2 &amp;&amp; d4 &lt;= d3)</span>
+<span class="nc" id="L308">			return Direction.UP;</span>
 
-<span class="pc bpc" id="L312" title="3 of 6 branches missed.">		if (d2 &lt;= d1 &amp;&amp; d2 &lt;= d3 &amp;&amp; d2 &lt;= d4)</span>
-<span class="fc" id="L313">			return Direction.DOWN;</span>
+<span class="pc bpc" id="L310" title="3 of 6 branches missed.">		if (d2 &lt;= d1 &amp;&amp; d2 &lt;= d3 &amp;&amp; d2 &lt;= d4)</span>
+<span class="fc" id="L311">			return Direction.DOWN;</span>
 
-<span class="nc" id="L315">		return null;</span>
+<span class="nc" id="L313">		return null;</span>
 
 	}
 
 	private static double getOrthoDistance(XLine2D seg, XPoint2D pt) {
-<span class="fc bfc" id="L320" title="All 2 branches covered.">		if (isHorizontal(seg))</span>
-<span class="fc" id="L321">			return Math.abs(seg.getP1().getY() - pt.getY());</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">		if (isHorizontal(seg))</span>
+<span class="fc" id="L319">			return Math.abs(seg.getP1().getY() - pt.getY());</span>
 
-<span class="pc bpc" id="L323" title="1 of 2 branches missed.">		if (isVertical(seg))</span>
-<span class="fc" id="L324">			return Math.abs(seg.getP1().getX() - pt.getX());</span>
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">		if (isVertical(seg))</span>
+<span class="fc" id="L322">			return Math.abs(seg.getP1().getX() - pt.getX());</span>
 
-<span class="nc" id="L326">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L324">		throw new IllegalArgumentException();</span>
 	}
 
 	private static boolean isHorizontal(XLine2D seg) {
-<span class="fc bfc" id="L330" title="All 2 branches covered.">		return seg.getP1().getY() == seg.getP2().getY();</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		return seg.getP1().getY() == seg.getP2().getY();</span>
 	}
 
 	private static boolean isVertical(XLine2D seg) {
-<span class="pc bpc" id="L334" title="1 of 2 branches missed.">		return seg.getP1().getX() == seg.getP2().getX();</span>
+<span class="pc bpc" id="L332" title="1 of 2 branches missed.">		return seg.getP1().getX() == seg.getP2().getX();</span>
 	}
 
 	public ShapeType getShapeType() {
-<span class="fc" id="L338">		return ShapeType.RECTANGLE;</span>
+<span class="fc" id="L336">		return ShapeType.RECTANGLE;</span>
 	}
 
 	private SvekEdge opaleLine;
 	private Link opaleLink;
 	private SvekNode node;
 	private SvekNode other;
-	// ::comment when __TEAVM__
 	private Map&lt;Link, SmetanaEdge&gt; smetanaPathes;
-	// ::done
 
 	public void setOpaleLine(SvekEdge line, SvekNode node, SvekNode other) {
-<span class="nc" id="L350">		this.opaleLine = line;</span>
-<span class="nc" id="L351">		this.node = node;</span>
-<span class="nc" id="L352">		this.other = Objects.requireNonNull(other);</span>
-<span class="nc" id="L353">	}</span>
+<span class="nc" id="L346">		this.opaleLine = line;</span>
+<span class="nc" id="L347">		this.node = node;</span>
+<span class="nc" id="L348">		this.other = Objects.requireNonNull(other);</span>
+<span class="nc" id="L349">	}</span>
 
-	// ::comment when __TEAVM__
 	public void setOpaleLink(Link link, SvekNode node, SvekNode other, Map&lt;Link, SmetanaEdge&gt; edges) {
-<span class="fc" id="L357">		this.opaleLink = link;</span>
-<span class="fc" id="L358">		this.node = node;</span>
-<span class="fc" id="L359">		this.other = Objects.requireNonNull(other);</span>
-<span class="fc" id="L360">		this.smetanaPathes = edges;</span>
-<span class="fc" id="L361">	}</span>
-	// ::done
+<span class="fc" id="L352">		this.opaleLink = link;</span>
+<span class="fc" id="L353">		this.node = node;</span>
+<span class="fc" id="L354">		this.other = Objects.requireNonNull(other);</span>
+<span class="fc" id="L355">		this.smetanaPathes = edges;</span>
+<span class="fc" id="L356">	}</span>
 
 	public double getStartingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L365">		return 0;</span>
+<span class="fc" id="L359">		return 0;</span>
 	}
 
 	public double getEndingX(StringBounder stringBounder, double y) {
-<span class="fc" id="L369">		return calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L363">		return calculateDimension(stringBounder).getWidth();</span>
 	}
 
 }

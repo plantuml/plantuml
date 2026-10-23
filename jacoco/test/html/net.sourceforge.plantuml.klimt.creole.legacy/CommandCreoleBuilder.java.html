@@ -120,21 +120,19 @@ public class CommandCreoleBuilder {
 <span class="fc" id="L120">		addCommand(CommandCreoleFontFamilyChange.createEol());</span>
 <span class="fc" id="L121">		addCommand(CommandCreoleMonospaced.create());</span>
 <span class="fc" id="L122">		addCommand(CommandCreoleUrl.create());</span>
-		// ::comment when __TEAVM__
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (SecurityUtils.allowSvgText())</span>
-<span class="fc" id="L125">			addCommand(CommandCreoleSvgAttributeChange.create());</span>
-		// ::done
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (SecurityUtils.allowSvgText())</span>
+<span class="fc" id="L124">			addCommand(CommandCreoleSvgAttributeChange.create());</span>
 
-<span class="fc" id="L128">	}</span>
+<span class="fc" id="L126">	}</span>
 
 	private void addCommand(Command cmd) {
-<span class="fc bfc" id="L131" title="All 2 branches covered.">		for (String starter : cmd.starters())</span>
-<span class="fc" id="L132">			commands.computeIfAbsent(starter, key -&gt; new ArrayList&lt;&gt;()).add(cmd);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		for (String starter : cmd.starters())</span>
+<span class="fc" id="L130">			commands.computeIfAbsent(starter, key -&gt; new ArrayList&lt;&gt;()).add(cmd);</span>
 
-<span class="fc" id="L134">	}</span>
+<span class="fc" id="L132">	}</span>
 
 	public Map&lt;String, List&lt;Command&gt;&gt; getMap() {
-<span class="fc" id="L137">		return commands;</span>
+<span class="fc" id="L135">		return commands;</span>
 	}
 
 }

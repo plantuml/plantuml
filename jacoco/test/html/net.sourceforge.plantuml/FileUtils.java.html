@@ -108,131 +108,128 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L108">		return readSvg(br, true, true);</span>
 	}
 
-	// ::comment when __TEAVM__
 	static public File createTempFileLegacy(String prefix, String suffix) throws IOException {
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (suffix.startsWith(&quot;.&quot;) == false)</span>
-<span class="nc" id="L114">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (suffix.startsWith(&quot;.&quot;) == false)</span>
+<span class="nc" id="L113">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L116">		Objects.requireNonNull(prefix);</span>
+<span class="nc" id="L115">		Objects.requireNonNull(prefix);</span>
 		final File f;
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (counter == null) {</span>
-<span class="nc" id="L119">			f = File.createTempFile(prefix, suffix);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (counter == null) {</span>
+<span class="nc" id="L118">			f = File.createTempFile(prefix, suffix);</span>
 		} else {
-<span class="nc" id="L121">			final String name = prefix + counter.addAndGet(1) + suffix;</span>
-<span class="nc" id="L122">			f = new File(name);</span>
+<span class="nc" id="L120">			final String name = prefix + counter.addAndGet(1) + suffix;</span>
+<span class="nc" id="L121">			f = new File(name);</span>
 		}
-<span class="nc" id="L124">		Log.info(() -&gt; &quot;Creating temporary file: &quot; + f);</span>
-<span class="nc" id="L125">		f.deleteOnExit();</span>
-<span class="nc" id="L126">		return f;</span>
+<span class="nc" id="L123">		Log.info(() -&gt; &quot;Creating temporary file: &quot; + f);</span>
+<span class="nc" id="L124">		f.deleteOnExit();</span>
+<span class="nc" id="L125">		return f;</span>
 	}
 
 	static public SFile createTempFile(String prefix, String suffix) throws IOException {
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (suffix.startsWith(&quot;.&quot;) == false)</span>
-<span class="nc" id="L131">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (suffix.startsWith(&quot;.&quot;) == false)</span>
+<span class="nc" id="L130">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L133">		Objects.requireNonNull(prefix);</span>
+<span class="nc" id="L132">		Objects.requireNonNull(prefix);</span>
 		final SFile f;
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (counter == null) {</span>
-<span class="nc" id="L136">			f = SFile.createTempFile(prefix, suffix);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (counter == null) {</span>
+<span class="nc" id="L135">			f = SFile.createTempFile(prefix, suffix);</span>
 		} else {
-<span class="nc" id="L138">			final String name = prefix + counter.addAndGet(1) + suffix;</span>
-<span class="nc" id="L139">			f = new SFile(name);</span>
+<span class="nc" id="L137">			final String name = prefix + counter.addAndGet(1) + suffix;</span>
+<span class="nc" id="L138">			f = new SFile(name);</span>
 		}
-<span class="nc" id="L141">		Log.info(() -&gt; &quot;Creating temporary file: &quot; + f);</span>
-<span class="nc" id="L142">		f.deleteOnExit();</span>
-<span class="nc" id="L143">		return f;</span>
+<span class="nc" id="L140">		Log.info(() -&gt; &quot;Creating temporary file: &quot; + f);</span>
+<span class="nc" id="L141">		f.deleteOnExit();</span>
+<span class="nc" id="L142">		return f;</span>
 	}
 
 	static public void copyToFile(SFile src, SFile dest) throws IOException {
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (dest.isDirectory())</span>
-<span class="nc" id="L148">			dest = dest.file(src.getName());</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (dest.isDirectory())</span>
+<span class="nc" id="L147">			dest = dest.file(src.getName());</span>
 
-<span class="nc" id="L150">		final InputStream fis = src.openFile();</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (fis == null)</span>
-<span class="nc" id="L152">			throw new FileNotFoundException();</span>
+<span class="nc" id="L149">		final InputStream fis = src.openFile();</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (fis == null)</span>
+<span class="nc" id="L151">			throw new FileNotFoundException();</span>
 
-<span class="nc" id="L154">		final OutputStream fos = dest.createBufferedOutputStream();</span>
-<span class="nc" id="L155">		copyInternal(fis, fos, true);</span>
-<span class="nc" id="L156">	}</span>
+<span class="nc" id="L153">		final OutputStream fos = dest.createBufferedOutputStream();</span>
+<span class="nc" id="L154">		copyInternal(fis, fos, true);</span>
+<span class="nc" id="L155">	}</span>
 
 	static public void copyToStream(SFile src, OutputStream os) throws IOException {
-<span class="fc" id="L159">		final InputStream fis = src.openFile();</span>
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (fis == null)</span>
-<span class="nc" id="L161">			throw new FileNotFoundException();</span>
+<span class="fc" id="L158">		final InputStream fis = src.openFile();</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (fis == null)</span>
+<span class="nc" id="L160">			throw new FileNotFoundException();</span>
 
-<span class="fc" id="L163">		final OutputStream fos = new BufferedOutputStream(os);</span>
-<span class="fc" id="L164">		copyInternal(fis, fos, true);</span>
-<span class="fc" id="L165">	}</span>
+<span class="fc" id="L162">		final OutputStream fos = new BufferedOutputStream(os);</span>
+<span class="fc" id="L163">		copyInternal(fis, fos, true);</span>
+<span class="fc" id="L164">	}</span>
 
 	static public void copyToStream(File src, OutputStream os) throws IOException {
-<span class="nc" id="L168">		final InputStream fis = new BufferedInputStream(new FileInputStream(src));</span>
-<span class="nc" id="L169">		final OutputStream fos = new BufferedOutputStream(os);</span>
-<span class="nc" id="L170">		copyInternal(fis, fos, true);</span>
-<span class="nc" id="L171">	}</span>
+<span class="nc" id="L167">		final InputStream fis = new BufferedInputStream(new FileInputStream(src));</span>
+<span class="nc" id="L168">		final OutputStream fos = new BufferedOutputStream(os);</span>
+<span class="nc" id="L169">		copyInternal(fis, fos, true);</span>
+<span class="nc" id="L170">	}</span>
 
 	static public void copyToStream(InputStream is, OutputStream os) throws IOException {
-<span class="nc" id="L174">		final InputStream fis = new BufferedInputStream(is);</span>
-<span class="nc" id="L175">		final OutputStream fos = new BufferedOutputStream(os);</span>
-<span class="nc" id="L176">		copyInternal(fis, fos, true);</span>
-<span class="nc" id="L177">	}</span>
+<span class="nc" id="L173">		final InputStream fis = new BufferedInputStream(is);</span>
+<span class="nc" id="L174">		final OutputStream fos = new BufferedOutputStream(os);</span>
+<span class="nc" id="L175">		copyInternal(fis, fos, true);</span>
+<span class="nc" id="L176">	}</span>
 
 	public static byte[] copyToByteArray(InputStream is) throws IOException {
-<span class="nc" id="L180">		try (BufferedInputStream bis = new BufferedInputStream(is);</span>
-<span class="nc" id="L181">				ByteArrayOutputStream bos = new ByteArrayOutputStream()) {</span>
-<span class="nc" id="L182">			copyInternal(bis, bos, true);</span>
-<span class="nc" id="L183">			return bos.toByteArray();</span>
+<span class="nc" id="L179">		try (BufferedInputStream bis = new BufferedInputStream(is);</span>
+<span class="nc" id="L180">				ByteArrayOutputStream bos = new ByteArrayOutputStream()) {</span>
+<span class="nc" id="L181">			copyInternal(bis, bos, true);</span>
+<span class="nc" id="L182">			return bos.toByteArray();</span>
 		}
 	}
 
 	static public void copyToFile(byte[] src, SFile dest) throws IOException {
-<span class="nc" id="L188">		try (OutputStream fos = dest.createBufferedOutputStream()) {</span>
-<span class="nc" id="L189">			fos.write(src);</span>
+<span class="nc" id="L187">		try (OutputStream fos = dest.createBufferedOutputStream()) {</span>
+<span class="nc" id="L188">			fos.write(src);</span>
 		}
-<span class="nc" id="L191">	}</span>
+<span class="nc" id="L190">	}</span>
 
 	static public String readFile(SFile svgFile) throws IOException {
-<span class="fc" id="L194">		final BufferedReader br = svgFile.openBufferedReader();</span>
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (br == null)</span>
-<span class="nc" id="L196">			return null;</span>
+<span class="fc" id="L193">		final BufferedReader br = svgFile.openBufferedReader();</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (br == null)</span>
+<span class="nc" id="L195">			return null;</span>
 
-<span class="fc" id="L198">		return readSvg(br, true, true);</span>
+<span class="fc" id="L197">		return readSvg(br, true, true);</span>
 	}
 
 	static public List&lt;String&gt; readStrings(InputStream is) throws IOException {
-<span class="fc" id="L202">		try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {</span>
-<span class="fc" id="L203">			return reader.lines().collect(Collectors.toList());</span>
+<span class="fc" id="L201">		try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {</span>
+<span class="fc" id="L202">			return reader.lines().collect(Collectors.toList());</span>
 		}
 	}
 
 	private static final int DISCARD_BUFFER_SIZE = 64 * 1024; // 64 KiB
 
 	public static byte[] readExactly(InputStream in, int n) throws IOException {
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (n &lt; 0)</span>
-<span class="nc" id="L211">			throw new IllegalArgumentException(&quot;n must be &gt;= 0&quot;);</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (n &lt; 0)</span>
+<span class="nc" id="L210">			throw new IllegalArgumentException(&quot;n must be &gt;= 0&quot;);</span>
 
-<span class="fc" id="L213">		final byte[] data = new byte[n];</span>
-<span class="fc" id="L214">		int offset = 0;</span>
-<span class="fc bfc" id="L215" title="All 2 branches covered.">		while (offset &lt; n) {</span>
-<span class="fc" id="L216">			final int read = in.read(data, offset, n - offset);</span>
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">			if (read == -1)</span>
-<span class="nc" id="L218">				throw new IOException(&quot;End of stream reached after reading &quot; + offset + &quot; bytes (expected &quot; + n + &quot;)&quot;);</span>
+<span class="fc" id="L212">		final byte[] data = new byte[n];</span>
+<span class="fc" id="L213">		int offset = 0;</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		while (offset &lt; n) {</span>
+<span class="fc" id="L215">			final int read = in.read(data, offset, n - offset);</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">			if (read == -1)</span>
+<span class="nc" id="L217">				throw new IOException(&quot;End of stream reached after reading &quot; + offset + &quot; bytes (expected &quot; + n + &quot;)&quot;);</span>
 
-<span class="fc" id="L220">			offset += read;</span>
-<span class="fc" id="L221">		}</span>
-<span class="fc" id="L222">		return data;</span>
+<span class="fc" id="L219">			offset += read;</span>
+<span class="fc" id="L220">		}</span>
+<span class="fc" id="L221">		return data;</span>
 	}
 
 	public static String readAllBytes(InputStream in) throws IOException {
-<span class="nc" id="L226">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L227">		final byte[] buffer = new byte[8192];</span>
+<span class="nc" id="L225">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L226">		final byte[] buffer = new byte[8192];</span>
 		int read;
-<span class="nc bnc" id="L229" title="All 2 branches missed.">		while ((read = in.read(buffer)) != -1)</span>
-<span class="nc" id="L230">			baos.write(buffer, 0, read);</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		while ((read = in.read(buffer)) != -1)</span>
+<span class="nc" id="L229">			baos.write(buffer, 0, read);</span>
 
-<span class="nc" id="L232">		return new String(baos.toByteArray(), StandardCharsets.UTF_8);</span>
+<span class="nc" id="L231">		return new String(baos.toByteArray(), StandardCharsets.UTF_8);</span>
 	}
-
-	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

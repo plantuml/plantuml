@@ -90,26 +90,24 @@ import net.sourceforge.plantuml.utils.SignatureUtils;
 				.format(DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss 'UTC'&quot;));
 	}
 
-	// ::comment when __TEAVM__
 	public static String getJarPath() {
 		try {
-<span class="nc" id="L96">			final ClassLoader loader = Version.class.getClassLoader();</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (loader == null)</span>
-<span class="nc" id="L98">				return &quot;No ClassLoader?&quot;;</span>
+<span class="nc" id="L95">			final ClassLoader loader = Version.class.getClassLoader();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (loader == null)</span>
+<span class="nc" id="L97">				return &quot;No ClassLoader?&quot;;</span>
 
-<span class="nc" id="L100">			final SURL url = SURL.create(loader.getResource(&quot;net/sourceforge/plantuml/version/Version.class&quot;));</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (url == null)</span>
-<span class="nc" id="L102">				return &quot;No URL?&quot;;</span>
+<span class="nc" id="L99">			final SURL url = SURL.create(loader.getResource(&quot;net/sourceforge/plantuml/version/Version.class&quot;));</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (url == null)</span>
+<span class="nc" id="L101">				return &quot;No URL?&quot;;</span>
 
-<span class="nc" id="L104">			String fullpath = url.toString();</span>
-<span class="nc" id="L105">			fullpath = fullpath.replaceAll(&quot;net/sourceforge/plantuml/version/Version\\.class&quot;, &quot;&quot;);</span>
-<span class="nc" id="L106">			return fullpath;</span>
-<span class="nc" id="L107">		} catch (Throwable t) {</span>
-<span class="nc" id="L108">			Logme.error(t);</span>
-<span class="nc" id="L109">			return t.toString();</span>
+<span class="nc" id="L103">			String fullpath = url.toString();</span>
+<span class="nc" id="L104">			fullpath = fullpath.replaceAll(&quot;net/sourceforge/plantuml/version/Version\\.class&quot;, &quot;&quot;);</span>
+<span class="nc" id="L105">			return fullpath;</span>
+<span class="nc" id="L106">		} catch (Throwable t) {</span>
+<span class="nc" id="L107">			Logme.error(t);</span>
+<span class="nc" id="L108">			return t.toString();</span>
 		}
 	}
-	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

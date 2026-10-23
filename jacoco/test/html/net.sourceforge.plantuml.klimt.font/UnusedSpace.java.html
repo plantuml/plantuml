@@ -83,79 +83,76 @@ public class UnusedSpace {
 
 <span class="fc" id="L84">	private UnusedSpace(UFont font, char c) {</span>
 
-		// ::comment when __TEAVM__
+<span class="fc" id="L86">		final PortableImage im = PortableImageFactory.build(2 * HALF_SIZE, 2 * HALF_SIZE, PortableImage.TYPE_INT_RGB);</span>
+<span class="fc" id="L87">		final Graphics2D g2d = im.createGraphics();</span>
+<span class="fc" id="L88">		final String text = &quot;&quot; + c;</span>
+<span class="fc" id="L89">		g2d.setFont(font.getUnderlayingFont(text));</span>
+<span class="fc" id="L90">		g2d.drawString(text, HALF_SIZE, HALF_SIZE);</span>
 
-<span class="fc" id="L88">		final PortableImage im = PortableImageFactory.build(2 * HALF_SIZE, 2 * HALF_SIZE, PortableImage.TYPE_INT_RGB);</span>
-<span class="fc" id="L89">		final Graphics2D g2d = im.createGraphics();</span>
-<span class="fc" id="L90">		final String text = &quot;&quot; + c;</span>
-<span class="fc" id="L91">		g2d.setFont(font.getUnderlayingFont(text));</span>
-<span class="fc" id="L92">		g2d.drawString(text, HALF_SIZE, HALF_SIZE);</span>
+<span class="fc" id="L92">		int minI = Integer.MAX_VALUE;</span>
+<span class="fc" id="L93">		int minJ = Integer.MAX_VALUE;</span>
+<span class="fc" id="L94">		int maxI = Integer.MIN_VALUE;</span>
+<span class="fc" id="L95">		int maxJ = Integer.MIN_VALUE;</span>
 
-<span class="fc" id="L94">		int minI = Integer.MAX_VALUE;</span>
-<span class="fc" id="L95">		int minJ = Integer.MAX_VALUE;</span>
-<span class="fc" id="L96">		int maxI = Integer.MIN_VALUE;</span>
-<span class="fc" id="L97">		int maxJ = Integer.MIN_VALUE;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		for (int i = 0; i &lt; im.getWidth(); i++) {</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			for (int j = 0; j &lt; im.getHeight(); j++) {</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">				if (isPoint(im, i, j)) {</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">					if (i &lt; minI)</span>
+<span class="fc" id="L101">						minI = i;</span>
 
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (int i = 0; i &lt; im.getWidth(); i++) {</span>
-<span class="fc bfc" id="L100" title="All 2 branches covered.">			for (int j = 0; j &lt; im.getHeight(); j++) {</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">				if (isPoint(im, i, j)) {</span>
-<span class="fc bfc" id="L102" title="All 2 branches covered.">					if (i &lt; minI)</span>
-<span class="fc" id="L103">						minI = i;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">					if (j &lt; minJ)</span>
+<span class="fc" id="L104">						minJ = j;</span>
 
-<span class="fc bfc" id="L105" title="All 2 branches covered.">					if (j &lt; minJ)</span>
-<span class="fc" id="L106">						minJ = j;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">					if (i &gt; maxI)</span>
+<span class="fc" id="L107">						maxI = i;</span>
 
-<span class="fc bfc" id="L108" title="All 2 branches covered.">					if (i &gt; maxI)</span>
-<span class="fc" id="L109">						maxI = i;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">					if (j &gt; maxJ)</span>
+<span class="fc" id="L110">						maxJ = j;</span>
 
-<span class="fc bfc" id="L111" title="All 2 branches covered.">					if (j &gt; maxJ)</span>
-<span class="fc" id="L112">						maxJ = j;</span>
-
-<span class="fc" id="L114">					points.add(new Point(i, j));</span>
+<span class="fc" id="L112">					points.add(new Point(i, j));</span>
 				}
 			}
 		}
 
-<span class="fc" id="L119">		double min = Double.MAX_VALUE;</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		for (int i = minI * 4; i &lt;= maxI * 4; i++)</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">			for (int j = minJ * 4; j &lt; maxJ * 4; j++) {</span>
-<span class="fc" id="L122">				final Point p = new Point(i / 4.0, j / 4.0);</span>
-<span class="fc" id="L123">				final double d = biggestDistSqFromPoint(p);</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">				if (d &lt; min) {</span>
-<span class="fc" id="L125">					min = d;</span>
-<span class="fc" id="L126">					this.meanX2 = i / 4.0 - HALF_SIZE;</span>
-<span class="fc" id="L127">					this.meanY2 = j / 4.0 - HALF_SIZE;</span>
+<span class="fc" id="L117">		double min = Double.MAX_VALUE;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		for (int i = minI * 4; i &lt;= maxI * 4; i++)</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			for (int j = minJ * 4; j &lt; maxJ * 4; j++) {</span>
+<span class="fc" id="L120">				final Point p = new Point(i / 4.0, j / 4.0);</span>
+<span class="fc" id="L121">				final double d = biggestDistSqFromPoint(p);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">				if (d &lt; min) {</span>
+<span class="fc" id="L123">					min = d;</span>
+<span class="fc" id="L124">					this.meanX2 = i / 4.0 - HALF_SIZE;</span>
+<span class="fc" id="L125">					this.meanY2 = j / 4.0 - HALF_SIZE;</span>
 				}
 			}
-		// ::done
 
-<span class="fc" id="L132">	}</span>
+<span class="fc" id="L129">	}</span>
 
 	private double biggestDistSqFromPoint(Point p) {
-<span class="fc" id="L135">		double result = 0;</span>
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (Point other : points) {</span>
-<span class="fc" id="L137">			final double d = p.getDistSq(other);</span>
-<span class="fc bfc" id="L138" title="All 2 branches covered.">			if (d &gt; result) {</span>
-<span class="fc" id="L139">				result = d;</span>
+<span class="fc" id="L132">		double result = 0;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (Point other : points) {</span>
+<span class="fc" id="L134">			final double d = p.getDistSq(other);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">			if (d &gt; result) {</span>
+<span class="fc" id="L136">				result = d;</span>
 			}
-<span class="fc" id="L141">		}</span>
-<span class="fc" id="L142">		return result;</span>
+<span class="fc" id="L138">		}</span>
+<span class="fc" id="L139">		return result;</span>
 	}
 
 	private static boolean isPoint(PortableImage im, int x, int y) {
-<span class="fc" id="L146">		final int color = im.getRGB(x, y) &amp; 0x00FFFFFF;</span>
-<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (color == 0) {</span>
-<span class="fc" id="L148">			return false;</span>
+<span class="fc" id="L143">		final int color = im.getRGB(x, y) &amp; 0x00FFFFFF;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (color == 0) {</span>
+<span class="fc" id="L145">			return false;</span>
 		}
-<span class="fc" id="L150">		return true;</span>
+<span class="fc" id="L147">		return true;</span>
 	}
 
 	public double getCenterX() {
-<span class="fc" id="L154">		return meanX2;</span>
+<span class="fc" id="L151">		return meanX2;</span>
 	}
 
 	public double getCenterY() {
-<span class="fc" id="L158">		return meanY2;</span>
+<span class="fc" id="L155">		return meanY2;</span>
 	}
 
 }

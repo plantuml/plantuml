@@ -58,54 +58,52 @@ public final class ProtectedCommand&lt;S extends Diagram&gt; implements Command&
 <span class="fc" id="L58">			final CommandExecutionResult result = cmd.execute(system, lines, currentPass);</span>
 			// if (result.isOk()) {
 			// // TRACECOMMAND
-			// ::uncomment when __TEAVM__
 			// // System.err.println(&quot;CMD = &quot; + cmd.getClass() + &quot; &quot; + currentPass);
-			// ::done
 			// }
-<span class="fc" id="L65">			return result;</span>
-<span class="fc" id="L66">		} catch (Throwable t) {</span>
-<span class="fc" id="L67">			Log.error(&quot;Error &quot; + t);</span>
-<span class="fc" id="L68">			Logme.error(t);</span>
+<span class="fc" id="L63">			return result;</span>
+<span class="fc" id="L64">		} catch (Throwable t) {</span>
+<span class="fc" id="L65">			Log.error(&quot;Error &quot; + t);</span>
+<span class="fc" id="L66">			Logme.error(t);</span>
 			String msg;
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">			if (Logme.MODE_VEGA)</span>
-<span class="fc" id="L71">				msg = &quot;You should send a mail to plantuml@gmail.com with this log&quot;;</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			if (Logme.MODE_VEGA)</span>
+<span class="fc" id="L69">				msg = &quot;You should send a mail to plantuml@gmail.com with this log&quot;;</span>
 			else
-<span class="nc" id="L73">				msg = &quot;You should send a mail to plantuml@gmail.com with this log (V&quot; + Version.versionString() + &quot;)&quot;;</span>
+<span class="nc" id="L71">				msg = &quot;You should send a mail to plantuml@gmail.com with this log (V&quot; + Version.versionString() + &quot;)&quot;;</span>
 
-<span class="fc" id="L75">			Log.error(msg);</span>
-<span class="fc" id="L76">			msg += &quot; &quot; + t.toString();</span>
-<span class="fc" id="L77">			return CommandExecutionResult.error(msg, t);</span>
+<span class="fc" id="L73">			Log.error(msg);</span>
+<span class="fc" id="L74">			msg += &quot; &quot; + t.toString();</span>
+<span class="fc" id="L75">			return CommandExecutionResult.error(msg, t);</span>
 		}
 	}
 	
 	@Override
 	public String explain(BlocLines lines) {
-<span class="nc" id="L83">		return cmd.explain(lines);</span>
+<span class="nc" id="L81">		return cmd.explain(lines);</span>
 	}
 
 	public CommandControl isValid(BlocLines lines) {
-<span class="nc" id="L87">		return cmd.isValid(lines);</span>
+<span class="nc" id="L85">		return cmd.isValid(lines);</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="nc" id="L92">		return cmd.isEligibleFor(pass);</span>
+<span class="nc" id="L90">		return cmd.isEligibleFor(pass);</span>
 	}
 
 	@Override
 	public final boolean isCommandForbidden(BlocLines lines) {
-<span class="nc" id="L97">		return cmd.isCommandForbidden(lines);</span>
+<span class="nc" id="L95">		return cmd.isCommandForbidden(lines);</span>
 	}
 	
 	
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensSlow() {
-<span class="nc" id="L103">		return cmd.mandatoryFirstTokensSlow();</span>
+<span class="nc" id="L101">		return cmd.mandatoryFirstTokensSlow();</span>
 	}
 	
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="nc" id="L108">		return cmd.mandatoryFirstTokensFast();</span>
+<span class="nc" id="L106">		return cmd.mandatoryFirstTokensFast();</span>
 	}
 
 

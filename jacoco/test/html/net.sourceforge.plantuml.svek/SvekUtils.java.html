@@ -46,59 +46,57 @@ import net.sourceforge.plantuml.utils.Log;
 
 <span class="nc" id="L47">public class SvekUtils {</span>
 
-	// ::comment when __TEAVM__
 	static public void traceString(final SFile f, String text) throws IOException {
-<span class="nc" id="L51">		Log.info(() -&gt; &quot;Creating intermediate file &quot; + f.getPrintablePath());</span>
-<span class="nc" id="L52">		try (PrintWriter pw = f.createPrintWriter()) {</span>
-<span class="nc" id="L53">			pw.print(text);</span>
+<span class="nc" id="L50">		Log.info(() -&gt; &quot;Creating intermediate file &quot; + f.getPrintablePath());</span>
+<span class="nc" id="L51">		try (PrintWriter pw = f.createPrintWriter()) {</span>
+<span class="nc" id="L52">			pw.print(text);</span>
 		}
-<span class="nc" id="L55">	}</span>
-	// ::done
+<span class="nc" id="L54">	}</span>
 
 	static public double getValue(String svg, int starting, String varName) {
-<span class="nc" id="L59">		final String varNameString = varName + &quot;=\&quot;&quot;;</span>
-<span class="nc" id="L60">		int p1 = svg.indexOf(varNameString, starting);</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		if (p1 == -1) {</span>
-<span class="nc" id="L62">			throw new IllegalStateException();</span>
+<span class="nc" id="L57">		final String varNameString = varName + &quot;=\&quot;&quot;;</span>
+<span class="nc" id="L58">		int p1 = svg.indexOf(varNameString, starting);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (p1 == -1) {</span>
+<span class="nc" id="L60">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L64">		p1 += varNameString.length();</span>
-<span class="nc" id="L65">		final int p2 = svg.indexOf('\&quot;', p1);</span>
-<span class="nc" id="L66">		return Double.parseDouble(svg.substring(p1, p2));</span>
+<span class="nc" id="L62">		p1 += varNameString.length();</span>
+<span class="nc" id="L63">		final int p2 = svg.indexOf('\&quot;', p1);</span>
+<span class="nc" id="L64">		return Double.parseDouble(svg.substring(p1, p2));</span>
 
 	}
 
 	public static XPoint2D getMinXY(List&lt;XPoint2D&gt; points) {
-<span class="nc" id="L71">		double minx = points.get(0).x;</span>
-<span class="nc" id="L72">		double miny = points.get(0).y;</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++) {</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (points.get(i).x &lt; minx)</span>
-<span class="nc" id="L75">				minx = points.get(i).x;</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">			if (points.get(i).y &lt; miny)</span>
-<span class="nc" id="L77">				miny = points.get(i).y;</span>
+<span class="nc" id="L69">		double minx = points.get(0).x;</span>
+<span class="nc" id="L70">		double miny = points.get(0).y;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">			if (points.get(i).x &lt; minx)</span>
+<span class="nc" id="L73">				minx = points.get(i).x;</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">			if (points.get(i).y &lt; miny)</span>
+<span class="nc" id="L75">				miny = points.get(i).y;</span>
 		}
-<span class="nc" id="L79">		return new XPoint2D(minx, miny);</span>
+<span class="nc" id="L77">		return new XPoint2D(minx, miny);</span>
 	}
 
 	public static XPoint2D getMaxXY(List&lt;XPoint2D&gt; points) {
-<span class="nc" id="L83">		double maxx = points.get(0).x;</span>
-<span class="nc" id="L84">		double maxy = points.get(0).y;</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++) {</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (points.get(i).x &gt; maxx)</span>
-<span class="nc" id="L87">				maxx = points.get(i).x;</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (points.get(i).y &gt; maxy)</span>
-<span class="nc" id="L89">				maxy = points.get(i).y;</span>
+<span class="nc" id="L81">		double maxx = points.get(0).x;</span>
+<span class="nc" id="L82">		double maxy = points.get(0).y;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		for (int i = 1; i &lt; points.size(); i++) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">			if (points.get(i).x &gt; maxx)</span>
+<span class="nc" id="L85">				maxx = points.get(i).x;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (points.get(i).y &gt; maxy)</span>
+<span class="nc" id="L87">				maxy = points.get(i).y;</span>
 		}
 
-<span class="nc" id="L92">		return new XPoint2D(maxx, maxy);</span>
+<span class="nc" id="L90">		return new XPoint2D(maxx, maxy);</span>
 	}
 
 	public static void println(StringBuilder sb) {
-<span class="nc" id="L96">		sb.append('\n');</span>
-<span class="nc" id="L97">	}</span>
+<span class="nc" id="L94">		sb.append('\n');</span>
+<span class="nc" id="L95">	}</span>
 
 	public static String pixelToInches(double pixel) {
-<span class="fc" id="L100">		final double v = pixel / 72.0;</span>
-<span class="fc" id="L101">		return String.format(Locale.US, &quot;%6.6f&quot;, v);</span>
+<span class="fc" id="L98">		final double v = pixel / 72.0;</span>
+<span class="fc" id="L99">		return String.format(Locale.US, &quot;%6.6f&quot;, v);</span>
 	}
 
 }

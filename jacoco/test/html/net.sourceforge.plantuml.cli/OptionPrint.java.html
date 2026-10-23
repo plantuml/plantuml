@@ -103,92 +103,89 @@ import net.sourceforge.plantuml.version.Version;
 <span class="fc" id="L103">		return MyCollections.unmodifiableCollection(strings);</span>
 	}
 
-	// ::comment when __TEAVM__
-
 	static public void printCheckGraphviz() {
-<span class="nc" id="L109">		final ReportLog result = new ReportLog();</span>
-<span class="nc" id="L110">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		for (String s : result)</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (errorCode == 0)</span>
-<span class="nc" id="L113">				System.out.println(s);</span>
+<span class="nc" id="L107">		final ReportLog result = new ReportLog();</span>
+<span class="nc" id="L108">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (String s : result)</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (errorCode == 0)</span>
+<span class="nc" id="L111">				System.out.println(s);</span>
 			else
-<span class="nc" id="L115">				System.err.println(s);</span>
+<span class="nc" id="L113">				System.err.println(s);</span>
 
-<span class="nc" id="L117">		Exit.exit(errorCode);</span>
-<span class="nc" id="L118">	}</span>
+<span class="nc" id="L115">		Exit.exit(errorCode);</span>
+<span class="nc" id="L116">	}</span>
 
 	public static void printLicense() {
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		for (String s : License.getCurrent().getTextFull())</span>
-<span class="nc" id="L122">			System.out.println(s);</span>
-<span class="nc" id="L123">	}</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (String s : License.getCurrent().getTextFull())</span>
+<span class="nc" id="L120">			System.out.println(s);</span>
+<span class="nc" id="L121">	}</span>
 
 	public static void printVersion() {
-<span class="nc" id="L126">		System.out.println(Version.fullDescription());</span>
-<span class="nc" id="L127">		System.out.println(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
-<span class="nc" id="L128">		System.out.println();</span>
-<span class="nc" id="L129">		System.out.println(&quot;Build Version: &quot; + CompilationInfo.VERSION);</span>
-<span class="nc" id="L130">		System.out.println(&quot;Git Commit: &quot; + CompilationInfo.COMMIT);</span>
+<span class="nc" id="L124">		System.out.println(Version.fullDescription());</span>
+<span class="nc" id="L125">		System.out.println(&quot;(&quot; + License.getCurrent() + &quot; source distribution)&quot;);</span>
+<span class="nc" id="L126">		System.out.println();</span>
+<span class="nc" id="L127">		System.out.println(&quot;Build Version: &quot; + CompilationInfo.VERSION);</span>
+<span class="nc" id="L128">		System.out.println(&quot;Git Commit: &quot; + CompilationInfo.COMMIT);</span>
 		if (CompilationInfo.COMPILE_TIMESTAMP != 0)
 			System.out.println(&quot;Compile Time: &quot; + Version.compileTimeString());
 
-<span class="nc" id="L134">		System.out.println();</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		for (String v : interestingProperties())</span>
-<span class="nc" id="L136">			System.out.println(v);</span>
+<span class="nc" id="L132">		System.out.println();</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		for (String v : interestingProperties())</span>
+<span class="nc" id="L134">			System.out.println(v);</span>
 
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (String v : interestingValues())</span>
-<span class="nc" id="L139">			System.out.println(v);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		for (String v : interestingValues())</span>
+<span class="nc" id="L137">			System.out.println(v);</span>
 
 		// The C build does not use Graphviz (the layout is computed by Smetana)
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (TeaVM.isC())</span>
-<span class="nc" id="L143">			return;</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (TeaVM.isC())</span>
+<span class="nc" id="L141">			return;</span>
 
-<span class="nc" id="L145">		System.out.println();</span>
-<span class="nc" id="L146">		final ReportLog result = new ReportLog();</span>
-<span class="nc" id="L147">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">		for (String s : result)</span>
-<span class="nc" id="L149">			System.out.println(s);</span>
+<span class="nc" id="L143">		System.out.println();</span>
+<span class="nc" id="L144">		final ReportLog result = new ReportLog();</span>
+<span class="nc" id="L145">		final int errorCode = GraphvizUtils.addDotStatus(result, false);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		for (String s : result)</span>
+<span class="nc" id="L147">			System.out.println(s);</span>
 
-<span class="nc" id="L151">		Exit.exit(errorCode);</span>
-<span class="nc" id="L152">	}</span>
+<span class="nc" id="L149">		Exit.exit(errorCode);</span>
+<span class="nc" id="L150">	}</span>
 
 	private static String hostname;
 
 	public static synchronized String getHostName() {
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (hostname == null)</span>
-<span class="nc" id="L158">			hostname = getHostNameSlow();</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (hostname == null)</span>
+<span class="nc" id="L156">			hostname = getHostNameSlow();</span>
 
-<span class="nc" id="L160">		return hostname;</span>
+<span class="nc" id="L158">		return hostname;</span>
 	}
 
 	private static String getHostNameSlow() {
 		try {
-<span class="nc" id="L165">			final InetAddress addr = InetAddress.getLocalHost();</span>
-<span class="nc" id="L166">			return addr.getHostName();</span>
-<span class="nc" id="L167">		} catch (Throwable e) {</span>
-<span class="nc" id="L168">			final Map&lt;String, String&gt; env = System.getenv();</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">			if (env.containsKey(&quot;COMPUTERNAME&quot;))</span>
-<span class="nc" id="L170">				return env.get(&quot;COMPUTERNAME&quot;);</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">			else if (env.containsKey(&quot;HOSTNAME&quot;))</span>
-<span class="nc" id="L172">				return env.get(&quot;HOSTNAME&quot;);</span>
+<span class="nc" id="L163">			final InetAddress addr = InetAddress.getLocalHost();</span>
+<span class="nc" id="L164">			return addr.getHostName();</span>
+<span class="nc" id="L165">		} catch (Throwable e) {</span>
+<span class="nc" id="L166">			final Map&lt;String, String&gt; env = System.getenv();</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			if (env.containsKey(&quot;COMPUTERNAME&quot;))</span>
+<span class="nc" id="L168">				return env.get(&quot;COMPUTERNAME&quot;);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">			else if (env.containsKey(&quot;HOSTNAME&quot;))</span>
+<span class="nc" id="L170">				return env.get(&quot;HOSTNAME&quot;);</span>
 
 		}
-<span class="nc" id="L175">		return &quot;Unknown Computer&quot;;</span>
+<span class="nc" id="L173">		return &quot;Unknown Computer&quot;;</span>
 	}
 
 	private static String format(final long value) {
-<span class="nc" id="L179">		return String.format(Locale.US, &quot;%,d&quot;, value);</span>
+<span class="nc" id="L177">		return String.format(Locale.US, &quot;%,d&quot;, value);</span>
 	}
 
 	public static void printAbout() {
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		for (String s : PSystemVersion.getAuthorsStrings(false))</span>
-<span class="nc" id="L184">			System.out.println(s);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">		for (String s : PSystemVersion.getAuthorsStrings(false))</span>
+<span class="nc" id="L182">			System.out.println(s);</span>
 
-<span class="nc" id="L186">	}</span>
+<span class="nc" id="L184">	}</span>
 
 	public static void printListKeywords() {
-<span class="nc" id="L189">		new LanguageDescriptor().print(System.out);</span>
-<span class="nc" id="L190">	}</span>
-	// ::done
+<span class="nc" id="L187">		new LanguageDescriptor().print(System.out);</span>
+<span class="nc" id="L188">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

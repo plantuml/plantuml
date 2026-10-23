@@ -336,128 +336,126 @@ public final class GraphvizImageBuilder {
 <span class="nc" id="L336">		return single;</span>
 	}
 
-	// ::comment when __TEAVM__
 	private IEntityImage error(File dotExe) {
-<span class="nc" id="L341">		final List&lt;String&gt; msg = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L342">		msg.add(&quot;Dot Executable: &quot; + dotExe);</span>
-<span class="nc" id="L343">		final ExeState exeState = ExeState.checkFile(dotExe);</span>
-<span class="nc" id="L344">		msg.add(exeState.getTextMessage());</span>
-<span class="nc" id="L345">		msg.add(&quot;Cannot find Graphviz. You should try&quot;);</span>
-<span class="nc" id="L346">		msg.add(&quot; &quot;);</span>
-<span class="nc" id="L347">		msg.add(&quot;@startuml&quot;);</span>
-<span class="nc" id="L348">		msg.add(&quot;testdot&quot;);</span>
-<span class="nc" id="L349">		msg.add(&quot;@enduml&quot;);</span>
-<span class="nc" id="L350">		msg.add(&quot; &quot;);</span>
-<span class="nc" id="L351">		msg.add(&quot; or &quot;);</span>
-<span class="nc" id="L352">		msg.add(&quot; &quot;);</span>
-<span class="nc" id="L353">		msg.add(&quot;java -jar plantuml.jar -testdot&quot;);</span>
-<span class="nc" id="L354">		msg.add(&quot; &quot;);</span>
-<span class="nc" id="L355">		return GraphicStrings.createForError(msg, false);</span>
+<span class="nc" id="L340">		final List&lt;String&gt; msg = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L341">		msg.add(&quot;Dot Executable: &quot; + dotExe);</span>
+<span class="nc" id="L342">		final ExeState exeState = ExeState.checkFile(dotExe);</span>
+<span class="nc" id="L343">		msg.add(exeState.getTextMessage());</span>
+<span class="nc" id="L344">		msg.add(&quot;Cannot find Graphviz. You should try&quot;);</span>
+<span class="nc" id="L345">		msg.add(&quot; &quot;);</span>
+<span class="nc" id="L346">		msg.add(&quot;@startuml&quot;);</span>
+<span class="nc" id="L347">		msg.add(&quot;testdot&quot;);</span>
+<span class="nc" id="L348">		msg.add(&quot;@enduml&quot;);</span>
+<span class="nc" id="L349">		msg.add(&quot; &quot;);</span>
+<span class="nc" id="L350">		msg.add(&quot; or &quot;);</span>
+<span class="nc" id="L351">		msg.add(&quot; &quot;);</span>
+<span class="nc" id="L352">		msg.add(&quot;java -jar plantuml.jar -testdot&quot;);</span>
+<span class="nc" id="L353">		msg.add(&quot; &quot;);</span>
+<span class="nc" id="L354">		return GraphicStrings.createForError(msg, false);</span>
 	}
-	// ::done
 
 	private void printEntities(StringBounder stringBounder, Collection&lt;Entity&gt; entities2) {
-<span class="nc bnc" id="L360" title="All 2 branches missed.">		for (Entity ent : entities2) {</span>
-<span class="nc bnc" id="L361" title="All 2 branches missed.">			if (ent.isRemoved())</span>
-<span class="nc" id="L362">				continue;</span>
+<span class="nc bnc" id="L358" title="All 2 branches missed.">		for (Entity ent : entities2) {</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">			if (ent.isRemoved())</span>
+<span class="nc" id="L360">				continue;</span>
 
-<span class="nc" id="L364">			printEntity(stringBounder, ent);</span>
-<span class="nc" id="L365">		}</span>
-<span class="nc" id="L366">	}</span>
+<span class="nc" id="L362">			printEntity(stringBounder, ent);</span>
+<span class="nc" id="L363">		}</span>
+<span class="nc" id="L364">	}</span>
 
 	private void printEntity(StringBounder stringBounder, Entity ent) {
-<span class="nc bnc" id="L369" title="All 2 branches missed.">		if (ent.isRemoved())</span>
-<span class="nc" id="L370">			throw new IllegalStateException(ent.toString());</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">		if (ent.isRemoved())</span>
+<span class="nc" id="L368">			throw new IllegalStateException(ent.toString());</span>
 
-<span class="nc" id="L372">		final IEntityImage image = printEntityInternal(stringBounder, ent);</span>
-<span class="nc" id="L373">		final SvekNode node = dotStringFactory.getBibliotekon().createNode(ent, image, stringBounder);</span>
-<span class="nc" id="L374">		clusterManager.addNode(node);</span>
-<span class="nc" id="L375">	}</span>
+<span class="nc" id="L370">		final IEntityImage image = printEntityInternal(stringBounder, ent);</span>
+<span class="nc" id="L371">		final SvekNode node = dotStringFactory.getBibliotekon().createNode(ent, image, stringBounder);</span>
+<span class="nc" id="L372">		clusterManager.addNode(node);</span>
+<span class="nc" id="L373">	}</span>
 
 	private IEntityImage printEntityInternal(StringBounder stringBounder, Entity ent) {
-<span class="nc bnc" id="L378" title="All 2 branches missed.">		if (ent.isRemoved())</span>
-<span class="nc" id="L379">			throw new IllegalStateException();</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">		if (ent.isRemoved())</span>
+<span class="nc" id="L377">			throw new IllegalStateException();</span>
 
-<span class="nc bnc" id="L381" title="All 2 branches missed.">		if (ent.getSvekImage() == null) {</span>
-<span class="nc" id="L382">			ISkinParam skinParam = dotData.getSkinParam();</span>
-<span class="nc bnc" id="L383" title="All 2 branches missed.">			if (skinParam.sameClassWidth()) {</span>
-<span class="nc" id="L384">				final double width = getMaxWidth(stringBounder);</span>
-<span class="nc" id="L385">				((SkinParam) skinParam).setParamSameClassWidth(width);</span>
+<span class="nc bnc" id="L379" title="All 2 branches missed.">		if (ent.getSvekImage() == null) {</span>
+<span class="nc" id="L380">			ISkinParam skinParam = dotData.getSkinParam();</span>
+<span class="nc bnc" id="L381" title="All 2 branches missed.">			if (skinParam.sameClassWidth()) {</span>
+<span class="nc" id="L382">				final double width = getMaxWidth(stringBounder);</span>
+<span class="nc" id="L383">				((SkinParam) skinParam).setParamSameClassWidth(width);</span>
 			}
 
-<span class="nc" id="L388">			return GeneralImageBuilder.createEntityImageBlock(ent, dotData.isHideEmptyDescriptionForState(),</span>
-<span class="nc" id="L389">					dotData.getPortionShower(), dotStringFactory.getBibliotekon(),</span>
-<span class="nc" id="L390">					dotStringFactory.getGraphvizVersion(), dotData.getLinks());</span>
+<span class="nc" id="L386">			return GeneralImageBuilder.createEntityImageBlock(ent, dotData.isHideEmptyDescriptionForState(),</span>
+<span class="nc" id="L387">					dotData.getPortionShower(), dotStringFactory.getBibliotekon(),</span>
+<span class="nc" id="L388">					dotStringFactory.getGraphvizVersion(), dotData.getLinks());</span>
 		}
-<span class="nc" id="L392">		return ent.getSvekImage();</span>
+<span class="nc" id="L390">		return ent.getSvekImage();</span>
 	}
 
 	private double getMaxWidth(StringBounder stringBounder) {
-<span class="nc" id="L396">		double result = 0;</span>
-<span class="nc bnc" id="L397" title="All 2 branches missed.">		for (Entity ent : dotData.getLeafs()) {</span>
-<span class="nc bnc" id="L398" title="All 2 branches missed.">			if (ent.getLeafType().isLikeClass() == false)</span>
-<span class="nc" id="L399">				continue;</span>
+<span class="nc" id="L394">		double result = 0;</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		for (Entity ent : dotData.getLeafs()) {</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">			if (ent.getLeafType().isLikeClass() == false)</span>
+<span class="nc" id="L397">				continue;</span>
 
-<span class="nc" id="L401">			final IEntityImage im = new EntityImageClass(ent, dotData.getPortionShower());</span>
-<span class="nc" id="L402">			final double w = im.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc bnc" id="L403" title="All 2 branches missed.">			if (w &gt; result)</span>
-<span class="nc" id="L404">				result = w;</span>
+<span class="nc" id="L399">			final IEntityImage im = new EntityImageClass(ent, dotData.getPortionShower());</span>
+<span class="nc" id="L400">			final double w = im.calculateDimension(stringBounder).getWidth();</span>
+<span class="nc bnc" id="L401" title="All 2 branches missed.">			if (w &gt; result)</span>
+<span class="nc" id="L402">				result = w;</span>
 
-<span class="nc" id="L406">		}</span>
-<span class="nc" id="L407">		return result;</span>
+<span class="nc" id="L404">		}</span>
+<span class="nc" id="L405">		return result;</span>
 	}
 
 	private Collection&lt;Entity&gt; getUnpackagedEntities() {
-<span class="nc" id="L411">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L412" title="All 2 branches missed.">		for (Entity ent : dotData.getLeafs())</span>
-<span class="nc bnc" id="L413" title="All 2 branches missed.">			if (dotData.getTopParent() == ent.getParentContainer())</span>
-<span class="nc" id="L414">				result.add(ent);</span>
+<span class="nc" id="L409">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">		for (Entity ent : dotData.getLeafs())</span>
+<span class="nc bnc" id="L411" title="All 2 branches missed.">			if (dotData.getTopParent() == ent.getParentContainer())</span>
+<span class="nc" id="L412">				result.add(ent);</span>
 
-<span class="nc" id="L416">		return result;</span>
+<span class="nc" id="L414">		return result;</span>
 	}
 
 	private void printGroups(StringBounder stringBounder, Entity parent) {
 		// System.err.println(&quot;PARENT=&quot; + parent);
-<span class="nc" id="L421">		final Collection&lt;Entity&gt; groups = dotData.getGroupHierarchy().getChildrenGroups(parent);</span>
+<span class="nc" id="L419">		final Collection&lt;Entity&gt; groups = dotData.getGroupHierarchy().getChildrenGroups(parent);</span>
 		// System.err.println(&quot;groups=&quot; + groups);
-<span class="nc bnc" id="L423" title="All 2 branches missed.">		for (Entity g : groups) {</span>
-<span class="nc bnc" id="L424" title="All 2 branches missed.">			if (g.isRemoved())</span>
-<span class="nc" id="L425">				continue;</span>
+<span class="nc bnc" id="L421" title="All 2 branches missed.">		for (Entity g : groups) {</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">			if (g.isRemoved())</span>
+<span class="nc" id="L423">				continue;</span>
 
-<span class="nc bnc" id="L427" title="All 4 branches missed.">			if (dotData.isEmpty(g) &amp;&amp; g.getGroupType() == GroupType.PACKAGE) {</span>
-<span class="nc" id="L428">				g.muteToType(LeafType.EMPTY_PACKAGE);</span>
-<span class="nc" id="L429">				printEntity(stringBounder, g);</span>
+<span class="nc bnc" id="L425" title="All 4 branches missed.">			if (dotData.isEmpty(g) &amp;&amp; g.getGroupType() == GroupType.PACKAGE) {</span>
+<span class="nc" id="L426">				g.muteToType(LeafType.EMPTY_PACKAGE);</span>
+<span class="nc" id="L427">				printEntity(stringBounder, g);</span>
 			} else {
-<span class="nc" id="L431">				printGroup(stringBounder, g);</span>
+<span class="nc" id="L429">				printGroup(stringBounder, g);</span>
 			}
-<span class="nc" id="L433">		}</span>
-<span class="nc" id="L434">	}</span>
+<span class="nc" id="L431">		}</span>
+<span class="nc" id="L432">	}</span>
 
 	private void printGroup(StringBounder stringBounder, Entity g) {
-<span class="nc bnc" id="L437" title="All 2 branches missed.">		if (g.getGroupType() == GroupType.CONCURRENT_STATE)</span>
-<span class="nc" id="L438">			return;</span>
+<span class="nc bnc" id="L435" title="All 2 branches missed.">		if (g.getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="nc" id="L436">			return;</span>
 
-<span class="nc" id="L440">		final ClusterHeader clusterHeader = new ClusterHeader(g, dotData.getPortionShower(), stringBounder);</span>
-<span class="nc" id="L441">		clusterManager.openCluster(g, clusterHeader);</span>
-<span class="nc" id="L442">		this.printEntities(stringBounder, g.leafs());</span>
+<span class="nc" id="L438">		final ClusterHeader clusterHeader = new ClusterHeader(g, dotData.getPortionShower(), stringBounder);</span>
+<span class="nc" id="L439">		clusterManager.openCluster(g, clusterHeader);</span>
+<span class="nc" id="L440">		this.printEntities(stringBounder, g.leafs());</span>
 
-<span class="nc" id="L444">		printGroups(stringBounder, g);</span>
+<span class="nc" id="L442">		printGroups(stringBounder, g);</span>
 
-<span class="nc" id="L446">		clusterManager.closeCluster();</span>
-<span class="nc" id="L447">	}</span>
+<span class="nc" id="L444">		clusterManager.closeCluster();</span>
+<span class="nc" id="L445">	}</span>
 
 	public String getWarningOrError(int warningOrError) {
-<span class="nc bnc" id="L450" title="All 2 branches missed.">		if (maxX == null)</span>
-<span class="nc" id="L451">			return &quot;&quot;;</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">		if (maxX == null)</span>
+<span class="nc" id="L449">			return &quot;&quot;;</span>
 
-<span class="nc" id="L453">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L454" title="All 2 branches missed.">		for (Map.Entry&lt;String, Double&gt; ent : maxX.entrySet())</span>
-<span class="nc bnc" id="L455" title="All 2 branches missed.">			if (ent.getValue() &gt; warningOrError) {</span>
-<span class="nc" id="L456">				sb.append(ent.getKey() + &quot; is overpassing the width limit.&quot;);</span>
-<span class="nc" id="L457">				sb.append(&quot;\n&quot;);</span>
+<span class="nc" id="L451">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L452" title="All 2 branches missed.">		for (Map.Entry&lt;String, Double&gt; ent : maxX.entrySet())</span>
+<span class="nc bnc" id="L453" title="All 2 branches missed.">			if (ent.getValue() &gt; warningOrError) {</span>
+<span class="nc" id="L454">				sb.append(ent.getKey() + &quot; is overpassing the width limit.&quot;);</span>
+<span class="nc" id="L455">				sb.append(&quot;\n&quot;);</span>
 			}
 
-<span class="nc bnc" id="L460" title="All 2 branches missed.">		return sb.length() == 0 ? &quot;&quot; : sb.toString();</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">		return sb.length() == 0 ? &quot;&quot; : sb.toString();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

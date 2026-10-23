@@ -291,97 +291,88 @@ public abstract class PSystemError extends UgDiagram {
 <span class="nc" id="L291">		return result;</span>
 	}
 
-	private TextBlock addMessageAdopt(final TextBlock source) throws IOException {
-<span class="nc bnc" id="L295" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
-<span class="nc" id="L296">			return source;</span>
-
-<span class="nc" id="L298">		final TextBlock message = getMessageAdopt();</span>
-<span class="nc" id="L299">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L300">		return result;</span>
-	}
-
 	private TextBlock addMessageArecibo(final TextBlock source) throws IOException {
-<span class="nc" id="L304">		final UImage message = new UImage(</span>
-<span class="nc" id="L305">				new PixelImage(PSystemVersion.getArecibo(), AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L306">		return TextBlockUtils.mergeLR(source, message, VerticalAlignment.TOP);</span>
+<span class="nc" id="L295">		final UImage message = new UImage(</span>
+<span class="nc" id="L296">				new PixelImage(PSystemVersion.getArecibo(), AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L297">		return TextBlockUtils.mergeLR(source, message, VerticalAlignment.TOP);</span>
 	}
 
 	private TextBlock getMessageDedication() {
-<span class="nc" id="L310">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
+<span class="nc" id="L301">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
 
-<span class="nc" id="L312">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
-<span class="nc" id="L313">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, XColor.BLACK, backColor.getAwtColor()));</span>
-<span class="nc" id="L314">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
+<span class="nc" id="L303">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="nc" id="L304">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, XColor.BLACK, backColor.getAwtColor()));</span>
+<span class="nc" id="L305">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
 				&quot;Details on &lt;i&gt;[[https://plantuml.com/dedication]]&quot;);
 
-<span class="nc" id="L317">		final UFont font = UFontFactory.sansSerif(14);</span>
-<span class="nc" id="L318">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
-<span class="nc" id="L319">		final TextBlock text = TextBlockUtils</span>
-<span class="nc" id="L320">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
+<span class="nc" id="L308">		final UFont font = UFontFactory.sansSerif(14);</span>
+<span class="nc" id="L309">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="nc" id="L310">		final TextBlock text = TextBlockUtils</span>
+<span class="nc" id="L311">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
 		final TextBlock result;
-<span class="nc bnc" id="L322" title="All 2 branches missed.">		if (qrcode == null) {</span>
-<span class="nc" id="L323">			result = text;</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">		if (qrcode == null) {</span>
+<span class="nc" id="L314">			result = text;</span>
 		} else {
-<span class="nc" id="L325">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
-<span class="nc" id="L326">			result = TextBlockUtils.mergeLR(text, qr, VerticalAlignment.CENTER);</span>
+<span class="nc" id="L316">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
+<span class="nc" id="L317">			result = TextBlockUtils.mergeLR(text, qr, VerticalAlignment.CENTER);</span>
 		}
-<span class="nc" id="L328">		return TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="nc" id="L319">		return TextBlockUtils.addBackcolor(result, backColor);</span>
 
 	}
 
 	private TextBlock getMessageAdopt() {
-<span class="nc" id="L333">		final HColor backColor = HColorSet.instance().getColorOrWhite(&quot;#eff4d2&quot;);</span>
+<span class="nc" id="L324">		final HColor backColor = HColorSet.instance().getColorOrWhite(&quot;#eff4d2&quot;);</span>
 
-<span class="nc" id="L335">		final Display disp = Display.create(&quot;&lt;b&gt;Adopt-a-Word and put your message here!&quot;, &quot; &quot;,</span>
+<span class="nc" id="L326">		final Display disp = Display.create(&quot;&lt;b&gt;Adopt-a-Word and put your message here!&quot;, &quot; &quot;,</span>
 				&quot;Details on &lt;i&gt;[[https://plantuml.com/adopt]]&quot;, &quot; &quot;);
 
-<span class="nc" id="L338">		final UFont font = UFontFactory.sansSerif(14);</span>
-<span class="nc" id="L339">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
-<span class="nc" id="L340">		final TextBlock text = TextBlockUtils</span>
-<span class="nc" id="L341">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
+<span class="nc" id="L329">		final UFont font = UFontFactory.sansSerif(14);</span>
+<span class="nc" id="L330">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="nc" id="L331">		final TextBlock text = TextBlockUtils</span>
+<span class="nc" id="L332">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
 		final TextBlock result;
-<span class="nc" id="L343">		result = text;</span>
-<span class="nc" id="L344">		return TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="nc" id="L334">		result = text;</span>
+<span class="nc" id="L335">		return TextBlockUtils.addBackcolor(result, backColor);</span>
 
 	}
 
 	private TextBlock getMessagePatreon() {
-<span class="nc" id="L349">		return buildMessageWithQrcode(PSystemVersion.getTime01(), &quot;https://plantuml.com/patreon&quot;);</span>
+<span class="nc" id="L340">		return buildMessageWithQrcode(PSystemVersion.getTime01(), &quot;https://plantuml.com/patreon&quot;);</span>
 	}
 
 	private TextBlock getMessageLiberapay() {
-<span class="nc" id="L353">		return buildMessageWithQrcode(PSystemVersion.getTime15(), &quot;https://plantuml.com/lp&quot;);</span>
+<span class="nc" id="L344">		return buildMessageWithQrcode(PSystemVersion.getTime15(), &quot;https://plantuml.com/lp&quot;);</span>
 	}
 
 	private TextBlock buildMessageWithQrcode(PortableImage banner, String url) {
-<span class="nc" id="L357">		final UImage message = new UImage(new PixelImage(banner, AffineTransformType.TYPE_BILINEAR));</span>
-<span class="nc" id="L358">		final XColor back = XColor.from(message.getImage(1).getRGB(0, 0));</span>
-<span class="nc" id="L359">		final HColor backColor = HColors.simple(back);</span>
+<span class="nc" id="L348">		final UImage message = new UImage(new PixelImage(banner, AffineTransformType.TYPE_BILINEAR));</span>
+<span class="nc" id="L349">		final XColor back = XColor.from(message.getImage(1).getRGB(0, 0));</span>
+<span class="nc" id="L350">		final HColor backColor = HColors.simple(back);</span>
 
-<span class="nc" id="L361">		final PortableImage qrcode = smaller(</span>
-<span class="nc" id="L362">				FlashCodeFactory.getFlashCodeUtils().exportFlashcode(url, XColor.BLACK, XColor.WHITE));</span>
+<span class="nc" id="L352">		final PortableImage qrcode = smaller(</span>
+<span class="nc" id="L353">				FlashCodeFactory.getFlashCodeUtils().exportFlashcode(url, XColor.BLACK, XColor.WHITE));</span>
 
 		TextBlock result;
-<span class="nc bnc" id="L365" title="All 2 branches missed.">		if (qrcode == null) {</span>
-<span class="nc" id="L366">			result = message;</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">		if (qrcode == null) {</span>
+<span class="nc" id="L357">			result = message;</span>
 		} else {
-<span class="nc" id="L368">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(2);</span>
-<span class="nc" id="L369">			result = TextBlockUtils.mergeLR(message, qr, VerticalAlignment.CENTER);</span>
+<span class="nc" id="L359">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(2);</span>
+<span class="nc" id="L360">			result = TextBlockUtils.mergeLR(message, qr, VerticalAlignment.CENTER);</span>
 		}
-<span class="nc" id="L371">		return TextBlockUtils.addBackcolor(TextBlockUtils.withMargin(result, 1, 1), backColor);</span>
+<span class="nc" id="L362">		return TextBlockUtils.addBackcolor(TextBlockUtils.withMargin(result, 1, 1), backColor);</span>
 	}
 
 	private PortableImage smaller(PortableImage im) {
-<span class="nc bnc" id="L375" title="All 2 branches missed.">		if (im == null)</span>
-<span class="nc" id="L376">			return null;</span>
+<span class="nc bnc" id="L366" title="All 2 branches missed.">		if (im == null)</span>
+<span class="nc" id="L367">			return null;</span>
 
-<span class="nc" id="L378">		final int nb = 1;</span>
-<span class="nc" id="L379">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
+<span class="nc" id="L369">		final int nb = 1;</span>
+<span class="nc" id="L370">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
 	}
 
 	public int score() {
-<span class="fc" id="L383">		final int result = trace.size() * 10 + singleError.score();</span>
-<span class="fc" id="L384">		return result;</span>
+<span class="fc" id="L374">		final int result = trace.size() * 10 + singleError.score();</span>
+<span class="fc" id="L375">		return result;</span>
 	}
 
 }

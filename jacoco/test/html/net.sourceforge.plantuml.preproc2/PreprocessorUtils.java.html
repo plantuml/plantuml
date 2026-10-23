@@ -88,39 +88,38 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="nc" id="L88">		return null;</span>
 	}
 
-	// ::comment when __TEAVM__
 	public static ReadLine getReaderNonstandardInclude(StringLocated s, String filename) {
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (filename.endsWith(&quot;.puml&quot;) == false)</span>
-<span class="nc" id="L94">			filename = filename + &quot;.puml&quot;;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (filename.endsWith(&quot;.puml&quot;) == false)</span>
+<span class="nc" id="L93">			filename = filename + &quot;.puml&quot;;</span>
 
-<span class="nc" id="L96">		final String filename2 = filename;</span>
-<span class="nc" id="L97">		Log.info(() -&gt; &quot;Loading non standard &quot; + filename2);</span>
-<span class="nc" id="L98">		final String res = &quot;/stdlib/&quot; + filename;</span>
-<span class="nc" id="L99">		InputStream is = Stdlib.class.getResourceAsStream(res);</span>
+<span class="nc" id="L95">		final String filename2 = filename;</span>
+<span class="nc" id="L96">		Log.info(() -&gt; &quot;Loading non standard &quot; + filename2);</span>
+<span class="nc" id="L97">		final String res = &quot;/stdlib/&quot; + filename;</span>
+<span class="nc" id="L98">		InputStream is = Stdlib.class.getResourceAsStream(res);</span>
 
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L102">			return null;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L101">			return null;</span>
 
-<span class="nc" id="L104">		final String description = &quot;[&quot; + filename + &quot;]&quot;;</span>
-<span class="nc" id="L105">		return ReadLineReader.create(new InputStreamReader(is), description);</span>
+<span class="nc" id="L103">		final String description = &quot;[&quot; + filename + &quot;]&quot;;</span>
+<span class="nc" id="L104">		return ReadLineReader.create(new InputStreamReader(is), description);</span>
 	}
 
 	public static ReadLine getReaderStdlibInclude(StringLocated s, String filename) throws IOException {
-<span class="pc" id="L109">		Log.info(() -&gt; &quot;Loading sdlib &quot; + filename);</span>
-<span class="fc" id="L110">		final byte[] puml = Stdlib.getPumlResource(filename);</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (puml == null)</span>
-<span class="nc" id="L112">			return null;</span>
+<span class="pc" id="L108">		Log.info(() -&gt; &quot;Loading sdlib &quot; + filename);</span>
+<span class="fc" id="L109">		final byte[] puml = Stdlib.getPumlResource(filename);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (puml == null)</span>
+<span class="nc" id="L111">			return null;</span>
 
-<span class="fc" id="L114">		final String description = &quot;&lt;&quot; + filename + &quot;&gt;&quot;;</span>
+<span class="fc" id="L113">		final String description = &quot;&lt;&quot; + filename + &quot;&gt;&quot;;</span>
 		try {
-<span class="fc" id="L116">			final ReadLine tmp = DiagramDetector.extractFromBytes(puml, description);</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			if (tmp != null)</span>
-<span class="nc" id="L118">				return tmp;</span>
+<span class="fc" id="L115">			final ReadLine tmp = DiagramDetector.extractFromBytes(puml, description);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">			if (tmp != null)</span>
+<span class="nc" id="L117">				return tmp;</span>
 
-<span class="fc" id="L120">			return ReadLineReader.create(puml, description);</span>
-<span class="nc" id="L121">		} catch (IOException e) {</span>
-<span class="nc" id="L122">			Logme.error(e);</span>
-<span class="nc" id="L123">			return new ReadLineSimple(s, e.toString());</span>
+<span class="fc" id="L119">			return ReadLineReader.create(puml, description);</span>
+<span class="nc" id="L120">		} catch (IOException e) {</span>
+<span class="nc" id="L121">			Logme.error(e);</span>
+<span class="nc" id="L122">			return new ReadLineSimple(s, e.toString());</span>
 		}
 	}
 
@@ -140,27 +139,26 @@ import net.sourceforge.plantuml.utils.Log;
 	public static ReadLine getReaderIncludeUrl(final SURL url, StringLocated s, String suf, Charset charset)
 			throws EaterException {
 		try {
-<span class="nc" id="L143">			final ReadLine tmp = DiagramDetector.extractFromUrl(url, s, suf, charset);</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (tmp != null)</span>
-<span class="nc" id="L145">				return tmp;</span>
+<span class="nc" id="L142">			final ReadLine tmp = DiagramDetector.extractFromUrl(url, s, suf, charset);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			if (tmp != null)</span>
+<span class="nc" id="L144">				return tmp;</span>
 
-<span class="nc" id="L147">			return getReaderInclude(url, s, charset);</span>
-<span class="nc" id="L148">		} catch (IOException e) {</span>
-<span class="nc" id="L149">			Logme.error(e);</span>
-<span class="nc" id="L150">			throw new EaterException(&quot;Cannot open URL &quot; + e.getMessage(), s);</span>
+<span class="nc" id="L146">			return getReaderInclude(url, s, charset);</span>
+<span class="nc" id="L147">		} catch (IOException e) {</span>
+<span class="nc" id="L148">			Logme.error(e);</span>
+<span class="nc" id="L149">			throw new EaterException(&quot;Cannot open URL &quot; + e.getMessage(), s);</span>
 		}
 
 	}
 
 	public static ReadLine getReaderInclude(SURL url, StringLocated s, Charset charset)
 			throws EaterException, UnsupportedEncodingException {
-<span class="nc" id="L157">		final InputStream is = url.openStream();</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (is == null)</span>
-<span class="nc" id="L159">			throw new EaterException(&quot;Cannot open URL&quot;, s);</span>
+<span class="nc" id="L156">		final InputStream is = url.openStream();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (is == null)</span>
+<span class="nc" id="L158">			throw new EaterException(&quot;Cannot open URL&quot;, s);</span>
 
-<span class="nc" id="L161">		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());</span>
+<span class="nc" id="L160">		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());</span>
 	}
-	// ::done
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
