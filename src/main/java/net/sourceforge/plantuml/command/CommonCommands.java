@@ -78,7 +78,8 @@ public final class CommonCommands {
 		cmds.add(CommandSpriteMd5.ME);
 
 		cmds.add(CommandSpriteSvg.ME);
-		if (!TeaVM.isTeaVM()) {
+		// The C build embeds the sprites of the standard library
+		if (!TeaVM.isTeaVM() || TeaVM.isC()) {
 			cmds.add(CommandSpriteStdlib.ME);
 			cmds.add(CommandSpriteStdlibSvg.ME);
 		}
