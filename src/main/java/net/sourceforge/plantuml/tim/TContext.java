@@ -708,7 +708,9 @@ public class TContext {
 						// The library's file is the engine's own: a relative include written
 						// in it must not reach the browser host (restored with the rest).
 						this.pathSystem = this.pathSystem.withoutHostFiles();
-						reader = ReadLineReader.create(new InputStreamReader(is), what);
+						// The C build extracts the diagram of the file, as the JVM does
+						reader = TeaVM.isC() ? PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath)
+								: ReadLineReader.create(new InputStreamReader(is), what);
 					}
 				} else {
 					InputFile tmp = this.pathSystem.getInputFile(what);

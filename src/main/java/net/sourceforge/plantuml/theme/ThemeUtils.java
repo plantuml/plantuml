@@ -88,7 +88,9 @@ public class ThemeUtils {
 			// directive.
 			if (from == null)
 				return TeaVM.isC() ? loadEmbeddedTheme(name) : loadJsTheme(name);
-			if (isLocalFolder(from) == false)
+			// The C build embeds the libraries: !theme x from <lib> works there
+			final boolean library = TeaVM.isC() && from.startsWith("<") && from.endsWith(">");
+			if (isLocalFolder(from) == false && library == false)
 				return null;
 		}
 		// ::done
