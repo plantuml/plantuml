@@ -74,7 +74,8 @@ public final class UBrexCommonCommands {
 		cmds.add(factorySpriteCommand.createMultiLine(false));
 		cmds.add(factorySpriteCommand.createSingleLine());
 		cmds.add(CommandSpriteSvg.ME);
-		if (!TeaVM.isTeaVM()) {
+		// The C build embeds the sprites of the standard library
+		if (!TeaVM.isTeaVM() || TeaVM.isC()) {
 			cmds.add(CommandSpriteStdlib.ME);
 			cmds.add(CommandSpriteStdlibSvg.ME);
 		}
