@@ -54,6 +54,9 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
 import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
+// ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.c.EmbeddedFiles;
+// ::done
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -98,6 +101,11 @@ public class SpriteImage implements Sprite {
 	}
 
 	public static Sprite fromInternal(String name) {
+		// ::comment when JAVA8
+		// The C build embeds the SVG sprites (src/main/resources/sprites)
+		if (TeaVM.isC())
+			return fromEmbedded(name);
+		// ::done
 		if (TeaVM.isTeaVM())
 			return null;
 		if (name.endsWith(".png") || name.endsWith(".svg"))
@@ -119,6 +127,19 @@ public class SpriteImage implements Sprite {
 			return null;
 		}
 	}
+
+	// ::comment when JAVA8
+	private static Sprite fromEmbedded(String name) {
+		if (name.endsWith(".png") || name.endsWith(".svg"))
+			throw new IllegalArgumentException();
+
+		final byte[] data = EmbeddedFiles.read("sprites/" + name + ".svg");
+		if (data == null)
+			return null;
+
+		return SvgSpriteParserFactory.create(new String(data, java.nio.charset.StandardCharsets.UTF_8));
+	}
+	// ::done
 
 	private static InputStream getInternalSprite(final String inner) {
 		final String path = "/sprites/" + inner;
