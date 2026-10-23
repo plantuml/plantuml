@@ -261,10 +261,27 @@ static void unpremultiply(uint32_t* pixels, int width, int height, int stride_pi
 	}
 }
 
+static int png_encode(uint32_t* pixels, int width, int height, int stride, int opaque, int premultiplied,
+		unsigned char** png, size_t* png_size);
+
 int plantuml_png_encode(uint32_t* pixels, int width, int height, int stride, int opaque, unsigned char** png,
 		size_t* png_size) {
+	return png_encode(pixels, width, height, stride, opaque, 1, png, png_size);
+}
+
+int plantuml_png_encode_straight(uint32_t* pixels, int width, int height, int stride, int opaque,
+		unsigned char** png, size_t* png_size) {
+	return png_encode(pixels, width, height, stride, opaque, 0, png, png_size);
+}
+
+static int png_encode(uint32_t* pixels, int width, int height, int stride, int opaque, int premultiplied,
+		unsigned char** png, size_t* png_size) {
 	const int stride_pixels = stride / 4;
-	unpremultiply(pixels, width, height, stride_pixels, opaque);
+	if (premultiplied)
+		unpremultiply(pixels, width, height, stride_pixels, opaque);
+	else if (opaque)
+		for (size_t i = 0; i < (size_t) height * stride_pixels; i++)
+			pixels[i] |= 0xFF000000u;
 
 	/* As PngIO: a palette only for an opaque image, QuantifyPacked28 otherwise */
 	plantuml_palette_t palette;
