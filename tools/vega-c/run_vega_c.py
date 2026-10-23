@@ -35,16 +35,20 @@ the executable wrote (svg, png...), in the same folders as the tests.
 """
 
 import argparse
+import base64
 import concurrent.futures
 import difflib
+import hashlib
 import json
 import os
 import re
 import shutil
+import struct
 import subprocess
 import sys
 import tempfile
 import time
+import zlib
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -166,6 +170,92 @@ def _tidy(element):
         _tidy(child)
 
 
+PNG_HREF = re.compile(r"data:image/png;base64,([A-Za-z0-9+/=\s]+)")
+
+
+def png_fingerprint(base64_text):
+    """Width, height and a hash of the RGBA pixels of a PNG (8 bits per channel,
+    not interlaced): two encoders write different bytes for the same image, only
+    the pixels are compared. Anything else is kept as it is."""
+    try:
+        data = base64.b64decode(base64_text)
+        if data[:8] != b"\x89PNG\r\n\x1a\n":
+            return None
+        position = 8
+        palette = None
+        transparency = None
+        idat = b""
+        header = None
+        while position + 8 <= len(data):
+            length, kind = struct.unpack(">I4s", data[position:position + 8])
+            body = data[position + 8:position + 8 + length]
+            position += 12 + length
+            if kind == b"IHDR":
+                header = struct.unpack(">IIBBBBB", body)
+            elif kind == b"PLTE":
+                palette = body
+            elif kind == b"tRNS":
+                transparency = body
+            elif kind == b"IDAT":
+                idat += body
+        width, height, depth, color_type, _, _, interlace = header
+        channels = {0: 1, 2: 3, 3: 1, 4: 2, 6: 4}[color_type]
+        if depth != 8 or interlace != 0:
+            return None
+        raw = zlib.decompress(idat)
+        stride = width * channels
+        rows = []
+        previous = bytearray(stride)
+        offset = 0
+        for _ in range(height):
+            filter_type = raw[offset]
+            line = bytearray(raw[offset + 1:offset + 1 + stride])
+            offset += 1 + stride
+            for i in range(stride):
+                left = line[i - channels] if i >= channels else 0
+                up = previous[i]
+                upper_left = previous[i - channels] if i >= channels else 0
+                if filter_type == 1:
+                    line[i] = (line[i] + left) & 255
+                elif filter_type == 2:
+                    line[i] = (line[i] + up) & 255
+                elif filter_type == 3:
+                    line[i] = (line[i] + ((left + up) >> 1)) & 255
+                elif filter_type == 4:
+                    p = left + up - upper_left
+                    pa, pb, pc = abs(p - left), abs(p - up), abs(p - upper_left)
+                    predictor = left if pa <= pb and pa <= pc else up if pb <= pc else upper_left
+                    line[i] = (line[i] + predictor) & 255
+            rows.append(line)
+            previous = line
+        rgba = bytearray()
+        for line in rows:
+            for x in range(width):
+                if color_type == 6:
+                    rgba += line[4 * x:4 * x + 4]
+                elif color_type == 2:
+                    rgba += line[3 * x:3 * x + 3] + b"\xff"
+                elif color_type == 0:
+                    rgba += bytes([line[x]] * 3) + b"\xff"
+                elif color_type == 4:
+                    rgba += bytes([line[2 * x]] * 3) + line[2 * x + 1:2 * x + 2]
+                else:
+                    index = line[x]
+                    alpha = transparency[index] if transparency and index < len(transparency) else 255
+                    rgba += palette[3 * index:3 * index + 3] + bytes([alpha])
+        return "png:%dx%d:%s" % (width, height, hashlib.sha1(bytes(rgba)).hexdigest())
+    except Exception:
+        return None
+
+
+def normalise_png_images(text):
+    """Replaces each embedded PNG by the fingerprint of its pixels."""
+    def replace(match):
+        fingerprint = png_fingerprint("".join(match.group(1).split()))
+        return fingerprint if fingerprint else match.group(0)
+    return PNG_HREF.sub(replace, text)
+
+
 def normalise_svg(data):
     """Parses and pretty-prints, so that only a real change makes a difference.
 
@@ -174,6 +264,7 @@ def normalise_svg(data):
     """
     text = data.decode("utf-8", errors="replace") if isinstance(data, bytes) else data
     text = text.replace("\r\n", "\n").replace("\r", "\n")
+    text = normalise_png_images(text)
     parser = ET.XMLParser(target=ET.TreeBuilder(insert_comments=True))
     root = ET.fromstring(text.encode("utf-8"), parser=parser)
     _tidy(root)
