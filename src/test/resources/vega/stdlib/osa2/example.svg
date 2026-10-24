@@ -258,7 +258,7 @@
       <line style="stroke:#000;stroke-width:1;" x1="490.091" x2="490.091" y1="1116" y2="1226.708"/>
     </g>
     <g class="footer" data-source-line="59">
-      <text fill="#888" font-size="10" textLength="177.375" x="209.063" y="1254.485">rendered with PlantUML version $version$</text>
+      <text fill="#888" font-size="10" textLength="234.062" x="180.719" y="1254.485">fakefilename rendered with PlantUML version $version$</text>
       <text fill="#888" font-size="10" textLength="147.938" x="223.781" y="1264.485">The Hitchhiker’s Guide to PlantUML</text>
     </g>
   </g>
