@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class FontStack {
 
 	public static final String MONOSPACE = "Monospaced";
@@ -54,15 +56,24 @@ public class FontStack {
 
 	private static final int MAX_ENTRIES = 200;
 
-	private static final Map<String, FontStack> cache = Collections
-			.synchronizedMap(new LinkedHashMap<String, FontStack>(16, 0.75f, true) {
-				@Override
-				protected boolean removeEldestEntry(Map.Entry<String, FontStack> eldest) {
-					return size() > MAX_ENTRIES;
-				}
-			});
+	private static final Map<String, FontStack> cache = createCache();
+
+	private static Map<String, FontStack> createCache() {
+		final Map<String, FontStack> result = new LinkedHashMap<String, FontStack>(16, 0.75f, true) {
+			@Override
+			protected boolean removeEldestEntry(Map.Entry<String, FontStack> eldest) {
+				return size() > MAX_ENTRIES;
+			}
+		};
+		// No monitor in the C build: it is single-threaded, and its monitors do not
+		// survive a garbage collection happening while they are held
+		return TeaVM.isC() ? result : Collections.synchronizedMap(result);
+	}
 
 	public static FontStack build(String fullDefinition) {
+		if (TeaVM.isC())
+			return cache.computeIfAbsent(fullDefinition, FontStack::new);
+
 		synchronized (cache) {
 			return cache.computeIfAbsent(fullDefinition, FontStack::new);
 		}
@@ -72,7 +83,17 @@ public class FontStack {
 		this.fullDefinition = fullDefinition;
 	}
 
-	private synchronized List<Font> getFonts() {
+	private List<Font> getFonts() {
+		if (TeaVM.isC())
+			return getFontsUnlocked();
+		return getFontsLocked();
+	}
+
+	private synchronized List<Font> getFontsLocked() {
+		return getFontsUnlocked();
+	}
+
+	private List<Font> getFontsUnlocked() {
 		if (fonts.size() == 0)
 			for (String name : fullDefinition.split(",")) {
 				name = trimWhitespaceOrDoubleQuote(name);
