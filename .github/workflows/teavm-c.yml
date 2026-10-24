@@ -5,11 +5,20 @@ name: TeaVM C (experimental)
 #
 # The generated C is platform independent: it is produced once on Linux, then
 # compiled and smoke-tested on one Windows runner per architecture.
+#
+# Also called by ci.yml (snapshot release) with x64_only: the executable
+# "plantuml-c-windows-x64" is then attached to the snapshot release.
 
 on:
   push:
-    branches: [ master-c ]
+    branches: [ master ]
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      x64_only:
+        description: Build only the windows-x64 executable (no windows-arm64)
+        type: boolean
+        default: false
 
 defaults:
   run:
@@ -32,6 +41,10 @@ jobs:
           java-version: 21
           distribution: temurin
           cache: gradle
+
+      # Version, git commit and timestamp reported by the executable (-version)
+      - name: Patch build metadata (version / git commit / timestamp)
+        run: ./gradlew --no-daemon patchCompilationInfo
 
       # ":" prefix: only the root project (plantuml-mcp-js also has a TeaVM
       # plugin, and therefore a generateC task, without any C configuration)
@@ -76,13 +89,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - arch: x64
-            runner: windows-latest
-            cmake_platform: x64
-          - arch: arm64
-            runner: windows-11-arm
-            cmake_platform: ARM64
+        include: ${{ fromJSON(inputs.x64_only && '[{"arch":"x64","runner":"windows-latest","cmake_platform":"x64"}]' || '[{"arch":"x64","runner":"windows-latest","cmake_platform":"x64"},{"arch":"arm64","runner":"windows-11-arm","cmake_platform":"ARM64"}]') }}
 
     steps:
       - name: Checkout the repository
