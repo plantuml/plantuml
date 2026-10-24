@@ -28,6 +28,12 @@ cp "build/native-image/native-plantuml-windows-amd64-SNAPSHOT.zip" "github_relea
 cp "build/native-image/native-plantuml-linux-amd64-SNAPSHOT.zip" "github_release/native-plantuml-linux-amd64-SNAPSHOT.zip"
 cp "build/native-image/native-plantuml-linux-arm64-SNAPSHOT.zip" "github_release/native-plantuml-linux-arm64-SNAPSHOT.zip"
 cp "build/native-image/native-plantuml-macos-arm64-SNAPSHOT.zip" "github_release/native-plantuml-macos-arm64-SNAPSHOT.zip"
+# Experimental C executable (Java -> C with TeaVM): optional, its build must not block the snapshot
+if [[ -f "build/c-executable/plantuml.exe" ]]; then
+  zip -j "github_release/c-plantuml-windows-amd64-SNAPSHOT.zip" "build/c-executable/plantuml.exe"
+else
+  echo "::warning title=release snapshot::The C executable (windows-amd64) is missing: it is not attached to the snapshot"
+fi
 cp "license-variants/plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}.jar" "github_release/plantuml-asl-SNAPSHOT.jar"
 cp "license-variants/plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-asl-SNAPSHOT-javadoc.jar"
 cp "license-variants/plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-asl-SNAPSHOT-sources.jar"
@@ -87,10 +93,12 @@ echo -n "${DATE_TIME_UTC}" > "github_release/plantuml-SNAPSHOT.timestamp"
 
 cat <<-EOF >notes.txt
   ## Version ~v${RELEASE_VERSION%-SNAPSHOT} of the ${DATE_TIME_UTC}
-  This is a [JAR](https://en.wikipedia.org/wiki/JAR_(file_format))/[JS](https://en.wikipedia.org/wiki/JavaScript) pre-release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
+  This is a [JAR](https://en.wikipedia.org/wiki/JAR_(file_format))/[JS](https://en.wikipedia.org/wiki/JavaScript)/[EXE](https://en.wikipedia.org/wiki/Executable) pre-release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
   ⚠️  **It is not ready for general use** ⚠️
   ⏱  _Snapshot taken the ${DATE_TIME_UTC}_
 EOF
+
+cat .github/scripts/notes-for-snapshot.md >> notes.txt
 
 gh release create \
   --prerelease \
@@ -99,4 +107,4 @@ gh release create \
   --notes-file notes.txt \
   "${TAG}" github_release/*
 
-echo "::notice title=release snapshot::snapshot - JAR/JS (~v${RELEASE_VERSION%-SNAPSHOT}) released at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG} and taken the ${DATE_TIME_UTC}"
+echo "::notice title=release snapshot::snapshot - JAR/JS/EXE (~v${RELEASE_VERSION%-SNAPSHOT}) released at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG} and taken the ${DATE_TIME_UTC}"

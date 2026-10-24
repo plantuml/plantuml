@@ -5,11 +5,14 @@ name: TeaVM C (experimental)
 #
 # The generated C is platform independent: it is produced once on Linux, then
 # compiled and smoke-tested on one Windows runner per architecture.
+#
+# Called by ci.yml on every push to master (so it runs once, there is no push
+# trigger here). The executable "plantuml-c-windows-x64" is then attached to
+# the snapshot release. Can also be started by hand.
 
 on:
-  push:
-    branches: [ master-c ]
   workflow_dispatch:
+  workflow_call:
 
 defaults:
   run:
@@ -32,6 +35,10 @@ jobs:
           java-version: 21
           distribution: temurin
           cache: gradle
+
+      # Version, git commit and timestamp reported by the executable (-version)
+      - name: Patch build metadata (version / git commit / timestamp)
+        run: ./gradlew --no-daemon patchCompilationInfo
 
       # ":" prefix: only the root project (plantuml-mcp-js also has a TeaVM
       # plugin, and therefore a generateC task, without any C configuration)
