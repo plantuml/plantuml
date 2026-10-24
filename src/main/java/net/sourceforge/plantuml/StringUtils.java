@@ -545,7 +545,7 @@ public class StringUtils {
 			}
 		}
 
-		final String s = String.format(Locale.US, "%." + decimal + "f", x);
+		final String s = String.format(Locale.ROOT, "%." + decimal + "f", x);
 		return trimZeros(s);
 	}
 

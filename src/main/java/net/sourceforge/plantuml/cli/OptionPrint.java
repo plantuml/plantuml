@@ -174,7 +174,7 @@ public class OptionPrint {
 	}
 
 	private static String format(final long value) {
-		return String.format(Locale.US, "%,d", value);
+		return String.format(Locale.ROOT, "%,d", value);
 	}
 
 	public static void printAbout() {

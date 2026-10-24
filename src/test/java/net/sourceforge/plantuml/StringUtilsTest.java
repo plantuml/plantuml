@@ -111,7 +111,7 @@ class StringUtilsTest {
 			for (int j = -2000; j <= 2000; j++) {
 				final double x = j * step;
 				final String reference = x == 0.0 ? "0"
-						: StringUtils.trimZeros(String.format(Locale.US, "%." + decimal + "f", x));
+						: StringUtils.trimZeros(String.format(Locale.ROOT, "%." + decimal + "f", x));
 				assertEquals(reference, StringUtils.formatDecimal(x, decimal), "x=" + x + " decimal=" + decimal);
 			}
 		}
@@ -216,7 +216,7 @@ class StringUtilsTest {
 	private static String reference(double x, int decimal) {
 		if (x == 0.0)
 			return "0";
-		return StringUtils.trimZeros(String.format(Locale.US, "%." + decimal + "f", x));
+		return StringUtils.trimZeros(String.format(Locale.ROOT, "%." + decimal + "f", x));
 	}
 
 	@ParameterizedTest

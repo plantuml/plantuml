@@ -62,7 +62,7 @@ public class NiceNumber {
 
 	public static String format(final long v) {
 		final DecimalFormat df = new DecimalFormat();
-		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
+		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ROOT));
 		df.setGroupingSize(3);
 		df.setMaximumFractionDigits(0);
 		final String t = df.format(v).replace(',', ' ');

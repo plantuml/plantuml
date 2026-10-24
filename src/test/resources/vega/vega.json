@@ -162,6 +162,34 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "asciiverse/note_001.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/note_002.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/note_003.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/note_004.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
       "file": "asciiverse/partition_001.puml",
       "folder": "asciiverse",
       "status": "pass",
@@ -624,6 +652,223 @@
       "status": "pass",
       "description": "(4 participants)",
       "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2632/connect_and_gap_side_by_side.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/connect_issue_example.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/connect_missing_at_both_ends.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/connect_two_missing_values.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/connect_with_color_and_labels.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/grouped_bars.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/horizontal_bars_with_labels.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/issue_example.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/line_gap.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_bar.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_bar_and_line.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_horizontal_bar.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_line_h_axis_range.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_line_pairs_negative_x.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_line_range.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_line_range_0_1.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_pairs_then_h_axis_labels.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2632/minimal_pairs_then_h_axis_range.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2632/minimal_pairs_then_list.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2632/minimal_range_after_data.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_range_and_h_axis_labels.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_range_different_lengths.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_range_missing_values.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_range_single_value.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_scatter.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_scatter_and_line_pairs.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_scatter_explicit_range.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_scatter_range.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_scatter_same_negative_x.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/minimal_scatter_single_point.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2632/stacked_bars.puml",
+      "folder": "nonreg/group2632",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
     },
     {
       "file": "nonreg/group2679/border_thickness_style.puml",
@@ -1529,6 +1774,237 @@
       "diagram_class": "StateDiagram"
     },
     {
+      "file": "nonreg/group2935/create_destroy.puml",
+      "folder": "nonreg/group2935",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2935/exo_messages.puml",
+      "folder": "nonreg/group2935",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2935/issue_example.puml",
+      "folder": "nonreg/group2935",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2935/note_and_group.puml",
+      "folder": "nonreg/group2935",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2935/self_message.puml",
+      "folder": "nonreg/group2935",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2936/dark_theme_stereotype.puml",
+      "folder": "nonreg/group2936",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2936/generic_dark_theme.puml",
+      "folder": "nonreg/group2936",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2936/light_theme_nested_package.puml",
+      "folder": "nonreg/group2936",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2936/skinparam_stereotype_font.puml",
+      "folder": "nonreg/group2936",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2936/skinparam_stereotype_per_stereotype.puml",
+      "folder": "nonreg/group2936",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2936/style_class_stereotype_size.puml",
+      "folder": "nonreg/group2936",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2936/style_stereotype_color.puml",
+      "folder": "nonreg/group2936",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2937/self_note_left_then_right.puml",
+      "folder": "nonreg/group2937",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2937/self_note_left_twice.puml",
+      "folder": "nonreg/group2937",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2937/self_note_right_then_left.puml",
+      "folder": "nonreg/group2937",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2937/self_note_right_twice.puml",
+      "folder": "nonreg/group2937",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2937/two_participants_note_right_then_left.puml",
+      "folder": "nonreg/group2937",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group2938/dot_separator.puml",
+      "folder": "nonreg/group2938",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2938/double_backslash_separator.puml",
+      "folder": "nonreg/group2938",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2938/intermediate_packages.puml",
+      "folder": "nonreg/group2938",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2938/issue_example.puml",
+      "folder": "nonreg/group2938",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2938/keyword_namespaceseparator.puml",
+      "folder": "nonreg/group2938",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2938/namespace_block.puml",
+      "folder": "nonreg/group2938",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2938/nested_links.puml",
+      "folder": "nonreg/group2938",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2938/object_diagram.puml",
+      "folder": "nonreg/group2938",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2938/stereotype_and_note.puml",
+      "folder": "nonreg/group2938",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2944/color_v2_and_labels.puml",
+      "folder": "nonreg/group2944",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2944/coordinate_pairs.puml",
+      "folder": "nonreg/group2944",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2944/coordinate_pairs_repeated_x.puml",
+      "folder": "nonreg/group2944",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2944/coordinate_pairs_x_not_increasing.puml",
+      "folder": "nonreg/group2944",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2944/issue_example.puml",
+      "folder": "nonreg/group2944",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2944/missing_value_bridged.puml",
+      "folder": "nonreg/group2944",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2944/two_points_across_a_gap.puml",
+      "folder": "nonreg/group2944",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
       "file": "nonreg/json/style-highlight-with-style-tags.puml",
       "folder": "nonreg/json",
       "status": "pass",
@@ -2027,6 +2503,7 @@
       "message": "/ by zero",
       "stacktrace": [
         "java.lang.ArithmeticException: / by zero",
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram.remainder(PacketDiagram.java)",
         "net.sourceforge.plantuml.packetdiag.PacketDiagram.lambda$(PacketDiagram.java)",
         "java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java)",
         "java.base/java.util.stream.SliceOps$2$1.accept(SliceOps.java)",
@@ -2134,6 +2611,7 @@
       "message": "/ by zero",
       "stacktrace": [
         "java.lang.ArithmeticException: / by zero",
+        "net.sourceforge.plantuml.packetdiag.PacketDiagram.remainder(PacketDiagram.java)",
         "net.sourceforge.plantuml.packetdiag.PacketDiagram.lambda$(PacketDiagram.java)",
         "java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java)",
         "java.base/java.util.stream.SliceOps$2$1.accept(SliceOps.java)",
@@ -3089,8 +3567,8 @@
     }
   ],
   "summary": {
-    "total": 404,
-    "passed": 400,
+    "total": 472,
+    "passed": 468,
     "failed": 0,
     "skipped": 4
   }

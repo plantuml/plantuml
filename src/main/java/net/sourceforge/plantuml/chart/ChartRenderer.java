@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.chart;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -685,7 +686,7 @@ public class ChartRenderer {
 			ug.apply(UTranslate.dx(x)).draw(ULine.vline(TICK_SIZE));
 
 			// Draw label below the tick
-			final String label = String.format("%.0f", value);
+			final String label = String.format(Locale.ROOT, "%.0f", value);
 			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
 					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
 			final double textWidth = textBlock.calculateDimension(ug.getStringBounder()).getWidth();
@@ -933,10 +934,10 @@ public class ChartRenderer {
 
 	private String formatValue(double value) {
 		if (Math.abs(value) < 0.01 && value != 0)
-			return String.format("%.2e", value);
+			return String.format(Locale.ROOT, "%.2e", value);
 		if (value == (long) value)
-			return String.format("%d", (long) value);
-		return String.format("%.2f", value);
+			return String.format(Locale.ROOT, "%d", (long) value);
+		return String.format(Locale.ROOT, "%.2f", value);
 	}
 
 	private HColor getDefaultColor(int index) {
@@ -1029,10 +1030,10 @@ public class ChartRenderer {
 	private String formatAxisValue(double value) {
 		// Format axis tick labels
 		if (Math.abs(value) < 0.01 && value != 0)
-			return String.format("%.2e", value);
+			return String.format(Locale.ROOT, "%.2e", value);
 		if (value == (long) value)
-			return String.format("%d", (long) value);
-		return String.format("%.1f", value);
+			return String.format(Locale.ROOT, "%d", (long) value);
+		return String.format(Locale.ROOT, "%.1f", value);
 	}
 
 	private StyleQuery getScatterStyleQuery() {
