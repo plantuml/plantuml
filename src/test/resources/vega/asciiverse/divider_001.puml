@@ -1,0 +1,11 @@
+---
+output: svg, debug, atxt, utxt
+expected-description: (2 participants)
+---
+@startuml
+' https://github.com/plantuml/plantuml/issues/2961
+a -> b : SYN
+b --> a : SYN+ACK
+a -> b : ACK
+== Connection established ==
+@enduml
