@@ -341,8 +341,6 @@
       "folder": "migration",
       "status": "pass",
       "description": "(30 entities)",
-      "tag": "specification",
-      "allow-failure": "true",
       "diagram_class": "ChenEerDiagram"
     },
     {
@@ -385,8 +383,6 @@
       "folder": "migration",
       "status": "pass",
       "description": "(3 entities)",
-      "tag": "specification",
-      "allow-failure": "true",
       "diagram_class": "ClassDiagram"
     },
     {
