@@ -108,6 +108,7 @@ import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.SvekUtils;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Position;
 import smetana.core.CString;
 import smetana.core.Globals;
@@ -572,13 +573,22 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			}
 		}
 
+		// No monitor in the C build: it is single-threaded, and its monitors do not
+		// survive a garbage collection happening while they are held
+		if (TeaVM.isC())
+			return layoutOpen(stringBounder);
+
 		synchronized (lock) {
-			final Globals zz = Globals.open();
-			try {
-				return getTextBlockInternal(stringBounder, zz);
-			} finally {
-				Globals.close();
-			}
+			return layoutOpen(stringBounder);
+		}
+	}
+
+	private TextBlock layoutOpen(StringBounder stringBounder) {
+		final Globals zz = Globals.open();
+		try {
+			return getTextBlockInternal(stringBounder, zz);
+		} finally {
+			Globals.close();
 		}
 	}
 

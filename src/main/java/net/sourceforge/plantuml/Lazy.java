@@ -38,6 +38,8 @@ package net.sourceforge.plantuml;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class Lazy<T> {
 
 	private final Supplier<T> supplier;
@@ -52,7 +54,19 @@ public class Lazy<T> {
 		this.supplier = () -> function.apply(null);
 	}
 
-	public synchronized T get() {
+	public T get() {
+		// The C build is single-threaded, and its monitors do not survive a garbage
+		// collection happening while they are held (see Stdlib.readSpriteInC)
+		if (TeaVM.isC())
+			return getUnlocked();
+		return getLocked();
+	}
+
+	private synchronized T getLocked() {
+		return getUnlocked();
+	}
+
+	private T getUnlocked() {
 		if (initialized == false) {
 			value = supplier.get();
 			initialized = true;
