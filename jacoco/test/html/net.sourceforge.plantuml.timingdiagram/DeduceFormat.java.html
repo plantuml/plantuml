@@ -83,7 +83,7 @@ final class DeduceFormat {
 	}
 
 	public DecimalFormat getDecimalFormat() {
-<span class="fc" id="L86">		final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);</span>
+<span class="fc" id="L86">		final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);</span>
 
 <span class="fc bfc" id="L88" title="All 2 branches covered.">		if (decimalSep != '\0')</span>
 <span class="fc" id="L89">			symbols.setDecimalSeparator(decimalSep);</span>

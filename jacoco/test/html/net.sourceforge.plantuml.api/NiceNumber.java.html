@@ -62,7 +62,7 @@ import java.util.Locale;
 
 	public static String format(final long v) {
 <span class="nc" id="L64">		final DecimalFormat df = new DecimalFormat();</span>
-<span class="nc" id="L65">		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));</span>
+<span class="nc" id="L65">		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.ROOT));</span>
 <span class="nc" id="L66">		df.setGroupingSize(3);</span>
 <span class="nc" id="L67">		df.setMaximumFractionDigits(0);</span>
 <span class="nc" id="L68">		final String t = df.format(v).replace(',', ' ');</span>

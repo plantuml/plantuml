@@ -293,7 +293,7 @@ public class SURL {
 		// Remove user information, because we don't like to store user/password or
 		// userTokens in allow-list
 <span class="fc" id="L295">		path = removeUserInfoFromUrlPath(path);</span>
-<span class="fc" id="L296">		path = path.trim().toLowerCase(Locale.US);</span>
+<span class="fc" id="L296">		path = path.trim().toLowerCase(Locale.ROOT);</span>
 		// We simplify/normalize the url, removing default ports
 <span class="fc" id="L298">		path = path.replace(&quot;:80/&quot;, &quot;&quot;);</span>
 <span class="fc" id="L299">		path = path.replace(&quot;:443/&quot;, &quot;&quot;);</span>

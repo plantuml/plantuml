@@ -48,7 +48,7 @@ public class HelpGroup implements Iterable&lt;CliFlag&gt; {
 
 		private String clean(String s) {
 			// Just because we what &quot;-v, --verbose&quot; and &quot;--version&quot; to be sorted %-)
-<span class="fc" id="L51">			final String onlyLetters = s.replaceAll(&quot;\\W&quot;, &quot;&quot;).toLowerCase(Locale.US);</span>
+<span class="fc" id="L51">			final String onlyLetters = s.replaceAll(&quot;\\W&quot;, &quot;&quot;).toLowerCase(Locale.ROOT);</span>
 <span class="fc bfc" id="L52" title="All 2 branches covered.">			if (s.trim().startsWith(&quot;--&quot;))</span>
 <span class="fc" id="L53">				return onlyLetters.charAt(0) + onlyLetters;</span>
 <span class="fc" id="L54">			return onlyLetters;</span>

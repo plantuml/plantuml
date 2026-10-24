@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.chart;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -69,361 +70,361 @@ public class BarRenderer {
 
 	public BarRenderer(ISkinParam skinParam, double plotWidth, double plotHeight, int categoryCount,
 			ChartAxis axis) {
-<span class="nc" id="L72">		this(skinParam, plotWidth, plotHeight, categoryCount, axis, false);</span>
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L73">		this(skinParam, plotWidth, plotHeight, categoryCount, axis, false);</span>
+<span class="nc" id="L74">	}</span>
 
 	public BarRenderer(ISkinParam skinParam, double plotWidth, double plotHeight, int categoryCount,
-<span class="fc" id="L76">			ChartAxis axis, boolean horizontal) {</span>
-<span class="fc" id="L77">		this.skinParam = skinParam;</span>
-<span class="fc" id="L78">		this.plotWidth = plotWidth;</span>
-<span class="fc" id="L79">		this.plotHeight = plotHeight;</span>
-<span class="fc" id="L80">		this.categoryCount = categoryCount;</span>
-<span class="fc" id="L81">		this.axis = axis;</span>
-<span class="fc" id="L82">		this.horizontal = horizontal;</span>
-<span class="fc" id="L83">	}</span>
+<span class="fc" id="L77">			ChartAxis axis, boolean horizontal) {</span>
+<span class="fc" id="L78">		this.skinParam = skinParam;</span>
+<span class="fc" id="L79">		this.plotWidth = plotWidth;</span>
+<span class="fc" id="L80">		this.plotHeight = plotHeight;</span>
+<span class="fc" id="L81">		this.categoryCount = categoryCount;</span>
+<span class="fc" id="L82">		this.axis = axis;</span>
+<span class="fc" id="L83">		this.horizontal = horizontal;</span>
+<span class="fc" id="L84">	}</span>
 
 	private StyleQuery getBarStyleQuery() {
-<span class="fc" id="L86">		return StyleQueries.CHARTDIAG_BAR;</span>
+<span class="fc" id="L87">		return StyleQueries.CHARTDIAG_BAR;</span>
 	}
 
 	private Style getBarStyle(ChartSeries series) {
-<span class="fc" id="L90">		StyleQuery query = getBarStyleQuery();</span>
-<span class="pc bpc" id="L91" title="2 of 4 branches missed.">		if (series != null &amp;&amp; series.getStereotype() != null)</span>
-<span class="nc" id="L92">			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withStereotype(series.getStereotype()));</span>
+<span class="fc" id="L91">		StyleQuery query = getBarStyleQuery();</span>
+<span class="pc bpc" id="L92" title="2 of 4 branches missed.">		if (series != null &amp;&amp; series.getStereotype() != null)</span>
+<span class="nc" id="L93">			return skinParam.getCurrentStyleBuilder().getMergedStyle(query.withStereotype(series.getStereotype()));</span>
 
-<span class="fc" id="L94">		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);</span>
+<span class="fc" id="L95">		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);</span>
 	}
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color) {
-<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (horizontal) {</span>
-<span class="fc" id="L99">			drawHorizontal(ug, series, color);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (horizontal) {</span>
+<span class="fc" id="L100">			drawHorizontal(ug, series, color);</span>
 		} else {
-<span class="fc" id="L101">			drawVertical(ug, series, color);</span>
+<span class="fc" id="L102">			drawVertical(ug, series, color);</span>
 		}
-<span class="fc" id="L103">	}</span>
+<span class="fc" id="L104">	}</span>
 
 	private void drawVertical(UGraphic ug, ChartSeries series, HColor color) {
 		// This method is for single-series rendering (backward compatibility)
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (categoryCount == 0)</span>
-<span class="nc" id="L108">			return;</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (categoryCount == 0)</span>
+<span class="nc" id="L109">			return;</span>
 
-<span class="fc" id="L110">		final List&lt;Double&gt; values = series.getValues();</span>
-<span class="fc" id="L111">		final double categoryWidth = plotWidth / categoryCount;</span>
-<span class="fc" id="L112">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L111">		final List&lt;Double&gt; values = series.getValues();</span>
+<span class="fc" id="L112">		final double categoryWidth = plotWidth / categoryCount;</span>
+<span class="fc" id="L113">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
 		// Get bar style (with stereotype support)
-<span class="fc" id="L115">		final Style barStyle = getBarStyle(series);</span>
+<span class="fc" id="L116">		final Style barStyle = getBarStyle(series);</span>
 
 		// Extract bar width ratio from style (default 0.6 = 60%)
-<span class="fc" id="L118">		double barWidthRatio = 0.6;</span>
+<span class="fc" id="L119">		double barWidthRatio = 0.6;</span>
 		try {
-<span class="fc" id="L120">			final Double styleBarWidth = barStyle.value(PName.BarWidth).asDouble();</span>
-<span class="pc bpc" id="L121" title="4 of 6 branches missed.">			if (styleBarWidth != null &amp;&amp; styleBarWidth &gt; 0 &amp;&amp; styleBarWidth &lt;= 1.0) {</span>
-<span class="nc" id="L122">				barWidthRatio = styleBarWidth;</span>
+<span class="fc" id="L121">			final Double styleBarWidth = barStyle.value(PName.BarWidth).asDouble();</span>
+<span class="pc bpc" id="L122" title="4 of 6 branches missed.">			if (styleBarWidth != null &amp;&amp; styleBarWidth &gt; 0 &amp;&amp; styleBarWidth &lt;= 1.0) {</span>
+<span class="nc" id="L123">				barWidthRatio = styleBarWidth;</span>
 			}
-<span class="nc" id="L124">		} catch (Exception e) {</span>
+<span class="nc" id="L125">		} catch (Exception e) {</span>
 			// Use default
-<span class="fc" id="L126">		}</span>
-<span class="fc" id="L127">		final double barWidth = categoryWidth * barWidthRatio;</span>
-<span class="fc" id="L128">		final double barOffset = (categoryWidth - barWidth) / 2;</span>
+<span class="fc" id="L127">		}</span>
+<span class="fc" id="L128">		final double barWidth = categoryWidth * barWidthRatio;</span>
+<span class="fc" id="L129">		final double barOffset = (categoryWidth - barWidth) / 2;</span>
 
 		// Extract line color and thickness for bar borders
-<span class="fc" id="L131">		HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (lineColor == null) {</span>
-<span class="nc" id="L133">			lineColor = color; // Use fill color if no line color specified</span>
+<span class="fc" id="L132">		HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (lineColor == null) {</span>
+<span class="nc" id="L134">			lineColor = color; // Use fill color if no line color specified</span>
 		}
-<span class="fc" id="L135">		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();</span>
-<span class="fc" id="L136">		final UStroke stroke = UStroke.withThickness(lineThickness);</span>
+<span class="fc" id="L136">		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();</span>
+<span class="fc" id="L137">		final UStroke stroke = UStroke.withThickness(lineThickness);</span>
 
-<span class="fc bfc" id="L138" title="All 2 branches covered.">		for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++) {</span>
-<span class="fc bfc" id="L139" title="All 2 branches covered.">			if (values.get(i) == null)</span>
-<span class="fc" id="L140">				continue;</span>
-<span class="fc" id="L141">			final double value = values.get(i);</span>
-<span class="fc" id="L142">			final double x = i * categoryWidth + barOffset;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++) {</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">			if (values.get(i) == null)</span>
+<span class="fc" id="L141">				continue;</span>
+<span class="fc" id="L142">			final double value = values.get(i);</span>
+<span class="fc" id="L143">			final double x = i * categoryWidth + barOffset;</span>
 
 			// If the range between axis.getMin() and axis.getMax() includes 0, zeroY represents the Y origin location
 			// If the range does not include zero, then zeroY will be bounded to 0 or plotHeight:
 			// 		If the range is negative, zeroY will be 0 (bars start at top and extend downwards)
 			//    If the range is positive, zeroY will be plotHeight (bars start at bottom and extend upwards)
-<span class="fc" id="L148">			final double zeroY = Math.max(0,Math.min(plotHeight,plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight));</span>
-<span class="fc" id="L149">			final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="fc" id="L149">			final double zeroY = Math.max(0,Math.min(plotHeight,plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight));</span>
+<span class="fc" id="L150">			final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
 			final double y;
 			final double barHeight;
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">			if (value &lt; 0) {</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">			if (value &lt; 0) {</span>
 				// Negative: bar top at zero, extends downward
-<span class="nc" id="L155">				y = zeroY;</span>
-<span class="nc" id="L156">				barHeight = valueY - zeroY;</span>
+<span class="nc" id="L156">				y = zeroY;</span>
+<span class="nc" id="L157">				barHeight = valueY - zeroY;</span>
 			} else {
 				// Positive: bar top at value, extends downward to zero
-<span class="fc" id="L159">				y = valueY;</span>
-<span class="fc" id="L160">				barHeight = zeroY - valueY;</span>
+<span class="fc" id="L160">				y = valueY;</span>
+<span class="fc" id="L161">				barHeight = zeroY - valueY;</span>
 			}
 
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">			if (barHeight &gt; 0) {</span>
-<span class="fc" id="L164">				final URectangle rect = URectangle.build(barWidth, barHeight);</span>
-<span class="fc" id="L165">				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y)))</span>
-<span class="fc" id="L166">						.draw(rect);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">			if (barHeight &gt; 0) {</span>
+<span class="fc" id="L165">				final URectangle rect = URectangle.build(barWidth, barHeight);</span>
+<span class="fc" id="L166">				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y)))</span>
+<span class="fc" id="L167">						.draw(rect);</span>
 			}
 
 			// Draw label if enabled
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">			if (series.isShowLabels()) {</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">			if (series.isShowLabels()) {</span>
 				// Label at the end of the bar (top for positive, bottom for negative)
-<span class="nc bnc" id="L172" title="All 2 branches missed.">				final double labelY = value &lt; 0 ? y + barHeight + 5 : y - 5;</span>
-<span class="nc" id="L173">				drawLabel(ug, value, x + barWidth / 2, labelY, stringBounder);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">				final double labelY = value &lt; 0 ? y + barHeight + 5 : y - 5;</span>
+<span class="nc" id="L174">				drawLabel(ug, value, x + barWidth / 2, labelY, stringBounder);</span>
 			}
 		}
-<span class="fc" id="L176">	}</span>
+<span class="fc" id="L177">	}</span>
 
 	private void drawHorizontal(UGraphic ug, ChartSeries series, HColor color) {
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (categoryCount == 0)</span>
-<span class="nc" id="L180">			return;</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		if (categoryCount == 0)</span>
+<span class="nc" id="L181">			return;</span>
 
-<span class="fc" id="L182">		final List&lt;Double&gt; values = series.getValues();</span>
-<span class="fc" id="L183">		final double categoryHeight = plotHeight / categoryCount;</span>
+<span class="fc" id="L183">		final List&lt;Double&gt; values = series.getValues();</span>
+<span class="fc" id="L184">		final double categoryHeight = plotHeight / categoryCount;</span>
 
 		// Get bar style (with stereotype support)
-<span class="fc" id="L186">		final Style barStyle = getBarStyle(series);</span>
+<span class="fc" id="L187">		final Style barStyle = getBarStyle(series);</span>
 
 		// Extract bar width ratio from style (default 0.6 = 60%)
-<span class="fc" id="L189">		double barWidthRatio = 0.6;</span>
+<span class="fc" id="L190">		double barWidthRatio = 0.6;</span>
 		try {
-<span class="fc" id="L191">			final Double styleBarWidth = barStyle.value(PName.BarWidth).asDouble();</span>
-<span class="pc bpc" id="L192" title="4 of 6 branches missed.">			if (styleBarWidth != null &amp;&amp; styleBarWidth &gt; 0 &amp;&amp; styleBarWidth &lt;= 1.0) {</span>
-<span class="nc" id="L193">				barWidthRatio = styleBarWidth;</span>
+<span class="fc" id="L192">			final Double styleBarWidth = barStyle.value(PName.BarWidth).asDouble();</span>
+<span class="pc bpc" id="L193" title="4 of 6 branches missed.">			if (styleBarWidth != null &amp;&amp; styleBarWidth &gt; 0 &amp;&amp; styleBarWidth &lt;= 1.0) {</span>
+<span class="nc" id="L194">				barWidthRatio = styleBarWidth;</span>
 			}
-<span class="nc" id="L195">		} catch (Exception e) {</span>
+<span class="nc" id="L196">		} catch (Exception e) {</span>
 			// Use default
-<span class="fc" id="L197">		}</span>
-<span class="fc" id="L198">		final double barHeight = categoryHeight * barWidthRatio;</span>
-<span class="fc" id="L199">		final double barOffset = (categoryHeight - barHeight) / 2;</span>
+<span class="fc" id="L198">		}</span>
+<span class="fc" id="L199">		final double barHeight = categoryHeight * barWidthRatio;</span>
+<span class="fc" id="L200">		final double barOffset = (categoryHeight - barHeight) / 2;</span>
 
 		// Extract line color and thickness for bar borders
-<span class="fc" id="L202">		HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (lineColor == null) {</span>
-<span class="nc" id="L204">			lineColor = color; // Use fill color if no line color specified</span>
+<span class="fc" id="L203">		HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">		if (lineColor == null) {</span>
+<span class="nc" id="L205">			lineColor = color; // Use fill color if no line color specified</span>
 		}
-<span class="fc" id="L206">		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();</span>
-<span class="fc" id="L207">		final UStroke stroke = UStroke.withThickness(lineThickness);</span>
+<span class="fc" id="L207">		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();</span>
+<span class="fc" id="L208">		final UStroke stroke = UStroke.withThickness(lineThickness);</span>
 
-<span class="fc bfc" id="L209" title="All 2 branches covered.">		for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++) {</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">			if (values.get(i) == null)</span>
-<span class="fc" id="L211">				continue;</span>
-<span class="fc" id="L212">			final double value = values.get(i);</span>
-<span class="fc" id="L213">			final double y = i * categoryHeight + barOffset;</span>
-<span class="fc" id="L214">			final double barWidth = Math.abs((value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotWidth);</span>
-<span class="fc" id="L215">			final double x = 0; // Start from left</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		for (int i = 0; i &lt; Math.min(values.size(), categoryCount); i++) {</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">			if (values.get(i) == null)</span>
+<span class="fc" id="L212">				continue;</span>
+<span class="fc" id="L213">			final double value = values.get(i);</span>
+<span class="fc" id="L214">			final double y = i * categoryHeight + barOffset;</span>
+<span class="fc" id="L215">			final double barWidth = Math.abs((value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotWidth);</span>
+<span class="fc" id="L216">			final double x = 0; // Start from left</span>
 
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">			if (barHeight &gt; 0) {</span>
-<span class="fc" id="L218">				final URectangle rect = URectangle.build(barWidth, barHeight);</span>
-<span class="fc" id="L219">				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">			if (barHeight &gt; 0) {</span>
+<span class="fc" id="L219">				final URectangle rect = URectangle.build(barWidth, barHeight);</span>
+<span class="fc" id="L220">				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);</span>
 			}
 
 			// Draw label if enabled
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">			if (series.isShowLabels()) {</span>
-<span class="fc" id="L224">				drawLabelHorizontal(ug, value, barWidth + 5, y + barHeight / 2);</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">			if (series.isShowLabels()) {</span>
+<span class="fc" id="L225">				drawLabelHorizontal(ug, value, barWidth + 5, y + barHeight / 2);</span>
 			}
 		}
-<span class="fc" id="L227">	}</span>
+<span class="fc" id="L228">	}</span>
 
 	/**
 	 * Draw multiple bar series in grouped mode (side-by-side)
 	 */
 	public void drawGrouped(UGraphic ug, List&lt;ChartSeries&gt; barSeries, List&lt;HColor&gt; colors) {
-<span class="pc bpc" id="L233" title="2 of 4 branches missed.">		if (categoryCount == 0 || barSeries.isEmpty())</span>
-<span class="nc" id="L234">			return;</span>
+<span class="pc bpc" id="L234" title="2 of 4 branches missed.">		if (categoryCount == 0 || barSeries.isEmpty())</span>
+<span class="nc" id="L235">			return;</span>
 
-<span class="fc" id="L236">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L237">		final double categoryWidth = plotWidth / categoryCount;</span>
-<span class="fc" id="L238">		final int seriesCount = barSeries.size();</span>
-<span class="fc" id="L239">		final double groupWidth = categoryWidth * 0.8; // 80% of category for all bars</span>
-<span class="fc" id="L240">		final double barWidth = groupWidth / seriesCount;</span>
-<span class="fc" id="L241">		final double groupOffset = (categoryWidth - groupWidth) / 2;</span>
+<span class="fc" id="L237">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L238">		final double categoryWidth = plotWidth / categoryCount;</span>
+<span class="fc" id="L239">		final int seriesCount = barSeries.size();</span>
+<span class="fc" id="L240">		final double groupWidth = categoryWidth * 0.8; // 80% of category for all bars</span>
+<span class="fc" id="L241">		final double barWidth = groupWidth / seriesCount;</span>
+<span class="fc" id="L242">		final double groupOffset = (categoryWidth - groupWidth) / 2;</span>
 
 		// Get bar style
-<span class="fc" id="L244">		final Style barStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getBarStyleQuery());</span>
+<span class="fc" id="L245">		final Style barStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getBarStyleQuery());</span>
 
 		// Extract line thickness for bar borders
-<span class="fc" id="L247">		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();</span>
-<span class="fc" id="L248">		final UStroke stroke = UStroke.withThickness(lineThickness);</span>
+<span class="fc" id="L248">		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();</span>
+<span class="fc" id="L249">		final UStroke stroke = UStroke.withThickness(lineThickness);</span>
 
-<span class="fc bfc" id="L250" title="All 2 branches covered.">		for (int categoryIndex = 0; categoryIndex &lt; categoryCount; categoryIndex++) {</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">			for (int seriesIndex = 0; seriesIndex &lt; seriesCount; seriesIndex++) {</span>
-<span class="fc" id="L252">				final ChartSeries series = barSeries.get(seriesIndex);</span>
-<span class="fc" id="L253">				final HColor color = colors.get(seriesIndex);</span>
-<span class="fc" id="L254">				final List&lt;Double&gt; values = series.getValues();</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">		for (int categoryIndex = 0; categoryIndex &lt; categoryCount; categoryIndex++) {</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">			for (int seriesIndex = 0; seriesIndex &lt; seriesCount; seriesIndex++) {</span>
+<span class="fc" id="L253">				final ChartSeries series = barSeries.get(seriesIndex);</span>
+<span class="fc" id="L254">				final HColor color = colors.get(seriesIndex);</span>
+<span class="fc" id="L255">				final List&lt;Double&gt; values = series.getValues();</span>
 
-<span class="pc bpc" id="L256" title="1 of 4 branches missed.">				if (categoryIndex &gt;= values.size() || values.get(categoryIndex) == null)</span>
-<span class="fc" id="L257">					continue;</span>
+<span class="pc bpc" id="L257" title="1 of 4 branches missed.">				if (categoryIndex &gt;= values.size() || values.get(categoryIndex) == null)</span>
+<span class="fc" id="L258">					continue;</span>
 
-<span class="fc" id="L259">				final double value = values.get(categoryIndex);</span>
-<span class="fc" id="L260">				final double x = categoryIndex * categoryWidth + groupOffset + seriesIndex * barWidth;</span>
+<span class="fc" id="L260">				final double value = values.get(categoryIndex);</span>
+<span class="fc" id="L261">				final double x = categoryIndex * categoryWidth + groupOffset + seriesIndex * barWidth;</span>
 
 				// Calculate bar position and height relative to zero
-<span class="fc" id="L263">				final double zeroY = Math.max(0,Math.min(plotHeight,plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight));</span>
-<span class="fc" id="L264">				final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="fc" id="L264">				final double zeroY = Math.max(0,Math.min(plotHeight,plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight));</span>
+<span class="fc" id="L265">				final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
 				final double y;
 				final double barHeight;
-<span class="pc bpc" id="L268" title="1 of 2 branches missed.">				if (value &lt; 0) {</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">				if (value &lt; 0) {</span>
 					// Negative: bar top at zero, extends downward
-<span class="nc" id="L270">					y = zeroY;</span>
-<span class="nc" id="L271">					barHeight = valueY - zeroY;</span>
+<span class="nc" id="L271">					y = zeroY;</span>
+<span class="nc" id="L272">					barHeight = valueY - zeroY;</span>
 				} else {
 					// Positive: bar top at value, extends downward to zero
-<span class="fc" id="L274">					y = valueY;</span>
-<span class="fc" id="L275">					barHeight = zeroY - valueY;</span>
+<span class="fc" id="L275">					y = valueY;</span>
+<span class="fc" id="L276">					barHeight = zeroY - valueY;</span>
 				}
 
 				// Extract line color for this bar's border
-<span class="fc" id="L279">				HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="pc bpc" id="L280" title="1 of 2 branches missed.">				if (lineColor == null) {</span>
-<span class="nc" id="L281">					lineColor = color; // Use fill color if no line color specified</span>
+<span class="fc" id="L280">				HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">				if (lineColor == null) {</span>
+<span class="nc" id="L282">					lineColor = color; // Use fill color if no line color specified</span>
 				}
 
-<span class="pc bpc" id="L284" title="1 of 2 branches missed.">				if (barHeight &gt; 0) {</span>
-<span class="fc" id="L285">					final URectangle rect = URectangle.build(barWidth, barHeight);</span>
-<span class="fc" id="L286">					ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);</span>
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">				if (barHeight &gt; 0) {</span>
+<span class="fc" id="L286">					final URectangle rect = URectangle.build(barWidth, barHeight);</span>
+<span class="fc" id="L287">					ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);</span>
 				}
 
 				// Draw label if enabled
-<span class="pc bpc" id="L290" title="1 of 2 branches missed.">				if (series.isShowLabels()) {</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">				if (series.isShowLabels()) {</span>
 					// Label at the end of the bar (top for positive, bottom for negative)
-<span class="nc bnc" id="L292" title="All 2 branches missed.">					final double labelY = value &lt; 0 ? y + barHeight + 5 : y - 5;</span>
-<span class="nc" id="L293">					drawLabel(ug, value, x + barWidth / 2, labelY, stringBounder);</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">					final double labelY = value &lt; 0 ? y + barHeight + 5 : y - 5;</span>
+<span class="nc" id="L294">					drawLabel(ug, value, x + barWidth / 2, labelY, stringBounder);</span>
 				}
 			}
 		}
-<span class="fc" id="L297">	}</span>
+<span class="fc" id="L298">	}</span>
 
 	/**
 	 * Draw multiple bar series in stacked mode (one on top of another)
 	 */
 	public void drawStacked(UGraphic ug, List&lt;ChartSeries&gt; barSeries, List&lt;HColor&gt; colors) {
-<span class="pc bpc" id="L303" title="2 of 4 branches missed.">		if (categoryCount == 0 || barSeries.isEmpty())</span>
-<span class="nc" id="L304">			return;</span>
+<span class="pc bpc" id="L304" title="2 of 4 branches missed.">		if (categoryCount == 0 || barSeries.isEmpty())</span>
+<span class="nc" id="L305">			return;</span>
 
-<span class="fc" id="L306">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L307">		final double categoryWidth = plotWidth / categoryCount;</span>
+<span class="fc" id="L307">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L308">		final double categoryWidth = plotWidth / categoryCount;</span>
 
 		// Get bar style
-<span class="fc" id="L310">		final Style barStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getBarStyleQuery());</span>
+<span class="fc" id="L311">		final Style barStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getBarStyleQuery());</span>
 
 		// Extract bar width ratio from style (default 0.6 = 60%)
-<span class="fc" id="L313">		double barWidthRatio = 0.6;</span>
+<span class="fc" id="L314">		double barWidthRatio = 0.6;</span>
 		try {
-<span class="fc" id="L315">			final Double styleBarWidth = barStyle.value(PName.BarWidth).asDouble();</span>
-<span class="pc bpc" id="L316" title="4 of 6 branches missed.">			if (styleBarWidth != null &amp;&amp; styleBarWidth &gt; 0 &amp;&amp; styleBarWidth &lt;= 1.0) {</span>
-<span class="nc" id="L317">				barWidthRatio = styleBarWidth;</span>
+<span class="fc" id="L316">			final Double styleBarWidth = barStyle.value(PName.BarWidth).asDouble();</span>
+<span class="pc bpc" id="L317" title="4 of 6 branches missed.">			if (styleBarWidth != null &amp;&amp; styleBarWidth &gt; 0 &amp;&amp; styleBarWidth &lt;= 1.0) {</span>
+<span class="nc" id="L318">				barWidthRatio = styleBarWidth;</span>
 			}
-<span class="nc" id="L319">		} catch (Exception e) {</span>
+<span class="nc" id="L320">		} catch (Exception e) {</span>
 			// Use default
-<span class="fc" id="L321">		}</span>
-<span class="fc" id="L322">		final double barWidth = categoryWidth * barWidthRatio;</span>
-<span class="fc" id="L323">		final double barOffset = (categoryWidth - barWidth) / 2;</span>
+<span class="fc" id="L322">		}</span>
+<span class="fc" id="L323">		final double barWidth = categoryWidth * barWidthRatio;</span>
+<span class="fc" id="L324">		final double barOffset = (categoryWidth - barWidth) / 2;</span>
 
 		// Track cumulative heights for each category
-<span class="fc" id="L326">		final Map&lt;Integer, Double&gt; cumulativeHeights = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L327">		final Map&lt;Integer, Double&gt; cumulativeHeights = new HashMap&lt;&gt;();</span>
 
 		// Extract line thickness for bar borders
-<span class="fc" id="L329">		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();</span>
-<span class="fc" id="L330">		final UStroke stroke = UStroke.withThickness(lineThickness);</span>
+<span class="fc" id="L330">		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();</span>
+<span class="fc" id="L331">		final UStroke stroke = UStroke.withThickness(lineThickness);</span>
 
-<span class="fc bfc" id="L332" title="All 2 branches covered.">		for (int categoryIndex = 0; categoryIndex &lt; categoryCount; categoryIndex++) {</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">		for (int categoryIndex = 0; categoryIndex &lt; categoryCount; categoryIndex++) {</span>
 			// Calculate zero position
-<span class="fc" id="L334">			final double zeroY = plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="fc" id="L335">			final double zeroY = plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
 			// Track cumulative positions for positive and negative stacks separately
-<span class="fc" id="L337">			double cumulativePositiveY = zeroY; // Positive bars grow upward from zero</span>
-<span class="fc" id="L338">			double cumulativeNegativeY = zeroY; // Negative bars grow downward from zero</span>
+<span class="fc" id="L338">			double cumulativePositiveY = zeroY; // Positive bars grow upward from zero</span>
+<span class="fc" id="L339">			double cumulativeNegativeY = zeroY; // Negative bars grow downward from zero</span>
 
-<span class="fc bfc" id="L340" title="All 2 branches covered.">			for (int seriesIndex = 0; seriesIndex &lt; barSeries.size(); seriesIndex++) {</span>
-<span class="fc" id="L341">				final ChartSeries series = barSeries.get(seriesIndex);</span>
-<span class="fc" id="L342">				final HColor color = colors.get(seriesIndex);</span>
-<span class="fc" id="L343">				final List&lt;Double&gt; values = series.getValues();</span>
+<span class="fc bfc" id="L341" title="All 2 branches covered.">			for (int seriesIndex = 0; seriesIndex &lt; barSeries.size(); seriesIndex++) {</span>
+<span class="fc" id="L342">				final ChartSeries series = barSeries.get(seriesIndex);</span>
+<span class="fc" id="L343">				final HColor color = colors.get(seriesIndex);</span>
+<span class="fc" id="L344">				final List&lt;Double&gt; values = series.getValues();</span>
 
-<span class="pc bpc" id="L345" title="1 of 4 branches missed.">				if (categoryIndex &gt;= values.size() || values.get(categoryIndex) == null)</span>
-<span class="fc" id="L346">					continue;</span>
+<span class="pc bpc" id="L346" title="1 of 4 branches missed.">				if (categoryIndex &gt;= values.size() || values.get(categoryIndex) == null)</span>
+<span class="fc" id="L347">					continue;</span>
 
-<span class="fc" id="L348">				final double value = values.get(categoryIndex);</span>
-<span class="fc" id="L349">				final double x = categoryIndex * categoryWidth + barOffset;</span>
-<span class="fc" id="L350">				final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
+<span class="fc" id="L349">				final double value = values.get(categoryIndex);</span>
+<span class="fc" id="L350">				final double x = categoryIndex * categoryWidth + barOffset;</span>
+<span class="fc" id="L351">				final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;</span>
 
 				final double y;
 				final double barHeight;
 
-<span class="pc bpc" id="L355" title="1 of 2 branches missed.">				if (value &lt; 0) {</span>
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">				if (value &lt; 0) {</span>
 					// Negative values stack downward from zero
-<span class="nc" id="L357">					barHeight = valueY - zeroY;</span>
-<span class="nc" id="L358">					y = cumulativeNegativeY;</span>
-<span class="nc" id="L359">					cumulativeNegativeY += barHeight;</span>
+<span class="nc" id="L358">					barHeight = valueY - zeroY;</span>
+<span class="nc" id="L359">					y = cumulativeNegativeY;</span>
+<span class="nc" id="L360">					cumulativeNegativeY += barHeight;</span>
 				} else {
 					// Positive values stack upward from zero
-<span class="fc" id="L362">					barHeight = zeroY - valueY;</span>
-<span class="fc" id="L363">					cumulativePositiveY -= barHeight;</span>
-<span class="fc" id="L364">					y = cumulativePositiveY;</span>
+<span class="fc" id="L363">					barHeight = zeroY - valueY;</span>
+<span class="fc" id="L364">					cumulativePositiveY -= barHeight;</span>
+<span class="fc" id="L365">					y = cumulativePositiveY;</span>
 				}
 
 				// Extract line color for this bar's border
-<span class="fc" id="L368">				HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="pc bpc" id="L369" title="1 of 2 branches missed.">				if (lineColor == null) {</span>
-<span class="nc" id="L370">					lineColor = color; // Use fill color if no line color specified</span>
+<span class="fc" id="L369">				HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="pc bpc" id="L370" title="1 of 2 branches missed.">				if (lineColor == null) {</span>
+<span class="nc" id="L371">					lineColor = color; // Use fill color if no line color specified</span>
 				}
 
-<span class="pc bpc" id="L373" title="1 of 2 branches missed.">				if (barHeight &gt; 0) {</span>
-<span class="fc" id="L374">					final URectangle rect = URectangle.build(barWidth, barHeight);</span>
-<span class="fc" id="L375">					ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">				if (barHeight &gt; 0) {</span>
+<span class="fc" id="L375">					final URectangle rect = URectangle.build(barWidth, barHeight);</span>
+<span class="fc" id="L376">					ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);</span>
 				}
 
 				// Draw label if enabled
-<span class="pc bpc" id="L379" title="1 of 2 branches missed.">				if (series.isShowLabels()) {</span>
+<span class="pc bpc" id="L380" title="1 of 2 branches missed.">				if (series.isShowLabels()) {</span>
 					// Label at the end of the bar segment
-<span class="nc bnc" id="L381" title="All 2 branches missed.">					final double labelY = value &lt; 0 ? y + barHeight + 5 : y - 5;</span>
-<span class="nc" id="L382">					drawLabel(ug, value, x + barWidth / 2, labelY, stringBounder);</span>
+<span class="nc bnc" id="L382" title="All 2 branches missed.">					final double labelY = value &lt; 0 ? y + barHeight + 5 : y - 5;</span>
+<span class="nc" id="L383">					drawLabel(ug, value, x + barWidth / 2, labelY, stringBounder);</span>
 				}
 			}
 		}
-<span class="fc" id="L386">	}</span>
+<span class="fc" id="L387">	}</span>
 
 	private void drawLabel(UGraphic ug, double value, double x, double y, StringBounder stringBounder) {
 		try {
-<span class="nc" id="L390">			final String label = formatValue(value);</span>
-<span class="nc" id="L391">			final UFont font = UFontFactory.sansSerif(10).withFontFace(UFontFace.bold());</span>
-<span class="nc" id="L392">			final HColor labelColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
-<span class="nc" id="L393">			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);</span>
-<span class="nc" id="L394">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
-<span class="nc" id="L395">					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
-<span class="nc" id="L396">			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L397">			final double labelX = x - textDim.getWidth() / 2;</span>
-<span class="nc" id="L398">			final double labelY = y - textDim.getHeight() - 2;</span>
-<span class="nc" id="L399">			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));</span>
-<span class="nc" id="L400">		} catch (Exception e) {</span>
+<span class="nc" id="L391">			final String label = formatValue(value);</span>
+<span class="nc" id="L392">			final UFont font = UFontFactory.sansSerif(10).withFontFace(UFontFace.bold());</span>
+<span class="nc" id="L393">			final HColor labelColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
+<span class="nc" id="L394">			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);</span>
+<span class="nc" id="L395">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
+<span class="nc" id="L396">					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="nc" id="L397">			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);</span>
+<span class="nc" id="L398">			final double labelX = x - textDim.getWidth() / 2;</span>
+<span class="nc" id="L399">			final double labelY = y - textDim.getHeight() - 2;</span>
+<span class="nc" id="L400">			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));</span>
+<span class="nc" id="L401">		} catch (Exception e) {</span>
 			// Silently ignore rendering errors
-<span class="nc" id="L402">		}</span>
-<span class="nc" id="L403">	}</span>
+<span class="nc" id="L403">		}</span>
+<span class="nc" id="L404">	}</span>
 
 	private void drawLabelHorizontal(UGraphic ug, double value, double x, double y) {
 		try {
-<span class="fc" id="L407">			final String label = formatValue(value);</span>
-<span class="fc" id="L408">			final UFont font = UFontFactory.sansSerif(10).withFontFace(UFontFace.bold());</span>
-<span class="fc" id="L409">			final HColor labelColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
-<span class="fc" id="L410">			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);</span>
-<span class="fc" id="L411">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
-<span class="fc" id="L412">					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);</span>
-<span class="fc" id="L413">			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());</span>
-<span class="fc" id="L414">			final double labelY = y - textDim.getHeight() / 2;</span>
-<span class="fc" id="L415">			textBlock.drawU(ug.apply(UTranslate.dx(x).compose(UTranslate.dy(labelY))));</span>
-<span class="nc" id="L416">		} catch (Exception e) {</span>
+<span class="fc" id="L408">			final String label = formatValue(value);</span>
+<span class="fc" id="L409">			final UFont font = UFontFactory.sansSerif(10).withFontFace(UFontFace.bold());</span>
+<span class="fc" id="L410">			final HColor labelColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
+<span class="fc" id="L411">			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);</span>
+<span class="fc" id="L412">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
+<span class="fc" id="L413">					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="fc" id="L414">			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L415">			final double labelY = y - textDim.getHeight() / 2;</span>
+<span class="fc" id="L416">			textBlock.drawU(ug.apply(UTranslate.dx(x).compose(UTranslate.dy(labelY))));</span>
+<span class="nc" id="L417">		} catch (Exception e) {</span>
 			// Silently ignore rendering errors
-<span class="fc" id="L418">		}</span>
-<span class="fc" id="L419">	}</span>
+<span class="fc" id="L419">		}</span>
+<span class="fc" id="L420">	}</span>
 
 	private String formatValue(double value) {
-<span class="pc bpc" id="L422" title="3 of 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
-<span class="nc" id="L423">			return String.format(&quot;%.2e&quot;, value);</span>
-<span class="pc bpc" id="L424" title="1 of 2 branches missed.">		if (value == (long) value)</span>
-<span class="fc" id="L425">			return String.format(&quot;%d&quot;, (long) value);</span>
-<span class="nc" id="L426">		return String.format(&quot;%.2f&quot;, value);</span>
+<span class="pc bpc" id="L423" title="3 of 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
+<span class="nc" id="L424">			return String.format(Locale.ROOT, &quot;%.2e&quot;, value);</span>
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">		if (value == (long) value)</span>
+<span class="fc" id="L426">			return String.format(Locale.ROOT, &quot;%d&quot;, (long) value);</span>
+<span class="nc" id="L427">		return String.format(Locale.ROOT, &quot;%.2f&quot;, value);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
