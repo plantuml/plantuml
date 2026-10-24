@@ -173,6 +173,11 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 		include("**/*.svg")
 		into("native/resources/sprites")
 	}
+	// The OpenIconic icons (<&name>)
+	from("src/main/resources/openiconic") {
+		include("*.svg")
+		into("native/resources/openiconic")
+	}
 	// The standard library: its list, and for each library its description, its
 	// puml, json, sprite and svg files; image.spm (raster images)
 	from("src/main/resources/stdlib") {
