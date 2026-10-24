@@ -100,6 +100,7 @@ file(GLOB_RECURSE RESOURCE_FILES CONFIGURE_DEPENDS
 	${PROJECT_SOURCE_DIR}/native/resources/themes/*.puml
 	${PROJECT_SOURCE_DIR}/native/resources/svg/*.min.*
 	${PROJECT_SOURCE_DIR}/native/resources/sprites/*.svg
+	${PROJECT_SOURCE_DIR}/native/resources/openiconic/*.svg
 	${PROJECT_SOURCE_DIR}/native/resources/stdlib/*.spm)
 set(RESOURCE_PAIRS)
 foreach(RESOURCE_FILE IN LISTS RESOURCE_FILES)
