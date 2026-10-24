@@ -54,6 +54,13 @@ import net.sourceforge.plantuml.version.Version;
 
 public class Defines implements Truth {
 
+	/**
+	 * Name of the diagram file in the deterministic (vega) tests: they feed
+	 * PlantUML with a text, and the C build with a file whose name must not change
+	 * the result.
+	 */
+	public static final String VEGA_FILENAME = "fakefilename";
+
 	private final Environment environment = new Environment();
 	private final Map<String, TValue> values = new LinkedHashMap<String, TValue>();
 
