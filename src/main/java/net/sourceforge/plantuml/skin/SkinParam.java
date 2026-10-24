@@ -279,14 +279,21 @@ public class SkinParam implements ISkinParam {
 	};
 
 	List<String> cleanForKey(String key) {
+		if (TeaVM.isC())
+			return cleanForKeyUnlocked(key);
+
 		synchronized (cacheCleanForKey) {
-			List<String> result = cacheCleanForKey.get(key);
-			if (result == null) {
-				result = cleanForKeySlow(key);
-				cacheCleanForKey.put(key, result);
-			}
-			return result;
+			return cleanForKeyUnlocked(key);
 		}
+	}
+
+	private List<String> cleanForKeyUnlocked(String key) {
+		List<String> result = cacheCleanForKey.get(key);
+		if (result == null) {
+			result = cleanForKeySlow(key);
+			cacheCleanForKey.put(key, result);
+		}
+		return result;
 	}
 
 	private static final Pattern patternCleanUnderscoreDot = Pattern.compile("_|\\.");

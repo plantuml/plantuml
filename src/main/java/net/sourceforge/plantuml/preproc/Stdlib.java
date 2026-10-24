@@ -138,6 +138,10 @@ public class Stdlib {
 	}
 
 	private byte[] loadPumlResource(String file) throws IOException {
+		if (TeaVM.isC()) {
+			initMapIfNeeded(puml, SpmChannel.PUML);
+			return puml.get(file);
+		}
 		synchronized (puml) {
 			initMapIfNeeded(puml, SpmChannel.PUML);
 			return puml.get(file);
@@ -145,6 +149,10 @@ public class Stdlib {
 	}
 
 	private byte[] loadJsonResource(String file) throws IOException {
+		if (TeaVM.isC()) {
+			initMapIfNeeded(json, SpmChannel.JSON);
+			return json.get(file);
+		}
 		synchronized (json) {
 			initMapIfNeeded(json, SpmChannel.JSON);
 			return json.get(file);

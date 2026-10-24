@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.klimt.shape.UImageSvg;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.openiconic.SvgPath;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.MyCollections;
 
 // Emojji from https://twemoji.twitter.com/
@@ -165,7 +166,17 @@ public class SvgNanoParser implements ISvgSpriteParser, GrayLevelRange {
 		}
 	}
 
-	private synchronized Collection<String> getData() {
+	private Collection<String> getData() {
+		if (TeaVM.isC())
+			return getDataUnlocked();
+		return getDataLocked();
+	}
+
+	private synchronized Collection<String> getDataLocked() {
+		return getDataUnlocked();
+	}
+
+	private Collection<String> getDataUnlocked() {
 		if (data.isEmpty()) {
 			final Matcher m = P_TEXT_OR_DRAW.matcher(svg);
 			while (m.find()) {
