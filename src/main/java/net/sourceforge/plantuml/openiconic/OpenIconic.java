@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 
 // ::comment when JAVA8
 import org.teavm.jso.JSBody;
+import net.sourceforge.plantuml.teavm.c.EmbeddedFiles;
 // ::done
 
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -75,7 +76,7 @@ public class OpenIconic {
 		if (TeaVM.isTeaVM() && TeaVM.isC() == false)
 			return retrieveFromJs(name);
 		if (TeaVM.isC())
-			return null;
+			return retrieveEmbedded(name);
 		// ::done
 		final InputStream is = getResource(name);
 		if (is == null)
@@ -90,6 +91,19 @@ public class OpenIconic {
 	}
 
 	// ::comment when JAVA8
+	// The C build embeds the icons in the executable
+	private static OpenIconic retrieveEmbedded(String name) {
+		final byte[] data = EmbeddedFiles.read("openiconic/" + name + ".svg");
+		if (data == null)
+			return null;
+		try {
+			return new OpenIconic(new ByteArrayInputStream(data), name);
+		} catch (IOException e) {
+			Logme.error(e);
+			return null;
+		}
+	}
+
 	private static OpenIconic retrieveFromJs(String name) {
 		loadOpeniconicJsIfNeeded();
 		final String pathLine = jsGetPathLine(name);
