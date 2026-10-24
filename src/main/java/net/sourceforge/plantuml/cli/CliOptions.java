@@ -227,6 +227,8 @@ public class CliOptions {
 
 	public Defines getDefaultDefines(SFile f) {
 		final Defines result = Defines.createWithFileName(f);
+		if (isTrue(CliFlag.T_SVG_VEGA))
+			result.overrideFilename(Defines.VEGA_FILENAME);
 		for (Map.Entry<String, String> ent : defines().entrySet())
 			result.define(ent.getKey(), ent.getValue());
 
@@ -235,6 +237,8 @@ public class CliOptions {
 
 	public Defines getDefaultDefines(java.io.File f) {
 		final Defines result = Defines.createWithFileName(f);
+		if (isTrue(CliFlag.T_SVG_VEGA))
+			result.overrideFilename(Defines.VEGA_FILENAME);
 		for (Map.Entry<String, String> ent : defines().entrySet())
 			result.define(ent.getKey(), ent.getValue());
 
