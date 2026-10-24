@@ -1,0 +1,9 @@
+---
+output: svg, debug, atxt, utxt
+expected-description: (2 participants)
+---
+@startuml
+a -> b : hi
+== a divider wider than all the participants ==
+a -> b : bye
+@enduml

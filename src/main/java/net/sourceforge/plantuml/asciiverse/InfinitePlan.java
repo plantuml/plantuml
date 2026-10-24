@@ -239,6 +239,29 @@ public final class InfinitePlan {
 				move(i, y).drawChar(c);
 	}
 
+	// The double line of a sequence diagram divider (DividerTile), and a
+	// lifeline crossing it: the same glyphs as the legacy
+	// asciiart.ComponentTextDivider, read for the character, not reused as
+	// code (see getTDownChar()).
+	private char getDoubleHLineChar() {
+		return isUnicode() ? '═' : '=';
+	}
+
+	private char getDoubleHLineCrossingChar() {
+		return isUnicode() ? '╪' : '+';
+	}
+
+	public void drawDoubleHLine(int xFrom, int xTo, int y) {
+		fillHLine(getDoubleHLineChar(), xFrom, xTo, y);
+	}
+
+	// Mutes the cell at the current position into a lifeline crossing, if it
+	// holds the double line drawn by drawDoubleHLine(): whatever else was
+	// drawn over that line (a divider's text) is left alone.
+	public void muteLifelineAcrossDoubleHLine() {
+		muteChar(getDoubleHLineChar(), getDoubleHLineCrossingChar());
+	}
+
 	// Char-parameterized versions of the two above: used internally wherever
 	// a border needs a character other than the plain box/lifeline one
 	// (namely the note box's double lines in Unicode mode, see
