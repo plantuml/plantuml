@@ -438,92 +438,90 @@ public class Stdlib {
 	 * The C build has a small heap, and some files are huge once decompressed (the
 	 * sprites of aws: 56 MB; the images of ibm: 74 MB). It scans the file and keeps
 	 * only what is asked for.
+	 * 
+	 * It runs on a single thread, hence no synchronization here: a monitor left
+	 * taken by an exception made every later call fail with "Can't enter monitor
+	 * from another thread synchronously".
 	 */
 
 	private Sprite readSpriteInC(String name) throws IOException {
-		synchronized (sprites) {
-			final StdlibSprite known = sprites.get(name);
-			if (known != null)
-				return known;
+		final StdlibSprite known = sprites.get(name);
+		if (known != null)
+			return known;
 
-			try (InputStream is = getInternalInputStream(SpmChannel.SPRITE);
-					DataInputStream dis = new DataInputStream(is)) {
-				final int nb = dis.readInt();
-				for (int i = 0; i < nb; i++) {
-					final String spriteName = dis.readUTF();
-					final int width = dis.readInt();
-					final int height = dis.readInt();
-					final int length = width * ((height + 1) / 2);
-					if (spriteName.equals(name)) {
-						final StdlibSprite sprite = new StdlibSprite(width, height, FileUtils.readExactly(dis, length));
-						sprites.put(name, sprite);
-						return sprite;
-					}
-					skipFully(dis, length);
+		try (InputStream is = getInternalInputStream(SpmChannel.SPRITE);
+				DataInputStream dis = new DataInputStream(is)) {
+			final int nb = dis.readInt();
+			for (int i = 0; i < nb; i++) {
+				final String spriteName = dis.readUTF();
+				final int width = dis.readInt();
+				final int height = dis.readInt();
+				final int length = width * ((height + 1) / 2);
+				if (spriteName.equals(name)) {
+					final StdlibSprite sprite = new StdlibSprite(width, height, FileUtils.readExactly(dis, length));
+					sprites.put(name, sprite);
+					return sprite;
 				}
+				skipFully(dis, length);
 			}
-			return null;
 		}
+		return null;
 	}
 
 	private Sprite readSvgSpriteInC(String name) throws IOException {
-		synchronized (svgs) {
-			final ISvgSpriteParser known = svgs.get(name);
-			if (known != null)
-				return known;
+		final ISvgSpriteParser known = svgs.get(name);
+		if (known != null)
+			return known;
 
-			try (InputStream is = getInternalInputStream(SpmChannel.SVG);
-					DataInputStream dis = new DataInputStream(is)) {
-				final int nb = dis.readInt();
-				for (int i = 0; i < nb; i++) {
-					final String spriteName = dis.readUTF();
-					final int length = dis.readUnsignedShort();
-					if (spriteName.equals(name)) {
-						// The text is in the modified UTF-8 of DataOutput.writeUTF
-						final byte[] utf = new byte[length + 2];
-						utf[0] = (byte) (length >> 8);
-						utf[1] = (byte) length;
-						dis.readFully(utf, 2, length);
-						final String svg = new DataInputStream(new ByteArrayInputStream(utf)).readUTF();
-						final ISvgSpriteParser parser = SvgSpriteParserFactory.create(svg);
-						svgs.put(name, parser);
-						return parser;
-					}
-					skipFully(dis, length);
+		try (InputStream is = getInternalInputStream(SpmChannel.SVG);
+				DataInputStream dis = new DataInputStream(is)) {
+			final int nb = dis.readInt();
+			for (int i = 0; i < nb; i++) {
+				final String spriteName = dis.readUTF();
+				final int length = dis.readUnsignedShort();
+				if (spriteName.equals(name)) {
+					// The text is in the modified UTF-8 of DataOutput.writeUTF
+					final byte[] utf = new byte[length + 2];
+					utf[0] = (byte) (length >> 8);
+					utf[1] = (byte) length;
+					dis.readFully(utf, 2, length);
+					final String svg = new DataInputStream(new ByteArrayInputStream(utf)).readUTF();
+					final ISvgSpriteParser parser = SvgSpriteParserFactory.create(svg);
+					svgs.put(name, parser);
+					return parser;
 				}
+				skipFully(dis, length);
 			}
-			return null;
 		}
+		return null;
 	}
 
 	private FutureImage readDataImagePngInC(int num) throws IOException {
-		synchronized (imagesInC) {
-			final FutureImage known = imagesInC.get(num);
-			if (known != null)
-				return known;
+		final FutureImage known = imagesInC.get(num);
+		if (known != null)
+			return known;
 
-			try (InputStream is = getInternalInputStream(SpmChannel.IMAGE);
-					DataInputStream dis = new DataInputStream(is)) {
-				final int nb = dis.readInt();
-				if (colors.size() == 0)
-					readColorTable(dis);
-				else
-					skipColorTable(dis);
-				for (int i = 0; i < nb; i++) {
-					final int width = dis.readInt();
-					final int height = dis.readInt();
-					final int length = width * height * 2;
-					if (i == num) {
-						final FutureImage image = new FutureImage(colors, width, height,
-								FileUtils.readExactly(dis, length));
-						imagesInC.put(num, image);
-						return image;
-					}
-					skipFully(dis, length);
+		try (InputStream is = getInternalInputStream(SpmChannel.IMAGE);
+				DataInputStream dis = new DataInputStream(is)) {
+			final int nb = dis.readInt();
+			if (colors.size() == 0)
+				readColorTable(dis);
+			else
+				skipColorTable(dis);
+			for (int i = 0; i < nb; i++) {
+				final int width = dis.readInt();
+				final int height = dis.readInt();
+				final int length = width * height * 2;
+				if (i == num) {
+					final FutureImage image = new FutureImage(colors, width, height,
+							FileUtils.readExactly(dis, length));
+					imagesInC.put(num, image);
+					return image;
 				}
+				skipFully(dis, length);
 			}
-			return null;
 		}
+		return null;
 	}
 
 	private static void skipColorTable(InputStream is) throws IOException {
