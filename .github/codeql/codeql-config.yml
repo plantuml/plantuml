@@ -1,0 +1,7 @@
+name: PlantUML CodeQL configuration
+
+# Third-party C code embedded in src/teavm-c/native: not ours to fix.
+paths-ignore:
+  - src/teavm-c/native/brotli
+  - src/teavm-c/native/miniz
+  - src/teavm-c/native/plutovg
