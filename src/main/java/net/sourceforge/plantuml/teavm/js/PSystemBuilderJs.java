@@ -92,7 +92,6 @@ public class PSystemBuilderJs {
 	private PSystemFactory lastFactory;
 
 	private PSystemBuilderJs() {
-		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 		factories.add(new SequenceDiagramFactory());
 		factories.add(new ClassDiagramFactory());
 		factories.add(new ActivityDiagramFactory());
@@ -105,7 +104,9 @@ public class PSystemBuilderJs {
 		factories.add(new MindMapDiagramFactory());
 		factories.add(new WBSDiagramFactory());
 		factories.add(new NwDiagramFactory());
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 		factories.add(new PSystemSudokuFactory());
+		// ::done
 		factories.add(new PSystemCreoleFactory());
 		factories.add(new TimingDiagramFactory());
 		factories.add(new ChartDiagramFactory());
@@ -115,7 +116,6 @@ public class PSystemBuilderJs {
 		factories.add(new PSystemEbnfFactory());
 		factories.add(new PSystemRegexFactory());
 		factories.add(new ChenEerDiagramFactory());
-		// ::done
 	}
 
 	public static PSystemBuilderJs getInstance() {

@@ -1,0 +1,15 @@
+---
+output: svg, debug, atxt, utxt
+expected-description: (3 participants)
+---
+@startuml
+participant Alice
+participant Bob
+participant Carol
+== Init ==
+Alice -> Bob : hello
+Bob -> Carol : forward
+== ==
+Carol --> Alice : reply
+== Done ==
+@enduml
