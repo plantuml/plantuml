@@ -38,9 +38,9 @@
     <line style="stroke:#181818;stroke-width:0.5;" x1="470" x2="470" y1="360" y2="365"/>
     <text fill="#000" font-size="14" textLength="15.575" x="462.213" y="380.889">30</text>
     <text fill="#000" font-size="14" textLength="31.15" x="254.425" y="400.889">Time</text>
-    <ellipse cx="70" cy="292.5" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="203.333" cy="117" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="336.667" cy="273" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="470" cy="255" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
+    <ellipse cx="70" cy="292.5" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="203.333" cy="117" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="336.667" cy="273" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="470" cy="255" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
   </g>
 </svg>

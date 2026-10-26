@@ -42,8 +42,8 @@
     <line style="stroke:#181818;stroke-width:2;" x1="270" x2="370" y1="270" y2="240"/>
     <line style="stroke:#181818;stroke-width:2;" x1="370" x2="470" y1="240" y2="210"/>
     <line style="stroke:#181818;stroke-width:2;" x1="70" x2="170" y1="180" y2="150"/>
-    <ellipse cx="70" cy="120" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="170" cy="90" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="270" cy="105" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
+    <ellipse cx="70" cy="120" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="170" cy="90" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="270" cy="105" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
   </g>
 </svg>

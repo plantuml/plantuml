@@ -37,6 +37,6 @@
     <text fill="#000" font-size="14" textLength="27.213" x="416.394" y="380.889">10.8</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="470" x2="470" y1="360" y2="365"/>
     <text fill="#000" font-size="14" textLength="27.213" x="456.394" y="380.889">11.0</text>
-    <ellipse cx="270" cy="225" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
+    <ellipse cx="270" cy="225" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
   </g>
 </svg>
