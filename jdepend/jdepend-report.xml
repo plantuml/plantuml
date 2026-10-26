@@ -14890,8 +14890,8 @@
 
         <Package name="net.sourceforge.plantuml.sequencediagram.teoz">
             <Stats>
-                <TotalClasses>43</TotalClasses>
-                <ConcreteClasses>37</ConcreteClasses>
+                <TotalClasses>42</TotalClasses>
+                <ConcreteClasses>36</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>21</Ce>
@@ -14949,9 +14949,6 @@
                 </Class>
                 <Class sourceFile="DelayTile.java">
                     net.sourceforge.plantuml.sequencediagram.teoz.DelayTile
-                </Class>
-                <Class sourceFile="DividerTile.java">
-                    net.sourceforge.plantuml.sequencediagram.teoz.DividerTile
                 </Class>
                 <Class sourceFile="Dolls.java">
                     net.sourceforge.plantuml.sequencediagram.teoz.Dolls

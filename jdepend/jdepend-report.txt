@@ -10285,8 +10285,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 43
-    Concrete Classes: 37
+    Total Classes: 42
+    Concrete Classes: 36
     Abstract Classes: 6
 
     Ca: 0
@@ -10314,7 +10314,6 @@ Concrete Classes:
     net.sourceforge.plantuml.sequencediagram.teoz.CommunicationTileSelfNoteRight
     net.sourceforge.plantuml.sequencediagram.teoz.ComponentAdapter
     net.sourceforge.plantuml.sequencediagram.teoz.DelayTile
-    net.sourceforge.plantuml.sequencediagram.teoz.DividerTile
     net.sourceforge.plantuml.sequencediagram.teoz.Dolls
     net.sourceforge.plantuml.sequencediagram.teoz.ElseTile
     net.sourceforge.plantuml.sequencediagram.teoz.EventsHistoryMode
@@ -15892,7 +15891,7 @@ net.sourceforge.plantuml.sequencediagram,24,5,12,19,0.21,0.61,0.18,1
 net.sourceforge.plantuml.sequencediagram.command,28,1,3,18,0.04,0.86,0.11,1
 net.sourceforge.plantuml.sequencediagram.graphic,39,8,3,20,0.21,0.87,0.07,1
 net.sourceforge.plantuml.sequencediagram.puma,6,0,0,3,0,1,0,1
-net.sourceforge.plantuml.sequencediagram.teoz,43,6,0,21,0.14,1,0.14,1
+net.sourceforge.plantuml.sequencediagram.teoz,42,6,0,21,0.14,1,0.14,1
 net.sourceforge.plantuml.skin,35,5,38,27,0.14,0.42,0.44,1
 net.sourceforge.plantuml.skin.rose,23,1,11,13,0.04,0.54,0.41,1
 net.sourceforge.plantuml.statediagram,1,0,4,11,0,0.73,0.27,1
