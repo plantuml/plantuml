@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -116,6 +118,88 @@ public class DividerTile extends AbstractTile implements Tile {
 		final Component comp = getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return xorigin.addFixed(dim.getWidth());
+	}
+
+	// ===================== ASCII =====================
+	//
+	// ASCII counterpart of drawU(), so that a divider ("== text ==", or
+	// "== ==" without text) no longer reaches the AsciiBlock "not migrated"
+	// default and crashes the whole txt/utxt export. Like the pixel
+	// ComponentRoseDivider: a double line across the whole diagram, with the
+	// text centered on it. The lifelines cross the line, except where the
+	// text hides them, as the pixel text box does.
+
+	// Same 2-cell widening past the outermost participant boxes as
+	// NewpageTile.ASCII_MARGIN, the other full-width separator
+	private static final int ASCII_MARGIN = 2;
+
+	// The double line left visible on each side of the text, at least
+	private static final int ASCII_MIN_LINE = 2;
+
+	// The text as a single line padded with one space on each side, multi-line
+	// text flattened the same way as GroupingTile.asciiTitle(); empty for a
+	// divider without text. Trimmed: CommandDivider keeps the spaces before
+	// the closing "==", which are invisible in pixels but not here.
+	private String asciiLabel() {
+		final StringBuilder sb = new StringBuilder();
+		for (CharSequence cs : divider.getText()) {
+			final String line = cs.toString().trim();
+			if (line.isEmpty())
+				continue;
+			if (sb.length() > 0)
+				sb.append(' ');
+			sb.append(line);
+		}
+		if (sb.length() == 0)
+			return "";
+
+		return " " + sb + " ";
+	}
+
+	// Spans every participant, like NewpageTile.asciiColumns(). A text too
+	// wide for that span extends it to the right, as the pixel divider widens
+	// the diagram from its left edge (see getMaxX()) instead of pushing any
+	// participant away.
+	private int[] asciiColumns() {
+		int lo = Integer.MAX_VALUE;
+		int hi = Integer.MIN_VALUE;
+		for (LivingSpace ls : tileArguments.getLivingSpaces().values()) {
+			lo = Math.min(lo, (int) ls.getAsciiPosB().getCurrentValue());
+			hi = Math.max(hi, (int) ls.getAsciiPosD().getCurrentValue() - 1);
+		}
+		if (lo == Integer.MAX_VALUE)
+			return new int[] { 0, 0 };
+
+		final int left = lo - ASCII_MARGIN;
+		final int right = Math.max(hi + ASCII_MARGIN, left + asciiLabel().length() + 2 * ASCII_MIN_LINE - 1);
+		return new int[] { left, right };
+	}
+
+	// The line, plus one blank row below it: the same breathing room a message
+	// leaves after its arrow (see CommunicationTile.asciiDimension())
+	@Override
+	public ADimension2D asciiDimension() {
+		final int[] cols = asciiColumns();
+		return new ADimension2D(cols[1] - cols[0] + 1, 2);
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		final int[] cols = asciiColumns();
+		plan.drawDoubleHLine(cols[0], cols[1], 0);
+
+		final String label = asciiLabel();
+		if (label.isEmpty() == false) {
+			final int width = cols[1] - cols[0] + 1;
+			final InfinitePlan text = plan.move(cols[0] + (width - label.length()) / 2, 0);
+			// Opaque, so that the lifelines drawn afterwards do not show
+			// through the spaces of the text (see InfinitePlan.opacify())
+			text.opacify(label.length(), 1);
+			text.drawString(label);
+		}
+
+		for (LivingSpace ls : tileArguments.getLivingSpaces().values())
+			plan.move((int) ls.getAsciiLifeColumn().getCurrentValue(), 0).muteLifelineAcrossDoubleHLine();
 	}
 
 }
