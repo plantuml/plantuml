@@ -230,28 +230,102 @@ class PortableImageTeaVM implements PortableImage {
 
 <span class="nc" id="L231">		final int[] dstPixels = new int[dstW * dstH];</span>
 
-		// Same pixels as AffineTransformOp on the JVM (see MlibAffine)
-<span class="nc bnc" id="L234" title="All 2 branches missed.">		if (interpolationType == 2)</span>
-<span class="nc" id="L235">			MlibAffine.bilinear(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);</span>
-		else
-<span class="nc" id="L237">			MlibAffine.nearest(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);</span>
+		// The C build gets the same pixels as AffineTransformOp on the JVM (see MlibAffine).
+		// TeaVM.isC() is folded at compile time, so MlibAffine is left out of the JavaScript
+		// build: it made plantuml.js fail with &quot;Uncaught SyntaxError: Unexpected number&quot;.
+<span class="nc bnc" id="L236" title="All 2 branches missed.">		if (TeaVM.isC()) {</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">			if (interpolationType == 2)</span>
+<span class="nc" id="L238">				MlibAffine.bilinear(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);</span>
+			else
+<span class="nc" id="L240">				MlibAffine.nearest(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);</span>
+		} else {
+<span class="nc bnc" id="L242" title="All 2 branches missed.">			if (interpolationType == 2)</span>
+<span class="nc" id="L243">				scaleBilinear(pixels, width, height, dstPixels, dstW, dstH);</span>
+			else
+<span class="nc" id="L245">				scaleNearestNeighbor(pixels, width, height, dstPixels, dstW, dstH);</span>
+		}
 
-<span class="nc" id="L239">		return new PortableImageTeaVM(dstW, dstH, imageType, dstPixels);</span>
+<span class="nc" id="L248">		return new PortableImageTeaVM(dstW, dstH, imageType, dstPixels);</span>
+	}
+
+	/**
+	 * Nearest-neighbor scaling - fast but can be blocky.
+	 */
+	private static void scaleNearestNeighbor(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
+<span class="nc bnc" id="L255" title="All 2 branches missed.">		for (int y = 0; y &lt; dstH; y++) {</span>
+<span class="nc" id="L256">			final int srcY = y * srcH / dstH;</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">			for (int x = 0; x &lt; dstW; x++) {</span>
+<span class="nc" id="L258">				final int srcX = x * srcW / dstW;</span>
+<span class="nc" id="L259">				dst[y * dstW + x] = src[srcY * srcW + srcX];</span>
+			}
+		}
+<span class="nc" id="L262">	}</span>
+
+	/**
+	 * Bilinear interpolation scaling - smoother results.
+	 */
+	private static void scaleBilinear(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
+<span class="nc" id="L268">		final double xRatio = (double) (srcW - 1) / dstW;</span>
+<span class="nc" id="L269">		final double yRatio = (double) (srcH - 1) / dstH;</span>
+
+<span class="nc bnc" id="L271" title="All 2 branches missed.">		for (int y = 0; y &lt; dstH; y++) {</span>
+<span class="nc" id="L272">			final double srcYf = y * yRatio;</span>
+<span class="nc" id="L273">			final int y0 = (int) srcYf;</span>
+<span class="nc" id="L274">			final int y1 = Math.min(y0 + 1, srcH - 1);</span>
+<span class="nc" id="L275">			final double yFrac = srcYf - y0;</span>
+
+<span class="nc bnc" id="L277" title="All 2 branches missed.">			for (int x = 0; x &lt; dstW; x++) {</span>
+<span class="nc" id="L278">				final double srcXf = x * xRatio;</span>
+<span class="nc" id="L279">				final int x0 = (int) srcXf;</span>
+<span class="nc" id="L280">				final int x1 = Math.min(x0 + 1, srcW - 1);</span>
+<span class="nc" id="L281">				final double xFrac = srcXf - x0;</span>
+
+				// Get 4 neighboring pixels
+<span class="nc" id="L284">				final int c00 = src[y0 * srcW + x0];</span>
+<span class="nc" id="L285">				final int c10 = src[y0 * srcW + x1];</span>
+<span class="nc" id="L286">				final int c01 = src[y1 * srcW + x0];</span>
+<span class="nc" id="L287">				final int c11 = src[y1 * srcW + x1];</span>
+
+				// Interpolate each channel
+<span class="nc" id="L290">				final int a = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 24);</span>
+<span class="nc" id="L291">				final int r = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 16);</span>
+<span class="nc" id="L292">				final int g = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 8);</span>
+<span class="nc" id="L293">				final int b = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 0);</span>
+
+<span class="nc" id="L295">				dst[y * dstW + x] = (a &lt;&lt; 24) | (r &lt;&lt; 16) | (g &lt;&lt; 8) | b;</span>
+			}
+		}
+<span class="nc" id="L298">	}</span>
+
+	/**
+	 * Bilinear interpolation for a single color channel.
+	 */
+	private static int interpolateChannel(int c00, int c10, int c01, int c11, double xFrac, double yFrac, int shift) {
+<span class="nc" id="L304">		final int v00 = (c00 &gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L305">		final int v10 = (c10 &gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L306">		final int v01 = (c01 &gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L307">		final int v11 = (c11 &gt;&gt; shift) &amp; 0xFF;</span>
+
+<span class="nc" id="L309">		final double top = v00 + xFrac * (v10 - v00);</span>
+<span class="nc" id="L310">		final double bottom = v01 + xFrac * (v11 - v01);</span>
+<span class="nc" id="L311">		final double result = top + yFrac * (bottom - top);</span>
+
+<span class="nc" id="L313">		return Math.min(255, Math.max(0, (int) Math.round(result)));</span>
 	}
 
 	@Override
 	public BufferedImage getBufferedImage() {
-<span class="nc" id="L244">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
+<span class="nc" id="L318">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
 	}
 
 	@Override
 	public Graphics2D createGraphics() {
-<span class="nc" id="L249">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
+<span class="nc" id="L323">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
 	}
 
 	@Override
 	public Graphics getGraphics() {
-<span class="nc" id="L254">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
+<span class="nc" id="L328">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
 	}
 
 }
