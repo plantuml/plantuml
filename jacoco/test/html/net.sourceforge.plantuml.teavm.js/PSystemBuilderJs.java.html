@@ -92,30 +92,30 @@ public class PSystemBuilderJs {
 	private PSystemFactory lastFactory;
 
 <span class="nc" id="L94">	private PSystemBuilderJs() {</span>
+<span class="nc" id="L95">		factories.add(new SequenceDiagramFactory());</span>
+<span class="nc" id="L96">		factories.add(new ClassDiagramFactory());</span>
+<span class="nc" id="L97">		factories.add(new ActivityDiagramFactory());</span>
+<span class="nc" id="L98">		factories.add(new DescriptionDiagramFactory());</span>
+<span class="nc" id="L99">		factories.add(new StateDiagramFactory());</span>
+<span class="nc" id="L100">		factories.add(new ActivityDiagramFactory3());</span>
+<span class="nc" id="L101">		factories.add(new PSystemVersionFactory());</span>
+<span class="nc" id="L102">		factories.add(new PSystemSaltFactory());</span>
+<span class="nc" id="L103">		factories.add(new GanttDiagramFactory());</span>
+<span class="nc" id="L104">		factories.add(new MindMapDiagramFactory());</span>
+<span class="nc" id="L105">		factories.add(new WBSDiagramFactory());</span>
+<span class="nc" id="L106">		factories.add(new NwDiagramFactory());</span>
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
-<span class="nc" id="L96">		factories.add(new SequenceDiagramFactory());</span>
-<span class="nc" id="L97">		factories.add(new ClassDiagramFactory());</span>
-<span class="nc" id="L98">		factories.add(new ActivityDiagramFactory());</span>
-<span class="nc" id="L99">		factories.add(new DescriptionDiagramFactory());</span>
-<span class="nc" id="L100">		factories.add(new StateDiagramFactory());</span>
-<span class="nc" id="L101">		factories.add(new ActivityDiagramFactory3());</span>
-<span class="nc" id="L102">		factories.add(new PSystemVersionFactory());</span>
-<span class="nc" id="L103">		factories.add(new PSystemSaltFactory());</span>
-<span class="nc" id="L104">		factories.add(new GanttDiagramFactory());</span>
-<span class="nc" id="L105">		factories.add(new MindMapDiagramFactory());</span>
-<span class="nc" id="L106">		factories.add(new WBSDiagramFactory());</span>
-<span class="nc" id="L107">		factories.add(new NwDiagramFactory());</span>
 <span class="nc" id="L108">		factories.add(new PSystemSudokuFactory());</span>
-<span class="nc" id="L109">		factories.add(new PSystemCreoleFactory());</span>
-<span class="nc" id="L110">		factories.add(new TimingDiagramFactory());</span>
-<span class="nc" id="L111">		factories.add(new ChartDiagramFactory());</span>
-<span class="nc" id="L112">		factories.add(new PacketDiagramFactory());</span>
-<span class="nc" id="L113">		factories.add(new JsonDiagramFactory());</span>
-<span class="nc" id="L114">		factories.add(new YamlDiagramFactory());</span>
-<span class="nc" id="L115">		factories.add(new PSystemEbnfFactory());</span>
-<span class="nc" id="L116">		factories.add(new PSystemRegexFactory());</span>
-<span class="nc" id="L117">		factories.add(new ChenEerDiagramFactory());</span>
 		// ::done
+<span class="nc" id="L110">		factories.add(new PSystemCreoleFactory());</span>
+<span class="nc" id="L111">		factories.add(new TimingDiagramFactory());</span>
+<span class="nc" id="L112">		factories.add(new ChartDiagramFactory());</span>
+<span class="nc" id="L113">		factories.add(new PacketDiagramFactory());</span>
+<span class="nc" id="L114">		factories.add(new JsonDiagramFactory());</span>
+<span class="nc" id="L115">		factories.add(new YamlDiagramFactory());</span>
+<span class="nc" id="L116">		factories.add(new PSystemEbnfFactory());</span>
+<span class="nc" id="L117">		factories.add(new PSystemRegexFactory());</span>
+<span class="nc" id="L118">		factories.add(new ChenEerDiagramFactory());</span>
 <span class="nc" id="L119">	}</span>
 
 	public static PSystemBuilderJs getInstance() {
