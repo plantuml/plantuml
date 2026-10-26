@@ -46,51 +46,51 @@ class ExtremityLineCrowfoot extends Extremity {
 
 	private final XPoint2D contact;
 	private final double angle;
-<span class="nc" id="L49">	private final double lineHeight = 4;</span>
+<span class="fc" id="L49">	private final double lineHeight = 4;</span>
 
 	@Override
 	public XPoint2D somePoint() {
 <span class="nc" id="L53">		return contact;</span>
 	}
 
-<span class="nc" id="L56">	public ExtremityLineCrowfoot(XPoint2D p1, double angle) {</span>
-<span class="nc" id="L57">		this.contact = new XPoint2D(p1.getX(), p1.getY());</span>
-<span class="nc" id="L58">		this.angle = manageround(angle + Math.PI / 2);</span>
-<span class="nc" id="L59">	}</span>
+<span class="fc" id="L56">	public ExtremityLineCrowfoot(XPoint2D p1, double angle) {</span>
+<span class="fc" id="L57">		this.contact = new XPoint2D(p1.getX(), p1.getY());</span>
+<span class="fc" id="L58">		this.angle = manageround(angle + Math.PI / 2);</span>
+<span class="fc" id="L59">	}</span>
 
 	public void drawU(UGraphic ug) {
 
-<span class="nc" id="L63">		final int xWing = 8;</span>
-<span class="nc" id="L64">		final int yAperture = 6;</span>
-<span class="nc" id="L65">		final XAffineTransform rotate = XAffineTransform.getRotateInstance(this.angle);</span>
-<span class="nc" id="L66">		XPoint2D middle = new XPoint2D(0, 0);</span>
-<span class="nc" id="L67">		XPoint2D left = new XPoint2D(0, -yAperture);</span>
-<span class="nc" id="L68">		XPoint2D base = new XPoint2D(-xWing, 0);</span>
-<span class="nc" id="L69">		XPoint2D lineTop = new XPoint2D(-xWing - 2, -lineHeight);</span>
-<span class="nc" id="L70">		XPoint2D lineBottom = new XPoint2D(-xWing - 2, lineHeight);</span>
-<span class="nc" id="L71">		XPoint2D right = new XPoint2D(0, yAperture);</span>
+<span class="fc" id="L63">		final int xWing = 8;</span>
+<span class="fc" id="L64">		final int yAperture = 6;</span>
+<span class="fc" id="L65">		final XAffineTransform rotate = XAffineTransform.getRotateInstance(this.angle);</span>
+<span class="fc" id="L66">		XPoint2D middle = new XPoint2D(0, 0);</span>
+<span class="fc" id="L67">		XPoint2D left = new XPoint2D(0, -yAperture);</span>
+<span class="fc" id="L68">		XPoint2D base = new XPoint2D(-xWing, 0);</span>
+<span class="fc" id="L69">		XPoint2D lineTop = new XPoint2D(-xWing - 2, -lineHeight);</span>
+<span class="fc" id="L70">		XPoint2D lineBottom = new XPoint2D(-xWing - 2, lineHeight);</span>
+<span class="fc" id="L71">		XPoint2D right = new XPoint2D(0, yAperture);</span>
 
-<span class="nc" id="L73">		left = left.transform(rotate);</span>
-<span class="nc" id="L74">		base = base.transform(rotate);</span>
-<span class="nc" id="L75">		right = right.transform(rotate);</span>
-<span class="nc" id="L76">		lineTop = lineTop.transform(rotate);</span>
-<span class="nc" id="L77">		lineBottom = lineBottom.transform(rotate);</span>
+<span class="fc" id="L73">		left = left.transform(rotate);</span>
+<span class="fc" id="L74">		base = base.transform(rotate);</span>
+<span class="fc" id="L75">		right = right.transform(rotate);</span>
+<span class="fc" id="L76">		lineTop = lineTop.transform(rotate);</span>
+<span class="fc" id="L77">		lineBottom = lineBottom.transform(rotate);</span>
 
-<span class="nc" id="L79">		drawLine(ug, contact.getX(), contact.getY(), base, left);</span>
-<span class="nc" id="L80">		drawLine(ug, contact.getX(), contact.getY(), base, right);</span>
-<span class="nc" id="L81">		drawLine(ug, contact.getX(), contact.getY(), base, middle);</span>
-<span class="nc" id="L82">		drawLine(ug, contact.getX(), contact.getY(), lineTop, lineBottom);</span>
-<span class="nc" id="L83">	}</span>
+<span class="fc" id="L79">		drawLine(ug, contact.getX(), contact.getY(), base, left);</span>
+<span class="fc" id="L80">		drawLine(ug, contact.getX(), contact.getY(), base, right);</span>
+<span class="fc" id="L81">		drawLine(ug, contact.getX(), contact.getY(), base, middle);</span>
+<span class="fc" id="L82">		drawLine(ug, contact.getX(), contact.getY(), lineTop, lineBottom);</span>
+<span class="fc" id="L83">	}</span>
 
 	static private void drawLine(UGraphic ug, double x, double y, XPoint2D p1, XPoint2D p2) {
-<span class="nc" id="L86">		final double dx = p2.getX() - p1.getX();</span>
-<span class="nc" id="L87">		final double dy = p2.getY() - p1.getY();</span>
-<span class="nc" id="L88">		ug.apply(new UTranslate(x + p1.getX(), y + p1.getY())).draw(new ULine(dx, dy));</span>
-<span class="nc" id="L89">	}</span>
+<span class="fc" id="L86">		final double dx = p2.getX() - p1.getX();</span>
+<span class="fc" id="L87">		final double dy = p2.getY() - p1.getY();</span>
+<span class="fc" id="L88">		ug.apply(new UTranslate(x + p1.getX(), y + p1.getY())).draw(new ULine(dx, dy));</span>
+<span class="fc" id="L89">	}</span>
 
 	@Override
 	public double getDecorationLength() {
-<span class="nc" id="L93">		return 8;</span>
+<span class="fc" id="L93">		return 8;</span>
 	}
 
 }

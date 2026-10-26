@@ -77,10 +77,10 @@ public class UBrexCommandRankDir extends UBrexSingleLineCommand2&lt;TitledDiagra
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L80">		final String s = StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)).replace(' ', '_');</span>
-<span class="nc" id="L81">		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));</span>
+<span class="fc" id="L80">		final String s = StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)).replace(' ', '_');</span>
+<span class="fc" id="L81">		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));</span>
 		// diagram.setRankdir(Rankdir.valueOf(s));
-<span class="nc" id="L83">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L83">		return CommandExecutionResult.ok();</span>
 	}
 
 	// Declared by hand: FirstTokens only reads regex patterns, and this one is a UBrex expression.

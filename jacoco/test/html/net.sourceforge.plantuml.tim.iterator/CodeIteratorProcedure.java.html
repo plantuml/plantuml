@@ -69,8 +69,8 @@ public class CodeIteratorProcedure extends AbstractCodeIterator {
 			}
 
 <span class="fc bfc" id="L71" title="All 2 branches covered.">			if (functionsSet.pendingFunction() != null</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">					&amp;&amp; (functionsSet.pendingFunction().getFunctionType() == TFunctionType.PROCEDURE</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">							|| functionsSet.pendingFunction().getFunctionType() == TFunctionType.LEGACY_DEFINELONG)) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">					&amp;&amp; (functionsSet.pendingFunction().getFunctionType() == TFunctionType.PROCEDURE</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">							|| functionsSet.pendingFunction().getFunctionType() == TFunctionType.LEGACY_DEFINELONG)) {</span>
 <span class="fc" id="L74">				logs.add(result);</span>
 <span class="fc bfc" id="L75" title="All 2 branches covered.">				if (result.getType() == TLineType.END_FUNCTION) {</span>
 <span class="fc" id="L76">					functionsSet.executeEndfunction();</span>

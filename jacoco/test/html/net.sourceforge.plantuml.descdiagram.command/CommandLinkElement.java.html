@@ -147,10 +147,10 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 
 <span class="fc" id="L148">		LinkType result = new LinkType(d2, d1);</span>
 <span class="fc" id="L149">		final String queue = getQueue(arg);</span>
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (queue.contains(&quot;.&quot;))</span>
-<span class="nc" id="L151">			result = result.goDashed();</span>
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		else if (queue.contains(&quot;~&quot;))</span>
-<span class="nc" id="L153">			result = result.goDotted();</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (queue.contains(&quot;.&quot;))</span>
+<span class="fc" id="L151">			result = result.goDashed();</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		else if (queue.contains(&quot;~&quot;))</span>
+<span class="fc" id="L153">			result = result.goDotted();</span>
 <span class="pc bpc" id="L154" title="1 of 2 branches missed.">		else if (queue.contains(&quot;=&quot;))</span>
 <span class="nc" id="L155">			result = result.goBold();</span>
 

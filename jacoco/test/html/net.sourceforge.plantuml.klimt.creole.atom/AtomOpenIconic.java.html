@@ -53,35 +53,35 @@ public class AtomOpenIconic extends AbstractAtom implements Atom {
 	private final HColor color;
 
 	public AtomOpenIconic(HColor newColor, double scale, OpenIconic openIconic, FontConfiguration fontConfiguration,
-<span class="nc" id="L56">			Url url) {</span>
-<span class="nc" id="L57">		this.url = url;</span>
-<span class="nc" id="L58">		this.openIconic = openIconic;</span>
-<span class="nc" id="L59">		this.factor = scale * fontConfiguration.getSize2D() / 12.0;</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		this.color = newColor == null ? fontConfiguration.getColor() : newColor;</span>
-<span class="nc" id="L61">	}</span>
+<span class="fc" id="L56">			Url url) {</span>
+<span class="fc" id="L57">		this.url = url;</span>
+<span class="fc" id="L58">		this.openIconic = openIconic;</span>
+<span class="fc" id="L59">		this.factor = scale * fontConfiguration.getSize2D() / 12.0;</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		this.color = newColor == null ? fontConfiguration.getColor() : newColor;</span>
+<span class="fc" id="L61">	}</span>
 
 	private TextBlock asTextBlock() {
-<span class="nc" id="L64">		return TextBlockUtils.withMargin(openIconic.asTextBlock(color, factor), 1, 0);</span>
+<span class="fc" id="L64">		return TextBlockUtils.withMargin(openIconic.asTextBlock(color, factor), 1, 0);</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L69">		return asTextBlock().calculateDimension(stringBounder);</span>
+<span class="fc" id="L69">		return asTextBlock().calculateDimension(stringBounder);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L73">		return -3 * factor;</span>
+<span class="fc" id="L73">		return -3 * factor;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (url != null)</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (url != null)</span>
 <span class="nc" id="L78">			ug.startUrl(url);</span>
 
-<span class="nc" id="L80">		asTextBlock().drawU(ug);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (url != null)</span>
+<span class="fc" id="L80">		asTextBlock().drawU(ug);</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (url != null)</span>
 <span class="nc" id="L82">			ug.closeUrl();</span>
 
-<span class="nc" id="L84">	}</span>
+<span class="fc" id="L84">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

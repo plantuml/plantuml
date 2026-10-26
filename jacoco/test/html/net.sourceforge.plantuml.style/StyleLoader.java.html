@@ -146,7 +146,7 @@ public final class StyleLoader {
 	public static InputStream getInputStreamForStyle(String filename) throws IOException {
 
 <span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L149">			return EmbeddedResources.openPlantumlSkin();</span>
+<span class="nc" id="L149">			return EmbeddedResources.openSkin(filename);</span>
 		} else {
 <span class="fc" id="L151">			InputStream is = null;</span>
 

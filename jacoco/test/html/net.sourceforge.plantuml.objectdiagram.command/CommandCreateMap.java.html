@@ -81,7 +81,7 @@ public class CommandCreateMap extends CommandMultilines2&lt;AbstractEntityDiagra
 <span class="fc" id="L81">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;map&quot;);</span>
 
 <span class="fc" id="L83">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L84">			() -&gt; Pattern2.cmpile(&quot;^[%s]*\\}[%s]*$&quot;));</span>
+<span class="fc" id="L84">			() -&gt; Pattern2.cmpile(&quot;^[%s]*\\}[%s]*$&quot;));</span>
 
 	public CommandCreateMap() {
 <span class="fc" id="L87">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
@@ -164,21 +164,21 @@ public class CommandCreateMap extends CommandMultilines2&lt;AbstractEntityDiagra
 	@Override
 	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L167">		lines = lines.trim().removeEmptyLines();</span>
-<span class="nc" id="L168">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L169">		final Entity entity1 = executeArg0(lines.getLocation(), diagram, line0);</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (entity1 == null)</span>
+<span class="fc" id="L167">		lines = lines.trim().removeEmptyLines();</span>
+<span class="fc" id="L168">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L169">		final Entity entity1 = executeArg0(lines.getLocation(), diagram, line0);</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (entity1 == null)</span>
 <span class="nc" id="L171">			return CommandExecutionResult.error(&quot;Map already exists: &quot; + line0.get(&quot;NAME&quot;, 1));</span>
 
-<span class="nc" id="L173">		lines = lines.subExtract(1, 1);</span>
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		for (StringLocated sl : lines) {</span>
-<span class="nc" id="L175">			final String line = sl.getString();</span>
-<span class="nc bnc" id="L176" title="All 4 branches missed.">			if (TeaVM.a()) assert line.length() &gt; 0;</span>
-<span class="nc" id="L177">			final boolean ok = entity1.getBodier().addFieldOrMethod(line);</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">			if (ok == false)</span>
+<span class="fc" id="L173">		lines = lines.subExtract(1, 1);</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		for (StringLocated sl : lines) {</span>
+<span class="fc" id="L175">			final String line = sl.getString();</span>
+<span class="pc bpc" id="L176" title="2 of 4 branches missed.">			if (TeaVM.a()) assert line.length() &gt; 0;</span>
+<span class="fc" id="L177">			final boolean ok = entity1.getBodier().addFieldOrMethod(line);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">			if (ok == false)</span>
 <span class="nc" id="L179">				return CommandExecutionResult.error(&quot;Map definition should contains key =&gt; value&quot;);</span>
 
-<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (BodierMap.getLinkedEntry(line) != null) {</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">			if (BodierMap.getLinkedEntry(line) != null) {</span>
 <span class="nc" id="L182">				final String linkStr = BodierMap.getLinkedEntry(line);</span>
 <span class="nc" id="L183">				final int x = line.indexOf(linkStr);</span>
 <span class="nc" id="L184">				final String key = line.substring(0, x).trim();</span>
@@ -196,44 +196,44 @@ public class CommandCreateMap extends CommandMultilines2&lt;AbstractEntityDiagra
 <span class="nc" id="L196">				link.setPortMembers(key, null);</span>
 <span class="nc" id="L197">				diagram.addLink(link);</span>
 			}
-<span class="nc" id="L199">		}</span>
-<span class="nc" id="L200">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L199">		}</span>
+<span class="fc" id="L200">		return CommandExecutionResult.ok();</span>
 	}
 
 	private Entity executeArg0(LineLocation location, AbstractEntityDiagram diagram, RegexResult line0)
 			throws NoSuchColorException {
-<span class="nc" id="L205">		final String name = line0.get(&quot;NAME&quot;, 1);</span>
+<span class="fc" id="L205">		final String name = line0.get(&quot;NAME&quot;, 1);</span>
 
-<span class="nc" id="L207">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(name));</span>
-<span class="nc" id="L208">		final String displayString = line0.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L209">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L207">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(name));</span>
+<span class="fc" id="L208">		final String displayString = line0.get(&quot;NAME&quot;, 0);</span>
+<span class="fc" id="L209">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="nc bnc" id="L211" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (quark.getData() != null)</span>
 <span class="nc" id="L212">			return null;</span>
 
-<span class="nc" id="L214">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
-<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (Display.isNull(display))</span>
-<span class="nc" id="L216">			display = Display.getWithNewlines(diagram.getPragma(), name).withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
+<span class="fc" id="L214">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (Display.isNull(display))</span>
+<span class="fc" id="L216">			display = Display.getWithNewlines(diagram.getPragma(), name).withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
 
-<span class="nc" id="L218">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.MAP, null);</span>
-<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="fc" id="L218">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.MAP, null);</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (stereotype != null)</span>
 <span class="nc" id="L220">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
 <span class="nc" id="L221">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
 <span class="nc" id="L222">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="nc" id="L224">		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L225">		final String s = line0.get(&quot;LINECOLOR&quot;, 1);</span>
+<span class="fc" id="L224">		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L225">		final String s = line0.get(&quot;LINECOLOR&quot;, 1);</span>
 
-<span class="nc bnc" id="L227" title="All 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (lineColor != null)</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">		if (lineColor != null)</span>
 <span class="nc" id="L229">			colors = colors.add(ColorType.LINE, lineColor);</span>
 
-<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (line0.get(&quot;LINECOLOR&quot;, 0) != null)</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (line0.get(&quot;LINECOLOR&quot;, 0) != null)</span>
 <span class="nc" id="L232">			colors = colors.addLegacyStroke(line0.get(&quot;LINECOLOR&quot;, 0));</span>
 
-<span class="nc" id="L234">		entity.setColors(colors);</span>
+<span class="fc" id="L234">		entity.setColors(colors);</span>
 
-<span class="nc" id="L236">		return entity;</span>
+<span class="fc" id="L236">		return entity;</span>
 	}
 
 	@Override

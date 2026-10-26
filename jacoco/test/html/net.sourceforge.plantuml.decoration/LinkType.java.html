@@ -117,11 +117,11 @@ public class LinkType {
 	}
 
 	public LinkType goDotted() {
-<span class="nc" id="L120">		return new LinkType(decor1, decor2, middleDecor, LinkStyle.DOTTED());</span>
+<span class="fc" id="L120">		return new LinkType(decor1, decor2, middleDecor, LinkStyle.DOTTED());</span>
 	}
 
 	public LinkType goThickness(double thickness) {
-<span class="nc" id="L124">		return new LinkType(decor1, decor2, middleDecor, linkStyle.goThickness(thickness));</span>
+<span class="fc" id="L124">		return new LinkType(decor1, decor2, middleDecor, linkStyle.goThickness(thickness));</span>
 	}
 
 	public LinkType goBold() {
@@ -243,8 +243,8 @@ public class LinkType {
 	}
 
 	public UStroke getStroke3(UStroke defaultThickness) {
-<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (linkStyle.isThicknessOverrided())</span>
-<span class="nc" id="L247">			return linkStyle.getStroke3();</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">		if (linkStyle.isThicknessOverrided())</span>
+<span class="fc" id="L247">			return linkStyle.getStroke3();</span>
 
 <span class="fc bfc" id="L249" title="All 2 branches covered.">		if (defaultThickness == null)</span>
 <span class="fc" id="L250">			return linkStyle.getStroke3();</span>
@@ -295,16 +295,16 @@ public class LinkType {
 <span class="pc bpc" id="L295" title="1 of 2 branches missed.">		if (has(LinkDecor.NOT_NAVIGABLE))</span>
 <span class="nc" id="L296">			return &quot;not_navigable&quot;;</span>
 		
-<span class="pc bpc" id="L298" title="1 of 2 branches missed.">		if (hasAny(LinkDecor.CROWFOOT, LinkDecor.CIRCLE_CROWFOOT, LinkDecor.LINE_CROWFOOT))</span>
-<span class="nc" id="L299">			return &quot;crowfoot&quot;;</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">		if (hasAny(LinkDecor.CROWFOOT, LinkDecor.CIRCLE_CROWFOOT, LinkDecor.LINE_CROWFOOT))</span>
+<span class="fc" id="L299">			return &quot;crowfoot&quot;;</span>
 		
-<span class="pc bpc" id="L301" title="2 of 4 branches missed.">		if (hasAny(LinkDecor.CIRCLE_LINE, LinkDecor.DOUBLE_LINE) || bothNone())</span>
+<span class="pc bpc" id="L301" title="1 of 4 branches missed.">		if (hasAny(LinkDecor.CIRCLE_LINE, LinkDecor.DOUBLE_LINE) || bothNone())</span>
 <span class="fc" id="L302">			return &quot;association&quot;;</span>
 		
-<span class="nc bnc" id="L304" title="All 2 branches missed.">		if (has(LinkDecor.PLUS))</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		if (has(LinkDecor.PLUS))</span>
 <span class="nc" id="L305">			return &quot;nested&quot;;</span>
 		
-<span class="nc" id="L307">		return null;</span>
+<span class="fc" id="L307">		return null;</span>
 	}
 
 	private boolean has(LinkDecor decor) {
@@ -320,7 +320,7 @@ public class LinkType {
 	}
 
 	private boolean bothNone() {
-<span class="pc bpc" id="L323" title="2 of 4 branches missed.">		return decor1 == LinkDecor.NONE &amp;&amp; decor2 == LinkDecor.NONE;</span>
+<span class="pc bpc" id="L323" title="1 of 4 branches missed.">		return decor1 == LinkDecor.NONE &amp;&amp; decor2 == LinkDecor.NONE;</span>
 	}
 
 }

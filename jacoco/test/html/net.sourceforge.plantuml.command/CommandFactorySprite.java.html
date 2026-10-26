@@ -151,7 +151,7 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand&lt;
 			@Override
 			protected CommandExecutionResult executeArg(final TitledDiagram system, LineLocation location,
 					RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L154">				return executeInternal(system, arg, Arrays.asList((String) arg.get(&quot;DATA&quot;, 0)));</span>
+<span class="fc" id="L154">				return executeInternal(system, arg, Arrays.asList((String) arg.get(&quot;DATA&quot;, 0)));</span>
 			}
 
 		};
@@ -206,11 +206,11 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand&lt;
 <span class="nc" id="L206">					return CommandExecutionResult.error(&quot;Only 4, 8 or 16 graylevel are allowed.&quot;);</span>
 
 <span class="fc" id="L208">				final SpriteGrayLevel level = SpriteGrayLevel.get(nbLevel);</span>
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">				if (line0.get(&quot;DIM&quot;, 3) == null) {</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">				if (line0.get(&quot;DIM&quot;, 3) == null) {</span>
 <span class="fc" id="L210">					sprite = level.buildSprite(width, height, strings);</span>
 				} else {
-<span class="nc" id="L212">					sprite = level.buildSpriteZ(width, height, concat(strings));</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">					if (sprite == null)</span>
+<span class="fc" id="L212">					sprite = level.buildSpriteZ(width, height, concat(strings));</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">					if (sprite == null)</span>
 <span class="nc" id="L214">						return CommandExecutionResult.error(&quot;Cannot decode sprite.&quot;);</span>
 
 				}
@@ -223,11 +223,11 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand&lt;
 	}
 
 	private String concat(final List&lt;String&gt; strings) {
-<span class="nc" id="L226">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L227" title="All 2 branches missed.">		for (String s : strings)</span>
-<span class="nc" id="L228">			sb.append(StringUtils.trin(s));</span>
+<span class="fc" id="L226">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		for (String s : strings)</span>
+<span class="fc" id="L228">			sb.append(StringUtils.trin(s));</span>
 
-<span class="nc" id="L230">		return sb.toString();</span>
+<span class="fc" id="L230">		return sb.toString();</span>
 	}
 
 }

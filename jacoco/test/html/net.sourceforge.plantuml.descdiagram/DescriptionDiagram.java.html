@@ -55,8 +55,8 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 
 	@Override
 	public String cleanId(String id) {
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (id == null)</span>
-<span class="nc" id="L59">			return null;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (id == null)</span>
+<span class="fc" id="L59">			return null;</span>
 <span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (id.startsWith(&quot;()&quot;))</span>
 <span class="nc" id="L61">			id = StringUtils.trin(id.substring(2));</span>
 <span class="pc bpc" id="L62" title="1 of 4 branches missed.">		if (id.startsWith(&quot;:&quot;) &amp;&amp; id.endsWith(&quot;:/&quot;))</span>
@@ -70,7 +70,7 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 <span class="fc bfc" id="L70" title="All 2 branches covered.">		for (Entity leaf : this.leafs()) {</span>
 <span class="fc" id="L71">			final LeafType type = leaf.getLeafType();</span>
 <span class="fc" id="L72">			final USymbol usymbol = leaf.getUSymbol();</span>
-<span class="pc bpc" id="L73" title="1 of 4 branches missed.">			if (type == LeafType.USECASE || usymbol == getSkinParam().actorStyle().toUSymbol())</span>
+<span class="fc bfc" id="L73" title="All 4 branches covered.">			if (type == LeafType.USECASE || usymbol == getSkinParam().actorStyle().toUSymbol())</span>
 <span class="fc" id="L74">				return true;</span>
 
 <span class="fc" id="L76">		}</span>

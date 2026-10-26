@@ -73,12 +73,12 @@ public class CommandProperty extends SingleLineCommand2&lt;NwDiagram&gt; {
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L76">		return diagram.setProperty(arg.get(&quot;NAME&quot;, 0), arg.get(&quot;VALUE&quot;, 0));</span>
+<span class="fc" id="L76">		return diagram.setProperty(arg.get(&quot;NAME&quot;, 0), arg.get(&quot;VALUE&quot;, 0));</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="nc" id="L81">		return FIRST_TOKENS;</span>
+<span class="fc" id="L81">		return FIRST_TOKENS;</span>
 	}
 
 }

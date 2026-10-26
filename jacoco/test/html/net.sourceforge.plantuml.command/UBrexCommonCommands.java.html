@@ -74,41 +74,42 @@ public final class UBrexCommonCommands {
 <span class="nc" id="L74">		cmds.add(factorySpriteCommand.createMultiLine(false));</span>
 <span class="nc" id="L75">		cmds.add(factorySpriteCommand.createSingleLine());</span>
 <span class="nc" id="L76">		cmds.add(CommandSpriteSvg.ME);</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L78">			cmds.add(CommandSpriteStdlib.ME);</span>
-<span class="nc" id="L79">			cmds.add(CommandSpriteStdlibSvg.ME);</span>
+		// The C build embeds the sprites of the standard library
+<span class="nc bnc" id="L78" title="All 4 branches missed.">		if (!TeaVM.isTeaVM() || TeaVM.isC()) {</span>
+<span class="nc" id="L79">			cmds.add(CommandSpriteStdlib.ME);</span>
+<span class="nc" id="L80">			cmds.add(CommandSpriteStdlibSvg.ME);</span>
 		}
-<span class="nc" id="L81">		cmds.add(CommandSpriteSvgMultiline.ME);</span>
-<span class="nc" id="L82">		cmds.add(CommandSpriteFile.ME);</span>
+<span class="nc" id="L82">		cmds.add(CommandSpriteSvgMultiline.ME);</span>
+<span class="nc" id="L83">		cmds.add(CommandSpriteFile.ME);</span>
 
-<span class="nc" id="L84">		cmds.add(CommandStyleSingleLineCSS.ME);</span>
-<span class="nc" id="L85">		cmds.add(CommandStyleMultilinesCSS.ME);</span>
-<span class="nc" id="L86">		cmds.add(CommandStyleImport.ME);</span>
+<span class="nc" id="L85">		cmds.add(CommandStyleSingleLineCSS.ME);</span>
+<span class="nc" id="L86">		cmds.add(CommandStyleMultilinesCSS.ME);</span>
+<span class="nc" id="L87">		cmds.add(CommandStyleImport.ME);</span>
 
-<span class="nc" id="L88">	}</span>
+<span class="nc" id="L89">	}</span>
 
 	static public void addCommonHides(List&lt;Command&gt; cmds) {
-<span class="nc" id="L91">		cmds.add(CommandHideEmptyDescription.ME);</span>
-<span class="nc" id="L92">		cmds.add(CommandHideShowByVisibility.ME);</span>
-<span class="nc" id="L93">		cmds.add(CommandHideShowByGender.ME);</span>
-<span class="nc" id="L94">	}</span>
+<span class="nc" id="L92">		cmds.add(CommandHideEmptyDescription.ME);</span>
+<span class="nc" id="L93">		cmds.add(CommandHideShowByVisibility.ME);</span>
+<span class="nc" id="L94">		cmds.add(CommandHideShowByGender.ME);</span>
+<span class="nc" id="L95">	}</span>
 
 	static public void addTitleCommands(List&lt;Command&gt; cmds) {
-<span class="nc" id="L97">		cmds.add(CommandTitle.ME);</span>
-<span class="nc" id="L98">		cmds.add(CommandMainframe.ME);</span>
-<span class="nc" id="L99">		cmds.add(CommandCaption.ME);</span>
-<span class="nc" id="L100">		cmds.add(CommandMultilinesCaption.ME);</span>
-<span class="nc" id="L101">		cmds.add(CommandMultilinesTitle.ME);</span>
-<span class="nc" id="L102">		cmds.add(CommandMultilinesLegend.ME);</span>
-<span class="nc" id="L103">		cmds.add(CommandLegend.ME);</span>
+<span class="nc" id="L98">		cmds.add(CommandTitle.ME);</span>
+<span class="nc" id="L99">		cmds.add(CommandMainframe.ME);</span>
+<span class="nc" id="L100">		cmds.add(CommandCaption.ME);</span>
+<span class="nc" id="L101">		cmds.add(CommandMultilinesCaption.ME);</span>
+<span class="nc" id="L102">		cmds.add(CommandMultilinesTitle.ME);</span>
+<span class="nc" id="L103">		cmds.add(CommandMultilinesLegend.ME);</span>
+<span class="nc" id="L104">		cmds.add(CommandLegend.ME);</span>
 
-<span class="nc" id="L105">		cmds.add(CommandFooter.ME);</span>
-<span class="nc" id="L106">		cmds.add(CommandMultilinesFooter.ME);</span>
+<span class="nc" id="L106">		cmds.add(CommandFooter.ME);</span>
+<span class="nc" id="L107">		cmds.add(CommandMultilinesFooter.ME);</span>
 
-<span class="nc" id="L108">		cmds.add(CommandHeader.ME);</span>
-<span class="nc" id="L109">		cmds.add(CommandMultilinesHeader.ME);</span>
-<span class="nc" id="L110">		cmds.add(CommandNamespaceSeparator.ME);</span>
-<span class="nc" id="L111">	}</span>
+<span class="nc" id="L109">		cmds.add(CommandHeader.ME);</span>
+<span class="nc" id="L110">		cmds.add(CommandMultilinesHeader.ME);</span>
+<span class="nc" id="L111">		cmds.add(CommandNamespaceSeparator.ME);</span>
+<span class="nc" id="L112">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

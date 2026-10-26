@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.nwdiag.next;
 
 import java.util.Objects;
 
-<span class="nc" id="L39">public class NBar implements Staged {</span>
+<span class="fc" id="L39">public class NBar implements Staged {</span>
 
 	private NBox parent;
 	private NStage start;
@@ -48,37 +48,37 @@ import java.util.Objects;
 	}
 
 	public final NBox getParent() {
-<span class="nc" id="L51">		return parent;</span>
+<span class="fc" id="L51">		return parent;</span>
 	}
 
 	public final void setParent(NBox parent) {
-<span class="nc" id="L55">		this.parent = parent;</span>
-<span class="nc" id="L56">	}</span>
+<span class="fc" id="L55">		this.parent = parent;</span>
+<span class="fc" id="L56">	}</span>
 
 	@Override
 	public final NStage getStart() {
-<span class="nc" id="L60">		return start;</span>
+<span class="fc" id="L60">		return start;</span>
 	}
 
 	@Override
 	public final NStage getEnd() {
-<span class="nc" id="L65">		return end;</span>
+<span class="fc" id="L65">		return end;</span>
 	}
 
 	public void addStage(NStage stage) {
-<span class="nc" id="L69">		Objects.requireNonNull(stage);</span>
-<span class="nc bnc" id="L70" title="All 4 branches missed.">		if (start == null &amp;&amp; end == null) {</span>
-<span class="nc" id="L71">			this.start = stage;</span>
-<span class="nc" id="L72">			this.end = stage;</span>
+<span class="fc" id="L69">		Objects.requireNonNull(stage);</span>
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">		if (start == null &amp;&amp; end == null) {</span>
+<span class="fc" id="L71">			this.start = stage;</span>
+<span class="fc" id="L72">			this.end = stage;</span>
 		} else {
-<span class="nc" id="L74">			this.start = NStage.getMin(this.start, stage);</span>
-<span class="nc" id="L75">			this.end = NStage.getMax(this.end, stage);</span>
+<span class="fc" id="L74">			this.start = NStage.getMin(this.start, stage);</span>
+<span class="fc" id="L75">			this.end = NStage.getMax(this.end, stage);</span>
 		}
-<span class="nc" id="L77">	}</span>
+<span class="fc" id="L77">	}</span>
 
 	@Override
 	public int getNWidth() {
-<span class="nc" id="L81">		return 1;</span>
+<span class="fc" id="L81">		return 1;</span>
 	}
 
 	@Override

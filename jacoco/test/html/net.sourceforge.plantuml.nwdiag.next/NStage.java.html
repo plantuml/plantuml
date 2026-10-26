@@ -38,9 +38,9 @@ public class NStage implements Comparable&lt;NStage&gt; {
 
 	private final int number;
 
-<span class="nc" id="L41">	public NStage(int number) {</span>
-<span class="nc" id="L42">		this.number = number;</span>
-<span class="nc" id="L43">	}</span>
+<span class="fc" id="L41">	public NStage(int number) {</span>
+<span class="fc" id="L42">		this.number = number;</span>
+<span class="fc" id="L43">	}</span>
 
 	@Override
 	public String toString() {
@@ -53,21 +53,21 @@ public class NStage implements Comparable&lt;NStage&gt; {
 	}
 
 	public int getNumber() {
-<span class="nc" id="L56">		return number;</span>
+<span class="fc" id="L56">		return number;</span>
 	}
 
 	public static NStage getMin(NStage stage1, NStage stage2) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (stage1.number &lt; stage2.number)</span>
-<span class="nc" id="L61">			return stage1;</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		if (stage1.number &lt; stage2.number)</span>
+<span class="fc" id="L61">			return stage1;</span>
 
-<span class="nc" id="L63">		return stage2;</span>
+<span class="fc" id="L63">		return stage2;</span>
 	}
 
 	public static NStage getMax(NStage stage1, NStage stage2) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (stage1.number &gt; stage2.number)</span>
-<span class="nc" id="L68">			return stage1;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">		if (stage1.number &gt; stage2.number)</span>
+<span class="fc" id="L68">			return stage1;</span>
 
-<span class="nc" id="L70">		return stage2;</span>
+<span class="fc" id="L70">		return stage2;</span>
 	}
 
 }

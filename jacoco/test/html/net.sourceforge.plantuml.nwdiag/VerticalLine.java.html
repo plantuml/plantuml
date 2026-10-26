@@ -60,30 +60,30 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc" id="L60">		double current = y1;</span>
 <span class="fc" id="L61">		UPath path = UPath.none();</span>
 <span class="fc" id="L62">		path.moveTo(0, current);</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		for (Double step : skip) {</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">			if (step &lt; y1) {</span>
-<span class="nc" id="L65">				continue;</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		for (Double step : skip) {</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">			if (step &lt; y1) {</span>
+<span class="fc" id="L65">				continue;</span>
 			}
-<span class="nc bnc" id="L67" title="All 4 branches missed.">			if (TeaVM.a()) assert step &gt;= y1;</span>
-<span class="nc" id="L68">			drawn = true;</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">			if (step == y2) {</span>
-<span class="nc" id="L70">				path.lineTo(0, y2);</span>
+<span class="pc bpc" id="L67" title="2 of 4 branches missed.">			if (TeaVM.a()) assert step &gt;= y1;</span>
+<span class="fc" id="L68">			drawn = true;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">			if (step == y2) {</span>
+<span class="fc" id="L70">				path.lineTo(0, y2);</span>
 			} else {
-<span class="nc" id="L72">				path.lineTo(0, Math.min(y2, step - 3));</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">				if (y2 &gt; step) {</span>
-<span class="nc" id="L74">					path.arcTo(4, 4, 0, 0, 1, 0, step + 9);</span>
-<span class="nc" id="L75">					continue;</span>
+<span class="fc" id="L72">				path.lineTo(0, Math.min(y2, step - 3));</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">				if (y2 &gt; step) {</span>
+<span class="fc" id="L74">					path.arcTo(4, 4, 0, 0, 1, 0, step + 9);</span>
+<span class="fc" id="L75">					continue;</span>
 				}
 			}
-<span class="nc" id="L78">			ug.draw(path);</span>
-<span class="nc" id="L79">			path = UPath.none();</span>
-<span class="nc" id="L80">			current = step + 9;</span>
-<span class="nc" id="L81">			path.moveTo(0, current);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">			if (current &gt;= y2) {</span>
-<span class="nc" id="L83">				break;</span>
+<span class="fc" id="L78">			ug.draw(path);</span>
+<span class="fc" id="L79">			path = UPath.none();</span>
+<span class="fc" id="L80">			current = step + 9;</span>
+<span class="fc" id="L81">			path.moveTo(0, current);</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			if (current &gt;= y2) {</span>
+<span class="fc" id="L83">				break;</span>
 			}
 <span class="nc" id="L85">		}</span>
-<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (drawn == false) {</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (drawn == false) {</span>
 <span class="fc" id="L87">			path.lineTo(0, y2);</span>
 <span class="fc" id="L88">			ug.draw(path);</span>
 		}

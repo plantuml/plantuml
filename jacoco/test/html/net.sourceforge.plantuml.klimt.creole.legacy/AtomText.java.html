@@ -99,7 +99,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 <span class="fc bfc" id="L99" title="All 2 branches covered.">			if (c == '&amp;') {</span>
 				// Try to match &amp;#[0-9]+;
 <span class="fc" id="L101">				int j = i + 1;</span>
-<span class="pc bpc" id="L102" title="2 of 4 branches missed.">				if (j &lt; len &amp;&amp; s.charAt(j) == '#') {</span>
+<span class="pc bpc" id="L102" title="1 of 4 branches missed.">				if (j &lt; len &amp;&amp; s.charAt(j) == '#') {</span>
 <span class="nc" id="L103">					j++;</span>
 <span class="nc" id="L104">					final int start = j;</span>
 <span class="nc bnc" id="L105" title="All 2 branches missed.">					while (j &lt; len) {</span>
@@ -148,7 +148,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 			}
 
 <span class="fc bfc" id="L150" title="All 2 branches covered.">			if (replacement != null) {</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">				if (sb == null) {</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">				if (sb == null) {</span>
 <span class="fc" id="L152">					sb = new StringBuilder(len);</span>
 <span class="fc" id="L153">					sb.append(s, 0, i);</span>
 				}
@@ -205,8 +205,8 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 <span class="fc" id="L206">			final FontConfiguration useFontConfiguration = fontConfiguration.adjustColorForBackground(ug);</span>
 
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">			if (marginLeft != AtomTextUtils.ZERO)</span>
-<span class="nc" id="L209">				ug = ug.apply(UTranslate.dx(marginLeft.getDouble(ug.getStringBounder())));</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">			if (marginLeft != AtomTextUtils.ZERO)</span>
+<span class="fc" id="L209">				ug = ug.apply(UTranslate.dx(marginLeft.getDouble(ug.getStringBounder())));</span>
 
 <span class="fc" id="L211">			final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
 

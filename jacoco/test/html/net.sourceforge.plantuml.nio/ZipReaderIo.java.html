@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ZipReaderIo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.nio</a> &gt; <span class="el_source">ZipReaderIo.java</span></div><h1>ZipReaderIo.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.nio;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sourceforge.plantuml.code.deflate.ByteBitInputStream;
+import net.sourceforge.plantuml.code.deflate.Decompressor;
+
+/**
+ * Reads a ZIP archive with java.io only, for the C build, where
+ * java.util.zip.ZipFile is not available. The archive is read whole in memory,
+ * its central directory gives the entries, and the deflated ones go through the
+ * pure Java inflater of PlantUML.
+ * &lt;p&gt;
+ * Neither encryption nor multi-volume archives are supported.
+ */
+final class ZipReaderIo {
+
+	private static final int METHOD_STORED = 0;
+	private static final int METHOD_DEFLATED = 8;
+
+	private static final class Entry {
+		private final int method;
+		private final long compressedSize;
+		private final long size;
+		private final long localHeaderOffset;
+
+<span class="nc" id="L69">		private Entry(int method, long compressedSize, long size, long localHeaderOffset) {</span>
+<span class="nc" id="L70">			this.method = method;</span>
+<span class="nc" id="L71">			this.compressedSize = compressedSize;</span>
+<span class="nc" id="L72">			this.size = size;</span>
+<span class="nc" id="L73">			this.localHeaderOffset = localHeaderOffset;</span>
+<span class="nc" id="L74">		}</span>
+	}
+
+	// The last archive read: the same one is asked again for each include
+	private static ZipReaderIo last;
+
+	private final String key;
+	private final byte[] data;
+<span class="nc" id="L82">	private final Map&lt;String, Entry&gt; entries = new HashMap&lt;String, Entry&gt;();</span>
+
+<span class="nc" id="L84">	private ZipReaderIo(String key, byte[] data) {</span>
+<span class="nc" id="L85">		this.key = key;</span>
+<span class="nc" id="L86">		this.data = data;</span>
+<span class="nc" id="L87">	}</span>
+
+	/**
+	 * The reader of this file, or null if it is not a readable ZIP archive.
+	 */
+	static ZipReaderIo open(File file) throws IOException {
+<span class="nc bnc" id="L93" title="All 4 branches missed.">		if (file.isFile() == false || file.canRead() == false)</span>
+<span class="nc" id="L94">			return null;</span>
+
+<span class="nc" id="L96">		final String key = file.getAbsolutePath() + &quot;|&quot; + file.length() + &quot;|&quot; + file.lastModified();</span>
+<span class="nc bnc" id="L97" title="All 4 branches missed.">		if (last != null &amp;&amp; last.key.equals(key))</span>
+<span class="nc" id="L98">			return last;</span>
+
+<span class="nc" id="L100">		final ZipReaderIo result = new ZipReaderIo(key, readAll(file));</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (result.readCentralDirectory() == false)</span>
+<span class="nc" id="L102">			return null;</span>
+
+<span class="nc" id="L104">		last = result;</span>
+<span class="nc" id="L105">		return result;</span>
+	}
+
+	private static byte[] readAll(File file) throws IOException {
+<span class="nc" id="L109">		final InputStream is = new FileInputStream(file);</span>
+		try {
+<span class="nc" id="L111">			final byte[] result = new byte[(int) file.length()];</span>
+<span class="nc" id="L112">			int done = 0;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			while (done &lt; result.length) {</span>
+<span class="nc" id="L114">				final int n = is.read(result, done, result.length - done);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">				if (n &lt; 0)</span>
+<span class="nc" id="L116">					break;</span>
+<span class="nc" id="L117">				done += n;</span>
+<span class="nc" id="L118">			}</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (done &lt; result.length) {</span>
+<span class="nc" id="L120">				final byte[] shorter = new byte[done];</span>
+<span class="nc" id="L121">				System.arraycopy(result, 0, shorter, 0, done);</span>
+<span class="nc" id="L122">				return shorter;</span>
+			}
+<span class="nc" id="L124">			return result;</span>
+		} finally {
+<span class="nc" id="L126">			is.close();</span>
+		}
+	}
+
+	private int u16(int pos) {
+<span class="nc" id="L131">		return (data[pos] &amp; 0xFF) | ((data[pos + 1] &amp; 0xFF) &lt;&lt; 8);</span>
+	}
+
+	private long u32(int pos) {
+<span class="nc" id="L135">		return (u16(pos) &amp; 0xFFFFL) | ((u16(pos + 2) &amp; 0xFFFFL) &lt;&lt; 16);</span>
+	}
+
+	private boolean readCentralDirectory() {
+		// End of central directory record: 22 bytes, then an optional comment
+<span class="nc" id="L140">		int end = -1;</span>
+<span class="nc bnc" id="L141" title="All 4 branches missed.">		for (int pos = data.length - 22; pos &gt;= 0 &amp;&amp; pos &gt;= data.length - 22 - 0xFFFF; pos--)</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (u32(pos) == 0x06054b50L) {</span>
+<span class="nc" id="L143">				end = pos;</span>
+<span class="nc" id="L144">				break;</span>
+			}
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (end == -1)</span>
+<span class="nc" id="L147">			return false;</span>
+
+<span class="nc" id="L149">		final int count = u16(end + 10);</span>
+<span class="nc" id="L150">		long pos = u32(end + 16);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		for (int i = 0; i &lt; count; i++) {</span>
+<span class="nc bnc" id="L152" title="All 6 branches missed.">			if (pos &lt; 0 || pos + 46 &gt; data.length || u32((int) pos) != 0x02014b50L)</span>
+<span class="nc" id="L153">				return false;</span>
+
+<span class="nc" id="L155">			final int p = (int) pos;</span>
+<span class="nc" id="L156">			final int method = u16(p + 10);</span>
+<span class="nc" id="L157">			final long compressedSize = u32(p + 20);</span>
+<span class="nc" id="L158">			final long size = u32(p + 24);</span>
+<span class="nc" id="L159">			final int nameLength = u16(p + 28);</span>
+<span class="nc" id="L160">			final int extraLength = u16(p + 30);</span>
+<span class="nc" id="L161">			final int commentLength = u16(p + 32);</span>
+<span class="nc" id="L162">			final long localHeaderOffset = u32(p + 42);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (p + 46 + nameLength &gt; data.length)</span>
+<span class="nc" id="L164">				return false;</span>
+
+<span class="nc" id="L166">			final String name = new String(data, p + 46, nameLength, StandardCharsets.UTF_8);</span>
+<span class="nc" id="L167">			entries.put(name, new Entry(method, compressedSize, size, localHeaderOffset));</span>
+<span class="nc" id="L168">			pos = p + 46L + nameLength + extraLength + commentLength;</span>
+		}
+<span class="nc" id="L170">		return true;</span>
+	}
+
+	/**
+	 * Whether this is a file (not a directory) of the archive.
+	 */
+	boolean contains(String name) {
+<span class="nc bnc" id="L177" title="All 4 branches missed.">		return entries.containsKey(name) &amp;&amp; name.endsWith(&quot;/&quot;) == false;</span>
+	}
+
+	/**
+	 * The uncompressed content of this entry, or null if there is none.
+	 */
+	byte[] read(String name) throws IOException {
+<span class="nc" id="L184">		final Entry entry = entries.get(name);</span>
+<span class="nc bnc" id="L185" title="All 4 branches missed.">		if (entry == null || name.endsWith(&quot;/&quot;))</span>
+<span class="nc" id="L186">			return null;</span>
+
+<span class="nc" id="L188">		final long local = entry.localHeaderOffset;</span>
+<span class="nc bnc" id="L189" title="All 6 branches missed.">		if (local &lt; 0 || local + 30 &gt; data.length || u32((int) local) != 0x04034b50L)</span>
+<span class="nc" id="L190">			throw new IOException(&quot;Bad ZIP entry: &quot; + name);</span>
+
+<span class="nc" id="L192">		final int start = (int) local + 30 + u16((int) local + 26) + u16((int) local + 28);</span>
+<span class="nc bnc" id="L193" title="All 4 branches missed.">		if (entry.compressedSize &lt; 0 || start + entry.compressedSize &gt; data.length)</span>
+<span class="nc" id="L194">			throw new IOException(&quot;Bad ZIP entry: &quot; + name);</span>
+
+<span class="nc" id="L196">		final int length = (int) entry.compressedSize;</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (entry.method == METHOD_STORED) {</span>
+<span class="nc" id="L198">			final byte[] result = new byte[length];</span>
+<span class="nc" id="L199">			System.arraycopy(data, start, result, 0, length);</span>
+<span class="nc" id="L200">			return result;</span>
+		}
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (entry.method != METHOD_DEFLATED)</span>
+<span class="nc" id="L203">			throw new IOException(&quot;Unsupported ZIP compression method &quot; + entry.method + &quot;: &quot; + name);</span>
+
+		// The bit reader looks a little beyond the last block: pad as CompressionZlib does
+<span class="nc" id="L206">		final byte[] padded = new byte[length + 256];</span>
+<span class="nc" id="L207">		System.arraycopy(data, start, padded, 0, length);</span>
+		try {
+<span class="nc" id="L209">			final byte[] result = Decompressor</span>
+<span class="nc" id="L210">					.decompress(new ByteBitInputStream(new ByteArrayInputStream(padded)));</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">			if (result.length != entry.size)</span>
+<span class="nc" id="L212">				throw new IOException(&quot;Bad ZIP entry size: &quot; + name);</span>
+<span class="nc" id="L213">			return result;</span>
+<span class="nc" id="L214">		} catch (IOException e) {</span>
+<span class="nc" id="L215">			throw e;</span>
+<span class="nc" id="L216">		} catch (Exception e) {</span>
+<span class="nc" id="L217">			throw new IOException(&quot;Bad ZIP entry: &quot; + name + &quot; (&quot; + e + &quot;)&quot;);</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

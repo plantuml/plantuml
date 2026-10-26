@@ -403,8 +403,8 @@ public class Cluster implements Moveable {
 
 	static public UStroke getStrokeInternal(Entity group, Style style) {
 <span class="fc" id="L405">		final Colors colors = group.getColors();</span>
-<span class="pc bpc" id="L406" title="1 of 2 branches missed.">		if (colors.getSpecificLineStroke() != null)</span>
-<span class="nc" id="L407">			return colors.getSpecificLineStroke();</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">		if (colors.getSpecificLineStroke() != null)</span>
+<span class="fc" id="L407">			return colors.getSpecificLineStroke();</span>
 
 <span class="fc" id="L409">		return style.getStroke();</span>
 	}

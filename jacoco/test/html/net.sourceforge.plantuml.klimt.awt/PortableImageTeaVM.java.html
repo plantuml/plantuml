@@ -12,6 +12,10 @@ import org.teavm.jso.dom.html.HTMLCanvasElement;
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.typedarrays.Int8Array;
 import org.teavm.jso.typedarrays.Uint8ClampedArray;
+
+import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.c.PngImageC;
+import net.sourceforge.plantuml.utils.Base64Coder;
 // ::done
 
 /**
@@ -33,34 +37,34 @@ class PortableImageTeaVM implements PortableImage {
 	 */
 	private final String pngDataUrl;
 
-<span class="nc" id="L36">	PortableImageTeaVM(int width, int height, int imageType) {</span>
-<span class="nc" id="L37">		this.width = width;</span>
-<span class="nc" id="L38">		this.height = height;</span>
-<span class="nc" id="L39">		this.imageType = imageType;</span>
-<span class="nc" id="L40">		this.pixels = new int[width * height];</span>
-<span class="nc" id="L41">		this.pngDataUrl = null;</span>
+<span class="nc" id="L40">	PortableImageTeaVM(int width, int height, int imageType) {</span>
+<span class="nc" id="L41">		this.width = width;</span>
+<span class="nc" id="L42">		this.height = height;</span>
+<span class="nc" id="L43">		this.imageType = imageType;</span>
+<span class="nc" id="L44">		this.pixels = new int[width * height];</span>
+<span class="nc" id="L45">		this.pngDataUrl = null;</span>
 		// Initialize with default color based on type
-<span class="nc bnc" id="L43" title="All 2 branches missed.">		if (imageType == TYPE_INT_RGB) {</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (imageType == TYPE_INT_RGB) {</span>
 			// Default to white for RGB
-<span class="nc" id="L45">			java.util.Arrays.fill(pixels, 0xFFFFFFFF);</span>
+<span class="nc" id="L49">			java.util.Arrays.fill(pixels, 0xFFFFFFFF);</span>
 		} else {
 			// Default to transparent for ARGB
-<span class="nc" id="L48">			java.util.Arrays.fill(pixels, 0x00000000);</span>
+<span class="nc" id="L52">			java.util.Arrays.fill(pixels, 0x00000000);</span>
 		}
-<span class="nc" id="L50">	}</span>
+<span class="nc" id="L54">	}</span>
 
 	/**
 	 * Creates a PortableImage from an existing pixel array. The array is copied,
 	 * not referenced.
 	 */
-<span class="nc" id="L56">	PortableImageTeaVM(int width, int height, int imageType, int[] sourcePixels) {</span>
-<span class="nc" id="L57">		this.width = width;</span>
-<span class="nc" id="L58">		this.height = height;</span>
-<span class="nc" id="L59">		this.imageType = imageType;</span>
-<span class="nc" id="L60">		this.pixels = new int[width * height];</span>
-<span class="nc" id="L61">		this.pngDataUrl = null;</span>
-<span class="nc" id="L62">		System.arraycopy(sourcePixels, 0, this.pixels, 0, Math.min(sourcePixels.length, this.pixels.length));</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L60">	PortableImageTeaVM(int width, int height, int imageType, int[] sourcePixels) {</span>
+<span class="nc" id="L61">		this.width = width;</span>
+<span class="nc" id="L62">		this.height = height;</span>
+<span class="nc" id="L63">		this.imageType = imageType;</span>
+<span class="nc" id="L64">		this.pixels = new int[width * height];</span>
+<span class="nc" id="L65">		this.pngDataUrl = null;</span>
+<span class="nc" id="L66">		System.arraycopy(sourcePixels, 0, this.pixels, 0, Math.min(sourcePixels.length, this.pixels.length));</span>
+<span class="nc" id="L67">	}</span>
 
 	/**
 	 * Creates a PortableImage from raw PNG bytes. The width and height are
@@ -72,77 +76,77 @@ class PortableImageTeaVM implements PortableImage {
 	 * This is acceptable because in TeaVM the image is rendered via the
 	 * SVG {@code &lt;image&gt;} element using the data URL.
 	 */
-<span class="nc" id="L75">	PortableImageTeaVM(byte[] pngBytes, String base64) {</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (pngBytes.length &lt; 24)</span>
-<span class="nc" id="L77">			throw new IllegalArgumentException(&quot;Invalid PNG: too short (&quot; + pngBytes.length + &quot; bytes)&quot;);</span>
+<span class="nc" id="L79">	PortableImageTeaVM(byte[] pngBytes, String base64) {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (pngBytes.length &lt; 24)</span>
+<span class="nc" id="L81">			throw new IllegalArgumentException(&quot;Invalid PNG: too short (&quot; + pngBytes.length + &quot; bytes)&quot;);</span>
 
-<span class="nc" id="L79">		this.width = readInt32BE(pngBytes, 16);</span>
-<span class="nc" id="L80">		this.height = readInt32BE(pngBytes, 20);</span>
-<span class="nc" id="L81">		this.imageType = TYPE_INT_ARGB;</span>
-<span class="nc" id="L82">		this.pixels = new int[0];</span>
-<span class="nc" id="L83">		this.pngDataUrl = &quot;data:image/png;base64,&quot; + base64;</span>
-<span class="nc" id="L84">	}</span>
+<span class="nc" id="L83">		this.width = readInt32BE(pngBytes, 16);</span>
+<span class="nc" id="L84">		this.height = readInt32BE(pngBytes, 20);</span>
+<span class="nc" id="L85">		this.imageType = TYPE_INT_ARGB;</span>
+<span class="nc" id="L86">		this.pixels = new int[0];</span>
+<span class="nc" id="L87">		this.pngDataUrl = &quot;data:image/png;base64,&quot; + base64;</span>
+<span class="nc" id="L88">	}</span>
 
 	private static int readInt32BE(byte[] data, int offset) {
-<span class="nc" id="L87">		return ((data[offset] &amp; 0xFF) &lt;&lt; 24)</span>
+<span class="nc" id="L91">		return ((data[offset] &amp; 0xFF) &lt;&lt; 24)</span>
 				| ((data[offset + 1] &amp; 0xFF) &lt;&lt; 16)
 				| ((data[offset + 2] &amp; 0xFF) &lt;&lt; 8)
 				| (data[offset + 3] &amp; 0xFF);
 	}
 
 	public int getWidth() {
-<span class="nc" id="L94">		return width;</span>
+<span class="nc" id="L98">		return width;</span>
 	}
 
 	public int getHeight() {
-<span class="nc" id="L98">		return height;</span>
+<span class="nc" id="L102">		return height;</span>
 	}
 
 	public int getRGB(int x, int y) {
-<span class="nc bnc" id="L102" title="All 8 branches missed.">		if (x &lt; 0 || x &gt;= width || y &lt; 0 || y &gt;= height)</span>
-<span class="nc" id="L103">			return 0;</span>
-<span class="nc" id="L104">		return pixels[y * width + x];</span>
+<span class="nc bnc" id="L106" title="All 8 branches missed.">		if (x &lt; 0 || x &gt;= width || y &lt; 0 || y &gt;= height)</span>
+<span class="nc" id="L107">			return 0;</span>
+<span class="nc" id="L108">		return pixels[y * width + x];</span>
 	}
 
 	public void setRGB(int x, int y, int rgb) {
-<span class="nc bnc" id="L108" title="All 8 branches missed.">		if (x &lt; 0 || x &gt;= width || y &lt; 0 || y &gt;= height)</span>
-<span class="nc" id="L109">			return;</span>
-<span class="nc" id="L110">		pixels[y * width + x] = rgb;</span>
-<span class="nc" id="L111">	}</span>
+<span class="nc bnc" id="L112" title="All 8 branches missed.">		if (x &lt; 0 || x &gt;= width || y &lt; 0 || y &gt;= height)</span>
+<span class="nc" id="L113">			return;</span>
+<span class="nc" id="L114">		pixels[y * width + x] = rgb;</span>
+<span class="nc" id="L115">	}</span>
 
 	public int getType() {
-<span class="nc" id="L114">		return imageType;</span>
+<span class="nc" id="L118">		return imageType;</span>
 	}
 
 	public PortableImage getSubimage(int x, int y, int w, int h) {
 		// Clamp bounds
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (x &lt; 0) {</span>
-<span class="nc" id="L120">			w += x;</span>
-<span class="nc" id="L121">			x = 0;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (x &lt; 0) {</span>
+<span class="nc" id="L124">			w += x;</span>
+<span class="nc" id="L125">			x = 0;</span>
 		}
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (y &lt; 0) {</span>
-<span class="nc" id="L124">			h += y;</span>
-<span class="nc" id="L125">			y = 0;</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (y &lt; 0) {</span>
+<span class="nc" id="L128">			h += y;</span>
+<span class="nc" id="L129">			y = 0;</span>
 		}
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (x + w &gt; width)</span>
-<span class="nc" id="L128">			w = width - x;</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (y + h &gt; height)</span>
-<span class="nc" id="L130">			h = height - y;</span>
-<span class="nc bnc" id="L131" title="All 4 branches missed.">		if (w &lt;= 0 || h &lt;= 0)</span>
-<span class="nc" id="L132">			return new PortableImageTeaVM(1, 1, imageType);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (x + w &gt; width)</span>
+<span class="nc" id="L132">			w = width - x;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (y + h &gt; height)</span>
+<span class="nc" id="L134">			h = height - y;</span>
+<span class="nc bnc" id="L135" title="All 4 branches missed.">		if (w &lt;= 0 || h &lt;= 0)</span>
+<span class="nc" id="L136">			return new PortableImageTeaVM(1, 1, imageType);</span>
 
-<span class="nc" id="L134">		int[] subPixels = new int[w * h];</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		for (int row = 0; row &lt; h; row++) {</span>
-<span class="nc" id="L136">			int srcOffset = (y + row) * width + x;</span>
-<span class="nc" id="L137">			int dstOffset = row * w;</span>
-<span class="nc" id="L138">			System.arraycopy(pixels, srcOffset, subPixels, dstOffset, w);</span>
+<span class="nc" id="L138">		int[] subPixels = new int[w * h];</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		for (int row = 0; row &lt; h; row++) {</span>
+<span class="nc" id="L140">			int srcOffset = (y + row) * width + x;</span>
+<span class="nc" id="L141">			int dstOffset = row * w;</span>
+<span class="nc" id="L142">			System.arraycopy(pixels, srcOffset, subPixels, dstOffset, w);</span>
 		}
-<span class="nc" id="L140">		return new PortableImageTeaVM(w, h, imageType, subPixels);</span>
+<span class="nc" id="L144">		return new PortableImageTeaVM(w, h, imageType, subPixels);</span>
 	}
 
 	public int getTransparency() {
 		// 1 = OPAQUE, 2 = BITMASK, 3 = TRANSLUCENT
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		return (imageType == TYPE_INT_RGB) ? 1 : 3;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		return (imageType == TYPE_INT_RGB) ? 1 : 3;</span>
 	}
 
 	/**
@@ -152,9 +156,9 @@ class PortableImageTeaVM implements PortableImage {
 	 * @return pixel array of size width * height
 	 */
 	public int[] getPixels() {
-<span class="nc" id="L155">		int[] copy = new int[pixels.length];</span>
-<span class="nc" id="L156">		System.arraycopy(pixels, 0, copy, 0, pixels.length);</span>
-<span class="nc" id="L157">		return copy;</span>
+<span class="nc" id="L159">		int[] copy = new int[pixels.length];</span>
+<span class="nc" id="L160">		System.arraycopy(pixels, 0, copy, 0, pixels.length);</span>
+<span class="nc" id="L161">		return copy;</span>
 	}
 
 	/**
@@ -164,16 +168,20 @@ class PortableImageTeaVM implements PortableImage {
 	 * @return PNG data URL string (data:image/png;base64,...)
 	 */
 	public String toPngDataUrl() {
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (pngDataUrl != null)</span>
-<span class="nc" id="L168">			return pngDataUrl;</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (pngDataUrl != null)</span>
+<span class="nc" id="L172">			return pngDataUrl;</span>
 
-<span class="nc" id="L170">		HTMLDocument doc = HTMLDocument.current();</span>
-<span class="nc" id="L171">		HTMLCanvasElement canvas = (HTMLCanvasElement) doc.createElement(&quot;canvas&quot;);</span>
-<span class="nc" id="L172">		canvas.setWidth(width);</span>
-<span class="nc" id="L173">		canvas.setHeight(height);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (TeaVM.isC())</span>
+<span class="nc" id="L175">			return &quot;data:image/png;base64,&quot;</span>
+<span class="nc" id="L176">					+ new String(Base64Coder.encode(PngImageC.encode(pixels, width, height, false)));</span>
 
-<span class="nc" id="L175">		CanvasRenderingContext2D ctx = (CanvasRenderingContext2D) canvas.getContext(&quot;2d&quot;);</span>
-<span class="nc" id="L176">		ImageData imageData = ctx.createImageData(width, height);</span>
+<span class="nc" id="L178">		HTMLDocument doc = HTMLDocument.current();</span>
+<span class="nc" id="L179">		HTMLCanvasElement canvas = (HTMLCanvasElement) doc.createElement(&quot;canvas&quot;);</span>
+<span class="nc" id="L180">		canvas.setWidth(width);</span>
+<span class="nc" id="L181">		canvas.setHeight(height);</span>
+
+<span class="nc" id="L183">		CanvasRenderingContext2D ctx = (CanvasRenderingContext2D) canvas.getContext(&quot;2d&quot;);</span>
+<span class="nc" id="L184">		ImageData imageData = ctx.createImageData(width, height);</span>
 
 		// Convert ARGB (0xAARRGGBB) to RGBA bytes in a plain Java array first, then
 		// hand the whole buffer to JavaScript in ONE call. Writing the pixels one
@@ -181,19 +189,19 @@ class PortableImageTeaVM implements PortableImage {
 		// Java -&gt; JS call per byte: cheap with the JS backend, but on the Wasm GC
 		// backend every such call crosses the Wasm/JS boundary, i.e. millions of
 		// crossings for a single large image.
-<span class="nc" id="L184">		final byte[] rgba = new byte[pixels.length * 4];</span>
-<span class="nc" id="L185">		int p = 0;</span>
-<span class="nc bnc" id="L186" title="All 2 branches missed.">		for (int i = 0; i &lt; pixels.length; i++) {</span>
-<span class="nc" id="L187">			final int c = pixels[i];</span>
-<span class="nc" id="L188">			rgba[p++] = (byte) (c &gt;&gt;&gt; 16); // r</span>
-<span class="nc" id="L189">			rgba[p++] = (byte) (c &gt;&gt;&gt; 8); // g</span>
-<span class="nc" id="L190">			rgba[p++] = (byte) c; // b</span>
-<span class="nc" id="L191">			rgba[p++] = (byte) (c &gt;&gt;&gt; 24); // a</span>
+<span class="nc" id="L192">		final byte[] rgba = new byte[pixels.length * 4];</span>
+<span class="nc" id="L193">		int p = 0;</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		for (int i = 0; i &lt; pixels.length; i++) {</span>
+<span class="nc" id="L195">			final int c = pixels[i];</span>
+<span class="nc" id="L196">			rgba[p++] = (byte) (c &gt;&gt;&gt; 16); // r</span>
+<span class="nc" id="L197">			rgba[p++] = (byte) (c &gt;&gt;&gt; 8); // g</span>
+<span class="nc" id="L198">			rgba[p++] = (byte) c; // b</span>
+<span class="nc" id="L199">			rgba[p++] = (byte) (c &gt;&gt;&gt; 24); // a</span>
 		}
-<span class="nc" id="L193">		copyRgba(imageData.getData(), Int8Array.copyFromJavaArray(rgba));</span>
+<span class="nc" id="L201">		copyRgba(imageData.getData(), Int8Array.copyFromJavaArray(rgba));</span>
 
-<span class="nc" id="L195">		ctx.putImageData(imageData, 0, 0);</span>
-<span class="nc" id="L196">		return canvasToDataUrl(canvas);</span>
+<span class="nc" id="L203">		ctx.putImageData(imageData, 0, 0);</span>
+<span class="nc" id="L204">		return canvasToDataUrl(canvas);</span>
 	}
 
 	/**
@@ -214,100 +222,36 @@ class PortableImageTeaVM implements PortableImage {
 	 * @return a new scaled PortableImage
 	 */
 	public PortableImage scale(double scaleFactor, int interpolationType) {
-<span class="nc" id="L217">		final int dstW = (int) Math.round(width * scaleFactor);</span>
-<span class="nc" id="L218">		final int dstH = (int) Math.round(height * scaleFactor);</span>
+<span class="nc" id="L225">		final int dstW = (int) Math.round(width * scaleFactor);</span>
+<span class="nc" id="L226">		final int dstH = (int) Math.round(height * scaleFactor);</span>
 
-<span class="nc bnc" id="L220" title="All 4 branches missed.">		if (dstW &lt;= 0 || dstH &lt;= 0)</span>
-<span class="nc" id="L221">			return new PortableImageTeaVM(1, 1, imageType);</span>
+<span class="nc bnc" id="L228" title="All 4 branches missed.">		if (dstW &lt;= 0 || dstH &lt;= 0)</span>
+<span class="nc" id="L229">			return new PortableImageTeaVM(1, 1, imageType);</span>
 
-<span class="nc" id="L223">		final int[] dstPixels = new int[dstW * dstH];</span>
+<span class="nc" id="L231">		final int[] dstPixels = new int[dstW * dstH];</span>
 
-<span class="nc bnc" id="L225" title="All 2 branches missed.">		if (interpolationType == 2)</span>
-<span class="nc" id="L226">			scaleBilinear(pixels, width, height, dstPixels, dstW, dstH);</span>
+		// Same pixels as AffineTransformOp on the JVM (see MlibAffine)
+<span class="nc bnc" id="L234" title="All 2 branches missed.">		if (interpolationType == 2)</span>
+<span class="nc" id="L235">			MlibAffine.bilinear(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);</span>
 		else
-<span class="nc" id="L228">			scaleNearestNeighbor(pixels, width, height, dstPixels, dstW, dstH);</span>
+<span class="nc" id="L237">			MlibAffine.nearest(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);</span>
 
-<span class="nc" id="L230">		return new PortableImageTeaVM(dstW, dstH, imageType, dstPixels);</span>
-	}
-
-	/**
-	 * Nearest-neighbor scaling - fast but can be blocky.
-	 */
-	private static void scaleNearestNeighbor(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
-<span class="nc bnc" id="L237" title="All 2 branches missed.">		for (int y = 0; y &lt; dstH; y++) {</span>
-<span class="nc" id="L238">			final int srcY = y * srcH / dstH;</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">			for (int x = 0; x &lt; dstW; x++) {</span>
-<span class="nc" id="L240">				final int srcX = x * srcW / dstW;</span>
-<span class="nc" id="L241">				dst[y * dstW + x] = src[srcY * srcW + srcX];</span>
-			}
-		}
-<span class="nc" id="L244">	}</span>
-
-	/**
-	 * Bilinear interpolation scaling - smoother results.
-	 */
-	private static void scaleBilinear(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH) {
-<span class="nc" id="L250">		final double xRatio = (double) (srcW - 1) / dstW;</span>
-<span class="nc" id="L251">		final double yRatio = (double) (srcH - 1) / dstH;</span>
-
-<span class="nc bnc" id="L253" title="All 2 branches missed.">		for (int y = 0; y &lt; dstH; y++) {</span>
-<span class="nc" id="L254">			final double srcYf = y * yRatio;</span>
-<span class="nc" id="L255">			final int y0 = (int) srcYf;</span>
-<span class="nc" id="L256">			final int y1 = Math.min(y0 + 1, srcH - 1);</span>
-<span class="nc" id="L257">			final double yFrac = srcYf - y0;</span>
-
-<span class="nc bnc" id="L259" title="All 2 branches missed.">			for (int x = 0; x &lt; dstW; x++) {</span>
-<span class="nc" id="L260">				final double srcXf = x * xRatio;</span>
-<span class="nc" id="L261">				final int x0 = (int) srcXf;</span>
-<span class="nc" id="L262">				final int x1 = Math.min(x0 + 1, srcW - 1);</span>
-<span class="nc" id="L263">				final double xFrac = srcXf - x0;</span>
-
-				// Get 4 neighboring pixels
-<span class="nc" id="L266">				final int c00 = src[y0 * srcW + x0];</span>
-<span class="nc" id="L267">				final int c10 = src[y0 * srcW + x1];</span>
-<span class="nc" id="L268">				final int c01 = src[y1 * srcW + x0];</span>
-<span class="nc" id="L269">				final int c11 = src[y1 * srcW + x1];</span>
-
-				// Interpolate each channel
-<span class="nc" id="L272">				final int a = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 24);</span>
-<span class="nc" id="L273">				final int r = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 16);</span>
-<span class="nc" id="L274">				final int g = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 8);</span>
-<span class="nc" id="L275">				final int b = interpolateChannel(c00, c10, c01, c11, xFrac, yFrac, 0);</span>
-
-<span class="nc" id="L277">				dst[y * dstW + x] = (a &lt;&lt; 24) | (r &lt;&lt; 16) | (g &lt;&lt; 8) | b;</span>
-			}
-		}
-<span class="nc" id="L280">	}</span>
-
-	/**
-	 * Bilinear interpolation for a single color channel.
-	 */
-	private static int interpolateChannel(int c00, int c10, int c01, int c11, double xFrac, double yFrac, int shift) {
-<span class="nc" id="L286">		final int v00 = (c00 &gt;&gt; shift) &amp; 0xFF;</span>
-<span class="nc" id="L287">		final int v10 = (c10 &gt;&gt; shift) &amp; 0xFF;</span>
-<span class="nc" id="L288">		final int v01 = (c01 &gt;&gt; shift) &amp; 0xFF;</span>
-<span class="nc" id="L289">		final int v11 = (c11 &gt;&gt; shift) &amp; 0xFF;</span>
-
-<span class="nc" id="L291">		final double top = v00 + xFrac * (v10 - v00);</span>
-<span class="nc" id="L292">		final double bottom = v01 + xFrac * (v11 - v01);</span>
-<span class="nc" id="L293">		final double result = top + yFrac * (bottom - top);</span>
-
-<span class="nc" id="L295">		return Math.min(255, Math.max(0, (int) Math.round(result)));</span>
+<span class="nc" id="L239">		return new PortableImageTeaVM(dstW, dstH, imageType, dstPixels);</span>
 	}
 
 	@Override
 	public BufferedImage getBufferedImage() {
-<span class="nc" id="L300">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
+<span class="nc" id="L244">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
 	}
 
 	@Override
 	public Graphics2D createGraphics() {
-<span class="nc" id="L305">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
+<span class="nc" id="L249">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
 	}
 
 	@Override
 	public Graphics getGraphics() {
-<span class="nc" id="L310">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
+<span class="nc" id="L254">		throw new UnsupportedOperationException(&quot;TEAVM9834&quot;);</span>
 	}
 
 }

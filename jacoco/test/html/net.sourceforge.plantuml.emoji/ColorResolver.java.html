@@ -53,8 +53,8 @@ public class ColorResolver {
 <span class="fc" id="L53">	}</span>
 
 	public HColor getDefaultColor() {
-<span class="pc bpc" id="L56" title="3 of 4 branches missed.">		if (fontColor == null &amp;&amp; forcedColor == null)</span>
-<span class="nc" id="L57">			return HColors.BLACK;</span>
+<span class="pc bpc" id="L56" title="1 of 4 branches missed.">		if (fontColor == null &amp;&amp; forcedColor == null)</span>
+<span class="fc" id="L57">			return HColors.BLACK;</span>
 
 <span class="fc bfc" id="L59" title="All 2 branches covered.">		return forcedColor == null ? fontColor : forcedColor;</span>
 	}

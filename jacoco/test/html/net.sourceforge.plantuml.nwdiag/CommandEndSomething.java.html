@@ -64,12 +64,12 @@ public class CommandEndSomething extends SingleLineCommand2&lt;NwDiagram&gt; {
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L67">		return diagram.closeSomething();</span>
+<span class="fc" id="L67">		return diagram.closeSomething();</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="nc" id="L72">		return FIRST_TOKENS;</span>
+<span class="fc" id="L72">		return FIRST_TOKENS;</span>
 	}
 
 }

@@ -94,16 +94,16 @@ public class EaterFunctionCall extends Eater {
 <span class="fc" id="L94">				}</span>
 //				}
 			} else {
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">				if (matchAffectation()) {</span>
-<span class="nc" id="L98">					final String varname = eatAndGetVarname();</span>
-<span class="nc" id="L99">					skipSpaces();</span>
-<span class="nc" id="L100">					checkAndEatChar('=');</span>
-<span class="nc" id="L101">					skipSpaces();</span>
-<span class="nc" id="L102">					final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();</span>
-<span class="nc" id="L103">					tokens.guessFunctions(getStringLocated());</span>
-<span class="nc" id="L104">					final TValue result = tokens.getResult(getStringLocated(), context, memory);</span>
-<span class="nc" id="L105">					namedArguments.put(varname, result);</span>
-<span class="nc" id="L106">				} else {</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">				if (matchAffectation()) {</span>
+<span class="fc" id="L98">					final String varname = eatAndGetVarname();</span>
+<span class="fc" id="L99">					skipSpaces();</span>
+<span class="fc" id="L100">					checkAndEatChar('=');</span>
+<span class="fc" id="L101">					skipSpaces();</span>
+<span class="fc" id="L102">					final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();</span>
+<span class="fc" id="L103">					tokens.guessFunctions(getStringLocated());</span>
+<span class="fc" id="L104">					final TValue result = tokens.getResult(getStringLocated(), context, memory);</span>
+<span class="fc" id="L105">					namedArguments.put(varname, result);</span>
+<span class="fc" id="L106">				} else {</span>
 <span class="fc" id="L107">					final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();</span>
 <span class="fc" id="L108">					tokens.guessFunctions(getStringLocated());</span>
 <span class="fc" id="L109">					final TValue result = tokens.getResult(getStringLocated(), context, memory);</span>

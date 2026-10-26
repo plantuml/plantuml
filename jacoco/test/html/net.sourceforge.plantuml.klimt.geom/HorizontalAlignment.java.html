@@ -61,15 +61,15 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 	public static HorizontalAlignment fromString(String s, HorizontalAlignment defaultValue) {
 <span class="fc" id="L63">		Objects.requireNonNull(defaultValue);</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (s == null)</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (s == null)</span>
 <span class="fc" id="L65">			return defaultValue;</span>
 
-<span class="nc" id="L67">		s = StringUtils.goUpperCase(s);</span>
-<span class="nc" id="L68">		final HorizontalAlignment result = fromString(s);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L67">		s = StringUtils.goUpperCase(s);</span>
+<span class="fc" id="L68">		final HorizontalAlignment result = fromString(s);</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (result == null)</span>
 <span class="nc" id="L70">			return defaultValue;</span>
 
-<span class="nc" id="L72">		return result;</span>
+<span class="fc" id="L72">		return result;</span>
 	}
 
 	public String getGraphVizValue() {
@@ -98,10 +98,10 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 	}
 
 	public PlacementStrategy asPlacementStrategy(StringBounder sb) {
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (this == HorizontalAlignment.RIGHT)</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">		if (this == HorizontalAlignment.RIGHT)</span>
 <span class="nc" id="L102">			return new PlacementStrategyY1Y2Right(sb);</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		else if (this == HorizontalAlignment.CENTER)</span>
-<span class="nc" id="L104">			return new PlacementStrategyY1Y2(sb);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		else if (this == HorizontalAlignment.CENTER)</span>
+<span class="fc" id="L104">			return new PlacementStrategyY1Y2(sb);</span>
 
 <span class="nc" id="L106">		return new PlacementStrategyY1Y2Left(sb);</span>
 

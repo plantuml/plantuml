@@ -164,8 +164,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="pc bpc" id="L164" title="1 of 6 branches missed.">				if (mode != EventsHistoryMode.IGNORE_FUTURE_ACTIVATE &amp;&amp; le.isActivate() &amp;&amp; msg.dealWith(p)</span>
 <span class="fc bfc" id="L165" title="All 2 branches covered.">						&amp;&amp; le.getParticipant() == p) {</span>
 <span class="fc" id="L166">					seenActivate = true;</span>
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">					if (seenDeactivate)</span>
-<span class="nc" id="L168">						break;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">					if (seenDeactivate)</span>
+<span class="fc" id="L168">						break;</span>
 <span class="fc" id="L169">					level++;</span>
 				}
 
@@ -297,7 +297,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc bfc" id="L297" title="All 2 branches covered.">				if (le.dealWith(p)) {</span>
 <span class="pc bpc" id="L298" title="1 of 4 branches missed.">					if (le.getMessage() == null || !(le.getMessage().isParallelWith(lastMessage))) {</span>
 <span class="fc" id="L299">						position = potentialPosition;</span>
-<span class="pc bpc" id="L300" title="1 of 8 branches missed.">					} else if ((le.isActivate() &amp;&amp; seenDeactivate) || (le.isDeactivate() &amp;&amp; seenActivate)) {</span>
+<span class="fc bfc" id="L300" title="All 8 branches covered.">					} else if ((le.isActivate() &amp;&amp; seenDeactivate) || (le.isDeactivate() &amp;&amp; seenActivate)) {</span>
 <span class="fc" id="L301">						position = potentialPosition;</span>
 					}
 <span class="fc" id="L303">					seenActivate |= le.isActivate();</span>

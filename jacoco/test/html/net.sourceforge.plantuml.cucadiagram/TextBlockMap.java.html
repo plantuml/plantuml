@@ -67,27 +67,27 @@ public class TextBlockMap extends TextBlockMemoized implements WithPorts {
 
 	private final ISkinParam skinParam;
 	private final FontConfiguration fontConfiguration;
-<span class="nc" id="L70">	private final Map&lt;TextBlock, TextBlock&gt; blocksMap = new LinkedHashMap&lt;&gt;();</span>
-<span class="nc" id="L71">	private final List&lt;String&gt; keys = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L70">	private final Map&lt;TextBlock, TextBlock&gt; blocksMap = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L71">	private final List&lt;String&gt; keys = new ArrayList&lt;&gt;();</span>
 	private double totalWidth;
 	private final HorizontalAlignment horizontalAlignment;
 
 	public TextBlockMap(FontConfiguration fontConfiguration, ISkinParam skinParam, Map&lt;String, String&gt; map,
-<span class="nc" id="L76">			LineBreakStrategy wordWrap, HorizontalAlignment horizontalAlignment) {</span>
-<span class="nc" id="L77">		this.skinParam = skinParam;</span>
-<span class="nc" id="L78">		this.horizontalAlignment = horizontalAlignment;</span>
-<span class="nc" id="L79">		this.fontConfiguration = fontConfiguration;</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : map.entrySet()) {</span>
-<span class="nc" id="L81">			String key = ent.getKey();</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">			if (VisibilityModifier.isVisibilityCharacter(key))</span>
+<span class="fc" id="L76">			LineBreakStrategy wordWrap, HorizontalAlignment horizontalAlignment) {</span>
+<span class="fc" id="L77">		this.skinParam = skinParam;</span>
+<span class="fc" id="L78">		this.horizontalAlignment = horizontalAlignment;</span>
+<span class="fc" id="L79">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		for (Map.Entry&lt;String, String&gt; ent : map.entrySet()) {</span>
+<span class="fc" id="L81">			String key = ent.getKey();</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			if (VisibilityModifier.isVisibilityCharacter(key))</span>
 <span class="nc" id="L83">				key = key.substring(1);</span>
-<span class="nc" id="L84">			this.keys.add(key);</span>
-<span class="nc" id="L85">			final String value = ent.getValue();</span>
-<span class="nc" id="L86">			final TextBlock block1 = getTextBlock(key, wordWrap);</span>
-<span class="nc" id="L87">			final TextBlock block2 = getTextBlock(value, wordWrap);</span>
-<span class="nc" id="L88">			this.blocksMap.put(block1, block2);</span>
-<span class="nc" id="L89">		}</span>
-<span class="nc" id="L90">	}</span>
+<span class="fc" id="L84">			this.keys.add(key);</span>
+<span class="fc" id="L85">			final String value = ent.getValue();</span>
+<span class="fc" id="L86">			final TextBlock block1 = getTextBlock(key, wordWrap);</span>
+<span class="fc" id="L87">			final TextBlock block2 = getTextBlock(value, wordWrap);</span>
+<span class="fc" id="L88">			this.blocksMap.put(block1, block2);</span>
+<span class="fc" id="L89">		}</span>
+<span class="fc" id="L90">	}</span>
 
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
@@ -107,77 +107,77 @@ public class TextBlockMap extends TextBlockMemoized implements WithPorts {
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L110">		return new XDimension2D(getWidthColA(stringBounder) + getWidthColB(stringBounder),</span>
-<span class="nc" id="L111">				getTotalHeight(stringBounder));</span>
+<span class="fc" id="L110">		return new XDimension2D(getWidthColA(stringBounder) + getWidthColB(stringBounder),</span>
+<span class="fc" id="L111">				getTotalHeight(stringBounder));</span>
 	}
 
 	private double getWidthColA(StringBounder stringBounder) {
-<span class="nc" id="L115">		return getMaxWidth(stringBounder, blocksMap.keySet());</span>
+<span class="fc" id="L115">		return getMaxWidth(stringBounder, blocksMap.keySet());</span>
 	}
 
 	private double getWidthColB(StringBounder stringBounder) {
-<span class="nc" id="L119">		return getMaxWidth(stringBounder, blocksMap.values());</span>
+<span class="fc" id="L119">		return getMaxWidth(stringBounder, blocksMap.values());</span>
 	}
 
 	private double getMaxWidth(StringBounder stringBounder, Collection&lt;TextBlock&gt; blocks) {
-<span class="nc" id="L123">		double width = 0;</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		for (TextBlock block : blocks)</span>
-<span class="nc" id="L125">			width = Math.max(width, block.calculateDimension(stringBounder).getWidth());</span>
+<span class="fc" id="L123">		double width = 0;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		for (TextBlock block : blocks)</span>
+<span class="fc" id="L125">			width = Math.max(width, block.calculateDimension(stringBounder).getWidth());</span>
 
-<span class="nc" id="L127">		return width;</span>
+<span class="fc" id="L127">		return width;</span>
 	}
 
 	public void drawU(final UGraphic ug) {
-<span class="nc" id="L131">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L132">		final XDimension2D fullDim = calculateDimension(stringBounder);</span>
-<span class="nc" id="L133">		final double trueWidth = Math.max(fullDim.getWidth(), totalWidth);</span>
-<span class="nc" id="L134">		final double widthColA = getWidthColA(stringBounder);</span>
-<span class="nc" id="L135">		final double widthColB = getWidthColB(stringBounder);</span>
-<span class="nc" id="L136">		double y = 0;</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
-<span class="nc" id="L138">			final TextBlock key = ent.getKey();</span>
-<span class="nc" id="L139">			final TextBlock value = ent.getValue();</span>
-<span class="nc" id="L140">			final UGraphic ugline = ug.apply(UTranslate.dy(y));</span>
-<span class="nc" id="L141">			ugline.draw(ULine.hline(trueWidth));</span>
-<span class="nc" id="L142">			final double heightOfRow = getHeightOfRow(stringBounder, key, value);</span>
-<span class="nc" id="L143">			final double keyWidth = key.calculateDimension(stringBounder).getWidth();</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (value instanceof Point) {</span>
+<span class="fc" id="L131">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L132">		final XDimension2D fullDim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L133">		final double trueWidth = Math.max(fullDim.getWidth(), totalWidth);</span>
+<span class="fc" id="L134">		final double widthColA = getWidthColA(stringBounder);</span>
+<span class="fc" id="L135">		final double widthColB = getWidthColB(stringBounder);</span>
+<span class="fc" id="L136">		double y = 0;</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
+<span class="fc" id="L138">			final TextBlock key = ent.getKey();</span>
+<span class="fc" id="L139">			final TextBlock value = ent.getValue();</span>
+<span class="fc" id="L140">			final UGraphic ugline = ug.apply(UTranslate.dy(y));</span>
+<span class="fc" id="L141">			ugline.draw(ULine.hline(trueWidth));</span>
+<span class="fc" id="L142">			final double heightOfRow = getHeightOfRow(stringBounder, key, value);</span>
+<span class="fc" id="L143">			final double keyWidth = key.calculateDimension(stringBounder).getWidth();</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">			if (value instanceof Point) {</span>
 <span class="nc" id="L145">				final double posColA = horizontalAlignment.getPosition(keyWidth, trueWidth);</span>
 <span class="nc" id="L146">				key.drawU(ugline.apply(UTranslate.dx(posColA)));</span>
 <span class="nc" id="L147">			} else {</span>
-<span class="nc" id="L148">				final double posColA = horizontalAlignment.getPosition(keyWidth, widthColA);</span>
-<span class="nc" id="L149">				key.drawU(ugline.apply(UTranslate.dx(posColA)));</span>
-<span class="nc" id="L150">				value.drawU(ugline.apply(UTranslate.dx(widthColA)));</span>
-<span class="nc" id="L151">				ugline.apply(UTranslate.dx(widthColA)).draw(ULine.vline(heightOfRow));</span>
+<span class="fc" id="L148">				final double posColA = horizontalAlignment.getPosition(keyWidth, widthColA);</span>
+<span class="fc" id="L149">				key.drawU(ugline.apply(UTranslate.dx(posColA)));</span>
+<span class="fc" id="L150">				value.drawU(ugline.apply(UTranslate.dx(widthColA)));</span>
+<span class="fc" id="L151">				ugline.apply(UTranslate.dx(widthColA)).draw(ULine.vline(heightOfRow));</span>
 			}
-<span class="nc" id="L153">			y += heightOfRow;</span>
-<span class="nc" id="L154">		}</span>
-<span class="nc" id="L155">	}</span>
+<span class="fc" id="L153">			y += heightOfRow;</span>
+<span class="fc" id="L154">		}</span>
+<span class="fc" id="L155">	}</span>
 
 	private double getTotalHeight(StringBounder stringBounder) {
-<span class="nc" id="L158">		double height = 0;</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
-<span class="nc" id="L160">			final TextBlock key = ent.getKey();</span>
-<span class="nc" id="L161">			final TextBlock value = ent.getValue();</span>
-<span class="nc" id="L162">			height += getHeightOfRow(stringBounder, key, value);</span>
-<span class="nc" id="L163">		}</span>
-<span class="nc" id="L164">		return height;</span>
+<span class="fc" id="L158">		double height = 0;</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (Map.Entry&lt;TextBlock, TextBlock&gt; ent : blocksMap.entrySet()) {</span>
+<span class="fc" id="L160">			final TextBlock key = ent.getKey();</span>
+<span class="fc" id="L161">			final TextBlock value = ent.getValue();</span>
+<span class="fc" id="L162">			height += getHeightOfRow(stringBounder, key, value);</span>
+<span class="fc" id="L163">		}</span>
+<span class="fc" id="L164">		return height;</span>
 	}
 
 	private double getHeightOfRow(StringBounder stringBounder, TextBlock key, TextBlock value) {
-<span class="nc" id="L168">		return Math.max(key.calculateDimension(stringBounder).getHeight(),</span>
-<span class="nc" id="L169">				value.calculateDimension(stringBounder).getHeight());</span>
+<span class="fc" id="L168">		return Math.max(key.calculateDimension(stringBounder).getHeight(),</span>
+<span class="fc" id="L169">				value.calculateDimension(stringBounder).getHeight());</span>
 	}
 
 	private TextBlock getTextBlock(String key, LineBreakStrategy wordWrap) {
-<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (key.equals(&quot;\0&quot;))</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (key.equals(&quot;\0&quot;))</span>
 <span class="nc" id="L174">			return new Point(fontConfiguration.getColor());</span>
 
-<span class="nc" id="L176">		final Display display = Display.getWithNewlines(skinParam.getPragma(), key);</span>
-<span class="nc" id="L177">		TextBlock result = display.create0(fontConfiguration, HorizontalAlignment.LEFT, skinParam, wordWrap,</span>
+<span class="fc" id="L176">		final Display display = Display.getWithNewlines(skinParam.getPragma(), key);</span>
+<span class="fc" id="L177">		TextBlock result = display.create0(fontConfiguration, HorizontalAlignment.LEFT, skinParam, wordWrap,</span>
 				CreoleMode.FULL, null, null);
-<span class="nc" id="L179">		result = TextBlockUtils.withMargin(result, 5, 2);</span>
-<span class="nc" id="L180">		return result;</span>
+<span class="fc" id="L179">		result = TextBlockUtils.withMargin(result, 5, 2);</span>
+<span class="fc" id="L180">		return result;</span>
 	}
 
 	static class Point implements TextBlock {
@@ -207,8 +207,8 @@ public class TextBlockMap extends TextBlockMemoized implements WithPorts {
 	}
 
 	public void setTotalWidth(double totalWidth) {
-<span class="nc" id="L210">		this.totalWidth = totalWidth;</span>
-<span class="nc" id="L211">	}</span>
+<span class="fc" id="L210">		this.totalWidth = totalWidth;</span>
+<span class="fc" id="L211">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

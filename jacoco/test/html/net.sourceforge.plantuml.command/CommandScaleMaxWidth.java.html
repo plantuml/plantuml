@@ -79,9 +79,9 @@ public class CommandScaleMaxWidth extends SingleLineCommand2&lt;AbstractDiagram&
 	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L82">		final double width = Double.parseDouble(arg.get(&quot;WIDTH&quot;, 0));</span>
-<span class="nc" id="L83">		diagram.setScale(new ScaleMaxWidth(width));</span>
-<span class="nc" id="L84">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L82">		final double width = Double.parseDouble(arg.get(&quot;WIDTH&quot;, 0));</span>
+<span class="fc" id="L83">		diagram.setScale(new ScaleMaxWidth(width));</span>
+<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
 	}
 
 	@Override

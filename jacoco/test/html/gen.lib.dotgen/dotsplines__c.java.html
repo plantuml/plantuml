@@ -218,7 +218,7 @@ public static boolean spline_merge(ST_Agnode_s n) {
 <span class="fc" id="L218">ENTERING(&quot;ddeny5ht7w8b16ztj5zt840ld&quot;,&quot;spline_merge&quot;);</span>
 try {
 <span class="fc bfc" id="L220" title="All 2 branches covered.">    return ((ND_node_type(n) == 1)</span>
-<span class="pc bpc" id="L221" title="2 of 4 branches missed.">	    &amp;&amp; ((ND_in(n).size &gt; 1) || (ND_out(n).size &gt; 1)));</span>
+<span class="pc bpc" id="L221" title="1 of 4 branches missed.">	    &amp;&amp; ((ND_in(n).size &gt; 1) || (ND_out(n).size &gt; 1)));</span>
 } finally {
 <span class="fc" id="L223">LEAVING(&quot;ddeny5ht7w8b16ztj5zt840ld&quot;,&quot;spline_merge&quot;);</span>
 }
@@ -241,8 +241,8 @@ try {
 <span class="nc" id="L241">	e = ED_to_orig(e);</span>
 <span class="fc bfc" id="L242" title="All 2 branches covered.">    if (ND_rank(aghead(e)) &gt; ND_rank(agtail(e)))</span>
 <span class="fc" id="L243">	return false;</span>
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">    if (ND_rank(aghead(e)) &lt; ND_rank(agtail(e)))</span>
-<span class="nc" id="L245">	return true;</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">    if (ND_rank(aghead(e)) &lt; ND_rank(agtail(e)))</span>
+<span class="fc" id="L245">	return true;</span>
 <span class="fc bfc" id="L246" title="All 2 branches covered.">    if (ND_order(aghead(e)) &gt;= ND_order(agtail(e)))</span>
 <span class="fc" id="L247">	return false;</span>
 <span class="fc" id="L248">    return true;</span>
@@ -483,22 +483,22 @@ try {
 		/* if n is the label of a flat edge, copy its position to
 		 * the label.
 		 */
-<span class="pc bpc" id="L486" title="1 of 2 branches missed.">	    if (ND_alg(n)!=null) {</span>
-<span class="nc" id="L487">		ST_Agedge_s fe = (ST_Agedge_s) ND_alg(n);</span>
-<span class="nc bnc" id="L488" title="All 2 branches missed.">		assert (ED_label(fe)!=null);</span>
+<span class="fc bfc" id="L486" title="All 2 branches covered.">	    if (ND_alg(n)!=null) {</span>
+<span class="fc" id="L487">		ST_Agedge_s fe = (ST_Agedge_s) ND_alg(n);</span>
+<span class="pc bpc" id="L488" title="1 of 2 branches missed.">		assert (ED_label(fe)!=null);</span>
 		// [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
 		if (false) SMETANA_TRACE(&quot;dotsplines__c&quot;, &quot;_dot_splines: label vnode rank=&quot; + i + &quot; order=&quot; + j
 			+ &quot; coord=(&quot; + ND_coord(n).x + &quot;,&quot; + ND_coord(n).y + &quot;)&quot;
 			+ &quot; feIdentityHash=&quot; + System.identityHashCode(fe)
 			+ &quot; ED_label(fe)=&quot; + (ED_label(fe) == null ? &quot;NULL!&quot; : &quot;present -&gt; copying pos&quot;));
-<span class="nc" id="L494">		ED_label(fe).pos.___(ND_coord(n));</span>
-<span class="nc" id="L495">		ED_label(fe).set= false ? 0 : 1;</span>
+<span class="fc" id="L494">		ED_label(fe).pos.___(ND_coord(n));</span>
+<span class="fc" id="L495">		ED_label(fe).set= false ? 0 : 1;</span>
 	    }
 <span class="fc bfc" id="L497" title="All 2 branches covered.">	    if ((ND_node_type(n) != NORMAL) &amp;&amp;</span>
-<span class="pc bpc" id="L498" title="1 of 2 branches missed.">		((Boolean)zz.sinfo.splineMerge.exe(zz, n) == false))</span>
+<span class="fc bfc" id="L498" title="All 2 branches covered.">		((Boolean)zz.sinfo.splineMerge.exe(zz, n) == false))</span>
 <span class="fc" id="L499">		continue;</span>
 <span class="fc bfc" id="L500" title="All 2 branches covered.">	    for (k = 0; (e = ND_out(n).list.get_(k))!=null; k++) {</span>
-<span class="pc bpc" id="L501" title="1 of 2 branches missed.">		if ((ED_edge_type(e) == FLATORDER)</span>
+<span class="fc bfc" id="L501" title="All 2 branches covered.">		if ((ED_edge_type(e) == FLATORDER)</span>
 <span class="pc bpc" id="L502" title="1 of 2 branches missed.">		    || (ED_edge_type(e) == IGNORED))</span>
 <span class="nc" id="L503">		    continue;</span>
 <span class="fc" id="L504">		setflags(e, REGULAREDGE, FWDEDGE, MAINGRAPH);</span>
@@ -510,7 +510,7 @@ try {
 <span class="pc bpc" id="L510" title="1 of 2 branches missed.">		if (n_edges % CHUNK == 0)</span>
 <span class="nc" id="L511">		    edges = CArrayOfStar.&lt;ST_Agedge_s&gt;REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);</span>
 	    }
-<span class="pc bpc" id="L513" title="1 of 2 branches missed.">	    if (ND_flat_out(n).list!=null)</span>
+<span class="fc bfc" id="L513" title="All 2 branches covered.">	    if (ND_flat_out(n).list!=null)</span>
 <span class="fc bfc" id="L514" title="All 2 branches covered.">		for (k = 0; (e = ND_flat_out(n).list.get_(k))!=null; k++) {</span>
 <span class="fc" id="L515">		    setflags(e, FLATEDGE, 0, AUXGRAPH);</span>
 		    // [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md)
@@ -521,7 +521,7 @@ try {
 <span class="pc bpc" id="L521" title="1 of 2 branches missed.">		    if (n_edges % CHUNK == 0)</span>
 <span class="nc" id="L522">			    edges = CArrayOfStar.&lt;ST_Agedge_s&gt;REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);</span>
 		}
-<span class="pc bpc" id="L524" title="1 of 2 branches missed.">	    if (ND_other(n).list!=null) {</span>
+<span class="fc bfc" id="L524" title="All 2 branches covered.">	    if (ND_other(n).list!=null) {</span>
 		/* In position, each node has its rw stored in mval and,
                  * if a node is part of a loop, rw may be increased to
                  * reflect the loops and associated labels. We restore
@@ -728,8 +728,8 @@ try {
 <span class="fc" id="L728">    final ST_pointf dimen = new ST_pointf();</span>
     double width;
     ST_Agedge_s e;
-<span class="pc bpc" id="L731" title="1 of 2 branches missed.">    if (ND_in(n).size == 0)</span>
-<span class="nc" id="L732">	return;			/* skip flat edge labels here */</span>
+<span class="fc bfc" id="L731" title="All 2 branches covered.">    if (ND_in(n).size == 0)</span>
+<span class="fc" id="L732">	return;			/* skip flat edge labels here */</span>
 <span class="fc bfc" id="L733" title="All 2 branches covered.">    for (e = (ST_Agedge_s) ND_out(n).list.get_(0); ED_edge_type(e) != 0;</span>
 <span class="fc" id="L734">	 e = ED_to_orig(e));</span>
 <span class="fc" id="L735">    dimen.___(ED_label(e).dimen);</span>
@@ -1317,17 +1317,17 @@ try {
  * doesn't apply), so callers fall back to the original chain-walk.
  */
 private static ST_Agnode_s findLabelVnodeByAlg(ST_Agraph_s g, ST_Agedge_s e) {
-<span class="nc" id="L1320">    final int r = ND_rank(agtail(e)) - 1;</span>
-<span class="nc bnc" id="L1321" title="All 2 branches missed.">    if (r &lt; GD_minrank(g))</span>
+<span class="fc" id="L1320">    final int r = ND_rank(agtail(e)) - 1;</span>
+<span class="pc bpc" id="L1321" title="1 of 2 branches missed.">    if (r &lt; GD_minrank(g))</span>
 <span class="nc" id="L1322">	return null;</span>
-<span class="nc" id="L1323">    final CArrayOfStar&lt;ST_Agnode_s&gt; v = GD_rank(g).get__(r).v;</span>
-<span class="nc" id="L1324">    final int n = GD_rank(g).get__(r).n;</span>
-<span class="nc bnc" id="L1325" title="All 2 branches missed.">    for (int i = 0; i &lt; n; i++) {</span>
-<span class="nc" id="L1326">	final ST_Agnode_s cand = v.get_(i);</span>
-<span class="nc bnc" id="L1327" title="All 4 branches missed.">	if (cand != null &amp;&amp; ND_alg(cand) == e)</span>
-<span class="nc" id="L1328">	    return cand;</span>
+<span class="fc" id="L1323">    final CArrayOfStar&lt;ST_Agnode_s&gt; v = GD_rank(g).get__(r).v;</span>
+<span class="fc" id="L1324">    final int n = GD_rank(g).get__(r).n;</span>
+<span class="fc bfc" id="L1325" title="All 2 branches covered.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc" id="L1326">	final ST_Agnode_s cand = v.get_(i);</span>
+<span class="pc bpc" id="L1327" title="1 of 4 branches missed.">	if (cand != null &amp;&amp; ND_alg(cand) == e)</span>
+<span class="fc" id="L1328">	    return cand;</span>
     }
-<span class="nc" id="L1330">    return null;</span>
+<span class="fc" id="L1330">    return null;</span>
 }
 
 
@@ -1338,18 +1338,18 @@ private static ST_Agnode_s findLabelVnodeByAlg(ST_Agraph_s g, ST_Agedge_s e) {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;make_flat_labeled_edge&quot;, key=&quot;w8ptjibydq995d2lexg85mku&quot;, definition=&quot;static void make_flat_labeled_edge(graph_t* g, spline_info_t* sp, path* P, edge_t* e, int et)&quot;)
 public static void make_flat_labeled_edge(Globals zz, ST_Agraph_s g, ST_spline_info_t sp, ST_path P, ST_Agedge_s e, int et) {
-<span class="nc" id="L1341">ENTERING(&quot;w8ptjibydq995d2lexg85mku&quot;,&quot;make_flat_labeled_edge&quot;);</span>
+<span class="fc" id="L1341">ENTERING(&quot;w8ptjibydq995d2lexg85mku&quot;,&quot;make_flat_labeled_edge&quot;);</span>
 try {
     ST_Agnode_s tn, hn, ln;
-<span class="nc" id="L1344">    CArray&lt;ST_pointf&gt; ps = null;</span>
-<span class="nc" id="L1345">    final ST_pathend_t tend = new ST_pathend_t(), hend = new ST_pathend_t();</span>
-<span class="nc" id="L1346">    final ST_boxf lb = new ST_boxf();</span>
+<span class="fc" id="L1344">    CArray&lt;ST_pointf&gt; ps = null;</span>
+<span class="fc" id="L1345">    final ST_pathend_t tend = new ST_pathend_t(), hend = new ST_pathend_t();</span>
+<span class="fc" id="L1346">    final ST_boxf lb = new ST_boxf();</span>
     int boxn, i, ydelta;
-<span class="nc" id="L1348">    int pn[] = new int[1];</span>
+<span class="fc" id="L1348">    int pn[] = new int[1];</span>
     ST_Agedge_s f;
-<span class="nc" id="L1350">    final CArray&lt;ST_pointf&gt; points = CArray.&lt;ST_pointf&gt;ALLOC__(7, ZType.ST_pointf);</span>
-<span class="nc" id="L1351">    tn = agtail(e);</span>
-<span class="nc" id="L1352">    hn = aghead(e);</span>
+<span class="fc" id="L1350">    final CArray&lt;ST_pointf&gt; points = CArray.&lt;ST_pointf&gt;ALLOC__(7, ZType.ST_pointf);</span>
+<span class="fc" id="L1351">    tn = agtail(e);</span>
+<span class="fc" id="L1352">    hn = aghead(e);</span>
     // [FIX-flat-label] Option A (see SMETANA.md, Test_5 label-placement bug):
     // resolve the label vnode ln via the structural invariant flat_node()
     // documents for it (&quot;characterized by being virtual and having a
@@ -1362,18 +1362,18 @@ try {
     // the rank -1 label vnode). Falls back to the original chain-walk when
     // the invariant search finds nothing, so this is purely additive and
     // cannot change behavior for any edge not affected by that bug.
-<span class="nc" id="L1365">    ln = findLabelVnodeByAlg(g, e);</span>
-<span class="nc bnc" id="L1366" title="All 2 branches missed.">    if (ln == null) {</span>
-<span class="nc bnc" id="L1367" title="All 2 branches missed.">	for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));</span>
-<span class="nc" id="L1368">	ln = agtail(f);</span>
+<span class="fc" id="L1365">    ln = findLabelVnodeByAlg(g, e);</span>
+<span class="fc bfc" id="L1366" title="All 2 branches covered.">    if (ln == null) {</span>
+<span class="pc bpc" id="L1367" title="1 of 2 branches missed.">	for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));</span>
+<span class="fc" id="L1368">	ln = agtail(f);</span>
     }
     // [DEBUG-flat-label] Enabled (SMETANA.md, zdev.Test_15 investigation)
     if (false) SMETANA_TRACE(&quot;dotsplines__c&quot;, &quot;make_flat_labeled_edge: e identityHash=&quot; + System.identityHashCode(e)
 	    + &quot; label vnode ln identityHash=&quot; + System.identityHashCode(ln)
 	    + &quot; ln coord=(&quot; + ND_coord(ln).x + &quot;,&quot; + ND_coord(ln).y + &quot;) -&gt; setting ED_label(e).pos&quot;);
-<span class="nc" id="L1374">    ED_label(e).pos.___(ND_coord(ln));</span>
-<span class="nc" id="L1375">    ED_label(e).set= false ? 0 : 1;</span>
-<span class="nc bnc" id="L1376" title="All 2 branches missed.">    if (et == (1 &lt;&lt; 1)) {</span>
+<span class="fc" id="L1374">    ED_label(e).pos.___(ND_coord(ln));</span>
+<span class="fc" id="L1375">    ED_label(e).set= false ? 0 : 1;</span>
+<span class="pc bpc" id="L1376" title="1 of 2 branches missed.">    if (et == (1 &lt;&lt; 1)) {</span>
 <span class="nc" id="L1377">UNSUPPORTED(&quot;ataaqkehwb736ts2x6olzqokx&quot;); // 	pointf startp, endp, lp;</span>
 <span class="nc" id="L1378">UNSUPPORTED(&quot;48h6vk2e5niep4dmpua377248&quot;); // 	startp = add_pointf(ND_coord(tn), ED_tail_port(e).p);</span>
 <span class="nc" id="L1379">UNSUPPORTED(&quot;8fokfn1629eyiqnzi7mey9o2q&quot;); // 	endp = add_pointf(ND_coord(hn), ED_head_port(e).p);</span>
@@ -1386,35 +1386,35 @@ try {
 <span class="nc" id="L1386">UNSUPPORTED(&quot;1uunj4jbr2uhiqxwor6rzmr3j&quot;); // 	pn = 7;</span>
     }
     else {
-<span class="nc" id="L1389">	lb.LL.x = ND_coord(ln).x - ND_lw(ln);</span>
-<span class="nc" id="L1390">	lb.UR.x = ND_coord(ln).x + ND_rw(ln);</span>
-<span class="nc" id="L1391">	lb.UR.y = ND_coord(ln).y + ND_ht(ln)/2;</span>
-<span class="nc" id="L1392">	ydelta = (int)(ND_coord(ln).y - GD_rank(g).get__(ND_rank(tn)).ht1 -</span>
-<span class="nc" id="L1393">		ND_coord(tn).y + GD_rank(g).get__(ND_rank(tn)).ht2);</span>
-<span class="nc" id="L1394">	ydelta = (int)(ydelta / 6.);</span>
-<span class="nc" id="L1395">	lb.LL.y = lb.UR.y - Math.max(5.,ydelta); </span>
-<span class="nc" id="L1396">	boxn = 0;</span>
-<span class="nc" id="L1397">	makeFlatEnd (zz, g, sp, P, tn, e,  tend, true);</span>
-<span class="nc" id="L1398">	makeFlatEnd (zz, g, sp, P, hn, e,  hend, false);</span>
-<span class="nc" id="L1399">	zz.boxes[boxn].LL.x = tend.boxes[tend.boxn[0] - 1].LL.x; </span>
-<span class="nc" id="L1400">	zz.boxes[boxn].LL.y = tend.boxes[tend.boxn[0] - 1].UR.y; </span>
-<span class="nc" id="L1401">	zz.boxes[boxn].UR.x = lb.LL.x;</span>
-<span class="nc" id="L1402">	zz.boxes[boxn].UR.y = lb.LL.y;</span>
-<span class="nc" id="L1403">	boxn++;</span>
-<span class="nc" id="L1404">	zz.boxes[boxn].LL.x = tend.boxes[tend.boxn[0] - 1].LL.x; </span>
-<span class="nc" id="L1405">	zz.boxes[boxn].LL.y = lb.LL.y;</span>
-<span class="nc" id="L1406">	zz.boxes[boxn].UR.x = hend.boxes[hend.boxn[0] - 1].UR.x;</span>
-<span class="nc" id="L1407">	zz.boxes[boxn].UR.y = lb.UR.y;</span>
-<span class="nc" id="L1408">	boxn++;</span>
-<span class="nc" id="L1409">	zz.boxes[boxn].LL.x = lb.UR.x;</span>
-<span class="nc" id="L1410">	zz.boxes[boxn].UR.y = lb.LL.y;</span>
-<span class="nc" id="L1411">	zz.boxes[boxn].LL.y = hend.boxes[hend.boxn[0] - 1].UR.y; </span>
-<span class="nc" id="L1412">	zz.boxes[boxn].UR.x = hend.boxes[hend.boxn[0] - 1].UR.x;</span>
-<span class="nc" id="L1413">	boxn++;</span>
-<span class="nc bnc" id="L1414" title="All 2 branches missed.">	for (i = 0; i &lt; tend.boxn[0]; i++) add_box(P, tend.boxes[i]);</span>
-<span class="nc bnc" id="L1415" title="All 2 branches missed.">	for (i = 0; i &lt; boxn; i++) add_box(P, zz.boxes[i]);</span>
-<span class="nc bnc" id="L1416" title="All 2 branches missed.">	for (i = hend.boxn[0] - 1; i &gt;= 0; i--) add_box(P, hend.boxes[i]);</span>
-<span class="nc bnc" id="L1417" title="All 2 branches missed.">	if (et == (5 &lt;&lt; 1)) ps = routesplines(zz, P, pn);</span>
+<span class="fc" id="L1389">	lb.LL.x = ND_coord(ln).x - ND_lw(ln);</span>
+<span class="fc" id="L1390">	lb.UR.x = ND_coord(ln).x + ND_rw(ln);</span>
+<span class="fc" id="L1391">	lb.UR.y = ND_coord(ln).y + ND_ht(ln)/2;</span>
+<span class="fc" id="L1392">	ydelta = (int)(ND_coord(ln).y - GD_rank(g).get__(ND_rank(tn)).ht1 -</span>
+<span class="fc" id="L1393">		ND_coord(tn).y + GD_rank(g).get__(ND_rank(tn)).ht2);</span>
+<span class="fc" id="L1394">	ydelta = (int)(ydelta / 6.);</span>
+<span class="fc" id="L1395">	lb.LL.y = lb.UR.y - Math.max(5.,ydelta); </span>
+<span class="fc" id="L1396">	boxn = 0;</span>
+<span class="fc" id="L1397">	makeFlatEnd (zz, g, sp, P, tn, e,  tend, true);</span>
+<span class="fc" id="L1398">	makeFlatEnd (zz, g, sp, P, hn, e,  hend, false);</span>
+<span class="fc" id="L1399">	zz.boxes[boxn].LL.x = tend.boxes[tend.boxn[0] - 1].LL.x; </span>
+<span class="fc" id="L1400">	zz.boxes[boxn].LL.y = tend.boxes[tend.boxn[0] - 1].UR.y; </span>
+<span class="fc" id="L1401">	zz.boxes[boxn].UR.x = lb.LL.x;</span>
+<span class="fc" id="L1402">	zz.boxes[boxn].UR.y = lb.LL.y;</span>
+<span class="fc" id="L1403">	boxn++;</span>
+<span class="fc" id="L1404">	zz.boxes[boxn].LL.x = tend.boxes[tend.boxn[0] - 1].LL.x; </span>
+<span class="fc" id="L1405">	zz.boxes[boxn].LL.y = lb.LL.y;</span>
+<span class="fc" id="L1406">	zz.boxes[boxn].UR.x = hend.boxes[hend.boxn[0] - 1].UR.x;</span>
+<span class="fc" id="L1407">	zz.boxes[boxn].UR.y = lb.UR.y;</span>
+<span class="fc" id="L1408">	boxn++;</span>
+<span class="fc" id="L1409">	zz.boxes[boxn].LL.x = lb.UR.x;</span>
+<span class="fc" id="L1410">	zz.boxes[boxn].UR.y = lb.LL.y;</span>
+<span class="fc" id="L1411">	zz.boxes[boxn].LL.y = hend.boxes[hend.boxn[0] - 1].UR.y; </span>
+<span class="fc" id="L1412">	zz.boxes[boxn].UR.x = hend.boxes[hend.boxn[0] - 1].UR.x;</span>
+<span class="fc" id="L1413">	boxn++;</span>
+<span class="fc bfc" id="L1414" title="All 2 branches covered.">	for (i = 0; i &lt; tend.boxn[0]; i++) add_box(P, tend.boxes[i]);</span>
+<span class="fc bfc" id="L1415" title="All 2 branches covered.">	for (i = 0; i &lt; boxn; i++) add_box(P, zz.boxes[i]);</span>
+<span class="fc bfc" id="L1416" title="All 2 branches covered.">	for (i = hend.boxn[0] - 1; i &gt;= 0; i--) add_box(P, hend.boxes[i]);</span>
+<span class="pc bpc" id="L1417" title="1 of 2 branches missed.">	if (et == (5 &lt;&lt; 1)) ps = routesplines(zz, P, pn);</span>
 <span class="nc" id="L1418">	else ps = routepolylines(zz, P, pn);</span>
 	// [DEBUG-flat-label] New (SMETANA.md, zdev.Test_15 investigation): this is
 	// the point where make_flat_labeled_edge gives up routing for a labeled
@@ -1426,13 +1426,13 @@ try {
 		+ &quot; tn=(&quot; + ND_coord(tn).x + &quot;,&quot; + ND_coord(tn).y + &quot;) hn=(&quot; + ND_coord(hn).x + &quot;,&quot; + ND_coord(hn).y + &quot;)&quot;
 		+ &quot; ln=(&quot; + ND_coord(ln).x + &quot;,&quot; + ND_coord(ln).y + &quot;)&quot;
 		+ &quot; pn[0]=&quot; + pn[0] + (pn[0] == 0 ? &quot; -&gt; ABOUT TO RETURN WITHOUT clip_and_install (ED_spl stays null)&quot; : &quot; -&gt; ok&quot;));
-<span class="nc bnc" id="L1429" title="All 2 branches missed.">	if (pn[0] == 0) return;</span>
+<span class="pc bpc" id="L1429" title="1 of 2 branches missed.">	if (pn[0] == 0) return;</span>
     }
-<span class="nc" id="L1431">    clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
+<span class="fc" id="L1431">    clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);</span>
 } finally {
-<span class="nc" id="L1433">LEAVING(&quot;w8ptjibydq995d2lexg85mku&quot;,&quot;make_flat_labeled_edge&quot;);</span>
+<span class="fc" id="L1433">LEAVING(&quot;w8ptjibydq995d2lexg85mku&quot;,&quot;make_flat_labeled_edge&quot;);</span>
 }
-<span class="nc" id="L1435">}</span>
+<span class="fc" id="L1435">}</span>
 
 
 
@@ -1566,9 +1566,9 @@ try {
 <span class="fc" id="L1566">	make_flat_adj_edges (zz, g, P, edges, ind, cnt, e, et);</span>
 <span class="fc" id="L1567">	return;</span>
     }
-<span class="pc bpc" id="L1569" title="1 of 2 branches missed.">    if (ED_label(e)!=null) {  /* edges with labels aren't multi-edges */</span>
-<span class="nc" id="L1570">	make_flat_labeled_edge (zz, g, sp, P, e, et);</span>
-<span class="nc" id="L1571">	return;</span>
+<span class="fc bfc" id="L1569" title="All 2 branches covered.">    if (ED_label(e)!=null) {  /* edges with labels aren't multi-edges */</span>
+<span class="fc" id="L1570">	make_flat_labeled_edge (zz, g, sp, P, e, et);</span>
+<span class="fc" id="L1571">	return;</span>
     }
     
 <span class="pc bpc" id="L1574" title="1 of 2 branches missed.">    if (et == (1 &lt;&lt; 1)) {</span>
@@ -2276,8 +2276,8 @@ try {
 public static boolean cl_vninside(ST_Agraph_s cl, ST_Agnode_s n) {
 <span class="fc" id="L2277">ENTERING(&quot;65uvkv1mextaah5m997ibe3qs&quot;,&quot;cl_vninside&quot;);</span>
 try {
-<span class="pc bpc" id="L2279" title="1 of 2 branches missed.">    return (BETWEEN(GD_bb(cl).LL.x, (double)(ND_coord(n).x), GD_bb(cl).UR.x) &amp;&amp;</span>
-<span class="pc bpc" id="L2280" title="1 of 2 branches missed.">	    BETWEEN(GD_bb(cl).LL.y, (double)(ND_coord(n).y), GD_bb(cl).UR.y));</span>
+<span class="fc bfc" id="L2279" title="All 2 branches covered.">    return (BETWEEN(GD_bb(cl).LL.x, (double)(ND_coord(n).x), GD_bb(cl).UR.x) &amp;&amp;</span>
+<span class="fc bfc" id="L2280" title="All 2 branches covered.">	    BETWEEN(GD_bb(cl).LL.y, (double)(ND_coord(n).y), GD_bb(cl).UR.y));</span>
 } finally {
 <span class="fc" id="L2282">LEAVING(&quot;65uvkv1mextaah5m997ibe3qs&quot;,&quot;cl_vninside&quot;);</span>
 }
@@ -2305,16 +2305,16 @@ try {
     }
 <span class="fc bfc" id="L2306" title="All 2 branches covered.">    if (ND_node_type(adj) == 0) {</span>
 <span class="fc bfc" id="L2307" title="All 2 branches covered.">	cl = ( ND_clust(adj) == g ? null:ND_clust(adj));</span>
-<span class="pc bpc" id="L2308" title="1 of 6 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl))</span>
+<span class="fc bfc" id="L2308" title="All 6 branches covered.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl))</span>
 <span class="fc" id="L2309">	    rv = cl;</span>
     } else {
 <span class="fc" id="L2311">	orig = ED_to_orig(ND_out(adj).list.get_(0));</span>
 <span class="fc bfc" id="L2312" title="All 2 branches covered.">	cl = ( ND_clust(agtail(orig)) == g ? null:ND_clust(agtail(orig)));</span>
-<span class="pc bpc" id="L2313" title="3 of 8 branches missed.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
-<span class="nc" id="L2314">	    rv = cl;</span>
+<span class="fc bfc" id="L2313" title="All 8 branches covered.">	if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
+<span class="fc" id="L2314">	    rv = cl;</span>
 	else {
-<span class="pc bpc" id="L2316" title="1 of 2 branches missed.">	    cl = ( ND_clust(aghead(orig)) == g ? null:ND_clust(aghead(orig)));</span>
-<span class="pc bpc" id="L2317" title="7 of 8 branches missed.">	    if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
+<span class="fc bfc" id="L2316" title="All 2 branches covered.">	    cl = ( ND_clust(aghead(orig)) == g ? null:ND_clust(aghead(orig)));</span>
+<span class="pc bpc" id="L2317" title="1 of 8 branches missed.">	    if (cl!=null &amp;&amp; (cl != tcl) &amp;&amp; (cl != hcl) &amp;&amp; cl_vninside(cl, adj))</span>
 <span class="nc" id="L2318">		rv = cl;</span>
 	}
     }
@@ -2470,8 +2470,8 @@ try {
 <span class="fc bfc" id="L2470" title="All 2 branches covered.">	for (cnt = 0; cnt &lt; 2; cnt++) {</span>
 <span class="fc bfc" id="L2471" title="All 2 branches covered.">	    if ((na = agtail(e0))== (nb = agtail(e1)))</span>
 <span class="fc" id="L2472">		break;</span>
-<span class="pc bpc" id="L2473" title="1 of 4 branches missed.">	    if (order != (ND_order(na) &gt; ND_order(nb)))</span>
-<span class="nc" id="L2474">		return true;</span>
+<span class="fc bfc" id="L2473" title="All 4 branches covered.">	    if (order != (ND_order(na) &gt; ND_order(nb)))</span>
+<span class="fc" id="L2474">		return true;</span>
 <span class="fc bfc" id="L2475" title="All 4 branches covered.">	    if ((ND_in(na).size != 1) || (ND_node_type(na) == 0))</span>
 <span class="fc" id="L2476">		break;</span>
 <span class="fc" id="L2477">	    e0 = (ST_Agedge_s) ND_in(na).list.get_(0);</span>

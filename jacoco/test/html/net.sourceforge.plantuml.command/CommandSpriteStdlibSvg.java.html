@@ -73,14 +73,14 @@ public class CommandSpriteStdlibSvg extends SingleLineCommand2&lt;TitledDiagram&
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		try {
-<span class="nc" id="L76">			final Stdlib lib = Stdlib.retrieve(arg.get(&quot;STDLIB&quot;, 0));</span>
-<span class="nc" id="L77">			final String exportedName = arg.get(&quot;STDLIB&quot;, 1);</span>
-<span class="nc" id="L78">			final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L79">			system.addSprite(name, new StdlibSpriteSvg(lib, exportedName));</span>
+<span class="fc" id="L76">			final Stdlib lib = Stdlib.retrieve(arg.get(&quot;STDLIB&quot;, 0));</span>
+<span class="fc" id="L77">			final String exportedName = arg.get(&quot;STDLIB&quot;, 1);</span>
+<span class="fc" id="L78">			final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="fc" id="L79">			system.addSprite(name, new StdlibSpriteSvg(lib, exportedName));</span>
 <span class="nc" id="L80">		} catch (IOException e) {</span>
 <span class="nc" id="L81">			return CommandExecutionResult.error(&quot;Cannot read sprite &quot; + e.toString());</span>
-<span class="nc" id="L82">		}</span>
-<span class="nc" id="L83">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L82">		}</span>
+<span class="fc" id="L83">		return CommandExecutionResult.ok();</span>
 	}
 
 	@Override

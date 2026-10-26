@@ -80,71 +80,71 @@ import net.sourceforge.plantuml.style.StyleQuery;
 
 public class NwDiagram extends TitledDiagram {
 
-<span class="nc" id="L83">	private final Map&lt;String, NServer&gt; servers = new LinkedHashMap&lt;&gt;();</span>
-<span class="nc" id="L84">	private final List&lt;Network&gt; networks = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L85">	private final List&lt;NwGroup&gt; groups = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L86">	private final List&lt;NStackable&gt; stack = new ArrayList&lt;NStackable&gt;();</span>
+<span class="fc" id="L83">	private final Map&lt;String, NServer&gt; servers = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L84">	private final List&lt;Network&gt; networks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L85">	private final List&lt;NwGroup&gt; groups = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L86">	private final List&lt;NStackable&gt; stack = new ArrayList&lt;NStackable&gt;();</span>
 
-<span class="nc" id="L88">	private final NPlayField playField = new NPlayField();</span>
+<span class="fc" id="L88">	private final NPlayField playField = new NPlayField();</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L91">		return new DiagramDescription(&quot;(Nwdiag)&quot;);</span>
+<span class="fc" id="L91">		return new DiagramDescription(&quot;(Nwdiag)&quot;);</span>
 	}
 
 	public NwDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L95">		super(source, DiagramType.NWDIAG, null, preprocessing);</span>
-<span class="nc" id="L96">	}</span>
+<span class="fc" id="L95">		super(source, DiagramType.NWDIAG, null, preprocessing);</span>
+<span class="fc" id="L96">	}</span>
 
 	private Network currentNetwork() {
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (int i = 0; i &lt; stack.size(); i++)</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (stack.get(i) instanceof Network)</span>
-<span class="nc" id="L101">				return (Network) stack.get(i);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (int i = 0; i &lt; stack.size(); i++)</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">			if (stack.get(i) instanceof Network)</span>
+<span class="fc" id="L101">				return (Network) stack.get(i);</span>
 
-<span class="nc" id="L103">		return null;</span>
+<span class="fc" id="L103">		return null;</span>
 	}
 
 	private NwGroup currentGroup() {
-<span class="nc bnc" id="L107" title="All 4 branches missed.">		if (stack.size() &gt; 0 &amp;&amp; stack.get(0) instanceof NwGroup)</span>
-<span class="nc" id="L108">			return (NwGroup) stack.get(0);</span>
-<span class="nc" id="L109">		return null;</span>
+<span class="fc bfc" id="L107" title="All 4 branches covered.">		if (stack.size() &gt; 0 &amp;&amp; stack.get(0) instanceof NwGroup)</span>
+<span class="fc" id="L108">			return (NwGroup) stack.get(0);</span>
+<span class="fc" id="L109">		return null;</span>
 	}
 
 	@Override
 	public void makeDiagramReady() {
-<span class="nc" id="L114">		super.makeDiagramReady();</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (networks.size() == 0)</span>
+<span class="fc" id="L114">		super.makeDiagramReady();</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (networks.size() == 0)</span>
 <span class="nc" id="L116">			createNetwork(&quot;&quot;).goInvisible();</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		for (NServer server : servers.values()) {</span>
-<span class="nc" id="L118">			server.connectMeIfAlone(networks.get(0));</span>
-<span class="nc" id="L119">			playField.addInPlayfield(server.getBar());</span>
-<span class="nc" id="L120">		}</span>
-<span class="nc" id="L121">	}</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		for (NServer server : servers.values()) {</span>
+<span class="fc" id="L118">			server.connectMeIfAlone(networks.get(0));</span>
+<span class="fc" id="L119">			playField.addInPlayfield(server.getBar());</span>
+<span class="fc" id="L120">		}</span>
+<span class="fc" id="L121">	}</span>
 
 	public CommandExecutionResult openGroup(String name) {
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		for (NStackable element : stack)</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		for (NStackable element : stack)</span>
 <span class="nc bnc" id="L125" title="All 2 branches missed.">			if (element instanceof NwGroup)</span>
 <span class="nc" id="L126">				return CommandExecutionResult.error(&quot;Cannot nest group&quot;);</span>
 
-<span class="nc" id="L128">		final NwGroup newGroup = new NwGroup(name);</span>
-<span class="nc" id="L129">		stack.add(0, newGroup);</span>
-<span class="nc" id="L130">		groups.add(newGroup);</span>
-<span class="nc" id="L131">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L128">		final NwGroup newGroup = new NwGroup(name);</span>
+<span class="fc" id="L129">		stack.add(0, newGroup);</span>
+<span class="fc" id="L130">		groups.add(newGroup);</span>
+<span class="fc" id="L131">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult openNetwork(String name) {
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (currentGroup() != null)</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (currentGroup() != null)</span>
 <span class="nc" id="L136">			return CommandExecutionResult.error(&quot;Cannot open network in a group&quot;);</span>
 
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (NStackable element : stack)</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		for (NStackable element : stack)</span>
 <span class="nc bnc" id="L139" title="All 2 branches missed.">			if (element instanceof Network)</span>
 <span class="nc" id="L140">				return CommandExecutionResult.error(&quot;Cannot nest network&quot;);</span>
 
-<span class="nc bnc" id="L142" title="All 4 branches missed.">		if (networks.size() == 0 &amp;&amp; groups.size() == 0)</span>
+<span class="pc bpc" id="L142" title="1 of 4 branches missed.">		if (networks.size() == 0 &amp;&amp; groups.size() == 0)</span>
 <span class="nc" id="L143">			eventuallyConnectAllStandaloneServersToHiddenNetwork();</span>
 
-<span class="nc" id="L145">		final Network network = createNetwork(name);</span>
-<span class="nc" id="L146">		stack.add(0, network);</span>
-<span class="nc" id="L147">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L145">		final Network network = createNetwork(name);</span>
+<span class="fc" id="L146">		stack.add(0, network);</span>
+<span class="fc" id="L147">		return CommandExecutionResult.ok();</span>
 	}
 
 	private void eventuallyConnectAllStandaloneServersToHiddenNetwork() {
@@ -160,16 +160,16 @@ public class NwDiagram extends TitledDiagram {
 <span class="nc" id="L160">	}</span>
 
 	public CommandExecutionResult closeSomething() {
-<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (stack.size() &gt; 0)</span>
-<span class="nc" id="L164">			stack.remove(0);</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (stack.size() &gt; 0)</span>
+<span class="fc" id="L164">			stack.remove(0);</span>
 
-<span class="nc" id="L166">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L166">		return CommandExecutionResult.ok();</span>
 	}
 
 	private Network createNetwork(String name) {
-<span class="nc" id="L170">		final Network network = new Network(playField.getLast(), playField.createNewStage(), name);</span>
-<span class="nc" id="L171">		networks.add(network);</span>
-<span class="nc" id="L172">		return network;</span>
+<span class="fc" id="L170">		final Network network = new Network(playField.getLast(), playField.createNewStage(), name);</span>
+<span class="fc" id="L171">		networks.add(network);</span>
+<span class="fc" id="L172">		return network;</span>
 	}
 
 	public CommandExecutionResult link(String name1, String name2) {
@@ -231,32 +231,32 @@ public class NwDiagram extends TitledDiagram {
 	}
 
 	public CommandExecutionResult addElement(String name, String definition) {
-<span class="nc" id="L234">		final Map&lt;String, String&gt; props = toSet(definition);</span>
-<span class="nc" id="L235">		NServer server = servers.get(name);</span>
-<span class="nc bnc" id="L236" title="All 2 branches missed.">		if (server == null) {</span>
-<span class="nc" id="L237">			server = NServer.create(name, getSkinParam());</span>
-<span class="nc" id="L238">			servers.put(name, server);</span>
+<span class="fc" id="L234">		final Map&lt;String, String&gt; props = toSet(definition);</span>
+<span class="fc" id="L235">		NServer server = servers.get(name);</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">		if (server == null) {</span>
+<span class="fc" id="L237">			server = NServer.create(name, getSkinParam());</span>
+<span class="fc" id="L238">			servers.put(name, server);</span>
 		}
 
-<span class="nc bnc" id="L241" title="All 2 branches missed.">		if (currentGroup() != null) {</span>
-<span class="nc bnc" id="L242" title="All 2 branches missed.">			if (alreadyInSomeGroup(name))</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		if (currentGroup() != null) {</span>
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">			if (alreadyInSomeGroup(name))</span>
 <span class="nc" id="L243">				return CommandExecutionResult.error(&quot;Element already in another group.&quot;);</span>
 
-<span class="nc" id="L245">			currentGroup().addName(name);</span>
-<span class="nc bnc" id="L246" title="All 2 branches missed.">			if (currentNetwork() == null) {</span>
-<span class="nc" id="L247">				server.updateProperties(props);</span>
-<span class="nc" id="L248">				return CommandExecutionResult.ok();</span>
+<span class="fc" id="L245">			currentGroup().addName(name);</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">			if (currentNetwork() == null) {</span>
+<span class="fc" id="L247">				server.updateProperties(props);</span>
+<span class="fc" id="L248">				return CommandExecutionResult.ok();</span>
 			}
 		}
 
-<span class="nc bnc" id="L252" title="All 4 branches missed.">		if (networks.size() == 0 || currentNetwork() == null) {</span>
+<span class="pc bpc" id="L252" title="2 of 4 branches missed.">		if (networks.size() == 0 || currentNetwork() == null) {</span>
 <span class="nc" id="L253">			server.updateProperties(props);</span>
 <span class="nc" id="L254">			server.learnThisAddress(props.get(&quot;address&quot;));</span>
 <span class="nc" id="L255">			return CommandExecutionResult.ok();</span>
 
 		}
 
-<span class="nc bnc" id="L259" title="All 2 branches missed.">		if (networks.size() == 0) {</span>
+<span class="pc bpc" id="L259" title="1 of 2 branches missed.">		if (networks.size() == 0) {</span>
 <span class="nc" id="L260">			final Network network = createNetwork(&quot;&quot;);</span>
 <span class="nc" id="L261">			network.goInvisible();</span>
 <span class="nc" id="L262">			server.connectTo(network, props.get(&quot;address&quot;));</span>
@@ -267,23 +267,23 @@ public class NwDiagram extends TitledDiagram {
 			 * if (networks.size() == 1) server.connectTo(networks.get(0),
 			 * props.get(&quot;address&quot;)); else
 			 */
-<span class="nc bnc" id="L270" title="All 2 branches missed.">			if (currentNetwork() != null) {</span>
-<span class="nc" id="L271">				server.connectTo(currentNetwork(), props.get(&quot;address&quot;));</span>
-<span class="nc" id="L272">				playField.addInPlayfield(server.getBar());</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">			if (currentNetwork() != null) {</span>
+<span class="fc" id="L271">				server.connectTo(currentNetwork(), props.get(&quot;address&quot;));</span>
+<span class="fc" id="L272">				playField.addInPlayfield(server.getBar());</span>
 			} else {
 <span class="nc" id="L274">				server.learnThisAddress(props.get(&quot;address&quot;));</span>
 			}
 		}
-<span class="nc" id="L277">		server.updateProperties(props);</span>
-<span class="nc" id="L278">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L277">		server.updateProperties(props);</span>
+<span class="fc" id="L278">		return CommandExecutionResult.ok();</span>
 	}
 
 	private boolean alreadyInSomeGroup(String name) {
-<span class="nc bnc" id="L282" title="All 2 branches missed.">		for (NwGroup g : groups)</span>
-<span class="nc bnc" id="L283" title="All 2 branches missed.">			if (g.names().contains(name))</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">		for (NwGroup g : groups)</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">			if (g.names().contains(name))</span>
 <span class="nc" id="L284">				return true;</span>
 
-<span class="nc" id="L286">		return false;</span>
+<span class="fc" id="L286">		return false;</span>
 	}
 
 <span class="fc" id="L289">	private static final Pattern p = Pattern.compile(&quot;\\s*(\\w+)\\s*=\\s*(\&quot;([^\&quot;]*)\&quot;|[^\\s,]+)&quot;);</span>
@@ -305,158 +305,158 @@ public class NwDiagram extends TitledDiagram {
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L308">		return new TextBlock() {</span>
+<span class="fc" id="L308">		return new TextBlock() {</span>
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L310">				drawMe(ug);</span>
-<span class="nc" id="L311">			}</span>
+<span class="fc" id="L310">				drawMe(ug);</span>
+<span class="fc" id="L311">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L314">				return getTotalDimension(stringBounder);</span>
+<span class="fc" id="L314">				return getTotalDimension(stringBounder);</span>
 			}
 
 		};
 	}
 
 	private StyleQuery getStyleDefinitionNetwork(SName sname) {
-<span class="nc" id="L321">		return StyleQueries.NWDIAG.add(sname);</span>
+<span class="fc" id="L321">		return StyleQueries.NWDIAG.add(sname);</span>
 	}
 
 	private TextBlock toTextBlockForNetworkName(String name, String s) {
-<span class="nc bnc" id="L325" title="All 2 branches missed.">		if (s != null)</span>
-<span class="nc" id="L326">			name += &quot;&quot; + Jaws.BLOCK_E1_NEWLINE + s;</span>
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">		if (s != null)</span>
+<span class="fc" id="L326">			name += &quot;&quot; + Jaws.BLOCK_E1_NEWLINE + s;</span>
 
-<span class="nc" id="L328">		final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();</span>
-<span class="nc" id="L329">		final Style style = styleBuilder.getMergedStyle(getStyleDefinitionNetwork(SName.network));</span>
-<span class="nc" id="L330">		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L331">		return Display.getWithNewlines(getPragma(), name).create(fontConfiguration, HorizontalAlignment.RIGHT,</span>
+<span class="fc" id="L328">		final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();</span>
+<span class="fc" id="L329">		final Style style = styleBuilder.getMergedStyle(getStyleDefinitionNetwork(SName.network));</span>
+<span class="fc" id="L330">		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L331">		return Display.getWithNewlines(getPragma(), name).create(fontConfiguration, HorizontalAlignment.RIGHT,</span>
 				new SpriteContainerEmpty());
 	}
 
 	private XDimension2D getTotalDimension(StringBounder stringBounder) {
-<span class="nc" id="L336">		return TextBlockUtils.getMinMax(new UDrawable() {</span>
+<span class="fc" id="L336">		return TextBlockUtils.getMinMax(new UDrawable() {</span>
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L338">				drawMe(ug);</span>
-<span class="nc" id="L339">			}</span>
-<span class="nc" id="L340">		}, stringBounder, true).getDimension();</span>
+<span class="fc" id="L338">				drawMe(ug);</span>
+<span class="fc" id="L339">			}</span>
+<span class="fc" id="L340">		}, stringBounder, true).getDimension();</span>
 	}
 
-<span class="nc" id="L343">	private final double margin = 5;</span>
+<span class="fc" id="L343">	private final double margin = 5;</span>
 
 	private void drawMe(UGraphic ug) {
-<span class="nc" id="L346">		ug = ug.apply(new UTranslate(margin, margin));</span>
+<span class="fc" id="L346">		ug = ug.apply(new UTranslate(margin, margin));</span>
 
-<span class="nc" id="L348">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L348">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L350">		double deltaX = 0;</span>
-<span class="nc" id="L351">		double deltaY = 0;</span>
+<span class="fc" id="L350">		double deltaX = 0;</span>
+<span class="fc" id="L351">		double deltaY = 0;</span>
 
-<span class="nc" id="L353">		final GridTextBlockDecorated grid = buildGrid(stringBounder);</span>
+<span class="fc" id="L353">		final GridTextBlockDecorated grid = buildGrid(stringBounder);</span>
 
-<span class="nc bnc" id="L355" title="All 2 branches missed.">		for (int i = 0; i &lt; networks.size(); i++) {</span>
-<span class="nc" id="L356">			final Network current = networks.get(i);</span>
-<span class="nc" id="L357">			final String address = current.getOwnAdress();</span>
-<span class="nc" id="L358">			final TextBlock desc = toTextBlockForNetworkName(current.getDisplayName(), address);</span>
-<span class="nc" id="L359">			final XDimension2D dim = desc.calculateDimension(stringBounder);</span>
-<span class="nc bnc" id="L360" title="All 2 branches missed.">			if (i == 0)</span>
-<span class="nc" id="L361">				deltaY = (dim.getHeight() - GridTextBlockDecorated.NETWORK_THIN) / 2;</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">		for (int i = 0; i &lt; networks.size(); i++) {</span>
+<span class="fc" id="L356">			final Network current = networks.get(i);</span>
+<span class="fc" id="L357">			final String address = current.getOwnAdress();</span>
+<span class="fc" id="L358">			final TextBlock desc = toTextBlockForNetworkName(current.getDisplayName(), address);</span>
+<span class="fc" id="L359">			final XDimension2D dim = desc.calculateDimension(stringBounder);</span>
+<span class="fc bfc" id="L360" title="All 2 branches covered.">			if (i == 0)</span>
+<span class="fc" id="L361">				deltaY = (dim.getHeight() - GridTextBlockDecorated.NETWORK_THIN) / 2;</span>
 
-<span class="nc" id="L363">			deltaX = Math.max(deltaX, dim.getWidth());</span>
+<span class="fc" id="L363">			deltaX = Math.max(deltaX, dim.getWidth());</span>
 		}
-<span class="nc" id="L365">		double y = 0;</span>
-<span class="nc bnc" id="L366" title="All 2 branches missed.">		for (int i = 0; i &lt; networks.size(); i++) {</span>
-<span class="nc" id="L367">			final Network current = networks.get(i);</span>
-<span class="nc" id="L368">			final String address = current.getOwnAdress();</span>
-<span class="nc" id="L369">			final TextBlock desc = toTextBlockForNetworkName(current.getDisplayName(), address);</span>
-<span class="nc" id="L370">			final XDimension2D dim = desc.calculateDimension(stringBounder);</span>
-<span class="nc" id="L371">			desc.drawU(ug.apply(new UTranslate(deltaX - dim.getWidth(), y)));</span>
+<span class="fc" id="L365">		double y = 0;</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">		for (int i = 0; i &lt; networks.size(); i++) {</span>
+<span class="fc" id="L367">			final Network current = networks.get(i);</span>
+<span class="fc" id="L368">			final String address = current.getOwnAdress();</span>
+<span class="fc" id="L369">			final TextBlock desc = toTextBlockForNetworkName(current.getDisplayName(), address);</span>
+<span class="fc" id="L370">			final XDimension2D dim = desc.calculateDimension(stringBounder);</span>
+<span class="fc" id="L371">			desc.drawU(ug.apply(new UTranslate(deltaX - dim.getWidth(), y)));</span>
 
-<span class="nc" id="L373">			y += grid.lineHeight(stringBounder, i);</span>
+<span class="fc" id="L373">			y += grid.lineHeight(stringBounder, i);</span>
 		}
-<span class="nc" id="L375">		deltaX += 5;</span>
+<span class="fc" id="L375">		deltaX += 5;</span>
 
-<span class="nc" id="L377">		grid.drawU(ug.apply(new UTranslate(deltaX, deltaY)));</span>
-<span class="nc" id="L378">		final XDimension2D dimGrid = grid.calculateDimension(stringBounder);</span>
+<span class="fc" id="L377">		grid.drawU(ug.apply(new UTranslate(deltaX, deltaY)));</span>
+<span class="fc" id="L378">		final XDimension2D dimGrid = grid.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L380">		ug.apply(new UTranslate(dimGrid.getWidth() + deltaX + margin, dimGrid.getHeight() + deltaY + margin))</span>
-<span class="nc" id="L381">				.draw(new UEmpty(1, 1));</span>
+<span class="fc" id="L380">		ug.apply(new UTranslate(dimGrid.getWidth() + deltaX + margin, dimGrid.getHeight() + deltaY + margin))</span>
+<span class="fc" id="L381">				.draw(new UEmpty(1, 1));</span>
 
-<span class="nc" id="L383">	}</span>
+<span class="fc" id="L383">	}</span>
 
 	private Map&lt;Network, String&gt; getLinks(NServer element) {
-<span class="nc" id="L386">		final Map&lt;Network, String&gt; result = new LinkedHashMap&lt;&gt;();</span>
-<span class="nc bnc" id="L387" title="All 2 branches missed.">		for (Network network : networks) {</span>
-<span class="nc" id="L388">			final String s = element.getAdress(network);</span>
-<span class="nc bnc" id="L389" title="All 2 branches missed.">			if (s != null)</span>
-<span class="nc" id="L390">				result.put(network, s);</span>
+<span class="fc" id="L386">		final Map&lt;Network, String&gt; result = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">		for (Network network : networks) {</span>
+<span class="fc" id="L388">			final String s = element.getAdress(network);</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">			if (s != null)</span>
+<span class="fc" id="L390">				result.put(network, s);</span>
 
-<span class="nc" id="L392">		}</span>
-<span class="nc" id="L393">		return result;</span>
+<span class="fc" id="L392">		}</span>
+<span class="fc" id="L393">		return result;</span>
 	}
 
 	private GridTextBlockDecorated buildGrid(StringBounder stringBounder) {
 
-<span class="nc" id="L398">		playField.fixGroups(groups, servers.values());</span>
+<span class="fc" id="L398">		playField.fixGroups(groups, servers.values());</span>
 
-<span class="nc" id="L400">		final GridTextBlockDecorated grid = new GridTextBlockDecorated(networks.size(), servers.size(), groups,</span>
-<span class="nc" id="L401">				networks, getSkinParam());</span>
+<span class="fc" id="L400">		final GridTextBlockDecorated grid = new GridTextBlockDecorated(networks.size(), servers.size(), groups,</span>
+<span class="fc" id="L401">				networks, getSkinParam());</span>
 
-<span class="nc" id="L403">		final Map&lt;NBar, Integer&gt; layout = playField.doLayout();</span>
-<span class="nc bnc" id="L404" title="All 2 branches missed.">		for (int i = 0; i &lt; networks.size(); i++) {</span>
-<span class="nc" id="L405">			final Network current = networks.get(i);</span>
-<span class="nc bnc" id="L406" title="All 2 branches missed.">			for (Map.Entry&lt;String, NServer&gt; ent : servers.entrySet()) {</span>
-<span class="nc" id="L407">				final NServer server = ent.getValue();</span>
-<span class="nc bnc" id="L408" title="All 2 branches missed.">				if (server.getMainNetworkNext() == current) {</span>
-<span class="nc" id="L409">					final Map&lt;Network, String&gt; conns = getLinks(server);</span>
-<span class="nc" id="L410">					final Integer col = layout.get(server.getBar());</span>
-<span class="nc bnc" id="L411" title="All 2 branches missed.">					if (col == null)</span>
+<span class="fc" id="L403">		final Map&lt;NBar, Integer&gt; layout = playField.doLayout();</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">		for (int i = 0; i &lt; networks.size(); i++) {</span>
+<span class="fc" id="L405">			final Network current = networks.get(i);</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">			for (Map.Entry&lt;String, NServer&gt; ent : servers.entrySet()) {</span>
+<span class="fc" id="L407">				final NServer server = ent.getValue();</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">				if (server.getMainNetworkNext() == current) {</span>
+<span class="fc" id="L409">					final Map&lt;Network, String&gt; conns = getLinks(server);</span>
+<span class="fc" id="L410">					final Integer col = layout.get(server.getBar());</span>
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">					if (col == null)</span>
 <span class="nc" id="L412">						continue;</span>
-<span class="nc" id="L413">					double topMargin = NServerDraw.MAGIC;</span>
-<span class="nc" id="L414">					NwGroup group = getGroupOf(server);</span>
-<span class="nc bnc" id="L415" title="All 2 branches missed.">					if (group != null)</span>
-<span class="nc" id="L416">						topMargin += group.getTopHeaderHeight(stringBounder, getSkinParam());</span>
-<span class="nc" id="L417">					grid.add(i, col, server.getDraw(topMargin, conns, networks, getSkinParam()));</span>
+<span class="fc" id="L413">					double topMargin = NServerDraw.MAGIC;</span>
+<span class="fc" id="L414">					NwGroup group = getGroupOf(server);</span>
+<span class="fc bfc" id="L415" title="All 2 branches covered.">					if (group != null)</span>
+<span class="fc" id="L416">						topMargin += group.getTopHeaderHeight(stringBounder, getSkinParam());</span>
+<span class="fc" id="L417">					grid.add(i, col, server.getDraw(topMargin, conns, networks, getSkinParam()));</span>
 				}
-<span class="nc" id="L419">			}</span>
+<span class="fc" id="L419">			}</span>
 		}
 
-<span class="nc" id="L422">		return grid;</span>
+<span class="fc" id="L422">		return grid;</span>
 	}
 
 	private NwGroup getGroupOf(NServer server) {
-<span class="nc bnc" id="L426" title="All 2 branches missed.">		for (NwGroup group : groups)</span>
-<span class="nc bnc" id="L427" title="All 2 branches missed.">			if (group.contains(server))</span>
-<span class="nc" id="L428">				return group;</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">		for (NwGroup group : groups)</span>
+<span class="fc bfc" id="L427" title="All 2 branches covered.">			if (group.contains(server))</span>
+<span class="fc" id="L428">				return group;</span>
 
-<span class="nc" id="L430">		return null;</span>
+<span class="fc" id="L430">		return null;</span>
 	}
 
 	public CommandExecutionResult setProperty(String property, String value) {
-<span class="nc bnc" id="L434" title="All 4 branches missed.">		if (&quot;address&quot;.equalsIgnoreCase(property) &amp;&amp; currentNetwork() != null)</span>
-<span class="nc" id="L435">			currentNetwork().setOwnAdress(value);</span>
+<span class="pc bpc" id="L434" title="1 of 4 branches missed.">		if (&quot;address&quot;.equalsIgnoreCase(property) &amp;&amp; currentNetwork() != null)</span>
+<span class="fc" id="L435">			currentNetwork().setOwnAdress(value);</span>
 
-<span class="nc bnc" id="L437" title="All 4 branches missed.">		if (&quot;width&quot;.equalsIgnoreCase(property) &amp;&amp; currentNetwork() != null)</span>
+<span class="pc bpc" id="L437" title="3 of 4 branches missed.">		if (&quot;width&quot;.equalsIgnoreCase(property) &amp;&amp; currentNetwork() != null)</span>
 <span class="nc" id="L438">			currentNetwork().setFullWidth(&quot;full&quot;.equalsIgnoreCase(value));</span>
 
-<span class="nc bnc" id="L440" title="All 2 branches missed.">		if (&quot;color&quot;.equalsIgnoreCase(property)) {</span>
-<span class="nc bnc" id="L441" title="All 2 branches missed.">			final HColor color = value == null ? null : getSkinParam().getIHtmlColorSet().getColorOrWhite(value);</span>
-<span class="nc bnc" id="L442" title="All 2 branches missed.">			if (currentGroup() != null)</span>
-<span class="nc" id="L443">				currentGroup().setColor(color);</span>
-<span class="nc bnc" id="L444" title="All 2 branches missed.">			else if (currentNetwork() != null)</span>
-<span class="nc" id="L445">				currentNetwork().setColor(color);</span>
+<span class="fc bfc" id="L440" title="All 2 branches covered.">		if (&quot;color&quot;.equalsIgnoreCase(property)) {</span>
+<span class="pc bpc" id="L441" title="1 of 2 branches missed.">			final HColor color = value == null ? null : getSkinParam().getIHtmlColorSet().getColorOrWhite(value);</span>
+<span class="fc bfc" id="L442" title="All 2 branches covered.">			if (currentGroup() != null)</span>
+<span class="fc" id="L443">				currentGroup().setColor(color);</span>
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">			else if (currentNetwork() != null)</span>
+<span class="fc" id="L445">				currentNetwork().setColor(color);</span>
 
 		}
-<span class="nc bnc" id="L448" title="All 2 branches missed.">		if (&quot;description&quot;.equalsIgnoreCase(property))</span>
-<span class="nc bnc" id="L449" title="All 2 branches missed.">			if (currentGroup() == null)</span>
+<span class="fc bfc" id="L448" title="All 2 branches covered.">		if (&quot;description&quot;.equalsIgnoreCase(property))</span>
+<span class="pc bpc" id="L449" title="1 of 2 branches missed.">			if (currentGroup() == null)</span>
 <span class="nc" id="L450">				currentNetwork().setDescription(value);</span>
 			else
-<span class="nc" id="L452">				currentGroup().setDescription(value);</span>
+<span class="fc" id="L452">				currentGroup().setDescription(value);</span>
 
-<span class="nc" id="L454">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L454">		return CommandExecutionResult.ok();</span>
 	}
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="nc" id="L459">		return ClockwiseTopRightBottomLeft.none();</span>
+<span class="fc" id="L459">		return ClockwiseTopRightBottomLeft.none();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

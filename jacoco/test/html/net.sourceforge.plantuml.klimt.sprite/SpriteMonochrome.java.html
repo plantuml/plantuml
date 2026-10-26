@@ -150,8 +150,8 @@ public class SpriteMonochrome implements Sprite {
 <span class="pc bpc" id="L150" title="2 of 4 branches missed.">		if (x &lt; 0 || x &gt;= width)</span>
 <span class="nc" id="L151">			return;</span>
 
-<span class="pc bpc" id="L153" title="2 of 4 branches missed.">		if (y &lt; 0 || y &gt;= height)</span>
-<span class="nc" id="L154">			return;</span>
+<span class="pc bpc" id="L153" title="1 of 4 branches missed.">		if (y &lt; 0 || y &gt;= height)</span>
+<span class="fc" id="L154">			return;</span>
 
 <span class="pc bpc" id="L156" title="2 of 4 branches missed.">		if (level &lt; 0 || level &gt;= grayLevel)</span>
 <span class="nc" id="L157">			throw new IllegalArgumentException(&quot;level=&quot; + level + &quot; grayLevel=&quot; + grayLevel);</span>
@@ -214,7 +214,7 @@ public class SpriteMonochrome implements Sprite {
 
 			public void drawU(UGraphic ug) {
 <span class="fc" id="L216">				final UImage image = toUImage(ug.getColorMapper(), ug.getParam().getBackcolor(),</span>
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">						forcedColor == null ? fontColor : forcedColor);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">						forcedColor == null ? fontColor : forcedColor);</span>
 <span class="fc" id="L218">				ug.draw(image.scale(scale));</span>
 <span class="fc" id="L219">			}</span>
 

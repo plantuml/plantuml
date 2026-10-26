@@ -255,22 +255,22 @@ try {
     
 <span class="fc" id="L256">    t = leader_of(g, agtail(e));</span>
 <span class="fc" id="L257">    h = leader_of(g, aghead(e));</span>
-<span class="pc bpc" id="L258" title="1 of 2 branches missed.">    if (ND_rank(t) &gt; ND_rank(h)) {</span>
-<span class="nc" id="L259">	ST_Agnode_s t0 = t;</span>
-<span class="nc" id="L260">	t = h;</span>
-<span class="nc" id="L261">	h = t0;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">    if (ND_rank(t) &gt; ND_rank(h)) {</span>
+<span class="fc" id="L259">	ST_Agnode_s t0 = t;</span>
+<span class="fc" id="L260">	t = h;</span>
+<span class="fc" id="L261">	h = t0;</span>
     }
 <span class="fc bfc" id="L263" title="All 2 branches covered.">    if ((ND_clust(t) != ND_clust(h))) {</span>
-<span class="pc bpc" id="L264" title="1 of 2 branches missed.">	if ((ve = find_fast_edge(t, h))!=null) {</span>
-<span class="nc" id="L265">	    merge_chain(g, e, ve, true);</span>
-<span class="nc" id="L266">	    return;</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">	if ((ve = find_fast_edge(t, h))!=null) {</span>
+<span class="fc" id="L265">	    merge_chain(g, e, ve, true);</span>
+<span class="fc" id="L266">	    return;</span>
 	}
 <span class="fc bfc" id="L268" title="All 2 branches covered.">	if (ND_rank(t) == ND_rank(h))</span>
 <span class="fc" id="L269">	    return;</span>
 <span class="fc" id="L270">	make_chain(g, t, h, e);</span>
 	
 	/* mark as cluster edge */
-<span class="pc bpc" id="L273" title="1 of 4 branches missed.">	for (ve = ED_to_virt(e); ve!=null &amp;&amp; (ND_rank(aghead(ve)) &lt;= ND_rank(h));</span>
+<span class="fc bfc" id="L273" title="All 4 branches covered.">	for (ve = ED_to_virt(e); ve!=null &amp;&amp; (ND_rank(aghead(ve)) &lt;= ND_rank(h));</span>
 <span class="fc" id="L274">	     ve = (ST_Agedge_s) ND_out(aghead(ve)).list.get_(0))</span>
 <span class="fc" id="L275">	    ED_edge_type(ve, CLUSTER_EDGE);</span>
     }

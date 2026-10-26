@@ -102,7 +102,7 @@ public class CommandHeader extends SingleLineCommand2&lt;TitledDiagram&gt; {
 			ParserPass currentPass) {
 <span class="fc" id="L103">		final String align = arg.get(&quot;POSITION&quot;, 0);</span>
 <span class="fc" id="L104">		HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.RIGHT);</span>
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (align == null)</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (align == null)</span>
 <span class="fc" id="L106">			ha = diagram.getCurrentStyleBuilder().getMergedStyle(FontParam.HEADER.getStyleDefinition(null))</span>
 <span class="fc" id="L107">					.getHorizontalAlignment();</span>
 

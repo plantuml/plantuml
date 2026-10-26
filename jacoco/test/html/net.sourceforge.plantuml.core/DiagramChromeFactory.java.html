@@ -401,7 +401,7 @@ public final class DiagramChromeFactory {
 
 <span class="fc" id="L402">		final DisplayPositioned header = annotated.getHeader();</span>
 <span class="fc" id="L403">		final DisplayPositioned footer = annotated.getFooter();</span>
-<span class="pc bpc" id="L404" title="1 of 4 branches missed.">		if (footer.isNull() &amp;&amp; header.isNull())</span>
+<span class="fc bfc" id="L404" title="All 4 branches covered.">		if (footer.isNull() &amp;&amp; header.isNull())</span>
 <span class="fc" id="L405">			return original;</span>
 
 <span class="fc" id="L407">		final UGroup group1 = new UGroup(header.getLineLocation());</span>
@@ -419,7 +419,7 @@ public final class DiagramChromeFactory {
 <span class="fc" id="L419">		group2.put(UGroupType.CLASS, &quot;footer&quot;);</span>
 
 <span class="fc" id="L421">		TextBlock textFooter = null;</span>
-<span class="pc bpc" id="L422" title="1 of 2 branches missed.">		if (!footer.isNull()) {</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">		if (!footer.isNull()) {</span>
 <span class="fc" id="L423">			final Style style = skinParam.getCurrentStyleBuilder()</span>
 <span class="fc" id="L424">					.getMergedStyle(StyleQueries.DOCUMENT_FOOTER);</span>
 <span class="fc" id="L425">			textFooter = footer.createRibbon(FontConfiguration.create(skinParam, FontParam.FOOTER, null), skinParam,</span>

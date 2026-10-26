@@ -60,9 +60,9 @@ public class StringWithArrow {
 <span class="fc" id="L60">			return;</span>
 		}
 <span class="fc" id="L62">		completeLabel = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(completeLabel, &quot;\&quot;&quot;);</span>
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (Display.hasSeveralGuideLines(completeLabel)) {</span>
-<span class="nc" id="L64">			this.linkArrow = LinkArrow.NONE_OR_SEVERAL;</span>
-<span class="nc" id="L65">			this.label = completeLabel;</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (Display.hasSeveralGuideLines(completeLabel)) {</span>
+<span class="fc" id="L64">			this.linkArrow = LinkArrow.NONE_OR_SEVERAL;</span>
+<span class="fc" id="L65">			this.label = completeLabel;</span>
 		} else {
 
 <span class="pc bpc" id="L68" title="1 of 2 branches missed.">			if (&quot;&lt;&quot;.equals(completeLabel)) {</span>
@@ -80,9 +80,9 @@ public class StringWithArrow {
 <span class="fc bfc" id="L80" title="All 2 branches covered.">			} else if (completeLabel.endsWith(&quot; &gt;&quot;)) {</span>
 <span class="fc" id="L81">				this.linkArrow = LinkArrow.DIRECT_NORMAL;</span>
 <span class="fc" id="L82">				this.label = StringUtils.trin(completeLabel.substring(0, completeLabel.length() - 2));</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			} else if (completeLabel.endsWith(&quot; &lt;&quot;)) {</span>
-<span class="nc" id="L84">				this.linkArrow = LinkArrow.BACKWARD;</span>
-<span class="nc" id="L85">				this.label = StringUtils.trin(completeLabel.substring(0, completeLabel.length() - 2));</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			} else if (completeLabel.endsWith(&quot; &lt;&quot;)) {</span>
+<span class="fc" id="L84">				this.linkArrow = LinkArrow.BACKWARD;</span>
+<span class="fc" id="L85">				this.label = StringUtils.trin(completeLabel.substring(0, completeLabel.length() - 2));</span>
 			} else {
 <span class="fc" id="L87">				this.linkArrow = LinkArrow.NONE_OR_SEVERAL;</span>
 <span class="fc" id="L88">				this.label = completeLabel;</span>

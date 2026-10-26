@@ -112,8 +112,8 @@ public class StereotypeDecoration {
 <span class="fc" id="L112">			return MyCollections.unmodifiableList(result);</span>
 
 <span class="fc" id="L114">		final int idx = spriteName.lastIndexOf('/');</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (idx != -1)</span>
-<span class="nc" id="L116">			result.add(spriteName.substring(idx + 1));</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (idx != -1)</span>
+<span class="fc" id="L116">			result.add(spriteName.substring(idx + 1));</span>
 <span class="fc" id="L117">		return MyCollections.unmodifiableList(result);</span>
 	}
 
@@ -166,10 +166,10 @@ public class StereotypeDecoration {
 <span class="fc" id="L166">				spriteName = mCircleSprite.get(&quot;NAME&quot;, 0);</span>
 <span class="fc" id="L167">				spriteScale = Parser.getScale(mCircleSprite.get(&quot;SCALE&quot;, 0), 1);</span>
 <span class="fc bfc" id="L168" title="All 2 branches covered.">			} else if (mCircleChar != null) {</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">				if (StringUtils.isNotEmpty(mCircleChar.get(&quot;LABEL&quot;, 0)))</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">				if (StringUtils.isNotEmpty(mCircleChar.get(&quot;LABEL&quot;, 0)))</span>
 <span class="fc" id="L170">					name = &quot;&lt;&lt;&quot; + mCircleChar.get(&quot;LABEL&quot;, 0) + &quot;&gt;&gt;&quot;;</span>
 				else
-<span class="nc" id="L172">					name = &quot;&quot;;</span>
+<span class="fc" id="L172">					name = &quot;&quot;;</span>
 
 <span class="fc" id="L174">				final String colName = mCircleChar.get(&quot;COLOR&quot;, 0);</span>
 <span class="pc bpc" id="L175" title="1 of 2 branches missed.">				htmlColor = colName == null ? null : htmlColorSet.getColor(colName);</span>

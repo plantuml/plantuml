@@ -315,14 +315,14 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 <span class="fc" id="L315">		String port1 = null;</span>
 <span class="fc" id="L316">		String port2 = null;</span>
 <span class="fc" id="L317">		final LinkType linkType = getLinkType(arg);</span>
-<span class="pc bpc" id="L318" title="3 of 4 branches missed.">		if (ent1String.contains(&quot;::&quot;) &amp;&amp; diagram.firstWithName(ent1String) == null) {</span>
-<span class="nc" id="L319">			port1 = diagram.getPortId(ent1String);</span>
-<span class="nc" id="L320">			ent1String = diagram.removePortId(ent1String);</span>
+<span class="pc bpc" id="L318" title="1 of 4 branches missed.">		if (ent1String.contains(&quot;::&quot;) &amp;&amp; diagram.firstWithName(ent1String) == null) {</span>
+<span class="fc" id="L319">			port1 = diagram.getPortId(ent1String);</span>
+<span class="fc" id="L320">			ent1String = diagram.removePortId(ent1String);</span>
 		}
 
-<span class="pc bpc" id="L323" title="3 of 4 branches missed.">		if (ent2String.contains(&quot;::&quot;) &amp;&amp; diagram.firstWithName(ent2String) == null) {</span>
-<span class="nc" id="L324">			port2 = diagram.getPortId(ent2String);</span>
-<span class="nc" id="L325">			ent2String = diagram.removePortId(ent2String);</span>
+<span class="pc bpc" id="L323" title="1 of 4 branches missed.">		if (ent2String.contains(&quot;::&quot;) &amp;&amp; diagram.firstWithName(ent2String) == null) {</span>
+<span class="fc" id="L324">			port2 = diagram.getPortId(ent2String);</span>
+<span class="fc" id="L325">			ent2String = diagram.removePortId(ent2String);</span>
 		}
 
 <span class="fc" id="L328">		final Failable&lt;Quark&lt;Entity&gt;&gt; quark1 = diagram.quarkInContextSafe(true, ent1String);</span>

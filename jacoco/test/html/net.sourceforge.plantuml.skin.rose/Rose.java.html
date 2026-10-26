@@ -317,11 +317,11 @@ import net.sourceforge.plantuml.style.StyleQuery;
 <span class="nc" id="L317">					messageHorizontalAlignment = HorizontalAlignment.LEFT;</span>
 
 			}
-<span class="pc bpc" id="L320" title="1 of 2 branches missed.">		} else if (&quot;direction&quot;.equalsIgnoreCase(value)) {</span>
-<span class="nc bnc" id="L321" title="All 2 branches missed.">			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
-<span class="nc" id="L322">				messageHorizontalAlignment = HorizontalAlignment.LEFT;</span>
-<span class="nc bnc" id="L323" title="All 2 branches missed.">			else if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE)</span>
-<span class="nc" id="L324">				messageHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
+<span class="pc bfc" id="L320" title="All 2 branches covered.">		} else if (&quot;direction&quot;.equalsIgnoreCase(value)) {</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">			if (arrowDirection == ArrowDirection.LEFT_TO_RIGHT_NORMAL)</span>
+<span class="fc" id="L322">				messageHorizontalAlignment = HorizontalAlignment.LEFT;</span>
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">			else if (arrowDirection == ArrowDirection.RIGHT_TO_LEFT_REVERSE)</span>
+<span class="fc" id="L324">				messageHorizontalAlignment = HorizontalAlignment.RIGHT;</span>
 <span class="nc bnc" id="L325" title="All 2 branches missed.">			else if (arrowDirection == ArrowDirection.BOTH_DIRECTION)</span>
 <span class="nc" id="L326">				messageHorizontalAlignment = HorizontalAlignment.CENTER;</span>
 

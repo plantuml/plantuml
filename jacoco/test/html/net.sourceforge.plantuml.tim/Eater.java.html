@@ -165,9 +165,9 @@ public abstract class Eater {
 <span class="fc" id="L165">		final StringBuilder result = new StringBuilder();</span>
 		while (true) {
 <span class="fc" id="L167">			final char ch = peekChar();</span>
-<span class="pc bpc" id="L168" title="1 of 4 branches missed.">			if (result.length() == 0 &amp;&amp; ch == '-') {</span>
-<span class="nc" id="L169">				result.append(eatOneChar());</span>
-<span class="nc" id="L170">				continue;</span>
+<span class="fc bfc" id="L168" title="All 4 branches covered.">			if (result.length() == 0 &amp;&amp; ch == '-') {</span>
+<span class="fc" id="L169">				result.append(eatOneChar());</span>
+<span class="fc" id="L170">				continue;</span>
 			}
 
 <span class="fc bfc" id="L173" title="All 4 branches covered.">			if (ch == 0 || TLineType.isLatinDigit(ch) == false)</span>
@@ -181,7 +181,7 @@ public abstract class Eater {
 <span class="fc" id="L181">		final StringBuilder result = new StringBuilder();</span>
 		while (true) {
 <span class="fc" id="L183">			final char ch = peekChar();</span>
-<span class="pc bpc" id="L184" title="1 of 4 branches missed.">			if (ch == 0 || TLineType.isSpaceChar(ch) == false)</span>
+<span class="fc bfc" id="L184" title="All 4 branches covered.">			if (ch == 0 || TLineType.isSpaceChar(ch) == false)</span>
 <span class="fc" id="L185">				return result.toString();</span>
 
 <span class="fc" id="L187">			result.append(eatOneChar());</span>
@@ -257,8 +257,8 @@ public abstract class Eater {
 <span class="fc" id="L257">	}</span>
 
 	final protected boolean safeCheckAndEatChar(char ch) throws EaterException {
-<span class="pc bpc" id="L260" title="2 of 4 branches missed.">		if (i &gt;= stringLocated.length() || stringLocated.charAt(i) != ch)</span>
-<span class="nc" id="L261">			return false;</span>
+<span class="pc bpc" id="L260" title="1 of 4 branches missed.">		if (i &gt;= stringLocated.length() || stringLocated.charAt(i) != ch)</span>
+<span class="fc" id="L261">			return false;</span>
 
 <span class="fc" id="L263">		i++;</span>
 <span class="fc" id="L264">		return true;</span>
@@ -305,9 +305,9 @@ public abstract class Eater {
 <span class="fc" id="L305">		final List&lt;TFunctionArgument&gt; args = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L306">		final String functionName = eatAndGetFunctionName();</span>
 <span class="fc" id="L307">		skipSpaces();</span>
-<span class="pc bpc" id="L308" title="1 of 2 branches missed.">		if (safeCheckAndEatChar('(') == false) {</span>
-<span class="nc bnc" id="L309" title="All 2 branches missed.">			if (allowNoParenthesis)</span>
-<span class="nc" id="L310">				return new TFunctionImpl(functionName, args, unquoted, type);</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">		if (safeCheckAndEatChar('(') == false) {</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">			if (allowNoParenthesis)</span>
+<span class="fc" id="L310">				return new TFunctionImpl(functionName, args, unquoted, type);</span>
 
 <span class="nc" id="L312">			throw new EaterException(&quot;Missing opening parenthesis&quot;, stringLocated);</span>
 		}

@@ -286,16 +286,16 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	}
 
 	public Sprite buildSpriteZ(int width, int height, String compressed) {
-<span class="nc" id="L289">		final byte comp[] = new AsciiEncoder().decode(compressed);</span>
+<span class="fc" id="L289">		final byte comp[] = new AsciiEncoder().decode(compressed);</span>
 		try {
-<span class="nc" id="L291">			final ByteArray img = new CompressionZlib().decompress(comp);</span>
-<span class="nc" id="L292">			final SpriteMonochrome result = new SpriteMonochrome(width, height, nbColor);</span>
-<span class="nc" id="L293">			int cpt = 0;</span>
-<span class="nc bnc" id="L294" title="All 2 branches missed.">			for (int line = 0; line &lt; result.getHeight(); line++)</span>
-<span class="nc bnc" id="L295" title="All 2 branches missed.">				for (int col = 0; col &lt; result.getWidth(); col++)</span>
-<span class="nc" id="L296">					result.setGray(col, line, img.getByteAt(cpt++));</span>
+<span class="fc" id="L291">			final ByteArray img = new CompressionZlib().decompress(comp);</span>
+<span class="fc" id="L292">			final SpriteMonochrome result = new SpriteMonochrome(width, height, nbColor);</span>
+<span class="fc" id="L293">			int cpt = 0;</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">			for (int line = 0; line &lt; result.getHeight(); line++)</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">				for (int col = 0; col &lt; result.getWidth(); col++)</span>
+<span class="fc" id="L296">					result.setGray(col, line, img.getByteAt(cpt++));</span>
 
-<span class="nc" id="L298">			return result;</span>
+<span class="fc" id="L298">			return result;</span>
 <span class="nc" id="L299">		} catch (NoPlantumlCompressionException e) {</span>
 <span class="nc" id="L300">			Logme.error(e);</span>
 <span class="nc" id="L301">			return null;</span>

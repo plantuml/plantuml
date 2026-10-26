@@ -99,7 +99,7 @@ public class Colors {
 <span class="fc" id="L99">			final String s = st.nextToken();</span>
 <span class="fc" id="L100">			final int x = s.indexOf(':');</span>
 <span class="fc bfc" id="L101" title="All 2 branches covered.">			if (x == -1) {</span>
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">				if (s.contains(&quot;.&quot;) == false)</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">				if (s.contains(&quot;.&quot;) == false)</span>
 <span class="fc" id="L103">					map.put(mainType, set.getColor(s));</span>
 
 			} else {
@@ -114,10 +114,10 @@ public class Colors {
 				}
 			}
 <span class="fc" id="L116">		}</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (data.contains(&quot;line.dashed&quot;))</span>
-<span class="nc" id="L118">			lineStyle = LinkStyle.DASHED();</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		else if (data.contains(&quot;line.dotted&quot;))</span>
-<span class="nc" id="L120">			lineStyle = LinkStyle.DOTTED();</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (data.contains(&quot;line.dashed&quot;))</span>
+<span class="fc" id="L118">			lineStyle = LinkStyle.DASHED();</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		else if (data.contains(&quot;line.dotted&quot;))</span>
+<span class="fc" id="L120">			lineStyle = LinkStyle.DOTTED();</span>
 <span class="pc bpc" id="L121" title="1 of 2 branches missed.">		else if (data.contains(&quot;line.bold&quot;))</span>
 <span class="nc" id="L122">			lineStyle = LinkStyle.BOLD();</span>
 

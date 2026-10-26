@@ -135,33 +135,33 @@ public class CommandArchimate extends SingleLineCommand2&lt;DescriptionDiagram&g
 	@Override
 	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L138">		final String codeRaw = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L138">		final String codeRaw = arg.getLazzy(&quot;CODE&quot;, 0);</span>
 
-<span class="nc" id="L140">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(codeRaw));</span>
+<span class="fc" id="L140">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(codeRaw));</span>
 
-<span class="nc" id="L142">		String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;DISPLAY&quot;, 0));</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (display == null)</span>
+<span class="fc" id="L142">		String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy(&quot;DISPLAY&quot;, 0));</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (display == null)</span>
 <span class="nc" id="L144">			display = quark.getName();</span>
 
-<span class="nc" id="L146">		Entity entity = quark.getData();</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (entity == null)</span>
-<span class="nc" id="L148">			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), LeafType.DESCRIPTION,</span>
+<span class="fc" id="L146">		Entity entity = quark.getData();</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (entity == null)</span>
+<span class="fc" id="L148">			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), LeafType.DESCRIPTION,</span>
 					USymbols.ARCHIMATE);
 
-<span class="nc" id="L151">		final String icon = StereotypePattern.removeChevronBrackets(arg.getLazzy(&quot;STEREOTYPE&quot;, 0));</span>
+<span class="fc" id="L151">		final String icon = StereotypePattern.removeChevronBrackets(arg.getLazzy(&quot;STEREOTYPE&quot;, 0));</span>
 
-<span class="nc" id="L153">		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
+<span class="fc" id="L153">		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
 
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (icon != null)</span>
-<span class="nc" id="L156">			entity.setStereotype(</span>
-<span class="nc" id="L157">					Stereotype.build(&quot;&lt;&lt;$archimate/&quot; + icon + &quot;&gt;&gt;&quot;, diagram.getSkinParam().getCircledCharacterRadius(),</span>
-<span class="nc" id="L158">							diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
-<span class="nc" id="L159">							diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (icon != null)</span>
+<span class="fc" id="L156">			entity.setStereotype(</span>
+<span class="fc" id="L157">					Stereotype.build(&quot;&lt;&lt;$archimate/&quot; + icon + &quot;&gt;&gt;&quot;, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="fc" id="L158">							diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="fc" id="L159">							diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="nc" id="L161">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L162">		entity.setColors(colors);</span>
+<span class="fc" id="L161">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L162">		entity.setColors(colors);</span>
 
-<span class="nc" id="L164">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L164">		return CommandExecutionResult.ok();</span>
 	}
 
 	@Override

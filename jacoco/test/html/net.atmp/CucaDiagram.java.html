@@ -178,18 +178,18 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="fc" id="L178">		int pos = stacks.size() - 1;</span>
 <span class="pc bpc" id="L179" title="1 of 2 branches missed.">		while (pos &gt;= 0) {</span>
 <span class="fc" id="L180">			final Bag tmp = this.stacks.get(pos);</span>
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">			if (tmp instanceof Entity)</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">			if (tmp instanceof Entity)</span>
 <span class="fc" id="L182">				return (Entity) tmp;</span>
-<span class="nc" id="L183">			pos--;</span>
-<span class="nc" id="L184">		}</span>
+<span class="fc" id="L183">			pos--;</span>
+<span class="fc" id="L184">		}</span>
 <span class="nc" id="L185">		throw new IllegalStateException();</span>
 	}
 
 	public final Together currentTogether() {
 <span class="fc" id="L189">		final int pos = stacks.size() - 1;</span>
 <span class="fc" id="L190">		final Bag tmp = this.stacks.get(pos);</span>
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">		if (tmp instanceof Together)</span>
-<span class="nc" id="L192">			return (Together) tmp;</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		if (tmp instanceof Together)</span>
+<span class="fc" id="L192">			return (Together) tmp;</span>
 <span class="fc" id="L193">		return null;</span>
 	}
 
@@ -299,12 +299,12 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 
 	public String removePortId(String id) {
 		// To be kept
-<span class="nc bnc" id="L302" title="All 2 branches missed.">		if (&quot;::&quot;.equals(getNamespaceSeparator()))</span>
+<span class="pc bpc" id="L302" title="1 of 2 branches missed.">		if (&quot;::&quot;.equals(getNamespaceSeparator()))</span>
 <span class="nc" id="L303">			return id;</span>
-<span class="nc" id="L304">		final int x = id.lastIndexOf(&quot;::&quot;);</span>
-<span class="nc bnc" id="L305" title="All 2 branches missed.">		if (x == -1)</span>
+<span class="fc" id="L304">		final int x = id.lastIndexOf(&quot;::&quot;);</span>
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">		if (x == -1)</span>
 <span class="nc" id="L306">			return id;</span>
-<span class="nc" id="L307">		return id.substring(0, x);</span>
+<span class="fc" id="L307">		return id.substring(0, x);</span>
 	}
 
 	public String getPortId(String id) {
@@ -312,9 +312,9 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="pc bpc" id="L312" title="1 of 2 branches missed.">		if (&quot;::&quot;.equals(getNamespaceSeparator()))</span>
 <span class="nc" id="L313">			return null;</span>
 <span class="fc" id="L314">		final int x = id.lastIndexOf(&quot;::&quot;);</span>
-<span class="pc bpc" id="L315" title="1 of 2 branches missed.">		if (x == -1)</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">		if (x == -1)</span>
 <span class="fc" id="L316">			return null;</span>
-<span class="nc" id="L317">		return id.substring(x + 2);</span>
+<span class="fc" id="L317">		return id.substring(x + 2);</span>
 	}
 
 	@Override
@@ -337,8 +337,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="fc" id="L337">	}</span>
 
 	final public CommandExecutionResult gotoTogether() {
-<span class="nc" id="L340">		this.stacks.add(new Together(currentTogether()));</span>
-<span class="nc" id="L341">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L340">		this.stacks.add(new Together(currentTogether()));</span>
+<span class="fc" id="L341">		return CommandExecutionResult.ok();</span>
 	}
 
 	final public CommandExecutionResult gotoGroup(LineLocation location, Quark&lt;Entity&gt; quark, Display display,
@@ -839,8 +839,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 <span class="pc bpc" id="L839" title="1 of 2 branches missed.">			assert note.getLeafType() == LeafType.NOTE;</span>
 <span class="fc" id="L840">		Entity other = null;</span>
 <span class="fc bfc" id="L841" title="All 2 branches covered.">		for (Link link : this.getLinks()) {</span>
-<span class="pc bpc" id="L842" title="1 of 2 branches missed.">			if (link.getType().isInvisible())</span>
-<span class="nc" id="L843">				continue;</span>
+<span class="fc bfc" id="L842" title="All 2 branches covered.">			if (link.getType().isInvisible())</span>
+<span class="fc" id="L843">				continue;</span>
 <span class="fc bfc" id="L844" title="All 2 branches covered.">			if (link.contains(note) == false)</span>
 <span class="fc" id="L845">				continue;</span>
 <span class="pc bpc" id="L846" title="1 of 2 branches missed.">			if (other != null)</span>
@@ -866,8 +866,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	final public Entity createLeaf(LineLocation location, Quark&lt;Entity&gt; quark, CucaDiagram diagram, LeafType entityType,
 			Set&lt;VisibilityModifier&gt; hideVisibilityModifier) {
 		final Bodier bodier;
-<span class="pc bpc" id="L869" title="1 of 2 branches missed.">		if (Objects.requireNonNull(entityType) == LeafType.MAP)</span>
-<span class="nc" id="L870">			bodier = new BodierMap();</span>
+<span class="fc bfc" id="L869" title="All 2 branches covered.">		if (Objects.requireNonNull(entityType) == LeafType.MAP)</span>
+<span class="fc" id="L870">			bodier = new BodierMap();</span>
 <span class="pc bpc" id="L871" title="1 of 2 branches missed.">		else if (Objects.requireNonNull(entityType) == LeafType.JSON)</span>
 <span class="nc" id="L872">			bodier = new BodierJSon();</span>
 		else

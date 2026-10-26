@@ -160,8 +160,8 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 <span class="fc" id="L160">			firstIsActivate = true;</span>
 
 <span class="fc bfc" id="L162" title="All 2 branches covered.">		if (lifeEvent.getType() == LifeEventType.ACTIVATE</span>
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">				&amp;&amp; noActivationAuthorized2.contains(lifeEvent.getParticipant()))</span>
-<span class="nc" id="L164">			return false;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">				&amp;&amp; noActivationAuthorized2.contains(lifeEvent.getParticipant()))</span>
+<span class="fc" id="L164">			return false;</span>
 
 <span class="fc bfc" id="L166" title="All 4 branches covered.">		if (lifeEvent.getType() == LifeEventType.DEACTIVATE || lifeEvent.getType() == LifeEventType.DESTROY)</span>
 <span class="fc" id="L167">			noActivationAuthorized2.add(lifeEvent.getParticipant());</span>

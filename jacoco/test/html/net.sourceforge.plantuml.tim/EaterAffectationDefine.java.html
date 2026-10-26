@@ -40,24 +40,24 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 public class EaterAffectationDefine extends Eater {
 
 	public EaterAffectationDefine(StringLocated s) {
-<span class="nc" id="L43">		super(s.getTrimmed());</span>
-<span class="nc" id="L44">	}</span>
+<span class="fc" id="L43">		super(s.getTrimmed());</span>
+<span class="fc" id="L44">	}</span>
 
 	@Override
 	public void analyze(TContext context, TMemory memory) throws EaterException {
-<span class="nc" id="L48">		skipSpaces();</span>
-<span class="nc" id="L49">		checkAndEatChar(&quot;!define&quot;);</span>
-<span class="nc" id="L50">		skipSpaces();</span>
-<span class="nc" id="L51">		final String varname = eatAndGetVarname();</span>
-<span class="nc" id="L52">		skipSpaces();</span>
-<span class="nc" id="L53">		final String tmp = eatAllToEnd();</span>
-<span class="nc" id="L54">		final String tmp2 = context.applyFunctionsAndVariables(memory, new StringLocated(tmp, getLineLocation()));</span>
-<span class="nc" id="L55">		final TValue value = TValue.fromString(tmp2);</span>
+<span class="fc" id="L48">		skipSpaces();</span>
+<span class="fc" id="L49">		checkAndEatChar(&quot;!define&quot;);</span>
+<span class="fc" id="L50">		skipSpaces();</span>
+<span class="fc" id="L51">		final String varname = eatAndGetVarname();</span>
+<span class="fc" id="L52">		skipSpaces();</span>
+<span class="fc" id="L53">		final String tmp = eatAllToEnd();</span>
+<span class="fc" id="L54">		final String tmp2 = context.applyFunctionsAndVariables(memory, new StringLocated(tmp, getLineLocation()));</span>
+<span class="fc" id="L55">		final TValue value = TValue.fromString(tmp2);</span>
 		// if (memory instanceof TMemoryLocal) {
 		// memory = ((TMemoryLocal) memory).getGlobalForInternalUseOnly();
 		// }
-<span class="nc" id="L59">		memory.putVariable(varname, value, TVariableScope.GLOBAL, getStringLocated());</span>
-<span class="nc" id="L60">	}</span>
+<span class="fc" id="L59">		memory.putVariable(varname, value, TVariableScope.GLOBAL, getStringLocated());</span>
+<span class="fc" id="L60">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

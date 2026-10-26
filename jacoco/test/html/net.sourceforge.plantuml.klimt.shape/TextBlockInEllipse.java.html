@@ -54,8 +54,8 @@ public class TextBlockInEllipse extends TextBlockMemoized {
 <span class="fc" id="L54">		double alpha = textDim.getHeight() / textDim.getWidth();</span>
 <span class="fc bfc" id="L55" title="All 2 branches covered.">		if (alpha &lt; .2) {</span>
 <span class="fc" id="L56">			alpha = .2;</span>
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		} else if (alpha &gt; .8) {</span>
-<span class="nc" id="L58">			alpha = .8;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		} else if (alpha &gt; .8) {</span>
+<span class="fc" id="L58">			alpha = .8;</span>
 		}
 <span class="fc" id="L60">		final Footprint footprint = new Footprint(stringBounder);</span>
 <span class="fc" id="L61">		ellipse = footprint.getEllipse(text, alpha);</span>

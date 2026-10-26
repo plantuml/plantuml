@@ -76,8 +76,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="pc bpc" id="L76" title="1 of 2 branches missed.">			if (signature.getNamedArguments().contains(n) == false)</span>
 <span class="nc" id="L77">				return false;</span>
 
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (nbArg &gt; args.size())</span>
-<span class="nc" id="L80">			return false;</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (nbArg &gt; args.size())</span>
+<span class="fc" id="L80">			return false;</span>
 
 <span class="pc bpc" id="L82" title="2 of 4 branches missed.">		if (TeaVM.a()) assert nbArg &lt;= args.size();</span>
 <span class="fc" id="L83">		int neededArgument = 0;</span>
@@ -134,7 +134,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	@Override
 	public void executeProcedureInternal(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; args,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="pc bpc" id="L137" title="3 of 4 branches missed.">		if (functionType != TFunctionType.PROCEDURE &amp;&amp; functionType != TFunctionType.LEGACY_DEFINELONG)</span>
+<span class="pc bpc" id="L137" title="1 of 4 branches missed.">		if (functionType != TFunctionType.PROCEDURE &amp;&amp; functionType != TFunctionType.LEGACY_DEFINELONG)</span>
 <span class="nc" id="L138">			throw new IllegalStateException();</span>
 
 <span class="fc" id="L140">		final TMemory copy = getNewMemory(memory, args, named);</span>
@@ -199,14 +199,14 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	}
 
 	public void finalizeEnddefinelong() {
-<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (functionType != TFunctionType.LEGACY_DEFINELONG)</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">		if (functionType != TFunctionType.LEGACY_DEFINELONG)</span>
 <span class="nc" id="L203">			throw new UnsupportedOperationException();</span>
 
-<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (body.size() == 1) {</span>
-<span class="nc" id="L206">			this.functionType = TFunctionType.LEGACY_DEFINE;</span>
-<span class="nc" id="L207">			this.legacyDefinition = body.get(0).getString();</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		if (body.size() == 1) {</span>
+<span class="fc" id="L206">			this.functionType = TFunctionType.LEGACY_DEFINE;</span>
+<span class="fc" id="L207">			this.legacyDefinition = body.get(0).getString();</span>
 		}
-<span class="nc" id="L209">	}</span>
+<span class="fc" id="L209">	}</span>
 
 	public final boolean doesContainReturn() {
 <span class="fc" id="L212">		return containsReturn;</span>

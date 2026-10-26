@@ -55,21 +55,21 @@ import net.sourceforge.plantuml.tim.EaterException;
 <span class="fc bfc" id="L55" title="All 2 branches covered.">			if (source.peek() == null) {</span>
 <span class="fc" id="L56">				return null;</span>
 			}
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if (source.peek().getType() != TLineType.COMMENT_LONG_START) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">			if (source.peek().getType() != TLineType.COMMENT_LONG_START) {</span>
 <span class="fc" id="L59">				return source.peek();</span>
 			}
-<span class="nc" id="L61">			StringLocated s = null;</span>
-<span class="nc bnc" id="L62" title="All 4 branches missed.">			while ((s = source.peek()) != null &amp;&amp; s.getTrimmed().getString().endsWith(&quot;'/&quot;) == false) {</span>
-<span class="nc" id="L63">				logs.add(s);</span>
-<span class="nc" id="L64">				source.next();</span>
+<span class="fc" id="L61">			StringLocated s = null;</span>
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">			while ((s = source.peek()) != null &amp;&amp; s.getTrimmed().getString().endsWith(&quot;'/&quot;) == false) {</span>
+<span class="fc" id="L63">				logs.add(s);</span>
+<span class="fc" id="L64">				source.next();</span>
 			}
-<span class="nc bnc" id="L66" title="All 6 branches missed.">			if (TeaVM.a()) assert source.peek() == null || s.getTrimmed().getString().endsWith(&quot;'/&quot;);</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (source.peek() != null) {</span>
-<span class="nc bnc" id="L68" title="All 4 branches missed.">				if (TeaVM.a()) assert s.getTrimmed().getString().endsWith(&quot;'/&quot;);</span>
-<span class="nc" id="L69">				logs.add(source.peek());</span>
-<span class="nc" id="L70">				source.next();</span>
+<span class="pc bpc" id="L66" title="3 of 6 branches missed.">			if (TeaVM.a()) assert source.peek() == null || s.getTrimmed().getString().endsWith(&quot;'/&quot;);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (source.peek() != null) {</span>
+<span class="pc bpc" id="L68" title="2 of 4 branches missed.">				if (TeaVM.a()) assert s.getTrimmed().getString().endsWith(&quot;'/&quot;);</span>
+<span class="fc" id="L69">				logs.add(source.peek());</span>
+<span class="fc" id="L70">				source.next();</span>
 			}
-<span class="nc" id="L72">		}</span>
+<span class="fc" id="L72">		}</span>
 
 	}
 }

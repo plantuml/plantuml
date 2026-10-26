@@ -11,9 +11,9 @@ import java.util.Base64;
 import java.util.List;
 
 /**
- * Generates {@code EmbeddedResources.java} by reading
- * {@code skin/plantuml.skin} from the main resources directory and encoding it
- * as a Base64 string literal.
+ * Generates {@code EmbeddedResources.java} by reading the skins of the main
+ * resources directory (see {@link #SKIN_NAMES}) and encoding them as Base64
+ * string literals.
  * &lt;p&gt;
  * Run this class on a standard JVM (NOT under TeaVM) from the project root:
  *
@@ -21,20 +21,20 @@ import java.util.List;
  * java net.sourceforge.plantuml.teavm.EmbeddedResourcesGenerator
  * &lt;/pre&gt;
  *
- * The generated class exposes {@code openPlantumlSkin()} and
- * {@code openStrictSkin()} which return an {@code InputStream} over the embedded
- * skin bytes, so it works inside a TeaVM-compiled context where
+ * The generated class exposes {@code openSkin(String)} (and the shortcuts
+ * {@code openPlantumlSkin()} and {@code openStrictSkin()}) which return an
+ * {@code InputStream} over the embedded skin bytes, so it works inside a TeaVM-compiled context where
  * {@code ClassLoader.getResourceAsStream()} is not available.
  */
 <span class="nc" id="L29">public final class EmbeddedResourcesGenerator {</span>
 
+	/**
+	 * The skins of src/main/resources/skin that {@code EmbeddedResources} embeds
+	 * (without the {@code .skin} extension).
+	 */
+<span class="fc" id="L35">	static final String[] SKIN_NAMES = { &quot;plantuml&quot;, &quot;strictuml&quot;, &quot;rose&quot;, &quot;sonyxperiadev&quot;, &quot;debug&quot; };</span>
+
 	public static void main(String[] args) throws Exception {
-<span class="nc" id="L32">		final String plantumlSkin = readCleanedSkin(&quot;src/main/resources/skin/plantuml.skin&quot;);</span>
-<span class="nc" id="L33">		final String strictSkin = readCleanedSkin(&quot;src/main/resources/skin/strictuml.skin&quot;);</span>
-
-<span class="nc" id="L35">		final String plantumlB64 = Base64.getEncoder().encodeToString(plantumlSkin.getBytes(StandardCharsets.UTF_8));</span>
-<span class="nc" id="L36">		final String strictB64 = Base64.getEncoder().encodeToString(strictSkin.getBytes(StandardCharsets.UTF_8));</span>
-
 <span class="nc" id="L38">		final File output = new File(&quot;src/main/java/net/sourceforge/plantuml/teavm/EmbeddedResources.java&quot;);</span>
 <span class="nc bnc" id="L39" title="All 2 branches missed.">		if (!output.getParentFile().isDirectory())</span>
 <span class="nc" id="L40">			throw new IOException(&quot;Target directory does not exist: &quot; + output.getParentFile());</span>
@@ -51,61 +51,87 @@ import java.util.List;
 <span class="nc" id="L51">			out.println(&quot;public final class EmbeddedResources {&quot;);</span>
 <span class="nc" id="L52">			out.println(&quot;\tprivate EmbeddedResources() {&quot;);</span>
 <span class="nc" id="L53">			out.println(&quot;\t}&quot;);</span>
-<span class="nc" id="L54">			out.println();</span>
-<span class="nc" id="L55">			out.println(&quot;\tprivate static final String PLANTUML_SKIN_B64 =&quot;);</span>
-<span class="nc" id="L56">			out.println(&quot;\t\t\t&quot; + toJavaLiteral(plantumlB64) + &quot;;&quot;);</span>
-<span class="nc" id="L57">			out.println();</span>
-<span class="nc" id="L58">			out.println(&quot;\tprivate static final String STRICT_SKIN_B64 =&quot;);</span>
-<span class="nc" id="L59">			out.println(&quot;\t\t\t&quot; + toJavaLiteral(strictB64) + &quot;;&quot;);</span>
-<span class="nc" id="L60">			out.println();</span>
-<span class="nc" id="L61">			out.println(&quot;\tpublic static InputStream openPlantumlSkin() {&quot;);</span>
-<span class="nc" id="L62">			out.println(&quot;\t\tbyte[] data = Base64.getDecoder().decode(PLANTUML_SKIN_B64);&quot;);</span>
-<span class="nc" id="L63">			out.println(&quot;\t\treturn new ByteArrayInputStream(data);&quot;);</span>
-<span class="nc" id="L64">			out.println(&quot;\t}&quot;);</span>
-<span class="nc" id="L65">			out.println();</span>
-<span class="nc" id="L66">			out.println(&quot;\tpublic static InputStream openStrictSkin() {&quot;);</span>
-<span class="nc" id="L67">			out.println(&quot;\t\tbyte[] data = Base64.getDecoder().decode(STRICT_SKIN_B64);&quot;);</span>
-<span class="nc" id="L68">			out.println(&quot;\t\treturn new ByteArrayInputStream(data);&quot;);</span>
-<span class="nc" id="L69">			out.println(&quot;\t}&quot;);</span>
-<span class="nc" id="L70">			out.println(&quot;}&quot;);</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">			for (String name : SKIN_NAMES) {</span>
+<span class="nc" id="L55">				final String skin = readCleanedSkin(&quot;src/main/resources/skin/&quot; + name + &quot;.skin&quot;);</span>
+<span class="nc" id="L56">				final String b64 = Base64.getEncoder().encodeToString(skin.getBytes(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L57">				out.println();</span>
+<span class="nc" id="L58">				out.println(&quot;\tprivate static final String &quot; + constantName(name) + &quot; =&quot;);</span>
+<span class="nc" id="L59">				out.println(&quot;\t\t\t&quot; + toJavaLiteral(b64) + &quot;;&quot;);</span>
+			}
+<span class="nc" id="L61">			out.println();</span>
+<span class="nc" id="L62">			out.println(&quot;\t/**&quot;);</span>
+<span class="nc" id="L63">			out.println(&quot;\t * The embedded skin of this file name (for instance \&quot;rose.skin\&quot;), or null.&quot;);</span>
+<span class="nc" id="L64">			out.println(&quot;\t */&quot;);</span>
+<span class="nc" id="L65">			out.println(&quot;\tpublic static InputStream openSkin(String filename) {&quot;);</span>
+<span class="nc" id="L66">			out.println(&quot;\t\tfinal String b64 = getSkinBase64(filename);&quot;);</span>
+<span class="nc" id="L67">			out.println(&quot;\t\tif (b64 == null)&quot;);</span>
+<span class="nc" id="L68">			out.println(&quot;\t\t\treturn null;&quot;);</span>
+<span class="nc" id="L69">			out.println();</span>
+<span class="nc" id="L70">			out.println(&quot;\t\tbyte[] data = Base64.getDecoder().decode(b64);&quot;);</span>
+<span class="nc" id="L71">			out.println(&quot;\t\treturn new ByteArrayInputStream(data);&quot;);</span>
+<span class="nc" id="L72">			out.println(&quot;\t}&quot;);</span>
+<span class="nc" id="L73">			out.println();</span>
+<span class="nc" id="L74">			out.println(&quot;\tprivate static String getSkinBase64(String filename) {&quot;);</span>
+<span class="nc" id="L75">			out.println(&quot;\t\tswitch (filename) {&quot;);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">			for (String name : SKIN_NAMES) {</span>
+<span class="nc" id="L77">				out.println(&quot;\t\tcase \&quot;&quot; + name + &quot;.skin\&quot;:&quot;);</span>
+<span class="nc" id="L78">				out.println(&quot;\t\t\treturn &quot; + constantName(name) + &quot;;&quot;);</span>
+			}
+<span class="nc" id="L80">			out.println(&quot;\t\tdefault:&quot;);</span>
+<span class="nc" id="L81">			out.println(&quot;\t\t\treturn null;&quot;);</span>
+<span class="nc" id="L82">			out.println(&quot;\t\t}&quot;);</span>
+<span class="nc" id="L83">			out.println(&quot;\t}&quot;);</span>
+<span class="nc" id="L84">			out.println();</span>
+<span class="nc" id="L85">			out.println(&quot;\tpublic static InputStream openPlantumlSkin() {&quot;);</span>
+<span class="nc" id="L86">			out.println(&quot;\t\treturn openSkin(\&quot;plantuml.skin\&quot;);&quot;);</span>
+<span class="nc" id="L87">			out.println(&quot;\t}&quot;);</span>
+<span class="nc" id="L88">			out.println();</span>
+<span class="nc" id="L89">			out.println(&quot;\tpublic static InputStream openStrictSkin() {&quot;);</span>
+<span class="nc" id="L90">			out.println(&quot;\t\treturn openSkin(\&quot;strictuml.skin\&quot;);&quot;);</span>
+<span class="nc" id="L91">			out.println(&quot;\t}&quot;);</span>
+<span class="nc" id="L92">			out.println(&quot;}&quot;);</span>
 		}
 
-<span class="nc" id="L73">		System.out.println(&quot;Generated &quot; + output.getAbsolutePath());</span>
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L95">		System.out.println(&quot;Generated &quot; + output.getAbsolutePath());</span>
+<span class="nc" id="L96">	}</span>
+
+	private static String constantName(String skinName) {
+<span class="nc" id="L99">		return skinName.toUpperCase() + &quot;_SKIN_B64&quot;;</span>
+	}
 
 	/**
 	 * Reads a skin file, stripping line and block comments and blank lines, and
 	 * returns the cleaned content joined by newlines.
 	 */
-	private static String readCleanedSkin(String path) throws IOException {
-<span class="nc" id="L81">		final File skinFile = new File(path);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (!skinFile.isFile())</span>
-<span class="nc" id="L83">			throw new IOException(&quot;File not found: &quot; + skinFile.getAbsolutePath());</span>
+	static String readCleanedSkin(String path) throws IOException {
+<span class="fc" id="L107">		final File skinFile = new File(path);</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (!skinFile.isFile())</span>
+<span class="nc" id="L109">			throw new IOException(&quot;File not found: &quot; + skinFile.getAbsolutePath());</span>
 
-<span class="nc" id="L85">		final List&lt;String&gt; cleaned = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L111">		final List&lt;String&gt; cleaned = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L87">		boolean inBlockComment = false;</span>
+<span class="fc" id="L113">		boolean inBlockComment = false;</span>
 
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (String ligne : Files.readAllLines(skinFile.toPath(), StandardCharsets.UTF_8)) {</span>
-<span class="nc" id="L90">			final String trimmed = ligne.trim();</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		for (String ligne : Files.readAllLines(skinFile.toPath(), StandardCharsets.UTF_8)) {</span>
+<span class="fc" id="L116">			final String trimmed = ligne.trim();</span>
 
-<span class="nc bnc" id="L92" title="All 2 branches missed.">			if (inBlockComment) {</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">				if (trimmed.contains(&quot;*/&quot;))</span>
-<span class="nc" id="L94">					inBlockComment = false;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">			if (inBlockComment) {</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">				if (trimmed.contains(&quot;*/&quot;))</span>
+<span class="fc" id="L120">					inBlockComment = false;</span>
 			} else {
-<span class="nc bnc" id="L96" title="All 2 branches missed.">				if (trimmed.startsWith(&quot;/*&quot;)) {</span>
-<span class="nc" id="L97">					inBlockComment = true;</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">					if (trimmed.endsWith(&quot;*/&quot;))</span>
-<span class="nc" id="L99">						inBlockComment = false;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">				if (trimmed.startsWith(&quot;/*&quot;)) {</span>
+<span class="fc" id="L123">					inBlockComment = true;</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">					if (trimmed.endsWith(&quot;*/&quot;))</span>
+<span class="nc" id="L125">						inBlockComment = false;</span>
 					continue;
 				}
-<span class="nc bnc" id="L102" title="All 4 branches missed.">				if (trimmed.startsWith(&quot;//&quot;) || trimmed.isEmpty())</span>
-<span class="nc" id="L103">					continue;</span>
-<span class="nc" id="L104">				cleaned.add(trimmed);</span>
+<span class="fc bfc" id="L128" title="All 4 branches covered.">				if (trimmed.startsWith(&quot;//&quot;) || trimmed.isEmpty())</span>
+<span class="fc" id="L129">					continue;</span>
+<span class="fc" id="L130">				cleaned.add(trimmed);</span>
 			}
-<span class="nc" id="L106">		}</span>
+<span class="fc" id="L132">		}</span>
 
-<span class="nc" id="L108">		return String.join(&quot;\n&quot;, cleaned);</span>
+<span class="fc" id="L134">		return String.join(&quot;\n&quot;, cleaned);</span>
 	}
 
 	/**
@@ -113,14 +139,14 @@ import java.util.List;
 	 * string literal, for readability.
 	 */
 	private static String toJavaLiteral(String b64) {
-<span class="nc" id="L116">		final int CHUNK = 100;</span>
-<span class="nc" id="L117">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (int i = 0; i &lt; b64.length(); i += CHUNK) {</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (i &gt; 0)</span>
-<span class="nc" id="L120">				sb.append(&quot; +\n\t\t\t&quot;);</span>
-<span class="nc" id="L121">			sb.append('&quot;').append(b64, i, Math.min(i + CHUNK, b64.length())).append('&quot;');</span>
+<span class="nc" id="L142">		final int CHUNK = 100;</span>
+<span class="nc" id="L143">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		for (int i = 0; i &lt; b64.length(); i += CHUNK) {</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (i &gt; 0)</span>
+<span class="nc" id="L146">				sb.append(&quot; +\n\t\t\t&quot;);</span>
+<span class="nc" id="L147">			sb.append('&quot;').append(b64, i, Math.min(i + CHUNK, b64.length())).append('&quot;');</span>
 		}
-<span class="nc" id="L123">		return sb.toString();</span>
+<span class="nc" id="L149">		return sb.toString();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

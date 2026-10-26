@@ -295,9 +295,9 @@ public class CommandCreateElementFull extends SingleLineCommand2&lt;DescriptionD
 <span class="pc bpc" id="L295" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;usecase/&quot;)) {</span>
 <span class="nc" id="L296">			type = LeafType.USECASE_BUSINESS;</span>
 <span class="nc" id="L297">			usymbol = null;</span>
-<span class="pc bpc" id="L298" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;circle&quot;)) {</span>
-<span class="nc" id="L299">			type = LeafType.CIRCLE;</span>
-<span class="nc" id="L300">			usymbol = null;</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">		} else if (symbol.equalsIgnoreCase(&quot;circle&quot;)) {</span>
+<span class="fc" id="L299">			type = LeafType.CIRCLE;</span>
+<span class="fc" id="L300">			usymbol = null;</span>
 		} else {
 <span class="fc" id="L302">			type = LeafType.DESCRIPTION;</span>
 <span class="fc" id="L303">			usymbol = USymbols.fromString(symbol, diagram.getSkinParam());</span>
@@ -324,7 +324,7 @@ public class CommandCreateElementFull extends SingleLineCommand2&lt;DescriptionD
 <span class="nc" id="L324">			return CommandExecutionResult.error(&quot;Port can only be used inside an element and not at root level&quot;);</span>
 
 <span class="fc" id="L326">		Entity entity = quark.getData();</span>
-<span class="pc bpc" id="L327" title="1 of 2 branches missed.">		if (entity == null)</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">		if (entity == null)</span>
 <span class="fc" id="L328">			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display),</span>
 					type, usymbol);
 

@@ -56,8 +56,8 @@ public class VariableManager {
 
 	public int replaceVariables(String str, int i, StringBuilder result) throws EaterException {
 <span class="fc" id="L58">		final String presentVariable = getVarnameAt(str, i);</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (result.toString().endsWith(&quot;##&quot;))</span>
-<span class="nc" id="L60">			result.setLength(result.length() - 2);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (result.toString().endsWith(&quot;##&quot;))</span>
+<span class="fc" id="L60">			result.setLength(result.length() - 2);</span>
 
 <span class="fc" id="L62">		final TValue value = memory.getVariable(presentVariable);</span>
 <span class="fc" id="L63">		i += presentVariable.length() - 1;</span>
@@ -75,8 +75,8 @@ public class VariableManager {
 		} else {
 <span class="fc" id="L76">			result.append(value.toString());</span>
 		}
-<span class="pc bpc" id="L78" title="3 of 6 branches missed.">		if (i + 2 &lt; str.length() &amp;&amp; str.charAt(i + 1) == '#' &amp;&amp; str.charAt(i + 2) == '#')</span>
-<span class="nc" id="L79">			i += 2;</span>
+<span class="pc bpc" id="L78" title="1 of 6 branches missed.">		if (i + 2 &lt; str.length() &amp;&amp; str.charAt(i + 1) == '#' &amp;&amp; str.charAt(i + 2) == '#')</span>
+<span class="fc" id="L79">			i += 2;</span>
 
 <span class="fc" id="L81">		return i;</span>
 	}
@@ -113,11 +113,11 @@ public class VariableManager {
 				}
 <span class="fc" id="L114">				final String nbString = context.applyFunctionsAndVariables(memory,</span>
 <span class="fc" id="L115">						new StringLocated(inBracket.toString(), location.getLocation()));</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">				if (jsonValue instanceof JsonArray) {</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">				if (jsonValue instanceof JsonArray) {</span>
 <span class="fc" id="L117">					final int nb = Integer.parseInt(nbString);</span>
 <span class="fc" id="L118">					jsonValue = ((JsonArray) jsonValue).get(nb);</span>
-<span class="pc bnc" id="L119" title="All 2 branches missed.">				} else if (jsonValue instanceof JsonObject) {</span>
-<span class="nc" id="L120">					jsonValue = ((JsonObject) jsonValue).get(nbString);</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">				} else if (jsonValue instanceof JsonObject) {</span>
+<span class="fc" id="L120">					jsonValue = ((JsonObject) jsonValue).get(nbString);</span>
 				} else {
 <span class="nc" id="L122">					throw new EaterException(&quot;Major parsing error&quot;, location);</span>
 				}

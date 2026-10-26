@@ -157,8 +157,8 @@ import net.sourceforge.plantuml.regex.RegexOr;
 <span class="fc bfc" id="L157" title="All 2 branches covered.">		if (PATTERN_COMMENT_SIMPLE2.match(sl))</span>
 <span class="fc" id="L158">			return COMMENT_SIMPLE;</span>
 
-<span class="pc bpc" id="L160" title="3 of 4 branches missed.">		if (PATTERN_COMMENT_LONG_START.match(sl) &amp;&amp; s.contains(&quot;'/&quot;) == false)</span>
-<span class="nc" id="L161">			return COMMENT_LONG_START;</span>
+<span class="pc bpc" id="L160" title="1 of 4 branches missed.">		if (PATTERN_COMMENT_LONG_START.match(sl) &amp;&amp; s.contains(&quot;'/&quot;) == false)</span>
+<span class="fc" id="L161">			return COMMENT_LONG_START;</span>
 
 <span class="fc bfc" id="L163" title="All 2 branches covered.">		if (sl.containsExclamationMark() == false)</span>
 <span class="fc" id="L164">			return PLAIN;</span>
@@ -166,17 +166,17 @@ import net.sourceforge.plantuml.regex.RegexOr;
 <span class="fc bfc" id="L166" title="All 2 branches covered.">		if (PATTERN_LEGACY_DEFINE.match(sl))</span>
 <span class="fc" id="L167">			return LEGACY_DEFINE;</span>
 
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (PATTERN_LEGACY_DEFINELONG.match(sl))</span>
-<span class="nc" id="L170">			return LEGACY_DEFINELONG;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (PATTERN_LEGACY_DEFINELONG.match(sl))</span>
+<span class="fc" id="L170">			return LEGACY_DEFINELONG;</span>
 
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		if (PATTERN_AFFECTATION_DEFINE.match(sl))</span>
-<span class="nc" id="L173">			return AFFECTATION_DEFINE;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (PATTERN_AFFECTATION_DEFINE.match(sl))</span>
+<span class="fc" id="L173">			return AFFECTATION_DEFINE;</span>
 
 <span class="fc bfc" id="L175" title="All 2 branches covered.">		if (PATTERN_AFFECTATION.match(sl))</span>
 <span class="fc" id="L176">			return AFFECTATION;</span>
 
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (PATTERN_IFDEF.match(sl))</span>
-<span class="nc" id="L179">			return IFDEF;</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (PATTERN_IFDEF.match(sl))</span>
+<span class="fc" id="L179">			return IFDEF;</span>
 
 <span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (PATTERN_UNDEF.match(sl))</span>
 <span class="nc" id="L182">			return UNDEF;</span>
@@ -184,8 +184,8 @@ import net.sourceforge.plantuml.regex.RegexOr;
 <span class="fc bfc" id="L184" title="All 2 branches covered.">		if (PATTERN_IFNDEF.match(sl))</span>
 <span class="fc" id="L185">			return IFNDEF;</span>
 
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (PATTERN_ASSERT.match(sl))</span>
-<span class="nc" id="L188">			return ASSERT;</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (PATTERN_ASSERT.match(sl))</span>
+<span class="fc" id="L188">			return ASSERT;</span>
 
 <span class="fc bfc" id="L190" title="All 2 branches covered.">		if (PATTERN_IF.match(sl))</span>
 <span class="fc" id="L191">			return IF;</span>

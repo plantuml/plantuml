@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.InputFile;
+import net.sourceforge.plantuml.nio.InputFileIo;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Environment;
 import net.sourceforge.plantuml.preproc.DiagramDetector;
@@ -105,21 +106,21 @@ import net.sourceforge.plantuml.utils.MyCollections;
 
 public class TContext {
 
-<span class="fc" id="L108">	private static final Pattern NEWLINE = Pattern.compile(&quot;\n&quot;);</span>
+<span class="fc" id="L109">	private static final Pattern NEWLINE = Pattern.compile(&quot;\n&quot;);</span>
 
-<span class="fc" id="L110">	private final List&lt;StringLocated&gt; resultList = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L111">	private final List&lt;StringLocated&gt; debug = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L111">	private final List&lt;StringLocated&gt; resultList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L112">	private final List&lt;StringLocated&gt; debug = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L113">	public final FunctionsSet functionsSet = new FunctionsSet(StandardFunctions.get());</span>
+<span class="fc" id="L114">	public final FunctionsSet functionsSet = new FunctionsSet(StandardFunctions.get());</span>
 
 	private final Environment environment;
 
 	private final Charset charset;
 
-<span class="fc" id="L119">	private final Map&lt;String, Sub&gt; subs = new HashMap&lt;String, Sub&gt;();</span>
+<span class="fc" id="L120">	private final Map&lt;String, Sub&gt; subs = new HashMap&lt;String, Sub&gt;();</span>
 	private final DefinitionsContainer definitionsContainer;
 
-<span class="fc" id="L122">	private final Set&lt;File&gt; filesUsedCurrent = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L123">	private final Set&lt;File&gt; filesUsedCurrent = new HashSet&lt;&gt;();</span>
 	/**
 	 * What the include strategies count as included: a file with its selector,
 	 * as FileWithSuffix did, so that two diagrams of one file
@@ -128,257 +129,257 @@ public class TContext {
 	 * identifier the host gave it, a string compared as it is, which a File
 	 * would normalise.
 	 */
-<span class="fc" id="L131">	private final Set&lt;List&lt;String&gt;&gt; includedCurrent = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L132">	private final Set&lt;List&lt;String&gt;&gt; includedCurrent = new HashSet&lt;&gt;();</span>
 
-<span class="fc" id="L133">	private final PreprocessingArtifact preprocessingArtifact = new PreprocessingArtifact();</span>
+<span class="fc" id="L134">	private final PreprocessingArtifact preprocessingArtifact = new PreprocessingArtifact();</span>
 	private PathSystem pathSystem;
 
 	public Set&lt;File&gt; getFilesUsedCurrent() {
-<span class="fc" id="L137">		return MyCollections.unmodifiableSet(filesUsedCurrent);</span>
+<span class="fc" id="L138">		return MyCollections.unmodifiableSet(filesUsedCurrent);</span>
 	}
 
 	public TContext(PathSystem pathSystem, Environment environment, Charset charset,
-<span class="fc" id="L141">			DefinitionsContainer definitionsContainer) {</span>
-<span class="fc" id="L142">		this.environment = requireNonNull(environment);</span>
-<span class="fc" id="L143">		this.pathSystem = pathSystem;</span>
-<span class="fc" id="L144">		this.definitionsContainer = definitionsContainer;</span>
-<span class="fc" id="L145">		this.charset = requireNonNull(charset);</span>
-<span class="fc" id="L146">	}</span>
+<span class="fc" id="L142">			DefinitionsContainer definitionsContainer) {</span>
+<span class="fc" id="L143">		this.environment = requireNonNull(environment);</span>
+<span class="fc" id="L144">		this.pathSystem = pathSystem;</span>
+<span class="fc" id="L145">		this.definitionsContainer = definitionsContainer;</span>
+<span class="fc" id="L146">		this.charset = requireNonNull(charset);</span>
+<span class="fc" id="L147">	}</span>
 
 	/**
 	 * Returns a value of the environment (see {@link Environment}), or
 	 * &lt;code&gt;null&lt;/code&gt; if there is none.
 	 */
 	public String getEnvironmentValue(String key) {
-<span class="fc" id="L153">		return environment.get(key);</span>
+<span class="fc" id="L154">		return environment.get(key);</span>
 	}
 
 	public Knowledge asKnowledge(final TMemory memory, final LineLocation location) {
-<span class="fc" id="L157">		return new Knowledge() {</span>
+<span class="fc" id="L158">		return new Knowledge() {</span>
 
 			public TValue getVariable(String name) throws EaterException {
-<span class="pc bpc" id="L160" title="1 of 4 branches missed.">				if (name.contains(&quot;.&quot;) || name.contains(&quot;[&quot;)) {</span>
-<span class="fc" id="L161">					final TValue result = fromJson(memory, name, location);</span>
-<span class="fc" id="L162">					return result;</span>
+<span class="fc bfc" id="L161" title="All 4 branches covered.">				if (name.contains(&quot;.&quot;) || name.contains(&quot;[&quot;)) {</span>
+<span class="fc" id="L162">					final TValue result = fromJson(memory, name, location);</span>
+<span class="fc" id="L163">					return result;</span>
 				}
-<span class="fc" id="L164">				return memory.getVariable(name);</span>
+<span class="fc" id="L165">				return memory.getVariable(name);</span>
 			}
 
 			public TFunction getFunction(TFunctionSignature name) {
-<span class="fc" id="L168">				return functionsSet.getFunctionSmart(name);</span>
+<span class="fc" id="L169">				return functionsSet.getFunctionSmart(name);</span>
 			}
 		};
 	}
 
 	private TValue fromJson(TMemory memory, String name, LineLocation location) throws EaterException {
-<span class="fc" id="L174">		final String result = applyFunctionsAndVariables(memory, new StringLocated(name, location));</span>
+<span class="fc" id="L175">		final String result = applyFunctionsAndVariables(memory, new StringLocated(name, location));</span>
 		try {
-<span class="nc" id="L176">			final JsonValue json = Json.parse(result);</span>
-<span class="nc" id="L177">			return TValue.fromJson(json);</span>
-<span class="fc" id="L178">		} catch (Exception e) {</span>
-<span class="fc" id="L179">			return TValue.fromString(result);</span>
+<span class="fc" id="L177">			final JsonValue json = Json.parse(result);</span>
+<span class="fc" id="L178">			return TValue.fromJson(json);</span>
+<span class="fc" id="L179">		} catch (Exception e) {</span>
+<span class="fc" id="L180">			return TValue.fromString(result);</span>
 		}
 	}
 
 	private CodeIterator buildCodeIterator(TMemory memory, List&lt;StringLocated&gt; body) {
-<span class="fc" id="L184">		final CodeIterator it10 = new CodeIteratorImpl(body);</span>
-<span class="fc" id="L185">		final CodeIterator it20 = new CodeIteratorLongComment(it10, debug);</span>
-<span class="fc" id="L186">		final CodeIterator it30 = new CodeIteratorShortComment(it20, debug);</span>
-<span class="fc" id="L187">		final CodeIterator it40 = new CodeIteratorInnerComment(it30);</span>
-<span class="fc" id="L188">		final CodeIterator it50 = new CodeIteratorSub(it40, subs, this, memory);</span>
-<span class="fc" id="L189">		final CodeIterator it60 = new CodeIteratorReturnFunction(it50, this, memory, functionsSet, debug);</span>
-<span class="fc" id="L190">		final CodeIterator it61 = new CodeIteratorProcedure(it60, this, memory, functionsSet, debug);</span>
-<span class="fc" id="L191">		final CodeIterator it70 = new CodeIteratorIf(it61, this, memory, debug);</span>
-<span class="fc" id="L192">		final CodeIterator it80 = new CodeIteratorLegacyDefine(it70, this, memory, functionsSet, debug);</span>
-<span class="fc" id="L193">		final CodeIterator it90 = new CodeIteratorWhile(it80, this, memory, debug);</span>
-<span class="fc" id="L194">		final CodeIterator it100 = new CodeIteratorForeach(it90, this, memory, debug);</span>
-<span class="fc" id="L195">		final CodeIterator it110 = new CodeIteratorAffectation(it100, this, memory, debug);</span>
+<span class="fc" id="L185">		final CodeIterator it10 = new CodeIteratorImpl(body);</span>
+<span class="fc" id="L186">		final CodeIterator it20 = new CodeIteratorLongComment(it10, debug);</span>
+<span class="fc" id="L187">		final CodeIterator it30 = new CodeIteratorShortComment(it20, debug);</span>
+<span class="fc" id="L188">		final CodeIterator it40 = new CodeIteratorInnerComment(it30);</span>
+<span class="fc" id="L189">		final CodeIterator it50 = new CodeIteratorSub(it40, subs, this, memory);</span>
+<span class="fc" id="L190">		final CodeIterator it60 = new CodeIteratorReturnFunction(it50, this, memory, functionsSet, debug);</span>
+<span class="fc" id="L191">		final CodeIterator it61 = new CodeIteratorProcedure(it60, this, memory, functionsSet, debug);</span>
+<span class="fc" id="L192">		final CodeIterator it70 = new CodeIteratorIf(it61, this, memory, debug);</span>
+<span class="fc" id="L193">		final CodeIterator it80 = new CodeIteratorLegacyDefine(it70, this, memory, functionsSet, debug);</span>
+<span class="fc" id="L194">		final CodeIterator it90 = new CodeIteratorWhile(it80, this, memory, debug);</span>
+<span class="fc" id="L195">		final CodeIterator it100 = new CodeIteratorForeach(it90, this, memory, debug);</span>
+<span class="fc" id="L196">		final CodeIterator it110 = new CodeIteratorAffectation(it100, this, memory, debug);</span>
 
-<span class="fc" id="L197">		final CodeIterator it = it110;</span>
-<span class="fc" id="L198">		return it;</span>
+<span class="fc" id="L198">		final CodeIterator it = it110;</span>
+<span class="fc" id="L199">		return it;</span>
 	}
 
 	public TValue executeLines(TMemory memory, List&lt;StringLocated&gt; body, TFunctionType ftype, boolean modeSpecial)
 			throws EaterException {
-<span class="fc" id="L203">		BrowserLog.consoleLog(TContext.class, &quot;executeLines start (&quot; + body.size() + &quot; lines)&quot;);</span>
-<span class="fc" id="L204">		final CodeIterator it = buildCodeIterator(memory, body);</span>
+<span class="fc" id="L204">		BrowserLog.consoleLog(TContext.class, &quot;executeLines start (&quot; + body.size() + &quot; lines)&quot;);</span>
+<span class="fc" id="L205">		final CodeIterator it = buildCodeIterator(memory, body);</span>
 
-<span class="fc" id="L206">		StringLocated s = null;</span>
-<span class="fc bfc" id="L207" title="All 2 branches covered.">		while ((s = it.peek()) != null) {</span>
-<span class="fc" id="L208">			final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);</span>
-<span class="fc bfc" id="L209" title="All 2 branches covered.">			if (result != null) {</span>
-<span class="fc" id="L210">				BrowserLog.consoleLog(TContext.class, &quot;executeLines ok -&gt; &quot; + result);</span>
-<span class="fc" id="L211">				return result;</span>
+<span class="fc" id="L207">		StringLocated s = null;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		while ((s = it.peek()) != null) {</span>
+<span class="fc" id="L209">			final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">			if (result != null) {</span>
+<span class="fc" id="L211">				BrowserLog.consoleLog(TContext.class, &quot;executeLines ok -&gt; &quot; + result);</span>
+<span class="fc" id="L212">				return result;</span>
 			}
-<span class="fc" id="L213">			it.next();</span>
-<span class="fc" id="L214">		}</span>
-<span class="fc" id="L215">		BrowserLog.consoleLog(TContext.class, &quot;executeLines return null&quot;);</span>
-<span class="fc" id="L216">		return null;</span>
+<span class="fc" id="L214">			it.next();</span>
+<span class="fc" id="L215">		}</span>
+<span class="fc" id="L216">		BrowserLog.consoleLog(TContext.class, &quot;executeLines return null&quot;);</span>
+<span class="fc" id="L217">		return null;</span>
 
 	}
 
 	private void executeLinesInternal(TMemory memory, List&lt;StringLocated&gt; body, TFunctionType ftype)
 			throws EaterException {
-<span class="fc" id="L222">		final CodeIterator it = buildCodeIterator(memory, body);</span>
+<span class="fc" id="L223">		final CodeIterator it = buildCodeIterator(memory, body);</span>
 
-<span class="fc" id="L224">		StringLocated s = null;</span>
-<span class="fc bfc" id="L225" title="All 2 branches covered.">		while ((s = it.peek()) != null) {</span>
-<span class="fc" id="L226">			executeOneLineSafe(memory, s, ftype, false);</span>
-<span class="fc" id="L227">			it.next();</span>
+<span class="fc" id="L225">		StringLocated s = null;</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		while ((s = it.peek()) != null) {</span>
+<span class="fc" id="L227">			executeOneLineSafe(memory, s, ftype, false);</span>
+<span class="fc" id="L228">			it.next();</span>
 		}
 
-<span class="fc" id="L230">	}</span>
+<span class="fc" id="L231">	}</span>
 
 	private TValue executeOneLineSafe(TMemory memory, StringLocated s, TFunctionType ftype, boolean modeSpecial)
 			throws EaterException {
 		try {
-<span class="fc" id="L235">			this.debug.add(s);</span>
-<span class="fc" id="L236">			return executeOneLineNotSafe(memory, s, ftype, modeSpecial);</span>
-<span class="fc" id="L237">		} catch (Exception e) {</span>
-<span class="pc bpc" id="L238" title="1 of 2 branches missed.">			if (e instanceof EaterException)</span>
-<span class="fc" id="L239">				throw (EaterException) e;</span>
-<span class="nc" id="L240">			Logme.error(e);</span>
-<span class="nc" id="L241">			throw new EaterException(&quot;Fatal parsing error&quot;, s);</span>
+<span class="fc" id="L236">			this.debug.add(s);</span>
+<span class="fc" id="L237">			return executeOneLineNotSafe(memory, s, ftype, modeSpecial);</span>
+<span class="fc" id="L238">		} catch (Exception e) {</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">			if (e instanceof EaterException)</span>
+<span class="fc" id="L240">				throw (EaterException) e;</span>
+<span class="nc" id="L241">			Logme.error(e);</span>
+<span class="nc" id="L242">			throw new EaterException(&quot;Fatal parsing error&quot;, s);</span>
 		}
 	}
 
 	private TValue executeOneLineNotSafe(TMemory memory, StringLocated s, TFunctionType ftype, boolean modeSpecial)
 			throws EaterException {
-<span class="fc" id="L247">		final TLineType type = s.getType();</span>
+<span class="fc" id="L248">		final TLineType type = s.getType();</span>
 
-<span class="fc bfc" id="L249" title="All 2 branches covered.">		if (type == TLineType.INCLUDESUB) {</span>
-<span class="fc" id="L250">			this.executeIncludesub(memory, s);</span>
-<span class="fc" id="L251">			return null;</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">		} else if (type == TLineType.THEME) {</span>
-<span class="fc" id="L253">			this.executeTheme(memory, s);</span>
-<span class="fc" id="L254">			return null;</span>
-<span class="fc bfc" id="L255" title="All 2 branches covered.">		} else if (type == TLineType.INCLUDE) {</span>
-<span class="fc" id="L256">			this.executeInclude(memory, s);</span>
-<span class="fc" id="L257">			return null;</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		if (type == TLineType.INCLUDESUB) {</span>
+<span class="fc" id="L251">			this.executeIncludesub(memory, s);</span>
+<span class="fc" id="L252">			return null;</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		} else if (type == TLineType.THEME) {</span>
+<span class="fc" id="L254">			this.executeTheme(memory, s);</span>
+<span class="fc" id="L255">			return null;</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">		} else if (type == TLineType.INCLUDE) {</span>
+<span class="fc" id="L257">			this.executeInclude(memory, s);</span>
+<span class="fc" id="L258">			return null;</span>
 //		} else if (type == TLineType.INCLUDE_SPRITES) {
 //			this.executeIncludeSprites(memory, s);
 //			return null;
-<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		} else if (type == TLineType.INCLUDE_DEF) {</span>
-<span class="nc" id="L262">			this.executeIncludeDef(memory, s);</span>
-<span class="nc" id="L263">			return null;</span>
-<span class="fc bfc" id="L264" title="All 2 branches covered.">		} else if (type == TLineType.IMPORT) {</span>
-<span class="fc" id="L265">			this.executeImport(memory, s);</span>
-<span class="fc" id="L266">			return null;</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		} else if (type == TLineType.INCLUDE_DEF) {</span>
+<span class="nc" id="L263">			this.executeIncludeDef(memory, s);</span>
+<span class="nc" id="L264">			return null;</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">		} else if (type == TLineType.IMPORT) {</span>
+<span class="fc" id="L266">			this.executeImport(memory, s);</span>
+<span class="fc" id="L267">			return null;</span>
 		}
-<span class="fc bfc" id="L268" title="All 2 branches covered.">		if (type == TLineType.DUMP_MEMORY) {</span>
-<span class="fc" id="L269">			this.executeDumpMemory(memory, s.getTrimmed());</span>
-<span class="fc" id="L270">			return null;</span>
-<span class="pc bpc" id="L271" title="1 of 2 branches missed.">		} else if (type == TLineType.ASSERT) {</span>
-<span class="nc" id="L272">			this.executeAssert(memory, s.getTrimmed());</span>
-<span class="nc" id="L273">			return null;</span>
-<span class="fc bfc" id="L274" title="All 2 branches covered.">		} else if (type == TLineType.OPTION) {</span>
-<span class="fc" id="L275">			this.executeOption(memory, s.getTrimmed());</span>
-<span class="fc" id="L276">			return null;</span>
-<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		} else if (type == TLineType.UNDEF) {</span>
-<span class="nc" id="L278">			this.executeUndef(memory, s);</span>
-<span class="nc" id="L279">			return null;</span>
-<span class="fc bfc" id="L280" title="All 4 branches covered.">		} else if (ftype != TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.PLAIN) {</span>
-<span class="fc" id="L281">			this.addPlain(memory, s);</span>
-<span class="fc" id="L282">			return null;</span>
-<span class="fc bfc" id="L283" title="All 4 branches covered.">		} else if (ftype == TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.RETURN) {</span>
-<span class="pc bpc" id="L284" title="1 of 2 branches missed.">			if (modeSpecial) {</span>
-<span class="fc" id="L285">				final EaterReturn eaterReturn = new EaterReturn(s);</span>
-<span class="fc" id="L286">				eaterReturn.analyze(this, memory);</span>
-<span class="fc" id="L287">				final TValue result = eaterReturn.getValue2();</span>
-<span class="fc" id="L288">				return result;</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">		if (type == TLineType.DUMP_MEMORY) {</span>
+<span class="fc" id="L270">			this.executeDumpMemory(memory, s.getTrimmed());</span>
+<span class="fc" id="L271">			return null;</span>
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		} else if (type == TLineType.ASSERT) {</span>
+<span class="nc" id="L273">			this.executeAssert(memory, s.getTrimmed());</span>
+<span class="nc" id="L274">			return null;</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">		} else if (type == TLineType.OPTION) {</span>
+<span class="fc" id="L276">			this.executeOption(memory, s.getTrimmed());</span>
+<span class="fc" id="L277">			return null;</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		} else if (type == TLineType.UNDEF) {</span>
+<span class="nc" id="L279">			this.executeUndef(memory, s);</span>
+<span class="nc" id="L280">			return null;</span>
+<span class="fc bfc" id="L281" title="All 4 branches covered.">		} else if (ftype != TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.PLAIN) {</span>
+<span class="fc" id="L282">			this.addPlain(memory, s);</span>
+<span class="fc" id="L283">			return null;</span>
+<span class="fc bfc" id="L284" title="All 4 branches covered.">		} else if (ftype == TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.RETURN) {</span>
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">			if (modeSpecial) {</span>
+<span class="fc" id="L286">				final EaterReturn eaterReturn = new EaterReturn(s);</span>
+<span class="fc" id="L287">				eaterReturn.analyze(this, memory);</span>
+<span class="fc" id="L288">				final TValue result = eaterReturn.getValue2();</span>
+<span class="fc" id="L289">				return result;</span>
 			}
 			// Actually, ignore because we are in a if
-<span class="nc" id="L291">			return null;</span>
-<span class="pc bpc" id="L292" title="1 of 4 branches missed.">		} else if (ftype == TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.PLAIN) {</span>
-<span class="fc" id="L293">			this.simulatePlain(memory, s);</span>
-<span class="fc" id="L294">			return null;</span>
-<span class="pc bpc" id="L295" title="1 of 2 branches missed.">		} else if (type == TLineType.AFFECTATION_DEFINE) {</span>
-<span class="nc" id="L296">			this.executeAffectationDefine(memory, s);</span>
-<span class="nc" id="L297">			return null;</span>
-<span class="pc bpc" id="L298" title="2 of 4 branches missed.">		} else if (ftype == null &amp;&amp; type == TLineType.END_FUNCTION) {</span>
-<span class="nc" id="L299">			CommandExecutionResult.error(&quot;error endfunc&quot;);</span>
-<span class="nc" id="L300">			return null;</span>
-<span class="pc bpc" id="L301" title="1 of 2 branches missed.">		} else if (type == TLineType.LOG) {</span>
-<span class="fc" id="L302">			this.executeLog(memory, s);</span>
-<span class="fc" id="L303">			return null;</span>
-<span class="nc bnc" id="L304" title="All 2 branches missed.">		} else if (ONLY_WHITESPACE_NON_EMPTY.matcher(s.getString()).matches()) {</span>
-<span class="nc" id="L305">			return null;</span>
+<span class="nc" id="L292">			return null;</span>
+<span class="pc bpc" id="L293" title="1 of 4 branches missed.">		} else if (ftype == TFunctionType.RETURN_FUNCTION &amp;&amp; type == TLineType.PLAIN) {</span>
+<span class="fc" id="L294">			this.simulatePlain(memory, s);</span>
+<span class="fc" id="L295">			return null;</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">		} else if (type == TLineType.AFFECTATION_DEFINE) {</span>
+<span class="fc" id="L297">			this.executeAffectationDefine(memory, s);</span>
+<span class="fc" id="L298">			return null;</span>
+<span class="pc bpc" id="L299" title="2 of 4 branches missed.">		} else if (ftype == null &amp;&amp; type == TLineType.END_FUNCTION) {</span>
+<span class="nc" id="L300">			CommandExecutionResult.error(&quot;error endfunc&quot;);</span>
+<span class="nc" id="L301">			return null;</span>
+<span class="pc bpc" id="L302" title="1 of 2 branches missed.">		} else if (type == TLineType.LOG) {</span>
+<span class="fc" id="L303">			this.executeLog(memory, s);</span>
+<span class="fc" id="L304">			return null;</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">		} else if (ONLY_WHITESPACE_NON_EMPTY.matcher(s.getString()).matches()) {</span>
+<span class="nc" id="L306">			return null;</span>
 		} else {
-<span class="nc" id="L307">			throw new EaterException(&quot;Compile Error &quot; + ftype + &quot; &quot; + type, s);</span>
+<span class="nc" id="L308">			throw new EaterException(&quot;Compile Error &quot; + ftype + &quot; &quot; + type, s);</span>
 		}
 	}
 
-<span class="fc" id="L311">	private static final Pattern ONLY_WHITESPACE_NON_EMPTY = Pattern.compile(&quot;^\\s+$&quot;);</span>
+<span class="fc" id="L312">	private static final Pattern ONLY_WHITESPACE_NON_EMPTY = Pattern.compile(&quot;^\\s+$&quot;);</span>
 
 	private void addPlain(TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L314">		final StringLocated tmp[] = applyFunctionsAndVariablesInternal(memory, s);</span>
-<span class="fc bfc" id="L315" title="All 2 branches covered.">		if (tmp != null) {</span>
-<span class="fc bfc" id="L316" title="All 2 branches covered.">			if (pendingAdd != null) {</span>
-<span class="fc" id="L317">				tmp[0] = new StringLocated(pendingAdd + tmp[0].getString(), tmp[0].getLocation());</span>
-<span class="fc" id="L318">				pendingAdd = null;</span>
+<span class="fc" id="L315">		final StringLocated tmp[] = applyFunctionsAndVariablesInternal(memory, s);</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">		if (tmp != null) {</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">			if (pendingAdd != null) {</span>
+<span class="fc" id="L318">				tmp[0] = new StringLocated(pendingAdd + tmp[0].getString(), tmp[0].getLocation());</span>
+<span class="fc" id="L319">				pendingAdd = null;</span>
 			}
-<span class="fc bfc" id="L320" title="All 2 branches covered.">			for (StringLocated line : tmp)</span>
-<span class="fc" id="L321">				addToResultList(line);</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">			for (StringLocated line : tmp)</span>
+<span class="fc" id="L322">				addToResultList(line);</span>
 
 		}
-<span class="fc" id="L324">	}</span>
+<span class="fc" id="L325">	}</span>
 
 	private boolean addToResultList(StringLocated line) {
 		if (Jaws.TRACE)
 			System.err.println(&quot;adding &quot; + line);
-<span class="fc" id="L329">		return resultList.add(line);</span>
+<span class="fc" id="L330">		return resultList.add(line);</span>
 	}
 
 	private void simulatePlain(TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L333">		final StringLocated ignored[] = applyFunctionsAndVariablesInternal(memory, s);</span>
-<span class="fc" id="L334">	}</span>
+<span class="fc" id="L334">		final StringLocated ignored[] = applyFunctionsAndVariablesInternal(memory, s);</span>
+<span class="fc" id="L335">	}</span>
 
 	private void executeAffectationDefine(TMemory memory, StringLocated s) throws EaterException {
-<span class="nc" id="L337">		new EaterAffectationDefine(s).analyze(this, memory);</span>
-<span class="nc" id="L338">	}</span>
+<span class="fc" id="L338">		new EaterAffectationDefine(s).analyze(this, memory);</span>
+<span class="fc" id="L339">	}</span>
 
 	private void executeDumpMemory(TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L341">		final EaterDumpMemory condition = new EaterDumpMemory(s);</span>
-<span class="fc" id="L342">		condition.analyze(this, memory);</span>
-<span class="fc" id="L343">	}</span>
+<span class="fc" id="L342">		final EaterDumpMemory condition = new EaterDumpMemory(s);</span>
+<span class="fc" id="L343">		condition.analyze(this, memory);</span>
+<span class="fc" id="L344">	}</span>
 
 	private void executeAssert(TMemory memory, StringLocated s) throws EaterException {
-<span class="nc" id="L346">		final EaterAssert condition = new EaterAssert(s);</span>
-<span class="nc" id="L347">		condition.analyze(this, memory);</span>
-<span class="nc" id="L348">	}</span>
+<span class="nc" id="L347">		final EaterAssert condition = new EaterAssert(s);</span>
+<span class="nc" id="L348">		condition.analyze(this, memory);</span>
+<span class="nc" id="L349">	}</span>
 
 	private void executeOption(TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L351">		final EaterOption condition = new EaterOption(s);</span>
-<span class="fc" id="L352">		condition.analyze(this, memory);</span>
-<span class="fc" id="L353">	}</span>
+<span class="fc" id="L352">		final EaterOption condition = new EaterOption(s);</span>
+<span class="fc" id="L353">		condition.analyze(this, memory);</span>
+<span class="fc" id="L354">	}</span>
 
 	private void executeUndef(TMemory memory, StringLocated s) throws EaterException {
-<span class="nc" id="L356">		final EaterUndef undef = new EaterUndef(s);</span>
-<span class="nc" id="L357">		undef.analyze(this, memory);</span>
-<span class="nc" id="L358">	}</span>
+<span class="nc" id="L357">		final EaterUndef undef = new EaterUndef(s);</span>
+<span class="nc" id="L358">		undef.analyze(this, memory);</span>
+<span class="nc" id="L359">	}</span>
 
 	@JawsStrange
 	private StringLocated[] applyFunctionsAndVariablesInternal(TMemory memory, StringLocated located)
 			throws EaterException {
-<span class="fc" id="L363">		final String result = applyFunctionsAndVariables(memory, located);</span>
-<span class="fc bfc" id="L364" title="All 2 branches covered.">		if (result == null)</span>
-<span class="fc" id="L365">			return null;</span>
+<span class="fc" id="L364">		final String result = applyFunctionsAndVariables(memory, located);</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">		if (result == null)</span>
+<span class="fc" id="L366">			return null;</span>
 
-<span class="pc bpc" id="L367" title="1 of 2 branches missed.">		if (Pragma.legacyReplaceBackslashNByNewline()) {</span>
-<span class="fc" id="L368">			final String[] splited = NEWLINE.split(result);</span>
-<span class="fc" id="L369">			final StringLocated[] tab = new StringLocated[splited.length];</span>
-<span class="fc bfc" id="L370" title="All 2 branches covered.">			for (int i = 0; i &lt; splited.length; i++)</span>
-<span class="fc" id="L371">				tab[i] = new StringLocated(splited[i], located.getLocation());</span>
+<span class="pc bpc" id="L368" title="1 of 2 branches missed.">		if (Pragma.legacyReplaceBackslashNByNewline()) {</span>
+<span class="fc" id="L369">			final String[] splited = NEWLINE.split(result);</span>
+<span class="fc" id="L370">			final StringLocated[] tab = new StringLocated[splited.length];</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">			for (int i = 0; i &lt; splited.length; i++)</span>
+<span class="fc" id="L372">				tab[i] = new StringLocated(splited[i], located.getLocation());</span>
 
-<span class="fc" id="L373">			return tab;</span>
+<span class="fc" id="L374">			return tab;</span>
 		}
-<span class="nc bnc" id="L375" title="All 2 branches missed.">		if (result.contains(&quot;\n&quot;))</span>
-<span class="nc" id="L376">			throw new IllegalStateException(result);</span>
-<span class="nc" id="L377">		return new StringLocated[] { new StringLocated(result, located.getLocation()) };</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">		if (result.contains(&quot;\n&quot;))</span>
+<span class="nc" id="L377">			throw new IllegalStateException(result);</span>
+<span class="nc" id="L378">		return new StringLocated[] { new StringLocated(result, located.getLocation()) };</span>
 
 	}
 
-<span class="fc" id="L381">	private String pendingAdd = null;</span>
+<span class="fc" id="L382">	private String pendingAdd = null;</span>
 
 	@JawsStrange
 	public String applyFunctionsAndVariables(TMemory memory, final StringLocated str) throws EaterException {
@@ -387,45 +388,45 @@ public class TContext {
 		// https://en.wikipedia.org/wiki/String-searching_algorithm
 		// https://www.quora.com/What-is-the-most-efficient-algorithm-to-replace-all-occurrences-of-a-pattern-P-in-a-string-with-a-pattern-P
 		// https://en.wikipedia.org/wiki/Trie
-<span class="fc" id="L390">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L391">		final StringBuilder result = new StringBuilder();</span>
 		// One VariableManager for the whole line: it only holds final references, and building
 		// two of them per character was a visible share of the preprocessor allocations.
-<span class="fc" id="L393">		final VariableManager variableManager = new VariableManager(this, memory, str);</span>
-<span class="fc bfc" id="L394" title="All 2 branches covered.">		for (int i = 0; i &lt; str.length(); i++) {</span>
-<span class="fc" id="L395">			final char c = str.charAt(i);</span>
-<span class="fc" id="L396">			final String presentFunction = getFunctionNameAt(str.getString(), i);</span>
-<span class="fc bfc" id="L397" title="All 2 branches covered.">			if (presentFunction != null) {</span>
-<span class="fc" id="L398">				final String sub = str.getString().substring(i);</span>
-<span class="fc" id="L399">				final EaterFunctionCall call = new EaterFunctionCall(new StringLocated(sub, str.getLocation()),</span>
-<span class="fc" id="L400">						isLegacyDefine(presentFunction), isUnquoted(presentFunction));</span>
-<span class="fc" id="L401">				call.analyze(this, memory);</span>
-<span class="fc" id="L402">				final TFunctionSignature signature = new TFunctionSignature(presentFunction, call.getValues().size(),</span>
-<span class="fc" id="L403">						call.getNamedArguments().keySet());</span>
-<span class="fc" id="L404">				final TFunction function = functionsSet.getFunctionSmart(signature);</span>
-<span class="pc bpc" id="L405" title="1 of 2 branches missed.">				if (function == null)</span>
-<span class="nc" id="L406">					throw new EaterException(&quot;Function not found &quot; + presentFunction, str);</span>
+<span class="fc" id="L394">		final VariableManager variableManager = new VariableManager(this, memory, str);</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">		for (int i = 0; i &lt; str.length(); i++) {</span>
+<span class="fc" id="L396">			final char c = str.charAt(i);</span>
+<span class="fc" id="L397">			final String presentFunction = getFunctionNameAt(str.getString(), i);</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">			if (presentFunction != null) {</span>
+<span class="fc" id="L399">				final String sub = str.getString().substring(i);</span>
+<span class="fc" id="L400">				final EaterFunctionCall call = new EaterFunctionCall(new StringLocated(sub, str.getLocation()),</span>
+<span class="fc" id="L401">						isLegacyDefine(presentFunction), isUnquoted(presentFunction));</span>
+<span class="fc" id="L402">				call.analyze(this, memory);</span>
+<span class="fc" id="L403">				final TFunctionSignature signature = new TFunctionSignature(presentFunction, call.getValues().size(),</span>
+<span class="fc" id="L404">						call.getNamedArguments().keySet());</span>
+<span class="fc" id="L405">				final TFunction function = functionsSet.getFunctionSmart(signature);</span>
+<span class="pc bpc" id="L406" title="1 of 2 branches missed.">				if (function == null)</span>
+<span class="nc" id="L407">					throw new EaterException(&quot;Function not found &quot; + presentFunction, str);</span>
 
-<span class="fc bfc" id="L408" title="All 2 branches covered.">				if (function.getFunctionType() == TFunctionType.PROCEDURE) {</span>
-<span class="fc" id="L409">					this.pendingAdd = result.toString();</span>
-<span class="fc" id="L410">					executeVoid3(str, memory, function, call);</span>
-<span class="fc" id="L411">					i += call.getCurrentPosition();</span>
-<span class="fc" id="L412">					final String remaining = str.getString().substring(i);</span>
-<span class="fc bfc" id="L413" title="All 2 branches covered.">					if (remaining.length() &gt; 0)</span>
-<span class="fc" id="L414">						appendToLastResult(remaining);</span>
+<span class="fc bfc" id="L409" title="All 2 branches covered.">				if (function.getFunctionType() == TFunctionType.PROCEDURE) {</span>
+<span class="fc" id="L410">					this.pendingAdd = result.toString();</span>
+<span class="fc" id="L411">					executeVoid3(str, memory, function, call);</span>
+<span class="fc" id="L412">					i += call.getCurrentPosition();</span>
+<span class="fc" id="L413">					final String remaining = str.getString().substring(i);</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">					if (remaining.length() &gt; 0)</span>
+<span class="fc" id="L415">						appendToLastResult(remaining);</span>
 
-<span class="fc" id="L416">					return null;</span>
+<span class="fc" id="L417">					return null;</span>
 				}
-<span class="pc bpc" id="L418" title="1 of 2 branches missed.">				if (function.getFunctionType() == TFunctionType.LEGACY_DEFINELONG) {</span>
-<span class="nc" id="L419">					this.pendingAdd = str.getString().substring(0, i);</span>
-<span class="nc" id="L420">					executeVoid3(str, memory, function, call);</span>
-<span class="nc" id="L421">					return null;</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">				if (function.getFunctionType() == TFunctionType.LEGACY_DEFINELONG) {</span>
+<span class="fc" id="L420">					this.pendingAdd = str.getString().substring(0, i);</span>
+<span class="fc" id="L421">					executeVoid3(str, memory, function, call);</span>
+<span class="fc" id="L422">					return null;</span>
 				}
-<span class="pc bpc" id="L423" title="1 of 2 branches missed.">				if (TeaVM.a())</span>
-<span class="pc bfc" id="L424" title="All 2 branches covered.">					assert function.getFunctionType() == TFunctionType.RETURN_FUNCTION</span>
-<span class="pc bpc" id="L425" title="1 of 2 branches missed.">							|| function.getFunctionType() == TFunctionType.LEGACY_DEFINE;</span>
-<span class="fc" id="L426">				final TValue functionReturn = function.executeReturnFunction(this, memory, str, call.getValues(),</span>
-<span class="fc" id="L427">						call.getNamedArguments());</span>
-<span class="fc" id="L428">				String tmp = functionReturn.toString();</span>
+<span class="pc bpc" id="L424" title="1 of 2 branches missed.">				if (TeaVM.a())</span>
+<span class="pc bfc" id="L425" title="All 2 branches covered.">					assert function.getFunctionType() == TFunctionType.RETURN_FUNCTION</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">							|| function.getFunctionType() == TFunctionType.LEGACY_DEFINE;</span>
+<span class="fc" id="L427">				final TValue functionReturn = function.executeReturnFunction(this, memory, str, call.getValues(),</span>
+<span class="fc" id="L428">						call.getNamedArguments());</span>
+<span class="fc" id="L429">				String tmp = functionReturn.toString();</span>
 				// if (tmp.indexOf(Jaws.BLOCK_E1_NEWLINE) &gt; 0)
 				// System.err.println(&quot;tmp=&quot; + tmp + &quot; (&quot; + function.getFunctionType() + &quot;)&quot;);
 				// if (function.getFunctionType() == TFunctionType.RETURN_FUNCTION &amp;&amp;
@@ -435,56 +436,85 @@ public class TContext {
 				// tmp = tmp.replace(Jaws.BLOCK_E1_NEWLINE, '\n');
 				// System.err.println(&quot;DONC tmp=&quot; + tmp);
 				// }
-<span class="fc" id="L438">				result.append(tmp);</span>
-<span class="fc" id="L439">				i += call.getCurrentPosition() - 1;</span>
-<span class="fc bfc" id="L440" title="All 2 branches covered.">			} else if (variableManager.getVarnameAt(str.getString(), i) != null) {</span>
-<span class="fc" id="L441">				i = variableManager.replaceVariables(str.getString(), i, result);</span>
+<span class="fc" id="L439">				result.append(tmp);</span>
+<span class="fc" id="L440">				i += call.getCurrentPosition() - 1;</span>
+<span class="fc bfc" id="L441" title="All 2 branches covered.">			} else if (variableManager.getVarnameAt(str.getString(), i) != null) {</span>
+<span class="fc" id="L442">				i = variableManager.replaceVariables(str.getString(), i, result);</span>
 			} else {
-<span class="fc" id="L443">				result.append(c);</span>
+<span class="fc" id="L444">				result.append(c);</span>
 			}
 		}
-<span class="fc" id="L446">		return result.toString();</span>
+<span class="fc" id="L447">		return result.toString();</span>
 	}
 
 	private void appendToLastResult(String remaining) {
-<span class="fc" id="L450">		final StringLocated last = this.resultList.get(this.resultList.size() - 1);</span>
-<span class="fc" id="L451">		this.resultList.set(this.resultList.size() - 1, last.append(remaining));</span>
-<span class="fc" id="L452">	}</span>
+<span class="fc" id="L451">		final StringLocated last = this.resultList.get(this.resultList.size() - 1);</span>
+<span class="fc" id="L452">		this.resultList.set(this.resultList.size() - 1, last.append(remaining));</span>
+<span class="fc" id="L453">	}</span>
 
 	private void executeVoid3(StringLocated location, TMemory memory, TFunction function, EaterFunctionCall call)
 			throws EaterException {
-<span class="fc" id="L456">		function.executeProcedureInternal(this, memory, location, call.getValues(), call.getNamedArguments());</span>
-<span class="fc" id="L457">	}</span>
+<span class="fc" id="L457">		function.executeProcedureInternal(this, memory, location, call.getValues(), call.getNamedArguments());</span>
+<span class="fc" id="L458">	}</span>
 
 	private void executeImport(TMemory memory, StringLocated s) throws EaterException {
-<span class="pc bpc" id="L460" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="fc" id="L461">			final EaterImport _import = new EaterImport(s.getTrimmed());</span>
-<span class="fc" id="L462">			_import.analyze(this, memory);</span>
+		// ::comment when JAVA8
+<span class="pc bpc" id="L462" title="1 of 2 branches missed.">		if (TeaVM.isC()) {</span>
+<span class="nc" id="L463">			executeImportInC(memory, s);</span>
+<span class="nc" id="L464">			return;</span>
+		}
+		// ::done
+<span class="pc bpc" id="L467" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L468">			final EaterImport _import = new EaterImport(s.getTrimmed());</span>
+<span class="fc" id="L469">			_import.analyze(this, memory);</span>
 
 			try {
-<span class="fc" id="L465">				final String what = applyFunctionsAndVariables(memory,</span>
-<span class="fc" id="L466">						new StringLocated(_import.getWhat(), s.getLocation()));</span>
+<span class="fc" id="L472">				final String what = applyFunctionsAndVariables(memory,</span>
+<span class="fc" id="L473">						new StringLocated(_import.getWhat(), s.getLocation()));</span>
 				// Same lookup as !include (relative to the directory of the current diagram)
 				// and only then the historical one, based on the global current directory.
-<span class="pc bpc" id="L469" title="3 of 6 branches missed.">				final boolean special = what.startsWith(&quot;&lt;&quot;) || what.startsWith(&quot;http://&quot;) || what.startsWith(&quot;https://&quot;);</span>
-<span class="pc bpc" id="L470" title="1 of 2 branches missed.">				final InputFile found = special ? null : pathSystem.getInputFile(what);</span>
-<span class="pc bpc" id="L471" title="1 of 2 branches missed.">				final SFile file = found instanceof SFile ? (SFile) found : FileSystem.getInstance().getFile(what);</span>
-<span class="pc bpc" id="L472" title="2 of 4 branches missed.">				if (file.exists() &amp;&amp; file.isDirectory() == false) {</span>
-<span class="fc" id="L473">					pathSystem.addImportFile(file);</span>
-<span class="fc" id="L474">					return;</span>
+<span class="pc bpc" id="L476" title="3 of 6 branches missed.">				final boolean special = what.startsWith(&quot;&lt;&quot;) || what.startsWith(&quot;http://&quot;) || what.startsWith(&quot;https://&quot;);</span>
+<span class="pc bpc" id="L477" title="1 of 2 branches missed.">				final InputFile found = special ? null : pathSystem.getInputFile(what);</span>
+<span class="pc bpc" id="L478" title="1 of 2 branches missed.">				final SFile file = found instanceof SFile ? (SFile) found : FileSystem.getInstance().getFile(what);</span>
+<span class="pc bpc" id="L479" title="2 of 4 branches missed.">				if (file.exists() &amp;&amp; file.isDirectory() == false) {</span>
+<span class="fc" id="L480">					pathSystem.addImportFile(file);</span>
+<span class="fc" id="L481">					return;</span>
 				}
-<span class="nc" id="L476">			} catch (IOException e) {</span>
-<span class="nc" id="L477">				Logme.error(e);</span>
-<span class="nc" id="L478">				throw new EaterException(&quot;Cannot import &quot; + e.getMessage(), s);</span>
-<span class="nc" id="L479">			}</span>
+<span class="nc" id="L483">			} catch (IOException e) {</span>
+<span class="nc" id="L484">				Logme.error(e);</span>
+<span class="nc" id="L485">				throw new EaterException(&quot;Cannot import &quot; + e.getMessage(), s);</span>
+<span class="nc" id="L486">			}</span>
 		}
-<span class="nc" id="L481">		throw new EaterException(&quot;Cannot import&quot;, s);</span>
+<span class="nc" id="L488">		throw new EaterException(&quot;Cannot import&quot;, s);</span>
 	}
 
+	// ::comment when JAVA8
+	/**
+	 * The C build imports an archive found like an included file (relative to the
+	 * folder of the diagram), with java.io.
+	 */
+	private void executeImportInC(TMemory memory, StringLocated s) throws EaterException {
+<span class="nc" id="L497">		final EaterImport _import = new EaterImport(s.getTrimmed());</span>
+<span class="nc" id="L498">		_import.analyze(this, memory);</span>
+
+<span class="nc" id="L500">		final String what = applyFunctionsAndVariables(memory, new StringLocated(_import.getWhat(), s.getLocation()));</span>
+		try {
+<span class="nc" id="L502">			final InputFile found = pathSystem.getInputFile(what);</span>
+<span class="nc bnc" id="L503" title="All 2 branches missed.">			if (found instanceof InputFileIo) {</span>
+<span class="nc" id="L504">				pathSystem.addImportFile(((InputFileIo) found).getFile());</span>
+<span class="nc" id="L505">				return;</span>
+			}
+<span class="nc" id="L507">		} catch (IOException e) {</span>
+<span class="nc" id="L508">			throw new EaterException(&quot;Cannot import &quot; + e.getMessage(), s);</span>
+<span class="nc" id="L509">		}</span>
+<span class="nc" id="L510">		throw new EaterException(&quot;Cannot import&quot;, s);</span>
+	}
+	// ::done
+
 	private void executeLog(TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L485">		final EaterLog log = new EaterLog(s.getTrimmed());</span>
-<span class="fc" id="L486">		log.analyze(this, memory);</span>
-<span class="fc" id="L487">	}</span>
+<span class="fc" id="L515">		final EaterLog log = new EaterLog(s.getTrimmed());</span>
+<span class="fc" id="L516">		log.analyze(this, memory);</span>
+<span class="fc" id="L517">	}</span>
 
 //	public FileWithSuffix getFileWithSuffix(String from, String realName) throws IOException {
 //		throw new IOException(&quot;to be finished&quot;);
@@ -495,129 +525,129 @@ public class TContext {
 //	}
 
 	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L498">		PathSystem saveImportedFiles = null;</span>
+<span class="fc" id="L528">		PathSystem saveImportedFiles = null;</span>
 		try {
-<span class="fc" id="L500">			final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());</span>
-<span class="fc" id="L501">			include.analyze(this, memory);</span>
-<span class="fc" id="L502">			final String what = include.getWhat();</span>
-<span class="fc" id="L503">			final int idx = what.indexOf('!');</span>
-<span class="fc" id="L504">			Sub sub = null;</span>
-<span class="fc bfc" id="L505" title="All 2 branches covered.">			if (idx != -1) {</span>
-<span class="fc" id="L506">				final String filename = what.substring(0, idx);</span>
-<span class="fc" id="L507">				final String blocname = what.substring(idx + 1);</span>
+<span class="fc" id="L530">			final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());</span>
+<span class="fc" id="L531">			include.analyze(this, memory);</span>
+<span class="fc" id="L532">			final String what = include.getWhat();</span>
+<span class="fc" id="L533">			final int idx = what.indexOf('!');</span>
+<span class="fc" id="L534">			Sub sub = null;</span>
+<span class="fc bfc" id="L535" title="All 2 branches covered.">			if (idx != -1) {</span>
+<span class="fc" id="L536">				final String filename = what.substring(0, idx);</span>
+<span class="fc" id="L537">				final String blocname = what.substring(idx + 1);</span>
 				try {
-<span class="fc" id="L509">					final InputFile f2 = pathSystem.getInputFile(filename, PathSystem.KIND_INCLUDESUB);</span>
-<span class="pc bpc" id="L510" title="1 of 2 branches missed.">					if (f2 != null) {</span>
-<span class="fc" id="L511">						saveImportedFiles = this.pathSystem;</span>
-<span class="fc" id="L512">						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());</span>
-<span class="fc" id="L513">						final Reader reader = f2.getReader(charset);</span>
-<span class="pc bpc" id="L514" title="1 of 2 branches missed.">						if (reader == null)</span>
-<span class="nc" id="L515">							throw new EaterException(&quot;cannot include &quot; + what, s);</span>
+<span class="fc" id="L539">					final InputFile f2 = pathSystem.getInputFile(filename, PathSystem.KIND_INCLUDESUB);</span>
+<span class="pc bpc" id="L540" title="1 of 2 branches missed.">					if (f2 != null) {</span>
+<span class="fc" id="L541">						saveImportedFiles = this.pathSystem;</span>
+<span class="fc" id="L542">						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());</span>
+<span class="fc" id="L543">						final Reader reader = f2.getReader(charset);</span>
+<span class="pc bpc" id="L544" title="1 of 2 branches missed.">						if (reader == null)</span>
+<span class="nc" id="L545">							throw new EaterException(&quot;cannot include &quot; + what, s);</span>
 
 						try {
-<span class="fc" id="L518">							ReadLine readerline = ReadLineReader.create(reader, what, s.getLocation());</span>
-<span class="fc" id="L519">							readerline = new UncommentReadLine(readerline);</span>
-<span class="fc" id="L520">							readerline = new ReadFilterMergeLines().applyFilter(readerline);</span>
-<span class="fc" id="L521">							sub = Sub.fromFile(readerline, blocname, this, memory);</span>
+<span class="fc" id="L548">							ReadLine readerline = ReadLineReader.create(reader, what, s.getLocation());</span>
+<span class="fc" id="L549">							readerline = new UncommentReadLine(readerline);</span>
+<span class="fc" id="L550">							readerline = new ReadFilterMergeLines().applyFilter(readerline);</span>
+<span class="fc" id="L551">							sub = Sub.fromFile(readerline, blocname, this, memory);</span>
 						} finally {
-<span class="fc" id="L523">							reader.close();</span>
+<span class="fc" id="L553">							reader.close();</span>
 						}
 					}
-<span class="nc" id="L526">				} catch (IOException e) {</span>
-<span class="nc" id="L527">					Logme.error(e);</span>
-<span class="nc" id="L528">					throw new EaterException(&quot;cannot include &quot; + what, s);</span>
-<span class="fc" id="L529">				}</span>
+<span class="nc" id="L556">				} catch (IOException e) {</span>
+<span class="nc" id="L557">					Logme.error(e);</span>
+<span class="nc" id="L558">					throw new EaterException(&quot;cannot include &quot; + what, s);</span>
+<span class="fc" id="L559">				}</span>
 			}
-<span class="fc bfc" id="L531" title="All 2 branches covered.">			if (sub == null)</span>
-<span class="fc" id="L532">				sub = subs.get(what);</span>
+<span class="fc bfc" id="L561" title="All 2 branches covered.">			if (sub == null)</span>
+<span class="fc" id="L562">				sub = subs.get(what);</span>
 
-<span class="pc bpc" id="L534" title="1 of 2 branches missed.">			if (sub == null)</span>
-<span class="nc" id="L535">				throw new EaterException(&quot;cannot include &quot; + what, s);</span>
+<span class="pc bpc" id="L564" title="1 of 2 branches missed.">			if (sub == null)</span>
+<span class="nc" id="L565">				throw new EaterException(&quot;cannot include &quot; + what, s);</span>
 
-<span class="fc" id="L537">			executeLinesInternal(memory, sub.lines(), null);</span>
+<span class="fc" id="L567">			executeLinesInternal(memory, sub.lines(), null);</span>
 		} finally {
-<span class="fc bfc" id="L539" title="All 2 branches covered.">			if (saveImportedFiles != null)</span>
-<span class="fc" id="L540">				this.pathSystem = saveImportedFiles;</span>
+<span class="fc bfc" id="L569" title="All 2 branches covered.">			if (saveImportedFiles != null)</span>
+<span class="fc" id="L570">				this.pathSystem = saveImportedFiles;</span>
 
 		}
-<span class="fc" id="L543">	}</span>
+<span class="fc" id="L573">	}</span>
 
 	private void executeIncludeDef(TMemory memory, StringLocated s) throws EaterException {
-<span class="nc bnc" id="L546" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="nc bnc" id="L576" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
 
-<span class="nc" id="L548">			final EaterIncludeDef include = new EaterIncludeDef(s.getTrimmed());</span>
-<span class="nc" id="L549">			include.analyze(this, memory);</span>
-<span class="nc" id="L550">			final String definitionName = include.getLocation();</span>
-<span class="nc" id="L551">			final List&lt;String&gt; definition = definitionsContainer.getDefinition(definitionName);</span>
-<span class="nc" id="L552">			final ReadLine reader2 = new ReadLineList(definition, s.getLocation());</span>
+<span class="nc" id="L578">			final EaterIncludeDef include = new EaterIncludeDef(s.getTrimmed());</span>
+<span class="nc" id="L579">			include.analyze(this, memory);</span>
+<span class="nc" id="L580">			final String definitionName = include.getLocation();</span>
+<span class="nc" id="L581">			final List&lt;String&gt; definition = definitionsContainer.getDefinition(definitionName);</span>
+<span class="nc" id="L582">			final ReadLine reader2 = new ReadLineList(definition, s.getLocation());</span>
 
 			try {
-<span class="nc" id="L555">				final List&lt;StringLocated&gt; body = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L585">				final List&lt;StringLocated&gt; body = new ArrayList&lt;&gt;();</span>
 				do {
-<span class="nc" id="L557">					final StringLocated sl = reader2.readLine();</span>
-<span class="nc bnc" id="L558" title="All 2 branches missed.">					if (sl == null) {</span>
-<span class="nc" id="L559">						executeLinesInternal(memory, body, null);</span>
-<span class="nc" id="L560">						return;</span>
+<span class="nc" id="L587">					final StringLocated sl = reader2.readLine();</span>
+<span class="nc bnc" id="L588" title="All 2 branches missed.">					if (sl == null) {</span>
+<span class="nc" id="L589">						executeLinesInternal(memory, body, null);</span>
+<span class="nc" id="L590">						return;</span>
 					}
-<span class="nc" id="L562">					body.add(sl);</span>
-<span class="nc" id="L563">				} while (true);</span>
-<span class="nc" id="L564">			} catch (IOException e) {</span>
-<span class="nc" id="L565">				Logme.error(e);</span>
-<span class="nc" id="L566">				throw new EaterException(&quot;&quot; + e, s);</span>
+<span class="nc" id="L592">					body.add(sl);</span>
+<span class="nc" id="L593">				} while (true);</span>
+<span class="nc" id="L594">			} catch (IOException e) {</span>
+<span class="nc" id="L595">				Logme.error(e);</span>
+<span class="nc" id="L596">				throw new EaterException(&quot;&quot; + e, s);</span>
 			} finally {
 				try {
-<span class="nc" id="L569">					reader2.close();</span>
-<span class="nc" id="L570">				} catch (IOException e) {</span>
-<span class="nc" id="L571">					Logme.error(e);</span>
-<span class="nc" id="L572">				}</span>
+<span class="nc" id="L599">					reader2.close();</span>
+<span class="nc" id="L600">				} catch (IOException e) {</span>
+<span class="nc" id="L601">					Logme.error(e);</span>
+<span class="nc" id="L602">				}</span>
 			}
 		}
-<span class="nc" id="L575">	}</span>
+<span class="nc" id="L605">	}</span>
 
-<span class="fc" id="L577">	private JsonObject themeMetadata = new JsonObject();</span>
+<span class="fc" id="L607">	private JsonObject themeMetadata = new JsonObject();</span>
 
 	public JsonObject getThemeMetadata() {
-<span class="nc" id="L580">		return themeMetadata;</span>
+<span class="nc" id="L610">		return themeMetadata;</span>
 	}
 
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L584">		final EaterTheme eater = new EaterTheme(s.getTrimmed(), pathSystem);</span>
-<span class="fc" id="L585">		eater.analyze(this, memory);</span>
-<span class="fc" id="L586">		final Theme theme = eater.getTheme();</span>
-<span class="pc bpc" id="L587" title="1 of 2 branches missed.">		if (theme == null)</span>
-<span class="nc" id="L588">			throw new EaterException(&quot;No such theme &quot; + eater.getName(), s);</span>
+<span class="fc" id="L614">		final EaterTheme eater = new EaterTheme(s.getTrimmed(), pathSystem);</span>
+<span class="fc" id="L615">		eater.analyze(this, memory);</span>
+<span class="fc" id="L616">		final Theme theme = eater.getTheme();</span>
+<span class="pc bpc" id="L617" title="1 of 2 branches missed.">		if (theme == null)</span>
+<span class="nc" id="L618">			throw new EaterException(&quot;No such theme &quot; + eater.getName(), s);</span>
 
-<span class="fc" id="L590">		final PathSystem saveImportedFiles = this.pathSystem;</span>
-<span class="fc" id="L591">		this.pathSystem = eater.getNewImportedFiles();</span>
-<span class="pc bpc" id="L592" title="3 of 4 branches missed.">		if (TeaVM.isTeaVM() &amp;&amp; eater.isFromLocalFolder() == false)</span>
+<span class="fc" id="L620">		final PathSystem saveImportedFiles = this.pathSystem;</span>
+<span class="fc" id="L621">		this.pathSystem = eater.getNewImportedFiles();</span>
+<span class="pc bpc" id="L622" title="3 of 4 branches missed.">		if (TeaVM.isTeaVM() &amp;&amp; eater.isFromLocalFolder() == false)</span>
 			// A bundled theme is the engine's own: a relative include written in it
 			// must not reach the browser host (restored in the finally below). One
 			// read from a local folder came from the host, as an included file does.
-<span class="nc" id="L596">			this.pathSystem = this.pathSystem.withoutHostFiles();</span>
+<span class="nc" id="L626">			this.pathSystem = this.pathSystem.withoutHostFiles();</span>
 
 		// Local themes keep the caller's current directory, also in the browser:
 		// includes in their body resolve from the !theme line, not the theme file.
 		try {
-<span class="fc" id="L601">			final List&lt;StringLocated&gt; body = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L631">			final List&lt;StringLocated&gt; body = new ArrayList&lt;&gt;();</span>
 			do {
-<span class="fc" id="L603">				final StringLocated sl = theme.readLine();</span>
-<span class="fc bfc" id="L604" title="All 2 branches covered.">				if (sl == null) {</span>
-<span class="fc" id="L605">					executeLines(memory, body, null, false);</span>
-<span class="fc" id="L606">					return;</span>
+<span class="fc" id="L633">				final StringLocated sl = theme.readLine();</span>
+<span class="fc bfc" id="L634" title="All 2 branches covered.">				if (sl == null) {</span>
+<span class="fc" id="L635">					executeLines(memory, body, null, false);</span>
+<span class="fc" id="L636">					return;</span>
 				}
-<span class="fc" id="L608">				body.add(sl);</span>
-<span class="fc" id="L609">			} while (true);</span>
-<span class="nc" id="L610">		} catch (IOException e) {</span>
-<span class="nc" id="L611">			Logme.error(e);</span>
-<span class="nc" id="L612">			throw new EaterException(&quot;Error reading theme &quot; + e, s);</span>
+<span class="fc" id="L638">				body.add(sl);</span>
+<span class="fc" id="L639">			} while (true);</span>
+<span class="nc" id="L640">		} catch (IOException e) {</span>
+<span class="nc" id="L641">			Logme.error(e);</span>
+<span class="nc" id="L642">			throw new EaterException(&quot;Error reading theme &quot; + e, s);</span>
 		} finally {
-<span class="fc" id="L614">			this.themeMetadata = theme.getMetadata();</span>
-<span class="fc" id="L615">			this.pathSystem = saveImportedFiles;</span>
+<span class="fc" id="L644">			this.themeMetadata = theme.getMetadata();</span>
+<span class="fc" id="L645">			this.pathSystem = saveImportedFiles;</span>
 			try {
-<span class="fc" id="L617">				theme.close();</span>
-<span class="nc" id="L618">			} catch (IOException e) {</span>
-<span class="nc" id="L619">				Logme.error(e);</span>
-<span class="fc" id="L620">			}</span>
+<span class="fc" id="L647">				theme.close();</span>
+<span class="nc" id="L648">			} catch (IOException e) {</span>
+<span class="nc" id="L649">				Logme.error(e);</span>
+<span class="fc" id="L650">			}</span>
 		}
 	}
 
@@ -655,202 +685,204 @@ public class TContext {
 //	}
 
 	private void executeInclude(TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L658">		final EaterInclude include = new EaterInclude(s.getTrimmed());</span>
-<span class="fc" id="L659">		include.analyze(this, memory);</span>
-<span class="fc" id="L660">		String what = include.getWhat();</span>
-<span class="fc" id="L661">		final PreprocessorIncludeStrategy strategy = include.getPreprocessorIncludeStrategy();</span>
-<span class="fc" id="L662">		final int idx = what.lastIndexOf('!');</span>
-<span class="fc" id="L663">		String suf = null;</span>
-<span class="fc bfc" id="L664" title="All 2 branches covered.">		if (idx != -1) {</span>
-<span class="fc" id="L665">			suf = what.substring(idx + 1);</span>
-<span class="fc" id="L666">			what = what.substring(0, idx);</span>
+<span class="fc" id="L688">		final EaterInclude include = new EaterInclude(s.getTrimmed());</span>
+<span class="fc" id="L689">		include.analyze(this, memory);</span>
+<span class="fc" id="L690">		String what = include.getWhat();</span>
+<span class="fc" id="L691">		final PreprocessorIncludeStrategy strategy = include.getPreprocessorIncludeStrategy();</span>
+<span class="fc" id="L692">		final int idx = what.lastIndexOf('!');</span>
+<span class="fc" id="L693">		String suf = null;</span>
+<span class="fc bfc" id="L694" title="All 2 branches covered.">		if (idx != -1) {</span>
+<span class="fc" id="L695">			suf = what.substring(idx + 1);</span>
+<span class="fc" id="L696">			what = what.substring(0, idx);</span>
 		}
 
-<span class="fc" id="L669">		ReadLine reader = null;</span>
-<span class="fc" id="L670">		PathSystem saveImportedFiles = null;</span>
+<span class="fc" id="L699">		ReadLine reader = null;</span>
+<span class="fc" id="L700">		PathSystem saveImportedFiles = null;</span>
 		try {
-<span class="pc bpc" id="L672" title="1 of 4 branches missed.">			if (what.startsWith(&quot;&lt;&quot;) &amp;&amp; what.endsWith(&quot;&gt;&quot;)) {</span>
-<span class="fc" id="L673">				final String stdlibPath = what.substring(1, what.length() - 1);</span>
-<span class="fc" id="L674">				saveImportedFiles = this.pathSystem;</span>
-<span class="pc bpc" id="L675" title="1 of 2 branches missed.">				if (TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L676">					final InputStream is = this.pathSystem.getTeaVMStdlibInputStream(what);</span>
-<span class="nc bnc" id="L677" title="All 2 branches missed.">					if (is != null) {</span>
+<span class="pc bpc" id="L702" title="1 of 4 branches missed.">			if (what.startsWith(&quot;&lt;&quot;) &amp;&amp; what.endsWith(&quot;&gt;&quot;)) {</span>
+<span class="fc" id="L703">				final String stdlibPath = what.substring(1, what.length() - 1);</span>
+<span class="fc" id="L704">				saveImportedFiles = this.pathSystem;</span>
+<span class="pc bpc" id="L705" title="1 of 2 branches missed.">				if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L706">					final InputStream is = this.pathSystem.getTeaVMStdlibInputStream(what);</span>
+<span class="nc bnc" id="L707" title="All 2 branches missed.">					if (is != null) {</span>
 						// The library's file is the engine's own: a relative include written
 						// in it must not reach the browser host (restored with the rest).
-<span class="nc" id="L680">						this.pathSystem = this.pathSystem.withoutHostFiles();</span>
-<span class="nc" id="L681">						reader = ReadLineReader.create(new InputStreamReader(is), what);</span>
+<span class="nc" id="L710">						this.pathSystem = this.pathSystem.withoutHostFiles();</span>
+						// The C build extracts the diagram of the file, as the JVM does
+<span class="nc bnc" id="L712" title="All 2 branches missed.">						reader = TeaVM.isC() ? PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath)</span>
+<span class="nc" id="L713">								: ReadLineReader.create(new InputStreamReader(is), what);</span>
 					}
-<span class="nc" id="L683">				} else {</span>
-<span class="fc" id="L684">					InputFile tmp = this.pathSystem.getInputFile(what);</span>
-<span class="fc" id="L685">					this.pathSystem = this.pathSystem.changeCurrentDirectory(tmp.getParentFolder());</span>
-<span class="fc" id="L686">					reader = PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);</span>
+<span class="nc" id="L715">				} else {</span>
+<span class="fc" id="L716">					InputFile tmp = this.pathSystem.getInputFile(what);</span>
+<span class="fc" id="L717">					this.pathSystem = this.pathSystem.changeCurrentDirectory(tmp.getParentFolder());</span>
+<span class="fc" id="L718">					reader = PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);</span>
 				}
-<span class="pc bpc" id="L688" title="2 of 4 branches missed.">			} else if (what.startsWith(&quot;http://&quot;) || what.startsWith(&quot;https://&quot;)) {</span>
-<span class="nc bnc" id="L689" title="All 2 branches missed.">				if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L690">					final SURL url = SURL.create(what);</span>
-<span class="nc bnc" id="L691" title="All 2 branches missed.">					if (url == null)</span>
-<span class="nc" id="L692">						throw new EaterException(&quot;Cannot open URL&quot;, s);</span>
+<span class="pc bpc" id="L720" title="2 of 4 branches missed.">			} else if (what.startsWith(&quot;http://&quot;) || what.startsWith(&quot;https://&quot;)) {</span>
+<span class="nc bnc" id="L721" title="All 2 branches missed.">				if (!TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L722">					final SURL url = SURL.create(what);</span>
+<span class="nc bnc" id="L723" title="All 2 branches missed.">					if (url == null)</span>
+<span class="nc" id="L724">						throw new EaterException(&quot;Cannot open URL&quot;, s);</span>
 
-<span class="nc" id="L694">					reader = PreprocessorUtils.getReaderIncludeUrl(url, s, suf, charset);</span>
-<span class="nc" id="L695">				}</span>
-<span class="pc bpc" id="L696" title="3 of 4 branches missed.">			} else if (what.startsWith(&quot;[&quot;) &amp;&amp; what.endsWith(&quot;]&quot;)) {</span>
-<span class="nc" id="L697">				throw new IOException(&quot;To be finished&quot;);</span>
+<span class="nc" id="L726">					reader = PreprocessorUtils.getReaderIncludeUrl(url, s, suf, charset);</span>
+<span class="nc" id="L727">				}</span>
+<span class="pc bpc" id="L728" title="3 of 4 branches missed.">			} else if (what.startsWith(&quot;[&quot;) &amp;&amp; what.endsWith(&quot;]&quot;)) {</span>
+<span class="nc" id="L729">				throw new IOException(&quot;To be finished&quot;);</span>
 				// reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1,
 				// what.length() - 1));
 			} else {
-<span class="fc" id="L701">				final InputFile f2 = this.pathSystem.getInputFile(what);</span>
-<span class="fc bfc" id="L702" title="All 2 branches covered.">				if (f2 != null) {</span>
-<span class="fc bfc" id="L703" title="All 2 branches covered.">					final File used = f2 instanceof SFile ? ((SFile) f2).getCanonicalFile().conv() : null;</span>
-<span class="fc bfc" id="L704" title="All 2 branches covered.">					final String identity = used != null ? used.getPath() : this.pathSystem.getTeaVMFileId(f2);</span>
-<span class="fc bfc" id="L705" title="All 2 branches covered.">					final List&lt;String&gt; included = identity == null ? null : Arrays.asList(identity, suf);</span>
-<span class="fc bfc" id="L706" title="All 4 branches covered.">					final boolean seen = included != null &amp;&amp; includedCurrent.contains(included);</span>
-<span class="fc bfc" id="L707" title="All 4 branches covered.">					if (strategy == PreprocessorIncludeStrategy.DEFAULT &amp;&amp; seen)</span>
-<span class="fc" id="L708">						return;</span>
+<span class="fc" id="L733">				final InputFile f2 = this.pathSystem.getInputFile(what);</span>
+<span class="fc bfc" id="L734" title="All 2 branches covered.">				if (f2 != null) {</span>
+<span class="fc bfc" id="L735" title="All 2 branches covered.">					final File used = f2 instanceof SFile ? ((SFile) f2).getCanonicalFile().conv() : null;</span>
+<span class="fc bfc" id="L736" title="All 2 branches covered.">					final String identity = used != null ? used.getPath() : this.pathSystem.getTeaVMFileId(f2);</span>
+<span class="fc bfc" id="L737" title="All 2 branches covered.">					final List&lt;String&gt; included = identity == null ? null : Arrays.asList(identity, suf);</span>
+<span class="fc bfc" id="L738" title="All 4 branches covered.">					final boolean seen = included != null &amp;&amp; includedCurrent.contains(included);</span>
+<span class="fc bfc" id="L739" title="All 4 branches covered.">					if (strategy == PreprocessorIncludeStrategy.DEFAULT &amp;&amp; seen)</span>
+<span class="fc" id="L740">						return;</span>
 
-<span class="pc bpc" id="L710" title="1 of 4 branches missed.">					if (strategy == PreprocessorIncludeStrategy.ONCE &amp;&amp; seen)</span>
-<span class="nc" id="L711">						throw new EaterException(&quot;This file has already been included&quot;, s);</span>
+<span class="pc bpc" id="L742" title="1 of 4 branches missed.">					if (strategy == PreprocessorIncludeStrategy.ONCE &amp;&amp; seen)</span>
+<span class="nc" id="L743">						throw new EaterException(&quot;This file has already been included&quot;, s);</span>
 
-<span class="fc bfc" id="L713" title="All 2 branches covered.">					if (used != null)</span>
-<span class="fc" id="L714">						filesUsedCurrent.add(used);</span>
+<span class="fc bfc" id="L745" title="All 2 branches covered.">					if (used != null)</span>
+<span class="fc" id="L746">						filesUsedCurrent.add(used);</span>
 
 					try {
-<span class="fc" id="L717">						reader = DiagramDetector.extractFromFile(f2, &quot;desc2&quot;, suf);</span>
-<span class="fc" id="L718">					} catch (NumberFormatException | PatternSyntaxException e) {</span>
-<span class="fc" id="L719">						throw new EaterException(&quot;cannot include &quot; + what + &quot;!&quot; + suf, s);</span>
-<span class="fc" id="L720">					}</span>
-<span class="fc bfc" id="L721" title="All 4 branches covered.">					if (reader instanceof DiagramExtractor &amp;&amp; ((DiagramExtractor) reader).isFound() == false)</span>
-<span class="fc" id="L722">						throw new EaterException(&quot;cannot include &quot; + what + &quot;!&quot; + suf, s);</span>
+<span class="fc" id="L749">						reader = DiagramDetector.extractFromFile(f2, &quot;desc2&quot;, suf);</span>
+<span class="fc" id="L750">					} catch (NumberFormatException | PatternSyntaxException e) {</span>
+<span class="fc" id="L751">						throw new EaterException(&quot;cannot include &quot; + what + &quot;!&quot; + suf, s);</span>
+<span class="fc" id="L752">					}</span>
+<span class="fc bfc" id="L753" title="All 4 branches covered.">					if (reader instanceof DiagramExtractor &amp;&amp; ((DiagramExtractor) reader).isFound() == false)</span>
+<span class="fc" id="L754">						throw new EaterException(&quot;cannot include &quot; + what + &quot;!&quot; + suf, s);</span>
 
-<span class="fc bfc" id="L724" title="All 2 branches covered.">					if (reader == null) {</span>
-<span class="fc" id="L725">						final Reader tmp = f2.getReader(charset);</span>
-<span class="pc bpc" id="L726" title="1 of 2 branches missed.">						if (tmp == null)</span>
-<span class="nc" id="L727">							throw new EaterException(&quot;Cannot include file&quot;, s);</span>
+<span class="fc bfc" id="L756" title="All 2 branches covered.">					if (reader == null) {</span>
+<span class="fc" id="L757">						final Reader tmp = f2.getReader(charset);</span>
+<span class="pc bpc" id="L758" title="1 of 2 branches missed.">						if (tmp == null)</span>
+<span class="nc" id="L759">							throw new EaterException(&quot;Cannot include file&quot;, s);</span>
 
-<span class="fc" id="L729">						reader = ReadLineReader.create(tmp, what, s.getLocation());</span>
+<span class="fc" id="L761">						reader = ReadLineReader.create(tmp, what, s.getLocation());</span>
 					}
-<span class="fc" id="L731">					saveImportedFiles = this.pathSystem;</span>
-<span class="fc" id="L732">					this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());</span>
-<span class="pc bpc" id="L733" title="1 of 2 branches missed.">					if (TeaVM.a())</span>
-<span class="pc bpc" id="L734" title="1 of 2 branches missed.">						assert reader != null;</span>
-<span class="fc bfc" id="L735" title="All 2 branches covered.">					if (included != null)</span>
-<span class="fc" id="L736">						includedCurrent.add(included);</span>
+<span class="fc" id="L763">					saveImportedFiles = this.pathSystem;</span>
+<span class="fc" id="L764">					this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());</span>
+<span class="pc bpc" id="L765" title="1 of 2 branches missed.">					if (TeaVM.a())</span>
+<span class="pc bpc" id="L766" title="1 of 2 branches missed.">						assert reader != null;</span>
+<span class="fc bfc" id="L767" title="All 2 branches covered.">					if (included != null)</span>
+<span class="fc" id="L768">						includedCurrent.add(included);</span>
 				}
 			}
-<span class="fc bfc" id="L739" title="All 2 branches covered.">			if (reader != null)</span>
+<span class="fc bfc" id="L771" title="All 2 branches covered.">			if (reader != null)</span>
 				try {
-<span class="fc" id="L741">					final List&lt;StringLocated&gt; body = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L742">					reader = new ReadLineWithYamlHeader(reader);</span>
+<span class="fc" id="L773">					final List&lt;StringLocated&gt; body = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L774">					reader = new ReadLineWithYamlHeader(reader);</span>
 					do {
-<span class="fc" id="L744">						final StringLocated sl = reader.readLine();</span>
-<span class="fc bfc" id="L745" title="All 2 branches covered.">						if (sl == null) {</span>
-<span class="fc" id="L746">							executeLines(memory, body, null, false);</span>
-<span class="fc" id="L747">							return;</span>
+<span class="fc" id="L776">						final StringLocated sl = reader.readLine();</span>
+<span class="fc bfc" id="L777" title="All 2 branches covered.">						if (sl == null) {</span>
+<span class="fc" id="L778">							executeLines(memory, body, null, false);</span>
+<span class="fc" id="L779">							return;</span>
 						}
-<span class="fc" id="L749">						body.add(sl);</span>
-<span class="fc" id="L750">					} while (true);</span>
+<span class="fc" id="L781">						body.add(sl);</span>
+<span class="fc" id="L782">					} while (true);</span>
 				} finally {
-<span class="pc bpc" id="L752" title="1 of 2 branches missed.">					if (saveImportedFiles != null)</span>
-<span class="fc" id="L753">						this.pathSystem = saveImportedFiles;</span>
+<span class="pc bpc" id="L784" title="1 of 2 branches missed.">					if (saveImportedFiles != null)</span>
+<span class="fc" id="L785">						this.pathSystem = saveImportedFiles;</span>
 				}
 
-<span class="nc" id="L756">		} catch (IOException e) {</span>
-<span class="nc" id="L757">			Logme.error(e);</span>
-<span class="nc" id="L758">			throw new EaterException(&quot;cannot include &quot; + e, s);</span>
+<span class="nc" id="L788">		} catch (IOException e) {</span>
+<span class="nc" id="L789">			Logme.error(e);</span>
+<span class="nc" id="L790">			throw new EaterException(&quot;cannot include &quot; + e, s);</span>
 		} finally {
-<span class="fc bfc" id="L760" title="All 2 branches covered.">			if (reader != null)</span>
+<span class="fc bfc" id="L792" title="All 2 branches covered.">			if (reader != null)</span>
 				try {
-<span class="fc" id="L762">					reader.close();</span>
-<span class="nc" id="L763">				} catch (IOException e) {</span>
-<span class="nc" id="L764">					Logme.error(e);</span>
-<span class="fc" id="L765">				}</span>
+<span class="fc" id="L794">					reader.close();</span>
+<span class="nc" id="L795">				} catch (IOException e) {</span>
+<span class="nc" id="L796">					Logme.error(e);</span>
+<span class="fc" id="L797">				}</span>
 		}
-<span class="fc" id="L767">		throw new EaterException(&quot;cannot include &quot; + what, s);</span>
+<span class="fc" id="L799">		throw new EaterException(&quot;cannot include &quot; + what, s);</span>
 	}
 
 	public boolean isLegacyDefine(String functionName) {
-<span class="fc bfc" id="L771" title="All 2 branches covered.">		for (TFunction func : functionsSet.getFunctionsByName(functionName))</span>
-<span class="fc bfc" id="L772" title="All 2 branches covered.">			if (func.getFunctionType().isLegacy())</span>
-<span class="fc" id="L773">				return true;</span>
+<span class="fc bfc" id="L803" title="All 2 branches covered.">		for (TFunction func : functionsSet.getFunctionsByName(functionName))</span>
+<span class="fc bfc" id="L804" title="All 2 branches covered.">			if (func.getFunctionType().isLegacy())</span>
+<span class="fc" id="L805">				return true;</span>
 
-<span class="fc" id="L775">		return false;</span>
+<span class="fc" id="L807">		return false;</span>
 	}
 
 	public boolean isUnquoted(String functionName) {
-<span class="fc bfc" id="L779" title="All 2 branches covered.">		for (TFunction func : functionsSet.getFunctionsByName(functionName))</span>
-<span class="fc bfc" id="L780" title="All 2 branches covered.">			if (func.isUnquoted())</span>
-<span class="fc" id="L781">				return true;</span>
+<span class="fc bfc" id="L811" title="All 2 branches covered.">		for (TFunction func : functionsSet.getFunctionsByName(functionName))</span>
+<span class="fc bfc" id="L812" title="All 2 branches covered.">			if (func.isUnquoted())</span>
+<span class="fc" id="L813">				return true;</span>
 
-<span class="fc" id="L783">		return false;</span>
+<span class="fc" id="L815">		return false;</span>
 	}
 
 	public boolean doesFunctionExist(String functionName) {
-<span class="fc" id="L787">		return functionsSet.doesFunctionExist(functionName);</span>
+<span class="fc" id="L819">		return functionsSet.doesFunctionExist(functionName);</span>
 	}
 
 	@JawsStrange
 	private String getFunctionNameAt(String s, int pos) {
-<span class="fc bfc" id="L792" title="All 4 branches covered.">		final boolean justAfterALetter = pos &gt; 0 &amp;&amp; TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(pos - 1))</span>
-<span class="fc bfc" id="L793" title="All 2 branches covered.">				&amp;&amp; VariableManager.justAfterBackslashN(s, pos) == false;</span>
-<span class="fc bfc" id="L794" title="All 6 branches covered.">		if (justAfterALetter &amp;&amp; s.charAt(pos) != '%' &amp;&amp; s.charAt(pos) != '$')</span>
-<span class="fc" id="L795">			return null;</span>
+<span class="fc bfc" id="L824" title="All 4 branches covered.">		final boolean justAfterALetter = pos &gt; 0 &amp;&amp; TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(pos - 1))</span>
+<span class="fc bfc" id="L825" title="All 2 branches covered.">				&amp;&amp; VariableManager.justAfterBackslashN(s, pos) == false;</span>
+<span class="fc bfc" id="L826" title="All 6 branches covered.">		if (justAfterALetter &amp;&amp; s.charAt(pos) != '%' &amp;&amp; s.charAt(pos) != '$')</span>
+<span class="fc" id="L827">			return null;</span>
 
-<span class="fc" id="L797">		final String fname = functionsSet.getLonguestMatchStartingIn(s, pos);</span>
-<span class="fc bfc" id="L798" title="All 2 branches covered.">		if (fname.length() == 0)</span>
-<span class="fc" id="L799">			return null;</span>
+<span class="fc" id="L829">		final String fname = functionsSet.getLonguestMatchStartingIn(s, pos);</span>
+<span class="fc bfc" id="L830" title="All 2 branches covered.">		if (fname.length() == 0)</span>
+<span class="fc" id="L831">			return null;</span>
 
-<span class="fc" id="L801">		return fname.substring(0, fname.length() - 1);</span>
+<span class="fc" id="L833">		return fname.substring(0, fname.length() - 1);</span>
 	}
 
 	public List&lt;StringLocated&gt; getResultList() {
-<span class="fc" id="L805">		return resultList;</span>
+<span class="fc" id="L837">		return resultList;</span>
 	}
 
 	public List&lt;StringLocated&gt; getDebug() {
-<span class="fc" id="L809">		return debug;</span>
+<span class="fc" id="L841">		return debug;</span>
 	}
 
 	public String extractFromResultList(int n1) {
-<span class="nc" id="L813">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L814" title="All 2 branches missed.">		while (resultList.size() &gt; n1) {</span>
-<span class="nc" id="L815">			sb.append(resultList.get(n1).getString());</span>
-<span class="nc" id="L816">			resultList.remove(n1);</span>
-<span class="nc bnc" id="L817" title="All 2 branches missed.">			if (resultList.size() &gt; n1)</span>
-<span class="nc" id="L818">				sb.append(Jaws.BLOCK_E1_NEWLINE);</span>
+<span class="nc" id="L845">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L846" title="All 2 branches missed.">		while (resultList.size() &gt; n1) {</span>
+<span class="nc" id="L847">			sb.append(resultList.get(n1).getString());</span>
+<span class="nc" id="L848">			resultList.remove(n1);</span>
+<span class="nc bnc" id="L849" title="All 2 branches missed.">			if (resultList.size() &gt; n1)</span>
+<span class="nc" id="L850">				sb.append(Jaws.BLOCK_E1_NEWLINE);</span>
 
 		}
-<span class="nc" id="L821">		return sb.toString();</span>
+<span class="nc" id="L853">		return sb.toString();</span>
 	}
 
 	public void appendEndOfLine(String endOfLine) {
-<span class="nc bnc" id="L825" title="All 2 branches missed.">		if (endOfLine.length() &gt; 0) {</span>
-<span class="nc" id="L826">			final int idx = resultList.size() - 1;</span>
-<span class="nc" id="L827">			StringLocated last = resultList.get(idx);</span>
-<span class="nc" id="L828">			last = last.append(endOfLine);</span>
-<span class="nc" id="L829">			resultList.set(idx, last);</span>
+<span class="nc bnc" id="L857" title="All 2 branches missed.">		if (endOfLine.length() &gt; 0) {</span>
+<span class="nc" id="L858">			final int idx = resultList.size() - 1;</span>
+<span class="nc" id="L859">			StringLocated last = resultList.get(idx);</span>
+<span class="nc" id="L860">			last = last.append(endOfLine);</span>
+<span class="nc" id="L861">			resultList.set(idx, last);</span>
 		}
-<span class="nc" id="L831">	}</span>
+<span class="nc" id="L863">	}</span>
 
 	public TFunction getFunctionSmart(TFunctionSignature signature) {
-<span class="nc" id="L834">		return functionsSet.getFunctionSmart(signature);</span>
+<span class="fc" id="L866">		return functionsSet.getFunctionSmart(signature);</span>
 	}
 
 	/**
 	 * Retrieve data given after @startuml.
 	 */
 	public Optional&lt;String&gt; getXargs() {
-<span class="nc bnc" id="L841" title="All 2 branches missed.">		if (resultList.size() == 0)</span>
-<span class="nc" id="L842">			return Optional.empty();</span>
+<span class="nc bnc" id="L873" title="All 2 branches missed.">		if (resultList.size() == 0)</span>
+<span class="nc" id="L874">			return Optional.empty();</span>
 
-<span class="nc" id="L844">		final String first = resultList.get(0).toString();</span>
-<span class="nc" id="L845">		final int idx = first.indexOf(' ');</span>
-<span class="nc bnc" id="L846" title="All 2 branches missed.">		if (idx == -1)</span>
-<span class="nc" id="L847">			return Optional.empty();</span>
+<span class="nc" id="L876">		final String first = resultList.get(0).toString();</span>
+<span class="nc" id="L877">		final int idx = first.indexOf(' ');</span>
+<span class="nc bnc" id="L878" title="All 2 branches missed.">		if (idx == -1)</span>
+<span class="nc" id="L879">			return Optional.empty();</span>
 
-<span class="nc" id="L849">		return Optional.of(first.substring(idx + 1).trim());</span>
+<span class="nc" id="L881">		return Optional.of(first.substring(idx + 1).trim());</span>
 	}
 
 	public PreprocessingArtifact getPreprocessingArtifact() {
-<span class="fc" id="L853">		return preprocessingArtifact;</span>
+<span class="fc" id="L885">		return preprocessingArtifact;</span>
 	}
 
 }

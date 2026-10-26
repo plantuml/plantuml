@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MlibAffine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.awt</a> &gt; <span class="el_source">MlibAffine.java</span></div><h1>MlibAffine.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.klimt.awt;
+
+/**
+ * Pure Java port of the part of Oracle's medialib (the native library behind
+ * &lt;code&gt;java.awt.image.AffineTransformOp&lt;/code&gt;) that scales an image by a
+ * uniform factor, so that the C build gives the very same pixels as the JVM:
+ * &lt;code&gt;mlib_AffineEdges&lt;/code&gt; (which positions the destination pixels in the
+ * source image, in 16.16 fixed point), the bilinear and nearest-neighbor
+ * kernels and the processing of the edges (which uses double arithmetic).
+ * &lt;p&gt;
+ * Only what PlantUML needs is ported: a transformation which is a scale
+ * (positive, identical on both axes, no translation) of an ARGB image.
+ * Intermediate values keep the exact order of operations of the C code,
+ * because a difference of one unit in the last place may change the pixel.
+ */
+final class MlibAffine {
+	// ::remove file when JAVA8
+
+	private static final int SHIFT = 16;
+	private static final int PREC = 1 &lt;&lt; SHIFT;
+	private static final int MASK = PREC - 1;
+
+	private MlibAffine() {
+	}
+
+	/** What &lt;code&gt;mlib_AffineEdges&lt;/code&gt; computes: one entry per destination row. */
+<span class="nc" id="L27">	private static final class Edges {</span>
+		int[] left;
+		int[] right;
+		int[] xStarts;
+		int[] yStarts;
+<span class="nc" id="L32">		int yStart = 0;</span>
+<span class="nc" id="L33">		int yFinish = -1;</span>
+		int dX;
+		int dY;
+	}
+
+	/** Same as &lt;code&gt;(mlib_s32) value&lt;/code&gt; saturated. */
+	private static int sat32(double value) {
+<span class="nc bnc" id="L40" title="All 2 branches missed.">		if (value &gt;= Integer.MAX_VALUE)</span>
+<span class="nc" id="L41">			return Integer.MAX_VALUE;</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">		if (value &lt;= Integer.MIN_VALUE)</span>
+<span class="nc" id="L43">			return Integer.MIN_VALUE;</span>
+<span class="nc" id="L44">		return (int) value;</span>
+	}
+
+	/**
+	 * Port of &lt;code&gt;mlib_AffineEdges&lt;/code&gt; for the matrix (s, 0, 0, 0, s, 0).
+	 * 
+	 * @param kw      the width of the filter kernel (1: nearest, 2: bilinear)
+	 * @param wholeSrc true for the second call, which covers the whole source
+	 *                image (the pixels to be extended)
+	 */
+	private static Edges edges(int srcW, int srcH, int dstW, int dstH, double s, int kw, boolean wholeSrc) {
+<span class="nc" id="L55">		final Edges result = new Edges();</span>
+<span class="nc" id="L56">		final int kw1 = 0;</span>
+<span class="nc" id="L57">		double delta = 0.0;</span>
+		final double xClip;
+		final double yClip;
+		final double wClip;
+		final double hClip;
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (wholeSrc) {</span>
+<span class="nc" id="L63">			xClip = 0;</span>
+<span class="nc" id="L64">			yClip = 0;</span>
+<span class="nc" id="L65">			wClip = srcW;</span>
+<span class="nc" id="L66">			hClip = srcH;</span>
+		} else {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">			if (kw &gt; 1)</span>
+<span class="nc" id="L69">				delta = -0.5;</span>
+<span class="nc" id="L70">			xClip = kw1 - delta;</span>
+<span class="nc" id="L71">			yClip = kw1 - delta;</span>
+<span class="nc" id="L72">			wClip = srcW - ((kw - 1) - (kw1 - delta));</span>
+<span class="nc" id="L73">			hClip = srcH - ((kw - 1) - (kw1 - delta));</span>
+		}
+<span class="nc bnc" id="L75" title="All 6 branches missed.">		if (srcW &gt;= (1 &lt;&lt; 15) || srcH &gt;= (1 &lt;&lt; 15) || dstH &lt;= 0)</span>
+<span class="nc" id="L76">			return result;</span>
+
+<span class="nc" id="L78">		final int[] leftEdges = new int[dstH];</span>
+<span class="nc" id="L79">		final int[] rightEdges = new int[dstH];</span>
+<span class="nc" id="L80">		final int[] xStarts = new int[dstH];</span>
+<span class="nc" id="L81">		final int[] yStarts = new int[dstH];</span>
+<span class="nc" id="L82">		result.left = leftEdges;</span>
+<span class="nc" id="L83">		result.right = rightEdges;</span>
+<span class="nc" id="L84">		result.xStarts = xStarts;</span>
+<span class="nc" id="L85">		result.yStarts = yStarts;</span>
+
+<span class="nc bnc" id="L87" title="All 4 branches missed.">		if (xClip &gt;= wClip || yClip &gt;= hClip)</span>
+<span class="nc" id="L88">			return result;</span>
+
+		// The matrix is (a, b, tx, c, d, ty) = (s, 0, 0, 0, s, 0)
+<span class="nc" id="L91">		final double a = s;</span>
+<span class="nc" id="L92">		final double b = 0.0;</span>
+<span class="nc" id="L93">		final double c = 0.0;</span>
+<span class="nc" id="L94">		final double d = s;</span>
+<span class="nc" id="L95">		double tx = 0.0;</span>
+<span class="nc" id="L96">		double ty = 0.0;</span>
+<span class="nc" id="L97">		final double div0 = a * d - b * c;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (div0 == 0.0)</span>
+<span class="nc" id="L99">			return result;</span>
+
+<span class="nc" id="L101">		final double a2 = d;</span>
+<span class="nc" id="L102">		final double b2 = -b;</span>
+<span class="nc" id="L103">		final double tx2 = (-d * tx + b * ty);</span>
+<span class="nc" id="L104">		final double c2 = -c;</span>
+<span class="nc" id="L105">		final double d2 = a;</span>
+<span class="nc" id="L106">		final double ty2 = (c * tx - a * ty);</span>
+
+<span class="nc" id="L108">		final double dx = a2;</span>
+<span class="nc" id="L109">		final double dy = c2;</span>
+
+<span class="nc" id="L111">		tx -= 0.5;</span>
+<span class="nc" id="L112">		ty -= 0.5;</span>
+
+<span class="nc" id="L114">		final double[][] coords = new double[4][2];</span>
+<span class="nc" id="L115">		coords[0][0] = xClip * a + yClip * b + tx;</span>
+<span class="nc" id="L116">		coords[0][1] = xClip * c + yClip * d + ty;</span>
+<span class="nc" id="L117">		coords[2][0] = wClip * a + hClip * b + tx;</span>
+<span class="nc" id="L118">		coords[2][1] = wClip * c + hClip * d + ty;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (div0 &gt; 0) {</span>
+<span class="nc" id="L120">			coords[1][0] = wClip * a + yClip * b + tx;</span>
+<span class="nc" id="L121">			coords[1][1] = wClip * c + yClip * d + ty;</span>
+<span class="nc" id="L122">			coords[3][0] = xClip * a + hClip * b + tx;</span>
+<span class="nc" id="L123">			coords[3][1] = xClip * c + hClip * d + ty;</span>
+		} else {
+<span class="nc" id="L125">			return result; // not needed: a scale is positive</span>
+		}
+
+<span class="nc" id="L128">		int topIdx = 0;</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		for (int i = 1; i &lt; 4; i++)</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (coords[i][1] &lt; coords[topIdx][1])</span>
+<span class="nc" id="L131">				topIdx = i;</span>
+
+<span class="nc" id="L133">		final double dTop = coords[topIdx][1];</span>
+<span class="nc" id="L134">		int top = sat32(dTop);</span>
+<span class="nc" id="L135">		int bot = -1;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (top &gt;= dstH)</span>
+<span class="nc" id="L137">			return result;</span>
+
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (dTop &gt;= 0.0) {</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (dTop == top) {</span>
+<span class="nc" id="L141">				double xLeft = coords[topIdx][0];</span>
+<span class="nc" id="L142">				double xRight = coords[topIdx][0];</span>
+<span class="nc" id="L143">				int nextIdx = (topIdx + 1) &amp; 0x3;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">				if (dTop == coords[nextIdx][1]) {</span>
+<span class="nc" id="L145">					final double x = coords[nextIdx][0];</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">					xLeft = (xLeft &lt;= x) ? xLeft : x;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">					xRight = (xRight &gt;= x) ? xRight : x;</span>
+				}
+<span class="nc" id="L149">				nextIdx = (topIdx - 1) &amp; 0x3;</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">				if (dTop == coords[nextIdx][1]) {</span>
+<span class="nc" id="L151">					final double x = coords[nextIdx][0];</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">					xLeft = (xLeft &lt;= x) ? xLeft : x;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">					xRight = (xRight &gt;= x) ? xRight : x;</span>
+				}
+<span class="nc" id="L155">				int t = sat32(xLeft);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">				leftEdges[top] = (t &gt;= xLeft) ? t : ++t;</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">				if (xLeft &gt;= Integer.MAX_VALUE)</span>
+<span class="nc" id="L158">					leftEdges[top] = Integer.MAX_VALUE;</span>
+<span class="nc" id="L159">				rightEdges[top] = sat32(xRight);</span>
+<span class="nc" id="L160">			} else {</span>
+<span class="nc" id="L161">				top++;</span>
+			}
+		} else {
+<span class="nc" id="L164">			top = 0;</span>
+		}
+
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		for (int i = 0; i &lt; 2; i++) {</span>
+<span class="nc" id="L168">			final double dY1 = coords[(topIdx - i) &amp; 0x3][1];</span>
+<span class="nc" id="L169">			final double dX1 = coords[(topIdx - i) &amp; 0x3][0];</span>
+<span class="nc" id="L170">			final double dY2 = coords[(topIdx - i - 1) &amp; 0x3][1];</span>
+<span class="nc" id="L171">			final double dX2 = coords[(topIdx - i - 1) &amp; 0x3][0];</span>
+<span class="nc" id="L172">			double x = dX1;</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">			if (dY1 == dY2)</span>
+<span class="nc" id="L174">				continue;</span>
+<span class="nc" id="L175">			final double slope = (dX2 - dX1) / (dY2 - dY1);</span>
+<span class="nc bnc" id="L176" title="All 4 branches missed.">			if (Double.isNaN(slope) || Double.isInfinite(slope))</span>
+<span class="nc" id="L177">				continue;</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">			final int y1 = dY1 &lt; 0.0 ? 0 : sat32(dY1 + 1);</span>
+<span class="nc" id="L179">			int y2 = sat32(dY2);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (y2 &gt;= dstH)</span>
+<span class="nc" id="L181">				y2 = dstH - 1;</span>
+<span class="nc" id="L182">			x += slope * (y1 - dY1);</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">			for (int j = y1; j &lt;= y2; j++) {</span>
+<span class="nc" id="L184">				int t = sat32(x);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">				leftEdges[j] = (t &gt;= x) ? t : ++t;</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">				if (x &gt;= Integer.MAX_VALUE)</span>
+<span class="nc" id="L187">					leftEdges[j] = Integer.MAX_VALUE;</span>
+<span class="nc" id="L188">				x += slope;</span>
+			}
+		}
+
+<span class="nc bnc" id="L192" title="All 2 branches missed.">		for (int i = 0; i &lt; 2; i++) {</span>
+<span class="nc" id="L193">			final double dY1 = coords[(topIdx + i) &amp; 0x3][1];</span>
+<span class="nc" id="L194">			final double dX1 = coords[(topIdx + i) &amp; 0x3][0];</span>
+<span class="nc" id="L195">			final double dY2 = coords[(topIdx + i + 1) &amp; 0x3][1];</span>
+<span class="nc" id="L196">			final double dX2 = coords[(topIdx + i + 1) &amp; 0x3][0];</span>
+<span class="nc" id="L197">			double x = dX1;</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">			if (dY1 == dY2)</span>
+<span class="nc" id="L199">				continue;</span>
+<span class="nc" id="L200">			final double slope = (dX2 - dX1) / (dY2 - dY1);</span>
+<span class="nc bnc" id="L201" title="All 4 branches missed.">			if (Double.isNaN(slope) || Double.isInfinite(slope))</span>
+<span class="nc" id="L202">				continue;</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">			final int y1 = dY1 &lt; 0.0 ? 0 : sat32(dY1 + 1);</span>
+<span class="nc" id="L204">			int y2 = sat32(dY2);</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">			if (y2 &gt;= dstH)</span>
+<span class="nc" id="L206">				y2 = dstH - 1;</span>
+<span class="nc" id="L207">			x += slope * (y1 - dY1);</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">			for (int j = y1; j &lt;= y2; j++) {</span>
+<span class="nc" id="L209">				rightEdges[j] = sat32(x);</span>
+<span class="nc" id="L210">				x += slope;</span>
+			}
+<span class="nc" id="L212">			bot = y2;</span>
+		}
+
+<span class="nc" id="L215">		final double dxCl = xClip * div0;</span>
+<span class="nc" id="L216">		final double dyCl = yClip * div0;</span>
+<span class="nc" id="L217">		final double dwCl = wClip * div0;</span>
+<span class="nc" id="L218">		final double dhCl = hClip * div0;</span>
+
+<span class="nc" id="L220">		final int xCl = (int) (xClip + delta);</span>
+<span class="nc" id="L221">		final int yCl = (int) (yClip + delta);</span>
+<span class="nc" id="L222">		final int wCl = (int) (wClip + delta);</span>
+<span class="nc" id="L223">		final int hCl = (int) (hClip + delta);</span>
+
+<span class="nc" id="L225">		final double div = 1.0 / div0;</span>
+
+<span class="nc" id="L227">		int sdx = (int) (a2 * div * (1 &lt;&lt; SHIFT));</span>
+<span class="nc" id="L228">		int sdy = (int) (c2 * div * (1 &lt;&lt; SHIFT));</span>
+
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		for (int i = top; i &lt;= bot; i++) {</span>
+<span class="nc" id="L231">			int xLeft = leftEdges[i];</span>
+<span class="nc" id="L232">			int xRight = rightEdges[i];</span>
+
+<span class="nc bnc" id="L234" title="All 2 branches missed.">			xLeft = (xLeft &lt; 0) ? 0 : xLeft;</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">			xRight = (xRight &gt;= dstW) ? dstW - 1 : xRight;</span>
+
+<span class="nc" id="L237">			final double xl = xLeft + 0.5;</span>
+<span class="nc" id="L238">			final double ii = i + 0.5;</span>
+<span class="nc" id="L239">			final double xr = xRight + 0.5;</span>
+<span class="nc" id="L240">			double dxs = xl * a2 + ii * b2 + tx2;</span>
+<span class="nc" id="L241">			double dys = xl * c2 + ii * d2 + ty2;</span>
+
+<span class="nc bnc" id="L243" title="All 8 branches missed.">			if ((dxs &lt; dxCl) || (dxs &gt;= dwCl) || (dys &lt; dyCl) || (dys &gt;= dhCl)) {</span>
+<span class="nc" id="L244">				dxs += dx;</span>
+<span class="nc" id="L245">				dys += dy;</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">				if (xLeft &lt; Integer.MAX_VALUE)</span>
+<span class="nc" id="L247">					xLeft++;</span>
+<span class="nc bnc" id="L248" title="All 8 branches missed.">				if ((dxs &lt; dxCl) || (dxs &gt;= dwCl) || (dys &lt; dyCl) || (dys &gt;= dhCl))</span>
+<span class="nc" id="L249">					xRight = -1;</span>
+			}
+
+<span class="nc" id="L252">			double dxe = xr * a2 + ii * b2 + tx2;</span>
+<span class="nc" id="L253">			double dye = xr * c2 + ii * d2 + ty2;</span>
+
+<span class="nc bnc" id="L255" title="All 8 branches missed.">			if ((dxe &lt; dxCl) || (dxe &gt;= dwCl) || (dye &lt; dyCl) || (dye &gt;= dhCl)) {</span>
+<span class="nc" id="L256">				dxe -= dx;</span>
+<span class="nc" id="L257">				dye -= dy;</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">				if (xRight &gt; Integer.MIN_VALUE)</span>
+<span class="nc" id="L259">					xRight--;</span>
+<span class="nc bnc" id="L260" title="All 8 branches missed.">				if ((dxe &lt; dxCl) || (dxe &gt;= dwCl) || (dye &lt; dyCl) || (dye &gt;= dhCl))</span>
+<span class="nc" id="L261">					xRight = -1;</span>
+			}
+
+<span class="nc" id="L264">			int xs = (int) ((dxs * div + delta) * (1 &lt;&lt; SHIFT));</span>
+<span class="nc" id="L265">			final int xS = xs &gt;&gt; SHIFT;</span>
+
+<span class="nc" id="L267">			int ys = (int) ((dys * div + delta) * (1 &lt;&lt; SHIFT));</span>
+<span class="nc" id="L268">			final int yS = ys &gt;&gt; SHIFT;</span>
+
+<span class="nc bnc" id="L270" title="All 2 branches missed.">			if (xS &lt; xCl)</span>
+<span class="nc" id="L271">				xs = (xCl &lt;&lt; SHIFT);</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">			else if (xS &gt;= wCl)</span>
+<span class="nc" id="L273">				xs = ((wCl &lt;&lt; SHIFT) - 1);</span>
+
+<span class="nc bnc" id="L275" title="All 2 branches missed.">			if (yS &lt; yCl)</span>
+<span class="nc" id="L276">				ys = (yCl &lt;&lt; SHIFT);</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">			else if (yS &gt;= hCl)</span>
+<span class="nc" id="L278">				ys = ((hCl &lt;&lt; SHIFT) - 1);</span>
+
+<span class="nc bnc" id="L280" title="All 2 branches missed.">			if (xRight &gt;= xLeft) {</span>
+<span class="nc" id="L281">				final int xE = ((xRight - xLeft) * sdx + xs) &gt;&gt; SHIFT;</span>
+<span class="nc" id="L282">				final int yE = ((xRight - xLeft) * sdy + ys) &gt;&gt; SHIFT;</span>
+
+<span class="nc bnc" id="L284" title="All 4 branches missed.">				if ((xE &lt; xCl) || (xE &gt;= wCl)) {</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">					if (sdx &gt; 0)</span>
+<span class="nc" id="L286">						sdx -= 1;</span>
+					else
+<span class="nc" id="L288">						sdx += 1;</span>
+				}
+
+<span class="nc bnc" id="L291" title="All 4 branches missed.">				if ((yE &lt; yCl) || (yE &gt;= hCl)) {</span>
+<span class="nc bnc" id="L292" title="All 2 branches missed.">					if (sdy &gt; 0)</span>
+<span class="nc" id="L293">						sdy -= 1;</span>
+					else
+<span class="nc" id="L295">						sdy += 1;</span>
+				}
+			}
+
+<span class="nc" id="L299">			leftEdges[i] = xLeft;</span>
+<span class="nc" id="L300">			rightEdges[i] = xRight;</span>
+<span class="nc" id="L301">			xStarts[i] = xs;</span>
+<span class="nc" id="L302">			yStarts[i] = ys;</span>
+		}
+
+<span class="nc bnc" id="L305" title="All 4 branches missed.">		while (top &lt;= bot &amp;&amp; leftEdges[top] &gt; rightEdges[top])</span>
+<span class="nc" id="L306">			top++;</span>
+
+<span class="nc bnc" id="L308" title="All 2 branches missed.">		if (top &lt; bot)</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">			while (leftEdges[bot] &gt; rightEdges[bot])</span>
+<span class="nc" id="L310">				bot--;</span>
+
+<span class="nc" id="L312">		result.yStart = top;</span>
+<span class="nc" id="L313">		result.yFinish = bot;</span>
+<span class="nc" id="L314">		result.dX = sdx;</span>
+<span class="nc" id="L315">		result.dY = sdy;</span>
+<span class="nc" id="L316">		return result;</span>
+	}
+
+	/**
+	 * &lt;code&gt;AffineTransformOp(scale, TYPE_NEAREST_NEIGHBOR)&lt;/code&gt; on an ARGB
+	 * image. The destination must be filled with 0 (transparent).
+	 */
+	static void nearest(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH, double scale) {
+<span class="nc" id="L324">		final Edges e = edges(srcW, srcH, dstW, dstH, scale, 1, false);</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">		for (int j = e.yStart; j &lt;= e.yFinish; j++) {</span>
+<span class="nc" id="L326">			final int xLeft = e.left[j];</span>
+<span class="nc" id="L327">			final int xRight = e.right[j];</span>
+<span class="nc" id="L328">			int x = e.xStarts[j];</span>
+<span class="nc" id="L329">			int y = e.yStarts[j];</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">			if (xLeft &gt; xRight)</span>
+<span class="nc" id="L331">				continue;</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">			for (int p = xLeft; p &lt;= xRight; p++) {</span>
+<span class="nc" id="L333">				final int xSrc = clamp(x &gt;&gt; SHIFT, srcW);</span>
+<span class="nc" id="L334">				final int ySrc = clamp(y &gt;&gt; SHIFT, srcH);</span>
+<span class="nc" id="L335">				dst[j * dstW + p] = src[ySrc * srcW + xSrc];</span>
+<span class="nc" id="L336">				x += e.dX;</span>
+<span class="nc" id="L337">				y += e.dY;</span>
+			}
+		}
+<span class="nc" id="L340">	}</span>
+
+	/**
+	 * &lt;code&gt;AffineTransformOp(scale, TYPE_BILINEAR)&lt;/code&gt; on an ARGB image, with
+	 * the pixels along the border computed by extending the image. The
+	 * destination must be filled with 0 (transparent).
+	 */
+	static void bilinear(int[] src, int srcW, int srcH, int[] dst, int dstW, int dstH, double scale) {
+<span class="nc" id="L348">		final Edges main = edges(srcW, srcH, dstW, dstH, scale, 2, false);</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">		for (int j = main.yStart; j &lt;= main.yFinish; j++) {</span>
+<span class="nc" id="L350">			final int xLeft = main.left[j];</span>
+<span class="nc" id="L351">			final int xRight = main.right[j];</span>
+<span class="nc" id="L352">			int x = main.xStarts[j];</span>
+<span class="nc" id="L353">			int y = main.yStarts[j];</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">			if (xLeft &gt; xRight)</span>
+<span class="nc" id="L355">				continue;</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">			for (int p = xLeft; p &lt;= xRight; p++) {</span>
+<span class="nc" id="L357">				final int fdx = x &amp; MASK;</span>
+<span class="nc" id="L358">				final int fdy = y &amp; MASK;</span>
+<span class="nc" id="L359">				final int xSrc = clamp(x &gt;&gt; SHIFT, srcW);</span>
+<span class="nc" id="L360">				final int ySrc = clamp(y &gt;&gt; SHIFT, srcH);</span>
+<span class="nc" id="L361">				final int xNext = Math.min(xSrc + 1, srcW - 1);</span>
+<span class="nc" id="L362">				final int yNext = Math.min(ySrc + 1, srcH - 1);</span>
+<span class="nc" id="L363">				final int c00 = src[ySrc * srcW + xSrc];</span>
+<span class="nc" id="L364">				final int c01 = src[ySrc * srcW + xNext];</span>
+<span class="nc" id="L365">				final int c10 = src[yNext * srcW + xSrc];</span>
+<span class="nc" id="L366">				final int c11 = src[yNext * srcW + xNext];</span>
+<span class="nc" id="L367">				dst[j * dstW + p] = (interpolate(c00, c01, c10, c11, fdx, fdy, 24) &lt;&lt; 24)</span>
+<span class="nc" id="L368">						| (interpolate(c00, c01, c10, c11, fdx, fdy, 16) &lt;&lt; 16)</span>
+<span class="nc" id="L369">						| (interpolate(c00, c01, c10, c11, fdx, fdy, 8) &lt;&lt; 8)</span>
+<span class="nc" id="L370">						| interpolate(c00, c01, c10, c11, fdx, fdy, 0);</span>
+<span class="nc" id="L371">				x += main.dX;</span>
+<span class="nc" id="L372">				y += main.dY;</span>
+			}
+		}
+
+		// The pixels that cannot be interpolated because they are too close to the
+		// border: bilinear interpolation in double, with the image extended
+<span class="nc" id="L378">		final Edges edge = edges(srcW, srcH, dstW, dstH, scale, 2, true);</span>
+<span class="nc bnc" id="L379" title="All 2 branches missed.">		for (int i = edge.yStart; i &lt;= edge.yFinish; i++) {</span>
+			// Row i of the edge pass; the interior pixels are those of the main pass
+<span class="nc bnc" id="L381" title="All 4 branches missed.">			final boolean inMain = i &gt;= main.yStart &amp;&amp; i &lt;= main.yFinish;</span>
+<span class="nc" id="L382">			final int xLeftE = edge.left[i];</span>
+<span class="nc" id="L383">			final int xRightE = edge.right[i] + 1;</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">			if (inMain) {</span>
+<span class="nc" id="L385">				int xLeft = main.left[i];</span>
+<span class="nc" id="L386">				int xRight = main.right[i] + 1;</span>
+<span class="nc bnc" id="L387" title="All 2 branches missed.">				if (xLeft &lt; xRight) {</span>
+<span class="nc" id="L388">					extend(src, srcW, srcH, dst, dstW, i, xLeftE, xLeft, edge.xStarts[i], edge.yStarts[i], edge.dX,</span>
+							edge.dY);
+				} else {
+<span class="nc" id="L391">					xRight = xLeftE;</span>
+				}
+<span class="nc" id="L393">				extend(src, srcW, srcH, dst, dstW, i, xRight, xRightE, edge.xStarts[i] + edge.dX * (xRight - xLeftE),</span>
+						edge.yStarts[i] + edge.dY * (xRight - xLeftE), edge.dX, edge.dY);
+<span class="nc" id="L395">			} else {</span>
+<span class="nc" id="L396">				extend(src, srcW, srcH, dst, dstW, i, xLeftE, xRightE, edge.xStarts[i], edge.yStarts[i], edge.dX,</span>
+						edge.dY);
+			}
+		}
+<span class="nc" id="L400">	}</span>
+
+	private static int clamp(int value, int size) {
+<span class="nc bnc" id="L403" title="All 4 branches missed.">		return value &lt; 0 ? 0 : value &gt;= size ? size - 1 : value;</span>
+	}
+
+	/**
+	 * One channel of the interpolation of the main kernel (integer arithmetic,
+	 * rounded).
+	 */
+	private static int interpolate(int c00, int c01, int c10, int c11, int fdx, int fdy, int shift) {
+<span class="nc" id="L411">		final int a00 = (c00 &gt;&gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L412">		final int a01 = (c01 &gt;&gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L413">		final int a10 = (c10 &gt;&gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L414">		final int a11 = (c11 &gt;&gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L415">		final int round = 1 &lt;&lt; (SHIFT - 1);</span>
+<span class="nc" id="L416">		final int pix0 = a00 + ((fdy * (a10 - a00) + round) &gt;&gt; SHIFT);</span>
+<span class="nc" id="L417">		final int pix1 = a01 + ((fdy * (a11 - a01) + round) &gt;&gt; SHIFT);</span>
+<span class="nc" id="L418">		return pix0 + ((fdx * (pix1 - pix0) + round) &gt;&gt; SHIFT);</span>
+	}
+
+	/** Port of MLIB_EDGE_BL: the pixels [left, right) of the row, in double. */
+	private static void extend(int[] src, int srcW, int srcH, int[] dst, int dstW, int row, int left, int right,
+			int xStart, int yStart, int dX, int dY) {
+<span class="nc" id="L424">		final double scale = 1.0 / (double) PREC;</span>
+<span class="nc" id="L425">		int x = xStart;</span>
+<span class="nc" id="L426">		int y = yStart;</span>
+<span class="nc bnc" id="L427" title="All 2 branches missed.">		for (int p = left; p &lt; right; p++) {</span>
+<span class="nc" id="L428">			int ySrc = ((y - 32768) &gt;&gt; SHIFT);</span>
+<span class="nc" id="L429">			int xSrc = ((x - 32768) &gt;&gt; SHIFT);</span>
+
+<span class="nc" id="L431">			final double t = ((x - 32768) &amp; MASK) * scale;</span>
+<span class="nc" id="L432">			final double u = ((y - 32768) &amp; MASK) * scale;</span>
+
+<span class="nc" id="L434">			int xDelta = ((xSrc + 1 - srcW) &gt;&gt; 31) &amp; 1;</span>
+<span class="nc" id="L435">			int yDelta = ((ySrc + 1 - srcH) &gt;&gt; 31) &amp; 1;</span>
+
+<span class="nc" id="L437">			final int xFlag = (xSrc &gt;&gt; 15);</span>
+<span class="nc" id="L438">			xSrc = xSrc + (1 &amp; xFlag);</span>
+<span class="nc" id="L439">			xDelta = xDelta &amp; ~xFlag;</span>
+
+<span class="nc" id="L441">			final int yFlag = (ySrc &gt;&gt; 15);</span>
+<span class="nc" id="L442">			ySrc = ySrc + (1 &amp; yFlag);</span>
+<span class="nc" id="L443">			yDelta = yDelta &amp; ~yFlag;</span>
+
+			// Never out of the image for the pixels the edges select; just in case
+<span class="nc" id="L446">			ySrc = clamp(ySrc, srcH);</span>
+<span class="nc" id="L447">			xSrc = clamp(xSrc, srcW);</span>
+<span class="nc" id="L448">			final int c00 = src[ySrc * srcW + xSrc];</span>
+<span class="nc" id="L449">			final int c01 = src[ySrc * srcW + clamp(xSrc + xDelta, srcW)];</span>
+<span class="nc" id="L450">			final int c10 = src[clamp(ySrc + yDelta, srcH) * srcW + xSrc];</span>
+<span class="nc" id="L451">			final int c11 = src[clamp(ySrc + yDelta, srcH) * srcW + clamp(xSrc + xDelta, srcW)];</span>
+
+<span class="nc" id="L453">			dst[row * dstW + p] = (extendChannel(c00, c01, c10, c11, t, u, 24) &lt;&lt; 24)</span>
+<span class="nc" id="L454">					| (extendChannel(c00, c01, c10, c11, t, u, 16) &lt;&lt; 16)</span>
+<span class="nc" id="L455">					| (extendChannel(c00, c01, c10, c11, t, u, 8) &lt;&lt; 8) | extendChannel(c00, c01, c10, c11, t, u, 0);</span>
+
+<span class="nc" id="L457">			x += dX;</span>
+<span class="nc" id="L458">			y += dY;</span>
+		}
+<span class="nc" id="L460">	}</span>
+
+	private static int extendChannel(int c00, int c01, int c10, int c11, double t, double u, int shift) {
+<span class="nc" id="L463">		final double a00 = (c00 &gt;&gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L464">		final double a01 = (c01 &gt;&gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L465">		final double a10 = (c10 &gt;&gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L466">		final double a11 = (c11 &gt;&gt;&gt; shift) &amp; 0xFF;</span>
+<span class="nc" id="L467">		final double pix0 = (a00 * (1 - t) + a01 * t) * (1 - u) + (a10 * (1 - t) + a11 * t) * u;</span>
+<span class="nc" id="L468">		return ((int) pix0) &amp; 0xFF;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

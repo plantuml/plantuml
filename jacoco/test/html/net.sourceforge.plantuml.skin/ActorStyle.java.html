@@ -58,12 +58,12 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 	}
 
 	public TextBlock getTextBlock(Fashion symbolContext) {
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (this == STICKMAN)</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (this == STICKMAN)</span>
 <span class="fc" id="L62">			return new ActorStickMan(symbolContext, false);</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		else if (this == STICKMAN_BUSINESS)</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		else if (this == STICKMAN_BUSINESS)</span>
 <span class="nc" id="L64">			return new ActorStickMan(symbolContext, true);</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		else if (this == AWESOME)</span>
-<span class="nc" id="L66">			return new ActorAwesome(symbolContext);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		else if (this == AWESOME)</span>
+<span class="fc" id="L66">			return new ActorAwesome(symbolContext);</span>
 <span class="nc bnc" id="L67" title="All 2 branches missed.">		else if (this == HOLLOW)</span>
 <span class="nc" id="L68">			return new ActorHollow(symbolContext);</span>
 

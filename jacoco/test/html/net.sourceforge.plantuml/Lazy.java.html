@@ -38,26 +38,40 @@ package net.sourceforge.plantuml;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
+
 public class Lazy&lt;T&gt; {
 
 	private final Supplier&lt;T&gt; supplier;
 	private T value;
-<span class="pc" id="L45">	private boolean initialized = false;</span>
+<span class="pc" id="L47">	private boolean initialized = false;</span>
 
-<span class="fc" id="L47">	public Lazy(Supplier&lt;T&gt; supplier) {</span>
-<span class="fc" id="L48">		this.supplier = supplier;</span>
-<span class="fc" id="L49">	}</span>
+<span class="fc" id="L49">	public Lazy(Supplier&lt;T&gt; supplier) {</span>
+<span class="fc" id="L50">		this.supplier = supplier;</span>
+<span class="fc" id="L51">	}</span>
 
-<span class="nc" id="L51">	public Lazy(Function&lt;Void, T&gt; function) {</span>
-<span class="nc" id="L52">		this.supplier = () -&gt; function.apply(null);</span>
-<span class="nc" id="L53">	}</span>
+<span class="nc" id="L53">	public Lazy(Function&lt;Void, T&gt; function) {</span>
+<span class="nc" id="L54">		this.supplier = () -&gt; function.apply(null);</span>
+<span class="nc" id="L55">	}</span>
 
-	public synchronized T get() {
-<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (initialized == false) {</span>
-<span class="fc" id="L57">			value = supplier.get();</span>
-<span class="fc" id="L58">			initialized = true;</span>
+	public T get() {
+		// The C build is single-threaded, and its monitors do not survive a garbage
+		// collection happening while they are held (see Stdlib.readSpriteInC)
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (TeaVM.isC())</span>
+<span class="nc" id="L61">			return getUnlocked();</span>
+<span class="fc" id="L62">		return getLocked();</span>
+	}
+
+	private synchronized T getLocked() {
+<span class="fc" id="L66">		return getUnlocked();</span>
+	}
+
+	private T getUnlocked() {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (initialized == false) {</span>
+<span class="fc" id="L71">			value = supplier.get();</span>
+<span class="fc" id="L72">			initialized = true;</span>
 		}
-<span class="fc" id="L60">		return value;</span>
+<span class="fc" id="L74">		return value;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -38,11 +38,14 @@ package net.sourceforge.plantuml.nio;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
+
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 /**
  * A virtual folder representing a location inside a ZIP archive.
@@ -50,29 +53,39 @@ import java.util.zip.ZipFile;
  * &lt;p&gt;
  * Instances are immutable. Each instance points to the same ZIP file but to a
  * specific sub-path (which can be the root) inside that archive.
+ * &lt;p&gt;
+ * The paths are handled as strings, since the C build has no file system
+ * provider behind java.nio.file.
  */
 public final class NFolderZip implements NFolder {
-	
 
 	private final File zipFile;
-	/** Current path inside the ZIP (relative, no leading slash). */
-	private final Path pathInsideZip;
+	/** Current path inside the ZIP (relative, forward slashes, no leading slash). */
+	private final String pathInsideZip;
 
 	/** Creates a folder view of the ZIP root. */
 	public NFolderZip(File zipFile) {
-<span class="fc" id="L63">		this(zipFile, Paths.get(&quot;&quot;));</span>
-<span class="fc" id="L64">	}</span>
-
-<span class="fc" id="L66">	private NFolderZip(File zipFile, Path currentPathInsideZip) {</span>
-<span class="fc" id="L67">		this.zipFile = Objects.requireNonNull(zipFile);</span>
-<span class="fc" id="L68">		this.pathInsideZip = Objects.requireNonNull(currentPathInsideZip).normalize();</span>
+<span class="fc" id="L68">		this(zipFile, &quot;&quot;);</span>
 <span class="fc" id="L69">	}</span>
+
+<span class="fc" id="L71">	private NFolderZip(File zipFile, String currentPathInsideZip) {</span>
+<span class="fc" id="L72">		this.zipFile = Objects.requireNonNull(zipFile);</span>
+<span class="fc" id="L73">		this.pathInsideZip = normalize(Objects.requireNonNull(currentPathInsideZip));</span>
+<span class="fc" id="L74">	}</span>
 
 	@Override
 	public InputFile getInputFile(Path nameOrPath) throws IOException {
-<span class="fc" id="L73">		Objects.requireNonNull(nameOrPath);</span>
-<span class="fc" id="L74">		final String entry = toZipEntryName(nameOrPath);</span>
-<span class="fc" id="L75">		return new InputFileZip(zipFile, entry);</span>
+<span class="fc" id="L78">		Objects.requireNonNull(nameOrPath);</span>
+<span class="fc" id="L79">		return getInputFile(nameOrPath.toString());</span>
+	}
+
+	/**
+	 * Same as {@link #getInputFile(Path)}, without java.nio.file.
+	 */
+	public InputFile getInputFile(String nameOrPath) {
+<span class="fc" id="L86">		Objects.requireNonNull(nameOrPath);</span>
+<span class="fc" id="L87">		final String entry = toZipEntryName(nameOrPath);</span>
+<span class="fc" id="L88">		return new InputFileZip(zipFile, entry);</span>
 	}
 
 	/**
@@ -82,45 +95,85 @@ public final class NFolderZip implements NFolder {
 	 * usable when the archive is only one of several places to search.
 	 */
 	public boolean contains(Path nameOrPath) throws IOException {
-<span class="fc" id="L85">		Objects.requireNonNull(nameOrPath);</span>
-<span class="fc" id="L86">		final String entry = toZipEntryName(nameOrPath);</span>
-<span class="pc bpc" id="L87" title="2 of 4 branches missed.">		if (entry.isEmpty() || zipFile.canRead() == false)</span>
-<span class="nc" id="L88">			return false;</span>
+<span class="fc" id="L98">		Objects.requireNonNull(nameOrPath);</span>
+<span class="fc" id="L99">		return contains(nameOrPath.toString());</span>
+	}
 
-<span class="fc" id="L90">		try (ZipFile zf = new ZipFile(zipFile)) {</span>
-<span class="fc" id="L91">			final ZipEntry ze = zf.getEntry(entry);</span>
-<span class="pc bpc" id="L92" title="1 of 4 branches missed.">			return ze != null &amp;&amp; ze.isDirectory() == false;</span>
-<span class="nc" id="L93">		} catch (ZipException e) {</span>
+	/**
+	 * Same as {@link #contains(Path)}, without java.nio.file.
+	 */
+	public boolean contains(String nameOrPath) throws IOException {
+<span class="fc" id="L106">		Objects.requireNonNull(nameOrPath);</span>
+<span class="fc" id="L107">		final String entry = toZipEntryName(nameOrPath);</span>
+<span class="pc bpc" id="L108" title="2 of 4 branches missed.">		if (entry.isEmpty() || zipFile.canRead() == false)</span>
+<span class="nc" id="L109">			return false;</span>
+
+		// ::comment when JAVA8
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (TeaVM.isC()) {</span>
+<span class="nc" id="L113">			final ZipReaderIo reader = ZipReaderIo.open(zipFile);</span>
+<span class="nc bnc" id="L114" title="All 4 branches missed.">			return reader != null &amp;&amp; reader.contains(entry);</span>
+		}
+		// ::done
+
+<span class="fc" id="L118">		try (ZipFile zf = new ZipFile(zipFile)) {</span>
+<span class="fc" id="L119">			final ZipEntry ze = zf.getEntry(entry);</span>
+<span class="pc bpc" id="L120" title="1 of 4 branches missed.">			return ze != null &amp;&amp; ze.isDirectory() == false;</span>
+<span class="nc" id="L121">		} catch (ZipException e) {</span>
 			// Not a valid archive
-<span class="nc" id="L95">			return false;</span>
+<span class="nc" id="L123">			return false;</span>
 		}
 	}
 
 	@Override
 	public NFolder getSubfolder(Path nameOrPath) throws IOException {
-<span class="fc" id="L101">		Objects.requireNonNull(nameOrPath);</span>
-<span class="fc" id="L102">		final String entry = toZipEntryName(nameOrPath);</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		final Path next = entry.isEmpty() ? Paths.get(&quot;&quot;) : Paths.get(entry);</span>
-<span class="fc" id="L104">		return new NFolderZip(zipFile, next);</span>
+<span class="fc" id="L129">		Objects.requireNonNull(nameOrPath);</span>
+<span class="fc" id="L130">		return getSubfolder(nameOrPath.toString());</span>
+	}
+
+	/**
+	 * Same as {@link #getSubfolder(Path)}, without java.nio.file.
+	 */
+	public NFolder getSubfolder(String nameOrPath) {
+<span class="fc" id="L137">		Objects.requireNonNull(nameOrPath);</span>
+<span class="fc" id="L138">		return new NFolderZip(zipFile, toZipEntryName(nameOrPath));</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L109">		final String prefix = pathInsideZip.toString().replace('\\', '/');</span>
-<span class="fc" id="L110">		return zipFile.getName() + &quot;!&quot; + prefix;</span>
+<span class="fc" id="L143">		return zipFile.getName() + &quot;!&quot; + pathInsideZip;</span>
 	}
 
 	/**
 	 * Resolves a path inside the ZIP and returns a forward-slash entry name without
 	 * any leading slash (as typically stored in ZIPs).
 	 */
-	private String toZipEntryName(Path child) {
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		final Path resolved = child.isAbsolute() ? child.normalize() : pathInsideZip.resolve(child).normalize();</span>
-<span class="fc" id="L119">		String s = resolved.toString().replace('\\', '/');</span>
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		while (s.startsWith(&quot;/&quot;))</span>
-<span class="nc" id="L121">			s = s.substring(1);</span>
+	private String toZipEntryName(String child) {
+<span class="fc" id="L151">		final String slashed = child.replace('\\', '/');</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		return slashed.startsWith(&quot;/&quot;) ? normalize(slashed) : normalize(pathInsideZip + &quot;/&quot; + slashed);</span>
+	}
 
-<span class="fc" id="L123">		return s;</span>
+	/**
+	 * Forward slashes, no empty or &quot;.&quot; segment, &quot;..&quot; removing the segment before
+	 * it, no leading slash.
+	 */
+	private static String normalize(String path) {
+<span class="fc" id="L160">		final List&lt;String&gt; result = new ArrayList&lt;String&gt;();</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		for (String segment : path.replace('\\', '/').split(&quot;/&quot;)) {</span>
+<span class="pc bpc" id="L162" title="1 of 4 branches missed.">			if (segment.isEmpty() || segment.equals(&quot;.&quot;))</span>
+<span class="nc" id="L163">				continue;</span>
+
+<span class="pc bpc" id="L165" title="2 of 6 branches missed.">			if (segment.equals(&quot;..&quot;) &amp;&amp; result.size() &gt; 0 &amp;&amp; result.get(result.size() - 1).equals(&quot;..&quot;) == false)</span>
+<span class="fc" id="L166">				result.remove(result.size() - 1);</span>
+			else
+<span class="fc" id="L168">				result.add(segment);</span>
+		}
+<span class="fc" id="L170">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		for (String segment : result) {</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">			if (sb.length() &gt; 0)</span>
+<span class="fc" id="L173">				sb.append('/');</span>
+<span class="fc" id="L174">			sb.append(segment);</span>
+<span class="fc" id="L175">		}</span>
+<span class="fc" id="L176">		return sb.toString();</span>
 	}
 
 }

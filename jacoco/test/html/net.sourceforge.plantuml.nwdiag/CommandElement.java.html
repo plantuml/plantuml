@@ -55,7 +55,7 @@ public class CommandElement extends SingleLineCommand2&lt;NwDiagram&gt; {
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="nc" id="L58">		return FirstTokens.ANYTHING;</span>
+<span class="fc" id="L58">		return FirstTokens.ANYTHING;</span>
 	}
 
 	static IRegex getRegexConcat() {
@@ -69,7 +69,7 @@ public class CommandElement extends SingleLineCommand2&lt;NwDiagram&gt; {
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L72">		return diagram.addElement(arg.get(&quot;NAME&quot;, 0), arg.get(&quot;DEFINITION&quot;, 1));</span>
+<span class="fc" id="L72">		return diagram.addElement(arg.get(&quot;NAME&quot;, 0), arg.get(&quot;DEFINITION&quot;, 1));</span>
 	}
 
 }

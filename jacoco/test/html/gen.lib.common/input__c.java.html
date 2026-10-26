@@ -483,7 +483,7 @@ try {
 	
 <span class="fc" id="L484">	dimen.___(GD_label(sg).dimen);</span>
 <span class="fc" id="L485">	PAD(dimen);</span>
-<span class="pc bpc" id="L486" title="1 of 2 branches missed.">	if (!GD_flip(agroot(sg))) {</span>
+<span class="fc bfc" id="L486" title="All 2 branches covered.">	if (!GD_flip(agroot(sg))) {</span>
 <span class="pc bpc" id="L487" title="1 of 2 branches missed.">	    if ((GD_label_pos(sg) &amp; LABEL_AT_TOP)!=0)</span>
 <span class="fc" id="L488">		pos_ix = TOP_IX;</span>
 	    else
@@ -491,12 +491,12 @@ try {
 <span class="fc" id="L491">	    GD_border(sg)[pos_ix].___(dimen);</span>
 	} else {
 	    /* when rotated, the labels will be restored to TOP or BOTTOM  */
-<span class="nc bnc" id="L494" title="All 2 branches missed.">	    if ((GD_label_pos(sg) &amp; LABEL_AT_TOP)!=0)</span>
-<span class="nc" id="L495">		pos_ix = RIGHT_IX;</span>
+<span class="pc bpc" id="L494" title="1 of 2 branches missed.">	    if ((GD_label_pos(sg) &amp; LABEL_AT_TOP)!=0)</span>
+<span class="fc" id="L495">		pos_ix = RIGHT_IX;</span>
 	    else
 <span class="nc" id="L497">		pos_ix = LEFT_IX;</span>
-<span class="nc" id="L498">	    GD_border(sg)[pos_ix].x = dimen.y;</span>
-<span class="nc" id="L499">	    GD_border(sg)[pos_ix].y = dimen.x;	}</span>
+<span class="fc" id="L498">	    GD_border(sg)[pos_ix].x = dimen.y;</span>
+<span class="fc" id="L499">	    GD_border(sg)[pos_ix].y = dimen.x;	}</span>
     }
 } finally {
 <span class="fc" id="L502">LEAVING(&quot;5vks1zdadu5vjinaivs0j2bkb&quot;,&quot;do_graph_label&quot;);</span>

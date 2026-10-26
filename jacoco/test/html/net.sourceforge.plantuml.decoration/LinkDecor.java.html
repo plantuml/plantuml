@@ -173,7 +173,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 	}
 
 	public ExtremityFactory getExtremityFactoryLegacy(HColor backgroundColor) {
-<span class="pc bpc" id="L176" title="17 of 23 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L176" title="13 of 23 branches missed.">		switch (this) {</span>
 		case PLUS:
 <span class="fc" id="L178">			return new ExtremityFactoryPlus(backgroundColor);</span>
 		case REDEFINES:
@@ -191,11 +191,11 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 		case CIRCLE_CROWFOOT:
 <span class="nc" id="L192">			return new ExtremityFactoryCircleCrowfoot();</span>
 		case LINE_CROWFOOT:
-<span class="nc" id="L194">			return new ExtremityFactoryLineCrowfoot();</span>
+<span class="fc" id="L194">			return new ExtremityFactoryLineCrowfoot();</span>
 		case CIRCLE_LINE:
 <span class="nc" id="L196">			return new ExtremityFactoryCircleLine();</span>
 		case DOUBLE_LINE:
-<span class="nc" id="L198">			return new ExtremityFactoryDoubleLine();</span>
+<span class="fc" id="L198">			return new ExtremityFactoryDoubleLine();</span>
 		case CIRCLE_CROSS:
 <span class="nc" id="L200">			return new ExtremityFactoryCircleCross(backgroundColor);</span>
 		case ARROW:
@@ -211,9 +211,9 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 		case CIRCLE:
 <span class="nc" id="L212">			return new ExtremityFactoryCircle(false, backgroundColor);</span>
 		case CIRCLE_FILL:
-<span class="nc" id="L214">			return new ExtremityFactoryCircle(true, backgroundColor);</span>
+<span class="fc" id="L214">			return new ExtremityFactoryCircle(true, backgroundColor);</span>
 		case SQUARE:
-<span class="nc" id="L216">			return new ExtremityFactorySquare(backgroundColor);</span>
+<span class="fc" id="L216">			return new ExtremityFactorySquare(backgroundColor);</span>
 		case PARENTHESIS:
 <span class="nc" id="L218">			return new ExtremityFactoryParenthesis();</span>
 		case CIRCLE_CONNECT:

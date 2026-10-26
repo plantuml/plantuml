@@ -120,8 +120,8 @@ public class Doll implements WithStyle {
 
 	private Component getComponent() {
 <span class="fc" id="L122">		final ParticipantEnglober englober = getParticipantEnglober();</span>
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		final ISkinParam s = englober.getBoxColor() == null ? tileArguments.getSkinParam()</span>
-<span class="pc" id="L124">				: new SkinParamBackcolored(tileArguments.getSkinParam(), englober.getBoxColor());</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		final ISkinParam s = englober.getBoxColor() == null ? tileArguments.getSkinParam()</span>
+<span class="fc" id="L124">				: new SkinParamBackcolored(tileArguments.getSkinParam(), englober.getBoxColor());</span>
 <span class="fc" id="L125">		return tileArguments.getSkin().createComponent(getUsedStyles(), ComponentType.ENGLOBER, null, s,</span>
 <span class="fc" id="L126">				englober.getTitle());</span>
 	}
@@ -229,7 +229,7 @@ public class Doll implements WithStyle {
 <span class="fc" id="L229">		final double x2 = getPosD(stringBounder).getCurrentValue();</span>
 <span class="fc" id="L230">		final double actualWidth = x2 - x1;</span>
 <span class="fc" id="L231">		final double marginX = (titleWidth + 10 - actualWidth) / 2;</span>
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (marginX &gt; 0) {</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">		if (marginX &gt; 0) {</span>
 <span class="fc" id="L233">			getFirstLivingSpace().ensureMarginBefore(marginX);</span>
 <span class="fc" id="L234">			getLastLivingSpace().ensureMarginAfter(marginX);</span>
 		}

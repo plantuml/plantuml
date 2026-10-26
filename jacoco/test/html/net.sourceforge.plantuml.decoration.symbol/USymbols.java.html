@@ -100,8 +100,8 @@ public abstract class USymbols {
 <span class="fc bfc" id="L100" title="All 2 branches covered.">		if (s == null)</span>
 <span class="fc" id="L101">			return null;</span>
 
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;package&quot;))</span>
-<span class="nc" id="L104">			return packageStyle.toUSymbol();</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (s.equalsIgnoreCase(&quot;package&quot;))</span>
+<span class="fc" id="L104">			return packageStyle.toUSymbol();</span>
 
 <span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (s.equalsIgnoreCase(&quot;actor&quot;))</span>
 <span class="nc" id="L107">			return actorStyle.toUSymbol();</span>
@@ -135,8 +135,8 @@ public abstract class USymbols {
 <span class="nc" id="L135">			usymbol = USymbols.PERSON;</span>
 <span class="pc bpc" id="L136" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;hexagon&quot;))</span>
 <span class="nc" id="L137">			usymbol = USymbols.HEXAGON;</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;label&quot;))</span>
-<span class="nc" id="L139">			usymbol = USymbols.LABEL;</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		else if (symbol.equalsIgnoreCase(&quot;label&quot;))</span>
+<span class="fc" id="L139">			usymbol = USymbols.LABEL;</span>
 <span class="pc bpc" id="L140" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;collections&quot;))</span>
 <span class="nc" id="L141">			usymbol = USymbols.COLLECTIONS;</span>
 <span class="fc bfc" id="L142" title="All 2 branches covered.">		else if (symbol.equalsIgnoreCase(&quot;node&quot;))</span>
@@ -151,14 +151,14 @@ public abstract class USymbols {
 <span class="nc" id="L151">			usymbol = USymbols.PROCESS;</span>
 <span class="fc bfc" id="L152" title="All 2 branches covered.">		else if (symbol.equalsIgnoreCase(&quot;database&quot;))</span>
 <span class="fc" id="L153">			usymbol = USymbols.DATABASE;</span>
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;queue&quot;))</span>
-<span class="nc" id="L155">			usymbol = USymbols.QUEUE;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		else if (symbol.equalsIgnoreCase(&quot;queue&quot;))</span>
+<span class="fc" id="L155">			usymbol = USymbols.QUEUE;</span>
 <span class="pc bpc" id="L156" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;stack&quot;))</span>
 <span class="nc" id="L157">			usymbol = USymbols.STACK;</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;storage&quot;))</span>
-<span class="nc" id="L159">			usymbol = USymbols.STORAGE;</span>
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;agent&quot;))</span>
-<span class="nc" id="L161">			usymbol = USymbols.AGENT;</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		else if (symbol.equalsIgnoreCase(&quot;storage&quot;))</span>
+<span class="fc" id="L159">			usymbol = USymbols.STORAGE;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		else if (symbol.equalsIgnoreCase(&quot;agent&quot;))</span>
+<span class="fc" id="L161">			usymbol = USymbols.AGENT;</span>
 <span class="pc bpc" id="L162" title="1 of 2 branches missed.">		else if (symbol.equalsIgnoreCase(&quot;actor/&quot;))</span>
 <span class="nc" id="L163">			usymbol = USymbols.ACTOR_STICKMAN_BUSINESS;</span>
 <span class="fc bfc" id="L164" title="All 2 branches covered.">		else if (symbol.equalsIgnoreCase(&quot;actor&quot;))</span>

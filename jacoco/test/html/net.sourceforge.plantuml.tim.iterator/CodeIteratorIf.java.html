@@ -86,18 +86,18 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 	}
 
 	private boolean isConditionalDirective(TLineType type) {
-<span class="pc bpc" id="L89" title="1 of 12 branches missed.">		return type == TLineType.IF || type == TLineType.IFDEF || type == TLineType.IFNDEF || type == TLineType.ELSE</span>
+<span class="fc bfc" id="L89" title="All 12 branches covered.">		return type == TLineType.IF || type == TLineType.IFDEF || type == TLineType.IFNDEF || type == TLineType.ELSE</span>
 				|| type == TLineType.ELSEIF || type == TLineType.ENDIF;
 	}
 
 	private void processConditionalDirective(StringLocated line, TLineType type) throws EaterException {
-<span class="pc bpc" id="L94" title="2 of 7 branches missed.">		switch (type) {</span>
+<span class="pc bpc" id="L94" title="1 of 7 branches missed.">		switch (type) {</span>
 		case IF:
 <span class="fc" id="L96">			executeIf(line);</span>
 <span class="fc" id="L97">			break;</span>
 		case IFDEF:
-<span class="nc" id="L99">			executeIfdef(line);</span>
-<span class="nc" id="L100">			break;</span>
+<span class="fc" id="L99">			executeIfdef(line);</span>
+<span class="fc" id="L100">			break;</span>
 		case IFNDEF:
 <span class="fc" id="L102">			executeIfndef(line);</span>
 <span class="fc" id="L103">			break;</span>
@@ -136,11 +136,11 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 <span class="fc" id="L136">	}</span>
 
 	private void executeIfdef(StringLocated s) throws EaterException {
-<span class="nc" id="L139">		final EaterIfdef condition = new EaterIfdef(s);</span>
-<span class="nc" id="L140">		condition.analyze(context, memory);</span>
-<span class="nc" id="L141">		final boolean isTrue = condition.isTrue(context, memory);</span>
-<span class="nc" id="L142">		memory.addIf(ExecutionContextIf.fromValue(isTrue));</span>
-<span class="nc" id="L143">	}</span>
+<span class="fc" id="L139">		final EaterIfdef condition = new EaterIfdef(s);</span>
+<span class="fc" id="L140">		condition.analyze(context, memory);</span>
+<span class="fc" id="L141">		final boolean isTrue = condition.isTrue(context, memory);</span>
+<span class="fc" id="L142">		memory.addIf(ExecutionContextIf.fromValue(isTrue));</span>
+<span class="fc" id="L143">	}</span>
 
 	private void executeIfndef(StringLocated s) throws EaterException {
 <span class="fc" id="L146">		final EaterIfndef condition = new EaterIfndef(s);</span>

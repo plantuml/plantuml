@@ -40,12 +40,12 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 
-<span class="nc" id="L43">public class ExtremityFactoryLineCrowfoot extends AbstractExtremityFactory implements ExtremityFactory {</span>
+<span class="fc" id="L43">public class ExtremityFactoryLineCrowfoot extends AbstractExtremityFactory implements ExtremityFactory {</span>
 
 	@Override
 	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
-<span class="nc" id="L47">		angle -= Math.PI / 2;</span>
-<span class="nc" id="L48">		return new ExtremityLineCrowfoot(p0, angle);</span>
+<span class="fc" id="L47">		angle -= Math.PI / 2;</span>
+<span class="fc" id="L48">		return new ExtremityLineCrowfoot(p0, angle);</span>
 	}
 
 	@Override

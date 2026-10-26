@@ -61,133 +61,133 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 
 	public GridTextBlockDecorated(int lines, int cols, List&lt;NwGroup&gt; groups, List&lt;Network&gt; networks,
 			ISkinParam skinparam) {
-<span class="nc" id="L64">		super(lines, cols, skinparam);</span>
-<span class="nc" id="L65">		this.groups = groups;</span>
-<span class="nc" id="L66">		this.networks = networks;</span>
-<span class="nc" id="L67">	}</span>
+<span class="fc" id="L64">		super(lines, cols, skinparam);</span>
+<span class="fc" id="L65">		this.groups = groups;</span>
+<span class="fc" id="L66">		this.networks = networks;</span>
+<span class="fc" id="L67">	}</span>
 
 	@Override
 	protected void drawGrid(UGraphic ug) {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		for (NwGroup group : groups)</span>
-<span class="nc" id="L72">			drawGroups(ug, group, getSkinParam());</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (NwGroup group : groups)</span>
+<span class="fc" id="L72">			drawGroups(ug, group, getSkinParam());</span>
 
-<span class="nc" id="L74">		drawNetworkTube(ug);</span>
-<span class="nc" id="L75">		drawLinks(ug, getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L76">	}</span>
+<span class="fc" id="L74">		drawNetworkTube(ug);</span>
+<span class="fc" id="L75">		drawLinks(ug, getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L76">	}</span>
 
 	private void drawLinks(UGraphic ug, StyleBuilder styleBuilder) {
 
-<span class="nc" id="L80">		final Style style = styleBuilder.getMergedStyle(getStyleDefinitionNetwork(SName.arrow));</span>
-<span class="nc" id="L81">		final HColor lineColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L80">		final Style style = styleBuilder.getMergedStyle(getStyleDefinitionNetwork(SName.arrow));</span>
+<span class="fc" id="L81">		final HColor lineColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L83">		ug = ug.apply(lineColor);</span>
+<span class="fc" id="L83">		ug = ug.apply(lineColor);</span>
 
-<span class="nc" id="L85">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
-<span class="nc" id="L87">			final double lineHeight = lineHeight(stringBounder, i);</span>
-<span class="nc" id="L88">			double x = 0;</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">			for (int j = 0; j &lt; data.getNbCols(); j++) {</span>
-<span class="nc" id="L90">				final double colWidth = colWidth(stringBounder, j);</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">				if (data.get(i, j) != null)</span>
-<span class="nc" id="L92">					data.get(i, j).drawLinks(ug, x, colWidth, lineHeight);</span>
+<span class="fc" id="L85">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
+<span class="fc" id="L87">			final double lineHeight = lineHeight(stringBounder, i);</span>
+<span class="fc" id="L88">			double x = 0;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">			for (int j = 0; j &lt; data.getNbCols(); j++) {</span>
+<span class="fc" id="L90">				final double colWidth = colWidth(stringBounder, j);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">				if (data.get(i, j) != null)</span>
+<span class="fc" id="L92">					data.get(i, j).drawLinks(ug, x, colWidth, lineHeight);</span>
 
-<span class="nc" id="L94">				x += colWidth;</span>
+<span class="fc" id="L94">				x += colWidth;</span>
 			}
 		}
 
-<span class="nc" id="L98">	}</span>
+<span class="fc" id="L98">	}</span>
 
 	private void drawGroups(UGraphic ug, NwGroup group, ISkinParam skinParam) {
-<span class="nc" id="L101">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L101">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L103">		MinMax size = null;</span>
-<span class="nc" id="L104">		double y = 0;</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
-<span class="nc" id="L106">			final double lineHeight = lineHeight(stringBounder, i);</span>
-<span class="nc" id="L107">			double x = 0;</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">			for (int j = 0; j &lt; data.getNbCols(); j++) {</span>
-<span class="nc" id="L109">				final double colWidth = colWidth(stringBounder, j);</span>
-<span class="nc" id="L110">				final NServerDraw element = data.get(i, j);</span>
-<span class="nc bnc" id="L111" title="All 4 branches missed.">				if (element != null &amp;&amp; group.contains(element.getServer())) {</span>
-<span class="nc" id="L112">					final MinMax minMax = element.getMinMax(stringBounder, colWidth, lineHeight)</span>
-<span class="nc" id="L113">							.translate(new UTranslate(x, y));</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">					size = size == null ? minMax : size.addMinMax(minMax);</span>
+<span class="fc" id="L103">		MinMax size = null;</span>
+<span class="fc" id="L104">		double y = 0;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
+<span class="fc" id="L106">			final double lineHeight = lineHeight(stringBounder, i);</span>
+<span class="fc" id="L107">			double x = 0;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			for (int j = 0; j &lt; data.getNbCols(); j++) {</span>
+<span class="fc" id="L109">				final double colWidth = colWidth(stringBounder, j);</span>
+<span class="fc" id="L110">				final NServerDraw element = data.get(i, j);</span>
+<span class="fc bfc" id="L111" title="All 4 branches covered.">				if (element != null &amp;&amp; group.contains(element.getServer())) {</span>
+<span class="fc" id="L112">					final MinMax minMax = element.getMinMax(stringBounder, colWidth, lineHeight)</span>
+<span class="fc" id="L113">							.translate(new UTranslate(x, y));</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">					size = size == null ? minMax : size.addMinMax(minMax);</span>
 				}
-<span class="nc" id="L116">				x += colWidth;</span>
+<span class="fc" id="L116">				x += colWidth;</span>
 			}
-<span class="nc" id="L118">			y += lineHeight;</span>
+<span class="fc" id="L118">			y += lineHeight;</span>
 		}
-<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (size != null)</span>
-<span class="nc" id="L121">			group.drawGroup(ug, size, skinParam);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (size != null)</span>
+<span class="fc" id="L121">			group.drawGroup(ug, size, skinParam);</span>
 
-<span class="nc" id="L123">	}</span>
+<span class="fc" id="L123">	}</span>
 
 	private boolean isThereALink(int j, Network network) {
-<span class="nc bnc" id="L126" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
-<span class="nc" id="L127">			final NServerDraw element = data.get(i, j);</span>
-<span class="nc bnc" id="L128" title="All 4 branches missed.">			if (element != null &amp;&amp; element.isLinkedTo(network))</span>
-<span class="nc" id="L129">				return true;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
+<span class="fc" id="L127">			final NServerDraw element = data.get(i, j);</span>
+<span class="fc bfc" id="L128" title="All 4 branches covered.">			if (element != null &amp;&amp; element.isLinkedTo(network))</span>
+<span class="fc" id="L129">				return true;</span>
 
 		}
-<span class="nc" id="L132">		return false;</span>
+<span class="fc" id="L132">		return false;</span>
 	}
 
 	private StyleQuery getStyleDefinitionNetwork(SName sname) {
-<span class="nc" id="L136">		return StyleQueries.NWDIAG.add(sname);</span>
+<span class="fc" id="L136">		return StyleQueries.NWDIAG.add(sname);</span>
 	}
 
 	private void drawNetworkTube(UGraphic ug) {
 
-<span class="nc" id="L141">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L142">		double y = 0;</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
-<span class="nc" id="L144">			final Network network = getNetwork(i);</span>
-<span class="nc" id="L145">			computeMixMax(data.getLine(i), stringBounder, network);</span>
+<span class="fc" id="L141">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L142">		double y = 0;</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		for (int i = 0; i &lt; data.getNbLines(); i++) {</span>
+<span class="fc" id="L144">			final Network network = getNetwork(i);</span>
+<span class="fc" id="L145">			computeMixMax(data.getLine(i), stringBounder, network);</span>
 
-<span class="nc" id="L147">			final double width = Math.max(GridTextBlockSimple.MINIMUM_WIDTH, network.getXmax() - network.getXmin());</span>
-<span class="nc" id="L148">			final URectangle rect = URectangle.build(width, NETWORK_THIN);</span>
+<span class="fc" id="L147">			final double width = Math.max(GridTextBlockSimple.MINIMUM_WIDTH, network.getXmax() - network.getXmin());</span>
+<span class="fc" id="L148">			final URectangle rect = URectangle.build(width, NETWORK_THIN);</span>
 
-<span class="nc" id="L150">			UGraphic ug2 = ug.apply(new UTranslate(network.getXmin(), y));</span>
-<span class="nc" id="L151">			final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();</span>
-<span class="nc" id="L152">			final Style style = styleBuilder.getMergedStyle(getStyleDefinitionNetwork(SName.network));</span>
-<span class="nc" id="L153">			final double deltaShadow = style.getShadowing();</span>
-<span class="nc" id="L154">			ug2 = ug2.apply(style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet()));</span>
-<span class="nc" id="L155">			ug2 = ug2.apply(style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet()).bg());</span>
+<span class="fc" id="L150">			UGraphic ug2 = ug.apply(new UTranslate(network.getXmin(), y));</span>
+<span class="fc" id="L151">			final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();</span>
+<span class="fc" id="L152">			final Style style = styleBuilder.getMergedStyle(getStyleDefinitionNetwork(SName.network));</span>
+<span class="fc" id="L153">			final double deltaShadow = style.getShadowing();</span>
+<span class="fc" id="L154">			ug2 = ug2.apply(style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet()));</span>
+<span class="fc" id="L155">			ug2 = ug2.apply(style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet()).bg());</span>
 
-<span class="nc" id="L157">			rect.setDeltaShadow(deltaShadow);</span>
-<span class="nc bnc" id="L158" title="All 4 branches missed.">			if (network != null &amp;&amp; network.getColor() != null)</span>
-<span class="nc" id="L159">				ug2 = ug2.apply(network.getColor().bg());</span>
+<span class="fc" id="L157">			rect.setDeltaShadow(deltaShadow);</span>
+<span class="pc bpc" id="L158" title="2 of 4 branches missed.">			if (network != null &amp;&amp; network.getColor() != null)</span>
+<span class="fc" id="L159">				ug2 = ug2.apply(network.getColor().bg());</span>
 
-<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (network != null)</span>
-<span class="nc" id="L162">				network.setY(y);</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">			if (network != null)</span>
+<span class="fc" id="L162">				network.setY(y);</span>
 
-<span class="nc bnc" id="L164" title="All 2 branches missed.">			if (network.isVisible())</span>
-<span class="nc" id="L165">				ug2.draw(rect);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">			if (network.isVisible())</span>
+<span class="fc" id="L165">				ug2.draw(rect);</span>
 
-<span class="nc" id="L167">			y += lineHeight(stringBounder, i);</span>
+<span class="fc" id="L167">			y += lineHeight(stringBounder, i);</span>
 		}
-<span class="nc" id="L169">	}</span>
+<span class="fc" id="L169">	}</span>
 
 	private void computeMixMax(NServerDraw line[], StringBounder stringBounder, Network network) {
-<span class="nc" id="L172">		double x = 0;</span>
-<span class="nc bnc" id="L173" title="All 2 branches missed.">		double xmin = network.isFullWidth() ? 0 : -1;</span>
-<span class="nc" id="L174">		double xmax = 0;</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		for (int j = 0; j &lt; line.length; j++) {</span>
-<span class="nc" id="L176">			final boolean hline = isThereALink(j, network);</span>
-<span class="nc bnc" id="L177" title="All 4 branches missed.">			if (hline &amp;&amp; xmin &lt; 0)</span>
-<span class="nc" id="L178">				xmin = x;</span>
+<span class="fc" id="L172">		double x = 0;</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		double xmin = network.isFullWidth() ? 0 : -1;</span>
+<span class="fc" id="L174">		double xmax = 0;</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		for (int j = 0; j &lt; line.length; j++) {</span>
+<span class="fc" id="L176">			final boolean hline = isThereALink(j, network);</span>
+<span class="fc bfc" id="L177" title="All 4 branches covered.">			if (hline &amp;&amp; xmin &lt; 0)</span>
+<span class="fc" id="L178">				xmin = x;</span>
 
-<span class="nc" id="L180">			x += colWidth(stringBounder, j);</span>
-<span class="nc bnc" id="L181" title="All 4 branches missed.">			if (hline || network.isFullWidth())</span>
-<span class="nc" id="L182">				xmax = x;</span>
+<span class="fc" id="L180">			x += colWidth(stringBounder, j);</span>
+<span class="pc bpc" id="L181" title="1 of 4 branches missed.">			if (hline || network.isFullWidth())</span>
+<span class="fc" id="L182">				xmax = x;</span>
 
 		}
-<span class="nc" id="L185">		network.setMinMax(xmin, xmax);</span>
+<span class="fc" id="L185">		network.setMinMax(xmin, xmax);</span>
 
-<span class="nc" id="L187">	}</span>
+<span class="fc" id="L187">	}</span>
 
 	private Network getNetwork(int i) {
-<span class="nc" id="L190">		return networks.get(i);</span>
+<span class="fc" id="L190">		return networks.get(i);</span>
 	}
 
 }

@@ -38,44 +38,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-<span class="nc" id="L41">public class NBox implements Staged {</span>
+<span class="fc" id="L41">public class NBox implements Staged {</span>
 
-<span class="nc" id="L43">	private final List&lt;NBar&gt; bars = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L44">	private final NTetris&lt;NBar&gt; tetris = new NTetris&lt;&gt;();</span>
+<span class="fc" id="L43">	private final List&lt;NBar&gt; bars = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L44">	private final NTetris&lt;NBar&gt; tetris = new NTetris&lt;&gt;();</span>
 
 	public void add(NBar bar) {
-<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (this.bars.contains(bar))</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (this.bars.contains(bar))</span>
 <span class="nc" id="L48">			return;</span>
 
-<span class="nc" id="L50">		this.bars.add(bar);</span>
-<span class="nc" id="L51">		this.tetris.add(bar);</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L50">		this.bars.add(bar);</span>
+<span class="fc" id="L51">		this.tetris.add(bar);</span>
+<span class="fc" id="L52">	}</span>
 
 	@Override
 	public NStage getStart() {
-<span class="nc" id="L56">		NStage result = bars.get(0).getStart();</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (int i = 1; i &lt; bars.size(); i++)</span>
-<span class="nc" id="L58">			result = NStage.getMin(result, bars.get(i).getStart());</span>
+<span class="fc" id="L56">		NStage result = bars.get(0).getStart();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		for (int i = 1; i &lt; bars.size(); i++)</span>
+<span class="fc" id="L58">			result = NStage.getMin(result, bars.get(i).getStart());</span>
 
-<span class="nc" id="L60">		return result;</span>
+<span class="fc" id="L60">		return result;</span>
 	}
 
 	@Override
 	public NStage getEnd() {
-<span class="nc" id="L65">		NStage result = bars.get(0).getEnd();</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		for (int i = 1; i &lt; bars.size(); i++)</span>
-<span class="nc" id="L67">			result = NStage.getMax(result, bars.get(i).getEnd());</span>
+<span class="fc" id="L65">		NStage result = bars.get(0).getEnd();</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		for (int i = 1; i &lt; bars.size(); i++)</span>
+<span class="fc" id="L67">			result = NStage.getMax(result, bars.get(i).getEnd());</span>
 
-<span class="nc" id="L69">		return result;</span>
+<span class="fc" id="L69">		return result;</span>
 	}
 
 	@Override
 	public int getNWidth() {
-<span class="nc" id="L74">		return tetris.getNWidth();</span>
+<span class="fc" id="L74">		return tetris.getNWidth();</span>
 	}
 
 	public Map&lt;NBar, Integer&gt; getPositions() {
-<span class="nc" id="L78">		return tetris.getPositions();</span>
+<span class="fc" id="L78">		return tetris.getPositions();</span>
 	}
 
 	@Override

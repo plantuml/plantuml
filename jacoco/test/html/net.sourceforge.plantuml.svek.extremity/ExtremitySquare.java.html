@@ -45,27 +45,27 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 class ExtremitySquare extends Extremity {
 	private final HColor backgroundColor;
 	private final XPoint2D dest;
-<span class="nc" id="L48">	private final double radius = 5;</span>
+<span class="fc" id="L48">	private final double radius = 5;</span>
 
 	@Override
 	public XPoint2D somePoint() {
 <span class="nc" id="L52">		return dest;</span>
 	}
 
-<span class="nc" id="L55">	public ExtremitySquare(XPoint2D p1, HColor backgroundColor) {</span>
-<span class="nc" id="L56">		this.dest = new XPoint2D(p1.getX(), p1.getY());</span>
-<span class="nc" id="L57">		this.backgroundColor = backgroundColor;</span>
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L55">	public ExtremitySquare(XPoint2D p1, HColor backgroundColor) {</span>
+<span class="fc" id="L56">		this.dest = new XPoint2D(p1.getX(), p1.getY());</span>
+<span class="fc" id="L57">		this.backgroundColor = backgroundColor;</span>
+<span class="fc" id="L58">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L61">		ug.apply(UStroke.withThickness(1.5)).apply(backgroundColor.bg())</span>
-<span class="nc" id="L62">				.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))</span>
-<span class="nc" id="L63">				.draw(URectangle.build(radius * 2, radius * 2));</span>
-<span class="nc" id="L64">	}</span>
+<span class="fc" id="L61">		ug.apply(UStroke.withThickness(1.5)).apply(backgroundColor.bg())</span>
+<span class="fc" id="L62">				.apply(new UTranslate(dest.getX() - radius, dest.getY() - radius))</span>
+<span class="fc" id="L63">				.draw(URectangle.build(radius * 2, radius * 2));</span>
+<span class="fc" id="L64">	}</span>
 	
 	@Override
 	public double getDecorationLength() {
-<span class="nc" id="L68">		return 5;</span>
+<span class="fc" id="L68">		return 5;</span>
 	}
 
 }

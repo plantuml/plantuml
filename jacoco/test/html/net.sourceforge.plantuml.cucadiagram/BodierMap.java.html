@@ -49,31 +49,31 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
-<span class="nc" id="L52">public class BodierMap extends BodierAbstract {</span>
+<span class="fc" id="L52">public class BodierMap extends BodierAbstract {</span>
 
-<span class="nc" id="L54">	private final Map&lt;String, String&gt; map = new LinkedHashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L54">	private final Map&lt;String, String&gt; map = new LinkedHashMap&lt;String, String&gt;();</span>
 
 	@Override
 	public void muteClassToObject() {
 <span class="nc" id="L58">		throw new UnsupportedOperationException();</span>
 	}
 
-<span class="nc" id="L61">	private static final Pattern p = Pattern.compile(&quot;(\\*-+_?\\&gt;)&quot;);</span>
+<span class="fc" id="L61">	private static final Pattern p = Pattern.compile(&quot;(\\*-+_?\\&gt;)&quot;);</span>
 
 	public static String getLinkedEntry(String s) {
-<span class="nc" id="L64">		final Matcher m = p.matcher(s);</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (m.find())</span>
+<span class="fc" id="L64">		final Matcher m = p.matcher(s);</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (m.find())</span>
 <span class="nc" id="L66">			return m.group(1);</span>
 
-<span class="nc" id="L68">		return null;</span>
+<span class="fc" id="L68">		return null;</span>
 	}
 
 	@Override
 	public boolean addFieldOrMethod(String s) {
-<span class="nc" id="L73">		final int x = s.indexOf(&quot;=&gt;&quot;);</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (x != -1) {</span>
-<span class="nc" id="L75">			map.put(s.substring(0, x).trim(), s.substring(x + 2).trim());</span>
-<span class="nc" id="L76">			return true;</span>
+<span class="fc" id="L73">		final int x = s.indexOf(&quot;=&gt;&quot;);</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (x != -1) {</span>
+<span class="fc" id="L75">			map.put(s.substring(0, x).trim(), s.substring(x + 2).trim());</span>
+<span class="fc" id="L76">			return true;</span>
 <span class="nc bnc" id="L77" title="All 2 branches missed.">		} else if (getLinkedEntry(s) != null) {</span>
 <span class="nc" id="L78">			final String link = getLinkedEntry(s);</span>
 <span class="nc" id="L79">			final int pos = s.indexOf(link);</span>
@@ -101,9 +101,9 @@ import net.sourceforge.plantuml.style.Style;
 	@Override
 	public TextBlock getBody(ISkinParam skinParam, final boolean showMethods, final boolean showFields,
 			Stereotype stereotype, Style style, FontConfiguration fontConfiguration) {
-<span class="nc" id="L104">		final LineBreakStrategy wordWrap = style.wrapWidth();</span>
-<span class="nc" id="L105">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
-<span class="nc" id="L106">		return new TextBlockMap(fontConfiguration, skinParam, map, wordWrap, horizontalAlignment);</span>
+<span class="fc" id="L104">		final LineBreakStrategy wordWrap = style.wrapWidth();</span>
+<span class="fc" id="L105">		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();</span>
+<span class="fc" id="L106">		return new TextBlockMap(fontConfiguration, skinParam, map, wordWrap, horizontalAlignment);</span>
 	}
 
 }

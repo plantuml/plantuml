@@ -143,19 +143,19 @@ import net.sourceforge.plantuml.url.Url;
 	}
 
 	public static Atom createListNumber(final FontConfiguration fontConfiguration, final int order, int localNumber) {
-<span class="nc" id="L146">		final DelayedDouble left = new DelayedDouble() {</span>
+<span class="fc" id="L146">		final DelayedDouble left = new DelayedDouble() {</span>
 			public double getDouble(StringBounder stringBounder) {
-<span class="nc" id="L148">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), &quot;9. &quot;);</span>
-<span class="nc" id="L149">				return dim.getWidth() * order;</span>
+<span class="fc" id="L148">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), &quot;9. &quot;);</span>
+<span class="fc" id="L149">				return dim.getWidth() * order;</span>
 			}
 		};
-<span class="nc" id="L152">		final DelayedDouble right = new DelayedDouble() {</span>
+<span class="fc" id="L152">		final DelayedDouble right = new DelayedDouble() {</span>
 			public double getDouble(StringBounder stringBounder) {
-<span class="nc" id="L154">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), &quot;.&quot;);</span>
-<span class="nc" id="L155">				return dim.getWidth();</span>
+<span class="fc" id="L154">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), &quot;.&quot;);</span>
+<span class="fc" id="L155">				return dim.getWidth();</span>
 			}
 		};
-<span class="nc" id="L158">		return new AtomText(&quot;&quot; + (localNumber + 1) + &quot;.&quot;, fontConfiguration, null, left, right, true);</span>
+<span class="fc" id="L158">		return new AtomText(&quot;&quot; + (localNumber + 1) + &quot;.&quot;, fontConfiguration, null, left, right, true);</span>
 	}
 
 }

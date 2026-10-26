@@ -289,7 +289,7 @@ try {
 <span class="fc bfc" id="L289" title="All 2 branches covered.">    while (ED_edge_type(e) != 0)</span>
 <span class="fc" id="L290">	e = ED_to_orig(e);</span>
     if (false) SMETANA_TRACE(&quot;splines__c&quot;, &quot;new_spline: AFTER walk, installing ED_spl on edgeIdentityHash=&quot; + System.identityHashCode(e));
-<span class="pc bpc" id="L292" title="1 of 2 branches missed.">    if (ED_spl(e) == null)</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">    if (ED_spl(e) == null)</span>
 <span class="fc" id="L293">	ED_spl(e, new ST_splines());</span>
 <span class="fc" id="L294">    ED_spl(e).list = CArray.&lt;ST_bezier&gt; REALLOC__(ED_spl(e).size + 1, ED_spl(e).list, ZType.ST_bezier);</span>
 <span class="fc" id="L295">    rv = ED_spl(e).list.get__(ED_spl(e).size++);</span>

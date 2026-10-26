@@ -134,11 +134,11 @@ public final class Decompressor {
 			} else {
 				int runLen;
 <span class="fc" id="L136">				int runVal = 0;</span>
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">				if (sym == 16) {</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">					if (codeLensIndex == 0)</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">				if (sym == 16) {</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">					if (codeLensIndex == 0)</span>
 <span class="nc" id="L139">						throw new DataFormatException(&quot;No code length value to copy&quot;);</span>
-<span class="nc" id="L140">					runLen = readInt(2) + 3;</span>
-<span class="nc" id="L141">					runVal = codeLens[codeLensIndex - 1];</span>
+<span class="fc" id="L140">					runLen = readInt(2) + 3;</span>
+<span class="fc" id="L141">					runVal = codeLens[codeLensIndex - 1];</span>
 <span class="fc bfc" id="L142" title="All 2 branches covered.">				} else if (sym == 17)</span>
 <span class="fc" id="L143">					runLen = readInt(3) + 3;</span>
 <span class="pc bpc" id="L144" title="1 of 2 branches missed.">				else if (sym == 18)</span>
@@ -172,14 +172,14 @@ public final class Decompressor {
 <span class="fc" id="L172">			int oneCount = 0;</span>
 <span class="fc" id="L173">			int otherPositiveCount = 0;</span>
 <span class="fc bfc" id="L174" title="All 2 branches covered.">			for (int x : distCodeLen) {</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">				if (x == 1)</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">				if (x == 1)</span>
 <span class="fc" id="L176">					oneCount++;</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">				else if (x &gt; 1)</span>
-<span class="nc" id="L178">					otherPositiveCount++;</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">				else if (x &gt; 1)</span>
+<span class="fc" id="L178">					otherPositiveCount++;</span>
 			}
 
 			// Handle the case where only one distance code is defined
-<span class="pc bpc" id="L182" title="3 of 4 branches missed.">			if (oneCount == 1 &amp;&amp; otherPositiveCount == 0) {</span>
+<span class="pc bpc" id="L182" title="1 of 4 branches missed.">			if (oneCount == 1 &amp;&amp; otherPositiveCount == 0) {</span>
 				// Add a dummy invalid code to make the Huffman tree complete
 <span class="nc" id="L184">				distCodeLen = Arrays.copyOf(distCodeLen, 32);</span>
 <span class="nc" id="L185">				distCodeLen[31] = 1;</span>

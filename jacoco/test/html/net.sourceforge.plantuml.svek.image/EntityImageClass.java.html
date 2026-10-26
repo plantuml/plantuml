@@ -219,18 +219,18 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 <span class="nc" id="L219">			rect2.setDeltaShadow(0);</span>
 <span class="nc" id="L220">			ugHeader = ugHeader.apply(headerBackcolor.bg());</span>
 <span class="nc" id="L221">			ugHeader.apply(stroke).draw(rect2);</span>
-<span class="pc bpc" id="L222" title="2 of 6 branches missed.">		} else if (roundCorner != 0 &amp;&amp; headerBackcolor != null &amp;&amp; backcolor.equals(headerBackcolor) == false) {</span>
-<span class="nc" id="L223">			ug.apply(stroke).draw(rect);</span>
-<span class="nc" id="L224">			final Shadowable rect2 = URectangle.build(widthTotal, dimHeader.getHeight()).rounded(roundCorner);</span>
-<span class="nc" id="L225">			final URectangle rect3 = URectangle.build(widthTotal, roundCorner / 2);</span>
-<span class="nc" id="L226">			rect2.setDeltaShadow(0);</span>
-<span class="nc" id="L227">			rect3.setDeltaShadow(0);</span>
-<span class="nc" id="L228">			ugHeader = ugHeader.apply(headerBackcolor.bg()).apply(headerBackcolor);</span>
-<span class="nc" id="L229">			ugHeader.apply(stroke).draw(rect2);</span>
-<span class="nc" id="L230">			ugHeader.apply(stroke).apply(UTranslate.dy(dimHeader.getHeight() - rect3.getHeight())).draw(rect3);</span>
-<span class="nc" id="L231">			rect.setDeltaShadow(0);</span>
-<span class="nc" id="L232">			ug.apply(stroke).apply(HColors.none().bg()).draw(rect);</span>
-<span class="nc" id="L233">		} else {</span>
+<span class="pc bpc" id="L222" title="1 of 6 branches missed.">		} else if (roundCorner != 0 &amp;&amp; headerBackcolor != null &amp;&amp; backcolor.equals(headerBackcolor) == false) {</span>
+<span class="fc" id="L223">			ug.apply(stroke).draw(rect);</span>
+<span class="fc" id="L224">			final Shadowable rect2 = URectangle.build(widthTotal, dimHeader.getHeight()).rounded(roundCorner);</span>
+<span class="fc" id="L225">			final URectangle rect3 = URectangle.build(widthTotal, roundCorner / 2);</span>
+<span class="fc" id="L226">			rect2.setDeltaShadow(0);</span>
+<span class="fc" id="L227">			rect3.setDeltaShadow(0);</span>
+<span class="fc" id="L228">			ugHeader = ugHeader.apply(headerBackcolor.bg()).apply(headerBackcolor);</span>
+<span class="fc" id="L229">			ugHeader.apply(stroke).draw(rect2);</span>
+<span class="fc" id="L230">			ugHeader.apply(stroke).apply(UTranslate.dy(dimHeader.getHeight() - rect3.getHeight())).draw(rect3);</span>
+<span class="fc" id="L231">			rect.setDeltaShadow(0);</span>
+<span class="fc" id="L232">			ug.apply(stroke).apply(HColors.none().bg()).draw(rect);</span>
+<span class="fc" id="L233">		} else {</span>
 <span class="fc" id="L234">			ug.apply(stroke).draw(rect);</span>
 		}
 <span class="fc" id="L236">		header.drawU(ugHeader, dimTotal.getWidth(), dimHeader.getHeight());</span>

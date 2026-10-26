@@ -456,7 +456,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 <span class="nc" id="L456">	}</span>
 
 	public boolean isHidden() {
-<span class="pc bpc" id="L459" title="1 of 6 branches missed.">		return hidden || cl1.isHidden() || cl2.isHidden();</span>
+<span class="fc bfc" id="L459" title="All 6 branches covered.">		return hidden || cl1.isHidden() || cl2.isHidden();</span>
 	}
 
 	public boolean sameConnections(Link other) {
@@ -515,11 +515,11 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	public void setPortMembers(String port1, String port2) {
 <span class="fc" id="L516">		this.port1 = port1;</span>
 <span class="fc" id="L517">		this.port2 = port2;</span>
-<span class="pc bpc" id="L518" title="1 of 2 branches missed.">		if (port1 != null)</span>
-<span class="nc" id="L519">			cl1.addPortShortName(port1);</span>
+<span class="fc bfc" id="L518" title="All 2 branches covered.">		if (port1 != null)</span>
+<span class="fc" id="L519">			cl1.addPortShortName(port1);</span>
 
-<span class="pc bpc" id="L521" title="1 of 2 branches missed.">		if (port2 != null)</span>
-<span class="nc" id="L522">			cl2.addPortShortName(port2);</span>
+<span class="fc bfc" id="L521" title="All 2 branches covered.">		if (port2 != null)</span>
+<span class="fc" id="L522">			cl2.addPortShortName(port2);</span>
 
 <span class="fc" id="L524">	}</span>
 

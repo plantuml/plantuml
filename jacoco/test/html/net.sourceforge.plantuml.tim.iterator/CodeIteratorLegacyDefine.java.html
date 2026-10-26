@@ -71,11 +71,11 @@ public class CodeIteratorLegacyDefine extends AbstractCodeIterator {
 <span class="fc" id="L71">				functionsSet.executeLegacyDefine(context, memory, result);</span>
 <span class="fc" id="L72">				next();</span>
 <span class="fc" id="L73">				continue;</span>
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">			} else if (result.getType() == TLineType.LEGACY_DEFINELONG) {</span>
-<span class="nc" id="L75">				logs.add(result);</span>
-<span class="nc" id="L76">				functionsSet.executeLegacyDefineLong(context, memory, result);</span>
-<span class="nc" id="L77">				next();</span>
-<span class="nc" id="L78">				continue;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">			} else if (result.getType() == TLineType.LEGACY_DEFINELONG) {</span>
+<span class="fc" id="L75">				logs.add(result);</span>
+<span class="fc" id="L76">				functionsSet.executeLegacyDefineLong(context, memory, result);</span>
+<span class="fc" id="L77">				next();</span>
+<span class="fc" id="L78">				continue;</span>
 			}
 
 <span class="fc" id="L81">			return result;</span>

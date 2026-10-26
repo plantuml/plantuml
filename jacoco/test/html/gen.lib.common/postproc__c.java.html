@@ -867,28 +867,28 @@ public static void place_flip_graph_label(ST_Agraph_s g) {
 	    int c;
 <span class="fc" id="L868">	    final ST_pointf p = new ST_pointf(), d = new ST_pointf();</span>
 
-<span class="pc bpc" id="L870" title="5 of 6 branches missed.">	    if ((g != agroot(g)) &amp;&amp; (GD_label(g)!=null) &amp;&amp; GD_label(g).set==0) {</span>
-<span class="nc bnc" id="L871" title="All 2 branches missed.">	    	if ((GD_label_pos(g) &amp; LABEL_AT_TOP)!=0) {</span>
-<span class="nc" id="L872">	    	    d.___(GD_border(g)[RIGHT_IX]);</span>
-<span class="nc" id="L873">	    	    p.x = GD_bb(g).UR.x - d.x / 2;</span>
+<span class="pc bpc" id="L870" title="2 of 6 branches missed.">	    if ((g != agroot(g)) &amp;&amp; (GD_label(g)!=null) &amp;&amp; GD_label(g).set==0) {</span>
+<span class="pc bpc" id="L871" title="1 of 2 branches missed.">	    	if ((GD_label_pos(g) &amp; LABEL_AT_TOP)!=0) {</span>
+<span class="fc" id="L872">	    	    d.___(GD_border(g)[RIGHT_IX]);</span>
+<span class="fc" id="L873">	    	    p.x = GD_bb(g).UR.x - d.x / 2;</span>
 	    	} else {
 <span class="nc" id="L875">	    	    d.___(GD_border(g)[LEFT_IX]);</span>
 <span class="nc" id="L876">	    	    p.x = GD_bb(g).LL.x + d.x / 2;</span>
 	    	}
 
-<span class="nc bnc" id="L879" title="All 2 branches missed.">	    	if ((GD_label_pos(g) &amp; LABEL_AT_RIGHT)!=0) {</span>
+<span class="pc bpc" id="L879" title="1 of 2 branches missed.">	    	if ((GD_label_pos(g) &amp; LABEL_AT_RIGHT)!=0) {</span>
 <span class="nc" id="L880">	    	    p.y = GD_bb(g).LL.y + d.y / 2;</span>
-<span class="nc bnc" id="L881" title="All 2 branches missed.">	    	} else if ((GD_label_pos(g) &amp; LABEL_AT_LEFT)!=0) {</span>
+<span class="pc bpc" id="L881" title="1 of 2 branches missed.">	    	} else if ((GD_label_pos(g) &amp; LABEL_AT_LEFT)!=0) {</span>
 <span class="nc" id="L882">	    	    p.y = GD_bb(g).UR.y - d.y / 2;</span>
 	    	} else {
-<span class="nc" id="L884">	    	    p.y = (GD_bb(g).LL.y + GD_bb(g).UR.y) / 2;</span>
+<span class="fc" id="L884">	    	    p.y = (GD_bb(g).LL.y + GD_bb(g).UR.y) / 2;</span>
 	    	}
-<span class="nc" id="L886">	    	GD_label(g).pos.___(p);</span>
-<span class="nc" id="L887">	    	GD_label(g).set = 1;</span>
+<span class="fc" id="L886">	    	GD_label(g).pos.___(p);</span>
+<span class="fc" id="L887">	    	GD_label(g).set = 1;</span>
 	        }
 	    
-<span class="pc bpc" id="L890" title="1 of 2 branches missed.">	    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
-<span class="nc" id="L891">	    	place_flip_graph_label(GD_clust(g).get_(c));</span>
+<span class="fc bfc" id="L890" title="All 2 branches covered.">	    for (c = 1; c &lt;= GD_n_cluster(g); c++)</span>
+<span class="fc" id="L891">	    	place_flip_graph_label(GD_clust(g).get_(c));</span>
 	} finally {
 <span class="fc" id="L893">		LEAVING(&quot;72zw1alhd5vd0g6mhum507rvx&quot;, &quot;place_graph_label&quot;);</span>
 	}

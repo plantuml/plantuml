@@ -43,21 +43,21 @@ import java.util.List;
 <span class="fc" id="L43">	private final List&lt;Integer&gt; stack = new ArrayList&lt;&gt;();</span>
 
 	public int getLocalNumber(int order) {
-<span class="nc" id="L46">		ensureStackOk(order);</span>
-<span class="nc" id="L47">		final int n = stack.get(order);</span>
-<span class="nc" id="L48">		stack.set(order, n + 1);</span>
-<span class="nc" id="L49">		return n;</span>
+<span class="fc" id="L46">		ensureStackOk(order);</span>
+<span class="fc" id="L47">		final int n = stack.get(order);</span>
+<span class="fc" id="L48">		stack.set(order, n + 1);</span>
+<span class="fc" id="L49">		return n;</span>
 	}
 
 	private void ensureStackOk(int order) {
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		while (stack.size() &lt;= order) {</span>
-<span class="nc" id="L54">			stack.add(0);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		while (stack.size() &lt;= order) {</span>
+<span class="fc" id="L54">			stack.add(0);</span>
 		}
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		while (stack.size() &gt; order + 1) {</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		while (stack.size() &gt; order + 1) {</span>
 <span class="nc" id="L57">			stack.remove(order + 1);</span>
 		}
 
-<span class="nc" id="L60">	}</span>
+<span class="fc" id="L60">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

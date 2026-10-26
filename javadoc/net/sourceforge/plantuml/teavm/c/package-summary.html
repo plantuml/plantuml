@@ -95,18 +95,29 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="NativeExit.html" title="class in net.sourceforge.plantuml.teavm.c">NativeExit</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="EmbeddedFiles.html" title="class in net.sourceforge.plantuml.teavm.c">EmbeddedFiles</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Files embedded in the executable of the C build: the themes today, the
+ standard library later.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="NativeExit.html" title="class in net.sourceforge.plantuml.teavm.c">NativeExit</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Binding to the <code>exit</code> function of the C library, for the exit code of
  the command line: <code>System.exit</code> does not exist in the classlib of the
  TeaVM C backend.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PngCanvas.html" title="class in net.sourceforge.plantuml.teavm.c">PngCanvas</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PngCanvas.html" title="class in net.sourceforge.plantuml.teavm.c">PngCanvas</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">The <a href="../../klimt/drawing/raster/RasterCanvas.html" title="interface in net.sourceforge.plantuml.klimt.drawing.raster"><code>RasterCanvas</code></a> of the TeaVM C build: drawn by plutovg (see
  <code>NativeCanvas</code>), text with the fonts embedded in the executable
  (Liberation Sans, whatever the family: the other families are not embedded
  yet), never the fonts of the machine.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PngImageC.html" title="class in net.sourceforge.plantuml.teavm.c">PngImageC</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Encodes a raster image (ARGB pixels) as a PNG in C, losslessly (no palette,
+ no packing of the channels), as javax.imageio does for an image embedded in an
+ SVG (src/teavm-c/native/plantuml_png.h).</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="PSystemBuilderC.html" title="class in net.sourceforge.plantuml.teavm.c">PSystemBuilderC</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>

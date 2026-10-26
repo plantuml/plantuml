@@ -39,14 +39,14 @@ public class ScaleMaxWidth extends ScaleProtected implements Scale {
 
 	private final double maxWidth;
 
-<span class="nc" id="L42">	public ScaleMaxWidth(double maxWidth) {</span>
-<span class="nc" id="L43">		this.maxWidth = maxWidth;</span>
-<span class="nc" id="L44">	}</span>
+<span class="fc" id="L42">	public ScaleMaxWidth(double maxWidth) {</span>
+<span class="fc" id="L43">		this.maxWidth = maxWidth;</span>
+<span class="fc" id="L44">	}</span>
 
 	public double getScaleInternal(double width, double height) {
-<span class="nc" id="L47">		final double result = maxWidth / width;</span>
-<span class="nc bnc" id="L48" title="All 2 branches missed.">		if (result &gt; 1) {</span>
-<span class="nc" id="L49">			return 1;</span>
+<span class="fc" id="L47">		final double result = maxWidth / width;</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (result &gt; 1) {</span>
+<span class="fc" id="L49">			return 1;</span>
 		}
 <span class="nc" id="L51">		return result;</span>
 	}

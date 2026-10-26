@@ -611,7 +611,8 @@ public class Run {
 	 * {@code UgDiagram#exportDiagram}), and the preprocessed source.
 	 */
 	private static boolean isAvailableInC(FileFormat format) {
-<span class="nc bnc" id="L614" title="All 6 branches missed.">		return format == FileFormat.SVG || format == FileFormat.PNG || format == FileFormat.PREPROC;</span>
+<span class="nc bnc" id="L614" title="All 8 branches missed.">		return format == FileFormat.SVG || format == FileFormat.SVG_DETERMINISTIC || format == FileFormat.PNG</span>
+				|| format == FileFormat.PREPROC;
 	}
 
 	/**
@@ -619,92 +620,92 @@ public class Run {
 	 * the error) so that the caller stops before exporting the diagram.
 	 */
 	private static boolean refuseFormatInC(CliOptions option, ExitStatus exitStatus) {
-<span class="fc" id="L622">		final FileFormat format = option.getFileFormatOption().getFileFormat();</span>
-<span class="pc bpc" id="L623" title="3 of 4 branches missed.">		if (!TeaVM.isC() || isAvailableInC(format))</span>
-<span class="fc" id="L624">			return false;</span>
+<span class="fc" id="L623">		final FileFormat format = option.getFileFormatOption().getFileFormat();</span>
+<span class="pc bpc" id="L624" title="3 of 4 branches missed.">		if (!TeaVM.isC() || isAvailableInC(format))</span>
+<span class="fc" id="L625">			return false;</span>
 
-<span class="nc" id="L626">		notAvailableInC(&quot;The output format &quot; + format);</span>
-<span class="nc" id="L627">		exitStatus.goesHasErrors();</span>
-<span class="nc" id="L628">		return true;</span>
+<span class="nc" id="L627">		notAvailableInC(&quot;The output format &quot; + format);</span>
+<span class="nc" id="L628">		exitStatus.goesHasErrors();</span>
+<span class="nc" id="L629">		return true;</span>
 	}
 
 	private void extractPreprocessingSource(final ISourceFileReader sourceFileReader) throws IOException {
 
-<span class="fc" id="L633">		final FileFormat format = option.getFileFormatOption().getFileFormat();</span>
-<span class="pc bpc" id="L634" title="1 of 4 branches missed.">		final Obfuscate obfuscate = format == FileFormat.OBFUSCATE &amp;&amp; !TeaVM.isC()</span>
-<span class="fc" id="L635">				? new LanguageDescriptor().getObfuscate()</span>
-<span class="fc" id="L636">				: null;</span>
+<span class="fc" id="L634">		final FileFormat format = option.getFileFormatOption().getFileFormat();</span>
+<span class="pc bpc" id="L635" title="1 of 4 branches missed.">		final Obfuscate obfuscate = format == FileFormat.OBFUSCATE &amp;&amp; !TeaVM.isC()</span>
+<span class="fc" id="L636">				? new LanguageDescriptor().getObfuscate()</span>
+<span class="fc" id="L637">				: null;</span>
 
-<span class="fc bfc" id="L638" title="All 2 branches covered.">		for (BlockUml blockUml : sourceFileReader.getBlocks()) {</span>
-<span class="fc" id="L639">			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)</span>
-<span class="fc" id="L640">					.withPreprocFormat(option.getFileFormatOption().getFileFormat());</span>
-<span class="fc" id="L641">			final SFile file = suggested.getFile(0);</span>
-<span class="pc" id="L642">			Log.info(() -&gt; &quot;Export preprocessing source to &quot; + file.getPrintablePath());</span>
-<span class="pc bpc" id="L643" title="1 of 2 branches missed.">			try (final PrintWriter pw = charset == null ? file.createPrintWriter() : file.createPrintWriter(charset)) {</span>
-<span class="fc" id="L644">				int level = 0;</span>
-<span class="fc bfc" id="L645" title="All 2 branches covered.">				for (CharSequence cs : blockUml.getDefinition(true)) {</span>
-<span class="fc" id="L646">					String s = cs.toString();</span>
-<span class="fc bfc" id="L647" title="All 2 branches covered.">					if (obfuscate != null) {</span>
-<span class="pc bpc" id="L648" title="3 of 4 branches missed.">						if (s.contains(&quot;skinparam&quot;) &amp;&amp; s.contains(&quot;{&quot;))</span>
-<span class="nc" id="L649">							level++;</span>
+<span class="fc bfc" id="L639" title="All 2 branches covered.">		for (BlockUml blockUml : sourceFileReader.getBlocks()) {</span>
+<span class="fc" id="L640">			final SuggestedFile suggested = ((SourceFileReaderAbstract) sourceFileReader).getSuggestedFile(blockUml)</span>
+<span class="fc" id="L641">					.withPreprocFormat(option.getFileFormatOption().getFileFormat());</span>
+<span class="fc" id="L642">			final SFile file = suggested.getFile(0);</span>
+<span class="pc" id="L643">			Log.info(() -&gt; &quot;Export preprocessing source to &quot; + file.getPrintablePath());</span>
+<span class="pc bpc" id="L644" title="1 of 2 branches missed.">			try (final PrintWriter pw = charset == null ? file.createPrintWriter() : file.createPrintWriter(charset)) {</span>
+<span class="fc" id="L645">				int level = 0;</span>
+<span class="fc bfc" id="L646" title="All 2 branches covered.">				for (CharSequence cs : blockUml.getDefinition(true)) {</span>
+<span class="fc" id="L647">					String s = cs.toString();</span>
+<span class="fc bfc" id="L648" title="All 2 branches covered.">					if (obfuscate != null) {</span>
+<span class="pc bpc" id="L649" title="3 of 4 branches missed.">						if (s.contains(&quot;skinparam&quot;) &amp;&amp; s.contains(&quot;{&quot;))</span>
+<span class="nc" id="L650">							level++;</span>
 
-<span class="pc bpc" id="L651" title="2 of 4 branches missed.">						if (level == 0 &amp;&amp; s.contains(&quot;skinparam&quot;) == false)</span>
-<span class="fc" id="L652">							s = obfuscate.obfuscate(s);</span>
+<span class="pc bpc" id="L652" title="2 of 4 branches missed.">						if (level == 0 &amp;&amp; s.contains(&quot;skinparam&quot;) == false)</span>
+<span class="fc" id="L653">							s = obfuscate.obfuscate(s);</span>
 
-<span class="pc bpc" id="L654" title="3 of 4 branches missed.">						if (level &gt; 0 &amp;&amp; s.contains(&quot;}&quot;))</span>
-<span class="nc" id="L655">							level--;</span>
+<span class="pc bpc" id="L655" title="3 of 4 branches missed.">						if (level &gt; 0 &amp;&amp; s.contains(&quot;}&quot;))</span>
+<span class="nc" id="L656">							level--;</span>
 
 					}
-<span class="fc" id="L658">					pw.println(s);</span>
-<span class="fc" id="L659">				}</span>
+<span class="fc" id="L659">					pw.println(s);</span>
+<span class="fc" id="L660">				}</span>
 			}
-<span class="fc" id="L661">		}</span>
-<span class="fc" id="L662">	}</span>
+<span class="fc" id="L662">		}</span>
+<span class="fc" id="L663">	}</span>
 
 	private static final String META_HEADER_NEW = &quot;&lt;?plantuml-src &quot;;
 
 	private static void extractMetadata(File f) throws IOException {
-<span class="fc" id="L667">		System.out.println(&quot;------------------------&quot;);</span>
-<span class="fc" id="L668">		System.out.println(f);</span>
-<span class="fc" id="L669">		System.out.println();</span>
-<span class="fc bfc" id="L670" title="All 2 branches covered.">		if (f.getName().endsWith(&quot;.svg&quot;)) {</span>
-<span class="fc" id="L671">			final SFile file = SFile.fromFile(f);</span>
-<span class="fc" id="L672">			final String svg = FileUtils.readFile(file);</span>
-<span class="fc" id="L673">			final String decoded = extractMetadataFromSvg(svg);</span>
-<span class="fc bfc" id="L674" title="All 2 branches covered.">			if (decoded != null)</span>
-<span class="fc" id="L675">				System.out.println(decoded);</span>
-<span class="pc bpc" id="L676" title="1 of 2 branches missed.">		} else if (TeaVM.isC()) {</span>
-<span class="nc" id="L677">			notAvailableInC(&quot;The extraction of the source from a PNG file (--extract-source)&quot;);</span>
+<span class="fc" id="L668">		System.out.println(&quot;------------------------&quot;);</span>
+<span class="fc" id="L669">		System.out.println(f);</span>
+<span class="fc" id="L670">		System.out.println();</span>
+<span class="fc bfc" id="L671" title="All 2 branches covered.">		if (f.getName().endsWith(&quot;.svg&quot;)) {</span>
+<span class="fc" id="L672">			final SFile file = SFile.fromFile(f);</span>
+<span class="fc" id="L673">			final String svg = FileUtils.readFile(file);</span>
+<span class="fc" id="L674">			final String decoded = extractMetadataFromSvg(svg);</span>
+<span class="fc bfc" id="L675" title="All 2 branches covered.">			if (decoded != null)</span>
+<span class="fc" id="L676">				System.out.println(decoded);</span>
+<span class="pc bpc" id="L677" title="1 of 2 branches missed.">		} else if (TeaVM.isC()) {</span>
+<span class="nc" id="L678">			notAvailableInC(&quot;The extraction of the source from a PNG file (--extract-source)&quot;);</span>
 		} else {
-<span class="fc" id="L679">			final String data = new MetadataTag(f, &quot;plantuml&quot;).getData();</span>
-<span class="fc" id="L680">			System.out.println(data);</span>
+<span class="fc" id="L680">			final String data = new MetadataTag(f, &quot;plantuml&quot;).getData();</span>
+<span class="fc" id="L681">			System.out.println(data);</span>
 		}
-<span class="fc" id="L682">		System.out.println(&quot;------------------------&quot;);</span>
-<span class="fc" id="L683">	}</span>
+<span class="fc" id="L683">		System.out.println(&quot;------------------------&quot;);</span>
+<span class="fc" id="L684">	}</span>
 
 	private static String extractMetadataFromSvg(String svg) throws NoPlantumlCompressionException {
 		// New format: &lt;?plantuml-src ...?&gt;
-<span class="fc" id="L687">		final int idxNew = svg.lastIndexOf(META_HEADER_NEW);</span>
-<span class="fc bfc" id="L688" title="All 2 branches covered.">		if (idxNew &gt; 0) {</span>
-<span class="fc" id="L689">			String part = svg.substring(idxNew + META_HEADER_NEW.length());</span>
-<span class="fc" id="L690">			final int idxEnd = part.indexOf(&quot;?&gt;&quot;);</span>
-<span class="pc bpc" id="L691" title="1 of 2 branches missed.">			if (idxEnd &gt; 0) {</span>
-<span class="fc" id="L692">				part = part.substring(0, idxEnd);</span>
-<span class="fc" id="L693">				return TranscoderUtil.getDefaultTranscoderProtected().decode(part);</span>
+<span class="fc" id="L688">		final int idxNew = svg.lastIndexOf(META_HEADER_NEW);</span>
+<span class="fc bfc" id="L689" title="All 2 branches covered.">		if (idxNew &gt; 0) {</span>
+<span class="fc" id="L690">			String part = svg.substring(idxNew + META_HEADER_NEW.length());</span>
+<span class="fc" id="L691">			final int idxEnd = part.indexOf(&quot;?&gt;&quot;);</span>
+<span class="pc bpc" id="L692" title="1 of 2 branches missed.">			if (idxEnd &gt; 0) {</span>
+<span class="fc" id="L693">				part = part.substring(0, idxEnd);</span>
+<span class="fc" id="L694">				return TranscoderUtil.getDefaultTranscoderProtected().decode(part);</span>
 			}
 		}
 		// Old format: &lt;!--SRC=[...]--&gt;
-<span class="fc" id="L697">		final int idxOld = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
-<span class="pc bpc" id="L698" title="1 of 2 branches missed.">		if (idxOld &gt; 0) {</span>
-<span class="nc" id="L699">			String part = svg.substring(idxOld + SvgGraphics.META_HEADER.length());</span>
-<span class="nc" id="L700">			final int idxEnd = part.indexOf(&quot;]&quot;);</span>
-<span class="nc bnc" id="L701" title="All 2 branches missed.">			if (idxEnd &gt; 0) {</span>
-<span class="nc" id="L702">				part = part.substring(0, idxEnd);</span>
-<span class="nc" id="L703">				part = part.replace(&quot;- -&quot;, &quot;--&quot;);</span>
-<span class="nc" id="L704">				return TranscoderUtil.getDefaultTranscoderProtected().decode(part);</span>
+<span class="fc" id="L698">		final int idxOld = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
+<span class="pc bpc" id="L699" title="1 of 2 branches missed.">		if (idxOld &gt; 0) {</span>
+<span class="nc" id="L700">			String part = svg.substring(idxOld + SvgGraphics.META_HEADER.length());</span>
+<span class="nc" id="L701">			final int idxEnd = part.indexOf(&quot;]&quot;);</span>
+<span class="nc bnc" id="L702" title="All 2 branches missed.">			if (idxEnd &gt; 0) {</span>
+<span class="nc" id="L703">				part = part.substring(0, idxEnd);</span>
+<span class="nc" id="L704">				part = part.replace(&quot;- -&quot;, &quot;--&quot;);</span>
+<span class="nc" id="L705">				return TranscoderUtil.getDefaultTranscoderProtected().decode(part);</span>
 			}
 		}
-<span class="fc" id="L707">		return null;</span>
+<span class="fc" id="L708">		return null;</span>
 	}
 
 }

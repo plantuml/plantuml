@@ -112,8 +112,8 @@ public class MinMax {
 	}
 
 	public MinMax addMinMax(MinMax other) {
-<span class="nc" id="L115">		return new MinMax(Math.min(other.minX, minX), Math.min(other.minY, minY), Math.max(other.maxX, maxX),</span>
-<span class="nc" id="L116">				Math.max(other.maxY, maxY));</span>
+<span class="fc" id="L115">		return new MinMax(Math.min(other.minX, minX), Math.min(other.minY, minY), Math.max(other.maxX, maxX),</span>
+<span class="fc" id="L116">				Math.max(other.maxY, maxY));</span>
 	}
 
 	public static MinMax fromMax(double maxX, double maxY) {
@@ -141,7 +141,7 @@ public class MinMax {
 	}
 
 	public double getHeight() {
-<span class="nc" id="L144">		return maxY - minY;</span>
+<span class="fc" id="L144">		return maxY - minY;</span>
 	}
 
 	public double getWidth() {
@@ -157,15 +157,15 @@ public class MinMax {
 <span class="nc" id="L157">	}</span>
 
 	public void draw(UGraphic ug, HColor borderColor, HColor backgroundColor) {
-<span class="nc" id="L160">		ug = ug.apply(borderColor).apply(backgroundColor.bg());</span>
-<span class="nc" id="L161">		ug = ug.apply(new UTranslate(minX, minY));</span>
-<span class="nc" id="L162">		ug.draw(URectangle.build(getWidth(), getHeight()));</span>
-<span class="nc" id="L163">	}</span>
+<span class="fc" id="L160">		ug = ug.apply(borderColor).apply(backgroundColor.bg());</span>
+<span class="fc" id="L161">		ug = ug.apply(new UTranslate(minX, minY));</span>
+<span class="fc" id="L162">		ug.draw(URectangle.build(getWidth(), getHeight()));</span>
+<span class="fc" id="L163">	}</span>
 
 	public MinMax translate(UTranslate translate) {
-<span class="nc" id="L166">		final double dx = translate.getDx();</span>
-<span class="nc" id="L167">		final double dy = translate.getDy();</span>
-<span class="nc" id="L168">		return new MinMax(minX + dx, minY + dy, maxX + dx, maxY + dy);</span>
+<span class="fc" id="L166">		final double dx = translate.getDx();</span>
+<span class="fc" id="L167">		final double dy = translate.getDy();</span>
+<span class="fc" id="L168">		return new MinMax(minX + dx, minY + dy, maxX + dx, maxY + dy);</span>
 	}
 
 	public MinMax enlarge(double dx, double dy) {

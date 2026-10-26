@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 	public static PackageStyle fromString(String value) {
 <span class="fc bfc" id="L57" title="All 2 branches covered.">		for (PackageStyle p : EnumSet.allOf(PackageStyle.class)) {</span>
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if (p.toString().equalsIgnoreCase(value)) {</span>
-<span class="nc" id="L59">				return p;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">			if (p.toString().equalsIgnoreCase(value)) {</span>
+<span class="fc" id="L59">				return p;</span>
 			}
 <span class="fc" id="L61">		}</span>
 <span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (&quot;rect&quot;.equalsIgnoreCase(value)) {</span>
@@ -78,8 +78,8 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 <span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (this == CLOUD)</span>
 <span class="nc" id="L79">			return USymbols.CLOUD;</span>
 
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (this == FRAME)</span>
-<span class="nc" id="L82">			return USymbols.FRAME;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (this == FRAME)</span>
+<span class="fc" id="L82">			return USymbols.FRAME;</span>
 
 <span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (this == RECTANGLE)</span>
 <span class="nc" id="L85">			return USymbols.RECTANGLE;</span>

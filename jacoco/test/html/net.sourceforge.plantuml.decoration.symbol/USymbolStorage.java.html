@@ -52,41 +52,41 @@ import net.sourceforge.plantuml.style.SName;
 
 	@Override
 	public SName[] getSNames() {
-<span class="nc" id="L55">		return new SName[] { SName.storage };</span>
+<span class="fc" id="L55">		return new SName[] { SName.storage };</span>
 	}
 
 	private void drawStorage(UGraphic ug, double width, double height, double shadowing) {
-<span class="nc" id="L59">		final URectangle shape = URectangle.build(width, height).rounded(70);</span>
-<span class="nc" id="L60">		shape.setDeltaShadow(shadowing);</span>
+<span class="fc" id="L59">		final URectangle shape = URectangle.build(width, height).rounded(70);</span>
+<span class="fc" id="L60">		shape.setDeltaShadow(shadowing);</span>
 
-<span class="nc" id="L62">		ug.draw(shape);</span>
-<span class="nc" id="L63">	}</span>
+<span class="fc" id="L62">		ug.draw(shape);</span>
+<span class="fc" id="L63">	}</span>
 
 	private Margin getMargin() {
-<span class="nc" id="L66">		return new Margin(10, 10, 10, 10);</span>
+<span class="fc" id="L66">		return new Margin(10, 10, 10, 10);</span>
 	}
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L72">		return new TextBlock() {</span>
+<span class="fc" id="L72">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L75">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L76">				ug = UGraphicStencil.create(ug, dim);</span>
-<span class="nc" id="L77">				ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L78">				drawStorage(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
-<span class="nc" id="L79">				final Margin margin = getMargin();</span>
-<span class="nc" id="L80">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);</span>
-<span class="nc" id="L81">				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
-<span class="nc" id="L82">			}</span>
+<span class="fc" id="L75">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L76">				ug = UGraphicStencil.create(ug, dim);</span>
+<span class="fc" id="L77">				ug = symbolContext.apply(ug);</span>
+<span class="fc" id="L78">				drawStorage(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
+<span class="fc" id="L79">				final Margin margin = getMargin();</span>
+<span class="fc" id="L80">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);</span>
+<span class="fc" id="L81">				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
+<span class="fc" id="L82">			}</span>
 
 			@Fast
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L87">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="nc" id="L88">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
-<span class="nc" id="L89">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
+<span class="fc" id="L87">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="fc" id="L88">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="fc" id="L89">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
 			}
 		};
 	}

@@ -85,14 +85,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../InputFileStdlib.html" class="type-name-link" title="class in net.sourceforge.plantuml.nio">InputFileStdlib</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="../InputFileIo.html" class="type-name-link" title="class in net.sourceforge.plantuml.nio">InputFileIo</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A file read with java.io only, see <a href="../NFolderIo.html" title="class in net.sourceforge.plantuml.nio"><code>NFolderIo</code></a>.</div>
+</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../InputFileUrl.html" class="type-name-link" title="class in net.sourceforge.plantuml.nio">InputFileUrl</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../InputFileStdlib.html" class="type-name-link" title="class in net.sourceforge.plantuml.nio">InputFileStdlib</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../InputFileZip.html" class="type-name-link" title="class in net.sourceforge.plantuml.nio">InputFileZip</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-second even-row-color"><code><a href="../InputFileUrl.html" class="type-name-link" title="class in net.sourceforge.plantuml.nio">InputFileUrl</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../InputFileZip.html" class="type-name-link" title="class in net.sourceforge.plantuml.nio">InputFileZip</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Represents an entry inside a ZIP archive as an <a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio"><code>InputFile</code></a>.</div>
 </div>
 </div>
@@ -105,21 +110,35 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">NFolder.</span><code><a href="../NFolder.html#getInputFile(java.nio.file.Path)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;nameOrPath)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">NFolderIo.</span><code><a href="../NFolderIo.html#getInputFile(java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;nameOrPath)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">The readable file of this name or path (relative to this folder unless it is
+ absolute), or null.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">NFolderIo.</span><code><a href="../NFolderIo.html#getInputFile(java.nio.file.Path)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;nameOrPath)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">NFolderRegular.</span><code><a href="../NFolderRegular.html#getInputFile(java.nio.file.Path)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;nameOrPath)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">NFolderStdlib.</span><code><a href="../NFolderStdlib.html#getInputFile(java.nio.file.Path)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;nameOrPath)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">NFolderZip.</span><code><a href="../NFolderZip.html#getInputFile(java.nio.file.Path)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;nameOrPath)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><span class="type-name-label">NFolderZip.</span><code><a href="../NFolderZip.html#getInputFile(java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;nameOrPath)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Same as <a href="../NFolderZip.html#getInputFile(java.nio.file.Path)"><code>NFolderZip.getInputFile(Path)</code></a>, without java.nio.file.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">PathSystem.</span><code><a href="../PathSystem.html#getInputFile(java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">NFolderZip.</span><code><a href="../NFolderZip.html#getInputFile(java.nio.file.Path)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;nameOrPath)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">PathSystem.</span><code><a href="../PathSystem.html#getInputFile(java.lang.String,java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
+<div class="col-second odd-row-color"><span class="type-name-label">PathSystem.</span><code><a href="../PathSystem.html#getInputFile(java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../InputFile.html" title="interface in net.sourceforge.plantuml.nio">InputFile</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PathSystem.</span><code><a href="../PathSystem.html#getInputFile(java.lang.String,java.lang.String)" class="member-name-link">getInputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;kind)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Reads a file, telling the browser host whether it is requested by an
  include, an includesub or a theme.</div>
 </div>

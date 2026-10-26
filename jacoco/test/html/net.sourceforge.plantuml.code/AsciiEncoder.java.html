@@ -80,8 +80,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 		// length++;
 		// }
 <span class="fc" id="L82">		final int r = length % 4;</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (r != 0)</span>
-<span class="nc" id="L84">			length += 4 - r;</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (r != 0)</span>
+<span class="fc" id="L84">			length += 4 - r;</span>
 
 		// System.err.println(&quot;length=&quot; + length);
 		// System.err.println(&quot;length1=&quot; + (length % 4));
@@ -92,8 +92,8 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	private char scharAt(String s, int i) {
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (i &gt;= s.length())</span>
-<span class="nc" id="L96">			return '0';</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (i &gt;= s.length())</span>
+<span class="fc" id="L96">			return '0';</span>
 
 <span class="fc" id="L98">		return s.charAt(i);</span>
 	}

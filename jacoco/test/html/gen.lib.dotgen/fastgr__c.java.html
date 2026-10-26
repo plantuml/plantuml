@@ -121,8 +121,8 @@ try {
 <span class="fc bfc" id="L121" title="All 4 branches covered.">    if ((uL.size &gt; 0) &amp;&amp; (vL.size &gt; 0)) {</span>
 <span class="fc bfc" id="L122" title="All 2 branches covered.">	if (uL.size &lt; vL.size) {</span>
 <span class="fc bfc" id="L123" title="All 2 branches covered.">	    for (i = 0; (e = (ST_Agedge_s) uL.list.get_(i))!=null; i++)</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (aghead(e) == v)</span>
-<span class="nc" id="L125">		    break;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (aghead(e) == v)</span>
+<span class="fc" id="L125">		    break;</span>
 	} else {
 <span class="fc bfc" id="L127" title="All 2 branches covered.">	    for (i = 0; (e = (ST_Agedge_s) vL.list.get_(i))!=null; i++)</span>
 <span class="fc bfc" id="L128" title="All 2 branches covered.">		if (agtail(e) == u)</span>
@@ -228,7 +228,7 @@ public static void zapinlist(ST_elist L, ST_Agedge_s e) {
 try {
     int i;
 <span class="pc bpc" id="L230" title="1 of 2 branches missed.">    for (i = 0; i &lt; L.size; i++) {</span>
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">	if (L.list.get_(i) == e) {</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">	if (L.list.get_(i) == e) {</span>
 <span class="fc" id="L232">	    L.size = L.size-1;</span>
 <span class="fc" id="L233">	    L.list.set_(i, L.list.get_(L.size));</span>
 <span class="fc" id="L234">	    L.list.set_(L.size, null);</span>
@@ -326,12 +326,12 @@ try {
 <span class="fc" id="L326">	ED_minlen(e, ED_minlen(orig));</span>
 <span class="fc bfc" id="L327" title="All 2 branches covered.">	if (agtail(e) == agtail(orig))</span>
 <span class="fc" id="L328">	    ED_tail_port(e, ED_tail_port(orig));</span>
-<span class="pc bpc" id="L329" title="1 of 2 branches missed.">	else if (agtail(e) == aghead(orig))</span>
-<span class="nc" id="L330">	    ED_tail_port(e, ED_head_port(orig));</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">	else if (agtail(e) == aghead(orig))</span>
+<span class="fc" id="L330">	    ED_tail_port(e, ED_head_port(orig));</span>
 <span class="fc bfc" id="L331" title="All 2 branches covered.">	if (aghead(e) == aghead(orig))</span>
 <span class="fc" id="L332">	    ED_head_port(e, ED_head_port(orig));</span>
-<span class="pc bpc" id="L333" title="1 of 2 branches missed.">	else if (aghead(e) == agtail(orig))</span>
-<span class="nc" id="L334">	    ED_head_port(e, ED_tail_port(orig));</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">	else if (aghead(e) == agtail(orig))</span>
+<span class="fc" id="L334">	    ED_head_port(e, ED_tail_port(orig));</span>
 	
 	
 <span class="fc bfc" id="L337" title="All 2 branches covered.">	if (ED_to_virt(orig) == null)</span>
@@ -457,17 +457,17 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/fastgr.c&quot;, name=&quot;delete_flat_edge&quot;, key=&quot;clspalhiuedfnk9g9rlvfqpg7&quot;, definition=&quot;void delete_flat_edge(edge_t * e)&quot;)
 public static void delete_flat_edge(ST_Agedge_s e) {
-<span class="nc" id="L460">ENTERING(&quot;clspalhiuedfnk9g9rlvfqpg7&quot;,&quot;delete_flat_edge&quot;);</span>
+<span class="fc" id="L460">ENTERING(&quot;clspalhiuedfnk9g9rlvfqpg7&quot;,&quot;delete_flat_edge&quot;);</span>
 try {
-<span class="nc bnc" id="L462" title="All 2 branches missed.">    assert(e != null);</span>
-<span class="nc bnc" id="L463" title="All 4 branches missed.">    if (ED_to_orig(e)!=null &amp;&amp; ED_to_virt(ED_to_orig(e)) == e)</span>
+<span class="pc bpc" id="L462" title="1 of 2 branches missed.">    assert(e != null);</span>
+<span class="pc bpc" id="L463" title="3 of 4 branches missed.">    if (ED_to_orig(e)!=null &amp;&amp; ED_to_virt(ED_to_orig(e)) == e)</span>
 <span class="nc" id="L464">	ED_to_virt(ED_to_orig(e), null);</span>
-<span class="nc" id="L465">    zapinlist((ND_flat_out(agtail(e))), e);</span>
-<span class="nc" id="L466">    zapinlist((ND_flat_in(aghead(e))), e);</span>
+<span class="fc" id="L465">    zapinlist((ND_flat_out(agtail(e))), e);</span>
+<span class="fc" id="L466">    zapinlist((ND_flat_in(aghead(e))), e);</span>
 } finally {
-<span class="nc" id="L468">LEAVING(&quot;clspalhiuedfnk9g9rlvfqpg7&quot;,&quot;delete_flat_edge&quot;);</span>
+<span class="fc" id="L468">LEAVING(&quot;clspalhiuedfnk9g9rlvfqpg7&quot;,&quot;delete_flat_edge&quot;);</span>
 }
-<span class="nc" id="L470">}</span>
+<span class="fc" id="L470">}</span>
 
 
 

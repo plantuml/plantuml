@@ -236,10 +236,10 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="pc bpc" id="L236" title="2 of 4 branches missed.">		if (TeaVM.a()) assert idea.getShape() == IdeaShape.NONE;</span>
 <span class="fc" id="L237">		final TextBlock text = idea.getLabel().create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),</span>
 <span class="fc" id="L238">				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);</span>
-<span class="pc bpc" id="L239" title="1 of 2 branches missed.">		if (direction == 1)</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">		if (direction == 1)</span>
 <span class="fc" id="L240">			return TextBlockUtils.withMargin(text, 3, 0, 1, 1);</span>
 
-<span class="nc" id="L242">		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
+<span class="fc" id="L242">		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);</span>
 	}
 
 	private Style getStyle() {

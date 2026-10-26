@@ -210,8 +210,8 @@ public class StripeSimple implements Stripe {
 	}
 
 	public void addImage(String src, double scale) {
-<span class="nc" id="L213">		atoms.add(AtomImg.create(skinParam, src, ImgValign.TOP, 0, scale, null));</span>
-<span class="nc" id="L214">	}</span>
+<span class="fc" id="L213">		atoms.add(AtomImg.create(skinParam, src, ImgValign.TOP, 0, scale, null));</span>
+<span class="fc" id="L214">	}</span>
 
 	public void addQrcode(String src, double scale) {
 <span class="nc" id="L217">		atoms.add(AtomImg.createQrcode(src, scale));</span>
@@ -227,7 +227,7 @@ public class StripeSimple implements Stripe {
 
 	public void addSprite(String src, double scale, HColor forcedColor) {
 <span class="fc" id="L229">		final Sprite sprite = skinParam.getSprite(src);</span>
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (sprite != null) {</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		if (sprite != null) {</span>
 <span class="pc bpc" id="L231" title="1 of 2 branches missed.">			final HColor backColor = fontConfiguration.containsStyle(FontStyle.BACKCOLOR)</span>
 <span class="nc" id="L232">					? fontConfiguration.getExtendedColor()</span>
 <span class="fc" id="L233">					: null;</span>
@@ -237,10 +237,10 @@ public class StripeSimple implements Stripe {
 <span class="fc" id="L237">	}</span>
 
 	public void addOpenIcon(String src, double scale, HColor color) {
-<span class="nc" id="L240">		final OpenIconic openIconic = OpenIconic.retrieve(src);</span>
-<span class="nc bnc" id="L241" title="All 2 branches missed.">		if (openIconic != null)</span>
-<span class="nc" id="L242">			atoms.add(new AtomOpenIconic(color, scale, openIconic, fontConfiguration, null));</span>
-<span class="nc" id="L243">	}</span>
+<span class="fc" id="L240">		final OpenIconic openIconic = OpenIconic.retrieve(src);</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		if (openIconic != null)</span>
+<span class="fc" id="L242">			atoms.add(new AtomOpenIconic(color, scale, openIconic, fontConfiguration, null));</span>
+<span class="fc" id="L243">	}</span>
 
 	public void addEmoji(String emojiName, double scale, String forcedColor) {
 <span class="nc" id="L246">		final Emoji emoji = Emoji.retrieve(emojiName);</span>

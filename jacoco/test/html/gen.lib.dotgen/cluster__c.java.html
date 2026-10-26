@@ -227,38 +227,38 @@ try {
 <span class="pc bpc" id="L227" title="1 of 2 branches missed.">    assert(ND_rank(from) &lt; ND_rank(to));</span>
 <span class="pc bpc" id="L228" title="1 of 4 branches missed.">    if (agtail(ve) == from &amp;&amp; aghead(ve) == to)</span>
 <span class="nc" id="L229">	return;</span>
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">    if (ED_count(ve) &gt; 1) {</span>
-<span class="nc" id="L231">	ED_to_virt(orig, null);</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">	if (ND_rank(to) - ND_rank(from) == 1) {</span>
-<span class="nc bnc" id="L233" title="All 4 branches missed.">	    if ((e = find_fast_edge(from, to))!=null &amp;&amp; (ports_eq(orig, e))) {</span>
-<span class="nc" id="L234">		merge_oneway(orig, e);</span>
-<span class="nc bnc" id="L235" title="All 2 branches missed.">		if ((ND_node_type(from) == 0)</span>
-<span class="nc bnc" id="L236" title="All 2 branches missed.">		    &amp;&amp; (ND_node_type(to) == 0))</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">    if (ED_count(ve) &gt; 1) {</span>
+<span class="fc" id="L231">	ED_to_virt(orig, null);</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">	if (ND_rank(to) - ND_rank(from) == 1) {</span>
+<span class="pc bpc" id="L233" title="1 of 4 branches missed.">	    if ((e = find_fast_edge(from, to))!=null &amp;&amp; (ports_eq(orig, e))) {</span>
+<span class="fc" id="L234">		merge_oneway(orig, e);</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">		if ((ND_node_type(from) == 0)</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">		    &amp;&amp; (ND_node_type(to) == 0))</span>
 <span class="nc" id="L237">		    other_edge(orig);</span>
-<span class="nc" id="L238">		return;</span>
+<span class="fc" id="L238">		return;</span>
 	    }
 	}
-<span class="nc" id="L241">	u = from;</span>
-<span class="nc bnc" id="L242" title="All 2 branches missed.">	for (r = ND_rank(from); r &lt; ND_rank(to); r++) {</span>
-<span class="nc bnc" id="L243" title="All 2 branches missed.">	    if (r &lt; ND_rank(to) - 1)</span>
+<span class="fc" id="L241">	u = from;</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">	for (r = ND_rank(from); r &lt; ND_rank(to); r++) {</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">	    if (r &lt; ND_rank(to) - 1)</span>
 <span class="nc" id="L244">		v = clone_vn(dot_root(from), aghead(ve));</span>
 	    else
-<span class="nc" id="L246">		v = to;</span>
-<span class="nc" id="L247">	    e = virtual_edge(u, v, orig);</span>
-<span class="nc" id="L248">	    ED_edge_type(e, type);</span>
-<span class="nc" id="L249">	    u = v;</span>
-<span class="nc" id="L250">	    ED_count(ve, ED_count(ve) - 1);</span>
-<span class="nc" id="L251">	    ve = (ST_Agedge_s) ND_out(aghead(ve)).list.get_(0);</span>
+<span class="fc" id="L246">		v = to;</span>
+<span class="fc" id="L247">	    e = virtual_edge(u, v, orig);</span>
+<span class="fc" id="L248">	    ED_edge_type(e, type);</span>
+<span class="fc" id="L249">	    u = v;</span>
+<span class="fc" id="L250">	    ED_count(ve, ED_count(ve) - 1);</span>
+<span class="fc" id="L251">	    ve = (ST_Agedge_s) ND_out(aghead(ve)).list.get_(0);</span>
 	}
     } else {
 <span class="fc bfc" id="L254" title="All 2 branches covered.">	if (ND_rank(to) - ND_rank(from) == 1) {</span>
-<span class="pc bpc" id="L255" title="3 of 4 branches missed.">	    if ((ve = find_fast_edge(from, to))!=null &amp;&amp; (ports_eq(orig, ve))) {</span>
+<span class="pc bpc" id="L255" title="1 of 4 branches missed.">	    if ((ve = find_fast_edge(from, to))!=null &amp;&amp; (ports_eq(orig, ve))) {</span>
 		/*ED_to_orig(ve) = orig; */
-<span class="nc" id="L257">		ED_to_virt(orig, ve);</span>
-<span class="nc" id="L258">		ED_edge_type(ve, type);</span>
-<span class="nc" id="L259">		ED_count(ve, ED_count(ve)+1);</span>
-<span class="nc bnc" id="L260" title="All 2 branches missed.">		if ((ND_node_type(from) == 0)</span>
-<span class="nc bnc" id="L261" title="All 2 branches missed.">		    &amp;&amp; (ND_node_type(to) == 0))</span>
+<span class="fc" id="L257">		ED_to_virt(orig, ve);</span>
+<span class="fc" id="L258">		ED_edge_type(ve, type);</span>
+<span class="fc" id="L259">		ED_count(ve, ED_count(ve)+1);</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		if ((ND_node_type(from) == 0)</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		    &amp;&amp; (ND_node_type(to) == 0))</span>
 <span class="nc" id="L262">		    other_edge(orig);</span>
 	    } else {
 <span class="fc" id="L264">		ED_to_virt(orig, null);</span>
@@ -370,7 +370,7 @@ try {
 	    }
 	    
 	    /* forward edges */
-<span class="pc bpc" id="L373" title="1 of 2 branches missed.">	    if (ND_rank(aghead(e)) &gt; ND_rank(agtail(e))) {</span>
+<span class="fc bfc" id="L373" title="All 2 branches covered.">	    if (ND_rank(aghead(e)) &gt; ND_rank(agtail(e))) {</span>
 <span class="fc" id="L374">		make_interclust_chain(g, agtail(e), aghead(e), e);</span>
 <span class="fc" id="L375">		prev = e;</span>
 <span class="fc" id="L376">		continue;</span>
@@ -383,8 +383,8 @@ I think that make_interclust_chain should create call other_edge(e) anyway
 				if (agcontains(subg,agtail(e))
 					&amp;&amp; agfindedge(g,aghead(e),agtail(e))) other_edge(e);
 */
-<span class="nc" id="L386">		make_interclust_chain(g, aghead(e), agtail(e), e);</span>
-<span class="nc" id="L387">		prev = e;</span>
+<span class="fc" id="L386">		make_interclust_chain(g, aghead(e), agtail(e), e);</span>
+<span class="fc" id="L387">		prev = e;</span>
 	    }
 	}
     }

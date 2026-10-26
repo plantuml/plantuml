@@ -222,13 +222,13 @@ import net.sourceforge.plantuml.utils.Log;
 	}
 
 	public static String readAllBytes(InputStream in) throws IOException {
-<span class="nc" id="L225">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L226">		final byte[] buffer = new byte[8192];</span>
+<span class="fc" id="L225">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L226">		final byte[] buffer = new byte[8192];</span>
 		int read;
-<span class="nc bnc" id="L228" title="All 2 branches missed.">		while ((read = in.read(buffer)) != -1)</span>
-<span class="nc" id="L229">			baos.write(buffer, 0, read);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">		while ((read = in.read(buffer)) != -1)</span>
+<span class="fc" id="L229">			baos.write(buffer, 0, read);</span>
 
-<span class="nc" id="L231">		return new String(baos.toByteArray(), StandardCharsets.UTF_8);</span>
+<span class="fc" id="L231">		return new String(baos.toByteArray(), StandardCharsets.UTF_8);</span>
 	}
 
 }

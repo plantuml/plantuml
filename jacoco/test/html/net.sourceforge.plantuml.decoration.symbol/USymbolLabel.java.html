@@ -51,33 +51,33 @@ import net.sourceforge.plantuml.style.SName;
 
 	@Override
 	public SName[] getSNames() {
-<span class="nc" id="L54">		return new SName[] { SName.label };</span>
+<span class="fc" id="L54">		return new SName[] { SName.label };</span>
 	}
 
 	private Margin getMargin() {
-<span class="nc" id="L58">		return new Margin(10, 10, 10, 10);</span>
+<span class="fc" id="L58">		return new Margin(10, 10, 10, 10);</span>
 	}
 
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L64">		return new TextBlock() {</span>
+<span class="fc" id="L64">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L67">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L68">				ug = UGraphicStencil.create(ug, dim);</span>
-<span class="nc" id="L69">				ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L70">				final Margin margin = getMargin();</span>
-<span class="nc" id="L71">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);</span>
-<span class="nc" id="L72">				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
-<span class="nc" id="L73">			}</span>
+<span class="fc" id="L67">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L68">				ug = UGraphicStencil.create(ug, dim);</span>
+<span class="fc" id="L69">				ug = symbolContext.apply(ug);</span>
+<span class="fc" id="L70">				final Margin margin = getMargin();</span>
+<span class="fc" id="L71">				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);</span>
+<span class="fc" id="L72">				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));</span>
+<span class="fc" id="L73">			}</span>
 
 			@Fast
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L78">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="nc" id="L79">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
-<span class="nc" id="L80">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
+<span class="fc" id="L78">				final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="fc" id="L79">				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);</span>
+<span class="fc" id="L80">				return getMargin().addDimension(dimStereo.mergeTB(dimLabel));</span>
 			}
 		};
 	}

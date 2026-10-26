@@ -48,27 +48,27 @@ class TextBlockMinWidth implements TextBlock {
 	private final double minWidth;
 	private final HorizontalAlignment horizontalAlignment;
 
-<span class="nc" id="L51">	TextBlockMinWidth(TextBlock textBlock, double minWidth, HorizontalAlignment horizontalAlignment) {</span>
-<span class="nc" id="L52">		this.textBlock = textBlock;</span>
-<span class="nc" id="L53">		this.minWidth = minWidth;</span>
-<span class="nc" id="L54">		this.horizontalAlignment = horizontalAlignment;</span>
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L51">	TextBlockMinWidth(TextBlock textBlock, double minWidth, HorizontalAlignment horizontalAlignment) {</span>
+<span class="fc" id="L52">		this.textBlock = textBlock;</span>
+<span class="fc" id="L53">		this.minWidth = minWidth;</span>
+<span class="fc" id="L54">		this.horizontalAlignment = horizontalAlignment;</span>
+<span class="fc" id="L55">	}</span>
 
 	@Fast
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L59">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L60">		return dim.atLeast(minWidth, 0);</span>
+<span class="fc" id="L59">		final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
+<span class="fc" id="L60">		return dim.atLeast(minWidth, 0);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (horizontalAlignment == HorizontalAlignment.LEFT) {</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (horizontalAlignment == HorizontalAlignment.LEFT) {</span>
 <span class="nc" id="L65">			textBlock.drawU(ug);</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		} else if (horizontalAlignment == HorizontalAlignment.CENTER) {</span>
-<span class="nc" id="L67">			final XDimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L68">			final XDimension2D dimFull = calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L69">			final double diffx = dimFull.getWidth() - dimText.getWidth();</span>
-<span class="nc" id="L70">			textBlock.drawU(ug.apply(UTranslate.dx(diffx / 2)));</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		} else if (horizontalAlignment == HorizontalAlignment.CENTER) {</span>
+<span class="fc" id="L67">			final XDimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L68">			final XDimension2D dimFull = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L69">			final double diffx = dimFull.getWidth() - dimText.getWidth();</span>
+<span class="fc" id="L70">			textBlock.drawU(ug.apply(UTranslate.dx(diffx / 2)));</span>
+<span class="pc bnc" id="L71" title="All 2 branches missed.">		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
 <span class="nc" id="L72">			final XDimension2D dimText = textBlock.calculateDimension(ug.getStringBounder());</span>
 <span class="nc" id="L73">			final XDimension2D dimFull = calculateDimension(ug.getStringBounder());</span>
 <span class="nc" id="L74">			final double diffx = dimFull.getWidth() - dimText.getWidth();</span>
@@ -76,6 +76,6 @@ class TextBlockMinWidth implements TextBlock {
 <span class="nc" id="L76">		} else {</span>
 <span class="nc" id="L77">			throw new UnsupportedOperationException();</span>
 		}
-<span class="nc" id="L79">	}</span>
+<span class="fc" id="L79">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

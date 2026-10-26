@@ -101,7 +101,7 @@ public class FunctionsSet {
 
 	private static boolean isCovering(TFunction candidate, TFunctionSignature searched) {
 <span class="fc bfc" id="L103" title="All 2 branches covered.">		return candidate.getSignature().sameFunctionNameAs(searched)</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">				&amp;&amp; candidate.canCover(searched.getNbArg(), searched.getNamedArguments());</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">				&amp;&amp; candidate.canCover(searched.getNbArg(), searched.getNamedArguments());</span>
 	}
 
 	public String getLonguestMatchStartingIn(String s, int pos) {
@@ -116,8 +116,8 @@ public class FunctionsSet {
 	}
 
 	public void addFunction(TFunction func) {
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (func.getFunctionType() == TFunctionType.LEGACY_DEFINELONG)</span>
-<span class="nc" id="L120">			((TFunctionImpl) func).finalizeEnddefinelong();</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (func.getFunctionType() == TFunctionType.LEGACY_DEFINELONG)</span>
+<span class="fc" id="L120">			((TFunctionImpl) func).finalizeEnddefinelong();</span>
 
 <span class="fc" id="L122">		this.functions.put(func.getSignature(), func);</span>
 <span class="fc" id="L123">		this.functions3.add(func.getSignature().getFunctionName() + &quot;(&quot;);</span>
@@ -173,13 +173,13 @@ public class FunctionsSet {
 
 	public void executeLegacyDefineLong(TContext context, TMemory memory, StringLocated s)
 			throws EaterException {
-<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (this.pendingFunction != null)</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
 <span class="nc" id="L177">			throw new EaterException(&quot;already0068&quot;, s);</span>
 
-<span class="nc" id="L179">		final EaterLegacyDefineLong legacyDefineLong = new EaterLegacyDefineLong(s);</span>
-<span class="nc" id="L180">		legacyDefineLong.analyze(context, memory);</span>
-<span class="nc" id="L181">		this.pendingFunction = legacyDefineLong.getFunction();</span>
-<span class="nc" id="L182">	}</span>
+<span class="fc" id="L179">		final EaterLegacyDefineLong legacyDefineLong = new EaterLegacyDefineLong(s);</span>
+<span class="fc" id="L180">		legacyDefineLong.analyze(context, memory);</span>
+<span class="fc" id="L181">		this.pendingFunction = legacyDefineLong.getFunction();</span>
+<span class="fc" id="L182">	}</span>
 
 	public void executeDeclareReturnFunction(TContext context, TMemory memory, StringLocated s)
 			throws EaterException {
@@ -191,7 +191,7 @@ public class FunctionsSet {
 <span class="fc" id="L191">		final boolean finalFlag = declareFunction.getFinalFlag();</span>
 <span class="fc" id="L192">		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();</span>
 <span class="fc" id="L193">		final TFunction previous = this.getExact(declaredSignature);</span>
-<span class="pc bpc" id="L194" title="5 of 6 branches missed.">		if (previous != null &amp;&amp; (finalFlag || this.functionsFinal.contains(declaredSignature)))</span>
+<span class="pc bpc" id="L194" title="2 of 6 branches missed.">		if (previous != null &amp;&amp; (finalFlag || this.functionsFinal.contains(declaredSignature)))</span>
 <span class="nc" id="L195">			throw new EaterException(&quot;This function is already defined&quot;, s);</span>
 
 <span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (finalFlag)</span>

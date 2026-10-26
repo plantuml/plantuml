@@ -89,20 +89,20 @@ public class URectangle extends AbstractShadowable implements UShapeSized, UShap
 <span class="pc bpc" id="L89" title="2 of 4 branches missed.">		if (ignoreForCompressionOnX || ignoreForCompressionOnY)</span>
 <span class="nc" id="L90">			throw new IllegalStateException();</span>
 
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (diagonalCorner == 0)</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (diagonalCorner == 0)</span>
 <span class="fc" id="L93">			return this;</span>
 
-<span class="nc" id="L95">		final UPath result = UPath.none();</span>
-<span class="nc" id="L96">		result.moveTo(diagonalCorner, 0);</span>
-<span class="nc" id="L97">		result.lineTo(width - diagonalCorner, 0);</span>
-<span class="nc" id="L98">		result.lineTo(width, diagonalCorner);</span>
-<span class="nc" id="L99">		result.lineTo(width, height - diagonalCorner);</span>
-<span class="nc" id="L100">		result.lineTo(width - diagonalCorner, height);</span>
-<span class="nc" id="L101">		result.lineTo(diagonalCorner, height);</span>
-<span class="nc" id="L102">		result.lineTo(0, height - diagonalCorner);</span>
-<span class="nc" id="L103">		result.lineTo(0, diagonalCorner);</span>
-<span class="nc" id="L104">		result.lineTo(diagonalCorner, 0);</span>
-<span class="nc" id="L105">		return result;</span>
+<span class="fc" id="L95">		final UPath result = UPath.none();</span>
+<span class="fc" id="L96">		result.moveTo(diagonalCorner, 0);</span>
+<span class="fc" id="L97">		result.lineTo(width - diagonalCorner, 0);</span>
+<span class="fc" id="L98">		result.lineTo(width, diagonalCorner);</span>
+<span class="fc" id="L99">		result.lineTo(width, height - diagonalCorner);</span>
+<span class="fc" id="L100">		result.lineTo(width - diagonalCorner, height);</span>
+<span class="fc" id="L101">		result.lineTo(diagonalCorner, height);</span>
+<span class="fc" id="L102">		result.lineTo(0, height - diagonalCorner);</span>
+<span class="fc" id="L103">		result.lineTo(0, diagonalCorner);</span>
+<span class="fc" id="L104">		result.lineTo(diagonalCorner, 0);</span>
+<span class="fc" id="L105">		return result;</span>
 	}
 
 	public final URectangle ignoreForCompressionOnX() {

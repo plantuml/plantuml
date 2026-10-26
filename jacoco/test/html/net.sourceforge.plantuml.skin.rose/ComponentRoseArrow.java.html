@@ -166,11 +166,11 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 <span class="fc bfc" id="L166" title="All 2 branches covered.">		if (messagePosition == HorizontalAlignment.CENTER) {</span>
 <span class="fc" id="L167">			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();</span>
 <span class="fc" id="L168">			textPos = (dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth) / 2;</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		} else if (messagePosition == HorizontalAlignment.RIGHT) {</span>
-<span class="nc" id="L170">			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();</span>
-<span class="nc" id="L171">			textPos = dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth - getOldPaddingX2()</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">					- (direction2 == ArrowDirection.LEFT_TO_RIGHT_NORMAL ? getArrowDeltaX() : 0);</span>
-<span class="nc" id="L173">		} else {</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		} else if (messagePosition == HorizontalAlignment.RIGHT) {</span>
+<span class="fc" id="L170">			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L171">			textPos = dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth - getOldPaddingX2()</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">					- (direction2 == ArrowDirection.LEFT_TO_RIGHT_NORMAL ? getArrowDeltaX() : 0);</span>
+<span class="fc" id="L173">		} else {</span>
 <span class="fc" id="L174">			textPos = getOldPaddingX1()</span>
 <span class="fc bfc" id="L175" title="All 4 branches covered.">					+ (direction2 == ArrowDirection.RIGHT_TO_LEFT_REVERSE || direction2 == ArrowDirection.BOTH_DIRECTION</span>
 <span class="fc" id="L176">							? getArrowDeltaX()</span>

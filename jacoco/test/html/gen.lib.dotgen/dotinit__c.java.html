@@ -724,7 +724,7 @@ private static void checkSiblingClusterOrder(Globals zz, ST_Agraph_s root, ST_Ag
 <span class="fc bfc" id="L724" title="All 2 branches covered.">	for (int j = i + 1; j &lt;= GD_n_cluster(g); j++) {</span>
 <span class="fc" id="L725">	    final ST_Agraph_s c1 = GD_clust(g).get_(i);</span>
 <span class="fc" id="L726">	    final ST_Agraph_s c2 = GD_clust(g).get_(j);</span>
-<span class="pc bpc" id="L727" title="1 of 4 branches missed.">	    if (GD_minrank(c1) &gt; GD_maxrank(c2) || GD_minrank(c2) &gt; GD_maxrank(c1)) {</span>
+<span class="fc bfc" id="L727" title="All 4 branches covered.">	    if (GD_minrank(c1) &gt; GD_maxrank(c2) || GD_minrank(c2) &gt; GD_maxrank(c1)) {</span>
 <span class="fc" id="L728">		continue;</span>
 	    }
 <span class="fc" id="L730">	    final java.util.Set&lt;ST_Agraph_s&gt; m1 = java.util.Collections</span>
@@ -757,11 +757,11 @@ private static void checkSiblingClusterOrder(Globals zz, ST_Agraph_s root, ST_Ag
 <span class="pc bpc" id="L757" title="2 of 4 branches missed.">		if (min1 &lt; 0 || min2 &lt; 0) {</span>
 <span class="nc" id="L758">		    continue; // one of the two has no member on this rank</span>
 		}
-<span class="pc bpc" id="L760" title="1 of 2 branches missed.">		final int side = min1 &lt; min2 ? 1 : -1;</span>
-<span class="pc bpc" id="L761" title="1 of 2 branches missed.">		if (firstSide == 0) {</span>
+<span class="fc bfc" id="L760" title="All 2 branches covered.">		final int side = min1 &lt; min2 ? 1 : -1;</span>
+<span class="fc bfc" id="L761" title="All 2 branches covered.">		if (firstSide == 0) {</span>
 <span class="fc" id="L762">		    firstSide = side;</span>
 <span class="fc" id="L763">		    firstSideRank = r;</span>
-<span class="nc bnc" id="L764" title="All 2 branches missed.">		} else if (side != firstSide) {</span>
+<span class="pc bpc" id="L764" title="1 of 2 branches missed.">		} else if (side != firstSide) {</span>
 		    if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;checkSiblingClusterOrder &quot; + phase + &quot;: SIDE-SWAP between &quot;
 			    + safeName(zz, c1) + &quot; and &quot; + safeName(zz, c2)
 			    + &quot; -- rank &quot; + firstSideRank + &quot; has &quot; + (firstSide &gt; 0 ? &quot;c1&quot; : &quot;c2&quot;)

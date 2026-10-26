@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.teavm.c.PngCanvas;
  *
  * Build it with
  * {@code gradlew :generateC -PteavmCMainClass=PngDemoC},
- * then run {@code plantuml-c [output.png]} (default: demo.png).
+ * then run {@code plantuml [output.png]} (default: demo.png).
  *
  * The picture is a small mind map whose boxes are sized from the measured
  * text, plus a text sample with its ascent, baseline and descent lines: the

@@ -186,24 +186,24 @@ public final class TValue {
 	}
 
 	public TValue equalsOperation(TValue v2) {
-<span class="pc bpc" id="L189" title="1 of 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="fc bfc" id="L189" title="All 4 branches covered.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
 <span class="fc bfc" id="L190" title="All 2 branches covered.">			return fromBoolean(this.intValue == v2.intValue);</span>
 		}
 <span class="fc bfc" id="L192" title="All 2 branches covered.">		return fromBoolean(toString().compareTo(v2.toString()) == 0);</span>
 	}
 
 	public TValue notEquals(TValue v2) {
-<span class="pc bpc" id="L196" title="3 of 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">			return fromBoolean(this.intValue != v2.intValue);</span>
+<span class="fc bfc" id="L196" title="All 4 branches covered.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">			return fromBoolean(this.intValue != v2.intValue);</span>
 		}
 <span class="fc bfc" id="L199" title="All 2 branches covered.">		return fromBoolean(toString().compareTo(v2.toString()) != 0);</span>
 	}
 
 	public boolean toBoolean() {
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (this.isNumber()) {</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (this.isNumber()) {</span>
 <span class="fc bfc" id="L204" title="All 2 branches covered.">			return this.intValue != 0;</span>
 		}
-<span class="nc bnc" id="L206" title="All 2 branches missed.">		return toString().length() &gt; 0;</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		return toString().length() &gt; 0;</span>
 	}
 
 	public int toInt() {
@@ -215,7 +215,7 @@ public final class TValue {
 	}
 
 	public TValue logicalOr(TValue v2) {
-<span class="pc bpc" id="L218" title="1 of 4 branches missed.">		return fromBoolean(this.toBoolean() || v2.toBoolean());</span>
+<span class="fc bfc" id="L218" title="All 4 branches covered.">		return fromBoolean(this.toBoolean() || v2.toBoolean());</span>
 	}
 
 	public JsonValue toJson() {

@@ -54,80 +54,87 @@ import net.sourceforge.plantuml.version.Version;
 
 public class Defines implements Truth {
 
-<span class="fc" id="L57">	private final Environment environment = new Environment();</span>
-<span class="fc" id="L58">	private final Map&lt;String, TValue&gt; values = new LinkedHashMap&lt;String, TValue&gt;();</span>
+	/**
+	 * Name of the diagram file in the deterministic (vega) tests: they feed
+	 * PlantUML with a text, and the C build with a file whose name must not change
+	 * the result.
+	 */
+	public static final String VEGA_FILENAME = &quot;fakefilename&quot;;
+
+<span class="fc" id="L64">	private final Environment environment = new Environment();</span>
+<span class="fc" id="L65">	private final Map&lt;String, TValue&gt; values = new LinkedHashMap&lt;String, TValue&gt;();</span>
 
 	@Deprecated
 	@ApiWarning(willBeRemoved = &quot;in next major release&quot;)
-<span class="fc" id="L62">	public Defines() {</span>
-<span class="fc" id="L63">		environment.put(&quot;PLANTUML_VERSION&quot;, &quot;&quot; + Version.versionString());</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L69">	public Defines() {</span>
+<span class="fc" id="L70">		environment.put(&quot;PLANTUML_VERSION&quot;, &quot;&quot; + Version.versionString());</span>
+<span class="fc" id="L71">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L68">		return values.keySet().toString() + &quot; &quot; + environment;</span>
+<span class="nc" id="L75">		return values.keySet().toString() + &quot; &quot; + environment;</span>
 	}
 
 	public static Defines createEmpty() {
-<span class="fc" id="L72">		return new Defines();</span>
+<span class="fc" id="L79">		return new Defines();</span>
 	}
 
 	public void copyTo(TMemory memory, StringLocated location) throws EaterException {
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		for (Entry&lt;String, TValue&gt; ent : values.entrySet())</span>
-<span class="fc" id="L77">			memory.putVariable(ent.getKey(), ent.getValue(), TVariableScope.GLOBAL, location);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		for (Entry&lt;String, TValue&gt; ent : values.entrySet())</span>
+<span class="fc" id="L84">			memory.putVariable(ent.getKey(), ent.getValue(), TVariableScope.GLOBAL, location);</span>
 
-<span class="fc" id="L79">	}</span>
-
-	public void overrideFilename(String filename) {
-<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (filename != null) {</span>
-<span class="fc" id="L83">			environment.put(&quot;filename&quot;, filename);</span>
-<span class="fc" id="L84">			environment.put(&quot;filenameNoExtension&quot;, nameNoExtension(filename));</span>
-		}
 <span class="fc" id="L86">	}</span>
 
+	public void overrideFilename(String filename) {
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (filename != null) {</span>
+<span class="fc" id="L90">			environment.put(&quot;filename&quot;, filename);</span>
+<span class="fc" id="L91">			environment.put(&quot;filenameNoExtension&quot;, nameNoExtension(filename));</span>
+		}
+<span class="fc" id="L93">	}</span>
+
 	public void overrideDirPath(String fileDir) {
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (fileDir != null)</span>
-<span class="fc" id="L90">			environment.put(&quot;dirpath&quot;, fileDir.replace('\\', '/'));</span>
-<span class="fc" id="L91">	}</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (fileDir != null)</span>
+<span class="fc" id="L97">			environment.put(&quot;dirpath&quot;, fileDir.replace('\\', '/'));</span>
+<span class="fc" id="L98">	}</span>
 
 	private void importFrom(Defines other) {
-<span class="fc" id="L94">		this.environment.putAll(other.environment);</span>
-<span class="fc" id="L95">		this.values.putAll(other.values);</span>
+<span class="fc" id="L101">		this.environment.putAll(other.environment);</span>
+<span class="fc" id="L102">		this.values.putAll(other.values);</span>
 		// magic = null;
-<span class="fc" id="L97">	}</span>
+<span class="fc" id="L104">	}</span>
 
 	public Defines cloneMe() {
-<span class="fc" id="L100">		final Defines result = new Defines();</span>
-<span class="fc" id="L101">		result.importFrom(this);</span>
-<span class="fc" id="L102">		return result;</span>
+<span class="fc" id="L107">		final Defines result = new Defines();</span>
+<span class="fc" id="L108">		result.importFrom(this);</span>
+<span class="fc" id="L109">		return result;</span>
 	}
 
 	public static Defines createWithFileName(SFile file) {
-<span class="nc" id="L106">		Objects.requireNonNull(file);</span>
-<span class="nc" id="L107">		final Defines result = createEmpty();</span>
-<span class="nc" id="L108">		result.overrideFilename(file.getName());</span>
-<span class="nc" id="L109">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
-<span class="nc" id="L111">			result.environment.put(&quot;dirpath&quot;,</span>
-<span class="nc" id="L112">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
+<span class="nc" id="L113">		Objects.requireNonNull(file);</span>
+<span class="nc" id="L114">		final Defines result = createEmpty();</span>
+<span class="nc" id="L115">		result.overrideFilename(file.getName());</span>
+<span class="nc" id="L116">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
+<span class="nc" id="L118">			result.environment.put(&quot;dirpath&quot;,</span>
+<span class="nc" id="L119">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
 
-<span class="nc" id="L114">		return result;</span>
+<span class="nc" id="L121">		return result;</span>
 	}
 
 	public static Defines createWithFileName(java.io.File file) {
-<span class="fc" id="L118">		Objects.requireNonNull(file);</span>
-<span class="fc" id="L119">		final Defines result = createEmpty();</span>
-<span class="fc" id="L120">		result.overrideFilename(file.getName());</span>
-<span class="fc" id="L121">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
-<span class="nc" id="L123">			result.environment.put(&quot;dirpath&quot;,</span>
-<span class="nc" id="L124">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
+<span class="fc" id="L125">		Objects.requireNonNull(file);</span>
+<span class="fc" id="L126">		final Defines result = createEmpty();</span>
+<span class="fc" id="L127">		result.overrideFilename(file.getName());</span>
+<span class="fc" id="L128">		result.environment.put(&quot;filedate&quot;, new Date(file.lastModified()).toString());</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE)</span>
+<span class="nc" id="L130">			result.environment.put(&quot;dirpath&quot;,</span>
+<span class="nc" id="L131">					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));</span>
 
-<span class="fc" id="L126">		return result;</span>
+<span class="fc" id="L133">		return result;</span>
 	}
 
 	public String getEnvironmentValue(String key) {
-<span class="fc" id="L130">		return this.environment.get(key);</span>
+<span class="fc" id="L137">		return this.environment.get(key);</span>
 	}
 
 	/**
@@ -135,15 +142,15 @@ public class Defines implements Truth {
 	 * seen by it.
 	 */
 	public Environment getEnvironment() {
-<span class="fc" id="L138">		return this.environment.copy();</span>
+<span class="fc" id="L145">		return this.environment.copy();</span>
 	}
 
 	private static String nameNoExtension(String name) {
-<span class="fc" id="L142">		final int x = name.lastIndexOf('.');</span>
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (x == -1)</span>
-<span class="nc" id="L144">			return name;</span>
+<span class="fc" id="L149">		final int x = name.lastIndexOf('.');</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (x == -1)</span>
+<span class="fc" id="L151">			return name;</span>
 
-<span class="fc" id="L146">		return name.substring(0, x);</span>
+<span class="fc" id="L153">		return name.substring(0, x);</span>
 	}
 
 	/**
@@ -151,15 +158,15 @@ public class Defines implements Truth {
 	 * one.
 	 */
 	public void define(String name, String value) {
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		values.put(name, TValue.fromString(value == null ? &quot;&quot; : value));</span>
-<span class="fc" id="L155">	}</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		values.put(name, TValue.fromString(value == null ? &quot;&quot; : value));</span>
+<span class="fc" id="L162">	}</span>
 
 	public boolean isTrue(String name) {
-<span class="fc bfc" id="L158" title="All 2 branches covered.">		for (String key : values.keySet())</span>
-<span class="pc bpc" id="L159" title="1 of 4 branches missed.">			if (key.equals(name) || key.startsWith(name + &quot;(&quot;))</span>
-<span class="fc" id="L160">				return true;</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		for (String key : values.keySet())</span>
+<span class="pc bpc" id="L166" title="1 of 4 branches missed.">			if (key.equals(name) || key.startsWith(name + &quot;(&quot;))</span>
+<span class="fc" id="L167">				return true;</span>
 
-<span class="fc" id="L162">		return false;</span>
+<span class="fc" id="L169">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

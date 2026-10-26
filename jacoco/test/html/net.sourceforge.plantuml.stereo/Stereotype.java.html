@@ -169,8 +169,8 @@ public class Stereotype implements CharSequence {
 <span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (isWithOOSymbol())</span>
 <span class="nc" id="L170">			return null;</span>
 
-<span class="pc bpc" id="L172" title="1 of 4 branches missed.">		if (decoration.spriteName != null &amp;&amp; decoration.spriteName.startsWith(&quot;archimate/&quot;))</span>
-<span class="nc" id="L173">			return guillemet.manageGuillemet(&quot;&lt;&lt;&quot; + decoration.spriteName.substring(&quot;archimate/&quot;.length()) + &quot;&gt;&gt;&quot;);</span>
+<span class="fc bfc" id="L172" title="All 4 branches covered.">		if (decoration.spriteName != null &amp;&amp; decoration.spriteName.startsWith(&quot;archimate/&quot;))</span>
+<span class="fc" id="L173">			return guillemet.manageGuillemet(&quot;&lt;&lt;&quot; + decoration.spriteName.substring(&quot;archimate/&quot;.length()) + &quot;&gt;&gt;&quot;);</span>
 
 <span class="fc" id="L175">		return guillemet.manageGuillemet(decoration.label);</span>
 	}

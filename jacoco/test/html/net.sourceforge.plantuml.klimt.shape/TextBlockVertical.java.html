@@ -90,13 +90,13 @@ public class TextBlockVertical extends TextBlockMemoized implements WithPorts {
 
 <span class="fc bfc" id="L91" title="All 2 branches covered.">			if (horizontalAlignment == HorizontalAlignment.LEFT) {</span>
 <span class="fc" id="L92">				block.drawU(ug.apply(UTranslate.dy(y)));</span>
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">			} else if (horizontalAlignment == HorizontalAlignment.CENTER) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			} else if (horizontalAlignment == HorizontalAlignment.CENTER) {</span>
 <span class="fc" id="L94">				final double dx = (dimtotal.getWidth() - dimb.getWidth()) / 2;</span>
 <span class="fc" id="L95">				block.drawU(ug.apply(new UTranslate(dx, y)));</span>
-<span class="pc bnc" id="L96" title="All 2 branches missed.">			} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
-<span class="nc" id="L97">				final double dx = dimtotal.getWidth() - dimb.getWidth();</span>
-<span class="nc" id="L98">				block.drawU(ug.apply(new UTranslate(dx, y)));</span>
-<span class="nc" id="L99">			} else {</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">			} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="fc" id="L97">				final double dx = dimtotal.getWidth() - dimb.getWidth();</span>
+<span class="fc" id="L98">				block.drawU(ug.apply(new UTranslate(dx, y)));</span>
+<span class="fc" id="L99">			} else {</span>
 <span class="nc" id="L100">				throw new UnsupportedOperationException();</span>
 			}
 <span class="fc" id="L102">			y += dimb.getHeight();</span>

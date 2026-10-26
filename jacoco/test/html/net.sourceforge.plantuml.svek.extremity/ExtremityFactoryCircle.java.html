@@ -46,15 +46,15 @@ public class ExtremityFactoryCircle extends AbstractExtremityFactory implements 
 	private final boolean fill;
 	private final HColor backgroundColor;
 
-<span class="nc" id="L49">	public ExtremityFactoryCircle(boolean fill, HColor backgroundColor) {</span>
-<span class="nc" id="L50">		this.fill = fill;</span>
-<span class="nc" id="L51">		this.backgroundColor = backgroundColor;</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L49">	public ExtremityFactoryCircle(boolean fill, HColor backgroundColor) {</span>
+<span class="fc" id="L50">		this.fill = fill;</span>
+<span class="fc" id="L51">		this.backgroundColor = backgroundColor;</span>
+<span class="fc" id="L52">	}</span>
 
 	@Override
 	public UDrawable createUDrawable(XPoint2D center, double angle, Side side) {
-<span class="nc" id="L56">		angle -= Math.PI / 2;</span>
-<span class="nc" id="L57">		return ExtremityCircle.create(center, fill, angle, backgroundColor);</span>
+<span class="fc" id="L56">		angle -= Math.PI / 2;</span>
+<span class="fc" id="L57">		return ExtremityCircle.create(center, fill, angle, backgroundColor);</span>
 	}
 
 	@Override

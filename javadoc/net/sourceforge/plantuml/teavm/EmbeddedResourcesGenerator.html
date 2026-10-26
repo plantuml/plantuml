@@ -93,9 +93,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">EmbeddedResourcesGenerator</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Generates <code>EmbeddedResources.java</code> by reading
- <code>skin/plantuml.skin</code> from the main resources directory and encoding it
- as a Base64 string literal.
+<div class="block">Generates <code>EmbeddedResources.java</code> by reading the skins of the main
+ resources directory (see <code>SKIN_NAMES</code>) and encoding them as Base64
+ string literals.
  <p>
  Run this class on a standard JVM (NOT under TeaVM) from the project root:
 
@@ -103,9 +103,9 @@ loadScripts(document, 'script');</script>
  java net.sourceforge.plantuml.teavm.EmbeddedResourcesGenerator
  </pre>
 
- The generated class exposes <code>openPlantumlSkin()</code> and
- <code>openStrictSkin()</code> which return an <code>InputStream</code> over the embedded
- skin bytes, so it works inside a TeaVM-compiled context where
+ The generated class exposes <code>openSkin(String)</code> (and the shortcuts
+ <code>openPlantumlSkin()</code> and <code>openStrictSkin()</code>) which return an
+ <code>InputStream</code> over the embedded skin bytes, so it works inside a TeaVM-compiled context where
  <code>ClassLoader.getResourceAsStream()</code> is not available.</div>
 </section>
 <section class="summary">

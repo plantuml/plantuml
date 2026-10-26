@@ -67,7 +67,7 @@ public class CommandGroup extends SingleLineCommand2&lt;NwDiagram&gt; {
 
 	@Override
 	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L70">		return diagram.openGroup(arg.get(&quot;NAME&quot;, 0));</span>
+<span class="fc" id="L70">		return diagram.openGroup(arg.get(&quot;NAME&quot;, 0));</span>
 	}
 
 	// Declared by hand: the pattern also accepts the keyword glued to what follows it
@@ -80,7 +80,7 @@ public class CommandGroup extends SingleLineCommand2&lt;NwDiagram&gt; {
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="nc" id="L83">		return FIRST_TOKENS;</span>
+<span class="fc" id="L83">		return FIRST_TOKENS;</span>
 	}
 
 }

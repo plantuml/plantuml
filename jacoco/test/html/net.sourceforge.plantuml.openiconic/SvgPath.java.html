@@ -144,23 +144,23 @@ public class SvgPath {
 	}
 
 	private UPath toUPath(double factorx, double factory) {
-<span class="nc" id="L147">		UPath result = UPath.none();</span>
-<span class="nc" id="L148">		Movement previous = null;</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (Movement move : movements) {</span>
-<span class="nc" id="L150">			final char letter = move.getLetter();</span>
-<span class="nc" id="L151">			final SvgPosition position = move.lastPosition();</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">			if (letter == 'M') {</span>
-<span class="nc" id="L153">				result.moveTo(position.getXDouble() * factorx, position.getYDouble() * factory);</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">			} else if (letter == 'C') {</span>
-<span class="nc" id="L155">				final SvgPosition ctl1 = move.getSvgPosition(0);</span>
-<span class="nc" id="L156">				final SvgPosition ctl2 = move.getSvgPosition(2);</span>
-<span class="nc" id="L157">				result.cubicTo(ctl1.getXDouble() * factorx, ctl1.getYDouble() * factory, ctl2.getXDouble() * factorx,</span>
-<span class="nc" id="L158">						ctl2.getYDouble() * factory, position.getXDouble() * factorx, position.getYDouble() * factory);</span>
-<span class="nc bnc" id="L159" title="All 2 branches missed.">			} else if (letter == 'Q') {</span>
+<span class="fc" id="L147">		UPath result = UPath.none();</span>
+<span class="fc" id="L148">		Movement previous = null;</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		for (Movement move : movements) {</span>
+<span class="fc" id="L150">			final char letter = move.getLetter();</span>
+<span class="fc" id="L151">			final SvgPosition position = move.lastPosition();</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			if (letter == 'M') {</span>
+<span class="fc" id="L153">				result.moveTo(position.getXDouble() * factorx, position.getYDouble() * factory);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">			} else if (letter == 'C') {</span>
+<span class="fc" id="L155">				final SvgPosition ctl1 = move.getSvgPosition(0);</span>
+<span class="fc" id="L156">				final SvgPosition ctl2 = move.getSvgPosition(2);</span>
+<span class="fc" id="L157">				result.cubicTo(ctl1.getXDouble() * factorx, ctl1.getYDouble() * factory, ctl2.getXDouble() * factorx,</span>
+<span class="fc" id="L158">						ctl2.getYDouble() * factory, position.getXDouble() * factorx, position.getYDouble() * factory);</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">			} else if (letter == 'Q') {</span>
 <span class="nc" id="L160">				final SvgPosition ctl = move.getSvgPosition(0);</span>
 <span class="nc" id="L161">				result.cubicTo(ctl.getXDouble() * factorx, ctl.getYDouble() * factory, ctl.getXDouble() * factorx,</span>
 <span class="nc" id="L162">						ctl.getYDouble() * factory, position.getXDouble() * factorx, position.getYDouble() * factory);</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">			} else if (letter == 'T') {</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">			} else if (letter == 'T') {</span>
 <span class="nc bnc" id="L164" title="All 2 branches missed.">				if (previous.getLetter() != 'Q')</span>
 <span class="nc" id="L165">					throw new IllegalArgumentException();</span>
 				// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
@@ -169,9 +169,9 @@ public class SvgPath {
 <span class="nc" id="L169">				final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
 <span class="nc" id="L170">				result.cubicTo(ctl.getXDouble() * factorx, ctl.getYDouble() * factory, ctl.getXDouble() * factorx,</span>
 <span class="nc" id="L171">						ctl.getYDouble() * factory, position.getXDouble() * factorx, position.getYDouble() * factory);</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">			} else if (letter == 'L') {</span>
-<span class="nc" id="L173">				result.lineTo(position.getXDouble() * factorx, position.getYDouble() * factory);</span>
-<span class="nc bnc" id="L174" title="All 2 branches missed.">			} else if (letter == 'A') {</span>
+<span class="pc bfc" id="L172" title="All 2 branches covered.">			} else if (letter == 'L') {</span>
+<span class="fc" id="L173">				result.lineTo(position.getXDouble() * factorx, position.getYDouble() * factory);</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">			} else if (letter == 'A') {</span>
 <span class="nc" id="L175">				final double rx = move.getArgument(0);</span>
 <span class="nc" id="L176">				final double ry = move.getArgument(1);</span>
 <span class="nc" id="L177">				final double x_axis_rotation = move.getArgument(2);</span>
@@ -179,14 +179,14 @@ public class SvgPath {
 <span class="nc" id="L179">				final double sweep_flag = move.getArgument(4);</span>
 <span class="nc" id="L180">				result.arcTo(rx * factorx, ry * factory, x_axis_rotation, large_arc_flag, sweep_flag,</span>
 <span class="nc" id="L181">						position.getXDouble() * factorx, position.getYDouble() * factory);</span>
-<span class="nc bnc" id="L182" title="All 2 branches missed.">			} else if (letter == 'Z') {</span>
-<span class="nc" id="L183">				result.closePath();</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">			} else if (letter == 'Z') {</span>
+<span class="fc" id="L183">				result.closePath();</span>
 			} else {
 <span class="nc" id="L185">				throw new UnsupportedOperationException(&quot;letter &quot; + letter);</span>
 			}
-<span class="nc" id="L187">		}</span>
-<span class="nc" id="L188">		result = result.translate(translate.getDx() * factorx, translate.getDy() * factory);</span>
-<span class="nc" id="L189">		return result;</span>
+<span class="fc" id="L187">		}</span>
+<span class="fc" id="L188">		result = result.translate(translate.getDx() * factorx, translate.getDy() * factory);</span>
+<span class="fc" id="L189">		return result;</span>
 	}
 
 	private UPath toUPath(XAffineTransform at) {
@@ -201,9 +201,9 @@ public class SvgPath {
 <span class="fc" id="L201">				final SvgPosition ctl1 = move.getSvgPosition(0);</span>
 <span class="fc" id="L202">				final SvgPosition ctl2 = move.getSvgPosition(2);</span>
 <span class="fc" id="L203">				result.cubicTo(ctl1.affine(at), ctl2.affine(at), position.affine(at));</span>
-<span class="pc bpc" id="L204" title="1 of 2 branches missed.">			} else if (letter == 'Q') {</span>
-<span class="nc" id="L205">				final SvgPosition ctl = move.getSvgPosition(0);</span>
-<span class="nc" id="L206">				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">			} else if (letter == 'Q') {</span>
+<span class="fc" id="L205">				final SvgPosition ctl = move.getSvgPosition(0);</span>
+<span class="fc" id="L206">				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
 <span class="pc bpc" id="L207" title="1 of 2 branches missed.">			} else if (letter == 'T') {</span>
 <span class="nc bnc" id="L208" title="All 2 branches missed.">				if (previous.getLetter() == 'Q') {</span>
 					// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
@@ -248,9 +248,9 @@ public class SvgPath {
 <span class="fc" id="L248">	}</span>
 
 	public void drawMe(UGraphic ug, double factor) {
-<span class="nc" id="L251">		final UPath path = toUPath(factor, factor);</span>
-<span class="nc" id="L252">		ug.draw(path);</span>
-<span class="nc" id="L253">	}</span>
+<span class="fc" id="L251">		final UPath path = toUPath(factor, factor);</span>
+<span class="fc" id="L252">		ug.draw(path);</span>
+<span class="fc" id="L253">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

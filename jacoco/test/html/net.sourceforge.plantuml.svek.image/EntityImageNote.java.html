@@ -203,7 +203,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 <span class="nc" id="L203">			ug.startUrl(url);</span>
 
 <span class="fc" id="L205">		final UGraphic ug2 = UGraphicStencil.create(ug, this, UStroke.simple());</span>
-<span class="pc bpc" id="L206" title="1 of 2 branches missed.">		if (opaleLink != null) {</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (opaleLink != null) {</span>
 <span class="fc" id="L207">			final StringBounder stringBounder = ug.getStringBounder();</span>
 
 <span class="fc" id="L209">			final SmetanaEdge smetanaEdged = smetanaPathes.get(opaleLink);</span>
@@ -232,8 +232,8 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 <span class="fc" id="L232">			opale.setOpale(strategy, pp2, pp1);</span>
 <span class="fc" id="L233">			final UGraphic stroked = applyStroke(ug2);</span>
 <span class="fc" id="L234">			opale.drawU(Colors.applyStroke(stroked, getEntity().getColors()));</span>
-<span class="pc bnc" id="L235" title="All 4 branches missed.">		} else if (opaleLine == null || opaleLine.isOpale() == false) {</span>
-<span class="nc" id="L236">			drawNormal(ug2);</span>
+<span class="pc bpc" id="L235" title="3 of 4 branches missed.">		} else if (opaleLine == null || opaleLine.isOpale() == false) {</span>
+<span class="fc" id="L236">			drawNormal(ug2);</span>
 		} else {
 <span class="nc" id="L238">			final StringBounder stringBounder = ug.getStringBounder();</span>
 <span class="nc" id="L239">			DotPath path = opaleLine.getDotPath();</span>
@@ -270,19 +270,19 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	}
 
 	private void drawNormal(UGraphic ug) {
-<span class="nc" id="L273">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L274">		final UPath polygon = Opale.getPolygonNormal(getTextWidth(stringBounder), getTextHeight(stringBounder),</span>
-<span class="nc" id="L275">				getRoundCorner());</span>
+<span class="fc" id="L273">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L274">		final UPath polygon = Opale.getPolygonNormal(getTextWidth(stringBounder), getTextHeight(stringBounder),</span>
+<span class="fc" id="L275">				getRoundCorner());</span>
 
-<span class="nc" id="L277">		polygon.setDeltaShadow(this.shadowing);</span>
+<span class="fc" id="L277">		polygon.setDeltaShadow(this.shadowing);</span>
 
-<span class="nc" id="L279">		ug = ug.apply(noteBackgroundColor.bg()).apply(borderColor);</span>
-<span class="nc" id="L280">		final UGraphic stroked = applyStroke(ug);</span>
-<span class="nc" id="L281">		stroked.draw(polygon);</span>
-<span class="nc" id="L282">		ug.draw(Opale.getCorner(getTextWidth(stringBounder), getRoundCorner()));</span>
+<span class="fc" id="L279">		ug = ug.apply(noteBackgroundColor.bg()).apply(borderColor);</span>
+<span class="fc" id="L280">		final UGraphic stroked = applyStroke(ug);</span>
+<span class="fc" id="L281">		stroked.draw(polygon);</span>
+<span class="fc" id="L282">		ug.draw(Opale.getCorner(getTextWidth(stringBounder), getRoundCorner()));</span>
 
-<span class="nc" id="L284">		getTextBlock().drawU(ug.apply(new UTranslate(marginX1, marginY)));</span>
-<span class="nc" id="L285">	}</span>
+<span class="fc" id="L284">		getTextBlock().drawU(ug.apply(new UTranslate(marginX1, marginY)));</span>
+<span class="fc" id="L285">	}</span>
 
 	private UGraphic applyStroke(UGraphic ug) {
 <span class="fc" id="L288">		return ug.apply(style.getStroke());</span>

@@ -119,8 +119,8 @@ public class CommandWBSItemNew extends SingleLineCommand2&lt;WBSDiagram&gt; {
 <span class="fc" id="L119">		final String code = arg.getLazzy(&quot;CODE&quot;, 0);</span>
 <span class="fc" id="L120">		final String stringColor = arg.getLazzy(&quot;BACKCOLOR&quot;, 0);</span>
 <span class="fc" id="L121">		HColor backColor = null;</span>
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (stringColor != null)</span>
-<span class="nc" id="L123">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (stringColor != null)</span>
+<span class="fc" id="L123">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
 
 <span class="fc" id="L125">		final Direction dir = Direction.getWBSDirection(arg);</span>
 <span class="fc" id="L126">		IdeaShape shape = IdeaShape.fromDesc(arg.getLazzy(&quot;SHAPE&quot;, 0));</span>

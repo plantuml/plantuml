@@ -80,14 +80,14 @@ public class CodeIteratorAffectation extends AbstractCodeIterator {
 			try {
 <span class="fc" id="L81">				this.executeAffectation(context, memory, result);</span>
 <span class="fc" id="L82">				return;</span>
-<span class="nc" id="L83">			} catch (ParseException e) {</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">				if (e.getColumn() &lt;= lastLocation)</span>
+<span class="fc" id="L83">			} catch (ParseException e) {</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">				if (e.getColumn() &lt;= lastLocation)</span>
 <span class="nc" id="L85">					throw new EaterException(&quot;Error in JSON format&quot;, result);</span>
 
-<span class="nc" id="L87">				lastLocation = e.getColumn();</span>
-<span class="nc" id="L88">				next();</span>
-<span class="nc" id="L89">				final StringLocated forward = source.peek();</span>
-<span class="nc" id="L90">				result = result.append(forward.getString());</span>
+<span class="fc" id="L87">				lastLocation = e.getColumn();</span>
+<span class="fc" id="L88">				next();</span>
+<span class="fc" id="L89">				final StringLocated forward = source.peek();</span>
+<span class="fc" id="L90">				result = result.append(forward.getString());</span>
 			}
 <span class="nc" id="L92">	}</span>
 

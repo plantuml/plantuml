@@ -129,7 +129,7 @@ public class UGraphicSvg extends AbstractUGraphic&lt;SvgGraphics&gt; implements 
 <span class="fc" id="L129">		registerDriver(UPixel.class, new DriverPixelSvg());</span>
 <span class="fc" id="L130">		registerDriver(UPolygon.class, new DriverPolygonSvg());</span>
 <span class="fc" id="L131">		registerDriver(UEllipse.class, new DriverEllipseSvg());</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
+<span class="pc bpc" id="L132" title="3 of 4 branches missed.">		if (!TeaVM.isTeaVM() || TeaVM.isC())</span>
 <span class="fc" id="L133">			registerDriver(UImage.class, new DriverImagePng());</span>
 <span class="fc" id="L134">		registerDriver(UImageSvg.class, new DriverImageSvgSvg());</span>
 <span class="fc" id="L135">		ignoreShape(UImageTikz.class);</span>

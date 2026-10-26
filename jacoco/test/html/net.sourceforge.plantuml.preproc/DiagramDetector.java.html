@@ -61,9 +61,9 @@ import net.sourceforge.plantuml.utils.StartUtils;
 
 	static public ReadLine extractFromBytes(byte[] puml, String description) throws IOException {
 <span class="fc" id="L63">		final ReadLine raw = newReadLineFromInputStream(new ByteArrayInputStream(puml), description);</span>
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (containsStartDiagram(raw)) {</span>
-<span class="nc" id="L65">			final ReadLine raw1 = newReadLineFromInputStream(new ByteArrayInputStream(puml), description);</span>
-<span class="nc" id="L66">			return new DiagramExtractor(raw1, null);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (containsStartDiagram(raw)) {</span>
+<span class="fc" id="L65">			final ReadLine raw1 = newReadLineFromInputStream(new ByteArrayInputStream(puml), description);</span>
+<span class="fc" id="L66">			return new DiagramExtractor(raw1, null);</span>
 		}
 <span class="fc" id="L68">		return null;</span>
 	}

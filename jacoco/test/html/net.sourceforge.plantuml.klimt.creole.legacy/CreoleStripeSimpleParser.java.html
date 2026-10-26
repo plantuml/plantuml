@@ -141,11 +141,11 @@ public class CreoleStripeSimpleParser {
 
 <span class="fc bfc" id="L142" title="All 2 branches covered.">		if (mode == CreoleMode.FULL) {</span>
 <span class="fc" id="L143">			final Matcher2 m2 = HASH_HEADING_PATTERN.matcher(CharHidder.hide(line), 0);</span>
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">			if (m2.find()) {</span>
-<span class="nc" id="L145">				this.line = StringUtils.trin(CharHidder.unhide(m2.group(2)));</span>
-<span class="nc" id="L146">				final int order = CharHidder.unhide(m2.group(1)).length() - 1;</span>
-<span class="nc" id="L147">				this.style = new StripeStyle(StripeStyleType.LIST_WITH_NUMBER, order, '\0');</span>
-<span class="nc" id="L148">				return;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">			if (m2.find()) {</span>
+<span class="fc" id="L145">				this.line = StringUtils.trin(CharHidder.unhide(m2.group(2)));</span>
+<span class="fc" id="L146">				final int order = CharHidder.unhide(m2.group(1)).length() - 1;</span>
+<span class="fc" id="L147">				this.style = new StripeStyle(StripeStyleType.LIST_WITH_NUMBER, order, '\0');</span>
+<span class="fc" id="L148">				return;</span>
 			}
 		}
 

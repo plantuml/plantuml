@@ -206,8 +206,8 @@ public class JsonParser {
 <span class="fc" id="L206">			handler.endArrayValue(array);</span>
 <span class="fc" id="L207">			skipWhiteSpace();</span>
 <span class="fc bfc" id="L208" title="All 2 branches covered.">		} while (readChar(','));</span>
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (!readChar(']')) {</span>
-<span class="nc" id="L210">			throw expected(&quot;',' or ']'&quot;);</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (!readChar(']')) {</span>
+<span class="fc" id="L210">			throw expected(&quot;',' or ']'&quot;);</span>
 		}
 <span class="fc" id="L212">		nestingLevel--;</span>
 <span class="fc" id="L213">		handler.endArray(array);</span>
@@ -246,8 +246,8 @@ public class JsonParser {
 <span class="nc" id="L246">				skipComment();</span>
 			}
 <span class="fc bfc" id="L248" title="All 2 branches covered.">		} while (readChar(','));</span>
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (!readChar('}')) {</span>
-<span class="nc" id="L250">			throw expected(&quot;',' or '}'&quot;);</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">		if (!readChar('}')) {</span>
+<span class="fc" id="L250">			throw expected(&quot;',' or '}'&quot;);</span>
 		}
 <span class="fc" id="L252">		nestingLevel--;</span>
 <span class="fc" id="L253">		handler.endObject(object);</span>
@@ -263,8 +263,8 @@ public class JsonParser {
 <span class="nc" id="L263">	}</span>
 
 	private String readName() throws IOException {
-<span class="pc bpc" id="L266" title="1 of 2 branches missed.">		if (current != '&quot;') {</span>
-<span class="nc" id="L267">			throw expected(&quot;name&quot;);</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">		if (current != '&quot;') {</span>
+<span class="fc" id="L267">			throw expected(&quot;name&quot;);</span>
 		}
 <span class="fc" id="L269">		return readStringInternal();</span>
 	}
@@ -499,7 +499,7 @@ public class JsonParser {
 	}
 
 	private boolean isWhiteSpace() {
-<span class="pc bpc" id="L502" title="2 of 8 branches missed.">		return current == ' ' || current == '\t' || current == '\n' || current == '\r';</span>
+<span class="pc bpc" id="L502" title="1 of 8 branches missed.">		return current == ' ' || current == '\t' || current == '\n' || current == '\r';</span>
 	}
 
 	private boolean isDigit() {

@@ -61,9 +61,9 @@ package net.sourceforge.plantuml.brotli;
 <span class="fc" id="L61">	}</span>
 
 	static void doReadMoreInput(State s) {
-<span class="pc bpc" id="L64" title="1 of 2 branches missed.">		if (s.endOfStreamReached != 0) {</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">			if (halfAvailable(s) &gt;= -2) {</span>
-<span class="nc" id="L66">				return;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (s.endOfStreamReached != 0) {</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (halfAvailable(s) &gt;= -2) {</span>
+<span class="fc" id="L66">				return;</span>
 			}
 <span class="nc" id="L68">			throw new BrotliRuntimeException(&quot;No more input&quot;);</span>
 		}
@@ -191,11 +191,11 @@ package net.sourceforge.plantuml.brotli;
 <span class="fc" id="L191">	}</span>
 
 	static int halfAvailable(State s) {
-<span class="nc" id="L194">		int limit = HALVES_CAPACITY;</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (s.endOfStreamReached != 0) {</span>
-<span class="nc" id="L196">			limit = (s.tailBytes + (HALF_SIZE - 1)) &gt;&gt; LOG_HALF_SIZE;</span>
+<span class="fc" id="L194">		int limit = HALVES_CAPACITY;</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (s.endOfStreamReached != 0) {</span>
+<span class="fc" id="L196">			limit = (s.tailBytes + (HALF_SIZE - 1)) &gt;&gt; LOG_HALF_SIZE;</span>
 		}
-<span class="nc" id="L198">		return limit - s.halfOffset;</span>
+<span class="fc" id="L198">		return limit - s.halfOffset;</span>
 	}
 
 	static void copyBytes(State s, byte[] data, int offset, int length) {

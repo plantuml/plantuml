@@ -91,8 +91,8 @@ public abstract class BodyEnhancedAbstract implements TextBlock {
 <span class="fc" id="L91">	}</span>
 
 	final protected TextBlock getTitle(String s, ISkinSimple spriteContainer) {
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (s.length() &lt;= 4)</span>
-<span class="nc" id="L95">			return null;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (s.length() &lt;= 4)</span>
+<span class="fc" id="L95">			return null;</span>
 
 <span class="fc" id="L97">		s = StringUtils.trin(s.substring(2, s.length() - 2));</span>
 <span class="fc" id="L98">		return Display.getWithNewlines(spriteContainer.getPragma(), s).create(titleConfig, HorizontalAlignment.LEFT,</span>
@@ -108,8 +108,8 @@ public abstract class BodyEnhancedAbstract implements TextBlock {
 <span class="fc bfc" id="L108" title="All 2 branches covered.">		if (separator == 0)</span>
 <span class="fc" id="L109">			return TextBlockUtils.withMargin(block, marginX, 0);</span>
 
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (title == null)</span>
-<span class="nc" id="L112">			return new TextBlockLineBefore(getDefaultThickness(), TextBlockUtils.withMargin(block, marginX, 4),</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (title == null)</span>
+<span class="fc" id="L112">			return new TextBlockLineBefore(getDefaultThickness(), TextBlockUtils.withMargin(block, marginX, 4),</span>
 					separator);
 
 <span class="fc" id="L115">		final XDimension2D dimTitle = title.calculateDimension(stringBounder);</span>
