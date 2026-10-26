@@ -291,7 +291,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 	}
 
 	private String pointd(double x, double y) {
-		return String.format(Locale.US, "[ %.4f ; %.4f ]", x, y);
+		return String.format(Locale.ROOT, "[ %.4f ; %.4f ]", x, y);
 	}
 
 	private String colorToString(HColor color) {
@@ -316,7 +316,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		print(os, "DPI: " + dpi);
 		print(os, "dimension: " + pointd(dim.getWidth(), dim.getHeight()));
-		print(os, "scaleFactor: " + String.format(Locale.US, "%.4f", scaleFactor));
+		print(os, "scaleFactor: " + String.format(Locale.ROOT, "%.4f", scaleFactor));
 		print(os, "seed: " + seed);
 		print(os, "svgLinkTarget: " + svgLinkTarget);
 		print(os, "hoverPathColorRGB: " + hoverPathColorRGB);

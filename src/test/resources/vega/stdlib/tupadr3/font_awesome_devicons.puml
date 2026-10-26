@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!include <tupadr3/common>
+!include <tupadr3/font-awesome/server>
+!include <tupadr3/font-awesome/database>
+!include <tupadr3/devicons/mysql>
+
+FA_SERVER(web, "Web")
+FA_DATABASE(db, "Database")
+DEV_MYSQL(mysql, "MySQL")
+
+web --> db
+db --> mysql
+@enduml

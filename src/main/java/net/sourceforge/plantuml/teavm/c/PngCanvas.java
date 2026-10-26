@@ -202,6 +202,15 @@ public final class PngCanvas implements RasterCanvas {
 		return metrics;
 	}
 
+	@Override
+	public double[] getInkBounds(String text, UFont font) {
+		setFont(font);
+		final char[] chars = text.toCharArray();
+		final double[] bounds = new double[4];
+		NativeCanvas.textBounds(handle, chars, chars.length, bounds);
+		return bounds;
+	}
+
 	private void setFont(UFont font) {
 		final UFontFace face = font.getFontFace();
 		final int id;

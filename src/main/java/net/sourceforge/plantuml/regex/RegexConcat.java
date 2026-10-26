@@ -51,7 +51,7 @@ public final class RegexConcat extends RegexComposed implements IRegex {
 //		if (OptionFlags.getInstance().isVerbose())
 //			synchronized (cache) {
 //
-//				final NumberFormat nf = NumberFormat.getInstance(Locale.US);
+//				final NumberFormat nf = NumberFormat.getInstance(Locale.ROOT);
 //
 //				int nbCompiled = 0;
 //				int nbInvoked = 0;

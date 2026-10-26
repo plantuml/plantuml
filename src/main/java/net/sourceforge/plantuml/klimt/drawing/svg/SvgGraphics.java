@@ -75,6 +75,9 @@ import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.style.LengthAdjust;
 import net.sourceforge.plantuml.teavm.TeaVM;
+// ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.c.EmbeddedFiles;
+// ::done
 import net.sourceforge.plantuml.utils.Base64Coder;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
@@ -263,6 +266,17 @@ public class SvgGraphics {
 	}
 
 	private static String getData(final String name) {
+		// ::comment when JAVA8
+		if (TeaVM.isC()) {
+			// No classpath in the C build: the files are embedded in the executable
+			final byte[] data = EmbeddedFiles.read("svg/" + name);
+			if (data == null) {
+				Log.error("Cannot retrieve " + name);
+				return null;
+			}
+			return new String(data, java.nio.charset.StandardCharsets.UTF_8);
+		}
+		// ::done
 		try {
 			final InputStream is = SvgGraphics.class.getResourceAsStream("/svg/" + name);
 			if (is == null)
@@ -1041,6 +1055,11 @@ public class SvgGraphics {
 	}
 
 	private String toBase64(PortableImage image) throws IOException {
+		if (TeaVM.isC()) {
+			// No javax.imageio in the C build: the image is encoded in C
+			final String url = image.toPngDataUrl();
+			return url.substring(url.indexOf(',') + 1);
+		}
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		SImageIO.write(image, "png", baos);
 		final byte data[] = baos.toByteArray();

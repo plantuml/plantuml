@@ -301,6 +301,9 @@ public enum CliFlag {
 
 	@CliFlagDoc(value = "Generate SVG images", level = 0)
 	T_SVG("--svg", aliases(DEPRECATED("-tsvg"), DEPRECATED("-svg")), Arity.UNARY_BOOLEAN, FileFormat.SVG),
+	// Deterministic SVG (text measured with width tables, not AWT): the same output on the JVM
+	// and in the C build, as used by the Vega tests
+	T_SVG_VEGA("--svg-vega", Arity.UNARY_BOOLEAN, FileFormat.SVG_DETERMINISTIC),
 	T_NULL("--null", Arity.UNARY_BOOLEAN, FileFormat.NULL),
 
 	@CliFlagDoc(value = "Generate ASCII art diagrams", level = 0)

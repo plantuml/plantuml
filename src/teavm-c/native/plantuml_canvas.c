@@ -222,6 +222,18 @@ void plantuml_canvas_font_metrics(int64_t handle, double* metrics) {
 	metrics[2] = line_gap;
 }
 
+void plantuml_canvas_text_bounds(int64_t handle, const uint16_t* text, int32_t length, double* bounds) {
+	plantuml_canvas_t* c = CANVAS(handle);
+	plutovg_rect_t extents = { 0, 0, 0, 0 };
+	if (c->face != NULL)
+		plutovg_font_face_text_extents(c->face, c->font_size, text, length, PLUTOVG_TEXT_ENCODING_UTF16, &extents);
+	/* plutovg gives the box with y going down from the baseline, as Java2D */
+	bounds[0] = extents.x;
+	bounds[1] = extents.y;
+	bounds[2] = extents.w;
+	bounds[3] = extents.h;
+}
+
 void plantuml_canvas_fill_text(int64_t handle, const uint16_t* text, int32_t length, double x, double y,
 		double angle) {
 	plantuml_canvas_t* c = CANVAS(handle);
@@ -260,4 +272,38 @@ void plantuml_canvas_copy_png(int64_t handle, int8_t* dest) {
 	plantuml_canvas_t* c = CANVAS(handle);
 	if (c->png_size > 0)
 		memcpy(dest, c->png, c->png_size);
+}
+
+static unsigned char* image_png = NULL;
+static size_t image_png_size = 0;
+
+int32_t plantuml_png_image_encode(const int32_t* argb, int32_t width, int32_t height, int32_t opaque) {
+	free(image_png);
+	image_png = NULL;
+	image_png_size = 0;
+	if (width <= 0 || height <= 0)
+		return -1;
+	const size_t count = (size_t) width * (size_t) height;
+	uint32_t* pixels = (uint32_t*) malloc(count * sizeof(uint32_t));
+	if (pixels == NULL)
+		return -1;
+	for (size_t i = 0; i < count; i++)
+		pixels[i] = (uint32_t) argb[i];
+	unsigned char* png;
+	size_t size;
+	const int failed = plantuml_png_encode_lossless(pixels, width, height, width * 4, opaque, &png, &size);
+	free(pixels);
+	if (failed != 0 || size > 0x7FFFFFFF)
+		return -1;
+	image_png = png;
+	image_png_size = size;
+	return (int32_t) size;
+}
+
+void plantuml_png_image_copy(int8_t* dest) {
+	if (image_png_size > 0)
+		memcpy(dest, image_png, image_png_size);
+	free(image_png);
+	image_png = NULL;
+	image_png_size = 0;
 }

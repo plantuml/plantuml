@@ -96,7 +96,7 @@ public class SvekUtils {
 
 	public static String pixelToInches(double pixel) {
 		final double v = pixel / 72.0;
-		return String.format(Locale.US, "%6.6f", v);
+		return String.format(Locale.ROOT, "%6.6f", v);
 	}
 
 }

@@ -42,25 +42,47 @@ import java.util.List;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.UgDiagram;
+import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
+import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.PSystemFactory;
+import net.sourceforge.plantuml.chart.ChartDiagramFactory;
+import net.sourceforge.plantuml.cheneer.ChenEerDiagramFactory;
+import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.descdiagram.DescriptionDiagramFactory;
+import net.sourceforge.plantuml.ebnf.PSystemEbnfFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.error.PSystemUnsupported;
 import net.sourceforge.plantuml.explain.Explanation;
 import net.sourceforge.plantuml.explain.PSystemExplain;
+import net.sourceforge.plantuml.gantt.GanttDiagramFactory;
 import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
+import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
+import net.sourceforge.plantuml.klimt.sprite.ListSpriteDiagramFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
 import net.sourceforge.plantuml.nio.PathSystem;
+import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
+import net.sourceforge.plantuml.packetdiag.PacketDiagramFactory;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.regexdiagram.PSystemRegexFactory;
+import net.sourceforge.plantuml.salt.PSystemSaltFactory;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
+import net.sourceforge.plantuml.statediagram.StateDiagramFactory;
+import net.sourceforge.plantuml.sudoku.PSystemSudokuFactory;
 import net.sourceforge.plantuml.teavm.TextareaSource;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.TimLoader;
+import net.sourceforge.plantuml.timingdiagram.TimingDiagramFactory;
+import net.sourceforge.plantuml.version.PSystemVersionFactory;
+import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
+import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 
 public class PSystemBuilderC {
 
@@ -70,8 +92,31 @@ public class PSystemBuilderC {
 	private PSystemFactory lastFactory;
 
 	private PSystemBuilderC() {
-		// Only MindMap for now (other diagrams will be added step by step)
+		factories.add(new SequenceDiagramFactory());
+		factories.add(new ClassDiagramFactory());
+		factories.add(new ActivityDiagramFactory());
+		factories.add(new DescriptionDiagramFactory());
+		factories.add(new StateDiagramFactory());
+		factories.add(new ActivityDiagramFactory3());
+		factories.add(new PSystemVersionFactory());
+		factories.add(new PSystemSaltFactory());
+		factories.add(new GanttDiagramFactory());
 		factories.add(new MindMapDiagramFactory());
+		factories.add(new WBSDiagramFactory());
+		factories.add(new NwDiagramFactory());
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
+		factories.add(new PSystemSudokuFactory());
+		// ::done
+		factories.add(new PSystemCreoleFactory());
+		factories.add(new TimingDiagramFactory());
+		factories.add(new ChartDiagramFactory());
+		factories.add(new PacketDiagramFactory());
+		factories.add(new JsonDiagramFactory());
+		factories.add(new YamlDiagramFactory());
+		factories.add(new PSystemEbnfFactory());
+		factories.add(new PSystemRegexFactory());
+		factories.add(new ChenEerDiagramFactory());
+		factories.add(new ListSpriteDiagramFactory());
 	}
 
 	public static PSystemBuilderC getInstance() {
@@ -142,10 +187,10 @@ public class PSystemBuilderC {
 				continue;
 			if (f == lastFactory)
 				continue;
-	
+
 			final Diagram sys = f.createSystem(null, umlSource, null, preprocessing);
 			if (isOk(sys)) {
-						this.lastFactory = f;
+				this.lastFactory = f;
 				if (explainTypes != null) {
 					final List<Explanation> explanations = f.explain(null, umlSource, null, preprocessing);
 					return new PSystemExplain(umlSource, preprocessing, explanations);

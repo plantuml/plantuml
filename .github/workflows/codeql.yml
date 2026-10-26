@@ -1,0 +1,51 @@
+name: CodeQL
+
+# Advanced setup of the code scanning, which replaces the "default setup" of
+# GitHub: the default setup cannot analyze the C code (no build system at the
+# root of the repository), so every language is analyzed here without build
+# (build-mode: none). The third-party C code is excluded in
+# .github/codeql/codeql-config.yml.
+#
+# The default setup must be disabled in Settings > Advanced Security >
+# CodeQL analysis, otherwise GitHub refuses the results of this workflow.
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: '23 4 * * 1'
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ actions, c-cpp, java-kotlin, javascript-typescript, python ]
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v7
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: none
+          config-file: ./.github/codeql/codeql-config.yml
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{ matrix.language }}"

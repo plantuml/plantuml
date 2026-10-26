@@ -35,6 +35,7 @@
 package net.sourceforge.plantuml.chart;
 
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -172,9 +173,9 @@ public class AreaRenderer {
 
 	private String formatValue(double value) {
 		if (Math.abs(value) < 0.01 && value != 0)
-			return String.format("%.2e", value);
+			return String.format(Locale.ROOT, "%.2e", value);
 		if (value == (long) value)
-			return String.format("%d", (long) value);
-		return String.format("%.2f", value);
+			return String.format(Locale.ROOT, "%d", (long) value);
+		return String.format(Locale.ROOT, "%.2f", value);
 	}
 }

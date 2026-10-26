@@ -1,6 +1,6 @@
 @echo off
 rem Java -> C (TeaVM) -> native Windows executable (MSVC), see src/teavm-c/README.md
-rem Usage: compilec.bat [x64|ARM64]   (default: the architecture of this machine)
+rem Usage: compilec.bat [x64|ARM64]   (default: the architecture of this machine). Set SKIP_GENERATE=1 to skip the Gradle step and only redo the C build
 setlocal
 
 cd /d "%~dp0"
@@ -11,7 +11,7 @@ if "%PLATFORM%"=="" (
 )
 
 echo === 1/3 Generating C sources with TeaVM ===
-call gradlew.bat :generateC
+if defined SKIP_GENERATE (echo SKIP_GENERATE is set, the C sources are not generated again) else call gradlew.bat :generateC
 if errorlevel 1 goto :error
 
 call :findcmake
@@ -21,22 +21,21 @@ echo === 2/3 Configuring CMake (%PLATFORM%) with %CMAKE% ===
 "%CMAKE%" -S build\generated\teavm\c -B build\c-build -A %PLATFORM%
 if errorlevel 1 goto :error
 
-echo === 3/3 Building plantuml-c.exe ===
-"%CMAKE%" --build build\c-build --config Release
+echo === 3/3 Building plantuml.exe ===
+"%CMAKE%" --build build\c-build --config Release --parallel
 if errorlevel 1 goto :error
 
 set "EXE="
-for /r "build\generated\teavm\c\bin" %%f in (plantuml-c.exe) do if exist "%%f" set "EXE=%%f"
+for /r "build\generated\teavm\c\bin" %%f in (plantuml.exe) do if exist "%%f" set "EXE=%%f"
 if "%EXE%"=="" goto :error
 
 rem Copy the executable to the repository root (the current directory)
-copy /y "%EXE%" "%~dp0plantuml-c.exe" >nul
+copy /y "%EXE%" "%~dp0plantuml.exe" >nul
 if errorlevel 1 goto :error
 
 echo.
-echo Done: %~dp0plantuml-c.exe
-echo Try:  plantuml-c.exe --help
-echo       plantuml-c.exe -tsvg mindmap.puml
+echo Done: %~dp0plantuml.exe
+echo Try:  plantuml.exe --help
 exit /b 0
 
 :error

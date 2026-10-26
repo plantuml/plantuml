@@ -32,7 +32,17 @@ extern "C" {
 int plantuml_png_encode(uint32_t* pixels, int width, int height, int stride, int opaque, unsigned char** png,
 		size_t* png_size);
 
+/* Same, but nothing is lost: no palette, no packing of the channels (what
+ * javax.imageio writes for an image embedded in an SVG) */
+int plantuml_png_encode_lossless(uint32_t* pixels, int width, int height, int stride, int opaque,
+		unsigned char** png, size_t* png_size);
+
 /* Quantify555 (exposed for tests) */
+/* Same for pixels that are not premultiplied (ARGB as they are), not clobbered
+ * but the alpha forced for an opaque image */
+int plantuml_png_encode_straight(uint32_t* pixels, int width, int height, int stride, int opaque,
+		unsigned char** png, size_t* png_size);
+
 typedef struct {
 	int size;
 	uint32_t palette[256];

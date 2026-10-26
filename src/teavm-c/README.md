@@ -6,10 +6,10 @@ native executable with no JVM.
 
 Current step: the executable has the entry point of the JVM
 (`net.sourceforge.plantuml.Run`), so it has the same command line and the same
-help (`plantuml-c --help`). It renders **mindmap diagrams only, in SVG or PNG**
-(PNG is the default format, as on the JVM): `plantuml-c [options] file.puml`
+help (`plantuml --help`). It renders **mindmap diagrams only, in SVG or PNG**
+(PNG is the default format, as on the JVM): `plantuml [options] file.puml`
 writes `file.png` (or `file.svg` with `-tsvg`) next to the source, or in the
-`-o` directory, and `plantuml-c -tsvg -pipe < file.puml > file.svg` reads the
+`-o` directory, and `plantuml -tsvg -pipe < file.puml > file.svg` reads the
 standard input. Prefer the files on Windows, whose console encodes the standard
 streams. Other diagram types are commented out in `PSystemBuilderC` and will be
 added one by one.
@@ -18,7 +18,7 @@ What the C build cannot do is guarded by `TeaVM.isC()`, so that TeaVM does not
 compile (and links nothing of) it. The flags exist and are parsed as on the JVM,
 but they only print "... is not available in the C build":
 
-- the GUI (it is also what `plantuml-c` without arguments would start on the
+- the GUI (it is also what `plantuml` without arguments would start on the
   JVM: the C build prints the help instead), `--ftp-server`, `--http-server`,
   `--clipboard`, `-printfonts`, `-license`, the statistics, `--encode-sprite`,
   `--check-graphviz` (there is no Graphviz: Smetana computes the layout);
@@ -90,7 +90,7 @@ This has to be done again in every new PowerShell window. Then:
 ```
 cmake -S build\generated\teavm\c -B build\c-native -G Ninja
 cmake --build build\c-native
-build\generated\teavm\c\bin\plantuml-c.exe -tsvg mindmap.puml
+build\generated\teavm\c\bin\plantuml.exe -tsvg mindmap.puml
 ```
 
 If `Launch-VsDevShell.ps1` or `vcvarsall.bat` is missing, the Build Tools
@@ -102,13 +102,13 @@ installation is incomplete (for instance after an interrupted download): use
 ```
 cmake -S build/generated/teavm/c -B build/c-native
 cmake --build build/c-native
-build/generated/teavm/c/bin/plantuml-c -tsvg mindmap.puml
+build/generated/teavm/c/bin/plantuml -tsvg mindmap.puml
 ```
 
 ## Continuous integration
 
 `.github/workflows/teavm-c.yml` runs on every push to `master-c`: it generates
-the C sources once on Linux, then builds and smoke-tests (small mindmap to SVG and PNG, help, exit code) `plantuml-c.exe` on
+the C sources once on Linux, then builds and smoke-tests (small mindmap to SVG and PNG, help, exit code) `plantuml.exe` on
 Windows x64 and Windows ARM64. The executables are available as workflow
 artifacts (`plantuml-c-windows-x64`, `plantuml-c-windows-arm64`).
 
@@ -164,7 +164,7 @@ native side alone, without PlantUML:
 gradlew :generateC -PteavmCMainClass=PngDemoC
 cmake -S build/generated/teavm/c -B build/c-native
 cmake --build build/c-native
-build/generated/teavm/c/bin/plantuml-c demo.png
+build/generated/teavm/c/bin/plantuml demo.png
 ```
 
 It draws a small mind map whose boxes are sized from the measured text, and a
@@ -232,8 +232,7 @@ TTF files and the measured widths (any OS), and the whole bounder against
 - `TeaVM.isTeaVM()` is true for every TeaVM target, C included. Code that only
   exists in a browser (`@JSBody`, DOM, viz.js, script and file loaders) must be
   guarded by `TeaVM.isJavaScript()`; `TeaVM.isC()` selects the C behavior. Emoji,
-  OpenIconic, `!theme`, `!include` of a library and Graphviz are not available
-  in C (Smetana is always used for the layout).
+  OpenIconic, the sprites and svg of the standard library and Graphviz are not available in C (Smetana is always used for the layout).
 - Text measurement: no AWT and no canvas, so `StringBounderEmbeddedFont` (see
   above), which measures as Java does on Windows.
 - Export: `TextBlockExporter.exportTo` (and so `UgDiagram.exportDiagram`) only
@@ -252,3 +251,31 @@ TTF files and the measured widths (any OS), and the whole bounder against
   The JavaScript build uses no coroutine either (no worker thread, no `@Async`:
   see `PendingResources`), and `tools/teavm-coroutines/check_no_coroutines.py`
   fails the CI when either output contains one again.
+
+## Embedded files (themes, standard library)
+
+Files that Java reads at run time (the bundled `!theme` files and the standard
+library) are embedded in the executable, since the C build has no classpath:
+
+- Gradle (`copyNativeSources`) copies them from `src/main/resources` into
+  `native/resources`, next to the generated C: `themes/*.puml`, and in
+  `stdlib/` the list (`home.spm`) and, for each library, `info.spm`, `puml.spm`,
+  `json.spm`, `sprite.spm`, `svg.spm` and `image.spm` (about 7 MB,
+  Brotli-compressed). A raster image is written to the SVG as a PNG encoded in
+  C (`PngImageC`).
+- CMake (`native/embed_resources.cmake`) lists them, and `native/embed_tool.c`,
+  a small program built and run by CMake, turns them into a C table. (A CMake
+  script would take minutes for the megabytes of the standard library.)
+- `native/plantuml_resources.c` looks a file up by its path under
+  `src/main/resources` (for instance `themes/puml-theme-amiga.puml`), and Java
+  reads it with `EmbeddedFiles.read(name)` (binding: `NativeResources`).
+- The `.spm` files are compressed with Brotli. `native/brotli/` is the C decoder
+  of Google (MIT, unmodified, see its README), and
+  `EmbeddedFiles.readBrotli(name)` decompresses a file straight from the
+  embedded bytes. `SpmChannel` uses it in C, so `!include <lib/file>`,
+  `!theme x from <lib>`, `%` JSON of a library, the sprites (`<tupadr3/...>`,
+  `<aws/...>`) and the list of libraries work as
+  on the JVM. The Java Brotli decoder (and its dictionary) is not in the C build.
+
+To embed more files, add `name=path` pairs to `RESOURCE_PAIRS` in
+`CMakeLists.txt` and have Gradle copy them.

@@ -41,7 +41,7 @@ public enum GroupingType {
 	START, START_PARTITION, ELSE, END;
 
 	public static GroupingType getType(String s) {
-		switch (s.toLowerCase(Locale.US)) {
+		switch (s.toLowerCase(Locale.ROOT)) {
 		case "opt":
 		case "alt":
 		case "loop":

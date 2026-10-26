@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!theme archimate-saturated from <archimate/themes>
+!include <archimate/Archimate>
+
+Business_Actor(BA, "Business Actor")
+Business_Role(BR, "Business Role")
+Rel_Assignment(BA, BR)
+@enduml

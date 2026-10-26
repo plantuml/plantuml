@@ -103,6 +103,13 @@ public interface RasterCanvas {
 	public void drawString(String text, UFont font, double x, double y, double angle);
 
 	/**
+	 * Box of the ink of the text drawn with its baseline at (0, 0), without
+	 * rotation (as {@code TextLayout.getBounds()}): x, y (of the top, so negative
+	 * above the baseline), width, height.
+	 */
+	public double[] getInkBounds(String text, UFont font);
+
+	/**
 	 * Encodes the image as PNG, as PngIO does (see {@code PngIO}: colors reduced
 	 * when possible), without any metadata (see {@link PngChunks}). Nothing can be
 	 * drawn afterwards.

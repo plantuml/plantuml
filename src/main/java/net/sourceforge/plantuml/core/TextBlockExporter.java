@@ -190,7 +190,7 @@ public class TextBlockExporter {
 		if (format == FileFormat.NULL)
 			return new ImageDataSimple(0, 0);
 
-		if (format == FileFormat.SVG)
+		if (format == FileFormat.SVG || format == FileFormat.SVG_DETERMINISTIC)
 			return exportSvgTo(os);
 
 		if (format == FileFormat.PNG)
@@ -211,7 +211,8 @@ public class TextBlockExporter {
 	 * @throws IOException if an I/O error occurs
 	 */
 	public ImageData exportSvgTo(OutputStream os) throws IOException {
-		if (fileFormatOption.getFileFormat() != FileFormat.SVG)
+		if (fileFormatOption.getFileFormat() != FileFormat.SVG
+				&& fileFormatOption.getFileFormat() != FileFormat.SVG_DETERMINISTIC)
 			throw new IllegalStateException("Not SVG: " + fileFormatOption.getFileFormat());
 
 		final XDimension2D dim = calculateFinalDimension();

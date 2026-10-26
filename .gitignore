@@ -46,4 +46,4 @@ node_modules/
 other
 
 # Executable copied by compilec.bat
-/plantuml-c.exe
+/plantuml.exe

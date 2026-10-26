@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+!include <awslib/AWSCommon>
+!include <awslib/InternetOfThings/IoTRule>
+!include <awslib/Analytics/KinesisDataStreams>
+!include <awslib/ApplicationIntegration/SimpleQueueService>
+
+left to right direction
+
+IoTRule(rule, "IoT Rule", "")
+KinesisDataStreams(stream, "Kinesis Data Streams", "")
+SimpleQueueService(queue, "Simple Queue Service", "")
+
+rule --> stream : Telemetry
+stream --> queue : Records
+@enduml

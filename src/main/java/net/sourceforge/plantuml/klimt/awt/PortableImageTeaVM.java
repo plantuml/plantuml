@@ -12,6 +12,10 @@ import org.teavm.jso.dom.html.HTMLCanvasElement;
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.typedarrays.Int8Array;
 import org.teavm.jso.typedarrays.Uint8ClampedArray;
+
+import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.c.PngImageC;
+import net.sourceforge.plantuml.utils.Base64Coder;
 // ::done
 
 /**
@@ -167,6 +171,10 @@ class PortableImageTeaVM implements PortableImage {
 		if (pngDataUrl != null)
 			return pngDataUrl;
 
+		if (TeaVM.isC())
+			return "data:image/png;base64,"
+					+ new String(Base64Coder.encode(PngImageC.encode(pixels, width, height, false)));
+
 		HTMLDocument doc = HTMLDocument.current();
 		HTMLCanvasElement canvas = (HTMLCanvasElement) doc.createElement("canvas");
 		canvas.setWidth(width);
@@ -222,10 +230,20 @@ class PortableImageTeaVM implements PortableImage {
 
 		final int[] dstPixels = new int[dstW * dstH];
 
-		if (interpolationType == 2)
-			scaleBilinear(pixels, width, height, dstPixels, dstW, dstH);
-		else
-			scaleNearestNeighbor(pixels, width, height, dstPixels, dstW, dstH);
+		// The C build gets the same pixels as AffineTransformOp on the JVM (see MlibAffine).
+		// TeaVM.isC() is folded at compile time, so MlibAffine is left out of the JavaScript
+		// build: it made plantuml.js fail with "Uncaught SyntaxError: Unexpected number".
+		if (TeaVM.isC()) {
+			if (interpolationType == 2)
+				MlibAffine.bilinear(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);
+			else
+				MlibAffine.nearest(pixels, width, height, dstPixels, dstW, dstH, scaleFactor);
+		} else {
+			if (interpolationType == 2)
+				scaleBilinear(pixels, width, height, dstPixels, dstW, dstH);
+			else
+				scaleNearestNeighbor(pixels, width, height, dstPixels, dstW, dstH);
+		}
 
 		return new PortableImageTeaVM(dstW, dstH, imageType, dstPixels);
 	}

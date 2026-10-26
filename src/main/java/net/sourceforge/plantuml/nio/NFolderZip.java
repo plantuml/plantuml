@@ -38,11 +38,14 @@ package net.sourceforge.plantuml.nio;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
+
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 /**
  * A virtual folder representing a location inside a ZIP archive.
@@ -50,26 +53,36 @@ import java.util.zip.ZipFile;
  * <p>
  * Instances are immutable. Each instance points to the same ZIP file but to a
  * specific sub-path (which can be the root) inside that archive.
+ * <p>
+ * The paths are handled as strings, since the C build has no file system
+ * provider behind java.nio.file.
  */
 public final class NFolderZip implements NFolder {
-	
 
 	private final File zipFile;
-	/** Current path inside the ZIP (relative, no leading slash). */
-	private final Path pathInsideZip;
+	/** Current path inside the ZIP (relative, forward slashes, no leading slash). */
+	private final String pathInsideZip;
 
 	/** Creates a folder view of the ZIP root. */
 	public NFolderZip(File zipFile) {
-		this(zipFile, Paths.get(""));
+		this(zipFile, "");
 	}
 
-	private NFolderZip(File zipFile, Path currentPathInsideZip) {
+	private NFolderZip(File zipFile, String currentPathInsideZip) {
 		this.zipFile = Objects.requireNonNull(zipFile);
-		this.pathInsideZip = Objects.requireNonNull(currentPathInsideZip).normalize();
+		this.pathInsideZip = normalize(Objects.requireNonNull(currentPathInsideZip));
 	}
 
 	@Override
 	public InputFile getInputFile(Path nameOrPath) throws IOException {
+		Objects.requireNonNull(nameOrPath);
+		return getInputFile(nameOrPath.toString());
+	}
+
+	/**
+	 * Same as {@link #getInputFile(Path)}, without java.nio.file.
+	 */
+	public InputFile getInputFile(String nameOrPath) {
 		Objects.requireNonNull(nameOrPath);
 		final String entry = toZipEntryName(nameOrPath);
 		return new InputFileZip(zipFile, entry);
@@ -83,9 +96,24 @@ public final class NFolderZip implements NFolder {
 	 */
 	public boolean contains(Path nameOrPath) throws IOException {
 		Objects.requireNonNull(nameOrPath);
+		return contains(nameOrPath.toString());
+	}
+
+	/**
+	 * Same as {@link #contains(Path)}, without java.nio.file.
+	 */
+	public boolean contains(String nameOrPath) throws IOException {
+		Objects.requireNonNull(nameOrPath);
 		final String entry = toZipEntryName(nameOrPath);
 		if (entry.isEmpty() || zipFile.canRead() == false)
 			return false;
+
+		// ::comment when JAVA8
+		if (TeaVM.isC()) {
+			final ZipReaderIo reader = ZipReaderIo.open(zipFile);
+			return reader != null && reader.contains(entry);
+		}
+		// ::done
 
 		try (ZipFile zf = new ZipFile(zipFile)) {
 			final ZipEntry ze = zf.getEntry(entry);
@@ -99,28 +127,53 @@ public final class NFolderZip implements NFolder {
 	@Override
 	public NFolder getSubfolder(Path nameOrPath) throws IOException {
 		Objects.requireNonNull(nameOrPath);
-		final String entry = toZipEntryName(nameOrPath);
-		final Path next = entry.isEmpty() ? Paths.get("") : Paths.get(entry);
-		return new NFolderZip(zipFile, next);
+		return getSubfolder(nameOrPath.toString());
+	}
+
+	/**
+	 * Same as {@link #getSubfolder(Path)}, without java.nio.file.
+	 */
+	public NFolder getSubfolder(String nameOrPath) {
+		Objects.requireNonNull(nameOrPath);
+		return new NFolderZip(zipFile, toZipEntryName(nameOrPath));
 	}
 
 	@Override
 	public String toString() {
-		final String prefix = pathInsideZip.toString().replace('\\', '/');
-		return zipFile.getName() + "!" + prefix;
+		return zipFile.getName() + "!" + pathInsideZip;
 	}
 
 	/**
 	 * Resolves a path inside the ZIP and returns a forward-slash entry name without
 	 * any leading slash (as typically stored in ZIPs).
 	 */
-	private String toZipEntryName(Path child) {
-		final Path resolved = child.isAbsolute() ? child.normalize() : pathInsideZip.resolve(child).normalize();
-		String s = resolved.toString().replace('\\', '/');
-		while (s.startsWith("/"))
-			s = s.substring(1);
+	private String toZipEntryName(String child) {
+		final String slashed = child.replace('\\', '/');
+		return slashed.startsWith("/") ? normalize(slashed) : normalize(pathInsideZip + "/" + slashed);
+	}
 
-		return s;
+	/**
+	 * Forward slashes, no empty or "." segment, ".." removing the segment before
+	 * it, no leading slash.
+	 */
+	private static String normalize(String path) {
+		final List<String> result = new ArrayList<String>();
+		for (String segment : path.replace('\\', '/').split("/")) {
+			if (segment.isEmpty() || segment.equals("."))
+				continue;
+
+			if (segment.equals("..") && result.size() > 0 && result.get(result.size() - 1).equals("..") == false)
+				result.remove(result.size() - 1);
+			else
+				result.add(segment);
+		}
+		final StringBuilder sb = new StringBuilder();
+		for (String segment : result) {
+			if (sb.length() > 0)
+				sb.append('/');
+			sb.append(segment);
+		}
+		return sb.toString();
 	}
 
 }

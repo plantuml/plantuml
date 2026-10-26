@@ -108,7 +108,10 @@ teavm {
 		// transformation of async methods fail with an ArrayIndexOutOfBoundsException
 
 		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)
-		// Heap size in MB (TeaVM default: 1 to 16)
+		// Heap size in MB (TeaVM default: 1 to 16). The heap starts at its maximum size, so that
+		// it is never resized: with a smaller start (1 MB), plantuml.exe crashed with an access
+		// violation (0xC0000005) on Windows ARM64, for instance on a diagram made of a single class.
+		minHeapSize.set(64)
 		maxHeapSize.set(64)
 		// outputDir defaults to build/generated/teavm/c
 	}
@@ -154,6 +157,33 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 	from("src/teavm-c/CMakeLists.txt")
 	from("src/teavm-c/native") {
 		into("native")
+	}
+	// Files that Java reads at run time (EmbeddedFiles), embedded by CMake
+	from("src/main/resources/themes") {
+		include("*.puml")
+		into("native/resources/themes")
+	}
+	// The CSS and JavaScript of the interactive SVG (!pragma svginteractive)
+	from("src/main/resources/svg") {
+		include("*.min.css", "*.min.js")
+		into("native/resources/svg")
+	}
+	// The SVG sprites of the stereotypes (archimate)
+	from("src/main/resources/sprites") {
+		include("**/*.svg")
+		into("native/resources/sprites")
+	}
+	// The OpenIconic icons (<&name>)
+	from("src/main/resources/openiconic") {
+		include("*.svg")
+		into("native/resources/openiconic")
+	}
+	// The standard library: its list, and for each library its description, its
+	// puml, json, sprite and svg files; image.spm (raster images)
+	from("src/main/resources/stdlib") {
+		include("home.spm", "*/info.spm", "*/puml.spm", "*/json.spm", "*/sprite.spm", "*/svg.spm",
+				"*/image.spm")
+		into("native/resources/stdlib")
 	}
 	into(layout.buildDirectory.dir("generated/teavm/c"))
 }

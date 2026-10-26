@@ -1,0 +1,6 @@
+---
+output: preproc
+---
+@startuml
+!include <elastic/common>
+@enduml

@@ -62,7 +62,7 @@ public class Block implements Clusterable {
 	}
 
 	public String toStringPosition() {
-		return String.format(Locale.US, "x=%9.2f y=%9.2f w=%9.2f h=%9.2f", x, y, width, height);
+		return String.format(Locale.ROOT, "x=%9.2f y=%9.2f w=%9.2f h=%9.2f", x, y, width, height);
 	}
 
 	public int getUid() {

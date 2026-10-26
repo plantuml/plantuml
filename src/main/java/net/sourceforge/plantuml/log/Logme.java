@@ -66,6 +66,11 @@ public class Logme {
 		if (!TeaVM.isTeaVM()) {
 			logger.log(Level.SEVERE, "", thrown);
 		}
+		else if (TeaVM.isC()) {
+			// No logger in the C build: print the stack trace on stderr to make
+			// internal errors diagnosable.
+			thrown.printStackTrace();
+		}
 	}
 
 	// Unused right now

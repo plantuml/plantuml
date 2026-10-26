@@ -83,7 +83,7 @@ final class DeduceFormat {
 	}
 
 	public DecimalFormat getDecimalFormat() {
-		final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+		final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.ROOT);
 
 		if (decimalSep != '\0')
 			symbols.setDecimalSeparator(decimalSep);

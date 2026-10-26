@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.salt.element;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -54,8 +54,8 @@ public class Grid {
 	private final TableStrategy strategy;
 	private final TextBlock title;
 
-	private final Set<Segment> horizontals = new HashSet<>();
-	private final Set<Segment> verticals = new HashSet<>();
+	private final Set<Segment> horizontals = new LinkedHashSet<>();
+	private final Set<Segment> verticals = new LinkedHashSet<>();
 
 	public Grid(double[] rowsStart, double[] colsStart, TableStrategy strategy, TextBlock title) {
 		this.title = title;

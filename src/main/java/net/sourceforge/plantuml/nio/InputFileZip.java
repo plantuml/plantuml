@@ -35,14 +35,15 @@
  */
 package net.sourceforge.plantuml.nio;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 /**
  * Represents an entry inside a ZIP archive as an {@link InputFile}.
@@ -76,6 +77,17 @@ public class InputFileZip implements InputFile {
 
 	@Override
 	public InputStream newInputStream() throws IOException {
+		// ::comment when JAVA8
+		if (TeaVM.isC()) {
+			final ZipReaderIo reader = ZipReaderIo.open(zipFile);
+			final byte[] content = reader == null ? null : reader.read(entryName);
+			if (content == null)
+				throw new IOException("Entry not found in ZIP: " + entryName + " (" + zipFile + ")");
+
+			return new ByteArrayInputStream(content);
+		}
+		// ::done
+
 		final ZipFile zf = new ZipFile(zipFile);
 		final ZipEntry entry = zf.getEntry(entryName);
 
@@ -128,30 +140,28 @@ public class InputFileZip implements InputFile {
 
 	@Override
 	public String toString() {
-		return Paths.get(zipFile.getPath()).toAbsolutePath() + "!" + entryName;
+		return zipFile.getAbsolutePath() + "!" + entryName;
 	}
 
 	@Override
 	public NFolder getParentFolder() throws IOException {
-		final Path parent = getParentFrom(entryName);
-		return new NFolderZip(zipFile).getSubfolder(parent);
+		return new NFolderZip(zipFile).getSubfolder(getParentFrom(entryName));
 	}
 
 	/**
 	 * Computes the parent path of an entry inside the ZIP. For example:
 	 * <ul>
-	 * <li>{@code "a/b/c.txt"} → {@code Paths.get("a/b")}</li>
-	 * <li>{@code "a.txt"} → {@code Paths.get("")}</li>
-	 * <li>{@code ""} → {@code Paths.get("")}</li>
+	 * <li>{@code "a/b/c.txt"} → {@code "a/b"}</li>
+	 * <li>{@code "a.txt"} → {@code ""}</li>
+	 * <li>{@code ""} → {@code ""}</li>
 	 * </ul>
 	 */
-	private static Path getParentFrom(String entryName) {
+	private static String getParentFrom(String entryName) {
 		if (entryName == null || entryName.isEmpty())
-			return Paths.get("");
+			return "";
 		final int idx = entryName.replace('\\', '/').lastIndexOf('/');
 		if (idx <= 0)
-			return Paths.get("");
-		final String parent = entryName.substring(0, idx);
-		return Paths.get(parent);
+			return "";
+		return entryName.substring(0, idx);
 	}
 }
