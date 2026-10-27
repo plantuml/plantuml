@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt.color;
 
+import net.sourceforge.plantuml.StringUtils;
+
 public enum ColorType {
 	TEXT, LINE, BACK, HEADER, ARROW;
 
@@ -43,7 +45,7 @@ public enum ColorType {
 		if (x != -1) {
 			s = s.substring(0, x);
 		}
-		final ColorType key = ColorType.valueOf(s.toUpperCase());
+		final ColorType key = ColorType.valueOf(StringUtils.goUpperCase(s));
 		return key;
 	}
 }

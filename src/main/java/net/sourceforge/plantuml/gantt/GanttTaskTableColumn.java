@@ -47,6 +47,7 @@ import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.gantt.core.Task;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 
@@ -201,7 +202,7 @@ public enum GanttTaskTableColumn {
 
 	public static GanttTaskTableColumn of(String what) {
 		try {
-			return valueOf(what.toUpperCase());
+			return valueOf(StringUtils.goUpperCase(what));
 		} catch (Exception e) {
 			return null;
 		}
@@ -211,7 +212,7 @@ public enum GanttTaskTableColumn {
 		final Collection<UBrexPart> definition = new ArrayList<>();
 		for (GanttTaskTableColumn column : GanttTaskTableColumn.values()) {
 			definition.add(new UBrexLeaf(column.toString()));
-			definition.add(new UBrexLeaf(column.toString().toLowerCase()));
+			definition.add(new UBrexLeaf(StringUtils.goLowerCase(column.toString())));
 		}
 		return new UBrexOr(definition);
 	}
