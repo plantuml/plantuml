@@ -145,8 +145,8 @@ public class ChartRenderer {
 		}
 
 		// Add space for legend
-<span class="pc bpc" id="L148" title="2 of 4 branches missed.">		if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {</span>
-<span class="nc" id="L149">			width += legendDim.getWidth() + LEGEND_MARGIN;</span>
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">		if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {</span>
+<span class="fc" id="L149">			width += legendDim.getWidth() + LEGEND_MARGIN;</span>
 <span class="pc bpc" id="L150" title="2 of 4 branches missed.">		} else if (legendPosition == ChartDiagram.LegendPosition.TOP || legendPosition == ChartDiagram.LegendPosition.BOTTOM) {</span>
 <span class="nc" id="L151">			height += legendDim.getHeight() + LEGEND_MARGIN;</span>
 		}
@@ -941,10 +941,10 @@ public class ChartRenderer {
 	}
 
 	private HColor getDefaultColor(int index) {
-<span class="nc" id="L944">		final String[] defaultColors = { &quot;#1f77b4&quot;, &quot;#ff7f0e&quot;, &quot;#2ca02c&quot;, &quot;#d62728&quot;, &quot;#9467bd&quot;, &quot;#8c564b&quot;,</span>
+<span class="fc" id="L944">		final String[] defaultColors = { &quot;#1f77b4&quot;, &quot;#ff7f0e&quot;, &quot;#2ca02c&quot;, &quot;#d62728&quot;, &quot;#9467bd&quot;, &quot;#8c564b&quot;,</span>
 				&quot;#e377c2&quot;, &quot;#7f7f7f&quot;, &quot;#bcbd22&quot;, &quot;#17becf&quot; };
 		try {
-<span class="nc" id="L947">			return skinParam.getIHtmlColorSet().getColor(defaultColors[index % defaultColors.length]);</span>
+<span class="fc" id="L947">			return skinParam.getIHtmlColorSet().getColor(defaultColors[index % defaultColors.length]);</span>
 <span class="nc" id="L948">		} catch (Exception e) {</span>
 <span class="nc" id="L949">			return null;</span>
 		}
@@ -1042,20 +1042,20 @@ public class ChartRenderer {
 
 	private Style getScatterStyle(ChartSeries series) {
 <span class="fc" id="L1044">		StyleQuery query = getScatterStyleQuery();</span>
-<span class="pc bpc" id="L1045" title="1 of 2 branches missed.">		if (series.getStereotype() != null) {</span>
+<span class="fc bfc" id="L1045" title="All 2 branches covered.">		if (series.getStereotype() != null) {</span>
 			// Use withTOBECHANGED for element-level stereotype styling
-<span class="nc" id="L1047">			Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L1048">					.getMergedStyle(query.withStereotype(series.getStereotype()));</span>
+<span class="fc" id="L1047">			Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L1048">					.getMergedStyle(query.withStereotype(series.getStereotype()));</span>
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., scatter.highlight)
-<span class="nc" id="L1051">			Style stereoStyle = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L1052">					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));</span>
+<span class="fc" id="L1051">			Style stereoStyle = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L1052">					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));</span>
 
 			// Merge with stereo style overwriting existing values
-<span class="nc bnc" id="L1055" title="All 2 branches missed.">			if (style != null)</span>
-<span class="nc" id="L1056">				stereoStyle = style.mergeWith(stereoStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="pc bpc" id="L1055" title="1 of 2 branches missed.">			if (style != null)</span>
+<span class="fc" id="L1056">				stereoStyle = style.mergeWith(stereoStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
 
-<span class="nc" id="L1058">			return stereoStyle;</span>
+<span class="fc" id="L1058">			return stereoStyle;</span>
 		}
 <span class="fc" id="L1060">		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);</span>
 	}
@@ -1070,7 +1070,7 @@ public class ChartRenderer {
 	}
 
 	private StyleQuery getLegendStyleSignature() {
-<span class="nc" id="L1073">		return StyleQueries.CHARTDIAG_LEGEND;</span>
+<span class="fc" id="L1073">		return StyleQueries.CHARTDIAG_LEGEND;</span>
 	}
 
 	private StyleQuery getAnnotationStyleSignature() {
@@ -1078,35 +1078,35 @@ public class ChartRenderer {
 	}
 
 	private XDimension2D calculateLegendDimension(StringBounder stringBounder) {
-<span class="pc bpc" id="L1081" title="3 of 4 branches missed.">		if (legendPosition == ChartDiagram.LegendPosition.NONE || series.isEmpty())</span>
+<span class="pc bpc" id="L1081" title="1 of 4 branches missed.">		if (legendPosition == ChartDiagram.LegendPosition.NONE || series.isEmpty())</span>
 <span class="fc" id="L1082">			return new XDimension2D(0, 0);</span>
 
 		// Get legend style
-<span class="nc" id="L1085">		final Style legendStyle = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L1086">			.getMergedStyle(getLegendStyleSignature());</span>
+<span class="fc" id="L1085">		final Style legendStyle = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L1086">			.getMergedStyle(getLegendStyleSignature());</span>
 
 		// Extract legend font configuration
-<span class="nc" id="L1089">		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L1089">		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 
-<span class="nc" id="L1091">		double maxWidth = 0;</span>
-<span class="nc" id="L1092">		double totalHeight = 0;</span>
+<span class="fc" id="L1091">		double maxWidth = 0;</span>
+<span class="fc" id="L1092">		double totalHeight = 0;</span>
 
-<span class="nc bnc" id="L1094" title="All 2 branches missed.">		for (ChartSeries s : series) {</span>
-<span class="nc" id="L1095">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), s.getName())</span>
-<span class="nc" id="L1096">					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);</span>
-<span class="nc" id="L1097">			final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
+<span class="fc bfc" id="L1094" title="All 2 branches covered.">		for (ChartSeries s : series) {</span>
+<span class="fc" id="L1095">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), s.getName())</span>
+<span class="fc" id="L1096">					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="fc" id="L1097">			final XDimension2D dim = textBlock.calculateDimension(stringBounder);</span>
 
-<span class="nc bnc" id="L1099" title="All 4 branches missed.">			if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {</span>
-<span class="nc" id="L1100">				maxWidth = Math.max(maxWidth, dim.getWidth());</span>
-<span class="nc" id="L1101">				totalHeight += dim.getHeight() + LEGEND_ITEM_SPACING;</span>
+<span class="pc bpc" id="L1099" title="2 of 4 branches missed.">			if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {</span>
+<span class="fc" id="L1100">				maxWidth = Math.max(maxWidth, dim.getWidth());</span>
+<span class="fc" id="L1101">				totalHeight += dim.getHeight() + LEGEND_ITEM_SPACING;</span>
 			} else {
 <span class="nc" id="L1103">				maxWidth += dim.getWidth() + LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING + LEGEND_ITEM_SPACING;</span>
 <span class="nc" id="L1104">				totalHeight = Math.max(totalHeight, dim.getHeight());</span>
 			}
-<span class="nc" id="L1106">		}</span>
+<span class="fc" id="L1106">		}</span>
 
-<span class="nc bnc" id="L1108" title="All 4 branches missed.">		if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {</span>
-<span class="nc" id="L1109">			return new XDimension2D(maxWidth + LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING + LEGEND_MARGIN * 2,</span>
+<span class="pc bpc" id="L1108" title="2 of 4 branches missed.">		if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {</span>
+<span class="fc" id="L1109">			return new XDimension2D(maxWidth + LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING + LEGEND_MARGIN * 2,</span>
 					totalHeight);
 		} else {
 <span class="nc" id="L1112">			return new XDimension2D(maxWidth, totalHeight + LEGEND_MARGIN * 2);</span>
@@ -1115,29 +1115,29 @@ public class ChartRenderer {
 
 	private void drawLegend(UGraphic ug, double leftMargin, double topMargin, double plotWidth, double plotHeight,
 			HColor lineColor, HColor fontColor) {
-<span class="pc bpc" id="L1118" title="3 of 4 branches missed.">		if (legendPosition == ChartDiagram.LegendPosition.NONE || series.isEmpty())</span>
+<span class="pc bpc" id="L1118" title="1 of 4 branches missed.">		if (legendPosition == ChartDiagram.LegendPosition.NONE || series.isEmpty())</span>
 <span class="fc" id="L1119">			return;</span>
 
 		// Get legend style
-<span class="nc" id="L1122">		final Style legendStyle = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L1123">			.getMergedStyle(getLegendStyleSignature());</span>
+<span class="fc" id="L1122">		final Style legendStyle = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L1123">			.getMergedStyle(getLegendStyleSignature());</span>
 
 		// Extract legend properties
-<span class="nc" id="L1126">		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L1126">		final FontConfiguration fontConfig = legendStyle.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 
-<span class="nc" id="L1128">		double x = 0;</span>
-<span class="nc" id="L1129">		double y = 0;</span>
+<span class="fc" id="L1128">		double x = 0;</span>
+<span class="fc" id="L1129">		double y = 0;</span>
 
 		// Calculate starting position based on legend position
-<span class="nc bnc" id="L1132" title="All 5 branches missed.">		switch (legendPosition) {</span>
+<span class="pc bpc" id="L1132" title="4 of 5 branches missed.">		switch (legendPosition) {</span>
 		case LEFT:
 <span class="nc" id="L1134">			x = MARGIN;</span>
 <span class="nc" id="L1135">			y = topMargin;</span>
 <span class="nc" id="L1136">			break;</span>
 		case RIGHT:
-<span class="nc bnc" id="L1138" title="All 2 branches missed.">			x = leftMargin + plotWidth + (y2Axis != null ? AXIS_LABEL_SPACE : 0) + LEGEND_MARGIN;</span>
-<span class="nc" id="L1139">			y = topMargin;</span>
-<span class="nc" id="L1140">			break;</span>
+<span class="pc bpc" id="L1138" title="1 of 2 branches missed.">			x = leftMargin + plotWidth + (y2Axis != null ? AXIS_LABEL_SPACE : 0) + LEGEND_MARGIN;</span>
+<span class="fc" id="L1139">			y = topMargin;</span>
+<span class="fc" id="L1140">			break;</span>
 		case TOP:
 <span class="nc" id="L1142">			x = leftMargin;</span>
 <span class="nc" id="L1143">			y = MARGIN;</span>
@@ -1150,15 +1150,15 @@ public class ChartRenderer {
 <span class="nc" id="L1150">			return;</span>
 		}
 
-<span class="nc" id="L1153">		double currentX = x;</span>
-<span class="nc" id="L1154">		double currentY = y;</span>
+<span class="fc" id="L1153">		double currentX = x;</span>
+<span class="fc" id="L1154">		double currentY = y;</span>
 
-<span class="nc bnc" id="L1156" title="All 2 branches missed.">		for (int i = 0; i &lt; series.size(); i++) {</span>
-<span class="nc" id="L1157">			final ChartSeries s = series.get(i);</span>
-<span class="nc bnc" id="L1158" title="All 2 branches missed.">			HColor color = s.getColor() != null ? s.getColor() : getDefaultColor(i);</span>
+<span class="fc bfc" id="L1156" title="All 2 branches covered.">		for (int i = 0; i &lt; series.size(); i++) {</span>
+<span class="fc" id="L1157">			final ChartSeries s = series.get(i);</span>
+<span class="fc bfc" id="L1158" title="All 2 branches covered.">			HColor color = s.getColor() != null ? s.getColor() : getDefaultColor(i);</span>
 
 			// Draw legend symbol
-<span class="nc bnc" id="L1161" title="All 2 branches missed.">			if (s.getType() == ChartSeries.SeriesType.BAR) {</span>
+<span class="pc bpc" id="L1161" title="1 of 2 branches missed.">			if (s.getType() == ChartSeries.SeriesType.BAR) {</span>
 				// Get bar color from style if not explicitly set
 <span class="nc bnc" id="L1163" title="All 2 branches missed.">				if (s.getColor() == null) {</span>
 <span class="nc" id="L1164">					final Style barStyle = getBarStyle(s);</span>
@@ -1172,7 +1172,7 @@ public class ChartRenderer {
 <span class="nc" id="L1172">						.build(LEGEND_SYMBOL_SIZE, LEGEND_SYMBOL_SIZE);</span>
 <span class="nc" id="L1173">				ug.apply(color).apply(color.bg()).apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY)))</span>
 <span class="nc" id="L1174">						.draw(rect);</span>
-<span class="nc bnc" id="L1175" title="All 2 branches missed.">			} else if (s.getType() == ChartSeries.SeriesType.LINE) {</span>
+<span class="pc bpc" id="L1175" title="1 of 2 branches missed.">			} else if (s.getType() == ChartSeries.SeriesType.LINE) {</span>
 				// Get line color from style if not explicitly set
 <span class="nc bnc" id="L1177" title="All 2 branches missed.">				if (s.getColor() == null) {</span>
 <span class="nc" id="L1178">					final Style lineStyle = getLineStyle(s);</span>
@@ -1186,7 +1186,7 @@ public class ChartRenderer {
 <span class="nc" id="L1186">				ug.apply(color).apply(UStroke.withThickness(2.0))</span>
 <span class="nc" id="L1187">						.apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY + LEGEND_SYMBOL_SIZE / 2)))</span>
 <span class="nc" id="L1188">						.draw(line);</span>
-<span class="nc bnc" id="L1189" title="All 2 branches missed.">			} else if (s.getType() == ChartSeries.SeriesType.AREA) {</span>
+<span class="pc bpc" id="L1189" title="1 of 2 branches missed.">			} else if (s.getType() == ChartSeries.SeriesType.AREA) {</span>
 				// Get area color from style if not explicitly set
 <span class="nc bnc" id="L1191" title="All 2 branches missed.">				if (s.getColor() == null) {</span>
 <span class="nc" id="L1192">					final Style areaStyle = getAreaStyle(s);</span>
@@ -1200,226 +1200,221 @@ public class ChartRenderer {
 <span class="nc" id="L1200">						.build(LEGEND_SYMBOL_SIZE, LEGEND_SYMBOL_SIZE);</span>
 <span class="nc" id="L1201">				ug.apply(color).apply(color.bg()).apply(UTranslate.dx(currentX).compose(UTranslate.dy(currentY)))</span>
 <span class="nc" id="L1202">						.draw(rect);</span>
-<span class="nc bnc" id="L1203" title="All 2 branches missed.">			} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {</span>
+<span class="pc bpc" id="L1203" title="1 of 2 branches missed.">			} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {</span>
 				// Get scatter style
-<span class="nc" id="L1205">				final Style scatterStyle = getScatterStyle(s);</span>
+<span class="fc" id="L1205">				final Style scatterStyle = getScatterStyle(s);</span>
 
-				// Get marker color from style - priority: MarkerColor &gt; LineColor &gt; explicit color
-<span class="nc" id="L1208">				HColor markerColor = color;</span>
-<span class="nc" id="L1209">				HColor styleMarkerColor = scatterStyle.value(PName.MarkerColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc bnc" id="L1210" title="All 2 branches missed.">				if (styleMarkerColor != null) {</span>
-<span class="nc" id="L1211">					markerColor = styleMarkerColor;</span>
-<span class="nc bnc" id="L1212" title="All 2 branches missed.">				} else if (s.getColor() == null) {</span>
-<span class="nc" id="L1213">					HColor styleLineColor = scatterStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc bnc" id="L1214" title="All 2 branches missed.">					if (styleLineColor != null) {</span>
-<span class="nc" id="L1215">						markerColor = styleLineColor;</span>
-					}
+				// Get marker color - priority: explicit color &gt; MarkerColor &gt; LineColor (same logic as ScatterRenderer)
+<span class="fc" id="L1208">				HColor markerColor = color;</span>
+<span class="fc bfc" id="L1209" title="All 2 branches covered.">				if (s.getColor() == null) {</span>
+<span class="fc bfc" id="L1210" title="All 2 branches covered.">					final PName colorName = scatterStyle.hasValue(PName.MarkerColor) ? PName.MarkerColor : PName.LineColor;</span>
+<span class="fc" id="L1211">					markerColor = scatterStyle.value(colorName).asColor(skinParam.getIHtmlColorSet());</span>
 				}
 
 				// Get marker shape from style (same logic as ScatterRenderer)
-<span class="nc" id="L1220">				ChartSeries.MarkerShape markerShape = s.getMarkerShape();</span>
+<span class="fc" id="L1215">				ChartSeries.MarkerShape markerShape = s.getMarkerShape();</span>
 				try {
-<span class="nc" id="L1222">					final String styleMarkerShape = scatterStyle.value(PName.MarkerShape).asString();</span>
-<span class="nc bnc" id="L1223" title="All 4 branches missed.">					if (styleMarkerShape != null &amp;&amp; !styleMarkerShape.isEmpty()) {</span>
-<span class="nc bnc" id="L1224" title="All 4 branches missed.">						switch (styleMarkerShape.toLowerCase()) {</span>
+<span class="fc" id="L1217">					final String styleMarkerShape = scatterStyle.value(PName.MarkerShape).asString();</span>
+<span class="pc bpc" id="L1218" title="2 of 4 branches missed.">					if (styleMarkerShape != null &amp;&amp; !styleMarkerShape.isEmpty()) {</span>
+<span class="nc bnc" id="L1219" title="All 4 branches missed.">						switch (styleMarkerShape.toLowerCase()) {</span>
 							case &quot;circle&quot;:
-<span class="nc" id="L1226">								markerShape = ChartSeries.MarkerShape.CIRCLE;</span>
-<span class="nc" id="L1227">								break;</span>
+<span class="nc" id="L1221">								markerShape = ChartSeries.MarkerShape.CIRCLE;</span>
+<span class="nc" id="L1222">								break;</span>
 							case &quot;square&quot;:
-<span class="nc" id="L1229">								markerShape = ChartSeries.MarkerShape.SQUARE;</span>
-<span class="nc" id="L1230">								break;</span>
+<span class="nc" id="L1224">								markerShape = ChartSeries.MarkerShape.SQUARE;</span>
+<span class="nc" id="L1225">								break;</span>
 							case &quot;triangle&quot;:
-<span class="nc" id="L1232">								markerShape = ChartSeries.MarkerShape.TRIANGLE;</span>
+<span class="nc" id="L1227">								markerShape = ChartSeries.MarkerShape.TRIANGLE;</span>
 								break;
 						}
 					}
-<span class="nc" id="L1236">				} catch (Exception e) {</span>
+<span class="nc" id="L1231">				} catch (Exception e) {</span>
 					// Use default
-<span class="nc" id="L1238">				}</span>
+<span class="fc" id="L1233">				}</span>
 				// Draw marker shape for scatter plot
-<span class="nc" id="L1240">				drawLegendScatterMarker(ug, markerColor, currentX + LEGEND_SYMBOL_SIZE / 2, currentY + LEGEND_SYMBOL_SIZE / 2, LEGEND_SYMBOL_SIZE * 0.7, markerShape);</span>
+<span class="fc" id="L1235">				drawLegendScatterMarker(ug, markerColor, currentX + LEGEND_SYMBOL_SIZE / 2, currentY + LEGEND_SYMBOL_SIZE / 2, LEGEND_SYMBOL_SIZE * 0.7, markerShape);</span>
 			}
 
 			// Draw series name
-<span class="nc" id="L1244">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), s.getName())</span>
-<span class="nc" id="L1245">					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);</span>
-<span class="nc" id="L1246">			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L1247">			textBlock.drawU(ug.apply(UTranslate.dx(currentX + LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING)</span>
-<span class="nc" id="L1248">					.compose(UTranslate.dy(currentY))));</span>
+<span class="fc" id="L1239">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), s.getName())</span>
+<span class="fc" id="L1240">					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="fc" id="L1241">			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L1242">			textBlock.drawU(ug.apply(UTranslate.dx(currentX + LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING)</span>
+<span class="fc" id="L1243">					.compose(UTranslate.dy(currentY))));</span>
 
 			// Move to next item position
-<span class="nc bnc" id="L1251" title="All 4 branches missed.">			if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {</span>
-<span class="nc" id="L1252">				currentY += textDim.getHeight() + LEGEND_ITEM_SPACING;</span>
+<span class="pc bpc" id="L1246" title="2 of 4 branches missed.">			if (legendPosition == ChartDiagram.LegendPosition.LEFT || legendPosition == ChartDiagram.LegendPosition.RIGHT) {</span>
+<span class="fc" id="L1247">				currentY += textDim.getHeight() + LEGEND_ITEM_SPACING;</span>
 			} else {
-<span class="nc" id="L1254">				currentX += LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING + textDim.getWidth() + LEGEND_ITEM_SPACING;</span>
+<span class="nc" id="L1249">				currentX += LEGEND_SYMBOL_SIZE + LEGEND_TEXT_SPACING + textDim.getWidth() + LEGEND_ITEM_SPACING;</span>
 			}
 		}
-<span class="nc" id="L1257">	}</span>
+<span class="fc" id="L1252">	}</span>
 
 	private void drawLegendScatterMarker(UGraphic ug, HColor color, double x, double y, double size, ChartSeries.MarkerShape shape) {
-<span class="nc bnc" id="L1260" title="All 4 branches missed.">		switch (shape) {</span>
+<span class="pc bpc" id="L1255" title="3 of 4 branches missed.">		switch (shape) {</span>
 		case CIRCLE:
-<span class="nc" id="L1262">			final net.sourceforge.plantuml.klimt.shape.UEllipse circle = net.sourceforge.plantuml.klimt.shape.UEllipse.build(size, size);</span>
-<span class="nc" id="L1263">			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x - size / 2).compose(UTranslate.dy(y - size / 2))).draw(circle);</span>
-<span class="nc" id="L1264">			break;</span>
+<span class="fc" id="L1257">			final net.sourceforge.plantuml.klimt.shape.UEllipse circle = net.sourceforge.plantuml.klimt.shape.UEllipse.build(size, size);</span>
+<span class="fc" id="L1258">			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x - size / 2).compose(UTranslate.dy(y - size / 2))).draw(circle);</span>
+<span class="fc" id="L1259">			break;</span>
 		case SQUARE:
-<span class="nc" id="L1266">			final net.sourceforge.plantuml.klimt.shape.URectangle square = net.sourceforge.plantuml.klimt.shape.URectangle.build(size, size);</span>
-<span class="nc" id="L1267">			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x - size / 2).compose(UTranslate.dy(y - size / 2))).draw(square);</span>
-<span class="nc" id="L1268">			break;</span>
+<span class="nc" id="L1261">			final net.sourceforge.plantuml.klimt.shape.URectangle square = net.sourceforge.plantuml.klimt.shape.URectangle.build(size, size);</span>
+<span class="nc" id="L1262">			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x - size / 2).compose(UTranslate.dy(y - size / 2))).draw(square);</span>
+<span class="nc" id="L1263">			break;</span>
 		case TRIANGLE:
-<span class="nc" id="L1270">			final net.sourceforge.plantuml.klimt.shape.UPolygon triangle = new net.sourceforge.plantuml.klimt.shape.UPolygon();</span>
-<span class="nc" id="L1271">			triangle.addPoint(0, -size / 2);</span>
-<span class="nc" id="L1272">			triangle.addPoint(-size / 2, size / 2);</span>
-<span class="nc" id="L1273">			triangle.addPoint(size / 2, size / 2);</span>
-<span class="nc" id="L1274">			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(triangle);</span>
+<span class="nc" id="L1265">			final net.sourceforge.plantuml.klimt.shape.UPolygon triangle = new net.sourceforge.plantuml.klimt.shape.UPolygon();</span>
+<span class="nc" id="L1266">			triangle.addPoint(0, -size / 2);</span>
+<span class="nc" id="L1267">			triangle.addPoint(-size / 2, size / 2);</span>
+<span class="nc" id="L1268">			triangle.addPoint(size / 2, size / 2);</span>
+<span class="nc" id="L1269">			ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(triangle);</span>
 			break;
 		}
-<span class="nc" id="L1277">	}</span>
+<span class="fc" id="L1272">	}</span>
 
 	private void drawAnnotations(UGraphic ug, double plotWidth, double plotHeight, HColor lineColor, HColor fontColor) {
-<span class="pc bpc" id="L1280" title="2 of 4 branches missed.">		if (annotations == null || annotations.isEmpty())</span>
-<span class="fc" id="L1281">			return;</span>
+<span class="pc bpc" id="L1275" title="2 of 4 branches missed.">		if (annotations == null || annotations.isEmpty())</span>
+<span class="fc" id="L1276">			return;</span>
 
 		// Get annotation style
-<span class="nc" id="L1284">		final Style annotationStyle = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L1285">			.getMergedStyle(getAnnotationStyleSignature());</span>
+<span class="nc" id="L1279">		final Style annotationStyle = skinParam.getCurrentStyleBuilder()</span>
+<span class="nc" id="L1280">			.getMergedStyle(getAnnotationStyleSignature());</span>
 
 		// Extract annotation properties
-<span class="nc" id="L1288">		final FontConfiguration fontConfig = annotationStyle.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L1283">		final FontConfiguration fontConfig = annotationStyle.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 
 		// Extract arrow line color
-<span class="nc" id="L1291">		HColor arrowColor = annotationStyle.value(PName.LineColor)</span>
-<span class="nc" id="L1292">			.asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc bnc" id="L1293" title="All 2 branches missed.">		if (arrowColor == null) {</span>
+<span class="nc" id="L1286">		HColor arrowColor = annotationStyle.value(PName.LineColor)</span>
+<span class="nc" id="L1287">			.asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc bnc" id="L1288" title="All 2 branches missed.">		if (arrowColor == null) {</span>
 			// Fallback to black
-<span class="nc" id="L1295">			arrowColor = HColors.BLACK;</span>
+<span class="nc" id="L1290">			arrowColor = HColors.BLACK;</span>
 			try {
-<span class="nc" id="L1297">				arrowColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
-<span class="nc" id="L1298">			} catch (Exception e) {</span>
-<span class="nc" id="L1299">				arrowColor = lineColor;</span>
-<span class="nc" id="L1300">			}</span>
+<span class="nc" id="L1292">				arrowColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
+<span class="nc" id="L1293">			} catch (Exception e) {</span>
+<span class="nc" id="L1294">				arrowColor = lineColor;</span>
+<span class="nc" id="L1295">			}</span>
 		}
 
 		// Extract arrow line thickness
-<span class="nc" id="L1304">		final double arrowThickness = annotationStyle.value(PName.LineThickness).asDouble();</span>
+<span class="nc" id="L1299">		final double arrowThickness = annotationStyle.value(PName.LineThickness).asDouble();</span>
 
-<span class="nc bnc" id="L1306" title="All 2 branches missed.">		for (ChartAnnotation annotation : annotations) {</span>
+<span class="nc bnc" id="L1301" title="All 2 branches missed.">		for (ChartAnnotation annotation : annotations) {</span>
 			// Calculate the pixel position of the annotation
-<span class="nc" id="L1308">			double x = 0;</span>
-<span class="nc" id="L1309">			double y = 0;</span>
+<span class="nc" id="L1303">			double x = 0;</span>
+<span class="nc" id="L1304">			double y = 0;</span>
 
 			// Handle X position (categorical or numeric)
-<span class="nc bnc" id="L1312" title="All 2 branches missed.">			if (annotation.getXPosition() instanceof Double) {</span>
+<span class="nc bnc" id="L1307" title="All 2 branches missed.">			if (annotation.getXPosition() instanceof Double) {</span>
 				// Numeric X position - convert to pixel coordinate
-<span class="nc" id="L1314">				double xValue = (Double) annotation.getXPosition();</span>
-<span class="nc bnc" id="L1315" title="All 2 branches missed.">				if (orientation == ChartDiagram.Orientation.HORIZONTAL) {</span>
+<span class="nc" id="L1309">				double xValue = (Double) annotation.getXPosition();</span>
+<span class="nc bnc" id="L1310" title="All 2 branches missed.">				if (orientation == ChartDiagram.Orientation.HORIZONTAL) {</span>
 					// For horizontal, numeric axis is Y
-<span class="nc" id="L1317">					y = plotHeight * (1.0 - (xValue - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));</span>
+<span class="nc" id="L1312">					y = plotHeight * (1.0 - (xValue - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));</span>
 				} else {
 					// For vertical, numeric X would map across the plot width
 					// This is unusual but support it for flexibility
-<span class="nc" id="L1321">					x = plotWidth * ((xValue - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));</span>
+<span class="nc" id="L1316">					x = plotWidth * ((xValue - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));</span>
 				}
-<span class="nc bnc" id="L1323" title="All 2 branches missed.">			} else if (annotation.getXPosition() instanceof String) {</span>
+<span class="nc bnc" id="L1318" title="All 2 branches missed.">			} else if (annotation.getXPosition() instanceof String) {</span>
 				// Categorical X position - find index in labels
-<span class="nc" id="L1325">				String xLabel = (String) annotation.getXPosition();</span>
-<span class="nc" id="L1326">				int index = xAxisLabels.indexOf(xLabel);</span>
-<span class="nc bnc" id="L1327" title="All 2 branches missed.">				if (index &lt; 0)</span>
-<span class="nc" id="L1328">					continue; // Label not found, skip this annotation</span>
+<span class="nc" id="L1320">				String xLabel = (String) annotation.getXPosition();</span>
+<span class="nc" id="L1321">				int index = xAxisLabels.indexOf(xLabel);</span>
+<span class="nc bnc" id="L1322" title="All 2 branches missed.">				if (index &lt; 0)</span>
+<span class="nc" id="L1323">					continue; // Label not found, skip this annotation</span>
 
-<span class="nc bnc" id="L1330" title="All 2 branches missed.">				if (orientation == ChartDiagram.Orientation.HORIZONTAL) {</span>
+<span class="nc bnc" id="L1325" title="All 2 branches missed.">				if (orientation == ChartDiagram.Orientation.HORIZONTAL) {</span>
 					// For horizontal, categories are on Y axis
-<span class="nc" id="L1332">					y = plotHeight * (index + 0.5) / xAxisLabels.size();</span>
+<span class="nc" id="L1327">					y = plotHeight * (index + 0.5) / xAxisLabels.size();</span>
 				} else {
 					// For vertical, categories are on X axis
-<span class="nc" id="L1335">					x = plotWidth * (index + 0.5) / xAxisLabels.size();</span>
+<span class="nc" id="L1330">					x = plotWidth * (index + 0.5) / xAxisLabels.size();</span>
 				}
 			}
 
 			// Handle Y position (always numeric)
-<span class="nc bnc" id="L1340" title="All 2 branches missed.">			if (orientation == ChartDiagram.Orientation.HORIZONTAL) {</span>
+<span class="nc bnc" id="L1335" title="All 2 branches missed.">			if (orientation == ChartDiagram.Orientation.HORIZONTAL) {</span>
 				// For horizontal, numeric axis is X (yAxis holds the numeric range)
-<span class="nc" id="L1342">				x = plotWidth * ((annotation.getYPosition() - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));</span>
+<span class="nc" id="L1337">				x = plotWidth * ((annotation.getYPosition() - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));</span>
 			} else {
 				// For vertical, numeric axis is Y
-<span class="nc" id="L1345">				y = plotHeight * (1.0 - (annotation.getYPosition() - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));</span>
+<span class="nc" id="L1340">				y = plotHeight * (1.0 - (annotation.getYPosition() - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));</span>
 			}
 
 			// Create text block for annotation
-<span class="nc" id="L1349">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), annotation.getText())</span>
-<span class="nc" id="L1350">					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);</span>
-<span class="nc" id="L1351">			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L1344">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), annotation.getText())</span>
+<span class="nc" id="L1345">					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="nc" id="L1346">			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());</span>
 
 			// Draw arrow if requested
-<span class="nc bnc" id="L1354" title="All 2 branches missed.">			if (annotation.isShowArrow()) {</span>
+<span class="nc bnc" id="L1349" title="All 2 branches missed.">			if (annotation.isShowArrow()) {</span>
 				// Check if there's enough space above the point for text + arrow
-<span class="nc" id="L1356">				final double minSpaceAbove = textDim.getHeight() + 40;</span>
-<span class="nc bnc" id="L1357" title="All 2 branches missed.">				final boolean placeAbove = y &gt; minSpaceAbove;</span>
+<span class="nc" id="L1351">				final double minSpaceAbove = textDim.getHeight() + 40;</span>
+<span class="nc bnc" id="L1352" title="All 2 branches missed.">				final boolean placeAbove = y &gt; minSpaceAbove;</span>
 
-<span class="nc bnc" id="L1359" title="All 2 branches missed.">				if (placeAbove) {</span>
+<span class="nc bnc" id="L1354" title="All 2 branches missed.">				if (placeAbove) {</span>
 					// Position text above the data point with arrow pointing down
-<span class="nc" id="L1361">					final double textX = x - textDim.getWidth() / 2;</span>
-<span class="nc" id="L1362">					final double textY = y - textDim.getHeight() - 40;</span>
+<span class="nc" id="L1356">					final double textX = x - textDim.getWidth() / 2;</span>
+<span class="nc" id="L1357">					final double textY = y - textDim.getHeight() - 40;</span>
 
 					// Draw text first
-<span class="nc" id="L1365">					textBlock.drawU(ug.apply(UTranslate.dx(textX).compose(UTranslate.dy(textY))));</span>
+<span class="nc" id="L1360">					textBlock.drawU(ug.apply(UTranslate.dx(textX).compose(UTranslate.dy(textY))));</span>
 
 					// Draw arrow from bottom of text to data point
-<span class="nc" id="L1368">					final double arrowStartY = textY + textDim.getHeight() + 5;</span>
-<span class="nc" id="L1369">					final double arrowEndY = y - 5;</span>
-<span class="nc" id="L1370">					final double arrowLength = arrowEndY - arrowStartY;</span>
+<span class="nc" id="L1363">					final double arrowStartY = textY + textDim.getHeight() + 5;</span>
+<span class="nc" id="L1364">					final double arrowEndY = y - 5;</span>
+<span class="nc" id="L1365">					final double arrowLength = arrowEndY - arrowStartY;</span>
 
-<span class="nc bnc" id="L1372" title="All 2 branches missed.">					if (arrowLength &gt; 0) {</span>
-<span class="nc" id="L1373">						final ULine arrowLine = new ULine(0, arrowLength);</span>
-<span class="nc" id="L1374">						ug.apply(arrowColor).apply(UStroke.withThickness(arrowThickness))</span>
-<span class="nc" id="L1375">								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowStartY)))</span>
-<span class="nc" id="L1376">								.draw(arrowLine);</span>
+<span class="nc bnc" id="L1367" title="All 2 branches missed.">					if (arrowLength &gt; 0) {</span>
+<span class="nc" id="L1368">						final ULine arrowLine = new ULine(0, arrowLength);</span>
+<span class="nc" id="L1369">						ug.apply(arrowColor).apply(UStroke.withThickness(arrowThickness))</span>
+<span class="nc" id="L1370">								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowStartY)))</span>
+<span class="nc" id="L1371">								.draw(arrowLine);</span>
 
 						// Draw arrowhead pointing down
-<span class="nc" id="L1379">						final net.sourceforge.plantuml.klimt.shape.UPolygon arrowhead = new net.sourceforge.plantuml.klimt.shape.UPolygon();</span>
-<span class="nc" id="L1380">						arrowhead.addPoint(0, 0);</span>
-<span class="nc" id="L1381">						arrowhead.addPoint(-5, -8);</span>
-<span class="nc" id="L1382">						arrowhead.addPoint(5, -8);</span>
-<span class="nc" id="L1383">						ug.apply(arrowColor).apply(arrowColor.bg())</span>
-<span class="nc" id="L1384">								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowEndY)))</span>
-<span class="nc" id="L1385">								.draw(arrowhead);</span>
+<span class="nc" id="L1374">						final net.sourceforge.plantuml.klimt.shape.UPolygon arrowhead = new net.sourceforge.plantuml.klimt.shape.UPolygon();</span>
+<span class="nc" id="L1375">						arrowhead.addPoint(0, 0);</span>
+<span class="nc" id="L1376">						arrowhead.addPoint(-5, -8);</span>
+<span class="nc" id="L1377">						arrowhead.addPoint(5, -8);</span>
+<span class="nc" id="L1378">						ug.apply(arrowColor).apply(arrowColor.bg())</span>
+<span class="nc" id="L1379">								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowEndY)))</span>
+<span class="nc" id="L1380">								.draw(arrowhead);</span>
 					}
-<span class="nc" id="L1387">				} else {</span>
+<span class="nc" id="L1382">				} else {</span>
 					// Position text below the data point with arrow pointing up
-<span class="nc" id="L1389">					final double textX = x - textDim.getWidth() / 2;</span>
-<span class="nc" id="L1390">					final double textY = y + 40;</span>
+<span class="nc" id="L1384">					final double textX = x - textDim.getWidth() / 2;</span>
+<span class="nc" id="L1385">					final double textY = y + 40;</span>
 
 					// Draw text below
-<span class="nc" id="L1393">					textBlock.drawU(ug.apply(UTranslate.dx(textX).compose(UTranslate.dy(textY))));</span>
+<span class="nc" id="L1388">					textBlock.drawU(ug.apply(UTranslate.dx(textX).compose(UTranslate.dy(textY))));</span>
 
 					// Draw arrow from top of text to data point
-<span class="nc" id="L1396">					final double arrowStartY = textY - 5;</span>
-<span class="nc" id="L1397">					final double arrowEndY = y + 5;</span>
-<span class="nc" id="L1398">					final double arrowLength = arrowStartY - arrowEndY;</span>
+<span class="nc" id="L1391">					final double arrowStartY = textY - 5;</span>
+<span class="nc" id="L1392">					final double arrowEndY = y + 5;</span>
+<span class="nc" id="L1393">					final double arrowLength = arrowStartY - arrowEndY;</span>
 
-<span class="nc bnc" id="L1400" title="All 2 branches missed.">					if (arrowLength &gt; 0) {</span>
-<span class="nc" id="L1401">						final ULine arrowLine = new ULine(0, -arrowLength);</span>
-<span class="nc" id="L1402">						ug.apply(arrowColor).apply(UStroke.withThickness(arrowThickness))</span>
-<span class="nc" id="L1403">								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowStartY)))</span>
-<span class="nc" id="L1404">								.draw(arrowLine);</span>
+<span class="nc bnc" id="L1395" title="All 2 branches missed.">					if (arrowLength &gt; 0) {</span>
+<span class="nc" id="L1396">						final ULine arrowLine = new ULine(0, -arrowLength);</span>
+<span class="nc" id="L1397">						ug.apply(arrowColor).apply(UStroke.withThickness(arrowThickness))</span>
+<span class="nc" id="L1398">								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowStartY)))</span>
+<span class="nc" id="L1399">								.draw(arrowLine);</span>
 
 						// Draw arrowhead pointing up
-<span class="nc" id="L1407">						final net.sourceforge.plantuml.klimt.shape.UPolygon arrowhead = new net.sourceforge.plantuml.klimt.shape.UPolygon();</span>
-<span class="nc" id="L1408">						arrowhead.addPoint(0, 0);</span>
-<span class="nc" id="L1409">						arrowhead.addPoint(-5, 8);</span>
-<span class="nc" id="L1410">						arrowhead.addPoint(5, 8);</span>
-<span class="nc" id="L1411">						ug.apply(arrowColor).apply(arrowColor.bg())</span>
-<span class="nc" id="L1412">								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowEndY)))</span>
-<span class="nc" id="L1413">								.draw(arrowhead);</span>
+<span class="nc" id="L1402">						final net.sourceforge.plantuml.klimt.shape.UPolygon arrowhead = new net.sourceforge.plantuml.klimt.shape.UPolygon();</span>
+<span class="nc" id="L1403">						arrowhead.addPoint(0, 0);</span>
+<span class="nc" id="L1404">						arrowhead.addPoint(-5, 8);</span>
+<span class="nc" id="L1405">						arrowhead.addPoint(5, 8);</span>
+<span class="nc" id="L1406">						ug.apply(arrowColor).apply(arrowColor.bg())</span>
+<span class="nc" id="L1407">								.apply(UTranslate.dx(x).compose(UTranslate.dy(arrowEndY)))</span>
+<span class="nc" id="L1408">								.draw(arrowhead);</span>
 					}
 				}
-<span class="nc" id="L1416">			} else {</span>
+<span class="nc" id="L1411">			} else {</span>
 				// Draw text near the point without arrow
-<span class="nc" id="L1418">				textBlock.drawU(ug.apply(UTranslate.dx(x - textDim.getWidth() / 2)</span>
-<span class="nc" id="L1419">						.compose(UTranslate.dy(y - textDim.getHeight() - 5))));</span>
+<span class="nc" id="L1413">				textBlock.drawU(ug.apply(UTranslate.dx(x - textDim.getWidth() / 2)</span>
+<span class="nc" id="L1414">						.compose(UTranslate.dy(y - textDim.getHeight() - 5))));</span>
 			}
-<span class="nc" id="L1421">		}</span>
-<span class="nc" id="L1422">	}</span>
+<span class="nc" id="L1416">		}</span>
+<span class="nc" id="L1417">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

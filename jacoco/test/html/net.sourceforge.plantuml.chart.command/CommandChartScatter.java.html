@@ -109,7 +109,7 @@ public class CommandChartScatter extends SingleLineCommand2&lt;ChartDiagram&gt; 
 
 		// Check if data contains coordinate pairs (x,y) format
 		final ChartSeries series;
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		final String seriesName = name != null ? name : &quot;scatter&quot; + diagram.getSeries().size();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		final String seriesName = name != null ? name : &quot;scatter&quot; + diagram.getSeries().size();</span>
 
 <span class="fc bfc" id="L114" title="All 2 branches covered.">		if (data.contains(&quot;(&quot;)) {</span>
 			// Parse coordinate pairs
@@ -128,13 +128,13 @@ public class CommandChartScatter extends SingleLineCommand2&lt;ChartDiagram&gt; 
 <span class="fc" id="L128">			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, values);</span>
 		}
 
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (stereo != null) {</span>
-<span class="nc" id="L132">			series.setStereotype(Stereotype.build(stereo));</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (stereo != null) {</span>
+<span class="fc" id="L132">			series.setStereotype(Stereotype.build(stereo));</span>
 		}
 
-<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (colorStr != null) {</span>
-<span class="nc" id="L136">			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr);</span>
-<span class="nc" id="L137">			series.setColor(color);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (colorStr != null) {</span>
+<span class="fc" id="L136">			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr);</span>
+<span class="fc" id="L137">			series.setColor(color);</span>
 		}
 
 		// Set marker shape if specified
@@ -161,8 +161,8 @@ public class CommandChartScatter extends SingleLineCommand2&lt;ChartDiagram&gt; 
 
 		// Check if labels keyword was present
 <span class="fc" id="L163">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (labelsStr != null) {</span>
-<span class="nc" id="L165">			series.setShowLabels(true);</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (labelsStr != null) {</span>
+<span class="fc" id="L165">			series.setShowLabels(true);</span>
 		}
 
 <span class="fc" id="L168">		return diagram.addSeries(series);</span>
