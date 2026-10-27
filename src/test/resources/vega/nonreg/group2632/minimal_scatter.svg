@@ -35,9 +35,9 @@
     <text fill="#000" font-size="14" textLength="27.213" x="407.505" y="380.889">49.5</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="461.111" x2="461.111" y1="360" y2="365"/>
     <text fill="#000" font-size="14" textLength="15.575" x="453.324" y="380.889">54</text>
-    <ellipse cx="70" cy="225" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="203.333" cy="174" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="336.667" cy="186" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="470" cy="150" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
+    <ellipse cx="70" cy="225" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="203.333" cy="174" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="336.667" cy="186" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="470" cy="150" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
   </g>
 </svg>

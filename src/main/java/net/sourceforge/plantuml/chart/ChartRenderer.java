@@ -1204,16 +1204,11 @@ public class ChartRenderer {
 				// Get scatter style
 				final Style scatterStyle = getScatterStyle(s);
 
-				// Get marker color from style - priority: MarkerColor > LineColor > explicit color
+				// Get marker color - priority: explicit color > MarkerColor > LineColor (same logic as ScatterRenderer)
 				HColor markerColor = color;
-				HColor styleMarkerColor = scatterStyle.value(PName.MarkerColor).asColor(skinParam.getIHtmlColorSet());
-				if (styleMarkerColor != null) {
-					markerColor = styleMarkerColor;
-				} else if (s.getColor() == null) {
-					HColor styleLineColor = scatterStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-					if (styleLineColor != null) {
-						markerColor = styleLineColor;
-					}
+				if (s.getColor() == null) {
+					final PName colorName = scatterStyle.hasValue(PName.MarkerColor) ? PName.MarkerColor : PName.LineColor;
+					markerColor = scatterStyle.value(colorName).asColor(skinParam.getIHtmlColorSet());
 				}
 
 				// Get marker shape from style (same logic as ScatterRenderer)

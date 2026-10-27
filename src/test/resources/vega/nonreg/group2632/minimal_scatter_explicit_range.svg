@@ -37,9 +37,9 @@
     <text fill="#000" font-size="14" textLength="15.575" x="422.213" y="380.889">90</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="470" x2="470" y1="360" y2="365"/>
     <text fill="#000" font-size="14" textLength="23.363" x="458.319" y="380.889">100</text>
-    <ellipse cx="110" cy="225" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="170" cy="174" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="230" cy="186" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="290" cy="150" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
+    <ellipse cx="110" cy="225" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="170" cy="174" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="230" cy="186" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="290" cy="150" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
   </g>
 </svg>

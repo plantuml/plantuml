@@ -1,0 +1,22 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+<style>
+chartDiagram {
+  scatter {
+    MarkerColor green
+  }
+  .blue {
+    MarkerColor blue
+  }
+}
+</style>
+h-axis 5 -> 55
+v-axis 30 -> 75
+scatter "style" [(10,45), (25,62)]
+scatter <<blue>> "stereotype" [(40,58), (55,70)]
+scatter "inline" [(30,40)] #red
+legend right
+@endchart

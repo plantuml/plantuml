@@ -38,7 +38,7 @@
     <text fill="#000" font-size="14" textLength="31.15" x="254.425" y="400.889">Time</text>
     <line style="stroke:#181818;stroke-width:2;" x1="70" x2="179.091" y1="300" y2="255"/>
     <line style="stroke:#181818;stroke-width:2;" x1="179.091" x2="360.909" y1="255" y2="210"/>
-    <ellipse cx="142.727" cy="270" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
-    <ellipse cx="470" cy="225" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
+    <ellipse cx="142.727" cy="270" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="470" cy="225" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
   </g>
 </svg>

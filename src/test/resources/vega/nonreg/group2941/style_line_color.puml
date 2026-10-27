@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+<style>
+chartDiagram {
+  scatter {
+    LineColor orange
+  }
+}
+</style>
+h-axis 5 -> 55
+v-axis 30 -> 75
+scatter "line color" [(10,45), (25,62), (40,58)]
+legend right
+@endchart

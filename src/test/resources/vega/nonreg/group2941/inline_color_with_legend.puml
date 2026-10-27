@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+h-axis 5 -> 55
+v-axis 30 -> 75
+scatter "a" [(10,45), (25,62)] #red
+scatter "b" [(40,58), (55,70)]
+legend right
+@endchart

@@ -99,17 +99,10 @@ public class ScatterRenderer {
 		// Get scatter style (with stereotype support)
 		final Style scatterStyle = getScatterStyle(series);
 
-		// Extract marker color from style - priority: MarkerColor > LineColor > explicit color
+		// Marker color - priority: explicit color > MarkerColor > LineColor (given by ChartRenderer)
 		HColor markerColor = color;
-		HColor styleMarkerColor = scatterStyle.value(PName.MarkerColor).asColor(skinParam.getIHtmlColorSet());
-		if (styleMarkerColor != null) {
-			markerColor = styleMarkerColor;
-		} else {
-			HColor styleLineColor = scatterStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-			if (styleLineColor != null && color == null) {
-				markerColor = styleLineColor;
-			}
-		}
+		if (series.getColor() == null && scatterStyle.hasValue(PName.MarkerColor))
+			markerColor = scatterStyle.value(PName.MarkerColor).asColor(skinParam.getIHtmlColorSet());
 
 		// Extract marker size from style (default 8)
 		double markerSize = 8.0;
