@@ -52,5 +52,6 @@
 'm:native':
 - changed-files:
   - any-glob-to-any-file:
-    - .github/workflows/native-image-snapshot.yml
-    - .github/workflows/native-image-release.yml
+    - .github/workflows/teavm-c.yml
+    - src/teavm-c/**
+    - plantuml-natif/**

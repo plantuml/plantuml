@@ -24,10 +24,6 @@ cp "build/java8/plantuml.jar" "github_release/plantuml-java8-SNAPSHOT.jar"
 cp "build/libs/plantuml-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-SNAPSHOT-javadoc.jar"
 cp "build/libs/plantuml-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-SNAPSHOT-sources.jar"
 cp "build/libs/js-plantuml-${RELEASE_VERSION}.zip" "github_release/js-plantuml-SNAPSHOT.zip"
-cp "build/native-image/native-plantuml-windows-amd64-SNAPSHOT.zip" "github_release/native-plantuml-windows-amd64-SNAPSHOT.zip"
-cp "build/native-image/native-plantuml-linux-amd64-SNAPSHOT.zip" "github_release/native-plantuml-linux-amd64-SNAPSHOT.zip"
-cp "build/native-image/native-plantuml-linux-arm64-SNAPSHOT.zip" "github_release/native-plantuml-linux-arm64-SNAPSHOT.zip"
-cp "build/native-image/native-plantuml-macos-arm64-SNAPSHOT.zip" "github_release/native-plantuml-macos-arm64-SNAPSHOT.zip"
 # Experimental C executables (Java -> C with TeaVM): optional, their build must not block the snapshot.
 # Each entry is <artifact suffix>:<name in the release>:<executable>; every artifact is downloaded
 # in its own folder (build/executable/plantuml-<artifact suffix>).

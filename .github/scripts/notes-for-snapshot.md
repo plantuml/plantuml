@@ -28,21 +28,6 @@
 </details>
 
 
-
-<details>
-<summary><strong>Native binaries by OS</strong></summary>
-
-| OS | Arch. | File |
-|---|---|---|
-| ![Linux](https://img.shields.io/badge/Linux-AMD64-FCC624?style=for-the-badge&logo=linux&logoColor=black) | amd64 | [native-plantuml-linux-amd64-SNAPSHOT.zip](https://github.com/plantuml/plantuml/releases/download/snapshot/native-plantuml-linux-amd64-SNAPSHOT.zip) |
-| ![Linux](https://img.shields.io/badge/Linux-ARM64-FCC624?style=for-the-badge&logo=linux&logoColor=black) | arm64 | [native-plantuml-linux-arm64-SNAPSHOT.zip](https://github.com/plantuml/plantuml/releases/download/snapshot/native-plantuml-linux-arm64-SNAPSHOT.zip) |
-| ![macOS](https://img.shields.io/badge/macOS-ARM64-111111?style=for-the-badge&logo=apple&logoColor=white) | arm64 | [native-plantuml-macos-arm64-SNAPSHOT.zip](https://github.com/plantuml/plantuml/releases/download/snapshot/native-plantuml-macos-arm64-SNAPSHOT.zip) |
-| ![Windows](https://img.shields.io/badge/Windows-AMD64-0078D6?style=for-the-badge&logo=windows&logoColor=white) | amd64 | [native-plantuml-windows-amd64-SNAPSHOT.zip](https://github.com/plantuml/plantuml/releases/download/snapshot/native-plantuml-windows-amd64-SNAPSHOT.zip) |
-
-</details>
-
-
-
 <details>
 <summary><strong>JAVA <i>(all licenses)</i></strong></summary>
 

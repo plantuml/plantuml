@@ -56,14 +56,14 @@ Batik to OpenPDF (see `src/main/java/net/sourceforge/plantuml/openpdf/readme.md`
 │   │   snapshot)    │  │ or snapshot) │  │ • js-plantuml   │                     │
 │   └────────────────┘  └──────┬───────┘  └─────────────────┘                     │
 │                              │                                                  │
-│              ┌───────────────┼───────────────┐                                  │
-│              │               │               │                                  │
-│              ▼               ▼               ▼                                  │
-│   ┌──────────────────┐ ┌───────────┐ ┌────────────────────┐                     │
-│   │ push_to_docker   │ │  native   │ │ trigger_plantuml   │                     │
-│   │    _registry     │ │  image    │ │  _eclipse_release  │                     │
-│   │ (release only)   │ │ (release) │ │   (release only)   │                     │
-│   └──────────────────┘ └───────────┘ └────────────────────┘                     │
+│              ┌───────────────┴───────────────┐                                  │
+│              │                               │                                  │
+│              ▼                               ▼                                  │
+│   ┌──────────────────┐               ┌────────────────────┐                     │
+│   │ push_to_docker   │               │ trigger_plantuml   │                     │
+│   │    _registry     │               │  _eclipse_release  │                     │
+│   │ (release only)   │               │   (release only)   │                     │
+│   └──────────────────┘               └────────────────────┘                     │
 │                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -128,7 +128,7 @@ gradle build                   (compiles the patched sources)
 
 This task is intentionally **not** wired to `compileJava`: the main source set
 stays plain `src/main/java`, which keeps IDEs happy. CI calls it explicitly before
-the build (`ci.yml`, `native-image-release.yml`):
+the build (`ci.yml`, `teavm-c.yml`):
 
 ```bash
 gradle patchCompilationInfo
@@ -222,17 +222,17 @@ timestamp as the GPL artifact.
 └────────┘             │    │    │ if do_javadoc │  │ or snapshot │
                        │    │    └───────────────┘  └──────┬──────┘
                        │    │                              │
-                       │    │         ┌────────────────────┼────────────────────┐
-                       │    │         │                    │                    │
-                       ▼    ▼         ▼                    ▼                    ▼
-              ┌─────────────────────────────┐  ┌────────────────┐  ┌──────────────────┐
-              │     push_to_docker_registry │  │ create_native  │  │ trigger_plantuml │
-              │                             │  │ _image_release │  │ _eclipse_release │
-              │ needs: workflow_config,     │  │                │  │                  │
-              │        upload, test_linux   │  │ needs: upload  │  │ needs: upload,   │
-              │                             │  │                │  │  build_artifacts │
-              │ if: do_release == true      │  │ if: do_release │  │                  │
-              └─────────────────────────────┘  └────────────────┘  └──────────────────┘
+                       │    │         ┌────────────────────┴────────────────────┐
+                       │    │         │                                         │
+                       ▼    ▼         ▼                                         ▼
+              ┌─────────────────────────────┐                      ┌──────────────────┐
+              │     push_to_docker_registry │                      │ trigger_plantuml │
+              │                             │                      │ _eclipse_release │
+              │ needs: workflow_config,     │                      │                  │
+              │        upload, test_linux   │                      │ needs: upload,   │
+              │                             │                      │  build_artifacts │
+              │ if: do_release == true      │                      │                  │
+              └─────────────────────────────┘                      └──────────────────┘
 ```
 
 ### Execution Matrix
@@ -252,7 +252,6 @@ timestamp as the GPL artifact.
 │ deploy_site_gh_page  │    ✗     │      ✗      │      ✓     │         ✓            │
 │ upload (release)     │    ✗     │      ✗      │      ✓     │         ✓ (snapshot) │
 │ push_to_docker       │    ✗     │      ✗      │      ✓     │         ✗            │
-│ create_native_image  │    ✗     │      ✗      │      ✓     │         ✗            │
 │ trigger_eclipse      │    ✗     │      ✗      │      ✓     │         ✗            │
 ├──────────────────────┼──────────┼─────────────┼─────────────┼──────────────────────┤
 │ ARTIFACTS UPLOADED   │    ✓     │      ✓      │      ✓     │         ✓            │
@@ -574,33 +573,7 @@ Legend:  ✓ = Runs    ✗ = Skipped    author = arnaudroques or The-Lum
 
 ---
 
-### 8. `create_native_image_release` - GraalVM Native Image
-
-**Purpose:** Creates native executables using GraalVM (release only).
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                 create_native_image_release Job                 │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Condition: do_release == 'true'                                │
-│  Depends on: workflow_config, upload                            │
-│                                                                 │
-│  Uses: .github/workflows/native-image-release.yml               │
-│                                                                 │
-│  Creates standalone executables (no JVM required):              │
-│    • plantuml-linux-amd64                                       │
-│    • plantuml-linux-arm64                                       │
-│    • plantuml-windows-amd64.exe                                 │
-│    • plantuml-macos-amd64                                       │
-│    • plantuml-macos-arm64                                       │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
----
-
-### 9. `trigger_plantuml_eclipse_release` - Eclipse Plugin Update
+### 8. `trigger_plantuml_eclipse_release` - Eclipse Plugin Update
 
 **Purpose:** Triggers the PlantUML Eclipse plugin repository to update (release only).
 
@@ -778,7 +751,6 @@ Snapshot version:    Extracted from src/net/sourceforge/plantuml/version/Version
 │      │  jdk8 ──────────────┐                                               │    │
 │      │  test_linux ────────┼──► upload ──┬──► push_to_docker_registry      │    │
 │      │  build_artifacts ───┘             │                                 │    │
-│      │                                   ├──► create_native_image_release  │    │
 │      │  deploy_site_to_gh_page           │                                 │    │
 │      │                                   └──► trigger_plantuml_eclipse     │    │
 │      └─────────────────────────────────────────────────────────────────────┘    │
@@ -812,7 +784,6 @@ Snapshot version:    Extracted from src/net/sourceforge/plantuml/version/Version
 │                                                                                 │
 │   NOT triggered:                                                                │
 │      • Docker push                                                              │
-│      • Native image creation                                                    │
 │      • Eclipse plugin trigger                                                   │
 │                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────┘

@@ -109,19 +109,19 @@ gradlew build -x test -x javadoc
 
 ### Building a native image
 
-The `plantuml-natif` subproject builds a GraalVM native binary of the same code as `plantuml.jar` (headless CLI). That is the task CI uses for Windows, Linux, and macOS native releases.
+The `plantuml-natif` subproject builds a GraalVM native binary of the same code as `plantuml.jar` (headless CLI). CI no longer builds it: the snapshot ships the TeaVM C executables instead (see [`src/teavm-c/README.md`](../src/teavm-c/README.md)). The subproject is kept for now.
 
-Do not use `:plantuml-gplv2:nativeFullCompile`. Published native images come from `:plantuml-natif:nativeCompile`.
+Do not use `:plantuml-gplv2:nativeFullCompile`: the native image comes from `:plantuml-natif:nativeCompile`.
 
 #### Prerequisites
 
-- JDK 11 or newer so Gradle includes `plantuml-natif`. CI builds with GraalVM / Liberica Native Image Kit **21**.
+- JDK 11 or newer so Gradle includes `plantuml-natif`. It was last built with GraalVM / Liberica Native Image Kit **21**.
 - `JAVA_HOME` must point at a JDK that ships `native-image` (GraalVM or Liberica NIK). `plantuml-natif` turns toolchain detection off, so a plain JDK leaves `javaLauncher` empty and the compile fails with `Cannot query the value of property 'javaLauncher'`. Setting `GRAALVM_HOME` is optional if `JAVA_HOME` already points at that JDK.
 - On Windows, install Visual Studio (2022 Community is enough) with the **Desktop development with C++** workload. Run Gradle from an x64 Native Tools / MSVC developer prompt so `cl.exe` is on `PATH`. GraalVM `native-image` needs that toolchain.
 
 #### Build
 
-From the repository root. `--no-daemon` matches CI.
+From the repository root.
 
 Linux / macOS:
 
