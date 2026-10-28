@@ -35,7 +35,7 @@ $(function() {
         if (redirect.is(":checked")) {
             href += "&r=1";
         }
-        searchLink.html(href);
+        searchLink.text(href);
         copy[0].onmouseenter();
     }
     function copyLink(e) {
@@ -70,11 +70,11 @@ $(window).on("load", function() {
     var feelingLucky = false;
     function renderResults(result) {
         if (!result.length) {
-            notify.html(messages.noResult);
+            notify.text(messages.noResult);
         } else if (result.length === 1) {
-            notify.html(messages.oneResult);
+            notify.text(messages.oneResult);
         } else {
-            notify.html(messages.manyResults.replace("{0}", result.length));
+            notify.text(messages.manyResults.replace("{0}", result.length));
         }
         resultContainer.empty();
         var r = {
@@ -99,7 +99,7 @@ $(window).on("load", function() {
             }, 0);
         }
         if (feelingLucky && activeTab) {
-            notify.html(messages.redirecting)
+            notify.text(messages.redirecting)
             var firstItem = r[activeTab][0];
             window.location = getURL(firstItem.indexItem, firstItem.category);
             return;
@@ -217,13 +217,13 @@ $(window).on("load", function() {
         setSearchUrl();
         var term = searchTerm = input.val().trim();
         if (term === "") {
-            notify.html(messages.enterTerm);
+            notify.text(messages.enterTerm);
             activeTab = "";
             fixedTab = false;
             resultContainer.empty();
             resultSection.hide();
         } else {
-            notify.html(messages.searching);
+            notify.text(messages.searching);
             doSearch({ term: term, maxResults: 1200 }, renderResults);
         }
     }
@@ -253,7 +253,7 @@ $(window).on("load", function() {
         }
     });
     reset.click(function() {
-        notify.html(messages.enterTerm);
+        notify.text(messages.enterTerm);
         resultSection.hide();
         activeTab = "";
         fixedTab = false;
@@ -278,7 +278,7 @@ $(window).on("load", function() {
     if (input.val()) {
         doPageSearch();
     } else {
-        notify.html(messages.enterTerm);
+        notify.text(messages.enterTerm);
     }
     input.select().focus();
 });

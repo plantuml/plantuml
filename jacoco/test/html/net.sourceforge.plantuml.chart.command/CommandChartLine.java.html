@@ -118,8 +118,8 @@ public class CommandChartLine extends SingleLineCommand2&lt;ChartDiagram&gt; {
 			// Parse coordinate pairs
 <span class="fc" id="L119">			final List&lt;Double&gt; xValues = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L120">			final List&lt;Double&gt; yValues = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">			if (!parseCoordinatePairs(data, xValues, yValues))</span>
-<span class="nc" id="L122">				return CommandExecutionResult.error(&quot;Invalid coordinate pair format in line data&quot;);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (!parseCoordinatePairs(data, xValues, yValues))</span>
+<span class="fc" id="L122">				return CommandExecutionResult.error(&quot;Invalid coordinate pair format in line data&quot;);</span>
 
 <span class="fc" id="L124">			series = new ChartSeries(seriesName, ChartSeries.SeriesType.LINE, xValues, yValues);</span>
 <span class="fc" id="L125">		} else {</span>
@@ -200,8 +200,8 @@ public class CommandChartLine extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc" id="L200">			trimmedPair = trimmedPair.replaceAll(&quot;[\\]\\)]+$&quot;, &quot;&quot;); // Remove trailing ] or )</span>
 
 <span class="fc" id="L202">			final String[] coords = trimmedPair.split(&quot;,&quot;);</span>
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">			if (coords.length != 2)</span>
-<span class="nc" id="L204">				return false;</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">			if (coords.length != 2)</span>
+<span class="fc" id="L204">				return false;</span>
 
 			try {
 <span class="fc" id="L207">				final double x = Double.parseDouble(coords[0].trim());</span>

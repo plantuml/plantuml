@@ -97,32 +97,32 @@ public class CommandChartAnnotation extends SingleLineCommand2&lt;ChartDiagram&g
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L100">		final String text = arg.get(&quot;TEXT&quot;, 0);</span>
-<span class="nc" id="L101">		final String xPosStr = arg.get(&quot;XPOS&quot;, 0).trim();</span>
-<span class="nc" id="L102">		final String yPosStr = arg.get(&quot;YPOS&quot;, 0).trim();</span>
-<span class="nc" id="L103">		final String arrowStr = arg.get(&quot;ARROW&quot;, 0);</span>
+<span class="fc" id="L100">		final String text = arg.get(&quot;TEXT&quot;, 0);</span>
+<span class="fc" id="L101">		final String xPosStr = arg.get(&quot;XPOS&quot;, 0).trim();</span>
+<span class="fc" id="L102">		final String yPosStr = arg.get(&quot;YPOS&quot;, 0).trim();</span>
+<span class="fc" id="L103">		final String arrowStr = arg.get(&quot;ARROW&quot;, 0);</span>
 
 		// Parse X position - can be either a string (categorical) or numeric
 		Object xPosition;
 		try {
 <span class="nc" id="L108">			xPosition = Double.parseDouble(xPosStr);</span>
-<span class="nc" id="L109">		} catch (NumberFormatException e) {</span>
+<span class="fc" id="L109">		} catch (NumberFormatException e) {</span>
 			// Not a number, treat as categorical label
-<span class="nc" id="L111">			xPosition = xPosStr;</span>
+<span class="fc" id="L111">			xPosition = xPosStr;</span>
 <span class="nc" id="L112">		}</span>
 
 		// Parse Y position - must be numeric
 		double yPosition;
 		try {
-<span class="nc" id="L117">			yPosition = Double.parseDouble(yPosStr);</span>
+<span class="fc" id="L117">			yPosition = Double.parseDouble(yPosStr);</span>
 <span class="nc" id="L118">		} catch (NumberFormatException e) {</span>
 <span class="nc" id="L119">			return CommandExecutionResult.error(&quot;Y position must be a numeric value: &quot; + yPosStr);</span>
-<span class="nc" id="L120">		}</span>
+<span class="fc" id="L120">		}</span>
 
-<span class="nc bnc" id="L122" title="All 2 branches missed.">		final boolean showArrow = arrowStr != null;</span>
-<span class="nc" id="L123">		final ChartAnnotation annotation = new ChartAnnotation(text, xPosition, yPosition, showArrow);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		final boolean showArrow = arrowStr != null;</span>
+<span class="fc" id="L123">		final ChartAnnotation annotation = new ChartAnnotation(text, xPosition, yPosition, showArrow);</span>
 
-<span class="nc" id="L125">		return diagram.addAnnotation(annotation);</span>
+<span class="fc" id="L125">		return diagram.addAnnotation(annotation);</span>
 	}
 
 	@Override

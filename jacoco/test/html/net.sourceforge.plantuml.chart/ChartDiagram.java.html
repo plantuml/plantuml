@@ -210,16 +210,16 @@ public class ChartDiagram extends TitledDiagram {
 <span class="fc" id="L210">	}</span>
 
 	public void setXAxisLabelPosition(ChartAxis.LabelPosition position) {
-<span class="nc" id="L213">		this.xAxisLabelPosition = position;</span>
-<span class="nc" id="L214">	}</span>
+<span class="fc" id="L213">		this.xAxisLabelPosition = position;</span>
+<span class="fc" id="L214">	}</span>
 
 	public ChartAxis.LabelPosition getXAxisLabelPosition() {
 <span class="nc" id="L217">		return xAxisLabelPosition;</span>
 	}
 
 	public void setXAxisTickSpacing(Integer spacing) {
-<span class="nc" id="L221">		this.xAxisTickSpacing = spacing;</span>
-<span class="nc" id="L222">	}</span>
+<span class="fc" id="L221">		this.xAxisTickSpacing = spacing;</span>
+<span class="fc" id="L222">	}</span>
 
 	public Integer getXAxisTickSpacing() {
 <span class="nc" id="L225">		return xAxisTickSpacing;</span>
@@ -260,15 +260,15 @@ public class ChartDiagram extends TitledDiagram {
 	}
 
 	public CommandExecutionResult setY2Axis(String title, Double min, Double max) {
-<span class="nc bnc" id="L263" title="All 2 branches missed.">		if (y2Axis == null)</span>
-<span class="nc" id="L264">			y2Axis = new ChartAxis();</span>
-<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (title != null)</span>
-<span class="nc" id="L266">			y2Axis.setTitle(title);</span>
-<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (min != null)</span>
-<span class="nc" id="L268">			y2Axis.setMin(min);</span>
-<span class="nc bnc" id="L269" title="All 2 branches missed.">		if (max != null)</span>
-<span class="nc" id="L270">			y2Axis.setMax(max);</span>
-<span class="nc" id="L271">		return CommandExecutionResult.ok();</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (y2Axis == null)</span>
+<span class="fc" id="L264">			y2Axis = new ChartAxis();</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">		if (title != null)</span>
+<span class="fc" id="L266">			y2Axis.setTitle(title);</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (min != null)</span>
+<span class="fc" id="L268">			y2Axis.setMin(min);</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		if (max != null)</span>
+<span class="fc" id="L270">			y2Axis.setMax(max);</span>
+<span class="fc" id="L271">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult addSeries(ChartSeries series) {
@@ -281,8 +281,8 @@ public class ChartDiagram extends TitledDiagram {
 			}
 
 			// Coordinate pairs require numeric h-axis (not categorical labels)
-<span class="pc bpc" id="L284" title="1 of 2 branches missed.">			if (!xAxisLabels.isEmpty()) {</span>
-<span class="nc" id="L285">				return CommandExecutionResult.error(</span>
+<span class="fc bfc" id="L284" title="All 2 branches covered.">			if (!xAxisLabels.isEmpty()) {</span>
+<span class="fc" id="L285">				return CommandExecutionResult.error(</span>
 						&quot;Coordinate pair notation requires numeric h-axis (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5), not categorical labels&quot;);
 			}
 
@@ -303,9 +303,9 @@ public class ChartDiagram extends TitledDiagram {
 
 			// Validate x-coordinates fall within axis range
 <span class="fc bfc" id="L305" title="All 2 branches covered.">			for (double x : series.getXValues()) {</span>
-<span class="pc bpc" id="L306" title="2 of 6 branches missed.">				if (xAxis.isAutoScale() == false &amp;&amp; (x &lt; xAxis.getMin() || x &gt; xAxis.getMax())) {</span>
-<span class="nc" id="L307">					return CommandExecutionResult.error(&quot;X-coordinate &quot; + x + &quot; is outside h-axis range [&quot;</span>
-<span class="nc" id="L308">							+ xAxis.getMin() + &quot;, &quot; + xAxis.getMax() + &quot;]&quot;);</span>
+<span class="pc bpc" id="L306" title="1 of 6 branches missed.">				if (xAxis.isAutoScale() == false &amp;&amp; (x &lt; xAxis.getMin() || x &gt; xAxis.getMax())) {</span>
+<span class="fc" id="L307">					return CommandExecutionResult.error(&quot;X-coordinate &quot; + x + &quot; is outside h-axis range [&quot;</span>
+<span class="fc" id="L308">							+ xAxis.getMin() + &quot;, &quot; + xAxis.getMax() + &quot;]&quot;);</span>
 				}
 <span class="fc" id="L310">			}</span>
 
@@ -327,7 +327,7 @@ public class ChartDiagram extends TitledDiagram {
 <span class="fc" id="L327">		this.series.add(series);</span>
 
 		// Auto-scale y-axes if needed
-<span class="pc bpc" id="L330" title="1 of 4 branches missed.">		final ChartAxis axis = series.isUseSecondaryAxis() &amp;&amp; y2Axis != null ? y2Axis : yAxis;</span>
+<span class="fc bfc" id="L330" title="All 4 branches covered.">		final ChartAxis axis = series.isUseSecondaryAxis() &amp;&amp; y2Axis != null ? y2Axis : yAxis;</span>
 <span class="fc bfc" id="L331" title="All 2 branches covered.">		for (Double value : series.getValues()) {</span>
 <span class="fc bfc" id="L332" title="All 2 branches covered.">			if (value != null)</span>
 <span class="fc" id="L333">				axis.includeValue(value);</span>
@@ -345,7 +345,7 @@ public class ChartDiagram extends TitledDiagram {
 	}
 
 	public ChartAxis getYAxis() {
-<span class="nc" id="L348">		return yAxis;</span>
+<span class="fc" id="L348">		return yAxis;</span>
 	}
 
 	public ChartAxis getY2Axis() {
@@ -368,13 +368,13 @@ public class ChartDiagram extends TitledDiagram {
 	}
 
 	public CommandExecutionResult setXGridMode(GridMode mode) {
-<span class="nc" id="L371">		this.xGridMode = mode;</span>
-<span class="nc" id="L372">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L371">		this.xGridMode = mode;</span>
+<span class="fc" id="L372">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setYGridMode(GridMode mode) {
-<span class="nc" id="L376">		this.yGridMode = mode;</span>
-<span class="nc" id="L377">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L376">		this.yGridMode = mode;</span>
+<span class="fc" id="L377">		return CommandExecutionResult.ok();</span>
 	}
 
 	public GridMode getXGridMode() {
@@ -404,8 +404,8 @@ public class ChartDiagram extends TitledDiagram {
 	}
 
 	public CommandExecutionResult addAnnotation(ChartAnnotation annotation) {
-<span class="nc" id="L407">		this.annotations.add(annotation);</span>
-<span class="nc" id="L408">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L407">		this.annotations.add(annotation);</span>
+<span class="fc" id="L408">		return CommandExecutionResult.ok();</span>
 	}
 
 	public List&lt;ChartAnnotation&gt; getAnnotations() {

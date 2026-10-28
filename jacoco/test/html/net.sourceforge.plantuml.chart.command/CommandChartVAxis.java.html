@@ -130,9 +130,9 @@ public class CommandChartVAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
 		// Parse custom ticks if present
 <span class="fc" id="L132">		Map&lt;Double, String&gt; customTicks = null;</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (ticksStr != null) {</span>
-<span class="nc" id="L134">			customTicks = parseCustomTicks(ticksStr);</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (customTicks == null) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (ticksStr != null) {</span>
+<span class="fc" id="L134">			customTicks = parseCustomTicks(ticksStr);</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">			if (customTicks == null) {</span>
 <span class="nc" id="L136">				return CommandExecutionResult.error(&quot;Invalid tick format. Expected: [value:\&quot;label\&quot;, ...]&quot;);</span>
 			}
 		}
@@ -152,19 +152,19 @@ public class CommandChartVAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
 		// Set axis properties
 		final CommandExecutionResult result;
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (isSecondaryAxis(axisType))</span>
-<span class="nc" id="L156">			result = diagram.setY2Axis(title, min, max);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (isSecondaryAxis(axisType))</span>
+<span class="fc" id="L156">			result = diagram.setY2Axis(title, min, max);</span>
 		else
 <span class="fc" id="L158">			result = diagram.setYAxis(title, min, max);</span>
 
 		// Set custom ticks if parsed successfully
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (customTicks != null) {</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (isSecondaryAxis(axisType)) {</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (customTicks != null) {</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">			if (isSecondaryAxis(axisType)) {</span>
 <span class="nc bnc" id="L163" title="All 2 branches missed.">				if (diagram.getY2Axis() != null) {</span>
 <span class="nc" id="L164">					diagram.getY2Axis().setCustomTicks(customTicks);</span>
 				}
 			} else {
-<span class="nc" id="L167">				diagram.getYAxis().setCustomTicks(customTicks);</span>
+<span class="fc" id="L167">				diagram.getYAxis().setCustomTicks(customTicks);</span>
 			}
 		}
 
@@ -180,27 +180,27 @@ public class CommandChartVAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 		}
 
 		// Set label position if label-top option is present
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (labelTopStr != null) {</span>
-<span class="nc bnc" id="L184" title="All 2 branches missed.">			if (isSecondaryAxis(axisType)) {</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">		if (labelTopStr != null) {</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">			if (isSecondaryAxis(axisType)) {</span>
 <span class="nc bnc" id="L185" title="All 2 branches missed.">				if (diagram.getY2Axis() != null) {</span>
 <span class="nc" id="L186">					diagram.getY2Axis().setLabelPosition(ChartAxis.LabelPosition.TOP);</span>
 				}
 			} else {
-<span class="nc" id="L189">				diagram.getYAxis().setLabelPosition(ChartAxis.LabelPosition.TOP);</span>
+<span class="fc" id="L189">				diagram.getYAxis().setLabelPosition(ChartAxis.LabelPosition.TOP);</span>
 			}
 		}
 
 		// Enable grid if grid option is present
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (gridStr != null) {</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (gridStr != null) {</span>
 			// Both primary and secondary Y-axis use the same grid mode
-<span class="nc" id="L196">			diagram.setYGridMode(ChartDiagram.GridMode.MAJOR);</span>
+<span class="fc" id="L196">			diagram.setYGridMode(ChartDiagram.GridMode.MAJOR);</span>
 		}
 
 <span class="fc" id="L199">		return result;</span>
 	}
 
 	private static boolean isSecondaryAxis(String axisType) {
-<span class="pc bpc" id="L203" title="3 of 6 branches missed.">		return axisType != null &amp;&amp; (axisType.startsWith(&quot;v2&quot;) || axisType.startsWith(&quot;y2&quot;));</span>
+<span class="pc bpc" id="L203" title="2 of 6 branches missed.">		return axisType != null &amp;&amp; (axisType.startsWith(&quot;v2&quot;) || axisType.startsWith(&quot;y2&quot;));</span>
 	}
 
 	private List&lt;String&gt; parseLabels(String data) {
@@ -221,38 +221,38 @@ public class CommandChartVAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 	}
 
 	private Map&lt;Double, String&gt; parseCustomTicks(String ticksStr) {
-<span class="nc" id="L224">		final Map&lt;Double, String&gt; ticks = new LinkedHashMap&lt;&gt;();</span>
-<span class="nc bnc" id="L225" title="All 4 branches missed.">		if (ticksStr == null || ticksStr.trim().isEmpty())</span>
+<span class="fc" id="L224">		final Map&lt;Double, String&gt; ticks = new LinkedHashMap&lt;&gt;();</span>
+<span class="pc bpc" id="L225" title="2 of 4 branches missed.">		if (ticksStr == null || ticksStr.trim().isEmpty())</span>
 <span class="nc" id="L226">			return ticks;</span>
 
 		// Parse format: 0:&quot;Low&quot;, 50:&quot;Mid&quot;, 100:&quot;High&quot;
-<span class="nc" id="L229">		final String[] pairs = ticksStr.split(&quot;,&quot;);</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">		for (String pair : pairs) {</span>
-<span class="nc" id="L231">			pair = pair.trim();</span>
+<span class="fc" id="L229">		final String[] pairs = ticksStr.split(&quot;,&quot;);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		for (String pair : pairs) {</span>
+<span class="fc" id="L231">			pair = pair.trim();</span>
 			// Match value:&quot;label&quot;
-<span class="nc" id="L233">			final int colonIndex = pair.indexOf(':');</span>
-<span class="nc bnc" id="L234" title="All 2 branches missed.">			if (colonIndex &lt; 0)</span>
+<span class="fc" id="L233">			final int colonIndex = pair.indexOf(':');</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">			if (colonIndex &lt; 0)</span>
 <span class="nc" id="L235">				return null;</span>
 
-<span class="nc" id="L237">			final String valueStr = pair.substring(0, colonIndex).trim();</span>
-<span class="nc" id="L238">			String label = pair.substring(colonIndex + 1).trim();</span>
+<span class="fc" id="L237">			final String valueStr = pair.substring(0, colonIndex).trim();</span>
+<span class="fc" id="L238">			String label = pair.substring(colonIndex + 1).trim();</span>
 
 			// Remove quotes from label
-<span class="nc bnc" id="L241" title="All 6 branches missed.">			if (label.startsWith(&quot;\&quot;&quot;) &amp;&amp; label.endsWith(&quot;\&quot;&quot;) &amp;&amp; label.length() &gt; 1) {</span>
-<span class="nc" id="L242">				label = label.substring(1, label.length() - 1);</span>
+<span class="pc bpc" id="L241" title="3 of 6 branches missed.">			if (label.startsWith(&quot;\&quot;&quot;) &amp;&amp; label.endsWith(&quot;\&quot;&quot;) &amp;&amp; label.length() &gt; 1) {</span>
+<span class="fc" id="L242">				label = label.substring(1, label.length() - 1);</span>
 			} else {
 <span class="nc" id="L244">				return null; // Invalid format</span>
 			}
 
 			try {
-<span class="nc" id="L248">				final double value = Double.parseDouble(valueStr);</span>
-<span class="nc" id="L249">				ticks.put(value, label);</span>
+<span class="fc" id="L248">				final double value = Double.parseDouble(valueStr);</span>
+<span class="fc" id="L249">				ticks.put(value, label);</span>
 <span class="nc" id="L250">			} catch (NumberFormatException e) {</span>
 <span class="nc" id="L251">				return null;</span>
-<span class="nc" id="L252">			}</span>
+<span class="fc" id="L252">			}</span>
 		}
 
-<span class="nc" id="L255">		return ticks;</span>
+<span class="fc" id="L255">		return ticks;</span>
 	}
 
 	@Override

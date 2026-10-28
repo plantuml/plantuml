@@ -151,10 +151,10 @@ public class BarRenderer {
 
 			final double y;
 			final double barHeight;
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">			if (value &lt; 0) {</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">			if (value &lt; 0) {</span>
 				// Negative: bar top at zero, extends downward
-<span class="nc" id="L156">				y = zeroY;</span>
-<span class="nc" id="L157">				barHeight = valueY - zeroY;</span>
+<span class="fc" id="L156">				y = zeroY;</span>
+<span class="fc" id="L157">				barHeight = valueY - zeroY;</span>
 			} else {
 				// Positive: bar top at value, extends downward to zero
 <span class="fc" id="L160">				y = valueY;</span>
@@ -168,10 +168,10 @@ public class BarRenderer {
 			}
 
 			// Draw label if enabled
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">			if (series.isShowLabels()) {</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			if (series.isShowLabels()) {</span>
 				// Label at the end of the bar (top for positive, bottom for negative)
-<span class="nc bnc" id="L173" title="All 2 branches missed.">				final double labelY = value &lt; 0 ? y + barHeight + 5 : y - 5;</span>
-<span class="nc" id="L174">				drawLabel(ug, value, x + barWidth / 2, labelY, stringBounder);</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">				final double labelY = value &lt; 0 ? y + barHeight + 5 : y - 5;</span>
+<span class="fc" id="L174">				drawLabel(ug, value, x + barWidth / 2, labelY, stringBounder);</span>
 			}
 		}
 <span class="fc" id="L177">	}</span>
@@ -221,7 +221,7 @@ public class BarRenderer {
 			}
 
 			// Draw label if enabled
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">			if (series.isShowLabels()) {</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">			if (series.isShowLabels()) {</span>
 <span class="fc" id="L225">				drawLabelHorizontal(ug, value, barWidth + 5, y + barHeight / 2);</span>
 			}
 		}
@@ -282,7 +282,7 @@ public class BarRenderer {
 <span class="nc" id="L282">					lineColor = color; // Use fill color if no line color specified</span>
 				}
 
-<span class="pc bpc" id="L285" title="1 of 2 branches missed.">				if (barHeight &gt; 0) {</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">				if (barHeight &gt; 0) {</span>
 <span class="fc" id="L286">					final URectangle rect = URectangle.build(barWidth, barHeight);</span>
 <span class="fc" id="L287">					ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);</span>
 				}
@@ -371,7 +371,7 @@ public class BarRenderer {
 <span class="nc" id="L371">					lineColor = color; // Use fill color if no line color specified</span>
 				}
 
-<span class="pc bpc" id="L374" title="1 of 2 branches missed.">				if (barHeight &gt; 0) {</span>
+<span class="fc bfc" id="L374" title="All 2 branches covered.">				if (barHeight &gt; 0) {</span>
 <span class="fc" id="L375">					final URectangle rect = URectangle.build(barWidth, barHeight);</span>
 <span class="fc" id="L376">					ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);</span>
 				}
@@ -388,20 +388,20 @@ public class BarRenderer {
 
 	private void drawLabel(UGraphic ug, double value, double x, double y, StringBounder stringBounder) {
 		try {
-<span class="nc" id="L391">			final String label = formatValue(value);</span>
-<span class="nc" id="L392">			final UFont font = UFontFactory.sansSerif(10).withFontFace(UFontFace.bold());</span>
-<span class="nc" id="L393">			final HColor labelColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
-<span class="nc" id="L394">			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);</span>
-<span class="nc" id="L395">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
-<span class="nc" id="L396">					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
-<span class="nc" id="L397">			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);</span>
-<span class="nc" id="L398">			final double labelX = x - textDim.getWidth() / 2;</span>
-<span class="nc" id="L399">			final double labelY = y - textDim.getHeight() - 2;</span>
-<span class="nc" id="L400">			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));</span>
+<span class="fc" id="L391">			final String label = formatValue(value);</span>
+<span class="fc" id="L392">			final UFont font = UFontFactory.sansSerif(10).withFontFace(UFontFace.bold());</span>
+<span class="fc" id="L393">			final HColor labelColor = skinParam.getIHtmlColorSet().getColor(&quot;#000000&quot;);</span>
+<span class="fc" id="L394">			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);</span>
+<span class="fc" id="L395">			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)</span>
+<span class="fc" id="L396">					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);</span>
+<span class="fc" id="L397">			final XDimension2D textDim = textBlock.calculateDimension(stringBounder);</span>
+<span class="fc" id="L398">			final double labelX = x - textDim.getWidth() / 2;</span>
+<span class="fc" id="L399">			final double labelY = y - textDim.getHeight() - 2;</span>
+<span class="fc" id="L400">			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));</span>
 <span class="nc" id="L401">		} catch (Exception e) {</span>
 			// Silently ignore rendering errors
-<span class="nc" id="L403">		}</span>
-<span class="nc" id="L404">	}</span>
+<span class="fc" id="L403">		}</span>
+<span class="fc" id="L404">	}</span>
 
 	private void drawLabelHorizontal(UGraphic ug, double value, double x, double y) {
 		try {

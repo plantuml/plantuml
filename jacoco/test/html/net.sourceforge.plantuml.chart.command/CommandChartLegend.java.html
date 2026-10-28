@@ -79,7 +79,7 @@ public class CommandChartLegend extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc" id="L79">		final String position = arg.get(&quot;POSITION&quot;, 0);</span>
 
 		ChartDiagram.LegendPosition legendPosition;
-<span class="pc bpc" id="L82" title="4 of 5 branches missed.">		switch (position.toLowerCase()) {</span>
+<span class="pc bpc" id="L82" title="3 of 5 branches missed.">		switch (position.toLowerCase()) {</span>
 		case &quot;left&quot;:
 <span class="nc" id="L84">			legendPosition = ChartDiagram.LegendPosition.LEFT;</span>
 <span class="nc" id="L85">			break;</span>
@@ -90,8 +90,8 @@ public class CommandChartLegend extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="nc" id="L90">			legendPosition = ChartDiagram.LegendPosition.TOP;</span>
 <span class="nc" id="L91">			break;</span>
 		case &quot;bottom&quot;:
-<span class="nc" id="L93">			legendPosition = ChartDiagram.LegendPosition.BOTTOM;</span>
-<span class="nc" id="L94">			break;</span>
+<span class="fc" id="L93">			legendPosition = ChartDiagram.LegendPosition.BOTTOM;</span>
+<span class="fc" id="L94">			break;</span>
 		default:
 <span class="nc" id="L96">			return CommandExecutionResult.error(&quot;Invalid legend position: &quot; + position);</span>
 		}

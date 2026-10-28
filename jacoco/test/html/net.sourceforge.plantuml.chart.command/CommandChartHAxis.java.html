@@ -103,26 +103,26 @@ public class CommandChartHAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc" id="L103">		final String gridStr = arg.get(&quot;GRID&quot;, 0);</span>
 
 		// Parse tick spacing if present (do this first, before any returns)
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (spacingStr != null) {</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (spacingStr != null) {</span>
 			try {
-<span class="nc" id="L108">				final int spacing = Integer.parseInt(spacingStr);</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (spacing &lt;= 0) {</span>
+<span class="fc" id="L108">				final int spacing = Integer.parseInt(spacingStr);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">				if (spacing &lt;= 0) {</span>
 <span class="nc" id="L110">					return CommandExecutionResult.error(&quot;X-axis spacing must be greater than 0&quot;);</span>
 				}
-<span class="nc" id="L112">				diagram.setXAxisTickSpacing(spacing);</span>
+<span class="fc" id="L112">				diagram.setXAxisTickSpacing(spacing);</span>
 <span class="nc" id="L113">			} catch (NumberFormatException e) {</span>
 <span class="nc" id="L114">				return CommandExecutionResult.error(&quot;Invalid number format in spacing value&quot;);</span>
-<span class="nc" id="L115">			}</span>
+<span class="fc" id="L115">			}</span>
 		}
 
 		// Set label position if label-right option is present (do this before any returns)
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (labelRightStr != null) {</span>
-<span class="nc" id="L120">			diagram.setXAxisLabelPosition(ChartAxis.LabelPosition.RIGHT);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (labelRightStr != null) {</span>
+<span class="fc" id="L120">			diagram.setXAxisLabelPosition(ChartAxis.LabelPosition.RIGHT);</span>
 		}
 
 		// Enable grid if grid option is present (do this before any returns)
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (gridStr != null) {</span>
-<span class="nc" id="L125">			diagram.setXGridMode(ChartDiagram.GridMode.MAJOR);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (gridStr != null) {</span>
+<span class="fc" id="L125">			diagram.setXGridMode(ChartDiagram.GridMode.MAJOR);</span>
 		}
 
 		// If numeric range is provided, this is for horizontal bar chart mode

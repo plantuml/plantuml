@@ -122,8 +122,8 @@ public class ChartAxis {
 <span class="fc bfc" id="L122" title="All 2 branches covered.">		if (autoScale) {</span>
 <span class="fc bfc" id="L123" title="All 2 branches covered.">			if (value &lt; min)</span>
 <span class="fc" id="L124">				min = value;</span>
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (value &gt; max)</span>
-<span class="nc" id="L126">				max = value;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">			if (value &gt; max)</span>
+<span class="fc" id="L126">				max = value;</span>
 		}
 <span class="fc" id="L128">	}</span>
 
@@ -131,21 +131,21 @@ public class ChartAxis {
 	 * Get custom tick labels map
 	 */
 	public Map&lt;Double, String&gt; getCustomTicks() {
-<span class="nc" id="L134">		return customTicks;</span>
+<span class="fc" id="L134">		return customTicks;</span>
 	}
 
 	/**
 	 * Set custom tick labels. The map keys are tick values and values are labels.
 	 */
 	public void setCustomTicks(Map&lt;Double, String&gt; customTicks) {
-<span class="nc" id="L141">		this.customTicks = customTicks;</span>
-<span class="nc" id="L142">	}</span>
+<span class="fc" id="L141">		this.customTicks = customTicks;</span>
+<span class="fc" id="L142">	}</span>
 
 	/**
 	 * Check if custom ticks are defined
 	 */
 	public boolean hasCustomTicks() {
-<span class="pc bpc" id="L148" title="3 of 4 branches missed.">		return customTicks != null &amp;&amp; !customTicks.isEmpty();</span>
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">		return customTicks != null &amp;&amp; !customTicks.isEmpty();</span>
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class ChartAxis {
 	 * Set label position
 	 */
 	public void setLabelPosition(LabelPosition labelPosition) {
-<span class="nc" id="L183">		this.labelPosition = labelPosition;</span>
-<span class="nc" id="L184">	}</span>
+<span class="fc" id="L183">		this.labelPosition = labelPosition;</span>
+<span class="fc" id="L184">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
