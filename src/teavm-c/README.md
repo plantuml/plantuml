@@ -108,10 +108,11 @@ build/generated/teavm/c/bin/plantuml -tsvg mindmap.puml
 ## Continuous integration
 
 `.github/workflows/teavm-c.yml` is called by `ci.yml` on every push to `master`: it generates
-the C sources once on Linux, then builds and smoke-tests (small mindmap to SVG and PNG, help, exit code) `plantuml.exe` on
-Windows x64 and Windows ARM64. The executables are available as workflow
-artifacts (`plantuml-c-windows-x64`, `plantuml-c-windows-arm64`), and the x64
-one is attached to the snapshot release.
+the C sources once on Linux, then builds and smoke-tests (small mindmap to SVG and PNG, help, exit code) the
+executable on Windows (MSVC), Linux and macOS, for x64 and arm64 each. The executables are available as
+workflow artifacts (`plantuml-windows-x64`, `plantuml-windows-arm64`, `plantuml-linux-x64`,
+`plantuml-linux-arm64`, `plantuml-macos-x64`, `plantuml-macos-arm64`), and they are all attached to the
+snapshot release (`plantuml-{windows,linux,macos}-{amd64,arm64}-SNAPSHOT.zip`).
 
 ## Expected output
 

@@ -1,14 +1,15 @@
 name: TeaVM C (experimental)
 
-# Java -> C with TeaVM, then a native Windows executable built with MSVC.
-# See src/teavm-c/README.md.
+# Java -> C with TeaVM, then a native executable: MSVC on Windows, the C compiler
+# of the runner on Linux and macOS. See src/teavm-c/README.md.
 #
 # The generated C is platform independent: it is produced once on Linux, then
-# compiled and smoke-tested on one Windows runner per architecture.
+# compiled and smoke-tested on one runner per system and architecture
+# (Windows, Linux and macOS, x64 and arm64).
 #
 # Called by ci.yml on every push to master (so it runs once, there is no push
-# trigger here). The executable "plantuml-c-windows-x64" is then attached to
-# the snapshot release. Can also be started by hand.
+# trigger here). The executables "plantuml-{windows,linux,macos}-{x64,arm64}"
+# are then attached to the snapshot release. Can also be started by hand.
 
 on:
   workflow_dispatch:
@@ -180,6 +181,109 @@ jobs:
       - name: Upload executable
         uses: actions/upload-artifact@v7
         with:
-          name: plantuml-c-windows-${{ matrix.arch }}
+          name: plantuml-windows-${{ matrix.arch }}
           path: c-sources/bin/Release/plantuml.exe
+          retention-days: 30
+
+  build_unix:
+    name: Build ${{ matrix.os }}-${{ matrix.arch }}
+    needs: generate_c
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: linux
+            arch: x64
+            runner: ubuntu-latest
+          - os: linux
+            arch: arm64
+            runner: ubuntu-24.04-arm
+          - os: macos
+            arch: x64
+            runner: macos-15-intel
+          - os: macos
+            arch: arm64
+            runner: macos-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v7
+
+      - name: Download C sources
+        uses: actions/download-artifact@v8
+        with:
+          name: teavm-c-sources
+          path: c-sources
+
+      # Single-configuration generator (Unix Makefiles): the executable is
+      # c-sources/bin/plantuml (CMakeLists.txt builds in Release by default)
+      - name: Configure
+        run: cmake -S c-sources -B c-build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build c-build --parallel
+
+      - name: Smoke test (mindmap to SVG)
+        run: |
+          exe="c-sources/bin/plantuml"
+          echo "Size: $(wc -c < "$exe") bytes"
+          printf '@startmindmap\n* Root\n** Alpha\n** Beta\n@endmindmap\n' > mindmap.puml
+          "$exe" -tsvg mindmap.puml
+          test -f mindmap.svg || { echo "::error::No SVG was written"; exit 1; }
+          cat mindmap.svg
+          grep -q "<svg" mindmap.svg && grep -q "Alpha" mindmap.svg \
+            || { echo "::error::The output is not the expected SVG"; exit 1; }
+
+      - name: Smoke test (mindmap to PNG)
+        run: |
+          exe="c-sources/bin/plantuml"
+          "$exe" -tpng mindmap.puml
+          test -f mindmap.png || { echo "::error::No PNG was written"; exit 1; }
+          echo "PNG: $(wc -c < mindmap.png) bytes"
+          signature="$(head -c 4 mindmap.png | tail -c 3)"
+          if [ "$signature" != "PNG" ] || ! grep -aq "iTXtplantuml" mindmap.png; then
+            echo "::error::The output is not the expected PNG"
+            exit 1
+          fi
+
+      # The executable has the entry point of the JVM (Run): same help, same flags
+      - name: Smoke test (help)
+        run: |
+          exe="c-sources/bin/plantuml"
+          help="$("$exe" --help)"
+          echo "$help"
+          if ! grep -q "Show help and usage information" <<< "$help" \
+            || ! grep -q "Generate SVG images" <<< "$help"; then
+            echo "::error::The help is not the expected one"
+            exit 1
+          fi
+
+      - name: Smoke test (exit code)
+        run: |
+          exe="c-sources/bin/plantuml"
+          code=0
+          "$exe" no-such-file.puml || code=$?
+          # 50: no file found, as on the JVM
+          if [ "$code" -ne 50 ]; then
+            echo "::error::Expected the exit code 50, got $code"
+            exit 1
+          fi
+
+      - name: Upload the SVG and the PNG
+        uses: actions/upload-artifact@v7
+        with:
+          name: mindmap-${{ matrix.os }}-${{ matrix.arch }}
+          path: |
+            mindmap.svg
+            mindmap.png
+          retention-days: 7
+
+      # upload-artifact does not keep the executable bit: release-snapshot.sh sets it again
+      - name: Upload executable
+        uses: actions/upload-artifact@v7
+        with:
+          name: plantuml-${{ matrix.os }}-${{ matrix.arch }}
+          path: c-sources/bin/plantuml
           retention-days: 30

@@ -28,12 +28,25 @@ cp "build/native-image/native-plantuml-windows-amd64-SNAPSHOT.zip" "github_relea
 cp "build/native-image/native-plantuml-linux-amd64-SNAPSHOT.zip" "github_release/native-plantuml-linux-amd64-SNAPSHOT.zip"
 cp "build/native-image/native-plantuml-linux-arm64-SNAPSHOT.zip" "github_release/native-plantuml-linux-arm64-SNAPSHOT.zip"
 cp "build/native-image/native-plantuml-macos-arm64-SNAPSHOT.zip" "github_release/native-plantuml-macos-arm64-SNAPSHOT.zip"
-# Experimental C executable (Java -> C with TeaVM): optional, its build must not block the snapshot
-if [[ -f "build/c-executable/plantuml.exe" ]]; then
-  zip -j "github_release/c-plantuml-windows-amd64-SNAPSHOT.zip" "build/c-executable/plantuml.exe"
-else
-  echo "::warning title=release snapshot::The C executable (windows-amd64) is missing: it is not attached to the snapshot"
-fi
+# Experimental C executables (Java -> C with TeaVM): optional, their build must not block the snapshot.
+# Each entry is <artifact suffix>:<name in the release>:<executable>; every artifact is downloaded
+# in its own folder (build/executable/plantuml-<artifact suffix>).
+for target in \
+  linux-x64:linux-amd64:plantuml \
+  linux-arm64:linux-arm64:plantuml \
+  macos-x64:macos-amd64:plantuml \
+  macos-arm64:macos-arm64:plantuml \
+  windows-x64:windows-amd64:plantuml.exe \
+  windows-arm64:windows-arm64:plantuml.exe; do
+  IFS=: read -r artifact asset exe <<< "${target}"
+  if [[ -f "build/executable/plantuml-${artifact}/${exe}" ]]; then
+    # upload-artifact does not keep the executable bit
+    chmod +x "build/executable/plantuml-${artifact}/${exe}"
+    zip -j "github_release/plantuml-${asset}-SNAPSHOT.zip" "build/executable/plantuml-${artifact}/${exe}"
+  else
+    echo "::warning title=release snapshot::The C executable (${asset}) is missing: it is not attached to the snapshot"
+  fi
+done
 cp "license-variants/plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}.jar" "github_release/plantuml-asl-SNAPSHOT.jar"
 cp "license-variants/plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-asl-SNAPSHOT-javadoc.jar"
 cp "license-variants/plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-asl-SNAPSHOT-sources.jar"

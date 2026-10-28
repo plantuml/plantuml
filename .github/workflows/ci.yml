@@ -344,16 +344,18 @@ jobs:
           name: macos-arm64
           path: build/native-image
 
-      # Experimental executable (Java -> C with TeaVM): it must not prevent the
-      # snapshot of the JARs, so a failure of its build is not fatal here
-      # (release-snapshot.sh simply skips it when the file is missing).
-      - name: Download C executable (Windows x64)
+      # Experimental executables (Java -> C with TeaVM): they must not prevent the
+      # snapshot of the JARs, so a failure of their build is not fatal here
+      # (release-snapshot.sh simply skips the missing ones). One artifact per system
+      # and architecture (plantuml-{windows,linux,macos}-{x64,arm64}), each one
+      # downloaded in its own folder of build/executable.
+      - name: Download C executables
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'
         continue-on-error: true
         uses: actions/download-artifact@v8
         with:
-          name: plantuml-c-windows-x64
-          path: build/c-executable
+          pattern: plantuml-*-*64
+          path: build/executable
 
       - name: Restore Libs cache
         uses: actions/cache/restore@v6
@@ -580,8 +582,8 @@ jobs:
     uses: ./.github/workflows/native-image-snapshot.yml
     secrets: inherit
 
-  # Experimental C build (Windows x64 and arm64) on every push to master;
-  # the x64 executable is attached to the snapshot (see teavm-c.yml)
+  # Experimental C build (Windows, Linux and macOS, x64 and arm64) on every push to master;
+  # the executables are attached to the snapshot (see teavm-c.yml)
   create_c_executable:
     needs: [ workflow_config, jdk8 ]
     if: github.ref == 'refs/heads/master'
