@@ -19,7 +19,8 @@ Each test is a single `.puml` file, rendered to SVG by the Vega harness (`test.v
 | R08 | Missing values (`interpolate`, `connect`) |
 | R09 | Default vertical range |
 | R10 | Drawing order of series |
-| R12 | Horizontal orientation |
+| R11 | Horizontal orientation |
+| R12 | Short series title without quotes |
 
 File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this directory.
 
@@ -78,9 +79,11 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R09.06 | `R09.06-range-line-missing-value.puml` | Line with missing value, default range |
 | R10 Drawing order | R10.01 | `R10.01-order-bar-then-area.puml` | Bar defined before area (issue #2973) |
 |  | R10.02 | `R10.02-order-area-then-bar.puml` | Area defined before bar |
-| R12 Horizontal | R12.01 | `R12.01-horizontal-grouped.puml` | Horizontal grouped bars |
-|  | R12.02 | `R12.02-horizontal-stacked.puml` | Horizontal stacked bars |
-|  | R12.03 | `R12.03-horizontal-negative-value.puml` | Horizontal bar with a negative value |
-|  | R12.04 | `R12.04-horizontal-area-legend-right.puml` | Horizontal areas with spacing and legend right |
+| R11 Horizontal | R11.01 | `R11.01-horizontal-grouped.puml` | Horizontal grouped bars |
+|  | R11.02 | `R11.02-horizontal-stacked.puml` | Horizontal stacked bars |
+|  | R11.03 | `R11.03-horizontal-negative-value.puml` | Horizontal bar with a negative value |
+|  | R11.04 | `R11.04-horizontal-area-legend-right.puml` | Horizontal areas with spacing and legend right |
+| R12 Short title | R12.01 | `R12.01-short-title-without-quote.puml` | Status 400 today: the parser only accepts quoted series names (see notes) |
 
 Note: R09 and R10 record current rendering for open enhancement requests; their references will change when those issues are fixed.
+R12.01 records the current behavior: `bar bar_title [...]` is a syntax error because the `NAME` pattern requires quotes. Update its reference when unquoted titles are supported.
