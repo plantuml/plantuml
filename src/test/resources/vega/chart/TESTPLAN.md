@@ -21,6 +21,7 @@ Each test is a single `.puml` file, rendered to SVG by the Vega harness (`test.v
 | R10 | Drawing order of series |
 | R11 | Horizontal orientation |
 | R12 | Short series title without quotes |
+| R13 | Zero values |
 
 File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this directory.
 
@@ -84,6 +85,8 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R11.03 | `R11.03-horizontal-negative-value.puml` | Horizontal bar with a negative value |
 |  | R11.04 | `R11.04-horizontal-area-legend-right.puml` | Horizontal areas with spacing and legend right |
 | R12 Short title | R12.01 | `R12.01-short-title-without-quote.puml` | Status 400 today: the parser only accepts quoted series names (see notes) |
+| R13 Zero value | R13.01 | `R13.01-zero-value-vertical.puml` | Grouped bars with a zero value, vertical |
+|  | R13.02 | `R13.02-zero-value-horizontal.puml` | Same chart, horizontal |
 
 Note: R09 and R10 record current rendering for open enhancement requests; their references will change when those issues are fixed.
 R12.01 records the current behavior: `bar bar_title [...]` is a syntax error because the `NAME` pattern requires quotes. Update its reference when unquoted titles are supported.
