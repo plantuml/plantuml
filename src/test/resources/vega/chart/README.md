@@ -30,7 +30,7 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 ## Test matrix
 
 | Requirement | Test ID | File | Expected Result | Request or Issue |
-|-------------|---------|------|-----------------|---------------------------|
+|-------------|---------|------|-----------------|:----------------:|
 | R01 — Series | R01.01 | `R01.01-series-bar-basic.puml` | Renders a single bar series |
 |  | R01.02 | `R01.02-series-bar-grouped.puml` | Two bar series side by side |
 |  | R01.03 | `R01.03-series-bar-stacked.puml` | Two bar series stacked |
@@ -87,6 +87,8 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 >  so the parser falls back to the default welcome image instead of a dedicated error message.
 > - R07.05 intentionally has no `@endchart`: no diagram block is found, which the harness cannot render,
 >  so the file uses `allow-failure: true` (reported as skipped) and has no reference `.svg`.
+
+> [!WARNING]
 > - R09 and R10 record current rendering for open enhancement requests.
 > - R12.01 records the current behavior: `bar bar_title [...]` is a syntax error because the `NAME` pattern requires quotes.
 > Update its reference when unquoted titles are supported.
