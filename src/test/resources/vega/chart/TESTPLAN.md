@@ -19,7 +19,7 @@ Each test is a single `.puml` file, rendered to SVG by the Vega harness (`test.v
 | R08 | Missing values (`interpolate`, `connect`) |
 | R09 | Default vertical range |
 | R10 | Drawing order of series |
-| R11 | Scatter label colour |
+| R12 | Horizontal orientation |
 
 File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this directory.
 
@@ -78,7 +78,9 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R09.06 | `R09.06-range-line-missing-value.puml` | Line with missing value, default range |
 | R10 Drawing order | R10.01 | `R10.01-order-bar-then-area.puml` | Bar defined before area (issue #2973) |
 |  | R10.02 | `R10.02-order-area-then-bar.puml` | Area defined before bar |
-| R11 Scatter labels | R11.01 | `R11.01-scatter-labels-inline-color.puml` | Labels with inline colour (PR #2974) |
-|  | R11.02 | `R11.02-scatter-labels-theme.puml` | Labels with `!theme amiga` (PR #2974) |
+| R12 Horizontal | R12.01 | `R12.01-horizontal-grouped.puml` | Horizontal grouped bars |
+|  | R12.02 | `R12.02-horizontal-stacked.puml` | Horizontal stacked bars |
+|  | R12.03 | `R12.03-horizontal-negative-value.puml` | Horizontal bar with a negative value |
+|  | R12.04 | `R12.04-horizontal-area-legend-right.puml` | Horizontal areas with spacing and legend right |
 
-Note: R09, R10 and R11 record current rendering for open enhancement requests; their references will change when those issues are fixed. R11 references still show black labels until PR #2974 is merged.
+Note: R09 and R10 record current rendering for open enhancement requests; their references will change when those issues are fixed.

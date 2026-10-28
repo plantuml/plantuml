@@ -3,11 +3,11 @@
   <g font-family="sans-serif" lengthAdjust="spacing">
     <line style="stroke:#181818;stroke-width:1;" x1="70" x2="70" y1="60" y2="360"/>
     <line style="stroke:#181818;stroke-width:1;" x1="65" x2="70" y1="110" y2="110"/>
-    <text fill="#000" font-size="10" x="54.438" y="112.778">1</text>
+    <text fill="#000" font-size="10" x="53.313" y="112.778">A</text>
     <line style="stroke:#181818;stroke-width:1;" x1="65" x2="70" y1="210" y2="210"/>
-    <text fill="#000" font-size="10" x="54.438" y="212.778">2</text>
+    <text fill="#000" font-size="10" x="53.313" y="212.778">B</text>
     <line style="stroke:#181818;stroke-width:1;" x1="65" x2="70" y1="310" y2="310"/>
-    <text fill="#000" font-size="10" x="54.438" y="312.778">3</text>
+    <text fill="#000" font-size="10" x="52.75" y="312.778">C</text>
     <line style="stroke:#181818;stroke-width:1;" x1="70" x2="470" y1="360" y2="360"/>
     <line style="stroke:#181818;stroke-width:1;" x1="70" x2="70" y1="360" y2="365"/>
     <text fill="#000" font-size="10" x="67.219" y="377.778">0</text>
