@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+h-axis [A, B, C]
+v-axis "Value" 0 --> 100 ticks [0:"0", 25:"25", 50:"50", 75:"75", 100:"100"]
+bar [10, 60, 90]
+@endchart

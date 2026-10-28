@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startchart
+<style>
+chartDiagram {
+  bar {
+    .highlight {
+      BackGroundColor #FF8800
+    }
+  }
+}
+</style>
+h-axis [A, B, C]
+bar <<highlight>> "Highlighted" [10, 20, 30]
+bar "Normal" [5, 15, 25]
+@endchart

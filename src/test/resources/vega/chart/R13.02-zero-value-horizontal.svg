@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="431px" preserveAspectRatio="none" style="width:501px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 431" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="65" x2="70" y1="135" y2="135"/>
+    <text fill="#000" font-size="10" x="53.313" y="137.778">A</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="65" x2="70" y1="285" y2="285"/>
+    <text fill="#000" font-size="10" x="53.313" y="287.778">B</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="70" x2="70" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" x="67.219" y="377.778">0</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="150" x2="150" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" textLength="11.125" x="144.438" y="377.778">20</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="230" x2="230" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" textLength="11.125" x="224.438" y="377.778">40</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="310" x2="310" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" textLength="11.125" x="304.438" y="377.778">60</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="390" x2="390" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" textLength="11.125" x="384.438" y="377.778">80</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="470" x2="470" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" textLength="16.688" x="461.656" y="377.778">100</text>
+    <rect fill="#F1F1F1" height="15" style="stroke:#181818;stroke-width:0.5;" width="80" x="90" y="345"/>
+    <rect fill="#F1F1F1" height="24" style="stroke:#181818;stroke-width:0.5;" width="80" x="170" y="336"/>
+    <rect fill="#F1F1F1" height="9" style="stroke:#181818;stroke-width:0.5;" width="80" x="290" y="351"/>
+  </g>
+</svg>

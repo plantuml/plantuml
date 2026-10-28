@@ -1,0 +1,8 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+h-axis 0 --> 10
+line [(1,2), 3, (5,6)]
+@endchart

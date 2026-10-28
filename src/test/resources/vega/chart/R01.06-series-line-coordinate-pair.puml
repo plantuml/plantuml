@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startchart
+h-axis 0 --> 10
+line "Curve" [(0,0), (2,4), (5,25), (10,100)]
+@endchart

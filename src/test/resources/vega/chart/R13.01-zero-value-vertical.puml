@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+h-axis [A, B]
+bar "Received" [5, 3]
+bar "Rejected" [8, 0]
+@endchart

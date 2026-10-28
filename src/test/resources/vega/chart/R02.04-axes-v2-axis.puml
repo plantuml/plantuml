@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2, Q3]
+v-axis "Revenue" 0 --> 100
+v2-axis "Margin %" 0 --> 50
+bar "Revenue" [40, 60, 80]
+line "Margin" [10, 20, 30] v2
+@endchart

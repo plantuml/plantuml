@@ -1,0 +1,7 @@
+---
+output: svg
+allow-failure: true
+---
+@startchart
+h-axis [A, B, C]
+bar [1, 2, 3]
