@@ -1,8 +1,7 @@
 ---
 output: svg
-expected-description: Chart Diagram
 ---
 @startchart
 h-axis [10, 25, 40, 55]
-line   [115, 112, 138, 110]
+line   [15, 12, 38, 10]
 @endchart

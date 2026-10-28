@@ -16,6 +16,10 @@ Each test is a single `.puml` file, rendered to SVG by the Vega harness (`test.v
 | R05 | Annotation |
 | R06 | Preprocessor |
 | R07 | Errors |
+| R08 | Missing values (`interpolate`, `connect`) |
+| R09 | Default vertical range |
+| R10 | Drawing order of series |
+| R11 | Scatter label colour |
 
 File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this directory.
 
@@ -62,3 +66,19 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R07.03 | `R07.03-error-mixed-formats.puml` | Status 400 (see notes) |
 |  | R07.04 | `R07.04-error-unknown-keyword.puml` | Status 400 (see notes) |
 |  | R07.05 | `R07.05-error-missing-endchart.puml` | No diagram block (see notes) |
+| R08 Missing values | R08.01 | `R08.01-missing-minimal-line-interpolate.puml` | Minimal line with `interpolate` |
+|  | R08.02 | `R08.02-missing-value-interpolate.puml` | Missing value interpolated |
+|  | R08.03 | `R08.03-missing-value-interpolate-labels.puml` | Interpolate with inline colour and labels |
+|  | R08.04 | `R08.04-missing-values-interpolate-connect.puml` | Interpolate and connect over two missing values |
+| R09 Default range | R09.01 | `R09.01-range-line-default.puml` | Line, default v range (issue #2956) |
+|  | R09.02 | `R09.02-range-line-explicit.puml` | Line, explicit `v-axis 5 -> 40` |
+|  | R09.03 | `R09.03-range-line-above-100.puml` | Line, values above 100 |
+|  | R09.04 | `R09.04-range-bar-default.puml` | Bar, default v range |
+|  | R09.05 | `R09.05-range-bar-above-100.puml` | Bar, values above 100 |
+|  | R09.06 | `R09.06-range-line-missing-value.puml` | Line with missing value, default range |
+| R10 Drawing order | R10.01 | `R10.01-order-bar-then-area.puml` | Bar defined before area (issue #2973) |
+|  | R10.02 | `R10.02-order-area-then-bar.puml` | Area defined before bar |
+| R11 Scatter labels | R11.01 | `R11.01-scatter-labels-inline-color.puml` | Labels with inline colour (PR #2974) |
+|  | R11.02 | `R11.02-scatter-labels-theme.puml` | Labels with `!theme amiga` (PR #2974) |
+
+Note: R09, R10 and R11 record current rendering for open enhancement requests; their references will change when those issues are fixed. R11 references still show black labels until PR #2974 is merged.

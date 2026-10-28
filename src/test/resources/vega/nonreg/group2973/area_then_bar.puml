@@ -1,8 +1,0 @@
----
-output: svg
-expected-description: Chart Diagram
----
-@startchart
-area "Product A" [45, 62, 58, 70, 83, 78] #blue
-bar "bar" [45, 62, 58, 70] #red
-@endchart
