@@ -29,8 +29,8 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 
 ## Test matrix
 
-| Requirement | Test ID | File | Expected Result |
-|-------------|---------|------|-----------------|
+| Requirement | Test ID | File | Expected Result | Request or Issue |
+|-------------|---------|------|-----------------|---------------------------|
 | R01 — Series | R01.01 | `R01.01-series-bar-basic.puml` | Renders a single bar series |
 |  | R01.02 | `R01.02-series-bar-grouped.puml` | Two bar series side by side |
 |  | R01.03 | `R01.03-series-bar-stacked.puml` | Two bar series stacked |
@@ -63,25 +63,30 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R08.02 | `R08.02-missing-value-interpolate.puml` | Missing value interpolated |
 |  | R08.03 | `R08.03-missing-value-interpolate-labels.puml` | Interpolate with inline colour and labels |
 |  | R08.04 | `R08.04-missing-values-interpolate-connect.puml` | Interpolate and connect over two missing values |
-| R09 — Default range | R09.01 | `R09.01-range-line-default.puml` | Line, default v range (issue #2956) |
+| R09 — Default range | R09.01 | `R09.01-range-line-default.puml` | Line, default v range  | [#2956](https://github.com/plantuml/plantuml/issues/2956)
 |  | R09.02 | `R09.02-range-line-explicit.puml` | Line, explicit `v-axis 5 -> 40` |
 |  | R09.03 | `R09.03-range-line-above-100.puml` | Line, values above 100 |
 |  | R09.04 | `R09.04-range-bar-default.puml` | Bar, default v range |
 |  | R09.05 | `R09.05-range-bar-above-100.puml` | Bar, values above 100 |
 |  | R09.06 | `R09.06-range-line-missing-value.puml` | Line with missing value, default range |
-| R10 — Drawing order | R10.01 | `R10.01-order-bar-then-area.puml` | Bar defined before area (issue #2973) |
+| R10 — Drawing order | R10.01 | `R10.01-order-bar-then-area.puml` | Bar defined before area issue | [#2973](https://github.com/plantuml/plantuml/issues/2973) 
 |  | R10.02 | `R10.02-order-area-then-bar.puml` | Area defined before bar |
 | R11 — Horizontal | R11.01 | `R11.01-horizontal-grouped.puml` | Horizontal grouped bars |
 |  | R11.02 | `R11.02-horizontal-stacked.puml` | Horizontal stacked bars |
 |  | R11.03 | `R11.03-horizontal-negative-value.puml` | Horizontal bar with a negative value |
 |  | R11.04 | `R11.04-horizontal-area-legend-right.puml` | Horizontal areas with spacing and legend right |
-| R12 — Short title | R12.01 | `R12.01-short-title-without-quote.puml` | Status 400 today: the parser only accepts quoted series names (see notes) |
+| R12 — Short title | R12.01 | `R12.01-short-title-without-quote.puml` | Status 400 today: the parser only accepts quoted series names (see notes) | Part 3. of [#2632](https://github.com/plantuml/plantuml/issues/2632)
 | R13 — Zero value | R13.01 | `R13.01-zero-value-vertical.puml` | Grouped bars with a zero value, vertical |
 |  | R13.02 | `R13.02-zero-value-horizontal.puml` | Same chart, horizontal |
 |  | R13.03 | `R13.03-zero-value-vertical-stacked.puml` | Stacked bars with a zero value, vertical |
 |  | R13.04 | `R13.04-zero-value-horizontal-stacked.puml` | Stacked bars with a zero value, horizontal |
 
 > [!NOTE]
+> - R07.01 to R07.04 declare `expected-status: 400`: the parser rejects the chart or the renderer reports an error, and the error image is the reference.
+>  Only R07.02 reports a chart-specific message. For R07.01, R07.03 and R07.04 the chart command regex does not match,
+>  so the parser falls back to the default welcome image instead of a dedicated error message.
+> - R07.05 intentionally has no `@endchart`: no diagram block is found, which the harness cannot render,
+>  so the file uses `allow-failure: true` (reported as skipped) and has no reference `.svg`.
 > - R09 and R10 record current rendering for open enhancement requests.
 > - R12.01 records the current behavior: `bar bar_title [...]` is a syntax error because the `NAME` pattern requires quotes.
 > Update its reference when unquoted titles are supported.
@@ -91,8 +96,4 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 - Run `test.vega.VegaTest` from the repository root (see `CLAUDE.md`).
 - Generate or refresh references with `VEGA_FORCE_WRITE=true`, review the `.svg` files, then re-run without the flag.
 - `vega.json`, `vega-summary.txt` and `vega-summary.md` are rewritten on every run and must be reverted.
-- R07.01 to R07.04 declare `expected-status: 400`: the parser rejects the chart or the renderer reports an error, and the error image is the reference.
-  Only R07.02 reports a chart-specific message. For R07.01, R07.03 and R07.04 the chart command regex does not match,
-  so the parser falls back to the default welcome image instead of a dedicated error message.
-- R07.05 intentionally has no `@endchart`: no diagram block is found, which the harness cannot render,
-  so the file uses `allow-failure: true` (reported as skipped) and has no reference `.svg`.
+
