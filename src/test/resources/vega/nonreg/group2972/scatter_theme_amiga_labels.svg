@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="421px" preserveAspectRatio="none" style="width:491px;height:421px;background:#0B58A8;" version="1.1" viewBox="0 0 491 421" width="491px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#0B58A8" height="421" style="stroke:none;" width="491" x="0" y="0"/>
+    <line style="stroke:#FFF;stroke-width:1;" x1="65" x2="65" y1="55" y2="355"/>
+    <line style="stroke:#FFF;stroke-width:1;" x1="65" x2="60" y1="355" y2="355"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="39.425" y="358.889">30</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="65" x2="60" y1="295" y2="295"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="39.425" y="298.889">39</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="65" x2="60" y1="235" y2="235"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="39.425" y="238.889">48</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="65" x2="60" y1="175" y2="175"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="39.425" y="178.889">57</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="65" x2="60" y1="115" y2="115"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="39.425" y="118.889">66</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="65" x2="60" y1="55" y2="55"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="39.425" y="58.889">75</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="65" x2="465" y1="355" y2="355"/>
+    <line style="stroke:#FFF;stroke-width:1;" x1="65" x2="65" y1="355" y2="360"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" x="61.106" y="375.889">5</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="105" x2="105" y1="355" y2="360"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="97.213" y="375.889">10</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="145" x2="145" y1="355" y2="360"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="137.213" y="375.889">15</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="185" x2="185" y1="355" y2="360"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="177.213" y="375.889">20</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="225" x2="225" y1="355" y2="360"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="217.213" y="375.889">25</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="265" x2="265" y1="355" y2="360"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="257.213" y="375.889">30</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="305" x2="305" y1="355" y2="360"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="297.213" y="375.889">35</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="345" x2="345" y1="355" y2="360"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="337.213" y="375.889">40</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="385" x2="385" y1="355" y2="360"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="377.213" y="375.889">45</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="425" x2="425" y1="355" y2="360"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="417.213" y="375.889">50</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="465" x2="465" y1="355" y2="360"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="15.575" x="457.213" y="375.889">55</text>
+    <ellipse cx="105" cy="255" fill="#FFF" rx="4" ry="4" style="stroke:#FFF;stroke-width:1;"/>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="99.438" y="238.778">45</text>
+    <ellipse cx="225" cy="141.667" fill="#FFF" rx="4" ry="4" style="stroke:#FFF;stroke-width:1;"/>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="219.438" y="125.444">62</text>
+    <ellipse cx="345" cy="168.333" fill="#FFF" rx="4" ry="4" style="stroke:#FFF;stroke-width:1;"/>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="339.438" y="152.111">58</text>
+    <ellipse cx="465" cy="88.333" fill="#FFF" rx="4" ry="4" style="stroke:#FFF;stroke-width:1;"/>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="459.438" y="72.111">70</text>
+  </g>
+</svg>

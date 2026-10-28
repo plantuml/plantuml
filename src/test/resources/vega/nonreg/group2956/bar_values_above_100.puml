@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+bar    [115, 112, 138, 110]
+@endchart
