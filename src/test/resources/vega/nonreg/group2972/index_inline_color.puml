@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v-axis 0 -> 100
+scatter "inline" [20, 45, 60, 80] #red labels
+scatter "default" [30, 55, 70, 90] labels
+@endchart

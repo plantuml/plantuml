@@ -38,12 +38,12 @@
     <line style="stroke:#181818;stroke-width:0.5;" x1="470" x2="470" y1="360" y2="365"/>
     <text fill="#000" font-size="14" textLength="15.575" x="462.213" y="380.889">55</text>
     <ellipse cx="110" cy="260" fill="#F00" rx="4" ry="4" style="stroke:#F00;stroke-width:1;"/>
-    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="104.438" y="243.778">45</text>
+    <text fill="#F00" font-size="10" font-weight="700" textLength="11.125" x="104.438" y="243.778">45</text>
     <ellipse cx="230" cy="146.667" fill="#F00" rx="4" ry="4" style="stroke:#F00;stroke-width:1;"/>
-    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="224.438" y="130.444">62</text>
+    <text fill="#F00" font-size="10" font-weight="700" textLength="11.125" x="224.438" y="130.444">62</text>
     <ellipse cx="350" cy="173.333" fill="#F00" rx="4" ry="4" style="stroke:#F00;stroke-width:1;"/>
-    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="344.438" y="157.111">58</text>
+    <text fill="#F00" font-size="10" font-weight="700" textLength="11.125" x="344.438" y="157.111">58</text>
     <ellipse cx="470" cy="93.333" fill="#F00" rx="4" ry="4" style="stroke:#F00;stroke-width:1;"/>
-    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="464.438" y="77.111">70</text>
+    <text fill="#F00" font-size="10" font-weight="700" textLength="11.125" x="464.438" y="77.111">70</text>
   </g>
 </svg>
