@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startchart
+<style>
+chartDiagram {
+  BackGroundColor #F0F0F0
+  LineColor #333333
+}
+</style>
+h-axis [A, B, C]
+bar [10, 20, 30]
+@endchart

@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startchart
+legend bottom
+h-axis [Q1, Q2, Q3]
+bar "2023" [10, 20, 30]
+line "2024" [15, 25, 35]
+@endchart

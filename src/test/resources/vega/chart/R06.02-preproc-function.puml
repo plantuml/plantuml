@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+!function $data()
+!return "[10, 20, 30]"
+!endfunction
+h-axis [A, B, C]
+bar $data()
+@endchart

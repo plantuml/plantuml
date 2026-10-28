@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="475px" preserveAspectRatio="none" style="width:501px;height:475px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 475" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="303.889">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">40</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">60</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">80</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">100</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="136.667" x2="136.667" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="127.348" y="380.889">Q1</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="270" x2="270" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="260.681" y="380.889">Q2</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="403.333" x2="403.333" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="394.015" y="380.889">Q3</text>
+    <rect fill="#F1F1F1" height="30" style="stroke:#181818;stroke-width:0.5;" width="80" x="96.667" y="330"/>
+    <rect fill="#F1F1F1" height="60" style="stroke:#181818;stroke-width:0.5;" width="80" x="230" y="300"/>
+    <rect fill="#F1F1F1" height="90" style="stroke:#181818;stroke-width:0.5;" width="80" x="363.333" y="270"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="136.667" x2="270" y1="315" y2="285"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="270" x2="403.333" y1="285" y2="255"/>
+    <rect fill="#F1F1F1" height="12" style="stroke:#F1F1F1;stroke-width:1;" width="12" x="70" y="410"/>
+    <text fill="#000" font-size="14" textLength="31.15" x="87" y="420.889">2023</text>
+    <line style="stroke:#181818;stroke-width:2;" x1="133.15" x2="145.15" y1="416" y2="416"/>
+    <text fill="#000" font-size="14" textLength="31.15" x="150.15" y="420.889">2024</text>
+  </g>
+</svg>

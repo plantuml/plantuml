@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+orientation horizontal
+h-axis [A, B, C]
+bar "Count" [5, 12, 8]
+@endchart

@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+h-axis [A, B, C, D]
+v-axis "Delta" -50 --> 50
+bar [-20, 10, -40, 30]
+@endchart

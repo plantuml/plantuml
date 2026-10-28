@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startchart
+h-axis [Jan, Feb, Mar, Apr]
+area "Volume" [5, 15, 10, 25]
+@endchart

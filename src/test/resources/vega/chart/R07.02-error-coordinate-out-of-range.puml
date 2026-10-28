@@ -1,0 +1,9 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+h-axis 0 --> 10
+v-axis 0 --> 10
+scatter [(1,2), (50,60)]
+@endchart
