@@ -1,0 +1,9 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+h-axis [1, 2, 3 ,4]
+bar bar_title [25, 62, 58, 70]
+legend bottom
+@endchart

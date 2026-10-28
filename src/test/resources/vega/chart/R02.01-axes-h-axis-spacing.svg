@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="451px" preserveAspectRatio="none" style="width:501px;height:451px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 451" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="303.889">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">40</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">60</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">80</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">100</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="120" x2="120" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="110.681" y="380.889">Q1</text>
+    <text fill="#000" font-size="14" textLength="47.337" x="246.331" y="400.889">Quarter</text>
+    <rect fill="#F1F1F1" height="30" style="stroke:#181818;stroke-width:0.5;" width="60" x="90" y="330"/>
+    <rect fill="#F1F1F1" height="60" style="stroke:#181818;stroke-width:0.5;" width="60" x="190" y="300"/>
+    <rect fill="#F1F1F1" height="90" style="stroke:#181818;stroke-width:0.5;" width="60" x="290" y="270"/>
+    <rect fill="#F1F1F1" height="120" style="stroke:#181818;stroke-width:0.5;" width="60" x="390" y="240"/>
+  </g>
+</svg>

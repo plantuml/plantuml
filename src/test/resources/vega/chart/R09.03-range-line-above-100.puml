@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startchart
+h-axis [10, 25, 40, 55]
+line   [115, 112, 138, 110]
+@endchart

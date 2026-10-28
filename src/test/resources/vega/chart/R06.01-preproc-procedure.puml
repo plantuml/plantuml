@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+!procedure $addBar($name, $values)
+bar "$name" $values
+!endprocedure
+h-axis [A, B, C]
+$addBar("Sales", "[10, 20, 30]")
+@endchart

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+h-axis 0 --> 10
+v-axis 0 --> 10
+scatter <<circle>> "Circles" [(1,2), (3,4), (5,6)]
+scatter <<square>> "Squares" [(2,1), (4,3), (6,5)]
+scatter <<triangle>> "Triangles" [(1,5), (3,7), (5,9)]
+@endchart

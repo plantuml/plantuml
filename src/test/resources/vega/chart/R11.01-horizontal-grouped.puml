@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+orientation horizontal
+v-axis [Q1, Q2, Q3, Q4]
+h-axis 0 --> 100
+bar "Revenue" [45, 62, 58, 70] #3498db
+bar "Costs" [25, 30, 28, 32] #e74c3c
+@endchart

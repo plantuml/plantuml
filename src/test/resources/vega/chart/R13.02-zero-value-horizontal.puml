@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startchart
+orientation horizontal
+v-axis [A, B]
+bar "Received" [5, 3]
+bar "Rejected" [8, 0]
+@endchart

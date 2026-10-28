@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+h-axis "Category" [A, B, C] label-right
+v-axis "Value" 0 --> 100 label-top
+bar [10, 50, 90]
+@endchart

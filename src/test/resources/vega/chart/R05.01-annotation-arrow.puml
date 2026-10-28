@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+h-axis [A, B, C, D]
+bar [10, 40, 20, 30]
+annotation "Peak" at (B, 40) <<arrow>>
+@endchart
