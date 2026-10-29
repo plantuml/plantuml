@@ -124,54 +124,63 @@ public abstract class UgDiagram extends AbstractDiagram {
 	/**
 	 * What {@link #exportDiagram} does in the TeaVM C build. There is no AWT there,
 	 * and TeaVM compiles every method a reachable method calls, whatever the file
-	 * format: the special formats (XMI, SCXML, GraphML, text) and the crash report
-	 * are left out, and {@link TextBlockExporter#exportTo} only writes SVG and PNG.
-	 * The other formats are refused by the command line before the diagram is
+	 * format: the special formats (XMI, SCXML, GraphML) and the crash report are
+	 * left out, and {@link TextBlockExporter#exportTo} only writes SVG, PNG and
+	 * text. The other formats are refused by the command line before the diagram is
 	 * exported, see {@code Run}.
+	 * &lt;p&gt;
+	 * Text (ATXT, UTXT): the diagrams that have their own text renderer (sequence
+	 * diagrams) use it, the others are drawn by {@code UGraphicTxt}, as on the JVM.
 	 */
 	private ImageData exportDiagramC(OutputStream os, int index, FileFormatOption fileFormatOption) {
 		try {
-<span class="nc" id="L134">			return getExporter(index, fileFormatOption).exportTo(os);</span>
-<span class="nc" id="L135">		} catch (Throwable e) {</span>
-<span class="nc" id="L136">			Logme.error(e);</span>
-<span class="nc" id="L137">			return ImageDataSimple.error(e);</span>
+<span class="nc" id="L137">			final FileFormat fileFormat = fileFormatOption.getFileFormat();</span>
+<span class="nc bnc" id="L138" title="All 4 branches missed.">			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {</span>
+<span class="nc" id="L139">				final ImageData txt = exportTxt(os, index, fileFormat);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">				if (txt != null)</span>
+<span class="nc" id="L141">					return txt;</span>
+			}
+<span class="nc" id="L143">			return getExporter(index, fileFormatOption).exportTo(os);</span>
+<span class="nc" id="L144">		} catch (Throwable e) {</span>
+<span class="nc" id="L145">			Logme.error(e);</span>
+<span class="nc" id="L146">			return ImageDataSimple.error(e);</span>
 		}
 	}
 	// ::done
 
 	public boolean isHandwritten() {
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (getPreprocessingArtifact().getOption().isTrue(OptionKey.HANDWRITTEN))</span>
-<span class="nc" id="L144">			return true;</span>
-<span class="fc" id="L145">		return false;</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (getPreprocessingArtifact().getOption().isTrue(OptionKey.HANDWRITTEN))</span>
+<span class="nc" id="L153">			return true;</span>
+<span class="fc" id="L154">		return false;</span>
 	}
 
 	protected TextBlockExporter getExporter(int index, FileFormatOption fileFormatOption) throws Exception {
-<span class="fc" id="L149">		TextBlock result = getTextBlock(index, fileFormatOption);</span>
+<span class="fc" id="L158">		TextBlock result = getTextBlock(index, fileFormatOption);</span>
 
-<span class="fc" id="L151">		final int status = computeStatus(result);</span>
+<span class="fc" id="L160">		final int status = computeStatus(result);</span>
 
-<span class="fc" id="L153">		result = addChrome(index, result);</span>
+<span class="fc" id="L162">		result = addChrome(index, result);</span>
 
-<span class="fc" id="L155">		final HColor backColor = calculateBackColor();</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (backColor != null)</span>
-<span class="fc" id="L157">			result = TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="fc" id="L164">		final HColor backColor = calculateBackColor();</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (backColor != null)</span>
+<span class="fc" id="L166">			result = TextBlockUtils.addBackcolor(result, backColor);</span>
 
-<span class="fc" id="L159">		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());</span>
-<span class="fc" id="L160">		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);</span>
+<span class="fc" id="L168">		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());</span>
+<span class="fc" id="L169">		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);</span>
 
-<span class="fc" id="L162">		final TextBlockExporter.Builder builder = TextBlockExporter.builder(result, effectiveFormat, isHandwritten());</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (this instanceof TitledDiagram)</span>
-<span class="fc" id="L164">			builder.styled((TitledDiagram) this);</span>
+<span class="fc" id="L171">		final TextBlockExporter.Builder builder = TextBlockExporter.builder(result, effectiveFormat, isHandwritten());</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (this instanceof TitledDiagram)</span>
+<span class="fc" id="L173">			builder.styled((TitledDiagram) this);</span>
 		else
-<span class="fc" id="L166">			builder.scale(getScale()) //</span>
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">					.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null) //</span>
-<span class="fc" id="L168">					.seed(seed()) //</span>
-<span class="fc" id="L169">					.warningOrError(getWarningOrError()) //</span>
-<span class="fc" id="L170">					.margin(getDefaultMargins());</span>
+<span class="fc" id="L175">			builder.scale(getScale()) //</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">					.metadata(fileFormatOption.isWithMetadata() ? getMetadata() : null) //</span>
+<span class="fc" id="L177">					.seed(seed()) //</span>
+<span class="fc" id="L178">					.warningOrError(getWarningOrError()) //</span>
+<span class="fc" id="L179">					.margin(getDefaultMargins());</span>
 
-<span class="fc" id="L172">		builder.status(status);</span>
+<span class="fc" id="L181">		builder.status(status);</span>
 
-<span class="fc" id="L174">		return builder.build();</span>
+<span class="fc" id="L183">		return builder.build();</span>
 	}
 
 	/**
@@ -181,7 +190,7 @@ public abstract class UgDiagram extends AbstractDiagram {
 	 * {@link TextBlockExporter#exportSvgTo}.
 	 */
 	public ImageData exportSvg(OutputStream os) throws Exception {
-<span class="nc" id="L184">		return getExporter(0, new FileFormatOption(FileFormat.SVG)).exportSvgTo(os);</span>
+<span class="nc" id="L193">		return getExporter(0, new FileFormatOption(FileFormat.SVG)).exportSvgTo(os);</span>
 	}
 
 	/**
@@ -190,19 +199,19 @@ public abstract class UgDiagram extends AbstractDiagram {
 	 * {@link TextBlockExporter#exportPngTo}.
 	 */
 	public ImageData exportPng(OutputStream os, RasterCanvas.Factory factory) throws Exception {
-<span class="fc" id="L193">		return getExporter(0, new FileFormatOption(FileFormat.PNG)).exportPngTo(os, factory);</span>
+<span class="fc" id="L202">		return getExporter(0, new FileFormatOption(FileFormat.PNG)).exportPngTo(os, factory);</span>
 	}
 
 	private int computeStatus(TextBlock textBlock) {
-<span class="fc bfc" id="L197" title="All 2 branches covered.">		if (this instanceof PSystemUnsupported)</span>
-<span class="fc" id="L198">			return FileImageData.ERROR;</span>
-<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (this instanceof PSystemError)</span>
-<span class="fc" id="L200">			return FileImageData.ERROR;</span>
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (textBlock instanceof GraphvizCrash)</span>
-<span class="nc" id="L202">			return FileImageData.CRASH;</span>
-<span class="pc bpc" id="L203" title="1 of 4 branches missed.">		if (textBlock instanceof IEntityImage &amp;&amp; ((IEntityImage) textBlock).isCrash())</span>
-<span class="nc" id="L204">			return FileImageData.CRASH;</span>
-<span class="fc" id="L205">		return 0;</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (this instanceof PSystemUnsupported)</span>
+<span class="fc" id="L207">			return FileImageData.ERROR;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (this instanceof PSystemError)</span>
+<span class="fc" id="L209">			return FileImageData.ERROR;</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (textBlock instanceof GraphvizCrash)</span>
+<span class="nc" id="L211">			return FileImageData.CRASH;</span>
+<span class="pc bpc" id="L212" title="1 of 4 branches missed.">		if (textBlock instanceof IEntityImage &amp;&amp; ((IEntityImage) textBlock).isCrash())</span>
+<span class="nc" id="L213">			return FileImageData.CRASH;</span>
+<span class="fc" id="L214">		return 0;</span>
 	}
 
 }
