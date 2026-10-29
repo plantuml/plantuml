@@ -11647,8 +11647,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 8
-    Concrete Classes: 8
+    Total Classes: 11
+    Concrete Classes: 11
     Abstract Classes: 0
 
     Ca: 1
@@ -11666,9 +11666,12 @@ Concrete Classes:
     net.sourceforge.plantuml.teavm.c.NativeCanvas
     net.sourceforge.plantuml.teavm.c.NativeExit
     net.sourceforge.plantuml.teavm.c.NativeResources
+    net.sourceforge.plantuml.teavm.c.NativeStdin
     net.sourceforge.plantuml.teavm.c.PSystemBuilderC
     net.sourceforge.plantuml.teavm.c.PngCanvas$1
     net.sourceforge.plantuml.teavm.c.PngImageC
+    net.sourceforge.plantuml.teavm.c.StdinStream
+    net.sourceforge.plantuml.teavm.c.StdoutStream
 
 Depends Upon:
     java.io
@@ -15337,7 +15340,7 @@ net.sourceforge.plantuml.svg.parser,11,1,0,13,0.09,1,0.09,1
 net.sourceforge.plantuml.swing,36,0,0,16,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
 net.sourceforge.plantuml.teavm,2,0,46,3,0,0.06,0.94,1
-net.sourceforge.plantuml.teavm.c,8,0,1,39,0,0.98,0.02,1
+net.sourceforge.plantuml.teavm.c,11,0,1,39,0,0.98,0.02,1
 net.sourceforge.plantuml.teavm.js,18,0,2,16,0,0.89,0.11,1
 net.sourceforge.plantuml.teavm.js.browser,12,5,3,9,0.42,0.75,0.17,1
 net.sourceforge.plantuml.teavm.js.headless,3,1,0,4,0.33,1,0.33,1

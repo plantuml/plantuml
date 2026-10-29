@@ -3287,7 +3287,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.teavm" --> "java.util"
 
 class "net.sourceforge.plantuml.teavm.c" %lighten("red", 98) {
-Total Classes: 8
+Total Classes: 11
 }
 "net.sourceforge.plantuml.teavm.c" --> "java.io"
 "net.sourceforge.plantuml.teavm.c" --> "java.lang"

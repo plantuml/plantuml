@@ -17028,8 +17028,8 @@
 
         <Package name="net.sourceforge.plantuml.teavm.c">
             <Stats>
-                <TotalClasses>8</TotalClasses>
-                <ConcreteClasses>8</ConcreteClasses>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>39</Ce>
@@ -17058,6 +17058,9 @@
                 <Class sourceFile="NativeResources.java">
                     net.sourceforge.plantuml.teavm.c.NativeResources
                 </Class>
+                <Class sourceFile="NativeStdin.java">
+                    net.sourceforge.plantuml.teavm.c.NativeStdin
+                </Class>
                 <Class sourceFile="PSystemBuilderC.java">
                     net.sourceforge.plantuml.teavm.c.PSystemBuilderC
                 </Class>
@@ -17066,6 +17069,12 @@
                 </Class>
                 <Class sourceFile="PngImageC.java">
                     net.sourceforge.plantuml.teavm.c.PngImageC
+                </Class>
+                <Class sourceFile="StdinStream.java">
+                    net.sourceforge.plantuml.teavm.c.StdinStream
+                </Class>
+                <Class sourceFile="StdoutStream.java">
+                    net.sourceforge.plantuml.teavm.c.StdoutStream
                 </Class>
             </ConcreteClasses>
 
