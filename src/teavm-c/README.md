@@ -243,6 +243,12 @@ TTF files and the measured widths (any OS), and the whole bounder against
   calls).
 - Input: the command line reads the file with `ReadLineReader`, as on the JVM
   (byte order mark removed, U+2013 replaced by `-`).
+- Standard input (`-pipe`, `-pipemap`, `--syntax`): the `System.in` of the TeaVM C
+  classlib (`ConsoleInputStream`) throws on every `read`, which aborted the process
+  (exit code 134) before the first byte. `Run` uses `StdinStream` instead, which
+  calls `read(0, ...)` of the C library through `native/plantuml_stdin.c`
+  (binding: `NativeStdin`). The CI checks it on Linux and macOS (pipe, and input
+  redirected from a file).
 - Async code: TeaVM turns a method into "async" code (fibers) when it can reach
   an `@Async` method of its classlib, and its coroutine transformation then fails
   with an `ArrayIndexOutOfBoundsException` on some methods. Plain locks are not
