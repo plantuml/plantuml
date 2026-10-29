@@ -22,8 +22,8 @@ but they only print "... is not available in the C build":
   JVM: the C build prints the help instead), `--ftp-server`, `--http-server`,
   `--clipboard`, `-printfonts`, `-license`, the statistics, `--encode-sprite`,
   `--check-graphviz` (there is no Graphviz: Smetana computes the layout);
-- the output formats other than SVG, PNG and `--preproc` (they need AWT or
-  other libraries);
+- the output formats other than SVG, PNG, text (`-ttxt`, `-tutxt`) and `--preproc`
+  (PDF, EPS, LaTeX, HTML5, VDX, XMI... need AWT or other libraries);
 - the extraction of the source of a PNG file (`--extract-source`; it works for
   an SVG file) and the check of the metadata of a PNG file (`--skip-fresh`: the
   PNG is always generated again).
@@ -194,6 +194,13 @@ Native sources (`native/`, copied by Gradle next to the generated C):
   compatible with Arial, i.e. with what Java's "SansSerif" is on Windows.
   `embed_font.cmake` turns the 4 TTF files (regular, bold, italic, bold italic)
   into C arrays when CMake configures.
+
+## Text output (`-ttxt`, `-tutxt`)
+
+No native code: the sequence diagrams use their own text renderer (`asciiverse`, called
+by `SequenceDiagram.exportTxt`), the other diagrams are drawn by `UGraphicTxt` (only their
+texts, as on the JVM). Text is measured in character cells (`TextStringBounder`), not with
+the embedded fonts: `FileFormat.getDefaultStringBounder` picks it for these two formats.
 
 ## Text measurement with the embedded fonts
 

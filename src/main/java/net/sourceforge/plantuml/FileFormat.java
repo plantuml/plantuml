@@ -185,6 +185,9 @@ public enum FileFormat {
 		if (TeaVM.isTeaVM()) {
 			if (this == SVG_DETERMINISTIC)
 				return new StringBounderFromWidthTable(this);
+			// The text formats measure in character cells, not in pixels, in every build
+			if (TeaVM.isC() && (this == ATXT || this == UTXT))
+				return new TextStringBounder(this);
 			// TeaVM C has no canvas to measure the text: the metrics of the fonts it
 			// embeds, which measure as Java does on Windows
 			if (TeaVM.isC())

@@ -275,6 +275,22 @@ jobs:
             exit 1
           fi
 
+      # Text output (no AWT, no native code): the sequence diagrams have their own text
+      # renderer, the other diagrams are drawn by UGraphicTxt
+      - name: Smoke test (text)
+        run: |
+          exe="c-sources/bin/plantuml"
+          printf '@startuml\nAlice -> Bob: Hello\n@enduml\n' > seq.puml
+          for format in txt utxt; do
+            "$exe" -pipe -t$format < seq.puml > seq.$format
+            if ! grep -q "Alice" seq.$format || ! grep -q "Hello" seq.$format; then
+              echo "::error::The output of -t$format is not the expected text"
+              cat seq.$format
+              exit 1
+            fi
+            cat seq.$format
+          done
+
       # The executable has the entry point of the JVM (Run): same help, same flags
       - name: Smoke test (help)
         run: |

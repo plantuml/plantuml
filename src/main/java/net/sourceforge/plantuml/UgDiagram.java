@@ -124,13 +124,22 @@ public abstract class UgDiagram extends AbstractDiagram {
 	/**
 	 * What {@link #exportDiagram} does in the TeaVM C build. There is no AWT there,
 	 * and TeaVM compiles every method a reachable method calls, whatever the file
-	 * format: the special formats (XMI, SCXML, GraphML, text) and the crash report
-	 * are left out, and {@link TextBlockExporter#exportTo} only writes SVG and PNG.
-	 * The other formats are refused by the command line before the diagram is
+	 * format: the special formats (XMI, SCXML, GraphML) and the crash report are
+	 * left out, and {@link TextBlockExporter#exportTo} only writes SVG, PNG and
+	 * text. The other formats are refused by the command line before the diagram is
 	 * exported, see {@code Run}.
+	 * <p>
+	 * Text (ATXT, UTXT): the diagrams that have their own text renderer (sequence
+	 * diagrams) use it, the others are drawn by {@code UGraphicTxt}, as on the JVM.
 	 */
 	private ImageData exportDiagramC(OutputStream os, int index, FileFormatOption fileFormatOption) {
 		try {
+			final FileFormat fileFormat = fileFormatOption.getFileFormat();
+			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
+				final ImageData txt = exportTxt(os, index, fileFormat);
+				if (txt != null)
+					return txt;
+			}
 			return getExporter(index, fileFormatOption).exportTo(os);
 		} catch (Throwable e) {
 			Logme.error(e);

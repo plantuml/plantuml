@@ -196,6 +196,9 @@ public class TextBlockExporter {
 		if (format == FileFormat.PNG)
 			return exportPngTo(os, PngCanvas::new);
 
+		if (format == FileFormat.ATXT || format == FileFormat.UTXT)
+			return exportTxtTo(os);
+
 		throw new UnsupportedOperationException("Format " + format + " is not available in the C build");
 	}
 	// ::done
@@ -241,6 +244,24 @@ public class TextBlockExporter {
 		final double scaleFactor = computeScaleFactor(dim);
 		checkScaleFactor(scaleFactor);
 		return draw(createUGraphicRaster(scaleFactor, dim, factory), os, dim, scaleFactor);
+	}
+
+	/**
+	 * Exports the {@link TextBlock} as text (ATXT or UTXT) with {@link UGraphicTxt},
+	 * exactly as {@link #exportTo} does, but without {@link #createUGraphic}, which
+	 * references the drivers of every format (and AWT): for the TeaVM C build. The
+	 * diagrams that have their own text renderer (sequence diagrams) do not come
+	 * here, see {@code UgDiagram#exportDiagramC}.
+	 *
+	 * @param os the output stream to write to
+	 * @return image metadata (dimensions)
+	 * @throws IOException if an I/O error occurs
+	 */
+	private ImageData exportTxtTo(OutputStream os) throws IOException {
+		final XDimension2D dim = calculateFinalDimension();
+		final double scaleFactor = computeScaleFactor(dim);
+		checkScaleFactor(scaleFactor);
+		return draw(new UGraphicTxt(fileFormatOption.getFileFormat()), os, dim, scaleFactor);
 	}
 
 	private static void checkScaleFactor(double scaleFactor) {

@@ -630,12 +630,12 @@ public class Run {
 	}
 
 	/**
-	 * The formats the C build writes: SVG and PNG (see
+	 * The formats the C build writes: SVG, PNG and text (see
 	 * {@code UgDiagram#exportDiagram}), and the preprocessed source.
 	 */
 	private static boolean isAvailableInC(FileFormat format) {
 		return format == FileFormat.SVG || format == FileFormat.SVG_DETERMINISTIC || format == FileFormat.PNG
-				|| format == FileFormat.PREPROC;
+				|| format == FileFormat.ATXT || format == FileFormat.UTXT || format == FileFormat.PREPROC;
 	}
 
 	/**
