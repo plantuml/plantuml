@@ -294,3 +294,24 @@ library) are embedded in the executable, since the C build has no classpath:
 
 To embed more files, add `name=path` pairs to `RESOURCE_PAIRS` in
 `CMakeLists.txt` and have Gradle copy them.
+
+## PDF (experiment, branch `master-openpdf-c`)
+
+PDF output goes through OpenPDF, which uses classes TeaVM does not provide
+(`java.awt.Font`, `java.awt.font.TextLayout`, `java.text.Bidi`, ...). TeaVM
+compiles every reachable method, so these classes must exist even if they are
+never executed. `src/main/java/org/teavm/classlib/...` holds minimal stand-ins
+named after TeaVM's classlib convention (`T<Name>` in
+`org.teavm.classlib.<package>`), and `org/apache/fop/complexscripts/...` the
+stand-ins for the optional FOP dependency. They are removed from the JVM jars
+(`::remove file when JAVA8`) and are not meant to work at runtime.
+
+Missing *members* of classes TeaVM already provides (`File.toPath()`,
+`FileInputStream.getChannel()`, `System.load()`, `Color.black`, ...) cannot be
+fixed this way and need another mechanism.
+
+OpenPDF has no class loader to read its resources (AFM font metrics, glyph list,
+messages) in the C build, and TeaVM's resource support crashes its coroutine
+transformation. The plantuml fork of OpenPDF reads them through
+`BaseFont.setResourceProvider`, `OpenPdfResources` points it at the embedded
+files (`openpdf/...`, copied from the OpenPDF jar by `copyNativeSources`).

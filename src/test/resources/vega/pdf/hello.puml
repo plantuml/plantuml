@@ -1,0 +1,7 @@
+---
+output: pdf
+---
+@startuml
+Alice -> Bob : Hello World
+Bob --> Alice : PDF, deterministic
+@enduml

@@ -9,7 +9,7 @@ import java.util.Properties
 println("Running build.gradle.kts")
 println(project.version)
 
-val javacRelease = (project.findProperty("javacRelease") ?: "11") as String
+val javacRelease = (project.findProperty("javacRelease") ?: "21") as String
 
 // When -Pfast is set, skip expensive steps (tests, javadoc, etc.)
 val fastBuild = project.hasProperty("fast")
@@ -178,12 +178,27 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 		include("*.svg")
 		into("native/resources/openiconic")
 	}
+	// The emoji (<:name:>): the list and one SVG file per emoji
+	from("src/main/resources/net/sourceforge/plantuml/emoji/data") {
+		include("emoji.txt", "*.svg")
+		into("native/resources/emoji")
+	}
 	// The standard library: its list, and for each library its description, its
 	// puml, json, sprite and svg files; image.spm (raster images)
 	from("src/main/resources/stdlib") {
 		include("home.spm", "*/info.spm", "*/puml.spm", "*/json.spm", "*/sprite.spm", "*/svg.spm",
 				"*/image.spm")
 		into("native/resources/stdlib")
+	}
+	// The resources OpenPDF reads (AFM font metrics, glyph list, messages): there is no
+	// class loader in the C build, see OpenPdfResources
+	from({
+		configurations.runtimeClasspath.get().filter { it.name.startsWith("openpdf") }.map { zipTree(it) }
+	}) {
+		include("org/openpdf/text/pdf/fonts/*.afm", "org/openpdf/text/pdf/fonts/glyphlist.txt",
+				"org/openpdf/text/error_messages/en.lng")
+		includeEmptyDirs = false
+		into("native/resources/openpdf")
 	}
 	into(layout.buildDirectory.dir("generated/teavm/c"))
 }
@@ -202,21 +217,23 @@ tasks.compileJava {
 apply(from = "tools/linters/superlinter.gradle.kts")
 
 // teavm-classlib 0.15+ is published for JVM 17+ only, and the TeaVM plugin adds it
-// to compileClasspath. With --release 11 Gradle refuses to resolve it. The Java
-// sources only need the JSO/interop APIs (Java 11 compatible), never the classlib
-// (it is only needed by the TeaVM compiler itself, which has its own classpath).
+// to compileClasspath: with -PjavacRelease=11 Gradle refuses to resolve it. The Java
+// sources never need the classlib (only the TeaVM compiler does, on its own classpath).
 configurations.compileClasspath {
 	exclude(group = "org.teavm", module = "teavm-classlib")
 }
 
-// TeaVM 0.15+ must RUN on Java 17+, but it can still consume Java 11 bytecode.
-// So the JAR stays compiled with --release 11 (see javacRelease above), and only
-// the JavaScript / WebAssembly / C generation needs a JDK 17+ running Gradle.
+// teavm-classlib 0.15+ is published for JVM 17+ only: with --release 21 (see
+// javacRelease above), Gradle resolves it on the compile classpath without trouble.
+// The Java sources only need the JSO/interop APIs, never the classlib.
+
+// TeaVM 0.15+ must RUN on Java 17+: the JavaScript / WebAssembly / C generation
+// needs a JDK 17+ running Gradle.
 tasks.matching { it.name == "generateJavaScript" || it.name == "generateWasmGC" || it.name == "generateC" }.configureEach {
 	doFirst {
 		check(JavaVersion.current() >= JavaVersion.VERSION_17) {
 			"TeaVM requires running Gradle on JDK 17+ (current: ${JavaVersion.current()}). " +
-				"The Java bytecode itself remains --release $javacRelease."
+				"The Java bytecode itself is --release $javacRelease."
 		}
 	}
 }

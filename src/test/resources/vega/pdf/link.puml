@@ -1,0 +1,7 @@
+---
+output: pdf
+---
+@startuml
+Alice -> Bob : [[https://plantuml.com a link]]
+note right : see [[https://plantuml.com/pdf the PDF page]]
+@enduml

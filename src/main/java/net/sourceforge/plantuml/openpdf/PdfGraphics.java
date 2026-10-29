@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.openpdf;
 
 import java.awt.Color;
 import java.awt.geom.PathIterator;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -51,10 +50,13 @@ import org.openpdf.text.pdf.BaseFont;
 import org.openpdf.text.pdf.PdfAction;
 import org.openpdf.text.pdf.PdfAnnotation;
 import org.openpdf.text.pdf.PdfContentByte;
+import org.openpdf.text.pdf.PdfDate;
+import org.openpdf.text.pdf.PdfStream;
 import org.openpdf.text.pdf.PdfTemplate;
 import org.openpdf.text.pdf.PdfWriter;
 
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import net.sourceforge.plantuml.klimt.geom.USegment;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
@@ -164,6 +166,14 @@ public class PdfGraphics {
 		// unbounded - it can hold negative-Y content without truncation.
 		this.document = new Document(new Rectangle(10, 10));
 		this.writer = PdfWriter.getInstance(document, buffer);
+		if (this.option.isDeterministic()) {
+			writer.setCompressionLevel(PdfStream.NO_COMPRESSION);
+			writer.setFixedFileId(new byte[16]);
+			final PdfDate fixedDate = new PdfDate("D:20000101000000Z");
+			document.addCreationDate(fixedDate);
+			document.addModificationDate(fixedDate);
+			document.addProducer("PlantUML");
+		}
 	}
 
 	private void openDocumentIfNeeded() {
@@ -574,43 +584,63 @@ public class PdfGraphics {
 	}
 	
 	/**
-	 * Insert a raster {@link BufferedImage} at position (x, y), rendered at its
-	 * natural pixel size (1 px = 1 user unit). Used by {@code DriverImagePdf} for
-	 * {@link net.sourceforge.plantuml.klimt.shape.UImage} content.
+	 * Insert a raster {@link PortableImage} at position (x, y), rendered at its
+	 * natural pixel size (1 px = 1 user unit). This does not use AWT, so it works
+	 * on the JVM and in the C build alike: the pixels are handed to OpenPDF as raw
+	 * RGB samples, with an 8-bit soft mask when the image has some transparency.
 	 *
-	 * <p>
-	 * Handed straight to OpenPDF via
-	 * {@code Image.getInstance(java.awt.Image, Color, boolean)}: passing a
-	 * {@code null} mask color makes OpenPDF derive the transparency mask from the
-	 * image's own alpha channel (PlantUML icons and sprites rely on it), and
-	 * {@code forceBW=false} keeps the colors. Positioning and Y-negation follow the
-	 * same convention as {@link #pdfImage(byte[], double, double, double, double)}.
-	 *
-	 * @param bufferedImage the image to embed.
-	 * @param x             top-left X (SVG convention).
-	 * @param y             top-left Y (SVG convention).
+	 * @param image the image to embed.
+	 * @param x     top-left X (SVG convention).
+	 * @param y     top-left Y (SVG convention).
 	 * @throws IOException if OpenPDF cannot build the image.
 	 */
-	public void pdfImage(BufferedImage bufferedImage, double x, double y) throws IOException {
+	public void pdfImage(PortableImage image, double x, double y) throws IOException {
 		if (hidden)
 			return;
-		if (bufferedImage == null)
+		if (image == null)
 			return;
-		openDocumentIfNeeded();
-		final int width = bufferedImage.getWidth();
-		final int height = bufferedImage.getHeight();
+		final int width = image.getWidth();
+		final int height = image.getHeight();
 		if (width <= 0 || height <= 0)
 			return;
+		openDocumentIfNeeded();
+		final byte[] rgb = new byte[width * height * 3];
+		final byte[] alpha = new byte[width * height];
+		boolean transparent = false;
+		int pos = 0;
+		for (int j = 0; j < height; j++) {
+			for (int i = 0; i < width; i++) {
+				final int argb = image.getRGB(i, j);
+				final int a = (argb >>> 24) & 0xFF;
+				rgb[pos * 3] = (byte) (argb >> 16);
+				rgb[pos * 3 + 1] = (byte) (argb >> 8);
+				rgb[pos * 3 + 2] = (byte) argb;
+				alpha[pos] = (byte) a;
+				if (a != 0xFF)
+					transparent = true;
+				pos++;
+			}
+		}
 		try {
-			final Image img = Image.getInstance(bufferedImage, null, false);
+			final Image img = Image.getInstance(width, height, 3, 8, rgb);
+			if (option.isDeterministic())
+				img.setCompressionLevel(PdfStream.NO_COMPRESSION);
+			if (transparent) {
+				final Image mask = Image.getInstance(width, height, 1, 8, alpha);
+				if (option.isDeterministic())
+					mask.setCompressionLevel(PdfStream.NO_COMPRESSION);
+				mask.makeMask();
+				img.setImageMask(mask);
+			}
 			img.setAbsolutePosition((float) x, ny(y + height));
 			cb.addImage(img);
 		} catch (BadElementException e) {
 			throw new IOException("Cannot embed image", e);
+		} catch (org.openpdf.text.DocumentException e) {
+			throw new IOException("Cannot embed image", e);
 		}
 		ensureVisible(x + width, y + height);
 	}
-
 
 	// ----------------------------------------------------------------------
 	// links
