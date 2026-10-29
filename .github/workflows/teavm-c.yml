@@ -248,6 +248,25 @@ jobs:
             exit 1
           fi
 
+      # -pipe: the source on the standard input, the image on the standard output (what
+      # Kroki does). TeaVM's System.in cannot read in the C build (StdinStream replaces it).
+      - name: Smoke test (pipe)
+        run: |
+          exe="c-sources/bin/plantuml"
+          cat mindmap.puml | "$exe" -pipe -tsvg > pipe.svg
+          grep -q "<svg" pipe.svg && grep -q "Alpha" pipe.svg \
+            || { echo "::error::The SVG of -pipe is not the expected one"; exit 1; }
+          # Standard input redirected from a file, not from a pipe
+          "$exe" -pipe -tsvg < mindmap.puml > pipe-redirect.svg
+          cmp pipe.svg pipe-redirect.svg \
+            || { echo "::error::-pipe gives another SVG when the input is a file"; exit 1; }
+          cat mindmap.puml | "$exe" -pipe -tpng > pipe.png
+          signature="$(head -c 4 pipe.png | tail -c 3)"
+          if [ "$signature" != "PNG" ]; then
+            echo "::error::The PNG of -pipe is not the expected one"
+            exit 1
+          fi
+
       # The executable has the entry point of the JVM (Run): same help, same flags
       - name: Smoke test (help)
         run: |

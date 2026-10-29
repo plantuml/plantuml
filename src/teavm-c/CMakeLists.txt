@@ -131,6 +131,7 @@ endforeach()
 message(STATUS "Generated C: ${TEAVM_GEN_GROUPS} groups of files with distinct names")
 
 add_executable(plantuml ${TEAVM_GEN_OBJECTS} native/plantuml_canvas.c native/plantuml_png.c native/plantuml_resources.c
+	native/plantuml_stdin.c
 	${RESOURCES_SOURCE} ${FONT_SOURCES})
 target_include_directories(plantuml PRIVATE native)
 

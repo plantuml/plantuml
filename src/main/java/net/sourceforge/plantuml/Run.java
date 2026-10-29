@@ -44,6 +44,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
@@ -85,6 +86,10 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.swing.MainWindow;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
 import net.sourceforge.plantuml.teavm.TeaVM;
+// ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.c.StdinStream;
+import net.sourceforge.plantuml.teavm.c.StdoutStream;
+// ::done
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.Obfuscate;
 import net.sourceforge.plantuml.version.Version;
@@ -185,7 +190,7 @@ public class Run {
 					exit.eventuallyExit();
 					return;
 				}
-				new Pipe(option, System.out, System.in, charset).managePipe(exit);
+				new Pipe(option, standardOutput(), standardInput(), charset).managePipe(exit);
 				exit.eventuallyExit();
 				return;
 			}
@@ -248,6 +253,24 @@ public class Run {
 
 		exit.eventuallyExit();
 
+	}
+
+	private static InputStream standardInput() {
+		// ::comment when JAVA8
+		// The System.in of the TeaVM C backend cannot read: it always throws
+		if (TeaVM.isC())
+			return new StdinStream();
+		// ::done
+		return System.in;
+	}
+
+	private static PrintStream standardOutput() {
+		// ::comment when JAVA8
+		// The System.out of the TeaVM C backend is a text stream: it alters a PNG
+		if (TeaVM.isC())
+			return new PrintStream(new StdoutStream(), false);
+		// ::done
+		return System.out;
 	}
 
 	private static void detectDisplay(String[] argsArray) {
