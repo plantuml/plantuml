@@ -222,8 +222,12 @@ jobs:
       - name: Configure
         run: cmake -S c-sources -B c-build -DCMAKE_BUILD_TYPE=Release
 
+      # An explicit number of jobs: a bare --parallel gives make an unlimited -j, which
+      # spawns one cc process per generated file at once and exhausts the process
+      # limit of the macOS runner ("posix_spawn failed: Resource
+      # temporarily unavailable", "make: wait: No child processes")
       - name: Build
-        run: cmake --build c-build --parallel
+        run: cmake --build c-build --parallel "$(getconf _NPROCESSORS_ONLN)"
 
       - name: Smoke test (mindmap to SVG)
         run: |
@@ -233,8 +237,10 @@ jobs:
           "$exe" -tsvg mindmap.puml
           test -f mindmap.svg || { echo "::error::No SVG was written"; exit 1; }
           cat mindmap.svg
-          grep -q "<svg" mindmap.svg && grep -q "Alpha" mindmap.svg \
-            || { echo "::error::The output is not the expected SVG"; exit 1; }
+          if ! grep -q "<svg" mindmap.svg || ! grep -q "Alpha" mindmap.svg; then
+            echo "::error::The output is not the expected SVG"
+            exit 1
+          fi
 
       - name: Smoke test (mindmap to PNG)
         run: |
@@ -254,8 +260,10 @@ jobs:
         run: |
           exe="c-sources/bin/plantuml"
           cat mindmap.puml | "$exe" -pipe -tsvg > pipe.svg
-          grep -q "<svg" pipe.svg && grep -q "Alpha" pipe.svg \
-            || { echo "::error::The SVG of -pipe is not the expected one"; exit 1; }
+          if ! grep -q "<svg" pipe.svg || ! grep -q "Alpha" pipe.svg; then
+            echo "::error::The SVG of -pipe is not the expected one"
+            exit 1
+          fi
           # Standard input redirected from a file, not from a pipe
           "$exe" -pipe -tsvg < mindmap.puml > pipe-redirect.svg
           cmp pipe.svg pipe-redirect.svg \
