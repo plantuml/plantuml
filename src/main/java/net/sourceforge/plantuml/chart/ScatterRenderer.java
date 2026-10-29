@@ -104,6 +104,10 @@ public class ScatterRenderer {
 		if (series.getColor() == null && scatterStyle.hasValue(PName.MarkerColor))
 			markerColor = scatterStyle.value(PName.MarkerColor).asColor(skinParam.getIHtmlColorSet());
 
+		// Label color - priority: explicit color > FontColor
+		final HColor labelColor = series.getColor() != null ? series.getColor()
+				: scatterStyle.value(PName.FontColor).asColor(skinParam.getIHtmlColorSet());
+
 		// Extract marker size from style (default 8)
 		double markerSize = 8.0;
 		try {
@@ -152,7 +156,7 @@ public class ScatterRenderer {
 
 				// Draw label if enabled
 				if (series.isShowLabels()) {
-					drawLabel(ug, yVal, x, y - markerSize / 2 - 8, stringBounder);
+					drawLabel(ug, yVal, x, y - markerSize / 2 - 8, labelColor, stringBounder);
 				}
 			}
 		} else {
@@ -169,7 +173,7 @@ public class ScatterRenderer {
 
 				// Draw label if enabled
 				if (series.isShowLabels()) {
-					drawLabel(ug, value, x, y - markerSize / 2 - 8, stringBounder);
+					drawLabel(ug, value, x, y - markerSize / 2 - 8, labelColor, stringBounder);
 				}
 			}
 		}
@@ -210,11 +214,11 @@ public class ScatterRenderer {
 		ug.apply(color).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(triangle);
 	}
 
-	private void drawLabel(UGraphic ug, double value, double x, double y, StringBounder stringBounder) {
+	private void drawLabel(UGraphic ug, double value, double x, double y, HColor labelColor,
+			StringBounder stringBounder) {
 		try {
 			final String label = formatValue(value);
 			final UFont font = UFontFactory.sansSerif(10).withFontFace(UFontFace.bold());
-			final HColor labelColor = skinParam.getIHtmlColorSet().getColor("#000000");
 			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);
 			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
 					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
