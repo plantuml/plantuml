@@ -57,7 +57,7 @@ public class DriverImagePdf implements UDriver<UImage, PdfGraphics> {
 		}
 
 		try {
-			pdf.pdfImage(image.getImage(1).getBufferedImage(), x, y);
+			pdf.pdfImage(image.getImage(1), x, y);
 		} catch (IOException e) {
 			Log.error("Error in svg for image " + e);
 		}

@@ -54,6 +54,7 @@ public class PdfOption {
 	private HColor backgroundColor;
 	private double minWidth = 10;
 	private double minHeight = 10;
+	private boolean deterministic = false;
 
 	public PdfOption() {
 	}
@@ -114,6 +115,20 @@ public class PdfOption {
 	public PdfOption withMinDimension(double width, double height) {
 		this.minWidth = width;
 		this.minHeight = height;
+		return this;
+	}
+
+	public boolean isDeterministic() {
+		return deterministic;
+	}
+
+	/**
+	 * Reproducible output: fixed dates, file identifier and producer, and no
+	 * compression, so that the same diagram gives the same bytes everywhere (used by
+	 * the Vega tests).
+	 */
+	public PdfOption withDeterministic(boolean deterministic) {
+		this.deterministic = deterministic;
 		return this;
 	}
 

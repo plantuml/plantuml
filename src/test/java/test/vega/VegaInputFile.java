@@ -80,6 +80,7 @@ public class VegaInputFile {
 		CHECKERS.put(FileFormat.XMI_SCRIPT, new VegaCheckerXmi());
 		CHECKERS.put(FileFormat.ATXT, new VegaCheckerAtxt());
 		CHECKERS.put(FileFormat.UTXT, new VegaCheckerUtxt());
+		CHECKERS.put(FileFormat.PDF_DETERMINISTIC, new VegaCheckerPdf());
 	}
 
 	private final Path path;
@@ -261,6 +262,8 @@ public class VegaInputFile {
 				result.add(FileFormat.UTXT);
 			else if (trimmed.equals("ATXT"))
 				result.add(FileFormat.ATXT);
+			else if (trimmed.equals("PDF"))
+				result.add(FileFormat.PDF_DETERMINISTIC);
 			else
 				result.add(FileFormat.valueOf(trimmed));
 		}
