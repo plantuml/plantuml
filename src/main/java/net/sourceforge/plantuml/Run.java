@@ -635,7 +635,8 @@ public class Run {
 	 */
 	private static boolean isAvailableInC(FileFormat format) {
 		return format == FileFormat.SVG || format == FileFormat.SVG_DETERMINISTIC || format == FileFormat.PNG
-				|| format == FileFormat.ATXT || format == FileFormat.UTXT || format == FileFormat.PREPROC;
+				|| format == FileFormat.ATXT || format == FileFormat.UTXT || format == FileFormat.PREPROC
+				|| format == FileFormat.PDF; // EXPERIMENT (not for master)
 	}
 
 	/**

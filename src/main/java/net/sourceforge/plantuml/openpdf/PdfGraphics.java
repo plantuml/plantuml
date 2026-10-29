@@ -55,9 +55,11 @@ import org.openpdf.text.pdf.PdfTemplate;
 import org.openpdf.text.pdf.PdfWriter;
 
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import net.sourceforge.plantuml.klimt.geom.USegment;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 /**
  * PDF backend that mirrors the public API of
@@ -592,6 +594,10 @@ public class PdfGraphics {
 	 * @throws IOException if OpenPDF cannot build the image.
 	 */
 	public void pdfImage(BufferedImage bufferedImage, double x, double y) throws IOException {
+		// Not available in the C build (no AWT images): the marker must be in this
+		// method, so that TeaVM prunes the rest of it.
+		if (TeaVM.isC())
+			return;
 		if (hidden)
 			return;
 		if (bufferedImage == null)
@@ -611,6 +617,62 @@ public class PdfGraphics {
 		ensureVisible(x + width, y + height);
 	}
 
+
+	/**
+	 * Insert a raster {@link PortableImage} at position (x, y), rendered at its
+	 * natural pixel size (1 px = 1 user unit). Unlike
+	 * {@link #pdfImage(BufferedImage, double, double)}, this does not use AWT: the
+	 * pixels are handed to OpenPDF as raw RGB samples, with an 8-bit soft mask when
+	 * the image has some transparency. This is the path of the native (C) build.
+	 *
+	 * @param image the image to embed.
+	 * @param x     top-left X (SVG convention).
+	 * @param y     top-left Y (SVG convention).
+	 * @throws IOException if OpenPDF cannot build the image.
+	 */
+	public void pdfImage(PortableImage image, double x, double y) throws IOException {
+		if (hidden)
+			return;
+		if (image == null)
+			return;
+		final int width = image.getWidth();
+		final int height = image.getHeight();
+		if (width <= 0 || height <= 0)
+			return;
+		openDocumentIfNeeded();
+		final byte[] rgb = new byte[width * height * 3];
+		final byte[] alpha = new byte[width * height];
+		boolean transparent = false;
+		int pos = 0;
+		for (int j = 0; j < height; j++) {
+			for (int i = 0; i < width; i++) {
+				final int argb = image.getRGB(i, j);
+				final int a = (argb >>> 24) & 0xFF;
+				rgb[pos * 3] = (byte) (argb >> 16);
+				rgb[pos * 3 + 1] = (byte) (argb >> 8);
+				rgb[pos * 3 + 2] = (byte) argb;
+				alpha[pos] = (byte) a;
+				if (a != 0xFF)
+					transparent = true;
+				pos++;
+			}
+		}
+		try {
+			final Image img = Image.getInstance(width, height, 3, 8, rgb);
+			if (transparent) {
+				final Image mask = Image.getInstance(width, height, 1, 8, alpha);
+				mask.makeMask();
+				img.setImageMask(mask);
+			}
+			img.setAbsolutePosition((float) x, ny(y + height));
+			cb.addImage(img);
+		} catch (BadElementException e) {
+			throw new IOException("Cannot embed image", e);
+		} catch (org.openpdf.text.DocumentException e) {
+			throw new IOException("Cannot embed image", e);
+		}
+		ensureVisible(x + width, y + height);
+	}
 
 	// ----------------------------------------------------------------------
 	// links

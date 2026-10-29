@@ -97,6 +97,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.teavm.TeaVM;
 // ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.c.OpenPdfResources;
 import net.sourceforge.plantuml.teavm.c.PngCanvas;
 // ::done
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
@@ -198,6 +199,17 @@ public class TextBlockExporter {
 
 		if (format == FileFormat.ATXT || format == FileFormat.UTXT)
 			return exportTxtTo(os);
+
+		// EXPERIMENT (not for master): PDF through OpenPDF, see what TeaVM says
+		if (format == FileFormat.PDF) {
+			// No class loader in the C build: OpenPDF reads the embedded files
+			OpenPdfResources.install();
+			final XDimension2D dim = calculateFinalDimension();
+			final double scaleFactor = computeScaleFactor(dim);
+			checkScaleFactor(scaleFactor);
+			final Pragma p = pragma != null ? pragma : Pragma.createEmpty();
+			return draw(createUGraphicPDF(scaleFactor, dim, p), os, dim, scaleFactor);
+		}
 
 		throw new UnsupportedOperationException("Format " + format + " is not available in the C build");
 	}

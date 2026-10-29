@@ -44,11 +44,17 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class DriverCenteredCharacterPdf implements UDriver<UCenteredCharacter, PdfGraphics> {
 
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
 			PdfGraphics svg) {
+		// Needs AWT text outlines (TextLayout, PathIterator): not available in the C
+		// build, where the circled character is simply not drawn. The marker must be
+		// in this method, so that TeaVM prunes the rest of it.
+		if (TeaVM.isC())
+			return;
 		final char c = characterCircled.getChar();
 		final HColor textColor = param.getColor();
 

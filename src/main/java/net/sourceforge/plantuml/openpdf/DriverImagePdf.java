@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Log;
 
 public class DriverImagePdf implements UDriver<UImage, PdfGraphics> {
@@ -57,7 +58,10 @@ public class DriverImagePdf implements UDriver<UImage, PdfGraphics> {
 		}
 
 		try {
-			pdf.pdfImage(image.getImage(1).getBufferedImage(), x, y);
+			if (TeaVM.isC())
+				pdf.pdfImage(image.getImage(1), x, y);
+			else
+				pdf.pdfImage(image.getImage(1).getBufferedImage(), x, y);
 		} catch (IOException e) {
 			Log.error("Error in svg for image " + e);
 		}
