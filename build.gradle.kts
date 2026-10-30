@@ -9,7 +9,7 @@ import java.util.Properties
 println("Running build.gradle.kts")
 println(project.version)
 
-val javacRelease = (project.findProperty("javacRelease") ?: "21") as String
+val javacRelease = (project.findProperty("javacRelease") ?: "11") as String
 
 // When -Pfast is set, skip expensive steps (tests, javadoc, etc.)
 val fastBuild = project.hasProperty("fast")
@@ -50,7 +50,6 @@ dependencies {
     implementation(libs.elk.alg.layered)
     implementation(libs.elk.alg.mrtree)
     implementation(libs.xtext.xbase.lib)
-	implementation(libs.openpdf)
 
 	// JDepend for package metrics
 	jdependConfig(libs.jdepend)
@@ -192,9 +191,7 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 	}
 	// The resources OpenPDF reads (AFM font metrics, glyph list, messages): there is no
 	// class loader in the C build, see OpenPdfResources
-	from({
-		configurations.runtimeClasspath.get().filter { it.name.startsWith("openpdf") }.map { zipTree(it) }
-	}) {
+	from("src/main/resources") {
 		include("org/openpdf/text/pdf/fonts/*.afm", "org/openpdf/text/pdf/fonts/glyphlist.txt",
 				"org/openpdf/text/error_messages/en.lng")
 		includeEmptyDirs = false

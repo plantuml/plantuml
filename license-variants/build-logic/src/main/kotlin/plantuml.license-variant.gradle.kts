@@ -50,7 +50,6 @@ java {
 dependencies {
 	compileOnly(lib("ant"))
 	compileOnly(lib("teavm-jso-apis"))
-	compileOnly(lib("openpdf"))
 	testImplementation(lib("junit-jupiter"))
 	testImplementation(lib("jlatexmath"))
 	testImplementation(lib("xmlunit-core"))

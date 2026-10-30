@@ -19,8 +19,6 @@ dependencies {
 	implementation(libs.elk.core)
 	implementation(libs.elk.alg.layered)
 	implementation(libs.elk.alg.mrtree)
-
-	implementation(libs.openpdf)
 }
 
 // Only the main jar: sources and javadoc jars must not contain the dependencies

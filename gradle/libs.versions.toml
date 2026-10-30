@@ -18,7 +18,6 @@ xtext-xbase         = "2.44.0"
 junit-pioneer       = "2.3.0"
 teavm               = "0.16.0"
 sonarqube           = "7.5.0.8588"
-openpdf             = "3.0.5"
 
 [libraries]
 # name                      = { module = "", version.ref = "" }
@@ -38,7 +37,6 @@ junit-pioneer               = { module = "org.junit-pioneer:junit-pioneer", vers
 teavm-classlib              = { module = "org.teavm:teavm-classlib", version.ref = "teavm" }
 teavm-jso-apis              = { module = "org.teavm:teavm-jso-apis", version.ref = "teavm" }
 
-openpdf                     = { module = "com.github.librepdf:openpdf", version.ref = "openpdf" }
 
 
 [plugins]
