@@ -555,33 +555,6 @@ public class PdfGraphics {
 	// images (PNG / JPEG)
 	// ----------------------------------------------------------------------
 
-	/**
-	 * Insert a raster image (PNG/JPEG bytes) at position (x, y).
-	 *
-	 * With Y negation, the image's bottom-left in PDF coords lands at
-	 * {@code (x, -(y + height))} - same formula as for rectangles. No local matrix
-	 * flip is needed; the image stays right-side-up.
-	 *
-	 * @param pngOrJpegBytes encoded image data.
-	 * @param x              top-left X (SVG convention).
-	 * @param y              top-left Y (SVG convention).
-	 * @param width          target render width.
-	 * @param height         target render height.
-	 */
-	public void pdfImage(byte[] pngOrJpegBytes, double x, double y, double width, double height) {
-		if (hidden)
-			return;
-		openDocumentIfNeeded();
-		try {
-			final Image img = Image.getInstance(pngOrJpegBytes);
-			img.scaleAbsolute((float) width, (float) height);
-			img.setAbsolutePosition((float) x, ny(y + height));
-			cb.addImage(img);
-		} catch (Exception e) {
-			throw new IllegalStateException("Cannot embed image", e);
-		}
-		ensureVisible(x + width, y + height);
-	}
 	
 	/**
 	 * Insert a raster {@link PortableImage} at position (x, y), rendered at its

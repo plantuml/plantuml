@@ -297,18 +297,11 @@ To embed more files, add `name=path` pairs to `RESOURCE_PAIRS` in
 
 ## PDF (experiment, branch `master-openpdf-c`)
 
-PDF output goes through OpenPDF, which uses classes TeaVM does not provide
-(`java.awt.Font`, `java.awt.font.TextLayout`, `java.text.Bidi`, ...). TeaVM
-compiles every reachable method, so these classes must exist even if they are
-never executed. `src/main/java/org/teavm/classlib/...` holds minimal stand-ins
-named after TeaVM's classlib convention (`T<Name>` in
-`org.teavm.classlib.<package>`), and `org/apache/fop/complexscripts/...` the
-stand-ins for the optional FOP dependency. They are removed from the JVM jars
-(`::remove file when JAVA8`) and are not meant to work at runtime.
-
-Missing *members* of classes TeaVM already provides (`File.toPath()`,
-`FileInputStream.getChannel()`, `System.load()`, `Color.black`, ...) cannot be
-fixed this way and need another mechanism.
+PDF output goes through the OpenPDF sources pruned and kept in
+`src/main/java/org/openpdf`, which no longer use any class TeaVM lacks
+(no `java.awt.Font`, `TextLayout`, `Bidi`, images decoders, ICC profiles, ...):
+there are no stand-in classes to maintain. Keep it that way when touching
+OpenPDF: a new JDK dependency in `org/openpdf` shows up as a `generateC` error.
 
 OpenPDF has no class loader to read its resources (AFM font metrics, glyph list,
 messages) in the C build, and TeaVM's resource support crashes its coroutine
