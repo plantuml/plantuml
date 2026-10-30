@@ -191,9 +191,7 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 	}
 	// The resources OpenPDF reads (AFM font metrics, glyph list, messages): there is no
 	// class loader in the C build, see OpenPdfResources
-	from({
-		configurations.runtimeClasspath.get().filter { it.name.startsWith("openpdf") }.map { zipTree(it) }
-	}) {
+	from("src/main/resources") {
 		include("org/openpdf/text/pdf/fonts/*.afm", "org/openpdf/text/pdf/fonts/glyphlist.txt",
 				"org/openpdf/text/error_messages/en.lng")
 		includeEmptyDirs = false
