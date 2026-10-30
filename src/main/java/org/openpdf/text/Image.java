@@ -606,7 +606,8 @@ public abstract class Image extends Rectangle {
 
             // Handle indexed color images when transparency can be represented directly.
             // More complex alpha (for example semi-transparency) must fallback to the generic RGB+SMask path below
-            if (bi.getColorModel() instanceof IndexColorModel icm && !forceBW && color == null) {
+            if (bi.getColorModel() instanceof IndexColorModel && !forceBW && color == null) {
+                IndexColorModel icm = (IndexColorModel) bi.getColorModel();
                 int transparentIndex = getIndexedTransparentPaletteIndex(icm);
                 if (transparentIndex != INDEXED_UNSUPPORTED_TRANSPARENCY) {
                     int mapSize = icm.getMapSize();

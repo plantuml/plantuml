@@ -328,7 +328,8 @@ public class Document implements DocListener {
         for (DocListener listener : listeners) {
             success |= listener.add(element);
         }
-        if (element instanceof LargeElement e) {
+        if (element instanceof LargeElement) {
+            LargeElement e = (LargeElement) element;
             if (!e.isComplete()) {
                 e.flushContent();
             }

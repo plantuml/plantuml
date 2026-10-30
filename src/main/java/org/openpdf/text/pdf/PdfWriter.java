@@ -2338,9 +2338,10 @@ public class PdfWriter extends DocWriter implements
              */
             @Override
             public boolean equals(Object obj) {
-                if (!(obj instanceof PdfCrossReference other)) {
+                if (!(obj instanceof PdfCrossReference)) {
                     return false;
                 }
+                PdfCrossReference other = (PdfCrossReference) obj;
 
                 return refnum == other.refnum;
             }
