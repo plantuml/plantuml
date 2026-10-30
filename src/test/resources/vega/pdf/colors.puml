@@ -1,0 +1,15 @@
+---
+output: pdf
+---
+@startuml
+skinparam backgroundColor transparent
+skinparam sequence {
+	ArrowColor #C00000
+	ParticipantBackgroundColor #FFE0A0
+}
+participant Alice #FFD700
+participant Bob #LightBlue
+Alice -> Bob : Hello <color:red>red</color>, <color:green>green</color>, <b>bold</b>, <i>italic</i>
+note over Alice, Bob #80FF8080 : Semi-transparent note
+Bob --> Alice : <u>underlined</u> and <s>striked</s>
+@enduml

@@ -1,0 +1,18 @@
+---
+output: pdf
+---
+@startuml
+sprite $dot [8x8/16] {
+00FFFF00
+0FFFFFF0
+FFF00FFF
+FF0000FF
+FF0000FF
+FFF00FFF
+0FFFFFF0
+00FFFF00
+}
+participant "Alice <$dot>" as A
+participant "Bob <:1f600:>" as B
+A -> B : Emoji <:1f680:> <:2764:> and sprite <$dot>
+@enduml

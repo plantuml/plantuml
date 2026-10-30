@@ -1,0 +1,12 @@
+---
+output: pdf
+---
+@startuml
+class Animal {
+  +name : String
+  +eat()
+}
+class Dog
+Animal <|-- Dog
+Dog --> Bone : chews
+@enduml
