@@ -9,7 +9,7 @@ import java.util.Properties
 println("Running build.gradle.kts")
 println(project.version)
 
-val javacRelease = (project.findProperty("javacRelease") ?: "21") as String
+val javacRelease = (project.findProperty("javacRelease") ?: "11") as String
 
 // When -Pfast is set, skip expensive steps (tests, javadoc, etc.)
 val fastBuild = project.hasProperty("fast")
