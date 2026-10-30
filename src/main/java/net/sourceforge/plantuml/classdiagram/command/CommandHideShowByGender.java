@@ -111,8 +111,10 @@ public class CommandHideShowByGender extends SingleLineCommand2<TitledDiagram> {
 		// Hides or shows a portion of the elements, optionally filtered by a
 		// kind keyword, a stereotype or a single element name. In class and
 		// description diagrams the filter applies as written (restricted to
-		// the current package, if any); in sequence diagrams only the portion
-		// is used; other diagram types silently ignore the command.
+		// the current package, if any). In sequence diagrams a stereotype
+		// filter or a participant name applies to the stereotype portion;
+		// other portions still apply to every participant. Other diagram
+		// types silently ignore the command.
 		final boolean show = arg.get("COMMAND", 0).equalsIgnoreCase("show");
 		sb.append(show ? "Showing the " : "Hiding the ");
 
@@ -165,7 +167,14 @@ public class CommandHideShowByGender extends SingleLineCommand2<TitledDiagram> {
 
 	private CommandExecutionResult executeSequenceDiagram(SequenceDiagram diagram, RegexResult arg) {
 		final EntityPortion portion = getEntityPortion(arg.get("PORTION", 0));
-		diagram.hideOrShow(portion.asSet(), arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		final boolean show = arg.get("COMMAND", 0).equalsIgnoreCase("show");
+		// A stereotype portion can name one stereotype or one participant.
+		// Ignoring that filter used to hide or show every stereotype.
+		if (portion == EntityPortion.STEREOTYPE) {
+			diagram.hideOrShowStereotype(arg.get("GENDER", 0), show);
+			return CommandExecutionResult.ok();
+		}
+		diagram.hideOrShow(portion.asSet(), show);
 		return CommandExecutionResult.ok();
 	}
 

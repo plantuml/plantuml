@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -73,6 +74,7 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	private Stereotype stereotype;
 	private boolean stereotypePositionTop;
 	private final Set<EntityPortion> hiddenPortions;
+	private final StereotypeVisibility stereotypeVisibility;
 	private final int order;
 	private final StyleBuilder styleBuilder;
 	private final LineLocation location;
@@ -96,10 +98,12 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	}
 
 	public Participant(LineLocation location, ParticipantType type, String code, Display display,
-			Set<EntityPortion> hiddenPortions, int order, StyleBuilder styleBuilder, String uid) {
+			Set<EntityPortion> hiddenPortions, StereotypeVisibility stereotypeVisibility, int order,
+			StyleBuilder styleBuilder, String uid) {
 		this.location = location;
 		this.uid = uid;
 		this.hiddenPortions = hiddenPortions;
+		this.stereotypeVisibility = stereotypeVisibility;
 		this.styleBuilder = styleBuilder;
 		this.order = order;
 		this.code = Objects.requireNonNull(code);
@@ -124,14 +128,41 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 
 	public Display getDisplay(boolean underlined) {
 		Display result = underlined ? display.underlined() : display;
-		if (stereotype != null && hiddenPortions.contains(EntityPortion.STEREOTYPE) == false) {
+		final CharSequence visibleStereotype = visibleStereotypeText();
+		if (visibleStereotype != null) {
 			if (stereotypePositionTop)
-				result = result.addFirst(stereotype);
+				result = result.addFirst(visibleStereotype);
 			else
-				result = result.add(stereotype);
+				result = result.add(visibleStereotype);
 
 		}
 		return result;
+	}
+
+	private CharSequence visibleStereotypeText() {
+		if (stereotype == null)
+			return null;
+
+		final String participantName = display.size() == 0 ? null : display.get(0).toString();
+		final List<String> labels = stereotype.getLabels(Guillemet.DOUBLE_COMPARATOR);
+		if (labels.isEmpty())
+			return stereotypeVisibility.isLabelShown(stereotype.toString(), code, participantName) ? stereotype : null;
+
+		boolean everyLabelShown = true;
+		final StringBuilder kept = new StringBuilder();
+		for (String label : labels) {
+			if (stereotypeVisibility.isLabelShown(label, code, participantName)) {
+				if (kept.length() > 0)
+					kept.append(' ');
+				kept.append(label);
+			} else
+				everyLabelShown = false;
+		}
+		// Leave an untouched stereotype as the original object so diagrams that
+		// do not filter stereotypes keep their previous text.
+		if (everyLabelShown)
+			return stereotype;
+		return kept.length() == 0 ? null : kept.toString();
 	}
 
 	public ParticipantType getType() {
