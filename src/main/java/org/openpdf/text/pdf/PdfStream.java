@@ -259,7 +259,8 @@ public class PdfStream extends PdfDictionary {
      * @since 2.1.3
      */
     public void flateCompress(int compressionLevel) {
-        if (!Document.compress) {
+        // NO_COMPRESSION: the stream stays readable (used for deterministic, diffable output)
+        if (!Document.compress || compressionLevel == NO_COMPRESSION) {
             return;
         }
         // check if the flateCompress-method has already been

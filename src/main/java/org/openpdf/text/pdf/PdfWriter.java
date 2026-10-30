@@ -530,7 +530,7 @@ public class PdfWriter extends DocWriter implements
     /**
      * This is the list with all the images in the document.
      */
-    private final HashMap<Long, PdfName> images = new HashMap<>();
+    private final HashMap<Long, PdfName> images = new LinkedHashMap<>();
     /**
      * the pdfdocument object.
      */
@@ -599,6 +599,22 @@ public class PdfWriter extends DocWriter implements
      * @since 2.1.3
      */
     protected int compressionLevel = PdfStream.DEFAULT_COMPRESSION;
+
+    /**
+     * When not null, the file identifier ({@code /ID}) of the trailer: the same bytes every time, instead of a
+     * random one. Used to produce reproducible files.
+     */
+    private byte[] fixedFileId = null;
+
+    /**
+     * Makes the file identifier ({@code /ID}) of the trailer the given bytes (16 are used), instead of a random value,
+     * so that the same document gives the same file.
+     *
+     * @param fileId the identifier, or null for a random one (the default)
+     */
+    public void setFixedFileId(byte[] fileId) {
+        this.fixedFileId = fileId;
+    }
     /**
      * The fonts of this document
      */
@@ -618,7 +634,7 @@ public class PdfWriter extends DocWriter implements
     /**
      * The colors of this document
      */
-    protected HashMap<PdfSpotColor, ColorDetails> documentColors = new HashMap<>();
+    protected HashMap<PdfSpotColor, ColorDetails> documentColors = new LinkedHashMap<>();
     /**
      * The color number counter for the colors in the document.
      */
@@ -628,17 +644,17 @@ public class PdfWriter extends DocWriter implements
     /**
      * The patterns of this document
      */
-    protected HashMap<PdfPatternPainter, PdfName> documentPatterns = new HashMap<>();
+    protected HashMap<PdfPatternPainter, PdfName> documentPatterns = new LinkedHashMap<>();
 
 //  [C5] named objects: named destinations, javascript, embedded files
     /**
      * The pattern number counter for the colors in the document.
      */
     protected int patternNumber = 1;
-    protected HashMap<PdfShadingPattern, Object> documentShadingPatterns = new HashMap<>();
-    protected HashMap<PdfShading, Object> documentShadings = new HashMap<>();
+    protected HashMap<PdfShadingPattern, Object> documentShadingPatterns = new LinkedHashMap<>();
+    protected HashMap<PdfShading, Object> documentShadings = new LinkedHashMap<>();
     protected HashMap<PdfDictionary, PdfObject[]> documentExtGState = new LinkedHashMap<>();
-    protected HashMap<Object, PdfObject[]> documentProperties = new HashMap<>();
+    protected HashMap<Object, PdfObject[]> documentProperties = new LinkedHashMap<>();
     protected boolean tagged = false;
     /**
      * A group attributes dictionary specifying the attributes of the page's page group for use in the transparent
@@ -648,7 +664,7 @@ public class PdfWriter extends DocWriter implements
     protected int runDirection = RUN_DIRECTION_NO_BIDI;
     protected float userunit = 0f;
     protected PdfDictionary defaultColorspace = new PdfDictionary();
-    protected HashMap<ColorDetails, ColorDetails> documentSpotPatterns = new HashMap<>();
+    protected HashMap<ColorDetails, ColorDetails> documentSpotPatterns = new LinkedHashMap<>();
     protected ColorDetails patternColorspaceRGB;
     protected ColorDetails patternColorspaceGRAY;
 
@@ -665,7 +681,7 @@ public class PdfWriter extends DocWriter implements
      *
      * @since 2.1.5
      */
-    protected HashMap<PdfStream, PdfIndirectReference> JBIG2Globals = new HashMap<>();
+    protected HashMap<PdfStream, PdfIndirectReference> JBIG2Globals = new LinkedHashMap<>();
     /**
      * The <CODE>PdfPageEvent</CODE> for this document.
      */
@@ -1171,7 +1187,7 @@ public class PdfWriter extends DocWriter implements
                     fileID = getInfo().get(PdfName.FILEID);
                 } else {
                     // the same documentId shall be provided to the first version
-                    byte[] documentId = PdfEncryption.createDocumentId();
+                    byte[] documentId = fixedFileId != null ? fixedFileId : PdfEncryption.createDocumentId();
                     fileID = PdfEncryption.createInfoId(documentId, documentId);
                 }
 

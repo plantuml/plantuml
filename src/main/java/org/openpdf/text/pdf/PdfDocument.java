@@ -52,6 +52,7 @@ package org.openpdf.text.pdf;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.openpdf.text.DocumentException;
@@ -104,8 +105,8 @@ public class PdfDocument extends Document {
     /**
      * The boxes of the pages (crop box...).
      */
-    protected HashMap<String, PdfRectangle> thisBoxSize = new HashMap<>();
-    protected HashMap<String, PdfRectangle> boxSize = new HashMap<>();
+    protected HashMap<String, PdfRectangle> thisBoxSize = new LinkedHashMap<>();
+    protected HashMap<String, PdfRectangle> boxSize = new LinkedHashMap<>();
 
     /**
      * The resources of the current page.
@@ -219,8 +220,12 @@ public class PdfDocument extends Document {
                 info.addProducer(((Meta) element).getContent());
                 break;
             case Element.CREATIONDATE:
-                // you can not set the creation date, only reset it
-                info.addCreationDate();
+                // A PDF date (Document.addCreationDate(PdfDate)) is used as is, anything else
+                // only resets the creation date to now
+                if (((Meta) element).getContent().startsWith("D:"))
+                    info.put(PdfName.CREATIONDATE, new PdfDate(((Meta) element).getContent()));
+                else
+                    info.addCreationDate();
                 break;
             case Element.MODIFICATIONDATE:
                 info.addModificationDate(new PdfDate(((Meta) element).getContent()));
@@ -393,7 +398,7 @@ public class PdfDocument extends Document {
 
         setNewPageSizeAndMargins();
 
-        thisBoxSize = new HashMap<>(boxSize);
+        thisBoxSize = new LinkedHashMap<>(boxSize);
         pageEmpty = true;
     }
 
