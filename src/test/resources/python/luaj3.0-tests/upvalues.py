@@ -1,11 +1,26 @@
+#
+# Closures: shared cells, nonlocal, nested functions.
+# (The Lua original used pcall; here pcall(fn) is a helper returning True when fn
+# completes and False when it raises an exception.)
+
+def pcall(fn):
+    try:
+        fn()
+        return True
+    except Exception:
+        return False
+
+
 print("-------- simple upvalues tests --------")
 def simpleupvalues():
     def test():
         x = 5
         def f():
+            nonlocal x
             x += 1
             return x
         def g():
+            nonlocal x
             x -= 1
             return x
         print(f())
@@ -26,10 +41,8 @@ def simpleupvalues():
 print("simplevalues result:", pcall(simpleupvalues))
 
 
-# The point of this test is that when an upvalue is created, it may
-# need to be inserted in the middle of the list, rather than always
-# appended at the end. Otherwise, it may not be found when it is
-# needed by another closure.
+# The point of this test is that when a closure captures a variable, it must see
+# the same cell as the enclosing scope, even when the variable is assigned later.
 print("----------- upvalued in middle ------------")
 def middleupvaluestest():
     def test():
@@ -47,6 +60,7 @@ def middleupvaluestest():
             print("x=", x)
 
         def setter(x1, y1, z1):
+            nonlocal x, y, z
             x = x1
             y = y1
             z = z1

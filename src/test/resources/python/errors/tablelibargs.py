@@ -1,70 +1,114 @@
-package.path = "?.py;test/python/errors/?.py"
-require("args")
+# Argument-type tests for the list and dict operations. Lua's table library maps
+# onto Python's list and dict methods: concat -> str.join, insert -> list.insert,
+# remove -> list.pop, sort -> list.sort, unpack -> slicing, and t[k] / t[k]=v.
+# Lua's table.maxn has no counterpart and is not tested.
 
-# arg type tests for table library functions
+def product(lists):
+    result = [[]]
+    for choices in lists:
+        new = []
+        for prefix in result:
+            for v in choices:
+                new.append(prefix + [v])
+        result = new
+    return result
 
-# table.concat
-somestringstable = [[8, 7, 6, 5, 4, 3, 2, 1]]
-somenonstringtable = [[True, True, True, True, True, True, True, True]]
-somesep = [',', 1.23]
-notasep = [aboolean, atable, afunction]
-somei = [2, '2', '2.2']
-somej = [4, '4', '4.4']
-notij = [astring, aboolean, atable, afunction]
-banner('table.concat')
-checkallpass('table.concat',[somestringstable])
-checkallpass('table.concat',[somestringstable, somesep])
-checkallpass('table.concat',[somestringstable, ['-'], somei])
-checkallpass('table.concat',[somestringstable, ['-'], [2], somej])
-checkallerrors('table.concat',[notatable],'bad argument')
-checkallerrors('table.concat',[somenonstringtable],'boolean')
-checkallerrors('table.concat',[somestringstable, notasep],'bad argument')
-checkallerrors('table.concat',[somestringstable, ['-'], notij],'bad argument')
-checkallerrors('table.concat',[somestringstable, ['-'], [2], notij],'bad argument')
+def outcome(f, args):
+    try:
+        f(*args)
+        return "ok"
+    except Exception as e:
+        return type(e).__name__
 
-# table.insert
-banner('table.insert')
-checkallpass('table.insert',[sometable, notanil])
-checkallpass('table.insert',[sometable, somei, notanil])
-checkallerrors('table.insert',[notatable, somestring],'bad argument')
-checkallerrors('table.insert',[sometable, notij, notanil],'bad argument')
+def banner(name):
+    print("-------- " + name)
 
-# table.remove
-banner('table.remove')
-checkallpass('table.remove',[sometable])
-checkallpass('table.remove',[sometable, somei])
-checkallerrors('table.remove',[notatable],'bad argument')
-checkallerrors('table.remove',[notatable, somei],'bad argument')
-checkallerrors('table.remove',[sometable, notij],'bad argument')
+def checkallpass(name, f, lists):
+    combos = product(lists)
+    assert len(combos) > 0, name
+    for args in combos:
+        r = outcome(f, args)
+        assert r == "ok", name + " raised " + r
+    print(name + ": " + str(len(combos)) + " calls ok")
 
-# table.sort
-somecomp = {None, afunction, "n": 2}
-notacomp = [astring, anumber, aboolean, atable]
-banner('table.sort')
-checkallpass('table.sort',[somestringstable, somecomp])
-checkallerrors('table.sort',[sometable],'attempt to')
-checkallerrors('table.sort',[notatable, somecomp],'bad argument')
-checkallerrors('table.sort',[sometable, notacomp],'bad argument')
+def checkallerrors(name, f, lists, expected):
+    combos = product(lists)
+    assert len(combos) > 0, name
+    for args in combos:
+        r = outcome(f, args)
+        assert r == expected, name + " raised " + r + ", expected " + expected
+    print(name + ": " + str(len(combos)) + " calls raised " + expected)
 
-# table get
-banner('table_get - tbl[key]')
-def table_get(tbl, key): return tbl[key]
-checkallpass('table_get',[sometable, anylua])
+anylua = [None, False, True, 0, 1.5, "abc", [1, 2], {"k": 1}]
+somestringstable = [["a", "b", "c"]]
+somenonstringtable = [[True, False]]
+notatable = [None, 1, 1.5]
 
-# table set
-banner('table_set - tbl[key]=val')
-def table_set(tbl, key, val): tbl[key] = val
-def table_set_nil_key(tbl, val): tbl[None] = val
-checkallpass('table_set',[sometable, notanil, anylua])
-checkallerrors('table_set_nil_key',[sometable, anylua],'table index')
+def tconcat(t, sep):
+    return sep.join(t)
 
-# table.unpack
-banner('table.unpack')
-checkallpass('table.unpack',[sometable])
-checkallpass('table.unpack',[sometable, [3, '5']])
-checkallpass('table.unpack',[sometable, [3, '5'], [1.25, '7']])
-checkallerrors('table.unpack',[notatable, somenumber, somenumber],'bad argument')
-checkallerrors('table.unpack',[sometable, nonnumber, somenumber],'bad argument')
-checkallerrors('table.unpack',[sometable, somenumber, nonnumber],'bad argument')
+def lappend(t, v):
+    t.append(v)
 
+def linsert(t, i, v):
+    t.insert(i, v)
 
+def lpop_at(i):
+    t = [1, 2, 3]
+    return t.pop(i)
+
+def lpop_t(t, i):
+    return t.pop(i)
+
+def lsort(t):
+    t.sort()
+
+def tget(t, k):
+    return t[k]
+
+def tset(t, k, v):
+    t[k] = v
+
+def tunpack(t, i, j):
+    return t[i:j]
+
+banner("table.concat (join)")
+checkallpass("join", tconcat, [somestringstable, [",", "-", ""]])
+checkallerrors("join-notsep", tconcat, [somestringstable, [1.23, None, True]], "AttributeError")
+checkallerrors("join-notitems", tconcat, [notatable, [","]], "TypeError")
+checkallerrors("join-nonstring-items", tconcat, [somenonstringtable, [","]], "TypeError")
+
+banner("table.insert (append)")
+checkallpass("append", lappend, [[[1, 2]], anylua])
+checkallerrors("append-notlist", lappend, [[None, "abc", {"k": 1}], anylua], "AttributeError")
+
+banner("table.insert (insert)")
+checkallpass("insert", linsert, [[[1, 2]], [0, 1, -1, 10], anylua])
+checkallerrors("insert-notindex", linsert, [[[1, 2]], ["x", None, 1.5], anylua], "TypeError")
+
+banner("table.remove (pop)")
+checkallpass("pop-at", lpop_at, [[0, 1, -1]])
+checkallerrors("pop-notindex", lpop_at, [[None, "x"]], "TypeError")
+checkallerrors("pop-out-of-range", lpop_at, [[5]], "IndexError")
+checkallerrors("pop-notlist", lpop_t, [[None, "abc", 1], [0]], "AttributeError")
+
+banner("table.sort")
+checkallpass("sort", lsort, [[[3, 1, 2], ["b", "a"]]])
+checkallerrors("sort-mixed", lsort, [[[1, "a"]]], "TypeError")
+checkallerrors("sort-notlist", lsort, [[None, "abc", 1]], "AttributeError")
+
+banner("table get - t[k]")
+checkallpass("table get", tget, [[{"k": 1}], ["k"]])
+checkallerrors("table get-missing", tget, [[{"k": 1}], ["zz"]], "KeyError")
+checkallerrors("table get-unhashable", tget, [[{"k": 1}], [[1, 2]]], "TypeError")
+
+banner("table set - t[k]=v")
+checkallpass("table set", tset, [[{}], ["k", 2], anylua])
+checkallerrors("table set-unhashable", tset, [[{}], [[1]], anylua], "TypeError")
+
+banner("table.unpack (slice)")
+checkallpass("unpack", tunpack, [[[1, 2, 3]], [0, 1], [1, None]])
+checkallerrors("unpack-notsequence", tunpack, [[None, 1], [0], [1]], "TypeError")
+checkallerrors("unpack-notindex", tunpack, [[[1, 2, 3]], ["x", 1.5], [1]], "TypeError")
+
+print("OK")

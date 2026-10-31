@@ -1,184 +1,198 @@
-package.path = "?.py;test/python/errors/?.py"
-require("args")
+# Argument-type tests for the operators: unary minus, len, not, call, binary
+# arithmetic, comparisons, indexing, attribute access, and/or, for-range, and
+# concatenation. Lua's "a..b" is Python's + on strings. Python never raises on
+# == and !=, so those are only checked for passing. Unlike Lua, Python raises
+# on "abc" + 1 and on 1 + None, and repeats "abc" * 2 without error.
 
-# arg types for language operator
-notstringortable = {None, anumber, aboolean, afunction, "n": 4}
-# ========= unary operators: - # not
+def product(lists):
+    result = [[]]
+    for choices in lists:
+        new = []
+        for prefix in result:
+            for v in choices:
+                new.append(prefix + [v])
+        result = new
+    return result
 
-# unary minus -
-banner('unary -')
-def negative(a):
-    return - a
-checkallpass('negative',[somenumber])
-checkallerrors('negative',[notanumber],'attempt to perform arithmetic')
+def outcome(f, args):
+    try:
+        f(*args)
+        return "ok"
+    except Exception as e:
+        return type(e).__name__
 
-# length
-banner('#')
-def lengthop(a):
-    return len(a)
-checkallpass('lengthop',[sometable])
-checkallerrors('lengthop',[notstringortable],'attempt to get length of')
+def banner(name):
+    print("-------- " + name)
 
-# length
-banner('not')
-def notop(a):
+def checkallpass(name, f, lists):
+    combos = product(lists)
+    assert len(combos) > 0, name
+    for args in combos:
+        r = outcome(f, args)
+        assert r == "ok", name + " raised " + r
+    print(name + ": " + str(len(combos)) + " calls ok")
+
+def checkallerrors(name, f, lists, expected):
+    combos = product(lists)
+    assert len(combos) > 0, name
+    for args in combos:
+        r = outcome(f, args)
+        assert r == expected, name + " raised " + r + ", expected " + expected
+    print(name + ": " + str(len(combos)) + " calls raised " + expected)
+
+anylua = [None, False, True, 0, 1.5, "abc", [1, 2], {"k": 1}]
+somenumber = [1, 0.75, -1, -0.25]
+notanumber = [None, "abc", [1, 2], {"k": 1}]
+notmulnumber = [None, {"k": 1}]
+somestring = ["abc", "def"]
+nonstring = [None, 1, [1]]
+
+def neg(a):
+    return -a
+
+def lnot(a):
     return not a
-checkallpass('notop',[somenumber])
-checkallpass('notop',[notanumber])
 
-# function call
-banner('()')
-def funcop(a):
-    return a()
-checkallpass('funcop',[somefunction])
-checkallerrors('funcop',[notafunction],'attempt to call')
+def lcall(f, *args):
+    return f(*args)
 
-# ========= binary ops: .. + - * / % ^ == ~= <= >= < > [] . and or
-banner('..')
-def concatop(a,b):
-    return a..b
-checkallpass('concatop',[somestring, somestring])
-checkallerrors('concatop',[notastring, somestring],'attempt to concatenate')
-checkallerrors('concatop',[somestring, notastring],'attempt to concatenate')
+def add(a, b):
+    return a + b
 
-banner('+')
-def plusop(a,b):
-    return a+b
-checkallpass('plusop',[somenumber, somenumber])
-checkallerrors('plusop',[notanumber, somenumber],'attempt to perform arithmetic')
-checkallerrors('plusop',[somenumber, notanumber],'attempt to perform arithmetic')
+def sub(a, b):
+    return a - b
 
-banner('-')
-def minusop(a,b):
-    return a-b
-checkallpass('minusop',[somenumber, somenumber])
-checkallerrors('minusop',[notanumber, somenumber],'attempt to perform arithmetic')
-checkallerrors('minusop',[somenumber, notanumber],'attempt to perform arithmetic')
+def mul(a, b):
+    return a * b
 
-banner('*')
-def timesop(a,b):
-    return a*b
-checkallpass('timesop',[somenumber, somenumber])
-checkallerrors('timesop',[notanumber, somenumber],'attempt to perform arithmetic')
-checkallerrors('timesop',[somenumber, notanumber],'attempt to perform arithmetic')
+def div(a, b):
+    return a / b
 
-banner('/')
-def divideop(a,b):
-    return a/b
-checkallpass('divideop',[somenumber, somenumber])
-checkallerrors('divideop',[notanumber, somenumber],'attempt to perform arithmetic')
-checkallerrors('divideop',[somenumber, notanumber],'attempt to perform arithmetic')
+def mod(a, b):
+    return a % b
 
-banner('%')
-def modop(a,b):
-    return a%b
-checkallpass('modop',[somenumber, somenumber])
-checkallerrors('modop',[notanumber, somenumber],'attempt to perform arithmetic')
-checkallerrors('modop',[somenumber, notanumber],'attempt to perform arithmetic')
-
-banner('^')
-def powerop(a,b):
+def power(a, b):
     return a ** b
-checkallpass('powerop',[[2, '2.5'], [3, '3.5']])
-checkallerrors('powerop',[notanumber, [3, '3.1']],'attempt to perform arithmetic')
-checkallerrors('powerop',[[2, '2.1'], notanumber],'attempt to perform arithmetic')
 
-banner('==')
-def equalsop(a,b):
-    return a==b
-checkallpass('equalsop',[anylua, anylua])
+def eq(a, b):
+    return a == b
 
-banner('~=')
-def noteqop(a,b):
+def neq(a, b):
     return a != b
-checkallpass('noteqop',[anylua, anylua])
 
-banner('<=')
-def leop(a,b):
-    return a<=b
-checkallpass('leop',[[anumber], [anumber]])
-checkallpass('leop',[[astring, astrnum], [astring, astrnum]])
-checkallerrors('leop',[notanumber, [anumber]],'attempt to compare')
-checkallerrors('leop',[[astrnum], [anumber]],'attempt to compare')
-checkallerrors('leop',[notastring, [astring, astrnum]],'attempt to compare')
-checkallerrors('leop',[[anumber], notanumber],'attempt to compare')
-checkallerrors('leop',[[anumber], [astrnum]],'attempt to compare')
-checkallerrors('leop',[[astring, astrnum], notastring],'attempt to compare')
+def le(a, b):
+    return a <= b
 
-banner('>=')
-def geop(a,b):
-    return a>=b
-checkallpass('geop',[[anumber], [anumber]])
-checkallpass('geop',[[astring, astrnum], [astring, astrnum]])
-checkallerrors('geop',[notanumber, [anumber]],'attempt to compare')
-checkallerrors('geop',[[astrnum], [anumber]],'attempt to compare')
-checkallerrors('geop',[notastring, [astring, astrnum]],'attempt to compare')
-checkallerrors('geop',[[anumber], notanumber],'attempt to compare')
-checkallerrors('geop',[[anumber], [astrnum]],'attempt to compare')
-checkallerrors('geop',[[astring, astrnum], notastring],'attempt to compare')
+def ge(a, b):
+    return a >= b
 
-banner('<')
-def ltop(a,b):
-    return a<b
-checkallpass('ltop',[[anumber], [anumber]])
-checkallpass('ltop',[[astring, astrnum], [astring, astrnum]])
-checkallerrors('ltop',[notanumber, [anumber]],'attempt to compare')
-checkallerrors('ltop',[[astrnum], [anumber]],'attempt to compare')
-checkallerrors('ltop',[notastring, [astring, astrnum]],'attempt to compare')
-checkallerrors('ltop',[[anumber], notanumber],'attempt to compare')
-checkallerrors('ltop',[[anumber], [astrnum]],'attempt to compare')
-checkallerrors('ltop',[[astring, astrnum], notastring],'attempt to compare')
+def lt(a, b):
+    return a < b
 
-banner('>')
-def gtop(a,b):
-    return a>b
-checkallpass('gtop',[[anumber], [anumber]])
-checkallpass('gtop',[[astring, astrnum], [astring, astrnum]])
-checkallerrors('gtop',[notanumber, [anumber]],'attempt to compare')
-checkallerrors('gtop',[[astrnum], [anumber]],'attempt to compare')
-checkallerrors('gtop',[notastring, [astring, astrnum]],'attempt to compare')
-checkallerrors('gtop',[[anumber], notanumber],'attempt to compare')
-checkallerrors('gtop',[[anumber], [astrnum]],'attempt to compare')
-checkallerrors('gtop',[[astring, astrnum], notastring],'attempt to compare')
+def gt(a, b):
+    return a > b
 
-banner('[]')
-def bracketop(a,b):
-    return a[b]
-checkallpass('bracketop',[sometable, notanil])
-checkallerrors('bracketop',[notstringortable, notanil],'attempt to index')
-#checkallerrors('bracketop',[sometable],'attempt to index')
+def idx(t, k):
+    return t[k]
 
-banner('.')
-def dotop(a,b):
-    return a.b
-checkallpass('dotop',[sometable, notanil])
-checkallerrors('dotop',[notstringortable, notanil],'attempt to index')
-#checkallerrors('dotop',[sometable],'attempt to index')
+def fattr(o):
+    return o.upper
 
-banner('and')
-types = {"table": "table", "function": "function", "thread": "thread"}
-def clean(x):
-    return types[type(x)] or x
-def andop(a,b):
-    return clean(a and b)
-checkallpass('andop',[anylua, anylua])
+def land(a, b):
+    return a and b
 
-banner('or')
-def orop(a,b):
-    return clean(a or b)
-checkallpass('orop',[anylua, anylua])
+def lor(a, b):
+    return a or b
 
-# ========= for x in y
-banner('for x=a,b,c')
-# A numeric `for` with arbitrary (possibly non-numeric) bounds. The original checks
-# the error messages "'for' initial value must be a number" and so on; with
-# range()'s exclusive limit the compiler would have to keep those checks.
 def forop(a, b, c):
-    for x in range(a, b, c):
+    for i in range(a, b, c):
         pass
-checkallpass('forop',[[1, '1.1'], [10, '10.1'], [2, '2.1']])
-checkallerrors('forop',[notanumber, [10, '10.1'], [2, '2.1']],"'for' initial value must be a number")
-checkallerrors('forop',[[1, '1.1'], notanumber, [2, '2.1']],"'for' limit must be a number")
-checkallerrors('forop',[[1, '1.1'], [10, '10.1'], notanumber],"'for' step must be a number")
 
+def concat(a, b):
+    return a + b
 
+banner("unary minus")
+checkallpass("neg", neg, [somenumber])
+checkallerrors("neg", neg, [notanumber], "TypeError")
+
+banner("len")
+checkallpass("len", len, [["abc", [1, 2], {"k": 1}]])
+checkallerrors("len", len, [[None, 1, 1.5]], "TypeError")
+
+banner("not")
+checkallpass("not", lnot, [anylua])
+
+banner("call")
+checkallpass("call", lcall, [[repr, str], [1, None]])
+checkallerrors("call-notfunction", lcall, [[None, 1, "abc", [1]]], "TypeError")
+
+banner("+")
+checkallpass("add", add, [somenumber, somenumber])
+checkallerrors("add-left", add, [notanumber, somenumber], "TypeError")
+checkallerrors("add-right", add, [somenumber, notanumber], "TypeError")
+
+banner("-")
+checkallpass("sub", sub, [somenumber, somenumber])
+checkallerrors("sub-left", sub, [notanumber, somenumber], "TypeError")
+checkallerrors("sub-right", sub, [somenumber, notanumber], "TypeError")
+
+banner("*")
+checkallpass("mul", mul, [somenumber, somenumber])
+checkallerrors("mul-left", mul, [notmulnumber, somenumber], "TypeError")
+checkallerrors("mul-right", mul, [somenumber, notmulnumber], "TypeError")
+
+banner("/")
+checkallpass("div", div, [somenumber, somenumber])
+checkallerrors("div-left", div, [notanumber, somenumber], "TypeError")
+checkallerrors("div-right", div, [somenumber, notanumber], "TypeError")
+
+banner("%")
+checkallpass("mod", mod, [somenumber, somenumber])
+checkallerrors("mod-left", mod, [[None, [1, 2]], somenumber], "TypeError")
+checkallerrors("mod-right", mod, [somenumber, [None, [1, 2]]], "TypeError")
+
+banner("**")
+checkallpass("power", power, [somenumber, somenumber])
+checkallerrors("power-left", power, [notanumber, somenumber], "TypeError")
+checkallerrors("power-right", power, [somenumber, notanumber], "TypeError")
+
+banner("==, !=")
+checkallpass("eq", eq, [anylua, anylua])
+checkallpass("neq", neq, [anylua, anylua])
+
+banner("<=, >=, <, >")
+checkallpass("le", le, [somenumber, somenumber])
+checkallpass("ge", ge, [somenumber, somenumber])
+checkallpass("lt", lt, [somenumber, somenumber])
+checkallpass("gt", gt, [somenumber, somenumber])
+checkallerrors("le-left", le, [notanumber, somenumber], "TypeError")
+checkallerrors("ge-right", ge, [somenumber, notanumber], "TypeError")
+checkallerrors("lt-left", lt, [notanumber, somenumber], "TypeError")
+checkallerrors("gt-right", gt, [somenumber, notanumber], "TypeError")
+
+banner("[]")
+checkallpass("index-dict", idx, [[{"k": 1}], ["k"]])
+checkallpass("index-list", idx, [[[1, 2]], [0, 1]])
+checkallerrors("index-none", idx, [[None, 1], [0]], "TypeError")
+checkallerrors("index-list-key", idx, [[[1, 2]], ["k"]], "TypeError")
+checkallerrors("index-missing", idx, [[{"k": 1}], ["zz"]], "KeyError")
+
+banner(".")
+checkallpass("attr", fattr, [["abc"]])
+checkallerrors("attr", fattr, [[None]], "AttributeError")
+
+banner("and, or")
+checkallpass("and", land, [anylua, anylua])
+checkallpass("or", lor, [anylua, anylua])
+
+banner("for x = a, b, c (range)")
+checkallpass("for", forop, [[1, 3, -2], [4, 0, 2], [1, -2, -1]])
+checkallerrors("for-type", forop, [[1.5, None, "abc"], [3], [1]], "TypeError")
+checkallerrors("for-zero-step", forop, [[1], [3], [0]], "ValueError")
+
+banner("..")
+checkallpass("concat", concat, [somestring, somestring])
+checkallerrors("concat-right", concat, [somestring, nonstring], "TypeError")
+checkallerrors("concat-left", concat, [nonstring, somestring], "TypeError")
+
+print("OK")

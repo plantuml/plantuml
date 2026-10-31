@@ -1,108 +1,113 @@
-package.path = "?.py;test/python/errors/?.py"
-require("args")
+# Argument-type tests for the math module. Lua's math.random, math.randomseed,
+# math.frexp and math.ldexp have no counterpart in this subset (no random module,
+# and frexp/ldexp are not in the math module offered here) and are not tested.
+# Lua's math.abs/deg/rad are abs (builtin), math.degrees and math.radians.
+import math
 
-ts = tostring
-def shorttostring(x):
-    s = ts(x)
-    return type(x) == "number" and len(s) > 4 and (s:sub(1, 5) .. "...") or s
-_G.tostring = shorttostring
+def product(lists):
+    result = [[]]
+    for choices in lists:
+        new = []
+        for prefix in result:
+            for v in choices:
+                new.append(prefix + [v])
+        result = new
+    return result
 
-# arg type tests for math library functions
-somenumber = [1, 0.75, '-1', '-0.25']
-somepositive = [1, 0.75, '2', '2.5']
-notanumber = [None, astring, aboolean, afunction, atable]
-nonnumber = [astring, aboolean, afunction, atable]
+def outcome(f, args):
+    try:
+        f(*args)
+        return "ok"
+    except Exception as e:
+        return type(e).__name__
+
+def banner(name):
+    print("-------- " + name)
+
+def checkallpass(name, f, lists):
+    combos = product(lists)
+    assert len(combos) > 0, name
+    for args in combos:
+        r = outcome(f, args)
+        assert r == "ok", name + " raised " + r
+    print(name + ": " + str(len(combos)) + " calls ok")
+
+def checkallerrors(name, f, lists, expected):
+    combos = product(lists)
+    assert len(combos) > 0, name
+    for args in combos:
+        r = outcome(f, args)
+        assert r == expected, name + " raised " + r + ", expected " + expected
+    print(name + ": " + str(len(combos)) + " calls raised " + expected)
+
+# Python does not coerce numeric strings, so only real numbers are "somenumber".
+somenumber = [1, 0.75, -1, -0.25]
+somepositive = [1, 0.75, 2, 2.5]
+notanumber = [None, "abc", [1, 2], {"k": 1}]
+nonnumber = ["abc", [1, 2], {"k": 1}]
 
 singleargfunctions = [
-    "abs", "acos", "asin", "atan", "cos", "cosh", "deg", "exp", "floor",
-    "rad", "randomseed", "sin", "sinh", "tan", "tanh", "frexp",
+    ("abs", abs), ("math.acos", math.acos), ("math.asin", math.asin),
+    ("math.atan", math.atan), ("math.ceil", math.ceil), ("math.cos", math.cos),
+    ("math.cosh", math.cosh), ("math.degrees", math.degrees),
+    ("math.exp", math.exp), ("math.fabs", math.fabs), ("math.floor", math.floor),
+    ("math.radians", math.radians), ("math.sin", math.sin),
+    ("math.sinh", math.sinh), ("math.tan", math.tan), ("math.tanh", math.tanh),
 ]
 
 singleargposdomain = [
-    "log", "sqrt", "ceil",
+    ("math.log", math.log), ("math.sqrt", math.sqrt),
 ]
 
 twoargfunctions = [
-    "atan2",
+    ("math.atan2", math.atan2),
 ]
 
 twoargsposdomain = [
-    "pow", "fmod",
+    ("math.pow", math.pow), ("math.fmod", math.fmod),
 ]
 
 # single argument tests
-for i, v in ipairs(singleargfunctions):
-    funcname = "math." .. v
-    banner(funcname)
-    checkallpass(funcname,[somenumber])
-    checkallerrors(funcname,[notanumber],'bad argument')
+for name, f in singleargfunctions:
+    banner(name)
+    checkallpass(name, f, [somenumber])
+    checkallerrors(name, f, [notanumber], "TypeError")
 
 # single argument, positive domain tests
-for i, v in ipairs(singleargposdomain):
-    funcname = "math." .. v
-    banner(funcname)
-    checkallpass(funcname,[somepositive])
-    checkallerrors(funcname,[notanumber],'bad argument')
+for name, f in singleargposdomain:
+    banner(name)
+    checkallpass(name, f, [somepositive])
+    checkallerrors(name, f, [notanumber], "TypeError")
 
 # two-argument tests
-for i, v in ipairs(twoargfunctions):
-    funcname = "math." .. v
-    banner(funcname)
-    checkallpass(funcname,[somenumber, somenumber])
-    checkallerrors(funcname,[],'bad argument')
-    checkallerrors(funcname,[notanumber],'bad argument')
-    checkallerrors(funcname,[notanumber, somenumber],'bad argument')
-    checkallerrors(funcname,[somenumber],'bad argument')
-    checkallerrors(funcname,[somenumber, notanumber],'bad argument')
+for name, f in twoargfunctions:
+    banner(name)
+    checkallpass(name, f, [somenumber, somenumber])
+    checkallerrors(name, f, [], "TypeError")
+    checkallerrors(name, f, [notanumber], "TypeError")
+    checkallerrors(name, f, [notanumber, somenumber], "TypeError")
+    checkallerrors(name, f, [somenumber], "TypeError")
+    checkallerrors(name, f, [somenumber, notanumber], "TypeError")
 
 # two-argument, positive domain tests
-for i, v in ipairs(twoargsposdomain):
-    funcname = "math." .. v
-    banner(funcname)
-    checkallpass(funcname,[somepositive, somenumber])
-    checkallerrors(funcname,[],'bad argument')
-    checkallerrors(funcname,[notanumber],'bad argument')
-    checkallerrors(funcname,[notanumber, somenumber],'bad argument')
-    checkallerrors(funcname,[somenumber],'bad argument')
-    checkallerrors(funcname,[somenumber, notanumber],'bad argument')
+for name, f in twoargsposdomain:
+    banner(name)
+    checkallpass(name, f, [somepositive, somenumber])
+    checkallerrors(name, f, [], "TypeError")
+    checkallerrors(name, f, [notanumber], "TypeError")
+    checkallerrors(name, f, [notanumber, somenumber], "TypeError")
+    checkallerrors(name, f, [somenumber], "TypeError")
+    checkallerrors(name, f, [somenumber, notanumber], "TypeError")
 
-# math.max
-banner('math.max')
-checkallpass('math.max',[somenumber])
-checkallpass('math.max',[somenumber, somenumber])
-checkallerrors('math.max',[],'bad argument')
-checkallerrors('math.max',[nonnumber],'bad argument')
-checkallerrors('math.max',[somenumber, nonnumber],'bad argument')
+# max and min (Python's builtins take any number of arguments)
+banner("max")
+checkallpass("max", max, [somenumber, somenumber])
+checkallerrors("max", max, [], "TypeError")
+checkallerrors("max", max, [somenumber, nonnumber], "TypeError")
 
-# math.min
-banner('math.min')
-checkallpass('math.min',[somenumber])
-checkallpass('math.min',[somenumber, somenumber])
-checkallerrors('math.min',[],'bad argument')
-checkallerrors('math.min',[nonnumber],'bad argument')
-checkallerrors('math.min',[somenumber, nonnumber],'bad argument')
+banner("min")
+checkallpass("min", min, [somenumber, somenumber])
+checkallerrors("min", min, [], "TypeError")
+checkallerrors("min", min, [somenumber, nonnumber], "TypeError")
 
-# math.random
-somem = [3, 4.5, '6.7']
-somen = [8, 9.10, '12.34']
-notamn = [astring, aboolean, atable, afunction]
-banner('math.random')
-checkallpass('math.random',[],True)
-checkallpass('math.random',[somem],True)
-checkallpass('math.random',[somem, somen],True)
-checkallpass('math.random',[[-4, -5.6, '-7', '-8.9'], [-1, 100, 23.45, '-1.23']],True)
-checkallerrors('math.random',[[-4, -5.6, '-7', '-8.9']],'interval is empty')
-checkallerrors('math.random',[somen, somem],'interval is empty')
-checkallerrors('math.random',[notamn, somen],'bad argument')
-checkallerrors('math.random',[somem, notamn],'bad argument')
-
-# math.ldexp
-somee = [-3, 0, 3, 9.10, '12.34']
-notae = [None, astring, aboolean, atable, afunction]
-banner('math.ldexp')
-checkallpass('math.ldexp',[somenumber, somee])
-checkallerrors('math.ldexp',[],'bad argument')
-checkallerrors('math.ldexp',[notanumber],'bad argument')
-checkallerrors('math.ldexp',[notanumber, somee],'bad argument')
-checkallerrors('math.ldexp',[somenumber],'bad argument')
-checkallerrors('math.ldexp',[somenumber, notae],'bad argument')
+print("OK")

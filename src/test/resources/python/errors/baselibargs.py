@@ -1,128 +1,132 @@
-package.path = "?.py;test/python/errors/?.py"
-require("args")
+# Argument-type tests for the builtins that have a counterpart in Lua's base
+# library. Lua-only functions (collectgarbage, error levels, getmetatable, load,
+# next, select, setmetatable) have no equivalent in this subset and are not
+# tested. Python does not coerce strings to numbers, so the number sets hold
+# numbers only, and bool (an int in Python) is kept out of the "not a number" sets.
 
-# arg types for basic library functions
+def product(lists):
+    result = [[]]
+    for choices in lists:
+        new = []
+        for prefix in result:
+            for v in choices:
+                new.append(prefix + [v])
+        result = new
+    return result
 
-# assert
-banner('assert')
-checkallpass('assert',[[True, 123], anylua])
-checkallerrors('assert',[{None, False, "n": 2}, {None, "n": 1}],'assertion failed')
-checkallerrors('assert',[{None, False, "n": 2}, ['message']],'message')
+def outcome(f, args):
+    try:
+        f(*args)
+        return "ok"
+    except Exception as e:
+        return type(e).__name__
 
-# collectgarbage
-banner('collectgarbage')
-# does nothing and always returns 0, whatever the arguments
-checkallpass('collectgarbage',[['collect', 'count', 'step', 'abc', 1.25, True]])
+def banner(name):
+    print("-------- " + name)
 
-# error
-banner('error')
-#checkallerrors('error', [['message'], {None, 0, 1, 2, "n": 4}], 'message')
-#checkallerrors('error', [[123], {None, 1, 2, "n": 3}], 123)
+def checkallpass(name, f, lists):
+    combos = product(lists)
+    assert len(combos) > 0, name
+    for args in combos:
+        r = outcome(f, args)
+        assert r == "ok", name + " raised " + r
+    print(name + ": " + str(len(combos)) + " calls ok")
 
-# getmetatable
-banner('getmetatable')
-checkallpass('getmetatable', [notanil])
-checkallerrors('getmetatable',[],'bad argument')
+def checkallerrors(name, f, lists, expected):
+    combos = product(lists)
+    assert len(combos) > 0, name
+    for args in combos:
+        r = outcome(f, args)
+        assert r == expected, name + " raised " + r + ", expected " + expected
+    print(name + ": " + str(len(combos)) + " calls raised " + expected)
 
-# ipairs
-banner('ipairs')
-checkallpass('ipairs', [sometable])
-checkallerrors('ipairs', [], 'bad argument')
+anylua = [None, False, True, 0, 1.5, "abc", [1, 2], {"k": 1}]
+notanil = [False, True, 0, 1.5, "abc", [1, 2], {"k": 1}]
+sometable = [[1, 2], {"k": 1}]
+notiterable = [None, 1, 1.5, True]
+notanumber = [None, "abc", [1, 2], {"k": 1}]
 
-# load
-banner('load')
-checkallpass('load', [somefunction, {None, astring, "n": 2}])
-checkallpass('load', [['return']])
-checkallpass('load', [['return'], ['mychunk']])
-# FIXME why is the result not printed?
-#checkallpass('load', [['return a ... b'], ['mychunk']],True)
-checkallerrors('load', [somefunction, nonstring], 'bad argument')
-checkallerrors('load', [[None, aboolean, atable], notastring], 'bad argument')
-checkallerrors('load', [['return'], nonstring], 'bad argument')
+def pcall(fn, *args):
+    try:
+        return True, fn(*args)
+    except Exception as e:
+        return False, type(e).__name__
 
-# next
-banner('next')
-checkallpass('next', [sometable, somekey])
-checkallerrors('next', [notatable, {None, 1, "n": 2}], 'bad argument')
-checkallerrors('next', [sometable, nonkey], 'invalid key')
+def pyassert(v, msg="assertion failed"):
+    assert v, msg
 
-# pairs
-banner('pairs')
-checkallpass('pairs', [sometable])
-checkallerrors('pairs', [notatable], 'bad argument')
+def pyraise(msg):
+    raise ValueError(msg)
 
-# pcall
-banner('pcall')
-checkallpass('pcall', [notanil, anylua], True)
-checkallerrors('pcall',[],'bad argument')
+def rawequal(a, b):
+    return a is b
 
-# print
-banner('print')
-checkallpass('print', [])
-checkallpass('print', [{None, astring, anumber, aboolean, "n": 4}])
+def rawget(t, k):
+    return t[k]
 
-# rawequal
-banner('rawequal')
-checkallpass('rawequal', [notanil, notanil])
-checkallerrors('rawequal', [], 'bad argument')
-checkallerrors('rawequal', [notanil], 'bad argument')
+def rawset(t, k, v):
+    t[k] = v
 
-# rawget
-banner('rawget')
-checkallpass('rawget', [sometable, somekey])
-checkallpass('rawget', [sometable, nonkey])
-checkallerrors('rawget', [sometable, somenil],'bad argument')
-checkallerrors('rawget', [notatable, notakey], 'bad argument')
-checkallerrors('rawget', [], 'bad argument')
+def fenum(t):
+    return list(enumerate(t))
 
-# rawset
-banner('rawset')
-checkallpass('rawset', [sometable, somekey, notanil])
-checkallpass('rawset', [sometable, nonkey, notanil])
-checkallerrors('rawset', [sometable, somenil],'table index is nil')
-checkallerrors('rawset', [], 'bad argument')
-checkallerrors('rawset', [notatable, somestring, somestring], 'bad argument')
-checkallerrors('rawset', [sometable, somekey], 'bad argument')
+def fitems(t):
+    return list(t.items())
 
-# select
-banner('select')
-checkallpass('select', [[anumber, '#'], anylua])
-checkallerrors('select', [notanumber], 'bad argument')
+def fint(x):
+    return int(x)
 
-# setmetatable
-banner('setmetatable')
-checkallpass('setmetatable', [sometable, {None, atable, "n": 2}])
-checkallerrors('setmetatable',[notatable, sometable],'bad argument')
-checkallerrors('setmetatable',[sometable, nontable],'bad argument')
+banner("assert")
+checkallpass("assert", pyassert, [[True, 1, "abc", [1]], anylua])
+checkallerrors("assert", pyassert, [[None, False, 0, ""], ["message"]], "AssertionError")
 
-# tonumber
-banner('tonumber')
-checkallpass('tonumber',[somenumber, {None, 2, 10, 36, "n": 4}])
-checkallpass('tonumber',[notanil, {None, "n": 1}])
-checkallpass('tonumber',[somestring, [10]])
-checkallerrors('tonumber',[notastring, [10]],'bad argument')
-checkallerrors('tonumber',[{None, afunction, atable, "n": 3}, [2, 9, 11, 36]],'bad argument')
-checkallerrors('tonumber',[somenumber, [1, 37, atable, afunction, aboolean]],'bad argument')
+banner("error")
+checkallerrors("error", pyraise, [anylua], "ValueError")
 
-# tostring
-banner('tostring')
-checkallpass('tostring',[[astring, anumber, aboolean]])
-checkallpass('tostring',[[atable, afunction]],True)
-checkallpass('tostring',[[astring, anumber, aboolean], ['anchor']])
-checkallpass('tostring',[[atable, afunction], ['anchor']],True)
-checkallerrors('tostring',[],'bad argument')
+banner("enumerate (Lua ipairs)")
+checkallpass("enumerate", fenum, [sometable])
+checkallerrors("enumerate", fenum, [notiterable], "TypeError")
+checkallerrors("enumerate", fenum, [], "TypeError")
 
-# type
-banner('type')
-checkallpass('type',[notanil])
-checkallpass('type',[anylua, ['anchor']])
-checkallerrors('type',[],'bad argument')
+banner("dict.items (Lua pairs)")
+checkallpass("dict.items", fitems, [[{"k": 1}, {}]])
+checkallerrors("dict.items", fitems, [[None, 1, "abc", [1, 2]]], "AttributeError")
 
-# xpcall
-banner('xpcall')
-checkallpass('xpcall', [notanil, nonfunction],True)
-def threevalues(*args):
-    return 'aaa', 'bbb', len([*args])
-checkallpass('xpcall', [notanil, [threevalues]],True)
-checkallerrors('xpcall',[anylua],'bad argument')
+banner("pcall")
+checkallpass("pcall", pcall, [notanil, anylua])
+checkallerrors("pcall", pcall, [], "TypeError")
 
+banner("print")
+checkallpass("print", print, [[None, True, 1, 1.5, "abc"]])
+
+banner("rawequal")
+checkallpass("rawequal", rawequal, [anylua, anylua])
+checkallerrors("rawequal", rawequal, [], "TypeError")
+checkallerrors("rawequal", rawequal, [anylua], "TypeError")
+
+banner("rawget")
+checkallpass("rawget", rawget, [[{"k": 1}], ["k"]])
+checkallerrors("rawget", rawget, [[{"k": 1}], ["zz"]], "KeyError")
+checkallerrors("rawget", rawget, [[None, 1, 1.5, True], ["k"]], "TypeError")
+checkallerrors("rawget", rawget, [[{"k": 1}]], "TypeError")
+
+banner("rawset")
+checkallpass("rawset", rawset, [[{"k": 1}], ["k", "x"], anylua])
+checkallerrors("rawset", rawset, [[None, 1], ["k"], anylua], "TypeError")
+checkallerrors("rawset", rawset, [[{"k": 1}], [[1, 2]], anylua], "TypeError")
+checkallerrors("rawset", rawset, [], "TypeError")
+
+banner("int (Lua tonumber)")
+checkallpass("int", fint, [["1", "-2", 3.5, 7]])
+checkallerrors("int-value", fint, [["abc"]], "ValueError")
+checkallerrors("int-type", fint, [[None, [1, 2], {"k": 1}]], "TypeError")
+checkallerrors("int-arity", fint, [], "TypeError")
+
+banner("str (Lua tostring)")
+checkallpass("str", str, [anylua])
+
+banner("type")
+checkallpass("type", type, [anylua])
+checkallerrors("type", type, [], "TypeError")
+
+print("OK")

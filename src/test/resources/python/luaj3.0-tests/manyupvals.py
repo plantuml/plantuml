@@ -1,33 +1,32 @@
-t = {}
-# The generated chunk is written in the same syntax. Its functions are locals of
-# main(), as the originals are locals of the chunk. The `result` cell of each
-# function was a block-local (`do ... end`) in the original: here it is a slot of
-# one shared table, because there are no block scopes.
-template = """
-    def f<i>():
-        if not cache[<i>]:
-            cache[<i>] = f<i-2>() + f<i-1>()
-        return cache[<i>]
-"""
-t[1] = """def main():
+# Many closures sharing the same upvalues (a memo table and the list of functions).
+# The Lua original generated 200 functions as source text and loaded it. Here the
+# same closures are created in a loop by a factory: each function captures its own
+# index i, the shared memo table and the shared table of functions.
+
+def main():
     cache = {}
-    def f1(): return 1
-"""
-t[2] = """    def f2(): return 1
-"""
-for i in range(3, 200):
-    def expand(s):
-        c = assert(load("return " .. s, "f" .. i, "bt", {"i": i}), "could not compile: " .. s)
-        return c()
-    t[i] = template:gsub("<([^>]+)>", expand)
-t[200] = """    print("5th fibonacci number is", f5())
-    print("10th fibonacci number is", f10())
-    print("199th fibonacci number is", f199())
+    fs = {}
+
+    def make(i):
+        def f():
+            if i not in cache:
+                cache[i] = fs[i - 2]() + fs[i - 1]()
+            return cache[i]
+        return f
+
+    def f1():
+        return 1
+
+    def f2():
+        return 1
+
+    fs[1] = f1
+    fs[2] = f2
+    for i in range(3, 200):
+        fs[i] = make(i)
+
+    print("5th fibonacci number is", fs[5]())
+    print("10th fibonacci number is", fs[10]())
+    print("199th fibonacci number is", fs[199]())
 
 main()
-"""
-
-s = table.concat(t)
-print(s)
-f = load(s)
-f()

@@ -1,125 +1,116 @@
 print("testing vararg")
 
-_G.arg = None
+# Variable number of arguments: *args, starred calls and returns, select-like slices.
+# (The Lua original used tables with an "n" field for the varargs: here the
+# varargs are tuples, and len() gives their count.)
 
-def f(a, *args):
-    arg = {"n": select("#", *args), *args}
-    for i in range(1, arg.n + 1): assert(a[i] == arg[i])
-    return arg.n
+def f(a=None, *args):
+    n = len(args)
+    for i in range(n):
+        assert a[i] == args[i]
+    return n
+
+assert f() == 0
+assert f([1, 2, 3], 1, 2, 3) == 3
+assert f(["alo", None, 45, f, None], "alo", None, 45, f, None) == 5
 
 def c12(*args):
-    assert(arg == None)
-    x = [*args]
-    x.n = len(x)
-    res = (x.n == 2 and x[1] == 1 and x[2] == 2)
-    if res: res = 55
+    res = (len(args) == 2 and args[0] == 1 and args[1] == 2)
+    if res:
+        res = 55
     return res, 2
 
-def vararg(*args): return {"n": select("#", *args), *args}
+def vararg(*args):
+    return args
 
-def call(f, args): return f(table.unpack(args, 1, args.n))
+def call(fn, args):
+    return fn(*args)
 
-assert(f() == 0)
-assert(f([1, 2, 3], 1, 2, 3) == 3)
-assert(f(["alo", None, 45, f, None], "alo", None, 45, f, None) == 5)
-
-assert(c12(1, 2) == 55)
-a, b = assert(call(c12, [1, 2]))
-assert(a == 55 and b == 2)
-a = call(c12, {1, 2, "n": 2})
-assert(a == 55 and b == 2)
-a = call(c12, {1, 2, "n": 1})
-assert(not a)
-assert(c12(1, 2, 3) == False)
-a = vararg(call(next, {_G, None, "n": 2}))
-b, c = next(_G)
-assert(a[1] == b and a[2] == c and a.n == 2)
-a = vararg(call(call, {c12, [1, 2]}))
-assert(a.n == 2 and a[1] == 55 and a[2] == 2)
+assert c12(1, 2)[0] == 55
+a, b = call(c12, [1, 2])
+assert a == 55 and b == 2
+a, b = call(c12, [1])
+assert not a
+assert c12(1, 2, 3)[0] == False
+a = vararg(*divmod(7, 2))
+assert len(a) == 2 and a[0] == 3 and a[1] == 1
+a = vararg(*call(call, (c12, [1, 2])))
+assert len(a) == 2 and a[0] == 55 and a[1] == 2
 a = call(print, ["+"])
-assert(a == None)
+assert a is None
 
-t = [1, 10]
-def t:f(*args):
-    arg = [*args]
-    return self[(*args)] + len(arg)
-assert(t:f(1, 4) == 3 and t:f(2) == 11)
+t = {1: 1, 2: 10}
+def tf(self, *args):
+    return self[args[0]] + len(args)
+assert tf(t, 1, 4) == 3 and tf(t, 2) == 11
 print("+")
 
 lim = 20
-i, a = 1, {}
-while i <= lim:
+a = {}
+for i in range(1, lim + 1):
     a[i] = i + 0.3
-    i += 1
 
 def f(a, b, c, d, *args):
-    more = [*args]
-    assert(a == 1.3 and more[1] == 5.3 and
-           more[lim - 4] == lim + 0.3 and not more[lim - 3])
+    more = list(args)
+    assert a == 1.3 and more[0] == 5.3 and more[lim - 5] == lim + 0.3 and len(more) == lim - 4
 
-def g(a, b, c):
-    assert(a == 1.3 and b == 2.3 and c == 3.3)
+def g(a, b, c, *_):
+    assert a == 1.3 and b == 2.3 and c == 3.3
 
-call(f, a)
-call(g, a)
+values = [a[i] for i in range(1, lim + 1)]
+call(f, values)
+call(g, values)
 
-a = {}
-i = 1
-while i <= lim:
-    a[i] = i
-    i += 1
-assert(call(math.max, a) == lim)
+ints = [i for i in range(1, lim + 1)]
+assert call(max, ints) == lim
 
 print("+")
 
 
 # new-style varargs
+def oneless(a=None, *args): return args
 
-def oneless(a, *args): return *args
-
-def f(n, a, *args):
-    b = None
-    assert(arg == None)
+def f(n, a=None, *args):
     if n == 0:
-        b, c, d = *args
-        return a, b, c, d, oneless(oneless(oneless(*args)))
+        b, c, d = (list(args) + [None, None, None])[:3]
+        return (a, b, c, d) + oneless(*oneless(*oneless(*args)))
     else:
-        n, b, a = n - 1, *args, a
-        assert(b == (*args))
+        n, b, a = n - 1, args, a
+        assert b == args
         return f(n, a, *args)
 
-a, b, c, d, e = assert(f(10, 5, 4, 3, 2, 1))
-assert(a == 5 and b == 4 and c == 3 and d == 2 and e == 1)
+result = f(10, 5, 4, 3, 2, 1)
+a, b, c, d, e = result
+assert a == 5 and b == 4 and c == 3 and d == 2 and e == 1
 
-a, b, c, d, e = f(4)
-assert(a == None and b == None and c == None and d == None and e == None)
-
-
-# varargs for main chunks (the chunk's `...` is `*argv`)
-f = load("return [*argv]")
-x = f(2, 3)
-assert(x[1] == 2 and x[2] == 3 and x[3] == None)
+result = (f(4) + (None, None, None, None, None))[:5]
+a, b, c, d, e = result
+assert a is None and b is None and c is None and d is None and e is None
 
 
-f = load("""
-x = [*argv]
-for i in range(1, select("#", *argv) + 1): assert(x[i] == select(i, *argv))
-assert(x[select("#", *argv) + 1] == None)
-return True
-""")
+# varargs of the main chunk: the first function receives its arguments as a tuple
+def chunk(*argv):
+    return list(argv)
 
-assert(f("a", "b", None, {}, assert))
-assert(f())
+x = chunk(2, 3)
+assert x[0] == 2 and x[1] == 3 and len(x) == 2
 
-a = [select(3, table.unpack([10, 20, 30, 40]))]
-assert(len(a) == 2 and a[1] == 30 and a[2] == 40)
-a = [select(1)]
-assert(next(a) == None)
-a = [select(-1, 3, 5, 7)]
-assert(a[1] == 7 and a[2] == None)
-a = [select(-2, 3, 5, 7)]
-assert(a[1] == 5 and a[2] == 7 and a[3] == None)
-pcall(select, 10000)
-pcall(select, -10000)
+def chunk2(*argv):
+    x = list(argv)
+    for i in range(len(argv)):
+        assert x[i] == argv[i]
+    return True
+
+assert chunk2("a", "b", None, {}, print)
+assert chunk2()
+
+a = (10, 20, 30, 40)[2:]
+assert len(a) == 2 and a[0] == 30 and a[1] == 40
+a = ()
+assert len(a) == 0
+a = (3, 5, 7)[-1:]
+assert a[0] == 7 and len(a) == 1
+a = (3, 5, 7)[-2:]
+assert a[0] == 5 and a[1] == 7 and len(a) == 2
 
 print("OK")

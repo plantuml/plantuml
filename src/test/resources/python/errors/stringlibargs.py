@@ -1,110 +1,137 @@
-package.path = "?.py;test/python/errors/?.py"
-require("args")
+# Argument-type tests for the string operations. Lua's string library functions
+# map onto Python's str methods and builtins: byte -> ord, char -> chr,
+# find -> str.find, format -> %, gsub -> str.replace, len, lower, upper, rep -> *,
+# reverse -> [::-1], sub -> slicing. Lua's gmatch and match (patterns) have no
+# equivalent here and are not tested. Python raises AttributeError for a missing
+# method and TypeError for a wrong argument type.
 
-# arg type tests for string library functions
+def product(lists):
+    result = [[]]
+    for choices in lists:
+        new = []
+        for prefix in result:
+            for v in choices:
+                new.append(prefix + [v])
+        result = new
+    return result
 
-# string.byte
-banner('string.byte')
-checkallpass('string.byte',[somestring])
-checkallpass('string.byte',[somestring, somenumber])
-checkallpass('string.byte',[somestring, somenumber, somenumber])
-checkallerrors('string.byte',[somestring, [astring, afunction, atable]],'bad argument')
-checkallerrors('string.byte',[notastring, {None, 111, "n": 2}],'bad argument')
+def outcome(f, args):
+    try:
+        f(*args)
+        return "ok"
+    except Exception as e:
+        return type(e).__name__
 
-# string.char
-def string_char(*args):
-    return string.byte(string.char(*args))
-banner('string_char')
-checkallpass('string.char',[[60]])
-checkallpass('string.char',[[60], [70]])
-checkallpass('string.char',[[60], [70], [80]])
-checkallpass('string_char',[[0, 9, 40, 127, 128, 255, '0', '9', '255', '9.2', 9.2]])
-checkallpass('string_char',[[0, 127, 255], [0, 127, 255]])
-#checkallerrors('string_char',[],'bad argument')
-checkallerrors('string_char',[[None, -1, 256]],'bad argument')
-checkallerrors('string_char',[notanumber, [23, '45', 6.7]],'bad argument')
-checkallerrors('string_char',[[23, '45', 6.7], nonnumber],'bad argument')
+def banner(name):
+    print("-------- " + name)
 
-# string.find
-banner('string.find')
-checkallpass('string.find',[somestring, somestring])
-checkallpass('string.find',[somestring, somestring, {None, -3, 3, "n": 3}])
-checkallpass('string.find',[somestring, somestring, somenumber, anylua])
-checkallerrors('string.find',[notastring, somestring],'bad argument')
-checkallerrors('string.find',[somestring, notastring],'bad argument')
-checkallerrors('string.find',[somestring, somestring, nonnumber],'bad argument')
+def checkallpass(name, f, lists):
+    combos = product(lists)
+    assert len(combos) > 0, name
+    for args in combos:
+        r = outcome(f, args)
+        assert r == "ok", name + " raised " + r
+    print(name + ": " + str(len(combos)) + " calls ok")
 
-# string.format
-#local numfmts = {'%c','%d','%E','%e','%f','%g','%G','%i','%o','%u','%X','%x'}
-numfmts = ['%c', '%d', '%i', '%o', '%u', '%X', '%x']
-strfmts = ['%q', '%s']
-badfmts = ['%w']
-banner('string.format')
-checkallpass('string.format',[somestring, anylua])
-checkallpass('string.format',[numfmts, somenumber])
-checkallpass('string.format',[strfmts, somestring])
-checkallerrors('string.format',[numfmts, notanumber],'bad argument')
-checkallerrors('string.format',[['%q'], notastring],'bad argument')
-checkallerrors('string.format',[badfmts, somestring],"invalid option '%w'")
+def checkallerrors(name, f, lists, expected):
+    combos = product(lists)
+    assert len(combos) > 0, name
+    for args in combos:
+        r = outcome(f, args)
+        assert r == expected, name + " raised " + r + ", expected " + expected
+    print(name + ": " + str(len(combos)) + " calls raised " + expected)
 
-# string.gmatch
-banner('string.gmatch')
-checkallpass('string.gmatch',[somestring, somestring])
-checkallerrors('string.gmatch',[notastring, somestring],'bad argument')
-checkallerrors('string.gmatch',[somestring, notastring],'bad argument')
+somestring = ["abc", "hello"]
+notastring = [None, 1, [1, 2]]
+somenumber = [0, 1, 2, -1, 3]
+notanumber = [None, "abc", {"k": 1}]
 
-# string.gsub
-somerepl = [astring, atable, afunction]
-notarepl = {None, aboolean, "n": 2}
-banner('string.gsub')
-checkallpass('string.gsub',[somestring, somestring, somerepl, {None, -1, "n": 2}])
-checkallerrors('string.gsub',[nonstring, somestring, somerepl],'bad argument')
-checkallerrors('string.gsub',[somestring, nonstring, somerepl],'bad argument')
-checkallerrors('string.gsub',[[astring], [astring], notarepl],'bad argument')
-checkallerrors('string.gsub',[[astring], [astring], somerepl, nonnumber],'bad argument')
+def sord(s):
+    return ord(s)
 
-# string.len
-banner('string.len')
-checkallpass('string.len',[somestring])
-checkallerrors('string.len',[notastring],'bad argument')
+def schr(n):
+    return chr(n)
 
-# string.lower
-banner('string.lower')
-checkallpass('string.lower',[somestring])
-checkallerrors('string.lower',[notastring],'bad argument')
+def sfind(s, sub, start=0):
+    return s.find(sub, start)
 
-# string.match
-banner('string.match')
-checkallpass('string.match',[somestring, somestring])
-checkallpass('string.match',[somestring, somestring, {None, -3, 3, "n": 3}])
-checkallerrors('string.match',[],'bad argument')
-checkallerrors('string.match',[nonstring, somestring],'bad argument')
-checkallerrors('string.match',[somestring],'bad argument')
-checkallerrors('string.match',[somestring, nonstring],'bad argument')
-checkallerrors('string.match',[somestring, somestring, nonnumber],'bad argument')
+def sformat(fmt, v):
+    return fmt % v
 
-# string.reverse
-banner('string.reverse')
-checkallpass('string.reverse',[somestring])
-checkallerrors('string.reverse',[notastring],'bad argument')
+def sreplace(s, old, new):
+    return s.replace(old, new)
 
-# string.rep
-banner('string.rep')
-checkallpass('string.rep',[somestring, somenumber])
-checkallerrors('string.rep',[notastring, somenumber],'bad argument')
-checkallerrors('string.rep',[somestring, notanumber],'bad argument')
+def slen(s):
+    return len(s)
 
-# string.sub
-banner('string.sub')
-checkallpass('string.sub',[somestring, somenumber])
-checkallpass('string.sub',[somestring, somenumber, somenumber])
-checkallerrors('string.sub',[],'bad argument')
-checkallerrors('string.sub',[nonstring, somenumber, somenumber],'bad argument')
-checkallerrors('string.sub',[somestring],'bad argument')
-checkallerrors('string.sub',[somestring, nonnumber, somenumber],'bad argument')
-checkallerrors('string.sub',[somestring, somenumber, nonnumber],'bad argument')
+def slower(s):
+    return s.lower()
 
-# string.upper
-banner('string.upper')
-checkallpass('string.upper',[somestring])
-checkallerrors('string.upper',[notastring],'bad argument')
+def supper(s):
+    return s.upper()
+
+def srep(s, n):
+    return s * n
+
+def sreverse(s):
+    return s[::-1]
+
+def ssub(s, i, j):
+    return s[i:j]
+
+banner("string.byte (ord)")
+checkallpass("ord", sord, [["a", "Z"]])
+checkallerrors("ord-length", sord, [["ab", ""]], "TypeError")
+checkallerrors("ord-type", sord, [[None, 1, [1, 2]]], "TypeError")
+
+banner("string.char (chr)")
+checkallpass("chr", schr, [[0, 9, 40, 127, 255]])
+checkallerrors("chr-range", schr, [[-1]], "ValueError")
+checkallerrors("chr-type", schr, [["45", None, 6.7]], "TypeError")
+
+banner("string.find")
+checkallpass("find", sfind, [somestring, somestring, [0, 1, -3, 3]])
+checkallerrors("find-notstring", sfind, [notastring, somestring], "AttributeError")
+checkallerrors("find-notsub", sfind, [somestring, [None, 1, [1, 2]]], "TypeError")
+checkallerrors("find-notstart", sfind, [somestring, somestring, ["x", 1.5]], "TypeError")
+
+banner("string.format (%)")
+checkallpass("format %s", sformat, [["%s", "%r"], anylua_placeholder if False else [None, 1, "abc", [1, 2]]])
+checkallpass("format %d", sformat, [["%d", "%i", "%x"], [1, -3, 255]])
+checkallerrors("format %d-notnumber", sformat, [["%d", "%x"], ["abc", None, [1, 2]]], "TypeError")
+checkallerrors("format bad option", sformat, [["%w"], ["x"]], "ValueError")
+
+banner("string.gsub (replace)")
+checkallpass("replace", sreplace, [somestring, ["a", "l"], ["x", "yy"]])
+checkallerrors("replace-notstring", sreplace, [notastring, ["a"], ["x"]], "AttributeError")
+checkallerrors("replace-notold", sreplace, [somestring, [None, 1], ["x"]], "TypeError")
+checkallerrors("replace-notnew", sreplace, [somestring, ["a"], [None, 1]], "TypeError")
+
+banner("string.len")
+checkallpass("len", slen, [somestring])
+checkallerrors("len", slen, [[None, 1, 1.5]], "TypeError")
+
+banner("string.lower")
+checkallpass("lower", slower, [somestring])
+checkallerrors("lower", slower, [notastring], "AttributeError")
+
+banner("string.upper")
+checkallpass("upper", supper, [somestring])
+checkallerrors("upper", supper, [notastring], "AttributeError")
+
+banner("string.rep")
+checkallpass("rep", srep, [somestring, [0, 2, 3]])
+checkallerrors("rep-notstring", srep, [[None, {"k": 1}], [2]], "TypeError")
+checkallerrors("rep-notnumber", srep, [somestring, [None, 1.5, "x"]], "TypeError")
+
+banner("string.reverse")
+checkallpass("reverse", sreverse, [somestring])
+checkallerrors("reverse", sreverse, [[None, 1]], "TypeError")
+
+banner("string.sub (slice)")
+checkallpass("sub", ssub, [somestring, [0, 1, -2], [1, 3, 5]])
+checkallerrors("sub-notstring", ssub, [[None, 1], [0], [1]], "TypeError")
+checkallerrors("sub-notindex", ssub, [somestring, ["x", 1.5], [1]], "TypeError")
+checkallerrors("sub-arity", ssub, [somestring], "TypeError")
+
+print("OK")

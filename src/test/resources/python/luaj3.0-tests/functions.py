@@ -1,8 +1,12 @@
-def f0(): print("f0:")
-def f1(a): print("f1:", a)
-def f2(a, b): print("f2:", a, b)
-def f3(a, b, c): print("f3:", a, b, c)
-def f4(a, b, c, d): print("f4:", a, b, c, d)
+# Function calls with missing and extra arguments, multiple results, varargs.
+# (Lua fills missing arguments with nil and ignores extra ones: the Python
+# equivalents are default values and a *rest parameter.)
+
+def f0(*_): print("f0:")
+def f1(a=None, *_): print("f1:", a)
+def f2(a=None, b=None, *_): print("f2:", a, b)
+def f3(a=None, b=None, c=None, *_): print("f3:", a, b, c)
+def f4(a=None, b=None, c=None, d=None, *_): print("f4:", a, b, c, d)
 
 f0()
 f0("a1/1")
@@ -30,10 +34,10 @@ f4("a1/2", "a2/2")
 f4("a1/3", "a2/3", "a3/3")
 f4("a1/4", "a2/4", "a3/4", "a4/4")
 
-def g0(a, b, c, d): return
+def g0(a, b, c, d): return None, None, None, None
 def g1(a, b, c, d): return d
-def g2(a, b, c, d): return c, d
-def g3(a, b, c, d): return b, c, d
+def g2(a, b, c, d): return None, None, c, d
+def g3(a, b, c, d): return None, b, c, d
 def g4(a, b, c, d): return a, b, c, d
 
 z = g0("c0.1/4", "c0.2/4", "c0.3/4", "c0.4/4")
@@ -57,7 +61,7 @@ print(func(11, 12, 13))
 print(func(23, 22, 21))
 print(func(func(32, 33, 34), func(45, 46, 47), func(58, 59, 50)))
 
-def p(a, *args):
+def p(a=None, *args):
     print("a", a)
     print("...", *args)
     print("...,a", *args, a)
@@ -68,14 +72,14 @@ p("q")
 p("q", "r")
 p("q", "r", "s")
 
-# tail call tests
+# tail call tests (Python has no tail call elimination: these check the values)
 def first(*args):
-    return "abc", *args, "|", *args
+    return ("abc",) + args + ("|",) + args
 
 def second(a, *args):
-    return "def", *args, "|", a, *args
+    return ("def",) + args + ("|", a) + args
 
-def third(a, b, c):
+def third(a=None, b=None, c=None, *_):
     print("third", first(a, b, c))
     print("third", second(a, b, c))
     return second(a, b, c)

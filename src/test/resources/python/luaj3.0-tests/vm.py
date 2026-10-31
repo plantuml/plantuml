@@ -1,8 +1,17 @@
 print("-------- basic vm tests --------")
 
+# (The Lua original kept tables with holes, metatables with __index/__mode, the
+# `arg` global, string method calls on values and huge table constructors with
+# integer keys. Python covers the same ground with lists, dicts and functions.)
+
+def pcall(fn, *args):
+    try:
+        return True, fn(*args)
+    except Exception as e:
+        return False, type(e).__name__
+
 print("-- boolean tests")
 def booleantests():
-    global t, f, n, s, z, one
     t = True
     f = False
     n = None
@@ -40,48 +49,56 @@ print("booleantests result:", pcall(booleantests))
 
 print("------------- varargs")
 def varargstest():
-    global arg
-    def p(a, *args):
+    arg = ["global-1", "global-2", "global-3"]
+
+    def p(a=None, *args):
         print("a", a)
         print("...", *args)
         print("...,a", *args, a)
         print("a,...", a, *args)
-    def q(a, *args):
-        print("a,arg[1],arg[2],arg[3]", a, arg.n, arg[1], arg[2], arg[3])
-    def r(a, *args):
-        print("a,arg[1],arg[2],arg[3]", a, arg.n, arg[1], arg[2], arg[3])
+
+    def q(a=None, *args):
+        print("a,arg[1],arg[2],arg[3]", a, len(args), *args[:3])
+
+    def r(a=None, *args):
+        print("a,count", a, len(args))
         print("a", a)
         print("...", *args)
         print("...,a", *args, a)
         print("a,...", a, *args)
-    def s(a):
+
+    def s(a=None):
         arg = ["1", "2", "3"]
-        print("a,arg[1],arg[2],arg[3]", a, arg[1], arg[2], arg[3])
+        print("a,arg[1],arg[2],arg[3]", a, arg[0], arg[1], arg[2])
         print("a", a)
-    def t(a, *args):
+
+    def t(a=None, *args):
         arg = ["1", "2", "3"]
-        print("a,arg[1],arg[2],arg[3]", a, arg[1], arg[2], arg[3])
+        print("a,arg[1],arg[2],arg[3]", a, arg[0], arg[1], arg[2])
         print("a", a)
         print("...", *args)
         print("...,a", *args, a)
         print("a,...", a, *args)
-    def u(arg):
+
+    def u(arg=None):
         print("arg", arg)
-    def v(arg, *args):
+
+    def v(arg=None, *args):
         print("arg", arg)
         print("...", *args)
         print("arg,...", arg, *args)
-    arg = ["global-1", "global-2", "global-3"]
+
     def tryall(f, name):
-        print("---- function " .. name .. "()")
-        print("--" .. name .. "():")
+        print("---- function " + name + "()")
+        print("--" + name + "():")
         print(" ->", pcall(f))
-        print("--" .. name .. '("q"):')
+        print("--" + name + '("q"):')
         print(" ->", pcall(f, "q"))
-        print("--" .. name .. '("q","r"):')
+        print("--" + name + '("q","r"):')
         print(" ->", pcall(f, "q", "r"))
-        print("--" .. name .. '("q","r","s"):')
+        print("--" + name + '("q","r","s"):')
         print(" ->", pcall(f, "q", "r", "s"))
+
     tryall(p, "p")
     tryall(q, "q")
     tryall(r, "r")
@@ -92,90 +109,43 @@ def varargstest():
 
 print("varargstest result:", pcall(varargstest))
 
-# The purpose of this test case is to demonstrate that
-# basic metatable operations on non-table types work.
-# i.e. that s.sub(s,...) could be used in place of string.sub(s,...)
-print("---------- metatable tests")
-def metatabletests():
-    global tostring
+print("---------- dict tests")
+def dicttests():
+    # missing keys: get with a default plays the role of the __index metamethod
+    d = {"aa": 1, "bb": 2}
+    print("get", d.get("aa"), d.get("zz"), d.get("zz", -1))
+    d["cc"] = 3
+    print("keys", sorted(d.keys()))
+    del d["aa"]
+    print("keys", sorted(d.keys()), len(d))
+    print("in", "aa" in d, "bb" in d)
 
-    # tostring replacement that assigns ids
-    ts, id, nid, types = tostring, {}, 0, {"table": "tbl", "thread": "thr", "userdata": "uda", "function": "func"}
-    def tostring(x):
-        if not x or not types[type(x)]:
-            return ts(x)
-        if not id[x]:
-            nid += 1
-            id[x] = types[type(x)] .. "." .. nid
-        return id[x]
-    def results(s, e, *args):
-        if s: return e, *args
-        return False, type(e)
-    # `def pcall` would make the inner call recursive (the name is already local
-    # in the whole function), so the original pcall is kept under another name.
-    pc = pcall
-    def pcall(*args):
-        return results(pc(*args))
+print("dicttests result:", pcall(dicttests))
 
-    s = "hello"
-    print(s:sub(2, 4))
-
-    t = {}
-    def op(name, *args):
-        a, b = pcall(setmetatable, t, *args)
-        print(name, t, getmetatable(t), a, b)
-    op("set{}  ", {})
-    op("set-nil", None)
-    op("set{}  ", {})
-    op("set")
-    op("set{}  ", {})
-    op("set{}  ", {})
-    op("set{}{}", {}, {})
-    op("set-nil", None)
-    op("set{__}", {"__metatable": {}})
-    op("set{}  ", {})
-    op("set-nil", None)
-    t = {}
-    op("set{}  ", {})
-    op("set-nil", None)
-    op("set{__}", {"__metatable": "abc"})
-    op("set{}  ", {})
-    op("set-nil", None)
-
-
-    # `i` is also the loop variable below: a Lua `for` has its own scope, a
-    # function-level name does not, so the counter and the loop index are named apart.
+print("---------- lazy values")
+def lazytests():
     i = 1234
-    def lazy(t, k):
-        v = i
-        i += 1
-        rawset(t, k, v)
-        return v
-    weak = setmetatable({}, {"__mode": "v", "__index": lazy})
+    counter = [i]
+    weak = {}
+
+    def lazy(key):
+        if key not in weak:
+            weak[key] = counter[0]
+            counter[0] += 1
+        return weak[key]
 
     l = ["a", "b", "a", "b", "c", "a", "b", "c", "d"]
-    for pos, key in ipairs(l):
-        print("t." .. key, weak[key])
+    for key in l:
+        print("t." + key, lazy(key))
 
-print("metatabletests result:", pcall(metatabletests))
+print("lazytests result:", pcall(lazytests))
 
-# test tables with more than 50 elements
+# test lists and dicts with more than 50 elements
 print("------------ huge tables")
 def hugetables():
-    t = [
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    ]
-    print("#t=", len(t), "t[1,50,51,59]", t[1], t[50], t[51], t[59])
-    print(table.concat(t, ","))
+    t = [1] * 100
+    print("#t=", len(t), "t[1,50,51,59]", t[0], t[49], t[50], t[58])
+    print(",".join([str(x) for x in t]))
 
     t2 = [
         0, 3, 4, 7, 9, 8, 12, 15, 23, 5,
@@ -187,28 +157,23 @@ def hugetables():
         70, 73, 74, 77, 79, 78, 72, 715, 723, 75
     ]
 
-    print("#t2=", len(t2), "t[1,50,51,59]", t[1], t[50], t[51], t[59])
-    print(table.concat(t2, ","))
+    print("#t2=", len(t2), "t2[1,50,51,59]", t2[0], t2[49], t2[50], t2[58])
+    print(",".join([str(x) for x in t2]))
 
-    t = {
-        2000: "a", 2001: "b", 2002: "c", 2003: "d", 2004: "e", 2005: "f", 2006: "g", 2007: "h", 2008: "i", 2009: "j",
-        3000: "a", 3001: "b", 3002: "c", 3003: "d", 3004: "e", 3005: "f", 3006: "g", 3007: "h", 3008: "i", 3009: "j",
-        4000: "a", 4001: "b", 4002: "c", 4003: "d", 4004: "e", 4005: "f", 4006: "g", 4007: "h", 4008: "i", 4009: "j",
-        5000: "a", 5001: "b", 5002: "c", 5003: "d", 5004: "e", 5005: "f", 5006: "g", 5007: "h", 5008: "i", 5009: "j",
-        6000: "a", 6001: "b", 6002: "c", 6003: "d", 6004: "e", 6005: "f", 6006: "g", 6007: "h", 6008: "i", 6009: "j",
-        7000: "a", 7001: "b", 7002: "c", 7003: "d", 7004: "e", 7005: "f", 7006: "g", 7007: "h", 7008: "i", 7009: "j",
-        8000: "a", 8001: "b", 8002: "c", 8003: "d", 8004: "e", 8005: "f", 8006: "g", 8007: "h", 8008: "i", 8009: "j"
-    }
+    t = {}
+    for base in [2000, 3000, 4000, 5000, 6000, 7000, 8000]:
+        for j in range(0, 10):
+            t[base + j] = chr(ord("a") + j)
 
     for i in range(2000, 8001, 1000):
         for j in range(0, 10):
-            print("t[" .. tostring(i + j) .. "]", t[i + j])
+            print("t[" + str(i + j) + "]", t[i + j])
 
 print("hugetables result:", pcall(hugetables))
 
 print("--------- many locals")
 def manylocals():
-    # test program with more than 50 non-sequential integer elements
+    # more than 50 variables, all assigned and printed
     t0000 = "a"; t0001 = "b"; t0002 = "c"; t0003 = "d"; t0004 = "e"; t0005 = "f"; t0006 = "g"; t0007 = "h"; t0008 = "i"; t0009 = "j"
     t1000 = "a"; t1001 = "b"; t1002 = "c"; t1003 = "d"; t1004 = "e"; t1005 = "f"; t1006 = "g"; t1007 = "h"; t1008 = "i"; t1009 = "j"
     t2000 = "a"; t2001 = "b"; t2002 = "c"; t2003 = "d"; t2004 = "e"; t2005 = "f"; t2006 = "g"; t2007 = "h"; t2008 = "i"; t2009 = "j"
@@ -224,7 +189,6 @@ def manylocals():
     t12000 = "a"; t12001 = "b"; t12002 = "c"; t12003 = "d"; t12004 = "e"; t12005 = "f"; t12006 = "g"; t12007 = "h"; t12008 = "i"; t12009 = "j"
     t13000 = "a"; t13001 = "b"; t13002 = "c"; t13003 = "d"; t13004 = "e"; t13005 = "f"; t13006 = "g"; t13007 = "h"; t13008 = "i"; t13009 = "j"
 
-    # print the variables
     print(t0000, "a"); print(t0001, "b"); print(t0002, "c"); print(t0003, "d"); print(t0004, "e"); print(t0005, "f"); print(t0006, "g"); print(t0007, "h"); print(t0008, "i"); print(t0009, "j")
     print(t1000, "a"); print(t1001, "b"); print(t1002, "c"); print(t1003, "d"); print(t1004, "e"); print(t1005, "f"); print(t1006, "g"); print(t1007, "h"); print(t1008, "i"); print(t1009, "j")
     print(t2000, "a"); print(t2001, "b"); print(t2002, "c"); print(t2003, "d"); print(t2004, "e"); print(t2005, "f"); print(t2006, "g"); print(t2007, "h"); print(t2008, "i"); print(t2009, "j")

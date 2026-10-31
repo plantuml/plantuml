@@ -1,0 +1,81 @@
+-- insert, len tests
+['one', 'two', 'three'] 3
+['one', 'two', 'three', 'six'] 4
+['seven', 'one', 'two', 'three', 'six'] 5
+['seven', 'one', 'two', 'eight', 'three', 'six'] 6
+['seven', 'one', 'two', 'eight', 'three', 'six', 'nine'] 7
+['seven', 'one', 'two', 'eight', 'three', 'six', 'nine', 'ten'] 8
+#[] 0
+#["a"] 1
+#["a","b"] 2
+#["a",None] 2
+#[None,None] 2
+#[None,"b"] 2
+#["a","b","c"] 3
+-- remove tests
+['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'ten'] 8
+pop() ten ['one', 'two', 'three', 'four', 'five', 'six', 'seven']
+pop(0) one ['two', 'three', 'four', 'five', 'six', 'seven']
+pop(2) four ['two', 'three', 'five', 'six', 'seven']
+pop(4) seven ['two', 'three', 'five', 'six']
+pop(-1) six ['two', 'three', 'five']
+remove('three') None ['two', 'five']
+pop(-1) five ['two'] 1
+-- concat tests
+'onetwothreefourfive'
+'one--two--three--four--five'
+'two,three,four,five'
+'two'
+''
+'abcde'
+'a--b--c--d--e'
+'b,c,d,e'
+'b'
+''
+''
+''
+''
+''
+''
+-- sort tests
+one-two-three
+one-three-two
+www-vvv-uuu-ttt-sss-zzz-yyy-xxx
+sss-ttt-uuu-vvv-www-xxx-yyy-zzz
+www-vvv-uuu-ttt-sss-zzz-yyy-xxx
+sss-ttt-uuu-vvv-www-xxx-yyy-zzz
+bb-a-ccc
+a-bb-ccc
+----- unpack tests -------
+unpack -
+unpack a a
+unpack ab a b
+unpack .b None b
+unpack a. a None
+unpack abc a b c
+unpack (-)
+unpack (a) a
+unpack (ab) a b
+unpack (.b) None b
+slices ['bb', 'cc', 'dd', 'ee', 'ff'] ['bb', 'cc'] ['cc', 'dd', 'ee'] ['ee', 'ff'] ['aa', 'cc', 'ee']
+empty slices [] [] []
+index errors:
+0 aa
+5 ff
+6 IndexError
+-1 ff
+-7 IndexError
+----- misc list initializer tests -------
+4
+4
+4
+----- dict operations -------
+empty {} 0
+{'a': 'b', 1: 2, None: 'd'} 3
+get b None default
+in True False True
+{'a': 'b', 1: 2} 2
+pop 2 {'a': 'b'}
+setdefault ccc {'a': 'b', 'c': 'ccc'}
+keys ['a', 'c'] values ['b', 'ccc']
+OK

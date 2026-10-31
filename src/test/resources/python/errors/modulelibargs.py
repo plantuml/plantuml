@@ -1,16 +1,16 @@
-package.path = "?.py;test/python/errors/?.py"
-require("args")
+# Module tests. Lua's require() and package.seeall have no equivalent in this
+# subset (user modules cannot be imported), so what is tested is the builtin
+# math module: it can be imported, and reading a missing attribute fails.
+import math
 
-# arg type tests for module library functions
+print("-------- import math")
+assert math.pi > 3
 
-# require
-banner('require')
-checkallpass('require',[['math', 'coroutine', 'package', 'string', 'table']],True)
-checkallerrors('require',[[anumber]],'not found')
-checkallerrors('require',[[anil, aboolean, afunction, atable]],'bad argument')
+print("-------- missing attribute")
+try:
+    x = math.nosuchfunction
+    print("unexpected: " + str(x))
+except AttributeError:
+    print("AttributeError")
 
-# package.seeall
-banner('package.seeall')
-checkallpass('package.seeall',[sometable])
-checkallerrors('package.seeall',[notatable],'bad argument')
-
+print("OK")
