@@ -35,38 +35,46 @@
  */
 package net.sourceforge.plantuml.openpdf;
 
-import java.awt.font.TextLayout;
+import org.openpdf.text.pdf.BaseFont;
 
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
-import net.sourceforge.plantuml.teavm.TeaVM;
 
+/**
+ * Draws the character of a circled character (the "C" of a class) as text, with
+ * the font of the PDF, centered on (x, y) by the bounding box of its glyph (AFM
+ * metrics). No AWT text outline: it is the same on the JVM and in the C build.
+ */
 public class DriverCenteredCharacterPdf implements UDriver<UCenteredCharacter, PdfGraphics> {
 
 	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
-			PdfGraphics svg) {
-		// Needs AWT text outlines (TextLayout, PathIterator): not available in the C
-		// build, where the circled character is simply not drawn. The marker must be
-		// in this method, so that TeaVM prunes the rest of it.
-		if (TeaVM.isC())
-			return;
+			PdfGraphics pdf) {
 		final char c = characterCircled.getChar();
 		final HColor textColor = param.getColor();
 
 		final UFont font = characterCircled.getFont();
-		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);
+		final int size = font.getSize();
+		final BaseFont baseFont = StringBounderOpenPdf.resolveFont(font);
+		final String text = "" + c;
 
-		final double xpos = x - unusedSpace.getCenterX() - 0.5;
-		final double ypos = y - unusedSpace.getCenterY() - 0.5;
+		// Center of the glyph, from the baseline origin, in points (the bounding box is in 1/1000 em)
+		final double centerX;
+		final double centerY;
+		final int[] bbox = baseFont.getCharBBox(c);
+		if (bbox == null) {
+			centerX = baseFont.getWidthPoint(text, size) / 2;
+			centerY = 0.35 * size;
+		} else {
+			centerX = (bbox[0] + bbox[2]) / 2000.0 * size;
+			centerY = (bbox[1] + bbox[3]) / 2000.0 * size;
+		}
 
-		final TextLayout t = font.createTextLayout("" + c);
-		svg.setFillColor(textColor.toColor(mapper).toAwtColor());
-
-		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));
+		pdf.setFillColor(textColor.toColor(mapper).toAwtColor());
+		// y grows downward: the baseline is below the center by centerY
+		pdf.pdfText(text, x - centerX, y + centerY, baseFont, size);
 	}
 }
