@@ -1,0 +1,4 @@
+error: TypeError
+line: 1
+text: 'int' object is not iterable
+trace: 1 <module>

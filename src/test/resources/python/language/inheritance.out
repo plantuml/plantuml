@@ -1,0 +1,16 @@
+ann ['deposit 3', 'deposit 4'] 1
+ann 1
+bob/shadow 2 shadow
+private
+Rect with area 6
+Square with area 16
+22
+abstract area
+True False True
+root
+  b
+    b1
+  c
+2 ['  b', '    b1']
+'root' 2
+{'k': [1, 2]} 5

@@ -1,0 +1,9 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): a date read from text, and written back in other forms
+' title 2026-11-08T14:31:10 | Sunday 08 November 2026 | 2026-11-08 14:31:10 | datetime.datetime(2026, 11, 8, 14, 31, 10)
+!x = datetime.datetime.fromisoformat('2026-11-08T14:31:10')
+title !{x.isoformat()} | !{x.strftime('%A %d %B %Y')} | !{x} | !{repr(x)}
+@enduml

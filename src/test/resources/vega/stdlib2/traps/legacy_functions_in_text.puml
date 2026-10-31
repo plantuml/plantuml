@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!function $f($x)
+!return $x + 1
+!endfunction
+!$y = $f(3)
+participant "f(2) = $f(2)" as P
+note over P : y = $y, %call_user_func("$f", 10)
+@enduml

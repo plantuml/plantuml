@@ -1,0 +1,15 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' node "web" #EEEEEE
+' node "db" #FFCCCC
+!class Node:
+!    def __init__(self, name, color="#EEEEEE"):
+!        self.name = name
+!        self.color = color
+
+!for n in [Node("web"), Node("db", color="#FFCCCC")]:
+    node "!{n.name}" !{n.color}
+@enduml

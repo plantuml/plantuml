@@ -1,0 +1,10 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): read_crlf.txt holds "one" CR LF "two" CR "three" LF; as Python reads a text
+' file, puml.read gives LF everywhere
+' title False [one, two, three, ] 4
+!text = puml.read("read_crlf.txt")
+title !{"\r" in text} [!{", ".join(text.split("\n"))}] !{len(text.split("\n"))}
+@enduml

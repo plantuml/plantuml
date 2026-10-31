@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="97px" preserveAspectRatio="none" style="width:329px;height:97px;background:#FFFFFF;" version="1.1" viewBox="0 0 329 97" width="329px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Different" data-source-line="5" id="part1-lifeline">
+      <g>
+        <title>Different</title>
+        <rect fill="#000" fill-opacity="0" height="18" width="8" x="39.925" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="43.425" x2="43.425" y1="39" y2="57"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="NotEqual" data-source-line="8" id="part2-lifeline">
+      <g>
+        <title>NotEqual</title>
+        <rect fill="#000" fill-opacity="0" height="18" width="8" x="119.181" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="122.681" x2="122.681" y1="39" y2="57"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="Defined" data-source-line="15" id="part3-lifeline">
+      <g>
+        <title>Defined</title>
+        <rect fill="#000" fill-opacity="0" height="18" width="8" x="196.163" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="199.663" x2="199.663" y1="39" y2="57"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part4" data-qualified-name="Undefined" data-source-line="19" id="part4-lifeline">
+      <g>
+        <title>Undefined</title>
+        <rect fill="#000" fill-opacity="0" height="18" width="8" x="276.25" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="279.75" x2="279.75" y1="39" y2="57"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Different" data-source-line="5" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.85" x="10" y="10"/>
+      <text fill="#000" font-size="14" textLength="52.85" x="17" y="27.889">Different</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="NotEqual" data-source-line="8" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.663" x="86.85" y="10"/>
+      <text fill="#000" font-size="14" textLength="57.662" x="93.85" y="27.889">NotEqual</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part3" data-qualified-name="Defined" data-source-line="15" id="part3-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.3" x="168.513" y="10"/>
+      <text fill="#000" font-size="14" textLength="48.3" x="175.513" y="27.889">Defined</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part4" data-qualified-name="Undefined" data-source-line="19" id="part4-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.875" x="240.813" y="10"/>
+      <text fill="#000" font-size="14" textLength="63.875" x="247.813" y="27.889">Undefined</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Different" data-source-line="5" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.85" x="10" y="57"/>
+      <text fill="#000" font-size="14" textLength="52.85" x="17" y="74.889">Different</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="NotEqual" data-source-line="8" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.663" x="86.85" y="57"/>
+      <text fill="#000" font-size="14" textLength="57.662" x="93.85" y="74.889">NotEqual</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="Defined" data-source-line="15" id="part3-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.3" x="168.513" y="57"/>
+      <text fill="#000" font-size="14" textLength="48.3" x="175.513" y="74.889">Defined</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part4" data-qualified-name="Undefined" data-source-line="19" id="part4-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.875" x="240.813" y="57"/>
+      <text fill="#000" font-size="14" textLength="63.875" x="247.813" y="74.889">Undefined</text>
+    </g>
+  </g>
+</svg>

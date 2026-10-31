@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="160px" preserveAspectRatio="none" style="width:161px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 161 160" width="161px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity db-->
+    <g class="entity" data-qualified-name="db" data-source-line="10" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.363" x="6" y="12"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="30.362" x="17" y="32.889">«v1»</text>
+      <text fill="#000" font-size="14" textLength="19.512" x="22.425" y="46.889">DB</text>
+    </g>
+    <!--entity web-->
+    <g class="entity" data-qualified-name="web" data-source-line="11" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="68.725" x="76.5" y="12"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="46.725" x="87.5" y="32.889">«none»</text>
+      <text fill="#000" font-size="14" textLength="28.787" x="96.469" y="46.889">Web</text>
+    </g>
+    <!--entity api-->
+    <g class="entity" data-qualified-name="api" data-source-line="12" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.363" x="6" y="96"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="30.362" x="17" y="116.889">«v2»</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="20.894" y="130.889">API</text>
+    </g>
+  </g>
+</svg>

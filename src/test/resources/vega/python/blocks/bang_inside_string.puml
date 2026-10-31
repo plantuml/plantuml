@@ -1,0 +1,10 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title !hello
+!python
+emit("title !hello")
+!endpy
+@enduml

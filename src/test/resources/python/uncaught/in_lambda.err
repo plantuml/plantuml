@@ -1,0 +1,5 @@
+error: ZeroDivisionError
+line: 1
+text: integer modulo by zero
+trace: 3 <module>
+trace: 1 <lambda>

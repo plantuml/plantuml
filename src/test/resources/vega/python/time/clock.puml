@@ -1,0 +1,9 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the clock itself is the only thing that changes from one run to the next, so the
+' test only checks its shape: a float of seconds, and the functions without argument use it
+' title float True 9 True
+title !{type(time.time()).__name__} !{time.time() > 1700000000} !{len(time.gmtime())} !{time.gmtime()[0] == time.localtime()[0]}
+@enduml

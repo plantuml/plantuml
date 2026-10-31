@@ -322,7 +322,12 @@ def produced_files(outdir, puml, extension):
     stem = puml.stem
     first = outdir / (stem + extension)
     others = sorted(p for p in outdir.glob(stem + "_*" + extension))
-    return ([first] if first.exists() else []) + others
+    found = ([first] if first.exists() else []) + others
+    if found:
+        return found
+    # "@startuml foo" names the output "foo", not after the file (the %xargs() tests
+    # of vega/python/puml): the folder is private to the test, so whatever it holds is its output
+    return sorted(p for p in outdir.glob("*" + extension) if p.is_file())
 
 
 def unified_diff(expected, actual, name):

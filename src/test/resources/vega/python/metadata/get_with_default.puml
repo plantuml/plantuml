@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+---
+name: foo
+---
+' EXPECT (preproc):
+' title foo / unknown
+title !{puml.metadata.get("name", "?")} / !{puml.metadata.get("author", "unknown")}
+Alice -> Bob : hello
+@enduml

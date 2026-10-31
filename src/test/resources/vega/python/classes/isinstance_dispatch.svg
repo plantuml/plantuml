@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="187px" preserveAspectRatio="none" style="width:149px;height:187px;background:#FFFFFF;" version="1.1" viewBox="0 0 149 187" width="149px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="User" data-source-line="13" id="part1-lifeline">
+      <g>
+        <title>User</title>
+        <rect fill="#000" fill-opacity="0" height="18" width="8" x="24.287" y="84"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="27.787" x2="27.787" y1="84" y2="102"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="API" data-source-line="13" id="part2-lifeline">
+      <g>
+        <title>API</title>
+        <rect fill="#000" fill-opacity="0" height="18" width="8" x="70.363" y="84"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="73.863" x2="73.863" y1="84" y2="102"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="DB" data-source-line="13" id="part3-lifeline">
+      <g>
+        <title>DB</title>
+        <rect fill="#000" fill-opacity="0" height="18" width="8" x="116.65" y="84"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="120.15" x2="120.15" y1="84" y2="102"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="User" data-source-line="13" id="part1-head">
+      <text fill="#000" font-size="14" textLength="29.575" x="10" y="80.889">User</text>
+      <ellipse cx="27.787" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M27.787,26.5 L27.787,53.5 M14.787,34.5 L40.787,34.5 M27.787,53.5 L14.787,68.5 M27.787,53.5 L40.787,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="API" data-source-line="13" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="36.575" x="55.575" y="55"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="62.575" y="72.889">API</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part3" data-qualified-name="DB" data-source-line="13" id="part3-head">
+      <text fill="#000" font-size="14" textLength="19.512" x="107.394" y="80.889">DB</text>
+      <path d="M102.15,34 C102.15,24 120.15,24 120.15,24 C120.15,24 138.15,24 138.15,34 L138.15,60 C138.15,70 120.15,70 120.15,70 C120.15,70 102.15,70 102.15,60 L102.15,34" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M102.15,34 C102.15,44 120.15,44 120.15,44 C120.15,44 138.15,44 138.15,34" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="User" data-source-line="13" id="part1-tail">
+      <text fill="#000" font-size="14" textLength="29.575" x="10" y="112.889">User</text>
+      <ellipse cx="27.787" cy="124.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M27.787,132.5 L27.787,159.5 M14.787,140.5 L40.787,140.5 M27.787,159.5 L14.787,174.5 M27.787,159.5 L40.787,174.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="API" data-source-line="13" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="36.575" x="55.575" y="102"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="62.575" y="119.889">API</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="DB" data-source-line="13" id="part3-tail">
+      <text fill="#000" font-size="14" textLength="19.512" x="107.394" y="112.889">DB</text>
+      <path d="M102.15,126 C102.15,116 120.15,116 120.15,116 C120.15,116 138.15,116 138.15,126 L138.15,152 C138.15,162 120.15,162 120.15,162 C120.15,162 102.15,162 102.15,152 L102.15,126" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M102.15,126 C102.15,136 120.15,136 120.15,136 C120.15,136 138.15,136 138.15,126" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+  </g>
+</svg>

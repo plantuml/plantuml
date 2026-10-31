@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the file is found like an included one, from the folder of the diagram
+' title hello world | 2
+title !{puml.read("read_data.txt").splitlines()[0]} | !{len(puml.read("read_data.txt").splitlines())}
+@enduml

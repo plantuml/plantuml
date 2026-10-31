@@ -1,0 +1,23 @@
+-------- simple upvalues tests --------
+6
+5
+f1()= 6
+g1()= 5
+6
+5
+f2()= 6
+g2()= 5
+g1()= 4
+f1()= 5
+simplevalues result: True
+----------- upvalued in middle ------------
+x= 3
+y= 5
+z= 7
+x= x
+y= y
+z= z
+True
+--------- nested upvalues ----------
+10 20
+nestedupvaluestest result: True

@@ -1,0 +1,9 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the text of a JSON file goes to json.loads
+' title Alice 42 b
+!d = json.loads(puml.read("read_data.json"))
+title !{d["name"]} !{d["n"] + 1} !{d["tags"][1]}
+@enduml

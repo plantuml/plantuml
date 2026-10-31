@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: 'Python syntax error: invalid character '$' (column 21)'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: Python syntax error: invalid character '$' (column 21)
+!$x = 1
+!emit("title " + str($x))
+@enduml

@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 3
+expected-error-message: '!foreach without !endfor'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: !foreach without !endfor
+!foreach $name in ["A", "B"]
+participant $name
+@enduml

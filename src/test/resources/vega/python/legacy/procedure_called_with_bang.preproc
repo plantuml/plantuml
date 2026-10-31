@@ -1,0 +1,4 @@
+@startuml
+!title A
+!participant B
+@enduml

@@ -1,0 +1,18 @@
+### line 1
+class A(B, C):
+    pass
+### line 3
+class A(B):
+    def f(self):
+        return super().f()
+### line 1
+class A(metaclass=M):
+    pass
+### line 3
+def f():
+    x = 1
+    class A:
+        x = 2
+        def g(self):
+            return x
+    return A

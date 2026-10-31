@@ -1,0 +1,8 @@
+@startuml
+
+participant Web
+participant API
+Web -> API
+participant DB
+API -> DB
+@enduml

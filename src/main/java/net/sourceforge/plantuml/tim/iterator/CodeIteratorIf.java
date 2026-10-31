@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.tim.iterator;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 import net.sourceforge.plantuml.text.StringLocated;
@@ -53,6 +55,13 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 	private final TMemory memory;
 	private final List<StringLocated> logs;
 
+	/**
+	 * The !if, !ifdef and !ifndef lines opened in the body this iterator reads
+	 * and not closed yet. The stack of the memory is not enough: it is shared
+	 * with the files that include this one.
+	 */
+	private final Deque<StringLocated> opened = new ArrayDeque<>();
+
 	public CodeIteratorIf(CodeIterator source, TContext context, TMemory memory, List<StringLocated> logs) {
 		super(source);
 		this.context = context;
@@ -63,8 +72,14 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 	public StringLocated peek() throws EaterException {
 		while (true) {
 			final StringLocated result = source.peek();
-			if (result == null)
+			if (result == null) {
+				if (opened.isEmpty() == false) {
+					// the error is reported on the last line of the debug list: the line left open
+					logs.add(opened.peekLast());
+					throw new EaterException(keyword(opened.peekLast()) + " without !endif", opened.peekLast());
+				}
 				return null;
+			}
 
 			final TLineType type = result.getType();
 
@@ -91,6 +106,10 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 	}
 
 	private void processConditionalDirective(StringLocated line, TLineType type) throws EaterException {
+		if (type == TLineType.IF || type == TLineType.IFDEF || type == TLineType.IFNDEF)
+			opened.addLast(line);
+		else if (type == TLineType.ENDIF && opened.isEmpty() == false)
+			opened.pollLast();
 		switch (type) {
 		case IF:
 			executeIf(line);
@@ -173,6 +192,16 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 	}
 
 	// --- Helper methods ---
+
+	/** "!if", "!ifdef" or "!ifndef", as the line writes it. */
+	private static String keyword(StringLocated line) {
+		final String s = line.getTrimmed().getString();
+		if (s.startsWith("!ifndef"))
+			return "!ifndef";
+		if (s.startsWith("!ifdef"))
+			return "!ifdef";
+		return "!if";
+	}
 
 	private ExecutionContextIf getRequiredIfContext(StringLocated s, String directive) throws EaterException {
 		final ExecutionContextIf poll = (ExecutionContextIf) memory.peekIf();

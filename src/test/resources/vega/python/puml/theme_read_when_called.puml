@@ -1,0 +1,9 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): puml.theme() is a function: the theme of a later !theme line is
+' not seen by a call before it
+' title 0
+title !{len(puml.theme())}
+@enduml

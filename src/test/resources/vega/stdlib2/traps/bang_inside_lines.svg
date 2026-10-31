@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="219px" preserveAspectRatio="none" style="width:166px;height:219px;background:#FFFFFF;" version="1.1" viewBox="0 0 166 219" width="166px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="5">
+      <text fill="#000" font-size="14" font-weight="700" textLength="76.3" x="44.253" y="25.889">Hello! World!</text>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="2" id="part1-lifeline">
+      <g>
+        <title>Alice</title>
+        <rect fill="#000" fill-opacity="0" height="105" width="8" x="28.725" y="74"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="32.225" x2="32.225" y1="74" y2="179"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="2" id="part2-lifeline">
+      <g>
+        <title>Bob</title>
+        <rect fill="#000" fill-opacity="0" height="105" width="8" x="132.838" y="74"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="136.338" x2="136.338" y1="74" y2="179"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="2" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="45"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="17" y="62.889">Alice</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="2" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="116.869" y="45"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="123.869" y="62.889">Bob</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="2" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="179"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="17" y="196.889">Alice</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="2" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="116.869" y="179"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="123.869" y="196.889">Bob</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="2" id="msg1">
+      <polygon fill="#181818" points="124.338,97,134.338,101,124.338,105,128.338,101" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="32.225" x2="130.338" y1="101" y2="101"/>
+      <text fill="#000" font-size="13" textLength="80.113" x="39.225" y="96.111">hello! (urgent!)</text>
+    </g>
+    <g class="message" data-entity-1="part2" data-entity-2="part1" data-source-line="3" id="msg2">
+      <polygon fill="#181818" points="43.225,124,33.225,128,43.225,132,39.225,128" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="37.225" x2="135.338" y1="128" y2="128"/>
+      <text fill="#000" font-size="13" textLength="56.713" x="49.225" y="123.111">x != y and !b</text>
+    </g>
+    <path d="M37.225,141 L37.225,164 L123.225,164 L123.225,151 L113.225,141 L37.225,141" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M113.225,141 L113.225,151 L123.225,151 L113.225,141" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="33.231" x="43.225" y="156.111">wow!!</text>
+    <text fill="#F00" font-size="13" x="76.456" y="156.111">!</text>
+    <text fill="#000" font-size="13" x="80.031" y="156.111"> </text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="28.194" x="80.031" y="156.111">bold!</text>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 3.142 00042 1,234,567 50.0% 2a -7
+!pi = 3.14159
+!n = 42
+!big = 1234567
+!ratio = 0.5
+!neg = -7
+title !{pi:.3f} !{n:05d} !{big:,} !{ratio:.1%} !{n:x} !{neg:+d}
+@enduml

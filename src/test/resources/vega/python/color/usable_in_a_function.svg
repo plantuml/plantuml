@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="196px" preserveAspectRatio="none" style="width:320px;height:196px;background:#FFFFFF;" version="1.1" viewBox="0 0 320 196" width="320px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="P000000" data-source-line="2" id="part1-lifeline">
+      <g>
+        <title>.000000</title>
+        <rect fill="#000" fill-opacity="0" height="117" width="8" x="44.606" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="48.106" x2="48.106" y1="39" y2="156"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="PFFFFFF" data-source-line="2" id="part2-lifeline">
+      <g>
+        <title>.FFFFFF</title>
+        <rect fill="#000" fill-opacity="0" height="117" width="8" x="133.181" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="136.681" x2="136.681" y1="39" y2="156"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="P6666FF" data-source-line="2" id="part3-lifeline">
+      <g>
+        <title>.6666FF</title>
+        <rect fill="#000" fill-opacity="0" height="117" width="8" x="222.544" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="226.044" x2="226.044" y1="39" y2="156"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="P000000" data-source-line="2" id="part1-head">
+      <rect fill="#000" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.213" x="10" y="10"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="17" y="27.889">1.</text>
+      <text fill="#000" font-size="14" textLength="46.725" x="32.488" y="27.889">000000</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="PFFFFFF" data-source-line="2" id="part2-head">
+      <rect fill="#FFF" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="80.938" x="96.213" y="10"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="103.213" y="27.889">1.</text>
+      <text fill="#000" font-size="14" textLength="51.45" x="118.7" y="27.889">FFFFFF</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part3" data-qualified-name="P6666FF" data-source-line="2" id="part3-head">
+      <rect fill="#66F" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.788" x="187.15" y="10"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="194.15" y="27.889">1.</text>
+      <text fill="#000" font-size="14" textLength="48.3" x="209.638" y="27.889">6666FF</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="P000000" data-source-line="2" id="part1-tail">
+      <rect fill="#000" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.213" x="10" y="156"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="17" y="173.889">1.</text>
+      <text fill="#000" font-size="14" textLength="46.725" x="32.488" y="173.889">000000</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="PFFFFFF" data-source-line="2" id="part2-tail">
+      <rect fill="#FFF" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="80.938" x="96.213" y="156"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="103.213" y="173.889">1.</text>
+      <text fill="#000" font-size="14" textLength="51.45" x="118.7" y="173.889">FFFFFF</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="P6666FF" data-source-line="2" id="part3-tail">
+      <rect fill="#66F" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.788" x="187.15" y="156"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="194.15" y="173.889">1.</text>
+      <text fill="#000" font-size="14" textLength="48.3" x="209.638" y="173.889">6666FF</text>
+    </g>
+    <path d="M53.106,52 L53.106,75 L126.106,75 L126.106,62 L116.106,52 L53.106,52" fill="#000" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M116.106,52 L116.106,62 L126.106,62 L116.106,52" fill="#000" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="52" x="59.106" y="67.111">font white</text>
+    <path d="M141.681,85 L141.681,108 L214.681,108 L214.681,95 L204.681,85 L141.681,85" fill="#FFF" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M204.681,85 L204.681,95 L214.681,95 L204.681,85" fill="#FFF" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="52" x="147.681" y="100.111">font black</text>
+    <path d="M231.044,118 L231.044,141 L304.044,141 L304.044,128 L294.044,118 L231.044,118" fill="#66F" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M294.044,118 L294.044,128 L304.044,128 L294.044,118" fill="#66F" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="52" x="237.044" y="133.111">font white</text>
+  </g>
+</svg>

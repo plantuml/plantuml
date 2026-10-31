@@ -95,8 +95,6 @@ public class HColorSimple extends HColor {
 
 	@Override
 	public HColor lighten(int ratio) {
-		if (TeaVM.isTeaVM())
-			return this;
 		final float[] hsl = new HSLColor(color).getHSL();
 		hsl[2] += hsl[2] * (ratio / 100.0);
 		return HColorSimple.create(new HSLColor(hsl).getRGB());
@@ -104,8 +102,6 @@ public class HColorSimple extends HColor {
 
 	@Override
 	public HColor darken(int ratio) {
-		if (TeaVM.isTeaVM())
-			return this;
 		final float[] hsl = new HSLColor(color).getHSL();
 		hsl[2] -= hsl[2] * (ratio / 100.0);
 		return HColorSimple.create(new HSLColor(hsl).getRGB());

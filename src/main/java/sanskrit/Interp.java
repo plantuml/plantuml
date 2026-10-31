@@ -1,0 +1,1086 @@
+package sanskrit;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/**
+ * The interpreter: runs compiled code on a stack machine. One instance holds
+ * the global variables, the output sink and the limits of one program.
+ */
+public final class Interp {
+	/** Receives what the program prints. */
+	public interface Output {
+		void write(String text);
+	}
+
+	/** The source of the current time (time.time, datetime.now...). */
+	public interface Clock {
+		long currentTimeMillis();
+	}
+
+	final Map<String, Object> globals = new HashMap<String, Object>();
+	final Map<String, Object> builtins = new HashMap<String, Object>();
+	final Map<String, PyModule> modules = new HashMap<String, PyModule>();
+	private final Output out;
+	private Clock clock = new Clock() {
+		@Override
+		public long currentTimeMillis() {
+			return System.currentTimeMillis();
+		}
+	};
+	private long steps;
+	private long maxSteps = 200000000L;
+	private int depth;
+	private int maxDepth = 1000;
+	/** pcs[d] is the next instruction of the frame at call depth d, kept for the exception handlers. */
+	private int[] pcs = new int[1002];
+	/** The exceptions being handled, the innermost last: what a bare raise re-raises. */
+	final ArrayList<PyException> handled = new ArrayList<PyException>();
+	/** The frames of the calls in progress, the innermost last: the roots of {@link Memory#live}. */
+	final ArrayList<Object[]> frames = new ArrayList<Object[]>();
+	/** What the program held when it was last measured, and what it has created since: see {@link Memory}. */
+	private long liveAtMark, sinceMark;
+	/** The work counted as one step: items copied or compared, characters built or searched. */
+	static final int WORK_SHIFT = 6;
+	/** hbase[d] is the size of {@code handled} when the frame at call depth d started. */
+	private int[] hbase = new int[1002];
+
+	public Interp(Output out) {
+		this.out = out;
+		Builtins.install(this);
+		globals.put("__name__", PyStr.of("__main__"));
+	}
+
+	/** Makes a module importable ({@code import name}). Done by the host, before running anything. */
+	public void addModule(PyModule m) {
+		modules.put(m.name, m);
+	}
+
+	/** A builtin module (math, json, or one added by {@link #addModule}), or null. */
+	public PyModule getModule(String name) {
+		return modules.get(name);
+	}
+
+	/** Defines a global variable: a module, or a member of a module such as {@link PyModule#get}. */
+	public void setGlobal(String name, Object value) {
+		globals.put(name, value);
+	}
+
+	/** Replaces the clock (the system clock by default), e.g. by a fixed one for deterministic tests. */
+	public void setClock(Clock clock) {
+		this.clock = clock;
+	}
+
+	long currentTimeMillis() {
+		return clock.currentTimeMillis();
+	}
+
+	public void setMaxSteps(long n) {
+		maxSteps = n;
+	}
+
+	public void setMaxDepth(int n) {
+		maxDepth = n;
+		pcs = new int[n + 2];
+		hbase = new int[n + 2];
+	}
+
+	/** Number of steps (backward jumps and calls) executed so far. */
+	public long getSteps() {
+		return steps;
+	}
+
+	void write(String s) {
+		out.write(PyStr.external(s));
+	}
+
+	void tick() {
+		if (++steps > maxSteps)
+			throw new ExecutionLimitError("instruction limit exceeded");
+	}
+
+	/**
+	 * Counts the work of one operation on a large value: n items or characters
+	 * copied, compared or searched are n >> WORK_SHIFT steps, so that the limit on
+	 * the steps bounds the time a program takes, whatever the size of its values.
+	 */
+	void work(long n) {
+		if (n >= 1 << WORK_SHIFT) {
+			steps += n >> WORK_SHIFT;
+			if (steps > maxSteps)
+				throw new ExecutionLimitError("instruction limit exceeded");
+		}
+	}
+
+	/** Counts the units of memory ({@link Memory}) of what the program creates; MemoryError when it holds too much. */
+	void allocated(long units) {
+		sinceMark += units;
+		if (liveAtMark + sinceMark > Memory.MAX) {
+			final long live = Memory.live(this);
+			if (live > Memory.MAX_LIVE)
+				throw PyOps.err(Types.MEMORY_ERROR, "out of memory");
+			liveAtMark = live;
+			sinceMark = units;
+		}
+	}
+
+	/** Counts a value an operation has just made: the work to make it and its memory. */
+	<T> T made(T v) {
+		final long w = Memory.weight(v);
+		if (w != 0) {
+			work(PyOps.size(v));
+			allocated(w);
+		}
+		return v;
+	}
+
+	/** Compiles a program. */
+	public static Code compile(String source, String filename) {
+		return CodeGen.compile(PyParser.parse(source), filename);
+	}
+
+	/** Compiles and runs a program in this interpreter's global scope. */
+	public void run(String source, String filename) {
+		run(compile(source, filename));
+	}
+
+	public void run(Code code) {
+		Object[] frame = new Object[code.nslots + code.maxStack];
+		execute(code, frame, globals);
+	}
+
+	/** The value of a global variable converted for display, or null if it is not defined. */
+	public String getGlobalAsString(String name) {
+		Object v = globals.get(name);
+		return v == null ? null : PyStr.external(PyOps.str(v));
+	}
+
+	// ------------------------------------------------------------ host API
+
+	/**
+	 * Calls a Python callable from the host, with positional arguments and
+	 * keyword arguments (Python values; kwargs may be null). A Python exception
+	 * is thrown as a {@link PyError}; the call counts against the limits.
+	 */
+	public Object callFunction(Object fn, Object[] args, Map<String, Object> kwargs) {
+		String[] kwn = null;
+		Object[] kwv = null;
+		if (kwargs != null && kwargs.isEmpty() == false) {
+			kwn = new String[kwargs.size()];
+			kwv = new Object[kwargs.size()];
+			int i = 0;
+			for (Map.Entry<String, Object> e : kwargs.entrySet()) {
+				kwn[i] = e.getKey();
+				kwv[i] = e.getValue();
+				i++;
+			}
+		}
+		return callGeneric(fn, args, 0, args.length, kwn, kwv);
+	}
+
+	/** True for what Python's callable() accepts. */
+	public static boolean isCallable(Object v) {
+		return v instanceof PyFunction || v instanceof Builtin || v instanceof BoundMethod
+				|| (v instanceof PyType && (((PyType) v).ctor != null || ((PyType) v).isClass()));
+	}
+
+	/** The __name__ of a function, a builtin function or a method; null for anything else. */
+	public static String functionName(Object v) {
+		if (v instanceof PyFunction)
+			return ((PyFunction) v).code.name;
+		if (v instanceof Builtin)
+			return ((Builtin) v).name;
+		if (v instanceof BoundMethod)
+			return ((BoundMethod) v).name();
+		return null;
+	}
+
+	/** True for the Python value None. */
+	public static boolean isNone(Object v) {
+		return v == PyNone.NONE;
+	}
+
+	/** str(v), for the host. */
+	public static String str(Object v) {
+		return PyStr.external(PyOps.str(v));
+	}
+
+	// ------------------------------------------------------------ calls
+
+	Object call(Object f, Object... args) {
+		return callGeneric(f, args, 0, args.length, null, null);
+	}
+
+	Object callGeneric(Object fn, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
+		if (fn instanceof PyFunction)
+			return invoke((PyFunction) fn, src, off, n, kwn, kwv);
+		if (fn instanceof BoundMethod && ((BoundMethod) fn).function != null) {
+			BoundMethod m = (BoundMethod) fn;
+			return invoke(m.function, withSelf(m.self, src, off, n), 0, n + 1, kwn, kwv);
+		}
+		if (fn instanceof PyType && ((PyType) fn).isClass())
+			return instantiate((PyType) fn, src, off, n, kwn, kwv);
+		Builtin b;
+		Object[] args;
+		if (fn instanceof Builtin) {
+			b = (Builtin) fn;
+			args = new Object[n];
+			System.arraycopy(src, off, args, 0, n);
+		} else if (fn instanceof BoundMethod) {
+			BoundMethod m = (BoundMethod) fn;
+			b = m.method;
+			args = new Object[n + 1];
+			args[0] = m.self;
+			System.arraycopy(src, off, args, 1, n);
+		} else if (fn instanceof PyType) {
+			b = ((PyType) fn).ctor;
+			if (b == null)
+				throw PyOps.err(Types.TYPE_ERROR, "cannot create '" + ((PyType) fn).name + "' instances");
+			args = new Object[n];
+			System.arraycopy(src, off, args, 0, n);
+		} else {
+			throw PyOps.err(Types.TYPE_ERROR, "'" + PyOps.typeName(fn) + "' object is not callable");
+		}
+		tick();
+		Object r;
+		if (kwn == null || kwn.length == 0) {
+			r = b.call(this, args);
+		} else {
+			Map<String, Object> kw = new LinkedHashMap<String, Object>();
+			for (int i = 0; i < kwn.length; i++)
+				kw.put(kwn[i], kwv[i]);
+			r = b.callKw(this, args, kw);
+		}
+		if (r == null)
+			return PyNone.NONE;
+		// what a builtin returns may be new: its memory is counted (its work is counted by the builtin)
+		allocated(Memory.weight(r));
+		return r;
+	}
+
+	private static Object[] withSelf(Object self, Object[] src, int off, int n) {
+		Object[] args = new Object[n + 1];
+		args[0] = self;
+		System.arraycopy(src, off, args, 1, n);
+		return args;
+	}
+
+	/** Calls a class of the program: creates the instance, then runs __init__ on it. */
+	private Object instantiate(PyType t, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
+		Object self;
+		if (t.exception) {
+			// as BaseException.__new__ does, the arguments of the call are the args of the exception
+			Object[] args = new Object[n];
+			System.arraycopy(src, off, args, 0, n);
+			self = new PyException(t, args);
+		} else {
+			self = new PyInstance(t);
+		}
+		allocated(Memory.ATTR);
+		Object init = t.lookup("__init__");
+		if (init instanceof PyFunction) {
+			Object r = invoke((PyFunction) init, withSelf(self, src, off, n), 0, n + 1, kwn, kwv);
+			if (r != PyNone.NONE)
+				throw PyOps.err(Types.TYPE_ERROR, "__init__() should return None, not '" + PyOps.typeName(r) + "'");
+		} else if (init instanceof Builtin && ((Builtin) init).isMethod) {
+			// the constructor of a native class
+			final Builtin b = (Builtin) init;
+			final Object[] args = withSelf(self, src, off, n);
+			Object r;
+			if (kwn == null || kwn.length == 0) {
+				r = b.call(this, args);
+			} else {
+				Map<String, Object> kw = new LinkedHashMap<String, Object>();
+				for (int i = 0; i < kwn.length; i++)
+					kw.put(kwn[i], kwv[i]);
+				r = b.callKw(this, args, kw);
+			}
+			if (r != null && r != PyNone.NONE)
+				throw PyOps.err(Types.TYPE_ERROR, "__init__() should return None, not '" + PyOps.typeName(r) + "'");
+		} else if (init == null || init == Builtins.OBJECT_INIT) {
+			if (n > 0 || (kwn != null && kwn.length > 0))
+				throw PyOps.err(Types.TYPE_ERROR, t.name + "() takes no arguments");
+		} else {
+			// BaseException.__init__: the args are already set
+			if (kwn != null && kwn.length > 0)
+				throw PyOps.err(Types.TYPE_ERROR, t.name + "() takes no keyword arguments");
+			if (init != Builtins.EXCEPTION_INIT)
+				throw PyOps.err(Types.TYPE_ERROR, "__init__ of class '" + t.name + "' must be a function");
+		}
+		return self;
+	}
+
+	private Object invoke(PyFunction fn, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
+		Code c = fn.code;
+		Object[] f = new Object[c.nslots + c.maxStack];
+		if (kwn == null && n == c.argcount && c.varargsSlot < 0 && c.kwargsSlot < 0 && c.kwonlycount == 0)
+			System.arraycopy(src, off, f, 0, n);
+		else
+			bind(fn, f, src, off, n, kwn, kwv);
+		if (c.nfree > 0)
+			System.arraycopy(fn.closure, 0, f, c.firstFree, c.nfree);
+		tick();
+		return execute(c, f, fn.globals);
+	}
+
+	private void bind(PyFunction fn, Object[] f, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
+		Code c = fn.code;
+		int argcount = c.argcount;
+		int npos = Math.min(n, argcount);
+		System.arraycopy(src, off, f, 0, npos);
+		if (n > argcount) {
+			if (c.varargsSlot < 0)
+				throw PyOps.err(Types.TYPE_ERROR, c.name + "() takes " + argcount + " positional argument"
+						+ (argcount == 1 ? "" : "s") + " but " + n + " " + (n == 1 ? "was" : "were") + " given");
+			Object[] extra = new Object[n - argcount];
+			System.arraycopy(src, off + argcount, extra, 0, extra.length);
+			f[c.varargsSlot] = new PyTuple(extra);
+		} else if (c.varargsSlot >= 0) {
+			f[c.varargsSlot] = PyTuple.EMPTY;
+		}
+		PyDict extraKw = null;
+		if (c.kwargsSlot >= 0) {
+			extraKw = new PyDict();
+			f[c.kwargsSlot] = extraKw;
+		}
+		if (kwn != null) {
+			int nparams = c.paramNames.length;
+			for (int k = 0; k < kwn.length; k++) {
+				int idx = -1;
+				for (int p = 0; p < nparams; p++)
+					if (c.paramNames[p].equals(kwn[k])) {
+						idx = p;
+						break;
+					}
+				if (idx >= 0) {
+					int slot = idx;
+					if (f[slot] != null)
+						throw PyOps.err(Types.TYPE_ERROR,
+								c.name + "() got multiple values for argument '" + kwn[k] + "'");
+					f[slot] = kwv[k];
+				} else if (extraKw != null) {
+					if (extraKw.containsKey(kwn[k]))
+						throw PyOps.err(Types.TYPE_ERROR,
+								c.name + "() got multiple values for keyword argument '" + kwn[k] + "'");
+					extraKw.put(kwn[k], kwv[k]);
+				} else {
+					throw PyOps.err(Types.TYPE_ERROR,
+							c.name + "() got an unexpected keyword argument '" + kwn[k] + "'");
+				}
+			}
+		}
+		int ndef = fn.defaults == null ? 0 : fn.defaults.length;
+		ArrayList<String> missing = null;
+		for (int i = 0; i < argcount; i++) {
+			if (f[i] == null) {
+				int di = i - (argcount - ndef);
+				if (di >= 0) {
+					f[i] = fn.defaults[di];
+				} else {
+					if (missing == null)
+						missing = new ArrayList<String>();
+					missing.add(c.paramNames[i]);
+				}
+			}
+		}
+		if (missing != null)
+			throw PyOps.err(Types.TYPE_ERROR, c.name + "() missing " + missing.size() + " required positional argument"
+					+ (missing.size() == 1 ? "" : "s") + ": " + quoteList(missing));
+		for (int i = argcount; i < argcount + c.kwonlycount; i++) {
+			if (f[i] == null) {
+				Object d = fn.kwdefaults == null ? null : fn.kwdefaults.get(c.paramNames[i]);
+				if (d == null)
+					throw PyOps.err(Types.TYPE_ERROR, c.name + "() missing required keyword-only argument: '"
+							+ c.paramNames[i] + "'");
+				f[i] = d;
+			}
+		}
+	}
+
+	private static String quoteList(ArrayList<String> names) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < names.size(); i++) {
+			if (i > 0)
+				sb.append(i == names.size() - 1 ? " and " : ", ");
+			sb.append('\'').append(names.get(i)).append('\'');
+		}
+		return sb.toString();
+	}
+
+	// ------------------------------------------------------------ the loop
+
+	/**
+	 * Runs a frame. The interpreter loop ({@link #run}) is kept out of any
+	 * try block (entering one is slow on TeaVM C): this method has the only
+	 * one, once per call, and re-enters the loop at the handler after an
+	 * exception.
+	 */
+	private Object execute(Code code, Object[] f, Map<String, Object> globals) {
+		if (depth >= maxDepth)
+			throw PyOps.err(Types.RECURSION_ERROR, "maximum recursion depth exceeded");
+		final int d = ++depth;
+		frames.add(f);
+		hbase[d] = handled.size();
+		int pc = 0;
+		int sp = code.nslots;
+		try {
+			for (;;) {
+				PyError e;
+				try {
+					return run(code, f, globals, pc, sp, d);
+				} catch (PyError pe) {
+					e = pe;
+				} catch (StackOverflowError so) {
+					// A safety net for the JVM and TeaVM, whose stacks are small: maxDepth and the limits on the
+					// nesting of the data (PyOps.MAX_NESTING, Resolver.MAX_NESTING) already bound every recursion,
+					// which is all a port to a language that cannot recover from a stack overflow relies on.
+					e = PyOps.err(Types.RECURSION_ERROR, "maximum recursion depth exceeded");
+				}
+				int fault = pcs[d] - 1;
+				int h = findHandler(code, fault);
+				// the frame has an entry in the traceback, as CPython adds one when the error goes through it,
+				// caught or not; a bare raise adds none, the entry of the first raise is there
+				if (e.reraised == false)
+					e.addFrame(code.filename, code.lines[fault], code.name);
+				e.reraised = false;
+				if (h < 0)
+					throw e;
+				e.exc.traceback = e;
+				sp = code.nslots + code.excDepth[h];
+				f[sp++] = e.exc;
+				pc = code.excHandler[h];
+			}
+		} finally {
+			truncateHandled(hbase[d]);
+			frames.remove(frames.size() - 1);
+			depth = d - 1;
+		}
+	}
+
+	private void truncateHandled(int size) {
+		while (handled.size() > size)
+			handled.remove(handled.size() - 1);
+	}
+
+	private static int findHandler(Code code, int pc) {
+		for (int i = 0; i < code.excStart.length; i++)
+			if (pc >= code.excStart[i] && pc < code.excEnd[i])
+				return i;
+		return -1;
+	}
+
+	private static PyError unbound(Code code, int slot) {
+		String name = code.slotNames[slot];
+		if (slot >= code.firstFree && slot < code.firstFree + code.nfree)
+			return PyOps.err(Types.NAME_ERROR, "cannot access free variable '" + name
+					+ "' where it is not associated with a value in enclosing scope");
+		return PyOps.err(Types.UNBOUND_LOCAL,
+				"cannot access local variable '" + name + "' where it is not associated with a value");
+	}
+
+	private static boolean excMatches(PyException e, Object t) {
+		if (t instanceof PyType && ((PyType) t).exception)
+			return e.type.isSubtypeOf((PyType) t);
+		if (t instanceof PyTuple) {
+			for (Object o : ((PyTuple) t).items)
+				if (excMatches(e, o))
+					return true;
+			return false;
+		}
+		throw PyOps.err(Types.TYPE_ERROR, "catching classes that do not inherit from BaseException is not allowed");
+	}
+
+	private PyError toRaise(Object v) {
+		if (v instanceof PyException)
+			return new PyError((PyException) v);
+		if (v instanceof PyType && ((PyType) v).exception) {
+			PyType t = (PyType) v;
+			if (t.isClass())
+				return toRaise(instantiate(t, new Object[0], 0, 0, null, null));
+			return new PyError(new PyException(t, new Object[0]));
+		}
+		return PyOps.err(Types.TYPE_ERROR, "exceptions must derive from BaseException");
+	}
+
+	private Object run(Code code, Object[] f, Map<String, Object> globals, int pc, int sp, int level) {
+		final int[] pcs = this.pcs;
+		final int[] c = code.code;
+		final Object[] consts = code.consts;
+		final String[] names = code.names;
+		for (;;) {
+			{
+				for (;;) {
+					int ins = c[pc++];
+					pcs[level] = pc;
+					int arg = ins >>> 8;
+					switch (ins & 0xff) {
+					case Op.NOP:
+						break;
+					case Op.POP:
+						f[--sp] = null;
+						break;
+					case Op.DUP:
+						f[sp] = f[sp - 1];
+						sp++;
+						break;
+					case Op.DUP2:
+						f[sp] = f[sp - 2];
+						f[sp + 1] = f[sp - 1];
+						sp += 2;
+						break;
+					case Op.ROT2: {
+						Object t = f[sp - 1];
+						f[sp - 1] = f[sp - 2];
+						f[sp - 2] = t;
+						break;
+					}
+					case Op.ROT3: {
+						Object t = f[sp - 1];
+						f[sp - 1] = f[sp - 2];
+						f[sp - 2] = f[sp - 3];
+						f[sp - 3] = t;
+						break;
+					}
+					case Op.LOAD_CONST:
+						f[sp++] = consts[arg];
+						break;
+					case Op.LOAD_FAST: {
+						Object v = f[arg];
+						if (v == null)
+							throw unbound(code, arg);
+						f[sp++] = v;
+						break;
+					}
+					case Op.STORE_FAST:
+						f[arg] = f[--sp];
+						f[sp] = null;
+						break;
+					case Op.DELETE_FAST:
+						if (f[arg] == null)
+							throw unbound(code, arg);
+						f[arg] = null;
+						break;
+					case Op.DELETE_FAST_Q:
+						f[arg] = null;
+						break;
+					case Op.DELETE_CELL_Q:
+						((Cell) f[arg]).value = null;
+						break;
+					case Op.DELETE_GLOBAL_Q:
+						globals.remove(names[arg]);
+						break;
+					case Op.LOAD_CELL: {
+						Object v = ((Cell) f[arg]).value;
+						if (v == null)
+							throw unbound(code, arg);
+						f[sp++] = v;
+						break;
+					}
+					case Op.STORE_CELL:
+						((Cell) f[arg]).value = f[--sp];
+						f[sp] = null;
+						break;
+					case Op.DELETE_CELL: {
+						Cell cell = (Cell) f[arg];
+						if (cell.value == null)
+							throw unbound(code, arg);
+						cell.value = null;
+						break;
+					}
+					case Op.LOAD_CLOSURE:
+						f[sp++] = f[arg];
+						break;
+					case Op.MAKE_CELL: {
+						Cell cell = new Cell();
+						cell.value = f[arg];
+						f[arg] = cell;
+						break;
+					}
+					case Op.LOAD_GLOBAL: {
+						String name = names[arg];
+						Object v = globals.get(name);
+						if (v == null) {
+							v = builtins.get(name);
+							if (v == null)
+								throw PyOps.err(Types.NAME_ERROR, "name '" + name + "' is not defined");
+						}
+						f[sp++] = v;
+						break;
+					}
+					case Op.STORE_GLOBAL:
+						globals.put(names[arg], f[--sp]);
+						f[sp] = null;
+						break;
+					case Op.DELETE_GLOBAL:
+						if (globals.remove(names[arg]) == null)
+							throw PyOps.err(Types.NAME_ERROR, "name '" + names[arg] + "' is not defined");
+						break;
+					case Op.LOAD_ATTR:
+						f[sp - 1] = PyOps.getattr(f[sp - 1], names[arg]);
+						break;
+					case Op.STORE_ATTR:
+						allocated(Memory.ATTR);
+						PyOps.setattr(f[sp - 1], names[arg], f[sp - 2]);
+						f[--sp] = null;
+						f[--sp] = null;
+						break;
+					case Op.DELETE_ATTR:
+						PyOps.delattr(f[sp - 1], names[arg]);
+						f[--sp] = null;
+						break;
+					case Op.BINARY_OP: {
+						Object b = f[--sp];
+						f[sp] = null;
+						final Object a = f[sp - 1];
+						final long before = a instanceof PyList ? ((PyList) a).items.size()
+								: a instanceof PySet ? ((PySet) a).size() : 0;
+						if (a instanceof PySet) {
+							if ((arg & Op.INPLACE) == 0)
+								work(PyOps.size(a) + PyOps.size(b)); // a | b... reads both sets
+							else // s |= o, s -= o, s ^= o read o; s &= o reads s
+								work((arg & 0xff) == Op.BIN_AND ? PyOps.size(a) : PyOps.size(b));
+						}
+						final Object r = (arg & Op.INPLACE) != 0 ? PyOps.inplace(arg & 0xff, a, b) : PyOps.binary(arg, a, b);
+						if (!(r instanceof Integer || r instanceof Double)) {
+							if (r != a) {
+								made(r);
+							} else if (a instanceof PyList) {
+								// l += x, l *= n: what was added
+								final long added = Math.max(0, ((PyList) a).items.size() - before);
+								work(added);
+								allocated(Memory.SLOT * added);
+							} else if (a instanceof PySet) {
+								// s |= o...: what was added
+								allocated(Memory.ENTRY * Math.max(0, ((PySet) a).size() - before));
+							}
+						}
+						f[sp - 1] = r;
+						break;
+					}
+					case Op.UNARY_NEG:
+						f[sp - 1] = PyOps.negate(f[sp - 1]);
+						break;
+					case Op.UNARY_POS:
+						f[sp - 1] = PyOps.plus(f[sp - 1]);
+						break;
+					case Op.UNARY_INVERT:
+						f[sp - 1] = PyOps.invert(f[sp - 1]);
+						break;
+					case Op.UNARY_NOT:
+						f[sp - 1] = PyOps.isTrue(f[sp - 1]) ? Boolean.FALSE : Boolean.TRUE;
+						break;
+					case Op.COMPARE_OP: {
+						Object b = f[--sp];
+						f[sp] = null;
+						if (!(b instanceof Integer || b instanceof Double))
+							work(Math.min(PyOps.size(f[sp - 1]), PyOps.size(b)));
+						f[sp - 1] = PyOps.compare(arg, f[sp - 1], b);
+						break;
+					}
+					case Op.IS_OP: {
+						Object b = f[--sp];
+						f[sp] = null;
+						boolean same = PyOps.sameObject(f[sp - 1], b);
+						f[sp - 1] = Boolean.valueOf(arg == 0 ? same : !same);
+						break;
+					}
+					case Op.CONTAINS_OP: {
+						Object container = f[--sp];
+						f[sp] = null;
+						if (container instanceof PyDict == false && container instanceof PySet == false)
+							work(PyOps.size(container));
+						else if (PyStr.is(f[sp - 1]))
+							work(PyOps.size(f[sp - 1]));
+						boolean in = PyOps.contains(container, f[sp - 1]);
+						f[sp - 1] = Boolean.valueOf(arg == 0 ? in : !in);
+						break;
+					}
+					case Op.GETITEM: {
+						Object idx = f[--sp];
+						f[sp] = null;
+						f[sp - 1] = PyOps.getitem(f[sp - 1], idx);
+						if (idx instanceof PySlice)
+							made(f[sp - 1]);
+						else if (PyStr.is(idx))
+							work(PyOps.size(idx)); // a key is hashed and compared
+						break;
+					}
+					case Op.SETITEM: {
+						Object idx = f[--sp];
+						Object obj = f[--sp];
+						Object v = f[--sp];
+						f[sp] = f[sp + 1] = f[sp + 2] = null;
+						if (idx instanceof PySlice) {
+							work(PyOps.size(v) + PyOps.size(obj));
+							allocated(Memory.SLOT * PyOps.size(v));
+						} else if (obj instanceof PyDict) {
+							work(PyOps.size(idx));
+							allocated(Memory.ENTRY);
+						}
+						PyOps.setitem(obj, idx, v);
+						break;
+					}
+					case Op.DELITEM: {
+						Object idx = f[--sp];
+						Object obj = f[--sp];
+						f[sp] = f[sp + 1] = null;
+						PyOps.delitem(obj, idx);
+						break;
+					}
+					case Op.BUILD_SLICE: {
+						Object step = f[--sp];
+						Object upper = f[--sp];
+						f[sp - 1] = new PySlice(f[sp - 1], upper, step);
+						f[sp] = f[sp + 1] = null;
+						break;
+					}
+					case Op.BUILD_LIST: {
+						ArrayList<Object> l = new ArrayList<Object>(arg);
+						for (int i = sp - arg; i < sp; i++) {
+							l.add(f[i]);
+							f[i] = null;
+						}
+						sp -= arg;
+						allocated(Memory.OBJECT + Memory.SLOT * arg);
+						f[sp++] = new PyList(l);
+						break;
+					}
+					case Op.BUILD_TUPLE: {
+						Object[] t = new Object[arg];
+						System.arraycopy(f, sp - arg, t, 0, arg);
+						for (int i = sp - arg; i < sp; i++)
+							f[i] = null;
+						sp -= arg;
+						allocated(Memory.OBJECT + Memory.SLOT * arg);
+						f[sp++] = new PyTuple(t);
+						break;
+					}
+					case Op.BUILD_DICT: {
+						PyDict d = new PyDict();
+						int base = sp - 2 * arg;
+						for (int i = base; i < sp; i += 2) {
+							d.put(f[i], f[i + 1]);
+							f[i] = f[i + 1] = null;
+						}
+						sp = base;
+						allocated(Memory.OBJECT + Memory.ENTRY * arg);
+						f[sp++] = d;
+						break;
+					}
+					case Op.BUILD_SET: {
+						allocated(Memory.OBJECT + Memory.ENTRY * arg);
+						PySet s = new PySet();
+						for (int i = sp - arg; i < sp; i++) {
+							s.add(f[i]);
+							f[i] = null;
+						}
+						sp -= arg;
+						f[sp++] = s;
+						break;
+					}
+					case Op.SET_ADD: {
+						Object v = f[--sp];
+						f[sp] = null;
+						final PySet s = (PySet) f[sp - arg];
+						if (!s.contains(v)) {
+							allocated(Memory.ENTRY);
+							s.add(v);
+						}
+						break;
+					}
+					case Op.BUILD_STRING: {
+						StringBuilder sb = new StringBuilder();
+						for (int i = sp - arg; i < sp; i++) {
+							sb.append(PyStr.text(f[i]));
+							f[i] = null;
+							if (sb.length() > PyOps.MAX_STRING)
+								throw PyOps.err(Types.MEMORY_ERROR, "string too large");
+						}
+						sp -= arg;
+						f[sp++] = made(PyStr.of(sb.toString()));
+						break;
+					}
+					case Op.LIST_APPEND: {
+						Object v = f[--sp];
+						f[sp] = null;
+						final ArrayList<Object> items = ((PyList) f[sp - arg]).items;
+						PyOps.checkList(items.size() + 1L);
+						allocated(Memory.SLOT);
+						items.add(v);
+						break;
+					}
+					case Op.LIST_EXTEND: {
+						Object v = f[--sp];
+						f[sp] = null;
+						if (PyOps.isIterable(v) == false)
+							throw PyOps.err(Types.TYPE_ERROR,
+									"argument after * must be an iterable, not " + PyOps.typeName(v));
+						PyOps.extend(this, ((PyList) f[sp - arg]).items, v);
+						break;
+					}
+					case Op.MAP_ADD: {
+						Object v = f[--sp];
+						Object k = f[--sp];
+						f[sp] = f[sp + 1] = null;
+						allocated(Memory.ENTRY);
+						((PyDict) f[sp - arg]).put(k, v);
+						break;
+					}
+					case Op.DICT_ADD_KW: {
+						Object v = f[--sp];
+						Object k = f[--sp];
+						f[sp] = f[sp + 1] = null;
+						PyDict d = (PyDict) f[sp - arg];
+						if (d.containsKey(k))
+							throw PyOps.err(Types.TYPE_ERROR, "got multiple values for keyword argument '" + k + "'");
+						d.put(k, v);
+						break;
+					}
+					case Op.DICT_MERGE_KW: {
+						Object m = f[--sp];
+						f[sp] = null;
+						if (!(m instanceof PyDict))
+							throw PyOps.err(Types.TYPE_ERROR,
+									"argument after ** must be a mapping, not " + PyOps.typeName(m));
+						PyDict d = (PyDict) f[sp - arg];
+						for (PyDict.Entry e : ((PyDict) m).map.values()) {
+							if (PyStr.is(e.key) == false)
+								throw PyOps.err(Types.TYPE_ERROR, "keywords must be strings");
+							if (d.containsKey(e.key))
+								throw PyOps.err(Types.TYPE_ERROR,
+										"got multiple values for keyword argument '" + e.key + "'");
+							d.put(e.key, e.value);
+						}
+						break;
+					}
+					case Op.UNPACK: {
+						Object seq = f[--sp];
+						Object[] items;
+						if (seq instanceof PyTuple)
+							items = ((PyTuple) seq).items;
+						else if (seq instanceof PyList)
+							items = ((PyList) seq).items.toArray();
+						else
+							items = PyOps.toArrayList(seq).toArray();
+						if (items.length < arg)
+							throw PyOps.err(Types.VALUE_ERROR, "not enough values to unpack (expected " + arg
+									+ ", got " + items.length + ")");
+						if (items.length > arg)
+							throw PyOps.err(Types.VALUE_ERROR, "too many values to unpack (expected " + arg + ")");
+						for (int i = arg - 1; i >= 0; i--)
+							f[sp++] = items[i];
+						break;
+					}
+					case Op.JUMP:
+						if (arg < pc && ++steps > maxSteps)
+							throw new ExecutionLimitError("instruction limit exceeded");
+						pc = arg;
+						break;
+					case Op.JUMP_IF_FALSE: {
+						Object v = f[--sp];
+						f[sp] = null;
+						if (!(v == Boolean.TRUE || (v != Boolean.FALSE && PyOps.isTrue(v)))) {
+							if (arg < pc && ++steps > maxSteps)
+								throw new ExecutionLimitError("instruction limit exceeded");
+							pc = arg;
+						}
+						break;
+					}
+					case Op.JUMP_IF_TRUE: {
+						Object v = f[--sp];
+						f[sp] = null;
+						if (v == Boolean.TRUE || (v != Boolean.FALSE && PyOps.isTrue(v))) {
+							if (arg < pc && ++steps > maxSteps)
+								throw new ExecutionLimitError("instruction limit exceeded");
+							pc = arg;
+						}
+						break;
+					}
+					case Op.JUMP_IF_FALSE_KEEP:
+						if (!PyOps.isTrue(f[sp - 1]))
+							pc = arg;
+						else
+							f[--sp] = null;
+						break;
+					case Op.JUMP_IF_TRUE_KEEP:
+						if (PyOps.isTrue(f[sp - 1]))
+							pc = arg;
+						else
+							f[--sp] = null;
+						break;
+					case Op.GET_ITER:
+						f[sp - 1] = PyOps.getIter(f[sp - 1]);
+						break;
+					case Op.FOR_ITER: {
+						Object v = ((PyIter) f[sp - 1]).next();
+						if (v == null) {
+							f[--sp] = null;
+							pc = arg;
+						} else {
+							f[sp++] = v;
+						}
+						break;
+					}
+					case Op.CALL: {
+						int base = sp - arg;
+						Object fn = f[base - 1];
+						Object r;
+						if (fn instanceof PyFunction) {
+							r = invoke((PyFunction) fn, f, base, arg, null, null);
+						} else if (fn instanceof BoundMethod && ((BoundMethod) fn).function != null) {
+							// the slot of the callee receives self: no copy of the arguments
+							f[base - 1] = ((BoundMethod) fn).self;
+							r = invoke(((BoundMethod) fn).function, f, base - 1, arg + 1, null, null);
+						} else {
+							r = callGeneric(fn, f, base, arg, null, null);
+						}
+						for (int i = base - 1; i < sp; i++)
+							f[i] = null;
+						sp = base;
+						f[sp - 1] = r;
+						break;
+					}
+					case Op.CALL_KW: {
+						PyTuple names2 = (PyTuple) f[--sp];
+						f[sp] = null;
+						int k = names2.items.length;
+						int npos = arg - k;
+						int base = sp - arg;
+						String[] kwn = new String[k];
+						Object[] kwv = new Object[k];
+						for (int i = 0; i < k; i++) {
+							kwn[i] = PyStr.text(names2.items[i]);
+							kwv[i] = f[base + npos + i];
+						}
+						Object r = callGeneric(f[base - 1], f, base, npos, kwn, kwv);
+						for (int i = base - 1; i < sp; i++)
+							f[i] = null;
+						sp = base;
+						f[sp - 1] = r;
+						break;
+					}
+					case Op.CALL_EX: {
+						PyDict kwd = null;
+						if ((arg & 1) != 0) {
+							kwd = (PyDict) f[--sp];
+							f[sp] = null;
+						}
+						PyList pos = (PyList) f[--sp];
+						f[sp] = null;
+						Object fn = f[sp - 1];
+						Object[] args = pos.items.toArray();
+						String[] kwn = null;
+						Object[] kwv = null;
+						if (kwd != null && kwd.size() > 0) {
+							kwn = new String[kwd.size()];
+							kwv = new Object[kwd.size()];
+							int i = 0;
+							for (PyDict.Entry e : kwd.map.values()) {
+								kwn[i] = PyStr.text(e.key);
+								kwv[i++] = e.value;
+							}
+						}
+						f[sp - 1] = callGeneric(fn, args, 0, args.length, kwn, kwv);
+						break;
+					}
+					case Op.MAKE_FUNCTION: {
+						Code fcode = (Code) f[--sp];
+						f[sp] = null;
+						Cell[] closure = null;
+						Map<String, Object> kwdef = null;
+						Object[] defaults = null;
+						if ((arg & 4) != 0) {
+							Object[] items = ((PyTuple) f[--sp]).items;
+							f[sp] = null;
+							closure = new Cell[items.length];
+							for (int i = 0; i < items.length; i++)
+								closure[i] = (Cell) items[i];
+						}
+						if ((arg & 2) != 0) {
+							PyDict d = (PyDict) f[--sp];
+							f[sp] = null;
+							kwdef = new HashMap<String, Object>();
+							for (PyDict.Entry e : d.map.values())
+								kwdef.put(PyStr.text(e.key), e.value);
+						}
+						if ((arg & 1) != 0) {
+							defaults = ((PyTuple) f[--sp]).items;
+							f[sp] = null;
+						}
+						f[sp++] = new PyFunction(fcode, globals, defaults, kwdef, closure);
+						break;
+					}
+					case Op.RETURN:
+						return f[--sp];
+					case Op.RAISE:
+						if (arg == 0) {
+							if (handled.isEmpty())
+								throw PyOps.err(Types.RUNTIME_ERROR, "No active exception to reraise");
+							throw PyError.reraise(handled.get(handled.size() - 1));
+						}
+						throw toRaise(f[--sp]);
+					case Op.HANDLER_ENTER:
+						truncateHandled(hbase[level] + arg);
+						handled.add((PyException) f[--sp]);
+						f[sp] = null;
+						break;
+					case Op.HANDLER_EXIT:
+						truncateHandled(hbase[level] + arg);
+						break;
+					case Op.RERAISE:
+						throw PyError.reraise((PyException) f[--sp]);
+					case Op.EXC_MATCH: {
+						Object t = f[--sp];
+						f[sp] = null;
+						f[sp - 1] = Boolean.valueOf(excMatches((PyException) f[sp - 1], t));
+						break;
+					}
+					case Op.IMPORT: {
+						PyModule m = modules.get(names[arg]);
+						if (m == null)
+							throw PyOps.err(Types.MODULE_NOT_FOUND, "No module named '" + names[arg] + "'");
+						f[sp++] = m;
+						break;
+					}
+					case Op.IMPORT_FROM: {
+						PyModule m = (PyModule) f[sp - 1];
+						Object v = m.members.get(names[arg]);
+						if (v == null)
+							throw PyOps.err(Types.IMPORT_ERROR, "cannot import name '" + names[arg] + "' from '" + m.name
+									+ "' (unknown location)");
+						f[sp++] = v;
+						break;
+					}
+					case Op.FORMAT_VALUE: {
+						String spec = "";
+						if ((arg & 4) != 0) {
+							spec = PyStr.text(f[--sp]);
+							f[sp] = null;
+						}
+						Object v = f[sp - 1];
+						switch (arg & 3) {
+						case 1:
+							v = PyOps.str(v);
+							break;
+						case 2:
+							v = PyOps.repr(v);
+							break;
+						case 3:
+							v = Fmt.asciiStr(PyOps.repr(v));
+							break;
+						default:
+							break;
+						}
+						f[sp - 1] = made(PyStr.of(spec.isEmpty() ? PyOps.str(v) : Fmt.format(v, spec)));
+						break;
+					}
+					default:
+						throw new IllegalStateException("bad opcode " + (ins & 0xff));
+					}
+				}
+			}
+		}
+	}
+}

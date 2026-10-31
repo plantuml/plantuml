@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the dates are compared by value: ==, in, dict keys, sorted
+' title True True 2 [2026-01-02, 2026-11-08, 2027-05-06] 2026-01-02
+!a = datetime.date(2026, 11, 8)
+!b = datetime.date(2026, 11, 8)
+!days = {a: 'a'}
+!order = sorted([datetime.date(2027, 5, 6), a, datetime.date(2026, 1, 2)])
+title !{a == b} !{b in days} !{len(days) + 1} [!{', '.join([str(x) for x in order])}] !{min(order)}
+@enduml

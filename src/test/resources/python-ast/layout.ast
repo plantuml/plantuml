@@ -1,0 +1,336 @@
+Module(
+  body=[
+    Assign(
+      targets=[
+        Name(id="x", ctx=Store)
+      ],
+      value=Constant(value=1)
+    ),
+    Assign(
+      targets=[
+        Name(id="y", ctx=Store)
+      ],
+      value=Constant(value=2)
+    ),
+    FunctionDef(
+      name="f",
+      args=arguments(
+        posonlyargs=[],
+        args=[
+          arg(arg="a", annotation=None),
+          arg(arg="b", annotation=None)
+        ],
+        vararg=None,
+        kwonlyargs=[],
+        kw_defaults=[],
+        kwarg=None,
+        defaults=[]
+      ),
+      body=[
+        Return(
+          value=BinOp(
+            left=Name(id="a", ctx=Load),
+            op=Add,
+            right=Name(id="b", ctx=Load)
+          )
+        )
+      ],
+      decorator_list=[],
+      returns=None
+    ),
+    FunctionDef(
+      name="g",
+      args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+      body=[
+        Assign(
+          targets=[
+            Name(id="x", ctx=Store)
+          ],
+          value=Constant(value=1)
+        ),
+        If(
+          test=Name(id="x", ctx=Load),
+          body=[
+            Assign(
+              targets=[
+                Name(id="y", ctx=Store)
+              ],
+              value=Constant(value=2)
+            )
+          ],
+          orelse=[]
+        ),
+        Return(
+          value=Name(id="x", ctx=Load)
+        )
+      ],
+      decorator_list=[],
+      returns=None
+    ),
+    Assign(
+      targets=[
+        Name(id="s", ctx=Store)
+      ],
+      value=BinOp(
+        left=Constant(value=1),
+        op=Add,
+        right=Constant(value=2)
+      )
+    ),
+    Assign(
+      targets=[
+        Name(id="t", ctx=Store)
+      ],
+      value=List(
+        elts=[
+          Constant(value=1),
+          Constant(value=2),
+          Constant(value=3)
+        ],
+        ctx=Load
+      )
+    ),
+    Assign(
+      targets=[
+        Name(id="d", ctx=Store)
+      ],
+      value=Dict(
+        keys=[
+          Constant(value="a"),
+          Constant(value="b")
+        ],
+        values=[
+          Constant(value=1),
+          Constant(value=2)
+        ]
+      )
+    ),
+    Assign(
+      targets=[
+        Name(id="call", ctx=Store)
+      ],
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[
+          Constant(value=1),
+          Constant(value=2)
+        ],
+        keywords=[]
+      )
+    ),
+    Assign(
+      targets=[
+        Name(id="a", ctx=Store)
+      ],
+      value=Constant(value=1)
+    ),
+    Assign(
+      targets=[
+        Name(id="b", ctx=Store)
+      ],
+      value=Constant(value=2)
+    ),
+    Assign(
+      targets=[
+        Name(id="a", ctx=Store)
+      ],
+      value=Constant(value=1)
+    ),
+    Assign(
+      targets=[
+        Name(id="b", ctx=Store)
+      ],
+      value=Constant(value=2)
+    ),
+    If(
+      test=Name(id="a", ctx=Load),
+      body=[
+        Assign(
+          targets=[
+            Name(id="b", ctx=Store)
+          ],
+          value=Constant(value=1)
+        )
+      ],
+      orelse=[]
+    ),
+    If(
+      test=Name(id="a", ctx=Load),
+      body=[
+        Assign(
+          targets=[
+            Name(id="b", ctx=Store)
+          ],
+          value=Constant(value=1)
+        ),
+        Assign(
+          targets=[
+            Name(id="c", ctx=Store)
+          ],
+          value=Constant(value=2)
+        )
+      ],
+      orelse=[]
+    ),
+    If(
+      test=Name(id="a", ctx=Load),
+      body=[
+        Pass
+      ],
+      orelse=[
+        Pass
+      ]
+    ),
+    For(
+      target=Name(id="i", ctx=Store),
+      iter=Name(id="x", ctx=Load),
+      body=[
+        Pass
+      ],
+      orelse=[]
+    ),
+    While(
+      test=Name(id="a", ctx=Load),
+      body=[
+        Break
+      ],
+      orelse=[]
+    ),
+    FunctionDef(
+      name="h",
+      args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+      body=[
+        Return(
+          value=Constant(value=1)
+        )
+      ],
+      decorator_list=[],
+      returns=None
+    ),
+    FunctionDef(
+      name="k",
+      args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+      body=[
+        Pass,
+        Pass
+      ],
+      decorator_list=[],
+      returns=None
+    ),
+    If(
+      test=Name(id="a", ctx=Load),
+      body=[
+        If(
+          test=Name(id="b", ctx=Load),
+          body=[
+            If(
+              test=Name(id="c", ctx=Load),
+              body=[
+                Expr(
+                  value=Name(id="d", ctx=Load)
+                )
+              ],
+              orelse=[
+                Expr(
+                  value=Name(id="e", ctx=Load)
+                )
+              ]
+            )
+          ],
+          orelse=[
+            Expr(
+              value=Name(id="g", ctx=Load)
+            )
+          ]
+        )
+      ],
+      orelse=[]
+    ),
+    Assign(
+      targets=[
+        Name(id="x", ctx=Store)
+      ],
+      value=List(
+        elts=[
+          Constant(value=1),
+          Constant(value=2),
+          Constant(value=3)
+        ],
+        ctx=Load
+      )
+    ),
+    Assign(
+      targets=[
+        Name(id="nested", ctx=Store)
+      ],
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[
+          Call(
+            func=Name(id="g", ctx=Load),
+            args=[
+              Call(
+                func=Name(id="h", ctx=Load),
+                args=[
+                  Constant(value=1)
+                ],
+                keywords=[]
+              )
+            ],
+            keywords=[]
+          )
+        ],
+        keywords=[]
+      )
+    ),
+    Assign(
+      targets=[
+        Name(id="text", ctx=Store)
+      ],
+      value=Constant(value="abcdefghi")
+    ),
+    If(
+      test=BoolOp(
+        op=And,
+        values=[
+          Name(id="a", ctx=Load),
+          Name(id="b", ctx=Load)
+        ]
+      ),
+      body=[
+        Pass
+      ],
+      orelse=[]
+    ),
+    Assign(
+      targets=[
+        Name(id="long", ctx=Store)
+      ],
+      value=BinOp(
+        left=BinOp(
+          left=Constant(value=1),
+          op=Add,
+          right=Constant(value=2)
+        ),
+        op=Add,
+        right=Constant(value=3)
+      )
+    ),
+    Try(
+      body=[
+        Pass
+      ],
+      handlers=[
+        ExceptHandler(
+          type=Name(id="E", ctx=Load),
+          name=None,
+          body=[
+            Pass
+          ]
+        )
+      ],
+      orelse=[],
+      finalbody=[]
+    )
+  ]
+)

@@ -1,0 +1,3 @@
+@startuml
+title !include stays Python text
+@enduml

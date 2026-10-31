@@ -1,0 +1,7 @@
+error: ValueError
+line: 2
+text: v
+trace: 11 <module>
+trace: 9 wrapper
+trace: 6 wrapper
+trace: 2 risky

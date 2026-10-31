@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+' Legacy directives indented with spaces and with tabs.
+  !$x = 1
+	!$names = ["A", "B"]
+	!if $x == 1
+    !foreach $n in $names
+		participant $n
+    !endfor
+	!endif
+  !$i = 0
+  !while $i < 2
+      A -> B : step $i
+		!$i = $i + 1
+  !endwhile
+    !function $twice($v)
+		!return $v * 2
+    !endfunction
+title $twice(21)
+@enduml

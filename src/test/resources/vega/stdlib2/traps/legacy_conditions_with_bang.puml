@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+!define FEATURE
+!$a = 1
+!$b = 2
+!if $a != $b
+participant Different
+!endif
+!if (%not($a == $b))
+participant NotEqual
+!elseif ($a == 1)
+participant Never
+!else
+participant Never2
+!endif
+!ifdef FEATURE
+participant Defined
+!endif
+!undef FEATURE
+!ifndef FEATURE
+participant Undefined
+!endif
+@enduml

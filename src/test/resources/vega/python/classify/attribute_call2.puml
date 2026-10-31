@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 3
+!l = [1]
+!l.append(2)
+!l.append(3)
+title !{len(l)}
+@enduml

@@ -1,0 +1,4 @@
+@startuml
+node app
+note right of app : run ${JAVA_HOME}/bin/java on port 8080
+@enduml

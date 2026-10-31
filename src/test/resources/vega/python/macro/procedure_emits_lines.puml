@@ -1,0 +1,15 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant Auth #FFCCCC
+' note right of Auth : Auth is up
+!python
+@macro
+def service(name, color):
+    emit("participant " + name + " " + color)
+    emit(f"note right of {name} : {name} is up")
+!endpy
+service(Auth, "#FFCCCC")
+@enduml

@@ -1,0 +1,4 @@
+@startuml
+title str str str 3.5 10 true
+Alice -> Bob : hello
+@enduml

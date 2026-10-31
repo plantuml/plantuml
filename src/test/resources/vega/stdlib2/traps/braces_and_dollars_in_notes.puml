@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+' Text that looks like an interpolation or a shell variable stays as written.
+Alice -> Bob : run ${HOME}/bin/start
+note over Alice
+${JAVA_HOME} and ${{ secrets.TOKEN }}
+value !{toto} and !{} here
+#{ruby} and %{x} and {{mustache}}
+end note
+Bob -> Alice : port !{port} ok
+@enduml

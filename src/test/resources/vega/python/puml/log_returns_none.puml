@@ -1,0 +1,9 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): puml.log writes "[Log] ..." on the standard error, as !log does, and gives None
+' title None
+!x = puml.log("a line for the log")
+title !{x}
+@enduml

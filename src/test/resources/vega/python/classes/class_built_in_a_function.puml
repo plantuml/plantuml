@@ -1,0 +1,18 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant Web #FFCCCC
+' participant API #FFCCCC
+!def themed(color):
+!    class Themed:
+!        def __init__(self, name):
+!            self.name = name
+!            self.color = color
+!    return Themed
+
+!Warm = themed("#FFCCCC")
+!for name in ["Web", "API"]:
+    participant !{name} !{Warm(name).color}
+@enduml

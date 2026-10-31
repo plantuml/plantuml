@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 3
+!emit("title " + str(int(math.sqrt(9))))
+@enduml

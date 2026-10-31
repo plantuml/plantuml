@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:166px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 166 72" width="166px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity web-->
+    <g class="entity" data-qualified-name="web" data-source-line="9" id="ent0001">
+      <polygon fill="#EEE" points="10,22,20,12,75.725,12,75.725,46,65.725,56,10,56,10,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="65.725" x2="75.725" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="65.725" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="65.725" x2="65.725" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="25.725" x="25" y="42.889">web</text>
+    </g>
+    <!--entity db-->
+    <g class="entity" data-qualified-name="db" data-source-line="9" id="ent0002">
+      <polygon fill="#FCC" points="94,22,104,12,149.575,12,149.575,46,139.575,56,94,56,94,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="139.575" x2="149.575" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="94" x2="139.575" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="139.575" x2="139.575" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="109" y="42.889">db</text>
+    </g>
+  </g>
+</svg>

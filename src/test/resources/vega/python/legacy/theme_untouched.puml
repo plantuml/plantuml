@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+' EXPECT (preproc):
+' participant A
+!theme plain
+!emit("participant A")
+@enduml

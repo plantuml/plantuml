@@ -1,0 +1,4 @@
+error: TypeError
+line: 2
+text: 'int' object is not callable
+trace: 2 <module>

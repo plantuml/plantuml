@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 5
+expected-error-message: 'nested format specs are not supported in !{pi:{w}}'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: nested format specs are not supported in !{pi:{w}}
+!pi = 3.14159
+!w = 8
+title !{pi:{w}}
+@enduml

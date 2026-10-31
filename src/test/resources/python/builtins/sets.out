@@ -1,0 +1,16 @@
+set() {1} {'a'} set() {(1, 2)}
+set() {None}
+{1}
+TypeError: unhashable type: 'list'
+TypeError: unhashable type: 'set'
+TypeError: '<' not supported between instances of 'set' and 'list'
+TypeError: unsupported operand type(s) for +: 'set' and 'set'
+TypeError: unsupported operand type(s) for |: 'set' and 'list'
+KeyError: 9
+KeyError: (1, 2)
+KeyError: 'pop from an empty set'
+TypeError: 'int' object is not iterable
+RuntimeError: Set changed size during iteration
+TypeError: 'set' object is not subscriptable
+TypeError: Object of type set is not JSON serializable
+sets ok

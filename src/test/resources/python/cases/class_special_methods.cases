@@ -1,0 +1,23 @@
+### line 2
+class A:
+    def __eq__(self, o):
+        return True
+### line 2
+class A:
+    def __hash__(self):
+        return 1
+### line 2
+class A:
+    def __add__(self, o):
+        return self
+### line 2
+class A:
+    def __len__(self):
+        return 0
+### line 2
+class A:
+    __slots__ = ()
+### line 2
+class A:
+    class __Meta__:
+        pass

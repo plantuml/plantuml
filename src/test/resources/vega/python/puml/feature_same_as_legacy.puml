@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): Python gives booleans, the legacy function 1 and 0
+' title True True False 1 1 0
+title !{puml.feature("theme")} !{puml.feature("style")} !{puml.feature("nothing")} %feature("theme") %feature("style") %feature("nothing")
+@enduml

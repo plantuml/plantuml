@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title !{toto} 2 !{a.b(} x}
+title !{toto} !{1 + 1} !{a.b(} !{"x}"}
+@enduml

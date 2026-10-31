@@ -1,0 +1,4 @@
+# NOT CPython: the instruction limit cannot be caught by except; it has no line.
+max-steps: 10000
+error: ExecutionLimitError
+text: instruction limit exceeded

@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the colour of a participant follows the background
+!def font(bg):
+!    return "white" if color.is_dark(bg) else "black"
+!for bg in ["#000000", "#FFFFFF", color.lighten("blue", 40)]:
+    participant "!{bg}" as P!{bg[1:]} !{bg}
+    note right of P!{bg[1:]} #!{bg[1:]}: font !{font(bg)}
+@enduml

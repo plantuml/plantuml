@@ -1,0 +1,5 @@
+@startuml
+
+participant Web #FFCCCC
+participant API #FFCCCC
+@enduml

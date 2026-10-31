@@ -1,0 +1,8 @@
+@startuml
+title ["a","b","c","d"]
+title ["a", "b", "c", "d"]
+title ["abc","def","ghi"]
+title ["abc", "def", "ghi"]
+title {"a":1,"o":{"x":1,"y":3,"z":4},"b":5}
+title {"a": 1, "o": {"x": 1, "y": 3, "z": 4}, "b": 5}
+@enduml

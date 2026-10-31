@@ -1,7 +1,9 @@
 {
   "Exclude": [
     "\\.spm$",
-    "\\.dat$"
+    "\\.dat$",
+    "src/test/resources/python/regressions/controlchars\\.out$",
+    "src/test/resources/vega/python/puml/read_crlf\\.txt$"
   ],
   "Disable": {
     "EndOfLine": false,

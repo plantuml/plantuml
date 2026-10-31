@@ -1,0 +1,6 @@
+@startuml
+
+User -> Web : login
+Web -> DB : query
+DB --> Web : rows
+@enduml

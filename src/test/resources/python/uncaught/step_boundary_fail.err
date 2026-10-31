@@ -1,0 +1,3 @@
+max-steps: 26
+error: ExecutionLimitError
+text: instruction limit exceeded

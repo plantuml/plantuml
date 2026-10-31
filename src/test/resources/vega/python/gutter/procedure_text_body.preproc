@@ -1,0 +1,7 @@
+@startuml
+
+participant Auth #FFCCCC
+note right of Auth : Auth is up
+participant Billing #CCE5FF
+note right of Billing : Billing is up
+@enduml

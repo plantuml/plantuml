@@ -221,7 +221,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 				while (tokenizer.hasMoreTokens()) {
 					final String s = tokenizer.nextToken();
 					if (s.equals("\t") || s.equals("" + Jaws.BLOCK_E1_REAL_TABULATION)) {
-						final double remainder = x % tabSize;
+						final double remainder = tabSize > 0 ? x % tabSize : 0;
 						x += tabSize - remainder;
 					} else {
 						final XDimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(),
@@ -246,7 +246,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 		while (tokenizer.hasMoreTokens()) {
 			final String s = tokenizer.nextToken();
 			if (s.equals("\t") || s.equals("" + Jaws.BLOCK_E1_REAL_TABULATION)) {
-				final double remainder = x % tabSize;
+				final double remainder = tabSize > 0 ? x % tabSize : 0;
 				x += tabSize - remainder;
 			} else {
 				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);

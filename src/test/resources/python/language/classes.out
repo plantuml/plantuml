@@ -1,0 +1,23 @@
+3 4 25 2 2
+4 6
+52
+52
+True True True Point
+<class '__main__.Point'> function
+__main__ __main__ Point
+14 3 True
+['Point', 'Point3']
+1 True False
+TypeError
+AttributeError
+deleted
+MyError ('bad', 2) ('bad', 2) MyError('bad', 2)
+42 ('oops',) oops E42: oops
+class raised ()
+10 15 5 make.<locals>.Counter <class '__main__.make.<locals>.Counter'>
+3 [1, 2, 3] True
+lifo lifo
+1 True True True
+hi <class '__main__.Outer.Inner'>
+2 10
+[0, 1, 4, 9] 7

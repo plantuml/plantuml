@@ -142,6 +142,7 @@ public class BlockUml {
 			Defines defines, Previous previous, Charset charset) {
 		this.pathSystem = pathSystem;
 		this.rawSource = ReadLineWithYamlHeader.removeYamlHeader(strings);
+		final List<StringLocated> yamlHeader = ReadLineWithYamlHeader.getYamlHeader(strings);
 		this.localDefines = defines;
 		this.previous = previous;
 
@@ -150,6 +151,7 @@ public class BlockUml {
 			this.preprocessingArtifact = new PreprocessingArtifact();
 		} else {
 			final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, this.rawSource.get(0));
+			timLoader.setYamlHeader(yamlHeader);
 			this.included.addAll(timLoader.load(this.rawSource));
 			List<StringLocated> tmp = timLoader.getResultList();
 			Jaws.mutateExpands1(tmp);
