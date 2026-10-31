@@ -62,29 +62,29 @@ public class CommandCreoleEmoji implements Command {
 
 	@Override
 	public int matchingSize(String line, int pos) {
-<span class="nc" id="L65">		final Matcher2 m = pattern.matcher(line, pos);</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="fc" id="L65">		final Matcher2 m = pattern.matcher(line, pos);</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (m.find() == false)</span>
 <span class="nc" id="L67">			return 0;</span>
 
-<span class="nc" id="L69">		return m.group(1).length();</span>
+<span class="fc" id="L69">		return m.group(1).length();</span>
 	}
 
 	@Override
 	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
-<span class="nc" id="L74">		final Matcher2 m = pattern.matcher(line, pos);</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (m.find() == false)</span>
+<span class="fc" id="L74">		final Matcher2 m = pattern.matcher(line, pos);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (m.find() == false)</span>
 <span class="nc" id="L76">			throw new IllegalStateException();</span>
 
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (stripe != null) {</span>
-<span class="nc" id="L79">			final String colorName1 = m.group(2);</span>
-<span class="nc" id="L80">			final String emoji = m.group(3);</span>
-<span class="nc" id="L81">			final double scale = Parser.getScale(m.group(4), 1);</span>
-<span class="nc" id="L82">			final String colorName2 = Parser.getColor(m.group(4));</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">			final String colorName = colorName1 == null ? colorName2 : colorName1;</span>
-<span class="nc" id="L84">			stripe.addEmoji(emoji, scale, colorName);</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (stripe != null) {</span>
+<span class="fc" id="L79">			final String colorName1 = m.group(2);</span>
+<span class="fc" id="L80">			final String emoji = m.group(3);</span>
+<span class="fc" id="L81">			final double scale = Parser.getScale(m.group(4), 1);</span>
+<span class="fc" id="L82">			final String colorName2 = Parser.getColor(m.group(4));</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			final String colorName = colorName1 == null ? colorName2 : colorName1;</span>
+<span class="fc" id="L84">			stripe.addEmoji(emoji, scale, colorName);</span>
 		}
 
-<span class="nc" id="L87">		return m.group(1).length();</span>
+<span class="fc" id="L87">		return m.group(1).length();</span>
 	}
 
 }

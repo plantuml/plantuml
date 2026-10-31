@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfDictionary.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfDictionary.java</span></div><h1>PdfDictionary.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfDictionary.java 3762 2009-03-06 16:53:44Z blowagie $
+ *
+ * Copyright 1999, 2000, 2001, 2002 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * &lt;CODE&gt;PdfDictionary&lt;/CODE&gt; is the Pdf dictionary object.
+ * &lt;p&gt;
+ * A dictionary is an associative table containing pairs of objects. The first element of each pair is called the
+ * &lt;I&gt;key&lt;/I&gt; and the second element is called the &lt;I&gt;value&lt;/I&gt;. Unlike dictionaries in the PostScript language, a key
+ * must be a
+ * &lt;CODE&gt;PdfName&lt;/CODE&gt;.
+ * A value can be any kind of &lt;CODE&gt;PdfObject&lt;/CODE&gt;, including a dictionary. A dictionary is generally used to collect
+ * and tie together the attributes of a complex object, with each key-value pair specifying the name and value of an
+ * attribute.&lt;BR&gt; A dictionary is represented by two left angle brackets ({@literal &lt;&lt;}), followed by a sequence of
+ * key-value pairs, followed by two right angle brackets ({@literal &gt;&gt;}).&lt;BR&gt; This object is described in the 'Portable
+ * Document Format Reference Manual version 1.7' section 3.2.6 (page 59-60).
+ *
+ * @see PdfObject
+ * @see PdfName
+ * @see BadPdfFormatException
+ */
+public class PdfDictionary extends PdfObject {
+
+    // CONSTANTS
+
+    /**
+     * This is a possible type of dictionary
+     */
+<span class="fc" id="L82">    public static final PdfName FONT = PdfName.FONT;</span>
+
+    /**
+     * This is a possible type of dictionary
+     */
+<span class="fc" id="L87">    public static final PdfName OUTLINES = PdfName.OUTLINES;</span>
+
+    /**
+     * This is a possible type of dictionary
+     */
+<span class="fc" id="L92">    public static final PdfName PAGE = PdfName.PAGE;</span>
+
+    /**
+     * This is a possible type of dictionary
+     */
+<span class="fc" id="L97">    public static final PdfName PAGES = PdfName.PAGES;</span>
+
+    /**
+     * This is a possible type of dictionary
+     */
+<span class="fc" id="L102">    public static final PdfName CATALOG = PdfName.CATALOG;</span>
+
+    // CLASS VARIABLES
+    /**
+     * This is the hashmap that contains all the values and keys of the dictionary
+     */
+    protected Map&lt;PdfName, PdfObject&gt; hashMap;
+    /**
+     * This is the type of this dictionary
+     */
+<span class="fc" id="L112">    private PdfName dictionaryType = null;</span>
+
+    // CONSTRUCTORS
+
+    /**
+     * Constructs an empty &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;-object.
+     */
+    public PdfDictionary() {
+<span class="fc" id="L120">        super(DICTIONARY);</span>
+<span class="fc" id="L121">        hashMap = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L122">    }</span>
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;-object of a certain type.
+     *
+     * @param type a &lt;CODE&gt;PdfName&lt;/CODE&gt;
+     */
+    public PdfDictionary(PdfName type) {
+<span class="fc" id="L130">        this();</span>
+<span class="fc" id="L131">        dictionaryType = type;</span>
+<span class="fc" id="L132">        put(PdfName.TYPE, dictionaryType);</span>
+<span class="fc" id="L133">    }</span>
+
+    // METHODS OVERRIDING SOME PDFOBJECT METHODS
+
+    /**
+     * Writes the PDF representation of this &lt;CODE&gt;PdfDictionary&lt;/CODE&gt; as an array of &lt;CODE&gt;byte&lt;/CODE&gt; to the given
+     * &lt;CODE&gt;OutputStream&lt;/CODE&gt;.
+     *
+     * @param writer for backwards compatibility
+     * @param os     the &lt;CODE&gt;OutputStream&lt;/CODE&gt; to write the bytes to.
+     * @throws IOException on error
+     */
+    public void toPdf(PdfWriter writer, OutputStream os) throws IOException {
+<span class="fc" id="L146">        os.write('&lt;');</span>
+<span class="fc" id="L147">        os.write('&lt;');</span>
+        // loop over all the object-pairs in the HashMap
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        for (PdfName pdfName : hashMap.keySet()) {</span>
+<span class="fc" id="L150">            PdfObject value = hashMap.get(pdfName);</span>
+<span class="fc" id="L151">            pdfName.toPdf(writer, os);</span>
+<span class="fc" id="L152">            int type = value.type();</span>
+<span class="fc bfc" id="L153" title="All 8 branches covered.">            if (type != PdfObject.ARRAY &amp;&amp; type != PdfObject.DICTIONARY &amp;&amp; type != PdfObject.NAME</span>
+                    &amp;&amp; type != PdfObject.STRING) {
+<span class="fc" id="L155">                os.write(' ');</span>
+            }
+<span class="fc" id="L157">            value.toPdf(writer, os);</span>
+<span class="fc" id="L158">        }</span>
+<span class="fc" id="L159">        os.write('&gt;');</span>
+<span class="fc" id="L160">        os.write('&gt;');</span>
+<span class="fc" id="L161">    }</span>
+
+    /**
+     * Returns a string representation of this &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;.
+     * &lt;p&gt;
+     * The string doesn't contain any of the content of this dictionary. Rather the string &quot;dictionary&quot; is returned,
+     * possibly followed by the type of this &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;, if set.
+     *
+     * @return the string representation of this &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;
+     * @see org.openpdf.text.pdf.PdfObject#toString()
+     */
+    public String toString() {
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        if (get(PdfName.TYPE) == null) {</span>
+<span class="nc" id="L174">            return &quot;Dictionary&quot;;</span>
+        }
+<span class="nc" id="L176">        return &quot;Dictionary of type: &quot; + get(PdfName.TYPE);</span>
+    }
+
+    // DICTIONARY CONTENT METHODS
+
+    /**
+     * Associates the specified &lt;CODE&gt;PdfObject&lt;/CODE&gt; as &lt;VAR&gt;value&lt;/VAR&gt; with the specified &lt;CODE&gt;PdfName&lt;/CODE&gt; as
+     * &lt;VAR&gt;key&lt;/VAR&gt; in this map.
+     * &lt;p&gt;
+     * If the map previously contained a mapping for this &lt;VAR&gt;key&lt;/VAR&gt;, the old &lt;VAR&gt;value&lt;/VAR&gt; is replaced. If the
+     * &lt;VAR&gt;value&lt;/VAR&gt; is
+     * &lt;CODE&gt;null&lt;/CODE&gt; or &lt;CODE&gt;PdfNull&lt;/CODE&gt; the key is deleted.
+     *
+     * @param key    a &lt;CODE&gt;PdfName&lt;/CODE&gt;
+     * @param object the &lt;CODE&gt;PdfObject&lt;/CODE&gt; to be associated with the
+     *               &lt;VAR&gt;key&lt;/VAR&gt;
+     */
+    public void put(PdfName key, PdfObject object) {
+<span class="pc bpc" id="L194" title="1 of 4 branches missed.">        if (object == null || object.isNull()) {</span>
+<span class="fc" id="L195">            hashMap.remove(key);</span>
+        } else {
+<span class="fc" id="L197">            hashMap.put(key, object);</span>
+        }
+<span class="fc" id="L199">    }</span>
+
+    /**
+     * Associates the specified &lt;CODE&gt;PdfObject&lt;/CODE&gt; as value to the specified &lt;CODE&gt;PdfName&lt;/CODE&gt; as key in this
+     * map.
+     * &lt;p&gt;
+     * If the &lt;VAR&gt;value&lt;/VAR&gt; is a &lt;CODE&gt;PdfNull&lt;/CODE&gt;, it is treated just as any other &lt;CODE&gt;PdfObject&lt;/CODE&gt;. If
+     * the
+     * &lt;VAR&gt;value&lt;/VAR&gt; is
+     * &lt;CODE&gt;null&lt;/CODE&gt; however nothing is done.
+     *
+     * @param key   a &lt;CODE&gt;PdfName&lt;/CODE&gt;
+     * @param value the &lt;CODE&gt;PdfObject&lt;/CODE&gt; to be associated to the
+     *              &lt;VAR&gt;key&lt;/VAR&gt;
+     */
+    public void putEx(PdfName key, PdfObject value) {
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        if (value == null) {</span>
+<span class="nc" id="L216">            return;</span>
+        }
+<span class="nc" id="L218">        put(key, value);</span>
+<span class="nc" id="L219">    }</span>
+
+    /**
+     * Copies all of the mappings from the specified &lt;CODE&gt;PdfDictionary&lt;/CODE&gt; to this &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;.
+     * &lt;p&gt;
+     * These mappings will replace any mappings previously contained in this
+     * &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;.
+     *
+     * @param dic The &lt;CODE&gt;PdfDictionary&lt;/CODE&gt; with the mappings to be copied over
+     */
+    public void putAll(PdfDictionary dic) {
+<span class="nc" id="L230">        hashMap.putAll(dic.hashMap);</span>
+<span class="nc" id="L231">    }</span>
+
+    /**
+     * Removes a &lt;CODE&gt;PdfObject&lt;/CODE&gt; and its &lt;VAR&gt;key&lt;/VAR&gt; from the
+     * &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;.
+     *
+     * @param key a &lt;CODE&gt;PdfName&lt;/CODE&gt;
+     */
+    public void remove(PdfName key) {
+<span class="nc" id="L240">        hashMap.remove(key);</span>
+<span class="nc" id="L241">    }</span>
+
+    /**
+     * Returns the &lt;CODE&gt;PdfObject&lt;/CODE&gt; associated to the specified
+     * &lt;VAR&gt;key&lt;/VAR&gt;.
+     *
+     * @param key a &lt;CODE&gt;PdfName&lt;/CODE&gt;
+     * @return the &lt;CODE&gt;PdfObject&lt;/CODE&gt; previously associated to the
+     * &lt;VAR&gt;key&lt;/VAR&gt;
+     */
+    public PdfObject get(PdfName key) {
+<span class="fc" id="L252">        return hashMap.get(key);</span>
+    }
+
+    /**
+     * Get all keys that are set.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if it is, otherwise &lt;CODE&gt;false&lt;/CODE&gt;.
+     */
+    public Set&lt;PdfName&gt; getKeys() {
+<span class="nc" id="L261">        return hashMap.keySet();</span>
+    }
+
+    /**
+     * Returns the number of &lt;VAR&gt;key&lt;/VAR&gt;-&lt;VAR&gt;value&lt;/VAR&gt; mappings in this
+     * &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;.
+     *
+     * @return the number of &lt;VAR&gt;key&lt;/VAR&gt;-&lt;VAR&gt;value&lt;/VAR&gt; mappings in this
+     * &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;.
+     */
+    public int size() {
+<span class="fc" id="L272">        return hashMap.size();</span>
+    }
+
+    /**
+     * Returns &lt;CODE&gt;true&lt;/CODE&gt; if this &lt;CODE&gt;PdfDictionary&lt;/CODE&gt; contains a mapping for the specified
+     * &lt;VAR&gt;key&lt;/VAR&gt;.
+     *
+     * @param key key
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if the key is set, otherwise &lt;CODE&gt;false&lt;/CODE&gt;.
+     */
+    public boolean contains(PdfName key) {
+<span class="fc" id="L283">        return hashMap.containsKey(key);</span>
+    }
+
+    // DICTIONARY TYPE METHODS
+
+    // OTHER METHODS
+
+    public void merge(PdfDictionary other) {
+<span class="fc" id="L291">        hashMap.putAll(other.hashMap);</span>
+<span class="fc" id="L292">    }</span>
+
+    public void mergeDifferent(PdfDictionary other) {
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">        for (PdfName key : other.hashMap.keySet()) {</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">            if (!hashMap.containsKey(key)) {</span>
+<span class="nc" id="L297">                hashMap.put(key, other.hashMap.get(key));</span>
+            }
+<span class="nc" id="L299">        }</span>
+<span class="fc" id="L300">    }</span>
+
+
+
+    /**
+     * Returns the &lt;CODE&gt;PdfObject&lt;/CODE&gt; associated to the specified
+     * &lt;VAR&gt;key&lt;/VAR&gt;, resolving a possible indirect reference to a direct
+     * object.
+     * &lt;p&gt;
+     * This method will never return a &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt; object.
+     *
+     * @param key A key for the &lt;CODE&gt;PdfObject&lt;/CODE&gt; to be returned
+     * @return A direct &lt;CODE&gt;PdfObject&lt;/CODE&gt; or &lt;CODE&gt;null&lt;/CODE&gt;
+     */
+    public PdfObject getDirectObject(PdfName key) {
+<span class="fc" id="L315">        return get(key);</span>
+    }
+
+
+
+    // DOWNCASTING GETTERS
+    // @author Mark A Storer (2/17/06)
+
+    /**
+     * Returns a &lt;CODE&gt;PdfObject&lt;/CODE&gt; as a &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;, resolving indirect references.
+     * &lt;p&gt;
+     * The object associated with the &lt;CODE&gt;PdfName&lt;/CODE&gt; given is retrieved and resolved to a direct object. If it is
+     * a &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;, it is cast down and returned as such. Otherwise &lt;CODE&gt;null&lt;/CODE&gt; is returned.
+     *
+     * @param key A &lt;CODE&gt;PdfName&lt;/CODE&gt;
+     * @return the associated &lt;CODE&gt;PdfDictionary&lt;/CODE&gt; object, or &lt;CODE&gt;null&lt;/CODE&gt;
+     */
+    public PdfDictionary getAsDict(PdfName key) {
+<span class="fc" id="L333">        PdfDictionary dict = null;</span>
+<span class="fc" id="L334">        PdfObject orig = getDirectObject(key);</span>
+<span class="pc bpc" id="L335" title="3 of 4 branches missed.">        if (orig != null &amp;&amp; orig.isDictionary()) {</span>
+<span class="nc" id="L336">            dict = (PdfDictionary) orig;</span>
+        }
+<span class="fc" id="L338">        return dict;</span>
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

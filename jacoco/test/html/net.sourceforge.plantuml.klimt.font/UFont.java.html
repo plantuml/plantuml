@@ -104,9 +104,9 @@ public final class UFont {
 <span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
 <span class="nc" id="L105">			return getTeaVMDefinition();</span>
 		} else {
-<span class="pc bpc" id="L107" title="2 of 4 branches missed.">			switch (context) {</span>
+<span class="pc bpc" id="L107" title="1 of 4 branches missed.">			switch (context) {</span>
 			case PDF:
-<span class="nc" id="L109">				return fontStack.getFullDefinition();</span>
+<span class="fc" id="L109">				return fontStack.getFullDefinition();</span>
 			case EPS:
 <span class="fc" id="L111">				return getUnderlayingFont(text).getPSName();</span>
 			case SVG:

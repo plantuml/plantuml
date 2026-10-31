@@ -89,9 +89,9 @@ public class Movement {
 <span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (is('S') == false) {</span>
 <span class="nc" id="L90">			throw new UnsupportedOperationException();</span>
 		}
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (mirrorControlPoint == null) {</span>
-<span class="nc" id="L93">			return new Movement(new SvgCommandLetter('C'), this.getSvgPosition(0), this.getSvgPosition(0),</span>
-<span class="nc" id="L94">					lastPosition());</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (mirrorControlPoint == null) {</span>
+<span class="fc" id="L93">			return new Movement(new SvgCommandLetter('C'), this.getSvgPosition(0), this.getSvgPosition(0),</span>
+<span class="fc" id="L94">					lastPosition());</span>
 		}
 <span class="fc" id="L96">		return new Movement(new SvgCommandLetter('C'), mirrorControlPoint, this.getSvgPosition(0), lastPosition());</span>
 	}

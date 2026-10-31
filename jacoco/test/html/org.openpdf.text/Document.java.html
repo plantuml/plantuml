@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Document.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text</a> &gt; <span class="el_source">Document.java</span></div><h1>Document.java</h1><pre class="source lang-java linenums">/*
+ * $Id: Document.java 4106 2009-11-27 12:59:39Z blowagie $
+ *
+ * Copyright 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text;
+
+import org.openpdf.text.error_messages.MessageLocalization;
+import org.openpdf.text.pdf.PdfDate;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+
+/**
+ * A generic Document class.
+ * &lt;p&gt;
+ * All kinds of Text-elements can be added to a &lt;CODE&gt;HTMLDocument&lt;/CODE&gt;. The &lt;CODE&gt;Document&lt;/CODE&gt; signals all the
+ * listeners when an element has been added.
+ * &lt;p&gt;
+ * Remark:
+ * &lt;OL&gt;
+ * &lt;LI&gt;Once a document is created you can add some meta information.
+ * &lt;LI&gt;You can also set the headers/footers.
+ * &lt;LI&gt;You have to open the document before you can write content.
+ * &lt;LI&gt;You can only write content (no more meta-formation!) once a document is
+ * opened.
+ * &lt;LI&gt;When you change the header/footer on a certain page, this will be
+ * effective starting on the next page.
+ * &lt;LI&gt;After closing the document, every listener (as well as its &lt;CODE&gt;
+ * OutputStream&lt;/CODE&gt;) is closed too.
+ * &lt;/OL&gt;
+ * Example: &lt;BLOCKQUOTE&gt;
+ *
+ * &lt;PRE&gt;// creation of the document with a certain size and certain margins
+ * &lt;STRONG&gt;Document document = new Document(new Rectangle(595, 842), 50, 50, 50, 50);
+ * &lt;/STRONG&gt; try {
+ * // creation of the different writers HtmlWriter.getInstance(&lt;STRONG&gt;document &lt;/STRONG&gt;, System.out);
+ * PdfWriter.getInstance(&lt;STRONG&gt;document &lt;/STRONG&gt;, new FileOutputStream(&quot;text.pdf&quot;)); // we add some meta information
+ * to the document
+ * &lt;STRONG&gt;document.addAuthor(&quot;Bruno Lowagie&quot;); &lt;/STRONG&gt;
+ * &lt;STRONG&gt;document.addSubject(&quot;This is the result of a Test.&quot;); &lt;/STRONG&gt;
+ * // we open the document for writing
+ * &lt;STRONG&gt;document.open(); &lt;/STRONG&gt;
+ * &lt;STRONG&gt;document.add(new Paragraph(&quot;Hello world&quot;));&lt;/STRONG&gt;
+ * } catch(DocumentException de) { System.err.println(de.getMessage()); }
+ * &lt;STRONG&gt;document.close();&lt;/STRONG&gt;
+ * &lt;/PRE&gt;
+ *
+ * &lt;/BLOCKQUOTE&gt;
+ */
+
+public class Document implements DocListener {
+
+    // membervariables
+    private static final String OPENPDF = &quot;OpenPDF&quot;;
+    private static final String RELEASE;
+    private static final String OPENPDF_VERSION;
+    /**
+     * Allows the pdf documents to be produced without compression for debugging purposes.
+     */
+<span class="fc" id="L107">    public static boolean compress = true;</span>
+    /**
+     * When true the file access is not done through a memory mapped file. Use it if the file is too big to be mapped in
+     * your address space.
+     */
+<span class="fc" id="L112">    public static boolean plainRandomAccess = false;</span>
+    static {
+<span class="fc" id="L114">        RELEASE = getVersionNumber();</span>
+<span class="fc" id="L115">        OPENPDF_VERSION = OPENPDF + &quot; &quot; + RELEASE;</span>
+<span class="fc" id="L116">    }</span>
+
+    /**
+     * The DocListener.
+     */
+<span class="fc" id="L121">    private final List&lt;DocListener&gt; listeners = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * Is the document open or not?
+     */
+    protected boolean open;
+    /**
+     * Has the document already been closed?
+     */
+    protected boolean close;
+    /**
+     * The size of the page.
+     */
+    protected Rectangle pageSize;
+
+    // membervariables concerning the layout
+    /**
+     * margin in x direction starting from the left
+     */
+<span class="fc" id="L140">    protected float marginLeft = 0;</span>
+    /**
+     * margin in x direction starting from the right
+     */
+<span class="fc" id="L144">    protected float marginRight = 0;</span>
+    /**
+     * margin in y direction starting from the top
+     */
+<span class="fc" id="L148">    protected float marginTop = 0;</span>
+    /**
+     * margin in y direction starting from the bottom
+     */
+<span class="fc" id="L152">    protected float marginBottom = 0;</span>
+    /**
+     * Current pagenumber
+     */
+<span class="fc" id="L156">    protected int pageN = 0;</span>
+    /**
+     * This is a chapter number in case ChapterAutoNumber is used.
+     */
+    /**
+     * Text rendering options, including the default language of the document and a flag to enable font glyph
+     * substitution (if FOP is available)
+     *
+     * @since 3.1.15
+     */
+<span class="fc" id="L166">    TextRenderingOptions textRenderingOptions = new TextRenderingOptions();</span>
+
+    // constructor
+
+    /**
+     * Constructs a new &lt;CODE&gt;Document&lt;/CODE&gt; -object with the A4 page size.
+     */
+    public Document() {
+<span class="fc" id="L174">        this(new RectangleReadOnly(595, 842));</span>
+<span class="fc" id="L175">    }</span>
+
+    /**
+     * Constructs a new &lt;CODE&gt;Document&lt;/CODE&gt; -object using the given rectangle as page size and default margin of 36.
+     *
+     * @param pageSize the pageSize
+     */
+    public Document(Rectangle pageSize) {
+<span class="fc" id="L183">        this(pageSize, 36, 36, 36, 36);</span>
+<span class="fc" id="L184">    }</span>
+
+    /**
+     * Constructs a new &lt;CODE&gt;Document&lt;/CODE&gt; -object.
+     *
+     * @param pageSize     the pageSize
+     * @param marginLeft   the margin on the left
+     * @param marginRight  the margin on the right
+     * @param marginTop    the margin on the top
+     * @param marginBottom the margin on the bottom
+     */
+    public Document(Rectangle pageSize, float marginLeft, float marginRight,
+<span class="fc" id="L196">            float marginTop, float marginBottom) {</span>
+<span class="fc" id="L197">        this.pageSize = pageSize;</span>
+<span class="fc" id="L198">        this.marginLeft = marginLeft;</span>
+<span class="fc" id="L199">        this.marginRight = marginRight;</span>
+<span class="fc" id="L200">        this.marginTop = marginTop;</span>
+<span class="fc" id="L201">        this.marginBottom = marginBottom;</span>
+<span class="fc" id="L202">    }</span>
+
+    private static String getVersionNumber() {
+<span class="fc" id="L205">        return &quot;PlantUML&quot;;</span>
+    }
+
+    // listener methods
+
+    // methods implementing the DocListener interface
+
+    /**
+     * Gets the iText version.
+     *
+     * @return iText version
+     */
+    public static String getVersion() {
+<span class="fc" id="L218">        return OPENPDF_VERSION;</span>
+    }
+
+    /**
+     * Adds a &lt;CODE&gt;DocListener&lt;/CODE&gt; to the &lt;CODE&gt;Document&lt;/CODE&gt;.
+     *
+     * @param listener the new DocListener.
+     */
+    public void addDocListener(DocListener listener) {
+<span class="fc" id="L227">        listeners.add(listener);</span>
+<span class="fc" id="L228">    }</span>
+
+    /**
+     * Adds an &lt;CODE&gt;Element&lt;/CODE&gt; to the &lt;CODE&gt;Document&lt;/CODE&gt;.
+     *
+     * @param element the &lt;CODE&gt;Element&lt;/CODE&gt; to add
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if the element was added, &lt;CODE&gt;false
+     * &lt;/CODE&gt; if not
+     * @throws DocumentException when a document isn't open yet, or has been closed
+     */
+    public boolean add(Element element) throws DocumentException {
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">        if (close) {</span>
+<span class="nc" id="L240">            throw new DocumentException(</span>
+<span class="nc" id="L241">                    MessageLocalization.getComposedMessage(&quot;the.document.has.been.closed.you.can.t.add.any.elements&quot;));</span>
+        }
+<span class="pc bpc" id="L243" title="2 of 4 branches missed.">        if (!open &amp;&amp; element.isContent()) {</span>
+<span class="nc" id="L244">            throw new DocumentException(MessageLocalization.getComposedMessage(</span>
+                    &quot;the.document.is.not.open.yet.you.can.only.add.meta.information&quot;));
+        }
+<span class="fc" id="L247">        boolean success = false;</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">        for (DocListener listener : listeners) {</span>
+<span class="fc" id="L249">            success |= listener.add(element);</span>
+<span class="fc" id="L250">        }</span>
+<span class="fc" id="L251">        return success;</span>
+    }
+
+    /**
+     * Opens the document.
+     * &lt;p&gt;
+     * Once the document is opened, you can't write any meta-information anymore. If you change the header/footer after
+     * opening the document, the change will be effective starting from the second page. You have to open the document
+     * before you can begin to add content to the body of the document.
+     */
+    public void open() {
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">        if (!close) {</span>
+<span class="fc" id="L263">            open = true;</span>
+        }
+<span class="fc bfc" id="L265" title="All 2 branches covered.">        for (DocListener listener : listeners) {</span>
+<span class="fc" id="L266">            listener.setPageSize(pageSize);</span>
+<span class="fc" id="L267">            listener.setMargins(marginLeft, marginRight, marginTop,</span>
+                    marginBottom);
+<span class="fc" id="L269">            listener.open();</span>
+<span class="fc" id="L270">        }</span>
+<span class="fc" id="L271">    }</span>
+
+    /**
+     * Sets the pagesize.
+     * &lt;p&gt;
+     * This change will be effective starting from the next page. If you want to change the page size of the first page,
+     * you need to set it before opening the document.
+     *
+     * @param pageSize the new pagesize
+     * @return a &lt;CODE&gt;boolean&lt;/CODE&gt;
+     */
+    public boolean setPageSize(Rectangle pageSize) {
+<span class="fc" id="L283">        this.pageSize = pageSize;</span>
+<span class="fc bfc" id="L284" title="All 2 branches covered.">        for (DocListener listener : listeners) {</span>
+<span class="fc" id="L285">            listener.setPageSize(pageSize);</span>
+<span class="fc" id="L286">        }</span>
+<span class="fc" id="L287">        return true;</span>
+    }
+
+    /**
+     * Sets the margins.
+     * &lt;p&gt;
+     * This change will be effective starting from the next page. If you want to change margins on the first page, you
+     * need to set it before opening the document.
+     * &lt;p&gt;
+     * A new page is created when you call:
+     *     &lt;ul&gt;
+     *         &lt;li&gt;Document.open()&lt;/li&gt;
+     *         &lt;li&gt;Document.newPage(), only if the current page has some content, otherwise no new page will be created&lt;/li&gt;
+     *     &lt;/ul&gt;
+     * &lt;/p&gt;
+     *
+     * @param marginLeft   the margin on the left
+     * @param marginRight  the margin on the right
+     * @param marginTop    the margin on the top
+     * @param marginBottom the margin on the bottom
+     * @return a &lt;CODE&gt;boolean&lt;/CODE&gt;
+     */
+    public boolean setMargins(float marginLeft, float marginRight,
+            float marginTop, float marginBottom) {
+<span class="nc" id="L311">        this.marginLeft = marginLeft;</span>
+<span class="nc" id="L312">        this.marginRight = marginRight;</span>
+<span class="nc" id="L313">        this.marginTop = marginTop;</span>
+<span class="nc" id="L314">        this.marginBottom = marginBottom;</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">        for (DocListener listener : listeners) {</span>
+<span class="nc" id="L316">            listener.setMargins(marginLeft, marginRight, marginTop,</span>
+                    marginBottom);
+<span class="nc" id="L318">        }</span>
+<span class="nc" id="L319">        return true;</span>
+    }
+
+    /**
+     * Signals to all listeners, that a new page has to be started. New pages can only be added on already opened and
+     * not yet closed documents.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if the page was added, &lt;CODE&gt;false&lt;/CODE&gt;
+     * if not.
+     */
+    public boolean newPage() {
+<span class="pc bpc" id="L330" title="2 of 4 branches missed.">        if (!open || close) {</span>
+<span class="nc" id="L331">            return false;</span>
+        }
+<span class="fc bfc" id="L333" title="All 2 branches covered.">        for (DocListener listener : listeners) {</span>
+<span class="fc" id="L334">            listener.newPage();</span>
+<span class="fc" id="L335">        }</span>
+<span class="fc" id="L336">        return true;</span>
+    }
+
+    // methods concerning the header or some meta information
+
+    /**
+     * Closes the document.
+     * &lt;p&gt;
+     * Once all the content has been written in the body, you have to close the body. After that nothing can be written
+     * to the body anymore.
+     */
+    @Override
+    public void close() {
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">        if (!close) {</span>
+<span class="fc" id="L350">            open = false;</span>
+<span class="fc" id="L351">            close = true;</span>
+        }
+<span class="fc bfc" id="L353" title="All 2 branches covered.">        for (DocListener listener : listeners) {</span>
+<span class="fc" id="L354">            listener.close();</span>
+<span class="fc" id="L355">        }</span>
+<span class="fc" id="L356">    }</span>
+
+    /**
+     * Adds the title to a Document.
+     * &lt;p/&gt;
+     * In case of a PDF this will be visible in the document properties panel.
+     * &lt;p/&gt;
+     * In case of a HTML file this will be visible as the &lt;CODE&gt;title&lt;/CODE&gt; &lt;CODE&gt;meta&lt;/CODE&gt; tag in the
+     * &lt;CODE&gt;HEAD&lt;/CODE&gt; part of the file.
+     * &lt;p/&gt;
+     * Shortcut method to call: &lt;CODE&gt;add(new Meta(Element.TITLE, title))&lt;/CODE&gt;
+     *
+     * @param title the title
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if successful, &lt;CODE&gt;false&lt;/CODE&gt; otherwise
+     */
+    public boolean addTitle(String title) {
+        try {
+<span class="nc" id="L373">            return add(new Meta(Element.TITLE, title));</span>
+<span class="nc" id="L374">        } catch (DocumentException de) {</span>
+<span class="nc" id="L375">            throw new ExceptionConverter(de);</span>
+        }
+    }
+
+    /**
+     * Adds the subject to a Document.
+     * &lt;p/&gt;
+     * In case of a PDF this will be visible in the document properties panel.
+     * &lt;p/&gt;
+     * In case of a HTML file this will be visible as the &lt;CODE&gt;subject&lt;/CODE&gt; &lt;CODE&gt;meta&lt;/CODE&gt; tag in the
+     * &lt;CODE&gt;HEAD&lt;/CODE&gt; part of the file.
+     *
+     * @param subject the subject
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if successful, &lt;CODE&gt;false&lt;/CODE&gt; otherwise
+     */
+    public boolean addSubject(String subject) {
+        try {
+<span class="nc" id="L392">            return add(new Meta(Element.SUBJECT, subject));</span>
+<span class="nc" id="L393">        } catch (DocumentException de) {</span>
+<span class="nc" id="L394">            throw new ExceptionConverter(de);</span>
+        }
+    }
+
+    /**
+     * Adds the author to a Document.
+     * &lt;p/&gt;
+     * In case of a PDF this will be visible in the document properties panel.
+     * &lt;p/&gt;
+     * In case of a HTML file this will be visible as the &lt;CODE&gt;author&lt;/CODE&gt; &lt;CODE&gt;meta&lt;/CODE&gt; tag in the
+     * &lt;CODE&gt;HEAD&lt;/CODE&gt; part of the file.
+     *
+     * @param author the name of the author
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if successful, &lt;CODE&gt;false&lt;/CODE&gt; otherwise
+     */
+    public boolean addAuthor(String author) {
+        try {
+<span class="nc" id="L411">            return add(new Meta(Element.AUTHOR, author));</span>
+<span class="nc" id="L412">        } catch (DocumentException de) {</span>
+<span class="nc" id="L413">            throw new ExceptionConverter(de);</span>
+        }
+    }
+
+    /**
+     * Adds the producer to a Document.
+     * &lt;p/&gt;
+     * In case of a PDF this will be visible in the document properties panel.
+     * &lt;p/&gt;
+     * In case of a HTML file this will be visible as comment in the &lt;CODE&gt;HEAD&lt;/CODE&gt; part of the file.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if successful, &lt;CODE&gt;false&lt;/CODE&gt; otherwise
+     */
+    public boolean addProducer() {
+<span class="fc" id="L427">        return this.addProducer(getVersion());</span>
+    }
+
+    /**
+     * Adds the provided value as the producer to a Document.
+     * &lt;p/&gt;
+     * The default producer is &lt;CODE&gt;OpenPDF XX.YY.ZZ&lt;/CODE&gt; where &lt;CODE&gt;XX.YY.ZZ&lt;/CODE&gt; is the version of the OpenPDF
+     * library used to produce the document
+     * &lt;p/&gt;
+     * In case of a PDF this will be visible in the document properties panel.
+     * &lt;p/&gt;
+     * In case of a HTML file this will be visible as comment in the &lt;CODE&gt;HEAD&lt;/CODE&gt; part of the file.
+     *
+     * @param producer new producer line value
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if successful, &lt;CODE&gt;false&lt;/CODE&gt; otherwise
+     */
+    public boolean addProducer(final String producer) {
+<span class="fc" id="L444">        return add(new Meta(Element.PRODUCER, producer));</span>
+    }
+
+    /**
+     * Adds the current date and time to a Document.
+     * &lt;p/&gt;
+     * In case of a PDF this will be visible in the document properties panel.
+     * &lt;p/&gt;
+     * In case of a HTML file this will be visible as comment in the &lt;CODE&gt;HEAD&lt;/CODE&gt; part of the file.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if successful, &lt;CODE&gt;false&lt;/CODE&gt; otherwise
+     */
+    public boolean addCreationDate() {
+        try {
+            /* bugfix by 'taqua' (Thomas) */
+<span class="fc" id="L459">            final SimpleDateFormat sdf = new SimpleDateFormat(</span>
+                    &quot;EEE MMM dd HH:mm:ss zzz yyyy&quot;);
+<span class="fc" id="L461">            return add(new Meta(Element.CREATIONDATE, sdf.format(new Date())));</span>
+<span class="nc" id="L462">        } catch (DocumentException de) {</span>
+<span class="nc" id="L463">            throw new ExceptionConverter(de);</span>
+        }
+    }
+
+    // methods to get the layout of the document.
+
+    /**
+     * Adds the current date and time to a Document.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if successful, &lt;CODE&gt;false&lt;/CODE&gt; otherwise
+     */
+    public boolean addCreationDate(PdfDate date) {
+        try {
+<span class="fc" id="L476">            return add(new Meta(Element.CREATIONDATE, date.toString()));</span>
+<span class="nc" id="L477">        } catch (DocumentException de) {</span>
+<span class="nc" id="L478">            throw new ExceptionConverter(de);</span>
+        }
+    }
+
+    /**
+     * Adds the current date and time to a Document.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if successful, &lt;CODE&gt;false&lt;/CODE&gt; otherwise
+     */
+    public boolean addModificationDate(PdfDate date) {
+        try {
+<span class="fc" id="L489">            return add(new Meta(Element.MODIFICATIONDATE, date.toString()));</span>
+<span class="nc" id="L490">        } catch (DocumentException de) {</span>
+<span class="nc" id="L491">            throw new ExceptionConverter(de);</span>
+        }
+    }
+
+    /**
+     * Returns the left margin.
+     *
+     * @return the left margin
+     */
+
+    /**
+     * Return the right margin.
+     *
+     * @return the right margin
+     */
+
+    /**
+     * Returns the top margin.
+     *
+     * @return the top margin
+     */
+
+    /**
+     * Returns the bottom margin.
+     *
+     * @return the bottom margin
+     */
+
+    /**
+     * Returns the lower left x-coordinate.
+     *
+     * @return the lower left x-coordinate
+     */
+
+    /**
+     * Returns the upper right x-coordinate.
+     *
+     * @return the upper right x-coordinate
+     */
+
+    /**
+     * Returns the upper right y-coordinate.
+     *
+     * @return the upper right y-coordinate
+     */
+
+    /**
+     * Returns the lower left y-coordinate.
+     *
+     * @return the lower left y-coordinate
+     */
+
+    /**
+     * Returns the lower left x-coordinate considering a given margin.
+     *
+     * @param margin a margin
+     * @return the lower left x-coordinate
+     */
+
+    /**
+     * Returns the upper right x-coordinate, considering a given margin.
+     *
+     * @param margin a margin
+     * @return the upper right x-coordinate
+     */
+
+    /**
+     * Returns the upper right y-coordinate, considering a given margin.
+     *
+     * @param margin a margin
+     * @return the upper right y-coordinate
+     */
+
+    /**
+     * Returns the lower left y-coordinate, considering a given margin.
+     *
+     * @param margin a margin
+     * @return the lower left y-coordinate
+     */
+
+    /**
+     * Gets the pagesize.
+     *
+     * @return the page size
+     */
+
+    /**
+     * Checks if the document is open.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if the document is open
+     */
+    public boolean isOpen() {
+<span class="fc" id="L583">        return open;</span>
+    }
+
+    /**
+     * Gets the JavaScript onLoad command.
+     *
+     * @return the JavaScript onLoad command
+     */
+
+    /**
+     * Adds a JavaScript onLoad function to the HTML body tag
+     *
+     * @param code the JavaScript code to be executed on load of the HTML page
+     */
+
+    /**
+     * Gets the JavaScript onUnLoad command.
+     *
+     * @return the JavaScript onUnLoad command
+     */
+
+    /**
+     * Adds a JavaScript onUnLoad function to the HTML body tag
+     *
+     * @param code the JavaScript code to be executed on unload of the HTML page
+     */
+
+    /**
+     * Gets the style class of the HTML body tag
+     *
+     * @return the style class of the HTML body tag
+     */
+
+    /**
+     * Adds a style class to the HTML body tag
+     *
+     * @param htmlStyleClass the style class for the HTML body tag
+     */
+
+    /**
+     * Gets the text rendering options.
+     *
+     * @return the text rendering options
+     */
+    public TextRenderingOptions getTextRenderingOptions() {
+<span class="fc" id="L628">        return textRenderingOptions;</span>
+    }
+
+    /**
+     * Sets the text rendering options.
+     *
+     * @param textRenderingOptions the text rendering options
+     */
+    public void setTextRenderingOptions(TextRenderingOptions textRenderingOptions) {
+<span class="pc bpc" id="L637" title="1 of 2 branches missed.">        this.textRenderingOptions = textRenderingOptions == null ? new TextRenderingOptions() : textRenderingOptions;</span>
+<span class="fc" id="L638">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

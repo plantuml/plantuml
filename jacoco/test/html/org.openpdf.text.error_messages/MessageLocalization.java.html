@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MessageLocalization.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.error_messages</a> &gt; <span class="el_source">MessageLocalization.java</span></div><h1>MessageLocalization.java</h1><pre class="source lang-java linenums">/*
+ * $Id: $
+ *
+ * Copyright 2009 by Paulo Soares.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+package org.openpdf.text.error_messages;
+
+import org.openpdf.text.pdf.BaseFont;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Localizes error messages. The messages are located in the package org.openpdf.text.error_messages in the form
+ * language_country.lng. The internal file encoding is UTF-8 without any escape chars, it's not a normal property file.
+ * See en.lng for more information on the internal format.
+ *
+ * @author Paulo Soares (psoares@glintt.com)
+ */
+<span class="nc" id="L68">public final class MessageLocalization {</span>
+
+    private static final String BASE_PATH = &quot;org/openpdf/text/error_messages/&quot;;
+<span class="nc" id="L71">    private static Map&lt;String, String&gt; defaultLanguage = new HashMap&lt;&gt;();</span>
+    private static Map&lt;String, String&gt; currentLanguage;
+
+    static {
+        try {
+<span class="nc" id="L76">            defaultLanguage = getLanguageMessages(&quot;en&quot;, null);</span>
+<span class="nc" id="L77">        } catch (Exception ex) {</span>
+            // do nothing
+<span class="nc" id="L79">        }</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (defaultLanguage == null) {</span>
+<span class="nc" id="L81">            defaultLanguage = new HashMap&lt;&gt;();</span>
+        }
+<span class="nc" id="L83">    }</span>
+
+    /**
+     * Get a message without parameters.
+     *
+     * @param key the key to the message
+     * @return the message
+     */
+    public static String getMessage(String key) {
+<span class="nc" id="L92">        Map&lt;String, String&gt; cl = currentLanguage;</span>
+        String val;
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (cl != null) {</span>
+<span class="nc" id="L95">            val = cl.get(key);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            if (val != null) {</span>
+<span class="nc" id="L97">                return val;</span>
+            }
+        }
+<span class="nc" id="L100">        cl = defaultLanguage;</span>
+<span class="nc" id="L101">        val = cl.get(key);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (val != null) {</span>
+<span class="nc" id="L103">            return val;</span>
+        }
+<span class="nc" id="L105">        return &quot;No message found for &quot; + key;</span>
+    }
+
+    /**
+     * Get a message without parameters.
+     *
+     * @param key the key to the message
+     * @return the message
+     */
+    public static String getComposedMessage(String key) {
+<span class="nc" id="L115">        return getComposedMessage(key, null, null, null, null);</span>
+    }
+
+    /**
+     * Get a message with one parameter. The parameter will replace the string &quot;{1}&quot; found in the message.
+     *
+     * @param key the key to the message
+     * @param p1  the parameter
+     * @return the message
+     */
+    public static String getComposedMessage(String key, Object p1) {
+<span class="nc" id="L126">        return getComposedMessage(key, p1, null, null, null);</span>
+    }
+
+    /**
+     * Get a message with one parameter. The parameter will replace the string &quot;{1}&quot; found in the message.
+     *
+     * @param key the key to the message
+     * @param p1  the parameter
+     * @return the message
+     */
+    public static String getComposedMessage(String key, int p1) {
+<span class="nc" id="L137">        return getComposedMessage(key, String.valueOf(p1), null, null, null);</span>
+    }
+
+    /**
+     * Get a message with one parameter. The parameter will replace the string &quot;{1}&quot;, &quot;{2}&quot; found in the message.
+     *
+     * @param key the key to the message
+     * @param p1  the parameter
+     * @param p2  the parameter
+     * @return the message
+     */
+    public static String getComposedMessage(String key, Object p1, Object p2) {
+<span class="nc" id="L149">        return getComposedMessage(key, p1, p2, null, null);</span>
+    }
+
+    /**
+     * Get a message with two parameters. The parameters will replace the strings &quot;{1}&quot;, &quot;{2}&quot;, &quot;{3}&quot;, &quot;{4}&quot; found in
+     * the message.
+     *
+     * @param key the key to the message
+     * @param p1  the parameter
+     * @param p2  the parameter
+     * @param p3  the parameter
+     * @param p4  the parameter
+     * @return the message
+     */
+    public static String getComposedMessage(String key, Object p1, Object p2, Object p3, Object p4) {
+<span class="nc" id="L164">        String msg = getMessage(key);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (p1 != null) {</span>
+<span class="nc" id="L166">            msg = msg.replace(&quot;{1}&quot;, p1.toString());</span>
+        }
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        if (p2 != null) {</span>
+<span class="nc" id="L169">            msg = msg.replace(&quot;{2}&quot;, p2.toString());</span>
+        }
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (p3 != null) {</span>
+<span class="nc" id="L172">            msg = msg.replace(&quot;{3}&quot;, p3.toString());</span>
+        }
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        if (p4 != null) {</span>
+<span class="nc" id="L175">            msg = msg.replace(&quot;{4}&quot;, p4.toString());</span>
+        }
+<span class="nc" id="L177">        return msg;</span>
+    }
+
+    private static Map&lt;String, String&gt; getLanguageMessages(String language, String country) throws IOException {
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        if (language == null) {</span>
+<span class="nc" id="L182">            throw new IllegalArgumentException(&quot;The language cannot be null.&quot;);</span>
+        }
+<span class="nc" id="L184">        InputStream is = null;</span>
+        try {
+            String file;
+<span class="nc bnc" id="L187" title="All 2 branches missed.">            if (country != null) {</span>
+<span class="nc" id="L188">                file = language + &quot;_&quot; + country + &quot;.lng&quot;;</span>
+            } else {
+<span class="nc" id="L190">                file = language + &quot;.lng&quot;;</span>
+            }
+<span class="nc" id="L192">            is = BaseFont.getResourceStream(BASE_PATH + file);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">            if (is != null) {</span>
+<span class="nc" id="L194">                return readLanguageStream(is);</span>
+            }
+<span class="nc bnc" id="L196" title="All 2 branches missed.">            if (country == null) {</span>
+<span class="nc" id="L197">                return null;</span>
+            }
+<span class="nc" id="L199">            file = language + &quot;.lng&quot;;</span>
+<span class="nc" id="L200">            is = BaseFont.getResourceStream(BASE_PATH + file);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">            if (is != null) {</span>
+<span class="nc" id="L202">                return readLanguageStream(is);</span>
+            } else {
+<span class="nc" id="L204">                return null;</span>
+            }
+        } finally {
+            try {
+<span class="nc bnc" id="L208" title="All 2 branches missed.">                if (is != null) {</span>
+<span class="nc" id="L209">                    is.close();</span>
+                }
+<span class="nc" id="L211">            } catch (Exception ignored) {</span>
+                // do nothing
+<span class="nc" id="L213">            }</span>
+        }
+    }
+
+    private static Map&lt;String, String&gt; readLanguageStream(InputStream is) throws IOException {
+<span class="nc" id="L218">        return readLanguageStream(new InputStreamReader(is, StandardCharsets.UTF_8));</span>
+    }
+
+    private static Map&lt;String, String&gt; readLanguageStream(Reader r) throws IOException {
+<span class="nc" id="L222">        Map&lt;String, String&gt; lang = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L223">        BufferedReader br = new BufferedReader(r);</span>
+        String line;
+<span class="nc bnc" id="L225" title="All 2 branches missed.">        while ((line = br.readLine()) != null) {</span>
+<span class="nc" id="L226">            int idxeq = line.indexOf('=');</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">            if (idxeq &lt; 0) {</span>
+<span class="nc" id="L228">                continue;</span>
+            }
+<span class="nc" id="L230">            String key = line.substring(0, idxeq).trim();</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">            if (key.startsWith(&quot;#&quot;)) {</span>
+<span class="nc" id="L232">                continue;</span>
+            }
+<span class="nc" id="L234">            lang.put(key, line.substring(idxeq + 1));</span>
+<span class="nc" id="L235">        }</span>
+<span class="nc" id="L236">        return lang;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfStream.java</span></div><h1>PdfStream.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfStream.java 4065 2009-09-16 23:09:11Z psoares33 $
+ *
+ * Copyright 1999, 2000, 2001, 2002 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import org.openpdf.text.DocWriter;
+import org.openpdf.text.Document;
+import org.openpdf.text.ExceptionConverter;
+import org.openpdf.text.error_messages.MessageLocalization;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
+
+
+/**
+ * &lt;CODE&gt;PdfStream&lt;/CODE&gt; is the Pdf stream object.
+ * &lt;p&gt;
+ * A stream, like a string, is a sequence of characters. However, an application can read a small portion of a stream at
+ * a time, while a string must be read in its entirety. For this reason, objects with potentially large amounts of data,
+ * such as images and page descriptions, are represented as streams.&lt;BR&gt; A stream consists of a dictionary that
+ * describes a sequence of characters, followed by the keyword &lt;B&gt;stream&lt;/B&gt;, followed by zero or more lines of
+ * characters, followed by the keyword &lt;B&gt;endstream&lt;/B&gt;.&lt;BR&gt; All streams must be &lt;CODE&gt;PdfIndirectObject&lt;/CODE&gt;s. The
+ * stream dictionary must be a direct object. The keyword &lt;B&gt;stream&lt;/B&gt; that follows the stream dictionary should be
+ * followed by a carriage return and linefeed or just a linefeed.&lt;BR&gt; Remark: In this version only the
+ * FLATEDECODE-filter is supported.&lt;BR&gt; This object is described in the 'Portable Document Format Reference Manual
+ * version 1.7' section 3.2.7 (page 60-63).&lt;BR&gt;
+ *
+ * @see PdfObject
+ * @see PdfDictionary
+ */
+
+public class PdfStream extends PdfDictionary {
+
+    // membervariables
+
+    /**
+     * A possible compression level.
+     *
+     * @since 2.1.3
+     */
+    public static final int DEFAULT_COMPRESSION = -1;
+    /**
+     * A possible compression level.
+     *
+     * @since 2.1.3
+     */
+    public static final int NO_COMPRESSION = 0;
+    /**
+     * A possible compression level.
+     *
+     * @since 2.1.3
+     */
+    public static final int BEST_COMPRESSION = 9;
+<span class="fc" id="L103">    static final byte[] STARTSTREAM = DocWriter.getISOBytes(&quot;stream\n&quot;);</span>
+<span class="fc" id="L104">    static final byte[] ENDSTREAM = DocWriter.getISOBytes(&quot;\nendstream&quot;);</span>
+    /**
+     * is the stream compressed?
+     */
+<span class="pc" id="L108">    protected boolean compressed = false;</span>
+    /**
+     * The level of compression.
+     *
+     * @since 2.1.3
+     */
+<span class="pc" id="L114">    protected int compressionLevel = NO_COMPRESSION;</span>
+<span class="pc" id="L115">    protected ByteArrayOutputStream streamBytes = null;</span>
+    protected InputStream inputStream;
+    protected PdfIndirectReference ref;
+<span class="pc" id="L118">    protected long inputStreamLength = -1;</span>
+    protected PdfWriter writer;
+    protected long rawLength;
+
+    // constructors
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfStream&lt;/CODE&gt;-object.
+     *
+     * @param bytes content of the new &lt;CODE&gt;PdfObject&lt;/CODE&gt; as an array of &lt;CODE&gt;byte&lt;/CODE&gt;.
+     */
+
+    public PdfStream(byte[] bytes) {
+<span class="nc" id="L131">        super();</span>
+<span class="nc" id="L132">        type = STREAM;</span>
+<span class="nc" id="L133">        this.bytes = bytes;</span>
+<span class="nc" id="L134">        rawLength = bytes.length;</span>
+<span class="nc" id="L135">        put(PdfName.LENGTH, new PdfNumber(bytes.length));</span>
+<span class="nc" id="L136">    }</span>
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfStream&lt;/CODE&gt;-object.
+     */
+
+    protected PdfStream() {
+<span class="fc" id="L143">        super();</span>
+<span class="fc" id="L144">        type = STREAM;</span>
+<span class="fc" id="L145">    }</span>
+
+//    public int getStreamLength(PdfWriter writer) {
+//        if (dicBytes == null)
+//            toPdf(writer);
+//        if (streamBytes != null)
+//            return streamBytes.size() + dicBytes.length + SIZESTREAM;
+//        else
+//            return bytes.length + dicBytes.length + SIZESTREAM;
+//    }
+
+    protected void superToPdf(PdfWriter writer, OutputStream os) throws IOException {
+<span class="fc" id="L157">        super.toPdf(writer, os);</span>
+<span class="fc" id="L158">    }</span>
+
+    /**
+     * Writes the data content to an &lt;CODE&gt;OutputStream&lt;/CODE&gt;.
+     *
+     * @param os the destination to write to
+     * @throws IOException on error
+     */
+    public void writeContent(OutputStream os) throws IOException {
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        if (streamBytes != null) {</span>
+<span class="nc" id="L168">            streamBytes.writeTo(os);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        } else if (bytes != null) {</span>
+<span class="nc" id="L170">            os.write(bytes);</span>
+        }
+<span class="nc" id="L172">    }</span>
+
+    /**
+     * @see org.openpdf.text.pdf.PdfObject#toString()
+     */
+    public String toString() {
+<span class="nc bnc" id="L178" title="All 2 branches missed.">        if (get(PdfName.TYPE) == null) {</span>
+<span class="nc" id="L179">            return &quot;Stream&quot;;</span>
+        }
+<span class="nc" id="L181">        return &quot;Stream of type: &quot; + get(PdfName.TYPE);</span>
+    }
+
+
+
+
+    /**
+     * Compresses the stream.
+     *
+     * @param compressionLevel the compression level (0 = best speed, 9 = best compression, -1 is default)
+     * @since 2.1.3
+     */
+    public void flateCompress(int compressionLevel) {
+        // NO_COMPRESSION: the stream stays readable (used for deterministic, diffable output)
+<span class="pc bpc" id="L195" title="2 of 4 branches missed.">        if (!Document.compress || compressionLevel == NO_COMPRESSION) {</span>
+<span class="fc" id="L196">            return;</span>
+        }
+        // check if the flateCompress-method has already been
+<span class="nc bnc" id="L199" title="All 2 branches missed.">        if (compressed) {</span>
+<span class="nc" id="L200">            return;</span>
+        }
+<span class="nc" id="L202">        this.compressionLevel = compressionLevel;</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">        if (inputStream != null) {</span>
+<span class="nc" id="L204">            compressed = true;</span>
+<span class="nc" id="L205">            return;</span>
+        }
+        // check if a filter already exists
+<span class="nc" id="L208">        PdfObject filter = get(PdfName.FILTER);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        if (filter != null) {</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">            if (filter.isName()) {</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">                if (PdfName.FLATEDECODE.equals(filter)) {</span>
+<span class="nc" id="L212">                    return;</span>
+                }
+<span class="nc bnc" id="L214" title="All 2 branches missed.">            } else if (filter.isArray()) {</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">                if (((PdfArray) filter).contains(PdfName.FLATEDECODE)) {</span>
+<span class="nc" id="L216">                    return;</span>
+                }
+            } else {
+<span class="nc" id="L219">                throw new RuntimeException(MessageLocalization.getComposedMessage(</span>
+                        &quot;stream.could.not.be.compressed.filter.is.not.a.name.or.array&quot;));
+            }
+        }
+        try {
+            // compress
+<span class="nc" id="L225">            ByteArrayOutputStream stream = new ByteArrayOutputStream();</span>
+<span class="nc" id="L226">            Deflater deflater = new Deflater(compressionLevel);</span>
+<span class="nc" id="L227">            DeflaterOutputStream zip = new DeflaterOutputStream(stream, deflater);</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">            if (streamBytes != null) {</span>
+<span class="nc" id="L229">                streamBytes.writeTo(zip);</span>
+            } else {
+<span class="nc" id="L231">                zip.write(bytes);</span>
+            }
+<span class="nc" id="L233">            zip.close();</span>
+<span class="nc" id="L234">            deflater.end();</span>
+            // update the object
+<span class="nc" id="L236">            streamBytes = stream;</span>
+<span class="nc" id="L237">            bytes = null;</span>
+<span class="nc" id="L238">            put(PdfName.LENGTH, new PdfNumber(streamBytes.size()));</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">            if (filter == null) {</span>
+<span class="nc" id="L240">                put(PdfName.FILTER, PdfName.FLATEDECODE);</span>
+            } else {
+<span class="nc" id="L242">                PdfArray filters = new PdfArray(filter);</span>
+<span class="nc" id="L243">                filters.add(PdfName.FLATEDECODE);</span>
+<span class="nc" id="L244">                put(PdfName.FILTER, filters);</span>
+            }
+<span class="nc" id="L246">            compressed = true;</span>
+<span class="nc" id="L247">        } catch (IOException ioe) {</span>
+<span class="nc" id="L248">            throw new ExceptionConverter(ioe);</span>
+<span class="nc" id="L249">        }</span>
+<span class="nc" id="L250">    }</span>
+
+    /**
+     * @see org.openpdf.text.pdf.PdfDictionary#toPdf(org.openpdf.text.pdf.PdfWriter, java.io.OutputStream)
+     */
+    public void toPdf(PdfWriter writer, OutputStream os) throws IOException {
+<span class="pc bpc" id="L256" title="3 of 4 branches missed.">        if (inputStream != null &amp;&amp; compressed) {</span>
+<span class="nc" id="L257">            put(PdfName.FILTER, PdfName.FLATEDECODE);</span>
+        }
+<span class="fc" id="L259">        superToPdf(writer, os);</span>
+<span class="fc" id="L260">        os.write(STARTSTREAM);</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">        if (inputStream != null) {</span>
+<span class="nc" id="L262">            rawLength = 0;</span>
+<span class="nc" id="L263">            DeflaterOutputStream def = null;</span>
+<span class="nc" id="L264">            OutputStreamCounter osc = new OutputStreamCounter(os);</span>
+<span class="nc" id="L265">            OutputStream fout = osc;</span>
+<span class="nc" id="L266">            Deflater deflater = null;</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">            if (compressed) {</span>
+<span class="nc" id="L268">                deflater = new Deflater(compressionLevel);</span>
+<span class="nc" id="L269">                fout = def = new DeflaterOutputStream(fout, deflater, 0x8000);</span>
+            }
+
+<span class="nc" id="L272">            byte[] buf = new byte[4192];</span>
+            while (true) {
+<span class="nc" id="L274">                int n = inputStream.read(buf);</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">                if (n &lt;= 0) {</span>
+<span class="nc" id="L276">                    break;</span>
+                }
+<span class="nc" id="L278">                fout.write(buf, 0, n);</span>
+<span class="nc" id="L279">                rawLength += n;</span>
+<span class="nc" id="L280">            }</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">            if (def != null) {</span>
+<span class="nc" id="L282">                def.finish();</span>
+<span class="nc" id="L283">                deflater.end();</span>
+            }
+<span class="nc" id="L285">            inputStreamLength = osc.getCounter();</span>
+<span class="nc" id="L286">        } else {</span>
+<span class="fc bfc" id="L287" title="All 2 branches covered.">            if (streamBytes != null) {</span>
+<span class="fc" id="L288">                streamBytes.writeTo(os);</span>
+            } else {
+<span class="fc" id="L290">                os.write(bytes);</span>
+            }
+        }
+<span class="fc" id="L293">        os.write(ENDSTREAM);</span>
+<span class="fc" id="L294">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

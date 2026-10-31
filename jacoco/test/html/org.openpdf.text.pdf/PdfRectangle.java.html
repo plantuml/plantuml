@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfRectangle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfRectangle.java</span></div><h1>PdfRectangle.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfRectangle.java 3694 2009-02-17 19:29:05Z mstorer $
+ *
+ * Copyright 1999, 2000, 2001, 2002 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import org.openpdf.text.Rectangle;
+
+/**
+ * &lt;CODE&gt;PdfRectangle&lt;/CODE&gt; is the PDF Rectangle object.
+ * &lt;p&gt;
+ * Rectangles are used to describe locations on the page and bounding boxes for several objects in PDF, such as fonts. A
+ * rectangle is represented as an &lt;CODE&gt;array&lt;/CODE&gt; of four numbers, specifying the lower left &lt;I&gt;x&lt;/I&gt;, lower left
+ * &lt;I&gt;y&lt;/I&gt;, upper right &lt;I&gt;x&lt;/I&gt;, and upper right &lt;I&gt;y&lt;/I&gt; coordinates of the rectangle, in that order.&lt;BR&gt; This
+ * object is described in the 'Portable Document Format Reference Manual version 1.3' section 7.1 (page 183).
+ *
+ * @see org.openpdf.text.Rectangle
+ * @see PdfArray
+ */
+
+public class PdfRectangle extends PdfArray {
+
+    // membervariables
+
+    /**
+     * lower left x
+     */
+<span class="fc" id="L73">    private float llx = 0;</span>
+
+    /**
+     * lower left y
+     */
+<span class="fc" id="L78">    private float lly = 0;</span>
+
+    /**
+     * upper right x
+     */
+<span class="fc" id="L83">    private float urx = 0;</span>
+
+    /**
+     * upper right y
+     */
+<span class="fc" id="L88">    private float ury = 0;</span>
+
+    // constructors
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfRectangle&lt;/CODE&gt;-object.
+     *
+     * @param llx      lower left x
+     * @param lly      lower left y
+     * @param urx      upper right x
+     * @param ury      upper right y
+     * @param rotation the rotation angle
+     * @since rugPdf0.10
+     */
+
+    public PdfRectangle(float llx, float lly, float urx, float ury, int rotation) {
+<span class="fc" id="L104">        super();</span>
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">        if (rotation == 90 || rotation == 270) {</span>
+<span class="nc" id="L106">            this.llx = lly;</span>
+<span class="nc" id="L107">            this.lly = llx;</span>
+<span class="nc" id="L108">            this.urx = ury;</span>
+<span class="nc" id="L109">            this.ury = urx;</span>
+        } else {
+<span class="fc" id="L111">            this.llx = llx;</span>
+<span class="fc" id="L112">            this.lly = lly;</span>
+<span class="fc" id="L113">            this.urx = urx;</span>
+<span class="fc" id="L114">            this.ury = ury;</span>
+        }
+<span class="fc" id="L116">        super.add(new PdfNumber(this.llx));</span>
+<span class="fc" id="L117">        super.add(new PdfNumber(this.lly));</span>
+<span class="fc" id="L118">        super.add(new PdfNumber(this.urx));</span>
+<span class="fc" id="L119">        super.add(new PdfNumber(this.ury));</span>
+<span class="fc" id="L120">    }</span>
+
+    public PdfRectangle(float llx, float lly, float urx, float ury) {
+<span class="nc" id="L123">        this(llx, lly, urx, ury, 0);</span>
+<span class="nc" id="L124">    }</span>
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfRectangle&lt;/CODE&gt;-object starting from the origin (0, 0).
+     *
+     * @param urx      upper right x
+     * @param ury      upper right y
+     * @param rotation the rotation angle
+     */
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfRectangle&lt;/CODE&gt;-object with a &lt;CODE&gt;Rectangle&lt;/CODE&gt;-object.
+     *
+     * @param rectangle a &lt;CODE&gt;Rectangle&lt;/CODE&gt;
+     * @param rotation  the rotation angle
+     */
+
+    public PdfRectangle(Rectangle rectangle, int rotation) {
+<span class="fc" id="L142">        this(rectangle.getLeft(), rectangle.getBottom(), rectangle.getRight(), rectangle.getTop(), rotation);</span>
+<span class="fc" id="L143">    }</span>
+
+    public PdfRectangle(Rectangle rectangle) {
+<span class="fc" id="L146">        this(rectangle.getLeft(), rectangle.getBottom(), rectangle.getRight(), rectangle.getTop(), 0);</span>
+<span class="fc" id="L147">    }</span>
+
+    // methods
+
+    /**
+     * Overrides the &lt;CODE&gt;add&lt;/CODE&gt;-method in &lt;CODE&gt;PdfArray&lt;/CODE&gt; in order to prevent the adding of extra object to
+     * the array.
+     *
+     * @param object &lt;CODE&gt;PdfObject&lt;/CODE&gt; to add (will not be added here)
+     * @return &lt;CODE&gt;false&lt;/CODE&gt;
+     */
+
+    public boolean add(PdfObject object) {
+<span class="nc" id="L160">        return false;</span>
+    }
+
+    /**
+     * Block changes to the underlying PdfArray
+     *
+     * @param values stuff we'll ignore.  Ha!
+     * @return false.  You can't add anything to a PdfRectangle
+     * @since 2.1.5
+     */
+
+    /**
+     * Block changes to the underlying PdfArray
+     *
+     * @param values stuff we'll ignore.  Ha!
+     * @return false.  You can't add anything to a PdfRectangle
+     * @since 2.1.5
+     */
+
+    public boolean add(int[] values) {
+<span class="nc" id="L180">        return false;</span>
+    }
+
+    /**
+     * Block changes to the underlying PdfArray
+     *
+     * @param object Ignored.
+     * @since 2.1.5
+     */
+
+    /**
+     * Returns the lower left x-coordinate.
+     *
+     * @return the lower left x-coordinate
+     */
+
+    public float left() {
+<span class="nc" id="L197">        return llx;</span>
+    }
+
+    /**
+     * Returns the upper right x-coordinate.
+     *
+     * @return the upper right x-coordinate
+     */
+
+    public float right() {
+<span class="nc" id="L207">        return urx;</span>
+    }
+
+    /**
+     * Returns the upper right y-coordinate.
+     *
+     * @return the upper right y-coordinate
+     */
+
+    public float top() {
+<span class="nc" id="L217">        return ury;</span>
+    }
+
+    /**
+     * Returns the lower left y-coordinate.
+     *
+     * @return the lower left y-coordinate
+     */
+
+    public float bottom() {
+<span class="nc" id="L227">        return lly;</span>
+    }
+
+    /**
+     * Returns the lower left x-coordinate, considering a given margin.
+     *
+     * @param margin a margin
+     * @return the lower left x-coordinate
+     */
+
+    /**
+     * Returns the upper right x-coordinate, considering a given margin.
+     *
+     * @param margin a margin
+     * @return the upper right x-coordinate
+     */
+
+    /**
+     * Returns the upper right y-coordinate, considering a given margin.
+     *
+     * @param margin a margin
+     * @return the upper right y-coordinate
+     */
+
+    /**
+     * Returns the lower left y-coordinate, considering a given margin.
+     *
+     * @param margin a margin
+     * @return the lower left y-coordinate
+     */
+
+    /**
+     * Returns the width of the rectangle.
+     *
+     * @return a width
+     */
+
+    /**
+     * Returns the height of the rectangle.
+     *
+     * @return a height
+     */
+
+    /**
+     * Swaps the values of urx and ury and of lly and llx in order to rotate the rectangle.
+     *
+     * @return a &lt;CODE&gt;PdfRectangle&lt;/CODE&gt;
+     */
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

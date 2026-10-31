@@ -149,12 +149,22 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTitle()" class="member-name-link">getTitle</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PdfOption.html" title="class in net.sourceforge.plantuml.openpdf">PdfOption</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withAuthor(java.lang.String)" class="member-name-link">withAuthor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;author)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDeterministic()" class="member-name-link">isDeterministic</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PdfOption.html" title="class in net.sourceforge.plantuml.openpdf">PdfOption</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withBackgroundColor(net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">withBackgroundColor</a><wbr>(<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backgroundColor)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withAuthor(java.lang.String)" class="member-name-link">withAuthor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;author)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PdfOption.html" title="class in net.sourceforge.plantuml.openpdf">PdfOption</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withBackgroundColor(net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">withBackgroundColor</a><wbr>(<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backgroundColor)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PdfOption.html" title="class in net.sourceforge.plantuml.openpdf">PdfOption</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withDeterministic(boolean)" class="member-name-link">withDeterministic</a><wbr>(boolean&nbsp;deterministic)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Reproducible output: fixed dates, file identifier and producer, and no
+ compression, so that the same diagram gives the same bytes everywhere (used by
+ the Vega tests).</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PdfOption.html" title="class in net.sourceforge.plantuml.openpdf">PdfOption</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withMinDimension(double,double)" class="member-name-link">withMinDimension</a><wbr>(double&nbsp;width,
  double&nbsp;height)</code></div>
@@ -276,6 +286,21 @@ loadScripts(document, 'script');</script>
 <h3>withMinDimension</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PdfOption.html" title="class in net.sourceforge.plantuml.openpdf">PdfOption</a></span>&nbsp;<span class="element-name">withMinDimension</span><wbr><span class="parameters">(double&nbsp;width,
  double&nbsp;height)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="isDeterministic()">
+<h3>isDeterministic</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDeterministic</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="withDeterministic(boolean)">
+<h3>withDeterministic</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PdfOption.html" title="class in net.sourceforge.plantuml.openpdf">PdfOption</a></span>&nbsp;<span class="element-name">withDeterministic</span><wbr><span class="parameters">(boolean&nbsp;deterministic)</span></div>
+<div class="block">Reproducible output: fixed dates, file identifier and producer, and no
+ compression, so that the same diagram gives the same bytes everywhere (used by
+ the Vega tests).</div>
 </section>
 </li>
 <li>

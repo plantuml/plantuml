@@ -243,15 +243,15 @@ public class StripeSimple implements Stripe {
 <span class="fc" id="L243">	}</span>
 
 	public void addEmoji(String emojiName, double scale, String forcedColor) {
-<span class="nc" id="L246">		final Emoji emoji = Emoji.retrieve(emojiName);</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">		if (emoji == null) {</span>
+<span class="fc" id="L246">		final Emoji emoji = Emoji.retrieve(emojiName);</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">		if (emoji == null) {</span>
 <span class="nc" id="L248">			atoms.add(AtomTextUtils.create(&quot;\u00BF&quot; + emojiName + &quot;?&quot;, fontConfiguration.changeColor(HColors.RED)));</span>
 <span class="nc" id="L249">			return;</span>
 		}
 
-<span class="nc" id="L252">		HColor col = null;</span>
-<span class="nc bnc" id="L253" title="All 2 branches missed.">		if (forcedColor == null)</span>
-<span class="nc" id="L254">			col = null;</span>
+<span class="fc" id="L252">		HColor col = null;</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (forcedColor == null)</span>
+<span class="fc" id="L254">			col = null;</span>
 <span class="nc bnc" id="L255" title="All 6 branches missed.">		else if (forcedColor.equals(&quot;#0&quot;) || forcedColor.equals(&quot;#000&quot;) || forcedColor.equals(&quot;#black&quot;))</span>
 <span class="nc" id="L256">			col = fontConfiguration.getColor();</span>
 		else
@@ -261,8 +261,8 @@ public class StripeSimple implements Stripe {
 <span class="nc" id="L261">				col = null;</span>
 <span class="nc" id="L262">			}</span>
 
-<span class="nc" id="L264">		atoms.add(new AtomEmoji(emoji, scale, fontConfiguration.getSize2D(), col));</span>
-<span class="nc" id="L265">	}</span>
+<span class="fc" id="L264">		atoms.add(new AtomEmoji(emoji, scale, fontConfiguration.getSize2D(), col));</span>
+<span class="fc" id="L265">	}</span>
 
 	public void addMath(ScientificEquationSafe math) {
 <span class="nc bnc" id="L268" title="All 2 branches missed.">		if (!TeaVM.isTeaVM())</span>

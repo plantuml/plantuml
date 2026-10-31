@@ -40,14 +40,14 @@ import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 
-<span class="nc" id="L43">public class DriverEllipsePdf implements UDriver&lt;UEllipse, PdfGraphics&gt; {</span>
+<span class="fc" id="L43">public class DriverEllipsePdf implements UDriver&lt;UEllipse, PdfGraphics&gt; {</span>
 
 	public void draw(UEllipse shape, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
-<span class="nc" id="L46">		final double width = shape.getWidth();</span>
-<span class="nc" id="L47">		final double height = shape.getHeight();</span>
+<span class="fc" id="L46">		final double width = shape.getWidth();</span>
+<span class="fc" id="L47">		final double height = shape.getHeight();</span>
 
-<span class="nc" id="L49">		final UClip clip = param.getClip();</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">		if (clip != null) {</span>
+<span class="fc" id="L49">		final UClip clip = param.getClip();</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (clip != null) {</span>
 <span class="nc bnc" id="L51" title="All 2 branches missed.">			if (clip.isInside(x, y) == false) {</span>
 <span class="nc" id="L52">				return;</span>
 			}
@@ -56,17 +56,17 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 			}
 		}
 
-<span class="nc" id="L59">		DriverRectanglePdf.applyStrokeColor(pdf, mapper, param);</span>
-<span class="nc" id="L60">		DriverRectanglePdf.applyFillColor(pdf, mapper, param);</span>
+<span class="fc" id="L59">		DriverRectanglePdf.applyStrokeColor(pdf, mapper, param);</span>
+<span class="fc" id="L60">		DriverRectanglePdf.applyFillColor(pdf, mapper, param);</span>
 
-<span class="nc" id="L62">		pdf.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+<span class="fc" id="L62">		pdf.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
-<span class="nc" id="L64">		double start = shape.getStart();</span>
-<span class="nc" id="L65">		final double extend = shape.getExtend();</span>
-<span class="nc" id="L66">		final double cx = x + width / 2;</span>
-<span class="nc" id="L67">		final double cy = y + height / 2;</span>
-<span class="nc bnc" id="L68" title="All 4 branches missed.">		if (start == 0 &amp;&amp; extend == 0) {</span>
-<span class="nc" id="L69">			pdf.pdfEllipse(cx, cy, width / 2, height / 2);</span>
+<span class="fc" id="L64">		double start = shape.getStart();</span>
+<span class="fc" id="L65">		final double extend = shape.getExtend();</span>
+<span class="fc" id="L66">		final double cx = x + width / 2;</span>
+<span class="fc" id="L67">		final double cy = y + height / 2;</span>
+<span class="pc bpc" id="L68" title="2 of 4 branches missed.">		if (start == 0 &amp;&amp; extend == 0) {</span>
+<span class="fc" id="L69">			pdf.pdfEllipse(cx, cy, width / 2, height / 2);</span>
 		} else {
 <span class="nc" id="L71">			start = start + 90;</span>
 <span class="nc bnc" id="L72" title="All 2 branches missed.">			if (extend &gt; 0) {</span>
@@ -85,7 +85,7 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 
 			}
 		}
-<span class="nc" id="L88">	}</span>
+<span class="fc" id="L88">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

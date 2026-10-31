@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Image.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text</a> &gt; <span class="el_source">Image.java</span></div><h1>Image.java</h1><pre class="source lang-java linenums">/*
+ * $Id: Image.java 4065 2009-09-16 23:09:11Z psoares33 $
+ *
+ * Copyright 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text;
+
+import org.openpdf.text.error_messages.MessageLocalization;
+import org.openpdf.text.pdf.PdfDictionary;
+import org.openpdf.text.pdf.PdfIndirectReference;
+import org.openpdf.text.pdf.PdfStream;
+import org.openpdf.text.pdf.PdfTemplate;
+import java.net.URL;
+
+
+/**
+ * An &lt;CODE&gt;Image&lt;/CODE&gt; is the representation of a graphic element (JPEG, PNG or GIF) that has to be inserted into the
+ * document
+ *
+ * Security consideration: This method accepts input and processes it without built-in validation,
+ * filtering, or access restrictions. It may load resources such as local files or external URLs,
+ * depending on the input. This can introduce security risks including unauthorized file access,
+ * directory traversal, or server-side request forgery (SSRF).
+ *
+ * It is the responsibility of the calling application to validate and sanitize all input
+ * before passing it to this method, especially when handling user-controlled or external data.
+ * Refer to established secure coding guidelines to ensure safe usage.
+ *
+ * @see Element
+ * @see Rectangle
+ */
+
+public abstract class Image extends Rectangle {
+
+    /**
+     * Image alignment: Default alignment (same as LEFT).
+     * The image will be placed on the left side of the page.
+     */
+    public static final int DEFAULT = 0;
+
+    /**
+     * Image alignment: Right-align the image.
+     * The image will be placed on the right side of the page.
+     * Can be combined with TEXTWRAP or UNDERLYING using bitwise OR.
+     * Example: {@code image.setAlignment(Image.RIGHT | Image.TEXTWRAP);}
+     */
+    public static final int RIGHT = 2;
+
+    /**
+     * Image alignment: Left-align the image.
+     * The image will be placed on the left side of the page.
+     * Can be combined with TEXTWRAP or UNDERLYING using bitwise OR.
+     * Example: {@code image.setAlignment(Image.LEFT | Image.TEXTWRAP);}
+     */
+    public static final int LEFT = 0;
+
+    /**
+     * This represents a coordinate in the transformation matrix.
+     */
+    public static final int AX = 0;
+
+    /**
+     * This represents a coordinate in the transformation matrix.
+     */
+    public static final int AY = 1;
+
+    /**
+     * This represents a coordinate in the transformation matrix.
+     */
+    public static final int BX = 2;
+
+    /**
+     * This represents a coordinate in the transformation matrix.
+     */
+    public static final int BY = 3;
+
+    /**
+     * This represents a coordinate in the transformation matrix.
+     */
+    public static final int CX = 4;
+
+    /**
+     * This represents a coordinate in the transformation matrix.
+     */
+    public static final int CY = 5;
+
+    /**
+     * This represents a coordinate in the transformation matrix.
+     */
+    public static final int DX = 6;
+
+    /**
+     * This represents a coordinate in the transformation matrix.
+     */
+    public static final int DY = 7;
+
+    /**
+     * type of image
+     */
+    public static final int ORIGINAL_NONE = 0;
+
+    /**
+     * a static that is used for attributing a unique id to each image.
+     */
+<span class="fc" id="L149">    static long serialId = 0;</span>
+    /**
+     * The image type.
+     */
+    protected int type;
+    /**
+     * The URL of the image.
+     */
+    protected URL url;
+    /**
+     * The raw data of the image.
+     */
+    protected byte[] rawData;
+    /**
+     * The bits per component of the raw image. It also flags a CCITT image.
+     */
+<span class="pc" id="L165">    protected int bpc = 1;</span>
+    /**
+     * The template to be treated as an image.
+     */
+<span class="pc" id="L169">    protected PdfTemplate[] template = new PdfTemplate[1];</span>
+    /**
+     * The alignment of the Image.
+     */
+    protected int alignment;
+    /**
+     * Text that can be shown instead of the image.
+     */
+    protected String alt;
+    /**
+     * This is the absolute X-position of the image.
+     */
+<span class="pc" id="L181">    protected float absoluteX = Float.NaN;</span>
+    /**
+     * This is the absolute Y-position of the image.
+     */
+<span class="pc" id="L185">    protected float absoluteY = Float.NaN;</span>
+    /**
+     * This is the width of the image without rotation.
+     */
+    protected float plainWidth;
+    /**
+     * This is the width of the image without rotation.
+     */
+    protected float plainHeight;
+    /**
+     * This is the scaled width of the image taking rotation into account.
+     */
+    protected float scaledWidth;
+    /**
+     * This is the original height of the image taking rotation into account.
+     */
+    protected float scaledHeight;
+    /**
+     * The compression level of the content streams.
+     *
+     * @since 2.1.3
+     */
+<span class="pc" id="L207">    protected int compressionLevel = PdfStream.DEFAULT_COMPRESSION;</span>
+
+    // image from file or URL
+    /**
+     * an iText attributed unique id for this image.
+     */
+<span class="pc" id="L213">    protected Long mySerialId = getSerialId();</span>
+    /**
+     * This is the rotation of the image in radians.
+     */
+    protected float rotationRadians;
+    /**
+     * the indentation to the left.
+     */
+<span class="pc" id="L221">    protected float indentationLeft = 0;</span>
+    /**
+     * the indentation to the right.
+     */
+<span class="pc" id="L225">    protected float indentationRight = 0;</span>
+    /**
+     * The spacing before the image.
+     */
+    protected float spacingBefore;
+    /**
+     * The spacing after the image.
+     */
+    protected float spacingAfter;
+    /**
+     * Holds value of property interpolation.
+     */
+    protected boolean interpolation;
+
+    // images from a PdfTemplate
+    /**
+     * Holds value of property originalType.
+     */
+<span class="pc" id="L243">    protected int originalType = ORIGINAL_NONE;</span>
+
+    // images from a java.awt.Image
+    /**
+     * Holds value of property originalData.
+     */
+    protected byte[] originalData;
+    /**
+     * Holds value of property deflated.
+     */
+<span class="pc" id="L253">    protected boolean deflated = false;</span>
+    /**
+     * Holds value of property dpiX.
+     */
+<span class="pc" id="L257">    protected int dpiX = 0;</span>
+    /**
+     * Holds value of property dpiY.
+     */
+<span class="pc" id="L261">    protected int dpiY = 0;</span>
+
+    // image from indirect reference
+    /**
+     * this is the colorspace of a jpeg-image.
+     */
+<span class="pc" id="L267">    protected int colorspace = -1;</span>
+    /**
+     * Image color inversion
+     */
+<span class="pc" id="L271">    protected boolean invert = false;</span>
+    /**
+     * ICC Profile attached
+     */
+    /**
+     * Is this image a mask?
+     */
+<span class="pc" id="L278">    protected boolean mask = false;</span>
+
+    // copy constructor
+    /**
+     * The image that serves as a mask for this image.
+     */
+    protected Image imageMask;
+    /**
+     * this is the transparency information of the raw image
+     */
+    protected int[] transparency;
+
+    // implementation of the Element interface
+    /**
+     * Holds value of property directReference. An image is embedded into a PDF as an Image XObject. This object is
+     * referenced by a PdfIndirectReference object.
+     */
+    private PdfIndirectReference directReference;
+    /**
+     * Holds value of property initialRotation.
+     */
+    private float initialRotation;
+
+    // checking the type of Image
+    /**
+     * Holds value of property widthPercentage.
+     */
+<span class="pc" id="L305">    private float widthPercentage = 100;</span>
+    /**
+     * Holds value of property XYRatio.
+     */
+<span class="pc" id="L309">    private float XYRatio = 0;</span>
+    /**
+     * a dictionary with additional information
+     */
+<span class="pc" id="L313">    private PdfDictionary additional = null;</span>
+
+    // getters and setters
+    /**
+     * Holds value of property smask.
+     */
+    private boolean smask;
+
+    /**
+     * Constructs an &lt;CODE&gt;Image&lt;/CODE&gt; -object, using an &lt;VAR&gt;url &lt;/VAR&gt;.
+     *
+     * @param url the &lt;CODE&gt;URL&lt;/CODE&gt; where the image can be found.
+     */
+    public Image(URL url) {
+<span class="fc" id="L327">        super(0, 0);</span>
+<span class="fc" id="L328">        this.url = url;</span>
+<span class="fc" id="L329">        this.alignment = DEFAULT;</span>
+<span class="fc" id="L330">        rotationRadians = 0;</span>
+<span class="fc" id="L331">    }</span>
+
+    /**
+     * Constructs an &lt;CODE&gt;Image&lt;/CODE&gt; -object, using an &lt;VAR&gt;url &lt;/VAR&gt;.
+     *
+     * @param image another Image object.
+     */
+    protected Image(Image image) {
+<span class="nc" id="L339">        super(image);</span>
+<span class="nc" id="L340">        this.type = image.type;</span>
+<span class="nc" id="L341">        this.url = image.url;</span>
+<span class="nc" id="L342">        this.rawData = image.rawData;</span>
+<span class="nc" id="L343">        this.bpc = image.bpc;</span>
+<span class="nc" id="L344">        this.template = image.template;</span>
+<span class="nc" id="L345">        this.alignment = image.alignment;</span>
+<span class="nc" id="L346">        this.alt = image.alt;</span>
+<span class="nc" id="L347">        this.absoluteX = image.absoluteX;</span>
+<span class="nc" id="L348">        this.absoluteY = image.absoluteY;</span>
+<span class="nc" id="L349">        this.plainWidth = image.plainWidth;</span>
+<span class="nc" id="L350">        this.plainHeight = image.plainHeight;</span>
+<span class="nc" id="L351">        this.scaledWidth = image.scaledWidth;</span>
+<span class="nc" id="L352">        this.scaledHeight = image.scaledHeight;</span>
+<span class="nc" id="L353">        this.mySerialId = image.mySerialId;</span>
+
+<span class="nc" id="L355">        this.directReference = image.directReference;</span>
+
+<span class="nc" id="L357">        this.rotationRadians = image.rotationRadians;</span>
+<span class="nc" id="L358">        this.initialRotation = image.initialRotation;</span>
+<span class="nc" id="L359">        this.indentationLeft = image.indentationLeft;</span>
+<span class="nc" id="L360">        this.indentationRight = image.indentationRight;</span>
+<span class="nc" id="L361">        this.spacingBefore = image.spacingBefore;</span>
+<span class="nc" id="L362">        this.spacingAfter = image.spacingAfter;</span>
+
+<span class="nc" id="L364">        this.widthPercentage = image.widthPercentage;</span>
+<span class="nc" id="L365">        this.interpolation = image.interpolation;</span>
+<span class="nc" id="L366">        this.originalType = image.originalType;</span>
+<span class="nc" id="L367">        this.originalData = image.originalData;</span>
+<span class="nc" id="L368">        this.deflated = image.deflated;</span>
+<span class="nc" id="L369">        this.dpiX = image.dpiX;</span>
+<span class="nc" id="L370">        this.dpiY = image.dpiY;</span>
+<span class="nc" id="L371">        this.XYRatio = image.XYRatio;</span>
+
+<span class="nc" id="L373">        this.colorspace = image.colorspace;</span>
+<span class="nc" id="L374">        this.invert = image.invert;</span>
+<span class="nc" id="L375">        this.additional = image.additional;</span>
+<span class="nc" id="L376">        this.mask = image.mask;</span>
+<span class="nc" id="L377">        this.imageMask = image.imageMask;</span>
+<span class="nc" id="L378">        this.smask = image.smask;</span>
+<span class="nc" id="L379">        this.transparency = image.transparency;</span>
+<span class="nc" id="L380">    }</span>
+
+    /**
+     * Gets an instance of an Image in raw mode.
+     *
+     * @param width      the width of the image in pixels
+     * @param height     the height of the image in pixels
+     * @param components 1,3 or 4 for GrayScale, RGB and CMYK
+     * @param data       the image data
+     * @param bpc        bits per component
+     * @return an object of type &lt;CODE&gt;ImgRaw&lt;/CODE&gt;
+     * @throws BadElementException on error
+     */
+    public static Image getInstance(int width, int height, int components,
+            int bpc, byte[] data) throws BadElementException {
+<span class="fc" id="L395">        return Image.getInstance(width, height, components, bpc, data, null);</span>
+    }
+
+    /**
+     * Creates a new serial id.
+     *
+     * @return a new serial id
+     */
+    static protected synchronized Long getSerialId() {
+<span class="fc" id="L404">        ++serialId;</span>
+<span class="fc" id="L405">        return serialId;</span>
+    }
+
+    /**
+     * Getter for property directReference.
+     *
+     * @return Value of property directReference.
+     */
+    public PdfIndirectReference getDirectReference() {
+<span class="fc" id="L414">        return this.directReference;</span>
+    }
+
+    /**
+     * Returns the type.
+     *
+     * @return a type
+     */
+
+    public int type() {
+<span class="nc" id="L424">        return type;</span>
+    }
+
+    /**
+     * @see org.openpdf.text.Element#isNestable()
+     * @since iText 2.0.8
+     */
+    public boolean isNestable() {
+<span class="nc" id="L432">        return true;</span>
+    }
+
+    /**
+     * Returns &lt;CODE&gt;true&lt;/CODE&gt; if the image is a &lt;CODE&gt;Jpeg&lt;/CODE&gt; -object.
+     *
+     * @return a &lt;CODE&gt;boolean&lt;/CODE&gt;
+     */
+
+    /**
+     * Returns &lt;CODE&gt;true&lt;/CODE&gt; if the image is a &lt;CODE&gt;ImgRaw&lt;/CODE&gt; -object.
+     *
+     * @return a &lt;CODE&gt;boolean&lt;/CODE&gt;
+     */
+
+    public boolean isImgRaw() {
+<span class="pc bpc" id="L448" title="1 of 2 branches missed.">        return type == IMGRAW;</span>
+    }
+
+    /**
+     * Returns &lt;CODE&gt;true&lt;/CODE&gt; if the image is an &lt;CODE&gt;ImgTemplate&lt;/CODE&gt; -object.
+     *
+     * @return a &lt;CODE&gt;boolean&lt;/CODE&gt;
+     */
+
+    public boolean isImgTemplate() {
+<span class="pc bpc" id="L458" title="1 of 2 branches missed.">        return type == IMGTEMPLATE;</span>
+    }
+
+    // serial stamping
+
+    /**
+     * Gets the &lt;CODE&gt;String&lt;/CODE&gt; -representation of the reference to the image.
+     *
+     * @return a &lt;CODE&gt;String&lt;/CODE&gt;
+     */
+
+    /**
+     * Gets the raw data for the image.
+     * &lt;p&gt;
+     * Remark: this only makes sense for Images of the type &lt;CODE&gt;RawImage
+     * &lt;/CODE&gt;.
+     *
+     * @return the raw data
+     */
+    public byte[] getRawData() {
+<span class="fc" id="L478">        return rawData;</span>
+    }
+
+    // rotation, note that the superclass also has a rotation value.
+
+    /**
+     * Gets the bpc for the image.
+     * &lt;p&gt;
+     * Remark: this only makes sense for Images of the type &lt;CODE&gt;RawImage
+     * &lt;/CODE&gt;.
+     *
+     * @return a bpc value
+     */
+    public int getBpc() {
+<span class="fc" id="L492">        return bpc;</span>
+    }
+
+    /**
+     * Gets the template to be used as an image.
+     * &lt;p&gt;
+     * Remark: this only makes sense for Images of the type &lt;CODE&gt;ImgTemplate
+     * &lt;/CODE&gt;.
+     *
+     * @return the template
+     */
+    public PdfTemplate getTemplateData() {
+<span class="nc" id="L504">        return template[0];</span>
+    }
+
+    /**
+     * Sets the alignment for the image.
+     * &lt;p&gt;
+     * The alignment parameter can be one of the following base values:
+     * &lt;ul&gt;
+     *   &lt;li&gt;{@link #LEFT} or {@link #DEFAULT} - Align the image to the left&lt;/li&gt;
+     *   &lt;li&gt;{@link #RIGHT} - Align the image to the right&lt;/li&gt;
+     *   &lt;li&gt;{@link #MIDDLE} - Center the image horizontally&lt;/li&gt;
+     * &lt;/ul&gt;
+     * &lt;p&gt;
+     * The base alignment can be combined with modifiers using bitwise OR (|):
+     * &lt;ul&gt;
+     *   &lt;li&gt;{@link #TEXTWRAP} - Allow text to wrap around the image (useful for inline images)&lt;/li&gt;
+     *   &lt;li&gt;{@link #UNDERLYING} - Place the image behind text (useful for watermarks, seals, stamps)&lt;/li&gt;
+     * &lt;/ul&gt;
+     * &lt;p&gt;
+     * Examples:
+     * &lt;pre&gt;{@code
+     * // Image aligned left with text wrapping around it on the right
+     * image.setAlignment(Image.LEFT | Image.TEXTWRAP);
+     * 
+     * // Image aligned right with text wrapping around it on the left
+     * image.setAlignment(Image.RIGHT | Image.TEXTWRAP);
+     * 
+     * // Seal or stamp that appears behind text on the right
+     * image.setAlignment(Image.RIGHT | Image.UNDERLYING);
+     * 
+     * // Watermark that appears behind centered text
+     * image.setAlignment(Image.MIDDLE | Image.UNDERLYING);
+     * }&lt;/pre&gt;
+     *
+     * @param alignment the alignment value (can be a combination of flags using bitwise OR)
+     */
+
+    /**
+     * Gets the alternative text for the image.
+     *
+     * @return a &lt;CODE&gt;String&lt;/CODE&gt;
+     */
+
+    /**
+     * Sets the alternative information for the image.
+     *
+     * @param alt the alternative information
+     */
+
+    // indentations
+
+    /**
+     * Sets the absolute position of the &lt;CODE&gt;Image&lt;/CODE&gt;.
+     *
+     * @param absoluteX absolute x position
+     * @param absoluteY absolute y position
+     */
+
+    public void setAbsolutePosition(float absoluteX, float absoluteY) {
+<span class="fc" id="L563">        this.absoluteX = absoluteX;</span>
+<span class="fc" id="L564">        this.absoluteY = absoluteY;</span>
+<span class="fc" id="L565">    }</span>
+
+    /**
+     * Returns the absolute X position.
+     *
+     * @return a position
+     */
+    public float getAbsoluteX() {
+<span class="fc" id="L573">        return absoluteX;</span>
+    }
+
+    /**
+     * Checks if the &lt;CODE&gt;Images&lt;/CODE&gt; has to be added at an absolute position.
+     *
+     * @return a boolean
+     */
+    public boolean hasAbsoluteY() {
+<span class="pc bpc" id="L582" title="1 of 2 branches missed.">        return !Float.isNaN(absoluteY);</span>
+    }
+
+    /**
+     * Returns the absolute Y position.
+     *
+     * @return a position
+     */
+    public float getAbsoluteY() {
+<span class="fc" id="L591">        return absoluteY;</span>
+    }
+
+    // widthpercentage (for the moment only used in ColumnText)
+
+    // annotation
+
+    /**
+     * Returns the transformation matrix of the image.
+     *
+     * @return an array [AX, AY, BX, BY, CX, CY, DX, DY]
+     */
+    public float[] matrix() {
+<span class="fc" id="L604">        float[] matrix = new float[8];</span>
+<span class="fc" id="L605">        float cosX = (float) Math.cos(rotationRadians);</span>
+<span class="fc" id="L606">        float sinX = (float) Math.sin(rotationRadians);</span>
+<span class="fc" id="L607">        matrix[AX] = plainWidth * cosX;</span>
+<span class="fc" id="L608">        matrix[AY] = plainWidth * sinX;</span>
+<span class="fc" id="L609">        matrix[BX] = (-plainHeight) * sinX;</span>
+<span class="fc" id="L610">        matrix[BY] = plainHeight * cosX;</span>
+<span class="pc bpc" id="L611" title="1 of 2 branches missed.">        if (rotationRadians &lt; Math.PI / 2f) {</span>
+<span class="fc" id="L612">            matrix[CX] = matrix[BX];</span>
+<span class="fc" id="L613">            matrix[CY] = 0;</span>
+<span class="fc" id="L614">            matrix[DX] = matrix[AX];</span>
+<span class="fc" id="L615">            matrix[DY] = matrix[AY] + matrix[BY];</span>
+<span class="nc bnc" id="L616" title="All 2 branches missed.">        } else if (rotationRadians &lt; Math.PI) {</span>
+<span class="nc" id="L617">            matrix[CX] = matrix[AX] + matrix[BX];</span>
+<span class="nc" id="L618">            matrix[CY] = matrix[BY];</span>
+<span class="nc" id="L619">            matrix[DX] = 0;</span>
+<span class="nc" id="L620">            matrix[DY] = matrix[AY];</span>
+<span class="nc bnc" id="L621" title="All 2 branches missed.">        } else if (rotationRadians &lt; Math.PI * 1.5f) {</span>
+<span class="nc" id="L622">            matrix[CX] = matrix[AX];</span>
+<span class="nc" id="L623">            matrix[CY] = matrix[AY] + matrix[BY];</span>
+<span class="nc" id="L624">            matrix[DX] = matrix[BX];</span>
+<span class="nc" id="L625">            matrix[DY] = 0;</span>
+        } else {
+<span class="nc" id="L627">            matrix[CX] = 0;</span>
+<span class="nc" id="L628">            matrix[CY] = matrix[AY];</span>
+<span class="nc" id="L629">            matrix[DX] = matrix[AX] + matrix[BX];</span>
+<span class="nc" id="L630">            matrix[DY] = matrix[BY];</span>
+        }
+<span class="fc" id="L632">        return matrix;</span>
+    }
+
+    /**
+     * Returns a serial id for the Image (reuse the same image more than once)
+     *
+     * @return a serialId
+     */
+    public Long getMySerialId() {
+<span class="fc" id="L641">        return mySerialId;</span>
+    }
+
+    // Optional Content
+
+    // interpolation
+
+    // original type and data
+
+    /**
+     * Sets the spacing before this image.
+     *
+     * @param spacing the new spacing
+     */
+
+    /**
+     * Sets the spacing after this image.
+     *
+     * @param spacing the new spacing
+     */
+
+    // the following values are only set for specific types of images.
+
+    // DPI info
+
+    /**
+     * Getter for property interpolation.
+     *
+     * @return Value of property interpolation.
+     */
+    public boolean isInterpolation() {
+<span class="fc" id="L672">        return interpolation;</span>
+    }
+
+    // XY Ratio
+
+    // color, colorspaces and transparency
+
+    /**
+     * Getter for property deflated.
+     *
+     * @return Value of property deflated.
+     */
+    public boolean isDeflated() {
+<span class="fc" id="L685">        return this.deflated;</span>
+    }
+
+    /**
+     * Gets the colorspace for the image.
+     * &lt;p&gt;
+     * Remark: this only makes sense for Images of the type &lt;CODE&gt;Jpeg&lt;/CODE&gt;.
+     *
+     * @return a colorspace value
+     */
+    public int getColorspace() {
+<span class="fc" id="L696">        return colorspace;</span>
+    }
+
+    /**
+     * Getter for the inverted value
+     *
+     * @return true if the image is inverted
+     */
+    public boolean isInverted() {
+<span class="fc" id="L705">        return invert;</span>
+    }
+
+    /**
+     * Getter for the dictionary with additional information.
+     *
+     * @return a PdfDictionary with additional information.
+     */
+    public PdfDictionary getAdditional() {
+<span class="fc" id="L714">        return this.additional;</span>
+    }
+
+    /**
+     * Returns &lt;CODE&gt;true&lt;/CODE&gt; if this &lt;CODE&gt;Image&lt;/CODE&gt; is a mask.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if this &lt;CODE&gt;Image&lt;/CODE&gt; is a mask
+     */
+    public boolean isMask() {
+<span class="fc" id="L723">        return mask;</span>
+    }
+
+    /**
+     * Make this &lt;CODE&gt;Image&lt;/CODE&gt; a mask.
+     *
+     * @throws DocumentException if this &lt;CODE&gt;Image&lt;/CODE&gt; can not be a mask
+     */
+    public void makeMask() throws DocumentException {
+<span class="pc bpc" id="L732" title="1 of 2 branches missed.">        if (!isMaskCandidate()) {</span>
+<span class="nc" id="L733">            throw new DocumentException(MessageLocalization.getComposedMessage(&quot;this.image.can.not.be.an.image.mask&quot;));</span>
+        }
+<span class="fc" id="L735">        mask = true;</span>
+<span class="fc" id="L736">    }</span>
+
+    /**
+     * Returns &lt;CODE&gt;true&lt;/CODE&gt; if this &lt;CODE&gt;Image&lt;/CODE&gt; has the requisites to be a mask.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if this &lt;CODE&gt;Image&lt;/CODE&gt; can be a mask
+     */
+    public boolean isMaskCandidate() {
+<span class="pc bpc" id="L744" title="1 of 2 branches missed.">        if (type == IMGRAW) {</span>
+<span class="pc bpc" id="L745" title="1 of 2 branches missed.">            if (bpc &gt; 0xff) {</span>
+<span class="nc" id="L746">                return true;</span>
+            }
+        }
+<span class="pc bpc" id="L749" title="1 of 2 branches missed.">        return colorspace == 1;</span>
+    }
+
+    /**
+     * Gets the explicit masking.
+     *
+     * @return the explicit masking
+     */
+    public Image getImageMask() {
+<span class="fc" id="L758">        return imageMask;</span>
+    }
+
+    /**
+     * Sets the explicit masking.
+     *
+     * @param mask the mask to be applied
+     * @throws DocumentException on error
+     */
+    public void setImageMask(Image mask) throws DocumentException {
+<span class="pc bpc" id="L768" title="1 of 2 branches missed.">        if (this.mask) {</span>
+<span class="nc" id="L769">            throw new DocumentException(</span>
+<span class="nc" id="L770">                    MessageLocalization.getComposedMessage(&quot;an.image.mask.cannot.contain.another.image.mask&quot;));</span>
+        }
+<span class="pc bpc" id="L772" title="1 of 2 branches missed.">        if (!mask.mask) {</span>
+<span class="nc" id="L773">            throw new DocumentException(</span>
+<span class="nc" id="L774">                    MessageLocalization.getComposedMessage(&quot;the.image.mask.is.not.a.mask.did.you.do.makemask&quot;));</span>
+        }
+<span class="fc" id="L776">        imageMask = mask;</span>
+<span class="pc bpc" id="L777" title="2 of 4 branches missed.">        smask = (mask.bpc &gt; 1 &amp;&amp; mask.bpc &lt;= 8);</span>
+<span class="fc" id="L778">    }</span>
+
+    /**
+     * Getter for property smask.
+     *
+     * @return Value of property smask.
+     */
+    public boolean isSmask() {
+<span class="fc" id="L786">        return this.smask;</span>
+    }
+
+    /**
+     * Returns the transparency.
+     *
+     * @return the transparency values
+     */
+
+    public int[] getTransparency() {
+<span class="fc" id="L796">        return transparency;</span>
+    }
+
+
+    /**
+     * Returns the compression level used for images written as a compressed stream.
+     *
+     * @return the compression level (0 = best speed, 9 = best compression, -1 is default)
+     * @since 2.1.3
+     */
+    public int getCompressionLevel() {
+<span class="fc" id="L807">        return compressionLevel;</span>
+    }
+
+    /**
+     * Sets the compression level to be used if the image is written as a compressed stream.
+     *
+     * @param compressionLevel a value between 0 (best speed) and 9 (best compression)
+     * @since 2.1.3
+     */
+    public void setCompressionLevel(int compressionLevel) {
+<span class="pc bpc" id="L817" title="2 of 4 branches missed.">        if (compressionLevel &lt; PdfStream.NO_COMPRESSION || compressionLevel &gt; PdfStream.BEST_COMPRESSION) {</span>
+<span class="nc" id="L818">            this.compressionLevel = PdfStream.DEFAULT_COMPRESSION;</span>
+        } else {
+<span class="fc" id="L820">            this.compressionLevel = compressionLevel;</span>
+        }
+<span class="fc" id="L822">    }</span>
+
+
+
+    /**
+     * Gets an instance of an Image in raw mode.
+     *
+     * @param width        the width of the image in pixels
+     * @param height       the height of the image in pixels
+     * @param components   1,3 or 4 for GrayScale, RGB and CMYK
+     * @param data         the image data
+     * @param bpc          bits per component
+     * @param transparency transparency information in the Mask format of the image dictionary
+     * @return an object of type &lt;CODE&gt;ImgRaw&lt;/CODE&gt;
+     * @throws BadElementException on error
+     */
+    public static Image getInstance(int width, int height, int components,
+            int bpc, byte[] data, int[] transparency)
+            throws BadElementException {
+<span class="pc bpc" id="L841" title="3 of 4 branches missed.">        if (transparency != null &amp;&amp; transparency.length != components * 2) {</span>
+<span class="nc" id="L842">            throw new BadElementException(</span>
+<span class="nc" id="L843">                    MessageLocalization.getComposedMessage(&quot;transparency.length.must.be.equal.to.componentes.2&quot;));</span>
+        }
+<span class="fc" id="L845">        Image img = new ImgRaw(width, height, components, bpc, data);</span>
+<span class="fc" id="L846">        img.transparency = transparency;</span>
+<span class="fc" id="L847">        return img;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

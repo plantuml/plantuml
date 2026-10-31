@@ -40,18 +40,18 @@ import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
 
-<span class="nc" id="L43">public class DriverDotPathPdf implements UDriver&lt;DotPath, PdfGraphics&gt; {</span>
+<span class="fc" id="L43">public class DriverDotPathPdf implements UDriver&lt;DotPath, PdfGraphics&gt; {</span>
 
 	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
 
-<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (param.getColor().isTransparent() == false) {</span>
-<span class="nc" id="L48">			DriverRectanglePdf.applyStrokeColor(pdf, mapper, param);</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (param.getColor().isTransparent() == false) {</span>
+<span class="fc" id="L48">			DriverRectanglePdf.applyStrokeColor(pdf, mapper, param);</span>
 
-<span class="nc" id="L50">			pdf.setFillColor(null);</span>
-<span class="nc" id="L51">			pdf.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+<span class="fc" id="L50">			pdf.setFillColor(null);</span>
+<span class="fc" id="L51">			pdf.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
 
-<span class="nc" id="L53">			pdf.pdfPath(x, y, shape.toUPath());</span>
+<span class="fc" id="L53">			pdf.pdfPath(x, y, shape.toUPath());</span>
 		}
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L55">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

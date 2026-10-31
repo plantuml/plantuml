@@ -8899,12 +8899,12 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 10
-    Concrete Classes: 10
+    Total Classes: 11
+    Concrete Classes: 11
     Abstract Classes: 0
 
     Ca: 0
-    Ce: 12
+    Ce: 14
 
     A: 0
     I: 1
@@ -8920,6 +8920,7 @@ Concrete Classes:
     net.sourceforge.plantuml.openpdf.DriverPolygonPdf
     net.sourceforge.plantuml.openpdf.DriverRectanglePdf
     net.sourceforge.plantuml.openpdf.DriverTextPdf
+    net.sourceforge.plantuml.openpdf.OpenPdfSetup
     net.sourceforge.plantuml.openpdf.PdfGraphics$PendingLink
     net.sourceforge.plantuml.openpdf.PdfOption
     net.sourceforge.plantuml.openpdf.UGraphicPdf
@@ -8936,7 +8937,9 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.teavm
+    net.sourceforge.plantuml.teavm.c
     net.sourceforge.plantuml.url
+    org.openpdf.text.pdf
 
 Used By:
     Not used by any packages.
@@ -11651,12 +11654,12 @@ Stats:
     Concrete Classes: 11
     Abstract Classes: 0
 
-    Ca: 1
+    Ca: 2
     Ce: 39
 
     A: 0
-    I: 0.98
-    D: 0.02
+    I: 0.95
+    D: 0.05
 
 Abstract Classes:
 
@@ -11716,6 +11719,7 @@ Depends Upon:
 
 Used By:
     net.sourceforge.plantuml.cli
+    net.sourceforge.plantuml.openpdf
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.teavm.js
@@ -13291,6 +13295,252 @@ Depends Upon:
 
 Used By:
     net.sourceforge.plantuml.code
+
+--------------------------------------------------
+- Package: org.openpdf.text
+--------------------------------------------------
+
+Stats:
+    Total Classes: 13
+    Concrete Classes: 8
+    Abstract Classes: 5
+
+    Ca: 2
+    Ce: 7
+
+    A: 0.38
+    I: 0.78
+    D: 0.16
+
+Abstract Classes:
+    org.openpdf.text.DocListener
+    org.openpdf.text.DocWriter
+    org.openpdf.text.Element
+    org.openpdf.text.ElementListener
+    org.openpdf.text.Image
+
+Concrete Classes:
+    org.openpdf.text.BadElementException
+    org.openpdf.text.DocumentException
+    org.openpdf.text.ImgJBIG2
+    org.openpdf.text.ImgRaw
+    org.openpdf.text.Meta
+    org.openpdf.text.Rectangle
+    org.openpdf.text.RectangleReadOnly
+    org.openpdf.text.TextRenderingOptions
+
+Depends Upon:
+    java.awt
+    java.io
+    java.lang
+    java.net
+    java.util
+    org.openpdf.text.error_messages
+    org.openpdf.text.pdf
+
+Used By:
+    org.openpdf.text.pdf
+    org.openpdf.text.pdf.internal
+
+--------------------------------------------------
+- Package: org.openpdf.text.error_messages
+--------------------------------------------------
+No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: org.openpdf.text.exceptions
+--------------------------------------------------
+
+Stats:
+    Total Classes: 1
+    Concrete Classes: 1
+    Abstract Classes: 0
+
+    Ca: 1
+    Ce: 1
+
+    A: 0
+    I: 0.5
+    D: 0.5
+
+Abstract Classes:
+
+Concrete Classes:
+    org.openpdf.text.exceptions.IllegalPdfSyntaxException
+
+Depends Upon:
+    java.lang
+
+Used By:
+    org.openpdf.text.pdf
+
+--------------------------------------------------
+- Package: org.openpdf.text.pdf
+--------------------------------------------------
+
+Stats:
+    Total Classes: 45
+    Concrete Classes: 41
+    Abstract Classes: 4
+
+    Ca: 3
+    Ce: 10
+
+    A: 0.09
+    I: 0.77
+    D: 0.14
+
+Abstract Classes:
+    org.openpdf.text.pdf.ExtendedColor
+    org.openpdf.text.pdf.ExtraEncoding
+    org.openpdf.text.pdf.PdfObject
+    org.openpdf.text.pdf.ResourceProvider
+
+Concrete Classes:
+    org.openpdf.text.pdf.BadPdfFormatException
+    org.openpdf.text.pdf.FontDetails
+    org.openpdf.text.pdf.GrayColor
+    org.openpdf.text.pdf.IntHashtable
+    org.openpdf.text.pdf.IntHashtable$Entry
+    org.openpdf.text.pdf.IntHashtable$IntHashtableIterator
+    org.openpdf.text.pdf.OutputStreamCounter
+    org.openpdf.text.pdf.PdfAnnotation
+    org.openpdf.text.pdf.PdfArray
+    org.openpdf.text.pdf.PdfBoolean
+    org.openpdf.text.pdf.PdfContentByte
+    org.openpdf.text.pdf.PdfContentByte$GraphicState
+    org.openpdf.text.pdf.PdfContents
+    org.openpdf.text.pdf.PdfDate
+    org.openpdf.text.pdf.PdfDocument
+    org.openpdf.text.pdf.PdfDocument$PdfCatalog
+    org.openpdf.text.pdf.PdfDocument$PdfInfo
+    org.openpdf.text.pdf.PdfEncodings
+    org.openpdf.text.pdf.PdfEncodings$Cp437Conversion
+    org.openpdf.text.pdf.PdfEncodings$SymbolConversion
+    org.openpdf.text.pdf.PdfEncodings$SymbolTTConversion
+    org.openpdf.text.pdf.PdfEncodings$WingdingsConversion
+    org.openpdf.text.pdf.PdfException
+    org.openpdf.text.pdf.PdfFormXObject
+    org.openpdf.text.pdf.PdfGState
+    org.openpdf.text.pdf.PdfIndirectObject
+    org.openpdf.text.pdf.PdfLiteral
+    org.openpdf.text.pdf.PdfName
+    org.openpdf.text.pdf.PdfNull
+    org.openpdf.text.pdf.PdfNumber
+    org.openpdf.text.pdf.PdfPage
+    org.openpdf.text.pdf.PdfPages
+    org.openpdf.text.pdf.PdfRectangle
+    org.openpdf.text.pdf.PdfResources
+    org.openpdf.text.pdf.PdfString
+    org.openpdf.text.pdf.PdfTemplate
+    org.openpdf.text.pdf.PdfWriter$PdfBody
+    org.openpdf.text.pdf.PdfWriter$PdfBody$PdfCrossReference
+    org.openpdf.text.pdf.PdfWriter$PdfTrailer
+    org.openpdf.text.pdf.RGBColor
+    org.openpdf.text.pdf.RandomAccessFileOrArray
+
+Depends Upon:
+    java.awt
+    java.io
+    java.lang
+    java.util
+    java.util.concurrent
+    java.util.zip
+    org.openpdf.text
+    org.openpdf.text.error_messages
+    org.openpdf.text.exceptions
+    org.openpdf.text.pdf.internal
+
+Used By:
+    net.sourceforge.plantuml.openpdf
+    org.openpdf.text
+    org.openpdf.text.pdf.internal
+
+--------------------------------------------------
+- Package: org.openpdf.text.pdf.fonts
+--------------------------------------------------
+
+Stats:
+    Total Classes: 1
+    Concrete Classes: 1
+    Abstract Classes: 0
+
+    Ca: 0
+    Ce: 1
+
+    A: 0
+    I: 1
+    D: 0
+
+Abstract Classes:
+
+Concrete Classes:
+    org.openpdf.text.pdf.fonts.FontsResourceAnchor
+
+Depends Upon:
+    java.lang
+
+Used By:
+    Not used by any packages.
+
+--------------------------------------------------
+- Package: org.openpdf.text.pdf.interfaces
+--------------------------------------------------
+
+Stats:
+    Total Classes: 2
+    Concrete Classes: 0
+    Abstract Classes: 2
+
+    Ca: 1
+    Ce: 1
+
+    A: 1
+    I: 0.5
+    D: 0.5
+
+Abstract Classes:
+    org.openpdf.text.pdf.interfaces.PdfRunDirection
+    org.openpdf.text.pdf.interfaces.PdfVersion
+
+Concrete Classes:
+
+Depends Upon:
+    java.lang
+
+Used By:
+    org.openpdf.text.pdf.internal
+
+--------------------------------------------------
+- Package: org.openpdf.text.pdf.internal
+--------------------------------------------------
+
+Stats:
+    Total Classes: 1
+    Concrete Classes: 1
+    Abstract Classes: 0
+
+    Ca: 1
+    Ce: 5
+
+    A: 0
+    I: 0.83
+    D: 0.17
+
+Abstract Classes:
+
+Concrete Classes:
+    org.openpdf.text.pdf.internal.PdfVersionImp
+
+Depends Upon:
+    java.io
+    java.lang
+    org.openpdf.text
+    org.openpdf.text.pdf
+    org.openpdf.text.pdf.interfaces
+
+Used By:
+    org.openpdf.text.pdf
 
 --------------------------------------------------
 - Package: org.stathissideris.ascii2image.core
@@ -15044,6 +15294,22 @@ net.sourceforge.plantuml.yaml.parser
     |   net.sourceforge.plantuml.jaws
     |-> net.sourceforge.plantuml.utils
 
+org.openpdf.text
+    |
+    |   org.openpdf.text.pdf
+    |-> org.openpdf.text
+
+org.openpdf.text.pdf
+    |
+    |   org.openpdf.text
+    |-> org.openpdf.text.pdf
+
+org.openpdf.text.pdf.internal
+    |
+    |-> org.openpdf.text.pdf
+    |   org.openpdf.text
+    |-> org.openpdf.text.pdf
+
 org.stathissideris.ascii2image.core
     |
     |   org.stathissideris.ascii2image.graphics
@@ -15114,18 +15380,18 @@ gen.lib.pack,1,0,1,5,0,0.83,0.17,1
 gen.lib.pathplan,4,0,1,4,0,0.8,0.2,1
 gen.plugin.dot_layout,2,0,0,1,0,1,0,1
 h,95,2,12,3,0.02,0.2,0.78,1
-java.awt,0,0,20,0,0,0,1,1
+java.awt,0,0,22,0,0,0,1,1
 java.awt.datatransfer,0,0,1,0,0,0,1,1
 java.awt.event,0,0,1,0,0,0,1,1
 java.awt.font,0,0,3,0,0,0,1,1
 java.awt.geom,0,0,6,0,0,0,1,1
 java.awt.image,0,0,13,0,0,0,1,1
-java.io,0,0,80,0,0,0,1,1
-java.lang,0,0,236,0,0,0,1,1
+java.io,0,0,83,0,0,0,1,1
+java.lang,0,0,242,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,4,0,0,0,1,1
 java.math,0,0,5,0,0,0,1,1
-java.net,0,0,5,0,0,0,1,1
+java.net,0,0,6,0,0,0,1,1
 java.nio,0,0,1,0,0,0,1,1
 java.nio.charset,0,0,21,0,0,0,1,1
 java.nio.file,0,0,4,0,0,0,1,1
@@ -15134,13 +15400,13 @@ java.security.spec,0,0,2,0,0,0,1,1
 java.text,0,0,5,0,0,0,1,1
 java.time,0,0,12,0,0,0,1,1
 java.time.temporal,0,0,2,0,0,0,1,1
-java.util,0,0,187,0,0,0,1,1
-java.util.concurrent,0,0,7,0,0,0,1,1
+java.util,0,0,189,0,0,0,1,1
+java.util.concurrent,0,0,8,0,0,0,1,1
 java.util.concurrent.atomic,0,0,5,0,0,0,1,1
 java.util.function,0,0,3,0,0,0,1,1
 java.util.logging,0,0,2,0,0,0,1,1
 java.util.regex,0,0,14,0,0,0,1,1
-java.util.zip,0,0,3,0,0,0,1,1
+java.util.zip,0,0,4,0,0,0,1,1
 javax.crypto,0,0,1,0,0,0,1,1
 javax.crypto.spec,0,0,1,0,0,0,1,1
 javax.imageio,0,0,3,0,0,0,1,1
@@ -15294,7 +15560,7 @@ net.sourceforge.plantuml.nwdiag.next,6,1,1,12,0.17,0.92,0.09,1
 net.sourceforge.plantuml.objectdiagram,2,1,0,14,0.5,1,0.5,1
 net.sourceforge.plantuml.objectdiagram.command,0,0,3,0,0,0,1,1
 net.sourceforge.plantuml.openiconic,7,1,1,14,0.14,0.93,0.08,1
-net.sourceforge.plantuml.openpdf,10,0,0,12,0,1,0,1
+net.sourceforge.plantuml.openpdf,11,0,0,14,0,1,0,1
 net.sourceforge.plantuml.packetdiag,6,0,2,16,0,0.89,0.11,1
 net.sourceforge.plantuml.packetdiag.command,6,0,1,8,0,0.89,0.11,1
 net.sourceforge.plantuml.picoweb,3,0,0,4,0,1,0,1
@@ -15340,7 +15606,7 @@ net.sourceforge.plantuml.svg.parser,11,1,0,13,0.09,1,0.09,1
 net.sourceforge.plantuml.swing,36,0,0,16,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
 net.sourceforge.plantuml.teavm,2,0,46,3,0,0.06,0.94,1
-net.sourceforge.plantuml.teavm.c,11,0,1,39,0,0.98,0.02,1
+net.sourceforge.plantuml.teavm.c,11,0,2,39,0,0.95,0.05,1
 net.sourceforge.plantuml.teavm.js,18,0,2,16,0,0.89,0.11,1
 net.sourceforge.plantuml.teavm.js.browser,12,5,3,9,0.42,0.75,0.17,1
 net.sourceforge.plantuml.teavm.js.headless,3,1,0,4,0.33,1,0.33,1
@@ -15370,6 +15636,13 @@ net.sourceforge.plantuml.xmlsc,2,0,0,17,0,1,0,1
 net.sourceforge.plantuml.yaml,2,0,2,17,0,0.89,0.11,1
 net.sourceforge.plantuml.yaml.parser,7,0,1,3,0,0.75,0.25,1
 net.sourceforge.plantuml.zopfli,19,0,1,2,0,0.67,0.33,1
+org.openpdf.text,13,5,2,7,0.38,0.78,0.16,1
+org.openpdf.text.error_messages,0,0,2,0,0,0,1,1
+org.openpdf.text.exceptions,1,0,1,1,0,0.5,0.5,1
+org.openpdf.text.pdf,45,4,3,10,0.09,0.77,0.14,1
+org.openpdf.text.pdf.fonts,1,0,0,1,0,1,0,1
+org.openpdf.text.pdf.interfaces,2,2,1,1,1,0.5,0.5,1
+org.openpdf.text.pdf.internal,1,0,1,5,0,0.83,0.17,1
 org.stathissideris.ascii2image.core,10,0,2,7,0,0.78,0.22,1
 org.stathissideris.ascii2image.graphics,6,0,2,11,0,0.85,0.15,1
 org.stathissideris.ascii2image.text,9,0,2,5,0,0.71,0.29,1

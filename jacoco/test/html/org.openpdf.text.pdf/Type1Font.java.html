@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Type1Font.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">Type1Font.java</span></div><h1>Type1Font.java</h1><pre class="source lang-java linenums">/*
+ * $Id: Type1Font.java 4065 2009-09-16 23:09:11Z psoares33 $
+ *
+ * Copyright 2001-2006 Paulo Soares
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import org.openpdf.text.Document;
+import org.openpdf.text.DocumentException;
+import org.openpdf.text.error_messages.MessageLocalization;
+import org.openpdf.text.pdf.fonts.FontsResourceAnchor;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+/**
+ * Reads a Type1 font
+ *
+ * @author Paulo Soares (psoares@consiste.pt)
+ */
+class Type1Font extends BaseFont {
+
+    /**
+     * Types of records in a PFB file. ASCII is 1 and BINARY is 2. They have to appear in the PFB file in this
+     * sequence.
+     */
+<span class="fc" id="L74">    private static final int[] PFB_TYPES = {1, 2, 1};</span>
+    private static FontsResourceAnchor resourceAnchor;
+    /**
+     * The PFB file if the input was made with a &lt;CODE&gt;byte&lt;/CODE&gt; array.
+     */
+    protected byte[] pfb;
+    /**
+     * The Postscript font name.
+     */
+    private String FontName;
+    /**
+     * The full name of the font.
+     */
+    private String FullName;
+    /**
+     * The family name of the font.
+     */
+    private String FamilyName;
+    /**
+     * The weight of the font: normal, bold, etc.
+     */
+<span class="fc" id="L95">    private String Weight = &quot;&quot;;</span>
+    /**
+     * The italic angle of the font, usually 0.0 or negative.
+     */
+<span class="fc" id="L99">    private float ItalicAngle = 0.0f;</span>
+    /**
+     * &lt;CODE&gt;true&lt;/CODE&gt; if all the characters have the same
+     * width.
+     */
+<span class="fc" id="L104">    private boolean IsFixedPitch = false;</span>
+    /**
+     * The character set of the font.
+     */
+    private String CharacterSet;
+    /**
+     * The llx of the FontBox.
+     */
+<span class="fc" id="L112">    private int llx = -50;</span>
+    /**
+     * The lly of the FontBox.
+     */
+<span class="fc" id="L116">    private int lly = -200;</span>
+    /**
+     * The lurx of the FontBox.
+     */
+<span class="fc" id="L120">    private int urx = 1000;</span>
+    /**
+     * The ury of the FontBox.
+     */
+<span class="fc" id="L124">    private int ury = 900;</span>
+    /**
+     * The underline position.
+     */
+<span class="fc" id="L128">    private int UnderlinePosition = -100;</span>
+    /**
+     * The underline thickness.
+     */
+<span class="fc" id="L132">    private int UnderlineThickness = 50;</span>
+    /**
+     * The font's encoding name. This encoding is 'StandardEncoding' or 'AdobeStandardEncoding' for a font that can be
+     * totally encoded according to the characters names. For all other names the font is treated as symbolic.
+     */
+<span class="fc" id="L137">    private String EncodingScheme = &quot;FontSpecific&quot;;</span>
+    /**
+     * A variable.
+     */
+<span class="fc" id="L141">    private int CapHeight = 700;</span>
+    /**
+     * A variable.
+     */
+<span class="fc" id="L145">    private int XHeight = 480;</span>
+    /**
+     * A variable.
+     */
+<span class="fc" id="L149">    private int Ascender = 800;</span>
+    /**
+     * A variable.
+     */
+<span class="fc" id="L153">    private int Descender = -200;</span>
+    /**
+     * A variable.
+     */
+    private int StdHW;
+    /**
+     * A variable.
+     */
+<span class="fc" id="L161">    private int StdVW = 80;</span>
+    /**
+     * Represents the section CharMetrics in the AFM file. Each value of this array contains a &lt;CODE&gt;Object[4]&lt;/CODE&gt;
+     * with an Integer, Integer, String and int[]. This is the code, width, name and char bbox. The key is the name of
+     * the char and also an Integer with the char number.
+     */
+<span class="fc" id="L167">    private Map&lt;Object, Object[]&gt; CharMetrics = new HashMap&lt;&gt;();</span>
+    /**
+     * Represents the section KernPairs in the AFM file. The key is the name of the first character and the value is a
+     * &lt;CODE&gt;Object[]&lt;/CODE&gt; with 2 elements for each kern pair. Position 0 is the name of the second character and
+     * position 1 is the kerning distance. This is repeated for all the pairs.
+     */
+<span class="fc" id="L173">    private Map&lt;String, Object[]&gt; KernPairs = new HashMap&lt;&gt;();</span>
+    /**
+     * The file in use.
+     */
+    private String fileName;
+    /**
+     * &lt;CODE&gt;true&lt;/CODE&gt; if this font is one of the 14 built in fonts.
+     */
+<span class="fc" id="L181">    private boolean builtinFont = false;</span>
+
+    /**
+     * Creates a new Type1 font.
+     *
+     * @param ttfAfm  the AFM file if the input is made with a &lt;CODE&gt;byte&lt;/CODE&gt; array
+     * @param pfb     the PFB file if the input is made with a &lt;CODE&gt;byte&lt;/CODE&gt; array
+     * @param afmFile the name of one of the 14 built-in fonts or the location of an AFM file. The file must end in
+     *                '.afm'
+     * @param enc     the encoding to be applied to this font
+     * @param emb     true if the font is to be embedded in the PDF
+     * @throws DocumentException the AFM file is invalid
+     * @throws IOException       the AFM file could not be read
+     * @since 2.1.5
+     */
+    Type1Font(String afmFile, String enc, boolean emb, byte[] ttfAfm, byte[] pfb, boolean forceRead)
+<span class="fc" id="L197">            throws DocumentException, IOException {</span>
+<span class="pc bpc" id="L198" title="5 of 6 branches missed.">        if (emb &amp;&amp; ttfAfm != null &amp;&amp; pfb == null) {</span>
+<span class="nc" id="L199">            throw new DocumentException(</span>
+<span class="nc" id="L200">                    MessageLocalization.getComposedMessage(&quot;two.byte.arrays.are.needed.if.the.type1.font.is.embedded&quot;));</span>
+        }
+<span class="pc bpc" id="L202" title="3 of 4 branches missed.">        if (emb &amp;&amp; ttfAfm != null) {</span>
+<span class="nc" id="L203">            this.pfb = pfb;</span>
+        }
+<span class="fc" id="L205">        encoding = enc;</span>
+<span class="fc" id="L206">        embedded = emb;</span>
+<span class="fc" id="L207">        fileName = afmFile;</span>
+<span class="fc" id="L208">        fontType = FONT_TYPE_T1;</span>
+<span class="fc" id="L209">        RandomAccessFileOrArray rf = null;</span>
+<span class="fc" id="L210">        InputStream is = null;</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">        if (BuiltinFonts14.containsKey(afmFile)) {</span>
+<span class="fc" id="L212">            embedded = false;</span>
+<span class="fc" id="L213">            builtinFont = true;</span>
+<span class="fc" id="L214">            byte[] buf = new byte[1024];</span>
+            try {
+<span class="fc bfc" id="L216" title="All 2 branches covered.">                if (resourceAnchor == null) {</span>
+<span class="fc" id="L217">                    resourceAnchor = new FontsResourceAnchor();</span>
+                }
+<span class="fc" id="L219">                is = getResourceStream(RESOURCE_PATH + afmFile + &quot;.afm&quot;);</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">                if (is == null) {</span>
+<span class="nc" id="L221">                    String msg = MessageLocalization.getComposedMessage(&quot;1.not.found.as.resource&quot;, afmFile);</span>
+<span class="nc" id="L222">                    System.err.println(msg);</span>
+<span class="nc" id="L223">                    throw new DocumentException(msg);</span>
+                }
+<span class="fc" id="L225">                ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+                while (true) {
+<span class="fc" id="L227">                    int size = is.read(buf);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">                    if (size &lt; 0) {</span>
+<span class="fc" id="L229">                        break;</span>
+                    }
+<span class="fc" id="L231">                    out.write(buf, 0, size);</span>
+<span class="fc" id="L232">                }</span>
+<span class="fc" id="L233">                buf = out.toByteArray();</span>
+            } finally {
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">                if (is != null) {</span>
+                    try {
+<span class="fc" id="L237">                        is.close();</span>
+<span class="nc" id="L238">                    } catch (Exception e) {</span>
+                        // empty on purpose
+<span class="fc" id="L240">                    }</span>
+                }
+            }
+            try {
+<span class="fc" id="L244">                rf = new RandomAccessFileOrArray(buf);</span>
+<span class="fc" id="L245">                process(rf);</span>
+            } finally {
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">                if (rf != null) {</span>
+                    try {
+<span class="fc" id="L249">                        rf.close();</span>
+<span class="nc" id="L250">                    } catch (Exception e) {</span>
+                        // empty on purpose
+<span class="fc" id="L252">                    }</span>
+                }
+            }
+<span class="pc bnc" id="L255" title="All 2 branches missed.">        } else if (afmFile.toLowerCase().endsWith(&quot;.afm&quot;)) {</span>
+            try {
+<span class="nc bnc" id="L257" title="All 2 branches missed.">                if (ttfAfm == null) {</span>
+<span class="nc" id="L258">                    rf = new RandomAccessFileOrArray(afmFile, forceRead, Document.plainRandomAccess);</span>
+                } else {
+<span class="nc" id="L260">                    rf = new RandomAccessFileOrArray(ttfAfm);</span>
+                }
+<span class="nc" id="L262">                process(rf);</span>
+            } finally {
+<span class="nc bnc" id="L264" title="All 2 branches missed.">                if (rf != null) {</span>
+                    try {
+<span class="nc" id="L266">                        rf.close();</span>
+<span class="nc" id="L267">                    } catch (Exception e) {</span>
+                        // empty on purpose
+<span class="nc" id="L269">                    }</span>
+                }
+<span class="nc" id="L271">            }</span>
+        } else {
+<span class="nc" id="L273">            throw new DocumentException(</span>
+<span class="nc" id="L274">                    MessageLocalization.getComposedMessage(&quot;1.is.not.an.afm.or.pfm.font.file&quot;, afmFile));</span>
+        }
+
+<span class="fc" id="L277">        EncodingScheme = EncodingScheme.trim();</span>
+<span class="pc bpc" id="L278" title="3 of 4 branches missed.">        if (EncodingScheme.equals(&quot;AdobeStandardEncoding&quot;) || EncodingScheme.equals(&quot;StandardEncoding&quot;)) {</span>
+<span class="fc" id="L279">            fontSpecific = false;</span>
+        }
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">        if (!encoding.startsWith(&quot;#&quot;)) {</span>
+<span class="fc" id="L282">            PdfEncodings.convertToBytes(&quot; &quot;, enc); // check if the encoding exists</span>
+        }
+<span class="fc" id="L284">        createEncoding();</span>
+<span class="fc" id="L285">    }</span>
+
+    /**
+     * Gets the width from the font according to the &lt;CODE&gt;name&lt;/CODE&gt; or, if the &lt;CODE&gt;name&lt;/CODE&gt; is null, meaning it
+     * is a symbolic font, the char &lt;CODE&gt;c&lt;/CODE&gt;.
+     *
+     * @param c    the char if the font is symbolic
+     * @param name the glyph name
+     * @return the width of the char
+     */
+    int getRawWidth(int c, String name) {
+        Object[] metrics;
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">        if (name == null) { // font specific</span>
+<span class="nc" id="L298">            metrics = CharMetrics.get(c);</span>
+        } else {
+<span class="fc bfc" id="L300" title="All 2 branches covered.">            if (name.equals(&quot;.notdef&quot;)) {</span>
+<span class="fc" id="L301">                return 0;</span>
+            }
+<span class="fc" id="L303">            metrics = CharMetrics.get(name);</span>
+        }
+<span class="fc bfc" id="L305" title="All 2 branches covered.">        if (metrics != null) {</span>
+<span class="fc" id="L306">            return (Integer) (metrics[1]);</span>
+        }
+<span class="fc" id="L308">        return 0;</span>
+    }
+
+
+    /**
+     * Reads the font metrics
+     *
+     * @param rf the AFM file
+     * @throws DocumentException the AFM file is invalid
+     * @throws IOException       the AFM file could not be read
+     */
+    public void process(RandomAccessFileOrArray rf) throws DocumentException, IOException {
+        String line;
+<span class="fc" id="L321">        boolean isMetrics = false;</span>
+        label:
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">        while ((line = rf.readLine()) != null) {</span>
+<span class="fc" id="L324">            StringTokenizer tok = new StringTokenizer(line, &quot; ,\n\r\t\f&quot;);</span>
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">            if (!tok.hasMoreTokens()) {</span>
+<span class="nc" id="L326">                continue;</span>
+            }
+<span class="fc" id="L328">            String ident = tok.nextToken();</span>
+<span class="fc bfc" id="L329" title="All 19 branches covered.">            switch (ident) {</span>
+                case &quot;FontName&quot;:
+<span class="fc" id="L331">                    FontName = tok.nextToken(&quot;\u00ff&quot;).substring(1);</span>
+<span class="fc" id="L332">                    break;</span>
+                case &quot;FullName&quot;:
+<span class="fc" id="L334">                    FullName = tok.nextToken(&quot;\u00ff&quot;).substring(1);</span>
+<span class="fc" id="L335">                    break;</span>
+                case &quot;FamilyName&quot;:
+<span class="fc" id="L337">                    FamilyName = tok.nextToken(&quot;\u00ff&quot;).substring(1);</span>
+<span class="fc" id="L338">                    break;</span>
+                case &quot;Weight&quot;:
+<span class="fc" id="L340">                    Weight = tok.nextToken(&quot;\u00ff&quot;).substring(1);</span>
+<span class="fc" id="L341">                    break;</span>
+                case &quot;ItalicAngle&quot;:
+<span class="fc" id="L343">                    ItalicAngle = Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L344">                    break;</span>
+                case &quot;IsFixedPitch&quot;:
+<span class="fc" id="L346">                    IsFixedPitch = tok.nextToken().equals(&quot;true&quot;);</span>
+<span class="fc" id="L347">                    break;</span>
+                case &quot;CharacterSet&quot;:
+<span class="fc" id="L349">                    CharacterSet = tok.nextToken(&quot;\u00ff&quot;).substring(1);</span>
+<span class="fc" id="L350">                    break;</span>
+                case &quot;FontBBox&quot;:
+<span class="fc" id="L352">                    llx = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L353">                    lly = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L354">                    urx = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L355">                    ury = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L356">                    break;</span>
+                case &quot;UnderlinePosition&quot;:
+<span class="fc" id="L358">                    UnderlinePosition = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L359">                    break;</span>
+                case &quot;UnderlineThickness&quot;:
+<span class="fc" id="L361">                    UnderlineThickness = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L362">                    break;</span>
+                case &quot;EncodingScheme&quot;:
+<span class="fc" id="L364">                    EncodingScheme = tok.nextToken(&quot;\u00ff&quot;).substring(1);</span>
+<span class="fc" id="L365">                    break;</span>
+                case &quot;CapHeight&quot;:
+<span class="fc" id="L367">                    CapHeight = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L368">                    break;</span>
+                case &quot;XHeight&quot;:
+<span class="fc" id="L370">                    XHeight = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L371">                    break;</span>
+                case &quot;Ascender&quot;:
+<span class="fc" id="L373">                    Ascender = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L374">                    break;</span>
+                case &quot;Descender&quot;:
+<span class="fc" id="L376">                    Descender = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L377">                    break;</span>
+                case &quot;StdHW&quot;:
+<span class="fc" id="L379">                    StdHW = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L380">                    break;</span>
+                case &quot;StdVW&quot;:
+<span class="fc" id="L382">                    StdVW = (int) Float.parseFloat(tok.nextToken());</span>
+<span class="fc" id="L383">                    break;</span>
+                case &quot;StartCharMetrics&quot;:
+<span class="fc" id="L385">                    isMetrics = true;</span>
+<span class="fc" id="L386">                    break label;</span>
+            }
+<span class="fc" id="L388">        }</span>
+<span class="pc bpc" id="L389" title="1 of 2 branches missed.">        if (!isMetrics) {</span>
+<span class="nc" id="L390">            throw new DocumentException(</span>
+<span class="nc" id="L391">                    MessageLocalization.getComposedMessage(&quot;missing.startcharmetrics.in.1&quot;, fileName));</span>
+        }
+<span class="pc bpc" id="L393" title="1 of 2 branches missed.">        while ((line = rf.readLine()) != null) {</span>
+<span class="fc" id="L394">            StringTokenizer tok = new StringTokenizer(line);</span>
+<span class="pc bpc" id="L395" title="1 of 2 branches missed.">            if (!tok.hasMoreTokens()) {</span>
+<span class="nc" id="L396">                continue;</span>
+            }
+<span class="fc" id="L398">            String ident = tok.nextToken();</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">            if (ident.equals(&quot;EndCharMetrics&quot;)) {</span>
+<span class="fc" id="L400">                isMetrics = false;</span>
+<span class="fc" id="L401">                break;</span>
+            }
+<span class="fc" id="L403">            Integer C = -1;</span>
+<span class="fc" id="L404">            int WX = 250;</span>
+<span class="fc" id="L405">            String N = &quot;&quot;;</span>
+<span class="fc" id="L406">            int[] B = null;</span>
+
+<span class="fc" id="L408">            tok = new StringTokenizer(line, &quot;;&quot;);</span>
+<span class="fc bfc" id="L409" title="All 2 branches covered.">            while (tok.hasMoreTokens()) {</span>
+<span class="fc" id="L410">                StringTokenizer tokc = new StringTokenizer(tok.nextToken());</span>
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">                if (!tokc.hasMoreTokens()) {</span>
+<span class="nc" id="L412">                    continue;</span>
+                }
+<span class="fc" id="L414">                ident = tokc.nextToken();</span>
+<span class="fc bfc" id="L415" title="All 5 branches covered.">                switch (ident) {</span>
+                    case &quot;C&quot;:
+<span class="fc" id="L417">                        C = Integer.valueOf(tokc.nextToken());</span>
+<span class="fc" id="L418">                        break;</span>
+                    case &quot;WX&quot;:
+<span class="fc" id="L420">                        WX = (int) Float.parseFloat(tokc.nextToken());</span>
+<span class="fc" id="L421">                        break;</span>
+                    case &quot;N&quot;:
+<span class="fc" id="L423">                        N = tokc.nextToken();</span>
+<span class="fc" id="L424">                        break;</span>
+                    case &quot;B&quot;:
+<span class="fc" id="L426">                        B = new int[]{Integer.parseInt(tokc.nextToken()),</span>
+<span class="fc" id="L427">                                Integer.parseInt(tokc.nextToken()),</span>
+<span class="fc" id="L428">                                Integer.parseInt(tokc.nextToken()),</span>
+<span class="fc" id="L429">                                Integer.parseInt(tokc.nextToken())};</span>
+                        break;
+                }
+<span class="fc" id="L432">            }</span>
+<span class="fc" id="L433">            Object[] metrics = new Object[]{C, WX, N, B};</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">            if (C &gt;= 0) {</span>
+<span class="fc" id="L435">                CharMetrics.put(C, metrics);</span>
+            }
+<span class="fc" id="L437">            CharMetrics.put(N, metrics);</span>
+<span class="fc" id="L438">        }</span>
+<span class="pc bpc" id="L439" title="1 of 2 branches missed.">        if (isMetrics) {</span>
+<span class="nc" id="L440">            throw new DocumentException(</span>
+<span class="nc" id="L441">                    MessageLocalization.getComposedMessage(&quot;missing.endcharmetrics.in.1&quot;, fileName));</span>
+        }
+<span class="pc bpc" id="L443" title="1 of 2 branches missed.">        if (!CharMetrics.containsKey(&quot;nonbreakingspace&quot;)) {</span>
+<span class="fc" id="L444">            Object[] space = CharMetrics.get(&quot;space&quot;);</span>
+<span class="pc bpc" id="L445" title="1 of 2 branches missed.">            if (space != null) {</span>
+<span class="fc" id="L446">                CharMetrics.put(&quot;nonbreakingspace&quot;, space);</span>
+            }
+        }
+<span class="pc bpc" id="L449" title="1 of 2 branches missed.">        while ((line = rf.readLine()) != null) {</span>
+<span class="fc" id="L450">            StringTokenizer tok = new StringTokenizer(line);</span>
+<span class="pc bpc" id="L451" title="1 of 2 branches missed.">            if (!tok.hasMoreTokens()) {</span>
+<span class="nc" id="L452">                continue;</span>
+            }
+<span class="fc" id="L454">            String ident = tok.nextToken();</span>
+<span class="fc bfc" id="L455" title="All 2 branches covered.">            if (ident.equals(&quot;EndFontMetrics&quot;)) {</span>
+<span class="fc" id="L456">                return;</span>
+            }
+<span class="fc bfc" id="L458" title="All 2 branches covered.">            if (ident.equals(&quot;StartKernPairs&quot;)) {</span>
+<span class="fc" id="L459">                isMetrics = true;</span>
+<span class="fc" id="L460">                break;</span>
+            }
+<span class="fc" id="L462">        }</span>
+<span class="pc bpc" id="L463" title="1 of 2 branches missed.">        if (!isMetrics) {</span>
+<span class="nc" id="L464">            throw new DocumentException(</span>
+<span class="nc" id="L465">                    MessageLocalization.getComposedMessage(&quot;missing.endfontmetrics.in.1&quot;, fileName));</span>
+        }
+<span class="pc bpc" id="L467" title="1 of 2 branches missed.">        while ((line = rf.readLine()) != null) {</span>
+<span class="fc" id="L468">            StringTokenizer tok = new StringTokenizer(line);</span>
+<span class="pc bpc" id="L469" title="1 of 2 branches missed.">            if (!tok.hasMoreTokens()) {</span>
+<span class="nc" id="L470">                continue;</span>
+            }
+<span class="fc" id="L472">            String ident = tok.nextToken();</span>
+<span class="fc bfc" id="L473" title="All 2 branches covered.">            if (ident.equals(&quot;KPX&quot;)) {</span>
+<span class="fc" id="L474">                String first = tok.nextToken();</span>
+<span class="fc" id="L475">                String second = tok.nextToken();</span>
+<span class="fc" id="L476">                int width = Integer.parseInt(tok.nextToken());</span>
+<span class="fc" id="L477">                Object[] relates = KernPairs.get(first);</span>
+<span class="fc bfc" id="L478" title="All 2 branches covered.">                if (relates == null) {</span>
+<span class="fc" id="L479">                    KernPairs.put(first, new Object[]{second, width});</span>
+                } else {
+<span class="fc" id="L481">                    int n = relates.length;</span>
+<span class="fc" id="L482">                    Object[] relates2 = new Object[n + 2];</span>
+<span class="fc" id="L483">                    System.arraycopy(relates, 0, relates2, 0, n);</span>
+<span class="fc" id="L484">                    relates2[n] = second;</span>
+<span class="fc" id="L485">                    relates2[n + 1] = width;</span>
+<span class="fc" id="L486">                    KernPairs.put(first, relates2);</span>
+                }
+<span class="pc bpc" id="L488" title="1 of 2 branches missed.">            } else if (ident.equals(&quot;EndKernPairs&quot;)) {</span>
+<span class="fc" id="L489">                isMetrics = false;</span>
+<span class="fc" id="L490">                break;</span>
+            }
+<span class="fc" id="L492">        }</span>
+<span class="pc bpc" id="L493" title="1 of 2 branches missed.">        if (isMetrics) {</span>
+<span class="nc" id="L494">            throw new DocumentException(MessageLocalization.getComposedMessage(&quot;missing.endkernpairs.in.1&quot;, fileName));</span>
+        }
+<span class="fc" id="L496">        rf.close();</span>
+<span class="fc" id="L497">    }</span>
+
+    /**
+     * If the embedded flag is &lt;CODE&gt;false&lt;/CODE&gt; or if the font is one of the 14 built in types, it returns
+     * &lt;CODE&gt;null&lt;/CODE&gt;, otherwise the font is read and output in a PdfStream object.
+     *
+     * @return the PdfStream containing the font or &lt;CODE&gt;null&lt;/CODE&gt;
+     * @throws DocumentException if there is an error reading the font
+     * @since 2.1.3
+     */
+    public PdfStream getFullFontStream() throws DocumentException {
+<span class="pc bpc" id="L508" title="3 of 4 branches missed.">        if (builtinFont || !embedded) {</span>
+<span class="fc" id="L509">            return null;</span>
+        }
+<span class="nc" id="L511">        RandomAccessFileOrArray rf = null;</span>
+        try {
+<span class="nc" id="L513">            String filePfb = fileName.substring(0, fileName.length() - 3) + &quot;pfb&quot;;</span>
+<span class="nc bnc" id="L514" title="All 2 branches missed.">            if (pfb == null) {</span>
+<span class="nc" id="L515">                rf = new RandomAccessFileOrArray(filePfb, true, Document.plainRandomAccess);</span>
+            } else {
+<span class="nc" id="L517">                rf = new RandomAccessFileOrArray(pfb);</span>
+            }
+<span class="nc" id="L519">            int fileLength = rf.length();</span>
+<span class="nc" id="L520">            byte[] st = new byte[fileLength - 18];</span>
+<span class="nc" id="L521">            int[] lengths = new int[3];</span>
+<span class="nc" id="L522">            int bytePtr = 0;</span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">            for (int k = 0; k &lt; 3; ++k) {</span>
+<span class="nc bnc" id="L524" title="All 2 branches missed.">                if (rf.read() != 0x80) {</span>
+<span class="nc" id="L525">                    throw new DocumentException(</span>
+<span class="nc" id="L526">                            MessageLocalization.getComposedMessage(&quot;start.marker.missing.in.1&quot;, filePfb));</span>
+                }
+<span class="nc bnc" id="L528" title="All 2 branches missed.">                if (rf.read() != PFB_TYPES[k]) {</span>
+<span class="nc" id="L529">                    throw new DocumentException(</span>
+<span class="nc" id="L530">                            MessageLocalization.getComposedMessage(&quot;incorrect.segment.type.in.1&quot;, filePfb));</span>
+                }
+<span class="nc" id="L532">                int size = rf.read();</span>
+<span class="nc" id="L533">                size += rf.read() &lt;&lt; 8;</span>
+<span class="nc" id="L534">                size += rf.read() &lt;&lt; 16;</span>
+<span class="nc" id="L535">                size += rf.read() &lt;&lt; 24;</span>
+<span class="nc" id="L536">                lengths[k] = size;</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">                while (size != 0) {</span>
+<span class="nc" id="L538">                    int got = rf.read(st, bytePtr, size);</span>
+<span class="nc bnc" id="L539" title="All 2 branches missed.">                    if (got &lt; 0) {</span>
+<span class="nc" id="L540">                        throw new DocumentException(</span>
+<span class="nc" id="L541">                                MessageLocalization.getComposedMessage(&quot;premature.end.in.1&quot;, filePfb));</span>
+                    }
+<span class="nc" id="L543">                    bytePtr += got;</span>
+<span class="nc" id="L544">                    size -= got;</span>
+<span class="nc" id="L545">                }</span>
+            }
+<span class="nc" id="L547">            return new StreamFont(st, lengths, compressionLevel);</span>
+<span class="nc" id="L548">        } catch (Exception e) {</span>
+<span class="nc" id="L549">            throw new DocumentException(e);</span>
+        } finally {
+<span class="nc bnc" id="L551" title="All 2 branches missed.">            if (rf != null) {</span>
+                try {
+<span class="nc" id="L553">                    rf.close();</span>
+<span class="nc" id="L554">                } catch (Exception e) {</span>
+                    // empty on purpose
+<span class="nc" id="L556">                }</span>
+            }
+        }
+    }
+
+    /**
+     * Generates the font descriptor for this font or &lt;CODE&gt;null&lt;/CODE&gt; if it is one of the 14 built in fonts.
+     *
+     * @param fontStream the indirect reference to a PdfStream containing the font or &lt;CODE&gt;null&lt;/CODE&gt;
+     * @return the PdfDictionary containing the font descriptor or &lt;CODE&gt;null&lt;/CODE&gt;
+     */
+    private PdfDictionary getFontDescriptor(PdfIndirectReference fontStream) {
+<span class="pc bpc" id="L568" title="1 of 2 branches missed.">        if (builtinFont) {</span>
+<span class="fc" id="L569">            return null;</span>
+        }
+<span class="nc" id="L571">        PdfDictionary dic = new PdfDictionary(PdfName.FONTDESCRIPTOR);</span>
+<span class="nc" id="L572">        dic.put(PdfName.ASCENT, new PdfNumber(Ascender));</span>
+<span class="nc" id="L573">        dic.put(PdfName.CAPHEIGHT, new PdfNumber(CapHeight));</span>
+<span class="nc" id="L574">        dic.put(PdfName.DESCENT, new PdfNumber(Descender));</span>
+<span class="nc" id="L575">        dic.put(PdfName.FONTBBOX, new PdfRectangle(llx, lly, urx, ury));</span>
+<span class="nc" id="L576">        dic.put(PdfName.FONTNAME, new PdfName(FontName));</span>
+<span class="nc" id="L577">        dic.put(PdfName.ITALICANGLE, new PdfNumber(ItalicAngle));</span>
+<span class="nc" id="L578">        dic.put(PdfName.STEMV, new PdfNumber(StdVW));</span>
+<span class="nc bnc" id="L579" title="All 2 branches missed.">        if (fontStream != null) {</span>
+<span class="nc" id="L580">            dic.put(PdfName.FONTFILE, fontStream);</span>
+        }
+<span class="nc" id="L582">        int flags = 0;</span>
+<span class="nc bnc" id="L583" title="All 2 branches missed.">        if (IsFixedPitch) {</span>
+<span class="nc" id="L584">            flags |= 1;</span>
+        }
+<span class="nc bnc" id="L586" title="All 2 branches missed.">        flags |= fontSpecific ? 4 : 32;</span>
+<span class="nc bnc" id="L587" title="All 2 branches missed.">        if (ItalicAngle &lt; 0) {</span>
+<span class="nc" id="L588">            flags |= 64;</span>
+        }
+<span class="nc bnc" id="L590" title="All 4 branches missed.">        if (FontName.contains(&quot;Caps&quot;) || FontName.endsWith(&quot;SC&quot;)) {</span>
+<span class="nc" id="L591">            flags |= 131072;</span>
+        }
+<span class="nc bnc" id="L593" title="All 2 branches missed.">        if (Weight.equals(&quot;Bold&quot;)) {</span>
+<span class="nc" id="L594">            flags |= 262144;</span>
+        }
+<span class="nc" id="L596">        dic.put(PdfName.FLAGS, new PdfNumber(flags));</span>
+
+<span class="nc" id="L598">        return dic;</span>
+    }
+
+    /**
+     * Generates the font dictionary for this font.
+     *
+     * @param firstChar      the first valid character
+     * @param lastChar       the last valid character
+     * @param shortTag       a 256 bytes long &lt;CODE&gt;byte&lt;/CODE&gt; array where each unused byte is represented by 0
+     * @param fontDescriptor the indirect reference to a PdfDictionary containing the font descriptor or
+     *                       &lt;CODE&gt;null&lt;/CODE&gt;
+     * @return the PdfDictionary containing the font dictionary
+     */
+    private PdfDictionary getFontBaseType(PdfIndirectReference fontDescriptor, int firstChar, int lastChar,
+            byte[] shortTag) {
+<span class="fc" id="L613">        PdfDictionary dic = new PdfDictionary(PdfName.FONT);</span>
+<span class="fc" id="L614">        dic.put(PdfName.SUBTYPE, PdfName.TYPE1);</span>
+<span class="fc" id="L615">        dic.put(PdfName.BASEFONT, new PdfName(FontName));</span>
+<span class="pc bpc" id="L616" title="3 of 4 branches missed.">        boolean stdEncoding = encoding.equals(&quot;Cp1252&quot;) || encoding.equals(&quot;MacRoman&quot;);</span>
+<span class="pc bpc" id="L617" title="3 of 4 branches missed.">        if (!fontSpecific || specialMap != null) {</span>
+<span class="pc bpc" id="L618" title="1 of 2 branches missed.">            for (int k = firstChar; k &lt;= lastChar; ++k) {</span>
+<span class="pc bpc" id="L619" title="1 of 2 branches missed.">                if (!differences[k].equals(notdef)) {</span>
+<span class="fc" id="L620">                    firstChar = k;</span>
+<span class="fc" id="L621">                    break;</span>
+                }
+            }
+<span class="pc bpc" id="L624" title="1 of 2 branches missed.">            if (stdEncoding) {</span>
+<span class="fc" id="L625">                dic.put(PdfName.ENCODING,</span>
+<span class="pc bpc" id="L626" title="1 of 2 branches missed.">                        encoding.equals(&quot;Cp1252&quot;) ? PdfName.WIN_ANSI_ENCODING : PdfName.MAC_ROMAN_ENCODING);</span>
+            } else {
+<span class="nc" id="L628">                PdfDictionary enc = new PdfDictionary(PdfName.ENCODING);</span>
+<span class="nc" id="L629">                PdfArray dif = new PdfArray();</span>
+<span class="nc" id="L630">                boolean gap = true;</span>
+<span class="nc bnc" id="L631" title="All 2 branches missed.">                for (int k = firstChar; k &lt;= lastChar; ++k) {</span>
+<span class="nc bnc" id="L632" title="All 2 branches missed.">                    if (shortTag[k] != 0) {</span>
+<span class="nc bnc" id="L633" title="All 2 branches missed.">                        if (gap) {</span>
+<span class="nc" id="L634">                            dif.add(new PdfNumber(k));</span>
+<span class="nc" id="L635">                            gap = false;</span>
+                        }
+<span class="nc" id="L637">                        dif.add(new PdfName(differences[k]));</span>
+                    } else {
+<span class="nc" id="L639">                        gap = true;</span>
+                    }
+                }
+<span class="nc" id="L642">                enc.put(PdfName.DIFFERENCES, dif);</span>
+<span class="nc" id="L643">                dic.put(PdfName.ENCODING, enc);</span>
+            }
+        }
+<span class="pc bpc" id="L646" title="5 of 10 branches missed.">        if (specialMap != null || forceWidthsOutput || !(builtinFont &amp;&amp; (fontSpecific || stdEncoding))) {</span>
+<span class="nc" id="L647">            dic.put(PdfName.FIRSTCHAR, new PdfNumber(firstChar));</span>
+<span class="nc" id="L648">            dic.put(PdfName.LASTCHAR, new PdfNumber(lastChar));</span>
+<span class="nc" id="L649">            PdfArray wd = new PdfArray();</span>
+<span class="nc bnc" id="L650" title="All 2 branches missed.">            for (int k = firstChar; k &lt;= lastChar; ++k) {</span>
+<span class="nc bnc" id="L651" title="All 2 branches missed.">                if (shortTag[k] == 0) {</span>
+<span class="nc" id="L652">                    wd.add(new PdfNumber(0));</span>
+                } else {
+<span class="nc" id="L654">                    wd.add(new PdfNumber(widths[k]));</span>
+                }
+            }
+<span class="nc" id="L657">            dic.put(PdfName.WIDTHS, wd);</span>
+        }
+<span class="pc bpc" id="L659" title="3 of 4 branches missed.">        if (!builtinFont &amp;&amp; fontDescriptor != null) {</span>
+<span class="nc" id="L660">            dic.put(PdfName.FONTDESCRIPTOR, fontDescriptor);</span>
+        }
+<span class="fc" id="L662">        return dic;</span>
+    }
+
+    /**
+     * Outputs to the writer the font dictionaries and streams.
+     *
+     * @param writer the writer for this document
+     * @param ref    the font indirect reference
+     * @param params several parameters that depend on the font type
+     * @throws IOException       on error
+     * @throws DocumentException error in generating the object
+     */
+    void writeFont(PdfWriter writer, PdfIndirectReference ref, Object[] params) throws DocumentException, IOException {
+<span class="fc" id="L675">        int firstChar = (Integer) params[0];</span>
+<span class="fc" id="L676">        int lastChar = (Integer) params[1];</span>
+<span class="fc" id="L677">        byte[] shortTag = (byte[]) params[2];</span>
+<span class="pc bpc" id="L678" title="2 of 4 branches missed.">        boolean subsetp = (Boolean) params[3] &amp;&amp; subset;</span>
+<span class="pc bpc" id="L679" title="1 of 2 branches missed.">        if (!subsetp) {</span>
+<span class="nc" id="L680">            firstChar = 0;</span>
+<span class="nc" id="L681">            lastChar = shortTag.length - 1;</span>
+<span class="nc bnc" id="L682" title="All 2 branches missed.">            for (int k = 0; k &lt; shortTag.length; ++k) {</span>
+<span class="nc" id="L683">                shortTag[k] = 1;</span>
+            }
+        }
+<span class="fc" id="L686">        PdfIndirectReference ind_font = null;</span>
+<span class="fc" id="L687">        PdfObject pobj = null;</span>
+<span class="fc" id="L688">        PdfIndirectObject obj = null;</span>
+<span class="fc" id="L689">        pobj = getFullFontStream();</span>
+<span class="pc bpc" id="L690" title="1 of 2 branches missed.">        if (pobj != null) {</span>
+<span class="nc" id="L691">            obj = writer.addToBody(pobj);</span>
+<span class="nc" id="L692">            ind_font = obj.getIndirectReference();</span>
+        }
+<span class="fc" id="L694">        pobj = getFontDescriptor(ind_font);</span>
+<span class="pc bpc" id="L695" title="1 of 2 branches missed.">        if (pobj != null) {</span>
+<span class="nc" id="L696">            obj = writer.addToBody(pobj);</span>
+<span class="nc" id="L697">            ind_font = obj.getIndirectReference();</span>
+        }
+<span class="fc" id="L699">        pobj = getFontBaseType(ind_font, firstChar, lastChar, shortTag);</span>
+<span class="fc" id="L700">        writer.addToBody(pobj, ref);</span>
+<span class="fc" id="L701">    }</span>
+
+    /**
+     * Gets the font parameter identified by &lt;CODE&gt;key&lt;/CODE&gt;. Valid values for &lt;CODE&gt;key&lt;/CODE&gt; are
+     * &lt;CODE&gt;ASCENT&lt;/CODE&gt;, &lt;CODE&gt;CAPHEIGHT&lt;/CODE&gt;, &lt;CODE&gt;DESCENT&lt;/CODE&gt;,
+     * &lt;CODE&gt;ITALICANGLE&lt;/CODE&gt;, &lt;CODE&gt;BBOXLLX&lt;/CODE&gt;, &lt;CODE&gt;BBOXLLY&lt;/CODE&gt;, &lt;CODE&gt;BBOXURX&lt;/CODE&gt;
+     * and &lt;CODE&gt;BBOXURY&lt;/CODE&gt;.
+     *
+     * @param key      the parameter to be extracted
+     * @param fontSize the font size in points
+     * @return the parameter in points
+     */
+    public float getFontDescriptor(int key, float fontSize) {
+<span class="pc bpc" id="L714" title="11 of 13 branches missed.">        switch (key) {</span>
+            case AWT_ASCENT:
+            case ASCENT:
+<span class="fc" id="L717">                return Ascender * fontSize / 1000;</span>
+            case CAPHEIGHT:
+<span class="nc" id="L719">                return CapHeight * fontSize / 1000;</span>
+            case AWT_DESCENT:
+            case DESCENT:
+<span class="fc" id="L722">                return Descender * fontSize / 1000;</span>
+            case ITALICANGLE:
+<span class="nc" id="L724">                return ItalicAngle;</span>
+            case BBOXLLX:
+<span class="nc" id="L726">                return llx * fontSize / 1000;</span>
+            case BBOXLLY:
+<span class="nc" id="L728">                return lly * fontSize / 1000;</span>
+            case BBOXURX:
+<span class="nc" id="L730">                return urx * fontSize / 1000;</span>
+            case BBOXURY:
+<span class="nc" id="L732">                return ury * fontSize / 1000;</span>
+            case AWT_LEADING:
+<span class="nc" id="L734">                return 0;</span>
+            case AWT_MAXADVANCE:
+<span class="nc" id="L736">                return (urx - llx) * fontSize / 1000;</span>
+            case UNDERLINE_POSITION:
+<span class="nc" id="L738">                return UnderlinePosition * fontSize / 1000;</span>
+            case UNDERLINE_THICKNESS:
+<span class="nc" id="L740">                return UnderlineThickness * fontSize / 1000;</span>
+        }
+<span class="nc" id="L742">        return 0;</span>
+    }
+
+    /**
+     * Gets the postscript font name.
+     *
+     * @return the postscript font name
+     */
+    public String getPostscriptFontName() {
+<span class="nc" id="L751">        return FontName;</span>
+    }
+
+    protected int[] getRawCharBBox(int c, String name) {
+        Object[] metrics;
+<span class="pc bpc" id="L756" title="1 of 2 branches missed.">        if (name == null) { // font specific</span>
+<span class="nc" id="L757">            metrics = CharMetrics.get(c);</span>
+        } else {
+<span class="fc bfc" id="L759" title="All 2 branches covered.">            if (name.equals(&quot;.notdef&quot;)) {</span>
+<span class="fc" id="L760">                return null;</span>
+            }
+<span class="fc" id="L762">            metrics = CharMetrics.get(name);</span>
+        }
+<span class="fc bfc" id="L764" title="All 2 branches covered.">        if (metrics != null) {</span>
+<span class="fc" id="L765">            return ((int[]) (metrics[3]));</span>
+        }
+<span class="fc" id="L767">        return null;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

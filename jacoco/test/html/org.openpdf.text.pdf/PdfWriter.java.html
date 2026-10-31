@@ -1,0 +1,1479 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfWriter.java</span></div><h1>PdfWriter.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfWriter.java 4095 2009-11-12 14:40:41Z blowagie $
+ *
+ * Copyright 1999, 2000, 2001, 2002 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import org.openpdf.text.DocWriter;
+import org.openpdf.text.Document;
+import org.openpdf.text.DocumentException;
+import org.openpdf.text.ExceptionConverter;
+import org.openpdf.text.Image;
+import org.openpdf.text.error_messages.MessageLocalization;
+import org.openpdf.text.pdf.interfaces.PdfRunDirection;
+import org.openpdf.text.pdf.interfaces.PdfVersion;
+import org.openpdf.text.pdf.internal.PdfVersionImp;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeSet;
+
+/**
+ * A &lt;CODE&gt;DocWriter&lt;/CODE&gt; class for PDF.
+ * &lt;p&gt;
+ * When this &lt;CODE&gt;PdfWriter&lt;/CODE&gt; is added to a certain &lt;CODE&gt;PdfDocument&lt;/CODE&gt;, the PDF representation of every
+ * Element added to this Document will be written to the outputstream.&lt;/P&gt;
+ */
+
+public class PdfWriter extends DocWriter implements
+        PdfVersion,
+        PdfRunDirection {
+
+    /**
+     * The highest generation number possible.
+     *
+     * @since iText 2.1.6
+     */
+    public static final int GENERATION_MAX = 65535;
+
+// INNER CLASSES
+    /**
+     * possible PDF version (header)
+     */
+    public static final String VERSION_1_2 = &quot;1.2&quot;;
+    /**
+     * possible PDF version (header)
+     */
+    public static final String VERSION_1_3 = &quot;1.3&quot;;
+
+//    ESSENTIALS
+
+//    Construct a PdfWriter instance
+    /**
+     * possible PDF version (header)
+     */
+    public static final String VERSION_1_4 = &quot;1.4&quot;;
+    /**
+     * possible PDF version (header)
+     */
+    public static final String VERSION_1_5 = &quot;1.5&quot;;
+    /**
+     * possible PDF version (header)
+     */
+    public static final String VERSION_1_6 = &quot;1.6&quot;;
+    /**
+     * possible PDF version (header)
+     */
+    public static final String VERSION_1_7 = &quot;1.7&quot;;
+
+    
+    /**
+     * PDF version 2.0.
+     */
+    public static final String VERSION_2_0 = &quot;2.0&quot;;
+
+
+//    the PdfDocument instance
+    /**
+     * possible PDF version (catalog)
+     */
+<span class="fc" id="L130">    public static final PdfName PDF_VERSION_1_2 = new PdfName(&quot;1.2&quot;);</span>
+    /**
+     * possible PDF version (catalog)
+     */
+<span class="fc" id="L134">    public static final PdfName PDF_VERSION_1_3 = new PdfName(&quot;1.3&quot;);</span>
+    /**
+     * possible PDF version (catalog)
+     */
+<span class="fc" id="L138">    public static final PdfName PDF_VERSION_1_4 = new PdfName(&quot;1.4&quot;);</span>
+    /**
+     * possible PDF version (catalog)
+     */
+<span class="fc" id="L142">    public static final PdfName PDF_VERSION_1_5 = new PdfName(&quot;1.5&quot;);</span>
+    /**
+     * possible PDF version (catalog)
+     */
+<span class="fc" id="L146">    public static final PdfName PDF_VERSION_1_6 = new PdfName(&quot;1.6&quot;);</span>
+
+//    the PdfDirectContentByte instances
+
+    /*
+     * You should see Direct Content as a canvas on which you can draw
+     * graphics and text. One canvas goes on top of the page (getDirectContent),
+     * the other goes underneath (getDirectContentUnder).
+     * You can always the same object throughout your document,
+     * even if you have moved to a new page. Whatever you add on
+     * the canvas will be displayed on top or under the current page.
+     */
+    /**
+     * possible PDF version (catalog)
+     */
+<span class="fc" id="L161">    public static final PdfName PDF_VERSION_1_7 = new PdfName(&quot;1.7&quot;);</span>
+
+
+    /**
+     * possible PDF version (catalog)
+     */
+<span class="fc" id="L167">    public static final PdfName PDF_VERSION_2_0 = new PdfName(&quot;2.0&quot;);</span>
+
+
+//    PDF body
+
+//    PDF Catalog
+
+//    PdfPages
+
+//    page events
+
+
+//    Open and Close methods + method that create the PDF
+// Root data for the PDF document (used when composing the Catalog)
+
+//  [C3] PdfViewerPreferences interface
+
+    /**
+     * This is the list with all the images in the document.
+     */
+<span class="fc" id="L187">    private final HashMap&lt;Long, PdfName&gt; images = new LinkedHashMap&lt;&gt;();</span>
+    /**
+     * the pdfdocument object.
+     */
+    protected PdfDocument pdf;
+    /**
+     * The direct content in this document.
+     */
+    protected PdfContentByte directContent;
+    /**
+     * The direct content under in this document.
+     */
+    protected PdfContentByte directContentUnder;
+
+    // page mode (section 13.1.2 of &quot;iText in Action&quot;)
+    /**
+     * body of the PDF document
+     */
+    protected PdfBody body;
+    /**
+     * Holds value of property extraCatalog this is used for Output Intents.
+     */
+    protected PdfDictionary extraCatalog;
+    /**
+     * The root of the page tree.
+     */
+<span class="fc" id="L213">    protected PdfPages root = new PdfPages(this);</span>
+    /**
+     * The PdfIndirectReference to the pages.
+     */
+<span class="fc" id="L217">    protected ArrayList&lt;PdfIndirectReference&gt; pageReferences = new ArrayList&lt;&gt;();</span>
+    /**
+     * The current page number.
+     */
+<span class="fc" id="L221">    protected int currentPageNumber = 1;</span>
+    /**
+     * The value of the Tabs entry in the page dictionary.
+     *
+     * @since 2.1.5
+     */
+<span class="fc" id="L227">    protected PdfName tabs = null;</span>
+
+    // values for setting viewer preferences in iText versions older than 2.x
+    /**
+     * A number referring to the previous Cross-Reference Table.
+     */
+<span class="fc" id="L233">    protected int prevxref = 0;</span>
+    /**
+     * Stores the version information for the header and the catalog.
+     */
+<span class="fc" id="L237">    protected PdfVersionImp pdf_version = new PdfVersionImp();</span>
+    /**
+     * XMP Metadata for the document.
+     */
+<span class="fc" id="L241">    protected byte[] xmpMetadata = null;</span>
+    /**
+     * Contains the business logic for cryptography.
+     */
+    /**
+     * Holds value of property fullCompression.
+     */
+<span class="fc" id="L248">    protected boolean fullCompression = false;</span>
+    /**
+     * The compression level of the content streams.
+     *
+     * @since 2.1.3
+     */
+<span class="fc" id="L254">    protected int compressionLevel = PdfStream.DEFAULT_COMPRESSION;</span>
+
+    /**
+     * When not null, the file identifier ({@code /ID}) of the trailer: the same bytes every time, instead of a
+     * random one. Used to produce reproducible files.
+     */
+<span class="fc" id="L260">    private byte[] fixedFileId = null;</span>
+
+    /**
+     * Makes the file identifier ({@code /ID}) of the trailer the given bytes (16 are used), instead of a random value,
+     * so that the same document gives the same file.
+     *
+     * @param fileId the identifier, or null for a random one (the default)
+     */
+    public void setFixedFileId(byte[] fileId) {
+<span class="fc" id="L269">        this.fixedFileId = fileId;</span>
+<span class="fc" id="L270">    }</span>
+    /**
+     * The fonts of this document
+     */
+<span class="fc" id="L274">    protected LinkedHashMap&lt;BaseFont, FontDetails&gt; documentFonts = new LinkedHashMap&lt;&gt;();</span>
+    /**
+     * The font number counter for the fonts in the document.
+     */
+<span class="fc" id="L278">    protected int fontNumber = 1;</span>
+    /**
+     * The form XObjects in this document. The key is the xref and the value is Object[]{PdfName, template}.
+     */
+<span class="fc" id="L282">    protected LinkedHashMap&lt;PdfIndirectReference, Object[]&gt; formXObjects = new LinkedHashMap&lt;&gt;();</span>
+    /**
+     * The name counter for the form XObjects name.
+     */
+<span class="fc" id="L286">    protected int formXObjectsCounter = 1;</span>
+    /**
+     * The color number counter for the colors in the document.
+     */
+<span class="fc" id="L290">    protected int colorNumber = 1;</span>
+
+//  [C4] Page labels
+    /**
+     * The patterns of this document
+     */
+
+<span class="fc" id="L297">    protected HashMap&lt;PdfDictionary, PdfObject[]&gt; documentExtGState = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L298">    protected HashMap&lt;Object, PdfObject[]&gt; documentProperties = new LinkedHashMap&lt;&gt;();</span>
+    /**
+     * A group attributes dictionary specifying the attributes of the page's page group for use in the transparent
+     * imaging model
+     */
+    protected PdfDictionary group;
+<span class="fc" id="L304">    protected float userunit = 0f;</span>
+<span class="fc" id="L305">    protected PdfDictionary defaultColorspace = new PdfDictionary();</span>
+//  [C8] AcroForm
+    /**
+     * Dictionary, containing all the images of the PDF document
+     */
+<span class="fc" id="L310">    protected PdfDictionary imageDictionary = new PdfDictionary();</span>
+    /**
+     * A HashSet with Stream objects containing JBIG2 Globals
+     *
+     * @since 2.1.5
+     */
+<span class="fc" id="L316">    protected HashMap&lt;PdfStream, PdfIndirectReference&gt; JBIG2Globals = new LinkedHashMap&lt;&gt;();</span>
+    /**
+     * Holds value of property RGBTranparency.
+     */
+    private boolean rgbTransparencyBlending;
+
+//  [C9] Metadata
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfWriter&lt;/CODE&gt;.
+     * &lt;p&gt;
+     * Remark: a PdfWriter can only be constructed by calling the method
+     * &lt;CODE&gt;getInstance(Document document, OutputStream os)&lt;/CODE&gt;.
+     *
+     * @param document The &lt;CODE&gt;PdfDocument&lt;/CODE&gt; that has to be written
+     * @param os       The &lt;CODE&gt;OutputStream&lt;/CODE&gt; the writer has to write to.
+     */
+
+    protected PdfWriter(PdfDocument document, OutputStream os) {
+<span class="fc" id="L335">        super(document, os);</span>
+<span class="fc" id="L336">        pdf = document;</span>
+<span class="fc" id="L337">        directContent = new PdfContentByte(this);</span>
+<span class="fc" id="L338">        directContentUnder = new PdfContentByte(this);</span>
+<span class="fc" id="L339">    }</span>
+
+    /**
+     * Use this method to get an instance of the &lt;CODE&gt;PdfWriter&lt;/CODE&gt;.
+     *
+     * @param document The &lt;CODE&gt;Document&lt;/CODE&gt; that has to be written
+     * @param os       The &lt;CODE&gt;OutputStream&lt;/CODE&gt; the writer has to write to.
+     * @return a new &lt;CODE&gt;PdfWriter&lt;/CODE&gt;
+     * @throws DocumentException on error
+     */
+
+    public static PdfWriter getInstance(Document document, OutputStream os)
+            throws DocumentException {
+<span class="fc" id="L352">        PdfDocument pdf = new PdfDocument();</span>
+<span class="fc" id="L353">        pdf.setTextRenderingOptions(document.getTextRenderingOptions());</span>
+<span class="fc" id="L354">        document.addDocListener(pdf);</span>
+<span class="fc" id="L355">        PdfWriter writer = new PdfWriter(pdf, os);</span>
+<span class="fc" id="L356">        pdf.addWriter(writer);</span>
+<span class="fc" id="L357">        return writer;</span>
+    }
+
+    /**
+     * Use this method to get an instance of the &lt;CODE&gt;PdfWriter&lt;/CODE&gt;.
+     *
+     * @param document The &lt;CODE&gt;Document&lt;/CODE&gt; that has to be written
+     * @param os       The &lt;CODE&gt;OutputStream&lt;/CODE&gt; the writer has to write to.
+     * @param listener A &lt;CODE&gt;DocListener&lt;/CODE&gt; to pass to the PdfDocument.
+     * @return a new &lt;CODE&gt;PdfWriter&lt;/CODE&gt;
+     * @throws DocumentException on error
+     */
+
+//  [C10] PDFX Conformance
+
+    /**
+     * Gets the &lt;CODE&gt;PdfDocument&lt;/CODE&gt; associated with this writer.
+     *
+     * @return the &lt;CODE&gt;PdfDocument&lt;/CODE&gt;
+     */
+
+    PdfDocument getPdfDocument() {
+<span class="fc" id="L379">        return pdf;</span>
+    }
+
+    /**
+     * Use this method to get the info dictionary if you want to change it directly (add keys and values to the info
+     * dictionary).
+     *
+     * @return the info dictionary
+     */
+    public PdfDictionary getInfo() {
+<span class="fc" id="L389">        return pdf.getInfo();</span>
+    }
+
+    /**
+     * Use this method to get the direct content for this document. There is only one direct content, multiple calls to
+     * this method will allways retrieve the same object.
+     *
+     * @return the direct content
+     */
+
+    public PdfContentByte getDirectContent() {
+<span class="pc bpc" id="L400" title="1 of 2 branches missed.">        if (!open) {</span>
+<span class="nc" id="L401">            throw new RuntimeException(MessageLocalization.getComposedMessage(&quot;the.document.is.not.open&quot;));</span>
+        }
+<span class="fc" id="L403">        return directContent;</span>
+    }
+
+    /**
+     * Use this method to get the direct content under for this document. There is only one direct content, multiple
+     * calls to this method will always retrieve the same object.
+     *
+     * @return the direct content
+     */
+
+    public PdfContentByte getDirectContentUnder() {
+<span class="pc bpc" id="L414" title="1 of 2 branches missed.">        if (!open) {</span>
+<span class="nc" id="L415">            throw new RuntimeException(MessageLocalization.getComposedMessage(&quot;the.document.is.not.open&quot;));</span>
+        }
+<span class="fc" id="L417">        return directContentUnder;</span>
+    }
+
+    /**
+     * Resets all the direct contents to empty. This happens when a new page is started.
+     */
+    void resetContent() {
+<span class="fc" id="L424">        directContent.reset();</span>
+<span class="fc" id="L425">        directContentUnder.reset();</span>
+<span class="fc" id="L426">    }</span>
+
+    /**
+     * Use this method to add a PDF object to the PDF body. Use this method only if you know what you're doing!
+     *
+     * @param object the PDF object to add
+     * @return a PdfIndirectObject
+     * @throws IOException thrown when an I/O operation fails
+     */
+    public PdfIndirectObject addToBody(PdfObject object) throws IOException {
+<span class="fc" id="L436">        return body.add(object);</span>
+    }
+
+    /**
+     * Use this method to add a PDF object to the PDF body. Use this method only if you know what you're doing!
+     *
+     * @param object   the PDF object to add
+     * @param inObjStm a boolean
+     * @return a PdfIndirectObject
+     * @throws IOException thrown when an I/O operation fails
+     */
+    public PdfIndirectObject addToBody(PdfObject object, boolean inObjStm) throws IOException {
+<span class="fc" id="L448">        return body.add(object, inObjStm);</span>
+    }
+
+//  [C11] Output intents
+
+    /**
+     * Use this method to add a PDF object to the PDF body. Use this method only if you know what you're doing!
+     *
+     * @param object the object to add
+     * @param ref    the IndirectReference of that object
+     * @return a PdfIndirectObject
+     * @throws IOException thrown when an I/O operation fails
+     */
+    public PdfIndirectObject addToBody(PdfObject object, PdfIndirectReference ref) throws IOException {
+<span class="fc" id="L462">        return body.add(object, ref);</span>
+    }
+
+// PDF Objects that have an impact on the PDF body
+
+//  [F1] PdfEncryptionSettings interface
+
+    // types of encryption
+
+    /**
+     * Use this to get an &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt; for an object that will be created in the future. Use this
+     * method only if you know what you're doing!
+     *
+     * @return the &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt;
+     */
+
+    public PdfIndirectReference getPdfIndirectReference() {
+<span class="fc" id="L479">        return body.getPdfIndirectReference();</span>
+    }
+
+    /**
+     * Returns the outputStreamCounter.
+     *
+     * @return the outputStreamCounter
+     */
+    OutputStreamCounter getOs() {
+<span class="fc" id="L488">        return os;</span>
+    }
+
+    protected PdfDictionary getCatalog(PdfIndirectReference rootObj) {
+<span class="fc" id="L492">        PdfDictionary catalog = pdf.getCatalog(rootObj);</span>
+<span class="fc" id="L493">        return catalog;</span>
+    }
+    // ENCRYPTION_* = 3 reserved for implementation of the
+    // meanwhile deprecated proprietary AES256 variant by Adobe
+
+    /**
+     * Use this method to get a reference to a page existing or not. If the page does not exist yet the reference will
+     * be created in advance. If on closing the document, a page number greater than the total number of pages was
+     * requested, an exception is thrown.
+     *
+     * @param page the page number. The first page is 1
+     * @return the reference to the page
+     */
+    public PdfIndirectReference getPageReference(int page) {
+<span class="fc" id="L507">        --page;</span>
+<span class="pc bpc" id="L508" title="1 of 2 branches missed.">        if (page &lt; 0) {</span>
+<span class="nc" id="L509">            throw new IndexOutOfBoundsException(</span>
+<span class="nc" id="L510">                    MessageLocalization.getComposedMessage(&quot;the.page.number.must.be.gt.eq.1&quot;));</span>
+        }
+        PdfIndirectReference ref;
+<span class="pc bpc" id="L513" title="1 of 2 branches missed.">        if (page &lt; pageReferences.size()) {</span>
+<span class="nc" id="L514">            ref = pageReferences.get(page);</span>
+<span class="nc bnc" id="L515" title="All 2 branches missed.">            if (ref == null) {</span>
+<span class="nc" id="L516">                ref = body.getPdfIndirectReference();</span>
+<span class="nc" id="L517">                pageReferences.set(page, ref);</span>
+            }
+        } else {
+<span class="fc" id="L520">            int empty = page - pageReferences.size();</span>
+<span class="pc bpc" id="L521" title="1 of 2 branches missed.">            for (int k = 0; k &lt; empty; ++k) {</span>
+<span class="nc" id="L522">                pageReferences.add(null);</span>
+            }
+<span class="fc" id="L524">            ref = body.getPdfIndirectReference();</span>
+<span class="fc" id="L525">            pageReferences.add(ref);</span>
+        }
+<span class="fc" id="L527">        return ref;</span>
+    }
+
+    // permissions
+
+    /**
+     * Retrieves a reference to the current page of the document.
+     * The current page is typically the last page that was modified or accessed.
+     *
+     * @return a {@link PdfIndirectReference} object pointing to the current page in the PDF document.
+     */
+    public PdfIndirectReference getCurrentPage() {
+<span class="fc" id="L539">        return getPageReference(currentPageNumber);</span>
+    }
+
+    /**
+     * Returns the value to be used for the Tabs entry in the page tree.
+     *
+     * @return a PdfName of the value of the Tabs entry in the page dictionnary
+     * @since 2.1.5
+     */
+    public PdfName getTabs() {
+<span class="fc" id="L549">        return tabs;</span>
+    }
+
+    /**
+     * Adds some &lt;CODE&gt;PdfContents&lt;/CODE&gt; to this Writer.
+     * &lt;p&gt;
+     * The document has to be open before you can begin to add content to the body of the document.
+     *
+     * @param page     the &lt;CODE&gt;PdfPage&lt;/CODE&gt; to add
+     * @param contents the &lt;CODE&gt;PdfContents&lt;/CODE&gt; of the page
+     * @return a &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt;
+     * @throws PdfException on error
+     */
+
+    PdfIndirectReference add(PdfPage page, PdfContents contents) throws PdfException {
+<span class="pc bpc" id="L564" title="1 of 2 branches missed.">        if (!open) {</span>
+<span class="nc" id="L565">            throw new PdfException(MessageLocalization.getComposedMessage(&quot;the.document.is.not.open&quot;));</span>
+        }
+        PdfIndirectObject object;
+        try {
+<span class="fc" id="L569">            object = addToBody(contents);</span>
+<span class="nc" id="L570">        } catch (IOException ioe) {</span>
+<span class="nc" id="L571">            throw new ExceptionConverter(ioe);</span>
+<span class="fc" id="L572">        }</span>
+<span class="fc" id="L573">        page.add(object.getIndirectReference());</span>
+        // [U5]
+<span class="pc bpc" id="L575" title="1 of 2 branches missed.">        if (group != null) {</span>
+<span class="nc" id="L576">            page.put(PdfName.GROUP, group);</span>
+<span class="nc" id="L577">            group = null;</span>
+<span class="pc bpc" id="L578" title="1 of 2 branches missed.">        } else if (rgbTransparencyBlending) {</span>
+<span class="nc" id="L579">            PdfDictionary pp = new PdfDictionary();</span>
+<span class="nc" id="L580">            pp.put(PdfName.TYPE, PdfName.GROUP);</span>
+<span class="nc" id="L581">            pp.put(PdfName.S, PdfName.TRANSPARENCY);</span>
+<span class="nc" id="L582">            pp.put(PdfName.CS, PdfName.DEVICERGB);</span>
+<span class="nc" id="L583">            page.put(PdfName.GROUP, pp);</span>
+        }
+<span class="fc" id="L585">        root.addPage(page);</span>
+<span class="fc" id="L586">        currentPageNumber++;</span>
+<span class="fc" id="L587">        return null;</span>
+    }
+
+    /**
+     * Gets the &lt;CODE&gt;PdfPageEvent&lt;/CODE&gt; for this document or &lt;CODE&gt;null&lt;/CODE&gt; if none is set.
+     *
+     * @return the &lt;CODE&gt;PdfPageEvent&lt;/CODE&gt; for this document or &lt;CODE&gt;null&lt;/CODE&gt; if none is set
+     */
+
+    /**
+     * Signals that the &lt;CODE&gt;Document&lt;/CODE&gt; has been opened and that
+     * &lt;CODE&gt;Elements&lt;/CODE&gt; can be added.
+     * &lt;p&gt;
+     * When this method is called, the PDF-document header is written to the outputstream.
+     *
+     * @see org.openpdf.text.DocWriter#open()
+     */
+    @Override
+    public void open() {
+<span class="fc" id="L606">        super.open();</span>
+        try {
+<span class="fc" id="L608">            pdf_version.writeHeader(os);</span>
+<span class="fc" id="L609">            body = new PdfBody(this);</span>
+<span class="nc" id="L610">        } catch (IOException ioe) {</span>
+<span class="nc" id="L611">            throw new ExceptionConverter(ioe);</span>
+<span class="fc" id="L612">        }</span>
+<span class="fc" id="L613">    }</span>
+
+    /**
+     * Signals that the &lt;CODE&gt;Document&lt;/CODE&gt; was closed and that no other
+     * &lt;CODE&gt;Elements&lt;/CODE&gt; will be added.
+     * &lt;p&gt;
+     * The pages-tree is built and written to the outputstream. A Catalog is constructed, as well as an Info-object, the
+     * reference table is composed and everything is written to the outputstream embedded in a Trailer.
+     *
+     * @see org.openpdf.text.DocWriter#close()
+     */
+    @Override
+    public void close() {
+<span class="pc bpc" id="L626" title="1 of 2 branches missed.">        if (open) {</span>
+<span class="pc bpc" id="L627" title="2 of 4 branches missed.">            if (pdf != null &amp;&amp; pdf.isOpen()) {</span>
+<span class="nc" id="L628">                throw new IllegalStateException(MessageLocalization</span>
+<span class="nc" id="L629">                        .getComposedMessage(&quot;you.should.call.document.close.instead&quot;));</span>
+            }
+<span class="pc bpc" id="L631" title="1 of 2 branches missed.">            if ((currentPageNumber - 1) != pageReferences.size()) {</span>
+                // 2019-04-26: If you get this error, it could be that you are using OpenPDF or
+                // another library such as flying-saucer's ITextRenderer in a non-threadsafe way.
+                // ITextRenderer is not thread safe. So if you get this problem here, create a new
+                // instance, rather than re-using it.
+                // See: https://github.com/LibrePDF/OpenPDF/issues/164
+<span class="nc" id="L637">                throw new RuntimeException(&quot;The page &quot; + pageReferences.size() +</span>
+                        &quot; was requested but the document has only &quot; + (currentPageNumber - 1) + &quot; pages.&quot;);
+            }
+
+            try {
+<span class="fc" id="L642">                addSharedObjectsToBody();</span>
+                // add the root to the body
+<span class="fc" id="L644">                PdfIndirectReference rootRef = root.writePageTree();</span>
+                // make the catalog-object and add it to the body
+<span class="fc" id="L646">                PdfDictionary catalog = getCatalog(rootRef);</span>
+                // [C9] if there is XMP data to add: add it
+<span class="pc bpc" id="L648" title="1 of 2 branches missed.">                if (xmpMetadata != null) {</span>
+<span class="nc" id="L649">                    PdfStream xmp = new PdfStream(xmpMetadata);</span>
+<span class="nc" id="L650">                    xmp.put(PdfName.TYPE, PdfName.METADATA);</span>
+<span class="nc" id="L651">                    xmp.put(PdfName.SUBTYPE, PdfName.XML);</span>
+<span class="nc" id="L652">                    catalog.put(PdfName.METADATA, body.add(xmp).getIndirectReference());</span>
+                }
+                // [C11] Output Intents
+<span class="pc bpc" id="L655" title="1 of 2 branches missed.">                if (extraCatalog != null) {</span>
+<span class="nc" id="L656">                    catalog.mergeDifferent(extraCatalog);</span>
+                }
+
+                // add the Catalog to the body
+<span class="fc" id="L660">                PdfIndirectObject indirectCatalog = addToBody(catalog, false);</span>
+                // add the info-object to the body
+<span class="fc" id="L662">                PdfIndirectObject infoObj = addToBody(getInfo(), false);</span>
+
+                // [F1] encryption
+<span class="fc" id="L665">                PdfIndirectReference encryption = null;</span>
+                PdfObject fileID;
+<span class="fc" id="L667">                body.flushObjStm();</span>
+<span class="pc bpc" id="L668" title="1 of 2 branches missed.">                if (getInfo().contains(PdfName.FILEID)) {</span>
+<span class="nc" id="L669">                    fileID = getInfo().get(PdfName.FILEID);</span>
+                } else {
+                    // the same documentId shall be provided to the first version
+<span class="pc bpc" id="L672" title="1 of 2 branches missed.">                    byte[] documentId = fixedFileId != null ? fixedFileId : createDocumentId();</span>
+<span class="fc" id="L673">                    fileID = createInfoId(documentId, documentId);</span>
+                }
+
+                // write the cross-reference table of the body
+<span class="fc" id="L677">                body.writeCrossReferenceTable(os, indirectCatalog.getIndirectReference(),</span>
+<span class="fc" id="L678">                        infoObj.getIndirectReference(), encryption, fileID, prevxref);</span>
+
+<span class="fc" id="L680">                os.write(getISOBytes(&quot;startxref\n&quot;));</span>
+<span class="fc" id="L681">                os.write(getISOBytes(String.valueOf(body.offset())));</span>
+<span class="fc" id="L682">                os.write(getISOBytes(&quot;\n%%EOF\n&quot;));</span>
+<span class="fc" id="L683">                super.close();</span>
+<span class="nc" id="L684">            } catch (IOException ioe) {</span>
+<span class="nc" id="L685">                throw new ExceptionConverter(ioe);</span>
+<span class="fc" id="L686">            }</span>
+        }
+<span class="fc" id="L688">    }</span>
+
+    protected void addSharedObjectsToBody() throws IOException {
+        // [F3] add the fonts
+<span class="fc bfc" id="L692" title="All 2 branches covered.">        for (FontDetails details : documentFonts.values()) {</span>
+<span class="fc" id="L693">            details.writeFont(this);</span>
+<span class="fc" id="L694">        }</span>
+        // [F4] add the form XObjects
+<span class="fc bfc" id="L696" title="All 2 branches covered.">        for (Object[] objs : formXObjects.values()) {</span>
+<span class="fc" id="L697">            PdfTemplate template = (PdfTemplate) objs[1];</span>
+<span class="pc bpc" id="L698" title="2 of 4 branches missed.">            if (template != null &amp;&amp; template.getType() == PdfTemplate.TYPE_TEMPLATE) {</span>
+<span class="fc" id="L699">                addToBody(template.getFormXObject(compressionLevel), template.getIndirectReference());</span>
+            }
+<span class="fc" id="L701">        }</span>
+        // [F10] add the extgstate
+<span class="fc bfc" id="L703" title="All 2 branches covered.">        for (Map.Entry&lt;PdfDictionary, PdfObject[]&gt; entry : documentExtGState.entrySet()) {</span>
+<span class="fc" id="L704">            PdfDictionary gstate = entry.getKey();</span>
+<span class="fc" id="L705">            PdfObject[] obj = entry.getValue();</span>
+<span class="fc" id="L706">            addToBody(gstate, (PdfIndirectReference) obj[1]);</span>
+<span class="fc" id="L707">        }</span>
+        // [F11] add the properties
+<span class="pc bpc" id="L709" title="1 of 2 branches missed.">        for (Map.Entry&lt;Object, PdfObject[]&gt; entry : documentProperties.entrySet()) {</span>
+<span class="nc" id="L710">            Object prop = entry.getKey();</span>
+<span class="nc" id="L711">            PdfObject[] obj = entry.getValue();</span>
+<span class="nc bnc" id="L712" title="All 2 branches missed.">            if (prop instanceof PdfDictionary) {</span>
+<span class="nc" id="L713">                addToBody((PdfDictionary) prop, (PdfIndirectReference) obj[1]);</span>
+            }
+<span class="nc" id="L715">        }</span>
+<span class="fc" id="L716">    }</span>
+
+    /**
+     * Returns the version information.
+     */
+    PdfVersionImp getPdfVersion() {
+<span class="fc" id="L722">        return pdf_version;</span>
+    }
+
+//  [F3] adding fonts
+
+    public void addAnnotation(PdfAnnotation annot) {
+<span class="nc" id="L728">        pdf.addAnnotation(annot);</span>
+<span class="nc" id="L729">    }</span>
+
+//  [F9] document shadings
+
+//  [F11] adding properties (OCG, marked content)
+
+//  [F12] tagged PDF
+
+    private static byte[] createDocumentId() {
+<span class="nc" id="L738">        final byte[] id = new byte[16];</span>
+        // Not secure on purpose: the /ID of a PDF only has to be (very likely) unique.
+<span class="nc" id="L740">        new java.util.Random(System.nanoTime() ^ System.currentTimeMillis()).nextBytes(id);</span>
+<span class="nc" id="L741">        return id;</span>
+    }
+
+    private static PdfObject createInfoId(byte[] idPartOne, byte[] idPartTwo) {
+<span class="fc" id="L745">        try (ByteBuffer buf = new ByteBuffer(90)) {</span>
+<span class="fc" id="L746">            buf.append('[').append('&lt;');</span>
+<span class="pc bpc" id="L747" title="1 of 4 branches missed.">            for (int k = 0; k &lt; 16 &amp;&amp; k &lt; idPartOne.length; ++k) {</span>
+<span class="fc" id="L748">                buf.appendHex(idPartOne[k]);</span>
+            }
+<span class="fc" id="L750">            buf.append('&gt;').append('&lt;');</span>
+<span class="pc bpc" id="L751" title="1 of 4 branches missed.">            for (int k = 0; k &lt; 16 &amp;&amp; k &lt; idPartTwo.length; ++k) {</span>
+<span class="fc" id="L752">                buf.appendHex(idPartTwo[k]);</span>
+            }
+<span class="fc" id="L754">            buf.append('&gt;').append(']');</span>
+<span class="fc" id="L755">            return new PdfLiteral(buf.toByteArray());</span>
+<span class="nc" id="L756">        } catch (IOException e) {</span>
+<span class="nc" id="L757">            throw new ExceptionConverter(e);</span>
+        }
+    }
+
+    /**
+     * Use this method to find out if 1.5 compression is on.
+     *
+     * @return the 1.5 compression status
+     */
+    public boolean isFullCompression() {
+<span class="fc" id="L767">        return this.fullCompression;</span>
+    }
+
+    /**
+     * Returns the compression level used for streams written by this writer.
+     *
+     * @return the compression level (0 = best speed, 9 = best compression, -1 is default)
+     * @since 2.1.3
+     */
+    public int getCompressionLevel() {
+<span class="fc" id="L777">        return compressionLevel;</span>
+    }
+
+    /**
+     * Sets the compression level to be used for streams written by this writer.
+     *
+     * @param compressionLevel a value between 0 (best speed) and 9 (best compression)
+     * @since 2.1.3
+     */
+    public void setCompressionLevel(int compressionLevel) {
+<span class="pc bpc" id="L787" title="2 of 4 branches missed.">        if (compressionLevel &lt; PdfStream.NO_COMPRESSION || compressionLevel &gt; PdfStream.BEST_COMPRESSION) {</span>
+<span class="nc" id="L788">            this.compressionLevel = PdfStream.DEFAULT_COMPRESSION;</span>
+        } else {
+<span class="fc" id="L790">            this.compressionLevel = compressionLevel;</span>
+        }
+<span class="fc" id="L792">    }</span>
+
+//  User methods to change aspects of the page
+
+//  [U1] page size
+
+    PdfName getColorspaceName() {
+<span class="nc" id="L799">        return new PdfName(&quot;CS&quot; + (colorNumber++));</span>
+    }
+
+//  [U2] take care of empty pages
+
+//  [U3] page actions (open and close)
+
+    PdfObject[] addSimpleExtGState(PdfDictionary gstate) {
+<span class="pc bpc" id="L807" title="1 of 2 branches missed.">        if (!documentExtGState.containsKey(gstate)) {</span>
+<span class="fc" id="L808">            documentExtGState.put(gstate,</span>
+<span class="fc" id="L809">                    new PdfObject[]{new PdfName(&quot;GS&quot; + (documentExtGState.size() + 1)), getPdfIndirectReference()});</span>
+        }
+<span class="fc" id="L811">        return documentExtGState.get(gstate);</span>
+    }
+
+//  [U4] Thumbnail image
+
+//  [U5] Transparency groups
+
+//  [U7] run direction (doesn't actually do anything)
+
+// Miscellaneous topics
+
+//  [M1] Color settings
+
+//  [M2] spot patterns
+
+    /**
+     * Use this method to get the user unit. A user unit is a value that defines the default user space unit. The
+     * minimum UserUnit is 1 (1 unit = 1/72 inch). The maximum UserUnit is 75,000. Note that this userunit only works
+     * starting with PDF1.6!
+     *
+     * @return Returns the userunit.
+     */
+    public float getUserunit() {
+<span class="fc" id="L834">        return userunit;</span>
+    }
+
+//  [M3] Images
+
+    /**
+     * Use this method to get the default colorspaces.
+     *
+     * @return the default colorspaces
+     */
+    public PdfDictionary getDefaultColorspace() {
+<span class="fc" id="L845">        return defaultColorspace;</span>
+    }
+
+    /**
+     * Writes a &lt;CODE&gt;PdfImage&lt;/CODE&gt; to the outputstream.
+     *
+     * @param pdfImage the image to be added
+     * @return a &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt; to the encapsulated image
+     * @throws PdfException when a document isn't open yet, or has been closed
+     */
+
+    PdfIndirectReference add(PdfImage pdfImage, PdfIndirectReference fixedRef) throws PdfException {
+<span class="pc bpc" id="L857" title="1 of 2 branches missed.">        if (!imageDictionary.contains(pdfImage.name())) {</span>
+            try {
+<span class="pc bpc" id="L859" title="1 of 2 branches missed.">                if (fixedRef == null) {</span>
+<span class="fc" id="L860">                    fixedRef = addToBody(pdfImage).getIndirectReference();</span>
+                } else {
+<span class="nc" id="L862">                    addToBody(pdfImage, fixedRef);</span>
+                }
+<span class="nc" id="L864">            } catch (IOException ioe) {</span>
+<span class="nc" id="L865">                throw new ExceptionConverter(ioe);</span>
+<span class="fc" id="L866">            }</span>
+<span class="fc" id="L867">            imageDictionary.put(pdfImage.name(), fixedRef);</span>
+<span class="fc" id="L868">            return fixedRef;</span>
+        }
+<span class="nc" id="L870">        return (PdfIndirectReference) imageDictionary.get(pdfImage.name());</span>
+    }
+
+    /**
+     * return the &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt; to the image with a given name.
+     *
+     * @param name the name of the image
+     * @return a &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt;
+     */
+
+    PdfIndirectReference getImageReference(PdfName name) {
+<span class="fc" id="L881">        return (PdfIndirectReference) imageDictionary.get(name);</span>
+    }
+
+    /**
+     * Gets an indirect reference to a JBIG2 Globals stream. Adds the stream if it hasn't already been added to the
+     * writer.
+     *
+     * @param content a byte array that may already been added to the writer inside a stream object.
+     * @return the PdfIndirectReference
+     * @since 2.1.5
+     */
+    protected PdfIndirectReference getReferenceJBIG2Globals(byte[] content) {
+<span class="nc bnc" id="L893" title="All 2 branches missed.">        if (content == null) {</span>
+<span class="nc" id="L894">            return null;</span>
+        }
+        PdfStream stream;
+<span class="nc bnc" id="L897" title="All 2 branches missed.">        for (PdfStream pdfStream : JBIG2Globals.keySet()) {</span>
+<span class="nc" id="L898">            stream = pdfStream;</span>
+<span class="nc bnc" id="L899" title="All 2 branches missed.">            if (Arrays.equals(content, stream.getBytes())) {</span>
+<span class="nc" id="L900">                return JBIG2Globals.get(stream);</span>
+            }
+<span class="nc" id="L902">        }</span>
+<span class="nc" id="L903">        stream = new PdfStream(content);</span>
+        PdfIndirectObject ref;
+        try {
+<span class="nc" id="L906">            ref = addToBody(stream);</span>
+<span class="nc" id="L907">        } catch (IOException e) {</span>
+<span class="nc" id="L908">            return null;</span>
+<span class="nc" id="L909">        }</span>
+<span class="nc" id="L910">        JBIG2Globals.put(stream, ref.getIndirectReference());</span>
+<span class="nc" id="L911">        return ref.getIndirectReference();</span>
+    }
+//  [F12] tagged PDF
+
+    /**
+     * Gets the transparency blending colorspace.
+     *
+     * @return &lt;code&gt;true&lt;/code&gt; if the transparency blending colorspace is RGB, &lt;code&gt;false&lt;/code&gt;
+     * if it is the default blending colorspace
+     * @since 2.1.0
+     */
+    public boolean isRgbTransparencyBlending() {
+<span class="fc" id="L923">        return this.rgbTransparencyBlending;</span>
+    }
+
+    /**
+     * This class generates the structure of a PDF document.
+     * &lt;p&gt;
+     * This class covers the third section of Chapter 5 in the 'Portable Document Format Reference Manual version 1.3'
+     * (page 55-60). It contains the body of a PDF document (section 5.14) and it can also generate a Cross-reference
+     * Table (section 5.15).
+     *
+     * @see PdfWriter
+     * @see PdfObject
+     * @see PdfIndirectObject
+     */
+    public static class PdfBody {
+
+        private static final int OBJSINSTREAM = 200;
+
+        // membervariables
+
+        /**
+         * array containing the cross-reference table of the normal objects.
+         */
+        private final TreeSet&lt;PdfCrossReference&gt; xrefs;
+        private final PdfWriter writer;
+        private int refnum;
+        /**
+         * the current byte position in the body.
+         */
+        private long position;
+        private ByteBuffer index;
+        private ByteBuffer streamObjects;
+        private int currentObjNum;
+<span class="fc" id="L956">        private int numObj = 0;</span>
+
+        // constructors
+
+        /**
+         * Constructs a new &lt;CODE&gt;PdfBody&lt;/CODE&gt;.
+         *
+         * @param writer
+         */
+<span class="fc" id="L965">        PdfBody(PdfWriter writer) {</span>
+<span class="fc" id="L966">            xrefs = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L967">            xrefs.add(new PdfCrossReference(0, 0, GENERATION_MAX));</span>
+<span class="fc" id="L968">            position = writer.getOs().getCounter();</span>
+<span class="fc" id="L969">            refnum = 1;</span>
+<span class="fc" id="L970">            this.writer = writer;</span>
+<span class="fc" id="L971">        }</span>
+
+        // methods
+
+        private PdfWriter.PdfBody.PdfCrossReference addToObjStm(PdfObject obj, int nObj) throws IOException {
+<span class="nc bnc" id="L976" title="All 2 branches missed.">            if (numObj &gt;= OBJSINSTREAM) {</span>
+<span class="nc" id="L977">                flushObjStm();</span>
+            }
+<span class="nc bnc" id="L979" title="All 2 branches missed.">            if (index == null) {</span>
+<span class="nc" id="L980">                index = new ByteBuffer();</span>
+<span class="nc" id="L981">                streamObjects = new ByteBuffer();</span>
+<span class="nc" id="L982">                currentObjNum = getIndirectReferenceNumber();</span>
+<span class="nc" id="L983">                numObj = 0;</span>
+            }
+<span class="nc" id="L985">            int p = streamObjects.size();</span>
+<span class="nc" id="L986">            int idx = numObj++;</span>
+<span class="nc" id="L987">            obj.toPdf(writer, streamObjects);</span>
+<span class="nc" id="L988">            streamObjects.append(' ');</span>
+<span class="nc" id="L989">            index.append(nObj).append(' ').append(p).append(' ');</span>
+<span class="nc" id="L990">            return new PdfWriter.PdfBody.PdfCrossReference(2, nObj, currentObjNum, idx);</span>
+        }
+
+        private void flushObjStm() throws IOException {
+<span class="pc bpc" id="L994" title="1 of 2 branches missed.">            if (numObj == 0) {</span>
+<span class="fc" id="L995">                return;</span>
+            }
+<span class="nc" id="L997">            int first = index.size();</span>
+<span class="nc" id="L998">            index.append(streamObjects);</span>
+<span class="nc" id="L999">            PdfStream stream = new PdfStream(index.toByteArray());</span>
+<span class="nc" id="L1000">            stream.flateCompress(writer.getCompressionLevel());</span>
+<span class="nc" id="L1001">            stream.put(PdfName.TYPE, PdfName.OBJSTM);</span>
+<span class="nc" id="L1002">            stream.put(PdfName.N, new PdfNumber(numObj));</span>
+<span class="nc" id="L1003">            stream.put(PdfName.FIRST, new PdfNumber(first));</span>
+<span class="nc" id="L1004">            add(stream, currentObjNum);</span>
+<span class="nc" id="L1005">            index = null;</span>
+<span class="nc" id="L1006">            streamObjects = null;</span>
+<span class="nc" id="L1007">            numObj = 0;</span>
+<span class="nc" id="L1008">        }</span>
+
+        /**
+         * Adds a &lt;CODE&gt;PdfObject&lt;/CODE&gt; to the body.
+         * &lt;p&gt;
+         * This methods creates a &lt;CODE&gt;PdfIndirectObject&lt;/CODE&gt; with a certain number, containing the given
+         * &lt;CODE&gt;PdfObject&lt;/CODE&gt;. It also adds a &lt;CODE&gt;PdfCrossReference&lt;/CODE&gt; for this object to an
+         * &lt;CODE&gt;ArrayList&lt;/CODE&gt; that will be used to build the Cross-reference Table.
+         *
+         * @param object a &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+         * @return a &lt;CODE&gt;PdfIndirectObject&lt;/CODE&gt;
+         * @throws IOException
+         */
+        PdfIndirectObject add(PdfObject object) throws IOException {
+<span class="fc" id="L1022">            return add(object, getIndirectReferenceNumber());</span>
+        }
+
+        PdfIndirectObject add(PdfObject object, boolean inObjStm) throws IOException {
+<span class="fc" id="L1026">            return add(object, getIndirectReferenceNumber(), inObjStm);</span>
+        }
+
+        /**
+         * Gets a PdfIndirectReference for an object that will be created in the future.
+         *
+         * @return a PdfIndirectReference
+         */
+        PdfIndirectReference getPdfIndirectReference() {
+<span class="fc" id="L1035">            return new PdfIndirectReference(0, getIndirectReferenceNumber());</span>
+        }
+
+        int getIndirectReferenceNumber() {
+<span class="fc" id="L1039">            int n = refnum++;</span>
+<span class="fc" id="L1040">            xrefs.add(new PdfCrossReference(n, 0, GENERATION_MAX));</span>
+<span class="fc" id="L1041">            return n;</span>
+        }
+
+        /**
+         * Adds a &lt;CODE&gt;PdfObject&lt;/CODE&gt; to the body given an already existing PdfIndirectReference.
+         * &lt;p&gt;
+         * This methods creates a &lt;CODE&gt;PdfIndirectObject&lt;/CODE&gt; with the number given by
+         * &lt;CODE&gt;ref&lt;/CODE&gt;, containing the given &lt;CODE&gt;PdfObject&lt;/CODE&gt;.
+         * It also adds a &lt;CODE&gt;PdfCrossReference&lt;/CODE&gt; for this object to an &lt;CODE&gt;ArrayList&lt;/CODE&gt; that will be used
+         * to build the Cross-reference Table.
+         *
+         * @param object a &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+         * @param ref    a &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt;
+         * @return a &lt;CODE&gt;PdfIndirectObject&lt;/CODE&gt;
+         * @throws IOException
+         */
+        PdfIndirectObject add(PdfObject object, PdfIndirectReference ref) throws IOException {
+<span class="fc" id="L1058">            return add(object, ref.getNumber());</span>
+        }
+
+        PdfIndirectObject add(PdfObject object, int refNumber) throws IOException {
+<span class="fc" id="L1062">            return add(object, refNumber, true); // to false</span>
+        }
+
+        PdfIndirectObject add(PdfObject object, int refNumber, boolean inObjStm) throws IOException {
+<span class="pc bpc" id="L1066" title="1 of 6 branches missed.">            if (inObjStm &amp;&amp; object.canBeInObjStm() &amp;&amp; writer.isFullCompression()) {</span>
+<span class="nc" id="L1067">                PdfCrossReference pxref = addToObjStm(object, refNumber);</span>
+<span class="nc" id="L1068">                PdfIndirectObject indirect = new PdfIndirectObject(refNumber, object, writer);</span>
+<span class="nc bnc" id="L1069" title="All 2 branches missed.">                if (!xrefs.add(pxref)) {</span>
+<span class="nc" id="L1070">                    xrefs.remove(pxref);</span>
+<span class="nc" id="L1071">                    xrefs.add(pxref);</span>
+                }
+<span class="nc" id="L1073">                return indirect;</span>
+            } else {
+<span class="fc" id="L1075">                PdfIndirectObject indirect = new PdfIndirectObject(refNumber, object, writer);</span>
+<span class="fc" id="L1076">                PdfCrossReference pxref = new PdfCrossReference(refNumber, position);</span>
+<span class="pc bpc" id="L1077" title="1 of 2 branches missed.">                if (!xrefs.add(pxref)) {</span>
+<span class="fc" id="L1078">                    xrefs.remove(pxref);</span>
+<span class="fc" id="L1079">                    xrefs.add(pxref);</span>
+                }
+<span class="fc" id="L1081">                indirect.writeTo(writer.getOs());</span>
+<span class="fc" id="L1082">                position = writer.getOs().getCounter();</span>
+<span class="fc" id="L1083">                return indirect;</span>
+            }
+        }
+
+        /**
+         * Returns the offset of the Cross-Reference table.
+         *
+         * @return an offset
+         */
+        long offset() {
+<span class="fc" id="L1093">            return position;</span>
+        }
+
+        /**
+         * Returns the total number of objects contained in the CrossReferenceTable of this &lt;CODE&gt;Body&lt;/CODE&gt;.
+         *
+         * @return a number of objects
+         */
+        int size() {
+<span class="fc" id="L1102">            return Math.max((xrefs.last()).getRefnum() + 1, refnum);</span>
+        }
+
+        /**
+         * Returns the CrossReferenceTable of the &lt;CODE&gt;Body&lt;/CODE&gt;.
+         *
+         * @param os
+         * @param root
+         * @param info
+         * @param encryption
+         * @param fileID
+         * @param prevxref
+         * @throws IOException
+         */
+
+        void writeCrossReferenceTable(OutputStream os, PdfIndirectReference root, PdfIndirectReference info,
+                PdfIndirectReference encryption, PdfObject fileID, int prevxref) throws IOException {
+<span class="fc" id="L1119">            int refNumber = 0;</span>
+            // Old-style xref tables limit object offsets to 10 digits
+<span class="pc bpc" id="L1121" title="2 of 4 branches missed.">            boolean useNewXrefFormat = writer.isFullCompression() || position &gt; 9_999_999_999L;</span>
+<span class="pc bpc" id="L1122" title="1 of 2 branches missed.">            if (useNewXrefFormat) {</span>
+<span class="nc" id="L1123">                flushObjStm();</span>
+<span class="nc" id="L1124">                refNumber = getIndirectReferenceNumber();</span>
+<span class="nc" id="L1125">                xrefs.add(new PdfCrossReference(refNumber, position));</span>
+            }
+<span class="fc" id="L1127">            PdfCrossReference entry = xrefs.first();</span>
+<span class="fc" id="L1128">            int first = entry.getRefnum();</span>
+<span class="fc" id="L1129">            int len = 0;</span>
+<span class="fc" id="L1130">            ArrayList&lt;Integer&gt; sections = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L1131" title="All 2 branches covered.">            for (PdfCrossReference xref1 : xrefs) {</span>
+<span class="fc" id="L1132">                entry = xref1;</span>
+<span class="pc bpc" id="L1133" title="1 of 2 branches missed.">                if (first + len == entry.getRefnum()) {</span>
+<span class="fc" id="L1134">                    ++len;</span>
+                } else {
+<span class="nc" id="L1136">                    sections.add(first);</span>
+<span class="nc" id="L1137">                    sections.add(len);</span>
+<span class="nc" id="L1138">                    first = entry.getRefnum();</span>
+<span class="nc" id="L1139">                    len = 1;</span>
+                }
+<span class="fc" id="L1141">            }</span>
+<span class="fc" id="L1142">            sections.add(first);</span>
+<span class="fc" id="L1143">            sections.add(len);</span>
+<span class="fc" id="L1144">            PdfTrailer trailer = new PdfTrailer(size(), root, info, encryption, fileID, prevxref);</span>
+<span class="pc bpc" id="L1145" title="1 of 2 branches missed.">            if (useNewXrefFormat) {</span>
+<span class="nc" id="L1146">                int mid = 8 - (Long.numberOfLeadingZeros(position) &gt;&gt; 3);</span>
+<span class="nc" id="L1147">                ByteBuffer buf = new ByteBuffer();</span>
+
+<span class="nc bnc" id="L1149" title="All 2 branches missed.">                for (PdfCrossReference xref : xrefs) {</span>
+<span class="nc" id="L1150">                    entry = xref;</span>
+<span class="nc" id="L1151">                    entry.toPdf(mid, buf);</span>
+<span class="nc" id="L1152">                }</span>
+<span class="nc" id="L1153">                PdfStream xr = new PdfStream(buf.toByteArray());</span>
+<span class="nc" id="L1154">                xr.flateCompress(writer.getCompressionLevel());</span>
+<span class="nc" id="L1155">                xr.putAll(trailer);</span>
+<span class="nc" id="L1156">                xr.put(PdfName.W, new PdfArray(new int[]{1, mid, 2}));</span>
+<span class="nc" id="L1157">                xr.put(PdfName.TYPE, PdfName.XREF);</span>
+<span class="nc" id="L1158">                PdfArray idx = new PdfArray();</span>
+<span class="nc bnc" id="L1159" title="All 2 branches missed.">                for (Integer section : sections) {</span>
+<span class="nc" id="L1160">                    idx.add(new PdfNumber(section));</span>
+<span class="nc" id="L1161">                }</span>
+<span class="nc" id="L1162">                xr.put(PdfName.INDEX, idx);</span>
+<span class="nc" id="L1163">                PdfIndirectObject indirect = new PdfIndirectObject(refNumber, xr, writer);</span>
+<span class="nc" id="L1164">                indirect.writeTo(writer.getOs());</span>
+<span class="nc" id="L1165">            } else {</span>
+<span class="fc" id="L1166">                os.write(getISOBytes(&quot;xref\n&quot;));</span>
+<span class="fc" id="L1167">                Iterator&lt;PdfCrossReference&gt; i = xrefs.iterator();</span>
+<span class="fc bfc" id="L1168" title="All 2 branches covered.">                for (int k = 0; k &lt; sections.size(); k += 2) {</span>
+<span class="fc" id="L1169">                    first = sections.get(k);</span>
+<span class="fc" id="L1170">                    len = sections.get(k + 1);</span>
+<span class="fc" id="L1171">                    os.write(getISOBytes(String.valueOf(first)));</span>
+<span class="fc" id="L1172">                    os.write(getISOBytes(&quot; &quot;));</span>
+<span class="fc" id="L1173">                    os.write(getISOBytes(String.valueOf(len)));</span>
+<span class="fc" id="L1174">                    os.write('\n');</span>
+<span class="fc bfc" id="L1175" title="All 2 branches covered.">                    while (len-- &gt; 0) {</span>
+<span class="fc" id="L1176">                        entry = i.next();</span>
+<span class="fc" id="L1177">                        entry.toPdf(os);</span>
+                    }
+                }
+                // make the trailer
+<span class="fc" id="L1181">                trailer.toPdf(writer, os);</span>
+            }
+<span class="fc" id="L1183">        }</span>
+
+        // inner classes
+
+        /**
+         * &lt;CODE&gt;PdfCrossReference&lt;/CODE&gt; is an entry in the PDF Cross-Reference table.
+         */
+        public static class PdfCrossReference implements Comparable&lt;PdfCrossReference&gt; {
+
+            /**
+             * String template for cross-reference entry PDF representation.
+             *
+             * @see Formatter
+             */
+            private static final String CROSS_REFERENCE_ENTRY_FORMAT = &quot;%010d %05d %c \n&quot;;
+
+            // membervariables
+            private final int type;
+
+            /**
+             * Byte offset in the PDF file.
+             */
+            private final long offset;
+
+            private final int refnum;
+            /**
+             * generation of the object.
+             */
+            private final int generation;
+
+            // constructors
+
+            /**
+             * Constructs a cross-reference element for a PdfIndirectObject.
+             *
+             * @param refnum     the reference number
+             * @param offset     byte offset of the object
+             * @param generation generation number of the object
+             */
+<span class="fc" id="L1222">            public PdfCrossReference(int refnum, long offset, int generation) {</span>
+<span class="fc" id="L1223">                type = 0;</span>
+<span class="fc" id="L1224">                this.offset = offset;</span>
+<span class="fc" id="L1225">                this.refnum = refnum;</span>
+<span class="fc" id="L1226">                this.generation = generation;</span>
+<span class="fc" id="L1227">            }</span>
+
+            /**
+             * Constructs a cross-reference element for a PdfIndirectObject.
+             *
+             * @param refnum the reference number
+             * @param offset byte offset of the object
+             */
+<span class="fc" id="L1235">            public PdfCrossReference(int refnum, long offset) {</span>
+<span class="fc" id="L1236">                type = 1;</span>
+<span class="fc" id="L1237">                this.offset = offset;</span>
+<span class="fc" id="L1238">                this.refnum = refnum;</span>
+<span class="fc" id="L1239">                this.generation = 0;</span>
+<span class="fc" id="L1240">            }</span>
+
+<span class="nc" id="L1242">            public PdfCrossReference(int type, int refnum, long offset, int generation) {</span>
+<span class="nc" id="L1243">                this.type = type;</span>
+<span class="nc" id="L1244">                this.offset = offset;</span>
+<span class="nc" id="L1245">                this.refnum = refnum;</span>
+<span class="nc" id="L1246">                this.generation = generation;</span>
+<span class="nc" id="L1247">            }</span>
+
+            int getRefnum() {
+<span class="fc" id="L1250">                return refnum;</span>
+            }
+
+            /**
+             * Writes PDF representation of cross-reference entry to passed output stream.
+             *
+             * @param os Output stream this entry to write to
+             * @throws IOException If any I/O error occurs
+             */
+            public void toPdf(OutputStream os) throws IOException {
+                // TODO: are generation number and 'In use' keyword bound that way?
+<span class="fc bfc" id="L1261" title="All 2 branches covered.">                final char inUse = generation == GENERATION_MAX ? 'f' : 'n';</span>
+<span class="fc" id="L1262">                os.write(getISOBytes(String.format(CROSS_REFERENCE_ENTRY_FORMAT, offset, generation, inUse)));</span>
+<span class="fc" id="L1263">            }</span>
+
+            /**
+             * Writes PDF syntax to the OutputStream
+             *
+             * @param midSize the mid size
+             * @param os      the OutputStream
+             * @throws IOException on error
+             */
+            public void toPdf(int midSize, OutputStream os) throws IOException {
+<span class="nc" id="L1273">                os.write((byte) type);</span>
+<span class="nc" id="L1274">                int thisMidSize = midSize;</span>
+<span class="nc bnc" id="L1275" title="All 2 branches missed.">                while (--thisMidSize &gt;= 0) {</span>
+<span class="nc" id="L1276">                    os.write((byte) ((offset &gt;&gt;&gt; (8 * thisMidSize)) &amp; 0xff));</span>
+                }
+<span class="nc" id="L1278">                os.write((byte) ((generation &gt;&gt;&gt; 8) &amp; 0xff));</span>
+<span class="nc" id="L1279">                os.write((byte) (generation &amp; 0xff));</span>
+<span class="nc" id="L1280">            }</span>
+
+            /**
+             * Compares current {@link PdfCrossReference entry} with passed {@code reference} by PDF object number.
+             */
+            @Override
+            public int compareTo(final PdfCrossReference reference) {
+<span class="fc" id="L1287">                return Integer.compare(refnum, reference.refnum);</span>
+            }
+
+            /**
+             * Checks if two entries are equal if their PDF object numbers are equal.
+             *
+             * @param obj Another cross-reference entry
+             * @return If null, not of type {@link PdfCrossReference} or object numbers are not equal, returns false;
+             * true otherwise
+             */
+            @Override
+            public boolean equals(Object obj) {
+<span class="nc bnc" id="L1299" title="All 2 branches missed.">                if (!(obj instanceof PdfCrossReference)) {</span>
+<span class="nc" id="L1300">                    return false;</span>
+                }
+<span class="nc" id="L1302">                PdfCrossReference other = (PdfCrossReference) obj;</span>
+
+<span class="nc bnc" id="L1304" title="All 2 branches missed.">                return refnum == other.refnum;</span>
+            }
+
+            @Override
+            public int hashCode() {
+<span class="nc" id="L1309">                return refnum;</span>
+            }
+        }
+    }
+
+    /**
+     * &lt;CODE&gt;PdfTrailer&lt;/CODE&gt; is the PDF Trailer object.
+     * &lt;p&gt;
+     * This object is described in the 'Portable Document Format Reference Manual version 1.3' section 5.16 (page
+     * 59-60).
+     */
+
+    static class PdfTrailer extends PdfDictionary {
+
+        // constructors
+
+        /**
+         * Constructs a PDF-Trailer.
+         *
+         * @param size       the number of entries in the &lt;CODE&gt;PdfCrossReferenceTable&lt;/CODE&gt;
+         * @param root       an indirect reference to the root of the PDF document
+         * @param info       an indirect reference to the info object of the PDF document
+         * @param encryption
+         * @param fileID
+         * @param prevxref
+         */
+
+        PdfTrailer(int size, PdfIndirectReference root, PdfIndirectReference info, PdfIndirectReference encryption,
+<span class="fc" id="L1337">                PdfObject fileID, int prevxref) {</span>
+<span class="fc" id="L1338">            put(PdfName.SIZE, new PdfNumber(size));</span>
+<span class="fc" id="L1339">            put(PdfName.ROOT, root);</span>
+<span class="pc bpc" id="L1340" title="1 of 2 branches missed.">            if (info != null) {</span>
+<span class="fc" id="L1341">                put(PdfName.INFO, info);</span>
+            }
+<span class="pc bpc" id="L1343" title="1 of 2 branches missed.">            if (encryption != null) {</span>
+<span class="nc" id="L1344">                put(PdfName.ENCRYPT, encryption);</span>
+            }
+<span class="pc bpc" id="L1346" title="1 of 2 branches missed.">            if (fileID != null) {</span>
+<span class="fc" id="L1347">                put(PdfName.ID, fileID);</span>
+            }
+<span class="pc bpc" id="L1349" title="1 of 2 branches missed.">            if (prevxref &gt; 0) {</span>
+<span class="nc" id="L1350">                put(PdfName.PREV, new PdfNumber(prevxref));</span>
+            }
+<span class="fc" id="L1352">        }</span>
+
+        /**
+         * Returns the PDF representation of this &lt;CODE&gt;PdfObject&lt;/CODE&gt;.
+         *
+         * @param writer
+         * @param os
+         * @throws IOException
+         */
+        @Override
+        public void toPdf(PdfWriter writer, OutputStream os) throws IOException {
+<span class="fc" id="L1363">            os.write(getISOBytes(&quot;trailer\n&quot;));</span>
+<span class="fc" id="L1364">            super.toPdf(null, os);</span>
+<span class="fc" id="L1365">            os.write('\n');</span>
+<span class="fc" id="L1366">        }</span>
+    }
+
+
+
+    /**
+     * Adds a &lt;CODE&gt;BaseFont&lt;/CODE&gt; to the document but not to the page resources. It is used for templates.
+     *
+     * @param bf the &lt;CODE&gt;BaseFont&lt;/CODE&gt; to add
+     * @return an &lt;CODE&gt;Object[]&lt;/CODE&gt; where position 0 is a &lt;CODE&gt;PdfName&lt;/CODE&gt; and position 1 is an
+     * &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt;
+     */
+
+    FontDetails addSimple(BaseFont bf) {
+<span class="fc" id="L1380">        FontDetails ret = documentFonts.get(bf);</span>
+<span class="fc bfc" id="L1381" title="All 2 branches covered.">        if (ret == null) {</span>
+<span class="fc" id="L1382">            ret = new FontDetails(new PdfName(&quot;F&quot; + (fontNumber++)), body.getPdfIndirectReference(), bf);</span>
+<span class="fc" id="L1383">            documentFonts.put(bf, ret);</span>
+        }
+<span class="fc" id="L1385">        return ret;</span>
+    }
+
+
+
+    /**
+     * Adds a template to the document but not to the page resources.
+     *
+     * @param template   the template to add
+     * @param forcedName the template name, rather than a generated one. Can be null
+     * @return the &lt;CODE&gt;PdfName&lt;/CODE&gt; for this template
+     */
+
+    PdfName addDirectTemplateSimple(PdfTemplate template, PdfName forcedName) {
+<span class="fc" id="L1399">        PdfIndirectReference ref = template.getIndirectReference();</span>
+<span class="fc" id="L1400">        Object[] obj = formXObjects.get(ref);</span>
+        PdfName name;
+        try {
+<span class="fc bfc" id="L1403" title="All 2 branches covered.">            if (obj == null) {</span>
+<span class="pc bpc" id="L1404" title="1 of 2 branches missed.">                if (forcedName == null) {</span>
+<span class="fc" id="L1405">                    name = new PdfName(&quot;Xf&quot; + formXObjectsCounter);</span>
+<span class="fc" id="L1406">                    ++formXObjectsCounter;</span>
+                } else {
+<span class="nc" id="L1408">                    name = forcedName;</span>
+                }
+<span class="fc" id="L1410">                formXObjects.put(ref, new Object[]{name, template});</span>
+            } else {
+<span class="fc" id="L1412">                name = (PdfName) obj[0];</span>
+            }
+<span class="nc" id="L1414">        } catch (Exception e) {</span>
+<span class="nc" id="L1415">            throw new ExceptionConverter(e);</span>
+<span class="fc" id="L1416">        }</span>
+<span class="fc" id="L1417">        return name;</span>
+    }
+
+
+
+    /**
+     * Use this method to adds an image to the document but not to the page resources. It is used with templates and
+     * &lt;CODE&gt;Document.add(Image)&lt;/CODE&gt;. Use this method only if you know what you're doing!
+     *
+     * @param image the &lt;CODE&gt;Image&lt;/CODE&gt; to add
+     * @return the name of the image added
+     * @throws PdfException      on error
+     * @throws DocumentException on error
+     */
+    public PdfName addDirectImageSimple(Image image) throws DocumentException {
+<span class="fc" id="L1432">        return addDirectImageSimple(image, null);</span>
+    }
+
+
+    /**
+     * Adds an image to the document but not to the page resources. It is used with templates and
+     * &lt;CODE&gt;Document.add(Image)&lt;/CODE&gt;. Use this method only if you know what you're doing!
+     *
+     * @param image    the &lt;CODE&gt;Image&lt;/CODE&gt; to add
+     * @param fixedRef the reference to used. It may be &lt;CODE&gt;null&lt;/CODE&gt;, a &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt; or a
+     *                 &lt;CODE&gt;PRIndirectReference&lt;/CODE&gt;.
+     * @return the name of the image added
+     * @throws PdfException      on error
+     * @throws DocumentException on error
+     */
+    public PdfName addDirectImageSimple(Image image, PdfIndirectReference fixedRef) throws DocumentException {
+        PdfName name;
+        // if the images is already added, just retrieve the name
+<span class="pc bpc" id="L1450" title="1 of 2 branches missed.">        if (images.containsKey(image.getMySerialId())) {</span>
+<span class="nc" id="L1451">            name = images.get(image.getMySerialId());</span>
+        } else {
+            // if it's a new image, add it to the document
+<span class="pc bpc" id="L1454" title="1 of 2 branches missed.">            if (image.isImgTemplate()) {</span>
+<span class="nc" id="L1455">                name = new PdfName(&quot;img&quot; + images.size());</span>
+            } else {
+<span class="fc" id="L1457">                PdfIndirectReference dref = image.getDirectReference();</span>
+<span class="pc bpc" id="L1458" title="1 of 2 branches missed.">                if (dref != null) {</span>
+<span class="nc" id="L1459">                    PdfName rname = new PdfName(&quot;img&quot; + images.size());</span>
+<span class="nc" id="L1460">                    images.put(image.getMySerialId(), rname);</span>
+<span class="nc" id="L1461">                    imageDictionary.put(rname, dref);</span>
+<span class="nc" id="L1462">                    return rname;</span>
+                }
+<span class="fc" id="L1464">                Image maskImage = image.getImageMask();</span>
+<span class="fc" id="L1465">                PdfIndirectReference maskRef = null;</span>
+<span class="fc bfc" id="L1466" title="All 2 branches covered.">                if (maskImage != null) {</span>
+<span class="fc" id="L1467">                    PdfName mname = images.get(maskImage.getMySerialId());</span>
+<span class="fc" id="L1468">                    maskRef = getImageReference(mname);</span>
+                }
+<span class="fc" id="L1470">                PdfImage i = new PdfImage(image, &quot;img&quot; + images.size(), maskRef);</span>
+<span class="fc" id="L1471">                add(i, fixedRef);</span>
+<span class="fc" id="L1472">                name = i.name();</span>
+            }
+<span class="fc" id="L1474">            images.put(image.getMySerialId(), name);</span>
+        }
+<span class="fc" id="L1476">        return name;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

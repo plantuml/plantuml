@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GrayColor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">GrayColor.java</span></div><h1>GrayColor.java</h1><pre class="source lang-java linenums">/*
+ * $Id: GrayColor.java 3427 2008-05-24 18:32:31Z xlv $
+ *
+ * Copyright 2001, 2002 by Paulo Soares.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+/**
+ * @author Paulo Soares (psoares@consiste.pt)
+ */
+public class GrayColor extends ExtendedColor {
+
+<span class="fc" id="L57">    public static final GrayColor GRAYBLACK = new GrayColor(0);</span>
+    private static final long serialVersionUID = -6571835680819282746L;
+    private float gray;
+
+    public GrayColor(int intGray) {
+<span class="fc" id="L62">        this(normalize(intGray) / MAX_INT_COLOR_VALUE);</span>
+<span class="fc" id="L63">    }</span>
+
+    public GrayColor(float floatGray) {
+<span class="fc" id="L66">        this(floatGray, MAX_FLOAT_COLOR_VALUE);</span>
+<span class="fc" id="L67">    }</span>
+
+    public GrayColor(float floatGray, float alpha) {
+<span class="fc" id="L70">        super(TYPE_GRAY, normalize(floatGray), normalize(floatGray), normalize(floatGray), normalize(alpha));</span>
+<span class="fc" id="L71">        gray = normalize(floatGray);</span>
+<span class="fc" id="L72">    }</span>
+
+    public float getGray() {
+<span class="nc" id="L75">        return gray;</span>
+    }
+
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L79" title="All 4 branches missed.">        return obj instanceof GrayColor &amp;&amp; ((GrayColor) obj).gray == this.gray;</span>
+    }
+
+    public int hashCode() {
+<span class="nc" id="L83">        return Float.floatToIntBits(gray);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

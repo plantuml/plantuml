@@ -2564,7 +2564,7 @@ Total Classes: 7
 "net.sourceforge.plantuml.openiconic" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.openpdf" %lighten("red", 100) {
-Total Classes: 10
+Total Classes: 11
 }
 "net.sourceforge.plantuml.openpdf" --> "java.io"
 "net.sourceforge.plantuml.openpdf" --> "java.lang"
@@ -2577,7 +2577,9 @@ Total Classes: 10
 "net.sourceforge.plantuml.openpdf" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.openpdf" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.openpdf" --> "net.sourceforge.plantuml.teavm"
+"net.sourceforge.plantuml.openpdf" --> "net.sourceforge.plantuml.teavm.c"
 "net.sourceforge.plantuml.openpdf" --> "net.sourceforge.plantuml.url"
+"net.sourceforge.plantuml.openpdf" --> "org.openpdf.text.pdf"
 
 class "net.sourceforge.plantuml.packetdiag" %lighten("red", 89) {
 Total Classes: 6
@@ -3286,7 +3288,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.teavm" --> "java.lang"
 "net.sourceforge.plantuml.teavm" --> "java.util"
 
-class "net.sourceforge.plantuml.teavm.c" %lighten("red", 98) {
+class "net.sourceforge.plantuml.teavm.c" %lighten("red", 95) {
 Total Classes: 11
 }
 "net.sourceforge.plantuml.teavm.c" --> "java.io"
@@ -3749,6 +3751,59 @@ Total Classes: 19
 }
 "net.sourceforge.plantuml.zopfli" --> "java.lang"
 "net.sourceforge.plantuml.zopfli" --> "java.util"
+
+class "org.openpdf.text" %lighten("red", 84) {
+Total Classes: 13
+}
+"org.openpdf.text" --> "java.awt"
+"org.openpdf.text" --> "java.io"
+"org.openpdf.text" --> "java.lang"
+"org.openpdf.text" --> "java.net"
+"org.openpdf.text" --> "java.util"
+"org.openpdf.text" --> "org.openpdf.text.error_messages"
+"org.openpdf.text" --> "org.openpdf.text.pdf"
+
+class "org.openpdf.text.error_messages"{
+
+}
+
+class "org.openpdf.text.exceptions" %lighten("red", 50) {
+Total Classes: 1
+}
+"org.openpdf.text.exceptions" --> "java.lang"
+
+class "org.openpdf.text.pdf" %lighten("red", 86) {
+Total Classes: 45
+}
+"org.openpdf.text.pdf" --> "java.awt"
+"org.openpdf.text.pdf" --> "java.io"
+"org.openpdf.text.pdf" --> "java.lang"
+"org.openpdf.text.pdf" --> "java.util"
+"org.openpdf.text.pdf" --> "java.util.concurrent"
+"org.openpdf.text.pdf" --> "java.util.zip"
+"org.openpdf.text.pdf" --> "org.openpdf.text"
+"org.openpdf.text.pdf" --> "org.openpdf.text.error_messages"
+"org.openpdf.text.pdf" --> "org.openpdf.text.exceptions"
+"org.openpdf.text.pdf" --> "org.openpdf.text.pdf.internal"
+
+class "org.openpdf.text.pdf.fonts" %lighten("red", 100) {
+Total Classes: 1
+}
+"org.openpdf.text.pdf.fonts" --> "java.lang"
+
+class "org.openpdf.text.pdf.interfaces" %lighten("red", 50) {
+Total Classes: 2
+}
+"org.openpdf.text.pdf.interfaces" --> "java.lang"
+
+class "org.openpdf.text.pdf.internal" %lighten("red", 83) {
+Total Classes: 1
+}
+"org.openpdf.text.pdf.internal" --> "java.io"
+"org.openpdf.text.pdf.internal" --> "java.lang"
+"org.openpdf.text.pdf.internal" --> "org.openpdf.text"
+"org.openpdf.text.pdf.internal" --> "org.openpdf.text.pdf"
+"org.openpdf.text.pdf.internal" --> "org.openpdf.text.pdf.interfaces"
 
 class "org.stathissideris.ascii2image.core" %lighten("red", 78) {
 Total Classes: 10

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OutputStreamCounter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">OutputStreamCounter.java</span></div><h1>OutputStreamCounter.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2004 by Paulo Soares.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+package org.openpdf.text.pdf;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+/**
+ * @author psoares
+ */
+public class OutputStreamCounter extends OutputStream {
+
+    protected OutputStream out;
+<span class="fc" id="L58">    protected long counter = 0;</span>
+
+    /**
+     * Creates a new instance of OutputStreamCounter
+     *
+     * @param out output stream
+     */
+<span class="fc" id="L65">    public OutputStreamCounter(OutputStream out) {</span>
+<span class="fc" id="L66">        this.out = out;</span>
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * Closes this output stream and releases any system resources associated with this stream. The general contract of
+     * &lt;code&gt;close&lt;/code&gt; is that it closes the output stream. A closed stream cannot perform output operations and
+     * cannot be reopened.
+     * &lt;p&gt;
+     * The &lt;code&gt;close&lt;/code&gt; method of &lt;code&gt;OutputStream&lt;/code&gt; does nothing.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
+    public void close() throws IOException {
+<span class="fc" id="L79">        out.close();</span>
+<span class="fc" id="L80">    }</span>
+
+    /**
+     * Flushes this output stream and forces any buffered output bytes to be written out. The general contract of
+     * &lt;code&gt;flush&lt;/code&gt; is that calling it is an indication that, if any bytes previously written have been buffered
+     * by the implementation of the output stream, such bytes should immediately be written to their intended
+     * destination.
+     * &lt;p&gt;
+     * The &lt;code&gt;flush&lt;/code&gt; method of &lt;code&gt;OutputStream&lt;/code&gt; does nothing.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
+    public void flush() throws IOException {
+<span class="fc" id="L93">        out.flush();</span>
+<span class="fc" id="L94">    }</span>
+
+    /**
+     * Writes &lt;code&gt;b.length&lt;/code&gt; bytes from the specified byte array to this output stream. The general contract for
+     * &lt;code&gt;write(b)&lt;/code&gt; is that it should have exactly the same effect as the call
+     * &lt;code&gt;write(b, 0, b.length)&lt;/code&gt;.
+     *
+     * @param b the data.
+     * @throws IOException if an I/O error occurs.
+     * @see java.io.OutputStream#write(byte[], int, int)
+     */
+    public void write(byte[] b) throws IOException {
+<span class="fc" id="L106">        counter += b.length;</span>
+<span class="fc" id="L107">        out.write(b);</span>
+<span class="fc" id="L108">    }</span>
+
+    /**
+     * Writes the specified byte to this output stream. The general contract for &lt;code&gt;write&lt;/code&gt; is that one byte is
+     * written to the output stream. The byte to be written is the eight low-order bits of the argument &lt;code&gt;b&lt;/code&gt;.
+     * The 24 high-order bits of &lt;code&gt;b&lt;/code&gt; are ignored.
+     * &lt;p&gt;
+     * Subclasses of &lt;code&gt;OutputStream&lt;/code&gt; must provide an implementation for this method.
+     *
+     * @param b the &lt;code&gt;byte&lt;/code&gt;.
+     * @throws IOException if an I/O error occurs. In particular, an &lt;code&gt;IOException&lt;/code&gt; may be thrown if the
+     *                     output stream has been closed.
+     */
+    public void write(int b) throws IOException {
+<span class="fc" id="L122">        ++counter;</span>
+<span class="fc" id="L123">        out.write(b);</span>
+<span class="fc" id="L124">    }</span>
+
+    /**
+     * Writes &lt;code&gt;len&lt;/code&gt; bytes from the specified byte array starting at offset &lt;code&gt;off&lt;/code&gt; to this output
+     * stream. The general contract for &lt;code&gt;write(b, off, len)&lt;/code&gt; is that some of the bytes in the array
+     * &lt;code&gt;b&lt;/code&gt; are written to the output stream in order; element &lt;code&gt;b[off]&lt;/code&gt; is the first byte written
+     * and &lt;code&gt;b[off+len-1]&lt;/code&gt; is the last byte written by this operation.
+     * &lt;p&gt;
+     * The &lt;code&gt;write&lt;/code&gt; method of &lt;code&gt;OutputStream&lt;/code&gt; calls the write method of one argument on each of the
+     * bytes to be written out. Subclasses are encouraged to override this method and provide a more efficient
+     * implementation.
+     * &lt;p&gt;
+     * If &lt;code&gt;b&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt;, a
+     * &lt;code&gt;NullPointerException&lt;/code&gt; is thrown.
+     * &lt;p&gt;
+     * If &lt;code&gt;off&lt;/code&gt; is negative, or &lt;code&gt;len&lt;/code&gt; is negative, or
+     * &lt;code&gt;off+len&lt;/code&gt; is greater than the length of the array
+     * &lt;code&gt;b&lt;/code&gt;, then an &lt;code&gt;IndexOutOfBoundsException&lt;/code&gt; is thrown.
+     *
+     * @param b   the data.
+     * @param off the start offset in the data.
+     * @param len the number of bytes to write.
+     * @throws IOException if an I/O error occurs. In particular, an &lt;code&gt;IOException&lt;/code&gt; is thrown if the output
+     *                     stream is closed.
+     */
+    public void write(byte[] b, int off, int len) throws IOException {
+<span class="fc" id="L150">        counter += len;</span>
+<span class="fc" id="L151">        out.write(b, off, len);</span>
+<span class="fc" id="L152">    }</span>
+
+    public long getCounter() {
+<span class="fc" id="L155">        return counter;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

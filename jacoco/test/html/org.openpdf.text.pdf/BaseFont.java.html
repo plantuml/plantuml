@@ -1,0 +1,864 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaseFont.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">BaseFont.java</span></div><h1>BaseFont.java</h1><pre class="source lang-java linenums">/*
+ * $Id: BaseFont.java 4065 2009-09-16 23:09:11Z psoares33 $
+ *
+ * Copyright 2000-2006 by Paulo Soares.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import org.openpdf.text.DocumentException;
+import org.openpdf.text.error_messages.MessageLocalization;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.StringTokenizer;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * Base class for the several font types supported
+ *
+ * @author Paulo Soares (psoares@consiste.pt)
+ */
+
+public abstract class BaseFont {
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String COURIER = &quot;Courier&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String COURIER_BOLD = &quot;Courier-Bold&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String COURIER_OBLIQUE = &quot;Courier-Oblique&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String COURIER_BOLDOBLIQUE = &quot;Courier-BoldOblique&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String HELVETICA = &quot;Helvetica&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String HELVETICA_BOLD = &quot;Helvetica-Bold&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String HELVETICA_OBLIQUE = &quot;Helvetica-Oblique&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String HELVETICA_BOLDOBLIQUE = &quot;Helvetica-BoldOblique&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String SYMBOL = &quot;Symbol&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String TIMES_ROMAN = &quot;Times-Roman&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String TIMES_BOLD = &quot;Times-Bold&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String TIMES_ITALIC = &quot;Times-Italic&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String TIMES_BOLDITALIC = &quot;Times-BoldItalic&quot;;
+
+    /**
+     * This is a possible value of a base 14 type 1 font
+     */
+    public static final String ZAPFDINGBATS = &quot;ZapfDingbats&quot;;
+
+    /**
+     * The maximum height above the baseline reached by glyphs in this font, excluding the height of glyphs for accented
+     * characters.
+     */
+    public static final int ASCENT = 1;
+    /**
+     * The y coordinate of the top of flat capital letters, measured from the baseline.
+     */
+    public static final int CAPHEIGHT = 2;
+    /**
+     * The maximum depth below the baseline reached by glyphs in this font. The value is a negative number.
+     */
+    public static final int DESCENT = 3;
+    /**
+     * The angle, expressed in degrees counterclockwise from the vertical, of the dominant vertical strokes of the font.
+     * The value is negative for fonts that slope to the right, as almost all italic fonts do.
+     */
+    public static final int ITALICANGLE = 4;
+    /**
+     * The lower left x glyph coordinate.
+     */
+    public static final int BBOXLLX = 5;
+    /**
+     * The lower left y glyph coordinate.
+     */
+    public static final int BBOXLLY = 6;
+    /**
+     * The upper right x glyph coordinate.
+     */
+    public static final int BBOXURX = 7;
+    /**
+     * The upper right y glyph coordinate.
+     */
+    public static final int BBOXURY = 8;
+
+    /**
+     * java.awt.Font property
+     */
+    public static final int AWT_ASCENT = 9;
+    /**
+     * java.awt.Font property
+     */
+    public static final int AWT_DESCENT = 10;
+    /**
+     * java.awt.Font property
+     */
+    public static final int AWT_LEADING = 11;
+    /**
+     * java.awt.Font property
+     */
+    public static final int AWT_MAXADVANCE = 12;
+    /**
+     * The underline position. Usually a negative value.
+     */
+    public static final int UNDERLINE_POSITION = 13;
+    /**
+     * The underline thickness.
+     */
+    public static final int UNDERLINE_THICKNESS = 14;
+    /**
+     * The font is Type 1.
+     */
+    public static final int FONT_TYPE_T1 = 0;
+    /**
+     * A possible encoding.
+     */
+    public static final String CP1252 = &quot;Cp1252&quot;;
+
+    /**
+     * A possible encoding.
+     */
+    public static final String WINANSI = &quot;Cp1252&quot;;
+
+    /**
+     * A possible encoding.
+     */
+    public static final String MACROMAN = &quot;MacRoman&quot;;
+
+    /**
+     * if the font has to be embedded
+     */
+    public static final boolean EMBEDDED = true;
+
+    /**
+     * if the font doesn't have to be embedded
+     */
+    public static final boolean NOT_EMBEDDED = false;
+    /**
+     * The path to the font resources.
+     */
+    public static final String RESOURCE_PATH = &quot;org/openpdf/text/pdf/fonts/&quot;;
+    /**
+     * a not defined character in a custom PDF encoding
+     */
+    public static final String notdef = &quot;.notdef&quot;;
+    /**
+     * list of the 14 built in fonts.
+     */
+<span class="fc" id="L237">    protected static final HashMap&lt;String, PdfName&gt; BuiltinFonts14 = new HashMap&lt;&gt;();</span>
+    /**
+     * cache for the fonts already used.
+     */
+<span class="fc" id="L241">    protected static ConcurrentHashMap&lt;String, BaseFont&gt; fontCache = new ConcurrentHashMap&lt;&gt;(</span>
+            500, 0.85f, 64);
+
+    static {
+<span class="fc" id="L245">        BuiltinFonts14.put(COURIER, PdfName.COURIER);</span>
+<span class="fc" id="L246">        BuiltinFonts14.put(COURIER_BOLD, PdfName.COURIER_BOLD);</span>
+<span class="fc" id="L247">        BuiltinFonts14.put(COURIER_BOLDOBLIQUE, PdfName.COURIER_BOLDOBLIQUE);</span>
+<span class="fc" id="L248">        BuiltinFonts14.put(COURIER_OBLIQUE, PdfName.COURIER_OBLIQUE);</span>
+<span class="fc" id="L249">        BuiltinFonts14.put(HELVETICA, PdfName.HELVETICA);</span>
+<span class="fc" id="L250">        BuiltinFonts14.put(HELVETICA_BOLD, PdfName.HELVETICA_BOLD);</span>
+<span class="fc" id="L251">        BuiltinFonts14</span>
+<span class="fc" id="L252">                .put(HELVETICA_BOLDOBLIQUE, PdfName.HELVETICA_BOLDOBLIQUE);</span>
+<span class="fc" id="L253">        BuiltinFonts14.put(HELVETICA_OBLIQUE, PdfName.HELVETICA_OBLIQUE);</span>
+<span class="fc" id="L254">        BuiltinFonts14.put(SYMBOL, PdfName.SYMBOL);</span>
+<span class="fc" id="L255">        BuiltinFonts14.put(TIMES_ROMAN, PdfName.TIMES_ROMAN);</span>
+<span class="fc" id="L256">        BuiltinFonts14.put(TIMES_BOLD, PdfName.TIMES_BOLD);</span>
+<span class="fc" id="L257">        BuiltinFonts14.put(TIMES_BOLDITALIC, PdfName.TIMES_BOLDITALIC);</span>
+<span class="fc" id="L258">        BuiltinFonts14.put(TIMES_ITALIC, PdfName.TIMES_ITALIC);</span>
+<span class="fc" id="L259">        BuiltinFonts14.put(ZAPFDINGBATS, PdfName.ZAPFDINGBATS);</span>
+<span class="fc" id="L260">    }</span>
+
+    /**
+     * table of characters widths for this encoding
+     */
+<span class="fc" id="L265">    protected int[] widths = new int[256];</span>
+    /**
+     * encoding names
+     */
+<span class="fc" id="L269">    protected String[] differences = new String[256];</span>
+    /**
+     * same as differences but with the unicode codes
+     */
+<span class="fc" id="L273">    protected char[] unicodeDifferences = new char[256];</span>
+<span class="fc" id="L274">    protected int[][] charBBoxes = new int[256][];</span>
+    /**
+     * encoding used with this font
+     */
+    protected String encoding;
+    /**
+     * true if the font is to be embedded in the PDF
+     */
+    protected boolean embedded;
+    /**
+     * The compression level for the font stream.
+     *
+     * @since 2.1.3
+     */
+<span class="fc" id="L288">    protected int compressionLevel = PdfStream.DEFAULT_COMPRESSION;</span>
+    /**
+     * true if the font must use its built in encoding. In that case the
+     * &lt;CODE&gt;encoding&lt;/CODE&gt; is only used to map a char to the position inside
+     * the font, not to the expected char name.
+     */
+<span class="fc" id="L294">    protected boolean fontSpecific = true;</span>
+    /**
+     * Forces the output of the width array. Only matters for the 14 built-in fonts.
+     */
+<span class="fc" id="L298">    protected boolean forceWidthsOutput = false;</span>
+
+    /**
+     * Converts &lt;CODE&gt;char&lt;/CODE&gt; directly to &lt;CODE&gt;byte&lt;/CODE&gt; by casting.
+     */
+<span class="fc" id="L303">    protected boolean directTextToByte = false;</span>
+
+    /**
+     * Indicates if all the glyphs and widths for that particular encoding should be included in the document.
+     */
+<span class="fc" id="L308">    protected boolean subset = true;</span>
+
+<span class="fc" id="L310">    protected boolean fastWinansi = false;</span>
+
+    /**
+     * Custom encodings use this map to key the Unicode character to the single byte code.
+     */
+    protected IntHashtable specialMap;
+
+    /**
+     * Used to build a randomized prefix for a subset name
+     */
+
+    /**
+     * The font type.
+     */
+    int fontType;
+
+    /**
+     * Creates new BaseFont
+     */
+<span class="fc" id="L329">    protected BaseFont() {</span>
+<span class="fc" id="L330">    }</span>
+
+    /**
+     * Creates a new font. This font can be one of the 14 built in types, a Type1 font referred to by an AFM or PFM
+     * file, a TrueType font (simple or collection) or a CJK font from the Adobe Asian Font Pack. TrueType fonts and CJK
+     * fonts can have an optional style modifier appended to the name. These modifiers are: Bold, Italic and BoldItalic.
+     * An example would be &quot;STSong-Light,Bold&quot;. Note that this modifiers do not work if the font is embedded. Fonts in
+     * TrueType collections are addressed by index such as &quot;msgothic.ttc,1&quot;. This would get the second font (indexes
+     * start at 0), in this case &quot;MS PGothic&quot;.
+     * &lt;p&gt;
+     * The fonts are cached and if they already exist they are extracted from the cache, not parsed again.
+     * &lt;p&gt;
+     * Besides the common encodings described by name, custom encodings can also be made. These encodings will only work
+     * for the single byte fonts Type1 and TrueType. The encoding string starts with a '#' followed by &quot;simple&quot; or
+     * &quot;full&quot;. If &quot;simple&quot; there is a decimal for the first character position and then a list of hex values
+     * representing the Unicode codes that compose that encoding.&lt;br&gt; The &quot;simple&quot; encoding is recommended for TrueType
+     * fonts as the &quot;full&quot; encoding risks not matching the character with the right glyph if not done with care.&lt;br&gt; The
+     * &quot;full&quot; encoding is specially aimed at Type1 fonts where the glyphs have to be described by non standard names
+     * like the Tex math fonts. Each group of three elements compose a code position: the one byte code order in decimal
+     * or as 'x' (x cannot be the space), the name and the Unicode character used to access the glyph. The space must be
+     * assigned to character position 32 otherwise text justification will not work.
+     * &lt;p&gt;
+     * Example for a &quot;simple&quot; encoding that includes the Unicode character space, A, B and ecyrillic:
+     *
+     * &lt;PRE&gt;
+     * &amp;quot;# simple 32 0020 0041 0042 0454&amp;quot;
+     * &lt;/PRE&gt;
+     * &lt;p&gt;
+     * Example for a &quot;full&quot; encoding for a Type1 Tex font:
+     *
+     * &lt;PRE&gt;
+     * &amp;quot;# full 'A' nottriangeqlleft 0041 'B' dividemultiply 0042 32 space 0020&amp;quot;
+     * &lt;/PRE&gt;
+     * &lt;p&gt;
+     * This method calls:&lt;br&gt;
+     *
+     * &lt;PRE&gt;
+     * createFont(name, encoding, embedded, true, null, null);
+     * &lt;/PRE&gt;
+     *
+     * @param name     the name of the font or its location on file
+     * @param encoding the encoding to be applied to this font
+     * @param embedded true if the font is to be embedded in the PDF
+     * @return returns a new font. This font may come from the cache
+     * @throws DocumentException the font is invalid
+     * @throws IOException       the font file could not be read
+     */
+    public static BaseFont createFont(String name, String encoding,
+            boolean embedded) throws DocumentException, IOException {
+<span class="fc" id="L379">        return createFont(name, encoding, embedded, true, null, null, false);</span>
+    }
+
+    /**
+     * Creates a new font. This font can be one of the 14 built in types, a Type1 font referred to by an AFM or PFM
+     * file, a TrueType font (simple or collection) or a CJK font from the Adobe Asian Font Pack. TrueType fonts and CJK
+     * fonts can have an optional style modifier appended to the name. These modifiers are: Bold, Italic and BoldItalic.
+     * An example would be &quot;STSong-Light,Bold&quot;. Note that this modifiers do not work if the font is embedded. Fonts in
+     * TrueType collections are addressed by index such as &quot;msgothic.ttc,1&quot;. This would get the second font (indexes
+     * start at 0), in this case &quot;MS PGothic&quot;.
+     * &lt;p&gt;
+     * The fonts may or may not be cached depending on the flag
+     * &lt;CODE&gt;cached&lt;/CODE&gt;. If the &lt;CODE&gt;byte&lt;/CODE&gt; arrays are present the font
+     * will be read from them instead of the name. A name is still required to identify the font type.
+     * &lt;p&gt;
+     * Besides the common encodings described by name, custom encodings can also be made. These encodings will only work
+     * for the single byte fonts Type1 and TrueType. The encoding string starts with a '#' followed by &quot;simple&quot; or
+     * &quot;full&quot;. If &quot;simple&quot; there is a decimal for the first character position and then a list of hex values
+     * representing the Unicode codes that compose that encoding.&lt;br&gt; The &quot;simple&quot; encoding is recommended for TrueType
+     * fonts as the &quot;full&quot; encoding risks not matching the character with the right glyph if not done with care.&lt;br&gt; The
+     * &quot;full&quot; encoding is specially aimed at Type1 fonts where the glyphs have to be described by non standard names
+     * like the Tex math fonts. Each group of three elements compose a code position: the one byte code order in decimal
+     * or as 'x' (x cannot be the space), the name and the Unicode character used to access the glyph. The space must be
+     * assigned to character position 32 otherwise text justification will not work.
+     * &lt;p&gt;
+     * Example for a &quot;simple&quot; encoding that includes the Unicode character space, A, B and ecyrillic:
+     *
+     * &lt;PRE&gt;
+     * &amp;quot;# simple 32 0020 0041 0042 0454&amp;quot;
+     * &lt;/PRE&gt;
+     * &lt;p&gt;
+     * Example for a &quot;full&quot; encoding for a Type1 Tex font:
+     *
+     * &lt;PRE&gt;
+     * &amp;quot;# full 'A' nottriangeqlleft 0041 'B' dividemultiply 0042 32 space 0020&amp;quot;
+     * &lt;/PRE&gt;
+     *
+     * @param name     the name of the font or its location on file
+     * @param encoding the encoding to be applied to this font
+     * @param embedded true if the font is to be embedded in the PDF
+     * @param cached   true if the font comes from the cache or is added to the cache if new, false if the font is
+     *                 always created new
+     * @param ttfAfm   the true type font or the afm in a byte array
+     * @param pfb      the pfb in a byte array
+     * @param noThrow  if true will not throw an exception if the font is not recognized and will return null, if false
+     *                 will throw an exception if the font is not recognized. Note that even if true an exception may be
+     *                 thrown in some circumstances. This parameter is useful for FontFactory that may have to check
+     *                 many invalid font names before finding the right one
+     * @return returns a new font. This font may come from the cache but only if cached is true, otherwise it will
+     * always be created new
+     * @throws DocumentException the font is invalid
+     * @throws IOException       the font file could not be read
+     * @since 2.0.3
+     */
+    public static BaseFont createFont(String name, String encoding,
+            boolean embedded, boolean cached, byte[] ttfAfm, byte[] pfb,
+            boolean noThrow) throws DocumentException, IOException {
+<span class="fc" id="L436">        return createFont(name, encoding, embedded, cached, ttfAfm, pfb, false,</span>
+                false);
+    }
+
+    /**
+     * Normalize the encoding names. &quot;winansi&quot; is changed to &quot;Cp1252&quot; and &quot;macroman&quot; is changed to &quot;MacRoman&quot;.
+     *
+     * @param enc the encoding to be normalized
+     * @return the normalized encoding
+     */
+    protected static String normalizeEncoding(String enc) {
+<span class="pc bpc" id="L447" title="2 of 4 branches missed.">        if (enc.equals(&quot;winansi&quot;) || enc.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L448">            return CP1252;</span>
+<span class="pc bpc" id="L449" title="1 of 2 branches missed.">        } else if (enc.equals(&quot;macroman&quot;)) {</span>
+<span class="nc" id="L450">            return MACROMAN;</span>
+        } else {
+<span class="fc" id="L452">            return enc;</span>
+        }
+    }
+
+    private static volatile ResourceProvider resourceProvider;
+
+    /**
+     * Installs the source of the resources (AFM, glyph list, messages): the class loaders on the
+     * JVM, the embedded files in a native executable.
+     *
+     * @param provider the provider, or {@code null} to remove it
+     */
+    public static void setResourceProvider(ResourceProvider provider) {
+<span class="fc" id="L465">        resourceProvider = provider;</span>
+<span class="fc" id="L466">    }</span>
+
+    /**
+     * Gets the font resources, from the {@link ResourceProvider} (see
+     * {@link #setResourceProvider(ResourceProvider)}).
+     *
+     * @param key the full name of the resource
+     * @return the &lt;CODE&gt;InputStream&lt;/CODE&gt; to get the resource or
+     * &lt;CODE&gt;null&lt;/CODE&gt; if not found
+     */
+    public static InputStream getResourceStream(String key) {
+<span class="pc bpc" id="L477" title="1 of 2 branches missed.">        if (key.startsWith(&quot;/&quot;)) {</span>
+<span class="nc" id="L478">            key = key.substring(1);</span>
+        }
+<span class="fc" id="L480">        final ResourceProvider provider = resourceProvider;</span>
+<span class="pc bpc" id="L481" title="1 of 2 branches missed.">        if (provider == null) {</span>
+<span class="nc" id="L482">            return null;</span>
+        }
+        try {
+<span class="fc" id="L485">            final InputStream is = provider.open(key);</span>
+<span class="pc bpc" id="L486" title="1 of 2 branches missed.">            return is == null ? null : new BufferedInputStream(is);</span>
+<span class="nc" id="L487">        } catch (IOException e) {</span>
+<span class="nc" id="L488">            return null;</span>
+        }
+    }
+
+    // ia&gt;
+
+    /**
+     * Creates the &lt;CODE&gt;widths&lt;/CODE&gt; and the &lt;CODE&gt;differences&lt;/CODE&gt; arrays
+     */
+    protected void createEncoding() {
+<span class="pc bpc" id="L498" title="1 of 2 branches missed.">        if (encoding.startsWith(&quot;#&quot;)) {</span>
+<span class="nc" id="L499">            specialMap = new IntHashtable();</span>
+<span class="nc" id="L500">            StringTokenizer tok = new StringTokenizer(encoding.substring(1),</span>
+                    &quot; ,\t\n\r\f&quot;);
+<span class="nc bnc" id="L502" title="All 2 branches missed.">            if (tok.nextToken().equals(&quot;full&quot;)) {</span>
+<span class="nc bnc" id="L503" title="All 2 branches missed.">                while (tok.hasMoreTokens()) {</span>
+<span class="nc" id="L504">                    String order = tok.nextToken();</span>
+<span class="nc" id="L505">                    String name = tok.nextToken();</span>
+<span class="nc" id="L506">                    char uni = (char) Integer.parseInt(tok.nextToken(), 16);</span>
+                    int orderK;
+<span class="nc bnc" id="L508" title="All 2 branches missed.">                    if (order.startsWith(&quot;'&quot;)) {</span>
+<span class="nc" id="L509">                        orderK = order.charAt(1);</span>
+                    } else {
+<span class="nc" id="L511">                        orderK = Integer.parseInt(order);</span>
+                    }
+<span class="nc" id="L513">                    orderK %= 256;</span>
+<span class="nc" id="L514">                    specialMap.put(uni, orderK);</span>
+<span class="nc" id="L515">                    differences[orderK] = name;</span>
+<span class="nc" id="L516">                    unicodeDifferences[orderK] = uni;</span>
+<span class="nc" id="L517">                    widths[orderK] = getRawWidth(uni, name);</span>
+<span class="nc" id="L518">                    charBBoxes[orderK] = getRawCharBBox(uni, name);</span>
+<span class="nc" id="L519">                }</span>
+            } else {
+<span class="nc" id="L521">                int k = 0;</span>
+<span class="nc bnc" id="L522" title="All 2 branches missed.">                if (tok.hasMoreTokens()) {</span>
+<span class="nc" id="L523">                    k = Integer.parseInt(tok.nextToken());</span>
+                }
+<span class="nc bnc" id="L525" title="All 4 branches missed.">                while (tok.hasMoreTokens() &amp;&amp; k &lt; 256) {</span>
+<span class="nc" id="L526">                    String hex = tok.nextToken();</span>
+<span class="nc" id="L527">                    int uni = Integer.parseInt(hex, 16) % 0x10000;</span>
+<span class="nc" id="L528">                    String name = GlyphList.unicodeToName(uni);</span>
+<span class="nc bnc" id="L529" title="All 2 branches missed.">                    if (name != null) {</span>
+<span class="nc" id="L530">                        specialMap.put(uni, k);</span>
+<span class="nc" id="L531">                        differences[k] = name;</span>
+<span class="nc" id="L532">                        unicodeDifferences[k] = (char) uni;</span>
+<span class="nc" id="L533">                        widths[k] = getRawWidth(uni, name);</span>
+<span class="nc" id="L534">                        charBBoxes[k] = getRawCharBBox(uni, name);</span>
+<span class="nc" id="L535">                        ++k;</span>
+                    }
+<span class="nc" id="L537">                }</span>
+            }
+<span class="nc bnc" id="L539" title="All 2 branches missed.">            for (int k = 0; k &lt; 256; ++k) {</span>
+<span class="nc bnc" id="L540" title="All 2 branches missed.">                if (differences[k] == null) {</span>
+<span class="nc" id="L541">                    differences[k] = notdef;</span>
+                }
+            }
+<span class="pc bpc" id="L544" title="1 of 2 branches missed.">        } else if (fontSpecific) {</span>
+<span class="nc bnc" id="L545" title="All 2 branches missed.">            for (int k = 0; k &lt; 256; ++k) {</span>
+<span class="nc" id="L546">                widths[k] = getRawWidth(k, null);</span>
+<span class="nc" id="L547">                charBBoxes[k] = getRawCharBBox(k, null);</span>
+            }
+        } else {
+            String s;
+            String name;
+            char c;
+<span class="fc" id="L553">            byte[] b = new byte[1];</span>
+<span class="fc bfc" id="L554" title="All 2 branches covered.">            for (int k = 0; k &lt; 256; ++k) {</span>
+<span class="fc" id="L555">                b[0] = (byte) k;</span>
+<span class="fc" id="L556">                s = PdfEncodings.convertToString(b, encoding);</span>
+<span class="pc bpc" id="L557" title="1 of 2 branches missed.">                if (s.length() &gt; 0) {</span>
+<span class="fc" id="L558">                    c = s.charAt(0);</span>
+                } else {
+<span class="nc" id="L560">                    c = '?';</span>
+                }
+<span class="fc" id="L562">                name = GlyphList.unicodeToName(c);</span>
+<span class="fc bfc" id="L563" title="All 2 branches covered.">                if (name == null) {</span>
+<span class="fc" id="L564">                    name = notdef;</span>
+                }
+<span class="fc" id="L566">                differences[k] = name;</span>
+<span class="fc" id="L567">                unicodeDifferences[k] = c;</span>
+<span class="fc" id="L568">                widths[k] = getRawWidth(c, name);</span>
+<span class="fc" id="L569">                charBBoxes[k] = getRawCharBBox(c, name);</span>
+            }
+        }
+<span class="fc" id="L572">    }</span>
+
+    /**
+     * Gets the width from the font according to the Unicode char &lt;CODE&gt;c&lt;/CODE&gt; or the &lt;CODE&gt;name&lt;/CODE&gt;. If the
+     * &lt;CODE&gt;name&lt;/CODE&gt; is null it's a symbolic font.
+     *
+     * @param c    the unicode char
+     * @param name the glyph name
+     * @return the width of the char
+     */
+    abstract int getRawWidth(int c, String name);
+
+    /**
+     * Gets the width of a &lt;CODE&gt;char&lt;/CODE&gt; in normalized 1000 units.
+     *
+     * @param char1 the unicode &lt;CODE&gt;char&lt;/CODE&gt; to get the width of
+     * @return the width in normalized 1000 units
+     */
+    public int getWidth(int char1) {
+<span class="nc bnc" id="L591" title="All 2 branches missed.">        if (fastWinansi) {</span>
+<span class="nc bnc" id="L592" title="All 6 branches missed.">            if (char1 &lt; 128 || char1 &gt;= 160 &amp;&amp; char1 &lt;= 255) {</span>
+<span class="nc" id="L593">                return widths[char1];</span>
+            } else {
+<span class="nc" id="L595">                return widths[PdfEncodings.winansi.get(char1)];</span>
+            }
+        } else {
+<span class="nc" id="L598">            int total = 0;</span>
+<span class="nc" id="L599">            byte[] mbytes = convertToBytes((char) char1);</span>
+<span class="nc bnc" id="L600" title="All 2 branches missed.">            for (byte mbyte : mbytes) {</span>
+<span class="nc" id="L601">                total += widths[0xff &amp; mbyte];</span>
+            }
+<span class="nc" id="L603">            return total;</span>
+        }
+    }
+
+    /**
+     * Gets the width of a &lt;CODE&gt;String&lt;/CODE&gt; in normalized 1000 units.
+     *
+     * @param text the &lt;CODE&gt;String&lt;/CODE&gt; to get the width of
+     * @return the width in normalized 1000 units
+     */
+    public int getWidth(String text) {
+<span class="fc" id="L614">        int total = 0;</span>
+<span class="pc bpc" id="L615" title="1 of 2 branches missed.">        if (fastWinansi) {</span>
+<span class="fc" id="L616">            int len = text.length();</span>
+<span class="fc bfc" id="L617" title="All 2 branches covered.">            for (int k = 0; k &lt; len; ++k) {</span>
+<span class="fc" id="L618">                char char1 = text.charAt(k);</span>
+<span class="pc bpc" id="L619" title="5 of 6 branches missed.">                if (char1 &lt; 128 || char1 &gt;= 160 &amp;&amp; char1 &lt;= 255) {</span>
+<span class="fc" id="L620">                    total += widths[char1];</span>
+                } else {
+<span class="nc" id="L622">                    total += widths[PdfEncodings.winansi.get(char1)];</span>
+                }
+            }
+<span class="fc" id="L625">            return total;</span>
+        } else {
+<span class="nc" id="L627">            byte[] mbytes = convertToBytes(text);</span>
+<span class="nc bnc" id="L628" title="All 2 branches missed.">            for (byte mbyte : mbytes) {</span>
+<span class="nc" id="L629">                total += widths[0xff &amp; mbyte];</span>
+            }
+        }
+<span class="nc" id="L632">        return total;</span>
+    }
+
+    /**
+     * Gets the width of a &lt;CODE&gt;String&lt;/CODE&gt; in points.
+     *
+     * @param text     the &lt;CODE&gt;String&lt;/CODE&gt; to get the width of
+     * @param fontSize the font size
+     * @return the width in points
+     */
+    public float getWidthPoint(String text, float fontSize) {
+<span class="fc" id="L643">        return getWidth(text) * 0.001f * fontSize;</span>
+    }
+
+    /**
+     * Gets the width of a &lt;CODE&gt;char&lt;/CODE&gt; in points.
+     *
+     * @param char1    the &lt;CODE&gt;char&lt;/CODE&gt; to get the width of
+     * @param fontSize the font size
+     * @return the width in points
+     */
+    public float getWidthPoint(int char1, float fontSize) {
+<span class="nc" id="L654">        return getWidth(char1) * 0.001f * fontSize;</span>
+    }
+
+    /**
+     * Converts a &lt;CODE&gt;String&lt;/CODE&gt; to a &lt;CODE&gt;byte&lt;/CODE&gt; array according to the font's encoding.
+     *
+     * @param text the &lt;CODE&gt;String&lt;/CODE&gt; to be converted
+     * @return an array of &lt;CODE&gt;byte&lt;/CODE&gt; representing the conversion according to the font's encoding
+     */
+    byte[] convertToBytes(String text) {
+<span class="pc bpc" id="L664" title="1 of 2 branches missed.">        if (directTextToByte) {</span>
+<span class="nc" id="L665">            return PdfEncodings.convertToBytes(text, null);</span>
+        }
+<span class="pc bpc" id="L667" title="1 of 2 branches missed.">        if (specialMap != null) {</span>
+<span class="nc" id="L668">            byte[] b = new byte[text.length()];</span>
+<span class="nc" id="L669">            int ptr = 0;</span>
+<span class="nc" id="L670">            int length = text.length();</span>
+<span class="nc bnc" id="L671" title="All 2 branches missed.">            for (int k = 0; k &lt; length; ++k) {</span>
+<span class="nc" id="L672">                char c = text.charAt(k);</span>
+<span class="nc bnc" id="L673" title="All 2 branches missed.">                if (specialMap.containsKey(c)) {</span>
+<span class="nc" id="L674">                    b[ptr++] = (byte) specialMap.get(c);</span>
+                }
+            }
+<span class="nc bnc" id="L677" title="All 2 branches missed.">            if (ptr &lt; length) {</span>
+<span class="nc" id="L678">                byte[] b2 = new byte[ptr];</span>
+<span class="nc" id="L679">                System.arraycopy(b, 0, b2, 0, ptr);</span>
+<span class="nc" id="L680">                return b2;</span>
+            } else {
+<span class="nc" id="L682">                return b;</span>
+            }
+        }
+<span class="fc" id="L685">        return PdfEncodings.convertToBytes(text, encoding);</span>
+    }
+
+    /**
+     * Converts a &lt;CODE&gt;char&lt;/CODE&gt; to a &lt;CODE&gt;byte&lt;/CODE&gt; array according to the font's encoding.
+     *
+     * @param char1 the &lt;CODE&gt;char&lt;/CODE&gt; to be converted
+     * @return an array of &lt;CODE&gt;byte&lt;/CODE&gt; representing the conversion according to the font's encoding
+     */
+    byte[] convertToBytes(int char1) {
+<span class="pc bpc" id="L695" title="1 of 2 branches missed.">        if (directTextToByte) {</span>
+<span class="nc" id="L696">            return PdfEncodings.convertToBytes((char) char1, null);</span>
+        }
+<span class="pc bpc" id="L698" title="1 of 2 branches missed.">        if (specialMap != null) {</span>
+<span class="nc bnc" id="L699" title="All 2 branches missed.">            if (specialMap.containsKey(char1)) {</span>
+<span class="nc" id="L700">                return new byte[]{(byte) specialMap.get(char1)};</span>
+            } else {
+<span class="nc" id="L702">                return new byte[0];</span>
+            }
+        }
+<span class="fc" id="L705">        return PdfEncodings.convertToBytes((char) char1, encoding);</span>
+    }
+
+    /**
+     * Outputs to the writer the font dictionaries and streams.
+     *
+     * @param writer the writer for this document
+     * @param ref    the font indirect reference
+     * @param params several parameters that depend on the font type
+     * @throws IOException       on error
+     * @throws DocumentException error in generating the object
+     */
+    abstract void writeFont(PdfWriter writer, PdfIndirectReference ref,
+            Object[] params) throws DocumentException, IOException;
+
+    /**
+     * Returns a PdfStream object with the full font program (if possible). This method will return null for some types
+     * of fonts (CJKFont, Type3Font) or if there is no font program available (standard Type 1 fonts).
+     *
+     * @return a PdfStream with the font program
+     * @throws IOException       on error
+     * @throws DocumentException on error
+     * @since 2.1.3
+     */
+    abstract PdfStream getFullFontStream() throws IOException,
+            DocumentException;
+
+    /**
+     * Gets the font parameter identified by &lt;CODE&gt;key&lt;/CODE&gt;. Valid values for
+     * &lt;CODE&gt;key&lt;/CODE&gt; are &lt;CODE&gt;ASCENT&lt;/CODE&gt;, &lt;CODE&gt;AWT_ASCENT&lt;/CODE&gt;,
+     * &lt;CODE&gt;CAPHEIGHT&lt;/CODE&gt;, &lt;CODE&gt;DESCENT&lt;/CODE&gt;, &lt;CODE&gt;AWT_DESCENT&lt;/CODE&gt;,
+     * &lt;CODE&gt;ITALICANGLE&lt;/CODE&gt;, &lt;CODE&gt;BBOXLLX&lt;/CODE&gt;, &lt;CODE&gt;BBOXLLY&lt;/CODE&gt;,
+     * &lt;CODE&gt;BBOXURX&lt;/CODE&gt; and &lt;CODE&gt;BBOXURY&lt;/CODE&gt;.
+     *
+     * @param key      the parameter to be extracted
+     * @param fontSize the font size in points
+     * @return the parameter in points
+     */
+    public abstract float getFontDescriptor(int key, float fontSize);
+
+    /**
+     * Gets the font type. The font types can be: FONT_TYPE_T1, FONT_TYPE_TT, FONT_TYPE_CJK and FONT_TYPE_TTUNI.
+     *
+     * @return the font type
+     */
+    public int getFontType() {
+<span class="fc" id="L751">        return fontType;</span>
+    }
+
+    /**
+     * Gets the postscript font name.
+     *
+     * @return the postscript font name
+     */
+    public abstract String getPostscriptFontName();
+
+    /**
+     * Gets the smallest box enclosing the character contours. It will return
+     * &lt;CODE&gt;null&lt;/CODE&gt; if the font has not the information or the character
+     * has no contours, as in the case of the space, for example. Characters with no contours may also return
+     * [0,0,0,0].
+     *
+     * @param c the character to get the contour bounding box from
+     * @return an array of four floats with the bounding box in the format [llx,lly,urx,ury] or &lt;code&gt;null&lt;/code&gt;
+     */
+    public int[] getCharBBox(int c) {
+<span class="fc" id="L771">        byte[] b = convertToBytes(c);</span>
+<span class="pc bpc" id="L772" title="1 of 2 branches missed.">        if (b.length == 0) {</span>
+<span class="nc" id="L773">            return null;</span>
+        } else {
+<span class="fc" id="L775">            return charBBoxes[b[0] &amp; 0xff];</span>
+        }
+    }
+
+    protected abstract int[] getRawCharBBox(int c, String name);
+
+    /**
+     * Generates the PDF stream with the Type1 and Truetype fonts returning a PdfStream.
+     */
+    static class StreamFont extends PdfStream {
+
+        /**
+         * Generates the PDF stream with the Type1 and Truetype fonts returning a PdfStream.
+         *
+         * @param contents         the content of the stream
+         * @param lengths          an array of int that describes the several lengths of each part of the font
+         * @param compressionLevel the compression level of the Stream
+         * @throws DocumentException error in the stream compression
+         * @since 2.1.3 (replaces the constructor without param compressionLevel)
+         */
+        public StreamFont(byte[] contents, int[] lengths, int compressionLevel)
+<span class="nc" id="L796">                throws DocumentException {</span>
+            try {
+<span class="nc" id="L798">                bytes = contents;</span>
+<span class="nc" id="L799">                put(PdfName.LENGTH, new PdfNumber(bytes.length));</span>
+<span class="nc bnc" id="L800" title="All 2 branches missed.">                for (int k = 0; k &lt; lengths.length; ++k) {</span>
+<span class="nc" id="L801">                    put(new PdfName(&quot;Length&quot; + (k + 1)), new PdfNumber(</span>
+                            lengths[k]));
+                }
+<span class="nc" id="L804">                flateCompress(compressionLevel);</span>
+<span class="nc" id="L805">            } catch (Exception e) {</span>
+<span class="nc" id="L806">                throw new DocumentException(e);</span>
+<span class="nc" id="L807">            }</span>
+<span class="nc" id="L808">        }</span>
+
+    }
+
+    /**
+     * Creates a new font. In this pruned version of OpenPDF only the 14 built in types and the Type1 fonts referred to
+     * by an AFM file are supported (no TrueType, no CJK).
+     *
+     * @param name      the name of the font or its location on file
+     * @param encoding  the encoding to be applied to this font
+     * @param embedded  true if the font is to be embedded in the PDF
+     * @param cached    true if the font comes from the cache or is added to the cache if new, false if the font is
+     *                  always created new
+     * @param ttfAfm    the afm in a byte array
+     * @param pfb       the pfb in a byte array
+     * @param noThrow   if true will not throw an exception if the font is not recognized and will return null
+     * @param forceRead if true, the full font file will be read and kept in memory
+     * @return returns a new font
+     * @throws DocumentException the font is invalid
+     * @throws IOException       the font file could not be read
+     */
+    public static BaseFont createFont(String name, String encoding,
+            boolean embedded, boolean cached, byte[] ttfAfm, byte[] pfb,
+            boolean noThrow, boolean forceRead) throws DocumentException,
+            IOException {
+<span class="fc" id="L833">        encoding = normalizeEncoding(encoding);</span>
+<span class="fc" id="L834">        boolean isBuiltinFonts14 = BuiltinFonts14.containsKey(name);</span>
+<span class="pc bpc" id="L835" title="1 of 2 branches missed.">        if (isBuiltinFonts14) {</span>
+<span class="fc" id="L836">            embedded = false;</span>
+        }
+<span class="fc" id="L838">        BaseFont fontFound = null;</span>
+<span class="fc" id="L839">        BaseFont fontBuilt = null;</span>
+<span class="fc" id="L840">        String key = name + &quot;\n&quot; + encoding + &quot;\n&quot; + embedded;</span>
+<span class="pc bpc" id="L841" title="1 of 2 branches missed.">        if (cached) {</span>
+<span class="fc" id="L842">            fontFound = fontCache.get(key);</span>
+<span class="pc bpc" id="L843" title="1 of 2 branches missed.">            if (fontFound != null) {</span>
+<span class="nc" id="L844">                return fontFound;</span>
+            }
+        }
+<span class="pc bpc" id="L847" title="3 of 4 branches missed.">        if (isBuiltinFonts14 || name.toLowerCase().endsWith(&quot;.afm&quot;)) {</span>
+<span class="fc" id="L848">            fontBuilt = new Type1Font(name, encoding, embedded, ttfAfm, pfb,</span>
+                    forceRead);
+<span class="fc" id="L850">            fontBuilt.fastWinansi = encoding.equals(CP1252);</span>
+<span class="nc bnc" id="L851" title="All 2 branches missed.">        } else if (noThrow) {</span>
+<span class="nc" id="L852">            return null;</span>
+        } else {
+<span class="nc" id="L854">            throw new DocumentException(MessageLocalization.getComposedMessage(</span>
+                    &quot;font.1.with.2.is.not.recognized&quot;, name, encoding));
+        }
+<span class="pc bpc" id="L857" title="1 of 2 branches missed.">        if (cached) {</span>
+<span class="fc" id="L858">            fontCache.putIfAbsent(key, fontBuilt);</span>
+<span class="fc" id="L859">            return fontCache.get(key);</span>
+        }
+<span class="nc" id="L861">        return fontBuilt;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

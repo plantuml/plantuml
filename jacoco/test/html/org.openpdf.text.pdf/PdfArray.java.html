@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfArray.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfArray.java</span></div><h1>PdfArray.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfArray.java 3761 2009-03-06 16:33:57Z blowagie $
+ *
+ * Copyright 1999, 2000, 2001, 2002 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * &lt;CODE&gt;PdfArray&lt;/CODE&gt; is the PDF Array object.
+ * &lt;p&gt;
+ * An array is a sequence of PDF objects. An array may contain a mixture of object types. An array is written as a left
+ * square bracket ([), followed by a sequence of objects, followed by a right square bracket (]).&lt;BR&gt; This object is
+ * described in the 'Portable Document Format Reference Manual version 1.7' section 3.2.5 (page 58).
+ *
+ * @see PdfObject
+ */
+public class PdfArray extends PdfObject {
+
+    // CLASS VARIABLES
+
+    /**
+     * this is the actual array of PdfObjects
+     */
+    protected List&lt;PdfObject&gt; arrayList;
+
+    // constructors
+
+    /**
+     * Constructs an empty &lt;CODE&gt;PdfArray&lt;/CODE&gt;-object.
+     */
+    public PdfArray() {
+<span class="fc" id="L82">        super(ARRAY);</span>
+<span class="fc" id="L83">        arrayList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L84">    }</span>
+
+    /**
+     * Constructs an &lt;CODE&gt;PdfArray&lt;/CODE&gt;-object, containing 1
+     * &lt;CODE&gt;PdfObject&lt;/CODE&gt;.
+     *
+     * @param object a &lt;CODE&gt;PdfObject&lt;/CODE&gt; that has to be added to the array
+     */
+    public PdfArray(PdfObject object) {
+<span class="nc" id="L93">        this();</span>
+<span class="nc" id="L94">        arrayList.add(object);</span>
+<span class="nc" id="L95">    }</span>
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfArray&lt;/CODE&gt;-object, containing all
+     * &lt;CODE&gt;int&lt;/CODE&gt; values in a specified array.
+     * &lt;p&gt;
+     * The &lt;CODE&gt;int&lt;/CODE&gt; values are internally converted to
+     * &lt;CODE&gt;PdfNumber&lt;/CODE&gt; objects.
+     *
+     * @param values an array of &lt;CODE&gt;int&lt;/CODE&gt; values to be added
+     */
+    public PdfArray(int[] values) {
+<span class="nc" id="L107">        this();</span>
+<span class="nc" id="L108">        add(values);</span>
+<span class="nc" id="L109">    }</span>
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfArray&lt;/CODE&gt;, containing all elements of a specified &lt;CODE&gt;List&lt;/CODE&gt;.
+     *
+     * @param pdfObjectList an &lt;CODE&gt;List&lt;/CODE&gt; with &lt;CODE&gt;PdfObject&lt;/CODE&gt;s to be added to the array
+     * @since 2.1.3
+     */
+    public PdfArray(List&lt;? extends PdfObject&gt; pdfObjectList) {
+<span class="fc" id="L118">        this();</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        if (pdfObjectList != null) {</span>
+<span class="fc" id="L120">            arrayList.addAll(pdfObjectList);</span>
+        }
+<span class="fc" id="L122">    }</span>
+
+    // METHODS OVERRIDING SOME PDFOBJECT METHODS
+
+    /**
+     * Writes the PDF representation of this &lt;CODE&gt;PdfArray&lt;/CODE&gt; as an array of &lt;CODE&gt;byte&lt;/CODE&gt; to the specified
+     * &lt;CODE&gt;OutputStream&lt;/CODE&gt;.
+     *
+     * @param writer for backwards compatibility
+     * @param os     the &lt;CODE&gt;OutputStream&lt;/CODE&gt; to write the bytes to.
+     */
+    @Override
+    public void toPdf(PdfWriter writer, OutputStream os) throws IOException {
+<span class="fc" id="L135">        os.write('[');</span>
+
+<span class="fc" id="L137">        Iterator&lt;PdfObject&gt; i = arrayList.iterator();</span>
+        PdfObject object;
+        int type;
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        if (i.hasNext()) {</span>
+<span class="fc" id="L141">            object = i.next();</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">            if (object == null) {</span>
+<span class="nc" id="L143">                object = PdfNull.PDFNULL;</span>
+            }
+<span class="fc" id="L145">            object.toPdf(writer, os);</span>
+        }
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        while (i.hasNext()) {</span>
+<span class="fc" id="L148">            object = i.next();</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">            if (object == null) {</span>
+<span class="nc" id="L150">                object = PdfNull.PDFNULL;</span>
+            }
+<span class="fc" id="L152">            type = object.type();</span>
+<span class="pc bpc" id="L153" title="4 of 8 branches missed.">            if (type != PdfObject.ARRAY &amp;&amp; type != PdfObject.DICTIONARY</span>
+                    &amp;&amp; type != PdfObject.NAME &amp;&amp; type != PdfObject.STRING) {
+<span class="fc" id="L155">                os.write(' ');</span>
+            }
+<span class="fc" id="L157">            object.toPdf(writer, os);</span>
+        }
+<span class="fc" id="L159">        os.write(']');</span>
+<span class="fc" id="L160">    }</span>
+
+    /**
+     * Returns a string representation of this &lt;CODE&gt;PdfArray&lt;/CODE&gt;.
+     * &lt;p&gt;
+     * The string representation consists of a list of all
+     * &lt;CODE&gt;PdfObject&lt;/CODE&gt;s contained in this &lt;CODE&gt;PdfArray&lt;/CODE&gt;, enclosed
+     * in square brackets (&quot;[]&quot;). Adjacent elements are separated by the characters &quot;, &quot; (comma and space).
+     *
+     * @return the string representation of this &lt;CODE&gt;PdfArray&lt;/CODE&gt;
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L173">        return arrayList.toString();</span>
+    }
+
+    // ARRAY CONTENT METHODS
+
+    /**
+     * Returns the number of entries in the array.
+     *
+     * @return the size of the List
+     */
+    public int size() {
+<span class="nc" id="L184">        return arrayList.size();</span>
+    }
+
+    /**
+     * Returns &lt;CODE&gt;true&lt;/CODE&gt; if the array is empty.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if the array is empty
+     * @since 2.1.5
+     */
+    public boolean isEmpty() {
+<span class="nc" id="L194">        return arrayList.isEmpty();</span>
+    }
+
+    /**
+     * Adds a &lt;CODE&gt;PdfObject&lt;/CODE&gt; to the end of the &lt;CODE&gt;PdfArray&lt;/CODE&gt;.
+     * &lt;p&gt;
+     * The &lt;CODE&gt;PdfObject&lt;/CODE&gt; will be the last element.
+     *
+     * @param object &lt;CODE&gt;PdfObject&lt;/CODE&gt; to add
+     * @return always &lt;CODE&gt;true&lt;/CODE&gt;
+     */
+    public boolean add(PdfObject object) {
+<span class="fc" id="L206">        return arrayList.add(object);</span>
+    }
+
+    /**
+     * Adds an array of &lt;CODE&gt;int&lt;/CODE&gt; values to end of the
+     * &lt;CODE&gt;PdfArray&lt;/CODE&gt;.
+     * &lt;p&gt;
+     * The values will be the last elements. The &lt;CODE&gt;int&lt;/CODE&gt; values are internally converted to
+     * &lt;CODE&gt;PdfNumber&lt;/CODE&gt; objects.
+     *
+     * @param values An array of &lt;CODE&gt;int&lt;/CODE&gt; values to add
+     * @return always &lt;CODE&gt;true&lt;/CODE&gt;
+     */
+    public boolean add(int[] values) {
+<span class="nc bnc" id="L220" title="All 2 branches missed.">        for (int value : values) {</span>
+<span class="nc" id="L221">            arrayList.add(new PdfNumber(value));</span>
+        }
+<span class="nc" id="L223">        return true;</span>
+    }
+
+    /**
+     * Checks if the &lt;CODE&gt;PdfArray&lt;/CODE&gt; already contains a certain
+     * &lt;CODE&gt;PdfObject&lt;/CODE&gt;.
+     *
+     * @param object The &lt;CODE&gt;PdfObject&lt;/CODE&gt; to check
+     * @return &lt;CODE&gt;true&lt;/CODE&gt;
+     */
+    public boolean contains(PdfObject object) {
+<span class="nc" id="L234">        return arrayList.contains(object);</span>
+    }
+
+    /**
+     * Returns the &lt;CODE&gt;PdfObject&lt;/CODE&gt; with the specified index.
+     * &lt;p&gt;
+     * A possible indirect references is not resolved, so the returned
+     * &lt;CODE&gt;PdfObject&lt;/CODE&gt; may be either a direct object or an indirect
+     * reference, depending on how the object is stored in the
+     * &lt;CODE&gt;PdfArray&lt;/CODE&gt;.
+     *
+     * @param idx The index of the &lt;CODE&gt;PdfObject&lt;/CODE&gt; to be returned
+     * @return A &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    public PdfObject getPdfObject(int idx) {
+<span class="nc" id="L249">        return arrayList.get(idx);</span>
+    }
+
+
+
+    /**
+     * Returns the &lt;CODE&gt;PdfObject&lt;/CODE&gt; with the specified index, resolving a possible indirect reference to a direct
+     * object.
+     * &lt;p&gt;
+     * Thus this method will never return a &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt; object.
+     *
+     * @param idx The index of the &lt;CODE&gt;PdfObject&lt;/CODE&gt; to be returned
+     * @return A direct &lt;CODE&gt;PdfObject&lt;/CODE&gt; or &lt;CODE&gt;null&lt;/CODE&gt;
+     */
+    public PdfObject getDirectObject(int idx) {
+<span class="nc" id="L264">        return getPdfObject(idx);</span>
+    }
+
+
+
+    // DOWNCASTING GETTERS
+    // @author Mark A Storer (2/17/06)
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Returns a &lt;CODE&gt;PdfObject&lt;/CODE&gt; as a &lt;CODE&gt;PdfName&lt;/CODE&gt;, resolving indirect references.
+     * &lt;p&gt;
+     * The object corresponding to the specified index is retrieved and resolved to a direct object. If it is a
+     * &lt;CODE&gt;PdfName&lt;/CODE&gt;, it is cast down and returned as such. Otherwise &lt;CODE&gt;null&lt;/CODE&gt; is returned.
+     *
+     * @param idx The index of the &lt;CODE&gt;PdfObject&lt;/CODE&gt; to be returned
+     * @return the corresponding &lt;CODE&gt;PdfName&lt;/CODE&gt; object, or
+     * &lt;CODE&gt;null&lt;/CODE&gt;
+     */
+    public PdfName getAsName(int idx) {
+<span class="nc" id="L293">        PdfName name = null;</span>
+<span class="nc" id="L294">        PdfObject orig = getDirectObject(idx);</span>
+<span class="nc bnc" id="L295" title="All 4 branches missed.">        if (orig != null &amp;&amp; orig.isName()) {</span>
+<span class="nc" id="L296">            name = (PdfName) orig;</span>
+        }
+<span class="nc" id="L298">        return name;</span>
+    }
+
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

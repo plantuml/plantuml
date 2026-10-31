@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ByteBuffer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">ByteBuffer.java</span></div><h1>ByteBuffer.java</h1><pre class="source lang-java linenums">/*
+ * $Id: ByteBuffer.java 4065 2009-09-16 23:09:11Z psoares33 $
+ * $Name$
+ *
+ * Copyright 2000, 2001, 2002 by Paulo Soares.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import org.openpdf.text.DocWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
+/**
+ * Acts like a &lt;CODE&gt;StringBuffer&lt;/CODE&gt; but works with &lt;CODE&gt;byte&lt;/CODE&gt; arrays. Floating point is converted to a
+ * format suitable to the PDF.
+ *
+ * @author Paulo Soares (psoares@consiste.pt)
+ */
+
+public class ByteBuffer extends OutputStream {
+
+    public static final byte ZERO = (byte) '0';
+<span class="fc" id="L70">    private static final char[] chars = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};</span>
+<span class="fc" id="L71">    private static final byte[] bytes = new byte[]{48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102};</span>
+<span class="fc" id="L72">    private static final DecimalFormatSymbols dfs = new DecimalFormatSymbols(Locale.US);</span>
+    /**
+     * If &lt;CODE&gt;true&lt;/CODE&gt; always output floating point numbers with 6 decimal digits. If &lt;CODE&gt;false&lt;/CODE&gt; uses the
+     * faster, although less precise, representation.
+     */
+<span class="fc" id="L77">    public static boolean HIGH_PRECISION = false;</span>
+<span class="fc" id="L78">    private static int byteCacheSize = 0;</span>
+<span class="fc" id="L79">    private static byte[][] byteCache = new byte[byteCacheSize][];</span>
+    /**
+     * The count of bytes in the buffer.
+     */
+    protected int count;
+    /**
+     * The buffer where the bytes are stored.
+     */
+    protected byte[] buf;
+
+    /**
+     * Creates new ByteBuffer with capacity 128
+     */
+    public ByteBuffer() {
+<span class="fc" id="L93">        this(128);</span>
+<span class="fc" id="L94">    }</span>
+
+    /**
+     * Creates a byte buffer with a certain capacity.
+     *
+     * @param size the initial capacity
+     */
+<span class="fc" id="L101">    public ByteBuffer(int size) {</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (size &lt; 1) {</span>
+<span class="nc" id="L103">            size = 128;</span>
+        }
+<span class="fc" id="L105">        buf = new byte[size];</span>
+<span class="fc" id="L106">    }</span>
+
+    /**
+     * Sets the cache size.
+     * &lt;p&gt;
+     * This can only be used to increment the size. If the size that is passed through is smaller than the current size,
+     * nothing happens.
+     *
+     * @param size the size of the cache
+     */
+
+    /**
+     * You can fill the cache in advance if you want to.
+     *
+     * @param decimals decimals
+     */
+
+    /**
+     * Converts an double (multiplied by 100 and cast to an int) into an array of bytes.
+     *
+     * @param i the int
+     * @return a byte array
+     */
+
+    /**
+     * Outputs a &lt;CODE&gt;double&lt;/CODE&gt; into a format suitable for the PDF.
+     *
+     * @param d a double
+     * @return the &lt;CODE&gt;String&lt;/CODE&gt; representation of the &lt;CODE&gt;double&lt;/CODE&gt;
+     */
+    public static String formatDouble(double d) {
+<span class="fc" id="L137">        return formatDouble(d, null);</span>
+    }
+
+    /**
+     * Outputs a &lt;CODE&gt;double&lt;/CODE&gt; into a format suitable for the PDF.
+     *
+     * @param d   a double
+     * @param buf a ByteBuffer
+     * @return the &lt;CODE&gt;String&lt;/CODE&gt; representation of the &lt;CODE&gt;double&lt;/CODE&gt; if
+     * &lt;CODE&gt;buf&lt;/CODE&gt; is &lt;CODE&gt;null&lt;/CODE&gt;. If &lt;CODE&gt;buf&lt;/CODE&gt; is &lt;B&gt;not&lt;/B&gt; &lt;CODE&gt;null&lt;/CODE&gt;,
+     * then the double is appended directly to the buffer and this methods returns &lt;CODE&gt;null&lt;/CODE&gt;.
+     */
+    public static String formatDouble(double d, ByteBuffer buf) {
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (HIGH_PRECISION) {</span>
+<span class="nc" id="L151">            DecimalFormat dn = new DecimalFormat(&quot;0.######&quot;, dfs);</span>
+<span class="nc" id="L152">            String sform = dn.format(d);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">            if (buf == null) {</span>
+<span class="nc" id="L154">                return sform;</span>
+            } else {
+<span class="nc" id="L156">                buf.append(sform);</span>
+<span class="nc" id="L157">                return null;</span>
+            }
+        }
+<span class="fc" id="L160">        boolean negative = false;</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (Math.abs(d) &lt; 0.000015) {</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">            if (buf != null) {</span>
+<span class="fc" id="L163">                buf.append(ZERO);</span>
+<span class="fc" id="L164">                return null;</span>
+            } else {
+<span class="fc" id="L166">                return &quot;0&quot;;</span>
+            }
+        }
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        if (d &lt; 0) {</span>
+<span class="fc" id="L170">            negative = true;</span>
+<span class="fc" id="L171">            d = -d;</span>
+        }
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        if (d &lt; 1.0) {</span>
+<span class="fc" id="L174">            d += 0.000005;</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">            if (d &gt;= 1) {</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">                if (negative) {</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">                    if (buf != null) {</span>
+<span class="nc" id="L178">                        buf.append((byte) '-');</span>
+<span class="nc" id="L179">                        buf.append((byte) '1');</span>
+<span class="nc" id="L180">                        return null;</span>
+                    } else {
+<span class="nc" id="L182">                        return &quot;-1&quot;;</span>
+                    }
+                } else {
+<span class="nc bnc" id="L185" title="All 2 branches missed.">                    if (buf != null) {</span>
+<span class="nc" id="L186">                        buf.append((byte) '1');</span>
+<span class="nc" id="L187">                        return null;</span>
+                    } else {
+<span class="nc" id="L189">                        return &quot;1&quot;;</span>
+                    }
+                }
+            }
+<span class="fc bfc" id="L193" title="All 2 branches covered.">            if (buf != null) {</span>
+<span class="fc" id="L194">                int v = (int) (d * 100000);</span>
+
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">                if (negative) {</span>
+<span class="nc" id="L197">                    buf.append((byte) '-');</span>
+                }
+<span class="fc" id="L199">                buf.append((byte) '0');</span>
+<span class="fc" id="L200">                buf.append((byte) '.');</span>
+
+<span class="fc" id="L202">                buf.append((byte) (v / 10000 + ZERO));</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">                if (v % 10000 != 0) {</span>
+<span class="fc" id="L204">                    buf.append((byte) ((v / 1000) % 10 + ZERO));</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">                    if (v % 1000 != 0) {</span>
+<span class="fc" id="L206">                        buf.append((byte) ((v / 100) % 10 + ZERO));</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">                        if (v % 100 != 0) {</span>
+<span class="fc" id="L208">                            buf.append((byte) ((v / 10) % 10 + ZERO));</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">                            if (v % 10 != 0) {</span>
+<span class="fc" id="L210">                                buf.append((byte) ((v) % 10 + ZERO));</span>
+                            }
+                        }
+                    }
+                }
+<span class="fc" id="L215">                return null;</span>
+            } else {
+<span class="fc" id="L217">                int x = 100000;</span>
+<span class="fc" id="L218">                int v = (int) (d * x);</span>
+
+<span class="fc" id="L220">                StringBuilder res = new StringBuilder();</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">                if (negative) {</span>
+<span class="nc" id="L222">                    res.append('-');</span>
+                }
+<span class="fc" id="L224">                res.append(&quot;0.&quot;);</span>
+
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">                while (v &lt; x / 10) {</span>
+<span class="nc" id="L227">                    res.append('0');</span>
+<span class="nc" id="L228">                    x /= 10;</span>
+                }
+<span class="fc" id="L230">                res.append(v);</span>
+<span class="fc" id="L231">                int cut = res.length() - 1;</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">                while (res.charAt(cut) == '0') {</span>
+<span class="nc" id="L233">                    --cut;</span>
+                }
+<span class="fc" id="L235">                res.setLength(cut + 1);</span>
+<span class="fc" id="L236">                return res.toString();</span>
+            }
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">        } else if (d &lt;= 32767) {</span>
+<span class="fc" id="L239">            d += 0.005;</span>
+<span class="fc" id="L240">            int v = (int) (d * 100);</span>
+
+<span class="pc bpc" id="L242" title="3 of 4 branches missed.">            if (v &lt; byteCacheSize &amp;&amp; byteCache[v] != null) {</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">                if (buf != null) {</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">                    if (negative) {</span>
+<span class="nc" id="L245">                        buf.append((byte) '-');</span>
+                    }
+<span class="nc" id="L247">                    buf.append(byteCache[v]);</span>
+<span class="nc" id="L248">                    return null;</span>
+                } else {
+<span class="nc" id="L250">                    String tmp = PdfEncodings.convertToString(byteCache[v], null);</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">                    if (negative) {</span>
+<span class="nc" id="L252">                        tmp = &quot;-&quot; + tmp;</span>
+                    }
+<span class="nc" id="L254">                    return tmp;</span>
+                }
+            }
+<span class="fc bfc" id="L257" title="All 2 branches covered.">            if (buf != null) {</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">                if (v &lt; byteCacheSize) {</span>
+                    //create the cachebyte[]
+                    byte[] cache;
+<span class="nc" id="L261">                    int size = 0;</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">                    if (v &gt;= 1000000) {</span>
+                        //the original number is &gt;=10000, we need 5 more bytes
+<span class="nc" id="L264">                        size += 5;</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">                    } else if (v &gt;= 100000) {</span>
+                        //the original number is &gt;=1000, we need 4 more bytes
+<span class="nc" id="L267">                        size += 4;</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">                    } else if (v &gt;= 10000) {</span>
+                        //the original number is &gt;=100, we need 3 more bytes
+<span class="nc" id="L270">                        size += 3;</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">                    } else if (v &gt;= 1000) {</span>
+                        //the original number is &gt;=10, we need 2 more bytes
+<span class="nc" id="L273">                        size += 2;</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">                    } else if (v &gt;= 100) {</span>
+                        //the original number is &gt;=1, we need 1 more bytes
+<span class="nc" id="L276">                        size += 1;</span>
+                    }
+
+                    //now we must check if we have a decimal number
+<span class="nc bnc" id="L280" title="All 2 branches missed.">                    if (v % 100 != 0) {</span>
+                        //yes, do not forget the &quot;.&quot;
+<span class="nc" id="L282">                        size += 2;</span>
+                    }
+<span class="nc bnc" id="L284" title="All 2 branches missed.">                    if (v % 10 != 0) {</span>
+<span class="nc" id="L285">                        size++;</span>
+                    }
+<span class="nc" id="L287">                    cache = new byte[size];</span>
+<span class="nc" id="L288">                    int add = 0;</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">                    if (v &gt;= 1000000) {</span>
+<span class="nc" id="L290">                        cache[add++] = bytes[(v / 1000000)];</span>
+                    }
+<span class="nc bnc" id="L292" title="All 2 branches missed.">                    if (v &gt;= 100000) {</span>
+<span class="nc" id="L293">                        cache[add++] = bytes[(v / 100000) % 10];</span>
+                    }
+<span class="nc bnc" id="L295" title="All 2 branches missed.">                    if (v &gt;= 10000) {</span>
+<span class="nc" id="L296">                        cache[add++] = bytes[(v / 10000) % 10];</span>
+                    }
+<span class="nc bnc" id="L298" title="All 2 branches missed.">                    if (v &gt;= 1000) {</span>
+<span class="nc" id="L299">                        cache[add++] = bytes[(v / 1000) % 10];</span>
+                    }
+<span class="nc bnc" id="L301" title="All 2 branches missed.">                    if (v &gt;= 100) {</span>
+<span class="nc" id="L302">                        cache[add++] = bytes[(v / 100) % 10];</span>
+                    }
+
+<span class="nc bnc" id="L305" title="All 2 branches missed.">                    if (v % 100 != 0) {</span>
+<span class="nc" id="L306">                        cache[add++] = (byte) '.';</span>
+<span class="nc" id="L307">                        cache[add++] = bytes[(v / 10) % 10];</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">                        if (v % 10 != 0) {</span>
+<span class="nc" id="L309">                            cache[add++] = bytes[v % 10];</span>
+                        }
+                    }
+<span class="nc" id="L312">                    byteCache[v] = cache;</span>
+                }
+
+<span class="fc bfc" id="L315" title="All 2 branches covered.">                if (negative) {</span>
+<span class="fc" id="L316">                    buf.append((byte) '-');</span>
+                }
+<span class="pc bpc" id="L318" title="1 of 2 branches missed.">                if (v &gt;= 1000000) {</span>
+<span class="nc" id="L319">                    buf.append(bytes[(v / 1000000)]);</span>
+                }
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">                if (v &gt;= 100000) {</span>
+<span class="nc" id="L322">                    buf.append(bytes[(v / 100000) % 10]);</span>
+                }
+<span class="fc bfc" id="L324" title="All 2 branches covered.">                if (v &gt;= 10000) {</span>
+<span class="fc" id="L325">                    buf.append(bytes[(v / 10000) % 10]);</span>
+                }
+<span class="fc bfc" id="L327" title="All 2 branches covered.">                if (v &gt;= 1000) {</span>
+<span class="fc" id="L328">                    buf.append(bytes[(v / 1000) % 10]);</span>
+                }
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">                if (v &gt;= 100) {</span>
+<span class="fc" id="L331">                    buf.append(bytes[(v / 100) % 10]);</span>
+                }
+
+<span class="fc bfc" id="L334" title="All 2 branches covered.">                if (v % 100 != 0) {</span>
+<span class="fc" id="L335">                    buf.append((byte) '.');</span>
+<span class="fc" id="L336">                    buf.append(bytes[(v / 10) % 10]);</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">                    if (v % 10 != 0) {</span>
+<span class="fc" id="L338">                        buf.append(bytes[v % 10]);</span>
+                    }
+                }
+<span class="fc" id="L341">                return null;</span>
+            } else {
+<span class="fc" id="L343">                StringBuilder res = new StringBuilder();</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">                if (negative) {</span>
+<span class="fc" id="L345">                    res.append('-');</span>
+                }
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">                if (v &gt;= 1000000) {</span>
+<span class="nc" id="L348">                    res.append(chars[(v / 1000000)]);</span>
+                }
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">                if (v &gt;= 100000) {</span>
+<span class="nc" id="L351">                    res.append(chars[(v / 100000) % 10]);</span>
+                }
+<span class="fc bfc" id="L353" title="All 2 branches covered.">                if (v &gt;= 10000) {</span>
+<span class="fc" id="L354">                    res.append(chars[(v / 10000) % 10]);</span>
+                }
+<span class="fc bfc" id="L356" title="All 2 branches covered.">                if (v &gt;= 1000) {</span>
+<span class="fc" id="L357">                    res.append(chars[(v / 1000) % 10]);</span>
+                }
+<span class="pc bpc" id="L359" title="1 of 2 branches missed.">                if (v &gt;= 100) {</span>
+<span class="fc" id="L360">                    res.append(chars[(v / 100) % 10]);</span>
+                }
+
+<span class="fc bfc" id="L363" title="All 2 branches covered.">                if (v % 100 != 0) {</span>
+<span class="fc" id="L364">                    res.append('.');</span>
+<span class="fc" id="L365">                    res.append(chars[(v / 10) % 10]);</span>
+<span class="pc bpc" id="L366" title="1 of 2 branches missed.">                    if (v % 10 != 0) {</span>
+<span class="fc" id="L367">                        res.append(chars[v % 10]);</span>
+                    }
+                }
+<span class="fc" id="L370">                return res.toString();</span>
+            }
+        } else {
+<span class="nc" id="L373">            StringBuilder res = new StringBuilder();</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">            if (negative) {</span>
+<span class="nc" id="L375">                res.append('-');</span>
+            }
+<span class="nc" id="L377">            d += 0.5;</span>
+<span class="nc" id="L378">            long v = (long) d;</span>
+<span class="nc" id="L379">            return res.append(v).toString();</span>
+        }
+    }
+
+    /**
+     * Appends an &lt;CODE&gt;int&lt;/CODE&gt;. The size of the array will grow by one.
+     *
+     * @param b the int to be appended
+     * @return a reference to this &lt;CODE&gt;ByteBuffer&lt;/CODE&gt; object
+     */
+    public ByteBuffer append_i(int b) {
+<span class="fc" id="L390">        int newcount = count + 1;</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">        if (newcount &gt; buf.length) {</span>
+<span class="fc" id="L392">            byte[] newbuf = new byte[Math.max(buf.length &lt;&lt; 1, newcount)];</span>
+<span class="fc" id="L393">            System.arraycopy(buf, 0, newbuf, 0, count);</span>
+<span class="fc" id="L394">            buf = newbuf;</span>
+        }
+<span class="fc" id="L396">        buf[count] = (byte) b;</span>
+<span class="fc" id="L397">        count = newcount;</span>
+<span class="fc" id="L398">        return this;</span>
+    }
+
+    /**
+     * Appends the subarray of the &lt;CODE&gt;byte&lt;/CODE&gt; array. The buffer will grow by
+     * &lt;CODE&gt;len&lt;/CODE&gt; bytes.
+     *
+     * @param b   the array to be appended
+     * @param off the offset to the start of the array
+     * @param len the length of bytes to append
+     * @return a reference to this &lt;CODE&gt;ByteBuffer&lt;/CODE&gt; object
+     */
+    public ByteBuffer append(byte[] b, int off, int len) {
+<span class="pc bpc" id="L411" title="6 of 12 branches missed.">        if ((off &lt; 0) || (off &gt; b.length) || (len &lt; 0) ||</span>
+                ((off + len) &gt; b.length) || ((off + len) &lt; 0) || len == 0) {
+<span class="nc" id="L413">            return this;</span>
+        }
+<span class="fc" id="L415">        int newcount = count + len;</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">        if (newcount &gt; buf.length) {</span>
+<span class="fc" id="L417">            byte[] newbuf = new byte[Math.max(buf.length &lt;&lt; 1, newcount)];</span>
+<span class="fc" id="L418">            System.arraycopy(buf, 0, newbuf, 0, count);</span>
+<span class="fc" id="L419">            buf = newbuf;</span>
+        }
+<span class="fc" id="L421">        System.arraycopy(b, off, buf, count, len);</span>
+<span class="fc" id="L422">        count = newcount;</span>
+<span class="fc" id="L423">        return this;</span>
+    }
+
+    /**
+     * Appends an array of bytes.
+     *
+     * @param b the array to be appended
+     * @return a reference to this &lt;CODE&gt;ByteBuffer&lt;/CODE&gt; object
+     */
+    public ByteBuffer append(byte[] b) {
+<span class="fc" id="L433">        return append(b, 0, b.length);</span>
+    }
+
+    /**
+     * Appends a &lt;CODE&gt;String&lt;/CODE&gt; to the buffer. The &lt;CODE&gt;String&lt;/CODE&gt; is converted according to the encoding
+     * ISO-8859-1.
+     *
+     * @param str the &lt;CODE&gt;String&lt;/CODE&gt; to be appended
+     * @return a reference to this &lt;CODE&gt;ByteBuffer&lt;/CODE&gt; object
+     */
+    public ByteBuffer append(String str) {
+<span class="fc bfc" id="L444" title="All 2 branches covered.">        if (str != null) {</span>
+<span class="fc" id="L445">            return append(DocWriter.getISOBytes(str));</span>
+        }
+<span class="fc" id="L447">        return this;</span>
+    }
+
+    /**
+     * Appends a &lt;CODE&gt;char&lt;/CODE&gt; to the buffer. The &lt;CODE&gt;char&lt;/CODE&gt; is converted according to the encoding
+     * ISO-8859-1.
+     *
+     * @param c the &lt;CODE&gt;char&lt;/CODE&gt; to be appended
+     * @return a reference to this &lt;CODE&gt;ByteBuffer&lt;/CODE&gt; object
+     */
+    public ByteBuffer append(char c) {
+<span class="fc" id="L458">        return append_i(c);</span>
+    }
+
+    /**
+     * Appends another &lt;CODE&gt;ByteBuffer&lt;/CODE&gt; to this buffer.
+     *
+     * @param buf the &lt;CODE&gt;ByteBuffer&lt;/CODE&gt; to be appended
+     * @return a reference to this &lt;CODE&gt;ByteBuffer&lt;/CODE&gt; object
+     */
+    public ByteBuffer append(ByteBuffer buf) {
+<span class="nc" id="L468">        return append(buf.buf, 0, buf.count);</span>
+    }
+
+    /**
+     * Appends the string representation of an &lt;CODE&gt;int&lt;/CODE&gt;.
+     *
+     * @param i the &lt;CODE&gt;int&lt;/CODE&gt; to be appended
+     * @return a reference to this &lt;CODE&gt;ByteBuffer&lt;/CODE&gt; object
+     */
+    public ByteBuffer append(int i) {
+<span class="nc" id="L478">        return append(String.valueOf(i));</span>
+    }
+
+    public ByteBuffer append(byte b) {
+<span class="fc" id="L482">        return append_i(b);</span>
+    }
+
+    public ByteBuffer appendHex(byte b) {
+<span class="fc" id="L486">        append(bytes[(b &gt;&gt; 4) &amp; 0x0f]);</span>
+<span class="fc" id="L487">        return append(bytes[b &amp; 0x0f]);</span>
+    }
+
+    /**
+     * Appends a string representation of a &lt;CODE&gt;float&lt;/CODE&gt; according to the Pdf conventions.
+     *
+     * @param i the &lt;CODE&gt;float&lt;/CODE&gt; to be appended
+     * @return a reference to this &lt;CODE&gt;ByteBuffer&lt;/CODE&gt; object
+     */
+    public ByteBuffer append(float i) {
+<span class="fc" id="L497">        return append((double) i);</span>
+    }
+
+    /**
+     * Appends a string representation of a &lt;CODE&gt;double&lt;/CODE&gt; according to the Pdf conventions.
+     *
+     * @param d the &lt;CODE&gt;double&lt;/CODE&gt; to be appended
+     * @return a reference to this &lt;CODE&gt;ByteBuffer&lt;/CODE&gt; object
+     */
+    public ByteBuffer append(double d) {
+<span class="fc" id="L507">        append(formatDouble(d, this));</span>
+<span class="fc" id="L508">        return this;</span>
+    }
+
+    /**
+     * Sets the size to zero.
+     */
+    public void reset() {
+<span class="fc" id="L515">        count = 0;</span>
+<span class="fc" id="L516">    }</span>
+
+    /**
+     * Creates a newly allocated byte array. Its size is the current size of this output stream and the valid contents
+     * of the buffer have been copied into it.
+     *
+     * @return the current contents of this output stream, as a byte array.
+     */
+    public byte[] toByteArray() {
+<span class="fc" id="L525">        byte[] newbuf = new byte[count];</span>
+<span class="fc" id="L526">        System.arraycopy(buf, 0, newbuf, 0, count);</span>
+<span class="fc" id="L527">        return newbuf;</span>
+    }
+
+    /**
+     * Returns the current size of the buffer.
+     *
+     * @return the value of the &lt;code&gt;count&lt;/code&gt; field, which is the number of valid bytes in this byte buffer.
+     */
+    public int size() {
+<span class="fc" id="L536">        return count;</span>
+    }
+
+    /**
+     * Converts the buffer's contents into a string, translating bytes into characters according to the platform's
+     * default character encoding.
+     *
+     * @return String translated from the buffer's contents.
+     */
+    public String toString() {
+<span class="nc" id="L546">        return new String(buf, 0, count);</span>
+    }
+
+    /**
+     * Writes the complete contents of this byte buffer output to the specified output stream argument, as if by calling
+     * the output stream's write method using &lt;code&gt;out.write(buf, 0, count)&lt;/code&gt;.
+     *
+     * @param out the output stream to which to write the data.
+     * @throws IOException if an I/O error occurs.
+     */
+    public void writeTo(OutputStream out) throws IOException {
+<span class="fc" id="L557">        out.write(buf, 0, count);</span>
+<span class="fc" id="L558">    }</span>
+
+    public void write(int b) {
+<span class="nc" id="L561">        append((byte) b);</span>
+<span class="nc" id="L562">    }</span>
+
+    public void write(byte[] b, int off, int len) {
+<span class="nc" id="L565">        append(b, off, len);</span>
+<span class="nc" id="L566">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

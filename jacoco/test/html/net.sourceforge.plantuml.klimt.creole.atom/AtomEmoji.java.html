@@ -47,25 +47,25 @@ public class AtomEmoji extends AbstractAtom implements Atom {
 	private final double factor;
 	private final HColor color;
 
-<span class="nc" id="L50">	public AtomEmoji(Emoji emoji, double scale, double size2D, HColor color) {</span>
-<span class="nc" id="L51">		this.emoji = emoji;</span>
-<span class="nc" id="L52">		this.factor = scale * size2D / MAGIC;</span>
-<span class="nc" id="L53">		this.color = color;</span>
-<span class="nc" id="L54">	}</span>
+<span class="fc" id="L50">	public AtomEmoji(Emoji emoji, double scale, double size2D, HColor color) {</span>
+<span class="fc" id="L51">		this.emoji = emoji;</span>
+<span class="fc" id="L52">		this.factor = scale * size2D / MAGIC;</span>
+<span class="fc" id="L53">		this.color = color;</span>
+<span class="fc" id="L54">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L58">		final double size = 36 * factor;</span>
-<span class="nc" id="L59">		return new XDimension2D(size, size);</span>
+<span class="fc" id="L58">		final double size = 36 * factor;</span>
+<span class="fc" id="L59">		return new XDimension2D(size, size);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L63">		return -3 * factor;</span>
+<span class="fc" id="L63">		return -3 * factor;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L67">		emoji.drawU(ug, this.factor, this.color);</span>
-<span class="nc" id="L68">	}</span>
+<span class="fc" id="L67">		emoji.drawU(ug, this.factor, this.color);</span>
+<span class="fc" id="L68">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FontDetails.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">FontDetails.java</span></div><h1>FontDetails.java</h1><pre class="source lang-java linenums">/*
+ * $Id: FontDetails.java 4024 2009-07-12 00:33:57Z xlv $
+ *
+ * Copyright 2001, 2002 by Paulo Soares.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import org.openpdf.text.ExceptionConverter;
+import org.openpdf.text.TextRenderingOptions;
+
+/**
+ * Each font used in a document has an instance of this class. This class stores the characters used in the document
+ * and other specifics unique to the current working document.
+ * &lt;p&gt;
+ * This pruned version only supports the single byte fonts (Type1, the 14 built-in fonts).
+ */
+class FontDetails {
+
+    /**
+     * Indicates if all the glyphs and widths for that particular encoding should be included in the document.
+     */
+<span class="fc" id="L66">    protected boolean subset = true;</span>
+    /**
+     * The indirect reference to this font
+     */
+    PdfIndirectReference indirectReference;
+    /**
+     * The font name that appears in the document body stream
+     */
+    PdfName fontName;
+    /**
+     * The font
+     */
+    BaseFont baseFont;
+    /**
+     * The array used with single byte encodings
+     */
+    byte[] shortTag;
+    /**
+     * The font type
+     */
+    int fontType;
+
+    /**
+     * Each font used in a document has an instance of this class.
+     *
+     * @param fontName          the font name
+     * @param indirectReference the indirect reference to the font
+     * @param baseFont          the &lt;CODE&gt;BaseFont&lt;/CODE&gt;
+     */
+<span class="fc" id="L95">    FontDetails(PdfName fontName, PdfIndirectReference indirectReference, BaseFont baseFont) {</span>
+<span class="fc" id="L96">        this.fontName = fontName;</span>
+<span class="fc" id="L97">        this.indirectReference = indirectReference;</span>
+<span class="fc" id="L98">        this.baseFont = baseFont;</span>
+<span class="fc" id="L99">        fontType = baseFont.getFontType();</span>
+<span class="fc" id="L100">        shortTag = new byte[256];</span>
+<span class="fc" id="L101">    }</span>
+
+    /**
+     * Gets the indirect reference to this font.
+     *
+     * @return the indirect reference to this font
+     */
+    PdfIndirectReference getIndirectReference() {
+<span class="fc" id="L109">        return indirectReference;</span>
+    }
+
+    /**
+     * Gets the font name as it appears in the document body.
+     *
+     * @return the font name
+     */
+    PdfName getFontName() {
+<span class="fc" id="L118">        return fontName;</span>
+    }
+
+    /**
+     * Converts the text into bytes to be placed in the document. The conversion is done according to the font and the
+     * encoding and the characters used are stored.
+     *
+     * @param text the text to convert
+     * @return the conversion
+     */
+    byte[] convertToBytes(String text, TextRenderingOptions options) {
+<span class="fc" id="L129">        byte[] b = baseFont.convertToBytes(text);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        for (byte b1 : b) {</span>
+<span class="fc" id="L131">            shortTag[b1 &amp; 0xff] = 1;</span>
+        }
+<span class="fc" id="L133">        return b;</span>
+    }
+
+    /**
+     * Writes the font definition to the document.
+     *
+     * @param writer the &lt;CODE&gt;PdfWriter&lt;/CODE&gt; of this document
+     */
+    void writeFont(PdfWriter writer) {
+        try {
+            int firstChar;
+            int lastChar;
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">            for (firstChar = 0; firstChar &lt; 256; ++firstChar) {</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">                if (shortTag[firstChar] != 0) {</span>
+<span class="fc" id="L147">                    break;</span>
+                }
+            }
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">            for (lastChar = 255; lastChar &gt;= firstChar; --lastChar) {</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">                if (shortTag[lastChar] != 0) {</span>
+<span class="fc" id="L152">                    break;</span>
+                }
+            }
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">            if (firstChar &gt; 255) {</span>
+<span class="nc" id="L156">                firstChar = 255;</span>
+<span class="nc" id="L157">                lastChar = 255;</span>
+            }
+<span class="fc" id="L159">            baseFont.writeFont(writer, indirectReference, new Object[]{firstChar, lastChar, shortTag, subset});</span>
+<span class="nc" id="L160">        } catch (Exception e) {</span>
+<span class="nc" id="L161">            throw new ExceptionConverter(e);</span>
+<span class="fc" id="L162">        }</span>
+<span class="fc" id="L163">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

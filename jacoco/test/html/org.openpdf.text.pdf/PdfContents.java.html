@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfContents.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfContents.java</span></div><h1>PdfContents.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfContents.java 3634 2008-12-23 18:44:04Z xlv $
+ *
+ * Copyright 1999, 2000, 2001, 2002 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import org.openpdf.text.DocWriter;
+import org.openpdf.text.Document;
+import org.openpdf.text.Rectangle;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
+
+/**
+ * &lt;CODE&gt;PdfContents&lt;/CODE&gt; is a &lt;CODE&gt;PdfStream&lt;/CODE&gt; containing the contents (text + graphics) of a
+ * &lt;CODE&gt;PdfPage&lt;/CODE&gt;.
+ */
+
+class PdfContents extends PdfStream {
+
+<span class="fc" id="L67">    static final byte[] SAVESTATE = DocWriter.getISOBytes(&quot;q\n&quot;);</span>
+<span class="fc" id="L68">    static final byte[] RESTORESTATE = DocWriter.getISOBytes(&quot;Q\n&quot;);</span>
+<span class="fc" id="L69">    static final byte[] ROTATE90 = DocWriter.getISOBytes(&quot;0 1 -1 0 &quot;);</span>
+<span class="fc" id="L70">    static final byte[] ROTATE180 = DocWriter.getISOBytes(&quot;-1 0 0 -1 &quot;);</span>
+<span class="fc" id="L71">    static final byte[] ROTATE270 = DocWriter.getISOBytes(&quot;0 -1 1 0 &quot;);</span>
+<span class="fc" id="L72">    static final byte[] ROTATEFINAL = DocWriter.getISOBytes(&quot; cm\n&quot;);</span>
+    // constructor
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfContents&lt;/CODE&gt;-object, containing text and general graphics.
+     *
+     * @param under         the direct content that is under all others
+     * @param content       the graphics in a page
+     * @param text          the text in a page
+     * @param secondContent the direct content that is over all others
+     * @throws BadPdfFormatException on error
+     */
+
+    PdfContents(PdfContentByte under, PdfContentByte content, PdfContentByte text, PdfContentByte secondContent,
+            Rectangle page) throws BadPdfFormatException {
+<span class="fc" id="L87">        super();</span>
+        try {
+<span class="fc" id="L89">            PdfWriter writer = content.getPdfWriter();</span>
+<span class="fc" id="L90">            streamBytes = new ByteArrayOutputStream();</span>
+
+            OutputStream out;
+<span class="fc" id="L93">            Deflater deflater = null;</span>
+<span class="pc bpc" id="L94" title="2 of 4 branches missed.">            if (Document.compress &amp;&amp; writer.getCompressionLevel() != NO_COMPRESSION) {</span>
+<span class="nc" id="L95">                compressed = true;</span>
+<span class="nc" id="L96">                compressionLevel = writer.getCompressionLevel();</span>
+<span class="nc" id="L97">                deflater = new Deflater(compressionLevel);</span>
+<span class="nc" id="L98">                out = new DeflaterOutputStream(streamBytes, deflater);</span>
+            } else {
+<span class="fc" id="L100">                out = streamBytes;</span>
+            }
+
+<span class="fc" id="L103">            int rotation = page.getRotation();</span>
+<span class="pc bpc" id="L104" title="3 of 4 branches missed.">            switch (rotation) {</span>
+                case 90:
+<span class="nc" id="L106">                    out.write(ROTATE90);</span>
+<span class="nc" id="L107">                    out.write(DocWriter.getISOBytes(ByteBuffer.formatDouble(page.getTop())));</span>
+<span class="nc" id="L108">                    out.write(' ');</span>
+<span class="nc" id="L109">                    out.write('0');</span>
+<span class="nc" id="L110">                    out.write(ROTATEFINAL);</span>
+<span class="nc" id="L111">                    break;</span>
+                case 180:
+<span class="nc" id="L113">                    out.write(ROTATE180);</span>
+<span class="nc" id="L114">                    out.write(DocWriter.getISOBytes(ByteBuffer.formatDouble(page.getRight())));</span>
+<span class="nc" id="L115">                    out.write(' ');</span>
+<span class="nc" id="L116">                    out.write(DocWriter.getISOBytes(ByteBuffer.formatDouble(page.getTop())));</span>
+<span class="nc" id="L117">                    out.write(ROTATEFINAL);</span>
+<span class="nc" id="L118">                    break;</span>
+                case 270:
+<span class="nc" id="L120">                    out.write(ROTATE270);</span>
+<span class="nc" id="L121">                    out.write('0');</span>
+<span class="nc" id="L122">                    out.write(' ');</span>
+<span class="nc" id="L123">                    out.write(DocWriter.getISOBytes(ByteBuffer.formatDouble(page.getRight())));</span>
+<span class="nc" id="L124">                    out.write(ROTATEFINAL);</span>
+                    break;
+            }
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">            if (under.size() &gt; 0) {</span>
+<span class="nc" id="L128">                out.write(SAVESTATE);</span>
+<span class="nc" id="L129">                under.getInternalBuffer().writeTo(out);</span>
+<span class="nc" id="L130">                out.write(RESTORESTATE);</span>
+            }
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">            if (content.size() &gt; 0) {</span>
+<span class="nc" id="L133">                out.write(SAVESTATE);</span>
+<span class="nc" id="L134">                content.getInternalBuffer().writeTo(out);</span>
+<span class="nc" id="L135">                out.write(RESTORESTATE);</span>
+            }
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">            if (text != null) {</span>
+<span class="nc" id="L138">                out.write(SAVESTATE);</span>
+<span class="nc" id="L139">                text.getInternalBuffer().writeTo(out);</span>
+<span class="nc" id="L140">                out.write(RESTORESTATE);</span>
+            }
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">            if (secondContent.size() &gt; 0) {</span>
+<span class="fc" id="L143">                secondContent.getInternalBuffer().writeTo(out);</span>
+            }
+<span class="fc" id="L145">            out.close();</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">            if (deflater != null) {</span>
+<span class="nc" id="L147">                deflater.end();</span>
+            }
+
+<span class="fc" id="L150">            put(PdfName.LENGTH, new PdfNumber(streamBytes.size()));</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">            if (compressed) {</span>
+<span class="nc" id="L152">                put(PdfName.FILTER, PdfName.FLATEDECODE);</span>
+            }
+<span class="nc" id="L154">        } catch (Exception e) {</span>
+<span class="nc" id="L155">            throw new BadPdfFormatException(e.getMessage());</span>
+<span class="fc" id="L156">        }</span>
+<span class="fc" id="L157">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

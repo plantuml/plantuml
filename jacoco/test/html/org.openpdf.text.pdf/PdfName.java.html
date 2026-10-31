@@ -1,0 +1,1196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfName.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfName.java</span></div><h1>PdfName.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfName.java 4082 2009-10-25 14:18:28Z psoares33 $
+ *
+ * Copyright 1999-2006 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import org.openpdf.text.error_messages.MessageLocalization;
+
+/**
+ * &lt;CODE&gt;PdfName&lt;/CODE&gt; is an object that can be used as a name in a PDF-file.
+ * &lt;p&gt;
+ * A name, like a string, is a sequence of characters. It must begin with a slash followed by a sequence of ASCII
+ * characters in the range 32 through 136 except %, (, ), [, ], &amp;lt;, &amp;gt;, {, }, / and #. Any character except 0x00 may
+ * be included in a name by writing its two character hex code, preceded by #. The maximum number of characters in a
+ * name is 127.&lt;BR&gt; This object is described in the 'Portable Document Format Reference Manual version 1.7' section
+ * 3.2.4 (page 56-58).
+ * &lt;/P&gt;
+ *
+ * @see PdfObject
+ * @see PdfDictionary
+ * @see BadPdfFormatException
+ */
+
+public class PdfName extends PdfObject implements Comparable&lt;PdfName&gt; {
+
+    /**
+     * (Optional) An action that shall be performed when the annotation is activated.
+     */
+<span class="fc" id="L74">    public static final PdfName A = new PdfName(&quot;A&quot;);</span>
+    /**
+     * (Optional) An additional-actions dictionary defining the field's / annotations's behaviour in response to various
+     * trigger events. This entry has exactly the same meaning as the AA entry in an annotation dictionary.
+     */
+<span class="fc" id="L79">    public static final PdfName AA = new PdfName(&quot;AA&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L83">    public static final PdfName AC = new PdfName(&quot;AC&quot;);</span>
+    /**
+     * (Optional; PDF 2.0) An array of one or more file specification dictionaries which denote the associated files for
+     * this annotation.
+     */
+<span class="fc" id="L88">    public static final PdfName AF = new PdfName(&quot;AF&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L92">    public static final PdfName ANNOTS = new PdfName(&quot;Annots&quot;);</span>
+    /**
+     * (Optional) An appearance dictionary specifying how the annotation shall be presented visually on the page. A PDF
+     * writer shall include an appearance dictionary when writing or updating an annotation dictionary except for the
+     * two cases listed below. Every annotation (including those whose Subtype value is Widget, as used for form
+     * fields), except for the two cases listed below, shall have at least one appearance dictionary. Exclusions:
+     * &lt;ul&gt;
+     * &lt;li&gt;Annotations where the value of the Rect key consists of an array where the value at index 1 is equal to the
+     * value at index 3 or the value at index 2 is equal to the value at index 4&lt;/li&gt;
+     * &lt;li&gt;Annotations whose Subtype value is Popup, Projection or Link.&lt;/li&gt;
+     * &lt;/ul&gt;
+     */
+<span class="fc" id="L104">    public static final PdfName AP = new PdfName(&quot;AP&quot;);</span>
+
+    /**
+     * A name
+     */
+<span class="fc" id="L109">    public static final PdfName ARTBOX = new PdfName(&quot;ArtBox&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L113">    public static final PdfName ASCENT = new PdfName(&quot;Ascent&quot;);</span>
+    /**
+     * (Required if the appearance dictionary AP contains one or more subdictionaries) The annotation's appearance
+     * state, which selects the applicable appearance stream from an appearance subdictionary.
+     */
+<span class="fc" id="L118">    public static final PdfName AS = new PdfName(&quot;AS&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L122">    public static final PdfName AUTHOR = new PdfName(&quot;Author&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L126">    public static final PdfName B = new PdfName(&quot;B&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L130">    public static final PdfName BASEFONT = new PdfName(&quot;BaseFont&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L134">    public static final PdfName BBOX = new PdfName(&quot;BBox&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L138">    public static final PdfName BC = new PdfName(&quot;BC&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L142">    public static final PdfName BITSPERCOMPONENT = new PdfName(&quot;BitsPerComponent&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L146">    public static final PdfName BLACKIS1 = new PdfName(&quot;BlackIs1&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L150">    public static final PdfName BLEEDBOX = new PdfName(&quot;BleedBox&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L154">    public static final PdfName BOX = new PdfName(&quot;Box&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L158">    public static final PdfName BS = new PdfName(&quot;BS&quot;);</span>
+    /**
+     * (Optional) An array of numbers in the range 0.0 to 1.0, representing a colour used for the following purposes:
+     * &lt;ul&gt;&lt;li&gt;The background of the annotation's icon when closed &lt;/li&gt;
+     * &lt;li&gt;The title bar of the annotation's popup window &lt;/li&gt;
+     * &lt;li&gt;The border of a link annotation &lt;/li&gt;
+     * &lt;/ul&gt;
+     * &lt;p&gt;
+     * The number of array elements determines the colour space in which the colour shall be defined:
+     * 0=No colour; transparent 1=DeviceGray 3=DeviceRGB 4=DeviceCMYK
+     */
+<span class="fc" id="L169">    public static final PdfName C = new PdfName(&quot;C&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L173">    public static final PdfName C0 = new PdfName(&quot;C0&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L177">    public static final PdfName C1 = new PdfName(&quot;C1&quot;);</span>
+    /**
+     * (Optional; PDF 2.0) When regenerating the annotation's appearance stream, this is the opacity value that shall be
+     * used for stroking all visiblea elements of the annotation in its closed state, including its background and
+     * border, but not the popup window that appears when the annotation is opened. If a ca entry is not present in this
+     * dictionary, then the value of this CA entry shall also be used for nonstroking operations as well.&lt;p&gt; Default
+     * Value: 1.0 &lt;p&gt;The specified value shall not be used if the annotation has an appearance stream; in that case, the
+     * appearance stream shall specify any transparency.
+     */
+<span class="fc" id="L186">    public static final PdfName CA = new PdfName(&quot;CA&quot;);</span>
+    /**
+     * (Optional; PDF 2.0) When regenerating the annotation's appearance stream, this is the opacity value that shall be
+     * used for all nonstroking operations on all visible elements of the annotation in its closed state (including its
+     * background and border) but not the popup window that appears when the annotation is opened. Default value: 1.0
+     * The specified value shall not be used if the annotation has an appearance stream in that case, the appearance
+     * stream shall specify any transparency.
+     */
+<span class="fc" id="L194">    public static final PdfName ca = new PdfName(&quot;ca&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L198">    public static final PdfName CAPHEIGHT = new PdfName(&quot;CapHeight&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L202">    public static final PdfName CATALOG = new PdfName(&quot;Catalog&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L206">    public static final PdfName CCITTFAXDECODE = new PdfName(&quot;CCITTFaxDecode&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L210">    public static final PdfName CI = new PdfName(&quot;CI&quot;);</span>
+    /**
+     * A name.
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L216">    public static final PdfName CMD = new PdfName(&quot;CMD&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L220">    public static final PdfName COLORSPACE = new PdfName(&quot;ColorSpace&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L224">    public static final PdfName COLUMNS = new PdfName(&quot;Columns&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L228">    public static final PdfName CONTENT = new PdfName(&quot;Content&quot;);</span>
+    /**
+     * Used in several places:
+     * &lt;ul&gt;&lt;li&gt;
+     * 1) Annotations: (Optional) Text that shall be displayed for the annotation or, if this type of annotation does not display text,
+     * an alternative description of the annotation's contents in human-readable form. In either case, this text is useful when extracting
+     * the document's contents in support of accessibility to users with disabilities or for other purposes. Might be different for each
+     * annotation type.&lt;/li&gt;
+     * &lt;li&gt;
+     * 2) Part of the signature dictionary. The signature value. The value is a hexadecimal string representing the
+     * value of the byte range digest. (Required) &lt;/li&gt;&lt;/ul&gt;
+     */
+<span class="fc" id="L240">    public static final PdfName CONTENTS = new PdfName(&quot;Contents&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L244">    public static final PdfName COUNT = new PdfName(&quot;Count&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L248">    public static final PdfName COURIER = new PdfName(&quot;Courier&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L252">    public static final PdfName COURIER_BOLD = new PdfName(&quot;Courier-Bold&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L256">    public static final PdfName COURIER_OBLIQUE = new PdfName(&quot;Courier-Oblique&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L260">    public static final PdfName COURIER_BOLDOBLIQUE = new PdfName(&quot;Courier-BoldOblique&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L264">    public static final PdfName CREATIONDATE = new PdfName(&quot;CreationDate&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L268">    public static final PdfName CREATOR = new PdfName(&quot;Creator&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L272">    public static final PdfName CROPBOX = new PdfName(&quot;CropBox&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L276">    public static final PdfName CS = new PdfName(&quot;CS&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L280">    public static final PdfName D = new PdfName(&quot;D&quot;);</span>
+    /**
+     * Part of the Build Data Dictionary. The software module build date.
+     */
+<span class="fc" id="L284">    public static final PdfName DATE = new PdfName(&quot;Date&quot;);</span>
+
+    /**
+     * A name
+     */
+<span class="fc" id="L289">    public static final PdfName DC = new PdfName(&quot;DC&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L293">    public static final PdfName DECODE = new PdfName(&quot;Decode&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L297">    public static final PdfName DECODEPARMS = new PdfName(&quot;DecodeParms&quot;);</span>
+    /**
+     * A name
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L303">    public static final PdfName DEFAULT = new PdfName(&quot;Default&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L307">    public static final PdfName DESCENT = new PdfName(&quot;Descent&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L311">    public static final PdfName DEST = new PdfName(&quot;Dest&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L315">    public static final PdfName DEVICEGRAY = new PdfName(&quot;DeviceGray&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L319">    public static final PdfName DEVICERGB = new PdfName(&quot;DeviceRGB&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L323">    public static final PdfName DEVICECMYK = new PdfName(&quot;DeviceCMYK&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L327">    public static final PdfName DIFFERENCES = new PdfName(&quot;Differences&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L331">    public static final PdfName DL = new PdfName(&quot;DL&quot;);</span>
+    /**
+     * A name.
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L337">    public static final PdfName DOCUMENT = new PdfName(&quot;Document&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L341">    public static final PdfName DP = new PdfName(&quot;DP&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L345">    public static final PdfName DR = new PdfName(&quot;DR&quot;);</span>
+    /**
+     * (Optional) A default style string; described in the PDF Annex M.
+     */
+<span class="fc" id="L349">    public static final PdfName DS = new PdfName(&quot;DS&quot;);</span>
+
+    /**
+     * Entry in a structure element dictionary: The expanded form of an abbreviation or an acronym.
+     * &lt;p&gt;OR&lt;p&gt;
+     * Entry in an annotation’s additional-actions dictionary: An action that shall be performed when the cursor enters
+     * theannotation’s active area.
+     * &lt;p&gt;OR&lt;p&gt;
+     * Entry in a collection field dictionary: A flag indicating whether the interactive PDF processor should provide
+     * support for editing the field value.
+     * &lt;p&gt;OR more...
+     */
+<span class="fc" id="L361">    public static final PdfName E = new PdfName(&quot;E&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L365">    public static final PdfName EF = new PdfName(&quot;EF&quot;);</span>
+    /**
+     * A name
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L371">    public static final PdfName EMBEDDED = new PdfName(&quot;Embedded&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L375">    public static final PdfName ENCODEDBYTEALIGN = new PdfName(&quot;EncodedByteAlign&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L379">    public static final PdfName ENCODING = new PdfName(&quot;Encoding&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L383">    public static final PdfName ENCRYPT = new PdfName(&quot;Encrypt&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L387">    public static final PdfName ENDOFBLOCK = new PdfName(&quot;EndOfBlock&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L391">    public static final PdfName ENDOFLINE = new PdfName(&quot;EndOfLine&quot;);</span>
+
+    /**
+     * A name
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L398">    public static final PdfName EXTENSIONS = new PdfName(&quot;Extensions&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L402">    public static final PdfName EXTGSTATE = new PdfName(&quot;ExtGState&quot;);</span>
+    /**
+     * (Optional) A set of flags specifying various characteristics of the annotation Default value: 0.
+     */
+<span class="fc" id="L406">    public static final PdfName F = new PdfName(&quot;F&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L410">    public static final PdfName FILEID = new PdfName(&quot;FileId&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L414">    public static final PdfName FILTER = new PdfName(&quot;Filter&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L418">    public static final PdfName FIRST = new PdfName(&quot;First&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L422">    public static final PdfName FIRSTCHAR = new PdfName(&quot;FirstChar&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L426">    public static final PdfName FIRSTPAGE = new PdfName(&quot;FirstPage&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L430">    public static final PdfName FLAGS = new PdfName(&quot;Flags&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L434">    public static final PdfName FLATEDECODE = new PdfName(&quot;FlateDecode&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L438">    public static final PdfName FONT = new PdfName(&quot;Font&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L442">    public static final PdfName FONTBBOX = new PdfName(&quot;FontBBox&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L446">    public static final PdfName FONTDESCRIPTOR = new PdfName(&quot;FontDescriptor&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L450">    public static final PdfName FONTFILE = new PdfName(&quot;FontFile&quot;);</span>
+    /**
+     * (Required) The PostScript name of the font. This name shall be the same as the value of BaseFont in the font or
+     * CIDFont dictionary that refers to this font descriptor.
+     */
+<span class="fc" id="L455">    public static final PdfName FONTNAME = new PdfName(&quot;FontName&quot;);</span>
+
+    /**
+     * A name
+     */
+<span class="fc" id="L460">    public static final PdfName FORM = new PdfName(&quot;Form&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L464">    public static final PdfName FORMTYPE = new PdfName(&quot;FormType&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L468">    public static final PdfName FS = new PdfName(&quot;FS&quot;);</span>
+    /**
+     * A name of an attribute.
+     */
+<span class="fc" id="L472">    public static final PdfName GOTO = new PdfName(&quot;GoTo&quot;);</span>
+    /**
+     * A name of an attribute.
+     */
+<span class="fc" id="L476">    public static final PdfName GOTOR = new PdfName(&quot;GoToR&quot;);</span>
+    /**
+     * A name of an attribute.
+     */
+<span class="fc" id="L480">    public static final PdfName GROUP = new PdfName(&quot;Group&quot;);</span>
+    /**
+     * Optional) The annotation's highlighting mode, the visual effect that shall be used when the mouse button is
+     * pressed or held down inside its active area:&lt;ul&gt;
+     * &lt;li&gt;N (None) No highlighting.
+     * &lt;li&gt;I (Invert) Invert the colours used to display the contents of the annotation rectangle.
+     * &lt;li&gt;O (Outline) Stroke the colours used to display the annotation border.
+     * &lt;li&gt;P (Push) Display the annotation's down appearance, if any. If no down appearance is defined, the contents of
+     * the annotation rectangle shall be offset to appear as if it were beingpushed below the surface of the page.
+     * &lt;li&gt;T (Toggle) Same as P (which is preferred).
+     * &lt;/ul&gt;
+     * A highlighting mode other than P shall override any down appearance defined for the annotation. Default value:
+     * I.
+     */
+<span class="fc" id="L494">    public static final PdfName H = new PdfName(&quot;H&quot;);</span>
+    /**
+     * A name of an attribute.
+     */
+<span class="fc" id="L498">    public static final PdfName HEIGHT = new PdfName(&quot;Height&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L502">    public static final PdfName HELVETICA = new PdfName(&quot;Helvetica&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L506">    public static final PdfName HELVETICA_BOLD = new PdfName(&quot;Helvetica-Bold&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L510">    public static final PdfName HELVETICA_OBLIQUE = new PdfName(&quot;Helvetica-Oblique&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L514">    public static final PdfName HELVETICA_BOLDOBLIQUE = new PdfName(&quot;Helvetica-BoldOblique&quot;);</span>
+    /**
+     * (Sometimes required, otherwise optional) For choice fields that allow multiple selection (MultiSelect flag set),
+     * an array of integers, sorted in ascending order, representing the zero-based indices in the Opt array of the
+     * currently selected option items. This entry shall be used when two or more elements in the Opt array have
+     * different names but the same export value or when the value of the choice field is an array. If the items
+     * identified by this entry differ from those in the V entry of the field dictionary (see discussion following this
+     * Table), the V entry shall be used.
+     */
+<span class="fc" id="L523">    public static final PdfName I = new PdfName(&quot;I&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L527">    public static final PdfName ID = new PdfName(&quot;ID&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L531">    public static final PdfName IDENTITY = new PdfName(&quot;Identity&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L535">    public static final PdfName IF = new PdfName(&quot;IF&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L539">    public static final PdfName IMAGE = new PdfName(&quot;Image&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L543">    public static final PdfName IMAGEMASK = new PdfName(&quot;ImageMask&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L547">    public static final PdfName INDEX = new PdfName(&quot;Index&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L551">    public static final PdfName INDEXED = new PdfName(&quot;Indexed&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L555">    public static final PdfName INFO = new PdfName(&quot;Info&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L559">    public static final PdfName INTENT = new PdfName(&quot;Intent&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L563">    public static final PdfName INTERPOLATE = new PdfName(&quot;Interpolate&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L567">    public static final PdfName ISMAP = new PdfName(&quot;IsMap&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L571">    public static final PdfName ITALICANGLE = new PdfName(&quot;ItalicAngle&quot;);</span>
+
+    /**
+     * A name
+     */
+<span class="fc" id="L576">    public static final PdfName IX = new PdfName(&quot;IX&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L580">    public static final PdfName JAVASCRIPT = new PdfName(&quot;JavaScript&quot;);</span>
+    /**
+     * A name
+     *
+     * @since 2.1.5
+     */
+<span class="fc" id="L586">    public static final PdfName JBIG2GLOBALS = new PdfName(&quot;JBIG2Globals&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L590">    public static final PdfName JS = new PdfName(&quot;JS&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L594">    public static final PdfName K = new PdfName(&quot;K&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L598">    public static final PdfName KEYWORDS = new PdfName(&quot;Keywords&quot;);</span>
+    /**
+     * (Sometimes required, as described) An array of indirect references to the immediate children of this field. In a
+     * non-terminal field, the Kids array shall refer to field dictionaries that are immediate descendants of this
+     * field. In a terminal field, the Kids array ordinarily shall refer to one or more separate widget annotations that
+     * are associated with this field. However, if there is only one associated widget annotation, and its contents have
+     * been merged into the field dictionary, Kids shall be omitted.
+     */
+<span class="fc" id="L606">    public static final PdfName KIDS = new PdfName(&quot;Kids&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L610">    public static final PdfName L = new PdfName(&quot;L&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L614">    public static final PdfName LASTCHAR = new PdfName(&quot;LastChar&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L618">    public static final PdfName LASTPAGE = new PdfName(&quot;LastPage&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L622">    public static final PdfName LENGTH = new PdfName(&quot;Length&quot;);</span>
+    /**
+     * A name
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L628">    public static final PdfName LI = new PdfName(&quot;LI&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L632">    public static final PdfName LINK = new PdfName(&quot;Link&quot;);</span>
+    /**
+     * (Optional) The date and time when the annotation was most recently modified. The format should be a date string
+     * (a text string containing no whitespace, of the form (D:YYYYMMDDHHmmSSOHH'mm)) but interactive PDF processors
+     * shall accept and display a string in any format.
+     */
+<span class="fc" id="L638">    public static final PdfName M = new PdfName(&quot;M&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L642">    public static final PdfName MATRIX = new PdfName(&quot;Matrix&quot;);</span>
+    /**
+     * A name of an encoding
+     */
+<span class="fc" id="L646">    public static final PdfName MAC_ROMAN_ENCODING = new PdfName(&quot;MacRomanEncoding&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L650">    public static final PdfName MARKED = new PdfName(&quot;Marked&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L654">    public static final PdfName MASK = new PdfName(&quot;Mask&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L658">    public static final PdfName MEDIABOX = new PdfName(&quot;MediaBox&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L662">    public static final PdfName METADATA = new PdfName(&quot;Metadata&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L666">    public static final PdfName MODDATE = new PdfName(&quot;ModDate&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L670">    public static final PdfName N = new PdfName(&quot;N&quot;);</span>
+    /**
+     * (optional) The name of the person or authority signing the document. This value should be used only when it is
+     * not possible to extract the name from the signature.
+     */
+<span class="fc" id="L675">    public static final PdfName NAME = new PdfName(&quot;Name&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L679">    public static final PdfName NAMED = new PdfName(&quot;Named&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L683">    public static final PdfName NEXTPAGE = new PdfName(&quot;NextPage&quot;);</span>
+
+    /**
+     * A name
+     */
+<span class="fc" id="L688">    public static final PdfName O = new PdfName(&quot;O&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L692">    public static final PdfName OBJSTM = new PdfName(&quot;ObjStm&quot;);</span>
+    /**
+     * (Optional) An optional content group or optional content membership dictionary specifying the optional content
+     * properties for the annotation. Before the annotation is drawn, its visibility shall be determined based on this
+     * entry as well as the annotation flags specified in the F entry. If it is determined to be invisible, the
+     * annotation shall not be drawn.
+     */
+<span class="fc" id="L699">    public static final PdfName OC = new PdfName(&quot;OC&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L703">    public static final PdfName OCG = new PdfName(&quot;OCG&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L707">    public static final PdfName OFF = new PdfName(&quot;OFF&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L711">    public static final PdfName ON = new PdfName(&quot;ON&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L715">    public static final PdfName op = new PdfName(&quot;op&quot;);</span>
+    /**
+     * Parts of the Build Data Dictionary. Indicates the operating system, such as Win10. Currently there is no specific
+     * string format defined for the value of this attribute.
+     */
+<span class="fc" id="L720">    public static final PdfName OS = new PdfName(&quot;OS&quot;);</span>
+
+    /**
+     * A name
+     */
+<span class="fc" id="L725">    public static final PdfName OUTLINES = new PdfName(&quot;Outlines&quot;);</span>
+    /**
+     * (Optional) An indirect reference to the page object with which this annotation is associated. This entry shall be
+     * present in screen annotations associated with rendition actions. OR (Optional; PDF 2.0) The access permissions
+     * granted for this document. Valid values shall be 1,2,3
+     */
+<span class="fc" id="L731">    public static final PdfName P = new PdfName(&quot;P&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L735">    public static final PdfName PAGE = new PdfName(&quot;Page&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L739">    public static final PdfName PAGES = new PdfName(&quot;Pages&quot;);</span>
+    /**
+     * (Required if this field is the child of another in the field hierarchy; absent otherwise) The field that is the
+     * immediate parent of this one (the field, if any, whose Kids array includes this field). A field can have at most
+     * one parent; that is, it can be included in the Kids array of at most one other field.
+     */
+<span class="fc" id="L745">    public static final PdfName PARENT = new PdfName(&quot;Parent&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L749">    public static final PdfName PATTERN = new PdfName(&quot;Pattern&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L753">    public static final PdfName PDF = new PdfName(&quot;PDF&quot;);</span>
+    /**
+     * A name.
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L759">    public static final PdfName PI = new PdfName(&quot;PI&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L763">    public static final PdfName PREV = new PdfName(&quot;Prev&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L767">    public static final PdfName PREVPAGE = new PdfName(&quot;PrevPage&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L771">    public static final PdfName PRODUCER = new PdfName(&quot;Producer&quot;);</span>
+
+    /**
+     * A name
+     */
+<span class="fc" id="L776">    public static final PdfName PROPERTIES = new PdfName(&quot;Properties&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L780">    public static final PdfName PS = new PdfName(&quot;PS&quot;);</span>
+    /**
+     * (Optional; inheritable) A code specifying the form of quadding (justification) that shall be used in displaying
+     * the text:
+     * &lt;ul&gt;
+     * &lt;li&gt;0 Left-justified (default) &lt;/li&gt;
+     * &lt;li&gt;1 Centered &lt;/li&gt;
+     * &lt;li&gt;2 Right-justified &lt;/li&gt;
+     * &lt;/ul&gt;
+     */
+<span class="fc" id="L790">    public static final PdfName Q = new PdfName(&quot;Q&quot;);</span>
+    /**
+     * A name
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L796">    public static final PdfName QUOTE = new PdfName(&quot;Quote&quot;);</span>
+    /**
+     * Part of the Build Data Dictionary. The software module revision number
+     */
+<span class="fc" id="L800">    public static final PdfName R = new PdfName(&quot;R&quot;);</span>
+    /**
+     * (Required) The annotation rectangle, defining the location of the annotation on the page in default user space
+     * units.
+     */
+<span class="fc" id="L805">    public static final PdfName RECT = new PdfName(&quot;Rect&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L809">    public static final PdfName RESOURCES = new PdfName(&quot;Resources&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L813">    public static final PdfName RI = new PdfName(&quot;RI&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L817">    public static final PdfName ROOT = new PdfName(&quot;Root&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L821">    public static final PdfName ROTATE = new PdfName(&quot;Rotate&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L825">    public static final PdfName ROWS = new PdfName(&quot;Rows&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L829">    public static final PdfName S = new PdfName(&quot;S&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L833">    public static final PdfName SHADING = new PdfName(&quot;Shading&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L837">    public static final PdfName SIZE = new PdfName(&quot;Size&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L841">    public static final PdfName SMASK = new PdfName(&quot;SMask&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L845">    public static final PdfName STEMV = new PdfName(&quot;StemV&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L849">    public static final PdfName SUBJECT = new PdfName(&quot;Subject&quot;);</span>
+    /**
+     * (Required) The type of annotation that this dictionary describes.
+     */
+<span class="fc" id="L853">    public static final PdfName SUBTYPE = new PdfName(&quot;Subtype&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L857">    public static final PdfName SW = new PdfName(&quot;SW&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L861">    public static final PdfName SYMBOL = new PdfName(&quot;Symbol&quot;);</span>
+    /**
+     * (Required) The partial field name.
+     */
+<span class="fc" id="L865">    public static final PdfName T = new PdfName(&quot;T&quot;);</span>
+    /**
+     * A name
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L871">    public static final PdfName TA = new PdfName(&quot;TA&quot;);</span>
+    /**
+     * A name
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L877">    public static final PdfName TABLE = new PdfName(&quot;Table&quot;);</span>
+    /**
+     * A name
+     *
+     * @since 2.1.5
+     */
+<span class="fc" id="L883">    public static final PdfName TABS = new PdfName(&quot;Tabs&quot;);</span>
+    /**
+     * A name
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L889">    public static final PdfName TD = new PdfName(&quot;TD&quot;);</span>
+    /**
+     * A name
+     *
+     * @since 2.1.6
+     */
+<span class="fc" id="L895">    public static final PdfName TH = new PdfName(&quot;TH&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L899">    public static final PdfName TIMES_ROMAN = new PdfName(&quot;Times-Roman&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L903">    public static final PdfName TIMES_BOLD = new PdfName(&quot;Times-Bold&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L907">    public static final PdfName TIMES_ITALIC = new PdfName(&quot;Times-Italic&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L911">    public static final PdfName TIMES_BOLDITALIC = new PdfName(&quot;Times-BoldItalic&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L915">    public static final PdfName TITLE = new PdfName(&quot;Title&quot;);</span>
+    /**
+     * Optional) The mapping name that shall be used when exporting interactive form field data from the document.
+     */
+<span class="fc" id="L919">    public static final PdfName TM = new PdfName(&quot;TM&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L923">    public static final PdfName TRANSPARENCY = new PdfName(&quot;Transparency&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L927">    public static final PdfName TRIMBOX = new PdfName(&quot;TrimBox&quot;);</span>
+    /**
+     * There are lots of Type s in the PDF specification. The following dictionaries use Type:
+     *
+     * &lt;ul&gt;
+     *  &lt;li&gt;Crypt filters&lt;/li&gt;
+     *  &lt;li&gt;object stream dictionary&lt;/li&gt;
+     *  &lt;li&gt;cross-reference stream dictionary&lt;/li&gt;
+     *  &lt;li&gt;encrypted payload dictionary&lt;/li&gt;
+     *  &lt;li&gt;catalog dictionary&lt;/li&gt;
+     *  &lt;li&gt;page tree node&lt;/li&gt;
+     *  &lt;li&gt;page object&lt;/li&gt;
+     *  &lt;li&gt;file specification dictionary&lt;/li&gt;
+     *  &lt;li&gt;embedded file stream dictionary&lt;/li&gt;
+     *  &lt;li&gt;collection item dictionary&lt;/li&gt;
+     *  &lt;li&gt;collection subitem dictionary&lt;/li&gt;
+     *  &lt;li&gt;extensions dictionary&lt;/li&gt;
+     *  &lt;li&gt;developer extensions dictionary&lt;/li&gt;
+     *  &lt;li&gt;graphics state parameter dictionary&lt;/li&gt;
+     *  &lt;li&gt;Type 1 pattern dictionary&lt;/li&gt;
+     *  &lt;li&gt;DSS dictionary&lt;/li&gt;
+     *  &lt;li&gt;Type 2 pattern dictionary&lt;/li&gt;
+     *  &lt;li&gt;image dictionary&lt;/li&gt;
+     *  &lt;li&gt;Type 1 form dictionary&lt;/li&gt;
+     *  &lt;li&gt;group attributes dictionary&lt;/li&gt;
+     *  &lt;li&gt;content group dictionary&lt;/li&gt;
+     *  &lt;li&gt;content membership dictionary&lt;/li&gt;
+     *  &lt;li&gt;Type 1 font dictionary&lt;/li&gt;
+     *  &lt;li&gt;Type 3 font dictionary&lt;/li&gt;
+     *  &lt;li&gt;encoding dictionary&lt;/li&gt;
+     *  &lt;li&gt;outline dictionary&lt;/li&gt;
+     *  &lt;li&gt;annotation dictionaries&lt;/li&gt;
+     *  &lt;li&gt;field lock dictionary&lt;/li&gt;
+     *  &lt;li&gt;...&lt;/li&gt;
+     *
+     *  &lt;/ul&gt;
+     */
+<span class="fc" id="L964">    public static final PdfName TYPE = new PdfName(&quot;Type&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L968">    public static final PdfName TYPE1 = new PdfName(&quot;Type1&quot;);</span>
+    /**
+     * A name of an attribute.
+     */
+<span class="fc" id="L972">    public static final PdfName U = new PdfName(&quot;U&quot;);</span>
+    /**
+     * (Required if R=6 (PDF 2.0)) A 32-byte string, based on the user password, that shall be used in computing the
+     * file encryption key.
+     */
+<span class="fc" id="L977">    public static final PdfName UE = new PdfName(&quot;UE&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L981">    public static final PdfName UR = new PdfName(&quot;UR&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L985">    public static final PdfName URI = new PdfName(&quot;URI&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L989">    public static final PdfName URL = new PdfName(&quot;URL&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L993">    public static final PdfName USERUNIT = new PdfName(&quot;UserUnit&quot;);</span>
+    /**
+     * (Optional; inheritable) The field value, whose format varies depending on the field type. See the descriptions of
+     * individual field types for further information.
+     */
+<span class="fc" id="L998">    public static final PdfName V = new PdfName(&quot;V&quot;);</span>
+    /**
+     * (Deprecated) The application shall ask the security handler for the file encryption key and shall implicitly
+     * decrypt data with7.6.3.1, &quot;Algorithm 1: Encryption of data using the RC4 or AESalgorithms&quot;, using the RC4
+     * algorithm.
+     */
+<span class="fc" id="L1004">    public static final PdfName V2 = new PdfName(&quot;V2&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L1008">    public static final PdfName VERSION = new PdfName(&quot;Version&quot;);</span>
+    /**
+     * A name of an attribute.
+     */
+<span class="fc" id="L1012">    public static final PdfName W = new PdfName(&quot;W&quot;);</span>
+    /**
+     * A name of an attribute.
+     */
+<span class="fc" id="L1016">    public static final PdfName WIDTH = new PdfName(&quot;Width&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L1020">    public static final PdfName WIDTHS = new PdfName(&quot;Widths&quot;);</span>
+    /**
+     * A name of an encoding
+     */
+<span class="fc" id="L1024">    public static final PdfName WIN_ANSI_ENCODING = new PdfName(&quot;WinAnsiEncoding&quot;);</span>
+    /**
+     * A name of an encoding
+     */
+<span class="fc" id="L1028">    public static final PdfName WS = new PdfName(&quot;WS&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L1032">    public static final PdfName X = new PdfName(&quot;X&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L1036">    public static final PdfName XML = new PdfName(&quot;XML&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L1040">    public static final PdfName XOBJECT = new PdfName(&quot;XObject&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L1044">    public static final PdfName XREF = new PdfName(&quot;XRef&quot;);</span>
+    /**
+     * A name
+     */
+<span class="fc" id="L1048">    public static final PdfName XYZ = new PdfName(&quot;XYZ&quot;);</span>
+    /**
+     * A name of a base 14 type 1 font
+     */
+<span class="fc" id="L1052">    public static final PdfName ZAPFDINGBATS = new PdfName(&quot;ZapfDingbats&quot;);</span>
+<span class="fc" id="L1053">    private int hash = 0;</span>
+
+    /**
+     * Constructs a new &lt;CODE&gt;PdfName&lt;/CODE&gt;. The name length will be checked.
+     *
+     * @param name the new name
+     */
+    public PdfName(String name) {
+<span class="fc" id="L1061">        this(name, true);</span>
+<span class="fc" id="L1062">    }</span>
+
+    /**
+     * Constructs a new &lt;CODE&gt;PdfName&lt;/CODE&gt;.
+     *
+     * @param name        the new name
+     * @param lengthCheck if &lt;CODE&gt;true&lt;/CODE&gt; check the length validity, if &lt;CODE&gt;false&lt;/CODE&gt; the name can have any
+     *                    length
+     */
+    public PdfName(String name, boolean lengthCheck) {
+<span class="fc" id="L1072">        super(PdfObject.NAME);</span>
+        // The minimum number of characters in a name is 0, the maximum is 127 (the '/' not included)
+<span class="fc" id="L1074">        int length = name.length();</span>
+<span class="pc bpc" id="L1075" title="2 of 4 branches missed.">        if (lengthCheck &amp;&amp; length &gt; 127) {</span>
+<span class="nc" id="L1076">            throw new IllegalArgumentException(</span>
+<span class="nc" id="L1077">                    MessageLocalization.getComposedMessage(&quot;the.name.1.is.too.long.2.characters&quot;, name,</span>
+<span class="nc" id="L1078">                            String.valueOf(length)));</span>
+        }
+<span class="fc" id="L1080">        bytes = encodeName(name);</span>
+<span class="fc" id="L1081">    }</span>
+
+    // CLASS VARIABLES
+
+    // CLASS METHODS
+
+    /**
+     * Encodes a plain name given in the unescaped form &quot;AB CD&quot; into &quot;/AB#20CD&quot;.
+     *
+     * @param name the name to encode
+     * @return the encoded name
+     * @since 2.1.5
+     */
+    public static byte[] encodeName(String name) {
+<span class="fc" id="L1095">        int length = name.length();</span>
+<span class="fc" id="L1096">        ByteBuffer buf = new ByteBuffer(length + 20);</span>
+<span class="fc" id="L1097">        buf.append('/');</span>
+        char c;
+<span class="fc" id="L1099">        char[] chars = name.toCharArray();</span>
+<span class="fc bfc" id="L1100" title="All 2 branches covered.">        for (int k = 0; k &lt; length; k++) {</span>
+<span class="fc" id="L1101">            c = (char) (chars[k] &amp; 0xff);</span>
+            // Escape special characters
+<span class="pc bpc" id="L1103" title="1 of 2 branches missed.">            switch (c) {</span>
+                case ' ':
+                case '%':
+                case '(':
+                case ')':
+                case '&lt;':
+                case '&gt;':
+                case '[':
+                case ']':
+                case '{':
+                case '}':
+                case '/':
+                case '#':
+<span class="nc" id="L1116">                    buf.append('#');</span>
+<span class="nc" id="L1117">                    buf.append(Integer.toString(c, 16));</span>
+<span class="nc" id="L1118">                    break;</span>
+                default:
+<span class="pc bpc" id="L1120" title="2 of 4 branches missed.">                    if (c &gt;= 32 &amp;&amp; c &lt;= 126) {</span>
+<span class="fc" id="L1121">                        buf.append(c);</span>
+                    } else {
+<span class="nc" id="L1123">                        buf.append('#');</span>
+<span class="nc bnc" id="L1124" title="All 2 branches missed.">                        if (c &lt; 16) {</span>
+<span class="nc" id="L1125">                            buf.append('0');</span>
+                        }
+<span class="nc" id="L1127">                        buf.append(Integer.toString(c, 16));</span>
+                    }
+                    break;
+            }
+        }
+<span class="fc" id="L1132">        return buf.toByteArray();</span>
+    }
+
+    /**
+     * Compares this object with the specified object for order. Returns a negative integer, zero, or a positive integer
+     * as this object is less than, equal to, or greater than the specified object.&lt;p&gt;
+     *
+     * @param name the Object to be compared.
+     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than
+     * the specified object.
+     * @throws ClassCastException if the specified object's type prevents it from being compared to this Object.
+     */
+    public int compareTo(PdfName name) {
+<span class="nc" id="L1145">        byte[] myBytes = bytes;</span>
+<span class="nc" id="L1146">        byte[] objBytes = name.bytes;</span>
+<span class="nc" id="L1147">        int len = Math.min(myBytes.length, objBytes.length);</span>
+<span class="nc bnc" id="L1148" title="All 2 branches missed.">        for (int i = 0; i &lt; len; i++) {</span>
+<span class="nc bnc" id="L1149" title="All 2 branches missed.">            if (myBytes[i] &gt; objBytes[i]) {</span>
+<span class="nc" id="L1150">                return 1;</span>
+            }
+<span class="nc bnc" id="L1152" title="All 2 branches missed.">            if (myBytes[i] &lt; objBytes[i]) {</span>
+<span class="nc" id="L1153">                return -1;</span>
+            }
+        }
+<span class="nc" id="L1156">        return Integer.compare(myBytes.length, objBytes.length);</span>
+    }
+
+    /**
+     * Indicates whether some other object is &quot;equal to&quot; this one.
+     *
+     * @param obj the reference object with which to compare.
+     * @return &lt;code&gt;true&lt;/code&gt; if this object is the same as the obj
+     * argument; &lt;code&gt;false&lt;/code&gt; otherwise.
+     */
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L1167" title="All 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L1168">            return true;</span>
+        }
+<span class="nc bnc" id="L1170" title="All 2 branches missed.">        if (obj instanceof PdfName) {</span>
+<span class="nc bnc" id="L1171" title="All 2 branches missed.">            return compareTo((PdfName) obj) == 0;</span>
+        }
+<span class="nc" id="L1173">        return false;</span>
+    }
+
+    /**
+     * Returns a hash code value for the object. This method is supported for the benefit of hashtables such as those
+     * provided by
+     * &lt;code&gt;java.util.Hashtable&lt;/code&gt;.
+     *
+     * @return a hash code value for this object.
+     */
+    public int hashCode() {
+<span class="fc" id="L1184">        int h = hash;</span>
+<span class="fc bfc" id="L1185" title="All 2 branches covered.">        if (h == 0) {</span>
+<span class="fc" id="L1186">            int ptr = 0;</span>
+<span class="fc" id="L1187">            int len = bytes.length;</span>
+<span class="fc bfc" id="L1188" title="All 2 branches covered.">            for (int i = 0; i &lt; len; i++) {</span>
+<span class="fc" id="L1189">                h = 31 * h + (bytes[ptr++] &amp; 0xff);</span>
+            }
+<span class="fc" id="L1191">            hash = h;</span>
+        }
+<span class="fc" id="L1193">        return h;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

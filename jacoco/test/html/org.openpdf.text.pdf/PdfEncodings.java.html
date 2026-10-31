@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfEncodings.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfEncodings.java</span></div><h1>PdfEncodings.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2002 Paulo Soares
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+
+import org.openpdf.text.ExceptionConverter;
+import java.io.UnsupportedEncodingException;
+import java.util.Locale;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * Supports fast encodings for winansi and PDFDocEncoding. Supports conversions from CJK encodings to CID. Supports
+ * custom encodings.
+ *
+ * @author Paulo Soares (psoares@consiste.pt)
+ */
+<span class="nc" id="L62">public class PdfEncodings {</span>
+
+<span class="fc" id="L64">    static final char[] winansiByteToChar = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,</span>
+            11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+            28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,
+            45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61,
+            62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78,
+            79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95,
+            96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109,
+            110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122,
+            123, 124, 125, 126, 127, 8364, 65533, 8218, 402, 8222, 8230, 8224,
+            8225, 710, 8240, 352, 8249, 338, 65533, 381, 65533, 65533, 8216,
+            8217, 8220, 8221, 8226, 8211, 8212, 732, 8482, 353, 8250, 339,
+            65533, 382, 376, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169,
+            170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182,
+            183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195,
+            196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208,
+            209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221,
+            222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234,
+            235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247,
+            248, 249, 250, 251, 252, 253, 254, 255};
+<span class="fc" id="L83">    static final char[] pdfEncodingByteToChar = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9,</span>
+            10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+            27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
+            44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+            61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77,
+            78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94,
+            95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108,
+            109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121,
+            122, 123, 124, 125, 126, 127, 0x2022, 0x2020, 0x2021, 0x2026,
+            0x2014, 0x2013, 0x0192, 0x2044, 0x2039, 0x203a, 0x2212, 0x2030,
+            0x201e, 0x201c, 0x201d, 0x2018, 0x2019, 0x201a, 0x2122, 0xfb01,
+            0xfb02, 0x0141, 0x0152, 0x0160, 0x0178, 0x017d, 0x0131, 0x0142,
+            0x0153, 0x0161, 0x017e, 65533, 0x20ac, 161, 162, 163, 164, 165,
+            166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178,
+            179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191,
+            192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204,
+            205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217,
+            218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230,
+            231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243,
+            244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255};
+<span class="fc" id="L103">    static final IntHashtable winansi = new IntHashtable();</span>
+<span class="fc" id="L104">    static final IntHashtable pdfEncoding = new IntHashtable();</span>
+<span class="fc" id="L105">    static ConcurrentHashMap&lt;String, ExtraEncoding&gt; extraEncodings = new ConcurrentHashMap&lt;&gt;(</span>
+            200, 0.85f, 64);
+
+    static {
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        for (int k = 128; k &lt; 161; ++k) {</span>
+<span class="fc" id="L110">            char c = winansiByteToChar[k];</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (c != 65533) {</span>
+<span class="fc" id="L112">                winansi.put(c, k);</span>
+            }
+        }
+
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        for (int k = 128; k &lt; 161; ++k) {</span>
+<span class="fc" id="L117">            char c = pdfEncodingByteToChar[k];</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            if (c != 65533) {</span>
+<span class="fc" id="L119">                pdfEncoding.put(c, k);</span>
+            }
+        }
+
+<span class="fc" id="L123">        addExtraEncoding(&quot;Wingdings&quot;, new WingdingsConversion());</span>
+<span class="fc" id="L124">        addExtraEncoding(&quot;Symbol&quot;, new SymbolConversion(true));</span>
+<span class="fc" id="L125">        addExtraEncoding(&quot;ZapfDingbats&quot;, new SymbolConversion(false));</span>
+<span class="fc" id="L126">        addExtraEncoding(&quot;SymbolTT&quot;, new SymbolTTConversion());</span>
+<span class="fc" id="L127">        addExtraEncoding(&quot;Cp437&quot;, new Cp437Conversion());</span>
+<span class="fc" id="L128">    }</span>
+
+    /**
+     * Converts a &lt;CODE&gt;String&lt;/CODE&gt; to a &lt;CODE&gt;byte&lt;/CODE&gt; array according to the font's encoding.
+     *
+     * @param encoding the encoding
+     * @param text     the &lt;CODE&gt;String&lt;/CODE&gt; to be converted
+     * @return an array of &lt;CODE&gt;byte&lt;/CODE&gt; representing the conversion according to the font's encoding
+     */
+    public static final byte[] convertToBytes(String text, String encoding) {
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        if (text == null) {</span>
+<span class="nc" id="L139">            return new byte[0];</span>
+        }
+<span class="pc bpc" id="L141" title="1 of 4 branches missed.">        if (encoding == null || encoding.length() == 0) {</span>
+<span class="fc" id="L142">            int len = text.length();</span>
+<span class="fc" id="L143">            byte[] b = new byte[len];</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            for (int k = 0; k &lt; len; ++k) {</span>
+<span class="fc" id="L145">                b[k] = (byte) text.charAt(k);</span>
+            }
+<span class="fc" id="L147">            return b;</span>
+        }
+<span class="fc" id="L149">        ExtraEncoding extra = extraEncodings.get(encoding.toLowerCase(Locale.ROOT));</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (extra != null) {</span>
+<span class="nc" id="L151">            byte[] b = extra.charToByte(text, encoding);</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">            if (b != null) {</span>
+<span class="nc" id="L153">                return b;</span>
+            }
+        }
+<span class="fc" id="L156">        IntHashtable hash = null;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (encoding.equals(BaseFont.WINANSI)) {</span>
+<span class="fc" id="L158">            hash = winansi;</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        } else if (encoding.equals(PdfObject.TEXT_PDFDOCENCODING)) {</span>
+<span class="fc" id="L160">            hash = pdfEncoding;</span>
+        }
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">        if (hash != null) {</span>
+<span class="fc" id="L163">            char[] cc = text.toCharArray();</span>
+<span class="fc" id="L164">            int len = cc.length;</span>
+<span class="fc" id="L165">            int ptr = 0;</span>
+<span class="fc" id="L166">            byte[] b = new byte[len];</span>
+<span class="fc" id="L167">            int c = 0;</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">            for (char char1 : cc) {</span>
+<span class="pc bpc" id="L169" title="5 of 6 branches missed.">                if (char1 &lt; 128 || char1 &gt; 160 &amp;&amp; char1 &lt;= 255) {</span>
+<span class="fc" id="L170">                    c = char1;</span>
+                } else {
+<span class="nc" id="L172">                    c = hash.get(char1);</span>
+                }
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">                if (c != 0) {</span>
+<span class="fc" id="L175">                    b[ptr++] = (byte) c;</span>
+                }
+            }
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">            if (ptr == len) {</span>
+<span class="fc" id="L179">                return b;</span>
+            }
+<span class="nc" id="L181">            byte[] b2 = new byte[ptr];</span>
+<span class="nc" id="L182">            System.arraycopy(b, 0, b2, 0, ptr);</span>
+<span class="nc" id="L183">            return b2;</span>
+        }
+<span class="nc bnc" id="L185" title="All 2 branches missed.">        if (encoding.equals(PdfObject.TEXT_UNICODE)) {</span>
+            // workaround for jdk 1.2.2 bug
+<span class="nc" id="L187">            char[] cc = text.toCharArray();</span>
+<span class="nc" id="L188">            byte[] b = new byte[cc.length * 2 + 2];</span>
+<span class="nc" id="L189">            b[0] = -2;</span>
+<span class="nc" id="L190">            b[1] = -1;</span>
+<span class="nc" id="L191">            int bptr = 2;</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">            for (char c : cc) {</span>
+<span class="nc" id="L193">                b[bptr++] = (byte) (c &gt;&gt; 8);</span>
+<span class="nc" id="L194">                b[bptr++] = (byte) (c &amp; 0xff);</span>
+            }
+<span class="nc" id="L196">            return b;</span>
+        }
+        try {
+<span class="nc" id="L199">            return text.getBytes(encoding);</span>
+<span class="nc" id="L200">        } catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L201">            throw new ExceptionConverter(e);</span>
+        }
+    }
+
+    /**
+     * Converts a &lt;CODE&gt;String&lt;/CODE&gt; to a &lt;CODE&gt;byte&lt;/CODE&gt; array according to the font's encoding.
+     *
+     * @param encoding the encoding
+     * @param char1    the &lt;CODE&gt;char&lt;/CODE&gt; to be converted
+     * @return an array of &lt;CODE&gt;byte&lt;/CODE&gt; representing the conversion according to the font's encoding
+     */
+    public static final byte[] convertToBytes(char char1, String encoding) {
+<span class="pc bpc" id="L213" title="2 of 4 branches missed.">        if (encoding == null || encoding.length() == 0) {</span>
+<span class="nc" id="L214">            return new byte[]{(byte) char1};</span>
+        }
+<span class="fc" id="L216">        ExtraEncoding extra = extraEncodings.get(encoding.toLowerCase(Locale.ROOT));</span>
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">        if (extra != null) {</span>
+<span class="nc" id="L218">            byte[] b = extra.charToByte(char1, encoding);</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">            if (b != null) {</span>
+<span class="nc" id="L220">                return b;</span>
+            }
+        }
+<span class="fc" id="L223">        IntHashtable hash = null;</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">        if (encoding.equals(BaseFont.WINANSI)) {</span>
+<span class="fc" id="L225">            hash = winansi;</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">        } else if (encoding.equals(PdfObject.TEXT_PDFDOCENCODING)) {</span>
+<span class="nc" id="L227">            hash = pdfEncoding;</span>
+        }
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">        if (hash != null) {</span>
+<span class="fc" id="L230">            int c = 0;</span>
+<span class="pc bpc" id="L231" title="5 of 6 branches missed.">            if (char1 &lt; 128 || char1 &gt; 160 &amp;&amp; char1 &lt;= 255) {</span>
+<span class="fc" id="L232">                c = char1;</span>
+            } else {
+<span class="nc" id="L234">                c = hash.get(char1);</span>
+            }
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">            if (c != 0) {</span>
+<span class="fc" id="L237">                return new byte[]{(byte) c};</span>
+            } else {
+<span class="nc" id="L239">                return new byte[0];</span>
+            }
+        }
+<span class="nc bnc" id="L242" title="All 2 branches missed.">        if (encoding.equals(PdfObject.TEXT_UNICODE)) {</span>
+            // workaround for jdk 1.2.2 bug
+<span class="nc" id="L244">            byte[] b = new byte[4];</span>
+<span class="nc" id="L245">            b[0] = -2;</span>
+<span class="nc" id="L246">            b[1] = -1;</span>
+<span class="nc" id="L247">            b[2] = (byte) (char1 &gt;&gt; 8);</span>
+<span class="nc" id="L248">            b[3] = (byte) (char1 &amp; 0xff);</span>
+<span class="nc" id="L249">            return b;</span>
+        }
+        try {
+<span class="nc" id="L252">            return String.valueOf(char1).getBytes(encoding);</span>
+<span class="nc" id="L253">        } catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L254">            throw new ExceptionConverter(e);</span>
+        }
+    }
+
+    /**
+     * Converts a &lt;CODE&gt;byte&lt;/CODE&gt; array to a &lt;CODE&gt;String&lt;/CODE&gt; according to the some encoding.
+     *
+     * @param bytes    the bytes to convert
+     * @param encoding the encoding
+     * @return the converted &lt;CODE&gt;String&lt;/CODE&gt;
+     */
+    public static final String convertToString(byte[] bytes, String encoding) {
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">        if (bytes == null) {</span>
+<span class="nc" id="L267">            return PdfObject.NOTHING;</span>
+        }
+<span class="pc bpc" id="L269" title="1 of 4 branches missed.">        if (encoding == null || encoding.length() == 0) {</span>
+<span class="fc" id="L270">            char[] c = new char[bytes.length];</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">            for (int k = 0; k &lt; bytes.length; ++k) {</span>
+<span class="fc" id="L272">                c[k] = (char) (bytes[k] &amp; 0xff);</span>
+            }
+<span class="fc" id="L274">            return new String(c);</span>
+        }
+<span class="fc" id="L276">        ExtraEncoding extra = extraEncodings.get(encoding.toLowerCase(Locale.ROOT));</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">        if (extra != null) {</span>
+<span class="nc" id="L278">            String text = extra.byteToChar(bytes, encoding);</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">            if (text != null) {</span>
+<span class="nc" id="L280">                return text;</span>
+            }
+        }
+<span class="fc" id="L283">        char[] ch = null;</span>
+<span class="pc bpc" id="L284" title="1 of 2 branches missed.">        if (encoding.equals(BaseFont.WINANSI)) {</span>
+<span class="fc" id="L285">            ch = winansiByteToChar;</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">        } else if (encoding.equals(PdfObject.TEXT_PDFDOCENCODING)) {</span>
+<span class="nc" id="L287">            ch = pdfEncodingByteToChar;</span>
+        }
+<span class="pc bpc" id="L289" title="1 of 2 branches missed.">        if (ch != null) {</span>
+<span class="fc" id="L290">            int len = bytes.length;</span>
+<span class="fc" id="L291">            char[] c = new char[len];</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">            for (int k = 0; k &lt; len; ++k) {</span>
+<span class="fc" id="L293">                c[k] = ch[bytes[k] &amp; 0xff];</span>
+            }
+<span class="fc" id="L295">            return new String(c);</span>
+        }
+        try {
+<span class="nc" id="L298">            return new String(bytes, encoding);</span>
+<span class="nc" id="L299">        } catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L300">            throw new ExceptionConverter(e);</span>
+        }
+    }
+
+    /**
+     * Checks is &lt;CODE&gt;text&lt;/CODE&gt; only has PdfDocEncoding characters.
+     *
+     * @param text the &lt;CODE&gt;String&lt;/CODE&gt; to test
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if only PdfDocEncoding characters are present
+     */
+    public static boolean isPdfDocEncoding(String text) {
+<span class="nc bnc" id="L311" title="All 2 branches missed.">        if (text == null) {</span>
+<span class="nc" id="L312">            return true;</span>
+        }
+<span class="nc" id="L314">        int len = text.length();</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">        for (int k = 0; k &lt; len; ++k) {</span>
+<span class="nc" id="L316">            char char1 = text.charAt(k);</span>
+<span class="nc bnc" id="L317" title="All 6 branches missed.">            if (char1 &lt; 128 || char1 &gt; 160 &amp;&amp; char1 &lt;= 255) {</span>
+<span class="nc" id="L318">                continue;</span>
+            }
+<span class="nc bnc" id="L320" title="All 2 branches missed.">            if (!pdfEncoding.containsKey(char1)) {</span>
+<span class="nc" id="L321">                return false;</span>
+            }
+        }
+<span class="nc" id="L324">        return true;</span>
+    }
+
+    /**
+     * Adds an extra encoding.
+     *
+     * @param name the name of the encoding. The encoding recognition is case insensitive
+     * @param enc  the conversion class
+     */
+    public static void addExtraEncoding(String name, ExtraEncoding enc) {
+<span class="fc" id="L334">        extraEncodings.putIfAbsent(name.toLowerCase(Locale.ROOT), enc);</span>
+<span class="fc" id="L335">    }</span>
+
+    private static class WingdingsConversion implements ExtraEncoding {
+
+<span class="fc" id="L339">        private final static byte[] table = {0, 35, 34, 0, 0, 0, 41, 62, 81,</span>
+                42, 0, 0, 65, 63, 0, 0, 0, 0, 0, -4, 0, 0, 0, -5, 0, 0, 0, 0,
+                0, 0, 86, 0, 88, 89, 0, 0, 0, 0, 0, 0, 0, 0, -75, 0, 0, 0, 0,
+                0, -74, 0, 0, 0, -83, -81, -84, 0, 0, 0, 0, 0, 0, 0, 0, 124,
+                123, 0, 0, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, -90, 0, 0, 0, 113,
+                114, 0, 0, 0, 117, 0, 0, 0, 0, 0, 0, 125, 126, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -116,
+                -115, -114, -113, -112, -111, -110, -109, -108, -107, -127,
+                -126, -125, -124, -123, -122, -121, -120, -119, -118, -116,
+                -115, -114, -113, -112, -111, -110, -109, -108, -107, -24, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -24, -40, 0, 0, -60, -58, 0,
+                0, -16, 0, 0, 0, 0, 0, 0, 0, 0, 0, -36, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0};
+
+        @Override
+        public byte[] charToByte(char char1, String encoding) {
+<span class="nc bnc" id="L355" title="All 2 branches missed.">            if (char1 == ' ') {</span>
+<span class="nc" id="L356">                return new byte[]{(byte) char1};</span>
+<span class="nc bnc" id="L357" title="All 4 branches missed.">            } else if (char1 &gt;= '\u2701' &amp;&amp; char1 &lt;= '\u27BE') {</span>
+<span class="nc" id="L358">                byte v = table[char1 - 0x2700];</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">                if (v != 0) {</span>
+<span class="nc" id="L360">                    return new byte[]{v};</span>
+                }
+            }
+<span class="nc" id="L363">            return new byte[0];</span>
+        }
+
+        @Override
+        public byte[] charToByte(String text, String encoding) {
+<span class="nc" id="L368">            char[] cc = text.toCharArray();</span>
+<span class="nc" id="L369">            byte[] b = new byte[cc.length];</span>
+<span class="nc" id="L370">            int ptr = 0;</span>
+<span class="nc" id="L371">            int len = cc.length;</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">            for (char c : cc) {</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">                if (c == ' ') {</span>
+<span class="nc" id="L374">                    b[ptr++] = (byte) c;</span>
+<span class="nc bnc" id="L375" title="All 4 branches missed.">                } else if (c &gt;= '\u2701' &amp;&amp; c &lt;= '\u27BE') {</span>
+<span class="nc" id="L376">                    byte v = table[c - 0x2700];</span>
+<span class="nc bnc" id="L377" title="All 2 branches missed.">                    if (v != 0) {</span>
+<span class="nc" id="L378">                        b[ptr++] = v;</span>
+                    }
+                }
+            }
+<span class="nc bnc" id="L382" title="All 2 branches missed.">            if (ptr == len) {</span>
+<span class="nc" id="L383">                return b;</span>
+            }
+<span class="nc" id="L385">            byte[] b2 = new byte[ptr];</span>
+<span class="nc" id="L386">            System.arraycopy(b, 0, b2, 0, ptr);</span>
+<span class="nc" id="L387">            return b2;</span>
+        }
+
+        @Override
+        public String byteToChar(byte[] b, String encoding) {
+<span class="nc" id="L392">            return null;</span>
+        }
+    }
+
+    private static class Cp437Conversion implements ExtraEncoding {
+
+<span class="fc" id="L398">        private final static char[] table = {'\u00C7', '\u00FC', '\u00E9',</span>
+                '\u00E2', '\u00E4', '\u00E0', '\u00E5', '\u00E7', '\u00EA',
+                '\u00EB', '\u00E8', '\u00EF', '\u00EE', '\u00EC', '\u00C4',
+                '\u00C5', '\u00C9', '\u00E6', '\u00C6', '\u00F4', '\u00F6',
+                '\u00F2', '\u00FB', '\u00F9', '\u00FF', '\u00D6', '\u00DC',
+                '\u00A2', '\u00A3', '\u00A5', '\u20A7', '\u0192', '\u00E1',
+                '\u00ED', '\u00F3', '\u00FA', '\u00F1', '\u00D1', '\u00AA',
+                '\u00BA', '\u00BF', '\u2310', '\u00AC', '\u00BD', '\u00BC',
+                '\u00A1', '\u00AB', '\u00BB', '\u2591', '\u2592', '\u2593',
+                '\u2502', '\u2524', '\u2561', '\u2562', '\u2556', '\u2555',
+                '\u2563', '\u2551', '\u2557', '\u255D', '\u255C', '\u255B',
+                '\u2510', '\u2514', '\u2534', '\u252C', '\u251C', '\u2500',
+                '\u253C', '\u255E', '\u255F', '\u255A', '\u2554', '\u2569',
+                '\u2566', '\u2560', '\u2550', '\u256C', '\u2567', '\u2568',
+                '\u2564', '\u2565', '\u2559', '\u2558', '\u2552', '\u2553',
+                '\u256B', '\u256A', '\u2518', '\u250C', '\u2588', '\u2584',
+                '\u258C', '\u2590', '\u2580', '\u03B1', '\u00DF', '\u0393',
+                '\u03C0', '\u03A3', '\u03C3', '\u00B5', '\u03C4', '\u03A6',
+                '\u0398', '\u03A9', '\u03B4', '\u221E', '\u03C6', '\u03B5',
+                '\u2229', '\u2261', '\u00B1', '\u2265', '\u2264', '\u2320',
+                '\u2321', '\u00F7', '\u2248', '\u00B0', '\u2219', '\u00B7',
+                '\u221A', '\u207F', '\u00B2', '\u25A0', '\u00A0'};
+<span class="fc" id="L420">        private static IntHashtable c2b = new IntHashtable();</span>
+
+        static {
+<span class="fc bfc" id="L423" title="All 2 branches covered.">            for (int k = 0; k &lt; table.length; ++k) {</span>
+<span class="fc" id="L424">                c2b.put(table[k], k + 128);</span>
+            }
+<span class="fc" id="L426">        }</span>
+
+        @Override
+        public byte[] charToByte(String text, String encoding) {
+<span class="nc" id="L430">            char[] cc = text.toCharArray();</span>
+<span class="nc" id="L431">            byte[] b = new byte[cc.length];</span>
+<span class="nc" id="L432">            int ptr = 0;</span>
+<span class="nc" id="L433">            int len = cc.length;</span>
+<span class="nc bnc" id="L434" title="All 2 branches missed.">            for (char c : cc) {</span>
+<span class="nc bnc" id="L435" title="All 2 branches missed.">                if (c &lt; 128) {</span>
+<span class="nc" id="L436">                    b[ptr++] = (byte) c;</span>
+                } else {
+<span class="nc" id="L438">                    byte v = (byte) c2b.get(c);</span>
+<span class="nc bnc" id="L439" title="All 2 branches missed.">                    if (v != 0) {</span>
+<span class="nc" id="L440">                        b[ptr++] = v;</span>
+                    }
+                }
+            }
+<span class="nc bnc" id="L444" title="All 2 branches missed.">            if (ptr == len) {</span>
+<span class="nc" id="L445">                return b;</span>
+            }
+<span class="nc" id="L447">            byte[] b2 = new byte[ptr];</span>
+<span class="nc" id="L448">            System.arraycopy(b, 0, b2, 0, ptr);</span>
+<span class="nc" id="L449">            return b2;</span>
+        }
+
+        @Override
+        public byte[] charToByte(char char1, String encoding) {
+<span class="nc bnc" id="L454" title="All 2 branches missed.">            if (char1 &lt; 128) {</span>
+<span class="nc" id="L455">                return new byte[]{(byte) char1};</span>
+            } else {
+<span class="nc" id="L457">                byte v = (byte) c2b.get(char1);</span>
+<span class="nc bnc" id="L458" title="All 2 branches missed.">                if (v != 0) {</span>
+<span class="nc" id="L459">                    return new byte[]{v};</span>
+                } else {
+<span class="nc" id="L461">                    return new byte[0];</span>
+                }
+            }
+        }
+
+        @Override
+        public String byteToChar(byte[] b, String encoding) {
+<span class="nc" id="L468">            int len = b.length;</span>
+<span class="nc" id="L469">            char[] cc = new char[len];</span>
+<span class="nc" id="L470">            int ptr = 0;</span>
+<span class="nc bnc" id="L471" title="All 2 branches missed.">            for (byte b1 : b) {</span>
+<span class="nc" id="L472">                int c = b1 &amp; 0xff;</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">                if (c &lt; ' ') {</span>
+<span class="nc" id="L474">                    continue;</span>
+                }
+<span class="nc bnc" id="L476" title="All 2 branches missed.">                if (c &lt; 128) {</span>
+<span class="nc" id="L477">                    cc[ptr++] = (char) c;</span>
+                } else {
+<span class="nc" id="L479">                    char v = table[c - 128];</span>
+<span class="nc" id="L480">                    cc[ptr++] = v;</span>
+                }
+            }
+<span class="nc" id="L483">            return new String(cc, 0, ptr);</span>
+        }
+    }
+
+    private static class SymbolConversion implements ExtraEncoding {
+
+<span class="fc" id="L489">        private static final IntHashtable t1 = new IntHashtable();</span>
+<span class="fc" id="L490">        private static final IntHashtable t2 = new IntHashtable();</span>
+<span class="fc" id="L491">        private final static char[] table1 = {' ', '!', '\u2200', '#',</span>
+                '\u2203', '%', '&amp;', '\u220b', '(', ')', '*', '+', ',', '-',
+                '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                ':', ';', '&lt;', '=', '&gt;', '?', '\u2245', '\u0391', '\u0392',
+                '\u03a7', '\u0394', '\u0395', '\u03a6', '\u0393', '\u0397',
+                '\u0399', '\u03d1', '\u039a', '\u039b', '\u039c', '\u039d',
+                '\u039f', '\u03a0', '\u0398', '\u03a1', '\u03a3', '\u03a4',
+                '\u03a5', '\u03c2', '\u03a9', '\u039e', '\u03a8', '\u0396',
+                '[', '\u2234', ']', '\u22a5', '_', '\u0305', '\u03b1',
+                '\u03b2', '\u03c7', '\u03b4', '\u03b5', '\u03d5', '\u03b3',
+                '\u03b7', '\u03b9', '\u03c6', '\u03ba', '\u03bb', '\u03bc',
+                '\u03bd', '\u03bf', '\u03c0', '\u03b8', '\u03c1', '\u03c3',
+                '\u03c4', '\u03c5', '\u03d6', '\u03c9', '\u03be', '\u03c8',
+                '\u03b6', '{', '|', '}', '~', '\0', '\0', '\0', '\0', '\0',
+                '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+                '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+                '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\u20ac',
+                '\u03d2', '\u2032', '\u2264', '\u2044', '\u221e', '\u0192',
+                '\u2663', '\u2666', '\u2665', '\u2660', '\u2194', '\u2190',
+                '\u2191', '\u2192', '\u2193', '\u00b0', '\u00b1', '\u2033',
+                '\u2265', '\u00d7', '\u221d', '\u2202', '\u2022', '\u00f7',
+                '\u2260', '\u2261', '\u2248', '\u2026', '\u2502', '\u2500',
+                '\u21b5', '\u2135', '\u2111', '\u211c', '\u2118', '\u2297',
+                '\u2295', '\u2205', '\u2229', '\u222a', '\u2283', '\u2287',
+                '\u2284', '\u2282', '\u2286', '\u2208', '\u2209', '\u2220',
+                '\u2207', '\u00ae', '\u00a9', '\u2122', '\u220f', '\u221a',
+                '\u2022', '\u00ac', '\u2227', '\u2228', '\u21d4', '\u21d0',
+                '\u21d1', '\u21d2', '\u21d3', '\u25ca', '\u2329', '\0', '\0',
+                '\0', '\u2211', '\u239b', '\u239c', '\u239d', '\u23a1',
+                '\u23a2', '\u23a3', '\u23a7', '\u23a8', '\u23a9', '\u23aa',
+                '\0', '\u232a', '\u222b', '\u2320', '\u23ae', '\u2321',
+                '\u239e', '\u239f', '\u23a0', '\u23a4', '\u23a5', '\u23a6',
+                '\u23ab', '\u23ac', '\u23ad', '\0'};
+<span class="fc" id="L524">        private final static char[] table2 = {'\u0020', '\u2701', '\u2702',</span>
+                '\u2703', '\u2704', '\u260e', '\u2706', '\u2707', '\u2708',
+                '\u2709', '\u261b', '\u261e', '\u270C', '\u270D', '\u270E',
+                '\u270F', '\u2710', '\u2711', '\u2712', '\u2713', '\u2714',
+                '\u2715', '\u2716', '\u2717', '\u2718', '\u2719', '\u271A',
+                '\u271B', '\u271C', '\u271D', '\u271E', '\u271F', '\u2720',
+                '\u2721', '\u2722', '\u2723', '\u2724', '\u2725', '\u2726',
+                '\u2727', '\u2605', '\u2729', '\u272A', '\u272B', '\u272C',
+                '\u272D', '\u272E', '\u272F', '\u2730', '\u2731', '\u2732',
+                '\u2733', '\u2734', '\u2735', '\u2736', '\u2737', '\u2738',
+                '\u2739', '\u273A', '\u273B', '\u273C', '\u273D', '\u273E',
+                '\u273F', '\u2740', '\u2741', '\u2742', '\u2743', '\u2744',
+                '\u2745', '\u2746', '\u2747', '\u2748', '\u2749', '\u274A',
+                '\u274B', '\u25cf', '\u274D', '\u25a0', '\u274F', '\u2750',
+                '\u2751', '\u2752', '\u25b2', '\u25bc', '\u25c6', '\u2756',
+                '\u25d7', '\u2758', '\u2759', '\u275A', '\u275B', '\u275C',
+                '\u275D', '\u275E', '\u0000', '\0', '\0', '\0', '\0', '\0',
+                '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+                '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0',
+                '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\u0000', '\u2761',
+                '\u2762', '\u2763', '\u2764', '\u2765', '\u2766', '\u2767',
+                '\u2663', '\u2666', '\u2665', '\u2660', '\u2460', '\u2461',
+                '\u2462', '\u2463', '\u2464', '\u2465', '\u2466', '\u2467',
+                '\u2468', '\u2469', '\u2776', '\u2777', '\u2778', '\u2779',
+                '\u277A', '\u277B', '\u277C', '\u277D', '\u277E', '\u277F',
+                '\u2780', '\u2781', '\u2782', '\u2783', '\u2784', '\u2785',
+                '\u2786', '\u2787', '\u2788', '\u2789', '\u278A', '\u278B',
+                '\u278C', '\u278D', '\u278E', '\u278F', '\u2790', '\u2791',
+                '\u2792', '\u2793', '\u2794', '\u2192', '\u2194', '\u2195',
+                '\u2798', '\u2799', '\u279A', '\u279B', '\u279C', '\u279D',
+                '\u279E', '\u279F', '\u27A0', '\u27A1', '\u27A2', '\u27A3',
+                '\u27A4', '\u27A5', '\u27A6', '\u27A7', '\u27A8', '\u27A9',
+                '\u27AA', '\u27AB', '\u27AC', '\u27AD', '\u27AE', '\u27AF',
+                '\u0000', '\u27B1', '\u27B2', '\u27B3', '\u27B4', '\u27B5',
+                '\u27B6', '\u27B7', '\u27B8', '\u27B9', '\u27BA', '\u27BB',
+                '\u27BC', '\u27BD', '\u27BE', '\u0000'};
+
+        static {
+<span class="fc bfc" id="L562" title="All 2 branches covered.">            for (int k = 0; k &lt; table1.length; ++k) {</span>
+<span class="fc" id="L563">                int v = table1[k];</span>
+<span class="fc bfc" id="L564" title="All 2 branches covered.">                if (v != 0) {</span>
+<span class="fc" id="L565">                    t1.put(v, k + 32);</span>
+                }
+            }
+<span class="fc bfc" id="L568" title="All 2 branches covered.">            for (int k = 0; k &lt; table2.length; ++k) {</span>
+<span class="fc" id="L569">                int v = table2[k];</span>
+<span class="fc bfc" id="L570" title="All 2 branches covered.">                if (v != 0) {</span>
+<span class="fc" id="L571">                    t2.put(v, k + 32);</span>
+                }
+            }
+<span class="fc" id="L574">        }</span>
+
+        private IntHashtable translation;
+        private char[] revTranslation;
+
+<span class="fc" id="L579">        SymbolConversion(boolean symbol) {</span>
+<span class="fc bfc" id="L580" title="All 2 branches covered.">            if (symbol) {</span>
+<span class="fc" id="L581">                translation = t1;</span>
+<span class="fc" id="L582">                revTranslation = table1;</span>
+            } else {
+<span class="fc" id="L584">                translation = t2;</span>
+<span class="fc" id="L585">                revTranslation = table2;</span>
+            }
+<span class="fc" id="L587">        }</span>
+
+        @Override
+        public byte[] charToByte(String text, String encoding) {
+<span class="nc" id="L591">            char[] cc = text.toCharArray();</span>
+<span class="nc" id="L592">            byte[] b = new byte[cc.length];</span>
+<span class="nc" id="L593">            int ptr = 0;</span>
+<span class="nc" id="L594">            int len = cc.length;</span>
+<span class="nc bnc" id="L595" title="All 2 branches missed.">            for (char c : cc) {</span>
+<span class="nc" id="L596">                byte v = (byte) translation.get(c);</span>
+<span class="nc bnc" id="L597" title="All 2 branches missed.">                if (v != 0) {</span>
+<span class="nc" id="L598">                    b[ptr++] = v;</span>
+                }
+            }
+<span class="nc bnc" id="L601" title="All 2 branches missed.">            if (ptr == len) {</span>
+<span class="nc" id="L602">                return b;</span>
+            }
+<span class="nc" id="L604">            byte[] b2 = new byte[ptr];</span>
+<span class="nc" id="L605">            System.arraycopy(b, 0, b2, 0, ptr);</span>
+<span class="nc" id="L606">            return b2;</span>
+        }
+
+        @Override
+        public byte[] charToByte(char char1, String encoding) {
+<span class="nc" id="L611">            byte v = (byte) translation.get(char1);</span>
+<span class="nc bnc" id="L612" title="All 2 branches missed.">            if (v != 0) {</span>
+<span class="nc" id="L613">                return new byte[]{v};</span>
+            } else {
+<span class="nc" id="L615">                return new byte[0];</span>
+            }
+        }
+
+        @Override
+        public String byteToChar(byte[] b, String encoding) {
+<span class="nc" id="L621">            int len = b.length;</span>
+<span class="nc" id="L622">            char[] chars = new char[len];</span>
+<span class="nc bnc" id="L623" title="All 2 branches missed.">            for (int i = 0; i &lt; len; i++) {</span>
+<span class="nc" id="L624">                int pos = b[i] &amp; 0xff;</span>
+<span class="nc bnc" id="L625" title="All 2 branches missed.">                if (pos &lt; 32) {</span>
+<span class="nc" id="L626">                    chars[i] = 0;</span>
+                } else {
+<span class="nc" id="L628">                    chars[i] = revTranslation[pos - 32];</span>
+                }
+            }
+<span class="nc" id="L631">            return new String(chars);</span>
+        }
+    }
+
+    private static class SymbolTTConversion implements ExtraEncoding {
+
+        @Override
+        public byte[] charToByte(char char1, String encoding) {
+<span class="nc bnc" id="L639" title="All 4 branches missed.">            if ((char1 &amp; 0xff00) == 0 || (char1 &amp; 0xff00) == 0xf000) {</span>
+<span class="nc" id="L640">                return new byte[]{(byte) char1};</span>
+            } else {
+<span class="nc" id="L642">                return new byte[0];</span>
+            }
+        }
+
+        @Override
+        public byte[] charToByte(String text, String encoding) {
+<span class="nc" id="L648">            char[] ch = text.toCharArray();</span>
+<span class="nc" id="L649">            byte[] b = new byte[ch.length];</span>
+<span class="nc" id="L650">            int ptr = 0;</span>
+<span class="nc" id="L651">            int len = ch.length;</span>
+<span class="nc bnc" id="L652" title="All 2 branches missed.">            for (char c : ch) {</span>
+<span class="nc bnc" id="L653" title="All 4 branches missed.">                if ((c &amp; 0xff00) == 0 || (c &amp; 0xff00) == 0xf000) {</span>
+<span class="nc" id="L654">                    b[ptr++] = (byte) c;</span>
+                }
+            }
+<span class="nc bnc" id="L657" title="All 2 branches missed.">            if (ptr == len) {</span>
+<span class="nc" id="L658">                return b;</span>
+            }
+<span class="nc" id="L660">            byte[] b2 = new byte[ptr];</span>
+<span class="nc" id="L661">            System.arraycopy(b, 0, b2, 0, ptr);</span>
+<span class="nc" id="L662">            return b2;</span>
+        }
+
+        @Override
+        public String byteToChar(byte[] b, String encoding) {
+<span class="nc" id="L667">            return null;</span>
+        }
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

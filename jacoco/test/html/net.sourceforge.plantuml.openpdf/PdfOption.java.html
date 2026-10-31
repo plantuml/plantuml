@@ -47,78 +47,93 @@ import net.sourceforge.plantuml.klimt.color.HColor;
  */
 public class PdfOption {
 
-<span class="nc" id="L50">	private double scale = 1.0;</span>
+<span class="fc" id="L50">	private double scale = 1.0;</span>
 	private String title;
 	private String author;
 	private String subject;
 	private HColor backgroundColor;
-<span class="nc" id="L55">	private double minWidth = 10;</span>
-<span class="nc" id="L56">	private double minHeight = 10;</span>
+<span class="fc" id="L55">	private double minWidth = 10;</span>
+<span class="fc" id="L56">	private double minHeight = 10;</span>
+<span class="fc" id="L57">	private boolean deterministic = false;</span>
 
-<span class="nc" id="L58">	public PdfOption() {</span>
-<span class="nc" id="L59">	}</span>
+<span class="fc" id="L59">	public PdfOption() {</span>
+<span class="fc" id="L60">	}</span>
 
 	public double getScale() {
-<span class="nc" id="L62">		return scale;</span>
+<span class="fc" id="L63">		return scale;</span>
 	}
 
 	public PdfOption withScale(double scale) {
-<span class="nc" id="L66">		this.scale = scale;</span>
-<span class="nc" id="L67">		return this;</span>
+<span class="nc" id="L67">		this.scale = scale;</span>
+<span class="nc" id="L68">		return this;</span>
 	}
 
 	public String getTitle() {
-<span class="nc" id="L71">		return title;</span>
+<span class="fc" id="L72">		return title;</span>
 	}
 
 	public PdfOption withTitle(String title) {
-<span class="nc" id="L75">		this.title = title;</span>
-<span class="nc" id="L76">		return this;</span>
+<span class="nc" id="L76">		this.title = title;</span>
+<span class="nc" id="L77">		return this;</span>
 	}
 
 	public String getAuthor() {
-<span class="nc" id="L80">		return author;</span>
+<span class="fc" id="L81">		return author;</span>
 	}
 
 	public PdfOption withAuthor(String author) {
-<span class="nc" id="L84">		this.author = author;</span>
-<span class="nc" id="L85">		return this;</span>
+<span class="nc" id="L85">		this.author = author;</span>
+<span class="nc" id="L86">		return this;</span>
 	}
 
 	public String getSubject() {
-<span class="nc" id="L89">		return subject;</span>
+<span class="fc" id="L90">		return subject;</span>
 	}
 
 	public PdfOption withSubject(String subject) {
-<span class="nc" id="L93">		this.subject = subject;</span>
-<span class="nc" id="L94">		return this;</span>
+<span class="nc" id="L94">		this.subject = subject;</span>
+<span class="nc" id="L95">		return this;</span>
 	}
 
 	public HColor getBackgroundColor() {
-<span class="nc" id="L98">		return backgroundColor;</span>
+<span class="fc" id="L99">		return backgroundColor;</span>
 	}
 
 	public PdfOption withBackgroundColor(HColor backgroundColor) {
-<span class="nc" id="L102">		this.backgroundColor = backgroundColor;</span>
-<span class="nc" id="L103">		return this;</span>
+<span class="fc" id="L103">		this.backgroundColor = backgroundColor;</span>
+<span class="fc" id="L104">		return this;</span>
 	}
 
 	public double getMinWidth() {
-<span class="nc" id="L107">		return minWidth;</span>
+<span class="fc" id="L108">		return minWidth;</span>
 	}
 
 	public double getMinHeight() {
-<span class="nc" id="L111">		return minHeight;</span>
+<span class="fc" id="L112">		return minHeight;</span>
 	}
 
 	public PdfOption withMinDimension(double width, double height) {
-<span class="nc" id="L115">		this.minWidth = width;</span>
-<span class="nc" id="L116">		this.minHeight = height;</span>
-<span class="nc" id="L117">		return this;</span>
+<span class="nc" id="L116">		this.minWidth = width;</span>
+<span class="nc" id="L117">		this.minHeight = height;</span>
+<span class="nc" id="L118">		return this;</span>
+	}
+
+	public boolean isDeterministic() {
+<span class="fc" id="L122">		return deterministic;</span>
+	}
+
+	/**
+	 * Reproducible output: fixed dates, file identifier and producer, and no
+	 * compression, so that the same diagram gives the same bytes everywhere (used by
+	 * the Vega tests).
+	 */
+	public PdfOption withDeterministic(boolean deterministic) {
+<span class="fc" id="L131">		this.deterministic = deterministic;</span>
+<span class="fc" id="L132">		return this;</span>
 	}
 
 	public ColorMapper getColorMapper() {
-<span class="nc" id="L121">		return ColorMapper.IDENTITY;</span>
+<span class="fc" id="L136">		return ColorMapper.IDENTITY;</span>
 	}
 
 }

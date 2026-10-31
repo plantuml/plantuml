@@ -42,14 +42,14 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.geom.XLine2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 
-<span class="nc" id="L45">public class DriverLinePdf implements UDriver&lt;ULine, PdfGraphics&gt; {</span>
+<span class="fc" id="L45">public class DriverLinePdf implements UDriver&lt;ULine, PdfGraphics&gt; {</span>
 
 	public void draw(ULine shape, double x, double y, ColorMapper mapper, UParam param, PdfGraphics pdf) {
-<span class="nc" id="L48">		double x2 = x + shape.getDX();</span>
-<span class="nc" id="L49">		double y2 = y + shape.getDY();</span>
+<span class="fc" id="L48">		double x2 = x + shape.getDX();</span>
+<span class="fc" id="L49">		double y2 = y + shape.getDY();</span>
 
-<span class="nc" id="L51">		final UClip clip = param.getClip();</span>
-<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (clip != null) {</span>
+<span class="fc" id="L51">		final UClip clip = param.getClip();</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (clip != null) {</span>
 <span class="nc" id="L53">			final XLine2D line = clip.getClippedLine(new XLine2D(x, y, x2, y2));</span>
 <span class="nc bnc" id="L54" title="All 2 branches missed.">			if (line == null) {</span>
 <span class="nc" id="L55">				return;</span>
@@ -60,15 +60,15 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 <span class="nc" id="L60">			y2 = line.y2;</span>
 		}
 
-<span class="nc" id="L63">		final HColor color = param.getColor();</span>
+<span class="fc" id="L63">		final HColor color = param.getColor();</span>
 //		if (color instanceof HColorGradient) {
 //			final HColorGradient gr = (HColorGradient) color;
 //			svg.setStrokeColor(gr.getColor1().toSvg(mapper));
 //		} else {
-<span class="nc" id="L68">		pdf.setStrokeColor(color.toColor(mapper).toAwtColor());</span>
+<span class="fc" id="L68">		pdf.setStrokeColor(color.toColor(mapper).toAwtColor());</span>
 //		}
-<span class="nc" id="L70">		pdf.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
-<span class="nc" id="L71">		pdf.pdfLine(x, y, x2, y2);</span>
-<span class="nc" id="L72">	}</span>
+<span class="fc" id="L70">		pdf.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());</span>
+<span class="fc" id="L71">		pdf.pdfLine(x, y, x2, y2);</span>
+<span class="fc" id="L72">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

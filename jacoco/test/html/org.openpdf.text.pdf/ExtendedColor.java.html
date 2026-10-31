@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtendedColor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">ExtendedColor.java</span></div><h1>ExtendedColor.java</h1><pre class="source lang-java linenums">/*
+ * $Id: ExtendedColor.java 3373 2008-05-12 16:21:24Z xlv $
+ *
+ * Copyright 2001, 2002 by Paulo Soares.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import java.awt.Color;
+
+/**
+ * @author Paulo Soares (psoares@consiste.pt)
+ */
+public abstract class ExtendedColor extends Color {
+
+    /**
+     * a type of extended color.
+     */
+    public static final int TYPE_RGB = 0;
+    /**
+     * a type of extended color.
+     */
+    public static final int TYPE_GRAY = 1;
+    /**
+     * a type of extended color.
+     */
+    public static final int TYPE_PATTERN = 4;
+    /**
+     * the max int color value (255) expressed in int
+     */
+    public static final int MAX_COLOR_VALUE = 0xFF;
+    /**
+     * the max int color value (255) expressed in float
+     */
+    public static final float MAX_INT_COLOR_VALUE = 0xFF;
+    /**
+     * the max float color value (1) expressed in float
+     */
+    public static final float MAX_FLOAT_COLOR_VALUE = 0x1;
+    private static final long serialVersionUID = 2722660170712380080L;
+    protected int type;
+
+    /**
+     * Constructs an extended color of a certain type and a certain color.
+     *
+     * @param type  {@link ExtendedColor#type}
+     * @param red   red quotient
+     * @param green green quotient
+     * @param blue  blue quotient
+     * @param alpha alpha quotient
+     */
+    public ExtendedColor(int type, float red, float green, float blue, float alpha) {
+<span class="fc" id="L96">        super(normalize(red), normalize(green), normalize(blue), normalize(alpha));</span>
+<span class="fc" id="L97">        this.type = type;</span>
+<span class="fc" id="L98">    }</span>
+
+    /**
+     * Gets the type of a given color.
+     *
+     * @param color an object of {@link Color}
+     * @return one of the types (see constants)
+     */
+    public static int getType(Color color) {
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (color instanceof ExtendedColor) {</span>
+<span class="nc" id="L108">            return ((ExtendedColor) color).getType();</span>
+        }
+<span class="fc" id="L110">        return TYPE_RGB;</span>
+    }
+
+    static final float normalize(float value) {
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">        if (value &lt; 0f) {</span>
+<span class="nc" id="L115">            return 0f;</span>
+        }
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (value &gt; MAX_FLOAT_COLOR_VALUE) {</span>
+<span class="nc" id="L118">            return MAX_FLOAT_COLOR_VALUE;</span>
+        }
+<span class="fc" id="L120">        return value;</span>
+    }
+
+    static final int normalize(int value) {
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if (value &lt; 0) {</span>
+<span class="nc" id="L125">            return 0;</span>
+        }
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (value &gt; (int) MAX_INT_COLOR_VALUE) {</span>
+<span class="nc" id="L128">            return (int) MAX_INT_COLOR_VALUE;</span>
+        }
+<span class="fc" id="L130">        return value;</span>
+    }
+
+    /**
+     * Gets the type of this color.
+     *
+     * @return one of the types (see constants)
+     */
+    public int getType() {
+<span class="nc" id="L139">        return type;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IntHashtable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">IntHashtable.java</span></div><h1>IntHashtable.java</h1><pre class="source lang-java linenums">/*
+ * This class is based on org.apache.IntHashMap.commons.lang
+ * http://jakarta.apache.org/commons/lang/xref/org/apache/commons/lang/IntHashMap.html
+ * It was adapted by Bruno Lowagie for use in iText,
+ * reusing methods that were written by Paulo Soares.
+ * Instead of being a hashtable that stores objects with an int as key,
+ * it stores int values with an int as key.
+ *
+ * This is the original license of the original class IntHashMap:
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Note: originally released under the GNU LGPL v2.1,
+ * but rereleased by the original author under the ASF license (above).
+ */
+
+package org.openpdf.text.pdf;
+
+import org.openpdf.text.error_messages.MessageLocalization;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+/***
+ * &lt;p&gt;A hash map that uses primitive ints for the key rather than objects.&lt;/p&gt;
+ *
+ * &lt;p&gt;Note that this class is for internal optimization purposes only, and may
+ * not be supported in future releases of Jakarta Commons Lang.  Utilities of
+ * this sort may be included in future releases of Jakarta Commons Collections.&lt;/p&gt;
+ *
+ * @author Justin Couch
+ * @author Alex Chaffee (alex@apache.org)
+ * @author Stephen Colebourne
+ * @author Bruno Lowagie (change Objects as keys into int values)
+ * @author Paulo Soares (added extra methods)
+ */
+public class IntHashtable implements Cloneable {
+
+    /***
+     * The hash table data.
+     */
+    private transient Entry[] table;
+
+    /***
+     * The total number of entries in the hash table.
+     */
+    private transient int count;
+
+    /***
+     * The table is rehashed when its size exceeds this threshold.  (The
+     * value of this field is (int)(capacity * loadFactor).)
+     *
+     * @serial
+     */
+    private int threshold;
+
+    /***
+     * The load factor for the hashtable.
+     *
+     * @serial
+     */
+    private final float loadFactor;
+
+    /***
+     * &lt;p&gt;Constructs a new, empty hashtable with a default capacity and load
+     * factor, which is &lt;code&gt;20&lt;/code&gt; and &lt;code&gt;0.75&lt;/code&gt; respectively.&lt;/p&gt;
+     */
+    public IntHashtable() {
+<span class="fc" id="L81">        this(150, 0.75f);</span>
+<span class="fc" id="L82">    }</span>
+
+    /***
+     * &lt;p&gt;Constructs a new, empty hashtable with the specified initial
+     * capacity and the specified load factor.&lt;/p&gt;
+     *
+     * @param initialCapacity the initial capacity of the hashtable.
+     * @param loadFactor the load factor of the hashtable.
+     * @throws IllegalArgumentException  if the initial capacity is less
+     *             than zero, or if the load factor is nonpositive.
+     */
+    public IntHashtable(int initialCapacity, float loadFactor) {
+<span class="fc" id="L94">        super();</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (initialCapacity &lt; 0) {</span>
+<span class="nc" id="L96">            throw new IllegalArgumentException(</span>
+<span class="nc" id="L97">                    MessageLocalization.getComposedMessage(&quot;illegal.capacity.1&quot;, initialCapacity));</span>
+        }
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (loadFactor &lt;= 0) {</span>
+<span class="nc" id="L100">            throw new IllegalArgumentException(</span>
+<span class="nc" id="L101">                    MessageLocalization.getComposedMessage(&quot;illegal.load.1&quot;, String.valueOf(loadFactor)));</span>
+        }
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        if (initialCapacity == 0) {</span>
+<span class="nc" id="L104">            initialCapacity = 1;</span>
+        }
+<span class="fc" id="L106">        this.loadFactor = loadFactor;</span>
+<span class="fc" id="L107">        table = new Entry[initialCapacity];</span>
+<span class="fc" id="L108">        threshold = (int) (initialCapacity * loadFactor);</span>
+<span class="fc" id="L109">    }</span>
+
+    /***
+     * &lt;p&gt;Tests if this hashtable maps no keys to values.&lt;/p&gt;
+     *
+     * @return  &lt;code&gt;true&lt;/code&gt; if this hashtable maps no keys to values;
+     *          &lt;code&gt;false&lt;/code&gt; otherwise.
+     */
+    public boolean isEmpty() {
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        return count == 0;</span>
+    }
+
+    /***
+     * &lt;p&gt;Tests if the specified int is a key in this hashtable.&lt;/p&gt;
+     *
+     * @param  key  possible key.
+     * @return &lt;code&gt;true&lt;/code&gt; if and only if the specified int is a
+     *    key in this hashtable, as determined by the &lt;code&gt;equals&lt;/code&gt;
+     *    method; &lt;code&gt;false&lt;/code&gt; otherwise.
+     */
+    public boolean containsKey(int key) {
+<span class="nc" id="L130">        Entry[] tab = table;</span>
+<span class="nc" id="L131">        int hash = key;</span>
+<span class="nc" id="L132">        int index = (hash &amp; 0x7FFFFFFF) % tab.length;</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        for (Entry e = tab[index]; e != null; e = e.next) {</span>
+<span class="nc bnc" id="L134" title="All 4 branches missed.">            if (e.hash == hash &amp;&amp; e.key == key) {</span>
+<span class="nc" id="L135">                return true;</span>
+            }
+        }
+<span class="nc" id="L138">        return false;</span>
+    }
+
+    /***
+     * &lt;p&gt;Returns the value to which the specified key is mapped in this map.&lt;/p&gt;
+     *
+     * @param   key   a key in the hashtable.
+     * @return the value to which the key is mapped in this hashtable;
+     *          &lt;code&gt;null&lt;/code&gt; if the key is not mapped to any value in
+     *          this hashtable.
+     * @see     #put(int, int)
+     */
+    public int get(int key) {
+<span class="nc" id="L151">        Entry[] tab = table;</span>
+<span class="nc" id="L152">        int hash = key;</span>
+<span class="nc" id="L153">        int index = (hash &amp; 0x7FFFFFFF) % tab.length;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">        for (Entry e = tab[index]; e != null; e = e.next) {</span>
+<span class="nc bnc" id="L155" title="All 4 branches missed.">            if (e.hash == hash &amp;&amp; e.key == key) {</span>
+<span class="nc" id="L156">                return e.value;</span>
+            }
+        }
+<span class="nc" id="L159">        return 0;</span>
+    }
+
+    /***
+     * &lt;p&gt;Increases the capacity of and internally reorganizes this
+     * hashtable, in order to accommodate and access its entries more
+     * efficiently.&lt;/p&gt;
+     *
+     * &lt;p&gt;This method is called automatically when the number of keys
+     * in the hashtable exceeds this hashtable's capacity and load
+     * factor.&lt;/p&gt;
+     */
+    protected void rehash() {
+<span class="fc" id="L172">        int oldCapacity = table.length;</span>
+<span class="fc" id="L173">        Entry[] oldMap = table;</span>
+
+<span class="fc" id="L175">        int newCapacity = oldCapacity * 2 + 1;</span>
+<span class="fc" id="L176">        Entry[] newMap = new Entry[newCapacity];</span>
+
+<span class="fc" id="L178">        threshold = (int) (newCapacity * loadFactor);</span>
+<span class="fc" id="L179">        table = newMap;</span>
+
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        for (int i = oldCapacity; i-- &gt; 0; ) {</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">            for (Entry old = oldMap[i]; old != null; ) {</span>
+<span class="fc" id="L183">                Entry e = old;</span>
+<span class="fc" id="L184">                old = old.next;</span>
+
+<span class="fc" id="L186">                int index = (e.hash &amp; 0x7FFFFFFF) % newCapacity;</span>
+<span class="fc" id="L187">                e.next = newMap[index];</span>
+<span class="fc" id="L188">                newMap[index] = e;</span>
+<span class="fc" id="L189">            }</span>
+        }
+<span class="fc" id="L191">    }</span>
+
+    /***
+     * &lt;p&gt;Maps the specified &lt;code&gt;key&lt;/code&gt; to the specified
+     * &lt;code&gt;value&lt;/code&gt; in this hashtable. The key cannot be
+     * &lt;code&gt;null&lt;/code&gt;. &lt;/p&gt;
+     *
+     * &lt;p&gt;The value can be retrieved by calling the &lt;code&gt;get&lt;/code&gt; method
+     * with a key that is equal to the original key.&lt;/p&gt;
+     *
+     * @param key     the hashtable key.
+     * @param value   the value.
+     * @return the previous value of the specified key in this hashtable,
+     *         or &lt;code&gt;null&lt;/code&gt; if it did not have one.
+     * @throws NullPointerException  if the key is &lt;code&gt;null&lt;/code&gt;.
+     * @see     #get(int)
+     */
+    public int put(int key, int value) {
+        // Makes sure the key is not already in the hashtable.
+<span class="fc" id="L210">        Entry[] tab = table;</span>
+<span class="fc" id="L211">        int hash = key;</span>
+<span class="fc" id="L212">        int index = (hash &amp; 0x7FFFFFFF) % tab.length;</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">        for (Entry e = tab[index]; e != null; e = e.next) {</span>
+<span class="pc bpc" id="L214" title="1 of 4 branches missed.">            if (e.hash == hash &amp;&amp; e.key == key) {</span>
+<span class="fc" id="L215">                int old = e.value;</span>
+<span class="fc" id="L216">                e.value = value;</span>
+<span class="fc" id="L217">                return old;</span>
+            }
+        }
+
+<span class="fc bfc" id="L221" title="All 2 branches covered.">        if (count &gt;= threshold) {</span>
+            // Rehash the table if the threshold is exceeded
+<span class="fc" id="L223">            rehash();</span>
+
+<span class="fc" id="L225">            tab = table;</span>
+<span class="fc" id="L226">            index = (hash &amp; 0x7FFFFFFF) % tab.length;</span>
+        }
+
+        // Creates the new entry.
+<span class="fc" id="L230">        Entry e = new Entry(hash, key, value, tab[index]);</span>
+<span class="fc" id="L231">        tab[index] = e;</span>
+<span class="fc" id="L232">        count++;</span>
+<span class="fc" id="L233">        return 0;</span>
+    }
+
+// extra methods by Paulo Soares:
+
+    public Object clone() {
+        try {
+<span class="nc" id="L240">            IntHashtable t = (IntHashtable) super.clone();</span>
+<span class="nc" id="L241">            t.table = new Entry[table.length];</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">            for (int i = table.length; i-- &gt; 0; ) {</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">                t.table[i] = (table[i] != null)</span>
+<span class="nc" id="L244">                        ? (Entry) table[i].clone() : null;</span>
+            }
+<span class="nc" id="L246">            return t;</span>
+<span class="nc" id="L247">        } catch (CloneNotSupportedException e) {</span>
+            // this shouldn't happen, since we are Cloneable
+<span class="nc" id="L249">            throw new InternalError();</span>
+        }
+    }
+
+    /***
+     * &lt;p&gt;Innerclass that acts as a datastructure to create a new entry in the
+     * table.&lt;/p&gt;
+     */
+    static class Entry {
+
+        int hash;
+        int key;
+        int value;
+        Entry next;
+
+        /***
+         * &lt;p&gt;Create a new entry with the given values.&lt;/p&gt;
+         *
+         * @param hash The code used to hash the int with
+         * @param key The key used to enter this in the table
+         * @param value The value for this key
+         * @param next A reference to the next entry in the table
+         */
+<span class="fc" id="L272">        protected Entry(int hash, int key, int value, Entry next) {</span>
+<span class="fc" id="L273">            this.hash = hash;</span>
+<span class="fc" id="L274">            this.key = key;</span>
+<span class="fc" id="L275">            this.value = value;</span>
+<span class="fc" id="L276">            this.next = next;</span>
+<span class="fc" id="L277">        }</span>
+
+        protected Object clone() {
+<span class="nc bnc" id="L280" title="All 2 branches missed.">            Entry entry = new Entry(hash, key, value, (next != null) ? (Entry) next.clone() : null);</span>
+<span class="nc" id="L281">            return entry;</span>
+        }
+    }
+
+    // extra inner class by Paulo
+<span class="nc" id="L286">    static class IntHashtableIterator implements Iterator {</span>
+
+        int index;
+        Entry[] table;
+        Entry entry;
+
+        public boolean hasNext() {
+<span class="nc bnc" id="L293" title="All 2 branches missed.">            if (entry != null) {</span>
+<span class="nc" id="L294">                return true;</span>
+            }
+<span class="nc bnc" id="L296" title="All 2 branches missed.">            while (index-- &gt; 0) {</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">                if ((entry = table[index]) != null) {</span>
+<span class="nc" id="L298">                    return true;</span>
+                }
+            }
+<span class="nc" id="L301">            return false;</span>
+        }
+
+        public Object next() {
+<span class="nc bnc" id="L305" title="All 2 branches missed.">            if (entry == null) {</span>
+<span class="nc bnc" id="L306" title="All 4 branches missed.">                while ((index-- &gt; 0) &amp;&amp; ((entry = table[index]) == null)) {</span>
+                    // searching
+                }
+            }
+<span class="nc bnc" id="L310" title="All 2 branches missed.">            if (entry != null) {</span>
+<span class="nc" id="L311">                Entry e = entry;</span>
+<span class="nc" id="L312">                entry = e.next;</span>
+<span class="nc" id="L313">                return e;</span>
+            }
+<span class="nc" id="L315">            throw new NoSuchElementException(MessageLocalization.getComposedMessage(&quot;inthashtableiterator&quot;));</span>
+        }
+
+        public void remove() {
+<span class="nc" id="L319">            throw new UnsupportedOperationException(MessageLocalization.getComposedMessage(&quot;remove.not.supported&quot;));</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfPage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfPage.java</span></div><h1>PdfPage.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfPage.java 3373 2008-05-12 16:21:24Z xlv $
+ *
+ * Copyright 1999, 2000, 2001, 2002 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import java.util.HashMap;
+
+/**
+ * &lt;CODE&gt;PdfPage&lt;/CODE&gt; is the PDF Page-object.
+ * &lt;p&gt;
+ * A Page object is a dictionary whose keys describe a single page containing text, graphics, and images. A Page object
+ * is a leaf of the Pages tree.&lt;BR&gt; This object is described in the 'Portable Document Format Reference Manual version
+ * 1.3' section 6.4 (page 73-81)
+ *
+ * @see PdfPages
+ */
+
+public class PdfPage extends PdfDictionary {
+
+<span class="fc" id="L66">    private static final String[] boxStrings = {&quot;crop&quot;, &quot;trim&quot;, &quot;art&quot;, &quot;bleed&quot;};</span>
+<span class="fc" id="L67">    private static final PdfName[] boxNames = {PdfName.CROPBOX, PdfName.TRIMBOX, PdfName.ARTBOX, PdfName.BLEEDBOX};</span>
+    /**
+     * value of the &lt;B&gt;MediaBox&lt;/B&gt; key
+     */
+    PdfRectangle mediaBox;
+
+    // constructors
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfPage&lt;/CODE&gt;.
+     *
+     * @param mediaBox  a value for the &lt;B&gt;MediaBox&lt;/B&gt; key
+     * @param resources an indirect reference to a &lt;CODE&gt;PdfResources&lt;/CODE&gt;-object
+     * @param rotate    a value for the &lt;B&gt;Rotate&lt;/B&gt; key
+     */
+
+    PdfPage(PdfRectangle mediaBox, HashMap&lt;String, ? extends PdfObject&gt; boxSize, PdfDictionary resources, int rotate) {
+<span class="fc" id="L84">        super(PAGE);</span>
+<span class="fc" id="L85">        this.mediaBox = mediaBox;</span>
+<span class="fc" id="L86">        put(PdfName.MEDIABOX, mediaBox);</span>
+<span class="fc" id="L87">        put(PdfName.RESOURCES, resources);</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        if (rotate != 0) {</span>
+<span class="nc" id="L89">            put(PdfName.ROTATE, new PdfNumber(rotate));</span>
+        }
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (int k = 0; k &lt; boxStrings.length; ++k) {</span>
+<span class="fc" id="L92">            PdfObject rect = boxSize.get(boxStrings[k]);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">            if (rect != null) {</span>
+<span class="nc" id="L94">                put(boxNames[k], rect);</span>
+            }
+        }
+<span class="fc" id="L97">    }</span>
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfPage&lt;/CODE&gt;.
+     *
+     * @param mediaBox  a value for the &lt;B&gt;MediaBox&lt;/B&gt; key
+     * @param resources an indirect reference to a &lt;CODE&gt;PdfResources&lt;/CODE&gt;-object
+     */
+
+    /**
+     * Checks if this page element is a tree of pages.
+     * &lt;p&gt;
+     * This method always returns &lt;CODE&gt;false&lt;/CODE&gt;.
+     *
+     * @return &lt;CODE&gt;false&lt;/CODE&gt; because this is a single page
+     */
+
+    // methods
+
+    /**
+     * Adds an indirect reference pointing to a &lt;CODE&gt;PdfContents&lt;/CODE&gt;-object.
+     *
+     * @param contents an indirect reference to a &lt;CODE&gt;PdfContents&lt;/CODE&gt;-object
+     */
+
+    void add(PdfIndirectReference contents) {
+<span class="fc" id="L123">        put(PdfName.CONTENTS, contents);</span>
+<span class="fc" id="L124">    }</span>
+
+    /**
+     * Rotates the mediabox, but not the text in it.
+     *
+     * @return a &lt;CODE&gt;PdfRectangle&lt;/CODE&gt;
+     */
+
+    /**
+     * Returns the MediaBox of this Page.
+     *
+     * @return a &lt;CODE&gt;PdfRectangle&lt;/CODE&gt;
+     */
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

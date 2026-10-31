@@ -232,6 +232,13 @@ net.sourceforge.plantuml.xmlsc
 net.sourceforge.plantuml.yaml
 net.sourceforge.plantuml.yaml.parser
 net.sourceforge.plantuml.zopfli
+org.openpdf.text
+org.openpdf.text.error_messages
+org.openpdf.text.exceptions
+org.openpdf.text.pdf
+org.openpdf.text.pdf.fonts
+org.openpdf.text.pdf.interfaces
+org.openpdf.text.pdf.internal
 org.stathissideris.ascii2image.core
 org.stathissideris.ascii2image.graphics
 org.stathissideris.ascii2image.text

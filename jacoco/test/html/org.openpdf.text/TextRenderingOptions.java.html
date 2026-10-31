@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextRenderingOptions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text</a> &gt; <span class="el_source">TextRenderingOptions.java</span></div><h1>TextRenderingOptions.java</h1><pre class="source lang-java linenums">package org.openpdf.text;
+
+
+/**
+ * Text rendering options, including the default language of the document and a flag to enable font glyph substitution
+ * (if FOP is available).
+ *
+ * @author Lucian Chirita (lucianc@users.sourceforge.net)
+ * @see Document#setTextRenderingOptions(TextRenderingOptions)
+ * @since 3.1.15
+ */
+public class TextRenderingOptions {
+
+    public static final String DOCUMENT_LANGUAGE_DEFAULT = &quot;dflt&quot;;
+
+    /**
+     * The default language of the document. Can be set to values like &quot;en_US&quot;. This language is used in
+     * FopGlyphProcessor to determine which glyphs are to be substituted. The default &quot;dflt&quot; means that all
+     * glyphs which can be replaced will be substituted.
+     */
+    private String documentLanguage;
+
+    private boolean glyphSubstitutionEnabled;
+
+    /**
+     * Creates a text rendering options instance with the default options: glyph substitution enabled and &quot;dflt&quot; as
+     * document language.
+     */
+    public TextRenderingOptions() {
+<span class="fc" id="L30">        this(DOCUMENT_LANGUAGE_DEFAULT, true);</span>
+<span class="fc" id="L31">    }</span>
+
+    /**
+     * Creates a text rendering options instance.
+     *
+     * @param documentLanguage         the wanted language
+     * @param glyphSubstitutionEnabled whether glyph substitution is enabled
+     */
+<span class="fc" id="L39">    public TextRenderingOptions(String documentLanguage, boolean glyphSubstitutionEnabled) {</span>
+<span class="fc" id="L40">        this.documentLanguage = documentLanguage;</span>
+<span class="fc" id="L41">        this.glyphSubstitutionEnabled = glyphSubstitutionEnabled;</span>
+<span class="fc" id="L42">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

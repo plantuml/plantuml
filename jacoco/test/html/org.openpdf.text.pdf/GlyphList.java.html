@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlyphList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">GlyphList.java</span></div><h1>GlyphList.java</h1><pre class="source lang-java linenums">/*
+ * $Id: GlyphList.java 3373 2008-05-12 16:21:24Z xlv $
+ *
+ * Copyright 2001-2006 Paulo Soares
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.StringTokenizer;
+
+<span class="nc" id="L57">public class GlyphList {</span>
+
+<span class="fc" id="L59">    private static HashMap&lt;Integer, String&gt; unicode2names = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L60">    private static HashMap&lt;String, int[]&gt; names2unicode = new HashMap&lt;&gt;();</span>
+
+    static {
+<span class="fc" id="L63">        InputStream is = null;</span>
+        try {
+<span class="fc" id="L65">            is = BaseFont.getResourceStream(BaseFont.RESOURCE_PATH + &quot;glyphlist.txt&quot;);</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">            if (is == null) {</span>
+<span class="nc" id="L67">                String msg = &quot;glyphlist.txt not found as resource. (It must exist as resource in the package org.openpdf.text.pdf.fonts)&quot;;</span>
+<span class="nc" id="L68">                throw new Exception(msg);</span>
+            }
+<span class="fc" id="L70">            byte[] buf = new byte[1024];</span>
+<span class="fc" id="L71">            ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+            while (true) {
+<span class="fc" id="L73">                int size = is.read(buf);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">                if (size &lt; 0) {</span>
+<span class="fc" id="L75">                    break;</span>
+                }
+<span class="fc" id="L77">                out.write(buf, 0, size);</span>
+<span class="fc" id="L78">            }</span>
+<span class="fc" id="L79">            is.close();</span>
+<span class="fc" id="L80">            is = null;</span>
+<span class="fc" id="L81">            String s = PdfEncodings.convertToString(out.toByteArray(), null);</span>
+<span class="fc" id="L82">            StringTokenizer tk = new StringTokenizer(s, &quot;\r\n&quot;);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            while (tk.hasMoreTokens()) {</span>
+<span class="fc" id="L84">                String line = tk.nextToken();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">                if (line.startsWith(&quot;#&quot;)) {</span>
+<span class="fc" id="L86">                    continue;</span>
+                }
+<span class="fc" id="L88">                StringTokenizer t2 = new StringTokenizer(line, &quot; ;\r\n\t\f&quot;);</span>
+                String name;
+                String hex;
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">                if (!t2.hasMoreTokens()) {</span>
+<span class="nc" id="L92">                    continue;</span>
+                }
+<span class="fc" id="L94">                name = t2.nextToken();</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">                if (!t2.hasMoreTokens()) {</span>
+<span class="nc" id="L96">                    continue;</span>
+                }
+<span class="fc" id="L98">                hex = t2.nextToken();</span>
+<span class="fc" id="L99">                Integer num = Integer.valueOf(hex, 16);</span>
+<span class="fc" id="L100">                unicode2names.put(num, name);</span>
+<span class="fc" id="L101">                names2unicode.put(name, new int[]{num});</span>
+<span class="fc" id="L102">            }</span>
+<span class="nc" id="L103">        } catch (Exception e) {</span>
+<span class="nc" id="L104">            System.err.println(&quot;glyphlist.txt loading error: &quot; + e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">            if (is != null) {</span>
+                try {
+<span class="nc" id="L108">                    is.close();</span>
+<span class="nc" id="L109">                } catch (Exception e) {</span>
+                    // empty on purpose
+<span class="nc" id="L111">                }</span>
+            }
+        }
+<span class="fc" id="L114">    }</span>
+
+    public static String unicodeToName(int num) {
+<span class="fc" id="L117">        return unicode2names.get(num);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

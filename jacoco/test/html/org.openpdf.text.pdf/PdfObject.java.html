@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfObject.java</span></div><h1>PdfObject.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfObject.java 3912 2009-04-26 08:38:15Z blowagie $
+ *
+ * Copyright 1999, 2000, 2001, 2002 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+/**
+ * &lt;CODE&gt;PdfObject&lt;/CODE&gt; is the abstract superclass of all PDF objects.
+ * &lt;p&gt;
+ * PDF supports seven basic types of objects: Booleans, numbers, strings, names, arrays, dictionaries and streams. In
+ * addition, PDF provides a null object. Objects may be labeled so that they can be referred to by other objects.&lt;BR&gt;
+ * All these basic PDF objects are described in the 'Portable Document Format Reference Manual version 1.3' Chapter 4
+ * (pages 37-54).
+ *
+ * @see PdfNull
+ * @see PdfBoolean
+ * @see PdfNumber
+ * @see PdfString
+ * @see PdfName
+ * @see PdfArray
+ * @see PdfDictionary
+ * @see PdfStream
+ * @see PdfIndirectReference
+ */
+public abstract class PdfObject {
+
+    // CONSTANTS
+
+    /**
+     * A possible type of &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    public static final int BOOLEAN = 1;
+
+    /**
+     * A possible type of &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    public static final int NUMBER = 2;
+
+    /**
+     * A possible type of &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    public static final int STRING = 3;
+
+    /**
+     * A possible type of &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    public static final int NAME = 4;
+
+    /**
+     * A possible type of &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    public static final int ARRAY = 5;
+
+    /**
+     * A possible type of &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    public static final int DICTIONARY = 6;
+
+    /**
+     * A possible type of &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    public static final int STREAM = 7;
+
+    /**
+     * A possible type of &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    public static final int NULL = 8;
+
+    /**
+     * A possible type of &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    public static final int INDIRECT = 10;
+
+    /**
+     * An empty string used for the &lt;CODE&gt;PdfNull&lt;/CODE&gt;-object and for an empty &lt;CODE&gt;PdfString&lt;/CODE&gt;-object.
+     */
+    public static final String NOTHING = &quot;&quot;;
+
+    /**
+     * This is the default encoding to be used for converting Strings into bytes and vice versa. The default encoding is
+     * PdfDocEncoding.
+     */
+    public static final String TEXT_PDFDOCENCODING = &quot;PDF&quot;;
+
+    /**
+     * This is the encoding to be used to output text in Unicode.
+     */
+    public static final String TEXT_UNICODE = &quot;UnicodeBig&quot;;
+
+    // CLASS VARIABLES
+
+    /**
+     * The content of this &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    protected byte[] bytes;
+
+    /**
+     * The type of this &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    protected int type;
+
+    // CONSTRUCTORS
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfObject&lt;/CODE&gt; of a certain &lt;VAR&gt;type&lt;/VAR&gt; without any &lt;VAR&gt;content&lt;/VAR&gt;.
+     *
+     * @param type type of the new &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+<span class="fc" id="L157">    protected PdfObject(int type) {</span>
+<span class="fc" id="L158">        this.type = type;</span>
+<span class="fc" id="L159">    }</span>
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfObject&lt;/CODE&gt; of a certain &lt;VAR&gt;type&lt;/VAR&gt; with a certain &lt;VAR&gt;content&lt;/VAR&gt;.
+     *
+     * @param type    type of the new &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     * @param content content of the new &lt;CODE&gt;PdfObject&lt;/CODE&gt; as a
+     *                &lt;CODE&gt;String&lt;/CODE&gt;.
+     */
+<span class="fc" id="L168">    protected PdfObject(int type, String content) {</span>
+<span class="fc" id="L169">        this.type = type;</span>
+<span class="fc" id="L170">        bytes = PdfEncodings.convertToBytes(content, null);</span>
+<span class="fc" id="L171">    }</span>
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfObject&lt;/CODE&gt; of a certain &lt;VAR&gt;type&lt;/VAR&gt; with a certain &lt;VAR&gt;content&lt;/VAR&gt;.
+     *
+     * @param type  type of the new &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     * @param bytes content of the new &lt;CODE&gt;PdfObject&lt;/CODE&gt; as an array of
+     *              &lt;CODE&gt;byte&lt;/CODE&gt;.
+     */
+<span class="fc" id="L180">    protected PdfObject(int type, byte[] bytes) {</span>
+<span class="fc" id="L181">        this.bytes = bytes;</span>
+<span class="fc" id="L182">        this.type = type;</span>
+<span class="fc" id="L183">    }</span>
+
+    // methods dealing with the content of this object
+
+    /**
+     * Writes the PDF representation of this &lt;CODE&gt;PdfObject&lt;/CODE&gt; as an array of &lt;CODE&gt;byte&lt;/CODE&gt;s to the writer.
+     *
+     * @param writer for backwards compatibility
+     * @param os     The &lt;CODE&gt;OutputStream&lt;/CODE&gt; to write the bytes to.
+     * @throws IOException on error
+     */
+    public void toPdf(PdfWriter writer, OutputStream os) throws IOException {
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">        if (bytes != null) {</span>
+<span class="fc" id="L196">            os.write(bytes);</span>
+        }
+<span class="fc" id="L198">    }</span>
+
+    /**
+     * Returns the &lt;CODE&gt;String&lt;/CODE&gt;-representation of this
+     * &lt;CODE&gt;PdfObject&lt;/CODE&gt;.
+     *
+     * @return a &lt;CODE&gt;String&lt;/CODE&gt;
+     */
+    public String toString() {
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">        if (bytes == null) {</span>
+<span class="nc" id="L208">            return super.toString();</span>
+        }
+<span class="fc" id="L210">        return PdfEncodings.convertToString(bytes, null);</span>
+    }
+
+    /**
+     * Gets the presentation of this object in a byte array
+     *
+     * @return a byte array
+     */
+    public byte[] getBytes() {
+<span class="fc" id="L219">        return bytes;</span>
+    }
+
+    /**
+     * Whether this object can be contained in an object stream.
+     * &lt;p&gt;
+     * PdfObjects of type STREAM OR INDIRECT can not be contained in an object stream.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if this object can be in an object stream.
+     * Otherwise &lt;CODE&gt;false&lt;/CODE&gt;
+     */
+    public boolean canBeInObjStm() {
+<span class="fc bfc" id="L231" title="All 2 branches covered.">        switch (type) {</span>
+            case NULL:
+            case BOOLEAN:
+            case NUMBER:
+            case STRING:
+            case NAME:
+            case ARRAY:
+            case DICTIONARY:
+<span class="fc" id="L239">                return true;</span>
+            case STREAM:
+            case INDIRECT:
+            default:
+<span class="fc" id="L243">                return false;</span>
+        }
+    }
+
+    /**
+     * Returns the length of the PDF representation of the &lt;CODE&gt;PdfObject&lt;/CODE&gt;.
+     * &lt;P&gt;
+     * In some cases, namely for &lt;CODE&gt;PdfString&lt;/CODE&gt; and &lt;CODE&gt;PdfStream&lt;/CODE&gt;,
+     * this method differs from the method &lt;CODE&gt;length&lt;/CODE&gt; because &lt;CODE&gt;length&lt;/CODE&gt;
+     * returns the length of the actual content of the &lt;CODE&gt;PdfObject&lt;/CODE&gt;.&lt;/P&gt;
+     * &lt;P&gt;
+     * Remark: the actual content of an object is in most cases identical to its representation.
+     * The following statement is always true: length() &amp;gt;= pdfLength().&lt;/P&gt;
+     *
+     * @return a length
+     */
+//    public int pdfLength() {
+//        return toPdf(null).length;
+//    }
+
+    /**
+     * Changes the content of this &lt;CODE&gt;PdfObject&lt;/CODE&gt;.
+     *
+     * @param content the new content of this &lt;CODE&gt;PdfObject&lt;/CODE&gt;
+     */
+    protected void setContent(String content) {
+<span class="fc" id="L269">        bytes = PdfEncodings.convertToBytes(content, null);</span>
+<span class="fc" id="L270">    }</span>
+
+    // methods dealing with the type of this object
+
+    /**
+     * Returns the type of this &lt;CODE&gt;PdfObject&lt;/CODE&gt;.
+     * &lt;p&gt;
+     * May be either of: - &lt;VAR&gt;NULL&lt;/VAR&gt;: A &lt;CODE&gt;PdfNull&lt;/CODE&gt; - &lt;VAR&gt;BOOLEAN&lt;/VAR&gt;: A &lt;CODE&gt;PdfBoolean&lt;/CODE&gt; -
+     * &lt;VAR&gt;NUMBER&lt;/VAR&gt;: A &lt;CODE&gt;PdfNumber&lt;/CODE&gt; - &lt;VAR&gt;STRING&lt;/VAR&gt;: A &lt;CODE&gt;PdfString&lt;/CODE&gt; - &lt;VAR&gt;NAME&lt;/VAR&gt;: A
+     * &lt;CODE&gt;PdfName&lt;/CODE&gt; - &lt;VAR&gt;ARRAY&lt;/VAR&gt;: A &lt;CODE&gt;PdfArray&lt;/CODE&gt; - &lt;VAR&gt;DICTIONARY&lt;/VAR&gt;: A
+     * &lt;CODE&gt;PdfDictionary&lt;/CODE&gt; - &lt;VAR&gt;STREAM&lt;/VAR&gt;: A &lt;CODE&gt;PdfStream&lt;/CODE&gt; - &lt;VAR&gt;INDIRECT&lt;/VAR&gt;: {@literal &gt;}
+     * &lt;CODE&gt;PdfIndirectObject&lt;/CODE&gt;
+     *
+     * @return The type
+     */
+    public int type() {
+<span class="fc" id="L286">        return type;</span>
+    }
+
+    /**
+     * Checks if this &lt;CODE&gt;PdfObject&lt;/CODE&gt; is of the type
+     * &lt;CODE&gt;PdfNull&lt;/CODE&gt;.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; or &lt;CODE&gt;false&lt;/CODE&gt;
+     */
+    public boolean isNull() {
+<span class="pc bpc" id="L296" title="1 of 2 branches missed.">        return (type == NULL);</span>
+    }
+
+    /**
+     * Checks if this &lt;CODE&gt;PdfObject&lt;/CODE&gt; is of the type
+     * &lt;CODE&gt;PdfNumber&lt;/CODE&gt;.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; or &lt;CODE&gt;false&lt;/CODE&gt;
+     */
+    public boolean isNumber() {
+<span class="nc bnc" id="L306" title="All 2 branches missed.">        return (type == NUMBER);</span>
+    }
+
+    /**
+     * Checks if this &lt;CODE&gt;PdfObject&lt;/CODE&gt; is of the type
+     * &lt;CODE&gt;PdfString&lt;/CODE&gt;.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; or &lt;CODE&gt;false&lt;/CODE&gt;
+     */
+    public boolean isString() {
+<span class="nc bnc" id="L316" title="All 2 branches missed.">        return (type == STRING);</span>
+    }
+
+    /**
+     * Checks if this &lt;CODE&gt;PdfObject&lt;/CODE&gt; is of the type
+     * &lt;CODE&gt;PdfName&lt;/CODE&gt;.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; or &lt;CODE&gt;false&lt;/CODE&gt;
+     */
+    public boolean isName() {
+<span class="nc bnc" id="L326" title="All 2 branches missed.">        return (type == NAME);</span>
+    }
+
+    /**
+     * Checks if this &lt;CODE&gt;PdfObject&lt;/CODE&gt; is of the type
+     * &lt;CODE&gt;PdfArray&lt;/CODE&gt;.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; or &lt;CODE&gt;false&lt;/CODE&gt;
+     */
+    public boolean isArray() {
+<span class="nc bnc" id="L336" title="All 2 branches missed.">        return (type == ARRAY);</span>
+    }
+
+    /**
+     * Checks if this &lt;CODE&gt;PdfObject&lt;/CODE&gt; is of the type
+     * &lt;CODE&gt;PdfDictionary&lt;/CODE&gt;.
+     *
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; or &lt;CODE&gt;false&lt;/CODE&gt;
+     */
+    public boolean isDictionary() {
+<span class="nc bnc" id="L346" title="All 2 branches missed.">        return (type == DICTIONARY);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfDocument.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfDocument.java</span></div><h1>PdfDocument.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfDocument.java 4098 2009-11-16 13:27:45Z blowagie $
+ *
+ * Copyright 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import org.openpdf.text.DocumentException;
+import org.openpdf.text.Element;
+import org.openpdf.text.ExceptionConverter;
+import org.openpdf.text.Meta;
+import org.openpdf.text.Rectangle;
+import org.openpdf.text.error_messages.MessageLocalization;
+import org.openpdf.text.Document;
+
+/**
+ * &lt;CODE&gt;PdfDocument&lt;/CODE&gt; is the class that is used by &lt;CODE&gt;PdfWriter&lt;/CODE&gt; to translate a &lt;CODE&gt;Document&lt;/CODE&gt;
+ * into a PDF with different pages.
+ * &lt;p&gt;
+ * This pruned version only manages pages (that are filled by the content of the writer), the information dictionary,
+ * the catalog and the annotations of the pages. The layout of text, tables and images is not supported.
+ *
+ * @see org.openpdf.text.Document
+ * @see PdfWriter
+ */
+public class PdfDocument extends Document {
+
+    /**
+     * The writer associated to this document.
+     */
+    protected PdfWriter writer;
+
+    /**
+     * The &lt;CODE&gt;PdfContentByte&lt;/CODE&gt; object that contains the text, the graphics and the images of the page.
+     */
+    protected PdfContentByte text;
+    protected PdfContentByte graphics;
+
+    private int textEmptySize;
+
+    /**
+     * The info dictionary.
+     */
+<span class="fc" id="L93">    protected PdfInfo info = new PdfInfo();</span>
+
+    /**
+     * Margins and page size of the next page.
+     */
+    private float nextMarginLeft;
+    private float nextMarginRight;
+    private float nextMarginTop;
+    private float nextMarginBottom;
+<span class="fc" id="L102">    private Rectangle nextPageSize = null;</span>
+
+    /**
+     * The boxes of the pages (crop box...).
+     */
+<span class="fc" id="L107">    protected HashMap&lt;String, PdfRectangle&gt; thisBoxSize = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L108">    protected HashMap&lt;String, PdfRectangle&gt; boxSize = new LinkedHashMap&lt;&gt;();</span>
+
+    /**
+     * The resources of the current page.
+     */
+    protected PageResources pageResources;
+
+    /**
+     * The annotations of the current page.
+     */
+<span class="fc" id="L118">    private List&lt;PdfAnnotation&gt; annotations = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * Indicates if the current page is empty.
+     */
+<span class="fc" id="L123">    private boolean pageEmpty = true;</span>
+
+    /**
+     * Constructs a new PDF document.
+     */
+    public PdfDocument() {
+<span class="fc" id="L129">        super();</span>
+<span class="fc" id="L130">        addProducer();</span>
+<span class="fc" id="L131">        addCreationDate();</span>
+<span class="fc" id="L132">    }</span>
+
+    /**
+     * Adds a &lt;CODE&gt;PdfWriter&lt;/CODE&gt; to the &lt;CODE&gt;PdfDocument&lt;/CODE&gt;.
+     *
+     * @param writer the &lt;CODE&gt;PdfWriter&lt;/CODE&gt;
+     * @throws DocumentException on error
+     */
+    public void addWriter(PdfWriter writer) throws DocumentException {
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        if (this.writer == null) {</span>
+<span class="fc" id="L142">            this.writer = writer;</span>
+<span class="fc" id="L143">            return;</span>
+        }
+<span class="nc" id="L145">        throw new DocumentException(</span>
+<span class="nc" id="L146">                MessageLocalization.getComposedMessage(&quot;you.can.only.add.a.writer.to.a.pdfdocument.once&quot;));</span>
+    }
+
+    /**
+     * Opens the document.
+     */
+    @Override
+    public void open() {
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        if (!open) {</span>
+<span class="fc" id="L155">            super.open();</span>
+<span class="fc" id="L156">            writer.open();</span>
+        }
+        try {
+<span class="fc" id="L159">            initPage();</span>
+<span class="nc" id="L160">        } catch (DocumentException de) {</span>
+<span class="nc" id="L161">            throw new ExceptionConverter(de);</span>
+<span class="fc" id="L162">        }</span>
+<span class="fc" id="L163">    }</span>
+
+    /**
+     * Closes the document.
+     */
+    @Override
+    public void close() {
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">        if (close) {</span>
+<span class="nc" id="L171">            return;</span>
+        }
+        try {
+<span class="fc" id="L174">            newPage();</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">            if (!annotations.isEmpty()) {</span>
+<span class="nc" id="L176">                throw new RuntimeException(MessageLocalization.getComposedMessage(</span>
+                        &quot;not.all.annotations.could.be.added.to.the.document.the.document.doesn.t.have.enough.pages&quot;));
+            }
+<span class="fc" id="L179">            super.close();</span>
+<span class="nc" id="L180">        } catch (Exception e) {</span>
+<span class="nc" id="L181">            throw new ExceptionConverter(e);</span>
+<span class="fc" id="L182">        }</span>
+<span class="fc" id="L183">        writer.close();</span>
+<span class="fc" id="L184">    }</span>
+
+    /**
+     * Signals that an &lt;CODE&gt;Element&lt;/CODE&gt; was added to the &lt;CODE&gt;Document&lt;/CODE&gt;. Only the meta information is
+     * supported by this pruned version.
+     *
+     * @param element the element to add
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if the element was added, &lt;CODE&gt;false&lt;/CODE&gt; if not.
+     * @throws DocumentException when a document isn't open yet, or has been closed
+     */
+    @Override
+    public boolean add(Element element) throws DocumentException {
+<span class="pc bpc" id="L196" title="1 of 4 branches missed.">        if (writer != null &amp;&amp; writer.isPaused()) {</span>
+<span class="nc" id="L197">            return false;</span>
+        }
+<span class="pc bpc" id="L199" title="6 of 9 branches missed.">        switch (element.type()) {</span>
+            case Element.TITLE:
+<span class="nc" id="L201">                info.addTitle(((Meta) element).getContent());</span>
+<span class="nc" id="L202">                break;</span>
+            case Element.SUBJECT:
+<span class="nc" id="L204">                info.addSubject(((Meta) element).getContent());</span>
+<span class="nc" id="L205">                break;</span>
+            case Element.KEYWORDS:
+<span class="nc" id="L207">                info.addKeywords(((Meta) element).getContent());</span>
+<span class="nc" id="L208">                break;</span>
+            case Element.AUTHOR:
+<span class="nc" id="L210">                info.addAuthor(((Meta) element).getContent());</span>
+<span class="nc" id="L211">                break;</span>
+            case Element.CREATOR:
+<span class="nc" id="L213">                info.addCreator(((Meta) element).getContent());</span>
+<span class="nc" id="L214">                break;</span>
+            case Element.PRODUCER:
+<span class="fc" id="L216">                info.addProducer(((Meta) element).getContent());</span>
+<span class="fc" id="L217">                break;</span>
+            case Element.CREATIONDATE:
+                // A PDF date (Document.addCreationDate(PdfDate)) is used as is, anything else
+                // only resets the creation date to now
+<span class="fc bfc" id="L221" title="All 2 branches covered.">                if (((Meta) element).getContent().startsWith(&quot;D:&quot;))</span>
+<span class="fc" id="L222">                    info.put(PdfName.CREATIONDATE, new PdfDate(((Meta) element).getContent()));</span>
+                else
+<span class="fc" id="L224">                    info.addCreationDate();</span>
+<span class="fc" id="L225">                break;</span>
+            case Element.MODIFICATIONDATE:
+<span class="fc" id="L227">                info.addModificationDate(new PdfDate(((Meta) element).getContent()));</span>
+<span class="fc" id="L228">                break;</span>
+            default:
+<span class="nc" id="L230">                return false;</span>
+        }
+<span class="fc" id="L232">        return true;</span>
+    }
+
+    /**
+     * Makes a new page and sends it to the &lt;CODE&gt;PdfWriter&lt;/CODE&gt;.
+     *
+     * @return a &lt;CODE&gt;boolean&lt;/CODE&gt;
+     */
+    @Override
+    public boolean newPage() {
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        if (isPageEmpty()) {</span>
+<span class="fc" id="L243">            setNewPageSizeAndMargins();</span>
+<span class="fc" id="L244">            resetText();</span>
+<span class="fc" id="L245">            return false;</span>
+        }
+<span class="pc bpc" id="L247" title="2 of 4 branches missed.">        if (!open || close) {</span>
+<span class="nc" id="L248">            throw new RuntimeException(MessageLocalization.getComposedMessage(&quot;the.document.is.not.open&quot;));</span>
+        }
+        try {
+            // page size and rotation
+<span class="fc" id="L252">            int rotation = pageSize.getRotation();</span>
+
+<span class="fc" id="L254">            pageResources.addDefaultColorDiff(writer.getDefaultColorspace());</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">            if (writer.isRgbTransparencyBlending()) {</span>
+<span class="nc" id="L256">                PdfDictionary dcs = new PdfDictionary();</span>
+<span class="nc" id="L257">                dcs.put(PdfName.CS, PdfName.DEVICERGB);</span>
+<span class="nc" id="L258">                pageResources.addDefaultColorDiff(dcs);</span>
+            }
+<span class="fc" id="L260">            PdfDictionary resources = pageResources.getResources();</span>
+
+            // we create the page dictionary
+<span class="fc" id="L263">            PdfPage page = new PdfPage(new PdfRectangle(pageSize, rotation), thisBoxSize, resources, rotation);</span>
+<span class="fc" id="L264">            page.put(PdfName.TABS, writer.getTabs());</span>
+
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">            if (writer.getUserunit() &gt; 0f) {</span>
+<span class="nc" id="L267">                page.put(PdfName.USERUNIT, new PdfNumber(writer.getUserunit()));</span>
+            }
+
+            // we add the annotations
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">            if (!annotations.isEmpty()) {</span>
+<span class="nc" id="L272">                PdfArray array = writeAnnotations();</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">                if (array.size() != 0) {</span>
+<span class="nc" id="L274">                    page.put(PdfName.ANNOTS, array);</span>
+                }
+            }
+
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">            if (text.size() &gt; textEmptySize) {</span>
+<span class="nc" id="L279">                text.endText();</span>
+            } else {
+<span class="fc" id="L281">                text = null;</span>
+            }
+<span class="fc" id="L283">            writer.add(page, new PdfContents(writer.getDirectContentUnder(), graphics, text, writer.getDirectContent(),</span>
+                    pageSize));
+            // we initialize the new page
+<span class="fc" id="L286">            initPage();</span>
+<span class="nc" id="L287">        } catch (DocumentException | IOException de) {</span>
+            // maybe this never happens, but it's better to check.
+<span class="nc" id="L289">            throw new ExceptionConverter(de);</span>
+<span class="fc" id="L290">        }</span>
+<span class="fc" id="L291">        return true;</span>
+    }
+
+    /**
+     * Adds the annotations of the page to the body and returns the array of their references.
+     */
+    private PdfArray writeAnnotations() throws IOException {
+<span class="nc" id="L298">        PdfArray array = new PdfArray();</span>
+<span class="nc" id="L299">        int rotation = pageSize.getRotation() % 360;</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">        for (PdfAnnotation dic : annotations) {</span>
+<span class="nc" id="L301">            array.add(dic.getIndirectReference());</span>
+<span class="nc" id="L302">            PdfRectangle rect = (PdfRectangle) dic.get(PdfName.RECT);</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">            if (rect != null) {</span>
+<span class="nc bnc" id="L304" title="All 4 branches missed.">                switch (rotation) {</span>
+                    case 90:
+<span class="nc" id="L306">                        dic.put(PdfName.RECT, new PdfRectangle(</span>
+<span class="nc" id="L307">                                pageSize.getTop() - rect.bottom(),</span>
+<span class="nc" id="L308">                                rect.left(),</span>
+<span class="nc" id="L309">                                pageSize.getTop() - rect.top(),</span>
+<span class="nc" id="L310">                                rect.right()));</span>
+<span class="nc" id="L311">                        break;</span>
+                    case 180:
+<span class="nc" id="L313">                        dic.put(PdfName.RECT, new PdfRectangle(</span>
+<span class="nc" id="L314">                                pageSize.getRight() - rect.left(),</span>
+<span class="nc" id="L315">                                pageSize.getTop() - rect.bottom(),</span>
+<span class="nc" id="L316">                                pageSize.getRight() - rect.right(),</span>
+<span class="nc" id="L317">                                pageSize.getTop() - rect.top()));</span>
+<span class="nc" id="L318">                        break;</span>
+                    case 270:
+<span class="nc" id="L320">                        dic.put(PdfName.RECT, new PdfRectangle(</span>
+<span class="nc" id="L321">                                rect.bottom(),</span>
+<span class="nc" id="L322">                                pageSize.getRight() - rect.left(),</span>
+<span class="nc" id="L323">                                rect.top(),</span>
+<span class="nc" id="L324">                                pageSize.getRight() - rect.right()));</span>
+<span class="nc" id="L325">                        break;</span>
+                    default:
+                        break;
+                }
+            }
+<span class="nc" id="L330">            writer.addToBody(dic, dic.getIndirectReference());</span>
+<span class="nc" id="L331">        }</span>
+<span class="nc" id="L332">        annotations = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L333">        return array;</span>
+    }
+
+    /**
+     * Sets the pagesize.
+     *
+     * @param pageSize the new pagesize
+     * @return &lt;CODE&gt;true&lt;/CODE&gt; if the page size was set
+     */
+    @Override
+    public boolean setPageSize(Rectangle pageSize) {
+<span class="pc bpc" id="L344" title="2 of 4 branches missed.">        if (writer != null &amp;&amp; writer.isPaused()) {</span>
+<span class="nc" id="L345">            return false;</span>
+        }
+<span class="fc" id="L347">        nextPageSize = new Rectangle(pageSize);</span>
+<span class="fc" id="L348">        return true;</span>
+    }
+
+    /**
+     * Sets the margins.
+     *
+     * @param marginLeft   the margin on the left
+     * @param marginRight  the margin on the right
+     * @param marginTop    the margin on the top
+     * @param marginBottom the margin on the bottom
+     * @return a &lt;CODE&gt;boolean&lt;/CODE&gt;
+     */
+    @Override
+    public boolean setMargins(float marginLeft, float marginRight, float marginTop, float marginBottom) {
+<span class="pc bpc" id="L362" title="2 of 4 branches missed.">        if (writer != null &amp;&amp; writer.isPaused()) {</span>
+<span class="nc" id="L363">            return false;</span>
+        }
+<span class="fc" id="L365">        nextMarginLeft = marginLeft;</span>
+<span class="fc" id="L366">        nextMarginRight = marginRight;</span>
+<span class="fc" id="L367">        nextMarginTop = marginTop;</span>
+<span class="fc" id="L368">        nextMarginBottom = marginBottom;</span>
+<span class="fc" id="L369">        return true;</span>
+    }
+
+    private void resetText() {
+<span class="fc" id="L373">        text = new PdfContentByte(writer);</span>
+<span class="fc" id="L374">        text.reset();</span>
+<span class="fc" id="L375">        text.beginText();</span>
+<span class="fc" id="L376">        textEmptySize = text.size();</span>
+<span class="fc" id="L377">    }</span>
+
+    /**
+     * Initializes a page.
+     *
+     * @throws DocumentException on error
+     */
+    protected void initPage() throws DocumentException {
+        // the pagenumber is incremented
+<span class="fc" id="L386">        pageN++;</span>
+
+        // initialization of some page objects
+<span class="fc" id="L389">        pageResources = new PageResources();</span>
+
+<span class="fc" id="L391">        writer.resetContent();</span>
+<span class="fc" id="L392">        graphics = new PdfContentByte(writer);</span>
+<span class="fc" id="L393">        resetText();</span>
+
+<span class="fc" id="L395">        setNewPageSizeAndMargins();</span>
+
+<span class="fc" id="L397">        thisBoxSize = new LinkedHashMap&lt;&gt;(boxSize);</span>
+<span class="fc" id="L398">        pageEmpty = true;</span>
+<span class="fc" id="L399">    }</span>
+
+    protected void setNewPageSizeAndMargins() {
+<span class="fc" id="L402">        pageSize = nextPageSize;</span>
+<span class="fc" id="L403">        marginLeft = nextMarginLeft;</span>
+<span class="fc" id="L404">        marginRight = nextMarginRight;</span>
+<span class="fc" id="L405">        marginTop = nextMarginTop;</span>
+<span class="fc" id="L406">        marginBottom = nextMarginBottom;</span>
+<span class="fc" id="L407">    }</span>
+
+    /**
+     * Gets the info dictionary.
+     *
+     * @return the info dictionary
+     */
+    protected PdfInfo getInfo() {
+<span class="fc" id="L415">        return info;</span>
+    }
+
+    /**
+     * Gets the catalog.
+     *
+     * @param pages the reference of the root of the pages tree
+     * @return the catalog
+     */
+    PdfCatalog getCatalog(PdfIndirectReference pages) {
+<span class="fc" id="L425">        PdfCatalog catalog = new PdfCatalog(pages, writer);</span>
+<span class="fc" id="L426">        writer.getPdfVersion().addToCatalog(catalog);</span>
+<span class="fc" id="L427">        return catalog;</span>
+    }
+
+    /**
+     * Adds an annotation to the current page.
+     *
+     * @param annot the annotation
+     */
+    void addAnnotation(PdfAnnotation annot) {
+<span class="nc" id="L436">        pageEmpty = false;</span>
+<span class="nc" id="L437">        annotations.add(annot);</span>
+<span class="nc" id="L438">    }</span>
+
+    boolean isPageEmpty() {
+<span class="pc bpc" id="L441" title="3 of 8 branches missed.">        return writer == null || (writer.getDirectContent().size() == 0 &amp;&amp; writer.getDirectContentUnder().size() == 0</span>
+<span class="pc bnc" id="L442" title="All 2 branches missed.">                &amp;&amp; (pageEmpty || writer.isPaused()));</span>
+    }
+
+    PageResources getPageResources() {
+<span class="fc" id="L446">        return pageResources;</span>
+    }
+
+    /**
+     * Meta information of the document.
+     */
+    public static class PdfInfo extends PdfDictionary {
+
+        PdfInfo() {
+<span class="fc" id="L455">            super();</span>
+<span class="fc" id="L456">        }</span>
+
+        void addTitle(String title) {
+<span class="nc" id="L459">            put(PdfName.TITLE, new PdfString(title, PdfObject.TEXT_UNICODE));</span>
+<span class="nc" id="L460">        }</span>
+
+        void addSubject(String subject) {
+<span class="nc" id="L463">            put(PdfName.SUBJECT, new PdfString(subject, PdfObject.TEXT_UNICODE));</span>
+<span class="nc" id="L464">        }</span>
+
+        void addKeywords(String keywords) {
+<span class="nc" id="L467">            put(PdfName.KEYWORDS, new PdfString(keywords, PdfObject.TEXT_UNICODE));</span>
+<span class="nc" id="L468">        }</span>
+
+        void addAuthor(String author) {
+<span class="nc" id="L471">            put(PdfName.AUTHOR, new PdfString(author, PdfObject.TEXT_UNICODE));</span>
+<span class="nc" id="L472">        }</span>
+
+        void addCreator(String creator) {
+<span class="nc" id="L475">            put(PdfName.CREATOR, new PdfString(creator, PdfObject.TEXT_UNICODE));</span>
+<span class="nc" id="L476">        }</span>
+
+        void addProducer(final String producer) {
+<span class="fc" id="L479">            put(PdfName.PRODUCER, new PdfString(producer));</span>
+<span class="fc" id="L480">        }</span>
+
+        void addCreationDate() {
+<span class="fc" id="L483">            PdfString date = new PdfDate();</span>
+<span class="fc" id="L484">            put(PdfName.CREATIONDATE, date);</span>
+<span class="fc" id="L485">        }</span>
+
+        void addModificationDate(PdfDate date) {
+<span class="fc" id="L488">            put(PdfName.MODDATE, date);</span>
+<span class="fc" id="L489">        }</span>
+
+    }
+
+    /**
+     * The catalog of the document.
+     */
+    static class PdfCatalog extends PdfDictionary {
+
+        PdfWriter writer;
+
+        PdfCatalog(PdfIndirectReference pages, PdfWriter writer) {
+<span class="fc" id="L501">            super(CATALOG);</span>
+<span class="fc" id="L502">            this.writer = writer;</span>
+<span class="fc" id="L503">            put(PdfName.PAGES, pages);</span>
+<span class="fc" id="L504">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

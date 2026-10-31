@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.openpdf;
 
 import java.awt.Color;
 import java.awt.geom.PathIterator;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -51,10 +50,13 @@ import org.openpdf.text.pdf.BaseFont;
 import org.openpdf.text.pdf.PdfAction;
 import org.openpdf.text.pdf.PdfAnnotation;
 import org.openpdf.text.pdf.PdfContentByte;
+import org.openpdf.text.pdf.PdfDate;
+import org.openpdf.text.pdf.PdfStream;
 import org.openpdf.text.pdf.PdfTemplate;
 import org.openpdf.text.pdf.PdfWriter;
 
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import net.sourceforge.plantuml.klimt.geom.USegment;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
@@ -104,28 +106,32 @@ import net.sourceforge.plantuml.klimt.geom.USegmentType;
  * Drop shadows, embedded SVG images (stdlib icons), gradients, text-background
  * filters, rotated text, CSS classes, interactive scripts, dark mode.
  *
- * &lt;h2&gt;Not for TeaVM&lt;/h2&gt;
+ * &lt;h2&gt;TeaVM&lt;/h2&gt;
  *
- * OpenPDF depends on {@code java.awt} and {@code java.util.zip}; this driver is
- * server-side only and is excluded from the TeaVM build path.
+ * The OpenPDF sources are part of PlantUML ({@code org.openpdf}, pruned to what
+ * is needed here, no AWT): this driver works on the JVM and in the C build.
+ * Only the images go through {@code PortableImage}, and the resources of OpenPDF
+ * are given by {@code OpenPdfSetup}.
  *
- * &lt;h2&gt;OpenPDF version&lt;/h2&gt;
+ * &lt;h2&gt;OpenPDF&lt;/h2&gt;
  *
- * Targets OpenPDF 3.0+ which uses the {@code org.openpdf} package namespace.
- * The legacy {@code com.lowagie} packages have been removed in 3.0 and are not
- * available anymore.
+ * The {@code org.openpdf} namespace is the one of OpenPDF 3.0+.
  */
 public class PdfGraphics {
+
+	static {
+<span class="fc" id="L123">		OpenPdfSetup.ensure();</span>
+<span class="fc" id="L124">	}</span>
 	// ::remove folder when JAVA8
 
 	// ---------- output buffering ----------
 
-<span class="nc" id="L123">	private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();</span>
+<span class="fc" id="L129">	private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();</span>
 	private final Document document;
 	private final PdfWriter writer;
 	private PdfTemplate template;
 	private PdfContentByte cb;
-<span class="nc" id="L128">	private boolean documentOpened = false;</span>
+<span class="fc" id="L134">	private boolean documentOpened = false;</span>
 
 	// ---------- options ----------
 
@@ -138,45 +144,53 @@ public class PdfGraphics {
 
 	// ---------- current graphics state ----------
 
-<span class="nc" id="L141">	private Color fillColor = Color.BLACK;</span>
-<span class="nc" id="L142">	private Color strokeColor = Color.BLACK;</span>
-<span class="nc" id="L143">	private double strokeWidth = 1.0;</span>
-<span class="nc" id="L144">	private float[] strokeDash = null;</span>
-<span class="nc" id="L145">	private boolean hidden = false;</span>
-<span class="nc" id="L146">	private boolean pathOpen = false;</span>
+<span class="fc" id="L147">	private Color fillColor = Color.BLACK;</span>
+<span class="fc" id="L148">	private Color strokeColor = Color.BLACK;</span>
+<span class="fc" id="L149">	private double strokeWidth = 1.0;</span>
+<span class="fc" id="L150">	private float[] strokeDash = null;</span>
+<span class="fc" id="L151">	private boolean hidden = false;</span>
+<span class="fc" id="L152">	private boolean pathOpen = false;</span>
 
 	// ---------- pending links (for openLink/closeLink) ----------
 
-<span class="nc" id="L150">	private final LinkedList&lt;PendingLink&gt; activeLinks = new LinkedList&lt;&gt;();</span>
+<span class="fc" id="L156">	private final LinkedList&lt;PendingLink&gt; activeLinks = new LinkedList&lt;&gt;();</span>
 
 	// ----------------------------------------------------------------------
 	// construction
 	// ----------------------------------------------------------------------
 
-<span class="nc" id="L156">	public PdfGraphics(PdfOption option) {</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		this.option = option == null ? new PdfOption() : option;</span>
-<span class="nc" id="L158">		this.maxX = this.option.getMinWidth();</span>
-<span class="nc" id="L159">		this.maxY = this.option.getMinHeight();</span>
+<span class="fc" id="L162">	public PdfGraphics(PdfOption option) {</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		this.option = option == null ? new PdfOption() : option;</span>
+<span class="fc" id="L164">		this.maxX = this.option.getMinWidth();</span>
+<span class="fc" id="L165">		this.maxY = this.option.getMinHeight();</span>
 
 		// We do not know the final page size yet. Open with an arbitrary
 		// placeholder (we'll fix the actual page size in createPdf, before
 		// document.open()). All drawing goes into a PdfTemplate which is
 		// unbounded - it can hold negative-Y content without truncation.
-<span class="nc" id="L165">		this.document = new Document(new Rectangle(10, 10));</span>
-<span class="nc" id="L166">		this.writer = PdfWriter.getInstance(document, buffer);</span>
-<span class="nc" id="L167">	}</span>
+<span class="fc" id="L171">		this.document = new Document(new Rectangle(10, 10));</span>
+<span class="fc" id="L172">		this.writer = PdfWriter.getInstance(document, buffer);</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (this.option.isDeterministic()) {</span>
+<span class="fc" id="L174">			writer.setCompressionLevel(PdfStream.NO_COMPRESSION);</span>
+<span class="fc" id="L175">			writer.setFixedFileId(new byte[16]);</span>
+<span class="fc" id="L176">			final PdfDate fixedDate = new PdfDate(&quot;D:20000101000000Z&quot;);</span>
+<span class="fc" id="L177">			document.addCreationDate(fixedDate);</span>
+<span class="fc" id="L178">			document.addModificationDate(fixedDate);</span>
+<span class="fc" id="L179">			document.addProducer(&quot;PlantUML&quot;);</span>
+		}
+<span class="fc" id="L181">	}</span>
 
 	private void openDocumentIfNeeded() {
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (documentOpened)</span>
-<span class="nc" id="L171">			return;</span>
-<span class="nc" id="L172">		documentOpened = true;</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		if (documentOpened)</span>
+<span class="fc" id="L185">			return;</span>
+<span class="fc" id="L186">		documentOpened = true;</span>
 
-<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (option.getTitle() != null)</span>
-<span class="nc" id="L175">			document.addTitle(option.getTitle());</span>
-<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (option.getAuthor() != null)</span>
-<span class="nc" id="L177">			document.addAuthor(option.getAuthor());</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		if (option.getSubject() != null)</span>
-<span class="nc" id="L179">			document.addSubject(option.getSubject());</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (option.getTitle() != null)</span>
+<span class="nc" id="L189">			document.addTitle(option.getTitle());</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		if (option.getAuthor() != null)</span>
+<span class="nc" id="L191">			document.addAuthor(option.getAuthor());</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (option.getSubject() != null)</span>
+<span class="nc" id="L193">			document.addSubject(option.getSubject());</span>
 
 		// Page size will be patched in createPdf. Open document with the
 		// placeholder; we draw exclusively into the template so the page's
@@ -187,12 +201,12 @@ public class PdfGraphics {
 		// the bbox must extend into negative Y too. We set it to a generous
 		// 10000 x 10000 region covering [0, 10000] x [-10000, 0]; createPdf
 		// later tightens it to the actual content bounds.
-<span class="nc" id="L190">		document.open();</span>
-<span class="nc" id="L191">		final PdfContentByte direct = writer.getDirectContent();</span>
-<span class="nc" id="L192">		this.template = direct.createTemplate(10000, 10000);</span>
-<span class="nc" id="L193">		this.template.setBoundingBox(new Rectangle(0f, -10000f, 10000f, 0f));</span>
-<span class="nc" id="L194">		this.cb = template;</span>
-<span class="nc" id="L195">	}</span>
+<span class="fc" id="L204">		document.open();</span>
+<span class="fc" id="L205">		final PdfContentByte direct = writer.getDirectContent();</span>
+<span class="fc" id="L206">		this.template = direct.createTemplate(10000, 10000);</span>
+<span class="fc" id="L207">		this.template.setBoundingBox(new Rectangle(0f, -10000f, 10000f, 0f));</span>
+<span class="fc" id="L208">		this.cb = template;</span>
+<span class="fc" id="L209">	}</span>
 
 	// ----------------------------------------------------------------------
 	// the one-line &quot;negate Y&quot; helper
@@ -203,7 +217,7 @@ public class PdfGraphics {
 	 * actually emit (negative, drawn below the y=0 axis).
 	 */
 	private static float ny(double svgY) {
-<span class="nc" id="L206">		return (float) -svgY;</span>
+<span class="fc" id="L220">		return (float) -svgY;</span>
 	}
 
 	// ----------------------------------------------------------------------
@@ -216,201 +230,201 @@ public class PdfGraphics {
 	 * {@code maxX x maxY} rectangle in standard PDF coords.
 	 */
 	protected final void ensureVisible(double x, double y) {
-<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (x &gt; maxX)</span>
-<span class="nc" id="L220">			maxX = x + 1;</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">		if (y &gt; maxY)</span>
-<span class="nc" id="L222">			maxY = y + 1;</span>
-<span class="nc" id="L223">	}</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (x &gt; maxX)</span>
+<span class="fc" id="L234">			maxX = x + 1;</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">		if (y &gt; maxY)</span>
+<span class="fc" id="L236">			maxY = y + 1;</span>
+<span class="fc" id="L237">	}</span>
 
 	// ----------------------------------------------------------------------
 	// state setters (mirror SvgGraphics)
 	// ----------------------------------------------------------------------
 
 	public final void setFillColor(Color fill) {
-<span class="nc" id="L230">		this.fillColor = fill;</span>
-<span class="nc" id="L231">	}</span>
+<span class="fc" id="L244">		this.fillColor = fill;</span>
+<span class="fc" id="L245">	}</span>
 
 	public final void setFillColor(Color fill, TransparentFillBehavior transparentFillBehaviour) {
-<span class="nc" id="L234">		this.fillColor = fill;</span>
-<span class="nc" id="L235">	}</span>
+<span class="fc" id="L248">		this.fillColor = fill;</span>
+<span class="fc" id="L249">	}</span>
 
 	public final void setStrokeColor(Color stroke) {
-<span class="nc" id="L238">		this.strokeColor = stroke;</span>
-<span class="nc" id="L239">	}</span>
+<span class="fc" id="L252">		this.strokeColor = stroke;</span>
+<span class="fc" id="L253">	}</span>
 
 	public final void setStrokeWidth(double width, double[] dash) {
-<span class="nc" id="L242">		this.strokeWidth = width;</span>
-<span class="nc bnc" id="L243" title="All 2 branches missed.">		if (dash == null) {</span>
-<span class="nc" id="L244">			this.strokeDash = null;</span>
+<span class="fc" id="L256">		this.strokeWidth = width;</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">		if (dash == null) {</span>
+<span class="fc" id="L258">			this.strokeDash = null;</span>
 		} else {
-<span class="nc" id="L246">			this.strokeDash = new float[dash.length];</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">			for (int i = 0; i &lt; dash.length; i++)</span>
-<span class="nc" id="L248">				this.strokeDash[i] = (float) dash[i];</span>
+<span class="fc" id="L260">			this.strokeDash = new float[dash.length];</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">			for (int i = 0; i &lt; dash.length; i++)</span>
+<span class="fc" id="L262">				this.strokeDash[i] = (float) dash[i];</span>
 		}
-<span class="nc" id="L250">	}</span>
+<span class="fc" id="L264">	}</span>
 
 	public void setHidden(boolean hidden) {
-<span class="nc" id="L253">		this.hidden = hidden;</span>
-<span class="nc" id="L254">	}</span>
+<span class="fc" id="L267">		this.hidden = hidden;</span>
+<span class="fc" id="L268">	}</span>
 
 	// ----------------------------------------------------------------------
 	// internal helpers
 	// ----------------------------------------------------------------------
 
 	private void applyStroke() {
-<span class="nc" id="L261">		cb.setLineWidth((float) strokeWidth);</span>
-<span class="nc bnc" id="L262" title="All 2 branches missed.">		if (strokeColor != null)</span>
-<span class="nc" id="L263">			cb.setColorStroke(strokeColor);</span>
-<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (strokeDash == null)</span>
-<span class="nc" id="L265">			cb.setLineDash(0);</span>
-<span class="nc bnc" id="L266" title="All 2 branches missed.">		else if (strokeDash.length &gt;= 2)</span>
-<span class="nc" id="L267">			cb.setLineDash(strokeDash[0], strokeDash[1], 0);</span>
+<span class="fc" id="L275">		cb.setLineWidth((float) strokeWidth);</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">		if (strokeColor != null)</span>
+<span class="fc" id="L277">			cb.setColorStroke(strokeColor);</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">		if (strokeDash == null)</span>
+<span class="fc" id="L279">			cb.setLineDash(0);</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">		else if (strokeDash.length &gt;= 2)</span>
+<span class="fc" id="L281">			cb.setLineDash(strokeDash[0], strokeDash[1], 0);</span>
 		else
-<span class="nc" id="L269">			cb.setLineDash(strokeDash[0], strokeDash[0], 0);</span>
-<span class="nc" id="L270">	}</span>
+<span class="nc" id="L283">			cb.setLineDash(strokeDash[0], strokeDash[0], 0);</span>
+<span class="fc" id="L284">	}</span>
 
 	private void applyFill() {
-<span class="nc bnc" id="L273" title="All 2 branches missed.">		if (fillColor != null)</span>
-<span class="nc" id="L274">			cb.setColorFill(fillColor);</span>
-<span class="nc" id="L275">	}</span>
+<span class="fc bfc" id="L287" title="All 2 branches covered.">		if (fillColor != null)</span>
+<span class="fc" id="L288">			cb.setColorFill(fillColor);</span>
+<span class="fc" id="L289">	}</span>
 
 	private boolean hasFill() {
-<span class="nc bnc" id="L278" title="All 4 branches missed.">		return fillColor != null &amp;&amp; fillColor.getAlpha() &gt; 0;</span>
+<span class="fc bfc" id="L292" title="All 4 branches covered.">		return fillColor != null &amp;&amp; fillColor.getAlpha() &gt; 0;</span>
 	}
 
 	private boolean hasStroke() {
-<span class="nc bnc" id="L282" title="All 6 branches missed.">		return strokeColor != null &amp;&amp; strokeColor.getAlpha() &gt; 0 &amp;&amp; strokeWidth &gt; 0;</span>
+<span class="pc bpc" id="L296" title="1 of 6 branches missed.">		return strokeColor != null &amp;&amp; strokeColor.getAlpha() &gt; 0 &amp;&amp; strokeWidth &gt; 0;</span>
 	}
 
 	private void paintPath() {
-<span class="nc" id="L286">		final boolean f = hasFill();</span>
-<span class="nc" id="L287">		final boolean s = hasStroke();</span>
-<span class="nc bnc" id="L288" title="All 4 branches missed.">		if (f &amp;&amp; s)</span>
-<span class="nc" id="L289">			cb.fillStroke();</span>
-<span class="nc bnc" id="L290" title="All 2 branches missed.">		else if (f)</span>
-<span class="nc" id="L291">			cb.fill();</span>
-<span class="nc bnc" id="L292" title="All 2 branches missed.">		else if (s)</span>
-<span class="nc" id="L293">			cb.stroke();</span>
+<span class="fc" id="L300">		final boolean f = hasFill();</span>
+<span class="fc" id="L301">		final boolean s = hasStroke();</span>
+<span class="fc bfc" id="L302" title="All 4 branches covered.">		if (f &amp;&amp; s)</span>
+<span class="fc" id="L303">			cb.fillStroke();</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">		else if (f)</span>
+<span class="fc" id="L305">			cb.fill();</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">		else if (s)</span>
+<span class="fc" id="L307">			cb.stroke();</span>
 		else
-<span class="nc" id="L295">			cb.newPath();</span>
-<span class="nc" id="L296">	}</span>
+<span class="fc" id="L309">			cb.newPath();</span>
+<span class="fc" id="L310">	}</span>
 
 	// ----------------------------------------------------------------------
 	// shape primitives (mirror SvgGraphics)
 	// ----------------------------------------------------------------------
 
 	public void pdfRectangle(double x, double y, double width, double height, double rx, double ry) {
-<span class="nc bnc" id="L303" title="All 4 branches missed.">		if (width &lt;= 0 || height &lt;= 0)</span>
-<span class="nc" id="L304">			return;</span>
-<span class="nc bnc" id="L305" title="All 2 branches missed.">		if (hidden)</span>
-<span class="nc" id="L306">			return;</span>
-<span class="nc" id="L307">		openDocumentIfNeeded();</span>
-<span class="nc" id="L308">		applyStroke();</span>
-<span class="nc" id="L309">		applyFill();</span>
+<span class="pc bpc" id="L317" title="2 of 4 branches missed.">		if (width &lt;= 0 || height &lt;= 0)</span>
+<span class="nc" id="L318">			return;</span>
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L320">			return;</span>
+<span class="fc" id="L321">		openDocumentIfNeeded();</span>
+<span class="fc" id="L322">		applyStroke();</span>
+<span class="fc" id="L323">		applyFill();</span>
 		// PDF rectangle takes its lower-left corner. In our (Y-negated) world,
 		// the SVG top-left (x, y) becomes the PDF *upper*-left at (x, -y),
 		// which means the lower-left is at (x, -y - height) = (x, -(y+height)).
-<span class="nc bnc" id="L313" title="All 4 branches missed.">		if (rx &gt; 0 &amp;&amp; ry &gt; 0)</span>
-<span class="nc" id="L314">			cb.roundRectangle((float) x, ny(y + height), (float) width, (float) height, (float) Math.min(rx, ry));</span>
+<span class="pc bpc" id="L327" title="1 of 4 branches missed.">		if (rx &gt; 0 &amp;&amp; ry &gt; 0)</span>
+<span class="fc" id="L328">			cb.roundRectangle((float) x, ny(y + height), (float) width, (float) height, (float) Math.min(rx, ry));</span>
 		else
-<span class="nc" id="L316">			cb.rectangle((float) x, ny(y + height), (float) width, (float) height);</span>
-<span class="nc" id="L317">		paintPath();</span>
-<span class="nc" id="L318">		ensureVisible(x + width, y + height);</span>
-<span class="nc" id="L319">	}</span>
+<span class="fc" id="L330">			cb.rectangle((float) x, ny(y + height), (float) width, (float) height);</span>
+<span class="fc" id="L331">		paintPath();</span>
+<span class="fc" id="L332">		ensureVisible(x + width, y + height);</span>
+<span class="fc" id="L333">	}</span>
 
 	public void pdfLine(double x1, double y1, double x2, double y2) {
-<span class="nc bnc" id="L322" title="All 2 branches missed.">		if (hidden)</span>
-<span class="nc" id="L323">			return;</span>
-<span class="nc" id="L324">		openDocumentIfNeeded();</span>
-<span class="nc" id="L325">		applyStroke();</span>
-<span class="nc" id="L326">		cb.moveTo((float) x1, ny(y1));</span>
-<span class="nc" id="L327">		cb.lineTo((float) x2, ny(y2));</span>
-<span class="nc" id="L328">		cb.stroke();</span>
-<span class="nc" id="L329">		ensureVisible(x1, y1);</span>
-<span class="nc" id="L330">		ensureVisible(x2, y2);</span>
-<span class="nc" id="L331">	}</span>
+<span class="pc bpc" id="L336" title="1 of 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L337">			return;</span>
+<span class="fc" id="L338">		openDocumentIfNeeded();</span>
+<span class="fc" id="L339">		applyStroke();</span>
+<span class="fc" id="L340">		cb.moveTo((float) x1, ny(y1));</span>
+<span class="fc" id="L341">		cb.lineTo((float) x2, ny(y2));</span>
+<span class="fc" id="L342">		cb.stroke();</span>
+<span class="fc" id="L343">		ensureVisible(x1, y1);</span>
+<span class="fc" id="L344">		ensureVisible(x2, y2);</span>
+<span class="fc" id="L345">	}</span>
 
 	public void pdfEllipse(double cx, double cy, double rx, double ry) {
-<span class="nc bnc" id="L334" title="All 2 branches missed.">		if (hidden)</span>
-<span class="nc" id="L335">			return;</span>
-<span class="nc" id="L336">		openDocumentIfNeeded();</span>
-<span class="nc" id="L337">		applyStroke();</span>
-<span class="nc" id="L338">		applyFill();</span>
+<span class="pc bpc" id="L348" title="1 of 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L349">			return;</span>
+<span class="fc" id="L350">		openDocumentIfNeeded();</span>
+<span class="fc" id="L351">		applyStroke();</span>
+<span class="fc" id="L352">		applyFill();</span>
 		// PdfContentByte.ellipse takes a bounding box (x1, y1, x2, y2). With
 		// Y negated, the box runs from (cx - rx, -cy - ry) to (cx + rx, -cy + ry).
-<span class="nc" id="L341">		cb.ellipse((float) (cx - rx), ny(cy + ry), (float) (cx + rx), ny(cy - ry));</span>
-<span class="nc" id="L342">		paintPath();</span>
-<span class="nc" id="L343">		ensureVisible(cx + rx, cy + ry);</span>
-<span class="nc" id="L344">	}</span>
+<span class="fc" id="L355">		cb.ellipse((float) (cx - rx), ny(cy + ry), (float) (cx + rx), ny(cy - ry));</span>
+<span class="fc" id="L356">		paintPath();</span>
+<span class="fc" id="L357">		ensureVisible(cx + rx, cy + ry);</span>
+<span class="fc" id="L358">	}</span>
 
 	public void pdfArcEllipse(double rx, double ry, double x1, double y1, double x2, double y2) {
-<span class="nc bnc" id="L347" title="All 2 branches missed.">		if (hidden)</span>
-<span class="nc" id="L348">			return;</span>
-<span class="nc" id="L349">		openDocumentIfNeeded();</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L362">			return;</span>
+<span class="nc" id="L363">		openDocumentIfNeeded();</span>
 
-<span class="nc" id="L351">		applyStroke();</span>
-<span class="nc" id="L352">		applyFill();</span>
+<span class="nc" id="L365">		applyStroke();</span>
+<span class="nc" id="L366">		applyFill();</span>
 
 		// Mirrors the SVG path &quot;M x1,y1 A rx,ry 0 0 0 x2,y2&quot; emitted by the
 		// original SvgGraphics.svgArcEllipse: xAxisRotation=0, largeArc=0,
 		// sweep=0. DriverEllipsePdf has already picked which endpoint goes
 		// first based on the sign of `extend`, so we can keep flags fixed.
-<span class="nc" id="L358">		cb.moveTo((float) x1, ny(y1));</span>
-<span class="nc" id="L359">		arcToCubics(x1, y1, rx, ry, /* phiDeg */ 0, /* largeArc */ false, /* sweep */ false, x2, y2);</span>
-<span class="nc" id="L360">		paintPath();</span>
+<span class="nc" id="L372">		cb.moveTo((float) x1, ny(y1));</span>
+<span class="nc" id="L373">		arcToCubics(x1, y1, rx, ry, /* phiDeg */ 0, /* largeArc */ false, /* sweep */ false, x2, y2);</span>
+<span class="nc" id="L374">		paintPath();</span>
 
-<span class="nc" id="L362">		ensureVisible(x1, y1);</span>
-<span class="nc" id="L363">		ensureVisible(x2, y2);</span>
-<span class="nc" id="L364">	}</span>
+<span class="nc" id="L376">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L377">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L378">	}</span>
 
 	public void pdfPolygon(double... points) {
-<span class="nc bnc" id="L367" title="All 4 branches missed.">		if (points.length &lt; 4 || (points.length &amp; 1) != 0)</span>
-<span class="nc" id="L368">			return;</span>
-<span class="nc bnc" id="L369" title="All 2 branches missed.">		if (hidden)</span>
-<span class="nc" id="L370">			return;</span>
-<span class="nc" id="L371">		openDocumentIfNeeded();</span>
-<span class="nc" id="L372">		applyStroke();</span>
-<span class="nc" id="L373">		applyFill();</span>
-<span class="nc" id="L374">		cb.moveTo((float) points[0], ny(points[1]));</span>
-<span class="nc bnc" id="L375" title="All 2 branches missed.">		for (int i = 2; i &lt; points.length; i += 2)</span>
-<span class="nc" id="L376">			cb.lineTo((float) points[i], ny(points[i + 1]));</span>
-<span class="nc" id="L377">		cb.closePath();</span>
-<span class="nc" id="L378">		paintPath();</span>
-<span class="nc bnc" id="L379" title="All 2 branches missed.">		for (int i = 0; i &lt; points.length; i += 2)</span>
-<span class="nc" id="L380">			ensureVisible(points[i], points[i + 1]);</span>
-<span class="nc" id="L381">	}</span>
+<span class="pc bpc" id="L381" title="2 of 4 branches missed.">		if (points.length &lt; 4 || (points.length &amp; 1) != 0)</span>
+<span class="nc" id="L382">			return;</span>
+<span class="pc bpc" id="L383" title="1 of 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L384">			return;</span>
+<span class="fc" id="L385">		openDocumentIfNeeded();</span>
+<span class="fc" id="L386">		applyStroke();</span>
+<span class="fc" id="L387">		applyFill();</span>
+<span class="fc" id="L388">		cb.moveTo((float) points[0], ny(points[1]));</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">		for (int i = 2; i &lt; points.length; i += 2)</span>
+<span class="fc" id="L390">			cb.lineTo((float) points[i], ny(points[i + 1]));</span>
+<span class="fc" id="L391">		cb.closePath();</span>
+<span class="fc" id="L392">		paintPath();</span>
+<span class="fc bfc" id="L393" title="All 2 branches covered.">		for (int i = 0; i &lt; points.length; i += 2)</span>
+<span class="fc" id="L394">			ensureVisible(points[i], points[i + 1]);</span>
+<span class="fc" id="L395">	}</span>
 
 	// ----------------------------------------------------------------------
 	// path drawing (newpath/moveto/.../fill)
 	// ----------------------------------------------------------------------
 
 	public void newpath() {
-<span class="nc" id="L388">		openDocumentIfNeeded();</span>
-<span class="nc" id="L389">		applyStroke();</span>
-<span class="nc" id="L390">		applyFill();</span>
-<span class="nc" id="L391">		pathOpen = true;</span>
-<span class="nc" id="L392">	}</span>
-
-	public void moveto(double x, double y) {
-<span class="nc" id="L395">		cb.moveTo((float) x, ny(y));</span>
-<span class="nc" id="L396">		ensureVisible(x, y);</span>
-<span class="nc" id="L397">	}</span>
-
-	public void lineto(double x, double y) {
-<span class="nc" id="L400">		cb.lineTo((float) x, ny(y));</span>
-<span class="nc" id="L401">		ensureVisible(x, y);</span>
-<span class="nc" id="L402">	}</span>
-
-	public void closepath() {
-<span class="nc" id="L405">		cb.closePath();</span>
+<span class="nc" id="L402">		openDocumentIfNeeded();</span>
+<span class="nc" id="L403">		applyStroke();</span>
+<span class="nc" id="L404">		applyFill();</span>
+<span class="nc" id="L405">		pathOpen = true;</span>
 <span class="nc" id="L406">	}</span>
 
+	public void moveto(double x, double y) {
+<span class="nc" id="L409">		cb.moveTo((float) x, ny(y));</span>
+<span class="nc" id="L410">		ensureVisible(x, y);</span>
+<span class="nc" id="L411">	}</span>
+
+	public void lineto(double x, double y) {
+<span class="nc" id="L414">		cb.lineTo((float) x, ny(y));</span>
+<span class="nc" id="L415">		ensureVisible(x, y);</span>
+<span class="nc" id="L416">	}</span>
+
+	public void closepath() {
+<span class="nc" id="L419">		cb.closePath();</span>
+<span class="nc" id="L420">	}</span>
+
 	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
-<span class="nc" id="L409">		cb.curveTo((float) x1, ny(y1), (float) x2, ny(y2), (float) x3, ny(y3));</span>
-<span class="nc" id="L410">		ensureVisible(x1, y1);</span>
-<span class="nc" id="L411">		ensureVisible(x2, y2);</span>
-<span class="nc" id="L412">		ensureVisible(x3, y3);</span>
-<span class="nc" id="L413">	}</span>
+<span class="nc" id="L423">		cb.curveTo((float) x1, ny(y1), (float) x2, ny(y2), (float) x3, ny(y3));</span>
+<span class="nc" id="L424">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L425">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L426">		ensureVisible(x3, y3);</span>
+<span class="nc" id="L427">	}</span>
 
 	/**
 	 * Quadratic bezier. PDF does not have a native quad operator, so we convert to
@@ -425,41 +439,41 @@ public class PdfGraphics {
 	 * keeps the formula readable.
 	 */
 	public void quadto(double x0, double y0, double x1, double y1, double x2, double y2) {
-<span class="nc" id="L428">		final double c1x = x0 + 2.0 / 3.0 * (x1 - x0);</span>
-<span class="nc" id="L429">		final double c1y = y0 + 2.0 / 3.0 * (y1 - y0);</span>
-<span class="nc" id="L430">		final double c2x = x2 + 2.0 / 3.0 * (x1 - x2);</span>
-<span class="nc" id="L431">		final double c2y = y2 + 2.0 / 3.0 * (y1 - y2);</span>
-<span class="nc" id="L432">		cb.curveTo((float) c1x, ny(c1y), (float) c2x, ny(c2y), (float) x2, ny(y2));</span>
-<span class="nc" id="L433">		ensureVisible(x1, y1);</span>
-<span class="nc" id="L434">		ensureVisible(x2, y2);</span>
-<span class="nc" id="L435">	}</span>
+<span class="nc" id="L442">		final double c1x = x0 + 2.0 / 3.0 * (x1 - x0);</span>
+<span class="nc" id="L443">		final double c1y = y0 + 2.0 / 3.0 * (y1 - y0);</span>
+<span class="nc" id="L444">		final double c2x = x2 + 2.0 / 3.0 * (x1 - x2);</span>
+<span class="nc" id="L445">		final double c2y = y2 + 2.0 / 3.0 * (y1 - y2);</span>
+<span class="nc" id="L446">		cb.curveTo((float) c1x, ny(c1y), (float) c2x, ny(c2y), (float) x2, ny(y2));</span>
+<span class="nc" id="L447">		ensureVisible(x1, y1);</span>
+<span class="nc" id="L448">		ensureVisible(x2, y2);</span>
+<span class="nc" id="L449">	}</span>
 
 	public void fill(int windingRule) {
-<span class="nc bnc" id="L438" title="All 2 branches missed.">		if (!pathOpen)</span>
-<span class="nc" id="L439">			return;</span>
-<span class="nc" id="L440">		pathOpen = false;</span>
-<span class="nc" id="L441">		final boolean f = hasFill();</span>
-<span class="nc" id="L442">		final boolean s = hasStroke();</span>
-<span class="nc bnc" id="L443" title="All 2 branches missed.">		if (windingRule == PathIterator.WIND_EVEN_ODD) {</span>
-<span class="nc bnc" id="L444" title="All 4 branches missed.">			if (f &amp;&amp; s)</span>
-<span class="nc" id="L445">				cb.eoFillStroke();</span>
-<span class="nc bnc" id="L446" title="All 2 branches missed.">			else if (f)</span>
-<span class="nc" id="L447">				cb.eoFill();</span>
-<span class="nc bnc" id="L448" title="All 2 branches missed.">			else if (s)</span>
-<span class="nc" id="L449">				cb.stroke();</span>
+<span class="nc bnc" id="L452" title="All 2 branches missed.">		if (!pathOpen)</span>
+<span class="nc" id="L453">			return;</span>
+<span class="nc" id="L454">		pathOpen = false;</span>
+<span class="nc" id="L455">		final boolean f = hasFill();</span>
+<span class="nc" id="L456">		final boolean s = hasStroke();</span>
+<span class="nc bnc" id="L457" title="All 2 branches missed.">		if (windingRule == PathIterator.WIND_EVEN_ODD) {</span>
+<span class="nc bnc" id="L458" title="All 4 branches missed.">			if (f &amp;&amp; s)</span>
+<span class="nc" id="L459">				cb.eoFillStroke();</span>
+<span class="nc bnc" id="L460" title="All 2 branches missed.">			else if (f)</span>
+<span class="nc" id="L461">				cb.eoFill();</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">			else if (s)</span>
+<span class="nc" id="L463">				cb.stroke();</span>
 			else
-<span class="nc" id="L451">				cb.newPath();</span>
+<span class="nc" id="L465">				cb.newPath();</span>
 		} else {
-<span class="nc bnc" id="L453" title="All 4 branches missed.">			if (f &amp;&amp; s)</span>
-<span class="nc" id="L454">				cb.fillStroke();</span>
-<span class="nc bnc" id="L455" title="All 2 branches missed.">			else if (f)</span>
-<span class="nc" id="L456">				cb.fill();</span>
-<span class="nc bnc" id="L457" title="All 2 branches missed.">			else if (s)</span>
-<span class="nc" id="L458">				cb.stroke();</span>
+<span class="nc bnc" id="L467" title="All 4 branches missed.">			if (f &amp;&amp; s)</span>
+<span class="nc" id="L468">				cb.fillStroke();</span>
+<span class="nc bnc" id="L469" title="All 2 branches missed.">			else if (f)</span>
+<span class="nc" id="L470">				cb.fill();</span>
+<span class="nc bnc" id="L471" title="All 2 branches missed.">			else if (s)</span>
+<span class="nc" id="L472">				cb.stroke();</span>
 			else
-<span class="nc" id="L460">				cb.newPath();</span>
+<span class="nc" id="L474">				cb.newPath();</span>
 		}
-<span class="nc" id="L462">	}</span>
+<span class="nc" id="L476">	}</span>
 
 	/**
 	 * Replay a Java2D {@link PathIterator} into the current PDF stream. Used by the
@@ -471,42 +485,42 @@ public class PdfGraphics {
 	 * transparently there.
 	 */
 	public void drawPathIterator(double x, double y, PathIterator path) {
-<span class="nc" id="L474">		newpath();</span>
-<span class="nc" id="L475">		final double[] coord = new double[6];</span>
-<span class="nc" id="L476">		double curX = 0, curY = 0;</span>
-<span class="nc bnc" id="L477" title="All 2 branches missed.">		while (!path.isDone()) {</span>
-<span class="nc" id="L478">			final int code = path.currentSegment(coord);</span>
-<span class="nc bnc" id="L479" title="All 6 branches missed.">			switch (code) {</span>
+<span class="nc" id="L488">		newpath();</span>
+<span class="nc" id="L489">		final double[] coord = new double[6];</span>
+<span class="nc" id="L490">		double curX = 0, curY = 0;</span>
+<span class="nc bnc" id="L491" title="All 2 branches missed.">		while (!path.isDone()) {</span>
+<span class="nc" id="L492">			final int code = path.currentSegment(coord);</span>
+<span class="nc bnc" id="L493" title="All 6 branches missed.">			switch (code) {</span>
 			case PathIterator.SEG_MOVETO:
-<span class="nc" id="L481">				moveto(coord[0] + x, coord[1] + y);</span>
-<span class="nc" id="L482">				curX = coord[0] + x;</span>
-<span class="nc" id="L483">				curY = coord[1] + y;</span>
-<span class="nc" id="L484">				break;</span>
+<span class="nc" id="L495">				moveto(coord[0] + x, coord[1] + y);</span>
+<span class="nc" id="L496">				curX = coord[0] + x;</span>
+<span class="nc" id="L497">				curY = coord[1] + y;</span>
+<span class="nc" id="L498">				break;</span>
 			case PathIterator.SEG_LINETO:
-<span class="nc" id="L486">				lineto(coord[0] + x, coord[1] + y);</span>
-<span class="nc" id="L487">				curX = coord[0] + x;</span>
-<span class="nc" id="L488">				curY = coord[1] + y;</span>
-<span class="nc" id="L489">				break;</span>
+<span class="nc" id="L500">				lineto(coord[0] + x, coord[1] + y);</span>
+<span class="nc" id="L501">				curX = coord[0] + x;</span>
+<span class="nc" id="L502">				curY = coord[1] + y;</span>
+<span class="nc" id="L503">				break;</span>
 			case PathIterator.SEG_QUADTO:
-<span class="nc" id="L491">				quadto(curX, curY, coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
-<span class="nc" id="L492">				curX = coord[2] + x;</span>
-<span class="nc" id="L493">				curY = coord[3] + y;</span>
-<span class="nc" id="L494">				break;</span>
+<span class="nc" id="L505">				quadto(curX, curY, coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
+<span class="nc" id="L506">				curX = coord[2] + x;</span>
+<span class="nc" id="L507">				curY = coord[3] + y;</span>
+<span class="nc" id="L508">				break;</span>
 			case PathIterator.SEG_CUBICTO:
-<span class="nc" id="L496">				curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);</span>
-<span class="nc" id="L497">				curX = coord[4] + x;</span>
-<span class="nc" id="L498">				curY = coord[5] + y;</span>
-<span class="nc" id="L499">				break;</span>
+<span class="nc" id="L510">				curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);</span>
+<span class="nc" id="L511">				curX = coord[4] + x;</span>
+<span class="nc" id="L512">				curY = coord[5] + y;</span>
+<span class="nc" id="L513">				break;</span>
 			case PathIterator.SEG_CLOSE:
-<span class="nc" id="L501">				closepath();</span>
-<span class="nc" id="L502">				break;</span>
+<span class="nc" id="L515">				closepath();</span>
+<span class="nc" id="L516">				break;</span>
 			default:
-<span class="nc" id="L504">				throw new UnsupportedOperationException(&quot;code=&quot; + code);</span>
+<span class="nc" id="L518">				throw new UnsupportedOperationException(&quot;code=&quot; + code);</span>
 			}
-<span class="nc" id="L506">			path.next();</span>
-<span class="nc" id="L507">		}</span>
-<span class="nc" id="L508">		fill(path.getWindingRule());</span>
-<span class="nc" id="L509">	}</span>
+<span class="nc" id="L520">			path.next();</span>
+<span class="nc" id="L521">		}</span>
+<span class="nc" id="L522">		fill(path.getWindingRule());</span>
+<span class="nc" id="L523">	}</span>
 
 	// ----------------------------------------------------------------------
 	// text
@@ -521,96 +535,89 @@ public class PdfGraphics {
 	 * {@code (x, -y)}.
 	 */
 	public void pdfText(String text, double x, double y, BaseFont font, int fontSize) {
-<span class="nc bnc" id="L524" title="All 2 branches missed.">		if (hidden)</span>
-<span class="nc" id="L525">			return;</span>
-<span class="nc bnc" id="L526" title="All 6 branches missed.">		if (text == null || text.isEmpty() || fontSize == 0)</span>
-<span class="nc" id="L527">			return;</span>
-<span class="nc" id="L528">		openDocumentIfNeeded();</span>
+<span class="pc bpc" id="L538" title="1 of 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L539">			return;</span>
+<span class="pc bpc" id="L540" title="3 of 6 branches missed.">		if (text == null || text.isEmpty() || fontSize == 0)</span>
+<span class="nc" id="L541">			return;</span>
+<span class="fc" id="L542">		openDocumentIfNeeded();</span>
 
-<span class="nc" id="L530">		cb.beginText();</span>
-<span class="nc bnc" id="L531" title="All 2 branches missed.">		cb.setColorFill(fillColor != null ? fillColor : Color.BLACK);</span>
-<span class="nc" id="L532">		cb.setFontAndSize(font, fontSize);</span>
+<span class="fc" id="L544">		cb.beginText();</span>
+<span class="pc bpc" id="L545" title="1 of 2 branches missed.">		cb.setColorFill(fillColor != null ? fillColor : Color.BLACK);</span>
+<span class="fc" id="L546">		cb.setFontAndSize(font, fontSize);</span>
 
 		// Default text matrix (identity, glyphs upright). Just place the
 		// baseline at (x, -y).
-<span class="nc" id="L536">		cb.setTextMatrix((float) x, ny(y));</span>
+<span class="fc" id="L550">		cb.setTextMatrix((float) x, ny(y));</span>
 
-<span class="nc" id="L538">		cb.showText(text);</span>
-<span class="nc" id="L539">		cb.endText();</span>
+<span class="fc" id="L552">		cb.showText(text);</span>
+<span class="fc" id="L553">		cb.endText();</span>
 
-<span class="nc" id="L541">		ensureVisible(x + font.getWidthPoint(text, fontSize), y);</span>
-<span class="nc" id="L542">	}</span>
+<span class="fc" id="L555">		ensureVisible(x + font.getWidthPoint(text, fontSize), y);</span>
+<span class="fc" id="L556">	}</span>
 
 	// ----------------------------------------------------------------------
 	// images (PNG / JPEG)
 	// ----------------------------------------------------------------------
 
-	/**
-	 * Insert a raster image (PNG/JPEG bytes) at position (x, y).
-	 *
-	 * With Y negation, the image's bottom-left in PDF coords lands at
-	 * {@code (x, -(y + height))} - same formula as for rectangles. No local matrix
-	 * flip is needed; the image stays right-side-up.
-	 *
-	 * @param pngOrJpegBytes encoded image data.
-	 * @param x              top-left X (SVG convention).
-	 * @param y              top-left Y (SVG convention).
-	 * @param width          target render width.
-	 * @param height         target render height.
-	 */
-	public void pdfImage(byte[] pngOrJpegBytes, double x, double y, double width, double height) {
-<span class="nc bnc" id="L562" title="All 2 branches missed.">		if (hidden)</span>
-<span class="nc" id="L563">			return;</span>
-<span class="nc" id="L564">		openDocumentIfNeeded();</span>
-		try {
-<span class="nc" id="L566">			final Image img = Image.getInstance(pngOrJpegBytes);</span>
-<span class="nc" id="L567">			img.scaleAbsolute((float) width, (float) height);</span>
-<span class="nc" id="L568">			img.setAbsolutePosition((float) x, ny(y + height));</span>
-<span class="nc" id="L569">			cb.addImage(img);</span>
-<span class="nc" id="L570">		} catch (Exception e) {</span>
-<span class="nc" id="L571">			throw new IllegalStateException(&quot;Cannot embed image&quot;, e);</span>
-<span class="nc" id="L572">		}</span>
-<span class="nc" id="L573">		ensureVisible(x + width, y + height);</span>
-<span class="nc" id="L574">	}</span>
 	
 	/**
-	 * Insert a raster {@link BufferedImage} at position (x, y), rendered at its
-	 * natural pixel size (1 px = 1 user unit). Used by {@code DriverImagePdf} for
-	 * {@link net.sourceforge.plantuml.klimt.shape.UImage} content.
+	 * Insert a raster {@link PortableImage} at position (x, y), rendered at its
+	 * natural pixel size (1 px = 1 user unit). This does not use AWT, so it works
+	 * on the JVM and in the C build alike: the pixels are handed to OpenPDF as raw
+	 * RGB samples, with an 8-bit soft mask when the image has some transparency.
 	 *
-	 * &lt;p&gt;
-	 * Handed straight to OpenPDF via
-	 * {@code Image.getInstance(java.awt.Image, Color, boolean)}: passing a
-	 * {@code null} mask color makes OpenPDF derive the transparency mask from the
-	 * image's own alpha channel (PlantUML icons and sprites rely on it), and
-	 * {@code forceBW=false} keeps the colors. Positioning and Y-negation follow the
-	 * same convention as {@link #pdfImage(byte[], double, double, double, double)}.
-	 *
-	 * @param bufferedImage the image to embed.
-	 * @param x             top-left X (SVG convention).
-	 * @param y             top-left Y (SVG convention).
+	 * @param image the image to embed.
+	 * @param x     top-left X (SVG convention).
+	 * @param y     top-left Y (SVG convention).
 	 * @throws IOException if OpenPDF cannot build the image.
 	 */
-	public void pdfImage(BufferedImage bufferedImage, double x, double y) throws IOException {
-<span class="nc bnc" id="L595" title="All 2 branches missed.">		if (hidden)</span>
-<span class="nc" id="L596">			return;</span>
-<span class="nc bnc" id="L597" title="All 2 branches missed.">		if (bufferedImage == null)</span>
-<span class="nc" id="L598">			return;</span>
-<span class="nc" id="L599">		openDocumentIfNeeded();</span>
-<span class="nc" id="L600">		final int width = bufferedImage.getWidth();</span>
-<span class="nc" id="L601">		final int height = bufferedImage.getHeight();</span>
-<span class="nc bnc" id="L602" title="All 4 branches missed.">		if (width &lt;= 0 || height &lt;= 0)</span>
-<span class="nc" id="L603">			return;</span>
+	public void pdfImage(PortableImage image, double x, double y) throws IOException {
+<span class="pc bpc" id="L575" title="1 of 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L576">			return;</span>
+<span class="pc bpc" id="L577" title="1 of 2 branches missed.">		if (image == null)</span>
+<span class="nc" id="L578">			return;</span>
+<span class="fc" id="L579">		final int width = image.getWidth();</span>
+<span class="fc" id="L580">		final int height = image.getHeight();</span>
+<span class="pc bpc" id="L581" title="2 of 4 branches missed.">		if (width &lt;= 0 || height &lt;= 0)</span>
+<span class="nc" id="L582">			return;</span>
+<span class="fc" id="L583">		openDocumentIfNeeded();</span>
+<span class="fc" id="L584">		final byte[] rgb = new byte[width * height * 3];</span>
+<span class="fc" id="L585">		final byte[] alpha = new byte[width * height];</span>
+<span class="fc" id="L586">		boolean transparent = false;</span>
+<span class="fc" id="L587">		int pos = 0;</span>
+<span class="fc bfc" id="L588" title="All 2 branches covered.">		for (int j = 0; j &lt; height; j++) {</span>
+<span class="fc bfc" id="L589" title="All 2 branches covered.">			for (int i = 0; i &lt; width; i++) {</span>
+<span class="fc" id="L590">				final int argb = image.getRGB(i, j);</span>
+<span class="fc" id="L591">				final int a = (argb &gt;&gt;&gt; 24) &amp; 0xFF;</span>
+<span class="fc" id="L592">				rgb[pos * 3] = (byte) (argb &gt;&gt; 16);</span>
+<span class="fc" id="L593">				rgb[pos * 3 + 1] = (byte) (argb &gt;&gt; 8);</span>
+<span class="fc" id="L594">				rgb[pos * 3 + 2] = (byte) argb;</span>
+<span class="fc" id="L595">				alpha[pos] = (byte) a;</span>
+<span class="fc bfc" id="L596" title="All 2 branches covered.">				if (a != 0xFF)</span>
+<span class="fc" id="L597">					transparent = true;</span>
+<span class="fc" id="L598">				pos++;</span>
+			}
+		}
 		try {
-<span class="nc" id="L605">			final Image img = Image.getInstance(bufferedImage, null, false);</span>
-<span class="nc" id="L606">			img.setAbsolutePosition((float) x, ny(y + height));</span>
-<span class="nc" id="L607">			cb.addImage(img);</span>
-<span class="nc" id="L608">		} catch (BadElementException e) {</span>
-<span class="nc" id="L609">			throw new IOException(&quot;Cannot embed image&quot;, e);</span>
-<span class="nc" id="L610">		}</span>
-<span class="nc" id="L611">		ensureVisible(x + width, y + height);</span>
-<span class="nc" id="L612">	}</span>
-
+<span class="fc" id="L602">			final Image img = Image.getInstance(width, height, 3, 8, rgb);</span>
+<span class="pc bpc" id="L603" title="1 of 2 branches missed.">			if (option.isDeterministic())</span>
+<span class="fc" id="L604">				img.setCompressionLevel(PdfStream.NO_COMPRESSION);</span>
+<span class="pc bpc" id="L605" title="1 of 2 branches missed.">			if (transparent) {</span>
+<span class="fc" id="L606">				final Image mask = Image.getInstance(width, height, 1, 8, alpha);</span>
+<span class="pc bpc" id="L607" title="1 of 2 branches missed.">				if (option.isDeterministic())</span>
+<span class="fc" id="L608">					mask.setCompressionLevel(PdfStream.NO_COMPRESSION);</span>
+<span class="fc" id="L609">				mask.makeMask();</span>
+<span class="fc" id="L610">				img.setImageMask(mask);</span>
+			}
+<span class="fc" id="L612">			img.setAbsolutePosition((float) x, ny(y + height));</span>
+<span class="fc" id="L613">			cb.addImage(img);</span>
+<span class="nc" id="L614">		} catch (BadElementException e) {</span>
+<span class="nc" id="L615">			throw new IOException(&quot;Cannot embed image&quot;, e);</span>
+<span class="nc" id="L616">		} catch (org.openpdf.text.DocumentException e) {</span>
+<span class="nc" id="L617">			throw new IOException(&quot;Cannot embed image&quot;, e);</span>
+<span class="fc" id="L618">		}</span>
+<span class="fc" id="L619">		ensureVisible(x + width, y + height);</span>
+<span class="fc" id="L620">	}</span>
 
 	// ----------------------------------------------------------------------
 	// links
@@ -624,26 +631,26 @@ public class PdfGraphics {
 	private static final class PendingLink {
 		final String url;
 		final String title;
-<span class="nc" id="L627">		double llx = Double.POSITIVE_INFINITY;</span>
-<span class="nc" id="L628">		double lly = Double.POSITIVE_INFINITY;</span>
-<span class="nc" id="L629">		double urx = Double.NEGATIVE_INFINITY;</span>
-<span class="nc" id="L630">		double ury = Double.NEGATIVE_INFINITY;</span>
+<span class="nc" id="L634">		double llx = Double.POSITIVE_INFINITY;</span>
+<span class="nc" id="L635">		double lly = Double.POSITIVE_INFINITY;</span>
+<span class="nc" id="L636">		double urx = Double.NEGATIVE_INFINITY;</span>
+<span class="nc" id="L637">		double ury = Double.NEGATIVE_INFINITY;</span>
 
-<span class="nc" id="L632">		PendingLink(String url, String title) {</span>
-<span class="nc" id="L633">			this.url = url;</span>
-<span class="nc" id="L634">			this.title = title;</span>
-<span class="nc" id="L635">		}</span>
+<span class="nc" id="L639">		PendingLink(String url, String title) {</span>
+<span class="nc" id="L640">			this.url = url;</span>
+<span class="nc" id="L641">			this.title = title;</span>
+<span class="nc" id="L642">		}</span>
 
 		void expand(double x, double pdfY) {
-<span class="nc bnc" id="L638" title="All 2 branches missed.">			if (x &lt; llx)</span>
-<span class="nc" id="L639">				llx = x;</span>
-<span class="nc bnc" id="L640" title="All 2 branches missed.">			if (pdfY &lt; lly)</span>
-<span class="nc" id="L641">				lly = pdfY;</span>
-<span class="nc bnc" id="L642" title="All 2 branches missed.">			if (x &gt; urx)</span>
-<span class="nc" id="L643">				urx = x;</span>
-<span class="nc bnc" id="L644" title="All 2 branches missed.">			if (pdfY &gt; ury)</span>
-<span class="nc" id="L645">				ury = pdfY;</span>
-<span class="nc" id="L646">		}</span>
+<span class="nc bnc" id="L645" title="All 2 branches missed.">			if (x &lt; llx)</span>
+<span class="nc" id="L646">				llx = x;</span>
+<span class="nc bnc" id="L647" title="All 2 branches missed.">			if (pdfY &lt; lly)</span>
+<span class="nc" id="L648">				lly = pdfY;</span>
+<span class="nc bnc" id="L649" title="All 2 branches missed.">			if (x &gt; urx)</span>
+<span class="nc" id="L650">				urx = x;</span>
+<span class="nc bnc" id="L651" title="All 2 branches missed.">			if (pdfY &gt; ury)</span>
+<span class="nc" id="L652">				ury = pdfY;</span>
+<span class="nc" id="L653">		}</span>
 	}
 
 	/**
@@ -659,22 +666,22 @@ public class PdfGraphics {
 	 * truly nested clickable regions.
 	 */
 	public void openLink(String url, String title) {
-<span class="nc" id="L662">		openDocumentIfNeeded();</span>
-<span class="nc" id="L663">		activeLinks.push(new PendingLink(url, title));</span>
-<span class="nc" id="L664">	}</span>
+<span class="nc" id="L669">		openDocumentIfNeeded();</span>
+<span class="nc" id="L670">		activeLinks.push(new PendingLink(url, title));</span>
+<span class="nc" id="L671">	}</span>
 
 	public void closeLink() {
-<span class="nc bnc" id="L667" title="All 2 branches missed.">		if (activeLinks.isEmpty())</span>
-<span class="nc" id="L668">			throw new IllegalStateException(&quot;closeLink() with no matching openLink()&quot;);</span>
-<span class="nc" id="L669">		final PendingLink link = activeLinks.pop();</span>
-<span class="nc bnc" id="L670" title="All 4 branches missed.">		if (link.urx &lt;= link.llx || link.ury &lt;= link.lly)</span>
-<span class="nc" id="L671">			return; // nothing was drawn in this region</span>
-<span class="nc" id="L672">		final PdfAction action = new PdfAction(link.url);</span>
-<span class="nc" id="L673">		final PdfAnnotation annot = PdfAnnotation.createLink(writer,</span>
+<span class="nc bnc" id="L674" title="All 2 branches missed.">		if (activeLinks.isEmpty())</span>
+<span class="nc" id="L675">			throw new IllegalStateException(&quot;closeLink() with no matching openLink()&quot;);</span>
+<span class="nc" id="L676">		final PendingLink link = activeLinks.pop();</span>
+<span class="nc bnc" id="L677" title="All 4 branches missed.">		if (link.urx &lt;= link.llx || link.ury &lt;= link.lly)</span>
+<span class="nc" id="L678">			return; // nothing was drawn in this region</span>
+<span class="nc" id="L679">		final PdfAction action = new PdfAction(link.url);</span>
+<span class="nc" id="L680">		final PdfAnnotation annot = PdfAnnotation.createLink(writer,</span>
 				new Rectangle((float) link.llx, (float) link.lly, (float) link.urx, (float) link.ury),
 				PdfAnnotation.HIGHLIGHT_INVERT, action);
-<span class="nc" id="L676">		writer.addAnnotation(annot);</span>
-<span class="nc" id="L677">	}</span>
+<span class="nc" id="L683">		writer.addAnnotation(annot);</span>
+<span class="nc" id="L684">	}</span>
 
 	// ----------------------------------------------------------------------
 	// output
@@ -696,30 +703,30 @@ public class PdfGraphics {
 	 * After this call the instance must not be used anymore.
 	 */
 	public void createPdf(OutputStream os) throws IOException {
-<span class="nc" id="L699">		openDocumentIfNeeded();</span>
+<span class="fc" id="L706">		openDocumentIfNeeded();</span>
 
-<span class="nc" id="L701">		final float scaledW = (float) (maxX * option.getScale());</span>
-<span class="nc" id="L702">		final float scaledH = (float) (maxY * option.getScale());</span>
+<span class="fc" id="L708">		final float scaledW = (float) (maxX * option.getScale());</span>
+<span class="fc" id="L709">		final float scaledH = (float) (maxY * option.getScale());</span>
 
 		// Tighten the template's bounding box to the actual content extent.
 		// Our content lives in [0, maxX] x [-maxY, 0].
-<span class="nc" id="L706">		template.setBoundingBox(new Rectangle(0f, -scaledH, scaledW, 0f));</span>
+<span class="fc" id="L713">		template.setBoundingBox(new Rectangle(0f, -scaledH, scaledW, 0f));</span>
 
 		// Switch to the real page size. setPageSize affects subsequent pages,
 		// so we call newPage() to flush the placeholder page and start a new
 		// one with the proper dimensions.
-<span class="nc" id="L711">		final Rectangle pageSize = new Rectangle(scaledW, scaledH);</span>
-<span class="nc" id="L712">		document.setPageSize(pageSize);</span>
-<span class="nc" id="L713">		document.newPage();</span>
+<span class="fc" id="L718">		final Rectangle pageSize = new Rectangle(scaledW, scaledH);</span>
+<span class="fc" id="L719">		document.setPageSize(pageSize);</span>
+<span class="fc" id="L720">		document.newPage();</span>
 
 		// Place the template, translated up by maxY so the content (which
 		// lives in negative Y inside the template) lands in [0, 0, w, h].
-<span class="nc" id="L717">		final PdfContentByte pageContent = writer.getDirectContent();</span>
-<span class="nc" id="L718">		pageContent.addTemplate(template, 0, scaledH);</span>
+<span class="fc" id="L724">		final PdfContentByte pageContent = writer.getDirectContent();</span>
+<span class="fc" id="L725">		pageContent.addTemplate(template, 0, scaledH);</span>
 
-<span class="nc" id="L720">		document.close();</span>
-<span class="nc" id="L721">		buffer.writeTo(os);</span>
-<span class="nc" id="L722">	}</span>
+<span class="fc" id="L727">		document.close();</span>
+<span class="fc" id="L728">		buffer.writeTo(os);</span>
+<span class="fc" id="L729">	}</span>
 
 	// ----------------------------------------------------------------------
 	// raw access (escape hatch for callers that need PdfContentByte)
@@ -735,13 +742,13 @@ public class PdfGraphics {
 	 * yourself with the same convention this class uses ({@code pdfY = -svgY}).
 	 */
 	public PdfContentByte getRawContent() {
-<span class="nc" id="L738">		openDocumentIfNeeded();</span>
-<span class="nc" id="L739">		return cb;</span>
+<span class="nc" id="L745">		openDocumentIfNeeded();</span>
+<span class="nc" id="L746">		return cb;</span>
 	}
 
 	public PdfWriter getRawWriter() {
-<span class="nc" id="L743">		openDocumentIfNeeded();</span>
-<span class="nc" id="L744">		return writer;</span>
+<span class="nc" id="L750">		openDocumentIfNeeded();</span>
+<span class="nc" id="L751">		return writer;</span>
 	}
 
 	// ----------------------------------------------------------------------
@@ -764,86 +771,86 @@ public class PdfGraphics {
 	 * could emit it as a marked-content tag if useful for accessibility or tooling.
 	 */
 	public void pdfPath(double x, double y, UPath path) {
-<span class="nc bnc" id="L767" title="All 2 branches missed.">		if (hidden)</span>
-<span class="nc" id="L768">			return;</span>
-<span class="nc" id="L769">		openDocumentIfNeeded();</span>
-<span class="nc" id="L770">		ensureVisible(x, y);</span>
+<span class="pc bpc" id="L774" title="1 of 2 branches missed.">		if (hidden)</span>
+<span class="nc" id="L775">			return;</span>
+<span class="fc" id="L776">		openDocumentIfNeeded();</span>
+<span class="fc" id="L777">		ensureVisible(x, y);</span>
 
-<span class="nc" id="L772">		applyStroke();</span>
-<span class="nc" id="L773">		applyFill();</span>
+<span class="fc" id="L779">		applyStroke();</span>
+<span class="fc" id="L780">		applyFill();</span>
 
 		// Track the current point so we can feed quad-to-cubic conversion and
 		// the arc converter, which both need the previous endpoint.
-<span class="nc" id="L777">		double curX = x;</span>
-<span class="nc" id="L778">		double curY = y;</span>
+<span class="fc" id="L784">		double curX = x;</span>
+<span class="fc" id="L785">		double curY = y;</span>
 
-<span class="nc bnc" id="L780" title="All 2 branches missed.">		for (USegment seg : path) {</span>
-<span class="nc" id="L781">			final USegmentType type = seg.getSegmentType();</span>
-<span class="nc" id="L782">			final double[] c = seg.getCoord();</span>
+<span class="fc bfc" id="L787" title="All 2 branches covered.">		for (USegment seg : path) {</span>
+<span class="fc" id="L788">			final USegmentType type = seg.getSegmentType();</span>
+<span class="fc" id="L789">			final double[] c = seg.getCoord();</span>
 
-<span class="nc bnc" id="L784" title="All 2 branches missed.">			if (type == USegmentType.SEG_MOVETO) {</span>
-<span class="nc" id="L785">				final double px = c[0] + x;</span>
-<span class="nc" id="L786">				final double py = c[1] + y;</span>
-<span class="nc" id="L787">				cb.moveTo((float) px, ny(py));</span>
-<span class="nc" id="L788">				ensureVisible(px, py);</span>
-<span class="nc" id="L789">				curX = px;</span>
-<span class="nc" id="L790">				curY = py;</span>
+<span class="fc bfc" id="L791" title="All 2 branches covered.">			if (type == USegmentType.SEG_MOVETO) {</span>
+<span class="fc" id="L792">				final double px = c[0] + x;</span>
+<span class="fc" id="L793">				final double py = c[1] + y;</span>
+<span class="fc" id="L794">				cb.moveTo((float) px, ny(py));</span>
+<span class="fc" id="L795">				ensureVisible(px, py);</span>
+<span class="fc" id="L796">				curX = px;</span>
+<span class="fc" id="L797">				curY = py;</span>
 
-<span class="nc bnc" id="L792" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_LINETO) {</span>
-<span class="nc" id="L793">				final double px = c[0] + x;</span>
-<span class="nc" id="L794">				final double py = c[1] + y;</span>
-<span class="nc" id="L795">				cb.lineTo((float) px, ny(py));</span>
-<span class="nc" id="L796">				ensureVisible(px, py);</span>
-<span class="nc" id="L797">				curX = px;</span>
-<span class="nc" id="L798">				curY = py;</span>
+<span class="fc bfc" id="L799" title="All 2 branches covered.">			} else if (type == USegmentType.SEG_LINETO) {</span>
+<span class="fc" id="L800">				final double px = c[0] + x;</span>
+<span class="fc" id="L801">				final double py = c[1] + y;</span>
+<span class="fc" id="L802">				cb.lineTo((float) px, ny(py));</span>
+<span class="fc" id="L803">				ensureVisible(px, py);</span>
+<span class="fc" id="L804">				curX = px;</span>
+<span class="fc" id="L805">				curY = py;</span>
 
-<span class="nc bnc" id="L800" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
+<span class="pc bpc" id="L807" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
 				// UPath.quadTo stores the control point twice; we use one pair
 				// as the quadratic control and convert to a cubic for PDF.
-<span class="nc" id="L803">				final double cx1 = c[0] + x;</span>
-<span class="nc" id="L804">				final double cy1 = c[1] + y;</span>
-<span class="nc" id="L805">				final double px = c[4] + x;</span>
-<span class="nc" id="L806">				final double py = c[5] + y;</span>
-<span class="nc" id="L807">				quadToInternal(curX, curY, cx1, cy1, px, py);</span>
-<span class="nc" id="L808">				ensureVisible(px, py);</span>
-<span class="nc" id="L809">				curX = px;</span>
-<span class="nc" id="L810">				curY = py;</span>
+<span class="nc" id="L810">				final double cx1 = c[0] + x;</span>
+<span class="nc" id="L811">				final double cy1 = c[1] + y;</span>
+<span class="nc" id="L812">				final double px = c[4] + x;</span>
+<span class="nc" id="L813">				final double py = c[5] + y;</span>
+<span class="nc" id="L814">				quadToInternal(curX, curY, cx1, cy1, px, py);</span>
+<span class="nc" id="L815">				ensureVisible(px, py);</span>
+<span class="nc" id="L816">				curX = px;</span>
+<span class="nc" id="L817">				curY = py;</span>
 
-<span class="nc bnc" id="L812" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
-<span class="nc" id="L813">				final double cx1 = c[0] + x;</span>
-<span class="nc" id="L814">				final double cy1 = c[1] + y;</span>
-<span class="nc" id="L815">				final double cx2 = c[2] + x;</span>
-<span class="nc" id="L816">				final double cy2 = c[3] + y;</span>
-<span class="nc" id="L817">				final double px = c[4] + x;</span>
-<span class="nc" id="L818">				final double py = c[5] + y;</span>
-<span class="nc" id="L819">				cb.curveTo((float) cx1, ny(cy1), (float) cx2, ny(cy2), (float) px, ny(py));</span>
-<span class="nc" id="L820">				ensureVisible(px, py);</span>
-<span class="nc" id="L821">				curX = px;</span>
-<span class="nc" id="L822">				curY = py;</span>
+<span class="pc bfc" id="L819" title="All 2 branches covered.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
+<span class="fc" id="L820">				final double cx1 = c[0] + x;</span>
+<span class="fc" id="L821">				final double cy1 = c[1] + y;</span>
+<span class="fc" id="L822">				final double cx2 = c[2] + x;</span>
+<span class="fc" id="L823">				final double cy2 = c[3] + y;</span>
+<span class="fc" id="L824">				final double px = c[4] + x;</span>
+<span class="fc" id="L825">				final double py = c[5] + y;</span>
+<span class="fc" id="L826">				cb.curveTo((float) cx1, ny(cy1), (float) cx2, ny(cy2), (float) px, ny(py));</span>
+<span class="fc" id="L827">				ensureVisible(px, py);</span>
+<span class="fc" id="L828">				curX = px;</span>
+<span class="fc" id="L829">				curY = py;</span>
 
-<span class="nc bnc" id="L824" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
+<span class="pc bpc" id="L831" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
 				// SVG arc: [rx, ry, xAxisRotation(deg), largeArcFlag, sweepFlag, x, y]
-<span class="nc" id="L826">				final double rx = c[0];</span>
-<span class="nc" id="L827">				final double ry = c[1];</span>
-<span class="nc" id="L828">				final double xAxisRotDeg = c[2];</span>
-<span class="nc bnc" id="L829" title="All 2 branches missed.">				final boolean largeArc = c[3] != 0;</span>
-<span class="nc bnc" id="L830" title="All 2 branches missed.">				final boolean sweep = c[4] != 0;</span>
-<span class="nc" id="L831">				final double endX = c[5] + x;</span>
-<span class="nc" id="L832">				final double endY = c[6] + y;</span>
-<span class="nc" id="L833">				arcToCubics(curX, curY, rx, ry, xAxisRotDeg, largeArc, sweep, endX, endY);</span>
-<span class="nc" id="L834">				ensureVisible(endX, endY);</span>
-<span class="nc" id="L835">				curX = endX;</span>
-<span class="nc" id="L836">				curY = endY;</span>
+<span class="fc" id="L833">				final double rx = c[0];</span>
+<span class="fc" id="L834">				final double ry = c[1];</span>
+<span class="fc" id="L835">				final double xAxisRotDeg = c[2];</span>
+<span class="pc bpc" id="L836" title="1 of 2 branches missed.">				final boolean largeArc = c[3] != 0;</span>
+<span class="pc bpc" id="L837" title="1 of 2 branches missed.">				final boolean sweep = c[4] != 0;</span>
+<span class="fc" id="L838">				final double endX = c[5] + x;</span>
+<span class="fc" id="L839">				final double endY = c[6] + y;</span>
+<span class="fc" id="L840">				arcToCubics(curX, curY, rx, ry, xAxisRotDeg, largeArc, sweep, endX, endY);</span>
+<span class="fc" id="L841">				ensureVisible(endX, endY);</span>
+<span class="fc" id="L842">				curX = endX;</span>
+<span class="fc" id="L843">				curY = endY;</span>
 
-<span class="nc bnc" id="L838" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CLOSE) {</span>
-<span class="nc" id="L839">				cb.closePath();</span>
+<span class="pc bnc" id="L845" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CLOSE) {</span>
+<span class="nc" id="L846">				cb.closePath();</span>
 			}
 			// Unknown segment types are silently ignored - UPath's enum is
 			// closed, so we should never get here in practice.
-<span class="nc" id="L843">		}</span>
+<span class="fc" id="L850">		}</span>
 
-<span class="nc" id="L845">		paintPath();</span>
-<span class="nc" id="L846">	}</span>
+<span class="fc" id="L852">		paintPath();</span>
+<span class="fc" id="L853">	}</span>
 
 	/**
 	 * Internal helper: emit a quadratic as a cubic. Same math as the public
@@ -851,12 +858,12 @@ public class PdfGraphics {
 	 * path-building state machine (no {@code newpath}/{@code fill} dance).
 	 */
 	private void quadToInternal(double x0, double y0, double cx, double cy, double x2, double y2) {
-<span class="nc" id="L854">		final double c1x = x0 + 2.0 / 3.0 * (cx - x0);</span>
-<span class="nc" id="L855">		final double c1y = y0 + 2.0 / 3.0 * (cy - y0);</span>
-<span class="nc" id="L856">		final double c2x = x2 + 2.0 / 3.0 * (cx - x2);</span>
-<span class="nc" id="L857">		final double c2y = y2 + 2.0 / 3.0 * (cy - y2);</span>
-<span class="nc" id="L858">		cb.curveTo((float) c1x, ny(c1y), (float) c2x, ny(c2y), (float) x2, ny(y2));</span>
-<span class="nc" id="L859">	}</span>
+<span class="nc" id="L861">		final double c1x = x0 + 2.0 / 3.0 * (cx - x0);</span>
+<span class="nc" id="L862">		final double c1y = y0 + 2.0 / 3.0 * (cy - y0);</span>
+<span class="nc" id="L863">		final double c2x = x2 + 2.0 / 3.0 * (cx - x2);</span>
+<span class="nc" id="L864">		final double c2y = y2 + 2.0 / 3.0 * (cy - y2);</span>
+<span class="nc" id="L865">		cb.curveTo((float) c1x, ny(c1y), (float) c2x, ny(c2y), (float) x2, ny(y2));</span>
+<span class="nc" id="L866">	}</span>
 
 	// ----------------------------------------------------------------------
 	// SVG arc -&gt; cubic Bezier conversion
@@ -884,128 +891,128 @@ public class PdfGraphics {
 		// Degenerate cases per SVG spec F.6.2:
 		// - identical endpoints: do nothing
 		// - either radius zero: straight line
-<span class="nc bnc" id="L887" title="All 4 branches missed.">		if (x1 == x2 &amp;&amp; y1 == y2)</span>
-<span class="nc" id="L888">			return;</span>
-<span class="nc bnc" id="L889" title="All 4 branches missed.">		if (rxIn == 0 || ryIn == 0) {</span>
-<span class="nc" id="L890">			cb.lineTo((float) x2, ny(y2));</span>
-<span class="nc" id="L891">			return;</span>
+<span class="pc bpc" id="L894" title="3 of 4 branches missed.">		if (x1 == x2 &amp;&amp; y1 == y2)</span>
+<span class="nc" id="L895">			return;</span>
+<span class="pc bpc" id="L896" title="2 of 4 branches missed.">		if (rxIn == 0 || ryIn == 0) {</span>
+<span class="nc" id="L897">			cb.lineTo((float) x2, ny(y2));</span>
+<span class="nc" id="L898">			return;</span>
 		}
 
-<span class="nc" id="L894">		double rx = Math.abs(rxIn);</span>
-<span class="nc" id="L895">		double ry = Math.abs(ryIn);</span>
-<span class="nc" id="L896">		final double phi = Math.toRadians(phiDeg);</span>
-<span class="nc" id="L897">		final double cosPhi = Math.cos(phi);</span>
-<span class="nc" id="L898">		final double sinPhi = Math.sin(phi);</span>
+<span class="fc" id="L901">		double rx = Math.abs(rxIn);</span>
+<span class="fc" id="L902">		double ry = Math.abs(ryIn);</span>
+<span class="fc" id="L903">		final double phi = Math.toRadians(phiDeg);</span>
+<span class="fc" id="L904">		final double cosPhi = Math.cos(phi);</span>
+<span class="fc" id="L905">		final double sinPhi = Math.sin(phi);</span>
 
 		// Step 1: compute (x1', y1') in the rotated coordinate system.
-<span class="nc" id="L901">		final double dx = (x1 - x2) / 2.0;</span>
-<span class="nc" id="L902">		final double dy = (y1 - y2) / 2.0;</span>
-<span class="nc" id="L903">		final double x1p = cosPhi * dx + sinPhi * dy;</span>
-<span class="nc" id="L904">		final double y1p = -sinPhi * dx + cosPhi * dy;</span>
+<span class="fc" id="L908">		final double dx = (x1 - x2) / 2.0;</span>
+<span class="fc" id="L909">		final double dy = (y1 - y2) / 2.0;</span>
+<span class="fc" id="L910">		final double x1p = cosPhi * dx + sinPhi * dy;</span>
+<span class="fc" id="L911">		final double y1p = -sinPhi * dx + cosPhi * dy;</span>
 
 		// Step 2: if the radii are too small to reach both endpoints, scale them
 		// up uniformly per SVG F.6.6.2.
-<span class="nc" id="L908">		final double lambda = (x1p * x1p) / (rx * rx) + (y1p * y1p) / (ry * ry);</span>
-<span class="nc bnc" id="L909" title="All 2 branches missed.">		if (lambda &gt; 1.0) {</span>
-<span class="nc" id="L910">			final double s = Math.sqrt(lambda);</span>
-<span class="nc" id="L911">			rx *= s;</span>
-<span class="nc" id="L912">			ry *= s;</span>
+<span class="fc" id="L915">		final double lambda = (x1p * x1p) / (rx * rx) + (y1p * y1p) / (ry * ry);</span>
+<span class="pc bpc" id="L916" title="1 of 2 branches missed.">		if (lambda &gt; 1.0) {</span>
+<span class="nc" id="L917">			final double s = Math.sqrt(lambda);</span>
+<span class="nc" id="L918">			rx *= s;</span>
+<span class="nc" id="L919">			ry *= s;</span>
 		}
 
 		// Step 3: center (cx', cy') in the rotated system.
-<span class="nc" id="L916">		final double rx2 = rx * rx;</span>
-<span class="nc" id="L917">		final double ry2 = ry * ry;</span>
-<span class="nc" id="L918">		final double x1p2 = x1p * x1p;</span>
-<span class="nc" id="L919">		final double y1p2 = y1p * y1p;</span>
+<span class="fc" id="L923">		final double rx2 = rx * rx;</span>
+<span class="fc" id="L924">		final double ry2 = ry * ry;</span>
+<span class="fc" id="L925">		final double x1p2 = x1p * x1p;</span>
+<span class="fc" id="L926">		final double y1p2 = y1p * y1p;</span>
 
-<span class="nc" id="L921">		double numerator = rx2 * ry2 - rx2 * y1p2 - ry2 * x1p2;</span>
-<span class="nc" id="L922">		final double denominator = rx2 * y1p2 + ry2 * x1p2;</span>
-<span class="nc bnc" id="L923" title="All 2 branches missed.">		if (numerator &lt; 0)</span>
-<span class="nc" id="L924">			numerator = 0;</span>
-<span class="nc" id="L925">		double coef = Math.sqrt(numerator / denominator);</span>
-<span class="nc bnc" id="L926" title="All 2 branches missed.">		if (largeArcFlag == sweepFlag)</span>
-<span class="nc" id="L927">			coef = -coef;</span>
-<span class="nc" id="L928">		final double cxp = coef * (rx * y1p) / ry;</span>
-<span class="nc" id="L929">		final double cyp = coef * -(ry * x1p) / rx;</span>
+<span class="fc" id="L928">		double numerator = rx2 * ry2 - rx2 * y1p2 - ry2 * x1p2;</span>
+<span class="fc" id="L929">		final double denominator = rx2 * y1p2 + ry2 * x1p2;</span>
+<span class="pc bpc" id="L930" title="1 of 2 branches missed.">		if (numerator &lt; 0)</span>
+<span class="nc" id="L931">			numerator = 0;</span>
+<span class="fc" id="L932">		double coef = Math.sqrt(numerator / denominator);</span>
+<span class="pc bpc" id="L933" title="1 of 2 branches missed.">		if (largeArcFlag == sweepFlag)</span>
+<span class="nc" id="L934">			coef = -coef;</span>
+<span class="fc" id="L935">		final double cxp = coef * (rx * y1p) / ry;</span>
+<span class="fc" id="L936">		final double cyp = coef * -(ry * x1p) / rx;</span>
 
 		// Step 4: center (cx, cy) in the original system.
-<span class="nc" id="L932">		final double mx = (x1 + x2) / 2.0;</span>
-<span class="nc" id="L933">		final double my = (y1 + y2) / 2.0;</span>
-<span class="nc" id="L934">		final double cx = cosPhi * cxp - sinPhi * cyp + mx;</span>
-<span class="nc" id="L935">		final double cy = sinPhi * cxp + cosPhi * cyp + my;</span>
+<span class="fc" id="L939">		final double mx = (x1 + x2) / 2.0;</span>
+<span class="fc" id="L940">		final double my = (y1 + y2) / 2.0;</span>
+<span class="fc" id="L941">		final double cx = cosPhi * cxp - sinPhi * cyp + mx;</span>
+<span class="fc" id="L942">		final double cy = sinPhi * cxp + cosPhi * cyp + my;</span>
 
 		// Step 5: start angle theta1 and sweep deltaTheta.
-<span class="nc" id="L938">		final double ux = (x1p - cxp) / rx;</span>
-<span class="nc" id="L939">		final double uy = (y1p - cyp) / ry;</span>
-<span class="nc" id="L940">		final double vx = (-x1p - cxp) / rx;</span>
-<span class="nc" id="L941">		final double vy = (-y1p - cyp) / ry;</span>
+<span class="fc" id="L945">		final double ux = (x1p - cxp) / rx;</span>
+<span class="fc" id="L946">		final double uy = (y1p - cyp) / ry;</span>
+<span class="fc" id="L947">		final double vx = (-x1p - cxp) / rx;</span>
+<span class="fc" id="L948">		final double vy = (-y1p - cyp) / ry;</span>
 
-<span class="nc" id="L943">		final double theta1 = angleBetween(1, 0, ux, uy);</span>
-<span class="nc" id="L944">		double deltaTheta = angleBetween(ux, uy, vx, vy);</span>
-<span class="nc bnc" id="L945" title="All 4 branches missed.">		if (!sweepFlag &amp;&amp; deltaTheta &gt; 0)</span>
-<span class="nc" id="L946">			deltaTheta -= 2 * Math.PI;</span>
-<span class="nc bnc" id="L947" title="All 4 branches missed.">		else if (sweepFlag &amp;&amp; deltaTheta &lt; 0)</span>
-<span class="nc" id="L948">			deltaTheta += 2 * Math.PI;</span>
+<span class="fc" id="L950">		final double theta1 = angleBetween(1, 0, ux, uy);</span>
+<span class="fc" id="L951">		double deltaTheta = angleBetween(ux, uy, vx, vy);</span>
+<span class="pc bpc" id="L952" title="3 of 4 branches missed.">		if (!sweepFlag &amp;&amp; deltaTheta &gt; 0)</span>
+<span class="nc" id="L953">			deltaTheta -= 2 * Math.PI;</span>
+<span class="pc bpc" id="L954" title="2 of 4 branches missed.">		else if (sweepFlag &amp;&amp; deltaTheta &lt; 0)</span>
+<span class="nc" id="L955">			deltaTheta += 2 * Math.PI;</span>
 
 		// Step 6: split sweep into &lt;= 90 degree slices and approximate each
 		// with one cubic Bezier. The standard approximation uses control
 		// distance alpha = (4/3) * tan(slice/4).
-<span class="nc" id="L953">		final int nSlices = (int) Math.ceil(Math.abs(deltaTheta) / (Math.PI / 2.0));</span>
-<span class="nc" id="L954">		final double slice = deltaTheta / nSlices;</span>
-<span class="nc" id="L955">		final double alpha = (4.0 / 3.0) * Math.tan(slice / 4.0);</span>
+<span class="fc" id="L960">		final int nSlices = (int) Math.ceil(Math.abs(deltaTheta) / (Math.PI / 2.0));</span>
+<span class="fc" id="L961">		final double slice = deltaTheta / nSlices;</span>
+<span class="fc" id="L962">		final double alpha = (4.0 / 3.0) * Math.tan(slice / 4.0);</span>
 
-<span class="nc" id="L957">		double t1 = theta1;</span>
-<span class="nc" id="L958">		double cos1 = Math.cos(t1);</span>
-<span class="nc" id="L959">		double sin1 = Math.sin(t1);</span>
-<span class="nc" id="L960">		double curX = x1;</span>
-<span class="nc" id="L961">		double curY = y1;</span>
+<span class="fc" id="L964">		double t1 = theta1;</span>
+<span class="fc" id="L965">		double cos1 = Math.cos(t1);</span>
+<span class="fc" id="L966">		double sin1 = Math.sin(t1);</span>
+<span class="fc" id="L967">		double curX = x1;</span>
+<span class="fc" id="L968">		double curY = y1;</span>
 
-<span class="nc bnc" id="L963" title="All 2 branches missed.">		for (int i = 0; i &lt; nSlices; i++) {</span>
-<span class="nc" id="L964">			final double t2 = t1 + slice;</span>
-<span class="nc" id="L965">			final double cos2 = Math.cos(t2);</span>
-<span class="nc" id="L966">			final double sin2 = Math.sin(t2);</span>
+<span class="fc bfc" id="L970" title="All 2 branches covered.">		for (int i = 0; i &lt; nSlices; i++) {</span>
+<span class="fc" id="L971">			final double t2 = t1 + slice;</span>
+<span class="fc" id="L972">			final double cos2 = Math.cos(t2);</span>
+<span class="fc" id="L973">			final double sin2 = Math.sin(t2);</span>
 
 			// Endpoint of this slice on the unit-circle parametrization,
 			// then mapped back to the rotated ellipse.
-<span class="nc" id="L970">			final double ex = cosPhi * (rx * cos2) - sinPhi * (ry * sin2) + cx;</span>
-<span class="nc" id="L971">			final double ey = sinPhi * (rx * cos2) + cosPhi * (ry * sin2) + cy;</span>
+<span class="fc" id="L977">			final double ex = cosPhi * (rx * cos2) - sinPhi * (ry * sin2) + cx;</span>
+<span class="fc" id="L978">			final double ey = sinPhi * (rx * cos2) + cosPhi * (ry * sin2) + cy;</span>
 
 			// Control points: tangents at t1 and t2, scaled by alpha.
-<span class="nc" id="L974">			final double c1ux = -rx * sin1 * alpha;</span>
-<span class="nc" id="L975">			final double c1uy = ry * cos1 * alpha;</span>
-<span class="nc" id="L976">			final double c2ux = rx * sin2 * alpha;</span>
-<span class="nc" id="L977">			final double c2uy = -ry * cos2 * alpha;</span>
+<span class="fc" id="L981">			final double c1ux = -rx * sin1 * alpha;</span>
+<span class="fc" id="L982">			final double c1uy = ry * cos1 * alpha;</span>
+<span class="fc" id="L983">			final double c2ux = rx * sin2 * alpha;</span>
+<span class="fc" id="L984">			final double c2uy = -ry * cos2 * alpha;</span>
 
-<span class="nc" id="L979">			final double c1x = curX + (cosPhi * c1ux - sinPhi * c1uy);</span>
-<span class="nc" id="L980">			final double c1y = curY + (sinPhi * c1ux + cosPhi * c1uy);</span>
-<span class="nc" id="L981">			final double c2x = ex + (cosPhi * c2ux - sinPhi * c2uy);</span>
-<span class="nc" id="L982">			final double c2y = ey + (sinPhi * c2ux + cosPhi * c2uy);</span>
+<span class="fc" id="L986">			final double c1x = curX + (cosPhi * c1ux - sinPhi * c1uy);</span>
+<span class="fc" id="L987">			final double c1y = curY + (sinPhi * c1ux + cosPhi * c1uy);</span>
+<span class="fc" id="L988">			final double c2x = ex + (cosPhi * c2ux - sinPhi * c2uy);</span>
+<span class="fc" id="L989">			final double c2y = ey + (sinPhi * c2ux + cosPhi * c2uy);</span>
 
-<span class="nc" id="L984">			cb.curveTo((float) c1x, ny(c1y), (float) c2x, ny(c2y), (float) ex, ny(ey));</span>
+<span class="fc" id="L991">			cb.curveTo((float) c1x, ny(c1y), (float) c2x, ny(c2y), (float) ex, ny(ey));</span>
 
-<span class="nc" id="L986">			t1 = t2;</span>
-<span class="nc" id="L987">			cos1 = cos2;</span>
-<span class="nc" id="L988">			sin1 = sin2;</span>
-<span class="nc" id="L989">			curX = ex;</span>
-<span class="nc" id="L990">			curY = ey;</span>
+<span class="fc" id="L993">			t1 = t2;</span>
+<span class="fc" id="L994">			cos1 = cos2;</span>
+<span class="fc" id="L995">			sin1 = sin2;</span>
+<span class="fc" id="L996">			curX = ex;</span>
+<span class="fc" id="L997">			curY = ey;</span>
 		}
-<span class="nc" id="L992">	}</span>
+<span class="fc" id="L999">	}</span>
 
 	/**
 	 * Signed angle between two 2D vectors, in radians, in {@code (-pi, pi]}. Used
 	 * internally by {@link #arcToCubics}.
 	 */
 	private static double angleBetween(double ux, double uy, double vx, double vy) {
-<span class="nc" id="L999">		final double dot = ux * vx + uy * vy;</span>
-<span class="nc" id="L1000">		final double lenU = Math.sqrt(ux * ux + uy * uy);</span>
-<span class="nc" id="L1001">		final double lenV = Math.sqrt(vx * vx + vy * vy);</span>
-<span class="nc" id="L1002">		double cos = dot / (lenU * lenV);</span>
-<span class="nc bnc" id="L1003" title="All 2 branches missed.">		if (cos &lt; -1)</span>
-<span class="nc" id="L1004">			cos = -1;</span>
-<span class="nc bnc" id="L1005" title="All 2 branches missed.">		else if (cos &gt; 1)</span>
-<span class="nc" id="L1006">			cos = 1;</span>
-<span class="nc bnc" id="L1007" title="All 2 branches missed.">		final double sign = (ux * vy - uy * vx) &lt; 0 ? -1 : 1;</span>
-<span class="nc" id="L1008">		return sign * Math.acos(cos);</span>
+<span class="fc" id="L1006">		final double dot = ux * vx + uy * vy;</span>
+<span class="fc" id="L1007">		final double lenU = Math.sqrt(ux * ux + uy * uy);</span>
+<span class="fc" id="L1008">		final double lenV = Math.sqrt(vx * vx + vy * vy);</span>
+<span class="fc" id="L1009">		double cos = dot / (lenU * lenV);</span>
+<span class="pc bpc" id="L1010" title="1 of 2 branches missed.">		if (cos &lt; -1)</span>
+<span class="nc" id="L1011">			cos = -1;</span>
+<span class="pc bpc" id="L1012" title="1 of 2 branches missed.">		else if (cos &gt; 1)</span>
+<span class="nc" id="L1013">			cos = 1;</span>
+<span class="fc bfc" id="L1014" title="All 2 branches covered.">		final double sign = (ux * vy - uy * vx) &lt; 0 ? -1 : 1;</span>
+<span class="fc" id="L1015">		return sign * Math.acos(cos);</span>
 	}
 
 

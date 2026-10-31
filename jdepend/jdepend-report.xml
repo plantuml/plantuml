@@ -12889,11 +12889,11 @@
 
         <Package name="net.sourceforge.plantuml.openpdf">
             <Stats>
-                <TotalClasses>10</TotalClasses>
-                <ConcreteClasses>10</ConcreteClasses>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>12</Ce>
+                <Ce>14</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -12925,6 +12925,9 @@
                 <Class sourceFile="DriverTextPdf.java">
                     net.sourceforge.plantuml.openpdf.DriverTextPdf
                 </Class>
+                <Class sourceFile="OpenPdfSetup.java">
+                    net.sourceforge.plantuml.openpdf.OpenPdfSetup
+                </Class>
                 <Class sourceFile="PdfGraphics.java">
                     net.sourceforge.plantuml.openpdf.PdfGraphics$PendingLink
                 </Class>
@@ -12948,7 +12951,9 @@
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.c</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
+                <Package>org.openpdf.text.pdf</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -17031,11 +17036,11 @@
                 <TotalClasses>11</TotalClasses>
                 <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>1</Ca>
+                <Ca>2</Ca>
                 <Ce>39</Ce>
                 <A>0</A>
-                <I>0.98</I>
-                <D>0.02</D>
+                <I>0.95</I>
+                <D>0.05</D>
                 <V>1</V>
             </Stats>
 
@@ -17122,6 +17127,7 @@
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.cli</Package>
+                <Package>net.sourceforge.plantuml.openpdf</Package>
             </UsedBy>
         </Package>
 
@@ -19480,6 +19486,388 @@
             </UsedBy>
         </Package>
 
+        <Package name="org.openpdf.text">
+            <Stats>
+                <TotalClasses>13</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
+                <AbstractClasses>5</AbstractClasses>
+                <Ca>2</Ca>
+                <Ce>7</Ce>
+                <A>0.38</A>
+                <I>0.78</I>
+                <D>0.16</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="DocListener.java">
+                    org.openpdf.text.DocListener
+                </Class>
+                <Class sourceFile="DocWriter.java">
+                    org.openpdf.text.DocWriter
+                </Class>
+                <Class sourceFile="Element.java">
+                    org.openpdf.text.Element
+                </Class>
+                <Class sourceFile="ElementListener.java">
+                    org.openpdf.text.ElementListener
+                </Class>
+                <Class sourceFile="Image.java">
+                    org.openpdf.text.Image
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="BadElementException.java">
+                    org.openpdf.text.BadElementException
+                </Class>
+                <Class sourceFile="DocumentException.java">
+                    org.openpdf.text.DocumentException
+                </Class>
+                <Class sourceFile="ImgJBIG2.java">
+                    org.openpdf.text.ImgJBIG2
+                </Class>
+                <Class sourceFile="ImgRaw.java">
+                    org.openpdf.text.ImgRaw
+                </Class>
+                <Class sourceFile="Meta.java">
+                    org.openpdf.text.Meta
+                </Class>
+                <Class sourceFile="Rectangle.java">
+                    org.openpdf.text.Rectangle
+                </Class>
+                <Class sourceFile="RectangleReadOnly.java">
+                    org.openpdf.text.RectangleReadOnly
+                </Class>
+                <Class sourceFile="TextRenderingOptions.java">
+                    org.openpdf.text.TextRenderingOptions
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.awt</Package>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.net</Package>
+                <Package>java.util</Package>
+                <Package>org.openpdf.text.error_messages</Package>
+                <Package>org.openpdf.text.pdf</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.openpdf.text.pdf</Package>
+                <Package>org.openpdf.text.pdf.internal</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.openpdf.text.error_messages">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.openpdf.text.exceptions">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>1</Ce>
+                <A>0</A>
+                <I>0.5</I>
+                <D>0.5</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="IllegalPdfSyntaxException.java">
+                    org.openpdf.text.exceptions.IllegalPdfSyntaxException
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.openpdf.text.pdf</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.openpdf.text.pdf">
+            <Stats>
+                <TotalClasses>45</TotalClasses>
+                <ConcreteClasses>41</ConcreteClasses>
+                <AbstractClasses>4</AbstractClasses>
+                <Ca>3</Ca>
+                <Ce>10</Ce>
+                <A>0.09</A>
+                <I>0.77</I>
+                <D>0.14</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="ExtendedColor.java">
+                    org.openpdf.text.pdf.ExtendedColor
+                </Class>
+                <Class sourceFile="ExtraEncoding.java">
+                    org.openpdf.text.pdf.ExtraEncoding
+                </Class>
+                <Class sourceFile="PdfObject.java">
+                    org.openpdf.text.pdf.PdfObject
+                </Class>
+                <Class sourceFile="ResourceProvider.java">
+                    org.openpdf.text.pdf.ResourceProvider
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="BadPdfFormatException.java">
+                    org.openpdf.text.pdf.BadPdfFormatException
+                </Class>
+                <Class sourceFile="FontDetails.java">
+                    org.openpdf.text.pdf.FontDetails
+                </Class>
+                <Class sourceFile="GrayColor.java">
+                    org.openpdf.text.pdf.GrayColor
+                </Class>
+                <Class sourceFile="IntHashtable.java">
+                    org.openpdf.text.pdf.IntHashtable
+                </Class>
+                <Class sourceFile="IntHashtable.java">
+                    org.openpdf.text.pdf.IntHashtable$Entry
+                </Class>
+                <Class sourceFile="IntHashtable.java">
+                    org.openpdf.text.pdf.IntHashtable$IntHashtableIterator
+                </Class>
+                <Class sourceFile="OutputStreamCounter.java">
+                    org.openpdf.text.pdf.OutputStreamCounter
+                </Class>
+                <Class sourceFile="PdfAnnotation.java">
+                    org.openpdf.text.pdf.PdfAnnotation
+                </Class>
+                <Class sourceFile="PdfArray.java">
+                    org.openpdf.text.pdf.PdfArray
+                </Class>
+                <Class sourceFile="PdfBoolean.java">
+                    org.openpdf.text.pdf.PdfBoolean
+                </Class>
+                <Class sourceFile="PdfContentByte.java">
+                    org.openpdf.text.pdf.PdfContentByte
+                </Class>
+                <Class sourceFile="PdfContentByte.java">
+                    org.openpdf.text.pdf.PdfContentByte$GraphicState
+                </Class>
+                <Class sourceFile="PdfContents.java">
+                    org.openpdf.text.pdf.PdfContents
+                </Class>
+                <Class sourceFile="PdfDate.java">
+                    org.openpdf.text.pdf.PdfDate
+                </Class>
+                <Class sourceFile="PdfDocument.java">
+                    org.openpdf.text.pdf.PdfDocument
+                </Class>
+                <Class sourceFile="PdfDocument.java">
+                    org.openpdf.text.pdf.PdfDocument$PdfCatalog
+                </Class>
+                <Class sourceFile="PdfDocument.java">
+                    org.openpdf.text.pdf.PdfDocument$PdfInfo
+                </Class>
+                <Class sourceFile="PdfEncodings.java">
+                    org.openpdf.text.pdf.PdfEncodings
+                </Class>
+                <Class sourceFile="PdfEncodings.java">
+                    org.openpdf.text.pdf.PdfEncodings$Cp437Conversion
+                </Class>
+                <Class sourceFile="PdfEncodings.java">
+                    org.openpdf.text.pdf.PdfEncodings$SymbolConversion
+                </Class>
+                <Class sourceFile="PdfEncodings.java">
+                    org.openpdf.text.pdf.PdfEncodings$SymbolTTConversion
+                </Class>
+                <Class sourceFile="PdfEncodings.java">
+                    org.openpdf.text.pdf.PdfEncodings$WingdingsConversion
+                </Class>
+                <Class sourceFile="PdfException.java">
+                    org.openpdf.text.pdf.PdfException
+                </Class>
+                <Class sourceFile="PdfFormXObject.java">
+                    org.openpdf.text.pdf.PdfFormXObject
+                </Class>
+                <Class sourceFile="PdfGState.java">
+                    org.openpdf.text.pdf.PdfGState
+                </Class>
+                <Class sourceFile="PdfIndirectObject.java">
+                    org.openpdf.text.pdf.PdfIndirectObject
+                </Class>
+                <Class sourceFile="PdfLiteral.java">
+                    org.openpdf.text.pdf.PdfLiteral
+                </Class>
+                <Class sourceFile="PdfName.java">
+                    org.openpdf.text.pdf.PdfName
+                </Class>
+                <Class sourceFile="PdfNull.java">
+                    org.openpdf.text.pdf.PdfNull
+                </Class>
+                <Class sourceFile="PdfNumber.java">
+                    org.openpdf.text.pdf.PdfNumber
+                </Class>
+                <Class sourceFile="PdfPage.java">
+                    org.openpdf.text.pdf.PdfPage
+                </Class>
+                <Class sourceFile="PdfPages.java">
+                    org.openpdf.text.pdf.PdfPages
+                </Class>
+                <Class sourceFile="PdfRectangle.java">
+                    org.openpdf.text.pdf.PdfRectangle
+                </Class>
+                <Class sourceFile="PdfResources.java">
+                    org.openpdf.text.pdf.PdfResources
+                </Class>
+                <Class sourceFile="PdfString.java">
+                    org.openpdf.text.pdf.PdfString
+                </Class>
+                <Class sourceFile="PdfTemplate.java">
+                    org.openpdf.text.pdf.PdfTemplate
+                </Class>
+                <Class sourceFile="PdfWriter.java">
+                    org.openpdf.text.pdf.PdfWriter$PdfBody
+                </Class>
+                <Class sourceFile="PdfWriter.java">
+                    org.openpdf.text.pdf.PdfWriter$PdfBody$PdfCrossReference
+                </Class>
+                <Class sourceFile="PdfWriter.java">
+                    org.openpdf.text.pdf.PdfWriter$PdfTrailer
+                </Class>
+                <Class sourceFile="RGBColor.java">
+                    org.openpdf.text.pdf.RGBColor
+                </Class>
+                <Class sourceFile="RandomAccessFileOrArray.java">
+                    org.openpdf.text.pdf.RandomAccessFileOrArray
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.awt</Package>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>java.util.concurrent</Package>
+                <Package>java.util.zip</Package>
+                <Package>org.openpdf.text</Package>
+                <Package>org.openpdf.text.error_messages</Package>
+                <Package>org.openpdf.text.exceptions</Package>
+                <Package>org.openpdf.text.pdf.internal</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.openpdf</Package>
+                <Package>org.openpdf.text</Package>
+                <Package>org.openpdf.text.pdf.internal</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.openpdf.text.pdf.fonts">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>1</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="FontsResourceAnchor.java">
+                    org.openpdf.text.pdf.fonts.FontsResourceAnchor
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.openpdf.text.pdf.interfaces">
+            <Stats>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>0</ConcreteClasses>
+                <AbstractClasses>2</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>1</Ce>
+                <A>1</A>
+                <I>0.5</I>
+                <D>0.5</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="PdfRunDirection.java">
+                    org.openpdf.text.pdf.interfaces.PdfRunDirection
+                </Class>
+                <Class sourceFile="PdfVersion.java">
+                    org.openpdf.text.pdf.interfaces.PdfVersion
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.openpdf.text.pdf.internal</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.openpdf.text.pdf.internal">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>5</Ce>
+                <A>0</A>
+                <I>0.83</I>
+                <D>0.17</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="PdfVersionImp.java">
+                    org.openpdf.text.pdf.internal.PdfVersionImp
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>org.openpdf.text</Package>
+                <Package>org.openpdf.text.pdf</Package>
+                <Package>org.openpdf.text.pdf.interfaces</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.openpdf.text.pdf</Package>
+            </UsedBy>
+        </Package>
+
         <Package name="org.stathissideris.ascii2image.core">
             <Stats>
                 <TotalClasses>10</TotalClasses>
@@ -21409,6 +21797,22 @@
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml.jaws</Package>
             <Package>net.sourceforge.plantuml.utils</Package>
+        </Package>
+
+        <Package Name="org.openpdf.text">
+            <Package>org.openpdf.text.pdf</Package>
+            <Package>org.openpdf.text</Package>
+        </Package>
+
+        <Package Name="org.openpdf.text.pdf">
+            <Package>org.openpdf.text</Package>
+            <Package>org.openpdf.text.pdf</Package>
+        </Package>
+
+        <Package Name="org.openpdf.text.pdf.internal">
+            <Package>org.openpdf.text.pdf</Package>
+            <Package>org.openpdf.text</Package>
+            <Package>org.openpdf.text.pdf</Package>
         </Package>
 
         <Package Name="org.stathissideris.ascii2image.core">

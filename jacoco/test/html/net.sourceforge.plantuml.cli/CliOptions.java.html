@@ -227,7 +227,7 @@ public class CliOptions {
 
 	public Defines getDefaultDefines(SFile f) {
 <span class="nc" id="L229">		final Defines result = Defines.createWithFileName(f);</span>
-<span class="nc bnc" id="L230" title="All 2 branches missed.">		if (isTrue(CliFlag.T_SVG_VEGA))</span>
+<span class="nc bnc" id="L230" title="All 4 branches missed.">		if (isTrue(CliFlag.T_SVG_VEGA) || isTrue(CliFlag.T_PDF_VEGA))</span>
 <span class="nc" id="L231">			result.overrideFilename(Defines.VEGA_FILENAME);</span>
 <span class="nc bnc" id="L232" title="All 2 branches missed.">		for (Map.Entry&lt;String, String&gt; ent : defines().entrySet())</span>
 <span class="nc" id="L233">			result.define(ent.getKey(), ent.getValue());</span>
@@ -237,7 +237,7 @@ public class CliOptions {
 
 	public Defines getDefaultDefines(java.io.File f) {
 <span class="fc" id="L239">		final Defines result = Defines.createWithFileName(f);</span>
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">		if (isTrue(CliFlag.T_SVG_VEGA))</span>
+<span class="pc bpc" id="L240" title="2 of 4 branches missed.">		if (isTrue(CliFlag.T_SVG_VEGA) || isTrue(CliFlag.T_PDF_VEGA))</span>
 <span class="nc" id="L241">			result.overrideFilename(Defines.VEGA_FILENAME);</span>
 <span class="fc bfc" id="L242" title="All 2 branches covered.">		for (Map.Entry&lt;String, String&gt; ent : defines().entrySet())</span>
 <span class="fc" id="L243">			result.define(ent.getKey(), ent.getValue());</span>

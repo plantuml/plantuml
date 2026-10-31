@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfImage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfImage.java</span></div><h1>PdfImage.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfImage.java 4067 2009-09-19 12:56:50Z psoares33 $
+ *
+ * Copyright 1999, 2000, 2001, 2002 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import org.openpdf.text.Image;
+import org.openpdf.text.error_messages.MessageLocalization;
+
+/**
+ * &lt;CODE&gt;PdfImage&lt;/CODE&gt; is a &lt;CODE&gt;PdfStream&lt;/CODE&gt; containing an image-&lt;CODE&gt;Dictionary&lt;/CODE&gt; and -stream.
+ */
+
+public class PdfImage extends PdfStream {
+
+    // membervariables
+
+    /**
+     * This is the &lt;CODE&gt;PdfName&lt;/CODE&gt; of the image.
+     */
+<span class="fc" id="L66">    protected PdfName name = null;</span>
+
+    // constructor
+
+    /**
+     * Constructs a &lt;CODE&gt;PdfImage&lt;/CODE&gt;-object.
+     *
+     * @param image   the &lt;CODE&gt;Image&lt;/CODE&gt;-object
+     * @param name    the &lt;CODE&gt;PdfName&lt;/CODE&gt; for this image
+     * @param maskRef the &lt;CODE&gt;PdfIndirectReference&lt;/CODE&gt;
+     * @throws BadPdfFormatException on error
+     */
+
+    public PdfImage(Image image, String name, PdfIndirectReference maskRef) throws BadPdfFormatException {
+<span class="fc" id="L80">        super();</span>
+<span class="fc" id="L81">        this.name = new PdfName(name);</span>
+<span class="fc" id="L82">        put(PdfName.TYPE, PdfName.XOBJECT);</span>
+<span class="fc" id="L83">        put(PdfName.SUBTYPE, PdfName.IMAGE);</span>
+<span class="fc" id="L84">        put(PdfName.WIDTH, new PdfNumber(image.getWidth()));</span>
+<span class="fc" id="L85">        put(PdfName.HEIGHT, new PdfNumber(image.getHeight()));</span>
+<span class="pc bpc" id="L86" title="2 of 6 branches missed.">        if (image.isMask() &amp;&amp; (image.getBpc() == 1 || image.getBpc() &gt; 0xff)) {</span>
+<span class="nc" id="L87">            put(PdfName.IMAGEMASK, PdfBoolean.PDFTRUE);</span>
+        }
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (maskRef != null) {</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">            if (image.isSmask()) {</span>
+<span class="fc" id="L91">                put(PdfName.SMASK, maskRef);</span>
+            } else {
+<span class="nc" id="L93">                put(PdfName.MASK, maskRef);</span>
+            }
+        }
+<span class="pc bpc" id="L96" title="1 of 4 branches missed.">        if (image.isMask() &amp;&amp; image.isInverted()) {</span>
+<span class="nc" id="L97">            put(PdfName.DECODE, new PdfLiteral(&quot;[1 0]&quot;));</span>
+        }
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (image.isInterpolation()) {</span>
+<span class="nc" id="L100">            put(PdfName.INTERPOLATE, PdfBoolean.PDFTRUE);</span>
+        }
+        // Raw Image data
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        if (image.isImgRaw()) {</span>
+            // will also have the CCITT parameters
+<span class="fc" id="L105">            int colorspace = image.getColorspace();</span>
+<span class="fc" id="L106">            int[] transparency = image.getTransparency();</span>
+<span class="pc bpc" id="L107" title="5 of 6 branches missed.">            if (transparency != null &amp;&amp; !image.isMask() &amp;&amp; maskRef == null) {</span>
+<span class="nc" id="L108">                String s = &quot;[&quot;;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">                for (int i : transparency) {</span>
+<span class="nc" id="L110">                    s += i + &quot; &quot;;</span>
+                }
+<span class="nc" id="L112">                s += &quot;]&quot;;</span>
+<span class="nc" id="L113">                put(PdfName.MASK, new PdfLiteral(s));</span>
+            }
+<span class="fc" id="L115">            bytes = image.getRawData();</span>
+<span class="fc" id="L116">            put(PdfName.LENGTH, new PdfNumber(bytes.length));</span>
+<span class="fc" id="L117">            int bpc = image.getBpc();</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">            if (bpc &gt; 0xff) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                if (!image.isMask()) {</span>
+<span class="nc" id="L120">                    put(PdfName.COLORSPACE, PdfName.DEVICEGRAY);</span>
+                }
+<span class="nc" id="L122">                put(PdfName.BITSPERCOMPONENT, new PdfNumber(1));</span>
+<span class="nc" id="L123">                put(PdfName.FILTER, PdfName.CCITTFAXDECODE);</span>
+<span class="nc" id="L124">                int k = bpc - Image.CCITTG3_1D;</span>
+<span class="nc" id="L125">                PdfDictionary decodeparms = new PdfDictionary();</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">                if (k != 0) {</span>
+<span class="nc" id="L127">                    decodeparms.put(PdfName.K, new PdfNumber(k));</span>
+                }
+<span class="nc bnc" id="L129" title="All 2 branches missed.">                if ((colorspace &amp; Image.CCITT_BLACKIS1) != 0) {</span>
+<span class="nc" id="L130">                    decodeparms.put(PdfName.BLACKIS1, PdfBoolean.PDFTRUE);</span>
+                }
+<span class="nc bnc" id="L132" title="All 2 branches missed.">                if ((colorspace &amp; Image.CCITT_ENCODEDBYTEALIGN) != 0) {</span>
+<span class="nc" id="L133">                    decodeparms.put(PdfName.ENCODEDBYTEALIGN, PdfBoolean.PDFTRUE);</span>
+                }
+<span class="nc bnc" id="L135" title="All 2 branches missed.">                if ((colorspace &amp; Image.CCITT_ENDOFLINE) != 0) {</span>
+<span class="nc" id="L136">                    decodeparms.put(PdfName.ENDOFLINE, PdfBoolean.PDFTRUE);</span>
+                }
+<span class="nc bnc" id="L138" title="All 2 branches missed.">                if ((colorspace &amp; Image.CCITT_ENDOFBLOCK) != 0) {</span>
+<span class="nc" id="L139">                    decodeparms.put(PdfName.ENDOFBLOCK, PdfBoolean.PDFFALSE);</span>
+                }
+<span class="nc" id="L141">                decodeparms.put(PdfName.COLUMNS, new PdfNumber(image.getWidth()));</span>
+<span class="nc" id="L142">                decodeparms.put(PdfName.ROWS, new PdfNumber(image.getHeight()));</span>
+<span class="nc" id="L143">                put(PdfName.DECODEPARMS, decodeparms);</span>
+<span class="nc" id="L144">            } else {</span>
+<span class="pc bpc" id="L145" title="1 of 3 branches missed.">                switch (colorspace) {</span>
+                    case 1:
+<span class="fc" id="L147">                        put(PdfName.COLORSPACE, PdfName.DEVICEGRAY);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">                        if (image.isInverted()) {</span>
+<span class="nc" id="L149">                            put(PdfName.DECODE, new PdfLiteral(&quot;[1 0]&quot;));</span>
+                        }
+                        break;
+                    case 3:
+<span class="fc" id="L153">                        put(PdfName.COLORSPACE, PdfName.DEVICERGB);</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">                        if (image.isInverted()) {</span>
+<span class="nc" id="L155">                            put(PdfName.DECODE, new PdfLiteral(&quot;[1 0 1 0 1 0]&quot;));</span>
+                        }
+                        break;
+                    case 4:
+                    default:
+<span class="nc" id="L160">                        put(PdfName.COLORSPACE, PdfName.DEVICECMYK);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">                        if (image.isInverted()) {</span>
+<span class="nc" id="L162">                            put(PdfName.DECODE, new PdfLiteral(&quot;[1 0 1 0 1 0 1 0]&quot;));</span>
+                        }
+                }
+<span class="fc" id="L165">                PdfDictionary additional = image.getAdditional();</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">                if (additional != null) {</span>
+<span class="nc" id="L167">                    putAll(additional);</span>
+                }
+<span class="pc bpc" id="L169" title="2 of 6 branches missed.">                if (image.isMask() &amp;&amp; (image.getBpc() == 1 || image.getBpc() &gt; 8)) {</span>
+<span class="nc" id="L170">                    remove(PdfName.COLORSPACE);</span>
+                }
+<span class="fc" id="L172">                put(PdfName.BITSPERCOMPONENT, new PdfNumber(image.getBpc()));</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">                if (image.isDeflated()) {</span>
+<span class="nc" id="L174">                    put(PdfName.FILTER, PdfName.FLATEDECODE);</span>
+                } else {
+<span class="fc" id="L176">                    flateCompress(image.getCompressionLevel());</span>
+                }
+            }
+<span class="fc" id="L179">            return;</span>
+        }
+        // This pruned OpenPDF only knows raw images (see Image.getInstance(int, int, int, int, byte[]))
+<span class="nc" id="L182">        throw new BadPdfFormatException(</span>
+<span class="nc" id="L183">                MessageLocalization.getComposedMessage(&quot;1.is.an.unknown.image.format&quot;, &quot;Not a raw image&quot;));</span>
+    }
+
+    /**
+     * Returns the &lt;CODE&gt;PdfName&lt;/CODE&gt; of the image.
+     *
+     * @return the name
+     */
+
+    public PdfName name() {
+<span class="fc" id="L193">        return name;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

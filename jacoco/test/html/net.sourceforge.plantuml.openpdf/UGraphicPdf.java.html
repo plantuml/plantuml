@@ -66,28 +66,28 @@ public class UGraphicPdf extends AbstractUGraphic&lt;PdfGraphics&gt; implements 
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-<span class="nc" id="L69">		return new UGraphicPdf(this);</span>
+<span class="fc" id="L69">		return new UGraphicPdf(this);</span>
 	}
 
 	// A copy takes its driver table from &quot;other&quot; (see AbstractUGraphic#copy) instead of building
 	// one, so this constructor deliberately does not register anything.
 	private UGraphicPdf(UGraphicPdf other) {
-<span class="nc" id="L75">		super(other.getStringBounder());</span>
-<span class="nc" id="L76">		this.option = other.option;</span>
-<span class="nc" id="L77">		copy(other);</span>
-<span class="nc" id="L78">	}</span>
+<span class="fc" id="L75">		super(other.getStringBounder());</span>
+<span class="fc" id="L76">		this.option = other.option;</span>
+<span class="fc" id="L77">		copy(other);</span>
+<span class="fc" id="L78">	}</span>
 
 	private UGraphicPdf(StringBounder stringBounder, PdfOption option) {
-<span class="nc" id="L81">		super(stringBounder);</span>
-<span class="nc" id="L82">		this.option = option;</span>
-<span class="nc" id="L83">		register();</span>
-<span class="nc" id="L84">	}</span>
+<span class="fc" id="L81">		super(stringBounder);</span>
+<span class="fc" id="L82">		this.option = option;</span>
+<span class="fc" id="L83">		register();</span>
+<span class="fc" id="L84">	}</span>
 
 	public static UGraphicPdf build(PdfOption option, StringBounder stringBounder) {
-<span class="nc" id="L87">		final UGraphicPdf result = new UGraphicPdf(stringBounder, option);</span>
-<span class="nc" id="L88">		result.copy(option.getBackgroundColor(), option.getColorMapper(), new PdfGraphics(option));</span>
-<span class="nc" id="L89">		result.option = option;</span>
-<span class="nc" id="L90">		return result;</span>
+<span class="fc" id="L87">		final UGraphicPdf result = new UGraphicPdf(stringBounder, option);</span>
+<span class="fc" id="L88">		result.copy(option.getBackgroundColor(), option.getColorMapper(), new PdfGraphics(option));</span>
+<span class="fc" id="L89">		result.option = option;</span>
+<span class="fc" id="L90">		return result;</span>
 	}
 
 	@Override
@@ -97,29 +97,29 @@ public class UGraphicPdf extends AbstractUGraphic&lt;PdfGraphics&gt; implements 
 
 	@Override
 	protected void beforeDraw() {
-<span class="nc" id="L100">		getGraphicObject().setHidden(getParam().isHidden());</span>
-<span class="nc" id="L101">	}</span>
+<span class="fc" id="L100">		getGraphicObject().setHidden(getParam().isHidden());</span>
+<span class="fc" id="L101">	}</span>
 
 	@Override
 	protected void afterDraw() {
-<span class="nc" id="L105">		getGraphicObject().setHidden(false);</span>
-<span class="nc" id="L106">	}</span>
+<span class="fc" id="L105">		getGraphicObject().setHidden(false);</span>
+<span class="fc" id="L106">	}</span>
 
 	private void register() {
-<span class="nc" id="L109">		registerDriver(URectangle.class, new DriverRectanglePdf());</span>
-<span class="nc" id="L110">		registerDriver(UText.class, new DriverTextPdf(getStringBounder()));</span>
+<span class="fc" id="L109">		registerDriver(URectangle.class, new DriverRectanglePdf());</span>
+<span class="fc" id="L110">		registerDriver(UText.class, new DriverTextPdf(getStringBounder()));</span>
 //
-<span class="nc" id="L112">		registerDriver(ULine.class, new DriverLinePdf());</span>
+<span class="fc" id="L112">		registerDriver(ULine.class, new DriverLinePdf());</span>
 //		registerDriver(UPixel.class, new DriverPixelSvg());
-<span class="nc" id="L114">		registerDriver(UPolygon.class, new DriverPolygonPdf());</span>
-<span class="nc" id="L115">		registerDriver(UEllipse.class, new DriverEllipsePdf());</span>
-<span class="nc" id="L116">		registerDriver(UImage.class, new DriverImagePdf());</span>
-<span class="nc" id="L117">		ignoreShape(UImageSvg.class);</span>
-<span class="nc" id="L118">		ignoreShape(UImageTikz.class);</span>
-<span class="nc" id="L119">		registerDriver(UPath.class, new DriverPathPdf());</span>
-<span class="nc" id="L120">		registerDriver(DotPath.class, new DriverDotPathPdf());</span>
-<span class="nc" id="L121">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterPdf());</span>
-<span class="nc" id="L122">	}</span>
+<span class="fc" id="L114">		registerDriver(UPolygon.class, new DriverPolygonPdf());</span>
+<span class="fc" id="L115">		registerDriver(UEllipse.class, new DriverEllipsePdf());</span>
+<span class="fc" id="L116">		registerDriver(UImage.class, new DriverImagePdf());</span>
+<span class="fc" id="L117">		ignoreShape(UImageSvg.class);</span>
+<span class="fc" id="L118">		ignoreShape(UImageTikz.class);</span>
+<span class="fc" id="L119">		registerDriver(UPath.class, new DriverPathPdf());</span>
+<span class="fc" id="L120">		registerDriver(DotPath.class, new DriverDotPathPdf());</span>
+<span class="fc" id="L121">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterPdf());</span>
+<span class="fc" id="L122">	}</span>
 
 	public PdfGraphics getSvgGraphics() {
 <span class="nc" id="L125">		return this.getGraphicObject();</span>
@@ -130,34 +130,34 @@ public class UGraphicPdf extends AbstractUGraphic&lt;PdfGraphics&gt; implements 
 //			if (metadata != null)
 //				getGraphicObject().addCommentMetadata(metadata);
 
-<span class="nc" id="L133">		getGraphicObject().createPdf(os);</span>
-<span class="nc" id="L134">	}</span>
+<span class="fc" id="L133">		getGraphicObject().createPdf(os);</span>
+<span class="fc" id="L134">	}</span>
 
 	@Override
 	public void startGroup(UGroup group) {
 		// getGraphicObject().startGroup(group.asMap());
-<span class="nc" id="L139">	}</span>
+<span class="fc" id="L139">	}</span>
 
 	@Override
 	public void closeGroup() {
 		// getGraphicObject().closeGroup();
-<span class="nc" id="L144">	}</span>
+<span class="fc" id="L144">	}</span>
 
 	@Override
 	public void startUrl(Url url) {
 		// getGraphicObject().openLink(url.getUrl(), url.getTooltip(),
 		// option.getLinkTarget());
-<span class="nc" id="L150">	}</span>
+<span class="fc" id="L150">	}</span>
 
 	@Override
 	public void closeUrl() {
 		// getGraphicObject().closeLink();
-<span class="nc" id="L155">	}</span>
+<span class="fc" id="L155">	}</span>
 
 	@Override
 	protected void drawComment(UComment comment) {
 		// getGraphicObject().addComment(comment.getComment());
-<span class="nc" id="L160">	}</span>
+<span class="fc" id="L160">	}</span>
 
 //	@Override
 //	public boolean matchesProperty(String propertyName) {

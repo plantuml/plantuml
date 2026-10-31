@@ -1,0 +1,1782 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfContentByte.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfContentByte.java</span></div><h1>PdfContentByte.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfContentByte.java 4065 2009-09-16 23:09:11Z psoares33 $
+ *
+ * Copyright 1999, 2000, 2001, 2002 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import static org.openpdf.text.pdf.ExtendedColor.MAX_COLOR_VALUE;
+import static org.openpdf.text.pdf.ExtendedColor.MAX_FLOAT_COLOR_VALUE;
+import static org.openpdf.text.pdf.ExtendedColor.MAX_INT_COLOR_VALUE;
+
+import org.openpdf.text.DocumentException;
+import org.openpdf.text.Element;
+import org.openpdf.text.Image;
+import org.openpdf.text.ImgJBIG2;
+import org.openpdf.text.Rectangle;
+import org.openpdf.text.error_messages.MessageLocalization;
+import org.openpdf.text.exceptions.IllegalPdfSyntaxException;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * &lt;CODE&gt;PdfContentByte&lt;/CODE&gt; is an object containing the user positioned
+ * text and graphic contents of a page. It knows how to apply the proper font encoding.
+ */
+
+public class PdfContentByte {
+
+    /**
+     * The alignment is center
+     */
+    public static final int ALIGN_CENTER = Element.ALIGN_CENTER;
+    /**
+     * The alignment is left
+     */
+    public static final int ALIGN_LEFT = Element.ALIGN_LEFT;
+    /**
+     * The alignment is right
+     */
+    public static final int ALIGN_RIGHT = Element.ALIGN_RIGHT;
+    /**
+     * A possible line cap value
+     */
+    public static final int LINE_CAP_BUTT = 0;
+    /**
+     * A possible line join value
+     */
+    public static final int LINE_JOIN_MITER = 0;
+    static final float MIN_FONT_SIZE = 0.0001f;
+<span class="fc" id="L97">    private static final Map&lt;PdfName, String&gt; abrev = new HashMap&lt;&gt;();</span>
+    // membervariables
+
+    static {
+<span class="fc" id="L101">        abrev.put(PdfName.BITSPERCOMPONENT, &quot;/BPC &quot;);</span>
+<span class="fc" id="L102">        abrev.put(PdfName.COLORSPACE, &quot;/CS &quot;);</span>
+<span class="fc" id="L103">        abrev.put(PdfName.DECODE, &quot;/D &quot;);</span>
+<span class="fc" id="L104">        abrev.put(PdfName.DECODEPARMS, &quot;/DP &quot;);</span>
+<span class="fc" id="L105">        abrev.put(PdfName.FILTER, &quot;/F &quot;);</span>
+<span class="fc" id="L106">        abrev.put(PdfName.HEIGHT, &quot;/H &quot;);</span>
+<span class="fc" id="L107">        abrev.put(PdfName.IMAGEMASK, &quot;/IM &quot;);</span>
+<span class="fc" id="L108">        abrev.put(PdfName.INTENT, &quot;/Intent &quot;);</span>
+<span class="fc" id="L109">        abrev.put(PdfName.INTERPOLATE, &quot;/I &quot;);</span>
+<span class="fc" id="L110">        abrev.put(PdfName.WIDTH, &quot;/W &quot;);</span>
+<span class="fc" id="L111">    }</span>
+
+    /**
+     * This is the actual content
+     */
+<span class="fc" id="L116">    protected ByteBuffer content = new ByteBuffer();</span>
+    /**
+     * This is the writer
+     */
+    protected PdfWriter writer;
+    /**
+     * This is the PdfDocument
+     */
+    protected PdfDocument pdf;
+    /**
+     * This is the GraphicState in use
+     */
+<span class="fc" id="L128">    protected GraphicState state = new GraphicState();</span>
+    /**
+     * The list were we save/restore the state
+     */
+<span class="fc" id="L132">    protected List&lt;GraphicState&gt; stateList = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * The separator between commands.
+     */
+<span class="fc" id="L137">    protected int separator = '\n';</span>
+<span class="fc" id="L138">    private int mcDepth = 0;</span>
+<span class="fc" id="L139">    private boolean inText = false;</span>
+<span class="fc" id="L140">    private int lastFillAlpha = MAX_COLOR_VALUE;</span>
+<span class="fc" id="L141">    private int lastStrokeAlpha = MAX_COLOR_VALUE;</span>
+
+
+    /**
+     * Constructs a new &lt;CODE&gt;PdfContentByte&lt;/CODE&gt;-object.
+     *
+     * @param wr the writer associated to this content
+     */
+
+<span class="fc" id="L150">    public PdfContentByte(PdfWriter wr) {</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">        if (wr != null) {</span>
+<span class="fc" id="L152">            writer = wr;</span>
+<span class="fc" id="L153">            pdf = writer.getPdfDocument();</span>
+        }
+<span class="fc" id="L155">    }</span>
+
+    // constructors
+
+    // methods to get the content of this object
+
+    /**
+     * Escapes a &lt;CODE&gt;byte&lt;/CODE&gt; array according to the PDF conventions.
+     *
+     * @param b the &lt;CODE&gt;byte&lt;/CODE&gt; array to escape
+     * @return an escaped &lt;CODE&gt;byte&lt;/CODE&gt; array
+     */
+    static byte[] escapeString(byte[] b) {
+<span class="fc" id="L168">        ByteBuffer content = new ByteBuffer();</span>
+<span class="fc" id="L169">        escapeAndAppendString(b, content);</span>
+<span class="fc" id="L170">        return content.toByteArray();</span>
+    }
+
+    /**
+     * Escapes a &lt;CODE&gt;byte&lt;/CODE&gt; array according to the PDF conventions and append it to &lt;CODE&gt;content&lt;/CODE&gt;
+     *
+     * @param b       the &lt;CODE&gt;byte&lt;/CODE&gt; array to escape
+     * @param content the content to append the escaped string
+     */
+    static void escapeAndAppendString(byte[] b, ByteBuffer content) {
+<span class="fc" id="L180">        content.append_i('(');</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        for (byte c : b) {</span>
+<span class="pc bpc" id="L182" title="5 of 7 branches missed.">            switch (c) {</span>
+                case '\r':
+<span class="nc" id="L184">                    content.append(&quot;\\r&quot;);</span>
+<span class="nc" id="L185">                    break;</span>
+                case '\n':
+<span class="nc" id="L187">                    content.append(&quot;\\n&quot;);</span>
+<span class="nc" id="L188">                    break;</span>
+                case '\t':
+<span class="nc" id="L190">                    content.append(&quot;\\t&quot;);</span>
+<span class="nc" id="L191">                    break;</span>
+                case '\b':
+<span class="nc" id="L193">                    content.append(&quot;\\b&quot;);</span>
+<span class="nc" id="L194">                    break;</span>
+                case '\f':
+<span class="nc" id="L196">                    content.append(&quot;\\f&quot;);</span>
+<span class="nc" id="L197">                    break;</span>
+                case '(':
+                case ')':
+                case '\\':
+<span class="fc" id="L201">                    content.append_i('\\').append_i(c);</span>
+<span class="fc" id="L202">                    break;</span>
+                default:
+<span class="fc" id="L204">                    content.append_i(c);</span>
+            }
+        }
+<span class="fc" id="L207">        content.append(&quot;)&quot;);</span>
+<span class="fc" id="L208">    }</span>
+
+    /**
+     * Generates an array of bezier curves to draw an arc.
+     * &lt;p&gt;
+     * (x1, y1) and (x2, y2) are the corners of the enclosing rectangle. Angles, measured in degrees, start with 0 to
+     * the right (the positive X axis) and increase counter-clockwise.  The arc extends from startAng to
+     * startAng+extent.  I.e. startAng=0 and extent=180 yields an openside-down semi-circle.
+     * &lt;p&gt;
+     * The resulting coordinates are of the form float[]{x1,y1,x2,y2,x3,y3, x4,y4} such that the curve goes from (x1,
+     * y1) to (x4, y4) with (x2, y2) and (x3, y3) as their respective Bezier control points.
+     * &lt;p&gt;
+     * Note: this code was taken from ReportLab (www.reportlab.org), an excellent PDF generator for Python (BSD license:
+     * http://www.reportlab.org/devfaq.html#1.3 ).
+     *
+     * @param x1       a corner of the enclosing rectangle
+     * @param y1       a corner of the enclosing rectangle
+     * @param x2       a corner of the enclosing rectangle
+     * @param y2       a corner of the enclosing rectangle
+     * @param startAng starting angle in degrees
+     * @param extent   angle extent in degrees
+     * @return a list of float[] with the bezier curves
+     */
+    public static List&lt;float[]&gt; bezierArc(float x1, float y1, float x2, float y2, float startAng, float extent) {
+        float tmp;
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">        if (x1 &gt; x2) {</span>
+<span class="nc" id="L234">            tmp = x1;</span>
+<span class="nc" id="L235">            x1 = x2;</span>
+<span class="nc" id="L236">            x2 = tmp;</span>
+        }
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">        if (y2 &gt; y1) {</span>
+<span class="fc" id="L239">            tmp = y1;</span>
+<span class="fc" id="L240">            y1 = y2;</span>
+<span class="fc" id="L241">            y2 = tmp;</span>
+        }
+
+        float fragAngle;
+        int Nfrag;
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">        if (Math.abs(extent) &lt;= 90f) {</span>
+<span class="nc" id="L247">            fragAngle = extent;</span>
+<span class="nc" id="L248">            Nfrag = 1;</span>
+        } else {
+<span class="fc" id="L250">            Nfrag = (int) (Math.ceil(Math.abs(extent) / 90f));</span>
+<span class="fc" id="L251">            fragAngle = extent / Nfrag;</span>
+        }
+<span class="fc" id="L253">        float x_cen = (x1 + x2) / 2f;</span>
+<span class="fc" id="L254">        float y_cen = (y1 + y2) / 2f;</span>
+<span class="fc" id="L255">        float rx = (x2 - x1) / 2f;</span>
+<span class="fc" id="L256">        float ry = (y2 - y1) / 2f;</span>
+<span class="fc" id="L257">        float halfAng = (float) (fragAngle * Math.PI / 360.);</span>
+<span class="fc" id="L258">        float kappa = (float) (Math.abs(4. / 3. * (1. - Math.cos(halfAng)) / Math.sin(halfAng)));</span>
+<span class="fc" id="L259">        List&lt;float[]&gt; pointList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        for (int i = 0; i &lt; Nfrag; ++i) {</span>
+<span class="fc" id="L261">            float theta0 = (float) ((startAng + i * fragAngle) * Math.PI / 180.);</span>
+<span class="fc" id="L262">            float theta1 = (float) ((startAng + (i + 1) * fragAngle) * Math.PI / 180.);</span>
+<span class="fc" id="L263">            float cos0 = (float) Math.cos(theta0);</span>
+<span class="fc" id="L264">            float cos1 = (float) Math.cos(theta1);</span>
+<span class="fc" id="L265">            float sin0 = (float) Math.sin(theta0);</span>
+<span class="fc" id="L266">            float sin1 = (float) Math.sin(theta1);</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">            if (fragAngle &gt; 0f) {</span>
+<span class="fc" id="L268">                pointList.add(new float[]{x_cen + rx * cos0,</span>
+                        y_cen - ry * sin0,
+                        x_cen + rx * (cos0 - kappa * sin0),
+                        y_cen - ry * (sin0 + kappa * cos0),
+                        x_cen + rx * (cos1 + kappa * sin1),
+                        y_cen - ry * (sin1 - kappa * cos1),
+                        x_cen + rx * cos1,
+                        y_cen - ry * sin1});
+            } else {
+<span class="nc" id="L277">                pointList.add(new float[]{x_cen + rx * cos0,</span>
+                        y_cen - ry * sin0,
+                        x_cen + rx * (cos0 + kappa * sin0),
+                        y_cen - ry * (sin0 - kappa * cos0),
+                        x_cen + rx * (cos1 - kappa * sin1),
+                        y_cen - ry * (sin1 + kappa * cos1),
+                        x_cen + rx * cos1,
+                        y_cen - ry * sin1});
+            }
+        }
+<span class="fc" id="L287">        return pointList;</span>
+    }
+
+    // methods to add graphical content
+
+    /**
+     * Returns the &lt;CODE&gt;String&lt;/CODE&gt; representation of this &lt;CODE&gt;PdfContentByte&lt;/CODE&gt;-object.
+     *
+     * @return a &lt;CODE&gt;String&lt;/CODE&gt;
+     */
+
+    public String toString() {
+<span class="nc" id="L299">        return content.toString();</span>
+    }
+
+    /**
+     * Gets the internal buffer.
+     *
+     * @return the internal buffer
+     */
+    public ByteBuffer getInternalBuffer() {
+<span class="fc" id="L308">        return content;</span>
+    }
+
+    /**
+     * Returns the PDF representation of this &lt;CODE&gt;PdfContentByte&lt;/CODE&gt;-object.
+     *
+     * @param writer the &lt;CODE&gt;PdfWriter&lt;/CODE&gt;
+     * @return a &lt;CODE&gt;byte&lt;/CODE&gt; array with the representation
+     */
+
+    public byte[] toPdf(PdfWriter writer) {
+<span class="fc" id="L319">        sanityCheck();</span>
+<span class="fc" id="L320">        return content.toByteArray();</span>
+    }
+
+    /**
+     * Adds the content of another &lt;CODE&gt;PdfContent&lt;/CODE&gt;-object to this object.
+     *
+     * @param other another &lt;CODE&gt;PdfByteContent&lt;/CODE&gt;-object
+     */
+
+    /**
+     * Changes the &lt;VAR&gt;Flatness&lt;/VAR&gt;.
+     * &lt;p&gt;
+     * &lt;VAR&gt;Flatness&lt;/VAR&gt; sets the maximum permitted distance in device pixels between the
+     * mathematically correct path and an approximation constructed from straight line segments.&lt;BR&gt;
+     *
+     * @param flatness a value
+     */
+
+    /**
+     * Changes the &lt;VAR&gt;Line cap style&lt;/VAR&gt;.
+     * &lt;p&gt;
+     * The &lt;VAR&gt;line cap style&lt;/VAR&gt; specifies the shape to be used at the end of open subpaths when they are
+     * stroked.&lt;BR&gt; Allowed values are LINE_CAP_BUTT, LINE_CAP_ROUND and LINE_CAP_PROJECTING_SQUARE.&lt;BR&gt;
+     *
+     * @param style a value
+     */
+
+    public void setLineCap(int style) {
+<span class="nc bnc" id="L348" title="All 4 branches missed.">        if (style &gt;= 0 &amp;&amp; style &lt;= 2) {</span>
+<span class="nc" id="L349">            content.append(style).append(&quot; J&quot;).append_i(separator);</span>
+        }
+<span class="nc" id="L351">    }</span>
+
+    /**
+     * Changes the value of the &lt;VAR&gt;line dash pattern&lt;/VAR&gt;.
+     * &lt;p&gt;
+     * The line dash pattern controls the pattern of dashes and gaps used to stroke paths. It is specified by an
+     * &lt;I&gt;array&lt;/I&gt; and a &lt;I&gt;phase&lt;/I&gt;. The array specifies the length of the alternating dashes and gaps. The phase
+     * specifies the distance into the dash pattern to start the dash.&lt;BR&gt;
+     *
+     * @param phase the value of the phase
+     */
+
+    public void setLineDash(float phase) {
+<span class="fc" id="L364">        content.append(&quot;[] &quot;).append(phase).append(&quot; d&quot;).append_i(separator);</span>
+<span class="fc" id="L365">    }</span>
+
+    /**
+     * Changes the value of the &lt;VAR&gt;line dash pattern&lt;/VAR&gt;.
+     * &lt;p&gt;
+     * The line dash pattern controls the pattern of dashes and gaps used to stroke paths. It is specified by an
+     * &lt;I&gt;array&lt;/I&gt; and a &lt;I&gt;phase&lt;/I&gt;. The array specifies the length of the alternating dashes and gaps. The phase
+     * specifies the distance into the dash pattern to start the dash.&lt;BR&gt;
+     *
+     * @param phase   the value of the phase
+     * @param unitsOn the number of units that must be 'on' (equals the number of units that must be 'off').
+     */
+
+    /**
+     * Changes the value of the &lt;VAR&gt;line dash pattern&lt;/VAR&gt;.
+     * &lt;p&gt;
+     * The line dash pattern controls the pattern of dashes and gaps used to stroke paths. It is specified by an
+     * &lt;I&gt;array&lt;/I&gt; and a &lt;I&gt;phase&lt;/I&gt;. The array specifies the length of the alternating dashes and gaps. The phase
+     * specifies the distance into the dash pattern to start the dash.&lt;BR&gt;
+     *
+     * @param phase    the value of the phase
+     * @param unitsOn  the number of units that must be 'on'
+     * @param unitsOff the number of units that must be 'off'
+     */
+
+    public void setLineDash(float unitsOn, float unitsOff, float phase) {
+<span class="fc" id="L391">        content.append(&quot;[&quot;).append(unitsOn).append(' ').append(unitsOff).append(&quot;] &quot;).append(phase).append(&quot; d&quot;)</span>
+<span class="fc" id="L392">                .append_i(separator);</span>
+<span class="fc" id="L393">    }</span>
+
+    /**
+     * Changes the value of the &lt;VAR&gt;line dash pattern&lt;/VAR&gt;.
+     * &lt;p&gt;
+     * The line dash pattern controls the pattern of dashes and gaps used to stroke paths. It is specified by an
+     * &lt;I&gt;array&lt;/I&gt; and a &lt;I&gt;phase&lt;/I&gt;. The array specifies the length of the alternating dashes and gaps. The phase
+     * specifies the distance into the dash pattern to start the dash.&lt;BR&gt;
+     *
+     * @param array length of the alternating dashes and gaps
+     * @param phase the value of the phase
+     */
+
+    /**
+     * Changes the &lt;VAR&gt;Line join style&lt;/VAR&gt;.
+     * &lt;p&gt;
+     * The &lt;VAR&gt;line join style&lt;/VAR&gt; specifies the shape to be used at the corners of paths that are stroked.&lt;BR&gt;
+     * Allowed values are LINE_JOIN_MITER (Miter joins), LINE_JOIN_ROUND (Round joins) and LINE_JOIN_BEVEL (Bevel
+     * joins).&lt;BR&gt;
+     *
+     * @param style a value
+     */
+
+    public void setLineJoin(int style) {
+<span class="nc bnc" id="L417" title="All 4 branches missed.">        if (style &gt;= 0 &amp;&amp; style &lt;= 2) {</span>
+<span class="nc" id="L418">            content.append(style).append(&quot; j&quot;).append_i(separator);</span>
+        }
+<span class="nc" id="L420">    }</span>
+
+    /**
+     * Changes the &lt;VAR&gt;line width&lt;/VAR&gt;.
+     * &lt;p&gt;
+     * The line width specifies the thickness of the line used to stroke a path and is measured in user space
+     * units.&lt;BR&gt;
+     *
+     * @param w a width
+     */
+
+    public void setLineWidth(float w) {
+<span class="fc" id="L432">        content.append(w).append(&quot; w&quot;).append_i(separator);</span>
+<span class="fc" id="L433">    }</span>
+
+    /**
+     * Changes the &lt;VAR&gt;Miter limit&lt;/VAR&gt;.
+     * &lt;p&gt;
+     * When two line segments meet at a sharp angle and mitered joins have been specified as the line join style, it is
+     * possible for the miter to extend far beyond the thickness of the line stroking path. The miter limit imposes a
+     * maximum on the ratio of the miter length to the line witdh. When the limit is exceeded, the join is converted
+     * from a miter to a bevel.&lt;BR&gt;
+     *
+     * @param miterLimit a miter limit
+     */
+
+    /**
+     * Modify the current clipping path by intersecting it with the current path, using the nonzero winding number rule
+     * to determine which regions lie inside the clipping path.
+     */
+
+    /**
+     * Modify the current clipping path by intersecting it with the current path, using the even-odd rule to determine
+     * which regions lie inside the clipping path.
+     */
+
+    /**
+     * Changes the currentgray tint for filling paths (device dependent colors!).
+     * &lt;p&gt;
+     * Sets the color space to &lt;B&gt;DeviceGray&lt;/B&gt; (or the &lt;B&gt;DefaultGray&lt;/B&gt; color space), and sets the gray tint to use
+     * for filling paths.&lt;/P&gt;
+     *
+     * @param gray a value between 0 (black) and 1 (white)
+     */
+
+    public void setGrayFill(float gray, float alpha) {
+<span class="nc" id="L466">        saveColorFill(new GrayColor(gray, alpha));</span>
+<span class="nc" id="L467">        content.append(gray).append(&quot; g&quot;).append_i(separator);</span>
+<span class="nc" id="L468">    }</span>
+
+    /**
+     * Changes the current gray tint for filling paths to black.
+     */
+
+    public void resetGrayFill() {
+<span class="nc" id="L475">        saveColorFill(GrayColor.GRAYBLACK);</span>
+<span class="nc" id="L476">        content.append(&quot;0 g&quot;).append_i(separator);</span>
+<span class="nc" id="L477">    }</span>
+
+    /**
+     * Changes the currentgray tint for stroking paths (device dependent colors!).
+     * &lt;p&gt;
+     * Sets the color space to &lt;B&gt;DeviceGray&lt;/B&gt; (or the &lt;B&gt;DefaultGray&lt;/B&gt; color space), and sets the gray tint to use
+     * for stroking paths.&lt;/P&gt;
+     *
+     * @param gray a value between 0 (black) and 1 (white)
+     */
+
+    public void setGrayStroke(float gray, float alpha) {
+<span class="nc" id="L489">        saveColorStroke(new GrayColor(gray, alpha));</span>
+<span class="nc" id="L490">        content.append(gray).append(&quot; G&quot;).append_i(separator);</span>
+<span class="nc" id="L491">    }</span>
+
+    /**
+     * Changes the current gray tint for stroking paths to black.
+     */
+
+    public void resetGrayStroke() {
+<span class="nc" id="L498">        saveColorStroke(GrayColor.GRAYBLACK);</span>
+<span class="nc" id="L499">        content.append(&quot;0 G&quot;).append_i(separator);</span>
+<span class="nc" id="L500">    }</span>
+
+    /**
+     * Helper to validate and write the RGB color components
+     *
+     * @param red   the intensity of red. A value between 0 and 255
+     * @param green the intensity of green. A value between 0 and 255
+     * @param blue  the intensity of blue. A value between 0 and 255
+     */
+    private void HelperRGB(int red, int green, int blue) {
+<span class="fc" id="L510">        HelperRGB((float) (red &amp; MAX_COLOR_VALUE) / MAX_INT_COLOR_VALUE,</span>
+                (float) (green &amp; MAX_COLOR_VALUE) / MAX_INT_COLOR_VALUE,
+                (float) (blue &amp; MAX_COLOR_VALUE) / MAX_INT_COLOR_VALUE);
+<span class="fc" id="L513">    }</span>
+
+    /**
+     * Helper to validate and write the RGB color components
+     *
+     * @param red   the intensity of red. A value between 0 and 1
+     * @param green the intensity of green. A value between 0 and 1
+     * @param blue  the intensity of blue. A value between 0 and 1
+     */
+    private void HelperRGB(float red, float green, float blue) {
+<span class="pc bpc" id="L523" title="1 of 2 branches missed.">        if (red &lt; 0.0f) {</span>
+<span class="nc" id="L524">            red = 0.0f;</span>
+<span class="pc bpc" id="L525" title="1 of 2 branches missed.">        } else if (red &gt; MAX_FLOAT_COLOR_VALUE) {</span>
+<span class="nc" id="L526">            red = MAX_FLOAT_COLOR_VALUE;</span>
+        }
+<span class="pc bpc" id="L528" title="1 of 2 branches missed.">        if (green &lt; 0.0f) {</span>
+<span class="nc" id="L529">            green = 0.0f;</span>
+<span class="pc bpc" id="L530" title="1 of 2 branches missed.">        } else if (green &gt; MAX_FLOAT_COLOR_VALUE) {</span>
+<span class="nc" id="L531">            green = MAX_FLOAT_COLOR_VALUE;</span>
+        }
+<span class="pc bpc" id="L533" title="1 of 2 branches missed.">        if (blue &lt; 0.0f) {</span>
+<span class="nc" id="L534">            blue = 0.0f;</span>
+<span class="pc bpc" id="L535" title="1 of 2 branches missed.">        } else if (blue &gt; MAX_FLOAT_COLOR_VALUE) {</span>
+<span class="nc" id="L536">            blue = MAX_FLOAT_COLOR_VALUE;</span>
+        }
+<span class="fc" id="L538">        content.append(red).append(' ').append(green).append(' ').append(blue);</span>
+<span class="fc" id="L539">    }</span>
+
+    /**
+     * Changes the current color for filling paths (device dependent colors!).
+     * &lt;p&gt;
+     * Sets the color space to &lt;B&gt;DeviceRGB&lt;/B&gt; (or the &lt;B&gt;DefaultRGB&lt;/B&gt; color space), and sets the color to use for
+     * filling paths.&lt;/P&gt;
+     * &lt;p&gt;
+     * Following the PDF manual, each operand must be a number between 0 (minimum intensity) and 1 (maximum
+     * intensity).&lt;/P&gt;
+     *
+     * @param red   the intensity of red. A value between 0 and 1
+     * @param green the intensity of green. A value between 0 and 1
+     * @param blue  the intensity of blue. A value between 0 and 1
+     */
+
+    /**
+     * Changes the current color for filling paths to black. Resetting using gray color to keep the backward
+     * compatibility.
+     */
+
+    public void resetRGBColorFill() {
+<span class="nc" id="L561">        resetGrayFill();</span>
+<span class="nc" id="L562">    }</span>
+
+    /**
+     * Changes the current color for stroking paths (device dependent colors!).
+     * &lt;p&gt;
+     * Sets the color space to &lt;B&gt;DeviceRGB&lt;/B&gt; (or the &lt;B&gt;DefaultRGB&lt;/B&gt; color space), and sets the color to use for
+     * stroking paths.&lt;/P&gt;
+     * &lt;p&gt;
+     * Following the PDF manual, each operand must be a number between 0 (miniumum intensity) and 1 (maximum
+     * intensity).
+     *
+     * @param red   the intensity of red. A value between 0 and 1
+     * @param green the intensity of green. A value between 0 and 1
+     * @param blue  the intensity of blue. A value between 0 and 1
+     */
+
+    /**
+     * Changes the current color for stroking paths to black. Resetting using gray color to keep the backward
+     * compatibility.
+     */
+
+    public void resetRGBColorStroke() {
+<span class="nc" id="L584">        resetGrayStroke();</span>
+<span class="nc" id="L585">    }</span>
+
+    /**
+     * Changes the current color for filling paths (device dependent colors!).
+     * &lt;p&gt;
+     * Sets the color space to &lt;B&gt;DeviceCMYK&lt;/B&gt; (or the &lt;B&gt;DefaultCMYK&lt;/B&gt; color space), and sets the color to use for
+     * filling paths.&lt;/P&gt;
+     * &lt;p&gt;
+     * Following the PDF manual, each operand must be a number between 0 (no ink) and 1 (maximum ink).&lt;/P&gt;
+     *
+     * @param cyan    the intensity of cyan. A value between 0 and 1
+     * @param magenta the intensity of magenta. A value between 0 and 1
+     * @param yellow  the intensity of yellow. A value between 0 and 1
+     * @param black   the intensity of black. A value between 0 and 1
+     */
+
+    /**
+     * Changes the current color for filling paths to black.
+     */
+
+    /**
+     * Changes the current color for stroking paths (device dependent colors!).
+     * &lt;p&gt;
+     * Sets the color space to &lt;B&gt;DeviceCMYK&lt;/B&gt; (or the &lt;B&gt;DefaultCMYK&lt;/B&gt; color space), and sets the color to use for
+     * stroking paths.&lt;/P&gt;
+     * &lt;p&gt;
+     * Following the PDF manual, each operand must be a number between 0 (miniumum intensity) and 1 (maximum
+     * intensity).
+     *
+     * @param cyan    the intensity of cyan. A value between 0 and 1
+     * @param magenta the intensity of magenta. A value between 0 and 1
+     * @param yellow  the intensity of yellow. A value between 0 and 1
+     * @param black   the intensity of black. A value between 0 and 1
+     */
+
+    /**
+     * Changes the current color for stroking paths to black.
+     */
+
+    /**
+     * Move the current point &lt;I&gt;(x, y)&lt;/I&gt;, omitting any connecting line segment.
+     *
+     * @param x new x-coordinate
+     * @param y new y-coordinate
+     */
+
+    public void moveTo(float x, float y) {
+<span class="fc" id="L632">        content.append(x).append(' ').append(y).append(&quot; m&quot;).append_i(separator);</span>
+<span class="fc" id="L633">    }</span>
+
+    /**
+     * Appends a straight line segment from the current point &lt;I&gt;(x, y)&lt;/I&gt;. The new current point is &lt;I&gt;(x, y)&lt;/I&gt;.
+     *
+     * @param x new x-coordinate
+     * @param y new y-coordinate
+     */
+
+    public void lineTo(float x, float y) {
+<span class="fc" id="L643">        content.append(x).append(' ').append(y).append(&quot; l&quot;).append_i(separator);</span>
+<span class="fc" id="L644">    }</span>
+
+    /**
+     * Appends a B&amp;#xea;zier curve to the path, starting from the current point.
+     *
+     * @param x1 x-coordinate of the first control point
+     * @param y1 y-coordinate of the first control point
+     * @param x2 x-coordinate of the second control point
+     * @param y2 y-coordinate of the second control point
+     * @param x3 x-coordinate of the ending point (= new current point)
+     * @param y3 y-coordinate of the ending point (= new current point)
+     */
+
+    public void curveTo(float x1, float y1, float x2, float y2, float x3, float y3) {
+<span class="fc" id="L658">        content.append(x1).append(' ').append(y1).append(' ').append(x2).append(' ').append(y2).append(' ').append(x3)</span>
+<span class="fc" id="L659">                .append(' ').append(y3).append(&quot; c&quot;).append_i(separator);</span>
+<span class="fc" id="L660">    }</span>
+
+    /**
+     * Appends a B&amp;#xea;zier curve to the path, starting from the current point.
+     *
+     * @param x2 x-coordinate of the second control point
+     * @param y2 y-coordinate of the second control point
+     * @param x3 x-coordinate of the ending point (= new current point)
+     * @param y3 y-coordinate of the ending point (= new current point)
+     */
+
+    /**
+     * Appends a B&amp;#xea;zier curve to the path, starting from the current point.
+     *
+     * @param x1 x-coordinate of the first control point
+     * @param y1 y-coordinate of the first control point
+     * @param x3 x-coordinate of the ending point (= new current point)
+     * @param y3 y-coordinate of the ending point (= new current point)
+     */
+
+    /**
+     * Adds a rectangle to the current path.
+     *
+     * @param x x-coordinate of the starting point
+     * @param y y-coordinate of the starting point
+     * @param w width
+     * @param h height
+     */
+
+    public void rectangle(float x, float y, float w, float h) {
+<span class="fc" id="L690">        content.append(x).append(' ').append(y).append(' ').append(w).append(' ').append(h).append(&quot; re&quot;)</span>
+<span class="fc" id="L691">                .append_i(separator);</span>
+<span class="fc" id="L692">    }</span>
+
+    private boolean compareColors(Color c1, Color c2) {
+<span class="nc bnc" id="L695" title="All 4 branches missed.">        if (c1 == null &amp;&amp; c2 == null) {</span>
+<span class="nc" id="L696">            return true;</span>
+        }
+<span class="nc bnc" id="L698" title="All 4 branches missed.">        if (c1 == null || c2 == null) {</span>
+<span class="nc" id="L699">            return false;</span>
+        }
+<span class="nc bnc" id="L701" title="All 2 branches missed.">        if (c1 instanceof ExtendedColor) {</span>
+<span class="nc" id="L702">            return c1.equals(c2);</span>
+        }
+<span class="nc" id="L704">        return c2.equals(c1);</span>
+    }
+
+    /**
+     * Adds a variable width border to the current path. Only use if
+     * {@link org.openpdf.text.Rectangle#isUseVariableBorders() Rectangle.isUseVariableBorders} = true.
+     *
+     * @param rect a &lt;CODE&gt;Rectangle&lt;/CODE&gt;
+     */
+    public void variableRectangle(Rectangle rect) {
+<span class="nc" id="L714">        float t = rect.getTop();</span>
+<span class="nc" id="L715">        float b = rect.getBottom();</span>
+<span class="nc" id="L716">        float r = rect.getRight();</span>
+<span class="nc" id="L717">        float l = rect.getLeft();</span>
+<span class="nc" id="L718">        float wt = rect.getBorderWidthTop();</span>
+<span class="nc" id="L719">        float wb = rect.getBorderWidthBottom();</span>
+<span class="nc" id="L720">        float wr = rect.getBorderWidthRight();</span>
+<span class="nc" id="L721">        float wl = rect.getBorderWidthLeft();</span>
+<span class="nc" id="L722">        Color ct = rect.getBorderColorTop();</span>
+<span class="nc" id="L723">        Color cb = rect.getBorderColorBottom();</span>
+<span class="nc" id="L724">        Color cr = rect.getBorderColorRight();</span>
+<span class="nc" id="L725">        Color cl = rect.getBorderColorLeft();</span>
+<span class="nc" id="L726">        saveState();</span>
+<span class="nc" id="L727">        setLineCap(PdfContentByte.LINE_CAP_BUTT);</span>
+<span class="nc" id="L728">        setLineJoin(PdfContentByte.LINE_JOIN_MITER);</span>
+<span class="nc" id="L729">        float clw = 0;</span>
+<span class="nc" id="L730">        boolean cdef = false;</span>
+<span class="nc" id="L731">        Color ccol = null;</span>
+<span class="nc" id="L732">        boolean cdefi = false;</span>
+<span class="nc" id="L733">        Color cfil = null;</span>
+        // draw top
+<span class="nc bnc" id="L735" title="All 2 branches missed.">        if (wt &gt; 0) {</span>
+<span class="nc" id="L736">            setLineWidth(clw = wt);</span>
+<span class="nc" id="L737">            cdef = true;</span>
+<span class="nc bnc" id="L738" title="All 2 branches missed.">            if (ct == null) {</span>
+<span class="nc" id="L739">                resetRGBColorStroke();</span>
+            } else {
+<span class="nc" id="L741">                setColorStroke(ct);</span>
+            }
+<span class="nc" id="L743">            ccol = ct;</span>
+<span class="nc" id="L744">            moveTo(l, t - wt / 2f);</span>
+<span class="nc" id="L745">            lineTo(r, t - wt / 2f);</span>
+<span class="nc" id="L746">            stroke();</span>
+        }
+
+        // Draw bottom
+<span class="nc bnc" id="L750" title="All 2 branches missed.">        if (wb &gt; 0) {</span>
+<span class="nc bnc" id="L751" title="All 2 branches missed.">            if (wb != clw) {</span>
+<span class="nc" id="L752">                setLineWidth(clw = wb);</span>
+            }
+<span class="nc bnc" id="L754" title="All 4 branches missed.">            if (!cdef || !compareColors(ccol, cb)) {</span>
+<span class="nc" id="L755">                cdef = true;</span>
+<span class="nc bnc" id="L756" title="All 2 branches missed.">                if (cb == null) {</span>
+<span class="nc" id="L757">                    resetRGBColorStroke();</span>
+                } else {
+<span class="nc" id="L759">                    setColorStroke(cb);</span>
+                }
+<span class="nc" id="L761">                ccol = cb;</span>
+            }
+<span class="nc" id="L763">            moveTo(r, b + wb / 2f);</span>
+<span class="nc" id="L764">            lineTo(l, b + wb / 2f);</span>
+<span class="nc" id="L765">            stroke();</span>
+        }
+
+        // Draw right
+<span class="nc bnc" id="L769" title="All 2 branches missed.">        if (wr &gt; 0) {</span>
+<span class="nc bnc" id="L770" title="All 2 branches missed.">            if (wr != clw) {</span>
+<span class="nc" id="L771">                setLineWidth(clw = wr);</span>
+            }
+<span class="nc bnc" id="L773" title="All 4 branches missed.">            if (!cdef || !compareColors(ccol, cr)) {</span>
+<span class="nc" id="L774">                cdef = true;</span>
+<span class="nc bnc" id="L775" title="All 2 branches missed.">                if (cr == null) {</span>
+<span class="nc" id="L776">                    resetRGBColorStroke();</span>
+                } else {
+<span class="nc" id="L778">                    setColorStroke(cr);</span>
+                }
+<span class="nc" id="L780">                ccol = cr;</span>
+            }
+<span class="nc" id="L782">            boolean bt = compareColors(ct, cr);</span>
+<span class="nc" id="L783">            boolean bb = compareColors(cb, cr);</span>
+<span class="nc bnc" id="L784" title="All 2 branches missed.">            moveTo(r - wr / 2f, bt ? t : t - wt);</span>
+<span class="nc bnc" id="L785" title="All 2 branches missed.">            lineTo(r - wr / 2f, bb ? b : b + wb);</span>
+<span class="nc" id="L786">            stroke();</span>
+<span class="nc bnc" id="L787" title="All 4 branches missed.">            if (!bt || !bb) {</span>
+<span class="nc" id="L788">                cdefi = true;</span>
+<span class="nc bnc" id="L789" title="All 2 branches missed.">                if (cr == null) {</span>
+<span class="nc" id="L790">                    resetRGBColorFill();</span>
+                } else {
+<span class="nc" id="L792">                    setColorFill(cr);</span>
+                }
+<span class="nc" id="L794">                cfil = cr;</span>
+<span class="nc bnc" id="L795" title="All 2 branches missed.">                if (!bt) {</span>
+<span class="nc" id="L796">                    moveTo(r, t);</span>
+<span class="nc" id="L797">                    lineTo(r, t - wt);</span>
+<span class="nc" id="L798">                    lineTo(r - wr, t - wt);</span>
+<span class="nc" id="L799">                    fill();</span>
+                }
+<span class="nc bnc" id="L801" title="All 2 branches missed.">                if (!bb) {</span>
+<span class="nc" id="L802">                    moveTo(r, b);</span>
+<span class="nc" id="L803">                    lineTo(r, b + wb);</span>
+<span class="nc" id="L804">                    lineTo(r - wr, b + wb);</span>
+<span class="nc" id="L805">                    fill();</span>
+                }
+            }
+        }
+
+        // Draw Left
+<span class="nc bnc" id="L811" title="All 2 branches missed.">        if (wl &gt; 0) {</span>
+<span class="nc bnc" id="L812" title="All 2 branches missed.">            if (wl != clw) {</span>
+<span class="nc" id="L813">                setLineWidth(wl);</span>
+            }
+<span class="nc bnc" id="L815" title="All 4 branches missed.">            if (!cdef || !compareColors(ccol, cl)) {</span>
+<span class="nc bnc" id="L816" title="All 2 branches missed.">                if (cl == null) {</span>
+<span class="nc" id="L817">                    resetRGBColorStroke();</span>
+                } else {
+<span class="nc" id="L819">                    setColorStroke(cl);</span>
+                }
+            }
+<span class="nc" id="L822">            boolean bt = compareColors(ct, cl);</span>
+<span class="nc" id="L823">            boolean bb = compareColors(cb, cl);</span>
+<span class="nc bnc" id="L824" title="All 2 branches missed.">            moveTo(l + wl / 2f, bt ? t : t - wt);</span>
+<span class="nc bnc" id="L825" title="All 2 branches missed.">            lineTo(l + wl / 2f, bb ? b : b + wb);</span>
+<span class="nc" id="L826">            stroke();</span>
+<span class="nc bnc" id="L827" title="All 4 branches missed.">            if (!bt || !bb) {</span>
+<span class="nc bnc" id="L828" title="All 4 branches missed.">                if (!cdefi || !compareColors(cfil, cl)) {</span>
+<span class="nc bnc" id="L829" title="All 2 branches missed.">                    if (cl == null) {</span>
+<span class="nc" id="L830">                        resetRGBColorFill();</span>
+                    } else {
+<span class="nc" id="L832">                        setColorFill(cl);</span>
+                    }
+                }
+<span class="nc bnc" id="L835" title="All 2 branches missed.">                if (!bt) {</span>
+<span class="nc" id="L836">                    moveTo(l, t);</span>
+<span class="nc" id="L837">                    lineTo(l, t - wt);</span>
+<span class="nc" id="L838">                    lineTo(l + wl, t - wt);</span>
+<span class="nc" id="L839">                    fill();</span>
+                }
+<span class="nc bnc" id="L841" title="All 2 branches missed.">                if (!bb) {</span>
+<span class="nc" id="L842">                    moveTo(l, b);</span>
+<span class="nc" id="L843">                    lineTo(l, b + wb);</span>
+<span class="nc" id="L844">                    lineTo(l + wl, b + wb);</span>
+<span class="nc" id="L845">                    fill();</span>
+                }
+            }
+        }
+<span class="nc" id="L849">        restoreState();</span>
+<span class="nc" id="L850">    }</span>
+
+    /**
+     * Adds a border (complete or partially) to the current path..
+     *
+     * @param rectangle a &lt;CODE&gt;Rectangle&lt;/CODE&gt;
+     */
+
+    public void rectangle(Rectangle rectangle) {
+        // the coordinates of the border are retrieved
+<span class="nc" id="L860">        float x1 = rectangle.getLeft();</span>
+<span class="nc" id="L861">        float y1 = rectangle.getBottom();</span>
+<span class="nc" id="L862">        float x2 = rectangle.getRight();</span>
+<span class="nc" id="L863">        float y2 = rectangle.getTop();</span>
+
+        // the backgroundcolor is set
+<span class="nc" id="L866">        Color background = rectangle.getBackgroundColor();</span>
+<span class="nc bnc" id="L867" title="All 2 branches missed.">        if (background != null) {</span>
+<span class="nc" id="L868">            saveState();</span>
+<span class="nc" id="L869">            setColorFill(background);</span>
+<span class="nc" id="L870">            rectangle(x1, y1, x2 - x1, y2 - y1);</span>
+<span class="nc" id="L871">            fill();</span>
+<span class="nc" id="L872">            restoreState();</span>
+        }
+
+        // if the element hasn't got any borders, nothing is added
+<span class="nc bnc" id="L876" title="All 2 branches missed.">        if (!rectangle.hasBorders()) {</span>
+<span class="nc" id="L877">            return;</span>
+        }
+
+        // if any of the individual border colors are set
+        // we draw the borders all around using the
+        // different colors
+<span class="nc bnc" id="L883" title="All 2 branches missed.">        if (rectangle.isUseVariableBorders()) {</span>
+<span class="nc" id="L884">            variableRectangle(rectangle);</span>
+        } else {
+            // the width is set to the width of the element
+<span class="nc bnc" id="L887" title="All 2 branches missed.">            if (rectangle.getBorderWidth() != Rectangle.UNDEFINED) {</span>
+<span class="nc" id="L888">                setLineWidth(rectangle.getBorderWidth());</span>
+            }
+
+            // the color is set to the color of the element
+<span class="nc" id="L892">            Color color = rectangle.getBorderColor();</span>
+<span class="nc bnc" id="L893" title="All 2 branches missed.">            if (color != null) {</span>
+<span class="nc" id="L894">                setColorStroke(color);</span>
+            }
+
+            // if the box is a rectangle, it is added as a rectangle
+<span class="nc bnc" id="L898" title="All 2 branches missed.">            if (rectangle.hasBorder(Rectangle.BOX)) {</span>
+<span class="nc" id="L899">                rectangle(x1, y1, x2 - x1, y2 - y1);</span>
+            } else {
+                // if the border isn't a rectangle, the different sides are added apart
+<span class="nc bnc" id="L902" title="All 2 branches missed.">                if (rectangle.hasBorder(Rectangle.RIGHT)) {</span>
+<span class="nc" id="L903">                    moveTo(x2, y1);</span>
+<span class="nc" id="L904">                    lineTo(x2, y2);</span>
+                }
+<span class="nc bnc" id="L906" title="All 2 branches missed.">                if (rectangle.hasBorder(Rectangle.LEFT)) {</span>
+<span class="nc" id="L907">                    moveTo(x1, y1);</span>
+<span class="nc" id="L908">                    lineTo(x1, y2);</span>
+                }
+<span class="nc bnc" id="L910" title="All 2 branches missed.">                if (rectangle.hasBorder(Rectangle.BOTTOM)) {</span>
+<span class="nc" id="L911">                    moveTo(x1, y1);</span>
+<span class="nc" id="L912">                    lineTo(x2, y1);</span>
+                }
+<span class="nc bnc" id="L914" title="All 2 branches missed.">                if (rectangle.hasBorder(Rectangle.TOP)) {</span>
+<span class="nc" id="L915">                    moveTo(x1, y2);</span>
+<span class="nc" id="L916">                    lineTo(x2, y2);</span>
+                }
+            }
+
+<span class="nc" id="L920">            stroke();</span>
+
+<span class="nc bnc" id="L922" title="All 2 branches missed.">            if (color != null) {</span>
+<span class="nc" id="L923">                resetRGBColorStroke();</span>
+            }
+        }
+<span class="nc" id="L926">    }</span>
+
+    /**
+     * Closes the current subpath by appending a straight line segment from the current point to the starting point of
+     * the subpath.
+     */
+
+    public void closePath() {
+<span class="fc" id="L934">        content.append(&quot;h&quot;).append_i(separator);</span>
+<span class="fc" id="L935">    }</span>
+
+    /**
+     * Ends the path without filling or stroking it.
+     */
+
+    public void newPath() {
+<span class="fc" id="L942">        content.append(&quot;n&quot;).append_i(separator);</span>
+<span class="fc" id="L943">    }</span>
+
+    /**
+     * Strokes the path.
+     */
+
+    public void stroke() {
+<span class="fc" id="L950">        content.append(&quot;S&quot;).append_i(separator);</span>
+<span class="fc" id="L951">    }</span>
+
+    /**
+     * Closes the path and strokes it.
+     */
+
+    /**
+     * Fills the path, using the non-zero winding number rule to determine the region to fill.
+     */
+
+    public void fill() {
+<span class="fc" id="L962">        content.append(&quot;f&quot;).append_i(separator);</span>
+<span class="fc" id="L963">    }</span>
+
+    /**
+     * Fills the path, using the even-odd rule to determine the region to fill.
+     */
+
+    public void eoFill() {
+<span class="nc" id="L970">        content.append(&quot;f*&quot;).append_i(separator);</span>
+<span class="nc" id="L971">    }</span>
+
+    /**
+     * Fills the path using the non-zero winding number rule to determine the region to fill and strokes it.
+     */
+
+    public void fillStroke() {
+<span class="fc" id="L978">        content.append(&quot;B&quot;).append_i(separator);</span>
+<span class="fc" id="L979">    }</span>
+
+    /**
+     * Closes the path, fills it using the non-zero winding number rule to determine the region to fill and strokes it.
+     */
+
+    /**
+     * Fills the path, using the even-odd rule to determine the region to fill and strokes it.
+     */
+
+    public void eoFillStroke() {
+<span class="nc" id="L990">        content.append(&quot;B*&quot;).append_i(separator);</span>
+<span class="nc" id="L991">    }</span>
+
+    /**
+     * Closes the path, fills it using the even-odd rule to determine the region to fill and strokes it.
+     */
+
+    /**
+     * Adds an &lt;CODE&gt;Image&lt;/CODE&gt; to the page. The &lt;CODE&gt;Image&lt;/CODE&gt; must have absolute positioning.
+     *
+     * @param image the &lt;CODE&gt;Image&lt;/CODE&gt; object
+     * @throws DocumentException if the &lt;CODE&gt;Image&lt;/CODE&gt; does not have absolute positioning
+     */
+    public void addImage(Image image) throws DocumentException {
+<span class="fc" id="L1004">        addImage(image, false);</span>
+<span class="fc" id="L1005">    }</span>
+
+    /**
+     * Adds an &lt;CODE&gt;Image&lt;/CODE&gt; to the page. The &lt;CODE&gt;Image&lt;/CODE&gt; must have absolute positioning. The image can be
+     * placed inline.
+     *
+     * @param image       the &lt;CODE&gt;Image&lt;/CODE&gt; object
+     * @param inlineImage &lt;CODE&gt;true&lt;/CODE&gt; to place this image inline, &lt;CODE&gt;false&lt;/CODE&gt; otherwise
+     * @throws DocumentException if the &lt;CODE&gt;Image&lt;/CODE&gt; does not have absolute positioning
+     */
+    public void addImage(Image image, boolean inlineImage) throws DocumentException {
+<span class="pc bpc" id="L1016" title="1 of 2 branches missed.">        if (!image.hasAbsoluteY()) {</span>
+<span class="nc" id="L1017">            throw new DocumentException(</span>
+<span class="nc" id="L1018">                    MessageLocalization.getComposedMessage(&quot;the.image.must.have.absolute.positioning&quot;));</span>
+        }
+<span class="fc" id="L1020">        float[] matrix = image.matrix();</span>
+<span class="fc" id="L1021">        matrix[Image.CX] = image.getAbsoluteX() - matrix[Image.CX];</span>
+<span class="fc" id="L1022">        matrix[Image.CY] = image.getAbsoluteY() - matrix[Image.CY];</span>
+<span class="fc" id="L1023">        addImage(image, matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5], inlineImage);</span>
+<span class="fc" id="L1024">    }</span>
+
+    /**
+     * Adds an &lt;CODE&gt;Image&lt;/CODE&gt; to the page. The positioning of the &lt;CODE&gt;Image&lt;/CODE&gt; is done with the transformation
+     * matrix. To position an &lt;CODE&gt;image&lt;/CODE&gt; at (x,y) use addImage(image, image_width, 0, 0, image_height, x, y).
+     * The image can be placed inline.
+     *
+     * @param image       the &lt;CODE&gt;Image&lt;/CODE&gt; object
+     * @param a           an element of the transformation matrix
+     * @param b           an element of the transformation matrix
+     * @param c           an element of the transformation matrix
+     * @param d           an element of the transformation matrix
+     * @param e           an element of the transformation matrix
+     * @param f           an element of the transformation matrix
+     * @param inlineImage &lt;CODE&gt;true&lt;/CODE&gt; to place this image inline, &lt;CODE&gt;false&lt;/CODE&gt; otherwise
+     * @throws DocumentException on error
+     */
+    public void addImage(Image image, float a, float b, float c, float d, float e, float f, boolean inlineImage)
+            throws DocumentException {
+        try {
+<span class="pc bpc" id="L1044" title="1 of 2 branches missed.">            if (image.isImgTemplate()) {</span>
+<span class="nc" id="L1045">                writer.addDirectImageSimple(image);</span>
+<span class="nc" id="L1046">                PdfTemplate template = image.getTemplateData();</span>
+<span class="nc" id="L1047">                float w = template.getWidth();</span>
+<span class="nc" id="L1048">                float h = template.getHeight();</span>
+<span class="nc" id="L1049">                addTemplate(template, a / w, b / w, c / h, d / h, e, f);</span>
+<span class="nc" id="L1050">            } else {</span>
+<span class="fc" id="L1051">                content.append(&quot;q &quot;);</span>
+<span class="fc" id="L1052">                content.append(a).append(' ');</span>
+<span class="fc" id="L1053">                content.append(b).append(' ');</span>
+<span class="fc" id="L1054">                content.append(c).append(' ');</span>
+<span class="fc" id="L1055">                content.append(d).append(' ');</span>
+<span class="fc" id="L1056">                content.append(e).append(' ');</span>
+<span class="fc" id="L1057">                content.append(f).append(&quot; cm&quot;);</span>
+<span class="pc bpc" id="L1058" title="1 of 2 branches missed.">                if (inlineImage) {</span>
+<span class="nc" id="L1059">                    content.append(&quot;\nBI\n&quot;);</span>
+<span class="nc" id="L1060">                    PdfImage pimage = new PdfImage(image, &quot;&quot;, null);</span>
+<span class="nc bnc" id="L1061" title="All 2 branches missed.">                    if (image instanceof ImgJBIG2) {</span>
+<span class="nc" id="L1062">                        byte[] globals = ((ImgJBIG2) image).getGlobalBytes();</span>
+<span class="nc bnc" id="L1063" title="All 2 branches missed.">                        if (globals != null) {</span>
+<span class="nc" id="L1064">                            PdfDictionary decodeparms = new PdfDictionary();</span>
+<span class="nc" id="L1065">                            decodeparms.put(PdfName.JBIG2GLOBALS, writer.getReferenceJBIG2Globals(globals));</span>
+<span class="nc" id="L1066">                            pimage.put(PdfName.DECODEPARMS, decodeparms);</span>
+                        }
+                    }
+<span class="nc bnc" id="L1069" title="All 2 branches missed.">                    for (PdfName key : pimage.getKeys()) {</span>
+<span class="nc" id="L1070">                        PdfObject value = pimage.get(key);</span>
+<span class="nc" id="L1071">                        String s = abrev.get(key);</span>
+<span class="nc bnc" id="L1072" title="All 2 branches missed.">                        if (s == null) {</span>
+<span class="nc" id="L1073">                            continue;</span>
+                        }
+<span class="nc" id="L1075">                        content.append(s);</span>
+<span class="nc" id="L1076">                        boolean check = true;</span>
+<span class="nc bnc" id="L1077" title="All 4 branches missed.">                        if (key.equals(PdfName.COLORSPACE) &amp;&amp; value.isArray()) {</span>
+<span class="nc" id="L1078">                            PdfArray ar = (PdfArray) value;</span>
+<span class="nc bnc" id="L1079" title="All 2 branches missed.">                            if (ar.size() == 4</span>
+<span class="nc bnc" id="L1080" title="All 2 branches missed.">                                    &amp;&amp; PdfName.INDEXED.equals(ar.getAsName(0))</span>
+<span class="nc bnc" id="L1081" title="All 2 branches missed.">                                    &amp;&amp; ar.getPdfObject(1).isName()</span>
+<span class="nc bnc" id="L1082" title="All 2 branches missed.">                                    &amp;&amp; ar.getPdfObject(2).isNumber()</span>
+<span class="nc bnc" id="L1083" title="All 2 branches missed.">                                    &amp;&amp; ar.getPdfObject(3).isString()</span>
+                            ) {
+<span class="nc" id="L1085">                                check = false;</span>
+                            }
+
+                        }
+<span class="nc bnc" id="L1089" title="All 6 branches missed.">                        if (check &amp;&amp; key.equals(PdfName.COLORSPACE) &amp;&amp; !value.isName()) {</span>
+<span class="nc" id="L1090">                            PdfName cs = writer.getColorspaceName();</span>
+<span class="nc" id="L1091">                            PageResources prs = getPageResources();</span>
+<span class="nc" id="L1092">                            prs.addColor(cs, writer.addToBody(value).getIndirectReference());</span>
+<span class="nc" id="L1093">                            value = cs;</span>
+                        }
+<span class="nc" id="L1095">                        value.toPdf(null, content);</span>
+<span class="nc" id="L1096">                        content.append('\n');</span>
+<span class="nc" id="L1097">                    }</span>
+<span class="nc" id="L1098">                    content.append(&quot;ID\n&quot;);</span>
+<span class="nc" id="L1099">                    pimage.writeContent(content);</span>
+<span class="nc" id="L1100">                    content.append(&quot;\nEI\nQ&quot;).append_i(separator);</span>
+<span class="nc" id="L1101">                } else {</span>
+                    PdfName name;
+<span class="fc" id="L1103">                    PageResources prs = getPageResources();</span>
+<span class="fc" id="L1104">                    Image maskImage = image.getImageMask();</span>
+<span class="pc bpc" id="L1105" title="1 of 2 branches missed.">                    if (maskImage != null) {</span>
+<span class="fc" id="L1106">                        name = writer.addDirectImageSimple(maskImage);</span>
+<span class="fc" id="L1107">                        prs.addXObject(name, writer.getImageReference(name));</span>
+                    }
+<span class="fc" id="L1109">                    name = writer.addDirectImageSimple(image);</span>
+<span class="fc" id="L1110">                    name = prs.addXObject(name, writer.getImageReference(name));</span>
+<span class="fc" id="L1111">                    content.append(' ').append(name.getBytes()).append(&quot; Do Q&quot;).append_i(separator);</span>
+                }
+            }
+<span class="pc bpc" id="L1114" title="1 of 2 branches missed.">            if (image.hasBorders()) {</span>
+<span class="nc" id="L1115">                saveState();</span>
+<span class="nc" id="L1116">                float w = image.getWidth();</span>
+<span class="nc" id="L1117">                float h = image.getHeight();</span>
+<span class="nc" id="L1118">                concatCTM(a / w, b / w, c / h, d / h, e, f);</span>
+<span class="nc" id="L1119">                rectangle(image);</span>
+<span class="nc" id="L1120">                restoreState();</span>
+            }
+<span class="nc" id="L1122">        } catch (Exception ee) {</span>
+<span class="nc" id="L1123">            throw new DocumentException(ee);</span>
+<span class="fc" id="L1124">        }</span>
+<span class="fc" id="L1125">    }</span>
+
+    /**
+     * Makes this &lt;CODE&gt;PdfContentByte&lt;/CODE&gt; empty. Calls &lt;code&gt;reset( true )&lt;/code&gt;
+     */
+    public void reset() {
+<span class="fc" id="L1131">        reset(true);</span>
+<span class="fc" id="L1132">    }</span>
+
+    /**
+     * Makes this &lt;CODE&gt;PdfContentByte&lt;/CODE&gt; empty.
+     *
+     * @param validateContent will call &lt;code&gt;sanityCheck()&lt;/code&gt; if true.
+     * @since 2.1.6
+     */
+    public void reset(boolean validateContent) {
+<span class="fc" id="L1141">        content.reset();</span>
+<span class="pc bpc" id="L1142" title="1 of 2 branches missed.">        if (validateContent) {</span>
+<span class="fc" id="L1143">            sanityCheck();</span>
+        }
+<span class="fc" id="L1145">        state = new GraphicState();</span>
+<span class="fc" id="L1146">    }</span>
+
+    /**
+     * Starts the writing of text.
+     */
+    public void beginText() {
+<span class="pc bpc" id="L1152" title="1 of 2 branches missed.">        if (inText) {</span>
+<span class="nc" id="L1153">            throw new IllegalPdfSyntaxException(</span>
+<span class="nc" id="L1154">                    MessageLocalization.getComposedMessage(&quot;unbalanced.begin.end.text.operators&quot;));</span>
+        }
+<span class="fc" id="L1156">        inText = true;</span>
+<span class="fc" id="L1157">        state.xTLM = 0;</span>
+<span class="fc" id="L1158">        state.yTLM = 0;</span>
+<span class="fc" id="L1159">        content.append(&quot;BT&quot;).append_i(separator);</span>
+<span class="fc" id="L1160">    }</span>
+
+    /**
+     * Ends the writing of text and makes the current font invalid.
+     */
+    public void endText() {
+<span class="pc bpc" id="L1166" title="1 of 2 branches missed.">        if (!inText) {</span>
+<span class="nc" id="L1167">            throw new IllegalPdfSyntaxException(</span>
+<span class="nc" id="L1168">                    MessageLocalization.getComposedMessage(&quot;unbalanced.begin.end.text.operators&quot;));</span>
+        }
+<span class="fc" id="L1170">        inText = false;</span>
+<span class="fc" id="L1171">        content.append(&quot;ET&quot;).append_i(separator);</span>
+<span class="fc" id="L1172">    }</span>
+
+    /**
+     * Saves the graphic state. &lt;CODE&gt;saveState&lt;/CODE&gt; and
+     * &lt;CODE&gt;restoreState&lt;/CODE&gt; must be balanced.
+     */
+    public void saveState() {
+<span class="nc" id="L1179">        content.append(&quot;q&quot;).append_i(separator);</span>
+<span class="nc bnc" id="L1180" title="All 2 branches missed.">        if (state != null) {</span>
+<span class="nc" id="L1181">            stateList.add(new GraphicState(state));</span>
+        }
+<span class="nc" id="L1183">    }</span>
+
+    /**
+     * Restores the graphic state. &lt;CODE&gt;saveState&lt;/CODE&gt; and
+     * &lt;CODE&gt;restoreState&lt;/CODE&gt; must be balanced.
+     */
+    public void restoreState() {
+<span class="nc" id="L1190">        content.append(&quot;Q&quot;).append_i(separator);</span>
+<span class="nc" id="L1191">        int idx = stateList.size() - 1;</span>
+<span class="nc bnc" id="L1192" title="All 2 branches missed.">        if (idx &lt; 0) {</span>
+<span class="nc" id="L1193">            throw new IllegalPdfSyntaxException(</span>
+<span class="nc" id="L1194">                    MessageLocalization.getComposedMessage(&quot;unbalanced.save.restore.state.operators&quot;));</span>
+        }
+
+<span class="nc bnc" id="L1197" title="All 2 branches missed.">        if (stateList.get(idx) != null) {</span>
+<span class="nc" id="L1198">            state.restore(stateList.get(idx));</span>
+        }
+<span class="nc" id="L1200">        stateList.remove(idx);</span>
+<span class="nc" id="L1201">    }</span>
+
+    /**
+     * Set the font and the size for the subsequent text writing.
+     *
+     * @param bf   the font
+     * @param size the font size in points
+     */
+    public void setFontAndSize(BaseFont bf, float size) {
+<span class="fc" id="L1210">        checkWriter();</span>
+<span class="pc bpc" id="L1211" title="3 of 4 branches missed.">        if (size &lt; MIN_FONT_SIZE &amp;&amp; size &gt; -MIN_FONT_SIZE) {</span>
+<span class="nc" id="L1212">            throw new IllegalArgumentException(</span>
+<span class="nc" id="L1213">                    MessageLocalization.getComposedMessage(&quot;font.size.too.small.1&quot;, String.valueOf(size)));</span>
+        }
+<span class="fc" id="L1215">        state.size = size;</span>
+<span class="fc" id="L1216">        state.fontDetails = writer.addSimple(bf);</span>
+<span class="fc" id="L1217">        PageResources prs = getPageResources();</span>
+<span class="fc" id="L1218">        PdfName name = state.fontDetails.getFontName();</span>
+<span class="fc" id="L1219">        name = prs.addFont(name, state.fontDetails.getIndirectReference());</span>
+<span class="fc" id="L1220">        content.append(name.getBytes()).append(' ').append(size).append(&quot; Tf&quot;).append_i(separator);</span>
+<span class="fc" id="L1221">    }</span>
+
+    /**
+     * A helper to insert into the content stream the &lt;CODE&gt;text&lt;/CODE&gt; converted to bytes according to the font's
+     * encoding.
+     *
+     * @param text the text to write
+     */
+    private void showText2(String text) {
+<span class="pc bpc" id="L1230" title="1 of 2 branches missed.">        if (state.fontDetails == null) {</span>
+<span class="nc" id="L1231">            throw new NullPointerException(</span>
+<span class="nc" id="L1232">                    MessageLocalization.getComposedMessage(&quot;font.and.size.must.be.set.before.writing.any.text&quot;));</span>
+        }
+<span class="fc" id="L1234">        byte[] b = state.fontDetails.convertToBytes(text, getPdfDocument().getTextRenderingOptions());</span>
+<span class="fc" id="L1235">        escapeAndAppendString(b, content);</span>
+<span class="fc" id="L1236">    }</span>
+
+    /**
+     * Shows the &lt;CODE&gt;text&lt;/CODE&gt;.
+     *
+     * @param text the text to write
+     */
+    public void showText(String text) {
+<span class="pc bpc" id="L1244" title="1 of 2 branches missed.">        if (state.fontDetails == null) {</span>
+<span class="nc" id="L1245">            throw new NullPointerException(</span>
+<span class="nc" id="L1246">                    MessageLocalization.getComposedMessage(&quot;font.and.size.must.be.set.before.writing.any.text&quot;));</span>
+        }
+<span class="fc" id="L1248">        showTextBasic(text);</span>
+<span class="fc" id="L1249">    }</span>
+
+    /**
+     * Shows the &lt;CODE&gt;text&lt;/CODE&gt;. LayoutProcessor is not used.
+     *
+     * @param text the text to write
+     */
+    public void showTextBasic(String text) {
+<span class="fc" id="L1257">        showText2(text);</span>
+<span class="fc" id="L1258">        content.append(&quot;Tj&quot;).append_i(separator);</span>
+<span class="fc" id="L1259">    }</span>
+
+    /**
+     * Changes the text matrix.
+     * &lt;p&gt;
+     * Remark: this operation also initializes the current point position.&lt;/P&gt;
+     *
+     * @param a operand 1,1 in the matrix
+     * @param b operand 1,2 in the matrix
+     * @param c operand 2,1 in the matrix
+     * @param d operand 2,2 in the matrix
+     * @param x operand 3,1 in the matrix
+     * @param y operand 3,2 in the matrix
+     */
+    public void setTextMatrix(float a, float b, float c, float d, float x, float y) {
+<span class="fc" id="L1274">        state.xTLM = x;</span>
+<span class="fc" id="L1275">        state.yTLM = y;</span>
+<span class="fc" id="L1276">        content.append(a).append(' ').append(b).append_i(' ')</span>
+<span class="fc" id="L1277">                .append(c).append_i(' ').append(d).append_i(' ')</span>
+<span class="fc" id="L1278">                .append(x).append_i(' ').append(y).append(&quot; Tm&quot;).append_i(separator);</span>
+<span class="fc" id="L1279">    }</span>
+
+    /**
+     * Changes the text matrix. The first four parameters are {1,0,0,1}.
+     * &lt;p&gt;
+     * Remark: this operation also initializes the current point position.&lt;/P&gt;
+     *
+     * @param x operand 3,1 in the matrix
+     * @param y operand 3,2 in the matrix
+     */
+    public void setTextMatrix(float x, float y) {
+<span class="fc" id="L1290">        setTextMatrix(1, 0, 0, 1, x, y);</span>
+<span class="fc" id="L1291">    }</span>
+
+    /**
+     * Gets the size of this content.
+     *
+     * @return the size of the content
+     */
+    int size() {
+<span class="fc" id="L1299">        return content.size();</span>
+    }
+
+    /**
+     * Computes the width of the given string taking in account the current values of &quot;Character spacing&quot;, &quot;Word
+     * Spacing&quot; and &quot;Horizontal Scaling&quot;. The additional spacing is not computed for the last character of the string.
+     *
+     * @param text   the string to get width of
+     * @param kerned the kerning option
+     * @return the width
+     */
+
+    /**
+     * Concatenate a matrix to the current transformation matrix.
+     *
+     * @param a an element of the transformation matrix
+     * @param b an element of the transformation matrix
+     * @param c an element of the transformation matrix
+     * @param d an element of the transformation matrix
+     * @param e an element of the transformation matrix
+     * @param f an element of the transformation matrix
+     **/
+    public void concatCTM(float a, float b, float c, float d, float e, float f) {
+<span class="nc" id="L1322">        content.append(a).append(' ').append(b).append(' ').append(c).append(' ');</span>
+<span class="nc" id="L1323">        content.append(d).append(' ').append(e).append(' ').append(f).append(&quot; cm&quot;).append_i(separator);</span>
+<span class="nc" id="L1324">    }</span>
+
+    /**
+     * Draws a partial ellipse inscribed within the rectangle x1,y1,x2,y2, starting at startAng degrees and covering
+     * extent degrees. Angles start with 0 to the right (+x) and increase counter-clockwise.
+     *
+     * @param x1       a corner of the enclosing rectangle
+     * @param y1       a corner of the enclosing rectangle
+     * @param x2       a corner of the enclosing rectangle
+     * @param y2       a corner of the enclosing rectangle
+     * @param startAng starting angle in degrees
+     * @param extent   angle extent in degrees
+     */
+    public void arc(float x1, float y1, float x2, float y2, float startAng, float extent) {
+<span class="fc" id="L1338">        List&lt;float[]&gt; ar = bezierArc(x1, y1, x2, y2, startAng, extent);</span>
+<span class="pc bpc" id="L1339" title="1 of 2 branches missed.">        if (ar.isEmpty()) {</span>
+<span class="nc" id="L1340">            return;</span>
+        }
+<span class="fc" id="L1342">        float[] pt = ar.get(0);</span>
+<span class="fc" id="L1343">        moveTo(pt[0], pt[1]);</span>
+<span class="fc bfc" id="L1344" title="All 2 branches covered.">        for (float[] anAr : ar) {</span>
+<span class="fc" id="L1345">            pt = anAr;</span>
+<span class="fc" id="L1346">            curveTo(pt[2], pt[3], pt[4], pt[5], pt[6], pt[7]);</span>
+<span class="fc" id="L1347">        }</span>
+<span class="fc" id="L1348">    }</span>
+
+    /**
+     * Draws an ellipse inscribed within the rectangle x1,y1,x2,y2.
+     *
+     * @param x1 a corner of the enclosing rectangle
+     * @param y1 a corner of the enclosing rectangle
+     * @param x2 a corner of the enclosing rectangle
+     * @param y2 a corner of the enclosing rectangle
+     */
+    public void ellipse(float x1, float y1, float x2, float y2) {
+<span class="fc" id="L1359">        arc(x1, y1, x2, y2, 0f, 360f);</span>
+<span class="fc" id="L1360">    }</span>
+
+    /**
+     * Creates a new template.
+     * &lt;p&gt;
+     * Creates a new template that is nothing more than a form XObject. This template can be included in this
+     * &lt;CODE&gt;PdfContentByte&lt;/CODE&gt; or in another template. Templates are only written to the output when the document
+     * is
+     * closed permitting things like showing text in the first page that is only defined in the last page.
+     *
+     * @param width  the bounding box width
+     * @param height the bounding box height
+     * @return the created template
+     */
+    public PdfTemplate createTemplate(float width, float height) {
+<span class="fc" id="L1375">        return createTemplate(width, height, null);</span>
+    }
+
+    PdfTemplate createTemplate(float width, float height, PdfName forcedName) {
+<span class="fc" id="L1379">        checkWriter();</span>
+<span class="fc" id="L1380">        PdfTemplate template = new PdfTemplate(writer);</span>
+<span class="fc" id="L1381">        template.setWidth(width);</span>
+<span class="fc" id="L1382">        template.setHeight(height);</span>
+<span class="fc" id="L1383">        writer.addDirectTemplateSimple(template, forcedName);</span>
+<span class="fc" id="L1384">        return template;</span>
+    }
+
+    /**
+     * Adds a template to this content.
+     *
+     * @param template the template
+     * @param a        an element of the transformation matrix
+     * @param b        an element of the transformation matrix
+     * @param c        an element of the transformation matrix
+     * @param d        an element of the transformation matrix
+     * @param e        an element of the transformation matrix
+     * @param f        an element of the transformation matrix
+     */
+    public void addTemplate(PdfTemplate template, float a, float b, float c, float d, float e, float f) {
+<span class="fc" id="L1399">        checkWriter();</span>
+<span class="fc" id="L1400">        checkNoPattern(template);</span>
+<span class="fc" id="L1401">        PdfName name = writer.addDirectTemplateSimple(template, null);</span>
+<span class="fc" id="L1402">        PageResources prs = getPageResources();</span>
+<span class="fc" id="L1403">        name = prs.addXObject(name, template.getIndirectReference());</span>
+<span class="fc" id="L1404">        content.append(&quot;q &quot;);</span>
+<span class="fc" id="L1405">        content.append(a).append(' ');</span>
+<span class="fc" id="L1406">        content.append(b).append(' ');</span>
+<span class="fc" id="L1407">        content.append(c).append(' ');</span>
+<span class="fc" id="L1408">        content.append(d).append(' ');</span>
+<span class="fc" id="L1409">        content.append(e).append(' ');</span>
+<span class="fc" id="L1410">        content.append(f).append(&quot; cm &quot;);</span>
+<span class="fc" id="L1411">        content.append(name.getBytes()).append(&quot; Do Q&quot;).append_i(separator);</span>
+<span class="fc" id="L1412">    }</span>
+
+    /**
+     * Adds a template to this content.
+     *
+     * @param template the template
+     * @param x        the x location of this template
+     * @param y        the y location of this template
+     */
+    public void addTemplate(PdfTemplate template, float x, float y) {
+<span class="fc" id="L1422">        addTemplate(template, 1, 0, 0, 1, x, y);</span>
+<span class="fc" id="L1423">    }</span>
+
+    /**
+     * Adds a template to this content using double matrices.
+     *
+     * @param template the template
+     * @param a        an element of the transformation matrix
+     * @param b        an element of the transformation matrix
+     * @param c        an element of the transformation matrix
+     * @param d        an element of the transformation matrix
+     * @param e        an element of the transformation matrix
+     * @param f        an element of the transformation matrix
+     */
+    public void addTemplate(final PdfTemplate template, final double a, final double b, final double c, final double d,
+            final double e, final double f) {
+<span class="nc" id="L1438">        checkWriter();</span>
+<span class="nc" id="L1439">        checkNoPattern(template);</span>
+
+<span class="nc" id="L1441">        PdfName name = writer.addDirectTemplateSimple(template, null);</span>
+<span class="nc" id="L1442">        PageResources prs = getPageResources();</span>
+<span class="nc" id="L1443">        name = prs.addXObject(name, template.getIndirectReference());</span>
+
+<span class="nc" id="L1445">        content.append(&quot;q &quot;);</span>
+<span class="nc" id="L1446">        content.append(a).append(' ');</span>
+<span class="nc" id="L1447">        content.append(b).append(' ');</span>
+<span class="nc" id="L1448">        content.append(c).append(' ');</span>
+<span class="nc" id="L1449">        content.append(d).append(' ');</span>
+<span class="nc" id="L1450">        content.append(e).append(' ');</span>
+<span class="nc" id="L1451">        content.append(f).append(&quot; cm &quot;);</span>
+<span class="nc" id="L1452">        content.append(name.getBytes()).append(&quot; Do Q&quot;).append_i(separator);</span>
+<span class="nc" id="L1453">    }</span>
+
+    /**
+     * Changes the current color for filling paths (device dependent colors!).
+     * &lt;p&gt;
+     * Sets the color space to &lt;B&gt;DeviceCMYK&lt;/B&gt; (or the &lt;B&gt;DefaultCMYK&lt;/B&gt; color space), and sets the color to use for
+     * filling paths.&lt;/P&gt;
+     * &lt;p&gt;
+     * This method is described in the 'Portable Document Format Reference Manual version 1.3' section 8.5.2.1 (page
+     * 331).&lt;/P&gt;
+     * &lt;p&gt;
+     * Following the PDF manual, each operand must be a number between 0 (no ink) and 1 (maximum ink). This method
+     * however accepts only integers between 0x00 and 0xFF.&lt;/P&gt;
+     *
+     * @param cyan    the intensity of cyan
+     * @param magenta the intensity of magenta
+     * @param yellow  the intensity of yellow
+     * @param black   the intensity of black
+     */
+
+    /**
+     * Changes the current color for stroking paths (device dependent colors!).
+     * &lt;p&gt;
+     * Sets the color space to &lt;B&gt;DeviceCMYK&lt;/B&gt; (or the &lt;B&gt;DefaultCMYK&lt;/B&gt; color space), and sets the color to use for
+     * stroking paths.&lt;/P&gt;
+     * &lt;p&gt;
+     * This method is described in the 'Portable Document Format Reference Manual version 1.3' section 8.5.2.1 (page
+     * 331).&lt;/P&gt; Following the PDF manual, each operand must be a number between 0 (minimum intensity) and 1 (maximum
+     * intensity). This method however accepts only integers between 0x00 and 0xFF.
+     *
+     * @param cyan    the intensity of red
+     * @param magenta the intensity of green
+     * @param yellow  the intensity of blue
+     * @param black   the intensity of black
+     */
+
+    /**
+     * Changes the current color for filling paths (device dependent colors!).
+     * &lt;p&gt;
+     * Sets the color space to &lt;B&gt;DeviceRGB&lt;/B&gt; (or the &lt;B&gt;DefaultRGB&lt;/B&gt; color space), and sets the color to use for
+     * filling paths.&lt;/P&gt;
+     * &lt;p&gt;
+     * This method is described in the 'Portable Document Format Reference Manual version 1.3' section 8.5.2.1 (page
+     * 331).&lt;/P&gt;
+     * &lt;p&gt;
+     * Following the PDF manual, each operand must be a number between 0 (minimum intensity) and 1 (maximum intensity).
+     * This method however accepts only integers between 0x00 and 0xFF.&lt;/P&gt;
+     *
+     * @param red   the intensity of red
+     * @param green the intensity of green
+     * @param blue  the intensity of blue
+     */
+
+    public void setRGBColorFill(int red, int green, int blue, int alpha) {
+<span class="fc" id="L1507">        saveColorFill(new RGBColor(red, green, blue, alpha));</span>
+<span class="fc" id="L1508">        HelperRGB(red, green, blue);</span>
+<span class="fc" id="L1509">        content.append(&quot; rg&quot;).append_i(separator);</span>
+<span class="fc" id="L1510">    }</span>
+
+    /**
+     * Changes the current color for stroking paths (device dependent colors!).
+     * &lt;p&gt;
+     * Sets the color space to &lt;B&gt;DeviceRGB&lt;/B&gt; (or the &lt;B&gt;DefaultRGB&lt;/B&gt; color space), and sets the color to use for
+     * stroking paths.&lt;/P&gt;
+     * &lt;p&gt;
+     * This method is described in the 'Portable Document Format Reference Manual version 1.3' section 8.5.2.1 (page
+     * 331).&lt;/P&gt; Following the PDF manual, each operand must be a number between 0 (minimum intensity) and 1 (maximum
+     * intensity). This method however accepts only integers between 0x00 and 0xFF.
+     *
+     * @param red   the intensity of red
+     * @param green the intensity of green
+     * @param blue  the intensity of blue
+     */
+
+    public void setRGBColorStroke(int red, int green, int blue, int alpha) {
+<span class="fc" id="L1528">        saveColorStroke(new RGBColor(red, green, blue, alpha));</span>
+<span class="fc" id="L1529">        HelperRGB(red, green, blue);</span>
+<span class="fc" id="L1530">        content.append(&quot; RG&quot;).append_i(separator);</span>
+<span class="fc" id="L1531">    }</span>
+
+    /**
+     * Sets the stroke color. &lt;CODE&gt;color&lt;/CODE&gt; can be an
+     * &lt;CODE&gt;ExtendedColor&lt;/CODE&gt;.
+     *
+     * @param color the color
+     */
+    public void setColorStroke(Color color) {
+<span class="fc" id="L1540">        int type = ExtendedColor.getType(color);</span>
+<span class="pc bpc" id="L1541" title="1 of 2 branches missed.">        switch (type) {</span>
+            case ExtendedColor.TYPE_GRAY: {
+<span class="nc" id="L1543">                final GrayColor grayColor = (GrayColor) color;</span>
+<span class="nc" id="L1544">                setGrayStroke(grayColor.getGray(), grayColor.getAlpha());</span>
+<span class="nc" id="L1545">                break;</span>
+            }
+            default:
+<span class="fc" id="L1548">                setRGBColorStroke(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());</span>
+        }
+<span class="fc" id="L1550">    }</span>
+
+    private void saveColorStroke(ExtendedColor extendedColor) {
+<span class="fc bfc" id="L1553" title="All 2 branches covered.">        if (lastStrokeAlpha != extendedColor.getAlpha()) {</span>
+<span class="fc" id="L1554">            PdfGState gState = new PdfGState();</span>
+<span class="fc" id="L1555">            gState.setStrokeOpacity(extendedColor.getAlpha() / MAX_INT_COLOR_VALUE);</span>
+<span class="fc" id="L1556">            setGState(gState);</span>
+<span class="fc" id="L1557">            lastStrokeAlpha = extendedColor.getAlpha();</span>
+        }
+<span class="pc bpc" id="L1559" title="1 of 2 branches missed.">        if (state != null) {</span>
+<span class="fc" id="L1560">            state.colorStroke = extendedColor;</span>
+        }
+<span class="fc" id="L1562">    }</span>
+
+    /**
+     * Sets the fill color. &lt;CODE&gt;color&lt;/CODE&gt; can be an
+     * &lt;CODE&gt;ExtendedColor&lt;/CODE&gt;.
+     *
+     * @param color the color
+     */
+    public void setColorFill(Color color) {
+<span class="fc" id="L1571">        int type = ExtendedColor.getType(color);</span>
+<span class="pc bpc" id="L1572" title="1 of 2 branches missed.">        switch (type) {</span>
+            case ExtendedColor.TYPE_GRAY: {
+<span class="nc" id="L1574">                GrayColor grayColor = (GrayColor) color;</span>
+<span class="nc" id="L1575">                setGrayFill(grayColor.getGray(), color.getAlpha() / MAX_INT_COLOR_VALUE);</span>
+<span class="nc" id="L1576">                break;</span>
+            }
+            default:
+<span class="fc" id="L1579">                setRGBColorFill(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());</span>
+        }
+<span class="fc" id="L1581">    }</span>
+
+    private void saveColorFill(ExtendedColor extendedColor) {
+<span class="fc bfc" id="L1584" title="All 2 branches covered.">        if (lastFillAlpha != extendedColor.getAlpha()) {</span>
+<span class="fc" id="L1585">            PdfGState gState = new PdfGState();</span>
+<span class="fc" id="L1586">            gState.setFillOpacity(extendedColor.getAlpha() / MAX_INT_COLOR_VALUE);</span>
+<span class="fc" id="L1587">            setGState(gState);</span>
+<span class="fc" id="L1588">            lastFillAlpha = extendedColor.getAlpha();</span>
+        }
+<span class="pc bpc" id="L1590" title="1 of 2 branches missed.">        if (state != null) {</span>
+<span class="fc" id="L1591">            state.colorFill = extendedColor;</span>
+        }
+<span class="fc" id="L1593">    }</span>
+
+    /**
+     * Check if we have a valid PdfWriter.
+     */
+    protected void checkWriter() {
+<span class="pc bpc" id="L1599" title="1 of 2 branches missed.">        if (writer == null) {</span>
+<span class="nc" id="L1600">            throw new NullPointerException(</span>
+<span class="nc" id="L1601">                    MessageLocalization.getComposedMessage(&quot;the.writer.in.pdfcontentbyte.is.null&quot;));</span>
+        }
+<span class="fc" id="L1603">    }</span>
+
+    /**
+     * Gets the &lt;CODE&gt;PdfWriter&lt;/CODE&gt; in use by this object.
+     *
+     * @return the &lt;CODE&gt;PdfWriter&lt;/CODE&gt; in use by this object
+     */
+    public PdfWriter getPdfWriter() {
+<span class="fc" id="L1611">        return writer;</span>
+    }
+
+    /**
+     * Gets the &lt;CODE&gt;PdfDocument&lt;/CODE&gt; in use by this object.
+     *
+     * @return the &lt;CODE&gt;PdfDocument&lt;/CODE&gt; in use by this object
+     */
+    public PdfDocument getPdfDocument() {
+<span class="fc" id="L1620">        return pdf;</span>
+    }
+
+    /**
+     * Adds a round rectangle to the current path.
+     *
+     * @param x x-coordinate of the starting point
+     * @param y y-coordinate of the starting point
+     * @param w width
+     * @param h height
+     * @param r radius of the arc corner
+     */
+    public void roundRectangle(float x, float y, float w, float h, float r) {
+<span class="pc bpc" id="L1633" title="1 of 2 branches missed.">        if (w &lt; 0) {</span>
+<span class="nc" id="L1634">            x += w;</span>
+<span class="nc" id="L1635">            w = -w;</span>
+        }
+<span class="pc bpc" id="L1637" title="1 of 2 branches missed.">        if (h &lt; 0) {</span>
+<span class="nc" id="L1638">            y += h;</span>
+<span class="nc" id="L1639">            h = -h;</span>
+        }
+<span class="pc bpc" id="L1641" title="1 of 2 branches missed.">        if (r &lt; 0) {</span>
+<span class="nc" id="L1642">            r = -r;</span>
+        }
+<span class="fc" id="L1644">        float b = 0.4477f;</span>
+<span class="fc" id="L1645">        moveTo(x + r, y);</span>
+<span class="fc" id="L1646">        lineTo(x + w - r, y);</span>
+<span class="fc" id="L1647">        curveTo(x + w - r * b, y, x + w, y + r * b, x + w, y + r);</span>
+<span class="fc" id="L1648">        lineTo(x + w, y + h - r);</span>
+<span class="fc" id="L1649">        curveTo(x + w, y + h - r * b, x + w - r * b, y + h, x + w - r, y + h);</span>
+<span class="fc" id="L1650">        lineTo(x + r, y + h);</span>
+<span class="fc" id="L1651">        curveTo(x + r * b, y + h, x, y + h - r * b, x, y + h - r);</span>
+<span class="fc" id="L1652">        lineTo(x, y + r);</span>
+<span class="fc" id="L1653">        curveTo(x, y + r * b, x + r * b, y, x + r, y);</span>
+<span class="fc" id="L1654">    }</span>
+
+    /**
+     * Throws an error if it is a pattern.
+     *
+     * @param t the object to check
+     */
+    void checkNoPattern(PdfTemplate t) {
+<span class="pc bpc" id="L1662" title="1 of 2 branches missed.">        if (t.getType() == PdfTemplate.TYPE_PATTERN) {</span>
+<span class="nc" id="L1663">            throw new RuntimeException(</span>
+<span class="nc" id="L1664">                    MessageLocalization.getComposedMessage(&quot;invalid.use.of.a.pattern.a.template.was.expected&quot;));</span>
+        }
+<span class="fc" id="L1666">    }</span>
+
+    PageResources getPageResources() {
+<span class="fc" id="L1669">        return pdf.getPageResources();</span>
+    }
+
+    /**
+     * Sets the graphic state
+     *
+     * @param gstate the graphic state
+     */
+    public void setGState(PdfGState gstate) {
+<span class="pc bpc" id="L1678" title="1 of 2 branches missed.">        if (writer == null) {</span>
+<span class="nc" id="L1679">            return;</span>
+        }
+<span class="fc" id="L1681">        PdfObject[] obj = writer.addSimpleExtGState(gstate);</span>
+<span class="fc" id="L1682">        PageResources prs = getPageResources();</span>
+<span class="fc" id="L1683">        PdfName name = prs.addExtGState((PdfName) obj[0], (PdfIndirectReference) obj[1]);</span>
+<span class="pc bpc" id="L1684" title="1 of 2 branches missed.">        if (state != null) {</span>
+<span class="fc" id="L1685">            state.extGState = gstate;</span>
+        }
+<span class="fc" id="L1687">        content.append(name.getBytes()).append(&quot; gs&quot;).append_i(separator);</span>
+<span class="fc" id="L1688">    }</span>
+
+    /**
+     * Checks for any dangling state: Mismatched save/restore state, begin/end text, begin/end layer, or begin/end
+     * marked content sequence. If found, this function will throw.  This function is called automatically during a
+     * reset() (from Document.newPage() for example), and before writing itself out in toPdf(). One possible cause: not
+     * calling myPdfGraphics2D.dispose() will leave dangling saveState() calls.
+     *
+     * @throws IllegalPdfSyntaxException (a runtime exception)
+     * @since 2.1.6
+     */
+    public void sanityCheck() {
+<span class="pc bpc" id="L1700" title="1 of 2 branches missed.">        if (mcDepth != 0) {</span>
+<span class="nc" id="L1701">            throw new IllegalPdfSyntaxException(</span>
+<span class="nc" id="L1702">                    MessageLocalization.getComposedMessage(&quot;unbalanced.marked.content.operators&quot;));</span>
+        }
+<span class="pc bpc" id="L1704" title="1 of 2 branches missed.">        if (inText) {</span>
+<span class="nc" id="L1705">            throw new IllegalPdfSyntaxException(</span>
+<span class="nc" id="L1706">                    MessageLocalization.getComposedMessage(&quot;unbalanced.begin.end.text.operators&quot;));</span>
+        }
+<span class="pc bpc" id="L1708" title="1 of 2 branches missed.">        if (!stateList.isEmpty()) {</span>
+<span class="nc" id="L1709">            throw new IllegalPdfSyntaxException(</span>
+<span class="nc" id="L1710">                    MessageLocalization.getComposedMessage(&quot;unbalanced.save.restore.state.operators&quot;));</span>
+        }
+<span class="fc" id="L1712">    }</span>
+
+    /**
+     * This class keeps the graphic state of the current page
+     */
+
+    static class GraphicState {
+
+        /**
+         * The x position of the text line matrix.
+         */
+<span class="pc" id="L1723">        protected float xTLM = 0;</span>
+        /**
+         * The y position of the text line matrix.
+         */
+<span class="pc" id="L1727">        protected float yTLM = 0;</span>
+        /**
+         * The current text leading.
+         */
+<span class="pc" id="L1731">        protected float leading = 0;</span>
+        /**
+         * The current horizontal scaling
+         */
+<span class="pc" id="L1735">        protected float scale = 100;</span>
+        /**
+         * The current character spacing
+         */
+<span class="pc" id="L1739">        protected float charSpace = 0;</span>
+        /**
+         * The current word spacing
+         */
+<span class="pc" id="L1743">        protected float wordSpace = 0;</span>
+<span class="pc" id="L1744">        protected ExtendedColor colorFill = GrayColor.GRAYBLACK;</span>
+<span class="pc" id="L1745">        protected ExtendedColor colorStroke = GrayColor.GRAYBLACK;</span>
+<span class="pc" id="L1746">        protected PdfObject extGState = null;</span>
+        /**
+         * This is the font in use
+         */
+        FontDetails fontDetails;
+        /**
+         * This is the font size in use
+         */
+        float size;
+
+<span class="fc" id="L1756">        GraphicState() {</span>
+<span class="fc" id="L1757">        }</span>
+
+<span class="nc" id="L1759">        GraphicState(GraphicState cp) {</span>
+<span class="nc" id="L1760">            copyParameters(cp);</span>
+<span class="nc" id="L1761">        }</span>
+
+        void copyParameters(final GraphicState cp) {
+<span class="nc" id="L1764">            fontDetails = cp.fontDetails;</span>
+<span class="nc" id="L1765">            size = cp.size;</span>
+<span class="nc" id="L1766">            xTLM = cp.xTLM;</span>
+<span class="nc" id="L1767">            yTLM = cp.yTLM;</span>
+<span class="nc" id="L1768">            leading = cp.leading;</span>
+<span class="nc" id="L1769">            scale = cp.scale;</span>
+<span class="nc" id="L1770">            charSpace = cp.charSpace;</span>
+<span class="nc" id="L1771">            wordSpace = cp.wordSpace;</span>
+<span class="nc" id="L1772">            colorFill = cp.colorFill;</span>
+<span class="nc" id="L1773">            colorStroke = cp.colorStroke;</span>
+<span class="nc" id="L1774">            extGState = cp.extGState;</span>
+<span class="nc" id="L1775">        }</span>
+
+        void restore(final GraphicState restore) {
+<span class="nc" id="L1778">            copyParameters(restore);</span>
+<span class="nc" id="L1779">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

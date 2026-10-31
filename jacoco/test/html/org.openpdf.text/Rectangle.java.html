@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Rectangle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text</a> &gt; <span class="el_source">Rectangle.java</span></div><h1>Rectangle.java</h1><pre class="source lang-java linenums">/*
+ * $Id: Rectangle.java 3742 2009-03-03 16:42:09Z blowagie $
+ *
+ * Copyright 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+package org.openpdf.text;
+
+import java.awt.Color;
+
+/**
+ * A &lt;CODE&gt;Rectangle&lt;/CODE&gt; is the representation of a geometric figure.
+ * &lt;p&gt;
+ * Rectangles support constant width borders using &lt;CODE&gt;setBorderWidth(float)&lt;/CODE&gt; and &lt;CODE&gt;setBorder(int)&lt;/CODE&gt;. They also
+ * support borders that vary in width/color on each side using methods like &lt;CODE&gt;setBorderWidthLeft(float)&lt;/CODE&gt; or
+ * &lt;CODE&gt;setBorderColorLeft(java.awt.Color)&lt;/CODE&gt;.
+ *
+ * @see Element
+ */
+public class Rectangle implements Element {
+
+    // CONSTANTS:
+
+    /**
+     * This is the value that will be used as &lt;VAR&gt;undefined &lt;/VAR&gt;.
+     */
+    public static final int UNDEFINED = -1;
+
+    /**
+     * This represents one side of the border of the &lt;CODE&gt;Rectangle&lt;/CODE&gt;.
+     */
+    public static final int TOP = 1;
+
+    /**
+     * This represents one side of the border of the &lt;CODE&gt;Rectangle&lt;/CODE&gt;.
+     */
+    public static final int BOTTOM = 2;
+
+    /**
+     * This represents one side of the border of the &lt;CODE&gt;Rectangle&lt;/CODE&gt;.
+     */
+    public static final int LEFT = 4;
+
+    /**
+     * This represents one side of the border of the &lt;CODE&gt;Rectangle&lt;/CODE&gt;.
+     */
+    public static final int RIGHT = 8;
+
+    /**
+     * This represents a rectangle without borders.
+     */
+    public static final int NO_BORDER = 0;
+
+    /**
+     * This represents a type of border.
+     */
+    public static final int BOX = TOP + BOTTOM + LEFT + RIGHT;
+
+    // MEMBER VARIABLES:
+
+    /**
+     * the lower left x-coordinate.
+     */
+    protected float llx;
+
+    /**
+     * the lower left y-coordinate.
+     */
+    protected float lly;
+
+    /**
+     * the upper right x-coordinate.
+     */
+    protected float urx;
+
+    /**
+     * the upper right y-coordinate.
+     */
+    protected float ury;
+
+    /**
+     * The rotation of the Rectangle
+     */
+<span class="fc" id="L126">    protected int rotation = 0;</span>
+
+    /**
+     * This is the color of the background of this rectangle.
+     */
+<span class="fc" id="L131">    protected Color backgroundColor = null;</span>
+
+    /**
+     * This represents the status of the 4 sides of the rectangle.
+     */
+<span class="fc" id="L136">    protected int border = UNDEFINED;</span>
+
+    /**
+     * Whether variable width/color borders are used.
+     */
+<span class="fc" id="L141">    protected boolean useVariableBorders = false;</span>
+
+    /**
+     * This is the width of the border around this rectangle.
+     */
+<span class="fc" id="L146">    protected float borderWidth = UNDEFINED;</span>
+
+    /**
+     * The width of the left border of this rectangle.
+     */
+<span class="fc" id="L151">    protected float borderWidthLeft = UNDEFINED;</span>
+
+    /**
+     * The width of the right border of this rectangle.
+     */
+<span class="fc" id="L156">    protected float borderWidthRight = UNDEFINED;</span>
+
+    /**
+     * The width of the top border of this rectangle.
+     */
+<span class="fc" id="L161">    protected float borderWidthTop = UNDEFINED;</span>
+
+    /**
+     * The width of the bottom border of this rectangle.
+     */
+<span class="fc" id="L166">    protected float borderWidthBottom = UNDEFINED;</span>
+
+    /**
+     * The color of the border of this rectangle.
+     */
+<span class="fc" id="L171">    protected Color borderColor = null;</span>
+
+    /**
+     * The color of the left border of this rectangle.
+     */
+<span class="fc" id="L176">    protected Color borderColorLeft = null;</span>
+
+    /**
+     * The color of the right border of this rectangle.
+     */
+<span class="fc" id="L181">    protected Color borderColorRight = null;</span>
+
+    /**
+     * The color of the top border of this rectangle.
+     */
+<span class="fc" id="L186">    protected Color borderColorTop = null;</span>
+
+    /**
+     * The color of the bottom border of this rectangle.
+     */
+<span class="fc" id="L191">    protected Color borderColorBottom = null;</span>
+
+    // CONSTRUCTORS:
+
+    /**
+     * Constructs a &lt;CODE&gt;Rectangle&lt;/CODE&gt; -object.
+     *
+     * @param llx lower left x
+     * @param lly lower left y
+     * @param urx upper right x
+     * @param ury upper right y
+     */
+<span class="fc" id="L203">    public Rectangle(float llx, float lly, float urx, float ury) {</span>
+<span class="fc" id="L204">        this.llx = llx;</span>
+<span class="fc" id="L205">        this.lly = lly;</span>
+<span class="fc" id="L206">        this.urx = urx;</span>
+<span class="fc" id="L207">        this.ury = ury;</span>
+<span class="fc" id="L208">    }</span>
+
+    /**
+     * Constructs a &lt;CODE&gt;Rectangle&lt;/CODE&gt; -object starting from the origin (0, 0).
+     *
+     * @param urx upper right x
+     * @param ury upper right y
+     */
+    public Rectangle(float urx, float ury) {
+<span class="fc" id="L217">        this(0, 0, urx, ury);</span>
+<span class="fc" id="L218">    }</span>
+
+    // OJO... Modificacion de
+    // flopez-------------------------------------------------
+
+    /**
+     * Constructs a &lt;CODE&gt;Rectangle&lt;/CODE&gt; -object.
+     *
+     * @param rect another &lt;CODE&gt;Rectangle&lt;/CODE&gt;
+     */
+    public Rectangle(Rectangle rect) {
+<span class="fc" id="L229">        this(rect.llx, rect.lly, rect.urx, rect.ury);</span>
+<span class="fc" id="L230">        cloneNonPositionParameters(rect);</span>
+<span class="fc" id="L231">    }</span>
+
+    // ******************************************************************************
+
+    // IMPLEMENTATION OF THE ELEMENT INTERFACE:e
+
+    /**
+     * Gets the type of the text element.
+     *
+     * @return a type
+     */
+    @Override
+    public int type() {
+<span class="nc" id="L244">        return Element.RECTANGLE;</span>
+    }
+
+    /**
+     * @see org.openpdf.text.Element#isContent()
+     * @since iText 2.0.8
+     */
+    @Override
+    public boolean isContent() {
+<span class="nc" id="L253">        return true;</span>
+    }
+
+    /**
+     * @see org.openpdf.text.Element#isNestable()
+     * @since iText 2.0.8
+     */
+    @Override
+    public boolean isNestable() {
+<span class="nc" id="L262">        return false;</span>
+    }
+
+    /**
+     * Returns the lower left x-coordinate.
+     *
+     * @return the lower left x-coordinate
+     */
+    public float getLeft() {
+<span class="fc" id="L271">        return llx;</span>
+    }
+
+    // METHODS TO GET/SET THE DIMENSIONS:
+
+    /**
+     * Sets the lower left x-coordinate.
+     *
+     * @param llx the new value
+     */
+    public void setLeft(float llx) {
+<span class="fc" id="L282">        this.llx = llx;</span>
+<span class="fc" id="L283">    }</span>
+
+    /**
+     * Returns the upper right x-coordinate.
+     *
+     * @return the upper right x-coordinate
+     */
+    public float getRight() {
+<span class="fc" id="L291">        return urx;</span>
+    }
+
+    /**
+     * Sets the upper right x-coordinate.
+     *
+     * @param urx the new value
+     */
+    public void setRight(float urx) {
+<span class="fc" id="L300">        this.urx = urx;</span>
+<span class="fc" id="L301">    }</span>
+
+    /**
+     * Returns the width of the rectangle.
+     *
+     * @return the width
+     */
+    public float getWidth() {
+<span class="fc" id="L309">        return urx - llx;</span>
+    }
+
+    /**
+     * Returns the upper right y-coordinate.
+     *
+     * @return the upper right y-coordinate
+     */
+    public float getTop() {
+<span class="fc" id="L318">        return ury;</span>
+    }
+
+    /**
+     * Sets the upper right y-coordinate.
+     *
+     * @param ury the new value
+     */
+    public void setTop(float ury) {
+<span class="fc" id="L327">        this.ury = ury;</span>
+<span class="fc" id="L328">    }</span>
+
+    /**
+     * Returns the lower left y-coordinate.
+     *
+     * @return the lower left y-coordinate
+     */
+    public float getBottom() {
+<span class="fc" id="L336">        return lly;</span>
+    }
+
+    /**
+     * Sets the lower left y-coordinate.
+     *
+     * @param lly the new value
+     */
+    public void setBottom(float lly) {
+<span class="fc" id="L345">        this.lly = lly;</span>
+<span class="fc" id="L346">    }</span>
+
+    /**
+     * Returns the height of the rectangle.
+     *
+     * @return the height
+     */
+    public float getHeight() {
+<span class="fc" id="L354">        return ury - lly;</span>
+    }
+
+    /**
+     * Gets the rotation of the rectangle
+     *
+     * @return a rotation value
+     */
+    public int getRotation() {
+<span class="fc" id="L363">        return rotation;</span>
+    }
+
+    // METHODS TO GET/SET THE ROTATION:
+
+    // METHODS TO GET/SET THE BACKGROUND COLOR:
+
+    /**
+     * Gets the backgroundcolor.
+     *
+     * @return a &lt;CODE&gt;Color&lt;/CODE&gt;
+     */
+    public Color getBackgroundColor() {
+<span class="nc" id="L376">        return backgroundColor;</span>
+    }
+
+    /**
+     * Sets the backgroundcolor of the rectangle.
+     *
+     * @param backgroundColor a &lt;CODE&gt;Color&lt;/CODE&gt;
+     */
+
+    // METHODS TO GET/SET THE BORDER:
+
+    /**
+     * Indicates whether some type of border is set.
+     *
+     * @return a boolean
+     */
+    public boolean hasBorders() {
+<span class="pc bpc" id="L393" title="1 of 2 branches missed.">        switch (border) {</span>
+            case UNDEFINED:
+            case NO_BORDER:
+<span class="fc" id="L396">                return false;</span>
+            default:
+<span class="nc bnc" id="L398" title="All 10 branches missed.">                return borderWidth &gt; 0 || borderWidthLeft &gt; 0 || borderWidthRight &gt; 0</span>
+                        || borderWidthTop &gt; 0 || borderWidthBottom &gt; 0;
+        }
+    }
+
+    /**
+     * Indicates whether the specified type of border is set.
+     *
+     * @param type the type of border
+     * @return a boolean
+     */
+    public boolean hasBorder(int type) {
+<span class="nc bnc" id="L410" title="All 2 branches missed.">        if (border == UNDEFINED) {</span>
+<span class="nc" id="L411">            return false;</span>
+        }
+<span class="nc bnc" id="L413" title="All 2 branches missed.">        return (border &amp; type) == type;</span>
+    }
+
+    /**
+     * Indicates whether variable width borders are being used. Returns true if
+     * &lt;CODE&gt;setBorderWidthLeft, setBorderWidthRight,
+     * setBorderWidthTop, or setBorderWidthBottom&lt;/CODE&gt; has been called.
+     *
+     * @return true if variable width borders are in use
+     */
+    public boolean isUseVariableBorders() {
+<span class="nc" id="L424">        return useVariableBorders;</span>
+    }
+
+    // METHODS TO GET/SET THE BORDER WIDTH:
+
+    /**
+     * Gets the borderwidth.
+     *
+     * @return a value
+     */
+    public float getBorderWidth() {
+<span class="nc" id="L435">        return borderWidth;</span>
+    }
+
+    /**
+     * Helper function returning the border width of a specific side.
+     *
+     * @param variableWidthValue a variable width (could be undefined)
+     * @param side               the border you want to check
+     * @return the variableWidthValue if not undefined, otherwise the borderWidth
+     */
+    private float getVariableBorderWidth(float variableWidthValue, int side) {
+<span class="nc bnc" id="L446" title="All 2 branches missed.">        if ((border &amp; side) != 0) {</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">            return variableWidthValue != UNDEFINED ? variableWidthValue : borderWidth;</span>
+        }
+<span class="nc" id="L449">        return 0;</span>
+    }
+
+    /**
+     * Gets the width of the left border.
+     *
+     * @return a width
+     */
+    public float getBorderWidthLeft() {
+<span class="nc" id="L458">        return getVariableBorderWidth(borderWidthLeft, LEFT);</span>
+    }
+
+    /**
+     * Gets the width of the right border.
+     *
+     * @return a width
+     */
+    public float getBorderWidthRight() {
+<span class="nc" id="L467">        return getVariableBorderWidth(borderWidthRight, RIGHT);</span>
+    }
+
+    /**
+     * Gets the width of the top border.
+     *
+     * @return a width
+     */
+    public float getBorderWidthTop() {
+<span class="nc" id="L476">        return getVariableBorderWidth(borderWidthTop, TOP);</span>
+    }
+
+    /**
+     * Gets the width of the bottom border.
+     *
+     * @return a width
+     */
+    public float getBorderWidthBottom() {
+<span class="nc" id="L485">        return getVariableBorderWidth(borderWidthBottom, BOTTOM);</span>
+    }
+
+    // METHODS TO GET/SET THE BORDER COLOR:
+
+    /**
+     * Gets the color of the border.
+     *
+     * @return a &lt;CODE&gt;Color&lt;/CODE&gt;
+     */
+    public Color getBorderColor() {
+<span class="nc" id="L496">        return borderColor;</span>
+    }
+
+    /**
+     * Gets the color of the left border.
+     *
+     * @return a &lt;CODE&gt;Color&lt;/CODE&gt;
+     */
+    public Color getBorderColorLeft() {
+<span class="nc bnc" id="L505" title="All 2 branches missed.">        if (borderColorLeft == null) {</span>
+<span class="nc" id="L506">            return borderColor;</span>
+        }
+<span class="nc" id="L508">        return borderColorLeft;</span>
+    }
+
+    /**
+     * Gets the color of the right border.
+     *
+     * @return a &lt;CODE&gt;Color&lt;/CODE&gt;
+     */
+    public Color getBorderColorRight() {
+<span class="nc bnc" id="L517" title="All 2 branches missed.">        if (borderColorRight == null) {</span>
+<span class="nc" id="L518">            return borderColor;</span>
+        }
+<span class="nc" id="L520">        return borderColorRight;</span>
+    }
+
+    /**
+     * Gets the color of the top border.
+     *
+     * @return a &lt;CODE&gt;Color&lt;/CODE&gt;
+     */
+    public Color getBorderColorTop() {
+<span class="nc bnc" id="L529" title="All 2 branches missed.">        if (borderColorTop == null) {</span>
+<span class="nc" id="L530">            return borderColor;</span>
+        }
+<span class="nc" id="L532">        return borderColorTop;</span>
+    }
+
+    /**
+     * Gets the color of the bottom border.
+     *
+     * @return a &lt;CODE&gt;Color&lt;/CODE&gt;
+     */
+    public Color getBorderColorBottom() {
+<span class="nc bnc" id="L541" title="All 2 branches missed.">        if (borderColorBottom == null) {</span>
+<span class="nc" id="L542">            return borderColor;</span>
+        }
+<span class="nc" id="L544">        return borderColorBottom;</span>
+    }
+
+    // SPECIAL METHODS:
+
+    /**
+     * Copies each of the parameters, except the position, from a
+     * &lt;CODE&gt;Rectangle&lt;/CODE&gt; object
+     *
+     * @param rect &lt;CODE&gt;Rectangle&lt;/CODE&gt; to copy from
+     */
+    public void cloneNonPositionParameters(Rectangle rect) {
+<span class="fc" id="L556">        this.rotation = rect.rotation;</span>
+<span class="fc" id="L557">        this.backgroundColor = rect.backgroundColor;</span>
+<span class="fc" id="L558">        this.border = rect.border;</span>
+<span class="fc" id="L559">        this.useVariableBorders = rect.useVariableBorders;</span>
+<span class="fc" id="L560">        this.borderWidth = rect.borderWidth;</span>
+<span class="fc" id="L561">        this.borderWidthLeft = rect.borderWidthLeft;</span>
+<span class="fc" id="L562">        this.borderWidthRight = rect.borderWidthRight;</span>
+<span class="fc" id="L563">        this.borderWidthTop = rect.borderWidthTop;</span>
+<span class="fc" id="L564">        this.borderWidthBottom = rect.borderWidthBottom;</span>
+<span class="fc" id="L565">        this.borderColor = rect.borderColor;</span>
+<span class="fc" id="L566">        this.borderColorLeft = rect.borderColorLeft;</span>
+<span class="fc" id="L567">        this.borderColorRight = rect.borderColorRight;</span>
+<span class="fc" id="L568">        this.borderColorTop = rect.borderColorTop;</span>
+<span class="fc" id="L569">        this.borderColorBottom = rect.borderColorBottom;</span>
+<span class="fc" id="L570">    }</span>
+
+    /**
+     * @return a String representation of the rectangle
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L578">        StringBuilder buf = new StringBuilder(&quot;Rectangle: &quot;);</span>
+<span class="nc" id="L579">        buf.append(getWidth());</span>
+<span class="nc" id="L580">        buf.append('x');</span>
+<span class="nc" id="L581">        buf.append(getHeight());</span>
+<span class="nc" id="L582">        buf.append(&quot; (rot: &quot;);</span>
+<span class="nc" id="L583">        buf.append(rotation);</span>
+<span class="nc" id="L584">        buf.append(&quot; degrees)&quot;);</span>
+<span class="nc" id="L585">        return buf.toString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

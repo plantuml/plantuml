@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfNumber.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.openpdf.text.pdf</a> &gt; <span class="el_source">PdfNumber.java</span></div><h1>PdfNumber.java</h1><pre class="source lang-java linenums">/*
+ * $Id: PdfNumber.java 4065 2009-09-16 23:09:11Z psoares33 $
+ *
+ * Copyright 1999, 2000, 2001, 2002 Bruno Lowagie
+ *
+ * The contents of this file are subject to the Mozilla Public License Version 1.1
+ * (the &quot;License&quot;); you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an &quot;AS IS&quot; basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the License.
+ *
+ * The Original Code is 'iText, a free JAVA-PDF library'.
+ *
+ * The Initial Developer of the Original Code is Bruno Lowagie. Portions created by
+ * the Initial Developer are Copyright (C) 1999, 2000, 2001, 2002 by Bruno Lowagie.
+ * All Rights Reserved.
+ * Co-Developer of the code is Paulo Soares. Portions created by the Co-Developer
+ * are Copyright (C) 2000, 2001, 2002 by Paulo Soares. All Rights Reserved.
+ *
+ * Contributor(s): all the names of the contributors are added in the source code
+ * where applicable.
+ *
+ * Alternatively, the contents of this file may be used under the terms of the
+ * LGPL license (the &quot;GNU LIBRARY GENERAL PUBLIC LICENSE&quot;), in which case the
+ * provisions of LGPL are applicable instead of those above.  If you wish to
+ * allow use of your version of this file only under the terms of the LGPL
+ * License and not to allow others to use your version of this file under
+ * the MPL, indicate your decision by deleting the provisions above and
+ * replace them with the notice and other provisions required by the LGPL.
+ * If you do not delete the provisions above, a recipient may use your version
+ * of this file under either the MPL or the GNU LIBRARY GENERAL PUBLIC LICENSE.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the MPL as stated above or under the terms of the GNU
+ * Library General Public License as published by the Free Software Foundation;
+ * either version 2 of the License, or any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Library general Public License for more
+ * details.
+ *
+ * If you didn't download this code from the following link, you should check if
+ * you aren't using an obsolete version:
+ * https://github.com/LibrePDF/OpenPDF
+ */
+
+package org.openpdf.text.pdf;
+
+import java.util.Objects;
+
+/**
+ * &lt;CODE&gt;PdfNumber&lt;/CODE&gt; provides two types of numbers, integer and real.
+ * &lt;p&gt;
+ * Integers may be specified by signed or unsigned constants. Reals may only be in decimal format.&lt;BR&gt; This object is
+ * described in the 'Portable Document Format Reference Manual version 1.7' section 3.3.2 (page 52-53).
+ *
+ * @see PdfObject
+ * @see BadPdfFormatException
+ */
+public class PdfNumber extends PdfObject implements Comparable&lt;PdfNumber&gt; {
+
+    // CLASS VARIABLES
+
+    /**
+     * actual value of this &lt;CODE&gt;PdfNumber&lt;/CODE&gt;, represented as a
+     * &lt;CODE&gt;double&lt;/CODE&gt;
+     */
+    private double value;
+
+    // CONSTRUCTORS
+
+    /**
+     * Constructs a new &lt;CODE&gt;PdfNumber&lt;/CODE&gt;-object of type integer.
+     *
+     * @param value value of the new &lt;CODE&gt;PdfNumber&lt;/CODE&gt;-object
+     */
+    public PdfNumber(int value) {
+<span class="fc" id="L81">        super(NUMBER);</span>
+<span class="fc" id="L82">        this.value = value;</span>
+<span class="fc" id="L83">        setContent(String.valueOf(value));</span>
+<span class="fc" id="L84">    }</span>
+
+    /**
+     * Constructs a new &lt;CODE&gt;PdfNumber&lt;/CODE&gt;-object of type real.
+     *
+     * @param value value of the new &lt;CODE&gt;PdfNumber&lt;/CODE&gt;-object
+     */
+    public PdfNumber(double value) {
+<span class="fc" id="L92">        super(NUMBER);</span>
+<span class="fc" id="L93">        this.value = value;</span>
+<span class="fc" id="L94">        setContent(ByteBuffer.formatDouble(value));</span>
+<span class="fc" id="L95">    }</span>
+
+    /**
+     * Constructs a new &lt;CODE&gt;PdfNumber&lt;/CODE&gt;-object of type real.
+     *
+     * @param value value of the new &lt;CODE&gt;PdfNumber&lt;/CODE&gt;-object
+     */
+    public PdfNumber(float value) {
+<span class="fc" id="L103">        this((double) value);</span>
+<span class="fc" id="L104">    }</span>
+
+    // methods returning the value of this object
+
+    // other methods
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L113">            return true;</span>
+        }
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (!(o instanceof PdfNumber)) {</span>
+<span class="nc" id="L116">            return false;</span>
+        }
+<span class="nc" id="L118">        PdfNumber pdfNumber = (PdfNumber) o;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        return Double.compare(pdfNumber.value, value) == 0;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L124">        return Objects.hash(value);</span>
+    }
+
+    @Override
+    public int compareTo(PdfNumber o) {
+<span class="nc" id="L129">        Objects.requireNonNull(o, &quot;PdfNumber is null, can't be compared to current instance.&quot;);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (this == o) {</span>
+<span class="nc" id="L131">            return 0;</span>
+        }
+<span class="nc" id="L133">        return Double.compare(o.value, value);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -47,6 +47,7 @@ import java.util.TreeMap;
 
 // ::comment when JAVA8
 import org.teavm.jso.JSBody;
+import net.sourceforge.plantuml.teavm.c.EmbeddedFiles;
 // ::done
 
 import net.sourceforge.plantuml.emoji.data.Dummy;
@@ -65,25 +66,57 @@ import net.sourceforge.plantuml.utils.MyCollections;
 
 public class Emoji {
 
-<span class="nc" id="L68">	private final static Map&lt;String, Emoji&gt; ALL = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L69">	private final static Map&lt;String, Emoji&gt; ALL = new HashMap&lt;&gt;();</span>
 
 	static {
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L72">			final InputStream is = Dummy.class.getResourceAsStream(&quot;emoji.txt&quot;);</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">			if (is != null)</span>
-<span class="nc" id="L74">				try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
-<span class="nc" id="L75">					String s = null;</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">					while ((s = br.readLine()) != null)</span>
-<span class="nc" id="L77">						new Emoji(s);</span>
+		// ::comment when JAVA8
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (TeaVM.isC())</span>
+<span class="nc" id="L74">			loadEmbeddedList();</span>
+		else
+		// ::done
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L78">			final InputStream is = Dummy.class.getResourceAsStream(&quot;emoji.txt&quot;);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">			if (is != null)</span>
+<span class="fc" id="L80">				try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {</span>
+<span class="fc" id="L81">					String s = null;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">					while ((s = br.readLine()) != null)</span>
+<span class="fc" id="L83">						new Emoji(s);</span>
 
-<span class="nc" id="L79">				} catch (IOException e) {</span>
-<span class="nc" id="L80">					Logme.error(e);</span>
-<span class="nc" id="L81">				}</span>
+<span class="nc" id="L85">				} catch (IOException e) {</span>
+<span class="nc" id="L86">					Logme.error(e);</span>
+<span class="fc" id="L87">				}</span>
 		}
 	}
 
+	// ::comment when JAVA8
+	// The C build embeds the list (emoji.txt) and the SVG files in the executable
+	private static void loadEmbeddedList() {
+<span class="nc" id="L94">		final String all = embeddedText(&quot;emoji/emoji.txt&quot;, false);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (all == null)</span>
+<span class="nc" id="L96">			return;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (String line : all.split(&quot;\n&quot;)) {</span>
+<span class="nc" id="L98">			line = line.trim();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (line.length() &gt; 0)</span>
+<span class="nc" id="L100">				new Emoji(line);</span>
+		}
+<span class="nc" id="L102">	}</span>
+
+	private static String embeddedText(String name, boolean firstLineOnly) {
+<span class="nc" id="L105">		final byte[] data = EmbeddedFiles.read(name);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (data == null)</span>
+<span class="nc" id="L107">			return null;</span>
+<span class="nc" id="L108">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		for (byte b : data) {</span>
+<span class="nc bnc" id="L110" title="All 4 branches missed.">			if (firstLineOnly &amp;&amp; b == '\n')</span>
+<span class="nc" id="L111">				break;</span>
+<span class="nc" id="L112">			sb.append((char) (b &amp; 0xFF));</span>
+		}
+<span class="nc" id="L114">		return sb.toString();</span>
+	}
+	// ::done
+
 	public static Map&lt;String, Emoji&gt; getAll() {
-<span class="nc" id="L86">		return MyCollections.unmodifiableMap(new TreeMap&lt;&gt;(ALL));</span>
+<span class="nc" id="L119">		return MyCollections.unmodifiableMap(new TreeMap&lt;&gt;(ALL));</span>
 	}
 
 	private ISvgSpriteParser parser;
@@ -91,63 +124,61 @@ public class Emoji {
 	private final String unicode;
 	private final String shortcut;
 
-<span class="nc" id="L94">	private Emoji(String unicode) {</span>
-<span class="nc" id="L95">		final int x = unicode.indexOf(';');</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (x == -1) {</span>
-<span class="nc" id="L97">			this.shortcut = null;</span>
+<span class="fc" id="L127">	private Emoji(String unicode) {</span>
+<span class="fc" id="L128">		final int x = unicode.indexOf(';');</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (x == -1) {</span>
+<span class="fc" id="L130">			this.shortcut = null;</span>
 		} else {
-<span class="nc" id="L99">			this.shortcut = unicode.substring(x + 1);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L101">				ALL.put(this.shortcut, this);</span>
+<span class="fc" id="L132">			this.shortcut = unicode.substring(x + 1);</span>
+<span class="pc bpc" id="L133" title="3 of 4 branches missed.">			if (!TeaVM.isTeaVM() || TeaVM.isC()) {</span>
+<span class="fc" id="L134">				ALL.put(this.shortcut, this);</span>
 			}
-<span class="nc" id="L103">			unicode = unicode.substring(0, x);</span>
+<span class="fc" id="L136">			unicode = unicode.substring(0, x);</span>
 		}
-<span class="nc" id="L105">		this.unicode = unicode;</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L107">			ALL.put(unicode, this);</span>
+<span class="fc" id="L138">		this.unicode = unicode;</span>
+<span class="pc bpc" id="L139" title="3 of 4 branches missed.">		if (!TeaVM.isTeaVM() || TeaVM.isC()) {</span>
+<span class="fc" id="L140">			ALL.put(unicode, this);</span>
 		}
-<span class="nc" id="L109">	}</span>
+<span class="fc" id="L142">	}</span>
 
 	public static Emoji retrieve(String name) {
 		// ::comment when JAVA8
-<span class="nc bnc" id="L113" title="All 4 branches missed.">		if (TeaVM.isTeaVM() &amp;&amp; TeaVM.isC() == false)</span>
-<span class="nc" id="L114">			return retrieveFromJs(name.toLowerCase());</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">		else if (TeaVM.isC())</span>
-<span class="nc" id="L116">			return null;</span>
+<span class="pc bpc" id="L146" title="3 of 4 branches missed.">		if (TeaVM.isTeaVM() &amp;&amp; TeaVM.isC() == false)</span>
+<span class="nc" id="L147">			return retrieveFromJs(name.toLowerCase());</span>
 		else
 			// ::done
-<span class="nc" id="L119">			return ALL.get(name.toLowerCase());</span>
+<span class="fc" id="L150">			return ALL.get(name.toLowerCase());</span>
 	}
 
 	// ::comment when JAVA8
 	private static Emoji retrieveFromJs(String name) {
-<span class="nc" id="L124">		loadEmojiJsIfNeeded();</span>
-<span class="nc" id="L125">		String unicode = jsGetShortcut(name);</span>
-<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (unicode == null)</span>
-<span class="nc" id="L127">			unicode = name;</span>
-<span class="nc" id="L128">		final String svgData = jsGetEmojiSvg(unicode);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (svgData == null)</span>
-<span class="nc" id="L130">			return null;</span>
-<span class="nc" id="L131">		return new Emoji(unicode);</span>
+<span class="nc" id="L155">		loadEmojiJsIfNeeded();</span>
+<span class="nc" id="L156">		String unicode = jsGetShortcut(name);</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (unicode == null)</span>
+<span class="nc" id="L158">			unicode = name;</span>
+<span class="nc" id="L159">		final String svgData = jsGetEmojiSvg(unicode);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (svgData == null)</span>
+<span class="nc" id="L161">			return null;</span>
+<span class="nc" id="L162">		return new Emoji(unicode);</span>
 	}
 	// ::done
 
-<span class="nc" id="L135">	private static volatile boolean emojiJsLoaded = false;</span>
+<span class="fc" id="L166">	private static volatile boolean emojiJsLoaded = false;</span>
 
 	private static void loadEmojiJsIfNeeded() {
 		// ::comment when JAVA8
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (emojiJsLoaded)</span>
-<span class="nc" id="L140">			return;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (emojiJsLoaded)</span>
+<span class="nc" id="L171">			return;</span>
 		// Same as themes (ThemeUtils.loadJsTheme): data that is already registered, by a
 		// bundler that inlined emoji.js or by the host (inside a Web Worker, say), is
 		// used as is, and emoji.js is only fetched when nothing is there.
 		// Never waits: when emoji.js is not loaded yet, this rendering attempt goes on
 		// without emoji and is rendered again once it is (PendingResources).
-<span class="nc bnc" id="L146" title="All 4 branches missed.">		if (jsHasEmoji() == false &amp;&amp; ScriptLoaderJs.require(&quot;emoji.js&quot;) == false)</span>
-<span class="nc" id="L147">			return;</span>
-<span class="nc" id="L148">		emojiJsLoaded = true;</span>
+<span class="nc bnc" id="L177" title="All 4 branches missed.">		if (jsHasEmoji() == false &amp;&amp; ScriptLoaderJs.require(&quot;emoji.js&quot;) == false)</span>
+<span class="nc" id="L178">			return;</span>
+<span class="nc" id="L179">		emojiJsLoaded = true;</span>
 		// ::done
-<span class="nc" id="L150">	}</span>
+<span class="nc" id="L181">	}</span>
 
 	// ::comment when JAVA8
 	// The data is read from the global object rather than from window, so that it
@@ -169,39 +200,43 @@ public class Emoji {
 	// ::done
 
 	private synchronized void loadIfNeed() throws IOException {
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (parser != null)</span>
-<span class="nc" id="L173">			return;</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (parser != null)</span>
+<span class="fc" id="L204">			return;</span>
 
-<span class="nc" id="L175">		final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
-<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (TeaVM.isC()) {</span>
-			// No emoji data with TeaVM C
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		} else if (TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L206">		final List&lt;String&gt; data = new ArrayList&lt;String&gt;();</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		if (TeaVM.isC()) {</span>
 			// ::comment when JAVA8
-<span class="nc" id="L180">			final String svgData = jsGetEmojiSvg(unicode);</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (svgData != null)</span>
-<span class="nc" id="L182">				data.add(svgData);</span>
+<span class="nc" id="L209">			final String svgData = embeddedText(&quot;emoji/&quot; + unicode + &quot;.svg&quot;, true);</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">			if (svgData != null)</span>
+<span class="nc" id="L211">				data.add(svgData);</span>
 			// ::done
-<span class="nc" id="L184">		} else {</span>
-<span class="nc" id="L185">			try (BufferedReader br = new BufferedReader(</span>
-<span class="nc" id="L186">					new InputStreamReader(Dummy.class.getResourceAsStream(unicode + &quot;.svg&quot;)))) {</span>
-<span class="nc" id="L187">				final String singleLine = br.readLine();</span>
-<span class="nc" id="L188">				data.add(singleLine);</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		} else if (TeaVM.isTeaVM()) {</span>
+			// ::comment when JAVA8
+<span class="nc" id="L215">			final String svgData = jsGetEmojiSvg(unicode);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">			if (svgData != null)</span>
+<span class="nc" id="L217">				data.add(svgData);</span>
+			// ::done
+<span class="nc" id="L219">		} else {</span>
+<span class="fc" id="L220">			try (BufferedReader br = new BufferedReader(</span>
+<span class="fc" id="L221">					new InputStreamReader(Dummy.class.getResourceAsStream(unicode + &quot;.svg&quot;)))) {</span>
+<span class="fc" id="L222">				final String singleLine = br.readLine();</span>
+<span class="fc" id="L223">				data.add(singleLine);</span>
 			}
 		}
-<span class="nc" id="L191">		this.parser = SvgSpriteParserFactory.create(data, null, null);</span>
-<span class="nc" id="L192">	}</span>
+<span class="fc" id="L226">		this.parser = SvgSpriteParserFactory.create(data, null, null);</span>
+<span class="fc" id="L227">	}</span>
 
 	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {
 		try {
-<span class="nc" id="L196">			loadIfNeed();</span>
-<span class="nc" id="L197">		} catch (IOException e) {</span>
-<span class="nc" id="L198">			Logme.error(e);</span>
-<span class="nc" id="L199">		}</span>
-<span class="nc" id="L200">		parser.drawU(ug, scale, colorForMonochrome, colorForMonochrome);</span>
-<span class="nc" id="L201">	}</span>
+<span class="fc" id="L231">			loadIfNeed();</span>
+<span class="nc" id="L232">		} catch (IOException e) {</span>
+<span class="nc" id="L233">			Logme.error(e);</span>
+<span class="fc" id="L234">		}</span>
+<span class="fc" id="L235">		parser.drawU(ug, scale, colorForMonochrome, colorForMonochrome);</span>
+<span class="fc" id="L236">	}</span>
 
 	public String getShortcut() {
-<span class="nc" id="L204">		return shortcut;</span>
+<span class="nc" id="L239">		return shortcut;</span>
 	}
 
 //	public static void main(String[] args) throws IOException {
