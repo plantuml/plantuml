@@ -50,15 +50,11 @@
 package org.openpdf.text;
 
 import org.openpdf.text.error_messages.MessageLocalization;
-import org.openpdf.text.pdf.NativePlatform;
 import org.openpdf.text.pdf.PdfDate;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 
 /**
@@ -102,7 +98,6 @@ import java.util.Properties;
 public class Document implements DocListener {
 
     // membervariables
-    private static final String VERSION_PROPERTIES = "org/openpdf/text/version.properties";
     private static final String OPENPDF = "OpenPDF";
     private static final String RELEASE;
     private static final String OPENPDF_VERSION;
@@ -235,22 +230,7 @@ public class Document implements DocListener {
     }
 
     private static String getVersionNumber() {
-        String releaseVersion = "UNKNOWN";
-        // The marker is tested here, so that TeaVM (C) prunes the class loader code
-        if (NativePlatform.isC()) {
-            return releaseVersion;
-        }
-        try (InputStream input = Document.class.getClassLoader()
-                .getResourceAsStream(VERSION_PROPERTIES)) {
-            if (input != null) {
-                Properties prop = new Properties();
-                prop.load(input);
-                releaseVersion = prop.getProperty("bundleVersion", releaseVersion);
-            }
-        } catch (IOException ignored) {
-            // ignore this and leave the default
-        }
-        return releaseVersion;
+        return "UNKNOWN";
     }
 
     // listener methods

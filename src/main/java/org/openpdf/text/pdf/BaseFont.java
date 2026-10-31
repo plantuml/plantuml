@@ -54,7 +54,6 @@ import org.openpdf.text.error_messages.MessageLocalization;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -406,7 +405,6 @@ public abstract class BaseFont {
     /**
      * Used to build a randomized prefix for a subset name
      */
-    protected SecureRandom secureRandom;
 
     /**
      * Indicates if a CIDSet stream should be included in the document.
@@ -689,8 +687,8 @@ public abstract class BaseFont {
     private static volatile ResourceProvider resourceProvider;
 
     /**
-     * Installs a source of resources that is tried before the class loaders (and the only
-     * one in a native executable).
+     * Installs the source of the resources (AFM, glyph list, messages): the class loaders on the
+     * JVM, the embedded files in a native executable.
      *
      * @param provider the provider, or {@code null} to remove it
      */
@@ -699,68 +697,27 @@ public abstract class BaseFont {
     }
 
     /**
-     * Gets the font resources.
+     * Gets the font resources, from the {@link ResourceProvider} (see
+     * {@link #setResourceProvider(ResourceProvider)}).
      *
      * @param key the full name of the resource
      * @return the <CODE>InputStream</CODE> to get the resource or
      * <CODE>null</CODE> if not found
      */
     public static InputStream getResourceStream(String key) {
-        return getResourceStream(key, null);
-    }
-
-    /**
-     * Gets the font resources.
-     *
-     * @param key    the full name of the resource
-     * @param loader the ClassLoader to load the resource or null to try the ones available
-     * @return the <CODE>InputStream</CODE> to get the resource or
-     * <CODE>null</CODE> if not found
-     */
-    public static InputStream getResourceStream(String key, ClassLoader loader) {
         if (key.startsWith("/")) {
             key = key.substring(1);
         }
         final ResourceProvider provider = resourceProvider;
-        if (provider != null) {
-            try {
-                final InputStream fromProvider = provider.open(key);
-                if (fromProvider != null) {
-                    return new BufferedInputStream(fromProvider);
-                }
-            } catch (IOException e) {
-                // fall through
-            }
-        }
-        // Native executable (TeaVM C): no class loader, only the provider above.
-        // The marker is tested here, so that TeaVM prunes the class loader code below.
-        if (NativePlatform.isC()) {
+        if (provider == null) {
             return null;
         }
-        InputStream is = null;
-        if (loader != null) {
-            is = loader.getResourceAsStream(key);
-            if (is != null) {
-                return new BufferedInputStream(is);
-            }
-        }
-        // Try to use Context Class Loader to load the properties file.
         try {
-            ClassLoader contextClassLoader = Thread.currentThread()
-                    .getContextClassLoader();
-            if (contextClassLoader != null) {
-                is = contextClassLoader.getResourceAsStream(key);
-            }
-        } catch (Throwable e) {
+            final InputStream is = provider.open(key);
+            return is == null ? null : new BufferedInputStream(is);
+        } catch (IOException e) {
+            return null;
         }
-
-        if (is == null) {
-            is = BaseFont.class.getResourceAsStream("/" + key);
-        }
-        if (is == null) {
-            is = ClassLoader.getSystemResourceAsStream(key);
-        }
-        return is == null ? null : new BufferedInputStream(is);
     }
 
     // ia>
@@ -1163,41 +1120,12 @@ public abstract class BaseFont {
      */
     protected String createSubsetPrefix() {
         String s = "";
-        // Native (TeaVM C) build: no SecureRandom. The marker is tested here, so that TeaVM
-        // prunes the SecureRandom code below.
-        if (NativePlatform.isC()) {
-            final java.util.Random random = new java.util.Random(System.nanoTime());
-            for (int k = 0; k < 6; ++k) {
-                s += (char) (random.nextDouble() * 26 + 'A');
-            }
-            return s + "+";
-        }
-        SecureRandom secureRandom = getSecureRandom();
+        // Not secure on purpose: only has to differ from the prefix of the other subsets
+        final java.util.Random random = new java.util.Random(System.nanoTime());
         for (int k = 0; k < 6; ++k) {
-            s += (char) (secureRandom.nextDouble() * 26 + 'A');
+            s += (char) (random.nextDouble() * 26 + 'A');
         }
         return s + "+";
-    }
-
-    /**
-     * Returns a defined SecureRandom implementation. If nothing is set, returns a new
-     *
-     * @return {@link SecureRandom}
-     */
-    protected SecureRandom getSecureRandom() {
-        if (secureRandom != null) {
-            return secureRandom;
-        }
-        return new SecureRandom();
-    }
-
-    /**
-     * Sets the SecureRandom instance to be used for a subset's prefix generation
-     *
-     * @param secureRandom {@link SecureRandom}
-     */
-    public void setSecureRandom(SecureRandom secureRandom) {
-        this.secureRandom = secureRandom;
     }
 
     /**

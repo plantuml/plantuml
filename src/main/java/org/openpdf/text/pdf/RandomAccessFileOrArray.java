@@ -49,7 +49,6 @@
 
 package org.openpdf.text.pdf;
 
-import org.openpdf.text.utils.UrlStreams;
 import org.openpdf.text.Document;
 import org.openpdf.text.error_messages.MessageLocalization;
 import java.io.ByteArrayOutputStream;
@@ -62,7 +61,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
-import java.net.URL;
 
 /**
  * An implementation of a RandomAccessFile for input only that accepts a file or a byte array as data source.
@@ -92,32 +90,23 @@ public class RandomAccessFileOrArray implements DataInput, Closeable {
         this.plainRandomAccess = plainRandomAccess;
         File file = new File(filename);
         if (!file.canRead()) {
-            if (filename.startsWith("file:/") || filename.startsWith("http://")
-                    || filename.startsWith("https://") || filename.startsWith("jar:") || filename.startsWith(
-                    "wsjar:")) {
-                try (InputStream is = UrlStreams.open(new URL(filename))) {
-                    this.arrayIn = InputStreamToArray(is);
-                    return;
-                }
+            InputStream is = null;
+            if ("-".equals(filename)) {
+                is = System.in;
             } else {
-                InputStream is = null;
-                if ("-".equals(filename)) {
-                    is = System.in;
-                } else {
-                    is = BaseFont.getResourceStream(filename);
-                }
-                if (is == null) {
-                    throw new IOException(
-                            MessageLocalization.getComposedMessage("1.not.found.as.file.or.resource", filename));
-                }
+                is = BaseFont.getResourceStream(filename);
+            }
+            if (is == null) {
+                throw new IOException(
+                        MessageLocalization.getComposedMessage("1.not.found.as.file.or.resource", filename));
+            }
+            try {
+                this.arrayIn = InputStreamToArray(is);
+                return;
+            } finally {
                 try {
-                    this.arrayIn = InputStreamToArray(is);
-                    return;
-                } finally {
-                    try {
-                        is.close();
-                    } catch (IOException ioe) {
-                    }
+                    is.close();
+                } catch (IOException ioe) {
                 }
             }
         } else if (forceRead) {
@@ -128,12 +117,6 @@ public class RandomAccessFileOrArray implements DataInput, Closeable {
         }
         this.filename = filename;
         trf = new RandomAccessFile(filename, "r");
-    }
-
-    public RandomAccessFileOrArray(URL url) throws IOException {
-        try (InputStream is = UrlStreams.open(url)) {
-            this.arrayIn = InputStreamToArray(is);
-        }
     }
 
     public RandomAccessFileOrArray(InputStream is) throws IOException {

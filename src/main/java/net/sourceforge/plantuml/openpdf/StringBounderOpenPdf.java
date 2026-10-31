@@ -46,11 +46,14 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.font.UFontFace;
-import net.sourceforge.plantuml.teavm.TeaVM;
-import net.sourceforge.plantuml.teavm.c.OpenPdfResources;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class StringBounderOpenPdf implements StringBounder {
+
+	static {
+		// Before the first measure, which happens while the diagram is laid out
+		OpenPdfSetup.ensure();
+	}
 
 	private static final Map<String, BaseFont> fontCache = new ConcurrentHashMap<>();
 
@@ -106,11 +109,6 @@ public class StringBounderOpenPdf implements StringBounder {
 	}
 
 	private static BaseFont resolveFont(String family, boolean bold, boolean italic) {
-		// The C build has no class loader: OpenPDF reads the AFM files from the executable.
-		// It must be set before the first measure, which happens while the diagram is laid out.
-		if (TeaVM.isC())
-			OpenPdfResources.install();
-
 		if (family == null)
 			family = "Helvetica";
 
