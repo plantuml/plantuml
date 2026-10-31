@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 5
+expected-error-message: 'Python error: StateError: unknown state'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: Python error: StateError: unknown state
+!class StateError(ValueError):
+!    pass
+!raise StateError("unknown state")
+@enduml

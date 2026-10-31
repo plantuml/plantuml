@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml foo bar
+' EXPECT (preproc): the first line of the diagram, @startuml included, as %xargs() gives
+' title [@startuml foo bar] True
+title [!{puml.xargs}] !{puml.xargs == "%xargs()"}
+@enduml

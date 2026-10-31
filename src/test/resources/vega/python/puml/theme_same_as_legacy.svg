@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="77.083px" preserveAspectRatio="none" style="width:110px;height:77px;" version="1.1" viewBox="0 0 110 77" width="110.417px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g11r1i228f0ajw0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#EDF0F2"/>
+      <stop offset="100%" stop-color="#E9ECEF"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="3">
+      <rect fill="url(#g11r1i228f0ajw0)" height="33.333" rx="4.167" ry="4.167" style="stroke:#BABDBF;stroke-width:1.042;" width="66.927" x="20.833" y="20.833"/>
+      <text fill="#2FA4E7" font-family="'Verdana'" font-size="20.833" font-weight="700" textLength="54.427" x="27.083" y="43.287">True 9</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title str str 2
+!@macro
+!def kinds(a, b):
+!    return type(a).__name__ + " " + type(b).__name__ + " " + str(len(a))
+
+title kinds(12, x)
+@enduml

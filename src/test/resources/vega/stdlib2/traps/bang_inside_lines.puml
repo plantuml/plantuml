@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+' A "!" that does not start the line is plain text.
+Alice -> Bob : hello! (urgent!)
+Bob -> Alice : x != y and !b
+note right of Alice : wow!! <color:red>!</color> **bold!**
+title Hello! World!
+@enduml

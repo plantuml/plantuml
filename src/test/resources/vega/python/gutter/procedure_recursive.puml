@@ -1,0 +1,19 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant A
+' participant B
+' A -> B : 3
+' A -> B : 2
+' A -> B : 1
+participant A
+participant B
+!def countdown(n):
+!    if n > 0:
+         A -> B : !{n}
+!        countdown(n - 1)
+
+!countdown(3)
+@enduml

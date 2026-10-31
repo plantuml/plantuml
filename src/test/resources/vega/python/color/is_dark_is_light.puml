@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the legacy functions print 1 and 0, Python prints True and False
+title %is_dark("#000000") %is_light("#000000") %is_dark("white") %is_light("white")
+title !{color.is_dark("#000000")} !{color.is_light("#000000")} !{color.is_dark("white")} !{color.is_light("white")}
+@enduml

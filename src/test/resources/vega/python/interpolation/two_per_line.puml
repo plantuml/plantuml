@@ -1,0 +1,10 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' A -> B : 1 and 2
+!x = 1
+!y = 2
+A -> B : !{x} and !{y}
+@enduml

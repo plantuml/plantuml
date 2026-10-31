@@ -1,0 +1,14 @@
+---
+output: preproc, svg
+---
+@startuml
+---
+version: 3.5
+count: 10
+ok: true
+---
+' EXPECT (preproc):
+' title str str str 3.5 10 true
+title !{type(puml.metadata["version"]).__name__} !{type(puml.metadata["count"]).__name__} !{type(puml.metadata["ok"]).__name__} !{puml.metadata["version"]} !{puml.metadata["count"]} !{puml.metadata["ok"]}
+Alice -> Bob : hello
+@enduml

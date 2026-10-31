@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+!unquoted procedure $box($alias, $label="none")
+rectangle "$label" as $alias
+!endprocedure
+!final function $up($s)
+!return %upper($s)
+!endfunction
+!procedure $scope()
+!local $v = "local"
+!global $g = "global"
+rectangle "$v" as L
+!endprocedure
+$box(db, Database)
+$box(web)
+$scope()
+rectangle "$g $up(abc) %strpos("hello", "l")" as G
+@enduml

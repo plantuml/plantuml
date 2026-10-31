@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: 'Unknown built-in function %foo'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR line 4: Unknown built-in function %foo
+!x = 1
+!if %foo()
+participant A
+@enduml

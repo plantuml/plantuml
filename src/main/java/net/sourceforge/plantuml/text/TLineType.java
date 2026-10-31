@@ -45,7 +45,7 @@ public enum TLineType {
 	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, WHILE, ENDWHILE,
 	FOREACH, ENDFOREACH, DECLARE_RETURN_FUNCTION, DECLARE_PROCEDURE, END_FUNCTION, RETURN, LEGACY_DEFINE,
 	LEGACY_DEFINELONG, THEME, INCLUDE, /*INCLUDE_SPRITES,*/ INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG,
-	DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START, OPTION;
+	DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START, OPTION, PYTHON;
 
 	private static final RegexLeaf IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT = new RegexLeaf(
 			"[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*");
@@ -67,10 +67,8 @@ public enum TLineType {
 			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!define"), RegexLeaf.spaceOneOrMore(),
 			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf("\\b"));
 
-	private static final IRegex PATTERN_AFFECTATION = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
-			new RegexLeaf("!"), RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "(local|global)?"),
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\$?"), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\??="));
+	/** Marker put at the start of a collapsed Python chunk, see PythonChunks. */
+	public static final String PYTHON_MARKER = "!python\n";
 
 	private static final IRegex PATTERN_COMMENT_SIMPLE1 = new RegexConcat(RegexLeaf.start(),
 			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("'"));
@@ -163,6 +161,12 @@ public enum TLineType {
 		if (sl.containsExclamationMark() == false)
 			return PLAIN;
 
+		if (s.startsWith(PYTHON_MARKER))
+			return PYTHON;
+
+		if (PythonLine.startsWithInterpolation(s))
+			return PLAIN;
+
 		if (PATTERN_LEGACY_DEFINE.match(sl))
 			return LEGACY_DEFINE;
 
@@ -172,8 +176,11 @@ public enum TLineType {
 		if (PATTERN_AFFECTATION_DEFINE.match(sl))
 			return AFFECTATION_DEFINE;
 
-		if (PATTERN_AFFECTATION.match(sl))
+		if (PythonLine.isLegacyAffectation(s))
 			return AFFECTATION;
+
+		if (PythonLine.isKeywordLine(s) || PythonLine.isDecoratorLine(s))
+			return PYTHON;
 
 		if (PATTERN_IFDEF.match(sl))
 			return IFDEF;
@@ -255,6 +262,9 @@ public enum TLineType {
 
 		if (PATTERN_OPTION.match(sl))
 			return OPTION;
+
+		if (PythonLine.isStatementLine(s))
+			return PYTHON;
 
 		return PLAIN;
 	}

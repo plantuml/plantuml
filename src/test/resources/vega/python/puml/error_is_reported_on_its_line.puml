@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 5
+expected-error-message: boom
+---
+@startuml
+' EXPECT (preproc):
+' ERROR line 5: boom
+title ok
+!x = 1
+!puml.error("boom")
+@enduml

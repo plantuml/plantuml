@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title True True True
+title !{puml.filename == "%filename()"} !{puml.dirpath == "%dirpath()"} !{puml.filedate == "%filedate()"}
+@enduml

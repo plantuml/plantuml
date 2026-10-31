@@ -1,0 +1,6 @@
+@startuml
+participant P0
+participant P1
+Alice -> P0 : its
+Bob -> P1 : 1
+@enduml

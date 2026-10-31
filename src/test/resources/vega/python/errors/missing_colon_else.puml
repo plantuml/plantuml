@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 6
+expected-error-message: 'No if related to this else (looks like Python, is the ':' missing?)'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR line 6: No if related to this else (looks like Python, is the ':' missing?)
+!x = 1
+!if x == 1:
+    participant A
+!else
+    participant B
+@enduml

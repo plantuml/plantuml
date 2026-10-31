@@ -1,0 +1,17 @@
+4.0 True
+3.0 True
+2 3 3.14159
+3.0 6
+NameError: name 'math' is not defined
+True True
+{"a": [1, 2]}
+2024-02-29
+5.0
+NameError: name 'root' is not defined
+mine 2.0
+2.718
+6.283
+ImportError True
+ImportError
+ModuleNotFoundError No module named 'nomodule'
+caught as ModuleNotFoundError

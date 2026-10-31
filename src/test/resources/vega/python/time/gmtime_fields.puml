@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): year, month, day, hour, minute, second, weekday (Monday is 0), day of the year, 0
+' title (2009, 2, 13, 23, 31, 30, 4, 44, 0) | (1970, 1, 1, 0, 0, 0, 3, 1, 0) | (1969, 12, 31, 23, 59, 59, 2, 365, 0)
+title !{time.gmtime(1234567890)} | !{time.gmtime(0)} | !{time.gmtime(-1)}
+@enduml

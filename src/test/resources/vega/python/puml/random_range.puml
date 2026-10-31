@@ -1,0 +1,15 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the draws are not the same from one run to the next, so the test checks the range
+' title True [0, 1, 2] True True
+!ok = True
+!seen = {}
+!for i in range(300):
+!    n = puml.random(3)
+!    seen[n] = 1
+!    if n < 0 or n >= 3 or puml.random() not in (0, 1) or puml.random(7, 15) not in range(7, 15):
+!        ok = False
+title !{ok} !{sorted(seen.keys())} !{puml.random(1) == 0} !{puml.random(3, 4) == 3}
+@enduml

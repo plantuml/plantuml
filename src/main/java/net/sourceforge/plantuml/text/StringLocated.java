@@ -275,6 +275,17 @@ final public class StringLocated {
 		return (getFoxSignature() & EXCLAMATION_MARK) != 0L;
 	}
 
+	private static final long INTERPOLATION_CHARS = FoxSignature.getFoxSignatureFromRealString("!{}");
+
+	/**
+	 * False when the line cannot hold a <code>!{expr}</code> (one of the characters
+	 * <code>!</code>, <code>{</code>, <code>}</code> is missing); true only means that
+	 * the three are somewhere in the line, not that they form <code>!{</code>.
+	 */
+	public boolean mayContainInterpolation() {
+		return (getFoxSignature() & INTERPOLATION_CHARS) == INTERPOLATION_CHARS;
+	}
+
 	private String firstToken = null;
 
 	/**

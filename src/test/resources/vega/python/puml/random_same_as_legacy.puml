@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the only draws that are the same every time: one value
+' title 0 0 3 3
+title %random(1) !{puml.random(1)} %random(3, 4) !{puml.random(3, 4)}
+@enduml

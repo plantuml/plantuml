@@ -1,0 +1,6 @@
+@startuml
+participant "v1.2" as v1_2
+participant "v1.10" as v1_10
+participant "v2.0" as v2_0
+title v1.2 < v1.10: True, newest v2.0
+@enduml

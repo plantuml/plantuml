@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.tim.iterator;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 import net.sourceforge.plantuml.json.JsonValue;
@@ -53,6 +55,9 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 	private final TMemory memory;
 	private final List<StringLocated> logs;
 
+	/** The !foreach lines opened in the body this iterator reads and not closed yet. */
+	private final Deque<StringLocated> opened = new ArrayDeque<>();
+
 	public CodeIteratorForeach(CodeIterator source, TContext context, TMemory memory, List<StringLocated> logs) {
 		super(source);
 		this.context = context;
@@ -64,8 +69,14 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 		int level = 0;
 		while (true) {
 			final StringLocated result = source.peek();
-			if (result == null)
+			if (result == null) {
+				if (opened.isEmpty() == false) {
+					// the error is reported on the last line of the debug list: the line left open
+					logs.add(opened.peekLast());
+					throw new EaterException("!foreach without !endfor", opened.peekLast());
+				}
 				return null;
+			}
 
 			final ExecutionContextForeach foreach = memory.peekForeach();
 			if (foreach != null && foreach.isSkipMe()) {
@@ -75,6 +86,7 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 					level--;
 					if (level == -1) {
 						memory.pollForeach();
+						opened.pollLast();
 						level = 0;
 					}
 				}
@@ -84,6 +96,7 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 
 			if (result.getType() == TLineType.FOREACH) {
 				logs.add(result);
+				opened.addLast(result);
 				executeForeach(memory, result.getTrimmed());
 				next();
 				continue;
@@ -95,6 +108,7 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 				foreach.inc();
 				if (foreach.isSkipMe()) {
 					memory.pollForeach();
+					opened.pollLast();
 				} else {
 					setLoopVariable(memory, foreach, result);
 					source.jumpToCodePosition(foreach.getStartForeach(), result);

@@ -1,0 +1,5 @@
+error: NameError
+line: 2
+text: name 'undefined_name' is not defined
+trace: 4 <module>
+trace: 2 f

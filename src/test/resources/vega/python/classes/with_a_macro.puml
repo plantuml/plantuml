@@ -1,0 +1,27 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' database "Orders" as orders <<v1>>
+' queue "Events" as events <<none>>
+!python
+class Component:
+    shapes = {"db": "database", "mq": "queue"}
+
+    def __init__(self, kind, alias, label, tags):
+        self.shape = Component.shapes[kind]
+        self.alias = alias
+        self.label = label
+        self.tags = tags
+
+    def render(self):
+        return f'{self.shape} "{self.label}" as {self.alias} <<{self.tags}>>'
+
+@macro
+def component(kind, alias, label, tags="none"):
+    return Component(kind, alias, label, tags).render()
+!endpy
+component(db, orders, "Orders", $tags="v1")
+component(mq, events, Events)
+@enduml

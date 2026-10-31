@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 'Auth' Auth [1, 'b'] [  'Auth'] [   42]
+!name = "Auth"
+!l = [1, "b"]
+!n = 42
+title !{name!r} !{name!s} !{l!r} [!{name!r:>8}] [!{n!s:>5}]
+@enduml

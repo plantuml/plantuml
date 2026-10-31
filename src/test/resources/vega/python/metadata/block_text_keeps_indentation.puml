@@ -1,0 +1,15 @@
+---
+output: preproc, svg
+---
+@startuml
+---
+note: |
+  first
+    indented
+  last
+---
+' EXPECT (preproc):
+' note over Alice : first / indented / last
+participant Alice
+note over Alice : !{" / ".join([l.strip() for l in puml.metadata["note"].splitlines()])}
+@enduml

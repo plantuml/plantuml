@@ -62,7 +62,8 @@ public class RandomFunction extends SimpleReturnFunction {
 	// Shared by all the diagrams (and threads): the function holds no state of its own.
 	private static final Random RANDOM = new Random();
 
-	private static synchronized int nextInt(int bound) {
+	/** A number in [0, bound). Shared by <code>%random</code> and <code>puml.random</code>. */
+	public static synchronized int nextInt(int bound) {
 		return RANDOM.nextInt(bound);
 	}
 

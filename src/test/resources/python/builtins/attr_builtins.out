@@ -1,0 +1,22 @@
+1 base hello 1
+default 1 None
+AttributeError
+TypeError TypeError
+TypeError TypeError
+ABC 0
+base Child
+10 2 hello 10
+child base child
+AttributeError TypeError TypeError
+True False True False True
+TypeError TypeError
+False
+AttributeError AttributeError TypeError
+base
+('a', 'b') True False
+5 5
+True False True True
+True False True True
+True False False True
+TypeError TypeError True
+True True True TypeError

@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant P0
+' participant P1
+' participant P2
+!for line in ["participant P" + str(i) for i in range(3)]:
+!    emit(line)
+@enduml

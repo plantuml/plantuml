@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): each pair of lines is the same colour
+title %reverse_color("#FF7700")
+title !{color.reverse_color("#FF7700")}
+title %reverse_hsluv_color("#FF7700")
+title !{color.reverse_hsluv_color("#FF7700")}
+title %reverse_color("LightBlue")
+title !{color.reverse_color("LightBlue")}
+@enduml

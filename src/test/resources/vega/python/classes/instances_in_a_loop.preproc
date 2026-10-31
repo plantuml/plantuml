@@ -1,0 +1,5 @@
+@startuml
+
+participant Auth #FFCCCC
+participant Billing #CCE5FF
+@enduml

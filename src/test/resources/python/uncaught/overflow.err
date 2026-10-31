@@ -1,0 +1,5 @@
+# NOT CPython: int is a 32-bit integer.
+error: OverflowError
+line: 4
+text: integer overflow (this interpreter has 32-bit integers)
+trace: 4 <module>

@@ -1,0 +1,41 @@
+42 3.14159 hi None [1, 'a'] {'k': 1}
+'hi' hi [1, 'a'] None 42 3.14159
+   42|42   |   42| 42  |00042|+42| 42|-0042
+2a 2A 52 101010 0x2a 0o52 0b101010 00101010 42 1,234,567 1_234_567
+3.14    3.142|3.1     |+3 3.141590e+00 3.14e+00 3.14159 1e+20 314.159000% 50%
+    hi|hi    |  hi  |**hi***|h|h     |--hi
+   42     3.14     hi
+    3.1|hi     |42     |
+{} {x} {42} }{
+43 84 8 2 1764 -42 True 42
+HI hihi 2 1 a 1 a, b
+nested hi 42  42|
+42hiplain3.1
+multi
+42
+line 'hi'
+quotes ab
+True False True True 1.0 1e+100 -0.0 1000000000 1073741824
+     |     |     |   42|    [1, 'a']|
+    0   0.0  -1  -1.50 1e-07 123456789.12345679
+1 a None
+x y x
+   b| 'a'    b| n     3.14|
+x   y    z|   q p
+1 2
+1 2 3
+    a b    |   c   2.50     3 ff
+'a' a    b
+{literal} 1
+1,234,567 1_234_567 +5  5
+ 3.14159      3.1
+1 a 'a'     2|3    |00004|+5
+ff FF 10 1.500000e+00 1.500000 1.5 %
+ 3.14|2.500   |-0001.50|2|   ab|cd   |xy
+x 2 'x'
+a [1, 2] None 5 plain [1]
+Hi ! 3 -2  99.5%
+   1|2   |3.14
+TypeError TypeError TypeError IndexError
+KeyError ValueError ValueError ValueError
+ValueError ValueError IndexError

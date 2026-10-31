@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: Python syntax error: invalid syntax near '=' (column 5)
+---
+@startuml
+' EXPECT (preproc):
+' ERROR line 4: Python syntax error
+title ok
+!x = = 1
+@enduml

@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title {"a": [1, 2.5, true, null, "x\u00e9\n"], "b": {"c": -3}}
+' title {"k": [1, 2], "3": false, "s": "q\"\\"}
+!d = json.loads('{"a": [1, 2.5, true, null, "x\\u00e9\\n"], "b": {"c": -3}}')
+title !{json.dumps(d)}
+!s = json.dumps({"k": (1, 2), 3: False, "s": "q\"\\"})
+title !{s}
+@enduml

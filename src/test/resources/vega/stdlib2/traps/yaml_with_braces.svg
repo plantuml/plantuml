@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="85px" preserveAspectRatio="none" style="width:338px;height:85px;background:#FFFFFF;" version="1.1" viewBox="0 0 338 85" width="338px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="159.913" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="15" y="22.889">image</text>
+    <text fill="#000" font-size="14" textLength="73.063" x="86.425" y="22.889">app:${TAG}</text>
+    <line style="stroke:#000;stroke-width:1;" x1="81.425" x2="81.425" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="169.913" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="61.425" x="15" y="40.889">command</text>
+    <text fill="#000" font-size="14" textLength="78.487" x="86.425" y="40.889">echo !{name}</text>
+    <line style="stroke:#000;stroke-width:1;" x1="81.425" x2="81.425" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="169.913" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="15" y="58.889">env</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="86.425" y="58.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="81.425" x2="81.425" y1="46" y2="64"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="159.913" x="10" y="10"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="119.288" x="207" y="37"/>
+    <text fill="#000" font-size="14" textLength="109.288" x="212" y="49.889">HOME=${HOME}</text>
+    <line style="stroke:#000;stroke-width:1;" x1="207" x2="326.288" y1="55" y2="55"/>
+    <text fill="#000" font-size="14" textLength="106.925" x="212" y="67.889">FLAG=!important</text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="119.288" x="207" y="37"/>
+    <path d="M158,55 L171,55 C180.305,55 190.123,55 199.775,55" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M199.775,58.077 L202.083,55 L199.775,51.923 L207.468,55 L199.775,58.077" fill="#000"/>
+    <ellipse cx="158" cy="55" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

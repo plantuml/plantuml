@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: '!ifdef without !endif'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: !ifdef without !endif
+!procedure $decl($n)
+!ifdef SHOW
+participant $n
+!endprocedure
+$decl(A)
+@enduml

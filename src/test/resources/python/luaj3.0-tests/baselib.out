@@ -1,0 +1,61 @@
+
+11
+abc 123 None pqr
+F
+F
+F
+pcall(assert,true) (True, True)
+pcall(assert,false) (False, 'AssertionError')
+pcall(assert,None) (False, 'AssertionError')
+pcall(assert,true,"msg") (True, True)
+pcall(assert,false,"msg") (False, 'AssertionError')
+pcall(assert,None,"msg") (False, 'AssertionError')
+type(None) NoneType
+type("a") str
+type(1) int
+type(1.5) float
+type(lambda) function
+type({}) dict
+type(True) bool
+type(False) bool
+type([]) list
+type(()) tuple
+int('1234567890') 1234567890
+int(' 123 ') 123
+int(3.9) 3 int(-3.9) -3
+pcall(int,'abc') (False, 'ValueError')
+pcall(int,None) (False, 'TypeError')
+float('1.5') 1.5 float(2) 2.0
+str(123) 123 str(True) True str(None) None
+repr('abc') 'abc' repr(1.0) 1.0
+repr(None) None repr([1,'a']) [1, 'a']
+len('Hello, world') 12
+len('\x00\x00\x00') 3
+len({}) 0 len(()) 0
+enumerate2 0 one
+enumerate2 1 two
+enumerate3 0 aa
+enumerate3 1 bb
+zip 30 x
+zip 20 y
+sorted [10, 20, 30] ['a', 'b'] []
+reversed [3, 2, 1]
+min/max 1 3 5 b
+sum 6 0 6
+abs 3 2.5
+round 2 4 2.67
+divmod (3, 2) (-4, 3)
+pow 1024 0.5
+isinstance True False True
+callable True False
+chr/ord A 65 z
+hex/bin/oct 0xff 0b101 0o10
+any/all True True False True
+filter [2, 3]
+map [2, 4, 6]
+closure 7
+defaults (1, 2, 5) (1, 3, 5) (1, 2, 6)
+pcall(len,1) (False, 'TypeError')
+pcall(lambda: 1/0) (False, 'ZeroDivisionError')
+pcall(list.index) (False, 'ValueError')
+OK

@@ -1,0 +1,97 @@
+### ok noeol
+x = 1
+### ok noeol
+if a:
+    b
+### ok
+def f():
+    return 1
+### ok
+x = 1
+
+
+### ok noeol
+# only a comment
+### ok noeol
+### ok
+
+
+### ok
+if a:
+    b
+# trailing
+### ok
+f(a)
+
+  # c
+### ok
+class A:
+    __n = 1
+    def __init__(self):
+        self.__x = 1
+    def __f(self):
+        pass
+    def __str__(self):
+        return ''
+    def __repr__(self):
+        return ''
+    def __lt__(self, o):
+        return True
+    def __le__(self, o):
+        return True
+    def __gt__(self, o):
+        return True
+    def __ge__(self, o):
+        return True
+### ok
+@a
+@a.b.c
+@a(1)
+@a.b(x=1)
+def f():
+    pass
+@a
+class C:
+    pass
+### ok
+try:
+    pass
+except E as e:
+    raise X from e
+### ok
+x = (i for i in y)
+### ok
+f(i for i in y)
+### ok
+f((i for i in y), 1)
+### ok
+all(a % 2 == 0 for a in y if a > 0)
+### ok
+f(x for x in a for y in b if y)
+### ok
+s = {1, 2}
+### ok
+s = {1, 2,}
+### ok
+s = {x for x in y if x}
+### ok
+s = {(x, y) for x in a for y in b}
+### ok
+f({1}, {x for x in y})
+### ok
+from math import sqrt
+### ok
+from math import sqrt as racine, pi
+### ok
+from a.b import c
+### ok
+from math import (sqrt,
+    pi as p,)
+### ok
+def f():
+    from math import sqrt
+    return sqrt(4)
+### ok noeol
+from math import sqrt
+### ok noeol
+s = {1}

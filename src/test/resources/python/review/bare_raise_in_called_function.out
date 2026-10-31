@@ -1,0 +1,3 @@
+ValueError a
+KeyError 'k'
+RuntimeError outside a handler

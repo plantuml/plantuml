@@ -1,0 +1,18 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the years 1 to 9999 only: a timestamp out of them is an OverflowError (CPython goes further)
+' title OverflowError OverflowError ValueError
+!r = []
+!for s in [253402300800.0, -62135596801.0]:
+!    try:
+!        time.gmtime(s)
+!    except OverflowError:
+!        r.append('OverflowError')
+!try:
+!    time.strftime('%Y', (2026, 13, 1, 0, 0, 0, 0, 1, 0))
+!except ValueError:
+!    r.append('ValueError')
+title !{' '.join(r)}
+@enduml

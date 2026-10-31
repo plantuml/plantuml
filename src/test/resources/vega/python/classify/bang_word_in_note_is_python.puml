@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 7
+expected-error-message: 'Python error: NameError: name 'important' is not defined'
+---
+@startuml
+' The incompatibility with the legacy preprocessor (section 12.1): a text line
+' that starts with "!" and a word is Python, here in a note. Write "!!important".
+' EXPECT (preproc):
+' ERROR: Python error: NameError: name 'important' is not defined
+Alice -> Bob : hello
+note over Alice
+!important
+end note
+@enduml

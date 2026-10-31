@@ -1,0 +1,5 @@
+error: KeyError
+line: 4
+text: 'inner'
+trace: 12 <module>
+trace: 4 f

@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: 'Python error: ValueError: day is out of range for month'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR line 5: Python error: ValueError: day is out of range for month
+!day = 30
+title !{datetime.date(2026, 2, day)}
+@enduml

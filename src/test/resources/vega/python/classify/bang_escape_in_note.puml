@@ -1,0 +1,27 @@
+---
+output: preproc, svg
+---
+@startuml
+' A text line that starts with "!" is written with "!!": one "!" is removed.
+' "!!{" stays the escape of an interpolation.
+' EXPECT (preproc):
+' Alice -> Bob : hello
+' note over Alice
+' !important
+' !Warning: read this
+' !
+' !!triple
+' !{x}
+'   !indented
+' end note
+!x = 1
+Alice -> Bob : hello
+note over Alice
+!!important
+!!Warning: read this
+!!
+!!!triple
+!!{x}
+  !!indented
+end note
+@enduml

@@ -1,0 +1,17 @@
+True False True True True True True True
+True [1, 2, 3]
+False [3, 2]
+False [1, 5, 3]
+True [1, 1, 2, 2]
+True False True True True
+True False True False True
+True True True
+True True True True
+True False True True
+True bool False True
+True True False True True
+[3, 4, 5] [3, 4, 5, 9]
+True False True
+in range
+8
+TypeError ok TypeError TypeError

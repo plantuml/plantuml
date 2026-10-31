@@ -1,0 +1,4 @@
+@startuml
+participant A
+note over A : caught oops
+@enduml

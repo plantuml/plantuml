@@ -1,0 +1,18 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 2 calls
+!class Counter:
+!    def __init__(self):
+!        self.__n = 0
+!    def tick(self):
+!        self.__n += 1
+!        return self
+!    def value(self):
+!        return self.__n
+
+!c = Counter().tick().tick()
+title !{c.value()} calls
+@enduml

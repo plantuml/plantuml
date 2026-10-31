@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="132px" preserveAspectRatio="none" style="width:351px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 351 132" width="351px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="24">
+      <text fill="#000" font-size="14" font-weight="700" textLength="208.513" x="15" y="25.889">Alice (admin) | [User('Alice', True)] | &lt;</text>
+      <text fill="#000" font-size="14" font-weight="700" text-decoration="underline" textLength="30.363" x="223.513" y="25.889">main</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="80.675" x="253.875" y="25.889">.Plain object&gt;</text>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="alice" data-source-line="23" id="part1-lifeline">
+      <g>
+        <title>Alice .admin.</title>
+        <rect fill="#000" fill-opacity="0" height="18" width="8" x="171.775" y="74"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="175.275" x2="175.275" y1="74" y2="92"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="alice" data-source-line="23" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.875" x="129.338" y="45"/>
+      <text fill="#000" font-size="14" textLength="77.875" x="136.338" y="62.889">Alice (admin)</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="alice" data-source-line="23" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.875" x="129.338" y="92"/>
+      <text fill="#000" font-size="14" textLength="77.875" x="136.338" y="109.889">Alice (admin)</text>
+    </g>
+  </g>
+</svg>

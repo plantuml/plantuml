@@ -1,0 +1,6 @@
+True True False
+True True True True
+False False
+['b', 'a'] ['b', 'a'] [2, 1] [('b', 2), ('a', 1)]
+('b', 2) ('a', 1) {}
+KeyError

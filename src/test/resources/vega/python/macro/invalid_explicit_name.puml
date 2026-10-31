@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: 'Python error: ValueError: invalid macro name '%color': a macro name is an identifier, optionally preceded by $'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: Python error: ValueError: invalid macro name '%color': a macro name is an identifier, optionally preceded by $
+!python
+@macro("%color")
+def color(n):
+    return "#FFCCCC"
+!endpy
+@enduml

@@ -1,0 +1,10 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 9
+!l = [1, 2]
+!l[1] = 9
+!emit("title " + str(l[1]))
+@enduml

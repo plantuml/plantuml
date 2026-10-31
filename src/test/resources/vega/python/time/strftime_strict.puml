@@ -1,0 +1,14 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): not like glibc, a directive that is not in C99 is a ValueError, on every machine
+' title ValueError ValueError ValueError UTC +0000
+!r = []
+!for f in ['%Q', '%', '%-d']:
+!    try:
+!        time.strftime(f, time.gmtime(0))
+!    except ValueError:
+!        r.append('ValueError')
+title !{' '.join(r)} !{time.strftime('%Z')} !{time.strftime('%z')}
+@enduml

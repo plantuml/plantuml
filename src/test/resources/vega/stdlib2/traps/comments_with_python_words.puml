@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+' !python
+' !x = 1
+' !for x in y:
+/' !python
+!def f():
+!endpy '/
+/'
+!x == 1
+!important
+'/
+Alice -> Bob : after the comments
+@enduml

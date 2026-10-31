@@ -95,18 +95,34 @@ public class ReadLineWithYamlHeader implements ReadLine {
 		return MyCollections.unmodifiableMap(metadata);
 	}
 
-	public static List<StringLocated> removeYamlHeader(List<StringLocated> input) {
-		if (input.size() > 1 && isSeparator(input.get(1))) {
-			final List<StringLocated> result = new ArrayList<>();
-			result.add(input.get(0));
-			for (int i = 2; i < input.size(); i++)
-				if (isSeparator(input.get(i))) {
-					result.addAll(input.subList(i + 1, input.size()));
-					return result;
-				}
-		}
+	/**
+	 * The lines of the YAML header of a diagram (between the two "---" lines that
+	 * follow the @start line, separators excluded), or an empty list.
+	 */
+	public static List<StringLocated> getYamlHeader(List<StringLocated> input) {
+		final int end = yamlHeaderEnd(input);
+		if (end == -1)
+			return new ArrayList<>();
+		return new ArrayList<>(input.subList(2, end));
+	}
 
-		return input;
+	public static List<StringLocated> removeYamlHeader(List<StringLocated> input) {
+		final int end = yamlHeaderEnd(input);
+		if (end == -1)
+			return input;
+		final List<StringLocated> result = new ArrayList<>();
+		result.add(input.get(0));
+		result.addAll(input.subList(end + 1, input.size()));
+		return result;
+	}
+
+	/** The index of the closing "---" of the header that follows the first line, or -1. */
+	private static int yamlHeaderEnd(List<StringLocated> input) {
+		if (input.size() > 1 && isSeparator(input.get(1)))
+			for (int i = 2; i < input.size(); i++)
+				if (isSeparator(input.get(i)))
+					return i;
+		return -1;
 	}
 
 }

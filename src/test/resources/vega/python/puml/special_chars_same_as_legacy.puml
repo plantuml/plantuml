@@ -1,0 +1,11 @@
+---
+output: preproc
+---
+@startuml
+' EXPECT (preproc): the same characters, from %function() and from puml.function()
+!x = 1
+note over A : a%newline()b%n()c%breakline()d
+note over A : a!{puml.newline()}b!{puml.n()}c!{puml.breakline()}d
+note over A : a%tab()b%left_align()c%right_align()d%backslash()e
+note over A : a!{puml.tab()}b!{puml.left_align()}c!{puml.right_align()}d!{puml.backslash()}e
+@enduml

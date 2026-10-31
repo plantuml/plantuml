@@ -1,0 +1,17 @@
+True False False True True False
+[Ver(1), Ver(2), Ver(3)] [Ver(3), Ver(2), Ver(1)]
+Ver(1) Ver(3) Ver(1) Ver(3)
+[Ver(1), Ver(2), Ver(3)]
+True True True True
+TypeError TypeError
+TypeError TypeError TypeError
+TypeError TypeError
+True True False False True True True
+[Full(0), Full(1), Full(2)] Full(2) Full(1)
+True False True False True True
+TypeError TypeError
+False False False True True
+[Ver(1), Ver(2), Ver(2)]
+ValueError
+ValueError
+NotImplemented NotImplementedType

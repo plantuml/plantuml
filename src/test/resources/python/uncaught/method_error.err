@@ -1,0 +1,5 @@
+error: ValueError
+line: 7
+text: insufficient funds: 6
+trace: 13 <module>
+trace: 7 withdraw

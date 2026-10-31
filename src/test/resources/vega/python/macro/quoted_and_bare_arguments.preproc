@@ -1,0 +1,3 @@
+@startuml
+rectangle "Data, base" as db
+@enduml

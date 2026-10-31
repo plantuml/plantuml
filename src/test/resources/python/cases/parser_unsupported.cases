@@ -1,0 +1,85 @@
+### line 1
+class A(metaclass=M): pass
+### line 1
+class A(*b): pass
+### line 1
+with a: pass
+### line 3
+try:
+ pass
+finally:
+ pass
+### line 5
+try:
+ pass
+except E:
+ pass
+finally:
+ pass
+### line 1
+def f(): yield 1
+### line 1
+{*a}
+### line 1
+{1, *a}
+### line 1
+(x := 1)
+### line 1
+async def f(): pass
+### line 2
+@dec
+async def f(): pass
+### line 1
+from math import *
+### line 1
+from . import b
+### line 1
+from .a import b
+### line 1
+from ..a import b
+### line 2
+def f():
+    from math import *
+### line 1
+a @ b
+### line 1
+x: int = 1
+### line 1
+def f(a: int): pass
+### line 1
+def f() -> int: pass
+### line 1
+a, *b = c
+### line 1
+[*a]
+### line 1
+(*a, b)
+### line 1
+b'bytes'
+### line 1
+1j
+### line 1
+...
+### line 1
+x = {**a}
+### line 1
+def f(a, /): pass
+### line 1
+x = yield
+### line 1
+await x
+### line 1
+'\N{DIGIT ONE}'
+### line 1
+f'{x=}'
+### line 3
+try:
+ pass
+except* E:
+ pass
+### line 5
+def f():
+    try:
+        g()
+    except E as e:
+        raise X from e

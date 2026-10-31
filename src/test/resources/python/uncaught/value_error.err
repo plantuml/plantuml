@@ -1,0 +1,4 @@
+error: ValueError
+line: 2
+text: invalid literal for int() with base 10: '12x'
+trace: 2 <module>

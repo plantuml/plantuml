@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): a file that is not found is a RuntimeError
+' title RuntimeError
+!try:
+!    puml.read("no_such_file.txt")
+!except RuntimeError as e:
+!    r = "RuntimeError"
+title !{r}
+@enduml

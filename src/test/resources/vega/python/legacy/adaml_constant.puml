@@ -1,0 +1,13 @@
+---
+output: preproc
+---
+@startuml
+' constant() of adaml calls "!__attr_line()", a legacy procedure: it must not
+' be taken for Python (it gave NameError: name '__attr_line' is not defined).
+' The preprocessed text is the one of the legacy preprocessor before Python.
+!include <adaml/adaml>
+begin_package_spec(Config)
+  constant(MAX, Integer, 10)
+  constant(NAME, String, ada)
+end()
+@enduml

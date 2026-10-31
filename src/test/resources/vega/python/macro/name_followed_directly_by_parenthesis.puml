@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title color (P) mycolor(P) #FFCCCC
+!python
+@macro
+def color(n):
+    return "#FFCCCC"
+!endpy
+title color (P) mycolor(P) color(P)
+@enduml

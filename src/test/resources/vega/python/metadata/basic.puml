@@ -1,0 +1,14 @@
+---
+output: preproc, svg
+---
+@startuml
+---
+name: foo
+author: Shakespeare
+version: 3.5
+---
+' EXPECT (preproc):
+' title foo v3.5 by Shakespeare
+title !{puml.metadata["name"]} v!{puml.metadata["version"]} by !{puml.metadata["author"]}
+Alice -> Bob : hello
+@enduml

@@ -97,6 +97,11 @@ public class YamlBuilder {
 		}
 	}
 
+	/** The indentation of the innermost open level, or -1 before the first line. */
+	public int currentIndent() {
+		return indents.isEmpty() ? -1 : indents.get(indents.size() - 1);
+	}
+
 	public Monomorph getResult() {
 		return nodes.get(0);
 	}

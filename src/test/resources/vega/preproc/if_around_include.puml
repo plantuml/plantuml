@@ -1,0 +1,15 @@
+---
+output: preproc, svg
+---
+@startuml
+' An !if of the diagram is still open at the end of the included file: that
+' is not an unclosed !if of the included file.
+' EXPECT (preproc):
+' participant Included
+' participant After
+!$x = 1
+!if $x == 1
+!include if_around_include.iuml
+participant After
+!endif
+@enduml

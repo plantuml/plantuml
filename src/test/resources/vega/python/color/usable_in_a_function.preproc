@@ -1,0 +1,8 @@
+@startuml
+participant "#000000" as P000000 #000000
+note right of P000000 #000000: font white
+participant "#FFFFFF" as PFFFFFF #FFFFFF
+note right of PFFFFFF #FFFFFF: font black
+participant "#6666FF" as P6666FF #6666FF
+note right of P6666FF #6666FF: font white
+@enduml

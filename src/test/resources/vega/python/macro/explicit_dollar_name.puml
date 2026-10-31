@@ -1,0 +1,15 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant P #FFCCCC
+' title Q color(Q)
+!python
+@macro("$color")
+def color(n):
+    return "#FFCCCC"
+!endpy
+participant P $color(P)
+title Q color(Q)
+@enduml

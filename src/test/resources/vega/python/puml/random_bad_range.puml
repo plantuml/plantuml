@@ -1,0 +1,21 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): an empty range is a ValueError (the legacy function fails with a Java exception)
+' title ValueError ValueError ValueError
+!r = []
+!try:
+!    puml.random(0)
+!except ValueError:
+!    r.append("ValueError")
+!try:
+!    puml.random(5, 5)
+!except ValueError:
+!    r.append("ValueError")
+!try:
+!    puml.random(1, 2, 3)
+!except TypeError:
+!    r.append("ValueError")
+title !{' '.join(r)}
+@enduml

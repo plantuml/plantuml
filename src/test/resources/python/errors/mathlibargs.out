@@ -1,0 +1,84 @@
+-------- abs
+abs: 4 calls ok
+abs: 4 calls raised TypeError
+-------- math.acos
+math.acos: 4 calls ok
+math.acos: 4 calls raised TypeError
+-------- math.asin
+math.asin: 4 calls ok
+math.asin: 4 calls raised TypeError
+-------- math.atan
+math.atan: 4 calls ok
+math.atan: 4 calls raised TypeError
+-------- math.ceil
+math.ceil: 4 calls ok
+math.ceil: 4 calls raised TypeError
+-------- math.cos
+math.cos: 4 calls ok
+math.cos: 4 calls raised TypeError
+-------- math.cosh
+math.cosh: 4 calls ok
+math.cosh: 4 calls raised TypeError
+-------- math.degrees
+math.degrees: 4 calls ok
+math.degrees: 4 calls raised TypeError
+-------- math.exp
+math.exp: 4 calls ok
+math.exp: 4 calls raised TypeError
+-------- math.fabs
+math.fabs: 4 calls ok
+math.fabs: 4 calls raised TypeError
+-------- math.floor
+math.floor: 4 calls ok
+math.floor: 4 calls raised TypeError
+-------- math.radians
+math.radians: 4 calls ok
+math.radians: 4 calls raised TypeError
+-------- math.sin
+math.sin: 4 calls ok
+math.sin: 4 calls raised TypeError
+-------- math.sinh
+math.sinh: 4 calls ok
+math.sinh: 4 calls raised TypeError
+-------- math.tan
+math.tan: 4 calls ok
+math.tan: 4 calls raised TypeError
+-------- math.tanh
+math.tanh: 4 calls ok
+math.tanh: 4 calls raised TypeError
+-------- math.log
+math.log: 4 calls ok
+math.log: 4 calls raised TypeError
+-------- math.sqrt
+math.sqrt: 4 calls ok
+math.sqrt: 4 calls raised TypeError
+-------- math.atan2
+math.atan2: 16 calls ok
+math.atan2: 1 calls raised TypeError
+math.atan2: 4 calls raised TypeError
+math.atan2: 16 calls raised TypeError
+math.atan2: 4 calls raised TypeError
+math.atan2: 16 calls raised TypeError
+-------- math.pow
+math.pow: 16 calls ok
+math.pow: 1 calls raised TypeError
+math.pow: 4 calls raised TypeError
+math.pow: 16 calls raised TypeError
+math.pow: 4 calls raised TypeError
+math.pow: 16 calls raised TypeError
+-------- math.fmod
+math.fmod: 16 calls ok
+math.fmod: 1 calls raised TypeError
+math.fmod: 4 calls raised TypeError
+math.fmod: 16 calls raised TypeError
+math.fmod: 4 calls raised TypeError
+math.fmod: 16 calls raised TypeError
+-------- max
+max: 16 calls ok
+max: 1 calls raised TypeError
+max: 12 calls raised TypeError
+-------- min
+min: 16 calls ok
+min: 1 calls raised TypeError
+min: 12 calls raised TypeError
+OK

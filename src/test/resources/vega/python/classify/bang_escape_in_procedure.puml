@@ -1,0 +1,19 @@
+---
+output: preproc, svg
+---
+@startuml
+' The escape also holds in the body of a legacy procedure, and in a diagram
+' without Python.
+' EXPECT (preproc):
+' participant A
+' note over A
+' !important for A
+' end note
+!procedure $warn($name)
+participant $name
+note over $name
+!!important for $name
+end note
+!endprocedure
+$warn(A)
+@enduml

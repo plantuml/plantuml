@@ -1,0 +1,5 @@
+error: KeyError
+line: 2
+text: 'k'
+trace: 5 <module>
+trace: 2 risky

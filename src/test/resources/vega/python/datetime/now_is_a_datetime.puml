@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the clock changes, so only the shape is checked; the time zone is UTC
+' title datetime date True None
+title !{type(datetime.datetime.now()).__name__} !{type(datetime.date.today()).__name__} !{datetime.datetime.now().year > 2000} !{datetime.datetime.now().tzinfo}
+@enduml

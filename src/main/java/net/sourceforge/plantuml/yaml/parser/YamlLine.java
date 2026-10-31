@@ -70,6 +70,9 @@ public class YamlLine {
 			trimmedLine = trimmedLine.substring(2);
 		}
 
+		if (trimmedLine.startsWith("{"))
+			throw new YamlSyntaxException("flow mappings {...} are not supported");
+
 		final int colonIndex = findColonSeparator(trimmedLine);
 		if (colonIndex == -1)
 			if (listItem)
@@ -88,6 +91,8 @@ public class YamlLine {
 			type = YamlLineType.KEY_AND_BLOCK_STYLE;
 		else if (rawValue.equals(">"))
 			type = YamlLineType.KEY_AND_FOLDED_STYLE;
+		else if (rawValue.startsWith("{"))
+			throw new YamlSyntaxException("flow mappings {...} are not supported");
 		else if (rawValue.startsWith("[") && rawValue.endsWith("]"))
 			return new YamlLine(YamlLineType.KEY_AND_FLOW_SEQUENCE, count, unquote(rawKey), null,
 					toList(rawValue.substring(1, rawValue.length() - 1)), listItem);
@@ -103,7 +108,9 @@ public class YamlLine {
 		for (int i = 0; i < line.length(); i++) {
 			final char c = line.charAt(i);
 			if (inQuote != '\0') {
-				if (c == inQuote)
+				if (c == '\\' && inQuote == '"')
+					i++;
+				else if (c == inQuote)
 					inQuote = '\0';
 			} else if (c == '"' || c == '\'') {
 				inQuote = c;
@@ -185,16 +192,45 @@ public class YamlLine {
 		this.listItem = listItem;
 	}
 
+	/**
+	 * Removes the quotes of a quoted scalar. In a single-quoted scalar, '' is a
+	 * quote; in a double-quoted one, a backslash escapes (\" \\ \n \t \/).
+	 */
 	private static String unquote(String str) {
 		if (str == null || str.length() < 2)
 			return str;
 
 		final char first = str.charAt(0);
 		final char last = str.charAt(str.length() - 1);
-		if ((first == '"' && last == '"') || (first == '\'' && last == '\''))
-			return str.substring(1, str.length() - 1);
+		if (first == '\'' && last == '\'')
+			return str.substring(1, str.length() - 1).replace("''", "'");
+		if (first == '"' && last == '"')
+			return unescapeDoubleQuoted(str.substring(1, str.length() - 1));
 
 		return str;
+	}
+
+	private static String unescapeDoubleQuoted(String s) {
+		if (s.indexOf('\\') == -1)
+			return s;
+		final StringBuilder result = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+			final char c = s.charAt(i);
+			if (c != '\\' || i + 1 == s.length()) {
+				result.append(c);
+				continue;
+			}
+			final char next = s.charAt(++i);
+			if (next == 'n')
+				result.append('\n');
+			else if (next == 't')
+				result.append('\t');
+			else if (next == '"' || next == '\\' || next == '/')
+				result.append(next);
+			else
+				result.append(c).append(next);
+		}
+		return result.toString();
 	}
 
 	public int getIndent() {

@@ -1,0 +1,15 @@
+---
+output: preproc, svg
+---
+@startuml
+---
+owner:
+  first: Will
+  last: Shakespear
+tags: [draft, v2]
+---
+' EXPECT (preproc):
+' title Will Shakespear draft/v2
+title !{puml.metadata["owner"]["first"]} !{puml.metadata["owner"]["last"]} !{"/".join(puml.metadata["tags"])}
+Alice -> Bob : hello
+@enduml

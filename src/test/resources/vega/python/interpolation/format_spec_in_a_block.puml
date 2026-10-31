@@ -1,0 +1,14 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant "P 1.50" as P0
+' participant "P 2.25" as P1
+' note over P1 : 'last'
+!for i, x in enumerate([1.5, 2.25]):
+    participant "P !{x:.2f}" as P!{i}
+!last = "last"
+!if True:
+    note over P1 : !{last!r}
+@enduml

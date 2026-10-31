@@ -107,6 +107,8 @@ public class Monomorph {
 		} else if (this.type != MonomorphType.MAP) {
 			throw new IllegalStateException("Monomorph is not of type MAP.");
 		}
+		if (this.map.containsKey(key))
+			throw new YamlSyntaxException("duplicate key '" + key + "'");
 		this.map.put(key, value);
 	}
 
