@@ -1,0 +1,17 @@
+a q
+...
+...,a q
+a,... q
+a q
+... r
+...,a r q
+a,... q r
+a q
+... r s
+...,a r s q
+a,... q r s
+end
+a-b
+a b!
+
+None True False 1 2.5 s [1, 'a'] (1,) {'k': None}

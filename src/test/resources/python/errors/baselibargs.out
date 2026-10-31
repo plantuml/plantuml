@@ -1,0 +1,47 @@
+-------- assert
+assert: 32 calls ok
+assert: 4 calls raised AssertionError
+-------- error
+error: 8 calls raised ValueError
+-------- enumerate (Lua ipairs)
+enumerate: 2 calls ok
+enumerate: 4 calls raised TypeError
+enumerate: 1 calls raised TypeError
+-------- dict.items (Lua pairs)
+dict.items: 2 calls ok
+dict.items: 4 calls raised AttributeError
+-------- pcall
+pcall: 56 calls ok
+pcall: 1 calls raised TypeError
+-------- print
+None
+True
+1
+1.5
+abc
+print: 5 calls ok
+-------- rawequal
+rawequal: 64 calls ok
+rawequal: 1 calls raised TypeError
+rawequal: 8 calls raised TypeError
+-------- rawget
+rawget: 1 calls ok
+rawget: 1 calls raised KeyError
+rawget: 4 calls raised TypeError
+rawget: 1 calls raised TypeError
+-------- rawset
+rawset: 16 calls ok
+rawset: 16 calls raised TypeError
+rawset: 8 calls raised TypeError
+rawset: 1 calls raised TypeError
+-------- int (Lua tonumber)
+int: 4 calls ok
+int-value: 1 calls raised ValueError
+int-type: 3 calls raised TypeError
+int-arity: 1 calls raised TypeError
+-------- str (Lua tostring)
+str: 8 calls ok
+-------- type
+type: 8 calls ok
+type: 1 calls raised TypeError
+OK

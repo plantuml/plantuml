@@ -1,0 +1,401 @@
+-------- basic vm tests --------
+-- boolean tests
+True
+False
+False
+True
+True
+True
+False
+True
+False
+False
+False
+True
+False
+True
+1
+0
+None
+1
+0
+None
+booleantests result: (True, None)
+------------- varargs
+---- function p()
+--p():
+a None
+...
+...,a None
+a,... None
+ -> (True, None)
+--p("q"):
+a q
+...
+...,a q
+a,... q
+ -> (True, None)
+--p("q","r"):
+a q
+... r
+...,a r q
+a,... q r
+ -> (True, None)
+--p("q","r","s"):
+a q
+... r s
+...,a r s q
+a,... q r s
+ -> (True, None)
+---- function q()
+--q():
+a,arg[1],arg[2],arg[3] None 0
+ -> (True, None)
+--q("q"):
+a,arg[1],arg[2],arg[3] q 0
+ -> (True, None)
+--q("q","r"):
+a,arg[1],arg[2],arg[3] q 1 r
+ -> (True, None)
+--q("q","r","s"):
+a,arg[1],arg[2],arg[3] q 2 r s
+ -> (True, None)
+---- function r()
+--r():
+a,count None 0
+a None
+...
+...,a None
+a,... None
+ -> (True, None)
+--r("q"):
+a,count q 0
+a q
+...
+...,a q
+a,... q
+ -> (True, None)
+--r("q","r"):
+a,count q 1
+a q
+... r
+...,a r q
+a,... q r
+ -> (True, None)
+--r("q","r","s"):
+a,count q 2
+a q
+... r s
+...,a r s q
+a,... q r s
+ -> (True, None)
+---- function s()
+--s():
+a,arg[1],arg[2],arg[3] None 1 2 3
+a None
+ -> (True, None)
+--s("q"):
+a,arg[1],arg[2],arg[3] q 1 2 3
+a q
+ -> (True, None)
+--s("q","r"):
+ -> (False, 'TypeError')
+--s("q","r","s"):
+ -> (False, 'TypeError')
+---- function t()
+--t():
+a,arg[1],arg[2],arg[3] None 1 2 3
+a None
+...
+...,a None
+a,... None
+ -> (True, None)
+--t("q"):
+a,arg[1],arg[2],arg[3] q 1 2 3
+a q
+...
+...,a q
+a,... q
+ -> (True, None)
+--t("q","r"):
+a,arg[1],arg[2],arg[3] q 1 2 3
+a q
+... r
+...,a r q
+a,... q r
+ -> (True, None)
+--t("q","r","s"):
+a,arg[1],arg[2],arg[3] q 1 2 3
+a q
+... r s
+...,a r s q
+a,... q r s
+ -> (True, None)
+---- function u()
+--u():
+arg None
+ -> (True, None)
+--u("q"):
+arg q
+ -> (True, None)
+--u("q","r"):
+ -> (False, 'TypeError')
+--u("q","r","s"):
+ -> (False, 'TypeError')
+---- function v()
+--v():
+arg None
+...
+arg,... None
+ -> (True, None)
+--v("q"):
+arg q
+...
+arg,... q
+ -> (True, None)
+--v("q","r"):
+arg q
+... r
+arg,... q r
+ -> (True, None)
+--v("q","r","s"):
+arg q
+... r s
+arg,... q r s
+ -> (True, None)
+varargstest result: (True, None)
+---------- dict tests
+get 1 None -1
+keys ['aa', 'bb', 'cc']
+keys ['bb', 'cc'] 2
+in False True
+dicttests result: (True, None)
+---------- lazy values
+t.a 1234
+t.b 1235
+t.a 1234
+t.b 1235
+t.c 1236
+t.a 1234
+t.b 1235
+t.c 1236
+t.d 1237
+lazytests result: (True, None)
+------------ huge tables
+#t= 100 t[1,50,51,59] 1 1 1 1
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+#t2= 70 t2[1,50,51,59] 0 55 60 623
+0,3,4,7,9,8,12,15,23,5,10,13,14,17,19,18,112,115,123,15,20,33,24,27,29,28,212,215,223,25,40,43,44,47,49,48,412,415,423,45,50,53,54,57,59,58,512,515,523,55,60,63,64,67,69,68,612,615,623,65,70,73,74,77,79,78,72,715,723,75
+t[2000] a
+t[2001] b
+t[2002] c
+t[2003] d
+t[2004] e
+t[2005] f
+t[2006] g
+t[2007] h
+t[2008] i
+t[2009] j
+t[3000] a
+t[3001] b
+t[3002] c
+t[3003] d
+t[3004] e
+t[3005] f
+t[3006] g
+t[3007] h
+t[3008] i
+t[3009] j
+t[4000] a
+t[4001] b
+t[4002] c
+t[4003] d
+t[4004] e
+t[4005] f
+t[4006] g
+t[4007] h
+t[4008] i
+t[4009] j
+t[5000] a
+t[5001] b
+t[5002] c
+t[5003] d
+t[5004] e
+t[5005] f
+t[5006] g
+t[5007] h
+t[5008] i
+t[5009] j
+t[6000] a
+t[6001] b
+t[6002] c
+t[6003] d
+t[6004] e
+t[6005] f
+t[6006] g
+t[6007] h
+t[6008] i
+t[6009] j
+t[7000] a
+t[7001] b
+t[7002] c
+t[7003] d
+t[7004] e
+t[7005] f
+t[7006] g
+t[7007] h
+t[7008] i
+t[7009] j
+t[8000] a
+t[8001] b
+t[8002] c
+t[8003] d
+t[8004] e
+t[8005] f
+t[8006] g
+t[8007] h
+t[8008] i
+t[8009] j
+hugetables result: (True, None)
+--------- many locals
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+a a
+b b
+c c
+d d
+e e
+f f
+g g
+h h
+i i
+j j
+manylocals result: (True, None)
