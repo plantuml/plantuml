@@ -1,0 +1,45 @@
+-------- string.byte (ord)
+ord: 2 calls ok
+ord-length: 2 calls raised TypeError
+ord-type: 3 calls raised TypeError
+-------- string.char (chr)
+chr: 5 calls ok
+chr-range: 1 calls raised ValueError
+chr-type: 3 calls raised TypeError
+-------- string.find
+find: 16 calls ok
+find-notstring: 6 calls raised AttributeError
+find-notsub: 6 calls raised TypeError
+find-notstart: 8 calls raised TypeError
+-------- string.format (%)
+format %s: 8 calls ok
+format %d: 9 calls ok
+format %d-notnumber: 6 calls raised TypeError
+format bad option: 1 calls raised ValueError
+-------- string.gsub (replace)
+replace: 8 calls ok
+replace-notstring: 3 calls raised AttributeError
+replace-notold: 4 calls raised TypeError
+replace-notnew: 4 calls raised TypeError
+-------- string.len
+len: 2 calls ok
+len: 3 calls raised TypeError
+-------- string.lower
+lower: 2 calls ok
+lower: 3 calls raised AttributeError
+-------- string.upper
+upper: 2 calls ok
+upper: 3 calls raised AttributeError
+-------- string.rep
+rep: 6 calls ok
+rep-notstring: 2 calls raised TypeError
+rep-notnumber: 6 calls raised TypeError
+-------- string.reverse
+reverse: 2 calls ok
+reverse: 2 calls raised TypeError
+-------- string.sub (slice)
+sub: 18 calls ok
+sub-notstring: 2 calls raised TypeError
+sub-notindex: 4 calls raised TypeError
+sub-arity: 2 calls raised TypeError
+OK
