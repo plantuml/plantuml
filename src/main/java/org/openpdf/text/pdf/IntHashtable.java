@@ -125,7 +125,6 @@ public class IntHashtable implements Cloneable {
      * @return <code>true</code> if and only if the specified int is a
      *    key in this hashtable, as determined by the <code>equals</code>
      *    method; <code>false</code> otherwise.
-     * @see #contains(int)
      */
     public boolean containsKey(int key) {
         Entry[] tab = table;

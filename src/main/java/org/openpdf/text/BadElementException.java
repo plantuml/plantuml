@@ -53,8 +53,6 @@ package org.openpdf.text;
  * Signals an attempt to create an <CODE>Element</CODE> that hasn't got the right form.
  *
  * @see DocumentException
- * @see Cell
- * @see Table
  */
 
 public class BadElementException extends DocumentException {

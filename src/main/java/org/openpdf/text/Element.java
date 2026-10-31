@@ -55,22 +55,9 @@ package org.openpdf.text;
  * <p>
  * Remark: I looked at the interface javax.swing.text.Element, but I decided to write my own text-classes.
  *
- * @see Anchor
- * @see Cell
- * @see Chapter
- * @see Chunk
- * @see Header
  * @see Image
- * @see Jpeg
- * @see List
- * @see ListItem
  * @see Meta
- * @see Paragraph
- * @see Phrase
  * @see Rectangle
- * @see Row
- * @see Section
- * @see Table
  */
 
 public interface Element {

@@ -54,13 +54,10 @@ import org.openpdf.text.error_messages.MessageLocalization;
 /**
  * A <CODE>RectangleReadOnly</CODE> is the representation of a geometric figure. It's the same as a
  * <CODE>Rectangle</CODE> but immutable. Rectangles support constant width borders using
- * {@link #setBorderWidth(float)}and {@link #setBorder(int)}. They also support borders that vary in width/color on each
- * side using methods like {@link #setBorderWidthLeft(float)}or {@link #setBorderColorLeft(java.awt.Color)}.
+ * <CODE>setBorderWidth(float)</CODE> and <CODE>setBorder(int)</CODE>. They also support borders that vary in width/color on each
+ * side using methods like <CODE>setBorderWidthLeft(float)</CODE> or <CODE>setBorderColorLeft(java.awt.Color)</CODE>.
  *
  * @see Element
- * @see Table
- * @see Cell
- * @see HeaderFooter
  * @since 2.1.2
  */
 

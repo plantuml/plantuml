@@ -724,9 +724,6 @@ public class PdfWriter extends DocWriter implements
 
 //  [F3] adding fonts
 
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfAnnotations#addAnnotation(org.openpdf.text.pdf.PdfAnnotation)
-     */
     public void addAnnotation(PdfAnnotation annot) {
         pdf.addAnnotation(annot);
     }

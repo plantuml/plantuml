@@ -59,7 +59,6 @@ package org.openpdf.text;
  * and Creationdate information.
  *
  * @see Element
- * @see Header
  */
 
 public class Meta implements Element {

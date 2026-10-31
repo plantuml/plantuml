@@ -53,14 +53,11 @@ import java.awt.Color;
 /**
  * A <CODE>Rectangle</CODE> is the representation of a geometric figure.
  * <p>
- * Rectangles support constant width borders using {@link #setBorderWidth(float)}and {@link #setBorder(int)}. They also
- * support borders that vary in width/color on each side using methods like {@link #setBorderWidthLeft(float)}or
- * {@link #setBorderColorLeft(java.awt.Color)}.
+ * Rectangles support constant width borders using <CODE>setBorderWidth(float)</CODE> and <CODE>setBorder(int)</CODE>. They also
+ * support borders that vary in width/color on each side using methods like <CODE>setBorderWidthLeft(float)</CODE> or
+ * <CODE>setBorderColorLeft(java.awt.Color)</CODE>.
  *
  * @see Element
- * @see Table
- * @see Cell
- * @see HeaderFooter
  */
 public class Rectangle implements Element {
 
