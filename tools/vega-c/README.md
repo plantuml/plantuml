@@ -39,3 +39,4 @@ JVM tests:
 - `output/`: the files written by `plantuml.exe` (svg, png...), in the same folders as the tests
 - `summary.txt` and `report.json`
 - `diffs/`: with `--diff`, one `.diff` per failed test
+- `pdf-diffs.zip`: when some PDF differ from their reference, the expected and the actual PDF, their diff and the source of each of these tests, to hand over to whoever investigates
