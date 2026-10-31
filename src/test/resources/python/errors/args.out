@@ -1,0 +1,6 @@
+-------- harness
+len: 3 calls ok
+len: 3 calls raised TypeError
+type: 8 calls ok
+type: 1 calls raised TypeError
+OK

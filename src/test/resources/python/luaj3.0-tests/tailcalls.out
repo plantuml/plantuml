@@ -1,0 +1,210 @@
+(True, (True, None))
+b
+(True, (True, None))
+(True, (True, 'c'))
+--f, n, unpacked f1 0
+(True, (0, 0, 0))
+--f, n, unpacked f1 0 1
+(True, (1, 1, 1))
+--f, n, unpacked f1 0 1 2
+(True, (1, 3, 3))
+--f, n, unpacked f1 0 1 2 3
+(True, (1, 3, 6))
+--f, n, unpacked f1 0 1 2 3 4
+(False, 'TypeError')
+--f, n, unpacked f1 1
+(True, (0, 0, 0))
+--f, n, unpacked f1 1 1
+(True, (1, 2, 3))
+--f, n, unpacked f1 1 1 2
+(True, (1, 4, 7))
+--f, n, unpacked f1 1 1 2 3
+(True, (1, 4, 10))
+--f, n, unpacked f1 1 1 2 3 4
+(False, 'TypeError')
+--f, n, unpacked f1 2
+(True, (0, 0, 0))
+--f, n, unpacked f1 2 1
+(True, (1, 3, 6))
+--f, n, unpacked f1 2 1 2
+(True, (1, 5, 12))
+--f, n, unpacked f1 2 1 2 3
+(True, (1, 5, 15))
+--f, n, unpacked f1 2 1 2 3 4
+(False, 'TypeError')
+--f, n, unpacked f1 3
+(True, (0, 0, 0))
+--f, n, unpacked f1 3 1
+(True, (1, 4, 10))
+--f, n, unpacked f1 3 1 2
+(True, (1, 6, 18))
+--f, n, unpacked f1 3 1 2 3
+(True, (1, 6, 21))
+--f, n, unpacked f1 3 1 2 3 4
+(False, 'TypeError')
+--f, n, unpacked f2 0
+ --f2, n<=0, returning sum(...)
+(True, 0)
+--f, n, unpacked f2 0 1
+ --f2, n<=0, returning sum(...) 1
+(True, 1)
+--f, n, unpacked f2 0 1 2
+ --f2, n<=0, returning sum(...) 1 2
+(True, 3)
+--f, n, unpacked f2 0 1 2 3
+ --f2, n<=0, returning sum(...) 1 2 3
+(True, 6)
+--f, n, unpacked f2 0 1 2 3 4
+ --f2, n<=0, returning sum(...) 1 2 3 4
+(True, 10)
+--f, n, unpacked f2 1
+ --f2, n>0, returning f2(n-1,n,...) 0 1
+ --f2, n<=0, returning sum(...) 1
+(True, 1)
+--f, n, unpacked f2 1 1
+ --f2, n>0, returning f2(n-1,n,...) 0 1 1
+ --f2, n<=0, returning sum(...) 1 1
+(True, 2)
+--f, n, unpacked f2 1 1 2
+ --f2, n>0, returning f2(n-1,n,...) 0 1 1 2
+ --f2, n<=0, returning sum(...) 1 1 2
+(True, 4)
+--f, n, unpacked f2 1 1 2 3
+ --f2, n>0, returning f2(n-1,n,...) 0 1 1 2 3
+ --f2, n<=0, returning sum(...) 1 1 2 3
+(True, 7)
+--f, n, unpacked f2 1 1 2 3 4
+ --f2, n>0, returning f2(n-1,n,...) 0 1 1 2 3 4
+ --f2, n<=0, returning sum(...) 1 1 2 3 4
+(True, 11)
+--f, n, unpacked f2 2
+ --f2, n>0, returning f2(n-1,n,...) 1 2
+ --f2, n>0, returning f2(n-1,n,...) 0 1 2
+ --f2, n<=0, returning sum(...) 1 2
+(True, 3)
+--f, n, unpacked f2 2 1
+ --f2, n>0, returning f2(n-1,n,...) 1 2 1
+ --f2, n>0, returning f2(n-1,n,...) 0 1 2 1
+ --f2, n<=0, returning sum(...) 1 2 1
+(True, 4)
+--f, n, unpacked f2 2 1 2
+ --f2, n>0, returning f2(n-1,n,...) 1 2 1 2
+ --f2, n>0, returning f2(n-1,n,...) 0 1 2 1 2
+ --f2, n<=0, returning sum(...) 1 2 1 2
+(True, 6)
+--f, n, unpacked f2 2 1 2 3
+ --f2, n>0, returning f2(n-1,n,...) 1 2 1 2 3
+ --f2, n>0, returning f2(n-1,n,...) 0 1 2 1 2 3
+ --f2, n<=0, returning sum(...) 1 2 1 2 3
+(True, 9)
+--f, n, unpacked f2 2 1 2 3 4
+ --f2, n>0, returning f2(n-1,n,...) 1 2 1 2 3 4
+ --f2, n>0, returning f2(n-1,n,...) 0 1 2 1 2 3 4
+ --f2, n<=0, returning sum(...) 1 2 1 2 3 4
+(True, 13)
+--f, n, unpacked f2 3
+ --f2, n>0, returning f2(n-1,n,...) 2 3
+ --f2, n>0, returning f2(n-1,n,...) 1 2 3
+ --f2, n>0, returning f2(n-1,n,...) 0 1 2 3
+ --f2, n<=0, returning sum(...) 1 2 3
+(True, 6)
+--f, n, unpacked f2 3 1
+ --f2, n>0, returning f2(n-1,n,...) 2 3 1
+ --f2, n>0, returning f2(n-1,n,...) 1 2 3 1
+ --f2, n>0, returning f2(n-1,n,...) 0 1 2 3 1
+ --f2, n<=0, returning sum(...) 1 2 3 1
+(True, 7)
+--f, n, unpacked f2 3 1 2
+ --f2, n>0, returning f2(n-1,n,...) 2 3 1 2
+ --f2, n>0, returning f2(n-1,n,...) 1 2 3 1 2
+ --f2, n>0, returning f2(n-1,n,...) 0 1 2 3 1 2
+ --f2, n<=0, returning sum(...) 1 2 3 1 2
+(True, 9)
+--f, n, unpacked f2 3 1 2 3
+ --f2, n>0, returning f2(n-1,n,...) 2 3 1 2 3
+ --f2, n>0, returning f2(n-1,n,...) 1 2 3 1 2 3
+ --f2, n>0, returning f2(n-1,n,...) 0 1 2 3 1 2 3
+ --f2, n<=0, returning sum(...) 1 2 3 1 2 3
+(True, 12)
+--f, n, unpacked f2 3 1 2 3 4
+ --f2, n>0, returning f2(n-1,n,...) 2 3 1 2 3 4
+ --f2, n>0, returning f2(n-1,n,...) 1 2 3 1 2 3 4
+ --f2, n>0, returning f2(n-1,n,...) 0 1 2 3 1 2 3 4
+ --f2, n<=0, returning sum(...) 1 2 3 1 2 3 4
+(True, 16)
+--f, n, unpacked f3 0
+(True, 0)
+--f, n, unpacked f3 0 1
+(True, 1)
+--f, n, unpacked f3 0 1 2
+(True, 3)
+--f, n, unpacked f3 0 1 2 3
+(True, 6)
+--f, n, unpacked f3 0 1 2 3 4
+(True, 10)
+--f, n, unpacked f3 1
+    f3,n-1,n,... 0 1
+(True, (True, 1))
+--f, n, unpacked f3 1 1
+    f3,n-1,n,... 0 1 1
+(True, (True, 2))
+--f, n, unpacked f3 1 1 2
+    f3,n-1,n,... 0 1 1 2
+(True, (True, 4))
+--f, n, unpacked f3 1 1 2 3
+    f3,n-1,n,... 0 1 1 2 3
+(True, (True, 7))
+--f, n, unpacked f3 1 1 2 3 4
+    f3,n-1,n,... 0 1 1 2 3 4
+(True, (True, 11))
+--f, n, unpacked f3 2
+    f3,n-1,n,... 1 2
+    f3,n-1,n,... 0 1 2
+(True, (True, (True, 3)))
+--f, n, unpacked f3 2 1
+    f3,n-1,n,... 1 2 1
+    f3,n-1,n,... 0 1 2 1
+(True, (True, (True, 4)))
+--f, n, unpacked f3 2 1 2
+    f3,n-1,n,... 1 2 1 2
+    f3,n-1,n,... 0 1 2 1 2
+(True, (True, (True, 6)))
+--f, n, unpacked f3 2 1 2 3
+    f3,n-1,n,... 1 2 1 2 3
+    f3,n-1,n,... 0 1 2 1 2 3
+(True, (True, (True, 9)))
+--f, n, unpacked f3 2 1 2 3 4
+    f3,n-1,n,... 1 2 1 2 3 4
+    f3,n-1,n,... 0 1 2 1 2 3 4
+(True, (True, (True, 13)))
+--f, n, unpacked f3 3
+    f3,n-1,n,... 2 3
+    f3,n-1,n,... 1 2 3
+    f3,n-1,n,... 0 1 2 3
+(True, (True, (True, (True, 6))))
+--f, n, unpacked f3 3 1
+    f3,n-1,n,... 2 3 1
+    f3,n-1,n,... 1 2 3 1
+    f3,n-1,n,... 0 1 2 3 1
+(True, (True, (True, (True, 7))))
+--f, n, unpacked f3 3 1 2
+    f3,n-1,n,... 2 3 1 2
+    f3,n-1,n,... 1 2 3 1 2
+    f3,n-1,n,... 0 1 2 3 1 2
+(True, (True, (True, (True, 9))))
+--f, n, unpacked f3 3 1 2 3
+    f3,n-1,n,... 2 3 1 2 3
+    f3,n-1,n,... 1 2 3 1 2 3
+    f3,n-1,n,... 0 1 2 3 1 2 3
+(True, (True, (True, (True, 12))))
+--f, n, unpacked f3 3 1 2 3 4
+    f3,n-1,n,... 2 3 1 2 3 4
+    f3,n-1,n,... 1 2 3 1 2 3 4
+    f3,n-1,n,... 0 1 2 3 1 2 3 4
+(True, (True, (True, (True, 16))))
+120
+120
+1234
+(True, 832040)
+(True, 222232244629420445529739893461909967206666939096499764990979600)
+(1, (1, (2, (3, (5, (8, (13, (21, (34, None)))))))))

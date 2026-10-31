@@ -1,0 +1,32 @@
+-------- table.concat (join)
+join: 3 calls ok
+join-notsep: 3 calls raised AttributeError
+join-notitems: 3 calls raised TypeError
+join-nonstring-items: 1 calls raised TypeError
+-------- table.insert (append)
+append: 8 calls ok
+append-notlist: 24 calls raised AttributeError
+-------- table.insert (insert)
+insert: 32 calls ok
+insert-notindex: 24 calls raised TypeError
+-------- table.remove (pop)
+pop-at: 3 calls ok
+pop-notindex: 2 calls raised TypeError
+pop-out-of-range: 1 calls raised IndexError
+pop-notlist: 3 calls raised AttributeError
+-------- table.sort
+sort: 2 calls ok
+sort-mixed: 1 calls raised TypeError
+sort-notlist: 3 calls raised AttributeError
+-------- table get - t[k]
+table get: 1 calls ok
+table get-missing: 1 calls raised KeyError
+table get-unhashable: 1 calls raised TypeError
+-------- table set - t[k]=v
+table set: 16 calls ok
+table set-unhashable: 8 calls raised TypeError
+-------- table.unpack (slice)
+unpack: 4 calls ok
+unpack-notsequence: 2 calls raised TypeError
+unpack-notindex: 2 calls raised TypeError
+OK

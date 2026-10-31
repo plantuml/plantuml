@@ -1,0 +1,9 @@
+testing (parts of) table library
+testing unpack
+testing pack
+testing sort
+Sorting 30000 elements
+Re-sorting 30000 elements
+Inverted sort of 30000 elements
+Sorting 30000 equal elements
+OK
