@@ -1,0 +1,139 @@
+platform python
+---------- miscellaneous tests ----------
+0.0
+-1.0
+3.0
+5 6
+-5
+-25 -2.5 1
+---------- constants ----------
+3.141592653589793 2.718281828459045 6.283185307179586
+inf -inf
+True True
+---------- unary operators ----------
+2.5 False
+2 False
+0 True
+-2 False
+-2.5 False
+---------- binary operators ----------
+2 2 0 zero division zero modulo
+-2.5 -2.5 -0.0 zero division zero modulo
+3 1 2 2.0 0
+7 3 10 2.5 1
+-3 -7 -10 -2.5 1
+18 14 32 8.0 0
+-18 -14 32 8.0 0
+0.5 0.5 0.0 zero division zero modulo
+1.5 -0.5 0.5 0.5 0.5
+2.5 -1.5 1.0 0.25 0.5
+-0.5 1.5 -0.5 -0.5 -0.5
+2.25 2.25 0.0 zero division zero modulo
+4.25 0.25 4.5 1.125 0.25
+-2 -2 0 zero division zero modulo
+6 0 9 1.0 0
+---------- relational operators ----------
+False True True False True False
+False True False True False True
+False True True False True False
+False True True False True False
+False True False True False True
+False True True False True False
+False True False True False True
+False True True False True False
+False True False True False True
+False True False True False True
+False True True False True False
+False True True False True False
+False True True False True False
+False True False True False True
+True False False False True True
+---------- one-argument math functions ----------
+abs 2.5 floor -3 ceil -2
+cos -0.8011436155469337 exp 0.0820849986238988 sin -0.5984721441039565
+degrees -143.2394487827058 radians -0.04363323129985824
+fabs 2.5 sqrt 1.5811388300841898
+abs 2 floor -2 ceil -2
+cos -0.4161468365471424 exp 0.1353352832366127 sin -0.9092974268256817
+degrees -114.59155902616465 radians -0.03490658503988659
+fabs 2.0 sqrt 1.4142135623730951
+abs 0 floor 0 ceil 0
+cos 1.0 exp 1.0 sin 0.0
+degrees 0.0 radians 0.0
+fabs 0.0 sqrt 0.0
+abs 2 floor 2 ceil 2
+cos -0.4161468365471424 exp 7.38905609893065 sin 0.9092974268256817
+degrees 114.59155902616465 radians 0.03490658503988659
+fabs 2.0 sqrt 1.4142135623730951
+abs 2.5 floor 2 ceil 3
+cos -0.8011436155469337 exp 12.182493960703473 sin 0.5984721441039565
+degrees 143.2394487827058 radians 0.04363323129985824
+fabs 2.5 sqrt 1.5811388300841898
+acos 1.4454684956268313 asin 0.1253278311680654 atan 0.4636476090008061
+cosh 1.1276259652063807 sinh 0.5210953054937474 tanh 0.46211715726000974
+log -0.6931471805599453 log10 -0.3010299956639812 log2 -1.0
+acos 1.318116071652818 asin 0.25268025514207865 atan 0.7853981633974483
+cosh 1.5430806348152437 sinh 1.1752011936438014 tanh 0.7615941559557649
+log 0.0 log10 0.0 log2 0.0
+acos 1.0471975511965979 asin 0.5235987755982989 atan 1.1071487177940904
+cosh 3.7621956910836314 sinh 3.626860407847019 tanh 0.9640275800758169
+log 0.6931471805599453 log10 0.3010299956639812 log2 1.0
+---------- two-argument math functions ----------
+fmod zero pow 1.0
+atan2 1.5707963267948966 hypot 2.0
+copysign 2.0
+fmod zero pow 1.0
+atan2 -1.5707963267948966 hypot 2.5
+copysign 2.5
+fmod 0.0 pow 2.0
+atan2 1.1071487177940904 hypot 2.23606797749979
+copysign 2.0
+fmod 1.0 pow 25.0
+atan2 1.1902899496825317 hypot 5.385164807134504
+copysign 5.0
+fmod -1.0 pow 25.0
+atan2 -1.1902899496825317 hypot 5.385164807134504
+copysign 5.0
+fmod 0.0 pow 256.0
+atan2 1.446441332248135 hypot 16.1245154965971
+copysign 16.0
+fmod -0.0 pow 0.00390625
+atan2 -1.695151321341658 hypot 16.1245154965971
+copysign -16.0
+fmod zero pow 1.0
+atan2 1.5707963267948966 hypot 0.5
+copysign 0.5
+fmod 0.5 pow 0.5
+atan2 0.4636476090008061 hypot 1.118033988749895
+copysign 0.5
+fmod 0.5 pow 0.25
+atan2 0.24497866312686414 hypot 2.0615528128088303
+copysign 0.5
+fmod 0.5 pow 2.0
+atan2 2.677945044588987 hypot 1.118033988749895
+copysign -0.5
+fmod zero pow 1.0
+atan2 1.5707963267948966 hypot 2.25
+copysign 2.25
+fmod 0.25 pow 5.0625
+atan2 0.844153986113171 hypot 3.010398644698074
+copysign 2.25
+fmod zero pow 1.0
+atan2 -1.5707963267948966 hypot 2.0
+copysign 2.0
+fmod 0.0 pow 27.0
+atan2 0.7853981633974483 hypot 4.242640687119285
+copysign 3.0
+---------- variadic math functions ----------
+5.5 -4.5
+333 -333
+444 -222
+---------- integer helpers ----------
+120 6
+0.6
+---------- Tests involving -0 and NaN ----------
+0 == -0 True
+t[-0] == t[0] True
+mz == z True
+a[z] == 1 and a[mz] == 1 True
+nan == nan False True

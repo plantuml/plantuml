@@ -1,0 +1,68 @@
+-------- unary minus
+neg: 4 calls ok
+neg: 4 calls raised TypeError
+-------- len
+len: 3 calls ok
+len: 3 calls raised TypeError
+-------- not
+not: 8 calls ok
+-------- call
+call: 4 calls ok
+call-notfunction: 4 calls raised TypeError
+-------- +
+add: 16 calls ok
+add-left: 16 calls raised TypeError
+add-right: 16 calls raised TypeError
+-------- -
+sub: 16 calls ok
+sub-left: 16 calls raised TypeError
+sub-right: 16 calls raised TypeError
+-------- *
+mul: 16 calls ok
+mul-left: 8 calls raised TypeError
+mul-right: 8 calls raised TypeError
+-------- /
+div: 16 calls ok
+div-left: 16 calls raised TypeError
+div-right: 16 calls raised TypeError
+-------- %
+mod: 16 calls ok
+mod-left: 8 calls raised TypeError
+mod-right: 8 calls raised TypeError
+-------- **
+power: 16 calls ok
+power-left: 16 calls raised TypeError
+power-right: 16 calls raised TypeError
+-------- ==, !=
+eq: 64 calls ok
+neq: 64 calls ok
+-------- <=, >=, <, >
+le: 16 calls ok
+ge: 16 calls ok
+lt: 16 calls ok
+gt: 16 calls ok
+le-left: 16 calls raised TypeError
+ge-right: 16 calls raised TypeError
+lt-left: 16 calls raised TypeError
+gt-right: 16 calls raised TypeError
+-------- []
+index-dict: 1 calls ok
+index-list: 2 calls ok
+index-none: 2 calls raised TypeError
+index-list-key: 1 calls raised TypeError
+index-missing: 1 calls raised KeyError
+-------- .
+attr: 1 calls ok
+attr: 1 calls raised AttributeError
+-------- and, or
+and: 64 calls ok
+or: 64 calls ok
+-------- for x = a, b, c (range)
+for: 27 calls ok
+for-type: 3 calls raised TypeError
+for-zero-step: 1 calls raised ValueError
+-------- ..
+concat: 4 calls ok
+concat-right: 6 calls raised TypeError
+concat-left: 6 calls raised TypeError
+OK
