@@ -460,10 +460,12 @@ def check_formats(puml, source, supported, exe, timeout, workdir, relative, resu
                 if actual != expected:
                     problems.append("[%s] output differs from %s" % (fmt, reference.name))
                     diffs.append(unified_diff(expected, actual, reference.name))
+                    if not actual_bytes:
+                        problems[-1] += " (empty file) " + stderr[:200]
                     if fmt == "pdf":  # kept for the zip of the PDF that differ (see write_pdf_zip)
                         result.setdefault("pdf_failures", []).append(
                             {"name": reference.name, "expected": expected_bytes, "actual": actual_bytes,
-                             "diff": diffs[-1]})
+                             "diff": diffs[-1], "stderr": stderr})
         finally:
             keep_files(outdir, relative)
             shutil.rmtree(outdir, ignore_errors=True)
@@ -484,6 +486,17 @@ def check_formats(puml, source, supported, exe, timeout, workdir, relative, resu
 # Zip of the PDF that differ
 # ---------------------------------------------------------------------------
 
+def count_generated_files(output_dir):
+    """Number of files written by the executable, by extension (.pdf, .svg, .png...)."""
+    counts = {}
+    if output_dir.is_dir():
+        for produced in output_dir.rglob("*"):
+            if produced.is_file():
+                extension = produced.suffix.lower() or "(none)"
+                counts[extension] = counts.get(extension, 0) + 1
+    return dict(sorted(counts.items()))
+
+
 def write_pdf_zip(results, exe, target):
     """Writes a zip with, for every PDF that differs from its reference: the expected and
     the actual PDF, their diff, and the source of the test. Meant to be handed over to
@@ -497,7 +510,8 @@ def write_pdf_zip(results, exe, target):
                          "PDF produced by the C build (%s, --pdf-vega) that differ from the reference\n"
                          "files of src/test/resources/vega (made by the JVM tests).\n"
                          "For each one: <name>.expected.pdf (reference), <name>.actual.pdf (C build),\n"
-                         "<name>.diff (unified diff, the PDF are not compressed) and the test <name>.puml.\n"
+                         "<name>.diff (unified diff, the PDF are not compressed), <name>.stderr.txt (what the\n"
+                         "executable wrote on stderr) and the test <name>.puml.\n"
                          % exe.name)
         sources = set()
         for result, failure in failed:
@@ -507,6 +521,7 @@ def write_pdf_zip(results, exe, target):
             archive.writestr(base + ".expected.pdf", failure["expected"])
             archive.writestr(base + ".actual.pdf", failure["actual"])
             archive.writestr(base + ".diff", failure["diff"])
+            archive.writestr(base + ".stderr.txt", failure["stderr"])
             test = VEGA_DIR / result["file"]
             if result["file"] not in sources and test.is_file():
                 sources.add(result["file"])
@@ -543,7 +558,6 @@ def main(argv=None):
     parser.add_argument("--out", default=str(OUT_DIR), help="folder of the reports (default: %(default)s)")
     parser.add_argument("--no-png", action="store_true", help="do not run the PNG generation")
     parser.add_argument("--strict", action="store_true", help="exit code 1 when a test fails (default: always 0)")
-    parser.add_argument("-v", "--verbose", action="store_true", help="print every test, not only the failures")
     args = parser.parse_args(argv)
 
     VEGA_DIR = Path(args.vega_dir).resolve()
@@ -583,8 +597,7 @@ def main(argv=None):
                     result = {"file": puml.relative_to(VEGA_DIR).as_posix(), "status": ERROR,
                               "message": "script error: %r" % e, "duration_ms": 0}
                 results.append(result)
-                if args.verbose or result["status"] in (ERROR, TIMEOUT):
-                    print("%-8s %s  %s" % (result["status"].upper(), result["file"], result["message"][:160]))
+                print("%-8s %s  %s" % (result["status"].upper(), result["file"], result["message"][:160]))
                 if done % 100 == 0:
                     print("... %d / %d" % (done, len(files)))
     finally:
@@ -603,6 +616,7 @@ def main(argv=None):
                 target = OUT_DIR / "diffs" / (r["file"] + ".diff")
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_text(r["diff"], encoding="utf-8")
+    generated = count_generated_files(OUT_DIR / "output")
     pdf_zip = OUT_DIR / "pdf-diffs.zip"
     pdf_zip_count = write_pdf_zip(results, exe, pdf_zip)
     for r in results:
@@ -610,7 +624,7 @@ def main(argv=None):
         r.pop("pdf_failures", None)
 
     report = {"executable": str(exe), "summary": dict(counts, total=len(results)),
-              "png": png_counts, "tests": results}
+              "png": png_counts, "generated_files": generated, "tests": results}
     (OUT_DIR / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
 
     lines = [
@@ -631,8 +645,9 @@ def main(argv=None):
             "  No output: %d" % png_counts[PNG_NO_OUTPUT],
             "  Not a PNG: %d" % png_counts[PNG_INVALID],
         ]
+    lines += ["", "Files generated: " + (", ".join("%s: %d" % item for item in generated.items()) or "none")]
     if pdf_zip_count:
-        lines += ["", "PDF that differ: %d, in %s" % (pdf_zip_count, pdf_zip.name)]
+        lines += ["PDF that differ: %d, in %s" % (pdf_zip_count, pdf_zip.name)]
     lines += ["", "Time: %.1fs" % (time.time() - started)]
     head = len(lines)
     lines.append("")

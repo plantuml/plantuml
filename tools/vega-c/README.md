@@ -7,7 +7,7 @@ Python 3.9+ and nothing else.
 
 ```
 python tools/vega-c/run_vega_c.py                    # every test
-python tools/vega-c/run_vega_c.py mindmap            # the paths containing "mindmap"
+python tools/vega-c/run_vega_c.py mindmap            # the paths containing "mindmap" (every test is listed)
 python tools/vega-c/run_vega_c.py --diff -j 8        # one .diff per failed test
 python tools/vega-c/run_vega_c.py --exe path\to\plantuml.exe
 ```
@@ -37,6 +37,6 @@ Everything goes to `build/vega-c/` (emptied at each run, git-ignored), never to
 JVM tests:
 
 - `output/`: the files written by `plantuml.exe` (svg, png...), in the same folders as the tests
-- `summary.txt` and `report.json`
+- `summary.txt` and `report.json` (with the number of files written, by extension: `.svg`, `.png`, `.pdf`...)
 - `diffs/`: with `--diff`, one `.diff` per failed test
 - `pdf-diffs.zip`: when some PDF differ from their reference, the expected and the actual PDF, their diff and the source of each of these tests, to hand over to whoever investigates
