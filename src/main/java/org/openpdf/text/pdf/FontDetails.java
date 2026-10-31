@@ -119,15 +119,6 @@ class FontDetails {
     }
 
     /**
-     * Gets the <CODE>BaseFont</CODE> of this <CODE>PdfDocument</CODE>.
-     *
-     * @return the <CODE>BaseFont</CODE> of this <CODE>PdfDocument</CODE>
-     */
-    BaseFont getBaseFont() {
-        return baseFont;
-    }
-
-    /**
      * Converts the text into bytes to be placed in the document. The conversion is done according to the font and the
      * encoding and the characters used are stored.
      *

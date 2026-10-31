@@ -49,7 +49,6 @@
 
 package org.openpdf.text.pdf;
 
-import java.awt.Color;
 
 /**
  * A <CODE>PdfColor</CODE> defines a Color (it's a <CODE>PdfArray</CODE> containing 3 values).
@@ -69,13 +68,4 @@ public class PdfColor extends PdfArray {
      * @param blue  a value between 0 and 255
      */
 
-    PdfColor(int red, int green, int blue) {
-        super(new PdfNumber((double) (red & 0xFF) / 0xFF));
-        add(new PdfNumber((double) (green & 0xFF) / 0xFF));
-        add(new PdfNumber((double) (blue & 0xFF) / 0xFF));
-    }
-
-    public PdfColor(Color color) {
-        this(color.getRed(), color.getGreen(), color.getBlue());
-    }
 }

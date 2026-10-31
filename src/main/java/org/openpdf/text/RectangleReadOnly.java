@@ -129,15 +129,6 @@ public class RectangleReadOnly extends Rectangle {
 
     // OVERWRITE METHODS SETTING THE BORDER:
 
-    /**
-     * Disables the border on the specified side.
-     *
-     * @param side the side to disable. One of <CODE>LEFT, RIGHT, TOP, BOTTOM</CODE>
-     */
-    public void disableBorderSide(int side) {
-        throwReadOnlyError();
-    }
-
     // OVERWRITE METHODS SETTING THE BORDER WIDTH:
 
     /**

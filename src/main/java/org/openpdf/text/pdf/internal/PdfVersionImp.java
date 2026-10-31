@@ -51,7 +51,6 @@ package org.openpdf.text.pdf.internal;
 
 import org.openpdf.text.DocWriter;
 import org.openpdf.text.pdf.OutputStreamCounter;
-import org.openpdf.text.pdf.PdfDeveloperExtension;
 import org.openpdf.text.pdf.PdfDictionary;
 import org.openpdf.text.pdf.PdfName;
 import org.openpdf.text.pdf.PdfWriter;
@@ -98,48 +97,6 @@ public class PdfVersionImp implements PdfVersion {
      * @since 2.1.6
      */
     protected PdfDictionary extensions = null;
-
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfVersion#setPdfVersion(String)
-     */
-    public void setPdfVersion(String version) {
-        if (headerWasWritten || appendmode) {
-            setPdfVersion(getVersionAsName(version));
-        } else {
-            this.header_version = version;
-        }
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfVersion#setAtLeastPdfVersion(String)
-     */
-    public void setAtLeastPdfVersion(String version) {
-        if (comparePdfVersions(version, header_version) > 0) {
-            setPdfVersion(version);
-        }
-    }
-
-    public int comparePdfVersions(String v1, String v2) {
-        String[] p1 = v1.split("\\.");
-        String[] p2 = v2.split("\\.");
-        int major1 = Integer.parseInt(p1[0]);
-        int major2 = Integer.parseInt(p2[0]);
-        if (major1 != major2) {
-            return Integer.compare(major1, major2);
-        }
-        int minor1 = (p1.length > 1) ? Integer.parseInt(p1[1]) : 0;
-        int minor2 = (p2.length > 1) ? Integer.parseInt(p2[1]) : 0;
-        return Integer.compare(minor1, minor2);
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfVersion#setPdfVersion(org.openpdf.text.pdf.PdfName)
-     */
-    public void setPdfVersion(PdfName version) {
-        if (catalog_version == null || catalog_version.compareTo(version) < 0) {
-            this.catalog_version = version;
-        }
-    }
 
     /**
      * Writes the header to the OutputStreamCounter.
@@ -209,26 +166,4 @@ public class PdfVersionImp implements PdfVersion {
         }
     }
 
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfVersion#addDeveloperExtension(org.openpdf.text.pdf.PdfDeveloperExtension)
-     * @since 2.1.6
-     */
-    public void addDeveloperExtension(PdfDeveloperExtension de) {
-        if (extensions == null) {
-            extensions = new PdfDictionary();
-        } else {
-            PdfDictionary extension = extensions.getAsDict(de.getPrefix());
-            if (extension != null) {
-                int diff = de.getBaseversion().compareTo(extension.getAsName(PdfName.BASEVERSION));
-                if (diff < 0) {
-                    return;
-                }
-                diff = de.getExtensionLevel() - extension.getAsNumber(PdfName.EXTENSIONLEVEL).intValue();
-                if (diff <= 0) {
-                    return;
-                }
-            }
-        }
-        extensions.put(de.getPrefix(), de.getDeveloperExtensions());
-    }
 }

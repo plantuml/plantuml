@@ -346,43 +346,7 @@ public class PdfDictionary extends PdfObject {
 
 
 
-    /**
-     * Returns a <CODE>PdfObject</CODE> as a <CODE>PdfNumber</CODE>, resolving indirect references.
-     * <p>
-     * The object associated with the <CODE>PdfName</CODE> given is retrieved and resolved to a direct object. If it is
-     * a <CODE>PdfNumber</CODE>, it is cast down and returned as such. Otherwise <CODE>null</CODE> is returned.
-     *
-     * @param key A <CODE>PdfName</CODE>
-     * @return the associated <CODE>PdfNumber</CODE> object, or <CODE>null</CODE>
-     */
-    public PdfNumber getAsNumber(PdfName key) {
-        PdfNumber number = null;
-        PdfObject orig = getDirectObject(key);
-        if (orig != null && orig.isNumber()) {
-            number = (PdfNumber) orig;
-        }
-        return number;
-    }
 
-
-
-    /**
-     * Returns a <CODE>PdfObject</CODE> as a <CODE>PdfName</CODE>, resolving indirect references.
-     * <p>
-     * The object associated with the <CODE>PdfName</CODE> given is retrieved and resolved to a direct object. If it is
-     * a <CODE>PdfName</CODE>, it is cast down and returned as such. Otherwise <CODE>null</CODE> is returned.
-     *
-     * @param key A <CODE>PdfName</CODE>
-     * @return the associated <CODE>PdfName</CODE> object, or <CODE>null</CODE>
-     */
-    public PdfName getAsName(PdfName key) {
-        PdfName name = null;
-        PdfObject orig = getDirectObject(key);
-        if (orig != null && orig.isName()) {
-            name = (PdfName) orig;
-        }
-        return name;
-    }
 
 
 

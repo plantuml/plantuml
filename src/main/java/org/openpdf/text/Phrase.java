@@ -49,7 +49,6 @@
 
 package org.openpdf.text;
 
-import org.openpdf.text.pdf.HyphenationEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -97,135 +96,9 @@ public class Phrase extends ArrayList<Element> implements TextElementArray {
      */
     protected Font font;
 
-    /**
-     * Null, unless the Phrase has to be hyphenated.
-     *
-     * @since 2.1.2
-     */
-    protected HyphenationEvent hyphenation = null;
-
     // constructors
 
-    /**
-     * Copy constructor for <CODE>Phrase</CODE>.
-     *
-     * @param phrase an object of {@link Phrase}, that you want to create a new object from
-     */
-    public Phrase(Phrase phrase) {
-        super();
-        this.addAll(phrase);
-        leading = phrase.getLeading();
-        font = phrase.getFont();
-        setHyphenation(phrase.getHyphenation());
-    }
-
-    /**
-     * Constructs a <CODE>Phrase</CODE> with a certain leading.
-     *
-     * @param leading the leading
-     */
-    public Phrase(float leading) {
-        this.leading = leading;
-        font = new Font();
-    }
-
-    /**
-     * Constructs a <CODE>Phrase</CODE> with a certain <CODE>Chunk</CODE>.
-     *
-     * @param chunk a <CODE>Chunk</CODE>
-     */
-    public Phrase(Chunk chunk) {
-        super.add(chunk);
-        font = chunk.getFont();
-        setHyphenation(chunk.getHyphenation());
-    }
-
     // implementation of the Element-methods
-
-    /**
-     * Constructs a Phrase that can be used in the static getInstance() method.
-     *
-     * @param dummy a dummy parameter
-     */
-    private Phrase(boolean dummy) {
-    }
-
-    /**
-     * Gets a special kind of Phrase that changes some characters into corresponding symbols.
-     *
-     * @param string input
-     * @return a newly constructed Phrase
-     */
-    public static final Phrase getInstance(String string) {
-        return getInstance(16, string, new Font());
-    }
-
-    /**
-     * Gets a special kind of Phrase that changes some characters into corresponding symbols.
-     *
-     * @param leading leading spaces
-     * @param string  input
-     * @return a newly constructed Phrase
-     */
-    public static final Phrase getInstance(int leading, String string) {
-        return getInstance(leading, string, new Font());
-    }
-
-    /**
-     * Gets a special kind of Phrase that changes some characters into corresponding symbols.
-     *
-     * @param leading leading spaces
-     * @param string  input
-     * @param font    font to be used
-     * @return a newly constructed Phrase
-     */
-    public static final Phrase getInstance(int leading, String string, Font font) {
-        Phrase p = new Phrase(true);
-        p.setLeading(leading);
-        p.font = font;
-        if (font.getFamily() != Font.SYMBOL && font.getFamily() != Font.ZAPFDINGBATS && font.getBaseFont() == null) {
-            int index;
-            while ((index = SpecialSymbol.index(string)) > -1) {
-                if (index > 0) {
-                    String firstPart = string.substring(0, index);
-                    p.add(new Chunk(firstPart, font));
-                    string = string.substring(index);
-                }
-                Font symbol = new Font(Font.SYMBOL, font.getSize(), font.getStyle(), font.getColor());
-                StringBuilder buf = new StringBuilder();
-                buf.append(SpecialSymbol.getCorrespondingSymbol(string.charAt(0)));
-                string = string.substring(1);
-                while (SpecialSymbol.index(string) == 0) {
-                    buf.append(SpecialSymbol.getCorrespondingSymbol(string.charAt(0)));
-                    string = string.substring(1);
-                }
-                p.add(new Chunk(buf.toString(), symbol));
-            }
-        }
-        if (string != null && string.length() != 0) {
-            p.add(new Chunk(string, font));
-        }
-        return p;
-    }
-
-    /**
-     * Processes the element by adding it (or the different parts) to an
-     * <CODE>ElementListener</CODE>.
-     *
-     * @param listener an <CODE>ElementListener</CODE>
-     * @return <CODE>true</CODE> if the element was processed successfully
-     */
-    @Override
-    public boolean process(ElementListener listener) {
-        try {
-            for (Object o : this) {
-                listener.add((Element) o);
-            }
-            return true;
-        } catch (DocumentException de) {
-            return false;
-        }
-    }
 
     // overriding some of the ArrayList-methods
 
@@ -237,20 +110,6 @@ public class Phrase extends ArrayList<Element> implements TextElementArray {
     @Override
     public int type() {
         return Element.PHRASE;
-    }
-
-    /**
-     * Gets all the chunks in this element.
-     *
-     * @return an <CODE>ArrayList</CODE>
-     */
-    @Override
-    public ArrayList<Element> getChunks() {
-        ArrayList<Element> tmp = new ArrayList<>();
-        for (Element element : this) {
-            tmp.addAll(element.getChunks());
-        }
-        return tmp;
     }
 
     /**
@@ -272,21 +131,6 @@ public class Phrase extends ArrayList<Element> implements TextElementArray {
     }
 
     /**
-     * Adds a <CODE>Chunk</CODE>, <CODE>Anchor</CODE> or another <CODE>Phrase</CODE> to this <CODE>Phrase</CODE>.
-     *
-     * @param o an object of type <CODE>Chunk</CODE>, <CODE>Anchor</CODE> or <CODE>Phrase</CODE>
-     * @return a boolean
-     * @throws ClassCastException when you try to add something that isn't a <CODE>Chunk</CODE>, <CODE>Anchor</CODE> or
-     *                            <CODE>Phrase</CODE>
-     */
-    public boolean add(String o) {
-        if (o == null) {
-            return false;
-        }
-        return super.add(new Chunk(o, font));
-    }
-
-    /**
      * Adds a collection of <CODE>Chunk</CODE>s to this <CODE>Phrase</CODE>.
      *
      * @param collection a collection of <CODE>Chunk</CODE>s, <CODE>Anchor</CODE>s and <CODE>Phrase</CODE>s.
@@ -303,52 +147,13 @@ public class Phrase extends ArrayList<Element> implements TextElementArray {
     }
 
     /**
-     * Gets the leading of this phrase.
-     *
-     * @return the linespacing
-     */
-    public float getLeading() {
-        if (Float.isNaN(leading) && font != null) {
-            return font.getCalculatedLeading(1.5f);
-        }
-        return leading;
-    }
-
-    /**
      * Sets the leading of this phrase.
      *
      * @param leading the new leading
      */
 
-    public void setLeading(float leading) {
-        this.leading = leading;
-    }
-
-    /**
-     * Gets the font of the first <CODE>Chunk</CODE> that appears in this <CODE>Phrase</CODE>.
-     *
-     * @return a <CODE>Font</CODE>
-     */
-    public Font getFont() {
-        return font;
-    }
-
     // kept for historical reasons; people should use FontSelector
     // eligible for deprecation, but the methods are mentioned in the book p277.
-
-    /**
-     * Returns the content as a String object. This method differs from toString because toString will return an
-     * ArrayList with the toString value of the Chunks in this Phrase.
-     *
-     * @return an <code>String</code>
-     */
-    public String getContent() {
-        StringBuilder buf = new StringBuilder();
-        for (Object o : getChunks()) {
-            buf.append(o.toString());
-        }
-        return buf.toString();
-    }
 
     /**
      * Checks is this <CODE>Phrase</CODE> contains no or 1 empty <CODE>Chunk</CODE>.
@@ -367,26 +172,6 @@ public class Phrase extends ArrayList<Element> implements TextElementArray {
             default:
                 return false;
         }
-    }
-
-    /**
-     * Getter for the hyphenation settings.
-     *
-     * @return a HyphenationEvent
-     * @since 2.1.2
-     */
-    public HyphenationEvent getHyphenation() {
-        return hyphenation;
-    }
-
-    /**
-     * Setter for the hyphenation.
-     *
-     * @param hyphenation a HyphenationEvent instance
-     * @since 2.1.2
-     */
-    public void setHyphenation(HyphenationEvent hyphenation) {
-        this.hyphenation = hyphenation;
     }
 
 }

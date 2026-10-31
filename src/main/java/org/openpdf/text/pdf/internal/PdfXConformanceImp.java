@@ -52,7 +52,6 @@ package org.openpdf.text.pdf.internal;
 import org.openpdf.text.error_messages.MessageLocalization;
 import org.openpdf.text.pdf.BaseFont;
 import org.openpdf.text.pdf.ExtendedColor;
-import org.openpdf.text.pdf.PatternColor;
 import org.openpdf.text.pdf.PdfArray;
 import org.openpdf.text.pdf.PdfDictionary;
 import org.openpdf.text.pdf.PdfGState;
@@ -138,10 +137,6 @@ public class PdfXConformanceImp implements PdfXConformance {
                                     checkPDFXConformance(writer, PDFXKEY_COLOR,
                                             xc.getPdfShadingPattern().getShading().getColorSpace());
                                     break;
-                                case ExtendedColor.TYPE_PATTERN:
-                                    PatternColor pc = (PatternColor) ec;
-                                    checkPDFXConformance(writer, PDFXKEY_COLOR, pc.getPainter().getDefaultColor());
-                                    break;
                             }
                         } else if (obj1 instanceof Color) {
                             throw new PdfXConformanceException(
@@ -223,13 +218,6 @@ public class PdfXConformanceImp implements PdfXConformance {
      */
     public int getPDFXConformance() {
         return pdfxConformance;
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfXConformance#setPDFXConformance(int)
-     */
-    public void setPDFXConformance(int pdfxConformance) {
-        this.pdfxConformance = pdfxConformance;
     }
 
     /**

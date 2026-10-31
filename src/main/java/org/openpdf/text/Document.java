@@ -151,16 +151,6 @@ public class Document implements DocListener {
      */
     protected float marginBottom = 0;
     /**
-     * mirroring of the left/right margins
-     */
-    protected boolean marginMirroring = false;
-    /**
-     * mirroring of the top/bottom margins
-     *
-     * @since 2.1.6
-     */
-    protected boolean marginMirroringTopBottom = false;
-    /**
      * Current pagenumber
      */
     protected int pageN = 0;
@@ -356,35 +346,7 @@ public class Document implements DocListener {
         return true;
     }
 
-    /**
-     * Sets the page number to 0.
-     * <p>
-     * This change will be effective starting from the next page.
-     */
-    public void resetPageCount() {
-        pageN = 0;
-        for (DocListener listener : listeners) {
-            listener.resetPageCount();
-        }
-    }
-
     // methods concerning the header or some meta information
-
-    /**
-     * Sets the page number.
-     * <p>
-     * This change will be effective starting from the next page.
-     * <p>
-     * <STRONG>The page number of the next new page will be: <CODE>pageN + 1</CODE></STRONG>
-     *
-     * @param pageN the new page number
-     */
-    public void setPageCount(int pageN) {
-        this.pageN = pageN;
-        for (DocListener listener : listeners) {
-            listener.setPageCount(pageN);
-        }
-    }
 
     /**
      * Closes the document.
@@ -532,19 +494,6 @@ public class Document implements DocListener {
      *
      * @return <CODE>true</CODE> if successful, <CODE>false</CODE> otherwise
      */
-    public boolean addModificationDate() {
-        try {
-            return add(new Meta(Element.MODIFICATIONDATE, new PdfDate().toString()));
-        } catch (DocumentException de) {
-            throw new ExceptionConverter(de);
-        }
-    }
-
-    /**
-     * Adds the current date and time to a Document.
-     *
-     * @return <CODE>true</CODE> if successful, <CODE>false</CODE> otherwise
-     */
     public boolean addModificationDate(PdfDate date) {
         try {
             return add(new Meta(Element.MODIFICATIONDATE, date.toString()));
@@ -583,19 +532,11 @@ public class Document implements DocListener {
      * @return the lower left x-coordinate
      */
 
-    public float left() {
-        return pageSize.getLeft(marginLeft);
-    }
-
     /**
      * Returns the upper right x-coordinate.
      *
      * @return the upper right x-coordinate
      */
-
-    public float right() {
-        return pageSize.getRight(marginRight);
-    }
 
     /**
      * Returns the upper right y-coordinate.
@@ -603,19 +544,11 @@ public class Document implements DocListener {
      * @return the upper right y-coordinate
      */
 
-    public float top() {
-        return pageSize.getTop(marginTop);
-    }
-
     /**
      * Returns the lower left y-coordinate.
      *
      * @return the lower left y-coordinate
      */
-
-    public float bottom() {
-        return pageSize.getBottom(marginBottom);
-    }
 
     /**
      * Returns the lower left x-coordinate considering a given margin.
@@ -695,39 +628,6 @@ public class Document implements DocListener {
      *
      * @param htmlStyleClass the style class for the HTML body tag
      */
-
-    /**
-     * Set the margin mirroring. It will mirror right/left margins for odd/even pages.
-     * <p>
-     * Note: it will not work with {@link Table}.
-     *
-     * @param marginMirroring <CODE>true</CODE> to mirror the margins
-     * @return always <CODE>true</CODE>
-     */
-    public boolean setMarginMirroring(boolean marginMirroring) {
-        this.marginMirroring = marginMirroring;
-        for (DocListener listener : listeners) {
-            listener.setMarginMirroring(marginMirroring);
-        }
-        return true;
-    }
-
-    /**
-     * Set the margin mirroring. It will mirror top/bottom margins for odd/even pages.
-     * <p>
-     * Note: it will not work with {@link Table}.
-     *
-     * @param marginMirroringTopBottom <CODE>true</CODE> to mirror the margins
-     * @return always <CODE>true</CODE>
-     * @since 2.1.6
-     */
-    public boolean setMarginMirroringTopBottom(boolean marginMirroringTopBottom) {
-        this.marginMirroringTopBottom = marginMirroringTopBottom;
-        for (DocListener listener : listeners) {
-            listener.setMarginMirroringTopBottom(marginMirroringTopBottom);
-        }
-        return true;
-    }
 
     /**
      * Gets the text rendering options.

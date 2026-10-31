@@ -78,13 +78,6 @@ public class DocumentException extends RuntimeException {
     // constructors
 
     /**
-     * Constructs a <CODE>DocumentException</CODE> without a message.
-     */
-    public DocumentException() {
-        super();
-    }
-
-    /**
      * Constructs a <code>DocumentException</code> with a message.
      *
      * @param message a message describing the exception

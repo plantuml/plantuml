@@ -195,9 +195,6 @@ public class PdfRectangle extends PdfArray {
      * @since 2.1.5
      */
 
-    public void addFirst(PdfObject object) {
-    }
-
     /**
      * Returns the lower left x-coordinate.
      *
@@ -272,19 +269,11 @@ public class PdfRectangle extends PdfArray {
      * @return a width
      */
 
-    public float width() {
-        return urx - llx;
-    }
-
     /**
      * Returns the height of the rectangle.
      *
      * @return a height
      */
-
-    public float height() {
-        return ury - lly;
-    }
 
     /**
      * Swaps the values of urx and ury and of lly and llx in order to rotate the rectangle.

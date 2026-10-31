@@ -109,15 +109,6 @@ public class IntHashtable implements Cloneable {
     }
 
     /***
-     * <p>Returns the number of keys in this hashtable.</p>
-     *
-     * @return the number of keys in this hashtable.
-     */
-    public int size() {
-        return count;
-    }
-
-    /***
      * <p>Tests if this hashtable maps no keys to values.</p>
      *
      * @return  <code>true</code> if this hashtable maps no keys to values;
@@ -125,37 +116,6 @@ public class IntHashtable implements Cloneable {
      */
     public boolean isEmpty() {
         return count == 0;
-    }
-
-    /***
-     * <p>Tests if some key maps into the specified value in this hashtable.
-     * This operation is more expensive than the <code>containsKey</code>
-     * method.</p>
-     *
-     * <p>Note that this method is identical in functionality to containsValue,
-     * (which is part of the Map interface in the collections framework).</p>
-     *
-     * @param      value   a value to search for.
-     * @return     <code>true</code> if and only if some key maps to the
-     *             <code>value</code> argument in this hashtable as
-     *             determined by the <code>equals</code> method;
-     *             <code>false</code> otherwise.
-     * @throws NullPointerException  if the value is <code>null</code>.
-     * @see        #containsKey(int)
-     * @see        #containsValue(int)
-     * @see        java.util.Map
-     */
-    public boolean contains(int value) {
-
-        Entry[] tab = table;
-        for (int i = tab.length; i-- > 0; ) {
-            for (Entry e = tab[i]; e != null; e = e.next) {
-                if (e.value == value) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     /***
@@ -315,10 +275,6 @@ public class IntHashtable implements Cloneable {
             this.key = key;
             this.value = value;
             this.next = next;
-        }
-
-        public int getValue() {
-            return value;
         }
 
         protected Object clone() {

@@ -54,30 +54,5 @@ package org.openpdf.text.pdf;
  */
 public interface HyphenationEvent {
 
-    /**
-     * Gets the hyphen symbol.
-     *
-     * @return the hyphen symbol
-     */
-    String getHyphenSymbol();
-
-    /**
-     * Hyphenates a word and returns the first part of it. To get the second part of the hyphenated word call
-     * <CODE>getHyphenatedWordPost()</CODE>.
-     *
-     * @param word           the word to hyphenate
-     * @param font           the font used by this word
-     * @param fontSize       the font size used by this word
-     * @param remainingWidth the width available to fit this word in
-     * @return the first part of the hyphenated word including the hyphen symbol, if any
-     */
-    String getHyphenatedWordPre(String word, BaseFont font, float fontSize, float remainingWidth);
-
-    /**
-     * Gets the second part of the hyphenated word. Must be called after <CODE>getHyphenatedWordPre()</CODE>.
-     *
-     * @return the second part of the hyphenated word
-     */
-    String getHyphenatedWordPost();
 }
 

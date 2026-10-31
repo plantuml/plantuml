@@ -136,30 +136,6 @@ public class PdfStream extends PdfDictionary {
     }
 
     /**
-     * Creates an efficient stream. No temporary array is ever created. The <CODE>InputStream</CODE> is totally consumed
-     * but is not closed. The general usage is:
-     * <pre>
-     * InputStream in = ...;
-     * PdfStream stream = new PdfStream(in, writer);
-     * stream.flateCompress();
-     * writer.addToBody(stream);
-     * stream.writeLength();
-     * in.close();
-     * </pre>
-     *
-     * @param inputStream the data to write to this stream
-     * @param writer      the <CODE>PdfWriter</CODE> for this stream
-     */
-    public PdfStream(InputStream inputStream, PdfWriter writer) {
-        super();
-        type = STREAM;
-        this.inputStream = inputStream;
-        this.writer = writer;
-        ref = writer.getPdfIndirectReference();
-        put(PdfName.LENGTH, ref);
-    }
-
-    /**
      * Constructs a <CODE>PdfStream</CODE>-object.
      */
 

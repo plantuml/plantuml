@@ -85,11 +85,6 @@ public class PdfTemplate extends PdfContentByte {
      * Creates a <CODE>PdfTemplate</CODE>.
      */
 
-    protected PdfTemplate() {
-        super(null);
-        type = TYPE_TEMPLATE;
-    }
-
     /**
      * Creates new PdfTemplate
      *
@@ -102,30 +97,6 @@ public class PdfTemplate extends PdfContentByte {
         pageResources = new PageResources();
         pageResources.addDefaultColor(wr.getDefaultColorspace());
         thisReference = writer.getPdfIndirectReference();
-    }
-
-    /**
-     * Creates a new template.
-     * <p>
-     * Creates a new template that is nothing more than a form XObject. This template can be included in this template
-     * or in another template. Templates are only written to the output when the document is closed permitting things
-     * like showing text in the first page that is only defined in the last page.
-     *
-     * @param writer the PdfWriter to use
-     * @param width  the bounding box width
-     * @param height the bounding box height
-     * @return the created template
-     */
-    public static PdfTemplate createTemplate(PdfWriter writer, float width, float height) {
-        return createTemplate(writer, width, height, null);
-    }
-
-    static PdfTemplate createTemplate(PdfWriter writer, float width, float height, PdfName forcedName) {
-        PdfTemplate template = new PdfTemplate(writer);
-        template.setWidth(width);
-        template.setHeight(height);
-        writer.addDirectTemplateSimple(template, forcedName);
-        return template;
     }
 
     /**

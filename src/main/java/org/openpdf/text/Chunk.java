@@ -49,8 +49,6 @@
 
 package org.openpdf.text;
 
-import org.openpdf.text.pdf.HyphenationEvent;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -247,56 +245,12 @@ public class Chunk implements Element {
     }
 
     /**
-     * Processes the element by adding it (or the different parts) to an <CODE> ElementListener</CODE>.
-     *
-     * @param listener an <CODE>ElementListener</CODE>
-     * @return <CODE>true</CODE> if the element was processed successfully
-     */
-    public boolean process(ElementListener listener) {
-        try {
-            return listener.add(this);
-        } catch (DocumentException de) {
-            return false;
-        }
-    }
-
-    /**
      * Gets the type of the text element.
      *
      * @return a type
      */
     public int type() {
         return Element.CHUNK;
-    }
-
-    /**
-     * Gets all the chunks in this element.
-     *
-     * @return an <CODE>ArrayList</CODE>
-     */
-    public ArrayList<Element> getChunks() {
-        ArrayList<Element> tmp = new ArrayList<>();
-        tmp.add(this);
-        return tmp;
-    }
-
-    /**
-     * appends some text to this <CODE>Chunk</CODE>.
-     *
-     * @param string <CODE>String</CODE>
-     * @return a <CODE>StringBuffer</CODE>
-     */
-    public StringBuffer append(String string) {
-        return content.append(string);
-    }
-
-    /**
-     * Gets the font of this <CODE>Chunk</CODE>.
-     *
-     * @return a <CODE>Font</CODE>
-     */
-    public Font getFont() {
-        return font;
     }
 
     /**
@@ -330,20 +284,6 @@ public class Chunk implements Element {
     }
 
     /**
-     * Gets the width of the Chunk in points.
-     *
-     * @return a width in points
-     */
-    public float getWidthPoint() {
-        if (getImage() != null) {
-            return getImage().getScaledWidth();
-        }
-        return font.getCalculatedBaseFont(true).getWidthPoint(getContent(),
-                font.getCalculatedSize())
-                * getHorizontalScaling();
-    }
-
-    /**
      * Checks the attributes of this <CODE>Chunk</CODE>.
      *
      * @return false if there aren't any.
@@ -371,22 +311,6 @@ public class Chunk implements Element {
         }
         attributes.put(name, obj);
         return this;
-    }
-
-    /**
-     * Gets the horizontal scaling.
-     *
-     * @return a percentage in float
-     */
-    public float getHorizontalScaling() {
-        if (attributes == null) {
-            return 1f;
-        }
-        Float f = (Float) attributes.get(HSCALE);
-        if (f == null) {
-            return 1f;
-        }
-        return f;
     }
 
     /**
@@ -439,18 +363,6 @@ public class Chunk implements Element {
      * @return the image
      */
 
-    public Image getImage() {
-        if (attributes == null) {
-            return null;
-        }
-        Object[] obj = (Object[]) attributes.get(Chunk.IMAGE);
-        if (obj == null) {
-            return null;
-        } else {
-            return (Image) obj[0];
-        }
-    }
-
     /**
      * Sets an action for this <CODE>Chunk</CODE>.
      *
@@ -498,19 +410,6 @@ public class Chunk implements Element {
      */
     public boolean isNestable() {
         return true;
-    }
-
-    /**
-     * Returns the hyphenation (if present).
-     *
-     * @return an object of {@link HyphenationEvent}
-     * @since 2.1.2
-     */
-    public HyphenationEvent getHyphenation() {
-        if (attributes == null) {
-            return null;
-        }
-        return (HyphenationEvent) attributes.get(Chunk.HYPHENATION);
     }
 
 }

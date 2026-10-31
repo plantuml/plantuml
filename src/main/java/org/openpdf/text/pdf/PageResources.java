@@ -99,14 +99,6 @@ class PageResources {
         return name;
     }
 
-    void addDefaultColor(PdfName name, PdfObject obj) {
-        if (obj == null || obj.isNull()) {
-            colorDictionary.remove(name);
-        } else {
-            colorDictionary.put(name, obj);
-        }
-    }
-
     void addDefaultColor(PdfDictionary dic) {
         colorDictionary.merge(dic);
     }

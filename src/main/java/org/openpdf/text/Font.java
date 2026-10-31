@@ -102,11 +102,6 @@ public class Font implements Comparable {
     /**
      * this is a possible style.
      */
-    public static final int NORMAL = 0;
-
-    /**
-     * this is a possible style.
-     */
     public static final int BOLD = 1;
 
     /**
@@ -119,22 +114,12 @@ public class Font implements Comparable {
      */
     public static final int UNDERLINE = 4;
 
-    /**
-     * this is a possible style.
-     */
-    public static final int BOLDITALIC = BOLD | ITALIC;
-
     // static membervariables
 
     /**
      * the value of an undefined attribute.
      */
     public static final int UNDEFINED = -1;
-
-    /**
-     * the value of the default size.
-     */
-    public static final int DEFAULTSIZE = 12;
 
     // membervariables
 
@@ -292,61 +277,12 @@ public class Font implements Comparable {
     // STYLE
 
     /**
-     * Gets the size that can be used with the calculated <CODE>BaseFont
-     * </CODE>.
-     *
-     * @return the size that can be used with the calculated <CODE>BaseFont
-     * </CODE>
-     */
-    public float getCalculatedSize() {
-        float s = this.size;
-        if (s == UNDEFINED) {
-            s = DEFAULTSIZE;
-        }
-        return s;
-    }
-
-    /**
-     * Gets the leading that can be used with this font.
-     *
-     * @param linespacing a certain linespacing
-     * @return the height of a line
-     */
-    public float getCalculatedLeading(float linespacing) {
-        return linespacing * getCalculatedSize();
-    }
-
-    /**
      * Gets the style of this font.
      *
      * @return a size
      */
     public int getStyle() {
         return style;
-    }
-
-    /**
-     * checks if this font is Bold.
-     *
-     * @return a <CODE>boolean</CODE>
-     */
-    public boolean isBold() {
-        if (style == UNDEFINED) {
-            return false;
-        }
-        return (style & BOLD) == BOLD;
-    }
-
-    /**
-     * checks if this font is italic.
-     *
-     * @return a <CODE>boolean</CODE>
-     */
-    public boolean isItalic() {
-        if (style == UNDEFINED) {
-            return false;
-        }
-        return (style & ITALIC) == ITALIC;
     }
 
     // COLOR
@@ -366,21 +302,6 @@ public class Font implements Comparable {
      * @param color the new color of the font
      */
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    /**
-     * Sets the color.
-     *
-     * @param red   the red-value of the new color
-     * @param green the green-value of the new color
-     * @param blue  the blue-value of the new color
-     */
-    public void setColor(int red, int green, int blue) {
-        this.color = new Color(red, green, blue);
-    }
-
     // BASEFONT
 
     /**
@@ -390,100 +311,6 @@ public class Font implements Comparable {
      */
     public BaseFont getBaseFont() {
         return baseFont;
-    }
-
-    /**
-     * Gets the <CODE>BaseFont</CODE> this class represents. For the built-in fonts a <CODE>BaseFont</CODE> is
-     * calculated.
-     *
-     * @param specialEncoding <CODE>true</CODE> to use the special encoding for Symbol and
-     *                        ZapfDingbats, <CODE>false</CODE> to always use <CODE>Cp1252
-     *                        </CODE>
-     * @return the <CODE>BaseFont</CODE> this class represents
-     */
-    public BaseFont getCalculatedBaseFont(boolean specialEncoding) {
-        if (baseFont != null) {
-            return baseFont;
-        }
-        int style = this.style;
-        if (style == UNDEFINED) {
-            style = NORMAL;
-        }
-        String fontName = BaseFont.HELVETICA;
-        String encoding = BaseFont.WINANSI;
-        BaseFont cfont = null;
-        switch (family) {
-            case COURIER:
-                switch (style & BOLDITALIC) {
-                    case BOLD:
-                        fontName = BaseFont.COURIER_BOLD;
-                        break;
-                    case ITALIC:
-                        fontName = BaseFont.COURIER_OBLIQUE;
-                        break;
-                    case BOLDITALIC:
-                        fontName = BaseFont.COURIER_BOLDOBLIQUE;
-                        break;
-                    default:
-                        //case NORMAL:
-                        fontName = BaseFont.COURIER;
-                        break;
-                }
-                break;
-            case TIMES_ROMAN:
-                switch (style & BOLDITALIC) {
-                    case BOLD:
-                        fontName = BaseFont.TIMES_BOLD;
-                        break;
-                    case ITALIC:
-                        fontName = BaseFont.TIMES_ITALIC;
-                        break;
-                    case BOLDITALIC:
-                        fontName = BaseFont.TIMES_BOLDITALIC;
-                        break;
-                    default:
-                    case NORMAL:
-                        fontName = BaseFont.TIMES_ROMAN;
-                        break;
-                }
-                break;
-            case SYMBOL:
-                fontName = BaseFont.SYMBOL;
-                if (specialEncoding) {
-                    encoding = BaseFont.SYMBOL;
-                }
-                break;
-            case ZAPFDINGBATS:
-                fontName = BaseFont.ZAPFDINGBATS;
-                if (specialEncoding) {
-                    encoding = BaseFont.ZAPFDINGBATS;
-                }
-                break;
-            default:
-            case Font.HELVETICA:
-                switch (style & BOLDITALIC) {
-                    case BOLD:
-                        fontName = BaseFont.HELVETICA_BOLD;
-                        break;
-                    case ITALIC:
-                        fontName = BaseFont.HELVETICA_OBLIQUE;
-                        break;
-                    case BOLDITALIC:
-                        fontName = BaseFont.HELVETICA_BOLDOBLIQUE;
-                        break;
-                    default:
-                    case NORMAL:
-                        fontName = BaseFont.HELVETICA;
-                        break;
-                }
-                break;
-        }
-        try {
-            cfont = BaseFont.createFont(fontName, encoding, false);
-        } catch (Exception ee) {
-            throw new ExceptionConverter(ee);
-        }
-        return cfont;
     }
 
     // Helper methods

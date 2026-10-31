@@ -53,7 +53,6 @@ package org.openpdf.text.pdf;
 import org.openpdf.text.DocWriter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -127,42 +126,6 @@ public class ByteBuffer extends OutputStream {
      * @param i the int
      * @return a byte array
      */
-
-    private static byte[] convertToBytes(int i) {
-        int size = (int) Math.floor(Math.log(i) / Math.log(10));
-        if (i % 100 != 0) {
-            size += 2;
-        }
-        if (i % 10 != 0) {
-            size++;
-        }
-        if (i < 100) {
-            size++;
-            if (i < 10) {
-                size++;
-            }
-        }
-        size--;
-        byte[] cache = new byte[size];
-        size--;
-        if (i < 100) {
-            cache[0] = (byte) '0';
-        }
-        if (i % 10 != 0) {
-            cache[size--] = bytes[i % 10];
-        }
-        if (i % 100 != 0) {
-            cache[size--] = bytes[(i / 10) % 10];
-            cache[size--] = (byte) '.';
-        }
-        size = (int) Math.floor(Math.log(i) / Math.log(10)) - 1;
-        int add = 0;
-        while (add < size) {
-            cache[add] = bytes[(i / (int) Math.pow(10, size - add + 1)) % 10];
-            add++;
-        }
-        return cache;
-    }
 
     /**
      * Outputs a <CODE>double</CODE> into a format suitable for the PDF.
@@ -591,18 +554,6 @@ public class ByteBuffer extends OutputStream {
      */
     public String toString() {
         return new String(buf, 0, count);
-    }
-
-    /**
-     * Converts the buffer's contents into a string, translating bytes into characters according to the specified
-     * character encoding.
-     *
-     * @param enc a character-encoding name.
-     * @return String translated from the buffer's contents.
-     * @throws UnsupportedEncodingException If the named encoding is not supported.
-     */
-    public String toString(String enc) throws UnsupportedEncodingException {
-        return new String(buf, 0, count, enc);
     }
 
     /**

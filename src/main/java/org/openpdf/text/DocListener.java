@@ -108,34 +108,13 @@ public interface DocListener extends ElementListener, AutoCloseable {
     boolean setMargins(float marginLeft, float marginRight, float marginTop, float marginBottom);  // [L5]
 
     /**
-     * Allows you to do left/right margin mirroring (odd/even pages)
-     *
-     * @param marginMirroring left/right margin mirroring (odd/even pages)
-     * @return true if successful
-     */
-    boolean setMarginMirroring(boolean marginMirroring); // [L6]
-
-    /**
-     * Parameter that allows you to do top/bottom margin mirroring (odd/even pages)
-     *
-     * @param marginMirroringTopBottom top/bottom margin mirroring (odd/even pages)
-     * @return true if successful
-     * @since 2.1.6
-     */
-    boolean setMarginMirroringTopBottom(boolean marginMirroringTopBottom); // [L6]
-
-    /**
      * Sets the page number.
      *
      * @param pageN the new page number
      */
 
-    void setPageCount(int pageN); // [L7]
-
     /**
      * Sets the page number to 0.
      */
-
-    void resetPageCount(); // [L12]
 
 }

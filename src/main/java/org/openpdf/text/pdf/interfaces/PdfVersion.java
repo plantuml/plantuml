@@ -49,8 +49,6 @@
 
 package org.openpdf.text.pdf.interfaces;
 
-import org.openpdf.text.pdf.PdfDeveloperExtension;
-import org.openpdf.text.pdf.PdfName;
 
 /**
  * The PDF version is described in the PDF Reference 1.7 p92 (about the PDF Header) and page 139 (the version entry in
@@ -62,36 +60,4 @@ import org.openpdf.text.pdf.PdfName;
 
 public interface PdfVersion {
 
-    /**
-     * If the PDF Header hasn't been written yet, this changes the version as it will appear in the PDF Header. If the
-     * PDF header was already written to the OutputStream, this changes the version as it will appear in the Catalog.
-     *
-     * @param version a String representing the PDF version
-     */
-    void setPdfVersion(String version);
-
-    /**
-     * If the PDF Header hasn't been written yet, this changes the version as it will appear in the PDF Header, but only
-     * if the parameter refers to a higher version. If the PDF header was already written to the OutputStream, this
-     * changes the version as it will appear in the Catalog.
-     *
-     * @param version a String representing the PDF version
-     */
-    void setAtLeastPdfVersion(String version);
-
-    /**
-     * Sets the PDF version as it will appear in the Catalog. Note that this only has effect if you use a later version
-     * than the one that appears in the header; this method ignores the parameter if you try to set a lower version.
-     *
-     * @param version the PDF name that will be used for the Version key in the catalog
-     */
-    void setPdfVersion(PdfName version);
-
-    /**
-     * Adds a developer extension to the Extensions dictionary in the Catalog.
-     *
-     * @param de an object that contains the extensions prefix and dictionary
-     * @since 2.1.6
-     */
-    void addDeveloperExtension(PdfDeveloperExtension de);
 }

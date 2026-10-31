@@ -194,10 +194,6 @@ public class RandomAccessFileOrArray implements DataInput, Closeable {
         }
     }
 
-    public int read(byte[] b) throws IOException {
-        return read(b, 0, b.length);
-    }
-
     public void readFully(byte[] b) throws IOException {
         readFully(b, 0, b.length);
     }
@@ -254,10 +250,6 @@ public class RandomAccessFileOrArray implements DataInput, Closeable {
         if (filename != null && trf == null) {
             reOpen();
         }
-    }
-
-    public boolean isOpen() {
-        return (filename == null || trf != null);
     }
 
     public void close() throws IOException {

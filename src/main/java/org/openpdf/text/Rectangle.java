@@ -49,7 +49,6 @@
 package org.openpdf.text;
 
 import java.awt.Color;
-import java.util.ArrayList;
 
 /**
  * A <CODE>Rectangle</CODE> is the representation of a geometric figure.
@@ -227,32 +226,6 @@ public class Rectangle implements Element {
     /**
      * Constructs a <CODE>Rectangle</CODE> -object.
      *
-     * @param llx      lower left x
-     * @param lly      lower left y
-     * @param urx      upper right x
-     * @param ury      upper right y
-     * @param rotation 0, 90, 180, or 270 grades
-     */
-    public Rectangle(float llx, float lly, float urx, float ury, int rotation) {
-        this(llx, lly, urx, ury);
-        setRotation(rotation);
-    }
-
-    /**
-     * Constructs a <CODE>Rectangle</CODE> -object starting from the origin (0, 0).
-     *
-     * @param urx      upper right x
-     * @param ury      upper right y
-     * @param rotation 0, 90, 180, or 270 grades
-     */
-    public Rectangle(float urx, float ury, int rotation) {
-        this(0, 0, urx, ury);
-        setRotation(rotation);
-    }
-
-    /**
-     * Constructs a <CODE>Rectangle</CODE> -object.
-     *
      * @param rect another <CODE>Rectangle</CODE>
      */
     public Rectangle(Rectangle rect) {
@@ -261,22 +234,6 @@ public class Rectangle implements Element {
     }
 
     // ******************************************************************************
-
-    /**
-     * Processes the element by adding it (or the different parts) to an
-     * <CODE>ElementListener</CODE>.
-     *
-     * @param listener an <CODE>ElementListener</CODE>
-     * @return <CODE>true</CODE> if the element was processed successfully
-     */
-    @Override
-    public boolean process(ElementListener listener) {
-        try {
-            return listener.add(this);
-        } catch (DocumentException de) {
-            return false;
-        }
-    }
 
     // IMPLEMENTATION OF THE ELEMENT INTERFACE:e
 
@@ -288,16 +245,6 @@ public class Rectangle implements Element {
     @Override
     public int type() {
         return Element.RECTANGLE;
-    }
-
-    /**
-     * Gets all the chunks in this element.
-     *
-     * @return an <CODE>ArrayList</CODE>
-     */
-    @Override
-    public ArrayList<Element> getChunks() {
-        return new ArrayList<>();
     }
 
     /**
@@ -339,16 +286,6 @@ public class Rectangle implements Element {
     }
 
     /**
-     * Returns the lower left x-coordinate, considering a given margin.
-     *
-     * @param margin a margin
-     * @return the lower left x-coordinate
-     */
-    public float getLeft(float margin) {
-        return llx + margin;
-    }
-
-    /**
      * Returns the upper right x-coordinate.
      *
      * @return the upper right x-coordinate
@@ -364,16 +301,6 @@ public class Rectangle implements Element {
      */
     public void setRight(float urx) {
         this.urx = urx;
-    }
-
-    /**
-     * Returns the upper right x-coordinate, considering a given margin.
-     *
-     * @param margin a margin
-     * @return the upper right x-coordinate
-     */
-    public float getRight(float margin) {
-        return urx - margin;
     }
 
     /**
@@ -404,16 +331,6 @@ public class Rectangle implements Element {
     }
 
     /**
-     * Returns the upper right y-coordinate, considering a given margin.
-     *
-     * @param margin a margin
-     * @return the upper right y-coordinate
-     */
-    public float getTop(float margin) {
-        return ury - margin;
-    }
-
-    /**
      * Returns the lower left y-coordinate.
      *
      * @return the lower left y-coordinate
@@ -429,16 +346,6 @@ public class Rectangle implements Element {
      */
     public void setBottom(float lly) {
         this.lly = lly;
-    }
-
-    /**
-     * Returns the lower left y-coordinate, considering a given margin.
-     *
-     * @param margin a margin
-     * @return the lower left y-coordinate
-     */
-    public float getBottom(float margin) {
-        return lly + margin;
     }
 
     /**
@@ -460,21 +367,6 @@ public class Rectangle implements Element {
     }
 
     // METHODS TO GET/SET THE ROTATION:
-
-    /**
-     * Sets the rotation of the rectangle. Valid values are 0, 90, 180, and 270.
-     *
-     * @param rotation the new rotation value
-     * @since iText 5.0.6
-     */
-    public void setRotation(final int rotation) {
-        int mod = rotation % 360;
-        if ((mod == 90) || (mod == 180) || (mod == 270)) {
-            this.rotation = mod;
-        } else {
-            this.rotation = 0;
-        }
-    }
 
     // METHODS TO GET/SET THE BACKGROUND COLOR:
 
@@ -533,18 +425,6 @@ public class Rectangle implements Element {
      */
     public boolean isUseVariableBorders() {
         return useVariableBorders;
-    }
-
-    /**
-     * Disables the border on the specified side.
-     *
-     * @param side the side to disable. One of <CODE>LEFT, RIGHT, TOP, BOTTOM</CODE>
-     */
-    public void disableBorderSide(int side) {
-        if (border == UNDEFINED) {
-            border = 0;
-        }
-        border &= ~side;
     }
 
     // METHODS TO GET/SET THE BORDER WIDTH:
@@ -668,26 +548,6 @@ public class Rectangle implements Element {
     }
 
     // SPECIAL METHODS:
-
-    /**
-     * Gets a Rectangle that is altered to fit on the page.
-     *
-     * @param top    the top position
-     * @param bottom the bottom position
-     * @return a <CODE>Rectangle</CODE>
-     */
-    public Rectangle rectangle(float top, float bottom) {
-        Rectangle tmp = new Rectangle(this);
-        if (getTop() > top) {
-            tmp.setTop(top);
-            tmp.disableBorderSide(TOP);
-        }
-        if (getBottom() < bottom) {
-            tmp.setBottom(bottom);
-            tmp.disableBorderSide(BOTTOM);
-        }
-        return tmp;
-    }
 
     /**
      * Copies each of the parameters, except the position, from a

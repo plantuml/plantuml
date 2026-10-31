@@ -90,13 +90,6 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
      */
     public static final int NUMBERSTYLE_DOTTED = 0;
     /**
-     * A possible number style. For instance: "1.2.3"
-     *
-     * @since iText 2.0.8
-     */
-    public static final int NUMBERSTYLE_DOTTED_WITHOUT_FINAL_DOT = 1;
-
-    /**
      * A serial version uid.
      */
     private static final long serialVersionUID = 3324172577544748043L;
@@ -109,18 +102,6 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
     protected Paragraph title;
 
     /**
-     * The number of sectionnumbers that has to be shown before the section title.
-     */
-    protected int numberDepth;
-
-    /**
-     * The style for sectionnumbers.
-     *
-     * @since iText 2.0.8
-     */
-    protected int numberStyle = NUMBERSTYLE_DOTTED;
-
-    /**
      * The indentation of this section on the left side.
      */
     protected float indentationLeft;
@@ -129,11 +110,6 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
      * The indentation of this section on the right side.
      */
     protected float indentationRight;
-
-    /**
-     * The additional indentation of the content of this section.
-     */
-    protected float indentation;
 
     /**
      * This is the complete list of sectionnumbers of this section and the parents of this section.
@@ -166,78 +142,12 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
     // implementation of the Element-methods
 
     /**
-     * Constructs a Paragraph that will be used as title for a Section or Chapter.
-     *
-     * @param title       the title of the section
-     * @param numbers     a list of sectionnumbers
-     * @param numberDepth how many numbers have to be shown
-     * @param numberStyle the numbering style
-     * @return a Paragraph object
-     * @since iText 2.0.8
-     */
-    public static Paragraph constructTitle(Paragraph title, java.util.List<Integer> numbers, int numberDepth,
-            int numberStyle) {
-        if (title == null) {
-            return null;
-        }
-
-        int depth = Math.min(numbers.size(), numberDepth);
-        if (depth < 1) {
-            return title;
-        }
-        StringBuilder buf = new StringBuilder(" ");
-        for (int i = 0; i < depth; i++) {
-            buf.insert(0, ".");
-            buf.insert(0, numbers.get(i).intValue());
-        }
-        if (numberStyle == NUMBERSTYLE_DOTTED_WITHOUT_FINAL_DOT) {
-            buf.deleteCharAt(buf.length() - 2);
-        }
-        Paragraph result = new Paragraph(title);
-        result.add(0, new Chunk(buf.toString(), title.getFont()));
-        return result;
-    }
-
-    /**
-     * Processes the element by adding it (or the different parts) to an
-     * <CODE>ElementListener</CODE>.
-     *
-     * @param listener the <CODE>ElementListener</CODE>
-     * @return <CODE>true</CODE> if the element was processed successfully
-     */
-    public boolean process(ElementListener listener) {
-        try {
-            Element element;
-            for (Object o : this) {
-                element = (Element) o;
-                listener.add(element);
-            }
-            return true;
-        } catch (DocumentException de) {
-            return false;
-        }
-    }
-
-    /**
      * Gets the type of the text element.
      *
      * @return a type
      */
     public int type() {
         return Element.SECTION;
-    }
-
-    /**
-     * Gets all the chunks in this element.
-     *
-     * @return an <CODE>ArrayList</CODE>
-     */
-    public ArrayList<Element> getChunks() {
-        ArrayList<Element> tmp = new ArrayList<>();
-        for (Element o : this) {
-            tmp.addAll(o.getChunks());
-        }
-        return tmp;
     }
 
     /**
@@ -303,51 +213,6 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
     }
 
     // public methods
-
-    /**
-     * Returns the title, preceded by a certain number of sectionnumbers.
-     *
-     * @return a <CODE>Paragraph</CODE>
-     */
-    public Paragraph getTitle() {
-        return constructTitle(title, numbers, numberDepth, numberStyle);
-    }
-
-    /**
-     * Returns the indentation of this <CODE>Section</CODE> on the left side.
-     *
-     * @return the indentation
-     */
-    public float getIndentationLeft() {
-        return indentationLeft;
-    }
-
-    /**
-     * Sets the indentation of this <CODE>Section</CODE> on the left side.
-     *
-     * @param indentation the indentation
-     */
-    public void setIndentationLeft(float indentation) {
-        indentationLeft = indentation;
-    }
-
-    /**
-     * Returns the indentation of this <CODE>Section</CODE> on the right side.
-     *
-     * @return the indentation
-     */
-    public float getIndentationRight() {
-        return indentationRight;
-    }
-
-    /**
-     * Sets the indentation of this <CODE>Section</CODE> on the right side.
-     *
-     * @param indentation the indentation
-     */
-    public void setIndentationRight(float indentation) {
-        indentationRight = indentation;
-    }
 
     /**
      * Changes the Chapter number.
@@ -424,20 +289,4 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
         return complete;
     }
 
-    /**
-     * @see org.openpdf.text.LargeElement#setComplete(boolean)
-     * @since iText 2.0.8
-     */
-    public void setComplete(boolean complete) {
-        this.complete = complete;
-    }
-
-    /**
-     * Adds a new page to the section.
-     *
-     * @since 2.1.1
-     */
-    public void newPage() {
-        this.add(Chunk.NEXTPAGE);
-    }
 }

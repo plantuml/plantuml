@@ -255,19 +255,6 @@ public class PdfArray extends PdfObject {
     }
 
     /**
-     * Inserts a <CODE>PdfObject</CODE> at the beginning of the
-     * <CODE>PdfArray</CODE>.
-     * <p>
-     * The <CODE>PdfObject</CODE> will be the first element, any other elements will be shifted to the right (adds one
-     * to their indices).
-     *
-     * @param object The <CODE>PdfObject</CODE> to add
-     */
-    public void addFirst(PdfObject object) {
-        arrayList.add(0, object);
-    }
-
-    /**
      * Checks if the <CODE>PdfArray</CODE> already contains a certain
      * <CODE>PdfObject</CODE>.
      *

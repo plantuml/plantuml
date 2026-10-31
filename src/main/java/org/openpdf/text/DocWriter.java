@@ -121,9 +121,6 @@ public abstract class DocWriter implements DocListener {
 
     // constructor
 
-    protected DocWriter() {
-    }
-
     /**
      * Constructs a <CODE>DocWriter</CODE>.
      *
@@ -227,9 +224,6 @@ public abstract class DocWriter implements DocListener {
      * if they actually support the use of pagenumbers.
      */
 
-    public void resetPageCount() {
-    }
-
     /**
      * Sets the page number.
      * <p>
@@ -238,9 +232,6 @@ public abstract class DocWriter implements DocListener {
      *
      * @param pageN the new page number
      */
-
-    public void setPageCount(int pageN) {
-    }
 
     // methods
 
@@ -335,20 +326,5 @@ public abstract class DocWriter implements DocListener {
      *
      * @throws IOException if there is any error
      */
-
-    /**
-     * @see org.openpdf.text.DocListener#setMarginMirroring(boolean)
-     */
-    public boolean setMarginMirroring(boolean MarginMirroring) {
-        return false;
-    }
-
-    /**
-     * @see org.openpdf.text.DocListener#setMarginMirroring(boolean)
-     * @since 2.1.6
-     */
-    public boolean setMarginMirroringTopBottom(boolean MarginMirroring) {
-        return false;
-    }
 
 }

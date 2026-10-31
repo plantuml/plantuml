@@ -176,12 +176,6 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
     public static final PdfName BASEFONT = new PdfName("BaseFont");
     /**
      * A name
-     *
-     * @since 2.1.6
-     */
-    public static final PdfName BASEVERSION = new PdfName("BaseVersion");
-    /**
-     * A name
      */
     public static final PdfName BBOX = new PdfName("BBox");
     /**
@@ -210,11 +204,6 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
      * one of the standard blend modes.
      */
     public static final PdfName BM = new PdfName("BM");
-    /**
-     * Optional) An array specifying the characteristics of the annotation's border, which shall be drawn as a rounded
-     * rectangle.
-     */
-    public static final PdfName BORDER = new PdfName("Border");
     /**
      * A name
      */
@@ -518,12 +507,6 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
      * @since 2.1.6
      */
     public static final PdfName EXTENSIONS = new PdfName("Extensions");
-    /**
-     * A name
-     *
-     * @since 2.1.6
-     */
-    public static final PdfName EXTENSIONLEVEL = new PdfName("ExtensionLevel");
     /**
      * A name
      */
@@ -935,10 +918,6 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
     /**
      * A name
      */
-    public static final PdfName NEXT = new PdfName("Next");
-    /**
-     * A name
-     */
     public static final PdfName NEXTPAGE = new PdfName("NextPage");
 
     /**
@@ -1034,10 +1013,6 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
      */
     public static final PdfName PAGES = new PdfName("Pages");
     /**
-     * A name
-     */
-    public static final PdfName PAINTTYPE = new PdfName("PaintType");
-    /**
      * (Required if this field is the child of another in the field hierarchy; absent otherwise) The field that is the
      * immediate parent of this one (the field, if any, whose Kids array includes this field). A field can have at most
      * one parent; that is, it can be included in the Kids array of at most one other field.
@@ -1047,10 +1022,6 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
      * A name
      */
     public static final PdfName PATTERN = new PdfName("Pattern");
-    /**
-     * A name
-     */
-    public static final PdfName PATTERNTYPE = new PdfName("PatternType");
     /**
      * A name.
      *
@@ -1268,10 +1239,6 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
      */
     public static final PdfName TI = new PdfName("TI");
     /**
-     * A name
-     */
-    public static final PdfName TILINGTYPE = new PdfName("TilingType");
-    /**
      * A name of a base 14 type 1 font
      */
     public static final PdfName TIMES_ROMAN = new PdfName("Times-Roman");
@@ -1458,10 +1425,6 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
     /**
      * A name of an encoding
      */
-    public static final PdfName WIN = new PdfName("Win");
-    /**
-     * A name of an encoding
-     */
     public static final PdfName WIN_ANSI_ENCODING = new PdfName("WinAnsiEncoding");
     /**
      * A name
@@ -1506,19 +1469,11 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
     /**
      * A name
      */
-    public static final PdfName XSTEP = new PdfName("XStep");
-    /**
-     * A name
-     */
     public static final PdfName XREF = new PdfName("XRef");
     /**
      * A name
      */
     public static final PdfName XYZ = new PdfName("XYZ");
-    /**
-     * A name
-     */
-    public static final PdfName YSTEP = new PdfName("YStep");
     /**
      * A name of a base 14 type 1 font
      */

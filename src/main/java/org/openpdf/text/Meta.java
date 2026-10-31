@@ -49,7 +49,6 @@
 
 package org.openpdf.text;
 
-import java.util.ArrayList;
 
 /**
  * This is an <CODE>Element</CODE> that contains some meta information about the document.
@@ -93,36 +92,12 @@ public class Meta implements Element {
     // implementation of the Element-methods
 
     /**
-     * Processes the element by adding it (or the different parts) to a
-     * <CODE>ElementListener</CODE>.
-     *
-     * @param listener the <CODE>ElementListener</CODE>
-     * @return <CODE>true</CODE> if the element was processed successfully
-     */
-    public boolean process(ElementListener listener) {
-        try {
-            return listener.add(this);
-        } catch (DocumentException de) {
-            return false;
-        }
-    }
-
-    /**
      * Gets the type of the text element.
      *
      * @return a type
      */
     public int type() {
         return type;
-    }
-
-    /**
-     * Gets all the chunks in this element.
-     *
-     * @return an <CODE>ArrayList</CODE>
-     */
-    public ArrayList<Element> getChunks() {
-        return new ArrayList<>();
     }
 
     /**
@@ -144,16 +119,6 @@ public class Meta implements Element {
     }
 
     // methods to retrieve information
-
-    /**
-     * appends some text to this <CODE>Meta</CODE>.
-     *
-     * @param string a <CODE>String</CODE>
-     * @return a <CODE>StringBuffer</CODE>
-     */
-    public StringBuffer append(String string) {
-        return content.append(string);
-    }
 
     /**
      * Returns the content of the meta information.

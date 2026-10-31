@@ -50,7 +50,6 @@
 package org.openpdf.text.pdf;
 
 import org.openpdf.text.Rectangle;
-import java.awt.Color;
 
 /**
  * A <CODE>PdfAnnotation</CODE> is a note that is associated with a page.
@@ -77,38 +76,12 @@ public class PdfAnnotation extends PdfDictionary {
     protected PdfIndirectReference reference;
     protected boolean annotation = true;
 
-    /**
-     * Holds value of property used.
-     */
-    protected boolean used = false;
-
     // constructors
     public PdfAnnotation(PdfWriter writer, Rectangle rect) {
         this.writer = writer;
         if (rect != null) {
             put(PdfName.RECT, new PdfRectangle(rect));
         }
-        addFKey();
-    }
-
-    /**
-     * Constructs a new <CODE>PdfAnnotation</CODE> of subtype text.
-     *
-     * @param writer  pdf writer
-     * @param llx     lower-left-x
-     * @param lly     lower-left-y
-     * @param urx     upper-right-x
-     * @param ury     upper-right-y
-     * @param title   title
-     * @param content content
-     */
-    public PdfAnnotation(PdfWriter writer, float llx, float lly, float urx, float ury, PdfString title,
-            PdfString content) {
-        this.writer = writer;
-        put(PdfName.SUBTYPE, PdfName.TEXT);
-        put(PdfName.T, title);
-        put(PdfName.RECT, new PdfRectangle(llx, lly, urx, ury));
-        put(PdfName.CONTENTS, content);
         addFKey();
     }
 
@@ -122,16 +95,6 @@ public class PdfAnnotation extends PdfDictionary {
      * @param ury    upper-right-y
      * @param action {@link PdfAction}
      */
-
-    public PdfAnnotation(PdfWriter writer, float llx, float lly, float urx, float ury, PdfAction action) {
-        this.writer = writer;
-        put(PdfName.SUBTYPE, PdfName.LINK);
-        put(PdfName.RECT, new PdfRectangle(llx, lly, urx, ury));
-        put(PdfName.A, action);
-        put(PdfName.BORDER, new PdfBorderArray(0, 0, 0));
-        put(PdfName.C, new PdfColor(0x00, 0x00, 0xFF));
-        addFKey();
-    }
 
     /**
      * Creates a link.
@@ -182,25 +145,6 @@ public class PdfAnnotation extends PdfDictionary {
     }
 
     /**
-     * Creates an Annotation with a PdfDestination.
-     *
-     * @param writer    {@link PdfWriter}
-     * @param rect      dimensions {@link Rectangle}
-     * @param highlight title for the link
-     * @param page      page
-     * @param dest      destination for pdf annotation
-     * @return A PdfAnnotation
-     */
-    public static PdfAnnotation createLink(PdfWriter writer, Rectangle rect, PdfName highlight, int page,
-            PdfDestination dest) {
-        PdfAnnotation annot = createLink(writer, rect, highlight);
-        PdfIndirectReference ref = writer.getPageReference(page);
-        dest.addPage(ref);
-        annot.put(PdfName.DEST, dest);
-        return annot;
-    }
-
-    /**
      * Returns an indirect reference to the annotation
      *
      * @return the indirect reference
@@ -210,10 +154,6 @@ public class PdfAnnotation extends PdfDictionary {
             reference = writer.getPdfIndirectReference();
         }
         return reference;
-    }
-
-    public void setColor(Color color) {
-        put(PdfName.C, new PdfColor(color));
     }
 
     private void addFKey() {

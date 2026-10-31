@@ -330,20 +330,6 @@ public abstract class BaseFont {
     }
 
     /**
-     * Creates a new font. This will always be the default Helvetica font (not embedded). This method is introduced
-     * because Helvetica is used in many examples.
-     *
-     * @return a BaseFont object (Helvetica, Winansi, not embedded)
-     * @throws IOException       This shouldn't occur ever
-     * @throws DocumentException This shouldn't occur ever
-     * @since 2.1.1
-     */
-    public static BaseFont createFont() throws DocumentException, IOException {
-        return createFont(BaseFont.HELVETICA, BaseFont.WINANSI,
-                BaseFont.NOT_EMBEDDED);
-    }
-
-    /**
      * Creates a new font. This font can be one of the 14 built in types, a Type1 font referred to by an AFM or PFM
      * file, a TrueType font (simple or collection) or a CJK font from the Adobe Asian Font Pack. TrueType fonts and CJK
      * fonts can have an optional style modifier appended to the name. These modifiers are: Bold, Italic and BoldItalic.
@@ -391,113 +377,6 @@ public abstract class BaseFont {
     public static BaseFont createFont(String name, String encoding,
             boolean embedded) throws DocumentException, IOException {
         return createFont(name, encoding, embedded, true, null, null, false);
-    }
-
-    /**
-     * Creates a new font. This font can be one of the 14 built in types, a Type1 font referred to by an AFM or PFM
-     * file, a TrueType font (simple or collection) or a CJK font from the Adobe Asian Font Pack. TrueType fonts and CJK
-     * fonts can have an optional style modifier appended to the name. These modifiers are: Bold, Italic and BoldItalic.
-     * An example would be "STSong-Light,Bold". Note that this modifiers do not work if the font is embedded. Fonts in
-     * TrueType collections are addressed by index such as "msgothic.ttc,1". This would get the second font (indexes
-     * start at 0), in this case "MS PGothic".
-     * <p>
-     * The fonts are cached and if they already exist they are extracted from the cache, not parsed again.
-     * <p>
-     * Besides the common encodings described by name, custom encodings can also be made. These encodings will only work
-     * for the single byte fonts Type1 and TrueType. The encoding string starts with a '#' followed by "simple" or
-     * "full". If "simple" there is a decimal for the first character position and then a list of hex values
-     * representing the Unicode codes that compose that encoding.<br> The "simple" encoding is recommended for TrueType
-     * fonts as the "full" encoding risks not matching the character with the right glyph if not done with care.<br> The
-     * "full" encoding is specially aimed at Type1 fonts where the glyphs have to be described by non standard names
-     * like the Tex math fonts. Each group of three elements compose a code position: the one byte code order in decimal
-     * or as 'x' (x cannot be the space), the name and the Unicode character used to access the glyph. The space must be
-     * assigned to character position 32 otherwise text justification will not work.
-     * <p>
-     * Example for a "simple" encoding that includes the Unicode character space, A, B and ecyrillic:
-     *
-     * <PRE>
-     * &quot;# simple 32 0020 0041 0042 0454&quot;
-     * </PRE>
-     * <p>
-     * Example for a "full" encoding for a Type1 Tex font:
-     *
-     * <PRE>
-     * &quot;# full 'A' nottriangeqlleft 0041 'B' dividemultiply 0042 32 space 0020&quot;
-     * </PRE>
-     * <p>
-     * This method calls:<br>
-     *
-     * <PRE>
-     * createFont(name, encoding, embedded, true, null, null);
-     * </PRE>
-     *
-     * @param name      the name of the font or its location on file
-     * @param encoding  the encoding to be applied to this font
-     * @param embedded  true if the font is to be embedded in the PDF
-     * @param forceRead in some cases (TrueTypeFont, Type1Font), the full font file will be read and kept in memory if
-     *                  forceRead is true
-     * @return returns a new font. This font may come from the cache
-     * @throws DocumentException the font is invalid
-     * @throws IOException       the font file could not be read
-     * @since 2.1.5
-     */
-    public static BaseFont createFont(String name, String encoding,
-            boolean embedded, boolean forceRead) throws DocumentException,
-            IOException {
-        return createFont(name, encoding, embedded, true, null, null, forceRead);
-    }
-
-    /**
-     * Creates a new font. This font can be one of the 14 built in types, a Type1 font referred to by an AFM or PFM
-     * file, a TrueType font (simple or collection) or a CJK font from the Adobe Asian Font Pack. TrueType fonts and CJK
-     * fonts can have an optional style modifier appended to the name. These modifiers are: Bold, Italic and BoldItalic.
-     * An example would be "STSong-Light,Bold". Note that this modifiers do not work if the font is embedded. Fonts in
-     * TrueType collections are addressed by index such as "msgothic.ttc,1". This would get the second font (indexes
-     * start at 0), in this case "MS PGothic".
-     * <p>
-     * The fonts may or may not be cached depending on the flag
-     * <CODE>cached</CODE>. If the <CODE>byte</CODE> arrays are present the font
-     * will be read from them instead of the name. A name is still required to identify the font type.
-     * <p>
-     * Besides the common encodings described by name, custom encodings can also be made. These encodings will only work
-     * for the single byte fonts Type1 and TrueType. The encoding string starts with a '#' followed by "simple" or
-     * "full". If "simple" there is a decimal for the first character position and then a list of hex values
-     * representing the Unicode codes that compose that encoding.<br> The "simple" encoding is recommended for TrueType
-     * fonts as the "full" encoding risks not matching the character with the right glyph if not done with care.<br> The
-     * "full" encoding is specially aimed at Type1 fonts where the glyphs have to be described by non standard names
-     * like the Tex math fonts. Each group of three elements compose a code position: the one byte code order in decimal
-     * or as 'x' (x cannot be the space), the name and the Unicode character used to access the glyph. The space must be
-     * assigned to character position 32 otherwise text justification will not work.
-     * <p>
-     * Example for a "simple" encoding that includes the Unicode character space, A, B and ecyrillic:
-     *
-     * <PRE>
-     * &quot;# simple 32 0020 0041 0042 0454&quot;
-     * </PRE>
-     * <p>
-     * Example for a "full" encoding for a Type1 Tex font:
-     *
-     * <PRE>
-     * &quot;# full 'A' nottriangeqlleft 0041 'B' dividemultiply 0042 32 space 0020&quot;
-     * </PRE>
-     *
-     * @param name     the name of the font or its location on file
-     * @param encoding the encoding to be applied to this font
-     * @param embedded true if the font is to be embedded in the PDF
-     * @param cached   true if the font comes from the cache or is added to the cache if new, false if the font is
-     *                 always created new
-     * @param ttfAfm   the true type font or the afm in a byte array
-     * @param pfb      the pfb in a byte array
-     * @return returns a new font. This font may come from the cache but only if cached is true, otherwise it will
-     * always be created new
-     * @throws DocumentException the font is invalid
-     * @throws IOException       the font file could not be read
-     * @since iText 0.80
-     */
-    public static BaseFont createFont(String name, String encoding,
-            boolean embedded, boolean cached, byte[] ttfAfm, byte[] pfb)
-            throws DocumentException, IOException {
-        return createFont(name, encoding, embedded, cached, ttfAfm, pfb, false);
     }
 
     /**
@@ -703,26 +582,6 @@ public abstract class BaseFont {
     abstract int getRawWidth(int c, String name);
 
     /**
-     * Gets the kerning between two Unicode chars.
-     *
-     * @param char1 the first char
-     * @param char2 the second char
-     * @return the kerning to be applied in normalized 1000 units
-     */
-    public abstract int getKerning(int char1, int char2);
-
-    /**
-     * Sets the kerning between two Unicode chars.
-     *
-     * @param char1 the first char
-     * @param char2 the second char
-     * @param kern  the kerning to apply in normalized 1000 units
-     * @return <code>true</code> if the kerning was applied, <code>false</code>
-     * otherwise
-     */
-    public abstract boolean setKerning(int char1, int char2, int kern);
-
-    /**
      * Gets the width of a <CODE>char</CODE> in normalized 1000 units.
      *
      * @param char1 the unicode <CODE>char</CODE> to get the width of
@@ -771,25 +630,6 @@ public abstract class BaseFont {
             }
         }
         return total;
-    }
-
-    /**
-     * Gets the descent of a <CODE>String</CODE> in normalized 1000 units. The descent will always be less than or equal
-     * to zero even if all the characters have an higher descent.
-     *
-     * @param text the <CODE>String</CODE> to get the descent of
-     * @return the descent in normalized 1000 units
-     */
-    public int getDescent(String text) {
-        int min = 0;
-        char[] chars = text.toCharArray();
-        for (char c : chars) {
-            int[] bbox = getCharBBox(c);
-            if (bbox != null && bbox[1] < min) {
-                min = bbox[1];
-            }
-        }
-        return min;
     }
 
     /**
@@ -928,52 +768,6 @@ public abstract class BaseFont {
     public abstract String getPostscriptFontName();
 
     /**
-     * Sets the font name that will appear in the pdf font dictionary. Use with care as it can easily make a font
-     * unreadable if not embedded.
-     *
-     * @param name the new font name
-     */
-    public abstract void setPostscriptFontName(String name);
-
-    /**
-     * Gets the full name of the font. If it is a True Type font each array element will have {Platform ID, Platform
-     * Encoding ID, Language ID, font name}. The interpretation of this values can be found in the Open Type
-     * specification, chapter 2, in the 'name' table.<br> For the other fonts the array has a single element with {"",
-     * "", "", font name}.
-     *
-     * @return the full name of the font
-     */
-    public abstract String[][] getFullFontName();
-
-    /**
-     * Gets all the entries of the names-table. If it is a True Type font each array element will have {Name ID,
-     * Platform ID, Platform Encoding ID, Language ID, font name}. The interpretation of this values can be found in the
-     * Open Type specification, chapter 2, in the 'name' table.<br> For the other fonts the array has a single element
-     * with {"4", "", "", "", font name}.
-     *
-     * @return the full name of the font
-     * @since 2.0.8
-     */
-    public abstract String[][] getAllNameEntries();
-
-    /**
-     * Gets the family name of the font. If it is a True Type font each array element will have {Platform ID, Platform
-     * Encoding ID, Language ID, font name}. The interpretation of this values can be found in the Open Type
-     * specification, chapter 2, in the 'name' table.<br> For the other fonts the array has a single element with {"",
-     * "", "", font name}.
-     *
-     * @return the family name of the font
-     */
-    public abstract String[][] getFamilyFontName();
-
-    /**
-     * Checks if the font has any kerning pairs.
-     *
-     * @return <CODE>true</CODE> if the font has any kerning pairs
-     */
-    public abstract boolean hasKernPairs();
-
-    /**
      * Gets the smallest box enclosing the character contours. It will return
      * <CODE>null</CODE> if the font has not the information or the character
      * has no contours, as in the case of the space, for example. Characters with no contours may also return
@@ -992,31 +786,6 @@ public abstract class BaseFont {
     }
 
     protected abstract int[] getRawCharBBox(int c, String name);
-
-    /**
-     * Returns the compression level used for the font streams.
-     *
-     * @return the compression level (0 = best speed, 9 = best compression, -1 is default)
-     * @since 2.1.3
-     */
-    public int getCompressionLevel() {
-        return compressionLevel;
-    }
-
-    /**
-     * Sets the compression level to be used for the font streams.
-     *
-     * @param compressionLevel a value between 0 (best speed) and 9 (best compression)
-     * @since 2.1.3
-     */
-    public void setCompressionLevel(int compressionLevel) {
-        if (compressionLevel < PdfStream.NO_COMPRESSION
-                || compressionLevel > PdfStream.BEST_COMPRESSION) {
-            this.compressionLevel = PdfStream.DEFAULT_COMPRESSION;
-        } else {
-            this.compressionLevel = compressionLevel;
-        }
-    }
 
     /**
      * Generates the PDF stream with the Type1 and Truetype fonts returning a PdfStream.

@@ -49,7 +49,6 @@
 
 package org.openpdf.text.pdf;
 
-import org.openpdf.text.DocListener;
 import org.openpdf.text.DocWriter;
 import org.openpdf.text.Document;
 import org.openpdf.text.DocumentException;
@@ -61,7 +60,6 @@ import org.openpdf.text.pdf.interfaces.PdfVersion;
 import org.openpdf.text.pdf.interfaces.PdfXConformance;
 import org.openpdf.text.pdf.internal.PdfVersionImp;
 import org.openpdf.text.pdf.internal.PdfXConformanceImp;
-import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -202,30 +200,6 @@ public class PdfWriter extends DocWriter implements
      * PDFA-1B level.
      */
     public static final int PDFA1B = 4;
-    /**
-     * PDFA-2A level.
-     */
-    public static final int PDFA2A = 5;
-    /**
-     * PDFA-2B level.
-     */
-    public static final int PDFA2B = 6;
-    /**
-     * PDFA-2U level.
-     */
-    public static final int PDFA2U = 7;
-    /**
-     * PDFA-3A level.
-     */
-    public static final int PDFA3A = 8;
-    /**
-     * PDFA-3B level.
-     */
-    public static final int PDFA3B = 9;
-    /**
-     * PDFA-3U level.
-     */
-    public static final int PDFA3U = 10;
 // Root data for the PDF document (used when composing the Catalog)
 
     /**
@@ -236,11 +210,6 @@ public class PdfWriter extends DocWriter implements
      * Do not use bidirectional reordering.
      */
     public static final int RUN_DIRECTION_NO_BIDI = 1;
-    /**
-     * Use bidirectional reordering with right-to-left preferential run direction.
-     */
-    public static final int RUN_DIRECTION_RTL = 3;
-
 //  [C3] PdfViewerPreferences interface
 
     /**
@@ -363,7 +332,6 @@ public class PdfWriter extends DocWriter implements
     /**
      * The patterns of this document
      */
-    protected HashMap<PdfPatternPainter, PdfName> documentPatterns = new LinkedHashMap<>();
 
 //  [C5] named objects: named destinations, javascript, embedded files
     /**
@@ -382,13 +350,6 @@ public class PdfWriter extends DocWriter implements
     protected int runDirection = RUN_DIRECTION_NO_BIDI;
     protected float userunit = 0f;
     protected PdfDictionary defaultColorspace = new PdfDictionary();
-    protected HashMap<ColorDetails, ColorDetails> documentSpotPatterns = new LinkedHashMap<>();
-    protected ColorDetails patternColorspaceRGB;
-    protected ColorDetails patternColorspaceGRAY;
-
-    //  [C7] portable collections
-    protected ColorDetails patternColorspaceCMYK;
-
 //  [C8] AcroForm
     /**
      * Dictionary, containing all the images of the PDF document
@@ -404,12 +365,6 @@ public class PdfWriter extends DocWriter implements
      * Holds value of property RGBTranparency.
      */
     private boolean rgbTransparencyBlending;
-
-    /**
-     * Constructs a <CODE>PdfWriter</CODE>.
-     */
-    protected PdfWriter() {
-    }
 
 //  [C9] Metadata
 
@@ -458,17 +413,6 @@ public class PdfWriter extends DocWriter implements
      * @return a new <CODE>PdfWriter</CODE>
      * @throws DocumentException on error
      */
-
-    public static PdfWriter getInstance(Document document, OutputStream os, DocListener listener)
-            throws DocumentException {
-        PdfDocument pdf = new PdfDocument();
-        pdf.setTextRenderingOptions(document.getTextRenderingOptions());
-        pdf.addDocListener(listener);
-        document.addDocListener(pdf);
-        PdfWriter writer = new PdfWriter(pdf, os);
-        pdf.addWriter(writer);
-        return writer;
-    }
 
 //  [C10] PDFX Conformance
 
@@ -592,10 +536,6 @@ public class PdfWriter extends DocWriter implements
 
     public PdfIndirectReference getPdfIndirectReference() {
         return body.getPdfIndirectReference();
-    }
-
-    int getIndirectReferenceNumber() {
-        return body.getIndirectReferenceNumber();
     }
 
     /**
@@ -832,10 +772,6 @@ public class PdfWriter extends DocWriter implements
         for (ColorDetails color : documentColors.values()) {
             addToBody(color.getSpotColor(this), color.getIndirectReference());
         }
-        // [F7] add the pattern
-        for (PdfPatternPainter pat : documentPatterns.keySet()) {
-            addToBody(pat.getPattern(compressionLevel), pat.getIndirectReference());
-        }
         // [F8] add the shading patterns
         for (PdfShadingPattern shadingPattern : documentShadingPatterns.keySet()) {
             shadingPattern.addToBody();
@@ -861,52 +797,19 @@ public class PdfWriter extends DocWriter implements
     }
 
     /**
-     * @see org.openpdf.text.pdf.interfaces.PdfVersion#setAtLeastPdfVersion(String)
-     */
-    public void setAtLeastPdfVersion(String version) {
-        pdf_version.setAtLeastPdfVersion(version);
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfVersion#addDeveloperExtension(org.openpdf.text.pdf.PdfDeveloperExtension)
-     * @since 2.1.6
-     */
-    public void addDeveloperExtension(PdfDeveloperExtension de) {
-        pdf_version.addDeveloperExtension(de);
-    }
-
-    /**
      * Returns the version information.
      */
     PdfVersionImp getPdfVersion() {
         return pdf_version;
     }
 
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfVersion#setPdfVersion(String)
-     */
-    public void setPdfVersion(String version) {
-        pdf_version.setPdfVersion(version);
-    }
-
 //  [F3] adding fonts
-
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfVersion#setPdfVersion(org.openpdf.text.pdf.PdfName)
-     */
-    public void setPdfVersion(PdfName version) {
-        pdf_version.setPdfVersion(version);
-    }
 
     /**
      * @see org.openpdf.text.pdf.interfaces.PdfAnnotations#addAnnotation(org.openpdf.text.pdf.PdfAnnotation)
      */
     public void addAnnotation(PdfAnnotation annot) {
         pdf.addAnnotation(annot);
-    }
-
-    void addAnnotation(PdfAnnotation annot, int page) {
-        addAnnotation(annot);
     }
 
 //  [F9] document shadings
@@ -918,29 +821,6 @@ public class PdfWriter extends DocWriter implements
      */
     public int getPDFXConformance() {
         return pdfxConformance.getPDFXConformance();
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfXConformance#setPDFXConformance(int)
-     */
-    public void setPDFXConformance(int pdfx) {
-        if (pdfxConformance.getPDFXConformance() == pdfx) {
-            return;
-        }
-        if (pdf.isOpen()) {
-            throw new PdfXConformanceException(
-                    MessageLocalization.getComposedMessage(
-                            "pdfx.conformance.can.only.be.set.before.opening.the.document"));
-        }
-        if (pdfx == PDFA1A || pdfx == PDFA1B) {
-            setPdfVersion(VERSION_1_4);
-        } else if (pdfx == PDFA2A || pdfx == PDFA2B || pdfx == PDFA2U
-                || pdfx == PDFA3A || pdfx == PDFA3B || pdfx == PDFA3U) {
-            setPdfVersion(VERSION_1_7);
-        } else if (pdfx != PDFXNONE) {
-            setPdfVersion(VERSION_1_3);
-        }
-        pdfxConformance.setPDFXConformance(pdfx);
     }
 
     /**
@@ -1039,20 +919,6 @@ public class PdfWriter extends DocWriter implements
         return ret;
     }
 
-    PdfName addSimplePattern(PdfPatternPainter painter) {
-        PdfName name = documentPatterns.get(painter);
-        try {
-            if (name == null) {
-                name = new PdfName("P" + patternNumber);
-                ++patternNumber;
-                documentPatterns.put(painter, name);
-            }
-        } catch (Exception e) {
-            throw new ExceptionConverter(e);
-        }
-        return name;
-    }
-
 //  [U3] page actions (open and close)
 
     void addSimpleShadingPattern(PdfShadingPattern shading) {
@@ -1086,42 +952,11 @@ public class PdfWriter extends DocWriter implements
 
 //  [U7] run direction (doesn't actually do anything)
 
-    /**
-     * Checks if a newPage() will actually generate a new page.
-     *
-     * @return true if a new page will be generated, false otherwise
-     * @since 2.1.8
-     */
-    public boolean isPageEmpty() {
-        return pdf.isPageEmpty();
-    }
-
 // Miscellaneous topics
 
 //  [M1] Color settings
 
 //  [M2] spot patterns
-
-    /**
-     * Use this method to set the run direction.
-     *
-     * @return the run direction
-     */
-    public int getRunDirection() {
-        return runDirection;
-    }
-
-    /**
-     * Use this method to set the run direction. This is only used as a placeholder as it does not affect anything.
-     *
-     * @param runDirection the run direction
-     */
-    public void setRunDirection(int runDirection) {
-        if (runDirection < RUN_DIRECTION_NO_BIDI || runDirection > RUN_DIRECTION_RTL) {
-            throw new RuntimeException(MessageLocalization.getComposedMessage("invalid.run.direction.1", runDirection));
-        }
-        this.runDirection = runDirection;
-    }
 
     /**
      * Use this method to get the user unit. A user unit is a value that defines the default user space unit. The
@@ -1160,61 +995,6 @@ public class PdfWriter extends DocWriter implements
             defaultColorspace.remove(key);
         }
         defaultColorspace.put(key, cs);
-    }
-
-    ColorDetails addSimplePatternColorspace(Color color) {
-        int type = ExtendedColor.getType(color);
-        if (type == ExtendedColor.TYPE_PATTERN || type == ExtendedColor.TYPE_SHADING) {
-            throw new RuntimeException(MessageLocalization.getComposedMessage(
-                    "an.uncolored.tile.pattern.can.not.have.another.pattern.or.shading.as.color"));
-        }
-        try {
-            switch (type) {
-                case ExtendedColor.TYPE_RGB:
-                    if (patternColorspaceRGB == null) {
-                        patternColorspaceRGB = new ColorDetails(getColorspaceName(), body.getPdfIndirectReference(),
-                                null);
-                        PdfArray array = new PdfArray(PdfName.PATTERN);
-                        array.add(PdfName.DEVICERGB);
-                        addToBody(array, patternColorspaceRGB.getIndirectReference());
-                    }
-                    return patternColorspaceRGB;
-                case ExtendedColor.TYPE_CMYK:
-                    if (patternColorspaceCMYK == null) {
-                        patternColorspaceCMYK = new ColorDetails(getColorspaceName(), body.getPdfIndirectReference(),
-                                null);
-                        PdfArray array = new PdfArray(PdfName.PATTERN);
-                        array.add(PdfName.DEVICECMYK);
-                        addToBody(array, patternColorspaceCMYK.getIndirectReference());
-                    }
-                    return patternColorspaceCMYK;
-                case ExtendedColor.TYPE_GRAY:
-                    if (patternColorspaceGRAY == null) {
-                        patternColorspaceGRAY = new ColorDetails(getColorspaceName(), body.getPdfIndirectReference(),
-                                null);
-                        PdfArray array = new PdfArray(PdfName.PATTERN);
-                        array.add(PdfName.DEVICEGRAY);
-                        addToBody(array, patternColorspaceGRAY.getIndirectReference());
-                    }
-                    return patternColorspaceGRAY;
-                case ExtendedColor.TYPE_SEPARATION: {
-                    ColorDetails details = addSimple(((SpotColor) color).getPdfSpotColor());
-                    ColorDetails patternDetails = documentSpotPatterns.get(details);
-                    if (patternDetails == null) {
-                        patternDetails = new ColorDetails(getColorspaceName(), body.getPdfIndirectReference(), null);
-                        PdfArray array = new PdfArray(PdfName.PATTERN);
-                        array.add(details.getIndirectReference());
-                        addToBody(array, patternDetails.getIndirectReference());
-                        documentSpotPatterns.put(details, patternDetails);
-                    }
-                    return patternDetails;
-                }
-                default:
-                    throw new RuntimeException(MessageLocalization.getComposedMessage("invalid.color.type"));
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
     }
 
     /**

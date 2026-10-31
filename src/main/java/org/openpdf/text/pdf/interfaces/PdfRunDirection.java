@@ -51,17 +51,4 @@ package org.openpdf.text.pdf.interfaces;
 
 public interface PdfRunDirection {
 
-    /**
-     * Gets the run direction.
-     *
-     * @return the run direction
-     */
-    int getRunDirection();
-
-    /**
-     * Sets the run direction. This is only used as a placeholder as it does not affect anything.
-     *
-     * @param runDirection the run direction
-     */
-    void setRunDirection(int runDirection);
 }

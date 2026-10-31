@@ -328,39 +328,6 @@ public class PdfContentByte {
      */
 
     /**
-     * Gets the current text leading.
-     *
-     * @return the current text leading
-     */
-    public float getLeading() {
-        return state.leading;
-    }
-
-    /**
-     * Sets the text leading parameter.
-     * <p>
-     * The leading parameter is measured in text space units. It specifies the vertical distance between the baselines
-     * of adjacent lines of text.</P>
-     *
-     * @param leading the new leading
-     */
-    public void setLeading(float leading) {
-        if (state != null) {
-            state.leading = leading;
-        }
-        content.append(leading).append(" TL").append_i(separator);
-    }
-
-    /**
-     * Gets the current character spacing.
-     *
-     * @return the current character spacing
-     */
-    public float getHorizontalScaling() {
-        return state.scale;
-    }
-
-    /**
      * Changes the <VAR>Flatness</VAR>.
      * <p>
      * <VAR>Flatness</VAR> sets the maximum permitted distance in device pixels between the
@@ -409,10 +376,6 @@ public class PdfContentByte {
      * @param unitsOn the number of units that must be 'on' (equals the number of units that must be 'off').
      */
 
-    public void setLineDash(float unitsOn, float phase) {
-        content.append("[").append(unitsOn).append("] ").append(phase).append(" d").append_i(separator);
-    }
-
     /**
      * Changes the value of the <VAR>line dash pattern</VAR>.
      * <p>
@@ -440,17 +403,6 @@ public class PdfContentByte {
      * @param array length of the alternating dashes and gaps
      * @param phase the value of the phase
      */
-
-    public final void setLineDash(float[] array, float phase) {
-        content.append("[");
-        for (int i = 0; i < array.length; i++) {
-            content.append(array[i]);
-            if (i < array.length - 1) {
-                content.append(' ');
-            }
-        }
-        content.append("] ").append(phase).append(" d").append_i(separator);
-    }
 
     /**
      * Changes the <VAR>Line join style</VAR>.
@@ -496,10 +448,6 @@ public class PdfContentByte {
      * Modify the current clipping path by intersecting it with the current path, using the nonzero winding number rule
      * to determine which regions lie inside the clipping path.
      */
-
-    public void clip() {
-        content.append("W").append_i(separator);
-    }
 
     /**
      * Modify the current clipping path by intersecting it with the current path, using the even-odd rule to determine
@@ -780,11 +728,6 @@ public class PdfContentByte {
      * @param x3 x-coordinate of the ending point (= new current point)
      * @param y3 y-coordinate of the ending point (= new current point)
      */
-
-    public void curveTo(float x2, float y2, float x3, float y3) {
-        content.append(x2).append(' ').append(y2).append(' ').append(x3).append(' ').append(y3).append(" v")
-                .append_i(separator);
-    }
 
     /**
      * Appends a B&#xea;zier curve to the path, starting from the current point.
@@ -1139,23 +1082,6 @@ public class PdfContentByte {
         matrix[Image.CX] = image.getAbsoluteX() - matrix[Image.CX];
         matrix[Image.CY] = image.getAbsoluteY() - matrix[Image.CY];
         addImage(image, matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5], inlineImage);
-    }
-
-    /**
-     * Adds an <CODE>Image</CODE> to the page. The positioning of the <CODE>Image</CODE> is done with the transformation
-     * matrix. To position an <CODE>image</CODE> at (x,y) use addImage(image, image_width, 0, 0, image_height, x, y).
-     *
-     * @param image the <CODE>Image</CODE> object
-     * @param a     an element of the transformation matrix
-     * @param b     an element of the transformation matrix
-     * @param c     an element of the transformation matrix
-     * @param d     an element of the transformation matrix
-     * @param e     an element of the transformation matrix
-     * @param f     an element of the transformation matrix
-     * @throws DocumentException on error
-     */
-    public void addImage(Image image, float a, float b, float c, float d, float e, float f) throws DocumentException {
-        addImage(image, a, b, c, d, e, f, false);
     }
 
     /**
@@ -1691,11 +1617,6 @@ public class PdfContentByte {
                 setColorStroke(spot.getPdfSpotColor(), spot.getTint());
                 break;
             }
-            case ExtendedColor.TYPE_PATTERN: {
-                PatternColor pat = (PatternColor) color;
-                setPatternStroke(pat.getPainter());
-                break;
-            }
             case ExtendedColor.TYPE_SHADING: {
                 ShadingColor shading = (ShadingColor) color;
                 setShadingStroke(shading.getPdfShadingPattern());
@@ -1742,11 +1663,6 @@ public class PdfContentByte {
             case ExtendedColor.TYPE_SEPARATION: {
                 SpotColor spot = (SpotColor) color;
                 setColorFill(spot.getPdfSpotColor(), spot.getTint());
-                break;
-            }
-            case ExtendedColor.TYPE_PATTERN: {
-                PatternColor pat = (PatternColor) color;
-                setPatternFill(pat.getPainter());
                 break;
             }
             case ExtendedColor.TYPE_SHADING: {
@@ -1804,152 +1720,6 @@ public class PdfContentByte {
     }
 
     /**
-     * Sets the fill color to a pattern. The pattern can be colored or uncolored.
-     *
-     * @param p the pattern
-     */
-    public void setPatternFill(PdfPatternPainter p) {
-        if (p.isStencil()) {
-            setPatternFill(p, p.getDefaultColor());
-            return;
-        }
-        checkWriter();
-        saveColorFill(new PatternColor(p));
-        PageResources prs = getPageResources();
-        PdfName name = writer.addSimplePattern(p);
-        name = prs.addPattern(name, p.getIndirectReference());
-        content.append(PdfName.PATTERN.getBytes()).append(" cs ").append(name.getBytes()).append(" scn")
-                .append_i(separator);
-    }
-
-    /**
-     * Outputs the color values to the content.
-     *
-     * @param color The color
-     * @param tint  the tint if it is a spot color, ignored otherwise
-     */
-    void outputColorNumbers(Color color, float tint) {
-        PdfXConformanceImp.checkPDFXConformance(writer, PdfXConformanceImp.PDFXKEY_COLOR, color);
-        int type = ExtendedColor.getType(color);
-        switch (type) {
-            case ExtendedColor.TYPE_RGB:
-                content.append((float) (color.getRed()) / MAX_INT_COLOR_VALUE);
-                content.append(' ');
-                content.append((float) (color.getGreen()) / MAX_INT_COLOR_VALUE);
-                content.append(' ');
-                content.append((float) (color.getBlue()) / MAX_INT_COLOR_VALUE);
-                break;
-            case ExtendedColor.TYPE_GRAY:
-                content.append(((GrayColor) color).getGray());
-                break;
-            case ExtendedColor.TYPE_CMYK: {
-                CMYKColor cmyk = (CMYKColor) color;
-                content.append(cmyk.getCyan()).append(' ').append(cmyk.getMagenta());
-                content.append(' ').append(cmyk.getYellow()).append(' ').append(cmyk.getBlack());
-                break;
-            }
-            case ExtendedColor.TYPE_SEPARATION:
-                content.append(tint);
-                break;
-            default:
-                throw new RuntimeException(MessageLocalization.getComposedMessage("invalid.color.type"));
-        }
-    }
-
-    /**
-     * Sets the fill color to an uncolored pattern.
-     *
-     * @param p     the pattern
-     * @param color the color of the pattern
-     */
-    public void setPatternFill(PdfPatternPainter p, Color color) {
-        if (ExtendedColor.getType(color) == ExtendedColor.TYPE_SEPARATION) {
-            setPatternFill(p, color, ((SpotColor) color).getTint());
-        } else {
-            setPatternFill(p, color, 0);
-        }
-    }
-
-    /**
-     * Sets the fill color to an uncolored pattern.
-     *
-     * @param p     the pattern
-     * @param color the color of the pattern
-     * @param tint  the tint if the color is a spot color, ignored otherwise
-     */
-    public void setPatternFill(PdfPatternPainter p, Color color, float tint) {
-        checkWriter();
-        if (!p.isStencil()) {
-            throw new RuntimeException(MessageLocalization.getComposedMessage("an.uncolored.pattern.was.expected"));
-        }
-        saveColorFill(new RGBColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()));
-        PageResources prs = getPageResources();
-        PdfName name = writer.addSimplePattern(p);
-        name = prs.addPattern(name, p.getIndirectReference());
-        ColorDetails csDetail = writer.addSimplePatternColorspace(color);
-        PdfName cName = prs.addColor(csDetail.getColorName(), csDetail.getIndirectReference());
-        content.append(cName.getBytes()).append(" cs").append_i(separator);
-        outputColorNumbers(color, tint);
-        content.append(' ').append(name.getBytes()).append(" scn").append_i(separator);
-    }
-
-    /**
-     * Sets the stroke color to an uncolored pattern.
-     *
-     * @param p     the pattern
-     * @param color the color of the pattern
-     */
-    public void setPatternStroke(PdfPatternPainter p, Color color) {
-        if (ExtendedColor.getType(color) == ExtendedColor.TYPE_SEPARATION) {
-            setPatternStroke(p, color, ((SpotColor) color).getTint());
-        } else {
-            setPatternStroke(p, color, 0);
-        }
-    }
-
-    /**
-     * Sets the stroke color to an uncolored pattern.
-     *
-     * @param p     the pattern
-     * @param color the color of the pattern
-     * @param tint  the tint if the color is a spot color, ignored otherwise
-     */
-    public void setPatternStroke(PdfPatternPainter p, Color color, float tint) {
-        checkWriter();
-        if (!p.isStencil()) {
-            throw new RuntimeException(MessageLocalization.getComposedMessage("an.uncolored.pattern.was.expected"));
-        }
-        saveColorStroke(new PatternColor(p));
-        PageResources prs = getPageResources();
-        PdfName name = writer.addSimplePattern(p);
-        name = prs.addPattern(name, p.getIndirectReference());
-        ColorDetails csDetail = writer.addSimplePatternColorspace(color);
-        PdfName cName = prs.addColor(csDetail.getColorName(), csDetail.getIndirectReference());
-        content.append(cName.getBytes()).append(" CS").append_i(separator);
-        outputColorNumbers(color, tint);
-        content.append(' ').append(name.getBytes()).append(" SCN").append_i(separator);
-    }
-
-    /**
-     * Sets the stroke color to a pattern. The pattern can be colored or uncolored.
-     *
-     * @param p the pattern
-     */
-    public void setPatternStroke(PdfPatternPainter p) {
-        if (p.isStencil()) {
-            setPatternStroke(p, p.getDefaultColor());
-            return;
-        }
-        checkWriter();
-        saveColorStroke(new PatternColor(p));
-        PageResources prs = getPageResources();
-        PdfName name = writer.addSimplePattern(p);
-        name = prs.addPattern(name, p.getIndirectReference());
-        content.append(PdfName.PATTERN.getBytes()).append(" CS ").append(name.getBytes()).append(" SCN")
-                .append_i(separator);
-    }
-
-    /**
      * Sets the shading fill pattern.
      *
      * @param shading the shading pattern
@@ -1995,35 +1765,6 @@ public class PdfContentByte {
             throw new NullPointerException(
                     MessageLocalization.getComposedMessage("the.writer.in.pdfcontentbyte.is.null"));
         }
-    }
-
-    /**
-     * Show an array of text.
-     *
-     * @param text array of text
-     */
-    public void showText(PdfTextArray text) {
-        if (state.fontDetails == null) {
-            throw new NullPointerException(
-                    MessageLocalization.getComposedMessage("font.and.size.must.be.set.before.writing.any.text"));
-        }
-        content.append("[");
-        List arrayList = text.getArrayList();
-        boolean lastWasNumber = false;
-        for (Object obj : arrayList) {
-            if (obj instanceof String) {
-                showText2((String) obj);
-                lastWasNumber = false;
-            } else {
-                if (lastWasNumber) {
-                    content.append(' ');
-                } else {
-                    lastWasNumber = true;
-                }
-                content.append((Float) obj);
-            }
-        }
-        content.append("]TJ").append_i(separator);
     }
 
     /**
@@ -2109,23 +1850,6 @@ public class PdfContentByte {
             state.extGState = gstate;
         }
         content.append(name.getBytes()).append(" gs").append_i(separator);
-    }
-
-    void addAnnotation(PdfAnnotation annot) {
-        writer.addAnnotation(annot);
-    }
-
-    /**
-     * Sets the default colorspace.
-     *
-     * @param name the name of the colorspace. It can be <CODE>PdfName.DEFAULTGRAY</CODE>,
-     *             <CODE>PdfName.DEFAULTRGB</CODE> or <CODE>PdfName.DEFAULTCMYK</CODE>
-     * @param obj  the colorspace. A <CODE>null</CODE> or <CODE>PdfNull</CODE> removes any colorspace with the same
-     *             name
-     */
-    public void setDefaultColorspace(PdfName name, PdfObject obj) {
-        PageResources prs = getPageResources();
-        prs.addDefaultColor(name, obj);
     }
 
     /**

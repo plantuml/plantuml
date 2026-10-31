@@ -128,10 +128,6 @@ public class PdfBoolean extends PdfObject {
      * @return the actual value of the object.
      */
 
-    public boolean booleanValue() {
-        return value;
-    }
-
     public String toString() {
         return value ? TRUE : FALSE;
     }

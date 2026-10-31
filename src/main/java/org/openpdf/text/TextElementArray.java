@@ -63,11 +63,4 @@ package org.openpdf.text;
 
 public interface TextElementArray extends Element {
 
-    /**
-     * Adds an object to the <CODE>TextElementArray</CODE>.
-     *
-     * @param o an object that has to be added
-     * @return <CODE>true</CODE> if the addition succeeded; <CODE>false</CODE> otherwise
-     */
-    boolean add(Element o);
 }

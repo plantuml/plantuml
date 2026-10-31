@@ -308,35 +308,6 @@ class Type1Font extends BaseFont {
         return 0;
     }
 
-    /**
-     * Gets the kerning between two Unicode characters. The characters are converted to names and this names are used to
-     * find the kerning pairs in the <CODE>HashMap</CODE> <CODE>KernPairs</CODE>.
-     *
-     * @param char1 the first char
-     * @param char2 the second char
-     * @return the kerning to be applied
-     */
-    public int getKerning(int char1, int char2) {
-        String first = GlyphList.unicodeToName(char1);
-        if (first == null) {
-            return 0;
-        }
-        String second = GlyphList.unicodeToName(char2);
-        if (second == null) {
-            return 0;
-        }
-        Object[] obj = KernPairs.get(first);
-        if (obj == null) {
-            return 0;
-        }
-        for (int k = 0; k < obj.length; k += 2) {
-            if (second.equals(obj[k]) && obj.length > k + 1) {
-                return (Integer) obj[k + 1];
-            }
-        }
-        return 0;
-    }
-
 
     /**
      * Reads the font metrics
@@ -778,99 +749,6 @@ class Type1Font extends BaseFont {
      */
     public String getPostscriptFontName() {
         return FontName;
-    }
-
-    /**
-     * Sets the font name that will appear in the pdf font dictionary. Use with care as it can easily make a font
-     * unreadable if not embedded.
-     *
-     * @param name the new font name
-     */
-    public void setPostscriptFontName(String name) {
-        FontName = name;
-    }
-
-    /**
-     * Gets the full name of the font. If it is a True Type font each array element will have {Platform ID, Platform
-     * Encoding ID, Language ID, font name}. The interpretation of this values can be found in the Open Type
-     * specification, chapter 2, in the 'name' table.<br> For the other fonts the array has a single element with {"",
-     * "", "", font name}.
-     *
-     * @return the full name of the font
-     */
-    public String[][] getFullFontName() {
-        return new String[][]{{"", "", "", FullName}};
-    }
-
-    /**
-     * Gets all the entries of the names-table. If it is a True Type font each array element will have {Name ID,
-     * Platform ID, Platform Encoding ID, Language ID, font name}. The interpretation of this values can be found in the
-     * Open Type specification, chapter 2, in the 'name' table.<br> For the other fonts the array has a single element
-     * with {"4", "", "", "", font name}.
-     *
-     * @return the full name of the font
-     */
-    public String[][] getAllNameEntries() {
-        return new String[][]{{"4", "", "", "", FullName}};
-    }
-
-    /**
-     * Gets the family name of the font. If it is a True Type font each array element will have {Platform ID, Platform
-     * Encoding ID, Language ID, font name}. The interpretation of this values can be found in the Open Type
-     * specification, chapter 2, in the 'name' table.<br> For the other fonts the array has a single element with {"",
-     * "", "", font name}.
-     *
-     * @return the family name of the font
-     */
-    public String[][] getFamilyFontName() {
-        return new String[][]{{"", "", "", FamilyName}};
-    }
-
-    /**
-     * Checks if the font has any kerning pairs.
-     *
-     * @return <CODE>true</CODE> if the font has any kerning pairs
-     */
-    public boolean hasKernPairs() {
-        return !KernPairs.isEmpty();
-    }
-
-    /**
-     * Sets the kerning between two Unicode chars.
-     *
-     * @param char1 the first char
-     * @param char2 the second char
-     * @param kern  the kerning to apply in normalized 1000 units
-     * @return <code>true</code> if the kerning was applied, <code>false</code> otherwise
-     */
-    public boolean setKerning(int char1, int char2, int kern) {
-        String first = GlyphList.unicodeToName(char1);
-        if (first == null) {
-            return false;
-        }
-        String second = GlyphList.unicodeToName(char2);
-        if (second == null) {
-            return false;
-        }
-        Object[] obj = KernPairs.get(first);
-        if (obj == null) {
-            obj = new Object[]{second, kern};
-            KernPairs.put(first, obj);
-            return true;
-        }
-        for (int k = 0; k < obj.length; k += 2) {
-            if (second.equals(obj[k]) && obj.length > k + 1) {
-                obj[k + 1] = kern;
-                return true;
-            }
-        }
-        int size = obj.length;
-        Object[] obj2 = new Object[size + 2];
-        System.arraycopy(obj, 0, obj2, 0, size);
-        obj2[size] = second;
-        obj2[size + 1] = kern;
-        KernPairs.put(first, obj2);
-        return true;
     }
 
     protected int[] getRawCharBBox(int c, String name) {

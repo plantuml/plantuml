@@ -176,12 +176,4 @@ public class PdfDestination extends PdfArray {
      * @return true if the page reference was added
      */
 
-    public boolean addPage(PdfIndirectReference page) {
-        if (!status) {
-            addFirst(page);
-            status = true;
-            return true;
-        }
-        return false;
-    }
 }

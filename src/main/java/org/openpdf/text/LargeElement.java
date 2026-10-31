@@ -68,16 +68,6 @@ public interface LargeElement extends Element {
     boolean isComplete();
 
     /**
-     * If you invoke setComplete(false), you indicate that the content of the object isn't complete yet; it can be added
-     * to the document partially, but more will follow. If you invoke setComplete(true), you indicate that you won't add
-     * any more data to the object.
-     *
-     * @param complete false if you'll be adding more data after adding the object to the document.
-     * @since iText 2.0.8
-     */
-    void setComplete(boolean complete);
-
-    /**
      * Flushes the content that has been added.
      */
     void flushContent();

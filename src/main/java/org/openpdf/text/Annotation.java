@@ -50,9 +50,6 @@
 package org.openpdf.text;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * An <CODE>Annotation</CODE> is a little note that can be added to a page on a document.
@@ -156,11 +153,6 @@ public class Annotation implements Element {
     public static final String URY = "ury";
 
     /**
-     * This is the title of the <CODE>Annotation</CODE>.
-     */
-    protected Map<String, Object> annotationAttributes = new HashMap<>();
-
-    /**
      * This is the lower left x-value
      */
     protected float llx = Float.NaN;
@@ -194,133 +186,14 @@ public class Annotation implements Element {
     }
 
     /**
-     * Processes the element by adding it (or the different parts) to an <CODE> ElementListener</CODE>.
-     *
-     * @param listener an <CODE>ElementListener</CODE>
-     * @return <CODE>true</CODE> if the element was processed successfully
-     */
-    public boolean process(ElementListener listener) {
-        try {
-            return listener.add(this);
-        } catch (DocumentException de) {
-            return false;
-        }
-    }
-
-    /**
      * Gets all the chunks in this element.
      *
      * @return an <CODE>ArrayList</CODE>
      */
 
-    public ArrayList<Element> getChunks() {
-        return new ArrayList<>();
-    }
-
     // methods
 
     // methods to retrieve information
-
-    /**
-     * Returns the lower left x-value.
-     *
-     * @return a value
-     */
-    public float llx() {
-        return llx;
-    }
-
-    /**
-     * Returns the lower left y-value.
-     *
-     * @return a value
-     */
-    public float lly() {
-        return lly;
-    }
-
-    /**
-     * Returns the upper right x-value.
-     *
-     * @return a value
-     */
-    public float urx() {
-        return urx;
-    }
-
-    /**
-     * Returns the upper right y-value.
-     *
-     * @return a value
-     */
-    public float ury() {
-        return ury;
-    }
-
-    /**
-     * Returns the lower left x-value.
-     *
-     * @param def the default value
-     * @return a value
-     */
-    public float llx(float def) {
-        if (Float.isNaN(llx)) {
-            return def;
-        }
-        return llx;
-    }
-
-    /**
-     * Returns the lower left y-value.
-     *
-     * @param def the default value
-     * @return a value
-     */
-    public float lly(float def) {
-        if (Float.isNaN(lly)) {
-            return def;
-        }
-        return lly;
-    }
-
-    /**
-     * Returns the upper right x-value.
-     *
-     * @param def the default value
-     * @return a value
-     */
-    public float urx(float def) {
-        if (Float.isNaN(urx)) {
-            return def;
-        }
-        return urx;
-    }
-
-    /**
-     * Returns the upper right y-value.
-     *
-     * @param def the default value
-     * @return a value
-     */
-    public float ury(float def) {
-        if (Float.isNaN(ury)) {
-            return def;
-        }
-        return ury;
-    }
-
-    /**
-     * Returns the title of this <CODE>Annotation</CODE>.
-     *
-     * @return a name
-     */
-    public String title() {
-        String s = (String) annotationAttributes.get(TITLE);
-        if (s == null) {
-            s = "";
-        }
-        return s;
-    }
 
     /**
      * @see org.openpdf.text.Element#isContent()

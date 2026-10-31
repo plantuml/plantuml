@@ -450,13 +450,6 @@ public class PdfDocument extends Document {
     }
 
     /**
-     * Gets the text and graphics content of the current page.
-     */
-    PdfContentByte getText() {
-        return text;
-    }
-
-    /**
      * Meta information of the document.
      */
     public static class PdfInfo extends PdfDictionary {
@@ -483,10 +476,6 @@ public class PdfDocument extends Document {
 
         void addCreator(String creator) {
             put(PdfName.CREATOR, new PdfString(creator, PdfObject.TEXT_UNICODE));
-        }
-
-        void addProducer() {
-            addProducer(getVersion());
         }
 
         void addProducer(final String producer) {

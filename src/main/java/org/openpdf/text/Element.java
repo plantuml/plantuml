@@ -49,7 +49,6 @@
 
 package org.openpdf.text;
 
-import java.util.ArrayList;
 
 /**
  * Interface for a text element.
@@ -208,13 +207,6 @@ public interface Element {
 
     /**
      * This is a possible type of <CODE>Element</CODE>.
-     *
-     * @since 2.1.5
-     */
-    int JBIG2 = 36;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
      */
     int MARKED = 50;
 
@@ -282,19 +274,9 @@ public interface Element {
     // static member variables for CCITT compression
 
     /**
-     * Pure two-dimensional encoding (Group 4)
-     */
-    int CCITTG4 = 0x100;
-
-    /**
      * Pure one-dimensional encoding (Group 3, 1-D)
      */
     int CCITTG3_1D = 0x101;
-
-    /**
-     * Mixed one- and two-dimensional encoding (Group 3, 2-D)
-     */
-    int CCITTG3_2D = 0x102;
 
     /**
      * A flag indicating whether 1-bits are to be interpreted as black pixels and 0-bits as white pixels,
@@ -327,8 +309,6 @@ public interface Element {
      * @return <CODE>true</CODE> if the element was processed successfully
      */
 
-    boolean process(ElementListener listener);
-
     /**
      * Gets the type of the text element.
      *
@@ -360,8 +340,6 @@ public interface Element {
      *
      * @return an <CODE>ArrayList</CODE>
      */
-
-    ArrayList<Element> getChunks();
 
     /**
      * Gets the content of the text element.

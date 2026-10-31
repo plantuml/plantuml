@@ -54,7 +54,6 @@ import org.openpdf.text.pdf.PdfDictionary;
 import org.openpdf.text.pdf.PdfIndirectReference;
 import org.openpdf.text.pdf.PdfStream;
 import org.openpdf.text.pdf.PdfTemplate;
-import java.lang.reflect.Constructor;
 import java.net.URL;
 
 
@@ -171,13 +170,6 @@ public abstract class Image extends Rectangle {
      * type of image
      */
     public static final int ORIGINAL_NONE = 0;
-
-    /**
-     * type of image
-     *
-     * @since 2.1.5
-     */
-    public static final int ORIGINAL_JBIG2 = 9;
 
     /**
      * a static that is used for attributing a unique id to each image.
@@ -437,99 +429,6 @@ public abstract class Image extends Rectangle {
     }
 
     /**
-     * Creates a JBIG2 Image.
-     *
-     * @param width   the width of the image
-     * @param height  the height of the image
-     * @param data    the raw image data
-     * @param globals JBIG2 globals
-     * @return an <code>Image</code> Object
-     * @since 2.1.5
-     */
-    public static Image getInstance(int width, int height, byte[] data, byte[] globals) {
-        Image img = new ImgJBIG2(width, height, data, globals);
-        return img;
-    }
-
-    /**
-     * Creates an Image with CCITT G3 or G4 compression. It assumes that the data bytes are already compressed.
-     *
-     * @param width       the exact width of the image
-     * @param height      the exact height of the image
-     * @param reverseBits reverses the bits in <code>data</code>. Bit 0 is swapped with bit 7 and so on
-     * @param typeCCITT   the type of compression in <code>data</code>. It can be CCITTG4, CCITTG31D, CCITTG32D
-     * @param parameters  parameters associated with this stream. Possible values are CCITT_BLACKIS1,
-     *                    CCITT_ENCODEDBYTEALIGN, CCITT_ENDOFLINE and CCITT_ENDOFBLOCK or a combination of them
-     * @param data        the image data
-     * @return an Image object
-     * @throws BadElementException on error
-     */
-    public static Image getInstance(int width, int height, boolean reverseBits,
-            int typeCCITT, int parameters, byte[] data)
-            throws BadElementException {
-        return Image.getInstance(width, height, reverseBits, typeCCITT,
-                parameters, data, null);
-    }
-
-    /**
-     * Creates an Image with CCITT G3 or G4 compression. It assumes that the data bytes are already compressed.
-     *
-     * @param width        the exact width of the image
-     * @param height       the exact height of the image
-     * @param reverseBits  reverses the bits in <code>data</code>. Bit 0 is swapped with bit 7 and so on
-     * @param typeCCITT    the type of compression in <code>data</code>. It can be CCITTG4, CCITTG31D, CCITTG32D
-     * @param parameters   parameters associated with this stream. Possible values are CCITT_BLACKIS1,
-     *                     CCITT_ENCODEDBYTEALIGN, CCITT_ENDOFLINE and CCITT_ENDOFBLOCK or a combination of them
-     * @param data         the image data
-     * @param transparency transparency information in the Mask format of the image dictionary
-     * @return an Image object
-     * @throws BadElementException on error
-     */
-    public static Image getInstance(int width, int height, boolean reverseBits,
-            int typeCCITT, int parameters, byte[] data, int[] transparency)
-            throws BadElementException {
-        if (transparency != null && transparency.length != 2) {
-            throw new BadElementException(
-                    MessageLocalization.getComposedMessage("transparency.length.must.be.equal.to.2.with.ccitt.images"));
-        }
-        Image img = new ImgCCITT(width, height, reverseBits, typeCCITT,
-                parameters, data);
-        img.transparency = transparency;
-        return img;
-    }
-
-    /**
-     * gets an instance of an Image
-     *
-     * @param template a PdfTemplate that has to be wrapped in an <code>Image</code> object
-     * @return an Image object
-     * @throws BadElementException on error
-     */
-    public static Image getInstance(PdfTemplate template)
-            throws BadElementException {
-        return new ImgTemplate(template);
-    }
-
-    /**
-     * gets an instance of an Image
-     *
-     * @param image an Image object
-     * @return a new Image object
-     */
-    public static Image getInstance(Image image) {
-        if (image == null) {
-            return null;
-        }
-        try {
-            Class<? extends Image> cs = image.getClass();
-            Constructor<? extends Image> constructor = cs.getDeclaredConstructor(Image.class);
-            return constructor.newInstance(image);
-        } catch (Exception e) {
-            throw new ExceptionConverter(e);
-        }
-    }
-
-    /**
      * Creates a new serial id.
      *
      * @return a new serial id
@@ -639,15 +538,6 @@ public abstract class Image extends Rectangle {
     }
 
     /**
-     * Sets data from a PdfTemplate
-     *
-     * @param template the template with the content
-     */
-    public void setTemplateData(PdfTemplate template) {
-        this.template[0] = template;
-    }
-
-    /**
      * Sets the alignment for the image.
      * <p>
      * The alignment parameter can be one of the following base values:
@@ -680,10 +570,6 @@ public abstract class Image extends Rectangle {
      *
      * @param alignment the alignment value (can be a combination of flags using bitwise OR)
      */
-
-    public void setAlignment(int alignment) {
-        this.alignment = alignment;
-    }
 
     /**
      * Gets the alternative text for the image.
@@ -736,15 +622,6 @@ public abstract class Image extends Rectangle {
      */
     public float getAbsoluteY() {
         return absoluteY;
-    }
-
-    /**
-     * Gets the scaled width of the image.
-     *
-     * @return a value
-     */
-    public float getScaledWidth() {
-        return scaledWidth;
     }
 
     // widthpercentage (for the moment only used in ColumnText)
@@ -801,52 +678,7 @@ public abstract class Image extends Rectangle {
 
     // interpolation
 
-    /**
-     * Gets the left indentation.
-     *
-     * @return the left indentation
-     */
-    public float getIndentationLeft() {
-        return indentationLeft;
-    }
-
-    /**
-     * Sets the left indentation.
-     *
-     * @param f left indentation
-     */
-    public void setIndentationLeft(float f) {
-        indentationLeft = f;
-    }
-
     // original type and data
-
-    /**
-     * Gets the right indentation.
-     *
-     * @return the right indentation
-     */
-    public float getIndentationRight() {
-        return indentationRight;
-    }
-
-    /**
-     * Sets the right indentation.
-     *
-     * @param f right indentation
-     */
-    public void setIndentationRight(float f) {
-        indentationRight = f;
-    }
-
-    /**
-     * Gets the spacing before this image.
-     *
-     * @return the spacing
-     */
-    public float getSpacingBefore() {
-        return spacingBefore;
-    }
 
     /**
      * Sets the spacing before this image.
@@ -854,28 +686,11 @@ public abstract class Image extends Rectangle {
      * @param spacing the new spacing
      */
 
-    public void setSpacingBefore(float spacing) {
-        this.spacingBefore = spacing;
-    }
-
-    /**
-     * Gets the spacing before this image.
-     *
-     * @return the spacing
-     */
-    public float getSpacingAfter() {
-        return spacingAfter;
-    }
-
     /**
      * Sets the spacing after this image.
      *
      * @param spacing the new spacing
      */
-
-    public void setSpacingAfter(float spacing) {
-        this.spacingAfter = spacing;
-    }
 
     // the following values are only set for specific types of images.
 
