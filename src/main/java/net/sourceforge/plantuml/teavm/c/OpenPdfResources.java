@@ -38,7 +38,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.openpdf.text.pdf.BaseFont;
 import org.openpdf.text.pdf.ResourceProvider;
 
 // ::remove file when JAVA8
@@ -50,21 +49,7 @@ import org.openpdf.text.pdf.ResourceProvider;
  */
 public final class OpenPdfResources implements ResourceProvider {
 
-	private static boolean installed;
-
-	private OpenPdfResources() {
-	}
-
-	/**
-	 * Makes OpenPDF read its resources from the embedded files. Only call it when
-	 * {@code TeaVM.isC()}.
-	 */
-	public static void install() {
-		if (installed)
-			return;
-
-		BaseFont.setResourceProvider(new OpenPdfResources());
-		installed = true;
+	public OpenPdfResources() {
 	}
 
 	@Override

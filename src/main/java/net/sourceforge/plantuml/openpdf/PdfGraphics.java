@@ -118,6 +118,10 @@ import net.sourceforge.plantuml.klimt.geom.USegmentType;
  * available anymore.
  */
 public class PdfGraphics {
+
+	static {
+		OpenPdfSetup.ensure();
+	}
 	// ::remove folder when JAVA8
 
 	// ---------- output buffering ----------

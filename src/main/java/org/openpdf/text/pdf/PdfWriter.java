@@ -1186,8 +1186,8 @@ public class PdfWriter extends DocWriter implements
                     fileID = getInfo().get(PdfName.FILEID);
                 } else {
                     // the same documentId shall be provided to the first version
-                    byte[] documentId = fixedFileId != null ? fixedFileId : PdfEncryption.createDocumentId();
-                    fileID = PdfEncryption.createInfoId(documentId, documentId);
+                    byte[] documentId = fixedFileId != null ? fixedFileId : createDocumentId();
+                    fileID = createInfoId(documentId, documentId);
                 }
 
                 // write the cross-reference table of the body
@@ -1378,6 +1378,30 @@ public class PdfWriter extends DocWriter implements
      */
     public boolean isPdfA() {
         return pdfxConformance.isPdfA();
+    }
+
+    private static byte[] createDocumentId() {
+        final byte[] id = new byte[16];
+        // Not secure on purpose: the /ID of a PDF only has to be (very likely) unique.
+        new java.util.Random(System.nanoTime() ^ System.currentTimeMillis()).nextBytes(id);
+        return id;
+    }
+
+    private static PdfObject createInfoId(byte[] idPartOne, byte[] idPartTwo) {
+        try (ByteBuffer buf = new ByteBuffer(90)) {
+            buf.append('[').append('<');
+            for (int k = 0; k < 16 && k < idPartOne.length; ++k) {
+                buf.appendHex(idPartOne[k]);
+            }
+            buf.append('>').append('<');
+            for (int k = 0; k < 16 && k < idPartTwo.length; ++k) {
+                buf.appendHex(idPartTwo[k]);
+            }
+            buf.append('>').append(']');
+            return new PdfLiteral(buf.toByteArray());
+        } catch (IOException e) {
+            throw new ExceptionConverter(e);
+        }
     }
 
     /**
