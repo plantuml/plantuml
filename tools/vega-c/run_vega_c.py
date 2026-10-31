@@ -17,7 +17,8 @@ What is checked, per test file:
   * output: preproc  -> `plantuml.exe --preproc`, compared with <name>.preproc
   * output: pdf      -> `plantuml.exe --pdf-vega` (deterministic PDF: fixed dates and /ID, no
                         compression), compared byte for byte with <name>.pdf / <name>-N.pdf
-  * any other output format, or a test that expects an error (expected-exception,
+  * a file without a YAML header, any other output format, or a test that expects an error
+    (expected-exception,
     expected-error-*, expected-status): reported as "skipped".
 The other expectations of the YAML header (expected-description, expected-stderr,
 expected-image-count...) are not checked.
@@ -92,7 +93,9 @@ COPY_PREFIX = "~vega-c-"
 # ---------------------------------------------------------------------------
 
 def read_header(path):
-    """Returns the top-level `key: value` pairs of the YAML header (empty if none).
+    """Returns the top-level `key: value` pairs of the YAML header, or None if the
+    file has no header (the Java tests then run it with the defaults and write its
+    reference files themselves: such a test has nothing to check).
 
     Same delimiting rule as VegaInputFile.parse: the first two lines that are
     `---` enclose the header. PlantUML ignores everything outside @startuml /
@@ -109,9 +112,10 @@ def read_header(path):
             break
         if inside:
             header.append(line)
-    else:
-        if inside:  # no closing delimiter: not a header
-            header = []
+    else:  # no closing delimiter: not a header
+        return None
+    if not header:  # as VegaInputFile: an empty header is no header
+        return None
 
     result = {}
     for line in header:
@@ -374,6 +378,10 @@ def run_checks(puml, exe, timeout, workdir):
     relative = puml.relative_to(VEGA_DIR).as_posix()
     result = {"file": relative, "status": SKIPPED, "message": "", "duration_ms": 0}
     header = read_header(puml)
+    if header is None:
+        result["allow_failure"] = True
+        result["message"] = "no YAML header: not checked"
+        return result
     result["allow_failure"] = header.get("allow-failure") == "true"
 
     formats = output_formats(header)
