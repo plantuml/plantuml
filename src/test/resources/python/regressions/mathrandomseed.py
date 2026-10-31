@@ -1,0 +1,1 @@
+math.randomseed(0)
