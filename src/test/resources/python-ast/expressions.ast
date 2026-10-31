@@ -1,0 +1,1329 @@
+Module(
+  body=[
+    Expr(
+      value=BoolOp(
+        op=Or,
+        values=[
+          Name(id="a", ctx=Load),
+          Name(id="b", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=BoolOp(
+        op=Or,
+        values=[
+          Name(id="a", ctx=Load),
+          Name(id="b", ctx=Load),
+          Name(id="c", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=BoolOp(
+        op=And,
+        values=[
+          Name(id="a", ctx=Load),
+          Name(id="b", ctx=Load),
+          Name(id="c", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=BoolOp(
+        op=Or,
+        values=[
+          Name(id="a", ctx=Load),
+          BoolOp(
+            op=And,
+            values=[
+              Name(id="b", ctx=Load),
+              Name(id="c", ctx=Load)
+            ]
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=BoolOp(
+        op=Or,
+        values=[
+          BoolOp(
+            op=And,
+            values=[
+              Name(id="a", ctx=Load),
+              Name(id="b", ctx=Load)
+            ]
+          ),
+          Name(id="c", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=UnaryOp(
+        op=Not,
+        operand=Name(id="a", ctx=Load)
+      )
+    ),
+    Expr(
+      value=UnaryOp(
+        op=Not,
+        operand=UnaryOp(
+          op=Not,
+          operand=Name(id="a", ctx=Load)
+        )
+      )
+    ),
+    Expr(
+      value=BoolOp(
+        op=And,
+        values=[
+          UnaryOp(
+            op=Not,
+            operand=Name(id="a", ctx=Load)
+          ),
+          Name(id="b", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=Compare(
+        left=Name(id="a", ctx=Load),
+        ops=[
+          Lt
+        ],
+        comparators=[
+          Name(id="b", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=Compare(
+        left=Name(id="a", ctx=Load),
+        ops=[
+          Lt,
+          Lt
+        ],
+        comparators=[
+          Name(id="b", ctx=Load),
+          Name(id="c", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=Compare(
+        left=Name(id="a", ctx=Load),
+        ops=[
+          Eq,
+          NotEq
+        ],
+        comparators=[
+          Name(id="b", ctx=Load),
+          Name(id="c", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=Compare(
+        left=Name(id="a", ctx=Load),
+        ops=[
+          Is
+        ],
+        comparators=[
+          Name(id="b", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=Compare(
+        left=Name(id="a", ctx=Load),
+        ops=[
+          IsNot
+        ],
+        comparators=[
+          Name(id="b", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=Compare(
+        left=Name(id="a", ctx=Load),
+        ops=[
+          In
+        ],
+        comparators=[
+          Name(id="b", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=Compare(
+        left=Name(id="a", ctx=Load),
+        ops=[
+          NotIn
+        ],
+        comparators=[
+          Name(id="b", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=Compare(
+        left=Name(id="a", ctx=Load),
+        ops=[
+          Lt,
+          Is,
+          NotIn
+        ],
+        comparators=[
+          Name(id="b", ctx=Load),
+          Name(id="c", ctx=Load),
+          Name(id="d", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=IfExp(
+        test=Name(id="a", ctx=Load),
+        body=Name(id="x", ctx=Load),
+        orelse=Name(id="y", ctx=Load)
+      )
+    ),
+    Expr(
+      value=IfExp(
+        test=Name(id="a", ctx=Load),
+        body=Name(id="x", ctx=Load),
+        orelse=IfExp(
+          test=Name(id="b", ctx=Load),
+          body=Name(id="y", ctx=Load),
+          orelse=Name(id="z", ctx=Load)
+        )
+      )
+    ),
+    Expr(
+      value=IfExp(
+        test=Name(id="b", ctx=Load),
+        body=IfExp(
+          test=Name(id="a", ctx=Load),
+          body=Name(id="x", ctx=Load),
+          orelse=Name(id="y", ctx=Load)
+        ),
+        orelse=Name(id="z", ctx=Load)
+      )
+    ),
+    Expr(
+      value=IfExp(
+        test=Name(id="c", ctx=Load),
+        body=BoolOp(
+          op=Or,
+          values=[
+            Name(id="a", ctx=Load),
+            Name(id="b", ctx=Load)
+          ]
+        ),
+        orelse=Name(id="d", ctx=Load)
+      )
+    ),
+    Expr(
+      value=Lambda(
+        args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+        body=Constant(value=1)
+      )
+    ),
+    Expr(
+      value=Lambda(
+        args=arguments(
+          posonlyargs=[],
+          args=[
+            arg(arg="x", annotation=None)
+          ],
+          vararg=None,
+          kwonlyargs=[],
+          kw_defaults=[],
+          kwarg=None,
+          defaults=[]
+        ),
+        body=Name(id="x", ctx=Load)
+      )
+    ),
+    Expr(
+      value=Lambda(
+        args=arguments(
+          posonlyargs=[],
+          args=[
+            arg(arg="x", annotation=None),
+            arg(arg="y", annotation=None)
+          ],
+          vararg=arg(arg="a", annotation=None),
+          kwonlyargs=[
+            arg(arg="k", annotation=None)
+          ],
+          kw_defaults=[
+            Constant(value=3)
+          ],
+          kwarg=arg(arg="kw", annotation=None),
+          defaults=[
+            Constant(value=2)
+          ]
+        ),
+        body=Name(id="x", ctx=Load)
+      )
+    ),
+    Expr(
+      value=Lambda(
+        args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+        body=Lambda(
+          args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+          body=Constant(value=1)
+        )
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[
+          Lambda(
+            args=arguments(
+              posonlyargs=[],
+              args=[
+                arg(arg="x", annotation=None)
+              ],
+              vararg=None,
+              kwonlyargs=[],
+              kw_defaults=[],
+              kwarg=None,
+              defaults=[]
+            ),
+            body=Name(id="x", ctx=Load)
+          )
+        ],
+        keywords=[
+          keyword(
+            arg="key",
+            value=Lambda(
+              args=arguments(
+                posonlyargs=[],
+                args=[
+                  arg(arg="y", annotation=None)
+                ],
+                vararg=None,
+                kwonlyargs=[],
+                kw_defaults=[],
+                kwarg=None,
+                defaults=[]
+              ),
+              body=Name(id="y", ctx=Load)
+            )
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=BinOp(
+        left=Name(id="a", ctx=Load),
+        op=BitOr,
+        right=BinOp(
+          left=Name(id="b", ctx=Load),
+          op=BitXor,
+          right=BinOp(
+            left=Name(id="c", ctx=Load),
+            op=BitAnd,
+            right=Name(id="d", ctx=Load)
+          )
+        )
+      )
+    ),
+    Expr(
+      value=BinOp(
+        left=BinOp(
+          left=Name(id="a", ctx=Load),
+          op=LShift,
+          right=Name(id="b", ctx=Load)
+        ),
+        op=RShift,
+        right=Name(id="c", ctx=Load)
+      )
+    ),
+    Expr(
+      value=BinOp(
+        left=BinOp(
+          left=Name(id="a", ctx=Load),
+          op=Add,
+          right=Name(id="b", ctx=Load)
+        ),
+        op=Sub,
+        right=Name(id="c", ctx=Load)
+      )
+    ),
+    Expr(
+      value=BinOp(
+        left=BinOp(
+          left=BinOp(
+            left=BinOp(
+              left=Name(id="a", ctx=Load),
+              op=Mult,
+              right=Name(id="b", ctx=Load)
+            ),
+            op=Div,
+            right=Name(id="c", ctx=Load)
+          ),
+          op=FloorDiv,
+          right=Name(id="d", ctx=Load)
+        ),
+        op=Mod,
+        right=Name(id="e", ctx=Load)
+      )
+    ),
+    Expr(
+      value=UnaryOp(
+        op=USub,
+        operand=Name(id="a", ctx=Load)
+      )
+    ),
+    Expr(
+      value=UnaryOp(
+        op=UAdd,
+        operand=Name(id="a", ctx=Load)
+      )
+    ),
+    Expr(
+      value=UnaryOp(
+        op=Invert,
+        operand=Name(id="a", ctx=Load)
+      )
+    ),
+    Expr(
+      value=UnaryOp(
+        op=USub,
+        operand=UnaryOp(
+          op=USub,
+          operand=Name(id="a", ctx=Load)
+        )
+      )
+    ),
+    Expr(
+      value=UnaryOp(
+        op=USub,
+        operand=BinOp(
+          left=Name(id="a", ctx=Load),
+          op=Pow,
+          right=Name(id="b", ctx=Load)
+        )
+      )
+    ),
+    Expr(
+      value=BinOp(
+        left=Name(id="a", ctx=Load),
+        op=Pow,
+        right=UnaryOp(
+          op=USub,
+          operand=Name(id="b", ctx=Load)
+        )
+      )
+    ),
+    Expr(
+      value=BinOp(
+        left=Name(id="a", ctx=Load),
+        op=Pow,
+        right=BinOp(
+          left=Name(id="b", ctx=Load),
+          op=Pow,
+          right=Name(id="c", ctx=Load)
+        )
+      )
+    ),
+    Expr(
+      value=BinOp(
+        left=BinOp(
+          left=Name(id="a", ctx=Load),
+          op=Pow,
+          right=Name(id="b", ctx=Load)
+        ),
+        op=Pow,
+        right=Name(id="c", ctx=Load)
+      )
+    ),
+    Expr(
+      value=BinOp(
+        left=Name(id="a", ctx=Load),
+        op=Add,
+        right=BinOp(
+          left=Name(id="b", ctx=Load),
+          op=Mult,
+          right=BinOp(
+            left=Name(id="c", ctx=Load),
+            op=Pow,
+            right=Name(id="d", ctx=Load)
+          )
+        )
+      )
+    ),
+    Expr(
+      value=BinOp(
+        left=UnaryOp(
+          op=USub,
+          operand=Name(id="a", ctx=Load)
+        ),
+        op=Mult,
+        right=Name(id="b", ctx=Load)
+      )
+    ),
+    Expr(
+      value=UnaryOp(
+        op=Not,
+        operand=Compare(
+          left=Name(id="a", ctx=Load),
+          ops=[
+            Eq
+          ],
+          comparators=[
+            Name(id="b", ctx=Load)
+          ]
+        )
+      )
+    ),
+    Expr(
+      value=IfExp(
+        test=UnaryOp(
+          op=Not,
+          operand=Name(id="b", ctx=Load)
+        ),
+        body=Name(id="a", ctx=Load),
+        orelse=Name(id="c", ctx=Load)
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[],
+        keywords=[]
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[
+          Name(id="a", ctx=Load)
+        ],
+        keywords=[]
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[
+          Name(id="a", ctx=Load),
+          Name(id="b", ctx=Load)
+        ],
+        keywords=[]
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[
+          Name(id="a", ctx=Load)
+        ],
+        keywords=[
+          keyword(
+            arg="b",
+            value=Constant(value=1)
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[
+          Starred(
+            value=Name(id="a", ctx=Load),
+            ctx=Load
+          )
+        ],
+        keywords=[]
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[
+          Starred(
+            value=Name(id="a", ctx=Load),
+            ctx=Load
+          ),
+          Starred(
+            value=Name(id="b", ctx=Load),
+            ctx=Load
+          )
+        ],
+        keywords=[]
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[],
+        keywords=[
+          keyword(
+            arg=None,
+            value=Name(id="k", ctx=Load)
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[
+          Name(id="a", ctx=Load),
+          Starred(
+            value=Name(id="b", ctx=Load),
+            ctx=Load
+          )
+        ],
+        keywords=[
+          keyword(
+            arg="c",
+            value=Constant(value=1)
+          ),
+          keyword(
+            arg=None,
+            value=Name(id="k", ctx=Load)
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Call(
+          func=Call(
+            func=Name(id="f", ctx=Load),
+            args=[
+              Name(id="a", ctx=Load)
+            ],
+            keywords=[]
+          ),
+          args=[
+            Name(id="b", ctx=Load)
+          ],
+          keywords=[]
+        ),
+        args=[
+          Name(id="c", ctx=Load)
+        ],
+        keywords=[]
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[
+          Name(id="a", ctx=Load)
+        ],
+        keywords=[]
+      )
+    ),
+    Expr(
+      value=Attribute(
+        value=Name(id="a", ctx=Load),
+        attr="b",
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Attribute(
+        value=Attribute(
+          value=Name(id="a", ctx=Load),
+          attr="b",
+          ctx=Load
+        ),
+        attr="c",
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Attribute(
+          value=Name(id="a", ctx=Load),
+          attr="b",
+          ctx=Load
+        ),
+        args=[],
+        keywords=[]
+      )
+    ),
+    Expr(
+      value=Attribute(
+        value=Call(
+          func=Attribute(
+            value=Name(id="a", ctx=Load),
+            attr="b",
+            ctx=Load
+          ),
+          args=[
+            Name(id="c", ctx=Load)
+          ],
+          keywords=[]
+        ),
+        attr="d",
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Constant(value=0),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Subscript(
+          value=Name(id="a", ctx=Load),
+          slice=Constant(value=0),
+          ctx=Load
+        ),
+        slice=Constant(value=1),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Tuple(
+          elts=[
+            Name(id="b", ctx=Load),
+            Name(id="c", ctx=Load)
+          ],
+          ctx=Load
+        ),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Tuple(
+          elts=[
+            Name(id="b", ctx=Load),
+            Name(id="c", ctx=Load)
+          ],
+          ctx=Load
+        ),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Slice(
+          lower=Constant(value=1),
+          upper=Constant(value=2),
+          step=None
+        ),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Slice(
+          lower=None,
+          upper=Constant(value=2),
+          step=None
+        ),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Slice(
+          lower=Constant(value=1),
+          upper=None,
+          step=None
+        ),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Slice(lower=None, upper=None, step=None),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Slice(
+          lower=None,
+          upper=None,
+          step=Constant(value=2)
+        ),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Slice(
+          lower=Constant(value=1),
+          upper=Constant(value=2),
+          step=Constant(value=3)
+        ),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Slice(
+          lower=None,
+          upper=None,
+          step=UnaryOp(
+            op=USub,
+            operand=Constant(value=1)
+          )
+        ),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Tuple(
+          elts=[
+            Slice(
+              lower=Constant(value=1),
+              upper=Constant(value=2),
+              step=None
+            ),
+            Constant(value=3)
+          ],
+          ctx=Load
+        ),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=UnaryOp(
+          op=USub,
+          operand=Constant(value=1)
+        ),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Subscript(
+        value=Subscript(
+          value=Name(id="a", ctx=Load),
+          slice=Slice(
+            lower=Name(id="b", ctx=Load),
+            upper=Name(id="c", ctx=Load),
+            step=None
+          ),
+          ctx=Load
+        ),
+        slice=Name(id="d", ctx=Load),
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Attribute(
+          value=Subscript(
+            value=Call(
+              func=Name(id="f", ctx=Load),
+              args=[
+                Name(id="x", ctx=Load)
+              ],
+              keywords=[]
+            ),
+            slice=Constant(value=0),
+            ctx=Load
+          ),
+          attr="y",
+          ctx=Load
+        ),
+        args=[
+          Name(id="z", ctx=Load)
+        ],
+        keywords=[]
+      )
+    ),
+    Expr(
+      value=Tuple(elts=[], ctx=Load)
+    ),
+    Expr(
+      value=Tuple(
+        elts=[
+          Constant(value=1)
+        ],
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Tuple(
+        elts=[
+          Constant(value=1),
+          Constant(value=2)
+        ],
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Tuple(
+        elts=[
+          Constant(value=1),
+          Constant(value=2)
+        ],
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Tuple(
+        elts=[
+          Tuple(
+            elts=[
+              Constant(value=1),
+              Constant(value=2)
+            ],
+            ctx=Load
+          ),
+          Tuple(
+            elts=[
+              Constant(value=3)
+            ],
+            ctx=Load
+          )
+        ],
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Name(id="a", ctx=Load)
+    ),
+    Expr(
+      value=Name(id="a", ctx=Load)
+    ),
+    Expr(
+      value=List(elts=[], ctx=Load)
+    ),
+    Expr(
+      value=List(
+        elts=[
+          Constant(value=1)
+        ],
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=List(
+        elts=[
+          Constant(value=1),
+          Constant(value=2)
+        ],
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=List(
+        elts=[
+          List(
+            elts=[
+              Constant(value=1)
+            ],
+            ctx=Load
+          ),
+          List(
+            elts=[
+              Constant(value=2),
+              Constant(value=3)
+            ],
+            ctx=Load
+          )
+        ],
+        ctx=Load
+      )
+    ),
+    Expr(
+      value=Dict(keys=[], values=[])
+    ),
+    Expr(
+      value=Dict(
+        keys=[
+          Constant(value=1)
+        ],
+        values=[
+          Constant(value=2)
+        ]
+      )
+    ),
+    Expr(
+      value=Dict(
+        keys=[
+          Constant(value=1),
+          Constant(value=3)
+        ],
+        values=[
+          Constant(value=2),
+          Constant(value=4)
+        ]
+      )
+    ),
+    Expr(
+      value=Dict(
+        keys=[
+          Name(id="a", ctx=Load),
+          Name(id="c", ctx=Load)
+        ],
+        values=[
+          Name(id="b", ctx=Load),
+          Name(id="d", ctx=Load)
+        ]
+      )
+    ),
+    Expr(
+      value=Dict(
+        keys=[
+          Constant(value="k")
+        ],
+        values=[
+          List(
+            elts=[
+              Constant(value=1),
+              Dict(
+                keys=[
+                  Constant(value="n")
+                ],
+                values=[
+                  Constant(value=None)
+                ]
+              )
+            ],
+            ctx=Load
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=ListComp(
+        elt=Name(id="x", ctx=Load),
+        generators=[
+          comprehension(
+            target=Name(id="x", ctx=Store),
+            iter=Name(id="y", ctx=Load),
+            ifs=[],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=ListComp(
+        elt=Name(id="x", ctx=Load),
+        generators=[
+          comprehension(
+            target=Name(id="x", ctx=Store),
+            iter=Name(id="y", ctx=Load),
+            ifs=[
+              Name(id="z", ctx=Load)
+            ],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=ListComp(
+        elt=Name(id="x", ctx=Load),
+        generators=[
+          comprehension(
+            target=Name(id="x", ctx=Store),
+            iter=Name(id="y", ctx=Load),
+            ifs=[
+              Name(id="z", ctx=Load),
+              Name(id="w", ctx=Load)
+            ],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=ListComp(
+        elt=Name(id="x", ctx=Load),
+        generators=[
+          comprehension(
+            target=Name(id="x", ctx=Store),
+            iter=Name(id="y", ctx=Load),
+            ifs=[],
+            is_async=0
+          ),
+          comprehension(
+            target=Name(id="z", ctx=Store),
+            iter=Name(id="w", ctx=Load),
+            ifs=[],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=ListComp(
+        elt=Name(id="x", ctx=Load),
+        generators=[
+          comprehension(
+            target=Tuple(
+              elts=[
+                Name(id="x", ctx=Store),
+                Name(id="y", ctx=Store)
+              ],
+              ctx=Store
+            ),
+            iter=Name(id="z", ctx=Load),
+            ifs=[],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=ListComp(
+        elt=Name(id="x", ctx=Load),
+        generators=[
+          comprehension(
+            target=Tuple(
+              elts=[
+                Tuple(
+                  elts=[
+                    Name(id="x", ctx=Store),
+                    Name(id="y", ctx=Store)
+                  ],
+                  ctx=Store
+                ),
+                Name(id="z", ctx=Store)
+              ],
+              ctx=Store
+            ),
+            iter=Name(id="w", ctx=Load),
+            ifs=[],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=ListComp(
+        elt=Name(id="x", ctx=Load),
+        generators=[
+          comprehension(
+            target=Name(id="x", ctx=Store),
+            iter=Name(id="y", ctx=Load),
+            ifs=[
+              BoolOp(
+                op=Or,
+                values=[
+                  Name(id="a", ctx=Load),
+                  Name(id="b", ctx=Load)
+                ]
+              )
+            ],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=ListComp(
+        elt=IfExp(
+          test=Name(id="a", ctx=Load),
+          body=Name(id="x", ctx=Load),
+          orelse=Name(id="b", ctx=Load)
+        ),
+        generators=[
+          comprehension(
+            target=Name(id="x", ctx=Store),
+            iter=Name(id="y", ctx=Load),
+            ifs=[],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=ListComp(
+        elt=Tuple(
+          elts=[
+            Name(id="x", ctx=Load),
+            Name(id="y", ctx=Load)
+          ],
+          ctx=Load
+        ),
+        generators=[
+          comprehension(
+            target=Name(id="x", ctx=Store),
+            iter=Name(id="a", ctx=Load),
+            ifs=[],
+            is_async=0
+          ),
+          comprehension(
+            target=Name(id="y", ctx=Store),
+            iter=Name(id="b", ctx=Load),
+            ifs=[
+              Compare(
+                left=Name(id="x", ctx=Load),
+                ops=[
+                  NotEq
+                ],
+                comparators=[
+                  Name(id="y", ctx=Load)
+                ]
+              )
+            ],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=ListComp(
+        elt=ListComp(
+          elt=Name(id="y", ctx=Load),
+          generators=[
+            comprehension(
+              target=Name(id="y", ctx=Store),
+              iter=Name(id="x", ctx=Load),
+              ifs=[],
+              is_async=0
+            )
+          ]
+        ),
+        generators=[
+          comprehension(
+            target=Name(id="x", ctx=Store),
+            iter=Name(id="z", ctx=Load),
+            ifs=[],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=DictComp(
+        key=Name(id="k", ctx=Load),
+        value=Name(id="v", ctx=Load),
+        generators=[
+          comprehension(
+            target=Tuple(
+              elts=[
+                Name(id="k", ctx=Store),
+                Name(id="v", ctx=Store)
+              ],
+              ctx=Store
+            ),
+            iter=Name(id="x", ctx=Load),
+            ifs=[],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=DictComp(
+        key=Name(id="k", ctx=Load),
+        value=Name(id="v", ctx=Load),
+        generators=[
+          comprehension(
+            target=Name(id="k", ctx=Store),
+            iter=Name(id="x", ctx=Load),
+            ifs=[
+              Name(id="k", ctx=Load)
+            ],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=DictComp(
+        key=Name(id="k", ctx=Load),
+        value=ListComp(
+          elt=Name(id="v", ctx=Load),
+          generators=[
+            comprehension(
+              target=Name(id="v", ctx=Store),
+              iter=Name(id="w", ctx=Load),
+              ifs=[],
+              is_async=0
+            )
+          ]
+        ),
+        generators=[
+          comprehension(
+            target=Name(id="k", ctx=Store),
+            iter=Name(id="x", ctx=Load),
+            ifs=[],
+            is_async=0
+          ),
+          comprehension(
+            target=Name(id="w", ctx=Store),
+            iter=Name(id="y", ctx=Load),
+            ifs=[],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=ListComp(
+        elt=Lambda(
+          args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+          body=Name(id="x", ctx=Load)
+        ),
+        generators=[
+          comprehension(
+            target=Name(id="x", ctx=Store),
+            iter=Name(id="y", ctx=Load),
+            ifs=[],
+            is_async=0
+          )
+        ]
+      )
+    ),
+    Expr(
+      value=Constant(value=None)
+    ),
+    Expr(
+      value=Constant(value=True)
+    ),
+    Expr(
+      value=Constant(value=False)
+    ),
+    Expr(
+      value=Compare(
+        left=Name(id="a", ctx=Load),
+        ops=[
+          Eq
+        ],
+        comparators=[
+          Constant(value=None)
+        ]
+      )
+    ),
+    Assign(
+      targets=[
+        Name(id="x", ctx=Store)
+      ],
+      value=IfExp(
+        test=Name(id="z", ctx=Load),
+        body=Name(id="y", ctx=Load),
+        orelse=Name(id="w", ctx=Load)
+      )
+    )
+  ]
+)

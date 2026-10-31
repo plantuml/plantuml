@@ -1,0 +1,707 @@
+Module(
+  body=[
+    Pass,
+    Assign(
+      targets=[
+        Name(id="x", ctx=Store)
+      ],
+      value=Constant(value=1)
+    ),
+    Assign(
+      targets=[
+        Name(id="x", ctx=Store),
+        Name(id="y", ctx=Store),
+        Name(id="z", ctx=Store)
+      ],
+      value=Constant(value=2)
+    ),
+    Assign(
+      targets=[
+        Tuple(
+          elts=[
+            Name(id="a", ctx=Store),
+            Name(id="b", ctx=Store)
+          ],
+          ctx=Store
+        )
+      ],
+      value=Tuple(
+        elts=[
+          Name(id="b", ctx=Load),
+          Name(id="a", ctx=Load)
+        ],
+        ctx=Load
+      )
+    ),
+    Assign(
+      targets=[
+        Tuple(
+          elts=[
+            Tuple(
+              elts=[
+                Name(id="a", ctx=Store),
+                Name(id="b", ctx=Store)
+              ],
+              ctx=Store
+            ),
+            Name(id="c", ctx=Store)
+          ],
+          ctx=Store
+        )
+      ],
+      value=Tuple(
+        elts=[
+          Tuple(
+            elts=[
+              Constant(value=1),
+              Constant(value=2)
+            ],
+            ctx=Load
+          ),
+          Constant(value=3)
+        ],
+        ctx=Load
+      )
+    ),
+    Assign(
+      targets=[
+        List(
+          elts=[
+            Name(id="a", ctx=Store),
+            Name(id="b", ctx=Store)
+          ],
+          ctx=Store
+        )
+      ],
+      value=Tuple(
+        elts=[
+          Constant(value=1),
+          Constant(value=2)
+        ],
+        ctx=Load
+      )
+    ),
+    Assign(
+      targets=[
+        Tuple(
+          elts=[
+            Subscript(
+              value=Name(id="a", ctx=Load),
+              slice=Constant(value=0),
+              ctx=Store
+            ),
+            Attribute(
+              value=Name(id="b", ctx=Load),
+              attr="c",
+              ctx=Store
+            )
+          ],
+          ctx=Store
+        )
+      ],
+      value=Tuple(
+        elts=[
+          Constant(value=1),
+          Constant(value=2)
+        ],
+        ctx=Load
+      )
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=Add,
+      value=Constant(value=1)
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=Sub,
+      value=Constant(value=1)
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=Mult,
+      value=Constant(value=2)
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=Div,
+      value=Constant(value=2)
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=FloorDiv,
+      value=Constant(value=2)
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=Mod,
+      value=Constant(value=2)
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=Pow,
+      value=Constant(value=2)
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=LShift,
+      value=Constant(value=1)
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=RShift,
+      value=Constant(value=1)
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=BitAnd,
+      value=Constant(value=1)
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=BitOr,
+      value=Constant(value=1)
+    ),
+    AugAssign(
+      target=Name(id="x", ctx=Store),
+      op=BitXor,
+      value=Constant(value=1)
+    ),
+    AugAssign(
+      target=Subscript(
+        value=Name(id="a", ctx=Load),
+        slice=Name(id="i", ctx=Load),
+        ctx=Store
+      ),
+      op=Add,
+      value=Constant(value=1)
+    ),
+    AugAssign(
+      target=Attribute(
+        value=Name(id="a", ctx=Load),
+        attr="b",
+        ctx=Store
+      ),
+      op=Add,
+      value=Constant(value=1)
+    ),
+    Assign(
+      targets=[
+        Name(id="t", ctx=Store)
+      ],
+      value=Tuple(
+        elts=[
+          Constant(value=1),
+          Constant(value=2),
+          Constant(value=3)
+        ],
+        ctx=Load
+      )
+    ),
+    Assign(
+      targets=[
+        Name(id="u", ctx=Store)
+      ],
+      value=Tuple(
+        elts=[
+          Constant(value=1)
+        ],
+        ctx=Load
+      )
+    ),
+    Assign(
+      targets=[
+        Name(id="v", ctx=Store)
+      ],
+      value=Tuple(elts=[], ctx=Load)
+    ),
+    Delete(
+      targets=[
+        Name(id="x", ctx=Del)
+      ]
+    ),
+    Delete(
+      targets=[
+        Subscript(
+          value=Name(id="a", ctx=Load),
+          slice=Constant(value=0),
+          ctx=Del
+        ),
+        Name(id="b", ctx=Del)
+      ]
+    ),
+    Delete(
+      targets=[
+        Tuple(
+          elts=[
+            Name(id="c", ctx=Del),
+            Name(id="d", ctx=Del)
+          ],
+          ctx=Del
+        )
+      ]
+    ),
+    Delete(
+      targets=[
+        Subscript(
+          value=Name(id="a", ctx=Load),
+          slice=Slice(
+            lower=Constant(value=1),
+            upper=Constant(value=2),
+            step=None
+          ),
+          ctx=Del
+        )
+      ]
+    ),
+    Assert(
+      test=Name(id="x", ctx=Load),
+      msg=None
+    ),
+    Assert(
+      test=Name(id="x", ctx=Load),
+      msg=Constant(value="message")
+    ),
+    Global(
+      names=[
+        "g1",
+        "g2"
+      ]
+    ),
+    Import(
+      names=[
+        alias(name="math", asname=None)
+      ]
+    ),
+    Import(
+      names=[
+        alias(name="os.path", asname="p"),
+        alias(name="sys", asname=None)
+      ]
+    ),
+    Expr(
+      value=Call(
+        func=Name(id="f", ctx=Load),
+        args=[
+          Constant(value=1)
+        ],
+        keywords=[]
+      )
+    ),
+    Expr(
+      value=Call(
+        func=Call(
+          func=Call(
+            func=Name(id="f", ctx=Load),
+            args=[
+              Constant(value=1)
+            ],
+            keywords=[]
+          ),
+          args=[
+            Constant(value=2)
+          ],
+          keywords=[]
+        ),
+        args=[
+          Constant(value=3)
+        ],
+        keywords=[]
+      )
+    ),
+    If(
+      test=Name(id="a", ctx=Load),
+      body=[
+        Pass
+      ],
+      orelse=[]
+    ),
+    If(
+      test=Name(id="a", ctx=Load),
+      body=[
+        Expr(
+          value=Name(id="b", ctx=Load)
+        )
+      ],
+      orelse=[
+        Expr(
+          value=Name(id="c", ctx=Load)
+        )
+      ]
+    ),
+    If(
+      test=Name(id="a", ctx=Load),
+      body=[
+        Expr(
+          value=Name(id="b", ctx=Load)
+        )
+      ],
+      orelse=[
+        If(
+          test=Name(id="c", ctx=Load),
+          body=[
+            Expr(
+              value=Name(id="d", ctx=Load)
+            )
+          ],
+          orelse=[
+            If(
+              test=Name(id="e", ctx=Load),
+              body=[
+                Expr(
+                  value=Name(id="f", ctx=Load)
+                )
+              ],
+              orelse=[
+                Expr(
+                  value=Name(id="g", ctx=Load)
+                )
+              ]
+            )
+          ]
+        )
+      ]
+    ),
+    While(
+      test=Name(id="a", ctx=Load),
+      body=[
+        Break
+      ],
+      orelse=[
+        Continue
+      ]
+    ),
+    For(
+      target=Name(id="i", ctx=Store),
+      iter=Call(
+        func=Name(id="range", ctx=Load),
+        args=[
+          Constant(value=3)
+        ],
+        keywords=[]
+      ),
+      body=[
+        Pass
+      ],
+      orelse=[]
+    ),
+    For(
+      target=Tuple(
+        elts=[
+          Name(id="a", ctx=Store),
+          Name(id="b", ctx=Store)
+        ],
+        ctx=Store
+      ),
+      iter=Name(id="x", ctx=Load),
+      body=[
+        Pass
+      ],
+      orelse=[]
+    ),
+    For(
+      target=Tuple(
+        elts=[
+          Tuple(
+            elts=[
+              Name(id="a", ctx=Store),
+              Name(id="b", ctx=Store)
+            ],
+            ctx=Store
+          ),
+          Name(id="c", ctx=Store)
+        ],
+        ctx=Store
+      ),
+      iter=Name(id="x", ctx=Load),
+      body=[
+        Pass
+      ],
+      orelse=[]
+    ),
+    For(
+      target=Name(id="i", ctx=Store),
+      iter=Tuple(
+        elts=[
+          Constant(value=1),
+          Constant(value=2),
+          Constant(value=3)
+        ],
+        ctx=Load
+      ),
+      body=[
+        Pass
+      ],
+      orelse=[
+        Pass
+      ]
+    ),
+    Try(
+      body=[
+        Expr(
+          value=Name(id="a", ctx=Load)
+        )
+      ],
+      handlers=[
+        ExceptHandler(
+          type=None,
+          name=None,
+          body=[
+            Expr(
+              value=Name(id="b", ctx=Load)
+            )
+          ]
+        )
+      ],
+      orelse=[],
+      finalbody=[]
+    ),
+    Try(
+      body=[
+        Expr(
+          value=Name(id="a", ctx=Load)
+        )
+      ],
+      handlers=[
+        ExceptHandler(
+          type=Name(id="E", ctx=Load),
+          name=None,
+          body=[
+            Expr(
+              value=Name(id="b", ctx=Load)
+            )
+          ]
+        ),
+        ExceptHandler(
+          type=Tuple(
+            elts=[
+              Name(id="E1", ctx=Load),
+              Name(id="E2", ctx=Load)
+            ],
+            ctx=Load
+          ),
+          name="e",
+          body=[
+            Expr(
+              value=Name(id="c", ctx=Load)
+            )
+          ]
+        ),
+        ExceptHandler(
+          type=Name(id="E3", ctx=Load),
+          name="e3",
+          body=[
+            Expr(
+              value=Name(id="d", ctx=Load)
+            )
+          ]
+        )
+      ],
+      orelse=[
+        Expr(
+          value=Name(id="e", ctx=Load)
+        )
+      ],
+      finalbody=[]
+    ),
+    FunctionDef(
+      name="f",
+      args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+      body=[
+        Return(value=None)
+      ],
+      decorator_list=[],
+      returns=None
+    ),
+    FunctionDef(
+      name="f",
+      args=arguments(
+        posonlyargs=[],
+        args=[
+          arg(arg="a", annotation=None),
+          arg(arg="b", annotation=None)
+        ],
+        vararg=None,
+        kwonlyargs=[],
+        kw_defaults=[],
+        kwarg=None,
+        defaults=[]
+      ),
+      body=[
+        Return(
+          value=Tuple(
+            elts=[
+              Name(id="a", ctx=Load),
+              Name(id="b", ctx=Load)
+            ],
+            ctx=Load
+          )
+        )
+      ],
+      decorator_list=[],
+      returns=None
+    ),
+    FunctionDef(
+      name="f",
+      args=arguments(
+        posonlyargs=[],
+        args=[
+          arg(arg="a", annotation=None),
+          arg(arg="b", annotation=None)
+        ],
+        vararg=arg(arg="args", annotation=None),
+        kwonlyargs=[
+          arg(arg="c", annotation=None),
+          arg(arg="d", annotation=None)
+        ],
+        kw_defaults=[
+          None,
+          Constant(value=2)
+        ],
+        kwarg=arg(arg="kwargs", annotation=None),
+        defaults=[
+          Constant(value=1)
+        ]
+      ),
+      body=[
+        Return(value=None)
+      ],
+      decorator_list=[],
+      returns=None
+    ),
+    FunctionDef(
+      name="f",
+      args=arguments(
+        posonlyargs=[],
+        args=[],
+        vararg=None,
+        kwonlyargs=[
+          arg(arg="a", annotation=None),
+          arg(arg="b", annotation=None)
+        ],
+        kw_defaults=[
+          None,
+          Constant(value=1)
+        ],
+        kwarg=None,
+        defaults=[]
+      ),
+      body=[
+        Pass
+      ],
+      decorator_list=[],
+      returns=None
+    ),
+    FunctionDef(
+      name="f",
+      args=arguments(
+        posonlyargs=[],
+        args=[],
+        vararg=arg(arg="args", annotation=None),
+        kwonlyargs=[],
+        kw_defaults=[],
+        kwarg=None,
+        defaults=[]
+      ),
+      body=[
+        Pass
+      ],
+      decorator_list=[],
+      returns=None
+    ),
+    FunctionDef(
+      name="f",
+      args=arguments(
+        posonlyargs=[],
+        args=[],
+        vararg=None,
+        kwonlyargs=[],
+        kw_defaults=[],
+        kwarg=arg(arg="kwargs", annotation=None),
+        defaults=[]
+      ),
+      body=[
+        Pass
+      ],
+      decorator_list=[],
+      returns=None
+    ),
+    FunctionDef(
+      name="f",
+      args=arguments(
+        posonlyargs=[],
+        args=[
+          arg(arg="a", annotation=None),
+          arg(arg="b", annotation=None)
+        ],
+        vararg=None,
+        kwonlyargs=[],
+        kw_defaults=[],
+        kwarg=None,
+        defaults=[
+          Constant(value=1),
+          Constant(value=2)
+        ]
+      ),
+      body=[
+        Global(
+          names=[
+            "q"
+          ]
+        ),
+        Assign(
+          targets=[
+            Name(id="q", ctx=Store)
+          ],
+          value=Constant(value=1)
+        ),
+        FunctionDef(
+          name="inner",
+          args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+          body=[
+            Nonlocal(
+              names=[
+                "a"
+              ]
+            ),
+            Assign(
+              targets=[
+                Name(id="a", ctx=Store)
+              ],
+              value=Constant(value=2)
+            )
+          ],
+          decorator_list=[],
+          returns=None
+        )
+      ],
+      decorator_list=[],
+      returns=None
+    ),
+    Raise(exc=None, cause=None),
+    Raise(
+      exc=Name(id="E", ctx=Load),
+      cause=None
+    ),
+    Raise(
+      exc=Call(
+        func=Name(id="E", ctx=Load),
+        args=[
+          Constant(value="x")
+        ],
+        keywords=[]
+      ),
+      cause=None
+    ),
+    Raise(
+      exc=Name(id="E", ctx=Load),
+      cause=Constant(value=None)
+    ),
+    Assign(
+      targets=[
+        Name(id="return_value", ctx=Store)
+      ],
+      value=Constant(value=3)
+    )
+  ]
+)
