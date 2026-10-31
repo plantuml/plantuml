@@ -60,7 +60,6 @@ import org.openpdf.text.ImgJBIG2;
 import org.openpdf.text.Rectangle;
 import org.openpdf.text.error_messages.MessageLocalization;
 import org.openpdf.text.exceptions.IllegalPdfSyntaxException;
-import org.openpdf.text.pdf.internal.PdfXConformanceImp;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -521,7 +520,6 @@ public class PdfContentByte {
      * @param blue  the intensity of blue. A value between 0 and 1
      */
     private void HelperRGB(float red, float green, float blue) {
-        PdfXConformanceImp.checkPDFXConformance(writer, PdfXConformanceImp.PDFXKEY_RGB, null);
         if (red < 0.0f) {
             red = 0.0f;
         } else if (red > MAX_FLOAT_COLOR_VALUE) {
@@ -587,53 +585,6 @@ public class PdfContentByte {
     }
 
     /**
-     * Helper to validate and write the CMYK color components.
-     *
-     * @param cyan    the intensity of cyan. A value between 0 and 255
-     * @param magenta the intensity of magenta. A value between 0 and 255
-     * @param yellow  the intensity of yellow. A value between 0 and 255
-     * @param black   the intensity of black. A value between 0 and 255
-     */
-    private void HelperCMYK(int cyan, int magenta, int yellow, int black) {
-        HelperCMYK((float) (cyan & MAX_COLOR_VALUE) / MAX_INT_COLOR_VALUE,
-                (float) (magenta & MAX_COLOR_VALUE) / MAX_INT_COLOR_VALUE,
-                (float) (yellow & MAX_COLOR_VALUE) / MAX_INT_COLOR_VALUE,
-                (float) (black & MAX_COLOR_VALUE) / MAX_INT_COLOR_VALUE);
-    }
-
-    /**
-     * Helper to validate and write the CMYK color components.
-     *
-     * @param cyan    the intensity of cyan. A value between 0 and 1
-     * @param magenta the intensity of magenta. A value between 0 and 1
-     * @param yellow  the intensity of yellow. A value between 0 and 1
-     * @param black   the intensity of black. A value between 0 and 1
-     */
-    private void HelperCMYK(float cyan, float magenta, float yellow, float black) {
-        if (cyan < 0.0f) {
-            cyan = 0.0f;
-        } else if (cyan > MAX_FLOAT_COLOR_VALUE) {
-            cyan = MAX_FLOAT_COLOR_VALUE;
-        }
-        if (magenta < 0.0f) {
-            magenta = 0.0f;
-        } else if (magenta > MAX_FLOAT_COLOR_VALUE) {
-            magenta = MAX_FLOAT_COLOR_VALUE;
-        }
-        if (yellow < 0.0f) {
-            yellow = 0.0f;
-        } else if (yellow > MAX_FLOAT_COLOR_VALUE) {
-            yellow = MAX_FLOAT_COLOR_VALUE;
-        }
-        if (black < 0.0f) {
-            black = 0.0f;
-        } else if (black > MAX_FLOAT_COLOR_VALUE) {
-            black = MAX_FLOAT_COLOR_VALUE;
-        }
-        content.append(cyan).append(' ').append(magenta).append(' ').append(yellow).append(' ').append(black);
-    }
-
-    /**
      * Changes the current color for filling paths (device dependent colors!).
      * <p>
      * Sets the color space to <B>DeviceCMYK</B> (or the <B>DefaultCMYK</B> color space), and sets the color to use for
@@ -646,12 +597,6 @@ public class PdfContentByte {
      * @param yellow  the intensity of yellow. A value between 0 and 1
      * @param black   the intensity of black. A value between 0 and 1
      */
-
-    public void setCMYKColorFillF(float cyan, float magenta, float yellow, float black, float alpha) {
-        saveColorFill(new CMYKColor(cyan, magenta, yellow, black, alpha));
-        HelperCMYK(cyan, magenta, yellow, black);
-        content.append(" k").append_i(separator);
-    }
 
     /**
      * Changes the current color for filling paths to black.
@@ -671,12 +616,6 @@ public class PdfContentByte {
      * @param yellow  the intensity of yellow. A value between 0 and 1
      * @param black   the intensity of black. A value between 0 and 1
      */
-
-    public void setCMYKColorStrokeF(float cyan, float magenta, float yellow, float black, float alpha) {
-        saveColorStroke(new CMYKColor(cyan, magenta, yellow, black, alpha));
-        HelperCMYK(cyan, magenta, yellow, black);
-        content.append(" K").append_i(separator);
-    }
 
     /**
      * Changes the current color for stroking paths to black.
@@ -1598,28 +1537,11 @@ public class PdfContentByte {
      * @param color the color
      */
     public void setColorStroke(Color color) {
-        PdfXConformanceImp.checkPDFXConformance(writer, PdfXConformanceImp.PDFXKEY_COLOR, color);
         int type = ExtendedColor.getType(color);
         switch (type) {
             case ExtendedColor.TYPE_GRAY: {
                 final GrayColor grayColor = (GrayColor) color;
                 setGrayStroke(grayColor.getGray(), grayColor.getAlpha());
-                break;
-            }
-            case ExtendedColor.TYPE_CMYK: {
-                CMYKColor cmyk = (CMYKColor) color;
-                setCMYKColorStrokeF(cmyk.getCyan(), cmyk.getMagenta(), cmyk.getYellow(), cmyk.getBlack(),
-                        cmyk.getAlpha());
-                break;
-            }
-            case ExtendedColor.TYPE_SEPARATION: {
-                SpotColor spot = (SpotColor) color;
-                setColorStroke(spot.getPdfSpotColor(), spot.getTint());
-                break;
-            }
-            case ExtendedColor.TYPE_SHADING: {
-                ShadingColor shading = (ShadingColor) color;
-                setShadingStroke(shading.getPdfShadingPattern());
                 break;
             }
             default:
@@ -1646,28 +1568,11 @@ public class PdfContentByte {
      * @param color the color
      */
     public void setColorFill(Color color) {
-        PdfXConformanceImp.checkPDFXConformance(writer, PdfXConformanceImp.PDFXKEY_COLOR, color);
         int type = ExtendedColor.getType(color);
         switch (type) {
             case ExtendedColor.TYPE_GRAY: {
                 GrayColor grayColor = (GrayColor) color;
                 setGrayFill(grayColor.getGray(), color.getAlpha() / MAX_INT_COLOR_VALUE);
-                break;
-            }
-            case ExtendedColor.TYPE_CMYK: {
-                CMYKColor cmyk = (CMYKColor) color;
-                setCMYKColorFillF(cmyk.getCyan(), cmyk.getMagenta(), cmyk.getYellow(), cmyk.getBlack(),
-                        cmyk.getAlpha() / MAX_INT_COLOR_VALUE);
-                break;
-            }
-            case ExtendedColor.TYPE_SEPARATION: {
-                SpotColor spot = (SpotColor) color;
-                setColorFill(spot.getPdfSpotColor(), spot.getTint());
-                break;
-            }
-            case ExtendedColor.TYPE_SHADING: {
-                ShadingColor shading = (ShadingColor) color;
-                setShadingFill(shading.getPdfShadingPattern());
                 break;
             }
             default:
@@ -1684,76 +1589,6 @@ public class PdfContentByte {
         }
         if (state != null) {
             state.colorFill = extendedColor;
-        }
-    }
-
-    /**
-     * Sets the fill color to a spot color.
-     *
-     * @param sp   the spot color
-     * @param tint the tint for the spot color. 0 is no color and 1 is 100% color
-     */
-    public void setColorFill(PdfSpotColor sp, float tint) {
-        checkWriter();
-        saveColorFill(new SpotColor(sp, tint));
-        state.colorDetails = writer.addSimple(sp);
-        PageResources prs = getPageResources();
-        PdfName name = state.colorDetails.getColorName();
-        name = prs.addColor(name, state.colorDetails.getIndirectReference());
-        content.append(name.getBytes()).append(" cs ").append(tint).append(" scn").append_i(separator);
-    }
-
-    /**
-     * Sets the stroke color to a spot color.
-     *
-     * @param sp   the spot color
-     * @param tint the tint for the spot color. 0 is no color and 1 is 100% color
-     */
-    public void setColorStroke(PdfSpotColor sp, float tint) {
-        checkWriter();
-        saveColorStroke(new SpotColor(sp, tint));
-        state.colorDetails = writer.addSimple(sp);
-        PageResources prs = getPageResources();
-        PdfName name = state.colorDetails.getColorName();
-        name = prs.addColor(name, state.colorDetails.getIndirectReference());
-        content.append(name.getBytes()).append(" CS ").append(tint).append(" SCN").append_i(separator);
-    }
-
-    /**
-     * Sets the shading fill pattern.
-     *
-     * @param shading the shading pattern
-     */
-    public void setShadingFill(PdfShadingPattern shading) {
-        checkWriter();
-        saveColorFill(new ShadingColor(shading));
-        writer.addSimpleShadingPattern(shading);
-        PageResources prs = getPageResources();
-        PdfName name = prs.addPattern(shading.getPatternName(), shading.getPatternReference());
-        content.append(PdfName.PATTERN.getBytes()).append(" cs ").append(name.getBytes()).append(" scn")
-                .append_i(separator);
-        ColorDetails details = shading.getColorDetails();
-        if (details != null) {
-            prs.addColor(details.getColorName(), details.getIndirectReference());
-        }
-    }
-
-    /**
-     * Sets the shading stroke pattern
-     *
-     * @param shading the shading pattern
-     */
-    public void setShadingStroke(PdfShadingPattern shading) {
-        checkWriter();
-        saveColorStroke(new ShadingColor(shading));
-        writer.addSimpleShadingPattern(shading);
-        PageResources prs = getPageResources();
-        PdfName name = prs.addPattern(shading.getPatternName(), shading.getPatternReference());
-        content.append(PdfName.PATTERN.getBytes()).append(" CS ").append(name.getBytes()).append(" SCN")
-                .append_i(separator);
-        ColorDetails details = shading.getColorDetails();
-        if (details != null) {
-            prs.addColor(details.getColorName(), details.getIndirectReference());
         }
     }
 
@@ -1914,10 +1749,6 @@ public class PdfContentByte {
          */
         FontDetails fontDetails;
         /**
-         * This is the color in use
-         */
-        ColorDetails colorDetails;
-        /**
          * This is the font size in use
          */
         float size;
@@ -1931,7 +1762,6 @@ public class PdfContentByte {
 
         void copyParameters(final GraphicState cp) {
             fontDetails = cp.fontDetails;
-            colorDetails = cp.colorDetails;
             size = cp.size;
             xTLM = cp.xTLM;
             yTLM = cp.yTLM;

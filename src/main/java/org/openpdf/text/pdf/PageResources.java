@@ -107,12 +107,6 @@ class PageResources {
         colorDictionary.mergeDifferent(dic);
     }
 
-    PdfName addPattern(PdfName name, PdfIndirectReference reference) {
-        name = translateName(name);
-        patternDictionary.put(name, reference);
-        return name;
-    }
-
     PdfName addExtGState(PdfName name, PdfIndirectReference reference) {
         name = translateName(name);
         extGStateDictionary.put(name, reference);

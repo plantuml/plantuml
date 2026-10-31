@@ -157,7 +157,6 @@ public class Document implements DocListener {
     /**
      * This is a chapter number in case ChapterAutoNumber is used.
      */
-    protected int chapternumber = 0;
     /**
      * Text rendering options, including the default language of the document and a flag to enable font glyph
      * substitution (if FOP is available)
@@ -246,17 +245,8 @@ public class Document implements DocListener {
                     "the.document.is.not.open.yet.you.can.only.add.meta.information"));
         }
         boolean success = false;
-        if (element instanceof ChapterAutoNumber) {
-            chapternumber = ((ChapterAutoNumber) element).setAutomaticNumber(chapternumber);
-        }
         for (DocListener listener : listeners) {
             success |= listener.add(element);
-        }
-        if (element instanceof LargeElement) {
-            LargeElement e = (LargeElement) element;
-            if (!e.isComplete()) {
-                e.flushContent();
-            }
         }
         return success;
     }

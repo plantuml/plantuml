@@ -133,15 +133,6 @@ public class PdfNumber extends PdfObject implements Comparable<PdfNumber> {
 
     // methods returning the value of this object
 
-    /**
-     * Returns the primitive <CODE>double</CODE> value of this object.
-     *
-     * @return The value as <CODE>double</CODE>
-     */
-    public double doubleValue() {
-        return value;
-    }
-
     // other methods
 
     @Override

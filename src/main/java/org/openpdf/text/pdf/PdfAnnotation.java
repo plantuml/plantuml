@@ -63,10 +63,6 @@ public class PdfAnnotation extends PdfDictionary {
      * highlight attributename
      */
     public static final PdfName HIGHLIGHT_INVERT = PdfName.I;
-    /**
-     * flagvalue
-     */
-    public static final int FLAGS_PRINT = 4;
     protected PdfWriter writer;
     /**
      * Reference to this annotation.
@@ -74,15 +70,12 @@ public class PdfAnnotation extends PdfDictionary {
      * @since 2.1.6; was removed in 2.1.5, but restored in 2.1.6
      */
     protected PdfIndirectReference reference;
-    protected boolean annotation = true;
-
     // constructors
     public PdfAnnotation(PdfWriter writer, Rectangle rect) {
         this.writer = writer;
         if (rect != null) {
             put(PdfName.RECT, new PdfRectangle(rect));
         }
-        addFKey();
     }
 
     /**
@@ -156,9 +149,4 @@ public class PdfAnnotation extends PdfDictionary {
         return reference;
     }
 
-    private void addFKey() {
-        if (writer.isPdfA1()) {
-            put(PdfName.F, new PdfNumber(FLAGS_PRINT));
-        }
-    }
 }

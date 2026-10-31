@@ -99,34 +99,6 @@ public abstract class Image extends Rectangle {
     public static final int LEFT = 0;
 
     /**
-     * Image alignment modifier: Allow text to wrap around the image.
-     * When combined with LEFT or RIGHT, text will flow around the image on the opposite side.
-     * This is useful for creating inline images where text continues alongside the image
-     * instead of the image occupying its own line.
-     * <p>
-     * Example for an image with text wrapping on the right:
-     * {@code image.setAlignment(Image.LEFT | Image.TEXTWRAP);}
-     * <p>
-     * Example for an image with text wrapping on the left:
-     * {@code image.setAlignment(Image.RIGHT | Image.TEXTWRAP);}
-     */
-    public static final int TEXTWRAP = 4;
-
-    /**
-     * Image alignment modifier: Place the image behind (underneath) the text.
-     * When combined with other alignment flags, the image will be rendered as a background
-     * element with text overlaying it. This is useful for watermarks, seals, or stamps
-     * that should appear behind text content.
-     * <p>
-     * Example for a background image on the left:
-     * {@code image.setAlignment(Image.LEFT | Image.UNDERLYING);}
-     * <p>
-     * Example for a seal that appears behind text:
-     * {@code image.setAlignment(Image.RIGHT | Image.UNDERLYING);}
-     */
-    public static final int UNDERLYING = 8;
-
-    /**
      * This represents a coordinate in the transformation matrix.
      */
     public static final int AX = 0;
@@ -260,10 +232,6 @@ public abstract class Image extends Rectangle {
      */
     protected float spacingAfter;
     /**
-     * if the annotation is not null the image will be clickable.
-     */
-    protected Annotation annotation = null;
-    /**
      * Holds value of property interpolation.
      */
     protected boolean interpolation;
@@ -394,7 +362,6 @@ public abstract class Image extends Rectangle {
         this.spacingAfter = image.spacingAfter;
 
         this.widthPercentage = image.widthPercentage;
-        this.annotation = image.annotation;
         this.interpolation = image.interpolation;
         this.originalType = image.originalType;
         this.originalData = image.originalData;

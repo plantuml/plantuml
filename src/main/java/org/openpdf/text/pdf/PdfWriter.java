@@ -57,9 +57,7 @@ import org.openpdf.text.Image;
 import org.openpdf.text.error_messages.MessageLocalization;
 import org.openpdf.text.pdf.interfaces.PdfRunDirection;
 import org.openpdf.text.pdf.interfaces.PdfVersion;
-import org.openpdf.text.pdf.interfaces.PdfXConformance;
 import org.openpdf.text.pdf.internal.PdfVersionImp;
-import org.openpdf.text.pdf.internal.PdfXConformanceImp;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -79,7 +77,6 @@ import java.util.TreeSet;
 
 public class PdfWriter extends DocWriter implements
         PdfVersion,
-        PdfXConformance,
         PdfRunDirection {
 
     /**
@@ -178,44 +175,12 @@ public class PdfWriter extends DocWriter implements
 
 //    page events
 
-    /**
-     * A PDF/X level.
-     */
-    public static final int PDFXNONE = 0;
-    /**
-     * A PDF/X level.
-     */
-    public static final int PDFX1A2001 = 1;
 
 //    Open and Close methods + method that create the PDF
-    /**
-     * A PDF/X level.
-     */
-    public static final int PDFX32002 = 2;
-    /**
-     * PDFA-1A level.
-     */
-    public static final int PDFA1A = 3;
-    /**
-     * PDFA-1B level.
-     */
-    public static final int PDFA1B = 4;
 // Root data for the PDF document (used when composing the Catalog)
 
-    /**
-     * Use the default run direction.
-     */
-    public static final int RUN_DIRECTION_DEFAULT = 0;
-    /**
-     * Do not use bidirectional reordering.
-     */
-    public static final int RUN_DIRECTION_NO_BIDI = 1;
 //  [C3] PdfViewerPreferences interface
 
-    /**
-     * Stores the PDF/X level.
-     */
-    private final PdfXConformanceImp pdfxConformance = new PdfXConformanceImp();
     /**
      * This is the list with all the images in the document.
      */
@@ -320,10 +285,6 @@ public class PdfWriter extends DocWriter implements
      */
     protected int formXObjectsCounter = 1;
     /**
-     * The colors of this document
-     */
-    protected HashMap<PdfSpotColor, ColorDetails> documentColors = new LinkedHashMap<>();
-    /**
      * The color number counter for the colors in the document.
      */
     protected int colorNumber = 1;
@@ -333,13 +294,6 @@ public class PdfWriter extends DocWriter implements
      * The patterns of this document
      */
 
-//  [C5] named objects: named destinations, javascript, embedded files
-    /**
-     * The pattern number counter for the colors in the document.
-     */
-    protected int patternNumber = 1;
-    protected HashMap<PdfShadingPattern, Object> documentShadingPatterns = new LinkedHashMap<>();
-    protected HashMap<PdfShading, Object> documentShadings = new LinkedHashMap<>();
     protected HashMap<PdfDictionary, PdfObject[]> documentExtGState = new LinkedHashMap<>();
     protected HashMap<Object, PdfObject[]> documentProperties = new LinkedHashMap<>();
     /**
@@ -347,7 +301,6 @@ public class PdfWriter extends DocWriter implements
      * imaging model
      */
     protected PdfDictionary group;
-    protected int runDirection = RUN_DIRECTION_NO_BIDI;
     protected float userunit = 0f;
     protected PdfDictionary defaultColorspace = new PdfDictionary();
 //  [C8] AcroForm
@@ -666,16 +619,6 @@ public class PdfWriter extends DocWriter implements
         try {
             pdf_version.writeHeader(os);
             body = new PdfBody(this);
-            if (pdfxConformance.isPdfX32002()) {
-                PdfDictionary sec = new PdfDictionary();
-                sec.put(PdfName.GAMMA, new PdfArray(new float[]{2.2f, 2.2f, 2.2f}));
-                sec.put(PdfName.MATRIX, new PdfArray(
-                        new float[]{0.4124f, 0.2126f, 0.0193f, 0.3576f, 0.7152f, 0.1192f, 0.1805f, 0.0722f, 0.9505f}));
-                sec.put(PdfName.WHITEPOINT, new PdfArray(new float[]{0.9505f, 1f, 1.089f}));
-                PdfArray arr = new PdfArray(PdfName.CALRGB);
-                arr.add(sec);
-                setDefaultColorspace(PdfName.DEFAULTRGB, addToBody(arr).getIndirectReference());
-            }
         } catch (IOException ioe) {
             throw new ExceptionConverter(ioe);
         }
@@ -768,18 +711,6 @@ public class PdfWriter extends DocWriter implements
                 addToBody(template.getFormXObject(compressionLevel), template.getIndirectReference());
             }
         }
-        // [F6] add the spotcolors
-        for (ColorDetails color : documentColors.values()) {
-            addToBody(color.getSpotColor(this), color.getIndirectReference());
-        }
-        // [F8] add the shading patterns
-        for (PdfShadingPattern shadingPattern : documentShadingPatterns.keySet()) {
-            shadingPattern.addToBody();
-        }
-        // [F9] add the shadings
-        for (PdfShading shading : documentShadings.keySet()) {
-            shading.addToBody();
-        }
         // [F10] add the extgstate
         for (Map.Entry<PdfDictionary, PdfObject[]> entry : documentExtGState.entrySet()) {
             PdfDictionary gstate = entry.getKey();
@@ -816,25 +747,7 @@ public class PdfWriter extends DocWriter implements
 
 //  [F11] adding properties (OCG, marked content)
 
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfXConformance#getPDFXConformance()
-     */
-    public int getPDFXConformance() {
-        return pdfxConformance.getPDFXConformance();
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.interfaces.PdfXConformance#isPdfX()
-     */
-    public boolean isPdfX() {
-        return pdfxConformance.isPdfX();
-    }
-
 //  [F12] tagged PDF
-
-    public boolean isPdfA1() {
-        return pdfxConformance.isPdfA1();
-    }
 
     private static byte[] createDocumentId() {
         final byte[] id = new byte[16];
@@ -903,43 +816,10 @@ public class PdfWriter extends DocWriter implements
 
 //  [U2] take care of empty pages
 
-    /**
-     * Adds a <CODE>SpotColor</CODE> to the document but not to the page resources.
-     *
-     * @param spc the <CODE>SpotColor</CODE> to add
-     * @return an <CODE>Object[]</CODE> where position 0 is a <CODE>PdfName</CODE> and position 1 is an
-     * <CODE>PdfIndirectReference</CODE>
-     */
-    ColorDetails addSimple(PdfSpotColor spc) {
-        ColorDetails ret = documentColors.get(spc);
-        if (ret == null) {
-            ret = new ColorDetails(getColorspaceName(), body.getPdfIndirectReference(), spc);
-            documentColors.put(spc, ret);
-        }
-        return ret;
-    }
-
 //  [U3] page actions (open and close)
-
-    void addSimpleShadingPattern(PdfShadingPattern shading) {
-        if (!documentShadingPatterns.containsKey(shading)) {
-            shading.setName(patternNumber);
-            ++patternNumber;
-            documentShadingPatterns.put(shading, null);
-            addSimpleShading(shading.getShading());
-        }
-    }
-
-    void addSimpleShading(PdfShading shading) {
-        if (!documentShadings.containsKey(shading)) {
-            documentShadings.put(shading, null);
-            shading.setName(documentShadings.size());
-        }
-    }
 
     PdfObject[] addSimpleExtGState(PdfDictionary gstate) {
         if (!documentExtGState.containsKey(gstate)) {
-            PdfXConformanceImp.checkPDFXConformance(this, PdfXConformanceImp.PDFXKEY_GSTATE, gstate);
             documentExtGState.put(gstate,
                     new PdfObject[]{new PdfName("GS" + (documentExtGState.size() + 1)), getPdfIndirectReference()});
         }
@@ -981,23 +861,6 @@ public class PdfWriter extends DocWriter implements
     }
 
     /**
-     * Use this method to sets the default colorspace that will be applied to all the document. The colorspace is only
-     * applied if another colorspace with the same name is not present in the content.
-     * <p>
-     * The colorspace is applied immediately when creating templates and at the page end for the main document content.
-     *
-     * @param key the name of the colorspace. It can be <CODE>PdfName.DEFAULTGRAY</CODE>,
-     *            <CODE>PdfName.DEFAULTRGB</CODE> or <CODE>PdfName.DEFAULTCMYK</CODE>
-     * @param cs  the colorspace. A <CODE>null</CODE> or <CODE>PdfNull</CODE> removes any colorspace with the same name
-     */
-    public void setDefaultColorspace(PdfName key, PdfObject cs) {
-        if (cs == null || cs.isNull()) {
-            defaultColorspace.remove(key);
-        }
-        defaultColorspace.put(key, cs);
-    }
-
-    /**
      * Writes a <CODE>PdfImage</CODE> to the outputstream.
      *
      * @param pdfImage the image to be added
@@ -1007,7 +870,6 @@ public class PdfWriter extends DocWriter implements
 
     PdfIndirectReference add(PdfImage pdfImage, PdfIndirectReference fixedRef) throws PdfException {
         if (!imageDictionary.contains(pdfImage.name())) {
-            PdfXConformanceImp.checkPDFXConformance(this, PdfXConformanceImp.PDFXKEY_IMAGE, pdfImage);
             try {
                 if (fixedRef == null) {
                     fixedRef = addToBody(pdfImage).getIndirectReference();
@@ -1536,7 +1398,6 @@ public class PdfWriter extends DocWriter implements
     FontDetails addSimple(BaseFont bf) {
         FontDetails ret = documentFonts.get(bf);
         if (ret == null) {
-            PdfXConformanceImp.checkPDFXConformance(this, PdfXConformanceImp.PDFXKEY_FONT, bf);
             ret = new FontDetails(new PdfName("F" + (fontNumber++)), body.getPdfIndirectReference(), bf);
             documentFonts.put(bf, ret);
         }

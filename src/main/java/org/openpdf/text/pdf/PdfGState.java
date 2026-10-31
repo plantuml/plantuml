@@ -54,14 +54,6 @@ package org.openpdf.text.pdf;
 public class PdfGState extends PdfDictionary {
 
     /**
-     * A possible blend mode
-     */
-    public static final PdfName BM_NORMAL = new PdfName("Normal");
-    /**
-     * A possible blend mode
-     */
-    public static final PdfName BM_COMPATIBLE = new PdfName("Compatible");
-    /**
      * Sets the current stroking alpha constant, specifying the constant shape or constant opacity value to be used for
      * stroking operations in the transparent imaging model.
      *

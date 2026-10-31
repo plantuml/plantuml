@@ -67,19 +67,7 @@ public abstract class ExtendedColor extends Color {
     /**
      * a type of extended color.
      */
-    public static final int TYPE_CMYK = 2;
-    /**
-     * a type of extended color.
-     */
-    public static final int TYPE_SEPARATION = 3;
-    /**
-     * a type of extended color.
-     */
     public static final int TYPE_PATTERN = 4;
-    /**
-     * a type of extended color.
-     */
-    public static final int TYPE_SHADING = 5;
     /**
      * the max int color value (255) expressed in int
      */
@@ -94,18 +82,6 @@ public abstract class ExtendedColor extends Color {
     public static final float MAX_FLOAT_COLOR_VALUE = 0x1;
     private static final long serialVersionUID = 2722660170712380080L;
     protected int type;
-
-    /**
-     * Constructs an extended color of a certain type and a certain color.
-     *
-     * @param type  {@link ExtendedColor#type}
-     * @param red   red quotient
-     * @param green green quotient
-     * @param blue  blue quotient
-     */
-    public ExtendedColor(int type, float red, float green, float blue) {
-        this(type, normalize(red), normalize(green), normalize(blue), MAX_FLOAT_COLOR_VALUE);
-    }
 
     /**
      * Constructs an extended color of a certain type and a certain color.

@@ -752,15 +752,6 @@ public abstract class BaseFont {
     }
 
     /**
-     * Gets the embedded flag.
-     *
-     * @return <CODE>true</CODE> if the font is embedded.
-     */
-    public boolean isEmbedded() {
-        return embedded;
-    }
-
-    /**
      * Gets the postscript font name.
      *
      * @return the postscript font name

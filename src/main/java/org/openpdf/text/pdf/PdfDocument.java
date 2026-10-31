@@ -197,9 +197,6 @@ public class PdfDocument extends Document {
             return false;
         }
         switch (element.type()) {
-            case Element.HEADER:
-                info.addkey(((Meta) element).getName(), ((Meta) element).getContent());
-                break;
             case Element.TITLE:
                 info.addTitle(((Meta) element).getContent());
                 break;
@@ -491,12 +488,6 @@ public class PdfDocument extends Document {
             put(PdfName.MODDATE, date);
         }
 
-        void addkey(String key, String value) {
-            if (key.equals("Producer") || key.equals("CreationDate")) {
-                return;
-            }
-            put(new PdfName(key), new PdfString(value, PdfObject.TEXT_UNICODE));
-        }
     }
 
     /**

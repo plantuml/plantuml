@@ -75,16 +75,6 @@ public abstract class DocWriter implements DocListener {
     /**
      * This is some byte that is often used.
      */
-    public static final byte NEWLINE = (byte) '\n';
-
-    /**
-     * This is some byte that is often used.
-     */
-    public static final byte TAB = (byte) '\t';
-
-    /**
-     * This is some byte that is often used.
-     */
     public static final byte QUOTE = (byte) '\"';
 
     // membervariables

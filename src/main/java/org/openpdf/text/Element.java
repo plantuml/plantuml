@@ -124,57 +124,7 @@ public interface Element {
 
     // static membervariables (content)
 
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     */
-    int CHUNK = 10;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     */
-    int PHRASE = 11;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     */
-    int PARAGRAPH = 12;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>
-     */
-    int SECTION = 13;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>
-     */
-    int LIST = 14;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>
-     */
-    int LISTITEM = 15;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>
-     */
-    int CHAPTER = 16;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>
-     */
-    int ANCHOR = 17;
-
     // static membervariables (tables)
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     */
-    int CELL = 20;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     */
-    int ROW = 21;
 
     /**
      * This is a possible type of <CODE>Element</CODE>.
@@ -182,11 +132,6 @@ public interface Element {
     int TABLE = 22;
 
     // static membervariables (annotations)
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     */
-    int ANNOTATION = 29;
 
     // static membervariables (geometric figures)
 
@@ -216,12 +161,6 @@ public interface Element {
      * A possible value for paragraph alignment. This specifies that the text is aligned to the left indent and extra
      * whitespace should be placed on the right.
      */
-    int ALIGN_UNDEFINED = -1;
-
-    /**
-     * A possible value for paragraph alignment. This specifies that the text is aligned to the left indent and extra
-     * whitespace should be placed on the right.
-     */
     int ALIGN_LEFT = 0;
 
     /**
@@ -237,39 +176,16 @@ public interface Element {
     int ALIGN_RIGHT = 2;
 
     /**
-     * A possible value for paragraph alignment. This specifies that extra whitespace should be spread out through the
-     * rows of the paragraph with the text lined up with the left and right indent except on the last line which should
-     * be aligned to the left.
+     * A possible value for vertical alignment.
      */
-    int ALIGN_JUSTIFIED = 3;
 
     /**
      * A possible value for vertical alignment.
      */
 
-    int ALIGN_TOP = 4;
-
     /**
      * A possible value for vertical alignment.
      */
-
-    int ALIGN_MIDDLE = 5;
-
-    /**
-     * A possible value for vertical alignment.
-     */
-
-    int ALIGN_BOTTOM = 6;
-
-    /**
-     * A possible value for vertical alignment.
-     */
-    int ALIGN_BASELINE = 7;
-
-    /**
-     * Does the same as ALIGN_JUSTIFIED but the last line is also spread out.
-     */
-    int ALIGN_JUSTIFIED_ALL = 8;
 
     // static member variables for CCITT compression
 

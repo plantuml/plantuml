@@ -135,23 +135,4 @@ public class Meta implements Element {
      * @return a <CODE>String</CODE>
      */
 
-    public String getName() {
-        switch (type) {
-            case Element.SUBJECT:
-                return ElementTags.SUBJECT;
-            case Element.KEYWORDS:
-                return ElementTags.KEYWORDS;
-            case Element.AUTHOR:
-                return ElementTags.AUTHOR;
-            case Element.TITLE:
-                return ElementTags.TITLE;
-            case Element.PRODUCER:
-                return ElementTags.PRODUCER;
-            case Element.CREATIONDATE:
-                return ElementTags.CREATIONDATE;
-            default:
-                return ElementTags.UNKNOWN;
-        }
-    }
-
 }
