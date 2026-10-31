@@ -7,7 +7,7 @@ every .puml file under src/test/resources/vega/ is rendered, and the output is
 compared with the reference file stored next to it (hello.puml -> hello.svg).
 This script does the same with the C executable instead of the JVM.
 
-The C build is still partial (mindmap only, SVG / PNG / --preproc), so many tests
+The C build is still partial (mindmap only, SVG / PNG / PDF / --preproc), so many tests
 are expected to fail. The script only reports; it does not decide what is a
 regression.
 
@@ -15,6 +15,8 @@ What is checked, per test file:
   * output: svg      -> `plantuml.exe --svg-vega`, compared (XML-normalised, as SvgCleaner
                         does in the Java tests) with <name>.svg / <name>-N.svg
   * output: preproc  -> `plantuml.exe --preproc`, compared with <name>.preproc
+  * output: pdf      -> `plantuml.exe --pdf-vega` (deterministic PDF: fixed dates and /ID, no
+                        compression), compared byte for byte with <name>.pdf / <name>-N.pdf
   * any other output format, or a test that expects an error (expected-exception,
     expected-error-*, expected-status): reported as "skipped".
 The other expectations of the YAML header (expected-description, expected-stderr,
@@ -63,6 +65,7 @@ YAML_DELIMITER = "---"
 SUPPORTED_FORMATS = {
     "svg": (["--svg-vega"], ".svg"),
     "preproc": (["--preproc"], ".preproc"),
+    "pdf": (["--pdf-vega"], ".pdf"),
 }
 
 # Keys of the YAML header that make a test expect an error: the C build does not
@@ -281,6 +284,13 @@ def normalise_svg(data):
     return ET.tostring(root, encoding="unicode")
 
 
+def normalise_pdf(data):
+    """The bytes of the PDF as ISO-8859-1 text (one character per byte, nothing lost),
+    without the carriage returns that a Git checkout may add to a file it takes for
+    text. The deterministic PDF is not compressed, so the diff is readable."""
+    return data.replace(b"\r", b"").decode("latin-1")
+
+
 def normalise_text(data):
     text = data.decode("utf-8", errors="replace") if isinstance(data, bytes) else data
     return text.replace("\r\n", "\n").replace("\r", "\n")
@@ -428,6 +438,9 @@ def check_formats(puml, source, supported, exe, timeout, workdir, relative, resu
                     if fmt == "svg":
                         actual = normalise_svg(actual_bytes)
                         expected = normalise_svg(expected_bytes)
+                    elif fmt == "pdf":
+                        actual = normalise_pdf(actual_bytes)
+                        expected = normalise_pdf(expected_bytes)
                     else:
                         actual = normalise_text(actual_bytes)
                         expected = normalise_text(expected_bytes)
