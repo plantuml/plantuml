@@ -90,46 +90,7 @@ public class Meta implements Element {
         this.content = new StringBuffer(content);
     }
 
-    /**
-     * Constructs a <CODE>Meta</CODE>.
-     *
-     * @param tag     the tagname of the meta-information
-     * @param content the content
-     */
-    public Meta(String tag, String content) {
-        this.type = Meta.getType(tag);
-        this.content = new StringBuffer(content);
-    }
-
     // implementation of the Element-methods
-
-    /**
-     * Returns the name of the meta information.
-     *
-     * @param tag iText tag for meta information
-     * @return the Element value corresponding with the given tag
-     */
-    public static int getType(String tag) {
-        if (ElementTags.SUBJECT.equals(tag)) {
-            return Element.SUBJECT;
-        }
-        if (ElementTags.KEYWORDS.equals(tag)) {
-            return Element.KEYWORDS;
-        }
-        if (ElementTags.AUTHOR.equals(tag)) {
-            return Element.AUTHOR;
-        }
-        if (ElementTags.TITLE.equals(tag)) {
-            return Element.TITLE;
-        }
-        if (ElementTags.PRODUCER.equals(tag)) {
-            return Element.PRODUCER;
-        }
-        if (ElementTags.CREATIONDATE.equals(tag)) {
-            return Element.CREATIONDATE;
-        }
-        return Element.HEADER;
-    }
 
     /**
      * Processes the element by adding it (or the different parts) to a

@@ -51,7 +51,6 @@ package org.openpdf.text;
 
 import org.openpdf.text.pdf.BaseFont;
 import java.awt.Color;
-import java.util.Locale;
 
 
 /**
@@ -123,11 +122,6 @@ public class Font implements Comparable {
     /**
      * this is a possible style.
      */
-    public static final int STRIKETHRU = 8;
-
-    /**
-     * this is a possible style.
-     */
     public static final int BOLDITALIC = BOLD | ITALIC;
 
     // static membervariables
@@ -172,19 +166,6 @@ public class Font implements Comparable {
     // constructors
 
     /**
-     * Copy constructor of a Font
-     *
-     * @param other the font that has to be copied
-     */
-    public Font(Font other) {
-        this.family = other.family;
-        this.size = other.size;
-        this.style = other.style;
-        this.color = other.color;
-        this.baseFont = other.baseFont;
-    }
-
-    /**
      * Constructs a Font.
      *
      * @param family the family to which this font belongs
@@ -219,45 +200,11 @@ public class Font implements Comparable {
     /**
      * Constructs a Font.
      *
-     * @param bf    the external font
-     * @param size  the size of this font
-     * @param style the style of this font
-     */
-    public Font(BaseFont bf, float size, int style) {
-        this(bf, size, style, null);
-    }
-
-    /**
-     * Constructs a Font.
-     *
-     * @param bf   the external font
-     * @param size the size of this font
-     */
-    public Font(BaseFont bf, float size) {
-        this(bf, size, UNDEFINED, null);
-    }
-
-    /**
-     * Constructs a Font.
-     *
-     * @param bf the external font
-     */
-    public Font(BaseFont bf) {
-        this(bf, UNDEFINED, UNDEFINED, null);
-    }
-
-    /**
-     * Constructs a Font.
-     *
      * @param family the family to which this font belongs
      * @param size   the size of this font
      * @param style  the style of this font
      */
 
-    public Font(int family, float size, int style) {
-        this(family, size, style, null);
-    }
-
     /**
      * Constructs a Font.
      *
@@ -265,19 +212,11 @@ public class Font implements Comparable {
      * @param size   the size of this font
      */
 
-    public Font(int family, float size) {
-        this(family, size, UNDEFINED, null);
-    }
-
     /**
      * Constructs a Font.
      *
      * @param family the family to which this font belongs
      */
-
-    public Font(int family) {
-        this(family, UNDEFINED, UNDEFINED, null);
-    }
 
     /**
      * Constructs a Font.
@@ -288,30 +227,6 @@ public class Font implements Comparable {
     }
 
     // FAMILY
-
-    /**
-     * Returns the font-style, if the font is already styled. <br>
-     * <pre>
-     * For example:
-     * font: Helvetica - style: normal
-     * font: Helvetica-Bold - style: bold
-     * </pre>
-     *
-     * @param fontName the name of the Font
-     * @return the styles of an already styled font.
-     */
-    public static int getFontStyleFromName(final String fontName) {
-        String lowerCaseFontName = fontName.toLowerCase(Locale.ROOT);
-
-        int fontStyle = Font.NORMAL;
-        if (lowerCaseFontName.contains("bold")) {
-            fontStyle |= Font.BOLD;
-        }
-        if (lowerCaseFontName.contains("italic") || lowerCaseFontName.contains("oblique")) {
-            fontStyle |= Font.ITALIC;
-        }
-        return fontStyle;
-    }
 
     /**
      * Compares this <CODE>Font</CODE> with another
@@ -374,15 +289,6 @@ public class Font implements Comparable {
         return size;
     }
 
-    /**
-     * Sets the size.
-     *
-     * @param size The new size of the font.
-     */
-    public void setSize(float size) {
-        this.size = size;
-    }
-
     // STYLE
 
     /**
@@ -420,58 +326,6 @@ public class Font implements Comparable {
     }
 
     /**
-     * Sets the style.
-     *
-     * @param style the style.
-     */
-    public void setStyle(int style) {
-        this.style = style;
-    }
-
-    /**
-     * Gets the style that can be used with the calculated <CODE>BaseFont
-     * </CODE>.
-     *
-     * @return the style that can be used with the calculated <CODE>BaseFont
-     * </CODE>
-     */
-    public int getCalculatedStyle() {
-        int style = this.style;
-        if (style == UNDEFINED) {
-            style = NORMAL;
-        }
-        if (baseFont != null) {
-            return style;
-        }
-        if (family == SYMBOL || family == ZAPFDINGBATS) {
-            return style;
-        } else {
-            return style & (~BOLDITALIC);
-        }
-    }
-
-    /**
-     * Returns the combined style of the font with the base font.
-     */
-    public int getCombinedStyle() {
-        return getBaseFontStyle() | getCalculatedStyle();
-    }
-
-    /**
-     * Return the style of the BaseFont based on it's name.
-     *
-     * @return Font.NORMAL if no style can be detected from the font name.
-     */
-    public int getBaseFontStyle() {
-        int style = Font.NORMAL;
-        if (baseFont != null) {
-            final String baseFontName = baseFont.getPostscriptFontName();
-            style = getFontStyleFromName(baseFontName);
-        }
-        return style;
-    }
-
-    /**
      * checks if this font is Bold.
      *
      * @return a <CODE>boolean</CODE>
@@ -493,30 +347,6 @@ public class Font implements Comparable {
             return false;
         }
         return (style & ITALIC) == ITALIC;
-    }
-
-    /**
-     * checks if this font is underlined.
-     *
-     * @return a <CODE>boolean</CODE>
-     */
-    public boolean isUnderlined() {
-        if (style == UNDEFINED) {
-            return false;
-        }
-        return (style & UNDERLINE) == UNDERLINE;
-    }
-
-    /**
-     * checks if the style of this font is STRIKETHRU.
-     *
-     * @return a <CODE>boolean</CODE>
-     */
-    public boolean isStrikethru() {
-        if (style == UNDEFINED) {
-            return false;
-        }
-        return (style & STRIKETHRU) == STRIKETHRU;
     }
 
     // COLOR
@@ -657,17 +487,5 @@ public class Font implements Comparable {
     }
 
     // Helper methods
-
-    /**
-     * Checks if the properties of this font are undefined or null.
-     * <p>
-     * If so, the standard should be used.
-     *
-     * @return a <CODE>boolean</CODE>
-     */
-    public boolean isStandardFont() {
-        return (family == UNDEFINED && size == UNDEFINED && style == UNDEFINED
-                && color == null && baseFont == null);
-    }
 
 }

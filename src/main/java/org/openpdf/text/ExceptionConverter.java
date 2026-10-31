@@ -93,30 +93,6 @@ public class ExceptionConverter extends RuntimeException {
     }
 
     /**
-     * Convert an Exception into an unchecked exception. Return the exception if it is already an unchecked exception or
-     * return an ExceptionConverter wrapper otherwise
-     *
-     * @param ex the exception to convert
-     * @return an unchecked exception
-     * @since 2.1.6
-     */
-    public static final RuntimeException convertException(Exception ex) {
-        if (ex instanceof RuntimeException) {
-            return (RuntimeException) ex;
-        }
-        return new ExceptionConverter(ex);
-    }
-
-    /**
-     * and allow the user of ExceptionConverter to get a handle to it.
-     *
-     * @return the original exception
-     */
-    public Exception getException() {
-        return ex;
-    }
-
-    /**
      * We print the message of the checked exception
      *
      * @return message of the original exception

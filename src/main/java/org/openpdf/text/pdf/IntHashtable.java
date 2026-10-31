@@ -30,7 +30,6 @@
 package org.openpdf.text.pdf;
 
 import org.openpdf.text.error_messages.MessageLocalization;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -80,18 +79,6 @@ public class IntHashtable implements Cloneable {
      */
     public IntHashtable() {
         this(150, 0.75f);
-    }
-
-    /***
-     * <p>Constructs a new, empty hashtable with the specified initial capacity
-     * and default load factor, which is <code>0.75</code>.</p>
-     *
-     * @param  initialCapacity the initial capacity of the hashtable.
-     * @throws IllegalArgumentException if the initial capacity is less
-     *   than zero.
-     */
-    public IntHashtable(int initialCapacity) {
-        this(initialCapacity, 0.75f);
     }
 
     /***
@@ -169,22 +156,6 @@ public class IntHashtable implements Cloneable {
             }
         }
         return false;
-    }
-
-    /***
-     * <p>Returns <code>true</code> if this HashMap maps one or more keys
-     * to this value.</p>
-     *
-     * <p>Note that this method is identical in functionality to contains
-     * (which predates the Map interface).</p>
-     *
-     * @param value value whose presence in this HashMap is to be tested.
-     * @return boolean <code>true</code> if the value is contained
-     * @see    java.util.Map
-     * @since JDK1.2
-     */
-    public boolean containsValue(int value) {
-        return contains(value);
     }
 
     /***
@@ -303,95 +274,7 @@ public class IntHashtable implements Cloneable {
         return 0;
     }
 
-    /***
-     * <p>Removes the key (and its corresponding value) from this
-     * hashtable.</p>
-     *
-     * <p>This method does nothing if the key is not present in the
-     * hashtable.</p>
-     *
-     * @param   key   the key that needs to be removed.
-     * @return the value to which the key had been mapped in this hashtable,
-     *          or <code>null</code> if the key did not have a mapping.
-     */
-    public int remove(int key) {
-        Entry[] tab = table;
-        int hash = key;
-        int index = (hash & 0x7FFFFFFF) % tab.length;
-        for (Entry e = tab[index], prev = null; e != null; prev = e, e = e.next) {
-            if (e.hash == hash && e.key == key) {
-                if (prev != null) {
-                    prev.next = e.next;
-                } else {
-                    tab[index] = e.next;
-                }
-                count--;
-                int oldValue = e.value;
-                e.value = 0;
-                return oldValue;
-            }
-        }
-        return 0;
-    }
-
-    /***
-     * <p>Clears this hashtable so that it contains no keys.</p>
-     */
-    public void clear() {
-        Entry[] tab = table;
-        for (int index = tab.length; --index >= 0; ) {
-            tab[index] = null;
-        }
-        count = 0;
-    }
-
-    public Iterator getEntryIterator() {
-        return new IntHashtableIterator(table);
-    }
-
-    public int[] toOrderedKeys() {
-        int[] res = getKeys();
-        Arrays.sort(res);
-        return res;
-    }
-
 // extra methods by Paulo Soares:
-
-    public int[] getKeys() {
-        int[] res = new int[count];
-        int ptr = 0;
-        int index = table.length;
-        Entry entry = null;
-        while (true) {
-            if (entry == null) {
-                while ((index-- > 0) && ((entry = table[index]) == null)) {
-                    // searching
-                }
-            }
-            if (entry == null) {
-                break;
-            }
-            Entry e = entry;
-            entry = e.next;
-            res[ptr++] = e.key;
-        }
-        return res;
-    }
-
-    public int getOneKey() {
-        if (count == 0) {
-            return 0;
-        }
-        int index = table.length;
-        Entry entry = null;
-        while ((index-- > 0) && ((entry = table[index]) == null)) {
-            // searching
-        }
-        if (entry == null) {
-            return 0;
-        }
-        return entry.key;
-    }
 
     public Object clone() {
         try {
@@ -434,11 +317,6 @@ public class IntHashtable implements Cloneable {
             this.next = next;
         }
 
-        // extra methods for inner class Entry by Paulo
-        public int getKey() {
-            return key;
-        }
-
         public int getValue() {
             return value;
         }
@@ -455,11 +333,6 @@ public class IntHashtable implements Cloneable {
         int index;
         Entry[] table;
         Entry entry;
-
-        IntHashtableIterator(Entry[] table) {
-            this.table = table;
-            this.index = table.length;
-        }
 
         public boolean hasNext() {
             if (entry != null) {

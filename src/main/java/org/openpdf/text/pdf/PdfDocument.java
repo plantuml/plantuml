@@ -54,7 +54,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import org.openpdf.text.DocumentException;
 import org.openpdf.text.Element;
 import org.openpdf.text.ExceptionConverter;
@@ -441,33 +440,9 @@ public class PdfDocument extends Document {
         annotations.add(annot);
     }
 
-    void setCropBoxSize(Rectangle crop) {
-        setBoxSize("crop", crop);
-    }
-
-    void setBoxSize(String boxName, Rectangle size) {
-        if (size == null) {
-            boxSize.remove(boxName);
-        } else {
-            boxSize.put(boxName, new PdfRectangle(size));
-        }
-    }
-
-    Rectangle getBoxSize(String boxName) {
-        PdfRectangle r = thisBoxSize.get(boxName);
-        if (r != null) {
-            return r.getRectangle();
-        }
-        return null;
-    }
-
     boolean isPageEmpty() {
         return writer == null || (writer.getDirectContent().size() == 0 && writer.getDirectContentUnder().size() == 0
                 && (pageEmpty || writer.isPaused()));
-    }
-
-    void setPageEmpty(boolean pageEmpty) {
-        this.pageEmpty = pageEmpty;
     }
 
     PageResources getPageResources() {

@@ -92,7 +92,6 @@ public class Emoji {
 	// The C build embeds the list (emoji.txt) and the SVG files in the executable
 	private static void loadEmbeddedList() {
 		final String all = embeddedText("emoji/emoji.txt", false);
-		System.err.println("EMOJI-TRACE emoji.txt " + (all == null ? "NOT FOUND" : all.length() + " chars"));
 		if (all == null)
 			return;
 		for (String line : all.split("\n")) {
@@ -100,7 +99,6 @@ public class Emoji {
 			if (line.length() > 0)
 				new Emoji(line);
 		}
-		System.err.println("EMOJI-TRACE loaded " + ALL.size() + " entries");
 	}
 
 	private static String embeddedText(String name, boolean firstLineOnly) {
@@ -144,8 +142,6 @@ public class Emoji {
 	}
 
 	public static Emoji retrieve(String name) {
-		System.err.println("EMOJI-TRACE retrieve '" + name + "' isTeaVM=" + TeaVM.isTeaVM() + " isC=" + TeaVM.isC()
-				+ " found=" + (ALL.get(name.toLowerCase()) != null) + " size=" + ALL.size());
 		// ::comment when JAVA8
 		if (TeaVM.isTeaVM() && TeaVM.isC() == false)
 			return retrieveFromJs(name.toLowerCase());

@@ -96,16 +96,6 @@ public abstract class ExtendedColor extends Color {
     protected int type;
 
     /**
-     * Constructs an extended color of a certain type.
-     *
-     * @param type {@link ExtendedColor#type}
-     */
-    public ExtendedColor(int type) {
-        super(0, 0, 0);
-        this.type = type;
-    }
-
-    /**
      * Constructs an extended color of a certain type and a certain color.
      *
      * @param type  {@link ExtendedColor#type}

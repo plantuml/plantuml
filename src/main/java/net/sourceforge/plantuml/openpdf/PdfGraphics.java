@@ -106,16 +106,16 @@ import net.sourceforge.plantuml.klimt.geom.USegmentType;
  * Drop shadows, embedded SVG images (stdlib icons), gradients, text-background
  * filters, rotated text, CSS classes, interactive scripts, dark mode.
  *
- * <h2>Not for TeaVM</h2>
+ * <h2>TeaVM</h2>
  *
- * OpenPDF depends on {@code java.awt} and {@code java.util.zip}; this driver is
- * server-side only and is excluded from the TeaVM build path.
+ * The OpenPDF sources are part of PlantUML ({@code org.openpdf}, pruned to what
+ * is needed here, no AWT): this driver works on the JVM and in the C build.
+ * Only the images go through {@code PortableImage}, and the resources of OpenPDF
+ * are given by {@code OpenPdfSetup}.
  *
- * <h2>OpenPDF version</h2>
+ * <h2>OpenPDF</h2>
  *
- * Targets OpenPDF 3.0+ which uses the {@code org.openpdf} package namespace.
- * The legacy {@code com.lowagie} packages have been removed in 3.0 and are not
- * available anymore.
+ * The {@code org.openpdf} namespace is the one of OpenPDF 3.0+.
  */
 public class PdfGraphics {
 

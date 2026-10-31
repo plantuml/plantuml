@@ -50,21 +50,12 @@
 package org.openpdf.text;
 
 import org.openpdf.text.error_messages.MessageLocalization;
-import org.openpdf.text.pdf.PdfArray;
-import org.openpdf.text.pdf.PdfContentByte;
 import org.openpdf.text.pdf.PdfDictionary;
 import org.openpdf.text.pdf.PdfIndirectReference;
-import org.openpdf.text.pdf.PdfName;
-import org.openpdf.text.pdf.PdfNumber;
-import org.openpdf.text.pdf.PdfObject;
 import org.openpdf.text.pdf.PdfStream;
-import org.openpdf.text.pdf.PdfString;
 import org.openpdf.text.pdf.PdfTemplate;
-import org.openpdf.text.pdf.PdfWriter;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.net.URL;
-import java.util.Optional;
 
 
 /**
@@ -107,12 +98,6 @@ public abstract class Image extends Rectangle {
      * Example: {@code image.setAlignment(Image.LEFT | Image.TEXTWRAP);}
      */
     public static final int LEFT = 0;
-
-    /**
-     * Image alignment: Center the image horizontally on the page.
-     * The image will be placed in the middle of the page width.
-     */
-    public static final int MIDDLE = 1;
 
     /**
      * Image alignment modifier: Allow text to wrap around the image.
@@ -189,55 +174,11 @@ public abstract class Image extends Rectangle {
 
     /**
      * type of image
-     */
-    public static final int ORIGINAL_JPEG = 1;
-
-    /**
-     * type of image
-     */
-    public static final int ORIGINAL_PNG = 2;
-
-    /**
-     * type of image
-     */
-    public static final int ORIGINAL_GIF = 3;
-
-    /**
-     * type of image
-     */
-    public static final int ORIGINAL_BMP = 4;
-
-    /**
-     * type of image
-     */
-    public static final int ORIGINAL_TIFF = 5;
-
-    /**
-     * type of image
-     */
-    public static final int ORIGINAL_WMF = 6;
-
-    /**
-     * type of image
-     */
-    public static final int ORIGINAL_PS = 7;
-
-    /**
-     * type of image
-     */
-    public static final int ORIGINAL_JPEG2000 = 8;
-
-    /**
-     * type of image
      *
      * @since 2.1.5
      */
     public static final int ORIGINAL_JBIG2 = 9;
 
-    // member variables
-    public static final int[] PNGID = {137, 80, 78, 71, 13, 10, 26, 10};
-    private static final int INDEXED_NO_TRANSPARENCY = -1;
-    private static final int INDEXED_UNSUPPORTED_TRANSPARENCY = -2;
     /**
      * a static that is used for attributing a unique id to each image.
      */
@@ -570,36 +511,6 @@ public abstract class Image extends Rectangle {
     }
 
     /**
-     * Packs a single pixel index into the target byte array based on specified bit depth (PDF MSB-first rule).
-     */
-    private static int packPixelByBitDepth(int bitsPerPixel, int pixelIndex, byte[] pixelData, int bytePos, int bitOffset) {
-        int currentBitOffset = bitOffset;
-
-        switch (bitsPerPixel) {
-            case 1:
-                if ((pixelIndex & 0x01) == 1) {
-                    pixelData[bytePos] |= (byte) (1 << currentBitOffset);
-                }
-                currentBitOffset--;
-                break;
-            case 2:
-                pixelData[bytePos] |= (byte) ((pixelIndex & 0x03) << (currentBitOffset - 1));
-                currentBitOffset -= 2;
-                break;
-            case 4:
-                pixelData[bytePos] |= (byte) ((pixelIndex & 0x0F) << (currentBitOffset - 3));
-                currentBitOffset -= 4;
-                break;
-            case 8:
-            default:
-                pixelData[bytePos] = (byte) pixelIndex;
-                currentBitOffset = -1;
-                break;
-        }
-        return currentBitOffset;
-    }
-
-    /**
      * gets an instance of an Image
      *
      * @param image an Image object
@@ -638,15 +549,6 @@ public abstract class Image extends Rectangle {
     }
 
     /**
-     * Setter for property directReference.
-     *
-     * @param directReference New value of property directReference.
-     */
-    public void setDirectReference(PdfIndirectReference directReference) {
-        this.directReference = directReference;
-    }
-
-    /**
      * Returns the type.
      *
      * @return a type
@@ -669,10 +571,6 @@ public abstract class Image extends Rectangle {
      *
      * @return a <CODE>boolean</CODE>
      */
-
-    public boolean isJpeg() {
-        return type == JPEG;
-    }
 
     /**
      * Returns <CODE>true</CODE> if the image is a <CODE>ImgRaw</CODE> -object.
@@ -701,19 +599,6 @@ public abstract class Image extends Rectangle {
      *
      * @return a <CODE>String</CODE>
      */
-
-    public URL getUrl() {
-        return url;
-    }
-
-    /**
-     * Sets the url of the image
-     *
-     * @param url the url of the image
-     */
-    public void setUrl(URL url) {
-        this.url = url;
-    }
 
     /**
      * Gets the raw data for the image.
@@ -763,24 +648,6 @@ public abstract class Image extends Rectangle {
     }
 
     /**
-     * Gets the alignment for the image.
-     * <p>
-     * The returned value may be a combination of alignment flags combined using bitwise OR.
-     * Use bitwise AND (&amp;) to check for specific flags:
-     * <pre>{@code
-     * int alignment = image.getAlignment();
-     * boolean hasTextwrap = (alignment & Image.TEXTWRAP) != 0;
-     * boolean isUnderlying = (alignment & Image.UNDERLYING) != 0;
-     * }</pre>
-     *
-     * @return the alignment value (possibly a combination of flags)
-     * @see #setAlignment(int)
-     */
-    public int getAlignment() {
-        return alignment;
-    }
-
-    /**
      * Sets the alignment for the image.
      * <p>
      * The alignment parameter can be one of the following base values:
@@ -824,19 +691,11 @@ public abstract class Image extends Rectangle {
      * @return a <CODE>String</CODE>
      */
 
-    public String getAlt() {
-        return alt;
-    }
-
     /**
      * Sets the alternative information for the image.
      *
      * @param alt the alternative information
      */
-
-    public void setAlt(String alt) {
-        this.alt = alt;
-    }
 
     // indentations
 
@@ -850,15 +709,6 @@ public abstract class Image extends Rectangle {
     public void setAbsolutePosition(float absoluteX, float absoluteY) {
         this.absoluteX = absoluteX;
         this.absoluteY = absoluteY;
-    }
-
-    /**
-     * Checks if the <CODE>Images</CODE> has to be added at an absolute X position.
-     *
-     * @return a boolean
-     */
-    public boolean hasAbsoluteX() {
-        return !Float.isNaN(absoluteX);
     }
 
     /**
@@ -897,113 +747,7 @@ public abstract class Image extends Rectangle {
         return scaledWidth;
     }
 
-    /**
-     * Gets the scaled height of the image.
-     *
-     * @return a value
-     */
-    public float getScaledHeight() {
-        return scaledHeight;
-    }
-
-    /**
-     * Gets the plain width of the image.
-     *
-     * @return a value
-     */
-    public float getPlainWidth() {
-        return plainWidth;
-    }
-
-    /**
-     * Gets the plain height of the image.
-     *
-     * @return a value
-     */
-    public float getPlainHeight() {
-        return plainHeight;
-    }
-
-    /**
-     * Scale the image to an absolute width and an absolute height.
-     *
-     * @param newWidth  the new width
-     * @param newHeight the new height
-     */
-    public void scaleAbsolute(float newWidth, float newHeight) {
-        plainWidth = newWidth;
-        plainHeight = newHeight;
-        float[] matrix = matrix();
-        scaledWidth = matrix[DX] - matrix[CX];
-        scaledHeight = matrix[DY] - matrix[CY];
-        setWidthPercentage(0);
-    }
-
-    /**
-     * Scale the image to an absolute width.
-     *
-     * @param newWidth the new width
-     */
-    public void scaleAbsoluteWidth(float newWidth) {
-        plainWidth = newWidth;
-        float[] matrix = matrix();
-        scaledWidth = matrix[DX] - matrix[CX];
-        scaledHeight = matrix[DY] - matrix[CY];
-        setWidthPercentage(0);
-    }
-
-    /**
-     * Scale the image to an absolute height.
-     *
-     * @param newHeight the new height
-     */
-    public void scaleAbsoluteHeight(float newHeight) {
-        plainHeight = newHeight;
-        float[] matrix = matrix();
-        scaledWidth = matrix[DX] - matrix[CX];
-        scaledHeight = matrix[DY] - matrix[CY];
-        setWidthPercentage(0);
-    }
-
     // widthpercentage (for the moment only used in ColumnText)
-
-    /**
-     * Scale the image to a certain percentage.
-     *
-     * @param percent the scaling percentage
-     */
-    public void scalePercent(float percent) {
-        scalePercent(percent, percent);
-    }
-
-    /**
-     * Scale the width and height of an image to a certain percentage.
-     *
-     * @param percentX the scaling percentage of the width
-     * @param percentY the scaling percentage of the height
-     */
-    public void scalePercent(float percentX, float percentY) {
-        plainWidth = (getWidth() * percentX) / 100f;
-        plainHeight = (getHeight() * percentY) / 100f;
-        float[] matrix = matrix();
-        scaledWidth = matrix[DX] - matrix[CX];
-        scaledHeight = matrix[DY] - matrix[CY];
-        setWidthPercentage(0);
-    }
-
-    /**
-     * Scales the image so that it fits a certain width and height.
-     *
-     * @param fitWidth  the width to fit
-     * @param fitHeight the height to fit
-     */
-    public void scaleToFit(float fitWidth, float fitHeight) {
-        scalePercent(100);
-        float percentX = (fitWidth * 100) / getScaledWidth();
-        float percentY = (fitHeight * 100) / getScaledHeight();
-        scalePercent(percentX < percentY ? percentX : percentY);
-        setWidthPercentage(0);
-    }
 
     // annotation
 
@@ -1053,69 +797,9 @@ public abstract class Image extends Rectangle {
         return mySerialId;
     }
 
-    /**
-     * Gets the current image rotation in radians.
-     *
-     * @return the current image rotation in radians
-     */
-    public float getImageRotation() {
-        float d = 2.0F * (float) Math.PI;
-        float rot = ((rotationRadians - initialRotation) % d);
-        if (rot < 0) {
-            rot += d;
-        }
-        return rot;
-    }
-
     // Optional Content
 
-    /**
-     * Sets the rotation of the image in radians.
-     *
-     * @param r rotation in radians
-     */
-    public void setRotation(float r) {
-        float d = 2.0F * (float) Math.PI;
-        rotationRadians = ((r + initialRotation) % d);
-        if (rotationRadians < 0) {
-            rotationRadians += d;
-        }
-        float[] matrix = matrix();
-        scaledWidth = matrix[DX] - matrix[CX];
-        scaledHeight = matrix[DY] - matrix[CY];
-    }
-
-    /**
-     * Sets the rotation of the image in degrees.
-     *
-     * @param deg rotation in degrees
-     */
-    public void setRotationDegrees(float deg) {
-        float d = (float) Math.PI;
-        setRotation(deg / 180 * d);
-    }
-
-    /**
-     * Getter for property initialRotation.
-     *
-     * @return Value of property initialRotation.
-     */
-    public float getInitialRotation() {
-        return this.initialRotation;
-    }
-
     // interpolation
-
-    /**
-     * Some image formats, like TIFF may present the images rotated that have to be compensated.
-     *
-     * @param initialRotation New value of property initialRotation.
-     */
-    public void setInitialRotation(float initialRotation) {
-        float old_rot = rotationRadians - this.initialRotation;
-        this.initialRotation = initialRotation;
-        setRotation(old_rot);
-    }
 
     /**
      * Gets the left indentation.
@@ -1195,43 +879,7 @@ public abstract class Image extends Rectangle {
 
     // the following values are only set for specific types of images.
 
-    /**
-     * Getter for property widthPercentage.
-     *
-     * @return Value of property widthPercentage.
-     */
-    public float getWidthPercentage() {
-        return this.widthPercentage;
-    }
-
-    /**
-     * Setter for property widthPercentage.
-     *
-     * @param widthPercentage New value of property widthPercentage.
-     */
-    public void setWidthPercentage(float widthPercentage) {
-        this.widthPercentage = widthPercentage;
-    }
-
-    /**
-     * Gets the annotation.
-     *
-     * @return the annotation that is linked to this image
-     */
-    public Annotation getAnnotation() {
-        return annotation;
-    }
-
     // DPI info
-
-    /**
-     * Sets the annotation of this Image.
-     *
-     * @param annotation the annotation
-     */
-    public void setAnnotation(Annotation annotation) {
-        this.annotation = annotation;
-    }
 
     /**
      * Getter for property interpolation.
@@ -1242,55 +890,9 @@ public abstract class Image extends Rectangle {
         return interpolation;
     }
 
-    /**
-     * Sets the image interpolation. Image interpolation attempts to produce a smooth transition between adjacent sample
-     * values.
-     *
-     * @param interpolation New value of property interpolation.
-     */
-    public void setInterpolation(boolean interpolation) {
-        this.interpolation = interpolation;
-    }
-
     // XY Ratio
 
-    /**
-     * Getter for property originalType.
-     *
-     * @return Value of property originalType.
-     */
-    public int getOriginalType() {
-        return this.originalType;
-    }
-
-    /**
-     * Setter for property originalType.
-     *
-     * @param originalType New value of property originalType.
-     */
-    public void setOriginalType(int originalType) {
-        this.originalType = originalType;
-    }
-
-    /**
-     * Getter for property originalData.
-     *
-     * @return Value of property originalData.
-     */
-    public byte[] getOriginalData() {
-        return this.originalData;
-    }
-
     // color, colorspaces and transparency
-
-    /**
-     * Setter for property originalData.
-     *
-     * @param originalData New value of property originalData.
-     */
-    public void setOriginalData(byte[] originalData) {
-        this.originalData = originalData;
-    }
 
     /**
      * Getter for property deflated.
@@ -1299,62 +901,6 @@ public abstract class Image extends Rectangle {
      */
     public boolean isDeflated() {
         return this.deflated;
-    }
-
-    /**
-     * Setter for property deflated.
-     *
-     * @param deflated New value of property deflated.
-     */
-    public void setDeflated(boolean deflated) {
-        this.deflated = deflated;
-    }
-
-    /**
-     * Gets the dots-per-inch in the X direction. Returns 0 if not available.
-     *
-     * @return the dots-per-inch in the X direction
-     */
-    public int getDpiX() {
-        return dpiX;
-    }
-
-    /**
-     * Gets the dots-per-inch in the Y direction. Returns 0 if not available.
-     *
-     * @return the dots-per-inch in the Y direction
-     */
-    public int getDpiY() {
-        return dpiY;
-    }
-
-    /**
-     * Sets the dots per inch value
-     *
-     * @param dpiX dpi for x coordinates
-     * @param dpiY dpi for y coordinates
-     */
-    public void setDpi(int dpiX, int dpiY) {
-        this.dpiX = dpiX;
-        this.dpiY = dpiY;
-    }
-
-    /**
-     * Gets the X/Y pixel dimensionless aspect ratio.
-     *
-     * @return the X/Y pixel dimensionless aspect ratio
-     */
-    public float getXYRatio() {
-        return this.XYRatio;
-    }
-
-    /**
-     * Sets the X/Y pixel dimensionless aspect ratio.
-     *
-     * @param XYRatio the X/Y pixel dimensionless aspect ratio
-     */
-    public void setXYRatio(float XYRatio) {
-        this.XYRatio = XYRatio;
     }
 
     /**
@@ -1378,77 +924,12 @@ public abstract class Image extends Rectangle {
     }
 
     /**
-     * Sets inverted true or false
-     *
-     * @param invert true or false
-     */
-    public void setInverted(boolean invert) {
-        this.invert = invert;
-    }
-
-    /**
      * Getter for the dictionary with additional information.
      *
      * @return a PdfDictionary with additional information.
      */
     public PdfDictionary getAdditional() {
         return this.additional;
-    }
-
-    /**
-     * Sets the /Colorspace key.
-     *
-     * @param additional a PdfDictionary with additional information.
-     */
-    public void setAdditional(PdfDictionary additional) {
-        this.additional = additional;
-    }
-
-    /**
-     * Replaces CalRGB and CalGray colorspaces with DeviceRGB and DeviceGray.
-     */
-    public void simplifyColorspace() {
-        if (additional == null) {
-            return;
-        }
-        PdfArray value = additional.getAsArray(PdfName.COLORSPACE);
-        if (value == null) {
-            return;
-        }
-        PdfObject cs = simplifyColorspace(value);
-        PdfObject newValue;
-        if (cs.isName()) {
-            newValue = cs;
-        } else {
-            newValue = value;
-            PdfName first = value.getAsName(0);
-            if (PdfName.INDEXED.equals(first)) {
-                if (value.size() >= 2) {
-                    PdfArray second = value.getAsArray(1);
-                    if (second != null) {
-                        value.set(1, simplifyColorspace(second));
-                    }
-                }
-            }
-        }
-        additional.put(PdfName.COLORSPACE, newValue);
-    }
-
-    /**
-     * Gets a PDF Name from an array or returns the object that was passed.
-     */
-    private PdfObject simplifyColorspace(PdfArray obj) {
-        if (obj == null) {
-            return obj;
-        }
-        PdfName first = obj.getAsName(0);
-        if (PdfName.CALGRAY.equals(first)) {
-            return PdfName.DEVICEGRAY;
-        } else if (PdfName.CALRGB.equals(first)) {
-            return PdfName.DEVICERGB;
-        } else {
-            return obj;
-        }
     }
 
     /**
@@ -1524,15 +1005,6 @@ public abstract class Image extends Rectangle {
     }
 
     /**
-     * Setter for property smask.
-     *
-     * @param smask New value of property smask.
-     */
-    public void setSmask(boolean smask) {
-        this.smask = smask;
-    }
-
-    /**
      * Returns the transparency.
      *
      * @return the transparency values
@@ -1540,15 +1012,6 @@ public abstract class Image extends Rectangle {
 
     public int[] getTransparency() {
         return transparency;
-    }
-
-    /**
-     * Sets the transparency values
-     *
-     * @param transparency the transparency values
-     */
-    public void setTransparency(int[] transparency) {
-        this.transparency = transparency;
     }
 
 
@@ -1574,11 +1037,6 @@ public abstract class Image extends Rectangle {
         } else {
             this.compressionLevel = compressionLevel;
         }
-    }
-
-    private static boolean isJBIG2(int[] array) {
-        return array[0] == 0x97 && array[1] == 'J' && array[2] == 'B' && array[3] == '2' &&
-                array[4] == '\r' && array[5] == '\n' && array[6] == 0x1a && array[7] == '\n';
     }
 
 

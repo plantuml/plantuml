@@ -54,7 +54,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * <CODE>PdfArray</CODE> is the PDF Array object.
@@ -136,16 +135,6 @@ public class PdfArray extends PdfObject {
         }
     }
 
-    /**
-     * Constructs an <CODE>PdfArray</CODE>-object, containing all
-     * <CODE>PdfObject</CODE>s in a specified <CODE>PdfArray</CODE>.
-     *
-     * @param array a <CODE>PdfArray</CODE> to be added to the array
-     */
-    public PdfArray(PdfArray array) {
-        this(array.getElements());
-    }
-
     // METHODS OVERRIDING SOME PDFOBJECT METHODS
 
     /**
@@ -199,53 +188,6 @@ public class PdfArray extends PdfObject {
     }
 
     // ARRAY CONTENT METHODS
-
-    /**
-     * Overwrites a specified location of the array, returning the previous value
-     *
-     * @param idx The index of the element to be overwritten
-     * @param obj new value for the specified index
-     * @return the previous value
-     * @throws IndexOutOfBoundsException if the specified position doesn't exist
-     * @since 2.1.5
-     */
-    public PdfObject set(int idx, PdfObject obj) {
-        return arrayList.set(idx, obj);
-    }
-
-    /**
-     * Remove the element at the specified position from the array.
-     * <p>
-     * Shifts any subsequent elements to the left (subtracts one from their indices).
-     *
-     * @param idx The index of the element to be removed.
-     * @return the PdfObject that was removed
-     * @throws IndexOutOfBoundsException the specified position doesn't exist
-     * @since 2.1.5
-     */
-    public PdfObject remove(int idx) {
-        return arrayList.remove(idx);
-    }
-
-    /**
-     * Removes the element from the list.
-     * <p>
-     * Shifts any subsequent elements to the left (subtracts one from their indices).
-     *
-     * @param object to be removed.
-     */
-    public boolean remove(PdfObject object) {
-        return this.arrayList.remove(object);
-    }
-
-    /**
-     * Get a copy the internal list for this PdfArray.
-     *
-     * @return a copy of the the internal List.
-     */
-    public List<PdfObject> getElements() {
-        return new ArrayList<>(arrayList);
-    }
 
     /**
      * Returns the number of entries in the array.
@@ -313,21 +255,6 @@ public class PdfArray extends PdfObject {
     }
 
     /**
-     * Inserts the specified element at the specified position.
-     * <p>
-     * Shifts the element currently at that position (if any) and any subsequent elements to the right (adds one to
-     * their indices).
-     *
-     * @param index   The index at which the specified element is to be inserted
-     * @param element The element to be inserted
-     * @throws IndexOutOfBoundsException if the specified index is larger than the last position currently set, plus 1.
-     * @since 2.1.5
-     */
-    public void add(int index, PdfObject element) {
-        arrayList.add(index, element);
-    }
-
-    /**
      * Inserts a <CODE>PdfObject</CODE> at the beginning of the
      * <CODE>PdfArray</CODE>.
      * <p>
@@ -352,15 +279,6 @@ public class PdfArray extends PdfObject {
     }
 
     /**
-     * Returns the list iterator for the array.
-     *
-     * @return a ListIterator
-     */
-    public ListIterator<PdfObject> listIterator() {
-        return arrayList.listIterator();
-    }
-
-    /**
      * Returns the <CODE>PdfObject</CODE> with the specified index.
      * <p>
      * A possible indirect references is not resolved, so the returned
@@ -373,26 +291,6 @@ public class PdfArray extends PdfObject {
      */
     public PdfObject getPdfObject(int idx) {
         return arrayList.get(idx);
-    }
-
-    /**
-     * Returns a <CODE>PdfObject</CODE> as a <CODE>PdfIndirectReference</CODE>.
-     * <p>
-     * The object corresponding to the specified index is retrieved. If it is a
-     * <CODE>PdfIndirectReference</CODE>, it is cast down and returned as such.
-     * Otherwise <CODE>null</CODE> is returned.
-     *
-     * @param idx The index of the <CODE>PdfObject</CODE> to be returned
-     * @return the corresponding <CODE>PdfIndirectReference</CODE> object, or
-     * <CODE>null</CODE>
-     */
-    public PdfIndirectReference getAsIndirectObject(int idx) {
-        PdfIndirectReference ref = null;
-        PdfObject orig = getPdfObject(idx); // not getDirect this time.
-        if (orig != null && orig.isIndirect()) {
-            ref = (PdfIndirectReference) orig;
-        }
-        return ref;
     }
 
 
@@ -415,108 +313,13 @@ public class PdfArray extends PdfObject {
     // DOWNCASTING GETTERS
     // @author Mark A Storer (2/17/06)
 
-    /**
-     * Returns a <CODE>PdfObject</CODE> as a <CODE>PdfDictionary</CODE>, resolving indirect references.
-     * <p>
-     * The object corresponding to the specified index is retrieved and resolvedto a direct object. If it is a
-     * <CODE>PdfDictionary</CODE>, it is cast down and returned as such. Otherwise <CODE>null</CODE> is returned.
-     *
-     * @param idx The index of the <CODE>PdfObject</CODE> to be returned
-     * @return the corresponding <CODE>PdfDictionary</CODE> object, or
-     * <CODE>null</CODE>
-     */
-    public PdfDictionary getAsDict(int idx) {
-        PdfDictionary dict = null;
-        PdfObject orig = getDirectObject(idx);
-        if (orig != null && orig.isDictionary()) {
-            dict = (PdfDictionary) orig;
-        }
-        return dict;
-    }
 
 
 
-    /**
-     * Returns a <CODE>PdfObject</CODE> as a <CODE>PdfArray</CODE>, resolving indirect references.
-     * <p>
-     * The object corresponding to the specified index is retrieved and resolved to a direct object. If it is a
-     * <CODE>PdfArray</CODE>, it is cast down and returned as such. Otherwise <CODE>null</CODE> is returned.
-     *
-     * @param idx The index of the <CODE>PdfObject</CODE> to be returned
-     * @return the corresponding <CODE>PdfArray</CODE> object, or
-     * <CODE>null</CODE>
-     */
-    public PdfArray getAsArray(int idx) {
-        PdfArray array = null;
-        PdfObject orig = getDirectObject(idx);
-        if (orig != null && orig.isArray()) {
-            array = (PdfArray) orig;
-        }
-        return array;
-    }
 
 
 
-    /**
-     * Returns a <CODE>PdfObject</CODE> as a <CODE>PdfStream</CODE>, resolving indirect references.
-     * <p>
-     * The object corresponding to the specified index is retrieved and resolved to a direct object. If it is a
-     * <CODE>PdfStream</CODE>, it is cast down and returned as such. Otherwise <CODE>null</CODE> is returned.
-     *
-     * @param idx The index of the <CODE>PdfObject</CODE> to be returned
-     * @return the corresponding <CODE>PdfStream</CODE> object, or
-     * <CODE>null</CODE>
-     */
-    public PdfStream getAsStream(int idx) {
-        PdfStream stream = null;
-        PdfObject orig = getDirectObject(idx);
-        if (orig != null && orig.isStream()) {
-            stream = (PdfStream) orig;
-        }
-        return stream;
-    }
 
-
-
-    /**
-     * Returns a <CODE>PdfObject</CODE> as a <CODE>PdfString</CODE>, resolving indirect references.
-     * <p>
-     * The object corresponding to the specified index is retrieved and resolved to a direct object. If it is a
-     * <CODE>PdfString</CODE>, it is cast down and returned as such. Otherwise <CODE>null</CODE> is returned.
-     *
-     * @param idx The index of the <CODE>PdfObject</CODE> to be returned
-     * @return the corresponding <CODE>PdfString</CODE> object, or
-     * <CODE>null</CODE>
-     */
-    public PdfString getAsString(int idx) {
-        PdfString string = null;
-        PdfObject orig = getDirectObject(idx);
-        if (orig != null && orig.isString()) {
-            string = (PdfString) orig;
-        }
-        return string;
-    }
-
-
-
-    /**
-     * Returns a <CODE>PdfObject</CODE> as a <CODE>PdfNumber</CODE>, resolving indirect references.
-     * <p>
-     * The object corresponding to the specified index is retrieved and resolved to a direct object. If it is a
-     * <CODE>PdfNumber</CODE>, it is cast down and returned as such. Otherwise <CODE>null</CODE> is returned.
-     *
-     * @param idx The index of the <CODE>PdfObject</CODE> to be returned
-     * @return the corresponding <CODE>PdfNumber</CODE> object, or
-     * <CODE>null</CODE>
-     */
-    public PdfNumber getAsNumber(int idx) {
-        PdfNumber number = null;
-        PdfObject orig = getDirectObject(idx);
-        if (orig != null && orig.isNumber()) {
-            number = (PdfNumber) orig;
-        }
-        return number;
-    }
 
 
 
@@ -541,22 +344,4 @@ public class PdfArray extends PdfObject {
 
 
 
-    /**
-     * Returns a <CODE>PdfObject</CODE> as a <CODE>PdfBoolean</CODE>, resolving indirect references.
-     * <p>
-     * The object corresponding to the specified index is retrieved and resolved to a direct object. If it is a
-     * <CODE>PdfBoolean</CODE>, it is cast down and returned as such. Otherwise <CODE>null</CODE> is returned.
-     *
-     * @param idx The index of the <CODE>PdfObject</CODE> to be returned
-     * @return the corresponding <CODE>PdfBoolean</CODE> object, or
-     * <CODE>null</CODE>
-     */
-    public PdfBoolean getAsBoolean(int idx) {
-        PdfBoolean bool = null;
-        PdfObject orig = getDirectObject(idx);
-        if (orig != null && orig.isBoolean()) {
-            bool = (PdfBoolean) orig;
-        }
-        return bool;
-    }
 }

@@ -78,13 +78,6 @@ public class ImgJBIG2 extends Image {
     }
 
     /**
-     * Empty constructor.
-     */
-    public ImgJBIG2() {
-        super((Image) null);
-    }
-
-    /**
      * Actual constructor for ImgJBIG2 images.
      *
      * @param width   the width of the image
@@ -126,15 +119,6 @@ public class ImgJBIG2 extends Image {
      */
     public byte[] getGlobalBytes() {
         return this.global;
-    }
-
-    /**
-     * Getter for the unique hash.
-     *
-     * @return an array of bytes
-     */
-    public byte[] getGlobalHash() {
-        return this.globalHash;
     }
 
 }

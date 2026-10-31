@@ -61,11 +61,6 @@ import java.util.Locale;
 public class ElementTags {
 
     /**
-     * the root tag.
-     */
-    public static final String ITEXT = "itext";
-
-    /**
      * attribute of the root and annotation tag (also a special tag within a chapter or section)
      */
     public static final String TITLE = "title";
@@ -110,22 +105,7 @@ public class ElementTags {
     /**
      * attribute of section/chapter tag
      */
-    public static final String NUMBERDEPTH = "numberdepth";
-
-    /**
-     * attribute of section/chapter tag
-     */
-    public static final String DEPTH = "depth";
-
-    /**
-     * attribute of section/chapter tag
-     */
     public static final String NUMBER = "number";
-
-    /**
-     * attribute of section/chapter tag
-     */
-    public static final String INDENT = "indent";
 
     /**
      * attribute of chapter/section/paragraph/table/cell tag
@@ -165,21 +145,6 @@ public class ElementTags {
     public static final String PARAGRAPH = "paragraph";
 
     /**
-     * attribute of phrase/paragraph/cell tag
-     */
-    public static final String LEADING = "leading";
-
-    /**
-     * attribute of paragraph/image/table tag
-     */
-    public static final String ALIGN = "align";
-
-    /**
-     * attribute of paragraph
-     */
-    public static final String KEEPTOGETHER = "keeptogether";
-
-    /**
      * attribute of anchor tag
      */
     public static final String NAME = "name";
@@ -192,49 +157,9 @@ public class ElementTags {
     /**
      * attribute of list tag
      */
-    public static final String LISTSYMBOL = "listsymbol";
-
-    /**
-     * attribute of list tag
-     */
-    public static final String NUMBERED = "numbered";
-
-    /**
-     * attribute of the list tag
-     */
-    public static final String LETTERED = "lettered";
-
-    /**
-     * attribute of list tag
-     */
     public static final String FIRST = "first";
 
-    /**
-     * attribute of list tag
-     */
-    public static final String SYMBOLINDENT = "symbolindent";
-
-    /**
-     * attribute of list tag
-     */
-    public static final String INDENTATIONLEFT = "indentationleft";
-
-    /**
-     * attribute of list tag
-     */
-    public static final String INDENTATIONRIGHT = "indentationright";
-
     // Chunks
-
-    /**
-     * the chunk tag
-     */
-    public static final String IGNORE = "ignore";
-
-    /**
-     * the chunk tag
-     */
-    public static final String ENTITY = "entity";
 
     /**
      * the chunk tag
@@ -260,21 +185,6 @@ public class ElementTags {
      * attribute of the chunk/table/cell tag
      */
     public static final String COLOR = "color";
-
-    /**
-     * attribute of the chunk/table/cell tag
-     */
-    public static final String RED = "red";
-
-    /**
-     * attribute of the chunk/table/cell tag
-     */
-    public static final String GREEN = "green";
-
-    /**
-     * attribute of the chunk/table/cell tag
-     */
-    public static final String BLUE = "blue";
 
     /**
      * attribute of the chunk tag
@@ -326,77 +236,12 @@ public class ElementTags {
     /**
      * attribute of the table tag
      */
-    public static final String LASTHEADERROW = "lastHeaderRow";
-
-    /**
-     * attribute of the table tag
-     */
-    public static final String CELLPADDING = "cellpadding";
-
-    /**
-     * attribute of the table tag
-     */
-    public static final String CELLSPACING = "cellspacing";
-
-    /**
-     * attribute of the table tag
-     */
-    public static final String OFFSET = "offset";
-
-    /**
-     * attribute of the table tag
-     */
     public static final String WIDTHS = "widths";
-
-    /**
-     * attribute of the table tag
-     */
-    public static final String TABLEFITSPAGE = "tablefitspage";
-
-    /**
-     * attribute of the table tag
-     */
-    public static final String CELLSFITPAGE = "cellsfitpage";
-
-    /**
-     * attribute of the table tag
-     */
-    public static final String CONVERT2PDFP = "convert2pdfp";
-
-    /**
-     * attribute of the cell tag
-     */
-    public static final String HORIZONTALALIGN = "horizontalalign";
-
-    /**
-     * attribute of the cell tag
-     */
-    public static final String VERTICALALIGN = "verticalalign";
-
-    /**
-     * attribute of the cell tag
-     */
-    public static final String COLSPAN = "colspan";
-
-    /**
-     * attribute of the cell tag
-     */
-    public static final String ROWSPAN = "rowspan";
 
     /**
      * attribute of the cell tag
      */
     public static final String HEADER = "header";
-
-    /**
-     * attribute of the cell tag
-     */
-    public static final String NOWRAP = "nowrap";
-
-    /**
-     * attribute of the table/cell tag
-     */
-    public static final String BORDERWIDTH = "borderwidth";
 
     /**
      * attribute of the table/cell tag
@@ -412,36 +257,6 @@ public class ElementTags {
      * attribute of the table/cell tag
      */
     public static final String WIDTH = "width";
-
-    /**
-     * attribute of the table/cell tag
-     */
-    public static final String BORDERCOLOR = "bordercolor";
-
-    /**
-     * attribute of the table/cell tag
-     */
-    public static final String BACKGROUNDCOLOR = "backgroundcolor";
-
-    /**
-     * attribute of the table/cell tag
-     */
-    public static final String BGRED = "bgred";
-
-    /**
-     * attribute of the table/cell tag
-     */
-    public static final String BGGREEN = "bggreen";
-
-    /**
-     * attribute of the table/cell tag
-     */
-    public static final String BGBLUE = "bgblue";
-
-    /**
-     * attribute of the table/cell tag
-     */
-    public static final String GRAYFILL = "grayfill";
 
     // Misc
 
@@ -469,41 +284,6 @@ public class ElementTags {
      * attribute of the image tag
      */
     public static final String ALT = "alt";
-
-    /**
-     * attribute of the image tag
-     */
-    public static final String ABSOLUTEX = "absolutex";
-
-    /**
-     * attribute of the image tag
-     */
-    public static final String ABSOLUTEY = "absolutey";
-
-    /**
-     * attribute of the image tag
-     */
-    public static final String PLAINWIDTH = "plainwidth";
-
-    /**
-     * attribute of the image tag
-     */
-    public static final String PLAINHEIGHT = "plainheight";
-
-    /**
-     * attribute of the image tag
-     */
-    public static final String SCALEDWIDTH = "scaledwidth";
-
-    /**
-     * attribute of the image tag
-     */
-    public static final String SCALEDHEIGHT = "scaledheight";
-
-    /**
-     * attribute of the image tag
-     */
-    public static final String ROTATION = "rotation";
 
     /**
      * the newpage tag
@@ -657,118 +437,6 @@ public class ElementTags {
      */
     public static final String STYLE = "fontstyle";
 
-    /**
-     * the possible value of a tag
-     */
-    public static final String HORIZONTALRULE = "horizontalrule";
-
-    /**
-     * the possible value of a tag
-     */
-    public static final String PAGE_SIZE = "pagesize";
-
-    /**
-     * the possible value of a tag
-     */
-    public static final String ORIENTATION = "orientation";
-
-    /**
-     * a possible list attribute
-     */
-    public static final String ALIGN_INDENTATION_ITEMS = "alignindent";
-
-    /**
-     * a possible list attribute
-     */
-    public static final String AUTO_INDENT_ITEMS = "autoindent";
-
-    /**
-     * a possible list attribute
-     */
-    public static final String LOWERCASE = "lowercase";
-    /**
-     * a possible list attribute
-     *
-     * @since 2.1.3
-     */
-    public static final String FACE = "face";
-
-    /**
-     * attribute of the image or iframe tag
-     *
-     * @since 2.1.3
-     */
-    public static final String SRC = "src";
-
     // methods
 
-    /**
-     * Translates the alignment value to a String value.
-     *
-     * @param alignment the alignment value
-     * @return the translated value
-     */
-    public static String getAlignment(int alignment) {
-        switch (alignment) {
-            case Element.ALIGN_LEFT:
-                return ALIGN_LEFT;
-            case Element.ALIGN_CENTER:
-                return ALIGN_CENTER;
-            case Element.ALIGN_RIGHT:
-                return ALIGN_RIGHT;
-            case Element.ALIGN_JUSTIFIED:
-            case Element.ALIGN_JUSTIFIED_ALL:
-                return ALIGN_JUSTIFIED;
-            case Element.ALIGN_TOP:
-                return ALIGN_TOP;
-            case Element.ALIGN_MIDDLE:
-                return ALIGN_MIDDLE;
-            case Element.ALIGN_BOTTOM:
-                return ALIGN_BOTTOM;
-            case Element.ALIGN_BASELINE:
-                return ALIGN_BASELINE;
-            default:
-                return DEFAULT;
-        }
-    }
-
-    /**
-     * Translates a String value to an alignment value. (written by Norman Richards, integrated into iText by Bruno)
-     *
-     * @param alignment a String (one of the ALIGN_ constants of this class)
-     * @return an alignment value (one of the ALIGN_ constants of the Element interface)
-     */
-    public static int alignmentValue(String alignment) {
-        if (alignment == null) {
-            return Element.ALIGN_UNDEFINED;
-        }
-        if (ALIGN_CENTER.equalsIgnoreCase(alignment)) {
-            return Element.ALIGN_CENTER;
-        }
-        if (ALIGN_LEFT.equalsIgnoreCase(alignment)) {
-            return Element.ALIGN_LEFT;
-        }
-        if (ALIGN_RIGHT.equalsIgnoreCase(alignment)) {
-            return Element.ALIGN_RIGHT;
-        }
-        if (ALIGN_JUSTIFIED.equalsIgnoreCase(alignment)) {
-            return Element.ALIGN_JUSTIFIED;
-        }
-        if (ALIGN_JUSTIFIED_ALL.equalsIgnoreCase(alignment)) {
-            return Element.ALIGN_JUSTIFIED_ALL;
-        }
-        if (ALIGN_TOP.equalsIgnoreCase(alignment)) {
-            return Element.ALIGN_TOP;
-        }
-        if (ALIGN_MIDDLE.equalsIgnoreCase(alignment)) {
-            return Element.ALIGN_MIDDLE;
-        }
-        if (ALIGN_BOTTOM.equalsIgnoreCase(alignment)) {
-            return Element.ALIGN_BOTTOM;
-        }
-        if (ALIGN_BASELINE.equalsIgnoreCase(alignment)) {
-            return Element.ALIGN_BASELINE;
-        }
-        return Element.ALIGN_UNDEFINED;
-    }
 }

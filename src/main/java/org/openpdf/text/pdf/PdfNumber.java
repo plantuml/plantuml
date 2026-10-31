@@ -162,14 +162,6 @@ public class PdfNumber extends PdfObject implements Comparable<PdfNumber> {
 
     // other methods
 
-    /**
-     * Increments the value of the <CODE>PdfNumber</CODE>-object by 1.
-     */
-    public void increment() {
-        value += 1.0;
-        setContent(ByteBuffer.formatDouble(value));
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

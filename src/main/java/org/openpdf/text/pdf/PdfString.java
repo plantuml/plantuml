@@ -51,7 +51,6 @@ package org.openpdf.text.pdf;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 
 /**
  * A <CODE>PdfString</CODE>-class is the PDF-equivalent of a JAVA-<CODE>String</CODE>-object.
@@ -76,16 +75,10 @@ public class PdfString extends PdfObject {
      */
     protected String value = NOTHING;
 
-    protected String originalValue = null;
-
     /**
      * The encoding.
      */
     protected String encoding = TEXT_PDFDOCENCODING;
-
-    protected int objNum = 0;
-
-    protected int objGen = 0;
 
     protected boolean hexWriting = false;
 
@@ -178,91 +171,4 @@ public class PdfString extends PdfObject {
 
     // other methods
 
-    /**
-     * Returns the Unicode <CODE>String</CODE> value of this
-     * <CODE>PdfString</CODE>-object.
-     *
-     * @return A <CODE>String</CODE>
-     */
-    public String toUnicodeString() {
-        if (encoding != null && encoding.length() != 0) {
-            return value;
-        }
-        getBytes();
-        if (bytes.length >= 2 && bytes[0] == (byte) 254 && bytes[1] == (byte) 255) {
-            return PdfEncodings.convertToString(bytes, PdfObject.TEXT_UNICODE);
-        } else {
-            return PdfEncodings.convertToString(bytes, PdfObject.TEXT_PDFDOCENCODING);
-        }
-    }
-
-    /**
-     * Gets the encoding of this string.
-     *
-     * @return a <CODE>String</CODE>
-     */
-    public String getEncoding() {
-        return encoding;
-    }
-
-    void setObjNum(int objNum, int objGen) {
-        this.objNum = objNum;
-        this.objGen = objGen;
-    }
-
-    /**
-     * @return The original bytes used to create this PDF string, or the bytes of our current value if the original
-     * bytes are missing.
-     */
-    public byte[] getOriginalBytes() {
-        if (originalValue == null) {
-            return getBytes();
-        }
-        return PdfEncodings.convertToBytes(originalValue, null);
-    }
-
-    /**
-     * return the characters in our value without any translation. This allows a string to be built that holds 2-byte or
-     * one-byte character codes, as needed for processing by fonts when extracting text.
-     * <p>
-     * Intended for use when no encoding transformations are desired.
-     *
-     * @return The code points in this font as chars.
-     */
-    public char[] getOriginalChars() {
-        char[] chars;
-        if (encoding == null || encoding.length() == 0) {
-            byte[] bytes = getOriginalBytes();
-            chars = new char[bytes.length];
-            for (int i = 0; i < bytes.length; i++) {
-                chars[i] = (char) (bytes[i] & 0xff);
-            }
-        } else if (encoding.equals("IDENTITY_H2")) {
-            //change it to char array according to two byte mapping.
-            byte[] bytes = value.getBytes(StandardCharsets.ISO_8859_1);
-            chars = new char[bytes.length / 2];
-            for (int i = 0; i < bytes.length / 2; i++) {
-                chars[i] = (char) (((bytes[2 * i] & 255) << 8) + (bytes[2 * i + 1] & 255));
-            }
-        } else if (encoding.equals("IDENTITY_H1")) {
-            //change it to char array according to one byte mapping.
-            byte[] bytes = value.getBytes(StandardCharsets.ISO_8859_1);
-            chars = new char[bytes.length];
-            for (int i = 0; i < bytes.length; i++) {
-                chars[i] = (char) (bytes[i] & 0xff);
-            }
-        } else {
-            chars = new char[0];
-        }
-        return chars;
-    }
-
-    public boolean isHexWriting() {
-        return hexWriting;
-    }
-
-    public PdfString setHexWriting(boolean hexWriting) {
-        this.hexWriting = hexWriting;
-        return this;
-    }
 }

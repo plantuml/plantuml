@@ -193,12 +193,4 @@ public class PdfImage extends PdfStream {
         return name;
     }
 
-    protected void importAll(PdfImage dup) {
-        name = dup.name;
-        compressed = dup.compressed;
-        compressionLevel = dup.compressionLevel;
-        streamBytes = dup.streamBytes;
-        bytes = dup.bytes;
-        hashMap = dup.hashMap;
-    }
 }

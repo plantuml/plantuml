@@ -49,7 +49,6 @@
 
 package org.openpdf.text.pdf;
 
-import org.openpdf.text.pdf.fonts.FontsResourceAnchor;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -112,10 +111,6 @@ public class GlyphList {
                 }
             }
         }
-    }
-
-    public static int[] nameToUnicode(String name) {
-        return names2unicode.get(name);
     }
 
     public static String unicodeToName(int num) {

@@ -55,36 +55,22 @@ import org.openpdf.text.Document;
 import org.openpdf.text.DocumentException;
 import org.openpdf.text.ExceptionConverter;
 import org.openpdf.text.Image;
-import org.openpdf.text.ImgJBIG2;
-import org.openpdf.text.Rectangle;
 import org.openpdf.text.error_messages.MessageLocalization;
-import org.openpdf.text.pdf.interfaces.PdfAnnotations;
-import org.openpdf.text.pdf.interfaces.PdfDocumentActions;
-import org.openpdf.text.pdf.interfaces.PdfPageActions;
 import org.openpdf.text.pdf.interfaces.PdfRunDirection;
 import org.openpdf.text.pdf.interfaces.PdfVersion;
-import org.openpdf.text.pdf.interfaces.PdfViewerPreferences;
 import org.openpdf.text.pdf.interfaces.PdfXConformance;
 import org.openpdf.text.pdf.internal.PdfVersionImp;
 import org.openpdf.text.pdf.internal.PdfXConformanceImp;
 import java.awt.Color;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Formatter;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 /**
  * A <CODE>DocWriter</CODE> class for PDF.
@@ -186,172 +172,14 @@ public class PdfWriter extends DocWriter implements
     public static final PdfName PDF_VERSION_2_0 = new PdfName("2.0");
 
 
-    /**
-     * A viewer preference
-     */
-    public static final int PageLayoutSinglePage = 1;
-    /**
-     * A viewer preference
-     */
-    public static final int PageLayoutOneColumn = 2;
-    /**
-     * A viewer preference
-     */
-    public static final int PageLayoutTwoColumnLeft = 4;
-    /**
-     * A viewer preference
-     */
-    public static final int PageLayoutTwoColumnRight = 8;
-
 //    PDF body
-
-    /*
-     * A PDF file has 4 parts: a header, a body, a cross-reference table, and a trailer.
-     * The body contains all the PDF objects that make up the PDF document.
-     * Each element gets a reference (a set of numbers) and the byte position of
-     * every object is stored in the cross-reference table.
-     * Use these methods only if you know what you're doing.
-     */
-    /**
-     * A viewer preference
-     */
-    public static final int PageLayoutTwoPageLeft = 16;
-    /**
-     * A viewer preference
-     */
-    public static final int PageLayoutTwoPageRight = 32;
-    /**
-     * A viewer preference
-     */
-    public static final int PageModeUseNone = 64;
-    /**
-     * A viewer preference
-     */
-    public static final int PageModeUseOutlines = 128;
-    /**
-     * A viewer preference
-     */
-    public static final int PageModeUseThumbs = 256;
-    /**
-     * A viewer preference
-     */
-    public static final int PageModeFullScreen = 512;
-    /**
-     * A viewer preference
-     */
-    public static final int PageModeUseOC = 1024;
-    /**
-     * A viewer preference
-     */
-    public static final int PageModeUseAttachments = 2048;
-    /**
-     * A viewer preference
-     */
-    public static final int HideToolbar = 1 << 12;
-    /**
-     * A viewer preference
-     */
-    public static final int HideMenubar = 1 << 13;
-    /**
-     * A viewer preference
-     */
-    public static final int HideWindowUI = 1 << 14;
 
 //    PDF Catalog
 
-    /*
-     * The Catalog is also called the root object of the document.
-     * Whereas the Cross-Reference maps the objects number with the
-     * byte offset so that the viewer can find the objects, the
-     * Catalog tells the viewer the numbers of the objects needed
-     * to render the document.
-     */
-    /**
-     * A viewer preference
-     */
-    public static final int FitWindow = 1 << 15;
-    /**
-     * A viewer preference
-     */
-    public static final int CenterWindow = 1 << 16;
-    /**
-     * A viewer preference
-     */
-    public static final int DisplayDocTitle = 1 << 17;
-
 //    PdfPages
-
-    /*
-     * The page root keeps the complete page tree of the document.
-     * There's an entry in the Catalog that refers to the root
-     * of the page tree, the page tree contains the references
-     * to pages and other page trees.
-     */
-    /**
-     * A viewer preference
-     */
-    public static final int NonFullScreenPageModeUseNone = 1 << 18;
-    /**
-     * A viewer preference
-     */
-    public static final int NonFullScreenPageModeUseOutlines = 1 << 19;
-    /**
-     * A viewer preference
-     */
-    public static final int NonFullScreenPageModeUseThumbs = 1 << 20;
-    /**
-     * A viewer preference
-     */
-    public static final int NonFullScreenPageModeUseOC = 1 << 21;
-    /**
-     * A viewer preference
-     */
-    public static final int DirectionL2R = 1 << 22;
-    /**
-     * A viewer preference
-     */
-    public static final int DirectionR2L = 1 << 23;
-    /**
-     * A viewer preference
-     */
-    public static final int PrintScalingNone = 1 << 24;
-    /**
-     * action value
-     */
-    public static final PdfName DOCUMENT_CLOSE = PdfName.WC;
-    /**
-     * action value
-     */
-    public static final PdfName WILL_SAVE = PdfName.WS;
-    /**
-     * action value
-     */
-    public static final PdfName DID_SAVE = PdfName.DS;
-    /**
-     * action value
-     */
-    public static final PdfName WILL_PRINT = PdfName.WP;
-    /**
-     * action value
-     */
-    public static final PdfName DID_PRINT = PdfName.DP;
-    /**
-     * signature value
-     */
-    public static final int SIGNATURE_EXISTS = 1;
 
 //    page events
 
-    /*
-     * Page events are specific for iText, not for PDF.
-     * Upon specific events (for instance when a page starts
-     * or ends), the corresponding method in the page event
-     * implementation that is added to the writer is invoked.
-     */
-    /**
-     * signature value
-     */
-    public static final int SIGNATURE_APPEND_ONLY = 2;
     /**
      * A PDF/X level.
      */
@@ -398,106 +226,8 @@ public class PdfWriter extends DocWriter implements
      * PDFA-3U level.
      */
     public static final int PDFA3U = 10;
-    /**
-     * No encryption
-     */
-    public static final int ENCRYPTION_NONE = -1;
-
 // Root data for the PDF document (used when composing the Catalog)
 
-//  [C1] Outlines (bookmarks)
-    /**
-     * Type of encryption
-     */
-    public static final int STANDARD_ENCRYPTION_40 = 0;
-    /**
-     * Type of encryption
-     */
-    public static final int STANDARD_ENCRYPTION_128 = 1;
-    /**
-     * Type of encryption
-     */
-    public static final int ENCRYPTION_AES_128 = 2;
-    /**
-     * Type of encryption
-     */
-    public static final int ENCRYPTION_AES_256_V3 = 4;
-
-//    [C2] PdfVersion interface
-    /**
-     * Add this to the mode to keep the metadata in clear text
-     */
-    public static final int DO_NOT_ENCRYPT_METADATA = 8;
-    /**
-     * Add this to the mode to keep encrypt only the embedded files.
-     *
-     * @since 2.1.3
-     */
-    public static final int EMBEDDED_FILES_ONLY = 24;
-    /**
-     * The operation permitted when the document is opened with the user password
-     *
-     * @since 2.0.7
-     */
-    public static final int ALLOW_PRINTING = 4 + 2048;
-    /**
-     * The operation permitted when the document is opened with the user password
-     *
-     * @since 2.0.7
-     */
-    public static final int ALLOW_MODIFY_CONTENTS = 8;
-    /**
-     * The operation permitted when the document is opened with the user password
-     *
-     * @since 2.0.7
-     */
-    public static final int ALLOW_COPY = 16;
-    /**
-     * The operation permitted when the document is opened with the user password
-     *
-     * @since 2.0.7
-     */
-    public static final int ALLOW_MODIFY_ANNOTATIONS = 32;
-    /**
-     * The operation permitted when the document is opened with the user password
-     *
-     * @since 2.0.7
-     */
-    public static final int ALLOW_FILL_IN = 256;
-    /**
-     * The operation permitted when the document is opened with the user password
-     *
-     * @since 2.0.7
-     */
-    public static final int ALLOW_SCREENREADERS = 512;
-    /**
-     * The operation permitted when the document is opened with the user password
-     *
-     * @since 2.0.7
-     */
-    public static final int ALLOW_ASSEMBLY = 1024;
-    /**
-     * The operation permitted when the document is opened with the user password
-     *
-     * @since 2.0.7
-     */
-    public static final int ALLOW_DEGRADED_PRINTING = 4;
-    /**
-     * action value
-     */
-    public static final PdfName PAGE_OPEN = PdfName.O;
-    /**
-     * action value
-     */
-    public static final PdfName PAGE_CLOSE = PdfName.C;
-    /**
-     * The default space-char ratio.
-     */
-    public static final float SPACE_CHAR_RATIO_DEFAULT = 2.5f;
-    /**
-     * Disable the inter-character spacing.
-     */
-    public static final float NO_SPACE_CHAR_RATIO = 10000000f;
     /**
      * Use the default run direction.
      */
@@ -507,21 +237,12 @@ public class PdfWriter extends DocWriter implements
      */
     public static final int RUN_DIRECTION_NO_BIDI = 1;
     /**
-     * Use bidirectional reordering with left-to-right preferential run direction.
-     */
-    public static final int RUN_DIRECTION_LTR = 2;
-    /**
      * Use bidirectional reordering with right-to-left preferential run direction.
      */
     public static final int RUN_DIRECTION_RTL = 3;
 
 //  [C3] PdfViewerPreferences interface
 
-    // page layout (section 13.1.1 of "iText in Action")
-    /**
-     * Mask to separate the encryption type from the encryption mode.
-     */
-    static final int ENCRYPTION_MASK = 7;
     /**
      * Stores the PDF/X level.
      */
@@ -576,7 +297,6 @@ public class PdfWriter extends DocWriter implements
      * A number referring to the previous Cross-Reference Table.
      */
     protected int prevxref = 0;
-    protected List newBookmarks;
     /**
      * Stores the version information for the header and the catalog.
      */
@@ -654,7 +374,6 @@ public class PdfWriter extends DocWriter implements
     protected HashMap<PdfShading, Object> documentShadings = new LinkedHashMap<>();
     protected HashMap<PdfDictionary, PdfObject[]> documentExtGState = new LinkedHashMap<>();
     protected HashMap<Object, PdfObject[]> documentProperties = new LinkedHashMap<>();
-    protected boolean tagged = false;
     /**
      * A group attributes dictionary specifying the attributes of the page's page group for use in the transparent
      * imaging model
@@ -681,19 +400,6 @@ public class PdfWriter extends DocWriter implements
      * @since 2.1.5
      */
     protected HashMap<PdfStream, PdfIndirectReference> JBIG2Globals = new LinkedHashMap<>();
-    /**
-     * The <CODE>PdfPageEvent</CODE> for this document.
-     */
-    private PdfPageEvent pageEvent;
-    /**
-     * The ratio between the extra word spacing and the extra character spacing. Extra word spacing will grow
-     * <CODE>ratio</CODE> times more than extra character spacing.
-     */
-    private float spaceCharRatio = SPACE_CHAR_RATIO_DEFAULT;
-    /**
-     * A flag indicating the presence of structure elements that contain user properties attributes.
-     */
-    private boolean userProperties;
     /**
      * Holds value of property RGBTranparency.
      */
@@ -862,20 +568,6 @@ public class PdfWriter extends DocWriter implements
     /**
      * Use this method to add a PDF object to the PDF body. Use this method only if you know what you're doing!
      *
-     * @param object   the object to add
-     * @param ref      the indirect reference
-     * @param inObjStm a boolean
-     * @return a PdfIndirectObject
-     * @throws IOException thrown when an I/O operation fails
-     */
-    public PdfIndirectObject addToBody(PdfObject object, PdfIndirectReference ref, boolean inObjStm)
-            throws IOException {
-        return body.add(object, ref, inObjStm);
-    }
-
-    /**
-     * Use this method to add a PDF object to the PDF body. Use this method only if you know what you're doing!
-     *
      * @param object    the object to add
      * @param refNumber the reference number
      * @return a PdfIndirectObject
@@ -883,19 +575,6 @@ public class PdfWriter extends DocWriter implements
      */
     public PdfIndirectObject addToBody(PdfObject object, int refNumber) throws IOException {
         return body.add(object, refNumber);
-    }
-
-    /**
-     * Use this method to add a PDF object to the PDF body. Use this method only if you know what you're doing!
-     *
-     * @param object    the object to add
-     * @param refNumber the reference number
-     * @param inObjStm  a boolean
-     * @return a PdfIndirectObject
-     * @throws IOException thrown when an I/O operation fails
-     */
-    public PdfIndirectObject addToBody(PdfObject object, int refNumber, boolean inObjStm) throws IOException {
-        return body.add(object, refNumber, inObjStm);
     }
 
 // PDF Objects that have an impact on the PDF body
@@ -936,38 +615,6 @@ public class PdfWriter extends DocWriter implements
     // meanwhile deprecated proprietary AES256 variant by Adobe
 
     /**
-     * Sets extra keys to the catalog.
-     *
-     * @return the catalog to change
-     */
-    public PdfDictionary getExtraCatalog() {
-        if (extraCatalog == null) {
-            extraCatalog = new PdfDictionary();
-        }
-        return this.extraCatalog;
-    }
-
-    /**
-     * Use this method to make sure the page tree has a linear structure (every leave is attached directly to the root).
-     * Use this method to allow page reordering with method reorderPages.
-     */
-    public void setLinearPageMode() {
-        root.setLinearMode(null);
-    }
-
-    /**
-     * Use this method to reorder the pages in the document. A <CODE>null</CODE> argument value only returns the number
-     * of pages to process. It is advisable to issue a <CODE>Document.newPage()</CODE> before using this method.
-     *
-     * @param order an array with the new page sequence. It must have the same size as the number of pages.
-     * @return the total number of pages
-     * @throws DocumentException if all the pages are not present in the array
-     */
-    public int reorderPages(int[] order) throws DocumentException {
-        return root.reorderPages(order);
-    }
-
-    /**
      * Use this method to get a reference to a page existing or not. If the page does not exist yet the reference will
      * be created in advance. If on closing the document, a page number greater than the total number of pages was
      * requested, an exception is thrown.
@@ -1002,16 +649,6 @@ public class PdfWriter extends DocWriter implements
     // permissions
 
     /**
-     * Gets the pagenumber of this document. This number can be different from the real pagenumber, if you have (re)set
-     * the page number previously.
-     *
-     * @return a page number
-     */
-    public int getPageNumber() {
-        return pdf.getPageNumber();
-    }
-
-    /**
      * Retrieves a reference to the current page of the document.
      * The current page is typically the last page that was modified or accessed.
      *
@@ -1022,16 +659,6 @@ public class PdfWriter extends DocWriter implements
     }
 
     /**
-     * Returns the number of the current page in the document.
-     * The current page is typically the last page that was modified or accessed.
-     *
-     * @return the current page number.
-     */
-    public int getCurrentPageNumber() {
-        return currentPageNumber;
-    }
-
-    /**
      * Returns the value to be used for the Tabs entry in the page tree.
      *
      * @return a PdfName of the value of the Tabs entry in the page dictionnary
@@ -1039,17 +666,6 @@ public class PdfWriter extends DocWriter implements
      */
     public PdfName getTabs() {
         return tabs;
-    }
-
-    /**
-     * Sets the value for the Tabs entry in the page tree.
-     *
-     * @param tabs Can be PdfName.R, PdfName.C or PdfName.S. Since the Adobe Extensions Level 3, it can also be
-     *             PdfName.A or PdfName.W
-     * @since 2.1.5
-     */
-    public void setTabs(PdfName tabs) {
-        this.tabs = tabs;
     }
 
     /**
@@ -1095,10 +711,6 @@ public class PdfWriter extends DocWriter implements
      *
      * @return the <CODE>PdfPageEvent</CODE> for this document or <CODE>null</CODE> if none is set
      */
-
-    public PdfPageEvent getPageEvent() {
-        return pageEvent;
-    }
 
     /**
      * Signals that the <CODE>Document</CODE> has been opened and that
@@ -1299,15 +911,6 @@ public class PdfWriter extends DocWriter implements
 
 //  [F9] document shadings
 
-    /**
-     * Use this method to set the XMP Metadata.
-     *
-     * @param xmpMetadata The xmpMetadata to set.
-     */
-    public void setXmpMetadata(byte[] xmpMetadata) {
-        this.xmpMetadata = xmpMetadata;
-    }
-
 //  [F11] adding properties (OCG, marked content)
 
     /**
@@ -1353,33 +956,6 @@ public class PdfWriter extends DocWriter implements
         return pdfxConformance.isPdfA1();
     }
 
-    /**
-     * Checks if the PDF has to be in conformance with PDFA2
-     *
-     * @return true if the PDF has to be in conformance with PDFA2
-     */
-    public boolean isPdfA2() {
-        return pdfxConformance.isPdfA2();
-    }
-
-    /**
-     * Checks if the PDF has to be in conformance with PDFA3
-     *
-     * @return true if the PDF has to be in conformance with PDFA3
-     */
-    public boolean isPdfA3() {
-        return pdfxConformance.isPdfA3();
-    }
-
-    /**
-     * Checks if the PDF has to be in conformance with any PDF/A version
-     *
-     * @return true if the PDF has to be in conformance with any PDF/A version
-     */
-    public boolean isPdfA() {
-        return pdfxConformance.isPdfA();
-    }
-
     private static byte[] createDocumentId() {
         final byte[] id = new byte[16];
         // Not secure on purpose: the /ID of a PDF only has to be (very likely) unique.
@@ -1414,17 +990,6 @@ public class PdfWriter extends DocWriter implements
     }
 
     /**
-     * Use this method to set the document's compression to the PDF 1.5 mode with object streams and xref streams. It
-     * can be set at any time but once set it can't be unset.
-     * <p>
-     * If set before opening the document it will also set the pdf version to 1.5.
-     */
-    public void setFullCompression() {
-        this.fullCompression = true;
-        setAtLeastPdfVersion(VERSION_1_5);
-    }
-
-    /**
      * Returns the compression level used for streams written by this writer.
      *
      * @return the compression level (0 = best speed, 9 = best compression, -1 is default)
@@ -1448,28 +1013,9 @@ public class PdfWriter extends DocWriter implements
         }
     }
 
-    void eliminateFontSubset(PdfDictionary fonts) {
-        for (FontDetails ft : documentFonts.values()) {
-            if (fonts.get(ft.getFontName()) != null) {
-                ft.setSubset(false);
-            }
-        }
-    }
-
 //  User methods to change aspects of the page
 
 //  [U1] page size
-
-    /**
-     * Use this method to gets the current document size. This size only includes the data already written to the output
-     * stream, it does not include templates or fonts. It is useful if used with <CODE>freeReader()</CODE> when
-     * concatenating many documents and an idea of the current size is needed.
-     *
-     * @return the approximate size without fonts or templates
-     */
-    public long getCurrentDocumentSize() {
-        return body.offset() + (long) body.size() * 20L + 0x48;
-    }
 
     PdfName getColorspaceName() {
         return new PdfName("CS" + (colorNumber++));
@@ -1534,81 +1080,11 @@ public class PdfWriter extends DocWriter implements
         return documentExtGState.get(gstate);
     }
 
-    PdfObject[] addSimpleProperty(Object prop, PdfIndirectReference refi) {
-        if (!documentProperties.containsKey(prop)) {
-            documentProperties.put(prop, new PdfObject[]{new PdfName("Pr" + (documentProperties.size() + 1)), refi});
-        }
-        return documentProperties.get(prop);
-    }
-
-    boolean propertyExists(Object prop) {
-        return documentProperties.containsKey(prop);
-    }
-
 //  [U4] Thumbnail image
-
-    /**
-     * Mark this document for tagging. It must be called before open.
-     */
-    public void setTagged() {
-        if (open) {
-            throw new IllegalArgumentException(
-                    MessageLocalization.getComposedMessage("tagging.must.be.set.before.opening.the.document"));
-        }
-        tagged = true;
-    }
 
 //  [U5] Transparency groups
 
-    /**
-     * Check if the document is marked for tagging.
-     *
-     * @return <CODE>true</CODE> if the document is marked for tagging
-     */
-    public boolean isTagged() {
-        return tagged;
-    }
-
 //  [U7] run direction (doesn't actually do anything)
-
-    /**
-     * Use this method to get the size of the media box.
-     *
-     * @return a Rectangle
-     */
-    public Rectangle getPageSize() {
-        return pdf.getPageSize();
-    }
-
-    /**
-     * Use this method to set the crop box. The crop box should not be rotated even if the page is rotated. This change
-     * only takes effect in the next page.
-     *
-     * @param crop the crop box
-     */
-    public void setCropBoxSize(Rectangle crop) {
-        pdf.setCropBoxSize(crop);
-    }
-
-    /**
-     * Use this method to set the page box sizes. Allowed names are: "crop", "trim", "art" and "bleed".
-     *
-     * @param boxName the box size
-     * @param size    the size
-     */
-    public void setBoxSize(String boxName, Rectangle size) {
-        pdf.setBoxSize(boxName, size);
-    }
-
-    /**
-     * Use this method to get the size of a trim, art, crop or bleed box, or null if not defined.
-     *
-     * @param boxName crop, trim, art or bleed
-     * @return the Rectangle
-     */
-    public Rectangle getBoxSize(String boxName) {
-        return pdf.getBoxSize(boxName);
-    }
 
     /**
      * Checks if a newPage() will actually generate a new page.
@@ -1620,63 +1096,11 @@ public class PdfWriter extends DocWriter implements
         return pdf.isPageEmpty();
     }
 
-    /**
-     * Use this method to make sure a page is added, even if it's empty. If you use setPageEmpty(false), invoking
-     * newPage() after a blank page will add a newPage. setPageEmpty(true) won't have any effect.
-     *
-     * @param pageEmpty the state
-     */
-    public void setPageEmpty(boolean pageEmpty) {
-        if (pageEmpty) {
-            return;
-        }
-        pdf.setPageEmpty(pageEmpty);
-    }
-
 // Miscellaneous topics
 
 //  [M1] Color settings
 
-    /**
-     * Use this method to get the group dictionary.
-     *
-     * @return Value of property group.
-     */
-    public PdfDictionary getGroup() {
-        return this.group;
-    }
-
-    /**
-     * Use this method to set the group dictionary.
-     *
-     * @param group New value of property group.
-     */
-    public void setGroup(PdfDictionary group) {
-        this.group = group;
-    }
-
-    /**
-     * Use this method to gets the space/character extra spacing ratio for fully justified text.
-     *
-     * @return the space/character extra spacing ratio
-     */
-    public float getSpaceCharRatio() {
-        return spaceCharRatio;
-    }
-
 //  [M2] spot patterns
-
-    /**
-     * Use this method to set the ratio between the extra word spacing and the extra character spacing when the text is
-     * fully justified. Extra word spacing will grow <CODE>spaceCharRatio</CODE> times more than extra character
-     * spacing. If the ratio is <CODE>PdfWriter.NO_SPACE_CHAR_RATIO</CODE> then the extra character spacing will be
-     * zero.
-     *
-     * @param spaceCharRatio the ratio between the extra word spacing and the extra character spacing
-     */
-    public void setSpaceCharRatio(float spaceCharRatio) {
-        this.spaceCharRatio = Math.max(spaceCharRatio, 0.001f);
-    }
 
     /**
      * Use this method to set the run direction.
@@ -1708,23 +1132,6 @@ public class PdfWriter extends DocWriter implements
      */
     public float getUserunit() {
         return userunit;
-    }
-
-    /**
-     * Use this method to set the user unit. A UserUnit is a value that defines the default user space unit. The minimum
-     * UserUnit is 1 (1 unit = 1/72 inch). The maximum UserUnit is 75,000. Note that this userunit only works starting
-     * with PDF1.6!
-     *
-     * @param userunit The userunit to set.
-     * @throws DocumentException on error
-     */
-    public void setUserunit(float userunit) throws DocumentException {
-        if (userunit < 1f || userunit > 75000f) {
-            throw new DocumentException(
-                    MessageLocalization.getComposedMessage("userunit.should.be.a.value.between.1.and.75000"));
-        }
-        this.userunit = userunit;
-        setAtLeastPdfVersion(VERSION_1_6);
     }
 
 //  [M3] Images
@@ -1879,24 +1286,6 @@ public class PdfWriter extends DocWriter implements
 //  [F12] tagged PDF
 
     /**
-     * Gets the flag indicating the presence of structure elements that contain user properties attributes.
-     *
-     * @return the user properties flag
-     */
-    public boolean isUserProperties() {
-        return this.userProperties;
-    }
-
-    /**
-     * Sets the flag indicating the presence of structure elements that contain user properties attributes.
-     *
-     * @param userProperties the user properties flag
-     */
-    public void setUserProperties(boolean userProperties) {
-        this.userProperties = userProperties;
-    }
-
-    /**
      * Gets the transparency blending colorspace.
      *
      * @return <code>true</code> if the transparency blending colorspace is RGB, <code>false</code>
@@ -1905,21 +1294,6 @@ public class PdfWriter extends DocWriter implements
      */
     public boolean isRgbTransparencyBlending() {
         return this.rgbTransparencyBlending;
-    }
-
-    /**
-     * Sets the transparency blending colorspace to RGB. The default blending colorspace is CMYK and will result in
-     * faded colors in the screen and in printing. Calling this method will return the RGB colors to what is expected.
-     * The RGB blending will be applied to all subsequent pages until other value is set. Note that this is a generic
-     * solution that may not work in all cases.
-     *
-     * @param rgbTransparencyBlending <code>true</code> to set the transparency blending colorspace to RGB,
-     *                                <code>false</code>
-     *                                to use the default blending colorspace
-     * @since 2.1.0
-     */
-    public void setRgbTransparencyBlending(boolean rgbTransparencyBlending) {
-        this.rgbTransparencyBlending = rgbTransparencyBlending;
     }
 
     /**
@@ -1970,10 +1344,6 @@ public class PdfWriter extends DocWriter implements
         }
 
         // methods
-
-        void setRefnum(int refnum) {
-            this.refnum = refnum;
-        }
 
         private PdfWriter.PdfBody.PdfCrossReference addToObjStm(PdfObject obj, int nObj) throws IOException {
             if (numObj >= OBJSINSTREAM) {

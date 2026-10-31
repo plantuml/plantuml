@@ -70,10 +70,6 @@ public class BadPdfFormatException extends PdfException {
      * Constructs a <CODE>BadPdfFormatException</CODE> without a message.
      */
 
-    BadPdfFormatException() {
-        super();
-    }
-
     /**
      * Constructs a <code>BadPdfFormatException</code> with a message.
      *

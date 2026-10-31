@@ -112,10 +112,6 @@ public class Paragraph extends Phrase {
      */
     protected float spacingAfter;
     /**
-     * Does the paragraph has to be kept together on 1 page.
-     */
-    protected boolean keeptogether = false;
-    /**
      * Holds value of property firstLineIndent.
      */
     private float firstLineIndent = 0;
@@ -125,13 +121,6 @@ public class Paragraph extends Phrase {
     private float extraParagraphSpace = 0;
 
     // constructors
-
-    /**
-     * Constructs a <CODE>Paragraph</CODE>.
-     */
-    public Paragraph() {
-        super();
-    }
 
     /**
      * Constructs a <CODE>Paragraph</CODE> with a certain leading.
@@ -149,56 +138,6 @@ public class Paragraph extends Phrase {
      */
     public Paragraph(Chunk chunk) {
         super(chunk);
-    }
-
-    /**
-     * Constructs a <CODE>Paragraph</CODE> with a certain <CODE>Chunk</CODE> and a certain leading.
-     *
-     * @param leading the leading
-     * @param chunk   a <CODE>Chunk</CODE>
-     */
-    public Paragraph(float leading, Chunk chunk) {
-        super(leading, chunk);
-    }
-
-    /**
-     * Constructs a <CODE>Paragraph</CODE> with a certain <CODE>String</CODE>.
-     *
-     * @param string a <CODE>String</CODE>
-     */
-    public Paragraph(String string) {
-        super(string);
-    }
-
-    /**
-     * Constructs a <CODE>Paragraph</CODE> with a certain <CODE>String</CODE> and a certain <CODE>Font</CODE>.
-     *
-     * @param string a <CODE>String</CODE>
-     * @param font   a <CODE>Font</CODE>
-     */
-    public Paragraph(String string, Font font) {
-        super(string, font);
-    }
-
-    /**
-     * Constructs a <CODE>Paragraph</CODE> with a certain <CODE>String</CODE> and a certain leading.
-     *
-     * @param leading the leading
-     * @param string  a <CODE>String</CODE>
-     */
-    public Paragraph(float leading, String string) {
-        super(leading, string);
-    }
-
-    /**
-     * Constructs a <CODE>Paragraph</CODE> with a certain leading, <CODE>String</CODE> and <CODE>Font</CODE>.
-     *
-     * @param leading the leading
-     * @param string  a <CODE>String</CODE>
-     * @param font    a <CODE>Font</CODE>
-     */
-    public Paragraph(float leading, String string, Font font) {
-        super(leading, string, font);
     }
 
     /**
@@ -256,33 +195,6 @@ public class Paragraph extends Phrase {
     }
 
     /**
-     * Checks if this paragraph has to be kept together on one page.
-     *
-     * @return true if the paragraph may not be split over 2 pages.
-     */
-    public boolean getKeepTogether() {
-        return keeptogether;
-    }
-
-    /**
-     * Indicates that the paragraph has to be kept together on one page.
-     *
-     * @param keeptogether true of the paragraph may not be split over 2 pages
-     */
-    public void setKeepTogether(boolean keeptogether) {
-        this.keeptogether = keeptogether;
-    }
-
-    /**
-     * Gets the alignment of this paragraph.
-     *
-     * @return alignment
-     */
-    public int getAlignment() {
-        return alignment;
-    }
-
-    /**
      * Sets the alignment of this paragraph.
      *
      * @param alignment the new alignment
@@ -314,41 +226,6 @@ public class Paragraph extends Phrase {
             return;
         }
         this.alignment = Element.ALIGN_LEFT;
-    }
-
-    /**
-     * Gets the variable leading
-     *
-     * @return the leading
-     */
-    public float getMultipliedLeading() {
-        return multipliedLeading;
-    }
-
-    /**
-     * Sets the variable leading. The resultant leading will be multipliedLeading*maxFontSize where maxFontSize is the
-     * size of the biggest font in the line.
-     *
-     * @param multipliedLeading the variable leading
-     */
-    public void setMultipliedLeading(float multipliedLeading) {
-        this.leading = 0;
-        this.multipliedLeading = multipliedLeading;
-    }
-
-    /**
-     * Gets the total leading. This method is based on the assumption that the font of the Paragraph is the font of all
-     * the elements that make part of the paragraph. This isn't necessarily true.
-     *
-     * @return the total leading (fixed and multiplied)
-     */
-    public float getTotalLeading() {
-        float m = font == null ?
-                Font.DEFAULTSIZE * multipliedLeading : font.getCalculatedLeading(multipliedLeading);
-        if (m > 0 && !hasLeading()) {
-            return m;
-        }
-        return getLeading() + m;
     }
 
     /**

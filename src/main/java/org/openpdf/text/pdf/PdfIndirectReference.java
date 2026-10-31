@@ -77,10 +77,6 @@ public class PdfIndirectReference extends PdfObject {
 
     // constructors
 
-    protected PdfIndirectReference() {
-        super(0);
-    }
-
     /**
      * Constructs a <CODE>PdfIndirectReference</CODE>.
      *
@@ -123,10 +119,6 @@ public class PdfIndirectReference extends PdfObject {
      *
      * @return a number.
      */
-
-    public int getGeneration() {
-        return generation;
-    }
 
     public String toString() {
         return new StringBuffer().append(number).append(" ").append(generation).append(" R").toString();

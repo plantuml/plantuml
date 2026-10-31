@@ -51,7 +51,6 @@ package org.openpdf.text.pdf;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.SimpleTimeZone;
 
 /**
  * <CODE>PdfDate</CODE> is the PDF date object.
@@ -69,9 +68,6 @@ import java.util.SimpleTimeZone;
  */
 
 public class PdfDate extends PdfString {
-
-    private static final int[] DATE_SPACE = {Calendar.YEAR, 4, 0, Calendar.MONTH, 2, -1, Calendar.DAY_OF_MONTH, 2, 0,
-            Calendar.HOUR_OF_DAY, 2, 0, Calendar.MINUTE, 2, 0, Calendar.SECOND, 2, 0};
 
     // constructors
 
@@ -126,123 +122,6 @@ public class PdfDate extends PdfString {
     }
 
     /**
-     * Gives the W3C format of the PdfDate.
-     *
-     * @param d the date in the format D:YYYYMMDDHHmmSSOHH'mm'
-     * @return a formatted date
-     */
-    public static String getW3CDate(String d) {
-        if (d.startsWith("D:")) {
-            d = d.substring(2);
-        }
-        StringBuilder sb = new StringBuilder();
-        if (d.length() < 4) {
-            return "0000";
-        }
-        sb.append(d, 0, 4); //year
-        d = d.substring(4);
-        if (d.length() < 2) {
-            return sb.toString();
-        }
-        sb.append('-').append(d, 0, 2); //month
-        d = d.substring(2);
-        if (d.length() < 2) {
-            return sb.toString();
-        }
-        sb.append('-').append(d, 0, 2); //day
-        d = d.substring(2);
-        if (d.length() < 2) {
-            return sb.toString();
-        }
-        sb.append('T').append(d, 0, 2); //hour
-        d = d.substring(2);
-        if (d.length() < 2) {
-            sb.append(":00Z");
-            return sb.toString();
-        }
-        sb.append(':').append(d, 0, 2); //minute
-        d = d.substring(2);
-        if (d.length() < 2) {
-            sb.append('Z');
-            return sb.toString();
-        }
-        sb.append(':').append(d, 0, 2); //second
-        d = d.substring(2);
-        if (d.startsWith("-") || d.startsWith("+")) {
-            String sign = d.substring(0, 1);
-            d = d.substring(1);
-            String h = "00";
-            String m = "00";
-            if (d.length() >= 2) {
-                h = d.substring(0, 2);
-                if (d.length() > 2) {
-                    d = d.substring(3);
-                    if (d.length() >= 2) {
-                        m = d.substring(0, 2);
-                    }
-                }
-                sb.append(sign).append(h).append(':').append(m);
-                return sb.toString();
-            }
-        }
-        sb.append('Z');
-        return sb.toString();
-    }
-
-    /**
-     * Converts a PDF string representing a date into a Calendar.
-     *
-     * @param s the PDF string representing a date
-     * @return a <CODE>Calendar</CODE> representing the date or <CODE>null</CODE> if the string was not a date
-     */
-    public static Calendar decode(String s) {
-        try {
-            if (s.startsWith("D:")) {
-                s = s.substring(2);
-            }
-            GregorianCalendar calendar;
-            int slen = s.length();
-            int idx = s.indexOf('Z');
-            if (idx >= 0) {
-                slen = idx;
-                calendar = new GregorianCalendar(new SimpleTimeZone(0, "ZPDF"));
-            } else {
-                int sign = 1;
-                idx = s.indexOf('+');
-                if (idx < 0) {
-                    idx = s.indexOf('-');
-                    if (idx >= 0) {
-                        sign = -1;
-                    }
-                }
-                if (idx < 0) {
-                    calendar = new GregorianCalendar();
-                } else {
-                    int offset = Integer.parseInt(s.substring(idx + 1, idx + 3)) * 60;
-                    if (idx + 5 < s.length()) {
-                        offset += Integer.parseInt(s.substring(idx + 4, idx + 6));
-                    }
-                    calendar = new GregorianCalendar(new SimpleTimeZone(offset * sign * 60000, "ZPDF"));
-                    slen = idx;
-                }
-            }
-            calendar.clear();
-            idx = 0;
-            for (int k = 0; k < DATE_SPACE.length; k += 3) {
-                if (idx >= slen) {
-                    break;
-                }
-                calendar.set(DATE_SPACE[k],
-                        Integer.parseInt(s.substring(idx, idx + DATE_SPACE[k + 1])) + DATE_SPACE[k + 2]);
-                idx += DATE_SPACE[k + 1];
-            }
-            return calendar;
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    /**
      * Adds a number of leading zeros to a given <CODE>String</CODE> in order to get a <CODE>String</CODE> of a certain
      * length.
      *
@@ -261,12 +140,4 @@ public class PdfDate extends PdfString {
         return tmp.toString();
     }
 
-    /**
-     * Gives the W3C format of the PdfDate.
-     *
-     * @return a formatted date
-     */
-    public String getW3CDate() {
-        return getW3CDate(value);
-    }
 }

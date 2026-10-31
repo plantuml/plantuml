@@ -115,12 +115,6 @@ class PageResources {
         colorDictionary.mergeDifferent(dic);
     }
 
-    PdfName addShading(PdfName name, PdfIndirectReference reference) {
-        name = translateName(name);
-        shadingDictionary.put(name, reference);
-        return name;
-    }
-
     PdfName addPattern(PdfName name, PdfIndirectReference reference) {
         name = translateName(name);
         patternDictionary.put(name, reference);
@@ -131,22 +125,6 @@ class PageResources {
         name = translateName(name);
         extGStateDictionary.put(name, reference);
         return name;
-    }
-
-    PdfName addProperty(PdfName name, PdfIndirectReference reference) {
-        name = translateName(name);
-        propertyDictionary.put(name, reference);
-        return name;
-    }
-
-    boolean hasResources() {
-        return (fontDictionary.size() > 0
-                || xObjectDictionary.size() > 0
-                || colorDictionary.size() > 0
-                || patternDictionary.size() > 0
-                || shadingDictionary.size() > 0
-                || extGStateDictionary.size() > 0
-                || propertyDictionary.size() > 0);
     }
 
 

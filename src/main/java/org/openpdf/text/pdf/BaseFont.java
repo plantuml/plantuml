@@ -54,9 +54,7 @@ import org.openpdf.text.error_messages.MessageLocalization;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -198,76 +196,13 @@ public abstract class BaseFont {
      */
     public static final int UNDERLINE_THICKNESS = 14;
     /**
-     * The strikethrough position.
-     */
-    public static final int STRIKETHROUGH_POSITION = 15;
-    /**
-     * The strikethrough thickness.
-     */
-    public static final int STRIKETHROUGH_THICKNESS = 16;
-    /**
-     * The recommended vertical size for subscripts for this font.
-     */
-    public static final int SUBSCRIPT_SIZE = 17;
-    /**
-     * The recommended vertical offset from the baseline for subscripts for this font. Usually a negative value.
-     */
-    public static final int SUBSCRIPT_OFFSET = 18;
-    /**
-     * The recommended vertical size for superscripts for this font.
-     */
-    public static final int SUPERSCRIPT_SIZE = 19;
-    /**
-     * The recommended vertical offset from the baseline for superscripts for this font.
-     */
-    public static final int SUPERSCRIPT_OFFSET = 20;
-    /**
      * The font is Type 1.
      */
     public static final int FONT_TYPE_T1 = 0;
     /**
-     * The font is True Type with a standard encoding.
-     */
-    public static final int FONT_TYPE_TT = 1;
-    /**
-     * The font is CJK.
-     */
-    public static final int FONT_TYPE_CJK = 2;
-    /**
-     * The font is True Type with a Unicode encoding.
-     */
-    public static final int FONT_TYPE_TTUNI = 3;
-    /**
-     * A font already inside the document.
-     */
-    public static final int FONT_TYPE_DOCUMENT = 4;
-    /**
-     * A Type3 font.
-     */
-    public static final int FONT_TYPE_T3 = 5;
-    /**
-     * The Unicode encoding with horizontal writing.
-     */
-    public static final String IDENTITY_H = "Identity-H";
-    /**
-     * The Unicode encoding with vertical writing.
-     */
-    public static final String IDENTITY_V = "Identity-V";
-
-    /**
-     * A possible encoding.
-     */
-    public static final String CP1250 = "Cp1250";
-
-    /**
      * A possible encoding.
      */
     public static final String CP1252 = "Cp1252";
-
-    /**
-     * A possible encoding.
-     */
-    public static final String CP1257 = "Cp1257";
 
     /**
      * A possible encoding.
@@ -279,15 +214,6 @@ public abstract class BaseFont {
      */
     public static final String MACROMAN = "MacRoman";
 
-    public static final int[] CHAR_RANGE_LATIN = {0, 0x17f, 0x2000, 0x206f,
-            0x20a0, 0x20cf, 0xfb00, 0xfb06};
-    public static final int[] CHAR_RANGE_ARABIC = {0, 0x7f, 0x0600, 0x067f,
-            0x20a0, 0x20cf, 0xfb50, 0xfbff, 0xfe70, 0xfeff};
-    public static final int[] CHAR_RANGE_HEBREW = {0, 0x7f, 0x0590, 0x05ff,
-            0x20a0, 0x20cf, 0xfb1d, 0xfb4f};
-    public static final int[] CHAR_RANGE_CYRILLIC = {0, 0x7f, 0x0400, 0x052f,
-            0x2000, 0x206f, 0x20a0, 0x20cf};
-
     /**
      * if the font has to be embedded
      */
@@ -298,22 +224,9 @@ public abstract class BaseFont {
      */
     public static final boolean NOT_EMBEDDED = false;
     /**
-     * if the font has to be cached
-     */
-    public static final boolean CACHED = true;
-    /**
-     * if the font doesn't have to be cached
-     */
-    public static final boolean NOT_CACHED = false;
-
-    /**
      * The path to the font resources.
      */
     public static final String RESOURCE_PATH = "org/openpdf/text/pdf/fonts/";
-    /**
-     * The fake CID code that represents a newline.
-     */
-    public static final char CID_NEWLINE = '\u7fff';
     /**
      * a not defined character in a custom PDF encoding
      */
@@ -346,7 +259,6 @@ public abstract class BaseFont {
         BuiltinFonts14.put(ZAPFDINGBATS, PdfName.ZAPFDINGBATS);
     }
 
-    protected ArrayList<int[]> subsetRanges;
     /**
      * table of characters widths for this encoding
      */
@@ -406,10 +318,6 @@ public abstract class BaseFont {
      * Used to build a randomized prefix for a subset name
      */
 
-    /**
-     * Indicates if a CIDSet stream should be included in the document.
-     */
-    protected boolean includeCidSet = true;
     /**
      * The font type.
      */
@@ -651,24 +559,6 @@ public abstract class BaseFont {
     }
 
     /**
-     * Gets the name without the modifiers Bold, Italic or BoldItalic.
-     *
-     * @param name the full name of the font
-     * @return the name without the modifiers Bold, Italic or BoldItalic
-     */
-    protected static String getBaseName(String name) {
-        if (name.endsWith(",Bold")) {
-            return name.substring(0, name.length() - 5);
-        } else if (name.endsWith(",Italic")) {
-            return name.substring(0, name.length() - 7);
-        } else if (name.endsWith(",BoldItalic")) {
-            return name.substring(0, name.length() - 11);
-        } else {
-            return name;
-        }
-    }
-
-    /**
      * Normalize the encoding names. "winansi" is changed to "Cp1252" and "macroman" is changed to "MacRoman".
      *
      * @param enc the encoding to be normalized
@@ -903,70 +793,6 @@ public abstract class BaseFont {
     }
 
     /**
-     * Gets the ascent of a <CODE>String</CODE> in normalized 1000 units. The ascent will always be greater than or
-     * equal to zero even if all the characters have a lower ascent.
-     *
-     * @param text the <CODE>String</CODE> to get the ascent of
-     * @return the ascent in normalized 1000 units
-     */
-    public int getAscent(String text) {
-        int max = 0;
-        char[] chars = text.toCharArray();
-        for (char c : chars) {
-            int[] bbox = getCharBBox(c);
-            if (bbox != null && bbox[3] > max) {
-                max = bbox[3];
-            }
-        }
-        return max;
-    }
-
-    /**
-     * Gets the descent of a <CODE>String</CODE> in points. The descent will always be less than or equal to zero even
-     * if all the characters have an higher descent.
-     *
-     * @param text     the <CODE>String</CODE> to get the descent of
-     * @param fontSize the size of the font
-     * @return the descent in points
-     */
-    public float getDescentPoint(String text, float fontSize) {
-        return getDescent(text) * 0.001f * fontSize;
-    }
-
-    /**
-     * Gets the ascent of a <CODE>String</CODE> in points. The ascent will always be greater than or equal to zero even
-     * if all the characters have a lower ascent.
-     *
-     * @param text     the <CODE>String</CODE> to get the ascent of
-     * @param fontSize the size of the font
-     * @return the ascent in points
-     */
-    public float getAscentPoint(String text, float fontSize) {
-        return getAscent(text) * 0.001f * fontSize;
-    }
-
-    /**
-     * Gets the width of a <CODE>String</CODE> in points taking kerning into account.
-     *
-     * @param text     the <CODE>String</CODE> to get the width of
-     * @param fontSize the font size
-     * @return the width in points
-     */
-    public float getWidthPointKerned(String text, float fontSize) {
-        float size = getWidth(text) * 0.001f * fontSize;
-        if (!hasKernPairs()) {
-            return size;
-        }
-        int len = text.length() - 1;
-        int kern = 0;
-        char[] c = text.toCharArray();
-        for (int k = 0; k < len; ++k) {
-            kern += getKerning(c[k], c[k + 1]);
-        }
-        return size + kern * 0.001f * fontSize;
-    }
-
-    /**
      * Gets the width of a <CODE>String</CODE> in points.
      *
      * @param text     the <CODE>String</CODE> to get the width of
@@ -1064,16 +890,6 @@ public abstract class BaseFont {
             DocumentException;
 
     /**
-     * Gets the encoding used to convert <CODE>String</CODE> into
-     * <CODE>byte[]</CODE>.
-     *
-     * @return the encoding name
-     */
-    public String getEncoding() {
-        return encoding;
-    }
-
-    /**
      * Gets the font parameter identified by <CODE>key</CODE>. Valid values for
      * <CODE>key</CODE> are <CODE>ASCENT</CODE>, <CODE>AWT_ASCENT</CODE>,
      * <CODE>CAPHEIGHT</CODE>, <CODE>DESCENT</CODE>, <CODE>AWT_DESCENT</CODE>,
@@ -1102,40 +918,6 @@ public abstract class BaseFont {
      */
     public boolean isEmbedded() {
         return embedded;
-    }
-
-    /**
-     * Gets the symbolic flag of the font.
-     *
-     * @return <CODE>true</CODE> if the font is symbolic
-     */
-    public boolean isFontSpecific() {
-        return fontSpecific;
-    }
-
-    /**
-     * Creates a unique subset prefix to be added to the font name when the font is embedded and subset.
-     *
-     * @return the subset prefix
-     */
-    protected String createSubsetPrefix() {
-        String s = "";
-        // Not secure on purpose: only has to differ from the prefix of the other subsets
-        final java.util.Random random = new java.util.Random(System.nanoTime());
-        for (int k = 0; k < 6; ++k) {
-            s += (char) (random.nextDouble() * 26 + 'A');
-        }
-        return s + "+";
-    }
-
-    /**
-     * Gets the Unicode character corresponding to the byte output to the pdf stream.
-     *
-     * @param index the byte index
-     * @return the Unicode character
-     */
-    char getUnicodeDifferences(int index) {
-        return unicodeDifferences[index];
     }
 
     /**
@@ -1185,165 +967,11 @@ public abstract class BaseFont {
     public abstract String[][] getFamilyFontName();
 
     /**
-     * Gets the code pages supported by the font. This has only meaning with True Type fonts.
-     *
-     * @return the code pages supported by the font
-     */
-    public String[] getCodePagesSupported() {
-        return new String[0];
-    }
-
-    /**
-     * Gets the raw TrueType/OpenType table directory for fonts that expose one.
-     *
-     * @return the table directory keyed by table tag, or an empty map when unavailable
-     */
-    public Map<String, int[]> getTables() {
-        return Map.of();
-    }
-
-    /**
-     * Gets the font width array.
-     *
-     * @return the font width array
-     */
-    public int[] getWidths() {
-        return widths;
-    }
-
-    /**
-     * Gets the array with the names of the characters.
-     *
-     * @return the array with the names of the characters
-     */
-    public String[] getDifferences() {
-        return differences;
-    }
-
-    /**
-     * Gets the array with the unicode characters.
-     *
-     * @return the array with the unicode characters
-     */
-    public char[] getUnicodeDifferences() {
-        return unicodeDifferences;
-    }
-
-    /**
-     * Gets the state of the property.
-     *
-     * @return value of property forceWidthsOutput
-     */
-    public boolean isForceWidthsOutput() {
-        return forceWidthsOutput;
-    }
-
-    /**
-     * Set to <CODE>true</CODE> to force the generation of the widths array.
-     *
-     * @param forceWidthsOutput <CODE>true</CODE> to force the generation of the widths array
-     */
-    public void setForceWidthsOutput(boolean forceWidthsOutput) {
-        this.forceWidthsOutput = forceWidthsOutput;
-    }
-
-    /**
-     * Gets the direct conversion of <CODE>char</CODE> to <CODE>byte</CODE>.
-     *
-     * @return value of property directTextToByte.
-     * @see #setDirectTextToByte(boolean directTextToByte)
-     */
-    public boolean isDirectTextToByte() {
-        return directTextToByte;
-    }
-
-    /**
-     * Sets the conversion of <CODE>char</CODE> directly to <CODE>byte</CODE> by casting. This is a low level feature to
-     * put the bytes directly in the content stream without passing through String.getBytes().
-     *
-     * @param directTextToByte New value of property directTextToByte.
-     */
-    public void setDirectTextToByte(boolean directTextToByte) {
-        this.directTextToByte = directTextToByte;
-    }
-
-    /**
-     * Indicates if all the glyphs and widths for that particular encoding should be included in the document.
-     *
-     * @return <CODE>false</CODE> to include all the glyphs and widths.
-     */
-    public boolean isSubset() {
-        return subset;
-    }
-
-    /**
-     * Indicates if all the glyphs and widths for that particular encoding should be included in the document. When set
-     * to <CODE>true</CODE> only the glyphs used will be included in the font. When set to
-     * <CODE>false</CODE> and {@link #addSubsetRange(int[])} was not called the
-     * full font will be included otherwise just the characters ranges will be included.
-     *
-     * @param subset new value of property subset
-     */
-    public void setSubset(boolean subset) {
-        this.subset = subset;
-    }
-
-    /**
-     * Gets the Unicode equivalent to a CID. The (nonexistent) CID <code>FF00</code> is translated as '\n'. It has only
-     * meaning with CJK fonts with Identity encoding.
-     *
-     * @param c the CID code
-     * @return the Unicode equivalent
-     */
-    public int getUnicodeEquivalent(int c) {
-        return c;
-    }
-
-    /**
-     * Gets the CID code given an Unicode. It has only meaning with CJK fonts.
-     *
-     * @param c the Unicode
-     * @return the CID equivalent
-     */
-    public int getCidCode(int c) {
-        return c;
-    }
-
-    /**
      * Checks if the font has any kerning pairs.
      *
      * @return <CODE>true</CODE> if the font has any kerning pairs
      */
     public abstract boolean hasKernPairs();
-
-    /**
-     * Checks if a character exists in this font.
-     *
-     * @param c the character to check
-     * @return <CODE>true</CODE> if the character has a glyph,
-     * <CODE>false</CODE> otherwise
-     */
-    public boolean charExists(int c) {
-        byte[] b = convertToBytes(c);
-        return b.length > 0;
-    }
-
-    /**
-     * Sets the character advance.
-     *
-     * @param c       the character
-     * @param advance the character advance normalized to 1000 units
-     * @return <CODE>true</CODE> if the advance was set, <CODE>false</CODE>
-     * otherwise
-     */
-    public boolean setCharAdvance(int c, int advance) {
-        byte[] b = convertToBytes(c);
-        if (b.length == 0) {
-            return false;
-        }
-        widths[0xff & b[0]] = advance;
-        return true;
-    }
 
     /**
      * Gets the smallest box enclosing the character contours. It will return
@@ -1364,44 +992,6 @@ public abstract class BaseFont {
     }
 
     protected abstract int[] getRawCharBBox(int c, String name);
-
-    /**
-     * iText expects Arabic Diactrics (tashkeel) to have zero advance but some fonts, most notably those that come with
-     * Windows, like times.ttf, have non-zero advance for those characters. This method makes those character to have
-     * zero width advance and work correctly in the iText Arabic shaping and reordering context.
-     */
-    public void correctArabicAdvance() {
-        for (char c = '\u064b'; c <= '\u0658'; ++c) {
-            setCharAdvance(c, 0);
-        }
-        setCharAdvance('\u0670', 0);
-        for (char c = '\u06d6'; c <= '\u06dc'; ++c) {
-            setCharAdvance(c, 0);
-        }
-        for (char c = '\u06df'; c <= '\u06e4'; ++c) {
-            setCharAdvance(c, 0);
-        }
-        for (char c = '\u06e7'; c <= '\u06e8'; ++c) {
-            setCharAdvance(c, 0);
-        }
-        for (char c = '\u06ea'; c <= '\u06ed'; ++c) {
-            setCharAdvance(c, 0);
-        }
-    }
-
-    /**
-     * Adds a character range when subsetting. The range is an <CODE>int</CODE> array where the first element is the
-     * start range inclusive and the second element is the end range inclusive. Several ranges are allowed in the same
-     * array.
-     *
-     * @param range the character range
-     */
-    public void addSubsetRange(int[] range) {
-        if (subsetRanges == null) {
-            subsetRanges = new ArrayList<>();
-        }
-        subsetRanges.add(range);
-    }
 
     /**
      * Returns the compression level used for the font streams.
@@ -1426,26 +1016,6 @@ public abstract class BaseFont {
         } else {
             this.compressionLevel = compressionLevel;
         }
-    }
-
-    /**
-     * Indicates if a CIDSet stream should be included in the document for {@link TrueTypeFontUnicode}.
-     *
-     * @return <CODE>true</CODE> to include a CIDSet stream.
-     */
-    public boolean isIncludeCidSet() {
-        return includeCidSet;
-    }
-
-    /**
-     * Indicates if a CIDSet stream should be included in the document for {@link TrueTypeFontUnicode}. When set to
-     * <CODE>true</CODE>, a CIDSet stream will be included in the document. When set to <CODE>false</CODE>, and
-     * {@link PdfWriter#getPDFXConformance()} does not require it, no CIDSet stream will be included.
-     *
-     * @param includeCidSet new value of {@link BaseFont#includeCidSet}
-     */
-    public void setIncludeCidSet(boolean includeCidSet) {
-        this.includeCidSet = includeCidSet;
     }
 
     /**

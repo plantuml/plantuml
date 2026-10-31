@@ -41,43 +41,4 @@ public class TextRenderingOptions {
         this.glyphSubstitutionEnabled = glyphSubstitutionEnabled;
     }
 
-    /**
-     * The default language of the document. Can be set to values like "en_US". This language is used in
-     * FopGlyphProcessor to determine which glyphs are to be substituted.
-     * <p/>
-     * The default "dflt" means that all glyphs which can be replaced will be substituted.
-     *
-     * @return the current document language
-     */
-    public String getDocumentLanguage() {
-        return documentLanguage;
-    }
-
-    /**
-     * Sets the default language of the document.
-     *
-     * @param documentLanguage the document language
-     * @see #getDocumentLanguage()
-     */
-    public void setDocumentLanguage(String documentLanguage) {
-        this.documentLanguage = documentLanguage;
-    }
-
-    /**
-     * Returns the glyph substitution enabled flag.
-     *
-     * @return the glyph substitution enabled flag #see {@link Document#setGlyphSubstitutionEnabled(boolean)}
-     */
-    public boolean isGlyphSubstitutionEnabled() {
-        return glyphSubstitutionEnabled;
-    }
-
-    /**
-     * Sets the font glyph substitution enabled flag.
-     *
-     * @param glyphSubstitutionEnabled whether glyph substitution is enabled
-     */
-    public void setGlyphSubstitutionEnabled(boolean glyphSubstitutionEnabled) {
-        this.glyphSubstitutionEnabled = glyphSubstitutionEnabled;
-    }
 }

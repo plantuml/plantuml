@@ -182,11 +182,6 @@ public interface Element {
      */
     int TABLE = 22;
 
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     */
-    int PTABLE = 23;
-
     // static membervariables (annotations)
 
     /**
@@ -200,16 +195,6 @@ public interface Element {
      * This is a possible type of <CODE>Element</CODE>.
      */
     int RECTANGLE = 30;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     */
-    int JPEG = 32;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     */
-    int JPEG2000 = 33;
 
     /**
      * This is a possible type of <CODE>Element</CODE>.
@@ -231,24 +216,7 @@ public interface Element {
     /**
      * This is a possible type of <CODE>Element</CODE>.
      */
-    int MULTI_COLUMN_TEXT = 40;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     */
     int MARKED = 50;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     *
-     * @since 2.1.2
-     */
-    int YMARK = 55;
-
-    /**
-     * This is a possible type of <CODE>Element</CODE>.
-     */
-    int FOOTNOTE = 56;
 
     // static membervariables (alignment)
 

@@ -63,23 +63,6 @@ import java.util.HashMap;
 
 public class PdfPage extends PdfDictionary {
 
-    /**
-     * value of the <B>Rotate</B> key for a page in PORTRAIT
-     */
-    public static final PdfNumber PORTRAIT = new PdfNumber(0);
-    /**
-     * value of the <B>Rotate</B> key for a page in LANDSCAPE
-     */
-    public static final PdfNumber LANDSCAPE = new PdfNumber(90);
-    // membervariables
-    /**
-     * value of the <B>Rotate</B> key for a page in INVERTEDPORTRAIT
-     */
-    public static final PdfNumber INVERTEDPORTRAIT = new PdfNumber(180);
-    /**
-     * value of the <B>Rotate</B> key for a page in SEASCAPE
-     */
-    public static final PdfNumber SEASCAPE = new PdfNumber(270);
     private static final String[] boxStrings = {"crop", "trim", "art", "bleed"};
     private static final PdfName[] boxNames = {PdfName.CROPBOX, PdfName.TRIMBOX, PdfName.ARTBOX, PdfName.BLEEDBOX};
     /**
@@ -120,10 +103,6 @@ public class PdfPage extends PdfDictionary {
      * @param resources an indirect reference to a <CODE>PdfResources</CODE>-object
      */
 
-    PdfPage(PdfRectangle mediaBox, HashMap<String, ? extends PdfObject> boxSize, PdfDictionary resources) {
-        this(mediaBox, boxSize, resources, 0);
-    }
-
     /**
      * Checks if this page element is a tree of pages.
      * <p>
@@ -131,10 +110,6 @@ public class PdfPage extends PdfDictionary {
      *
      * @return <CODE>false</CODE> because this is a single page
      */
-
-    public boolean isParent() {
-        return false;
-    }
 
     // methods
 
@@ -154,19 +129,10 @@ public class PdfPage extends PdfDictionary {
      * @return a <CODE>PdfRectangle</CODE>
      */
 
-    PdfRectangle rotateMediaBox() {
-        this.mediaBox = mediaBox.rotate();
-        put(PdfName.MEDIABOX, this.mediaBox);
-        return this.mediaBox;
-    }
-
     /**
      * Returns the MediaBox of this Page.
      *
      * @return a <CODE>PdfRectangle</CODE>
      */
 
-    PdfRectangle getMediaBox() {
-        return mediaBox;
-    }
 }

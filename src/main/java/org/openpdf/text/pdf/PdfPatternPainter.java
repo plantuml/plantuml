@@ -48,7 +48,6 @@ package org.openpdf.text.pdf;
 
 import org.openpdf.text.DocumentException;
 import org.openpdf.text.Image;
-import org.openpdf.text.Rectangle;
 import org.openpdf.text.error_messages.MessageLocalization;
 import java.awt.Color;
 
@@ -66,31 +65,11 @@ public final class PdfPatternPainter extends PdfTemplate {
      * Creates a <CODE>PdfPattern</CODE>.
      */
 
-    private PdfPatternPainter() {
-        super();
-        type = TYPE_PATTERN;
-    }
-
     /**
      * Creates new PdfPattern
      *
      * @param wr the <CODE>PdfWriter</CODE>
      */
-
-    PdfPatternPainter(PdfWriter wr) {
-        super(wr);
-        type = TYPE_PATTERN;
-    }
-
-    PdfPatternPainter(PdfWriter wr, Color defaultColor) {
-        this(wr);
-        stencil = true;
-        if (defaultColor == null) {
-            this.defaultColor = Color.gray;
-        } else {
-            this.defaultColor = defaultColor;
-        }
-    }
 
     /**
      * Returns the horizontal interval when repeating the pattern.
@@ -107,10 +86,6 @@ public final class PdfPatternPainter extends PdfTemplate {
      * @param xstep the xstep in horizontal painting
      */
 
-    public void setXStep(float xstep) {
-        this.xstep = xstep;
-    }
-
     /**
      * Returns the vertical interval when repeating the pattern.
      *
@@ -126,10 +101,6 @@ public final class PdfPatternPainter extends PdfTemplate {
      * @param ystep in vertical painting
      */
 
-    public void setYStep(float ystep) {
-        this.ystep = ystep;
-    }
-
     /**
      * Tells you if this pattern is colored/uncolored (stencil = uncolored, you need to set a default color).
      *
@@ -137,29 +108,6 @@ public final class PdfPatternPainter extends PdfTemplate {
      */
     public boolean isStencil() {
         return stencil;
-    }
-
-    /**
-     * Sets the transformation matrix for the pattern.
-     *
-     * @param a an element of the transformation matrix
-     * @param b an element of the transformation matrix
-     * @param c an element of the transformation matrix
-     * @param d an element of the transformation matrix
-     * @param e an element of the transformation matrix
-     * @param f an element of the transformation matrix
-     */
-    public void setPatternMatrix(float a, float b, float c, float d, float e, float f) {
-        setMatrix(a, b, c, d, e, f);
-    }
-
-    /**
-     * Gets the stream representing this pattern
-     *
-     * @return the stream representing this pattern
-     */
-    PdfPattern getPattern() {
-        return new PdfPattern(this);
     }
 
     /**
@@ -180,21 +128,6 @@ public final class PdfPatternPainter extends PdfTemplate {
      * @return a copy of this <CODE>PdfPatternPainter</CODE>
      */
 
-    public PdfContentByte getDuplicate() {
-        PdfPatternPainter tpl = new PdfPatternPainter();
-        tpl.writer = writer;
-        tpl.pdf = pdf;
-        tpl.thisReference = thisReference;
-        tpl.pageResources = pageResources;
-        tpl.bBox = new Rectangle(bBox);
-        tpl.xstep = xstep;
-        tpl.ystep = ystep;
-        tpl.matrix = matrix;
-        tpl.stencil = stencil;
-        tpl.defaultColor = defaultColor;
-        return tpl;
-    }
-
     /**
      * Returns the default color of the pattern.
      *
@@ -202,14 +135,6 @@ public final class PdfPatternPainter extends PdfTemplate {
      */
     public Color getDefaultColor() {
         return defaultColor;
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.PdfContentByte#setGrayFill(float)
-     */
-    public void setGrayFill(float gray) {
-        checkNoColor();
-        super.setGrayFill(gray);
     }
 
     /**
@@ -221,27 +146,11 @@ public final class PdfPatternPainter extends PdfTemplate {
     }
 
     /**
-     * @see org.openpdf.text.pdf.PdfContentByte#setGrayStroke(float)
-     */
-    public void setGrayStroke(float gray) {
-        checkNoColor();
-        super.setGrayStroke(gray);
-    }
-
-    /**
      * @see org.openpdf.text.pdf.PdfContentByte#resetGrayStroke()
      */
     public void resetGrayStroke() {
         checkNoColor();
         super.resetGrayStroke();
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.PdfContentByte#setRGBColorFillF(float, float, float)
-     */
-    public void setRGBColorFillF(float red, float green, float blue) {
-        checkNoColor();
-        super.setRGBColorFillF(red, green, blue);
     }
 
     /**
@@ -253,51 +162,11 @@ public final class PdfPatternPainter extends PdfTemplate {
     }
 
     /**
-     * @see org.openpdf.text.pdf.PdfContentByte#setRGBColorStrokeF(float, float, float)
-     */
-    public void setRGBColorStrokeF(float red, float green, float blue) {
-        checkNoColor();
-        super.setRGBColorStrokeF(red, green, blue);
-    }
-
-    /**
      * @see org.openpdf.text.pdf.PdfContentByte#resetRGBColorStroke()
      */
     public void resetRGBColorStroke() {
         checkNoColor();
         super.resetRGBColorStroke();
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.PdfContentByte#setCMYKColorFillF(float, float, float, float)
-     */
-    public void setCMYKColorFillF(float cyan, float magenta, float yellow, float black) {
-        checkNoColor();
-        super.setCMYKColorFillF(cyan, magenta, yellow, black);
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.PdfContentByte#resetCMYKColorFill()
-     */
-    public void resetCMYKColorFill() {
-        checkNoColor();
-        super.resetCMYKColorFill();
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.PdfContentByte#setCMYKColorStrokeF(float, float, float, float)
-     */
-    public void setCMYKColorStrokeF(float cyan, float magenta, float yellow, float black) {
-        checkNoColor();
-        super.setCMYKColorStrokeF(cyan, magenta, yellow, black);
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.PdfContentByte#resetCMYKColorStroke()
-     */
-    public void resetCMYKColorStroke() {
-        checkNoColor();
-        super.resetCMYKColorStroke();
     }
 
     /**
@@ -309,38 +178,6 @@ public final class PdfPatternPainter extends PdfTemplate {
             checkNoColor();
         }
         super.addImage(image, a, b, c, d, e, f);
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.PdfContentByte#setCMYKColorFill(int, int, int, int)
-     */
-    public void setCMYKColorFill(int cyan, int magenta, int yellow, int black) {
-        checkNoColor();
-        super.setCMYKColorFill(cyan, magenta, yellow, black);
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.PdfContentByte#setCMYKColorStroke(int, int, int, int)
-     */
-    public void setCMYKColorStroke(int cyan, int magenta, int yellow, int black) {
-        checkNoColor();
-        super.setCMYKColorStroke(cyan, magenta, yellow, black);
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.PdfContentByte#setRGBColorFill(int, int, int)
-     */
-    public void setRGBColorFill(int red, int green, int blue) {
-        checkNoColor();
-        super.setRGBColorFill(red, green, blue);
-    }
-
-    /**
-     * @see org.openpdf.text.pdf.PdfContentByte#setRGBColorStroke(int, int, int)
-     */
-    public void setRGBColorStroke(int red, int green, int blue) {
-        checkNoColor();
-        super.setRGBColorStroke(red, green, blue);
     }
 
     /**

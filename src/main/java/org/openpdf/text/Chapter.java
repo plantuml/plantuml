@@ -50,7 +50,6 @@
 
 package org.openpdf.text;
 
-import java.util.ArrayList;
 
 /**
  * A <CODE>Chapter</CODE> is a special <CODE>Section</CODE>.
@@ -82,38 +81,9 @@ public class Chapter extends Section {
     /**
      * Constructs a new <CODE>Chapter</CODE>.
      *
-     * @param number the Chapter number
-     */
-    public Chapter(int number) {
-        super(null, 1);
-        numbers = new ArrayList<>();
-        numbers.add(number);
-        triggerNewPage = true;
-    }
-
-    /**
-     * Constructs a new <CODE>Chapter</CODE>.
-     *
      * @param title  the Chapter title (as a <CODE>Paragraph</CODE>)
      * @param number the Chapter number
      */
-
-    public Chapter(Paragraph title, int number) {
-        super(title, 1);
-        numbers = new ArrayList<>();
-        numbers.add(number);
-        triggerNewPage = true;
-    }
-
-    /**
-     * Constructs a new <CODE>Chapter</CODE>.
-     *
-     * @param title  the Chapter title (as a <CODE>String</CODE>)
-     * @param number the Chapter number
-     */
-    public Chapter(String title, int number) {
-        this(new Paragraph(title), number);
-    }
 
     // implementation of the Element-methods
 

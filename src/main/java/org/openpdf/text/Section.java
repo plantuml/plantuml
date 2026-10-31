@@ -109,11 +109,6 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
     protected Paragraph title;
 
     /**
-     * The bookmark title if different from the content title
-     */
-    protected String bookmarkTitle;
-
-    /**
      * The number of sectionnumbers that has to be shown before the section title.
      */
     protected int numberDepth;
@@ -139,21 +134,6 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
      * The additional indentation of the content of this section.
      */
     protected float indentation;
-
-    /**
-     * false if the bookmark children are not visible
-     */
-    protected boolean bookmarkOpen = true;
-
-    /**
-     * true if the section has to trigger a new page
-     */
-    protected boolean triggerNewPage = false;
-
-    /**
-     * This is the number of subsections.
-     */
-    protected int subsections = 0;
 
     /**
      * This is the complete list of sectionnumbers of this section and the parents of this section.
@@ -182,25 +162,6 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
     protected boolean notAddedYet = true;
 
     // constructors
-
-    /**
-     * Constructs a new <CODE>Section</CODE>.
-     */
-    protected Section() {
-        title = new Paragraph();
-        numberDepth = 1;
-    }
-
-    /**
-     * Constructs a new <CODE>Section</CODE>.
-     *
-     * @param title       a <CODE>Paragraph</CODE>
-     * @param numberDepth the numberDepth
-     */
-    protected Section(Paragraph title, int numberDepth) {
-        this.numberDepth = numberDepth;
-        this.title = title;
-    }
 
     // implementation of the Element-methods
 
@@ -267,26 +228,6 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
     }
 
     /**
-     * Checks if this object is a <CODE>Chapter</CODE>.
-     *
-     * @return <CODE>true</CODE> if it is a <CODE>Chapter</CODE>,
-     * <CODE>false</CODE> if it is a <CODE>Section</CODE>.
-     */
-    public boolean isChapter() {
-        return type() == Element.CHAPTER;
-    }
-
-    /**
-     * Checks if this object is a <CODE>Section</CODE>.
-     *
-     * @return <CODE>true</CODE> if it is a <CODE>Section</CODE>,
-     * <CODE>false</CODE> if it is a <CODE>Chapter</CODE>.
-     */
-    public boolean isSection() {
-        return type() == Element.SECTION;
-    }
-
-    /**
      * Gets all the chunks in this element.
      *
      * @return an <CODE>ArrayList</CODE>
@@ -344,44 +285,6 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
         }
     }
 
-    /**
-     * Adds a <CODE>Paragraph</CODE>, <CODE>List</CODE>, <CODE>Table</CODE> or another <CODE>Section</CODE> to this
-     * <CODE>Section</CODE>.
-     *
-     * @param o an object of type <CODE>Paragraph</CODE>, <CODE>List</CODE>, <CODE>Table</CODE> or another
-     *          <CODE>Section</CODE>
-     * @return a boolean
-     * @throws ClassCastException if the object is not a <CODE>Paragraph</CODE>, <CODE>List</CODE>, <CODE>Table</CODE>
-     *                            or <CODE>Section</CODE>
-     */
-    public boolean add(Element o) {
-        if (isAddedCompletely()) {
-            throw new IllegalStateException(
-                    MessageLocalization.getComposedMessage("this.largeelement.has.already.been.added.to.the.document"));
-        }
-        try {
-            Element element = o;
-            if (element.type() == Element.SECTION) {
-                Section section = (Section) o;
-                section.setNumbers(++subsections, numbers);
-                return super.add(section);
-            } else if (o instanceof MarkedSection && ((MarkedObject) o).element.type() == Element.SECTION) {
-                MarkedSection mo = (MarkedSection) o;
-                Section section = (Section) mo.element;
-                section.setNumbers(++subsections, numbers);
-                return super.add(mo);
-            } else if (element.isNestable()) {
-                return super.add(o);
-            } else {
-                throw new ClassCastException(MessageLocalization.getComposedMessage("you.can.t.add.a.1.to.a.section",
-                        element.getClass().getName()));
-            }
-        } catch (ClassCastException cce) {
-            throw new ClassCastException(
-                    MessageLocalization.getComposedMessage("insertion.of.illegal.element.1", cce.getMessage()));
-        }
-    }
-
     // methods that return a Section
 
     /**
@@ -399,113 +302,7 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
         return true;
     }
 
-    /**
-     * Creates a <CODE>Section</CODE>, adds it to this <CODE>Section</CODE> and returns it.
-     *
-     * @param indentation the indentation of the new section
-     * @param title       the title of the new section
-     * @param numberDepth the numberDepth of the section
-     * @return a new Section object
-     */
-    public Section addSection(float indentation, Paragraph title, int numberDepth) {
-        if (isAddedCompletely()) {
-            throw new IllegalStateException(
-                    MessageLocalization.getComposedMessage("this.largeelement.has.already.been.added.to.the.document"));
-        }
-        Section section = new Section(title, numberDepth);
-        section.setIndentation(indentation);
-        add(section);
-        return section;
-    }
-
-    /**
-     * Creates a <CODE>Section</CODE>, adds it to this <CODE>Section</CODE> and returns it.
-     *
-     * @param indentation the indentation of the new section
-     * @param title       the title of the new section
-     * @return a new Section object
-     */
-    public Section addSection(float indentation, Paragraph title) {
-        return addSection(indentation, title, numberDepth + 1);
-    }
-
-    /**
-     * Creates a <CODE>Section</CODE>, add it to this <CODE>Section</CODE> and returns it.
-     *
-     * @param title       the title of the new section
-     * @param numberDepth the numberDepth of the section
-     * @return a new Section object
-     */
-    public Section addSection(Paragraph title, int numberDepth) {
-        return addSection(0, title, numberDepth);
-    }
-
-    /**
-     * Adds a marked section. For use in class MarkedSection only!
-     *
-     * @return an object of {@link MarkedSection}
-     */
-    public MarkedSection addMarkedSection() {
-        MarkedSection section = new MarkedSection(new Section(null, numberDepth + 1));
-        add(section);
-        return section;
-    }
-
-    /**
-     * Creates a <CODE>Section</CODE>, adds it to this <CODE>Section</CODE> and returns it.
-     *
-     * @param title the title of the new section
-     * @return a new Section object
-     */
-    public Section addSection(Paragraph title) {
-        return addSection(0, title, numberDepth + 1);
-    }
-
-    /**
-     * Adds a <CODE>Section</CODE> to this <CODE>Section</CODE> and returns it.
-     *
-     * @param indentation the indentation of the new section
-     * @param title       the title of the new section
-     * @param numberDepth the numberDepth of the section
-     * @return a new Section object
-     */
-    public Section addSection(float indentation, String title, int numberDepth) {
-        return addSection(indentation, new Paragraph(title), numberDepth);
-    }
-
-    /**
-     * Adds a <CODE>Section</CODE> to this <CODE>Section</CODE> and returns it.
-     *
-     * @param title       the title of the new section
-     * @param numberDepth the numberDepth of the section
-     * @return a new Section object
-     */
-    public Section addSection(String title, int numberDepth) {
-        return addSection(new Paragraph(title), numberDepth);
-    }
-
-    /**
-     * Adds a <CODE>Section</CODE> to this <CODE>Section</CODE> and returns it.
-     *
-     * @param indentation the indentation of the new section
-     * @param title       the title of the new section
-     * @return a new Section object
-     */
-    public Section addSection(float indentation, String title) {
-        return addSection(indentation, new Paragraph(title));
-    }
-
     // public methods
-
-    /**
-     * Adds a <CODE>Section</CODE> to this <CODE>Section</CODE> and returns it.
-     *
-     * @param title the title of the new section
-     * @return a new Section object
-     */
-    public Section addSection(String title) {
-        return addSection(new Paragraph(title));
-    }
 
     /**
      * Returns the title, preceded by a certain number of sectionnumbers.
@@ -514,58 +311,6 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
      */
     public Paragraph getTitle() {
         return constructTitle(title, numbers, numberDepth, numberStyle);
-    }
-
-    /**
-     * Sets the title of this section.
-     *
-     * @param title the new title
-     */
-    public void setTitle(Paragraph title) {
-        this.title = title;
-    }
-
-    /**
-     * Returns the numberdepth of this <CODE>Section</CODE>.
-     *
-     * @return the numberdepth
-     */
-    public int getNumberDepth() {
-        return numberDepth;
-    }
-
-    /**
-     * Sets the depth of the sectionnumbers that will be shown preceding the title.
-     * <p>
-     * If the numberdepth is 0, the sections will not be numbered. If the numberdepth is 1, the section will be numbered
-     * with their own number. If the numberdepth is higher (for instance {@literal x > 1}), the numbers of
-     * {@literal x - 1} parents will be shown.
-     *
-     * @param numberDepth the new numberDepth
-     */
-    public void setNumberDepth(int numberDepth) {
-        this.numberDepth = numberDepth;
-    }
-
-    /**
-     * Gets the style used for numbering sections.
-     *
-     * @return a value corresponding with a numbering style
-     * @since iText 2.0.8
-     */
-    public int getNumberStyle() {
-        return numberStyle;
-    }
-
-    /**
-     * Sets the style for numbering sections. Possible values are NUMBERSTYLE_DOTTED: 1.2.3. (the default) or
-     * NUMBERSTYLE_DOTTED_WITHOUT_FINAL_DOT: 1.2.3
-     *
-     * @param numberStyle {@link Section#numberStyle}
-     * @since iText 2.0.8
-     */
-    public void setNumberStyle(int numberStyle) {
-        this.numberStyle = numberStyle;
     }
 
     /**
@@ -605,83 +350,6 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
     }
 
     /**
-     * Returns the indentation of the content of this <CODE>Section</CODE>.
-     *
-     * @return the indentation
-     */
-    public float getIndentation() {
-        return indentation;
-    }
-
-    /**
-     * Sets the indentation of the content of this <CODE>Section</CODE>.
-     *
-     * @param indentation the indentation
-     */
-    public void setIndentation(float indentation) {
-        this.indentation = indentation;
-    }
-
-    /**
-     * Getter for property bookmarkOpen.
-     *
-     * @return Value of property bookmarkOpen.
-     */
-    public boolean isBookmarkOpen() {
-        return bookmarkOpen;
-    }
-
-    /**
-     * Setter for property bookmarkOpen.
-     *
-     * @param bookmarkOpen false if the bookmark children are not visible.
-     */
-    public void setBookmarkOpen(boolean bookmarkOpen) {
-        this.bookmarkOpen = bookmarkOpen;
-    }
-
-    /**
-     * Getter for property bookmarkOpen.
-     *
-     * @return Value of property triggerNewPage.
-     */
-    public boolean isTriggerNewPage() {
-        return triggerNewPage && notAddedYet;
-    }
-
-    /**
-     * Setter for property triggerNewPage.
-     *
-     * @param triggerNewPage true if a new page has to be triggered.
-     */
-    public void setTriggerNewPage(boolean triggerNewPage) {
-        this.triggerNewPage = triggerNewPage;
-    }
-
-    /**
-     * Gets the bookmark title.
-     *
-     * @return the bookmark title
-     */
-    public Paragraph getBookmarkTitle() {
-        if (bookmarkTitle == null) {
-            return getTitle();
-        } else {
-            return new Paragraph(bookmarkTitle);
-        }
-    }
-
-    /**
-     * Sets the bookmark title. The bookmark title is the same as the section title but can be changed with this
-     * method.
-     *
-     * @param bookmarkTitle the bookmark title
-     */
-    public void setBookmarkTitle(String bookmarkTitle) {
-        this.bookmarkTitle = bookmarkTitle;
-    }
-
-    /**
      * Changes the Chapter number.
      *
      * @param number new chapter number
@@ -697,38 +365,7 @@ public class Section extends ArrayList<Element> implements TextElementArray, Lar
         }
     }
 
-    /**
-     * Returns the depth of this section.
-     *
-     * @return the depth
-     */
-    public int getDepth() {
-        return numbers.size();
-    }
-
     // private methods
-
-    /**
-     * Sets the number of this section.
-     *
-     * @param number  the number of this section
-     * @param numbers an <CODE>ArrayList</CODE>, containing the numbers of the Parent
-     */
-    private void setNumbers(int number, java.util.List<Integer> numbers) {
-        this.numbers = new ArrayList<>();
-        this.numbers.add(number);
-        this.numbers.addAll(numbers);
-    }
-
-    /**
-     * Indicates if this is the first time the section is added.
-     *
-     * @return true if the section wasn't added yet
-     * @since iText2.0.8
-     */
-    public boolean isNotAddedYet() {
-        return notAddedYet;
-    }
 
     /**
      * Sets the indication if the section was already added to the document.

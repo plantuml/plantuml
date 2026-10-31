@@ -314,16 +314,6 @@ public abstract class PdfObject {
 
     /**
      * Checks if this <CODE>PdfObject</CODE> is of the type
-     * <CODE>PdfBoolean</CODE>.
-     *
-     * @return <CODE>true</CODE> or <CODE>false</CODE>
-     */
-    public boolean isBoolean() {
-        return (type == BOOLEAN);
-    }
-
-    /**
-     * Checks if this <CODE>PdfObject</CODE> is of the type
      * <CODE>PdfNumber</CODE>.
      *
      * @return <CODE>true</CODE> or <CODE>false</CODE>
@@ -372,24 +362,4 @@ public abstract class PdfObject {
         return (type == DICTIONARY);
     }
 
-    /**
-     * Checks if this <CODE>PdfObject</CODE> is of the type
-     * <CODE>PdfStream</CODE>.
-     *
-     * @return <CODE>true</CODE> or <CODE>false</CODE>
-     */
-    public boolean isStream() {
-        return (type == STREAM);
-    }
-
-    /**
-     * Checks if this <CODE>PdfObject</CODE> is of the type
-     * <CODE>PdfIndirectObject</CODE>.
-     *
-     * @return <CODE>true</CODE> if this is an indirect object,
-     * otherwise <CODE>false</CODE>
-     */
-    public boolean isIndirect() {
-        return (type == INDIRECT);
-    }
 }

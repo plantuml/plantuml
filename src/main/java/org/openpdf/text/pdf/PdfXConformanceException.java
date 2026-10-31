@@ -58,12 +58,6 @@ public class PdfXConformanceException extends RuntimeException {
 
     /**
      * Creates a new instance of PdfXConformanceException.
-     */
-    public PdfXConformanceException() {
-    }
-
-    /**
-     * Creates a new instance of PdfXConformanceException.
      *
      * @param s the detail message. The detail message is saved for later retrieval by the Throwable.getMessage()
      *          method.

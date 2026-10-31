@@ -74,7 +74,6 @@ public class PdfIndirectObject {
 
     static final byte[] STARTOBJ = DocWriter.getISOBytes(" obj\n");
     static final byte[] ENDOBJ = DocWriter.getISOBytes("\nendobj\n");
-    static final int SIZEOBJ = STARTOBJ.length + ENDOBJ.length;
     /**
      * The object number
      */
@@ -97,10 +96,6 @@ public class PdfIndirectObject {
 
     PdfIndirectObject(int number, PdfObject object, PdfWriter writer) {
         this(number, 0, object, writer);
-    }
-
-    PdfIndirectObject(PdfIndirectReference ref, PdfObject object, PdfWriter writer) {
-        this(ref.getNumber(), ref.getGeneration(), object, writer);
     }
 
     /**

@@ -55,7 +55,6 @@ package org.openpdf.text.pdf;
 public class GrayColor extends ExtendedColor {
 
     public static final GrayColor GRAYBLACK = new GrayColor(0);
-    public static final GrayColor GRAYWHITE = new GrayColor(MAX_FLOAT_COLOR_VALUE);
     private static final long serialVersionUID = -6571835680819282746L;
     private float gray;
 

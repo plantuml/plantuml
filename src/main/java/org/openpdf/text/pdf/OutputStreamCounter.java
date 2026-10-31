@@ -155,7 +155,4 @@ public class OutputStreamCounter extends OutputStream {
         return counter;
     }
 
-    public void resetCounter() {
-        counter = 0;
-    }
 }

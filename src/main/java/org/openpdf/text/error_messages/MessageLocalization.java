@@ -57,7 +57,6 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Localizes error messages. The messages are located in the package org.openpdf.text.error_messages in the form
@@ -81,9 +80,6 @@ public final class MessageLocalization {
         if (defaultLanguage == null) {
             defaultLanguage = new HashMap<>();
         }
-    }
-
-    private MessageLocalization() {
     }
 
     /**
@@ -154,20 +150,6 @@ public final class MessageLocalization {
     }
 
     /**
-     * Get a message with one parameter. The parameter will replace the string "{1}", "{2}", "{3}" found in the
-     * message.
-     *
-     * @param key the key to the message
-     * @param p1  the parameter
-     * @param p2  the parameter
-     * @param p3  the parameter
-     * @return the message
-     */
-    public static String getComposedMessage(String key, Object p1, Object p2, Object p3) {
-        return getComposedMessage(key, p1, p2, p3, null);
-    }
-
-    /**
      * Get a message with two parameters. The parameters will replace the strings "{1}", "{2}", "{3}", "{4}" found in
      * the message.
      *
@@ -193,34 +175,6 @@ public final class MessageLocalization {
             msg = msg.replace("{4}", p4.toString());
         }
         return msg;
-    }
-
-    /**
-     * Sets the language to be used globally for the error messages. The language is a two letter lowercase country
-     * designation like "en" or "pt". The country is an optional two letter uppercase code like "US" or "PT".
-     *
-     * @param language the language
-     * @param country  the country
-     * @return true if the language was found, false otherwise
-     * @throws IOException on error
-     */
-    public static boolean setLanguage(String language, String country) throws IOException {
-        Map<String, String> lang = getLanguageMessages(language, country);
-        if (lang == null) {
-            return false;
-        }
-        currentLanguage = lang;
-        return true;
-    }
-
-    /**
-     * Sets the error messages directly from a Reader.
-     *
-     * @param r the Reader
-     * @throws IOException on error
-     */
-    public static void setMessages(Reader r) throws IOException {
-        currentLanguage = readLanguageStream(r);
     }
 
     private static Map<String, String> getLanguageMessages(String language, String country) throws IOException {
@@ -282,8 +236,4 @@ public final class MessageLocalization {
         return lang;
     }
 
-    // For tests only
-    public static Set<String> getAllKeys() {
-        return defaultLanguage.keySet();
-    }
 }

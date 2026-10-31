@@ -110,11 +110,6 @@ public class Document implements DocListener {
      * your address space.
      */
     public static boolean plainRandomAccess = false;
-    /**
-     * Scales the WMF font size. The default value is 0.86.
-     */
-    public static float wmfFontCorrection = 0.86f;
-
     static {
         RELEASE = getVersionNumber();
         OPENPDF_VERSION = OPENPDF + " " + RELEASE;
@@ -165,18 +160,6 @@ public class Document implements DocListener {
      * @since 2.1.6
      */
     protected boolean marginMirroringTopBottom = false;
-    /**
-     * Content of JavaScript onLoad function
-     */
-    protected String javaScript_onLoad = null;
-    /**
-     * Content of JavaScript onUnLoad function
-     */
-    protected String javaScript_onUnLoad = null;
-    /**
-     * Style class in HTML body tag
-     */
-    protected String htmlStyleClass = null;
     /**
      * Current pagenumber
      */
@@ -230,30 +213,10 @@ public class Document implements DocListener {
     }
 
     private static String getVersionNumber() {
-        return "UNKNOWN";
+        return "PlantUML";
     }
 
     // listener methods
-
-    /**
-     * Gets the product name.
-     *
-     * @return the product name
-     * @since 2.1.6
-     */
-    public static String getProduct() {
-        return OPENPDF;
-    }
-
-    /**
-     * Gets the release number.
-     *
-     * @return the product name
-     * @since 2.1.6
-     */
-    public static String getRelease() {
-        return RELEASE;
-    }
 
     // methods implementing the DocListener interface
 
@@ -273,15 +236,6 @@ public class Document implements DocListener {
      */
     public void addDocListener(DocListener listener) {
         listeners.add(listener);
-    }
-
-    /**
-     * Removes a <CODE>DocListener</CODE> from the <CODE>Document</CODE>.
-     *
-     * @param listener the DocListener that has to be removed.
-     */
-    public void removeDocListener(DocListener listener) {
-        listeners.remove(listener);
     }
 
     /**
@@ -433,15 +387,6 @@ public class Document implements DocListener {
     }
 
     /**
-     * Returns the current page number.
-     *
-     * @return the current page number
-     */
-    public int getPageNumber() {
-        return this.pageN;
-    }
-
-    /**
      * Closes the document.
      * <p>
      * Once all the content has been written in the body, you have to close the body. After that nothing can be written
@@ -455,23 +400,6 @@ public class Document implements DocListener {
         }
         for (DocListener listener : listeners) {
             listener.close();
-        }
-    }
-
-    /**
-     * Adds a user defined header to the document.
-     * <p/>
-     * Shortcut method to call: <CODE>add(new Header(name, content))</CODE>
-     *
-     * @param name    the name of the header
-     * @param content the content of the header
-     * @return <CODE>true</CODE> if successful, <CODE>false</CODE> otherwise
-     */
-    public boolean addHeader(String name, String content) {
-        try {
-            return add(new Header(name, content));
-        } catch (DocumentException de) {
-            throw new ExceptionConverter(de);
         }
     }
 
@@ -516,25 +444,6 @@ public class Document implements DocListener {
     }
 
     /**
-     * Adds the keywords to a Document.
-     * <p/>
-     * In case of a PDF this will be visible in the document properties panel.
-     * <p/>
-     * In case of a HTML file this will be visible as the <CODE>keywords</CODE> <CODE>meta</CODE> tag in the
-     * <CODE>HEAD</CODE> part of the file.
-     *
-     * @param keywords adds the keywords to the document
-     * @return <CODE>true</CODE> if successful, <CODE>false</CODE> otherwise
-     */
-    public boolean addKeywords(String keywords) {
-        try {
-            return add(new Meta(Element.KEYWORDS, keywords));
-        } catch (DocumentException de) {
-            throw new ExceptionConverter(de);
-        }
-    }
-
-    /**
      * Adds the author to a Document.
      * <p/>
      * In case of a PDF this will be visible in the document properties panel.
@@ -548,24 +457,6 @@ public class Document implements DocListener {
     public boolean addAuthor(String author) {
         try {
             return add(new Meta(Element.AUTHOR, author));
-        } catch (DocumentException de) {
-            throw new ExceptionConverter(de);
-        }
-    }
-
-    /**
-     * Adds the creator to a Document.
-     * <p/>
-     * In case of a PDF this will be visible in the document properties panel.
-     * <p/>
-     * In case of a HTML file this will be visible as comment in the <CODE>HEAD</CODE> part of the file.
-     *
-     * @param creator the name of the creator
-     * @return <CODE>true</CODE> if successful, <CODE>false</CODE> otherwise
-     */
-    public boolean addCreator(String creator) {
-        try {
-            return add(new Meta(Element.CREATOR, creator));
         } catch (DocumentException de) {
             throw new ExceptionConverter(de);
         }
@@ -668,19 +559,11 @@ public class Document implements DocListener {
      * @return the left margin
      */
 
-    public float leftMargin() {
-        return marginLeft;
-    }
-
     /**
      * Return the right margin.
      *
      * @return the right margin
      */
-
-    public float rightMargin() {
-        return marginRight;
-    }
 
     /**
      * Returns the top margin.
@@ -688,19 +571,11 @@ public class Document implements DocListener {
      * @return the top margin
      */
 
-    public float topMargin() {
-        return marginTop;
-    }
-
     /**
      * Returns the bottom margin.
      *
      * @return the bottom margin
      */
-
-    public float bottomMargin() {
-        return marginBottom;
-    }
 
     /**
      * Returns the lower left x-coordinate.
@@ -749,20 +624,12 @@ public class Document implements DocListener {
      * @return the lower left x-coordinate
      */
 
-    public float left(float margin) {
-        return pageSize.getLeft(marginLeft + margin);
-    }
-
     /**
      * Returns the upper right x-coordinate, considering a given margin.
      *
      * @param margin a margin
      * @return the upper right x-coordinate
      */
-
-    public float right(float margin) {
-        return pageSize.getRight(marginRight + margin);
-    }
 
     /**
      * Returns the upper right y-coordinate, considering a given margin.
@@ -771,10 +638,6 @@ public class Document implements DocListener {
      * @return the upper right y-coordinate
      */
 
-    public float top(float margin) {
-        return pageSize.getTop(marginTop + margin);
-    }
-
     /**
      * Returns the lower left y-coordinate, considering a given margin.
      *
@@ -782,19 +645,11 @@ public class Document implements DocListener {
      * @return the lower left y-coordinate
      */
 
-    public float bottom(float margin) {
-        return pageSize.getBottom(marginBottom + margin);
-    }
-
     /**
      * Gets the pagesize.
      *
      * @return the page size
      */
-
-    public Rectangle getPageSize() {
-        return this.pageSize;
-    }
 
     /**
      * Checks if the document is open.
@@ -811,19 +666,11 @@ public class Document implements DocListener {
      * @return the JavaScript onLoad command
      */
 
-    public String getJavaScript_onLoad() {
-        return this.javaScript_onLoad;
-    }
-
     /**
      * Adds a JavaScript onLoad function to the HTML body tag
      *
      * @param code the JavaScript code to be executed on load of the HTML page
      */
-
-    public void setJavaScript_onLoad(String code) {
-        this.javaScript_onLoad = code;
-    }
 
     /**
      * Gets the JavaScript onUnLoad command.
@@ -831,19 +678,11 @@ public class Document implements DocListener {
      * @return the JavaScript onUnLoad command
      */
 
-    public String getJavaScript_onUnLoad() {
-        return this.javaScript_onUnLoad;
-    }
-
     /**
      * Adds a JavaScript onUnLoad function to the HTML body tag
      *
      * @param code the JavaScript code to be executed on unload of the HTML page
      */
-
-    public void setJavaScript_onUnLoad(String code) {
-        this.javaScript_onUnLoad = code;
-    }
 
     /**
      * Gets the style class of the HTML body tag
@@ -851,19 +690,11 @@ public class Document implements DocListener {
      * @return the style class of the HTML body tag
      */
 
-    public String getHtmlStyleClass() {
-        return this.htmlStyleClass;
-    }
-
     /**
      * Adds a style class to the HTML body tag
      *
      * @param htmlStyleClass the style class for the HTML body tag
      */
-
-    public void setHtmlStyleClass(String htmlStyleClass) {
-        this.htmlStyleClass = htmlStyleClass;
-    }
 
     /**
      * Set the margin mirroring. It will mirror right/left margins for odd/even pages.
@@ -896,59 +727,6 @@ public class Document implements DocListener {
             listener.setMarginMirroringTopBottom(marginMirroringTopBottom);
         }
         return true;
-    }
-
-    /**
-     * Gets the margin mirroring flag.
-     *
-     * @return the margin mirroring flag
-     */
-    public boolean isMarginMirroring() {
-        return marginMirroring;
-    }
-
-    /**
-     * The default language of the document. Can be set to values like "en_US". This language is used in
-     * FopGlyphProcessor to determine which glyphs are to be substituted.
-     * <p/>
-     * The default "dflt" means that all glyphs which can be replaced will be substituted.
-     *
-     * @return the current document language
-     */
-    public String getDocumentLanguage() {
-        return textRenderingOptions.getDocumentLanguage();
-    }
-
-    /**
-     * The new document language. This language is used in FopGlyphProcessor to determine which glyphs are to be
-     * substituted.
-     * <p/>
-     * The default "dflt" means that all glyphs which can be replaced will be substituted.
-     *
-     * @param documentLanguage the wanted language
-     */
-    public void setDocumentLanguage(String documentLanguage) {
-        textRenderingOptions.setDocumentLanguage(documentLanguage);
-    }
-
-    /**
-     * Returns the glyph substitution enabled flag.
-     *
-     * @return the glyph substitution enabled flag
-     * @see #setGlyphSubstitutionEnabled(boolean)
-     */
-    public boolean isGlyphSubstitutionEnabled() {
-        return textRenderingOptions.isGlyphSubstitutionEnabled();
-    }
-
-    /**
-     * Set a flag that determine whether glyph substion is enabled when FOP is available.
-     *
-     * @param glyphSubstitutionEnabled the glyph substitution enabled flag
-     * @see #setDocumentLanguage(String)
-     */
-    public void setGlyphSubstitutionEnabled(boolean glyphSubstitutionEnabled) {
-        textRenderingOptions.setGlyphSubstitutionEnabled(glyphSubstitutionEnabled);
     }
 
     /**

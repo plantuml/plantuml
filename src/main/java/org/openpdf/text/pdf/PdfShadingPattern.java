@@ -46,7 +46,6 @@
  */
 package org.openpdf.text.pdf;
 
-import org.openpdf.text.error_messages.MessageLocalization;
 import java.io.IOException;
 
 /**
@@ -66,23 +65,8 @@ public class PdfShadingPattern extends PdfDictionary {
 
     protected PdfIndirectReference patternReference;
 
-    /**
-     * Creates new PdfShadingPattern
-     *
-     * @param shading the shading
-     */
-    public PdfShadingPattern(PdfShading shading) {
-        writer = shading.getWriter();
-        put(PdfName.PATTERNTYPE, new PdfNumber(2));
-        this.shading = shading;
-    }
-
     PdfName getPatternName() {
         return patternName;
-    }
-
-    PdfName getShadingName() {
-        return shading.getShadingName();
     }
 
     PdfIndirectReference getPatternReference() {
@@ -104,17 +88,6 @@ public class PdfShadingPattern extends PdfDictionary {
         put(PdfName.SHADING, getShadingReference());
         put(PdfName.MATRIX, new PdfArray(matrix));
         writer.addToBody(this, getPatternReference());
-    }
-
-    public float[] getMatrix() {
-        return matrix;
-    }
-
-    public void setMatrix(float[] matrix) {
-        if (matrix.length != 6) {
-            throw new RuntimeException(MessageLocalization.getComposedMessage("the.matrix.size.must.be.6"));
-        }
-        this.matrix = matrix;
     }
 
     public PdfShading getShading() {

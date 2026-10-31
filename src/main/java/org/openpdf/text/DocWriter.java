@@ -53,8 +53,6 @@ import org.openpdf.text.pdf.OutputStreamCounter;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Iterator;
-import java.util.Properties;
 
 
 /**
@@ -87,32 +85,7 @@ public abstract class DocWriter implements DocListener {
     /**
      * This is some byte that is often used.
      */
-    public static final byte LT = (byte) '<';
-
-    /**
-     * This is some byte that is often used.
-     */
-    public static final byte SPACE = (byte) ' ';
-
-    /**
-     * This is some byte that is often used.
-     */
-    public static final byte EQUALS = (byte) '=';
-
-    /**
-     * This is some byte that is often used.
-     */
     public static final byte QUOTE = (byte) '\"';
-
-    /**
-     * This is some byte that is often used.
-     */
-    public static final byte GT = (byte) '>';
-
-    /**
-     * This is some byte that is often used.
-     */
-    public static final byte FORWARD = (byte) '/';
 
     // membervariables
 
@@ -295,10 +268,6 @@ public abstract class DocWriter implements DocListener {
      * Let the writer know that all writing has to be paused.
      */
 
-    public void pause() {
-        pause = true;
-    }
-
     /**
      * Checks if writing is paused.
      *
@@ -312,10 +281,6 @@ public abstract class DocWriter implements DocListener {
     /**
      * Let the writer know that writing may be resumed.
      */
-
-    public void resume() {
-        pause = false;
-    }
 
     /**
      * Flushes the <CODE>BufferedOutputStream</CODE>.
@@ -336,23 +301,12 @@ public abstract class DocWriter implements DocListener {
      * @throws IOException if there is any error
      */
 
-    protected void write(String string) throws IOException {
-        os.write(getISOBytes(string));
-    }
-
     /**
      * Writes a number of tabs.
      *
      * @param indent the number of tabs to add
      * @throws IOException if there is any error
      */
-
-    protected void addTabs(int indent) throws IOException {
-        os.write(NEWLINE);
-        for (int i = 0; i < indent; i++) {
-            os.write(TAB);
-        }
-    }
 
     /**
      * Writes a key-value pair to the outputstream.
@@ -362,16 +316,6 @@ public abstract class DocWriter implements DocListener {
      * @throws IOException if there is any error
      */
 
-    protected void write(String key, String value)
-            throws IOException {
-        os.write(SPACE);
-        write(key);
-        os.write(EQUALS);
-        os.write(QUOTE);
-        write(value);
-        os.write(QUOTE);
-    }
-
     /**
      * Writes a starttag to the outputstream.
      *
@@ -379,12 +323,6 @@ public abstract class DocWriter implements DocListener {
      * @throws IOException if there is any error
      */
 
-    protected void writeStart(String tag)
-            throws IOException {
-        os.write(LT);
-        write(tag);
-    }
-
     /**
      * Writes an endtag to the outputstream.
      *
@@ -392,67 +330,11 @@ public abstract class DocWriter implements DocListener {
      * @throws IOException if there is any error
      */
 
-    protected void writeEnd(String tag)
-            throws IOException {
-        os.write(LT);
-        os.write(FORWARD);
-        write(tag);
-        os.write(GT);
-    }
-
     /**
      * Writes an endtag to the outputstream.
      *
      * @throws IOException if there is any error
      */
-
-    protected void writeEnd()
-            throws IOException {
-        os.write(SPACE);
-        os.write(FORWARD);
-        os.write(GT);
-    }
-
-    /**
-     * Writes the markup attributes of the specified <CODE>MarkupAttributes</CODE> object to the
-     * <CODE>OutputStream</CODE>.
-     *
-     * @param markup a <CODE>Properties</CODE> collection to write.
-     * @return true, if writing the markup attributes succeeded
-     * @throws IOException if there is any error
-     */
-    protected boolean writeMarkupAttributes(Properties markup)
-            throws IOException {
-        if (markup == null) {
-            return false;
-        }
-        Iterator attributeIterator = markup.keySet().iterator();
-        String name;
-        while (attributeIterator.hasNext()) {
-            name = String.valueOf(attributeIterator.next());
-            write(name, markup.getProperty(name));
-        }
-        markup.clear();
-        return true;
-    }
-
-    /**
-     * Checks if the stream is to be closed on document close
-     *
-     * @return true if the stream is closed on document close
-     */
-    public boolean isCloseStream() {
-        return closeStream;
-    }
-
-    /**
-     * Sets the close state of the stream after document close
-     *
-     * @param closeStream true if the stream is closed on document close
-     */
-    public void setCloseStream(boolean closeStream) {
-        this.closeStream = closeStream;
-    }
 
     /**
      * @see org.openpdf.text.DocListener#setMarginMirroring(boolean)

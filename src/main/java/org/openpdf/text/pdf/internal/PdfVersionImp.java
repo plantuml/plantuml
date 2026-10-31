@@ -142,15 +142,6 @@ public class PdfVersionImp implements PdfVersion {
     }
 
     /**
-     * Sets the append mode.
-     *
-     * @param appendmode Boolean that indicates if we are working in append mode.
-     */
-    public void setAppendmode(boolean appendmode) {
-        this.appendmode = appendmode;
-    }
-
-    /**
      * Writes the header to the OutputStreamCounter.
      *
      * @param os the OutputStreamCounter

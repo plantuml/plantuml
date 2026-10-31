@@ -51,7 +51,6 @@
 package org.openpdf.text.pdf;
 
 import org.openpdf.text.DocWriter;
-import org.openpdf.text.error_messages.MessageLocalization;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -116,42 +115,11 @@ public class ByteBuffer extends OutputStream {
      * @param size the size of the cache
      */
 
-    public static void setCacheSize(int size) {
-        if (size > 3276700) {
-            size = 3276700;
-        }
-        if (size <= byteCacheSize) {
-            return;
-        }
-        byte[][] tmpCache = new byte[size][];
-        System.arraycopy(byteCache, 0, tmpCache, 0, byteCacheSize);
-        byteCache = tmpCache;
-        byteCacheSize = size;
-    }
-
     /**
      * You can fill the cache in advance if you want to.
      *
      * @param decimals decimals
      */
-
-    public static void fillCache(int decimals) {
-        int step = 1;
-        switch (decimals) {
-            case 0:
-                step = 100;
-                break;
-            case 1:
-                step = 10;
-                break;
-        }
-        for (int i = 1; i < byteCacheSize; i += step) {
-            if (byteCache[i] != null) {
-                continue;
-            }
-            byteCache[i] = convertToBytes(i);
-        }
-    }
 
     /**
      * Converts an double (multiplied by 100 and cast to an int) into an array of bytes.
@@ -615,14 +583,6 @@ public class ByteBuffer extends OutputStream {
         return count;
     }
 
-    public void setSize(int size) {
-        if (size > count || size < 0) {
-            throw new IndexOutOfBoundsException(MessageLocalization.getComposedMessage(
-                    "the.new.size.must.be.positive.and.lt.eq.of.the.current.size"));
-        }
-        count = size;
-    }
-
     /**
      * Converts the buffer's contents into a string, translating bytes into characters according to the platform's
      * default character encoding.
@@ -664,7 +624,4 @@ public class ByteBuffer extends OutputStream {
         append(b, off, len);
     }
 
-    public byte[] getBuffer() {
-        return buf;
-    }
 }

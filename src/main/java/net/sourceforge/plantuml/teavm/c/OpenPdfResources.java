@@ -45,7 +45,7 @@ import org.openpdf.text.pdf.ResourceProvider;
 /**
  * Where OpenPDF finds its resources (AFM font metrics, glyph list, messages) in the
  * C build, which has no class loader: in the files embedded in the executable, under
- * "openpdf/" (copied from the OpenPDF jar by Gradle, see copyNativeSources).
+ * "openpdf/" (copied from src/main/resources/org/openpdf by Gradle, see copyNativeSources).
  */
 public final class OpenPdfResources implements ResourceProvider {
 

@@ -60,7 +60,6 @@ import org.openpdf.text.pdf.PdfImage;
 import org.openpdf.text.pdf.PdfName;
 import org.openpdf.text.pdf.PdfNumber;
 import org.openpdf.text.pdf.PdfObject;
-import org.openpdf.text.pdf.PdfString;
 import org.openpdf.text.pdf.PdfWriter;
 import org.openpdf.text.pdf.PdfXConformanceException;
 import org.openpdf.text.pdf.ShadingColor;
@@ -243,15 +242,6 @@ public class PdfXConformanceImp implements PdfXConformance {
     }
 
     /**
-     * Checks if the PDF has to be in conformance with PDF/X-1a:2001
-     *
-     * @return true of the PDF has to be in conformance with PDF/X-1a:2001
-     */
-    public boolean isPdfX1A2001() {
-        return pdfxConformance == PdfWriter.PDFX1A2001;
-    }
-
-    /**
      * Checks if the PDF has to be in conformance with PDF/X-3:2002
      *
      * @return true of the PDF has to be in conformance with PDF/X-3:2002
@@ -269,79 +259,4 @@ public class PdfXConformanceImp implements PdfXConformance {
         return pdfxConformance == PdfWriter.PDFA1A || pdfxConformance == PdfWriter.PDFA1B;
     }
 
-    /**
-     * Checks if the PDF has to be in conformance with PDFA1A
-     *
-     * @return true of the PDF has to be in conformance with PDFA1A
-     */
-    public boolean isPdfA1A() {
-        return pdfxConformance == PdfWriter.PDFA1A;
-    }
-
-    /**
-     * Checks if the PDF has to be in conformance with PDFA2
-     *
-     * @return true if the PDF has to be in conformance with PDFA2
-     */
-    public boolean isPdfA2() {
-        return pdfxConformance == PdfWriter.PDFA2A
-                || pdfxConformance == PdfWriter.PDFA2B
-                || pdfxConformance == PdfWriter.PDFA2U;
-    }
-
-    /**
-     * Checks if the PDF has to be in conformance with PDFA3
-     *
-     * @return true if the PDF has to be in conformance with PDFA3
-     */
-    public boolean isPdfA3() {
-        return pdfxConformance == PdfWriter.PDFA3A
-                || pdfxConformance == PdfWriter.PDFA3B
-                || pdfxConformance == PdfWriter.PDFA3U;
-    }
-
-    /**
-     * Checks if the PDF has to be in conformance with any PDF/A version
-     *
-     * @return true if the PDF has to be in conformance with any PDF/A version
-     */
-    public boolean isPdfA() {
-        return isPdfA1() || isPdfA2() || isPdfA3();
-    }
-
-    public void completeInfoDictionary(PdfDictionary info) {
-        if (isPdfX() && !isPdfA()) {
-            if (info.get(PdfName.GTS_PDFXVERSION) == null) {
-                if (isPdfX1A2001()) {
-                    info.put(PdfName.GTS_PDFXVERSION, new PdfString("PDF/X-1:2001"));
-                    info.put(new PdfName("GTS_PDFXConformance"), new PdfString("PDF/X-1a:2001"));
-                } else if (isPdfX32002()) {
-                    info.put(PdfName.GTS_PDFXVERSION, new PdfString("PDF/X-3:2002"));
-                }
-            }
-            if (info.get(PdfName.TITLE) == null) {
-                info.put(PdfName.TITLE, new PdfString("Pdf document"));
-            }
-            if (info.get(PdfName.CREATOR) == null) {
-                info.put(PdfName.CREATOR, new PdfString("Unknown"));
-            }
-            if (info.get(PdfName.TRAPPED) == null) {
-                info.put(PdfName.TRAPPED, new PdfName("False"));
-            }
-        }
-    }
-
-    public void completeExtraCatalog(PdfDictionary extraCatalog) {
-        if (isPdfX() && !isPdfA()) {
-            if (extraCatalog.get(PdfName.OUTPUTINTENTS) == null) {
-                PdfDictionary out = new PdfDictionary(PdfName.OUTPUTINTENT);
-                out.put(PdfName.OUTPUTCONDITION, new PdfString("SWOP CGATS TR 001-1995"));
-                out.put(PdfName.OUTPUTCONDITIONIDENTIFIER, new PdfString("CGATS TR 001"));
-                out.put(PdfName.REGISTRYNAME, new PdfString("http://www.color.org"));
-                out.put(PdfName.INFO, new PdfString(""));
-                out.put(PdfName.S, PdfName.GTS_PDFX);
-                extraCatalog.put(PdfName.OUTPUTINTENTS, new PdfArray(out));
-            }
-        }
-    }
 }

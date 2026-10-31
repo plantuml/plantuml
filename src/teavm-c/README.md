@@ -295,16 +295,17 @@ library) are embedded in the executable, since the C build has no classpath:
 To embed more files, add `name=path` pairs to `RESOURCE_PAIRS` in
 `CMakeLists.txt` and have Gradle copy them.
 
-## PDF (experiment, branch `master-openpdf-c`)
+## PDF
 
-PDF output goes through the OpenPDF sources pruned and kept in
-`src/main/java/org/openpdf`, which no longer use any class TeaVM lacks
-(no `java.awt.Font`, `TextLayout`, `Bidi`, images decoders, ICC profiles, ...):
-there are no stand-in classes to maintain. Keep it that way when touching
-OpenPDF: a new JDK dependency in `org/openpdf` shows up as a `generateC` error.
+PDF output goes through the OpenPDF sources, pruned and kept in
+`src/main/java/org/openpdf` (no AWT, no `Font`, `TextLayout`, `Bidi`, image
+decoders, ICC profiles, ...): there are no stand-in classes to maintain. Keep it
+that way when touching OpenPDF: a new JDK dependency in `org/openpdf` shows up as
+a `generateC` error.
 
 OpenPDF has no class loader to read its resources (AFM font metrics, glyph list,
 messages) in the C build, and TeaVM's resource support crashes its coroutine
-transformation. The plantuml fork of OpenPDF reads them through
-`BaseFont.setResourceProvider`, `OpenPdfResources` points it at the embedded
-files (`openpdf/...`, copied from the OpenPDF jar by `copyNativeSources`).
+transformation. `BaseFont.setResourceProvider` is given `OpenPdfResources`, which
+reads the embedded files (`openpdf/...`, copied from `src/main/resources/org/openpdf`
+by `copyNativeSources`); on the JVM, `ClassLoaderResources` is used. `OpenPdfSetup`
+chooses one, once, before the first use of a font.

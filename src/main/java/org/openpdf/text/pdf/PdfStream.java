@@ -99,16 +99,9 @@ public class PdfStream extends PdfDictionary {
      *
      * @since 2.1.3
      */
-    public static final int BEST_SPEED = 1;
-    /**
-     * A possible compression level.
-     *
-     * @since 2.1.3
-     */
     public static final int BEST_COMPRESSION = 9;
     static final byte[] STARTSTREAM = DocWriter.getISOBytes("stream\n");
     static final byte[] ENDSTREAM = DocWriter.getISOBytes("\nendstream");
-    static final int SIZESTREAM = STARTSTREAM.length + ENDSTREAM.length;
     /**
      * is the stream compressed?
      */
@@ -175,36 +168,6 @@ public class PdfStream extends PdfDictionary {
         type = STREAM;
     }
 
-    /**
-     * Writes the stream length to the <CODE>PdfWriter</CODE>.
-     * <p>
-     * This method must be called and can only be called if the constructor {@link #PdfStream(InputStream, PdfWriter)}
-     * is used to create the stream.
-     *
-     * @throws IOException on error
-     * @see #PdfStream(InputStream, PdfWriter)
-     */
-    public void writeLength() throws IOException {
-        if (inputStream == null) {
-            throw new UnsupportedOperationException(MessageLocalization.getComposedMessage(
-                    "writelength.can.only.be.called.in.a.contructed.pdfstream.inputstream.pdfwriter"));
-        }
-        if (inputStreamLength == -1) {
-            throw new IOException(MessageLocalization.getComposedMessage(
-                    "writelength.can.only.be.called.after.output.of.the.stream.body"));
-        }
-        writer.addToBody(new PdfNumber(inputStreamLength), ref, false);
-    }
-
-    /**
-     * Gets the raw length of the stream.
-     *
-     * @return the raw length of the stream
-     */
-    public long getRawLength() {
-        return rawLength;
-    }
-
 //    public int getStreamLength(PdfWriter writer) {
 //        if (dicBytes == null)
 //            toPdf(writer);
@@ -243,13 +206,6 @@ public class PdfStream extends PdfDictionary {
     }
 
 
-
-    /**
-     * Compresses the stream.
-     */
-    public void flateCompress() {
-        flateCompress(DEFAULT_COMPRESSION);
-    }
 
 
     /**

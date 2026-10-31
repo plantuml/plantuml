@@ -59,7 +59,6 @@ import java.io.IOException;
 public class PdfTemplate extends PdfContentByte {
 
     public static final int TYPE_TEMPLATE = 1;
-    public static final int TYPE_IMPORTED = 2;
     public static final int TYPE_PATTERN = 3;
     protected int type;
     /**
@@ -178,16 +177,6 @@ public class PdfTemplate extends PdfContentByte {
         this.bBox = bBox;
     }
 
-    public void setMatrix(float a, float b, float c, float d, float e, float f) {
-        matrix = new PdfArray();
-        matrix.add(new PdfNumber(a));
-        matrix.add(new PdfNumber(b));
-        matrix.add(new PdfNumber(c));
-        matrix.add(new PdfNumber(d));
-        matrix.add(new PdfNumber(e));
-        matrix.add(new PdfNumber(f));
-    }
-
     PdfArray getMatrix() {
         return matrix;
     }
@@ -204,14 +193,6 @@ public class PdfTemplate extends PdfContentByte {
             thisReference = writer.getPdfIndirectReference();
         }
         return thisReference;
-    }
-
-    public void beginVariableText() {
-        content.append("/Tx BMC ");
-    }
-
-    public void endVariableText() {
-        content.append("EMC ");
     }
 
     /**
@@ -242,21 +223,6 @@ public class PdfTemplate extends PdfContentByte {
      * @return a copy of this <CODE>PdfTemplate</CODE>
      */
 
-    public PdfContentByte getDuplicate() {
-        PdfTemplate tpl = new PdfTemplate();
-        tpl.writer = writer;
-        tpl.pdf = pdf;
-        tpl.thisReference = thisReference;
-        tpl.pageResources = pageResources;
-        tpl.bBox = new Rectangle(bBox);
-        tpl.group = group;
-        if (matrix != null) {
-            tpl.matrix = new PdfArray(matrix);
-        }
-        tpl.separator = separator;
-        return tpl;
-    }
-
     public int getType() {
         return type;
     }
@@ -272,15 +238,6 @@ public class PdfTemplate extends PdfContentByte {
      */
     public PdfTransparencyGroup getGroup() {
         return this.group;
-    }
-
-    /**
-     * Setter for property group.
-     *
-     * @param group New value of property group.
-     */
-    public void setGroup(PdfTransparencyGroup group) {
-        this.group = group;
     }
 
 }

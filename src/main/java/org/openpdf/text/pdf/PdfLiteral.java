@@ -74,41 +74,11 @@ public class PdfLiteral extends PdfObject {
         java.util.Arrays.fill(bytes, (byte) 32);
     }
 
-    public PdfLiteral(int type, String text) {
-        super(type, text);
-    }
-
-    public PdfLiteral(int type, byte[] b) {
-        super(type, b);
-    }
-
     public void toPdf(PdfWriter writer, java.io.OutputStream os) throws java.io.IOException {
         if (os instanceof OutputStreamCounter) {
             position = ((OutputStreamCounter) os).getCounter();
         }
         super.toPdf(writer, os);
-    }
-
-    /**
-     * Getter for property position.
-     *
-     * @return Value of property position.
-     */
-    public long getPosition() {
-        return this.position;
-    }
-
-    /**
-     * Getter for property posLength.
-     *
-     * @return Value of property posLength.
-     */
-    public int getPosLength() {
-        if (bytes != null) {
-            return bytes.length;
-        } else {
-            return 0;
-        }
     }
 
 }

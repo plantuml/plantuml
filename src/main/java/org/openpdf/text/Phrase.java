@@ -49,7 +49,6 @@
 
 package org.openpdf.text;
 
-import org.openpdf.text.error_messages.MessageLocalization;
 import org.openpdf.text.pdf.HyphenationEvent;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -108,13 +107,6 @@ public class Phrase extends ArrayList<Element> implements TextElementArray {
     // constructors
 
     /**
-     * Constructs a <CODE>Phrase</CODE> without specifying a leading.
-     */
-    public Phrase() {
-        this(16);
-    }
-
-    /**
      * Copy constructor for <CODE>Phrase</CODE>.
      *
      * @param phrase an object of {@link Phrase}, that you want to create a new object from
@@ -146,65 +138,6 @@ public class Phrase extends ArrayList<Element> implements TextElementArray {
         super.add(chunk);
         font = chunk.getFont();
         setHyphenation(chunk.getHyphenation());
-    }
-
-    /**
-     * Constructs a <CODE>Phrase</CODE> with a certain <CODE>Chunk</CODE> and a certain leading.
-     *
-     * @param leading the leading
-     * @param chunk   a <CODE>Chunk</CODE>
-     */
-    public Phrase(float leading, Chunk chunk) {
-        this.leading = leading;
-        super.add(chunk);
-        font = chunk.getFont();
-        setHyphenation(chunk.getHyphenation());
-    }
-
-    /**
-     * Constructs a <CODE>Phrase</CODE> with a certain <CODE>String</CODE>.
-     *
-     * @param string a <CODE>String</CODE>
-     */
-    public Phrase(String string) {
-        this(Float.NaN, string, new Font());
-    }
-
-    /**
-     * Constructs a <CODE>Phrase</CODE> with a certain <CODE>String</CODE> and a certain <CODE>Font</CODE>.
-     *
-     * @param string a <CODE>String</CODE>
-     * @param font   a <CODE>Font</CODE>
-     */
-    public Phrase(String string, Font font) {
-        this(Float.NaN, string, font);
-    }
-
-    /**
-     * Constructs a <CODE>Phrase</CODE> with a certain leading and a certain <CODE>String</CODE>.
-     *
-     * @param leading the leading
-     * @param string  a <CODE>String</CODE>
-     */
-    public Phrase(float leading, String string) {
-        this(leading, string, new Font());
-    }
-
-    /**
-     * Constructs a <CODE>Phrase</CODE> with a certain leading, a certain <CODE>String</CODE> and a certain
-     * <CODE>Font</CODE>.
-     *
-     * @param leading the leading
-     * @param string  a <CODE>String</CODE>
-     * @param font    a <CODE>Font</CODE>
-     */
-    public Phrase(float leading, String string, Font font) {
-        this.leading = leading;
-        this.font = font;
-        /* bugfix by August Detlefsen */
-        if (string != null && string.length() != 0) {
-            super.add(new Chunk(string, font));
-        }
     }
 
     // implementation of the Element-methods
@@ -370,15 +303,6 @@ public class Phrase extends ArrayList<Element> implements TextElementArray {
     }
 
     /**
-     * Adds a <CODE>Object</CODE> to the <CODE>Paragraph</CODE>.
-     *
-     * @param object the object to add.
-     */
-    protected void addSpecial(Object object) {
-        super.add((Element) object);
-    }
-
-    /**
      * Gets the leading of this phrase.
      *
      * @return the linespacing
@@ -401,33 +325,12 @@ public class Phrase extends ArrayList<Element> implements TextElementArray {
     }
 
     /**
-     * Checks you if the leading of this phrase is defined.
-     *
-     * @return true if the leading is defined
-     */
-    public boolean hasLeading() {
-        return !Float.isNaN(leading);
-    }
-
-    /**
      * Gets the font of the first <CODE>Chunk</CODE> that appears in this <CODE>Phrase</CODE>.
      *
      * @return a <CODE>Font</CODE>
      */
     public Font getFont() {
         return font;
-    }
-
-    /**
-     * Sets the main font of this Phrase.
-     * <p>
-     * Please note that this font will only be used on new content added to the Phrase. It won't change the font of
-     * existing content.
-     *
-     * @param font the new font
-     */
-    public void setFont(Font font) {
-        this.font = font;
     }
 
     // kept for historical reasons; people should use FontSelector

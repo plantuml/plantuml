@@ -171,22 +171,4 @@ class FontDetails {
         }
     }
 
-    /**
-     * Indicates if all the glyphs and widths for that particular encoding should be included in the document.
-     *
-     * @return <CODE>false</CODE> to include all the glyphs and widths.
-     */
-    public boolean isSubset() {
-        return subset;
-    }
-
-    /**
-     * Indicates if all the glyphs and widths for that particular encoding should be included in the document. Set to
-     * <CODE>false</CODE> to include all.
-     *
-     * @param subset new value of property subset
-     */
-    public void setSubset(boolean subset) {
-        this.subset = subset;
-    }
 }

@@ -131,10 +131,6 @@ public class PdfRectangle extends PdfArray {
      * @param rotation the rotation angle
      */
 
-    public PdfRectangle(float urx, float ury, int rotation) {
-        this(0, 0, urx, ury, rotation);
-    }
-
     public PdfRectangle(float urx, float ury) {
         this(0, 0, urx, ury, 0);
     }
@@ -155,15 +151,6 @@ public class PdfRectangle extends PdfArray {
     }
 
     // methods
-
-    /**
-     * Returns the high level version of this PdfRectangle
-     *
-     * @return this PdfRectangle translated to class Rectangle
-     */
-    public Rectangle getRectangle() {
-        return new Rectangle(left(), bottom(), right(), top());
-    }
 
     /**
      * Overrides the <CODE>add</CODE>-method in <CODE>PdfArray</CODE> in order to prevent the adding of extra object to
@@ -258,20 +245,12 @@ public class PdfRectangle extends PdfArray {
      * @return the lower left x-coordinate
      */
 
-    public float left(int margin) {
-        return llx + margin;
-    }
-
     /**
      * Returns the upper right x-coordinate, considering a given margin.
      *
      * @param margin a margin
      * @return the upper right x-coordinate
      */
-
-    public float right(int margin) {
-        return urx - margin;
-    }
 
     /**
      * Returns the upper right y-coordinate, considering a given margin.
@@ -280,20 +259,12 @@ public class PdfRectangle extends PdfArray {
      * @return the upper right y-coordinate
      */
 
-    public float top(int margin) {
-        return ury - margin;
-    }
-
     /**
      * Returns the lower left y-coordinate, considering a given margin.
      *
      * @param margin a margin
      * @return the lower left y-coordinate
      */
-
-    public float bottom(int margin) {
-        return lly + margin;
-    }
 
     /**
      * Returns the width of the rectangle.
@@ -321,7 +292,4 @@ public class PdfRectangle extends PdfArray {
      * @return a <CODE>PdfRectangle</CODE>
      */
 
-    public PdfRectangle rotate() {
-        return new PdfRectangle(lly, llx, ury, urx, 0);
-    }
 }

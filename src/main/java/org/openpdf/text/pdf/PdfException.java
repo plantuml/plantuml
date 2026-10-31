@@ -71,10 +71,6 @@ public class PdfException extends DocumentException {
      * Constructs a <CODE>PdfException</CODE> without a message.
      */
 
-    PdfException() {
-        super();
-    }
-
     /**
      * Constructs a <code>PdfException</code> with a message.
      *

@@ -49,7 +49,6 @@
 
 package org.openpdf.text.pdf;
 
-import java.util.StringTokenizer;
 
 /**
  * A <CODE>PdfColor</CODE> defines a Color (it's a <CODE>PdfArray</CODE> containing 3 values).
@@ -120,15 +119,6 @@ public class PdfDestination extends PdfArray {
      * @param type The destination type
      */
 
-    public PdfDestination(int type) {
-        super();
-        if (type == FITB) {
-            add(PdfName.FITB);
-        } else {
-            add(PdfName.FIT);
-        }
-    }
-
     /**
      * Constructs a new <CODE>PdfDestination</CODE>.
      * <p>
@@ -142,23 +132,6 @@ public class PdfDestination extends PdfArray {
      * @param parameter a parameter to combined with the destination type
      */
 
-    public PdfDestination(int type, float parameter) {
-        super(new PdfNumber(parameter));
-        switch (type) {
-            default:
-                addFirst(PdfName.FITH);
-                break;
-            case FITV:
-                addFirst(PdfName.FITV);
-                break;
-            case FITBH:
-                addFirst(PdfName.FITBH);
-                break;
-            case FITBV:
-                addFirst(PdfName.FITBV);
-        }
-    }
-
     /**
      * Constructs a new <CODE>PdfDestination</CODE>.
      * <p>
@@ -171,21 +144,6 @@ public class PdfDestination extends PdfArray {
      * @param top  the top value. Negative to place a null
      * @param zoom The zoom factor. A value of 0 keeps the current value
      */
-
-    public PdfDestination(int type, float left, float top, float zoom) {
-        super(PdfName.XYZ);
-        if (left < 0) {
-            add(PdfNull.PDFNULL);
-        } else {
-            add(new PdfNumber(left));
-        }
-        if (top < 0) {
-            add(PdfNull.PDFNULL);
-        } else {
-            add(new PdfNumber(top));
-        }
-        add(new PdfNumber(zoom));
-    }
 
     /**
      * Constructs a new <CODE>PdfDestination</CODE>.
@@ -203,32 +161,6 @@ public class PdfDestination extends PdfArray {
      * @since iText0.38
      */
 
-    public PdfDestination(int type, float left, float bottom, float right, float top) {
-        super(PdfName.FITR);
-        add(new PdfNumber(left));
-        add(new PdfNumber(bottom));
-        add(new PdfNumber(right));
-        add(new PdfNumber(top));
-    }
-
-    /**
-     * Creates a PdfDestination based on a String. Valid Strings are for instance the values returned by
-     * SimpleNamedDestination: "Fit", "XYZ 36 806 0",...
-     *
-     * @param dest a String notation of a destination.
-     * @since iText 5.0
-     */
-    public PdfDestination(String dest) {
-        super();
-        StringTokenizer tokens = new StringTokenizer(dest);
-        if (tokens.hasMoreTokens()) {
-            add(new PdfName(tokens.nextToken()));
-        }
-        while (tokens.hasMoreTokens()) {
-            add(new PdfNumber(tokens.nextToken()));
-        }
-    }
-
     // methods
 
     /**
@@ -236,10 +168,6 @@ public class PdfDestination extends PdfArray {
      *
      * @return <CODE>true</CODE> or <CODE>false</CODE>
      */
-
-    public boolean hasPage() {
-        return status;
-    }
 
     /**
      * Adds the indirect reference of the destination page.
