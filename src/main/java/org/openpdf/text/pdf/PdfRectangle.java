@@ -131,10 +131,6 @@ public class PdfRectangle extends PdfArray {
      * @param rotation the rotation angle
      */
 
-    public PdfRectangle(float urx, float ury) {
-        this(0, 0, urx, ury, 0);
-    }
-
     /**
      * Constructs a <CODE>PdfRectangle</CODE>-object with a <CODE>Rectangle</CODE>-object.
      *
@@ -171,10 +167,6 @@ public class PdfRectangle extends PdfArray {
      * @return false.  You can't add anything to a PdfRectangle
      * @since 2.1.5
      */
-
-    public boolean add(float[] values) {
-        return false;
-    }
 
     /**
      * Block changes to the underlying PdfArray

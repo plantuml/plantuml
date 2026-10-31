@@ -79,7 +79,6 @@ public class PdfTemplate extends PdfContentByte {
 
     protected PdfArray matrix;
 
-    protected PdfTransparencyGroup group;
 
     /**
      * Creates a <CODE>PdfTemplate</CODE>.
@@ -200,15 +199,6 @@ public class PdfTemplate extends PdfContentByte {
 
     PageResources getPageResources() {
         return pageResources;
-    }
-
-    /**
-     * Getter for property group.
-     *
-     * @return Value of property group.
-     */
-    public PdfTransparencyGroup getGroup() {
-        return this.group;
     }
 
 }

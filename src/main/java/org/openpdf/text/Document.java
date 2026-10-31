@@ -78,7 +78,7 @@ import java.util.List;
  * Example: <BLOCKQUOTE>
  *
  * <PRE>// creation of the document with a certain size and certain margins
- * <STRONG>Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+ * <STRONG>Document document = new Document(new Rectangle(595, 842), 50, 50, 50, 50);
  * </STRONG> try {
  * // creation of the different writers HtmlWriter.getInstance(<STRONG>document </STRONG>, System.out);
  * PdfWriter.getInstance(<STRONG>document </STRONG>, new FileOutputStream("text.pdf")); // we add some meta information
@@ -165,14 +165,14 @@ public class Document implements DocListener {
      */
     TextRenderingOptions textRenderingOptions = new TextRenderingOptions();
 
+    // constructor
+
     /**
-     * Constructs a new <CODE>Document</CODE> -object with the default page size as <CODE>PageSize.A4</CODE> .
+     * Constructs a new <CODE>Document</CODE> -object with the A4 page size.
      */
     public Document() {
-        this(PageSize.A4);
+        this(new RectangleReadOnly(595, 842));
     }
-
-    // constructor
 
     /**
      * Constructs a new <CODE>Document</CODE> -object using the given rectangle as page size and default margin of 36.

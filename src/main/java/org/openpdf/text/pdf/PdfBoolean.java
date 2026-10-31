@@ -50,7 +50,6 @@
 
 package org.openpdf.text.pdf;
 
-import org.openpdf.text.error_messages.MessageLocalization;
 
 /**
  * <CODE>PdfBoolean</CODE> is the boolean object represented by the keywords <VAR>true</VAR> or <VAR>false</VAR>.
@@ -107,18 +106,6 @@ public class PdfBoolean extends PdfObject {
      * @param value the value of the new <CODE>PdfObject</CODE>, represented as a <CODE>String</CODE>
      * @throws BadPdfFormatException thrown if the <VAR>value</VAR> isn't '<CODE>true</CODE>' or '<CODE>false</CODE>'
      */
-
-    public PdfBoolean(String value) throws BadPdfFormatException {
-        super(BOOLEAN, value);
-        if (value.equals(TRUE)) {
-            this.value = true;
-        } else if (value.equals(FALSE)) {
-            this.value = false;
-        } else {
-            throw new BadPdfFormatException(
-                    MessageLocalization.getComposedMessage("the.value.has.to.be.true.of.false.instead.of.1", value));
-        }
-    }
 
     // methods returning the value of this object
 

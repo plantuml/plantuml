@@ -49,7 +49,6 @@
 
 package org.openpdf.text.pdf;
 
-import org.openpdf.text.error_messages.MessageLocalization;
 import java.util.Objects;
 
 /**
@@ -74,38 +73,11 @@ public class PdfNumber extends PdfObject implements Comparable<PdfNumber> {
     // CONSTRUCTORS
 
     /**
-     * Constructs a <CODE>PdfNumber</CODE>-object.
-     *
-     * @param content value of the new <CODE>PdfNumber</CODE>-object
-     */
-    public PdfNumber(String content) {
-        super(NUMBER);
-        try {
-            value = Double.parseDouble(content.trim());
-            setContent(content);
-        } catch (NumberFormatException nfe) {
-            throw new RuntimeException(
-                    MessageLocalization.getComposedMessage("1.is.not.a.valid.number.2", content, nfe.toString()));
-        }
-    }
-
-    /**
      * Constructs a new <CODE>PdfNumber</CODE>-object of type integer.
      *
      * @param value value of the new <CODE>PdfNumber</CODE>-object
      */
     public PdfNumber(int value) {
-        super(NUMBER);
-        this.value = value;
-        setContent(String.valueOf(value));
-    }
-
-    /**
-     * Constructs a new <CODE>PdfNumber</CODE>-object of type long.
-     *
-     * @param value value of the new <CODE>PdfNumber</CODE>-object
-     */
-    public PdfNumber(long value) {
         super(NUMBER);
         this.value = value;
         setContent(String.valueOf(value));

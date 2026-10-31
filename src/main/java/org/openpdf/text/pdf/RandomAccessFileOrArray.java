@@ -49,7 +49,6 @@
 
 package org.openpdf.text.pdf;
 
-import org.openpdf.text.Document;
 import org.openpdf.text.error_messages.MessageLocalization;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -81,10 +80,6 @@ public class RandomAccessFileOrArray implements DataInput, Closeable {
      * Holds value of property startOffset.
      */
     private int startOffset = 0;
-
-    public RandomAccessFileOrArray(String filename) throws IOException {
-        this(filename, false, Document.plainRandomAccess);
-    }
 
     public RandomAccessFileOrArray(String filename, boolean forceRead, boolean plainRandomAccess) throws IOException {
         this.plainRandomAccess = plainRandomAccess;
@@ -119,19 +114,8 @@ public class RandomAccessFileOrArray implements DataInput, Closeable {
         trf = new RandomAccessFile(filename, "r");
     }
 
-    public RandomAccessFileOrArray(InputStream is) throws IOException {
-        this.arrayIn = InputStreamToArray(is);
-    }
-
     public RandomAccessFileOrArray(byte[] arrayIn) {
         this.arrayIn = arrayIn;
-    }
-
-    public RandomAccessFileOrArray(RandomAccessFileOrArray file) {
-        filename = file.filename;
-        arrayIn = file.arrayIn;
-        startOffset = file.startOffset;
-        plainRandomAccess = file.plainRandomAccess;
     }
 
     public static byte[] InputStreamToArray(InputStream is) throws IOException {

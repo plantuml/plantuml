@@ -87,9 +87,6 @@ public class PdfFormXObject extends PdfStream {
         put(PdfName.RESOURCES, template.getResources());
         put(PdfName.BBOX, new PdfRectangle(template.getBoundingBox()));
         put(PdfName.FORMTYPE, ONE);
-        if (template.getGroup() != null) {
-            put(PdfName.GROUP, template.getGroup());
-        }
         PdfArray matrix = template.getMatrix();
         if (matrix == null) {
             put(PdfName.MATRIX, MATRIX);

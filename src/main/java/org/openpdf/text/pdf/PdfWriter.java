@@ -462,18 +462,6 @@ public class PdfWriter extends DocWriter implements
         return body.add(object, ref);
     }
 
-    /**
-     * Use this method to add a PDF object to the PDF body. Use this method only if you know what you're doing!
-     *
-     * @param object    the object to add
-     * @param refNumber the reference number
-     * @return a PdfIndirectObject
-     * @throws IOException thrown when an I/O operation fails
-     */
-    public PdfIndirectObject addToBody(PdfObject object, int refNumber) throws IOException {
-        return body.add(object, refNumber);
-    }
-
 // PDF Objects that have an impact on the PDF body
 
 //  [F1] PdfEncryptionSettings interface
@@ -1071,10 +1059,6 @@ public class PdfWriter extends DocWriter implements
          */
         PdfIndirectObject add(PdfObject object, PdfIndirectReference ref) throws IOException {
             return add(object, ref.getNumber());
-        }
-
-        PdfIndirectObject add(PdfObject object, PdfIndirectReference ref, boolean inObjStm) throws IOException {
-            return add(object, ref.getNumber(), inObjStm);
         }
 
         PdfIndirectObject add(PdfObject object, int refNumber) throws IOException {

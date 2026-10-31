@@ -66,10 +66,6 @@ public class GrayColor extends ExtendedColor {
         this(floatGray, MAX_FLOAT_COLOR_VALUE);
     }
 
-    public GrayColor(int intGray, int alpha) {
-        this(normalize(intGray) / MAX_INT_COLOR_VALUE, normalize(alpha) / MAX_INT_COLOR_VALUE);
-    }
-
     public GrayColor(float floatGray, float alpha) {
         super(TYPE_GRAY, normalize(floatGray), normalize(floatGray), normalize(floatGray), normalize(alpha));
         gray = normalize(floatGray);

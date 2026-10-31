@@ -68,12 +68,6 @@ public class PdfLiteral extends PdfObject {
         super(0, b);
     }
 
-    public PdfLiteral(int size) {
-        super(0, (byte[]) null);
-        bytes = new byte[size];
-        java.util.Arrays.fill(bytes, (byte) 32);
-    }
-
     public void toPdf(PdfWriter writer, java.io.OutputStream os) throws java.io.IOException {
         if (os instanceof OutputStreamCounter) {
             position = ((OutputStreamCounter) os).getCounter();

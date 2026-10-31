@@ -807,28 +807,6 @@ public abstract class BaseFont {
             }
         }
 
-        /**
-         * Generates the PDF stream for a font.
-         *
-         * @param contents         the content of a stream
-         * @param subType          the subtype of the font.
-         * @param compressionLevel the compression level of the Stream
-         * @throws DocumentException error in the stream compression
-         * @since 2.1.3 (replaces the constructor without param compressionLevel)
-         */
-        public StreamFont(byte[] contents, String subType, int compressionLevel)
-                throws DocumentException {
-            try {
-                bytes = contents;
-                put(PdfName.LENGTH, new PdfNumber(bytes.length));
-                if (subType != null) {
-                    put(PdfName.SUBTYPE, new PdfName(subType));
-                }
-                flateCompress(compressionLevel);
-            } catch (Exception e) {
-                throw new DocumentException(e);
-            }
-        }
     }
 
     /**

@@ -427,34 +427,6 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
     /**
      * A name
      */
-    public static final PdfName FIT = new PdfName("Fit");
-    /**
-     * A name
-     */
-    public static final PdfName FITH = new PdfName("FitH");
-    /**
-     * A name
-     */
-    public static final PdfName FITV = new PdfName("FitV");
-    /**
-     * A name
-     */
-    public static final PdfName FITR = new PdfName("FitR");
-    /**
-     * A name
-     */
-    public static final PdfName FITB = new PdfName("FitB");
-    /**
-     * A name
-     */
-    public static final PdfName FITBH = new PdfName("FitBH");
-    /**
-     * A name
-     */
-    public static final PdfName FITBV = new PdfName("FitBV");
-    /**
-     * A name
-     */
     public static final PdfName FLAGS = new PdfName("Flags");
     /**
      * A name
@@ -710,12 +682,6 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
      */
     public static final PdfName NEXTPAGE = new PdfName("NextPage");
 
-    /**
-     * A name
-     *
-     * @since 2.1.6
-     */
-    public static final PdfName NOTE = new PdfName("Note");
     /**
      * A name
      */
@@ -1115,15 +1081,6 @@ public class PdfName extends PdfObject implements Comparable<PdfName> {
     }
 
     // CLASS VARIABLES
-
-    /**
-     * Constructs a PdfName.
-     *
-     * @param bytes the byte representation of the name
-     */
-    public PdfName(byte[] bytes) {
-        super(PdfObject.NAME, bytes);
-    }
 
     // CLASS METHODS
 

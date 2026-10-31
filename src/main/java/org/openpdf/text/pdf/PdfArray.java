@@ -96,20 +96,6 @@ public class PdfArray extends PdfObject {
 
     /**
      * Constructs a <CODE>PdfArray</CODE>-object, containing all
-     * <CODE>float</CODE> values in a specified array.
-     * <p>
-     * The <CODE>float</CODE> values are internally converted to
-     * <CODE>PdfNumber</CODE> objects.
-     *
-     * @param values an array of <CODE>float</CODE> values to be added
-     */
-    public PdfArray(float[] values) {
-        this();
-        add(values);
-    }
-
-    /**
-     * Constructs a <CODE>PdfArray</CODE>-object, containing all
      * <CODE>int</CODE> values in a specified array.
      * <p>
      * The <CODE>int</CODE> values are internally converted to
@@ -218,23 +204,6 @@ public class PdfArray extends PdfObject {
      */
     public boolean add(PdfObject object) {
         return arrayList.add(object);
-    }
-
-    /**
-     * Adds an array of <CODE>float</CODE> values to end of the
-     * <CODE>PdfArray</CODE>.
-     * <p>
-     * The values will be the last elements. The <CODE>float</CODE> values are internally converted to
-     * <CODE>PdfNumber</CODE> objects.
-     *
-     * @param values An array of <CODE>float</CODE> values to add
-     * @return always <CODE>true</CODE>
-     */
-    public boolean add(float[] values) {
-        for (float value : values) {
-            arrayList.add(new PdfNumber(value));
-        }
-        return true;
     }
 
     /**

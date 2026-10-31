@@ -114,17 +114,6 @@ public class PdfString extends PdfObject {
         this.encoding = encoding;
     }
 
-    /**
-     * Constructs a <CODE>PdfString</CODE>-object.
-     *
-     * @param bytes an array of <CODE>byte</CODE>
-     */
-    public PdfString(byte[] bytes) {
-        super(STRING);
-        value = PdfEncodings.convertToString(bytes, null);
-        encoding = NOTHING;
-    }
-
     // methods overriding some methods in PdfObject
 
     /**
