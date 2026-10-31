@@ -1,46 +1,40 @@
 # The Computer Language Benchmarks Game
 # http://shootout.alioth.debian.org/
-# contributed by Mike Pall
+# contributed by Mike Pall; adapted to the Python subset
 
-def BottomUpTree(item, depth):
+def bottom_up_tree(item, depth):
     if depth > 0:
         i = item + item
         depth -= 1
-        left, right = BottomUpTree(i - 1, depth), BottomUpTree(i, depth)
-        return [item, left, right]
-    else:
-        return [item]
+        left, right = bottom_up_tree(i - 1, depth), bottom_up_tree(i, depth)
+        return (item, left, right)
+    return (item, None, None)
 
-def ItemCheck(tree):
-    if tree[2]:
-        return tree[1] + ItemCheck(tree[2]) - ItemCheck(tree[3])
-    else:
-        return tree[1]
+def item_check(tree):
+    item, left, right = tree
+    if left is not None:
+        return item + item_check(left) - item_check(right)
+    return item
 
-def main():
-    N = tonumber(arg and arg[1]) or 0
+def main(n):
     mindepth = 4
     maxdepth = mindepth + 2
-    if maxdepth < N: maxdepth = N
+    if maxdepth < n:
+        maxdepth = n
 
-    # (a `do ... end` block in the original, which has no equivalent here)
     stretchdepth = maxdepth + 1
-    stretchtree = BottomUpTree(0, stretchdepth)
-    io.write(string.format("stretch tree of depth %d\t check: %d\n",
-        stretchdepth, ItemCheck(stretchtree)))
+    stretchtree = bottom_up_tree(0, stretchdepth)
+    print("stretch tree of depth %d\t check: %d" % (stretchdepth, item_check(stretchtree)))
 
-    longlivedtree = BottomUpTree(0, maxdepth)
+    longlivedtree = bottom_up_tree(0, maxdepth)
 
     for depth in range(mindepth, maxdepth + 1, 2):
         iterations = 2 ** (maxdepth - depth + mindepth)
         check = 0
-        for i in range(1, iterations + 1):
-            check = (check + ItemCheck(BottomUpTree(1, depth)) +
-                     ItemCheck(BottomUpTree(-1, depth)))
-        io.write(string.format("%d\t trees of depth %d\t check: %d\n",
-            iterations * 2, depth, check))
+        for i in range(iterations):
+            check += item_check(bottom_up_tree(1, depth)) + item_check(bottom_up_tree(-1, depth))
+        print("%d\t trees of depth %d\t check: %d" % (iterations * 2, depth, check))
 
-    io.write(string.format("long lived tree of depth %d\t check: %d\n",
-        maxdepth, ItemCheck(longlivedtree)))
+    print("long lived tree of depth %d\t check: %d" % (maxdepth, item_check(longlivedtree)))
 
-main()
+main(6)

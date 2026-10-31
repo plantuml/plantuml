@@ -1,0 +1,20 @@
+a a
+...
+...,a a
+a,... a
+a a
+... b c
+...,a b c a
+a,... a b c
+a,args[0],args[1],args[2] a 1 2 3
+a,args[0],args[1],args[2] a 1 2 3
+a a
+... 1 2 3
+...,a 1 2 3 a
+a,... a 1 2 3
+a,args[0],args[1],args[2] a 1 2 3
+a a
+a,args[0],args[1],args[2] a 1 2 3
+a a
+a,args[0],args[1],args[2] a 1 2 3
+a a

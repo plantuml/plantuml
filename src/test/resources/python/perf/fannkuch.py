@@ -1,59 +1,48 @@
 # The Computer Language Benchmarks Game
 # http://shootout.alioth.debian.org/
-# contributed by Mike Pall
+# adapted to the Python subset
 
 def fannkuch(n):
-    p, q, s, odd, check, maxflips = [], [], [], True, 0, 0
-    for i in range(1, n + 1):
-        p[i] = i
-        q[i] = i
-        s[i] = i
+    perm1 = list(range(n))
+    count = [0] * n
+    max_flips = 0
+    checksum = 0
+    nperm = 0
+    r = n
     while True:
-        # Print max. 30 permutations.
-        if check < 30:
-            if not p[n]: return maxflips  # Catch n = 0, 1, 2.
-            io.write(table.unpack(p))
-            io.write("\n")
-            check += 1
-        # Copy and flip.
-        q1 = p[1]  # Cache 1st element.
-        if p[n] != n and q1 != 1:  # Avoid useless work.
-            for i in range(2, n + 1): q[i] = p[i]  # Work on a copy.
-            for flips in range(1, 1000001):  # Flip ...
-                qq = q[q1]
-                if qq == 1:  # ... until 1st element is 1.
-                    if flips > maxflips: maxflips = flips  # New maximum?
-                    break
-                q[q1] = q1
-                if q1 >= 4:
-                    i, j = 2, q1 - 1
-                    while True:
-                        q[i], q[j] = q[j], q[i]
-                        i += 1
-                        j -= 1
-                        if i >= j: break
-                q1 = qq
-        # Permute.
-        if odd:
-            p[2], p[1] = p[1], p[2]  # Rotate 1<-2.
-            odd = False
+        while r != 1:
+            count[r - 1] = r
+            r -= 1
+        perm = perm1[:]
+        flips = 0
+        k = perm[0]
+        while k != 0:
+            i, j = 0, k
+            while i < j:
+                perm[i], perm[j] = perm[j], perm[i]
+                i += 1
+                j -= 1
+            flips += 1
+            k = perm[0]
+        if flips > max_flips:
+            max_flips = flips
+        if nperm % 2 == 0:
+            checksum += flips
         else:
-            p[2], p[3] = p[3], p[2]  # Rotate 1<-2 and 1<-2<-3.
-            odd = True
-            for i in range(3, n + 1):
-                sx = s[i]
-                if sx != 1:
-                    s[i] = sx - 1
-                    break
-                if i == n: return maxflips  # Out of permutations.
-                s[i] = i
-                # Rotate 1<-...<-i+1.
-                t = p[1]
-                for j in range(1, i + 1): p[j] = p[j + 1]
-                p[i + 1] = t
+            checksum -= flips
+        while True:
+            if r == n:
+                return checksum, max_flips
+            first = perm1[0]
+            for i in range(r):
+                perm1[i] = perm1[i + 1]
+            perm1[r] = first
+            count[r] -= 1
+            if count[r] > 0:
+                break
+            r += 1
+        nperm += 1
 
-def main():
-    n = tonumber(arg and arg[1]) or 1
-    io.write("Pfannkuchen(", n, ") = ", fannkuch(n), "\n")
-
-main()
+checksum, maxflips = fannkuch(7)
+print("%d\nPfannkuchen(%d) = %d" % (checksum, 7, maxflips))
+assert (checksum, maxflips) == (228, 16)
