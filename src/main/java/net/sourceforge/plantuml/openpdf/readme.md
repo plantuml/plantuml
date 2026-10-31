@@ -138,7 +138,7 @@ Note: `UGraphicPdf.startUrl / closeUrl` are currently no-ops — wiring them thr
 - **Hyperlinks via `UGraphicPdf`.** The plumbing is in place in `PdfGraphics` but `startUrl / closeUrl` are stubs.
 - **Groups, comments, metadata.** `startGroup / closeGroup / drawComment` are stubs; PDF marked-content tags are the right primitive but unused so far.
 - **CSS classes, interactive scripts, dark mode.** Out of scope.
-- **Not compatible with TeaVM.** OpenPDF pulls in `java.awt`, `java.util.zip`, etc. The PDF backend is server-side only — hence the `// ::comment when JAVA8` / `// ::done` and `// ::remove folder when JAVA8` markers around the integration points.
+- **TeaVM.** The C build (native executable) can produce PDF: OpenPDF is not a library any more but pruned sources in `src/main/java/org/openpdf` (no AWT, no class loader). Its resources (AFM metrics, glyph list, messages) are embedded in the executable and given to OpenPDF by `OpenPdfResources`; images go through `PortableImage` (raw RGB + soft mask). The `// ::comment when JAVA8` / `// ::done` and `// ::remove folder when JAVA8` markers only keep this backend out of the Java 8 build path, since the OpenPDF sources require Java 11.
 
 
 ## Link
@@ -155,8 +155,8 @@ Note: `UGraphicPdf.startUrl / closeUrl` are currently no-ops — wiring them thr
 
 ## Credit
 
-- [LibrePDF/OpenPDF](https://github.com/LibrePDF/OpenPDF) — the underlying PDF library (LGPL 2.1 / MPL 2.0, both compatible with PlantUML's GPL).
+- [LibrePDF/OpenPDF](https://github.com/LibrePDF/OpenPDF) — the origin of the PDF sources in `org/openpdf`, pruned to what PlantUML needs (LGPL 2.1 / MPL 2.0, both compatible with PlantUML's GPL; the licenses are next to the sources).
 
 ## Misc.
 
-The `// ::comment when JAVA8` / `// ::done` markers in `FileFormat.java` exclude this backend from the Java 8 / TeaVM build paths, since OpenPDF requires Java 11+ and `java.awt`. The `// ::remove folder when JAVA8` marker at the top of `PdfGraphics` removes the whole `openpdf` package from TeaVM-targeted builds via the SJPP preprocessor.
+The `// ::comment when JAVA8` / `// ::done` markers in `FileFormat.java` exclude this backend from the Java 8 build path, since the OpenPDF sources require Java 11+. The `// ::remove folder when JAVA8` marker at the top of `PdfGraphics` removes the whole `openpdf` package from that build via the SJPP preprocessor.
