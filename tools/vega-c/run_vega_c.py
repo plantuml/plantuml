@@ -7,7 +7,7 @@ every .puml file under src/test/resources/vega/ is rendered, and the output is
 compared with the reference file stored next to it (hello.puml -> hello.svg).
 This script does the same with the C executable instead of the JVM.
 
-The C build is still partial (mindmap only, SVG / PNG / --preproc), so many tests
+The C build is still partial (mindmap only, SVG / PNG / PDF / --preproc), so many tests
 are expected to fail. The script only reports; it does not decide what is a
 regression.
 
@@ -15,7 +15,10 @@ What is checked, per test file:
   * output: svg      -> `plantuml.exe --svg-vega`, compared (XML-normalised, as SvgCleaner
                         does in the Java tests) with <name>.svg / <name>-N.svg
   * output: preproc  -> `plantuml.exe --preproc`, compared with <name>.preproc
-  * any other output format, or a test that expects an error (expected-exception,
+  * output: pdf      -> `plantuml.exe --pdf-vega` (deterministic PDF: fixed dates and /ID, no
+                        compression), compared byte for byte with <name>.pdf / <name>-N.pdf
+  * a file without a YAML header, any other output format, or a test that expects an error
+    (expected-exception,
     expected-error-*, expected-status): reported as "skipped".
 The other expectations of the YAML header (expected-description, expected-stderr,
 expected-image-count...) are not checked.
@@ -48,6 +51,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import zipfile
 import zlib
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -63,6 +67,7 @@ YAML_DELIMITER = "---"
 SUPPORTED_FORMATS = {
     "svg": (["--svg-vega"], ".svg"),
     "preproc": (["--preproc"], ".preproc"),
+    "pdf": (["--pdf-vega"], ".pdf"),
 }
 
 # Keys of the YAML header that make a test expect an error: the C build does not
@@ -89,7 +94,9 @@ COPY_PREFIX = "~vega-c-"
 # ---------------------------------------------------------------------------
 
 def read_header(path):
-    """Returns the top-level `key: value` pairs of the YAML header (empty if none).
+    """Returns the top-level `key: value` pairs of the YAML header, or None if the
+    file has no header (the Java tests then run it with the defaults and write its
+    reference files themselves: such a test has nothing to check).
 
     Same delimiting rule as VegaInputFile.parse: the first two lines that are
     `---` enclose the header. PlantUML ignores everything outside @startuml /
@@ -106,9 +113,10 @@ def read_header(path):
             break
         if inside:
             header.append(line)
-    else:
-        if inside:  # no closing delimiter: not a header
-            header = []
+    else:  # no closing delimiter: not a header
+        return None
+    if not header:  # as VegaInputFile: an empty header is no header
+        return None
 
     result = {}
     for line in header:
@@ -281,6 +289,13 @@ def normalise_svg(data):
     return ET.tostring(root, encoding="unicode")
 
 
+def normalise_pdf(data):
+    """The bytes of the PDF as ISO-8859-1 text (one character per byte, nothing lost),
+    without the carriage returns that a Git checkout may add to a file it takes for
+    text. The deterministic PDF is not compressed, so the diff is readable."""
+    return data.replace(b"\r", b"").decode("latin-1")
+
+
 def normalise_text(data):
     text = data.decode("utf-8", errors="replace") if isinstance(data, bytes) else data
     return text.replace("\r\n", "\n").replace("\r", "\n")
@@ -364,6 +379,10 @@ def run_checks(puml, exe, timeout, workdir):
     relative = puml.relative_to(VEGA_DIR).as_posix()
     result = {"file": relative, "status": SKIPPED, "message": "", "duration_ms": 0}
     header = read_header(puml)
+    if header is None:
+        result["allow_failure"] = True
+        result["message"] = "no YAML header: not checked"
+        return result
     result["allow_failure"] = header.get("allow-failure") == "true"
 
     formats = output_formats(header)
@@ -428,6 +447,9 @@ def check_formats(puml, source, supported, exe, timeout, workdir, relative, resu
                     if fmt == "svg":
                         actual = normalise_svg(actual_bytes)
                         expected = normalise_svg(expected_bytes)
+                    elif fmt == "pdf":
+                        actual = normalise_pdf(actual_bytes)
+                        expected = normalise_pdf(expected_bytes)
                     else:
                         actual = normalise_text(actual_bytes)
                         expected = normalise_text(expected_bytes)
@@ -438,6 +460,12 @@ def check_formats(puml, source, supported, exe, timeout, workdir, relative, resu
                 if actual != expected:
                     problems.append("[%s] output differs from %s" % (fmt, reference.name))
                     diffs.append(unified_diff(expected, actual, reference.name))
+                    if not actual_bytes:
+                        problems[-1] += " (empty file) " + stderr[:200]
+                    if fmt == "pdf":  # kept for the zip of the PDF that differ (see write_pdf_zip)
+                        result.setdefault("pdf_failures", []).append(
+                            {"name": reference.name, "expected": expected_bytes, "actual": actual_bytes,
+                             "diff": diffs[-1], "stderr": stderr})
         finally:
             keep_files(outdir, relative)
             shutil.rmtree(outdir, ignore_errors=True)
@@ -452,6 +480,53 @@ def check_formats(puml, source, supported, exe, timeout, workdir, relative, resu
     else:
         result["message"] = "nothing compared"
     return result
+
+
+# ---------------------------------------------------------------------------
+# Zip of the PDF that differ
+# ---------------------------------------------------------------------------
+
+def count_generated_files(output_dir):
+    """Number of files written by the executable, by extension (.pdf, .svg, .png...)."""
+    counts = {}
+    if output_dir.is_dir():
+        for produced in output_dir.rglob("*"):
+            if produced.is_file():
+                extension = produced.suffix.lower() or "(none)"
+                counts[extension] = counts.get(extension, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def write_pdf_zip(results, exe, target):
+    """Writes a zip with, for every PDF that differs from its reference: the expected and
+    the actual PDF, their diff, and the source of the test. Meant to be handed over to
+    whoever investigates (the PDF are not compressed, so they are readable as text).
+    Returns the number of PDF in the zip (the file is not written if there is none)."""
+    failed = [(r, f) for r in results for f in r.get("pdf_failures", [])]
+    if not failed:
+        return 0
+    with zipfile.ZipFile(target, "w", zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("README.txt",
+                         "PDF produced by the C build (%s, --pdf-vega) that differ from the reference\n"
+                         "files of src/test/resources/vega (made by the JVM tests).\n"
+                         "For each one: <name>.expected.pdf (reference), <name>.actual.pdf (C build),\n"
+                         "<name>.diff (unified diff, the PDF are not compressed), <name>.stderr.txt (what the\n"
+                         "executable wrote on stderr) and the test <name>.puml.\n"
+                         % exe.name)
+        sources = set()
+        for result, failure in failed:
+            folder = Path(result["file"]).parent.as_posix()
+            stem = failure["name"][:-len(".pdf")]
+            base = stem if folder in ("", ".") else folder + "/" + stem
+            archive.writestr(base + ".expected.pdf", failure["expected"])
+            archive.writestr(base + ".actual.pdf", failure["actual"])
+            archive.writestr(base + ".diff", failure["diff"])
+            archive.writestr(base + ".stderr.txt", failure["stderr"])
+            test = VEGA_DIR / result["file"]
+            if result["file"] not in sources and test.is_file():
+                sources.add(result["file"])
+                archive.write(test, result["file"])
+    return len(failed)
 
 
 # ---------------------------------------------------------------------------
@@ -483,7 +558,6 @@ def main(argv=None):
     parser.add_argument("--out", default=str(OUT_DIR), help="folder of the reports (default: %(default)s)")
     parser.add_argument("--no-png", action="store_true", help="do not run the PNG generation")
     parser.add_argument("--strict", action="store_true", help="exit code 1 when a test fails (default: always 0)")
-    parser.add_argument("-v", "--verbose", action="store_true", help="print every test, not only the failures")
     args = parser.parse_args(argv)
 
     VEGA_DIR = Path(args.vega_dir).resolve()
@@ -523,8 +597,7 @@ def main(argv=None):
                     result = {"file": puml.relative_to(VEGA_DIR).as_posix(), "status": ERROR,
                               "message": "script error: %r" % e, "duration_ms": 0}
                 results.append(result)
-                if args.verbose or result["status"] in (ERROR, TIMEOUT):
-                    print("%-8s %s  %s" % (result["status"].upper(), result["file"], result["message"][:160]))
+                print("%-8s %s  %s" % (result["status"].upper(), result["file"], result["message"][:160]))
                 if done % 100 == 0:
                     print("... %d / %d" % (done, len(files)))
     finally:
@@ -543,11 +616,15 @@ def main(argv=None):
                 target = OUT_DIR / "diffs" / (r["file"] + ".diff")
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_text(r["diff"], encoding="utf-8")
+    generated = count_generated_files(OUT_DIR / "output")
+    pdf_zip = OUT_DIR / "pdf-diffs.zip"
+    pdf_zip_count = write_pdf_zip(results, exe, pdf_zip)
     for r in results:
         r.pop("diff", None)
+        r.pop("pdf_failures", None)
 
     report = {"executable": str(exe), "summary": dict(counts, total=len(results)),
-              "png": png_counts, "tests": results}
+              "png": png_counts, "generated_files": generated, "tests": results}
     (OUT_DIR / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
 
     lines = [
@@ -568,6 +645,9 @@ def main(argv=None):
             "  No output: %d" % png_counts[PNG_NO_OUTPUT],
             "  Not a PNG: %d" % png_counts[PNG_INVALID],
         ]
+    lines += ["", "Files generated: " + (", ".join("%s: %d" % item for item in generated.items()) or "none")]
+    if pdf_zip_count:
+        lines += ["PDF that differ: %d, in %s" % (pdf_zip_count, pdf_zip.name)]
     lines += ["", "Time: %.1fs" % (time.time() - started)]
     head = len(lines)
     lines.append("")
@@ -586,6 +666,8 @@ def main(argv=None):
     print()
     print("\n".join(lines[:head]))
     print("Reports: %s" % OUT_DIR)
+    if pdf_zip_count:
+        print("PDF that differ (%d): %s" % (pdf_zip_count, pdf_zip))
     return 1 if args.strict and (counts[FAIL] or counts[ERROR] or counts[TIMEOUT] or png_bad) else 0
 
 
