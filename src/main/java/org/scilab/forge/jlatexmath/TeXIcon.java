@@ -49,8 +49,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
-import java.awt.Insets;
 
 
 /**
@@ -64,7 +62,7 @@ import java.awt.Insets;
  */
 public class TeXIcon {
 
-    private static final Color defaultColor = new Color(0, 0, 0);
+    private static final TeXColor defaultColor = new TeXColor(0, 0, 0);
 
     public static float defaultSize = -1;
     public static float magFactor = 0;
@@ -73,9 +71,9 @@ public class TeXIcon {
 
     private final float size;
 
-    private Insets insets = new Insets(0, 0, 0, 0);
+    private TeXInsets insets = new TeXInsets(0, 0, 0, 0);
 
-    private Color fg = null;
+    private TeXColor fg = null;
 
     public boolean isColored = false;
 
@@ -113,7 +111,7 @@ public class TeXIcon {
         }
     }
 
-    public void setForeground(Color fg) {
+    public void setForeground(TeXColor fg) {
         this.fg = fg;
     }
 
@@ -122,7 +120,7 @@ public class TeXIcon {
      *
      * @return the insets
      */
-    public Insets getInsets() {
+    public TeXInsets getInsets() {
         return insets;
     }
 
@@ -132,7 +130,7 @@ public class TeXIcon {
      * @param insets the insets
      * @param trueValues true to force the true values
      */
-    public void setInsets(Insets insets, boolean trueValues) {
+    public void setInsets(TeXInsets insets, boolean trueValues) {
         this.insets = insets;
         if (!trueValues) {
             this.insets.top += (int)(0.18f * size);
@@ -147,7 +145,7 @@ public class TeXIcon {
      *
      * @param insets the insets
      */
-    public void setInsets(Insets insets) {
+    public void setInsets(TeXInsets insets) {
         setInsets(insets, false);
     }
 
@@ -235,14 +233,14 @@ public class TeXIcon {
     /**
      * Paints the formula on a canvas that is not AWT (see PLAN.md, phase 2). The
      * origin of the canvas is the top left corner of the icon; the foreground
-     * color is the one of {@link #setForeground(Color)}, else the one given. If
+     * color is the one of {@link #setForeground(TeXColor)}, else the one given. If
      * both are null, the color of the canvas is kept.
      */
-    public void paint(TeXGraphics g2, Color defaultForeground, int x, int y) {
-        final Color oldColor = g2.getColor();
+    public void paint(TeXGraphics g2, TeXColor defaultForeground, int x, int y) {
+        final TeXColor oldColor = g2.getColor();
         g2.saveTransform();
         g2.scale(size, size); // the point size
-        final Color foreground = fg != null ? fg : defaultForeground;
+        final TeXColor foreground = fg != null ? fg : defaultForeground;
         if (foreground != null)
             g2.setColor(foreground);
         box.draw(g2, (x + insets.left) / size, (y + insets.top) / size + box.getHeight());

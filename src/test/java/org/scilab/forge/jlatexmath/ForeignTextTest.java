@@ -59,7 +59,7 @@ class ForeignTextTest {
 		assertEquals("\u4e2d\u6587", measurer.measured.get(0));
 
 		final Drawn canvas = new Drawn();
-		icon.paint(canvas, java.awt.Color.BLACK, 0, 0);
+		icon.paint(canvas, TeXColor.BLACK, 0, 0);
 		assertEquals(1, canvas.texts.size());
 		assertEquals("\u4e2d\u6587", canvas.texts.get(0));
 	}
@@ -75,7 +75,7 @@ class ForeignTextTest {
 	void testTextInTheScriptOfAFractionIsSmaller() {
 		final Drawn canvas = new Drawn();
 		builder("\\frac{\u4e2d}{x^{\u6587}}").setTextMeasurer(new OneEmPerChar()).build().paint(canvas,
-				java.awt.Color.BLACK, 0, 0);
+				TeXColor.BLACK, 0, 0);
 		assertEquals(2, canvas.texts.size());
 		final double numerator = canvas.sizes.get(0);
 		final double script = canvas.sizes.get(1);

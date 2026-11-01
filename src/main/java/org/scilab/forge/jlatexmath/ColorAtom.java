@@ -46,7 +46,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -56,13 +55,13 @@ import java.util.StringTokenizer;
  */
 public class ColorAtom extends Atom implements Row {
 
-    public static Map<String,Color> Colors = new HashMap<String,Color>();
+    public static Map<String,TeXColor> Colors = new HashMap<String,TeXColor>();
 
     // background color
-    private final Color background;
+    private final TeXColor background;
 
     // foreground color
-    private final Color color;
+    private final TeXColor color;
 
     // RowAtom for which the colorsettings apply
     private final RowAtom elements;
@@ -79,7 +78,7 @@ public class ColorAtom extends Atom implements Row {
      * @param bg the background color
      * @param c the foreground color
      */
-    public ColorAtom(Atom atom, Color bg, Color c) {
+    public ColorAtom(Atom atom, TeXColor bg, TeXColor c) {
         elements = new RowAtom(atom);
         background = bg;
         color = c;
@@ -94,7 +93,7 @@ public class ColorAtom extends Atom implements Row {
      * @param old the ColorAtom for which the colorsettings should be overriden with the
      *                  given colors.
      */
-    public ColorAtom(Color bg, Color c, ColorAtom old) {
+    public ColorAtom(TeXColor bg, TeXColor c, ColorAtom old) {
         elements = new RowAtom(old.elements);
         background = (bg == null ? old.background : bg);
         color = (c == null ? old.color : c);
@@ -122,12 +121,12 @@ public class ColorAtom extends Atom implements Row {
         elements.setPreviousAtom(prev);
     }
 
-    public static Color getColor(String s) {
+    public static TeXColor getColor(String s) {
         if (s != null) {
             s = s.trim();
             if (s.length() >= 1) {
                 if (s.charAt(0) == '#') {
-                    return Color.decode(s);
+                    return TeXColor.decode(s);
                 } else if (s.indexOf(',') != -1 || s.indexOf(';') != -1) {
                     StringTokenizer toks = new StringTokenizer(s, ";,");
                     int n = toks.countTokens();
@@ -146,15 +145,15 @@ public class ColorAtom extends Atom implements Row {
                                 int ir = (int) Math.min(255, Math.max(0, r));
                                 int ig = (int) Math.min(255, Math.max(0, g));
                                 int ib = (int) Math.min(255, Math.max(0, b));
-                                return new Color(ir, ig, ib);
+                                return new TeXColor(ir, ig, ib);
                             } else {
                                 r = (float) Math.min(1, Math.max(0, r));
                                 g = (float) Math.min(1, Math.max(0, g));
                                 b = (float) Math.min(1, Math.max(0, b));
-                                return new Color(r, g, b);
+                                return new TeXColor(r, g, b);
                             }
                         } catch (NumberFormatException e) {
-                            return Color.black;
+                            return TeXColor.BLACK;
                         }
                     } else if (n == 4) {
                         // CMYK model
@@ -171,12 +170,12 @@ public class ColorAtom extends Atom implements Row {
 
                             return convColor(c, m, y, k);
                         } catch (NumberFormatException e) {
-                            return Color.black;
+                            return TeXColor.BLACK;
                         }
                     }
                 }
 
-                Color c = Colors.get(s.toLowerCase());
+                TeXColor c = Colors.get(s.toLowerCase());
                 if (c != null) {
                     return c;
                 } else {
@@ -184,27 +183,27 @@ public class ColorAtom extends Atom implements Row {
                         try {
                             float g = (float) Math.min(1, Math.max(Float.parseFloat(s), 0));
 
-                            return new Color(g, g, g);
+                            return new TeXColor(g, g, g);
                         } catch (NumberFormatException e) { }
                     }
 
-                    return Color.decode("#" + s);
+                    return TeXColor.decode("#" + s);
                 }
             }
         }
 
-        return Color.black;
+        return TeXColor.BLACK;
     }
 
     private static void initColors() {
-        Colors.put("black", Color.black);
-        Colors.put("white", Color.white);
-        Colors.put("red", Color.red);
-        Colors.put("green", Color.green);
-        Colors.put("blue", Color.blue);
-        Colors.put("cyan", Color.cyan);
-        Colors.put("magenta", Color.magenta);
-        Colors.put("yellow", Color.yellow);
+        Colors.put("black", TeXColor.BLACK);
+        Colors.put("white", TeXColor.WHITE);
+        Colors.put("red", TeXColor.RED);
+        Colors.put("green", TeXColor.GREEN);
+        Colors.put("blue", TeXColor.BLUE);
+        Colors.put("cyan", TeXColor.CYAN);
+        Colors.put("magenta", TeXColor.MAGENTA);
+        Colors.put("yellow", TeXColor.YELLOW);
         Colors.put("greenyellow", convColor(0.15f, 0f, 0.69f, 0f));
         Colors.put("goldenrod", convColor(0f, 0.10f, 0.84f, 0f));
         Colors.put("dandelion", convColor(0f, 0.29f, 0.84f, 0f));
@@ -268,8 +267,8 @@ public class ColorAtom extends Atom implements Row {
         Colors.put("gray", convColor(0f, 0f, 0f, 0.50f));
     }
 
-    private static Color convColor(final float c, final float m, final float y, final float k) {
+    private static TeXColor convColor(final float c, final float m, final float y, final float k) {
         final float kk = 1f - k;
-        return new Color(kk * (1f - c), kk * (1f - m), kk * (1f - y));
+        return new TeXColor(kk * (1f - c), kk * (1f - m), kk * (1f - y));
     }
 }

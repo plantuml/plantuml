@@ -45,7 +45,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.geom.Point2D;
 
 /**
  * A box representing a rotated box.
@@ -91,7 +90,7 @@ public class RotateBox extends Box {
         depth = -ymin - shiftY;
     }
 
-    public RotateBox(Box b, double angle, Point2D.Float origin) {
+    private RotateBox(Box b, double angle, Point origin) {
         this(b, angle, origin.x, origin.y);
     }
 
@@ -136,8 +135,8 @@ public class RotateBox extends Box {
             return BBL;
     }
 
-    private static Point2D.Float calculateShift(Box b, int option) {
-        Point2D.Float p = new Point2D.Float(0, -b.depth);
+    private static Point calculateShift(Box b, int option) {
+        Point p = new Point(0, -b.depth);
         switch (option) {
         case BL :
             p.x = 0;
@@ -206,5 +205,16 @@ public class RotateBox extends Box {
 
     public int getLastFontId() {
         return box.getLastFontId();
+    }
+
+    /** A point of the box, as java.awt.geom.Point2D.Float was. */
+    private static final class Point {
+        float x;
+        float y;
+
+        Point(float x, float y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 }

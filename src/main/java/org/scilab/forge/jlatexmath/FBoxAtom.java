@@ -45,7 +45,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
 
 /**
  * An atom representing a boxed base atom.
@@ -56,7 +55,7 @@ public class FBoxAtom extends Atom {
 
     // base atom
     protected final Atom base;
-    protected Color bg = null, line = null;
+    protected TeXColor bg = null, line = null;
 
     public FBoxAtom(Atom base) {
         if (base == null)
@@ -67,7 +66,7 @@ public class FBoxAtom extends Atom {
         }
     }
 
-    public FBoxAtom(Atom base, Color bg, Color line) {
+    public FBoxAtom(Atom base, TeXColor bg, TeXColor line) {
         this(base);
         this.bg = bg;
         this.line = line;

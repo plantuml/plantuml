@@ -1,15 +1,13 @@
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
-
 /** A canvas that draws nothing, for the tests: they override what they look at. */
 class NoopGraphics implements TeXGraphics {
 
-	public Color getColor() {
-		return Color.BLACK;
+	public TeXColor getColor() {
+		return TeXColor.BLACK;
 	}
 
-	public void setColor(Color color) {
+	public void setColor(TeXColor color) {
 	}
 
 	public void setLineWidth(float width) {

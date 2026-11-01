@@ -230,7 +230,7 @@ Steps of phase 3:
 |------|---------|-------|
 | 3a | Remove what PlantUML does not use (images, Java fonts, GeoGebra, Fcscore, URL alphabets, user XML formulas), the AWT canvas, `Icon`, `java.awt.Font`; the TTF files leave the jar | done |
 | 3a+ | Text without a TeX glyph (CJK...) drawn by PlantUML; the fallback shows the source as it is; about 200 Vega tests (`vega/math`) and the unit tests of the package | done |
-| 3b | `Color`, `Insets` and `Point2D` replaced by small classes of the package (`TeXGraphics` and `TeXIcon` without `java.awt`) | next |
+| 3b | `Color`, `Insets` and `Point2D` replaced by small classes of the package (`TeXGraphics` and `TeXIcon` without `java.awt`) | done: `TeXColor`, `TeXInsets` |
 | 3c | No reflection (`MacroInfo` / `\newcommand`, the alphabets of the static block of `TeXFormula`), no `Character.UnicodeBlock` (to check with TeaVM) | |
 | 3d | XML: a mini reader (5 parsers) or binary files made at dev time | |
 | 3e | Resources: one abstraction (class path, `EmbeddedFiles`, bundle), also for `glyphs.bin` | |
@@ -358,10 +358,12 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
 4. ~~Phase 2, step 2c: draw `AtomMath` through `UGraphicTeXGraphics`, move the
    corpus to Vega~~ (done).
 5. ~~Phase 2, step 2d: review of the rendering~~ (done, see Decisions).
-6. Phase 3 (no `java.awt` / `javax.*` left, XML, resources): step 3a is done
-   (see the table of steps in section 6), 3b is next.
-   `TeXGraphics` still uses `java.awt.Color`, `TeXIcon` `java.awt.Insets`, and
-   `TeXIconBuilder` has `java.awt.Insets` too.
+6. Phase 3 (no `java.awt` / `javax.*` left, XML, resources): steps 3a and 3b are
+   done (see the table of steps in section 6); 3c is next (no reflection, no
+   `Character.UnicodeBlock`), then 3d (XML) and 3e (resources). What is left of
+   the platform in the package: `javax.xml` (5 parsers), the reflection of
+   `MacroInfo` (`\newcommand`) and of the alphabets in `TeXFormula`,
+   `Character.UnicodeBlock`, and `getResourceAsStream`.
 
 Working method, as usual: small patches (`git format-patch`), each with an
 English commit message starting with the emojis (here 🍵 for the C build plus

@@ -48,7 +48,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
 
 /**
  * Contains the used TeXFont-object, color settings and the current style in which a
@@ -58,7 +57,7 @@ import java.awt.Color;
 public class TeXEnvironment {
 
     // colors
-    private Color background = null, color = null;
+    private TeXColor background = null, color = null;
 
     // current style
     private int style = TeXConstants.STYLE_DISPLAY;
@@ -89,7 +88,7 @@ public class TeXEnvironment {
         this.textwidth = textwidth * SpaceAtom.getFactor(widthUnit, this);
     }
 
-    private TeXEnvironment(int style, TeXFont tf, Color bg, Color c) {
+    private TeXEnvironment(int style, TeXFont tf, TeXColor bg, TeXColor c) {
         this.style = style;
         this.tf = tf;
         background = bg;
@@ -97,7 +96,7 @@ public class TeXEnvironment {
         setInterline(TeXConstants.UNIT_EX, 1f);
     }
 
-    private TeXEnvironment(int style, float scaleFactor, TeXFont tf, Color bg, Color c, String textStyle, boolean smallCap) {
+    private TeXEnvironment(int style, float scaleFactor, TeXFont tf, TeXColor bg, TeXColor c, String textStyle, boolean smallCap) {
         this.style = style;
         this.scaleFactor = scaleFactor;
         this.tf = tf;
@@ -180,7 +179,7 @@ public class TeXEnvironment {
      *
      * @return the background color setting
      */
-    public Color getBackground() {
+    public TeXColor getBackground() {
         return background;
     }
 
@@ -188,7 +187,7 @@ public class TeXEnvironment {
      *
      * @return the foreground color setting
      */
-    public Color getColor() {
+    public TeXColor getColor() {
         return color;
     }
 
@@ -275,7 +274,7 @@ public class TeXEnvironment {
      *
      * @param c the background color to be set
      */
-    public void setBackground(Color c) {
+    public void setBackground(TeXColor c) {
         background = c;
     }
 
@@ -283,7 +282,7 @@ public class TeXEnvironment {
      *
      * @param c the foreground color to be set
      */
-    public void setColor(Color c) {
+    public void setColor(TeXColor c) {
         color = c;
     }
 

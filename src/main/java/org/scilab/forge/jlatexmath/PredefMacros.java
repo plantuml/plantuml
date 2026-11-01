@@ -45,7 +45,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -1284,10 +1283,10 @@ public class PredefMacros {
     }
 
     public static final Atom definecolor_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Color color = null;
+        TeXColor color = null;
         if ("gray".equals(args[2])) {
             float f = Float.parseFloat(args[3]);
-            color = new Color(f, f, f);
+            color = new TeXColor(f, f, f);
         } else if ("rgb".equals(args[2])) {
             StringTokenizer stok = new StringTokenizer(args[3], ";,");
             if (stok.countTokens() != 3)
@@ -1295,7 +1294,7 @@ public class PredefMacros {
             float r = Float.parseFloat(stok.nextToken().trim());
             float g = Float.parseFloat(stok.nextToken().trim());
             float b = Float.parseFloat(stok.nextToken().trim());
-            color = new Color(r, g, b);
+            color = new TeXColor(r, g, b);
         } else if ("cmyk".equals(args[2])) {
             StringTokenizer stok = new StringTokenizer(args[3], ",;");
             if (stok.countTokens() != 4)
@@ -1304,7 +1303,7 @@ public class PredefMacros {
             for (int i = 0; i < 4; i++)
                 cmyk[i] = Float.parseFloat(stok.nextToken().trim());
             float k = 1 - cmyk[3];
-            color = new Color(k * (1 - cmyk[0]), k * (1 - cmyk[1]), k * (1 - cmyk[2]));
+            color = new TeXColor(k * (1 - cmyk[0]), k * (1 - cmyk[1]), k * (1 - cmyk[2]));
         } else
             throw new ParseException("The color model is incorrect !");
 
@@ -1333,7 +1332,7 @@ public class PredefMacros {
     }
 
     public static final Atom colorbox_macro(final TeXParser tp, final String[] args) throws ParseException {
-        Color c = ColorAtom.getColor(args[1]);
+        TeXColor c = ColorAtom.getColor(args[1]);
         return new FBoxAtom(new TeXFormula(tp, args[2]).root, c, c);
     }
 

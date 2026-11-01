@@ -35,12 +35,12 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.scilab.forge.jlatexmath.FontInfo;
 import org.scilab.forge.jlatexmath.GlyphOutlines;
+import org.scilab.forge.jlatexmath.TeXColor;
 import org.scilab.forge.jlatexmath.TeXFormula;
 import org.scilab.forge.jlatexmath.TeXGraphics;
 
@@ -90,9 +90,9 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 	private double f = 0;
 
 	/** Stands for the foreground HColor in the colors that the boxes save and restore. */
-	private final Color foregroundMark = new Color(0, 0, 0);
+	private final TeXColor foregroundMark = new TeXColor(0, 0, 0);
 	private final HColor foreground;
-	private Color color = foregroundMark;
+	private TeXColor color = foregroundMark;
 	private float lineWidth = 1;
 
 	/**
@@ -112,11 +112,11 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 		this.foreground = foreground == null ? HColors.BLACK : foreground;
 	}
 
-	public Color getColor() {
+	public TeXColor getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
+	public void setColor(TeXColor color) {
 		if (color != this.color)
 			flush();
 		this.color = color;

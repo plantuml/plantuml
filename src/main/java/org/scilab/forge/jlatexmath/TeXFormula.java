@@ -48,8 +48,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
-import java.awt.Insets;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -552,7 +550,7 @@ public class TeXFormula {
         private Integer style;
         private Float size;
         private Integer type;
-        private Color fgcolor;
+        private TeXColor fgcolor;
         private boolean trueValues = false;
         private Integer widthUnit;
         private Float textWidth;
@@ -598,7 +596,7 @@ public class TeXFormula {
          * @param fgcolor the foreground color
          * @return the builder, used for chaining
          */
-        public TeXIconBuilder setFGColor(final Color fgcolor) {
+        public TeXIconBuilder setFGColor(final TeXColor fgcolor) {
             this.fgcolor = fgcolor;
             return this;
         }
@@ -751,7 +749,7 @@ public class TeXFormula {
         return new TeXIconBuilder().setStyle(style).setSize(size).setType(type).build();
     }
 
-    public TeXIcon createTeXIcon(int style, float size, int type, Color fgcolor) {
+    public TeXIcon createTeXIcon(int style, float size, int type, TeXColor fgcolor) {
         return new TeXIconBuilder().setStyle(style).setSize(size).setType(type).setFGColor(fgcolor).build();
     }
 
@@ -790,7 +788,7 @@ public class TeXFormula {
      * @param c the desired background color for the <i>current</i> TeXFormula
      * @return the modified TeXFormula
      */
-    public TeXFormula setBackground(Color c) {
+    public TeXFormula setBackground(TeXColor c) {
         if (c != null) {
             if (root instanceof ColorAtom)
                 root = new ColorAtom(c, null, (ColorAtom) root);
@@ -812,7 +810,7 @@ public class TeXFormula {
      * @param c the desired foreground color for the <i>current</i> TeXFormula
      * @return the modified TeXFormula
      */
-    public TeXFormula setColor(Color c) {
+    public TeXFormula setColor(TeXColor c) {
         if (c != null) {
             if (root instanceof ColorAtom)
                 root = new ColorAtom(null, c, (ColorAtom) root);

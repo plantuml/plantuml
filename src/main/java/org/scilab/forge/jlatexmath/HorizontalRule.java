@@ -46,14 +46,13 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
 
 /**
  * A box representing a horizontal line.
  */
 public class HorizontalRule extends Box {
 
-    private Color color = null;
+    private TeXColor color = null;
     private float speShift = 0;;
 
     public HorizontalRule(float thickness, float width, float s) {
@@ -73,7 +72,7 @@ public class HorizontalRule extends Box {
         }
     }
 
-    public HorizontalRule(float thickness, float width, float s, Color c) {
+    public HorizontalRule(float thickness, float width, float s, TeXColor c) {
         height = thickness;
         this.width = width;
         color = c;
@@ -81,7 +80,7 @@ public class HorizontalRule extends Box {
     }
 
     public void draw(TeXGraphics g2, float x, float y) {
-        Color old = g2.getColor();
+        TeXColor old = g2.getColor();
         if (color != null)
             g2.setColor(color);
 

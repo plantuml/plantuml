@@ -45,7 +45,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
 
 /**
  * A box representing a rotated box.
@@ -55,8 +54,8 @@ public class FramedBox extends Box {
     protected Box box;
     protected float thickness;
     protected float space;
-    private Color line;
-    private Color bg;
+    private TeXColor line;
+    private TeXColor bg;
 
     public FramedBox(Box box, float thickness, float space) {
         this.box = box;
@@ -68,7 +67,7 @@ public class FramedBox extends Box {
         this.space = space;
     }
 
-    public FramedBox(Box box, float thickness, float space, Color line, Color bg) {
+    public FramedBox(Box box, float thickness, float space, TeXColor line, TeXColor bg) {
         this(box, thickness, space);
         this.line = line;
         this.bg = bg;
@@ -79,13 +78,13 @@ public class FramedBox extends Box {
         g2.setLineWidth(thickness);
         float th = thickness / 2;
         if (bg != null) {
-            Color prev = g2.getColor();
+            TeXColor prev = g2.getColor();
             g2.setColor(bg);
             g2.fillRect(x + th, y - height + th, width - thickness, height + depth - thickness);
             g2.setColor(prev);
         }
         if (line != null) {
-            Color prev = g2.getColor();
+            TeXColor prev = g2.getColor();
             g2.setColor(line);
             g2.drawRect(x + th, y - height + th, width - thickness, height + depth - thickness);
             g2.setColor(prev);

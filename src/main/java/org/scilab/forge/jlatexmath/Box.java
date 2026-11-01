@@ -48,7 +48,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
 import java.util.LinkedList;
 
 /**
@@ -76,15 +75,15 @@ public abstract class Box {
      * be used. If it has no parent, the foreground color of the component on which it
      * will be painted, will be used.
      */
-    protected Color foreground;
+    protected TeXColor foreground;
 
     /**
      * The background color of the whole box. Child boxes can paint a background on top of
      * this background. If it's null, no background will be painted.
      */
-    protected Color background;
+    protected TeXColor background;
 
-    private Color prevColor; // used temporarily in startDraw and endDraw
+    private TeXColor prevColor; // used temporarily in startDraw and endDraw
 
     /**
      * The width of this box, i.e. the value that will be used for further
@@ -118,7 +117,7 @@ public abstract class Box {
     protected LinkedList<Box> children = new LinkedList<Box>();
     protected Box parent;
     protected Box elderParent;
-    protected Color markForDEBUG;
+    protected TeXColor markForDEBUG;
 
     /**
      * Inserts the given box at the end of the list of child boxes.
@@ -158,7 +157,7 @@ public abstract class Box {
      * @param fg the foreground color
      * @param bg the background color
      */
-    protected Box(Color fg, Color bg) {
+    protected Box(TeXColor fg, TeXColor bg) {
         foreground = fg;
         background = bg;
     }
@@ -298,7 +297,7 @@ public abstract class Box {
         if (DEBUG) {
             g2.saveStroke();
             if (markForDEBUG != null) {
-                Color c = g2.getColor();
+                TeXColor c = g2.getColor();
                 g2.setColor(markForDEBUG);
                 g2.fillRect(x, y - height, width, height + depth);
                 g2.setColor(c);
@@ -310,8 +309,8 @@ public abstract class Box {
             }
             g2.drawRect(x, y - height, width, height + depth);
             if (showDepth) {
-                Color c = g2.getColor();
-                g2.setColor(Color.RED);
+                TeXColor c = g2.getColor();
+                g2.setColor(TeXColor.RED);
                 if (depth > 0) {
                     g2.fillRect(x, y, width, depth);
                     g2.setColor(c);

@@ -7,7 +7,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Color;
 
 /**
  * The small drawing surface that the boxes need, in place of
@@ -20,9 +19,9 @@ import java.awt.Color;
  */
 public interface TeXGraphics {
 
-	Color getColor();
+	TeXColor getColor();
 
-	void setColor(Color color);
+	void setColor(TeXColor color);
 
 	/** Sets the width of the lines, with butt caps and miter joins. */
 	void setLineWidth(float width);

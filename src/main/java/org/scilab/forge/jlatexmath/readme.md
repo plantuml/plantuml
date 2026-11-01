@@ -98,6 +98,20 @@ Phase 3, step 3a, no more AWT canvas, AWT fonts or Swing:
   `tools/jlatexmath-glyphs/ttf`, with the generator and the checker of
   `glyphs.bin` (the generator makes the same three files again).
 
+Phase 3, step 3b, no `java.awt` at all in the package:
+
+- added `TeXColor` (an sRGB color with an alpha: the constants, the constructors
+  with integers and with floats rounded as AWT does, `decode`; the same results
+  and the same exceptions, checked against `java.awt.Color` by `TeXColorTest`),
+  and `TeXInsets` (the four sides of a `TeXIcon`);
+- `java.awt.Color` is `TeXColor` in `Box`, `ColorAtom`, `FBoxAtom`,
+  `FramedBox`, `HorizontalBox`, `HorizontalRule`, `PredefMacros`, `TeXEnvironment`,
+  `TeXFormula`, `TeXGraphics`, `TeXIcon`, `TeXParser`; `java.awt.Insets` is
+  `TeXInsets` in `TeXIcon`; `RotateBox` has its own small `Point` instead of
+  `Point2D.Float`. `javax.xml` (the parsers) and the reflection are what is left
+  (steps 3c and 3d).
+- in PlantUML, `UGraphicTeXGraphics` and `TeXIconBuilder` use them.
+
 A character that has no TeX glyph (CJK, for instance) was drawn with a Java font
 by `JavaFontRenderingAtom`; since step 2c that box drew nothing (a blank gap).
 That is fixed by the next step.

@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.awt.Insets;
-
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -45,6 +43,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
 import org.scilab.forge.jlatexmath.TeXIcon;
+import org.scilab.forge.jlatexmath.TeXInsets;
 // ::done
 
 public class TeXIconBuilder {
@@ -58,7 +57,7 @@ public class TeXIconBuilder {
 				.setTextMeasurer(new StringBounderTextMeasurer(stringBounder)).build();
 
 		final int margin = 1;
-		teXIcon.setInsets(new Insets(margin, margin, margin, margin));
+		teXIcon.setInsets(new TeXInsets(margin, margin, margin, margin));
 		final XDimension2D dimension = new XDimension2D(teXIcon.getIconWidth(), teXIcon.getIconHeight());
 		drawing = new MathDrawing() {
 
