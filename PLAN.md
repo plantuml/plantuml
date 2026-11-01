@@ -195,7 +195,19 @@ scripts (`cjk/`), and the other outputs (`formats/`: PDF, TikZ, text). The unit
 tests are in `src/test/java/org/scilab/forge/jlatexmath` (`GlyphOutlinesTest`,
 `ForeignTextTest`). The SVG references are made with `decimal: 1` (0.1 pixel):
 a third smaller than with 3 decimals, and enough to see a change of a shape or
-of the layout. Vega on the C build is still to do.
+of the layout.
+
+Vega on the C build: `tools/vega-c/run_vega_c.py` runs `plantuml.exe` on these
+tests (`--svg-vega`, with `--decimal N` for the `decimal:` key, `--pdf-vega`) and
+compares with the same reference files. On `plantuml.exe` of step 3d the 19
+tests of `vega/math` that have no `decimal:` fail and the others were skipped
+(the script did not know the key); the math diagrams are not in the C build yet
+(phase 4: `PSystemBuilderC` has no `PSystemMathFactory` / `PSystemLatexFactory`,
+and the `TeaVM.isTeaVM()` gates of the creole parser are on). The same script
+driven through the JVM command line instead of `plantuml.exe` gives 216 passed,
+0 failed, 5 skipped (TikZ and text outputs) out of the 221 math tests: so the
+references, the script and `--decimal` agree, and what is left to compare is
+the C build itself.
 
 - Vega tests from 5.1 on the JVM, and on the C build through
   `tools/vega-c/run_vega_c.py` (once the Vega headers are there).

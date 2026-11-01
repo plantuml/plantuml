@@ -14,6 +14,8 @@ regression.
 What is checked, per test file:
   * output: svg      -> `plantuml.exe --svg-vega`, compared (XML-normalised, as SvgCleaner
                         does in the Java tests) with <name>.svg / <name>-N.svg
+                        (with a `decimal: N` key, `--decimal N` is added: the number of
+                        decimals of the numbers of the SVG, as on the JVM)
   * output: preproc  -> `plantuml.exe --preproc`, compared with <name>.preproc
   * output: pdf      -> `plantuml.exe --pdf-vega` (deterministic PDF: fixed dates and /ID, no
                         compression), compared byte for byte with <name>.pdf / <name>-N.pdf
@@ -394,18 +396,26 @@ def run_checks(puml, exe, timeout, workdir):
         if key in header:
             result["message"] = "test expects an error (%s): not checked" % key
             return result
+    svg_flags = []
     if "decimal" in header:
-        result["message"] = "decimal option: not supported by this script"
-        return result
+        # the number of decimals of the SVG (the "decimal:" key of the JVM tests): --decimal N
+        try:
+            decimal = int(header["decimal"].strip())
+        except ValueError:
+            decimal = -1
+        if decimal < 0:
+            result["message"] = "bad decimal option: %r" % header["decimal"]
+            return result
+        svg_flags = ["--decimal", str(decimal)]
 
     source = write_source_copy(puml)
     try:
-        return check_formats(puml, source, supported, exe, timeout, workdir, relative, result)
+        return check_formats(puml, source, supported, exe, timeout, workdir, relative, result, svg_flags)
     finally:
         source.unlink()
 
 
-def check_formats(puml, source, supported, exe, timeout, workdir, relative, result):
+def check_formats(puml, source, supported, exe, timeout, workdir, relative, result, svg_flags=()):
     start = time.time()
     problems = []
     diffs = []
@@ -414,7 +424,7 @@ def check_formats(puml, source, supported, exe, timeout, workdir, relative, resu
         flags, extension = SUPPORTED_FORMATS[fmt]
         outdir = Path(tempfile.mkdtemp(prefix="vega-c-", dir=workdir))
         try:
-            command = [str(exe)] + flags + ["-o", str(outdir), str(source)]
+            command = [str(exe)] + flags + (list(svg_flags) if fmt == "svg" else []) + ["-o", str(outdir), str(source)]
             try:
                 proc = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
                                       stderr=subprocess.PIPE, timeout=timeout, cwd=str(puml.parent))

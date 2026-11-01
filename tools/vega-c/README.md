@@ -19,6 +19,7 @@ reports, it does not judge. The exit code is 0 unless `--strict` is given.
 |---|---|
 | `output: svg` | `plantuml.exe --svg-vega` (the deterministic SVG of the JVM Vega tests), compared with `<name>.svg` (or `<name>-N.svg`) once both are parsed and pretty-printed, as `SvgCleaner` does for the JVM |
 | `output: pdf` | `plantuml.exe --pdf-vega` (the deterministic PDF of the JVM Vega tests: fixed dates and file identifier, no compression), compared byte for byte with `<name>.pdf` (or `<name>-N.pdf`), ignoring carriage returns |
+| `decimal: N` (with `output: svg`) | adds `--decimal N` to the command line of the SVG: the number of decimals of the numbers, as on the JVM |
 | `output: preproc` | `plantuml.exe --preproc`, compared with `<name>.preproc` |
 | other formats, tests that expect an error | `skipped` |
 
