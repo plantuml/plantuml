@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.security.SURL;
 //::comment when JAVA8
 import org.teavm.jso.JSObject;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.c.HttpC;
 import net.sourceforge.plantuml.teavm.js.browser.BrowserLog;
 import net.sourceforge.plantuml.teavm.js.browser.FileLoaderJs;
 import net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs;
@@ -145,7 +146,8 @@ public class PathSystem {
 		// ::revert when JAVA8
 		// return null;
 		if (TeaVM.isC())
-			return file instanceof InputFileIo ? ((InputFileIo) file).getId() : null;
+			return file instanceof InputFileIo ? ((InputFileIo) file).getId()
+					: file instanceof InputFileBytes ? ((InputFileBytes) file).getId() : null;
 
 		return FileLoaderJs.getId(file);
 		// ::done
@@ -373,12 +375,17 @@ public class PathSystem {
 	// ::comment when JAVA8
 	/**
 	 * The C build reads a local file from the folder of the diagram, with java.io,
-	 * or from an archive given to !import. A URL and a standard-library path are
-	 * not available there.
+	 * or from an archive given to !import, and a URL with the native HTTP client. A
+	 * standard-library path is not available there.
 	 */
 	private InputFile getInputFileInC(String path) {
-		if (path.startsWith("http://") || path.startsWith("https://")
-				|| (path.startsWith("<") && path.endsWith(">")))
+		if (path.startsWith("http://") || path.startsWith("https://")) {
+			// The security profile and the allowlist are checked by HttpC
+			final byte[] data = HttpC.get(path);
+			return data == null ? null : new InputFileBytes(data, currentFolder, path);
+		}
+
+		if (path.startsWith("<") && path.endsWith(">"))
 			return null;
 
 		if (currentFolder instanceof NFolderIo) {

@@ -217,6 +217,12 @@ jobs:
           name: teavm-c-sources
           path: c-sources
 
+      # libcurl reads the URL of !include (macOS has it; the Linux runners may lack the
+      # development files)
+      - name: Install libcurl (Linux)
+        if: matrix.os == 'linux'
+        run: sudo apt-get install -y libcurl4-openssl-dev
+
       # Single-configuration generator (Unix Makefiles): the executable is
       # c-sources/bin/plantuml (CMakeLists.txt builds in Release by default)
       - name: Configure

@@ -717,7 +717,7 @@ public class TContext {
 					this.pathSystem = this.pathSystem.changeCurrentDirectory(tmp.getParentFolder());
 					reader = PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);
 				}
-			} else if (what.startsWith("http://") || what.startsWith("https://")) {
+			} else if ((what.startsWith("http://") || what.startsWith("https://")) && TeaVM.isC() == false) {
 				if (!TeaVM.isTeaVM()) {
 					final SURL url = SURL.create(what);
 					if (url == null)
@@ -731,6 +731,9 @@ public class TContext {
 				// what.length() - 1));
 			} else {
 				final InputFile f2 = this.pathSystem.getInputFile(what);
+				// The C build reads a URL here: refused by the security profile, or unreachable
+				if (f2 == null && TeaVM.isC() && (what.startsWith("http://") || what.startsWith("https://")))
+					throw new EaterException("Cannot open URL", s);
 				if (f2 != null) {
 					final File used = f2 instanceof SFile ? ((SFile) f2).getCanonicalFile().conv() : null;
 					final String identity = used != null ? used.getPath() : this.pathSystem.getTeaVMFileId(f2);
