@@ -62,7 +62,6 @@ package org.scilab.forge.jlatexmath;
  */
 public class TeXIcon {
 
-    private static final TeXColor defaultColor = new TeXColor(0, 0, 0);
 
     public static float defaultSize = -1;
     public static float magFactor = 0;
