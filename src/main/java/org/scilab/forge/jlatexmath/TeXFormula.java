@@ -48,8 +48,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -134,16 +132,6 @@ public class TeXFormula {
         DefaultTeXFont.registerAlphabet(new GreekRegistration());
 
         //setDefaultDPI();
-    }
-
-    public static void addSymbolMappings(String file) throws ResourceParseException {
-        FileInputStream in;
-        try {
-            in = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new ResourceParseException(file, e);
-        }
-        addSymbolMappings(in, file);
     }
 
     public static void addSymbolMappings(InputStream in, String name) throws ResourceParseException {

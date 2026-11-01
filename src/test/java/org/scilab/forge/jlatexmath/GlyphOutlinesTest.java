@@ -15,9 +15,15 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class GlyphOutlinesTest {
+
+	@BeforeAll
+	static void resources() {
+		LibraryResources.install();
+	}
 
 	/** Records what the reader gives. */
 	private static class Recorder implements GlyphOutlines.Sink {

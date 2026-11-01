@@ -61,7 +61,7 @@ public class TeXFormulaSettingsParser {
     private XmlElement root;
 
     public TeXFormulaSettingsParser() throws ResourceParseException {
-        this(GlueSettingsParser.class.getResourceAsStream(RESOURCE_NAME), RESOURCE_NAME);
+        this(TeXResources.open(GlueSettingsParser.class, RESOURCE_NAME), RESOURCE_NAME);
     }
 
     public TeXFormulaSettingsParser(InputStream file, String name) throws ResourceParseException {

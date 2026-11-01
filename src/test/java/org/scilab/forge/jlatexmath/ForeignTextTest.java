@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -14,6 +15,11 @@ import org.junit.jupiter.api.Test;
  * drawn by the canvas.
  */
 class ForeignTextTest {
+
+	@BeforeAll
+	static void resources() {
+		LibraryResources.install();
+	}
 
 	private static final TeXFormula.TeXIconBuilder builder(String tex) {
 		return new TeXFormula(tex).new TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20);

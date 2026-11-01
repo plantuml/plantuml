@@ -48,8 +48,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.BitSet;
 import java.util.Map;
@@ -125,16 +123,6 @@ public class SymbolAtom extends CharSymbol {
 
     public char getUnicode() {
         return unicode;
-    }
-
-    public static void addSymbolAtom(String file) {
-        FileInputStream in;
-        try {
-            in = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new ResourceParseException(file, e);
-        }
-        addSymbolAtom(in, file);
     }
 
     public static void addSymbolAtom(InputStream in, String name) {

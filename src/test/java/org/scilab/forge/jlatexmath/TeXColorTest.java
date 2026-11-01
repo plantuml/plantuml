@@ -7,10 +7,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Color;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /** TeXColor replaces java.awt.Color in the library: same values, same exceptions. */
 class TeXColorTest {
+
+	@BeforeAll
+	static void resources() {
+		LibraryResources.install();
+	}
 
 	private static void assertSame(Color awt, TeXColor color) {
 		assertEquals(awt.getRed(), color.getRed());

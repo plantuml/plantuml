@@ -169,7 +169,7 @@ public class DefaultTeXFontParser {
     }
 
     public DefaultTeXFontParser() throws ResourceParseException {
-        this(DefaultTeXFontParser.class.getResourceAsStream(RESOURCE_NAME), RESOURCE_NAME);
+        this(TeXResources.open(DefaultTeXFontParser.class, RESOURCE_NAME), RESOURCE_NAME);
     }
 
     public DefaultTeXFontParser(InputStream file, String name) throws ResourceParseException {
@@ -282,9 +282,9 @@ public class DefaultTeXFontParser {
                 // get required string attribute
                 String include = getAttrValueAndCheckIfNotNull("include", (XmlElement)list.item(i));
                 if (base == null) {
-                    fi = parseFontDescriptions(fi, DefaultTeXFontParser.class.getResourceAsStream(include), include);
+                    fi = parseFontDescriptions(fi, TeXResources.open(DefaultTeXFontParser.class, include), include);
                 } else {
-                    fi = parseFontDescriptions(fi, base.getClass().getResourceAsStream(include), include);
+                    fi = parseFontDescriptions(fi, TeXResources.open(base.getClass(), include), include);
                 }
             }
         }
@@ -296,13 +296,13 @@ public class DefaultTeXFontParser {
         if (syms != null) { // element present
             // get required string attribute
             String include = getAttrValueAndCheckIfNotNull("include", syms);
-            SymbolAtom.addSymbolAtom(base.getClass().getResourceAsStream(include), include);
+            SymbolAtom.addSymbolAtom(TeXResources.open(base.getClass(), include), include);
         }
         XmlElement settings = (XmlElement)root.getElementsByTagName("FormulaSettings").item(0);
         if (settings != null) { // element present
             // get required string attribute
             String include = getAttrValueAndCheckIfNotNull("include", settings);
-            TeXFormula.addSymbolMappings(base.getClass().getResourceAsStream(include), include);
+            TeXFormula.addSymbolMappings(TeXResources.open(base.getClass(), include), include);
         }
     }
 
@@ -346,9 +346,9 @@ public class DefaultTeXFontParser {
                 XmlElement map;
                 try {
                     if (base == null) {
-                        map = XmlReader.parse(DefaultTeXFontParser.class.getResourceAsStream(include));
+                        map = XmlReader.parse(TeXResources.open(DefaultTeXFontParser.class, include));
                     } else {
-                        map = XmlReader.parse(base.getClass().getResourceAsStream(include));
+                        map = XmlReader.parse(TeXResources.open(base.getClass(), include));
                     }
                 } catch (Exception e) {
                     throw new XMLResourceParseException("Cannot find the file " + include + "!");

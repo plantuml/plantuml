@@ -98,6 +98,30 @@ Phase 3, step 3a, no more AWT canvas, AWT fonts or Swing:
   `tools/jlatexmath-glyphs/ttf`, with the generator and the checker of
   `glyphs.bin` (the generator makes the same three files again).
 
+Phase 3, step 3e, one place for the resources:
+
+- added `TeXResources` (every resource of the library is read with
+  `TeXResources.open(class, name)`, from the `TeXResourceProvider` that is installed
+  with `setProvider`, and from nothing else: as with `BaseFont.setResourceProvider`
+  of OpenPDF, the library has no class loader code, so that the C build, where
+  TeaVM's support of the resources does not work, never reaches it) and
+  `TeXResourceProvider` (the interface; the name it is given is the whole one,
+  without a slash, for instance `org/scilab/forge/jlatexmath/fonts/base/jlm_cmr10.xml`);
+  `TeXClassLoaderResources` is the provider of the JVM (the class path), and the C
+  build installs one that reads the files embedded in the executable. A program that
+  uses the library by itself installs one (`TeXResources.setProvider(new
+  TeXClassLoaderResources())`); PlantUML does it in `MathResources`;
+- 15 `getResourceAsStream` calls (the four XML parsers, `DefaultTeXFont`,
+  `GlyphOutlines`) are `TeXResources.open`;
+- removed: the three methods that read a user file by its name with a
+  `FileInputStream` (`SymbolAtom.addSymbolAtom(String)`,
+  `TeXFormula.addSymbolMappings(String)`, `DefaultTeXFont.addTeXFontDescription(String)`);
+  the ones that take an `InputStream` stay;
+- checked without any resource in the class path: with a provider that reads
+  `src/main/resources`, the formulas (Greek, Cyrillic, `\newcommand`, CJK text)
+  have the same sizes and the same glyphs, and the library asks for exactly the 71
+  files that the C build embeds (the 68 XML files and the 3 `glyphs.bin`).
+
 Phase 3, step 3d, no `javax.xml` and no `org.w3c.dom` (the TeaVM class library has
 neither):
 

@@ -72,7 +72,7 @@ public class GlueSettingsParser {
         try {
             setTypeMappings();
             setStyleMappings();
-            root = XmlReader.parse(GlueSettingsParser.class.getResourceAsStream(RESOURCE_NAME));
+            root = XmlReader.parse(TeXResources.open(GlueSettingsParser.class, RESOURCE_NAME));
             parseGlueTypes();
         } catch (Exception e) { // JDOMException or IOException
             throw new XMLResourceParseException(RESOURCE_NAME, e);

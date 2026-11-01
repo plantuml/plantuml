@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -12,6 +13,11 @@ import org.junit.jupiter.api.Test;
  * have TeX fonts, and "other" for the rest.
  */
 class TeXUnicodeBlockTest {
+
+	@BeforeAll
+	static void resources() {
+		LibraryResources.install();
+	}
 
 	private static TeXUnicodeBlock expected(char c) {
 		final Character.UnicodeBlock block = Character.UnicodeBlock.of(c);

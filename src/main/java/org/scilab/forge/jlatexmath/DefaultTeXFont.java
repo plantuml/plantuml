@@ -46,8 +46,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,16 +141,6 @@ public class DefaultTeXFont implements TeXFont {
         isIt = it;
     }
 
-    public static void addTeXFontDescription(String file) throws ResourceParseException {
-        FileInputStream in;
-        try {
-            in = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new ResourceParseException(file, e);
-        }
-        addTeXFontDescription(in, file);
-    }
-
     public static void addTeXFontDescription(InputStream in, String name) throws ResourceParseException {
         DefaultTeXFontParser dtfp = new DefaultTeXFontParser(in, name);
         fontInfo = dtfp.parseFontDescriptions(fontInfo);
@@ -184,7 +172,7 @@ public class DefaultTeXFont implements TeXFont {
         }
         if (!b) {
             TeXParser.isLoading = true;
-            addTeXFontDescription(base, base.getClass().getResourceAsStream(language), language);
+            addTeXFontDescription(base, TeXResources.open(base.getClass(), language), language);
             for (int i = 0; i < alphabet.length; i++) {
                 loadedAlphabets.add(alphabet[i]);
             }
@@ -198,7 +186,7 @@ public class DefaultTeXFont implements TeXFont {
         String map = "fonts/" + name + "/mappings_" + name+ ".xml";
 
         try {
-            DefaultTeXFont.addAlphabet(alphabet, TeXFormula.class.getResourceAsStream(lg), lg, TeXFormula.class.getResourceAsStream(sym), sym, TeXFormula.class.getResourceAsStream(map), map);
+            DefaultTeXFont.addAlphabet(alphabet, TeXResources.open(TeXFormula.class, lg), lg, TeXResources.open(TeXFormula.class, sym), sym, TeXResources.open(TeXFormula.class, map), map);
         } catch (FontAlreadyLoadedException e) { }
     }
 

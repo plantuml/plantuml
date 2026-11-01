@@ -2,6 +2,7 @@ package org.scilab.forge.jlatexmath;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -12,6 +13,11 @@ import org.junit.jupiter.api.Test;
  * of a formula depended on what had been drawn before (a server, a test suite).
  */
 class StateLeakTest {
+
+	@BeforeAll
+	static void resources() {
+		LibraryResources.install();
+	}
 
 	private static String size(String tex) {
 		final TeXIcon icon = new TeXFormula(tex).new TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20)

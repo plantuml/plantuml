@@ -181,7 +181,7 @@ public final class GlyphOutlines {
 		GlyphOutlines result = CACHE.get(clazz);
 		if (result == null) {
 			// TODO phase 3: resource abstraction (class path, EmbeddedFiles, bundle).
-			final InputStream in = clazz.getResourceAsStream("fonts/glyphs.bin");
+			final InputStream in = TeXResources.open(clazz, "fonts/glyphs.bin");
 			if (in == null)
 				throw new IllegalStateException("No fonts/glyphs.bin next to " + clazz.getName());
 			try {
