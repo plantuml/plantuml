@@ -76,6 +76,7 @@ public class TeXEnvironment {
     private float scaleFactor = 1;
     private int interlineUnit;
     private float interline;
+    private TeXTextMeasurer textMeasurer;
 
     public boolean isColored = false;
 
@@ -107,6 +108,15 @@ public class TeXEnvironment {
         setInterline(TeXConstants.UNIT_EX, 1f);
     }
 
+    /** The measure of the text that has no TeX glyph, or null (a rough estimate is used). */
+    public TeXTextMeasurer getTextMeasurer() {
+        return textMeasurer;
+    }
+
+    public void setTextMeasurer(TeXTextMeasurer textMeasurer) {
+        this.textMeasurer = textMeasurer;
+    }
+
     public void setInterline(int unit, float len) {
         this.interline = len;
         this.interlineUnit = unit;
@@ -133,11 +143,14 @@ public class TeXEnvironment {
     }
 
     protected TeXEnvironment copy() {
-        return new TeXEnvironment(style, scaleFactor, tf, background, color, textStyle, smallCap);
+        TeXEnvironment te = new TeXEnvironment(style, scaleFactor, tf, background, color, textStyle, smallCap);
+        te.textMeasurer = textMeasurer;
+        return te;
     }
 
     protected TeXEnvironment copy(TeXFont tf) {
         TeXEnvironment te = new TeXEnvironment(style, scaleFactor, tf, background, color, textStyle, smallCap);
+        te.textMeasurer = textMeasurer;
         te.textwidth = textwidth;
         te.interline = interline;
         te.interlineUnit = interlineUnit;

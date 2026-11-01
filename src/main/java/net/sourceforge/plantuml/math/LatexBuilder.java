@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.math;
 
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+
 public class LatexBuilder implements ScientificEquation {
 
 	private final String tex;
@@ -44,9 +46,9 @@ public class LatexBuilder implements ScientificEquation {
 		this.tex = tex;
 	}
 
-	public MathDrawing getDrawing() throws ClassNotFoundException {
+	public MathDrawing getDrawing(StringBounder stringBounder) throws ClassNotFoundException {
 		if (drawing == null)
-			drawing = new TeXIconBuilder(tex).getDrawing();
+			drawing = new TeXIconBuilder(tex, stringBounder).getDrawing();
 		return drawing;
 	}
 

@@ -39,6 +39,7 @@ import java.awt.Insets;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 // ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 import org.scilab.forge.jlatexmath.TeXConstants;
@@ -50,10 +51,11 @@ public class TeXIconBuilder {
 
 	private MathDrawing drawing;
 
-	public TeXIconBuilder(String tex) throws ClassNotFoundException {
+	public TeXIconBuilder(String tex, StringBounder stringBounder) throws ClassNotFoundException {
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 		final TeXFormula formula = new TeXFormula(tex);
-		final TeXIcon teXIcon = formula.new TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20).build();
+		final TeXIcon teXIcon = formula.new TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20)
+				.setTextMeasurer(new StringBounderTextMeasurer(stringBounder)).build();
 
 		final int margin = 1;
 		teXIcon.setInsets(new Insets(margin, margin, margin, margin));

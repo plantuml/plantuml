@@ -1116,12 +1116,25 @@ public class TeXParser {
 
             String symbolName = TeXFormula.symbolMappings[c];
             if (symbolName == null && (TeXFormula.symbolFormulaMappings == null || TeXFormula.symbolFormulaMappings[c] == null)) {
-                if (!isPartial) {
-                    throw new ParseException("Unknown character : '"
-                                             + Character.toString(c) + "' (or " + ((int) c) + ")");
-                } else {
-                    return new ColorAtom(new RomanAtom(new TeXFormula("\\text{(Unknown char " + ((int) c) + ")}").root), null, Color.RED);
+                if (Character.isISOControl(c)) {
+                    if (!isPartial) {
+                        throw new ParseException("Unknown character : '"
+                                                 + Character.toString(c) + "' (or " + ((int) c) + ")");
+                    } else {
+                        return new ColorAtom(new RomanAtom(new TeXFormula("\\text{(Unknown char " + ((int) c) + ")}").root), null, Color.RED);
+                    }
                 }
+                // No TeX glyph (CJK, ...): the text is measured and drawn by the host, see TeXTextMeasurer
+                if (oneChar) {
+                    return new ForeignTextAtom(Character.toString(c));
+                }
+                final int start = pos;
+                int end = pos;
+                while (end + 1 < len && isForeign(parseString.charAt(end + 1))) {
+                    end++;
+                }
+                pos = end;
+                return new ForeignTextAtom(parseString.substring(start, end + 1));
             } else {
                 if (!ignoreWhiteSpace) {// we are in text mode
                     if (TeXFormula.symbolTextMappings[c] != null) {
@@ -1145,6 +1158,19 @@ public class TeXParser {
             // alphanumeric character
             return new CharAtom(c, formula.textStyle, ignoreWhiteSpace);
         }
+    }
+
+    /**
+     * A character that goes on a run of text without TeX glyph: not ASCII, no
+     * symbol, no control, and not a letter of an alphabet that has fonts (the
+     * Greek and Cyrillic ones are loaded when their first character is parsed).
+     */
+    private boolean isForeign(char c) {
+        if (c < 0x80 || Character.isISOControl(c))
+            return false;
+        if (TeXFormula.symbolMappings[c] != null || TeXFormula.symbolFormulaMappings[c] != null)
+            return false;
+        return DefaultTeXFont.registeredAlphabets.get(Character.UnicodeBlock.of(c)) == null;
     }
 
     private String getCommand() {

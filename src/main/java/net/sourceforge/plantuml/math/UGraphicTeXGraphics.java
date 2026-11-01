@@ -46,10 +46,14 @@ import org.scilab.forge.jlatexmath.TeXGraphics;
 
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.USegment;
 
 /**
@@ -243,6 +247,18 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 		pendingGlyphs = null;
 		pendingColor = null;
 		ug.apply(HColors.transparent()).apply(fore.bg()).apply(UStroke.withThickness(0)).draw(path);
+	}
+
+	public void drawText(String text, double fontSize) {
+		// The text is drawn by the font engine of the UGraphic: it can be neither rotated nor
+		// flipped, and its size is a whole number of pixels
+		flush();
+		final double scale = Math.sqrt(Math.abs(a * d - b * c));
+		final int size = Math.max(1, (int) Math.round(fontSize * scale));
+		final HColor fore = current();
+		final FontConfiguration fontConfiguration = FontConfiguration.create(UFontFactory.sansSerif(size), fore, fore,
+				UStroke.simple(), 8);
+		ug.apply(new UTranslate(tx(0, 0), ty(0, 0))).draw(UText.build(text, fontConfiguration));
 	}
 
 	// ------------------------------------------------------------------ transformation

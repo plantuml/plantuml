@@ -561,6 +561,8 @@ public class TeXFormula {
         private Integer interLineUnit;
         private Float interLineSpacing;
 
+        private TeXTextMeasurer textMeasurer;
+
         /**
          * Specify the style for rendering the given TeXFormula
          * @param style the style
@@ -673,6 +675,17 @@ public class TeXFormula {
         }
 
         /**
+         * Gives the measure of the text that has no TeX glyph (CJK, ...), which the
+         * canvas draws. Without it, a rough estimate is used.
+         * @param textMeasurer the measurer
+         * @return the builder, used for chaining
+         */
+        public TeXIconBuilder setTextMeasurer(final TeXTextMeasurer textMeasurer) {
+            this.textMeasurer = textMeasurer;
+            return this;
+        }
+
+        /**
          * Create a TeXIcon from the information gathered by the (chained) setXXX() methods.
          * (see Builder pattern)
          * @return the TeXIcon
@@ -695,6 +708,7 @@ public class TeXFormula {
             if (interLineUnit != null) {
                 te.setInterline(interLineUnit, interLineSpacing);
             }
+            te.setTextMeasurer(textMeasurer);
 
             Box box = createBox(te);
             TeXIcon ti;

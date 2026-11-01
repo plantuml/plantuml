@@ -100,8 +100,28 @@ Phase 3, step 3a, no more AWT canvas, AWT fonts or Swing:
 
 A character that has no TeX glyph (CJK, for instance) was drawn with a Java font
 by `JavaFontRenderingAtom`; since step 2c that box drew nothing (a blank gap).
-It is now a `ParseException` ("Unknown character"): PlantUML shows the source of
-the formula as text. See `PLAN.md`, section 8.
+That is fixed by the next step.
+
+Text without a TeX glyph (Chinese, Japanese, Korean, Arabic, emoji... any
+character that has no symbol) is drawn by the application that hosts the
+library, with its own font:
+
+- added: `TeXTextMeasurer` (the size of a text, for a font size of 1: width,
+  height above the baseline, depth), `ForeignTextAtom` and `ForeignTextBox`, and
+  `TeXGraphics.drawText(String, double)`;
+- modified: `TeXParser.convertCharacter` makes one `ForeignTextAtom` for a run
+  of such characters (it stops at a character that has a symbol, at ASCII and at
+  an alphabet that has fonts, such as Greek or Cyrillic; a control character is
+  still a `ParseException`); `TeXEnvironment` carries the measurer, given by
+  `TeXFormula.TeXIconBuilder.setTextMeasurer`. It is a field of the environment,
+  not a static one, so that formulas made at the same time can have different
+  measurers. Without a measurer a wide character is one em and the others half
+  an em.
+- in PlantUML, `StringBounderTextMeasurer` measures with the `StringBounder` of
+  the diagram and `UGraphicTeXGraphics.drawText` draws a `UText` with the same
+  font (sans serif), so the layout is the one of the drawing in every output
+  format. A text can be neither rotated nor flipped (UGraphic cannot), and its
+  size is a whole number of pixels.
 
 Everything else is as upstream. The package is listed in `CLAUDE.md` among the
 external packages, so that edits stay deliberate.

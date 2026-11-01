@@ -1,0 +1,9 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 participants)
+---
+@startuml
+Alice -> Bob : <latex>\text{你好} + x</latex>
+note right of Bob : <math>"世界"</math> 和 <latex>\alpha</latex>
+@enduml

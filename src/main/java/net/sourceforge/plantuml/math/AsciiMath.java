@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.math;
 
 import javax.script.ScriptException;
 
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+
 public class AsciiMath implements ScientificEquation {
 
 	private final LatexBuilder builder;
@@ -47,8 +49,8 @@ public class AsciiMath implements ScientificEquation {
 		this.builder = new LatexBuilder(tex);
 	}
 
-	public MathDrawing getDrawing() throws ClassNotFoundException {
-		return builder.getDrawing();
+	public MathDrawing getDrawing(StringBounder stringBounder) throws ClassNotFoundException {
+		return builder.getDrawing(stringBounder);
 	}
 
 	public String getSource() {

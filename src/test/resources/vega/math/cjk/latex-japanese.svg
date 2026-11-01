@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="30px" preserveAspectRatio="none" style="width:283px;height:30px;background:#FFFFFF;" version="1.1" viewBox="0 0 283 30" width="283px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="29" style="stroke:none;" width="282" x="0" y="0"/>
+    <text fill="#000" font-size="20" textLength="140" x="4" y="19.6">こんにちは世界</text>
+    <text fill="#000" font-size="20" textLength="80" x="150.7" y="19.6">カタカナ</text>
+    <text fill="#000" font-size="20" textLength="40" x="237.3" y="19.6">漢字</text>
+  </g>
+</svg>

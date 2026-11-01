@@ -47,6 +47,14 @@ public interface TeXGraphics {
 	 */
 	void drawChar(int fontId, char c);
 
+	/**
+	 * Draws text that no TeX font has the glyphs of (see {@link TeXTextMeasurer}),
+	 * with its baseline origin at the current origin. The font size is in the
+	 * current units, as the size of the glyphs of {@link #drawChar} is. The canvas
+	 * may not rotate or flip it.
+	 */
+	void drawText(String text, double fontSize);
+
 	void translate(double tx, double ty);
 
 	void scale(double sx, double sy);

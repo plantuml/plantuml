@@ -35,14 +35,17 @@
  */
 package net.sourceforge.plantuml.math;
 
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+
 public interface ScientificEquation {
 
 	/**
-	 * The formula, ready to be drawn.
+	 * The formula, ready to be drawn. The StringBounder measures the text that no TeX
+	 * font can draw (CJK, ...).
 	 *
 	 * @throws ClassNotFoundException when this license variant has no JLaTeXMath
 	 */
-	public MathDrawing getDrawing() throws ClassNotFoundException;
+	public MathDrawing getDrawing(StringBounder stringBounder) throws ClassNotFoundException;
 
 	public String getSource();
 

@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\colorbox{yellow}{高亮} \textcolor{red}{红色} \fbox{框}
+@endlatex

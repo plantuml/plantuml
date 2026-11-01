@@ -90,12 +90,12 @@ public class ScientificEquationSafe {
 	}
 
 	/** The formula, or null if it cannot be made (the source is then shown as text). */
-	private MathDrawing getDrawing() {
+	private MathDrawing getDrawing(StringBounder stringBounder) {
 		if (drawingDone == false) {
 			drawingDone = true;
 			if (equation != null)
 				try {
-					drawing = equation.getDrawing();
+					drawing = equation.getDrawing(stringBounder);
 				} catch (Exception e) {
 					printTrace(e);
 				}
@@ -104,7 +104,7 @@ public class ScientificEquationSafe {
 	}
 
 	public XDimension2D getDimension(StringBounder stringBounder) {
-		final MathDrawing result = getDrawing();
+		final MathDrawing result = getDrawing(stringBounder);
 		if (result != null)
 			return result.getDimension();
 		return getRollback().calculateDimension(stringBounder);
@@ -117,7 +117,7 @@ public class ScientificEquationSafe {
 	 * @param background the color behind the formula, null for none
 	 */
 	public void drawU(UGraphic ug, HColor foreground, HColor background) {
-		final MathDrawing result = getDrawing();
+		final MathDrawing result = getDrawing(ug.getStringBounder());
 		if (result == null) {
 			getRollback().drawU(ug);
 			return;
