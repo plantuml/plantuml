@@ -365,6 +365,13 @@ static plutovg_glyph_t* plutovg_font_face_get_glyph(plutovg_font_face_t* face, p
     return plutovg_glyph_cache_get(&face->cache, face, codepoint);
 }
 
+/* PlantUML addition, see plutovg.h */
+int plutovg_font_face_glyph_outline_size(plutovg_font_face_t* face, plutovg_codepoint_t codepoint)
+{
+    plutovg_glyph_t* glyph = plutovg_font_face_get_glyph(face, codepoint);
+    return glyph->index == 0 ? -1 : (int)glyph->nvertices;
+}
+
 void plutovg_font_face_get_glyph_metrics(plutovg_font_face_t* face, float size, plutovg_codepoint_t codepoint, float* advance_width, float* left_side_bearing, plutovg_rect_t* extents)
 {
     float scale = plutovg_font_face_get_scale(face, size);

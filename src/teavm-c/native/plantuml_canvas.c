@@ -3,11 +3,13 @@
  */
 #include "plantuml_canvas.h"
 
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <plutovg.h>
 
+#include "plantuml_fonts.h"
 #include "plantuml_png.h"
 
 /* Generated at build time from the TTF files (see embed_font.cmake) */
@@ -204,10 +206,89 @@ int32_t plantuml_canvas_set_font(int64_t handle, int32_t font_id, double size) {
 	return 0;
 }
 
+/*
+ * The characters the embedded font has no glyph for are drawn with a font of the
+ * machine, when there is one (plantuml_fonts.h). The usual text has none, and
+ * is measured and drawn by plutovg as a whole: the output does not depend on
+ * the machine. The text that has some is measured and drawn glyph by glyph.
+ */
+
+/* The face that draws a code point */
+static plutovg_font_face_t* face_of(plantuml_canvas_t* c, plutovg_codepoint_t codepoint) {
+	if (plantuml_face_lacks(c->face, codepoint) == 0)
+		return c->face;
+	plutovg_font_face_t* fallback = plantuml_fallback_face(codepoint);
+	return fallback != NULL ? fallback : c->face;
+}
+
+static int needs_fallback(plantuml_canvas_t* c, const uint16_t* text, int32_t length) {
+	plutovg_text_iterator_t it;
+	plutovg_text_iterator_init(&it, text, length, PLUTOVG_TEXT_ENCODING_UTF16);
+	while (plutovg_text_iterator_has_next(&it))
+		if (plantuml_face_lacks(c->face, plutovg_text_iterator_next(&it)))
+			return 1;
+	return 0;
+}
+
+/* plutovg_font_face_text_extents(), a face per code point */
+static float mixed_text_extents(plantuml_canvas_t* c, const uint16_t* text, int32_t length,
+		plutovg_rect_t* extents) {
+	plutovg_text_iterator_t it;
+	plutovg_text_iterator_init(&it, text, length, PLUTOVG_TEXT_ENCODING_UTF16);
+	plutovg_rect_t box = { 0, 0, 0, 0 };
+	int first = 1;
+	float total = 0.f;
+	while (plutovg_text_iterator_has_next(&it)) {
+		const plutovg_codepoint_t codepoint = plutovg_text_iterator_next(&it);
+		float advance;
+		plutovg_rect_t glyph;
+		plutovg_font_face_get_glyph_metrics(face_of(c, codepoint), c->font_size, codepoint, &advance, NULL, &glyph);
+		glyph.x += total;
+		total += advance;
+		if (first) {
+			box = glyph;
+			first = 0;
+			continue;
+		}
+		const float x1 = fminf(box.x, glyph.x);
+		const float y1 = fminf(box.y, glyph.y);
+		const float x2 = fmaxf(box.x + box.w, glyph.x + glyph.w);
+		const float y2 = fmaxf(box.y + box.h, glyph.y + glyph.h);
+		box.x = x1;
+		box.y = y1;
+		box.w = x2 - x1;
+		box.h = y2 - y1;
+	}
+	if (extents != NULL)
+		*extents = box;
+	return total;
+}
+
+/* plutovg_canvas_fill_text(), a face per code point */
+static void fill_text(plantuml_canvas_t* c, const uint16_t* text, int32_t length, float x, float y) {
+	if (needs_fallback(c, text, length) == 0) {
+		plutovg_canvas_fill_text(c->canvas, text, length, PLUTOVG_TEXT_ENCODING_UTF16, x, y);
+		return;
+	}
+	plutovg_text_iterator_t it;
+	plutovg_text_iterator_init(&it, text, length, PLUTOVG_TEXT_ENCODING_UTF16);
+	plutovg_canvas_new_path(c->canvas);
+	float advance = 0.f;
+	while (plutovg_text_iterator_has_next(&it)) {
+		const plutovg_codepoint_t codepoint = plutovg_text_iterator_next(&it);
+		plutovg_canvas_set_font_face(c->canvas, face_of(c, codepoint));
+		advance += plutovg_canvas_add_glyph(c->canvas, codepoint, x + advance, y);
+	}
+	plutovg_canvas_set_font_face(c->canvas, c->face);
+	plutovg_canvas_fill(c->canvas);
+}
+
 double plantuml_canvas_text_width(int64_t handle, const uint16_t* text, int32_t length) {
 	plantuml_canvas_t* c = CANVAS(handle);
 	if (c->face == NULL)
 		return 0;
+	if (needs_fallback(c, text, length))
+		return mixed_text_extents(c, text, length, NULL);
 	return plutovg_font_face_text_extents(c->face, c->font_size, text, length, PLUTOVG_TEXT_ENCODING_UTF16, NULL);
 }
 
@@ -225,8 +306,13 @@ void plantuml_canvas_font_metrics(int64_t handle, double* metrics) {
 void plantuml_canvas_text_bounds(int64_t handle, const uint16_t* text, int32_t length, double* bounds) {
 	plantuml_canvas_t* c = CANVAS(handle);
 	plutovg_rect_t extents = { 0, 0, 0, 0 };
-	if (c->face != NULL)
-		plutovg_font_face_text_extents(c->face, c->font_size, text, length, PLUTOVG_TEXT_ENCODING_UTF16, &extents);
+	if (c->face != NULL) {
+		if (needs_fallback(c, text, length))
+			mixed_text_extents(c, text, length, &extents);
+		else
+			plutovg_font_face_text_extents(c->face, c->font_size, text, length, PLUTOVG_TEXT_ENCODING_UTF16,
+					&extents);
+	}
 	/* plutovg gives the box with y going down from the baseline, as Java2D */
 	bounds[0] = extents.x;
 	bounds[1] = extents.y;
@@ -240,13 +326,13 @@ void plantuml_canvas_fill_text(int64_t handle, const uint16_t* text, int32_t len
 	if (c->face == NULL)
 		return;
 	if (angle == 0) {
-		plutovg_canvas_fill_text(c->canvas, text, length, PLUTOVG_TEXT_ENCODING_UTF16, (float) x, (float) y);
+		fill_text(c, text, length, (float) x, (float) y);
 		return;
 	}
 	plutovg_canvas_save(c->canvas);
 	plutovg_canvas_translate(c->canvas, (float) x, (float) y);
 	plutovg_canvas_rotate(c->canvas, (float) angle);
-	plutovg_canvas_fill_text(c->canvas, text, length, PLUTOVG_TEXT_ENCODING_UTF16, 0, 0);
+	fill_text(c, text, length, 0, 0);
 	plutovg_canvas_restore(c->canvas);
 }
 

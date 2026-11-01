@@ -174,7 +174,8 @@ Java2D: the PNG must be the one of `-tpng`, pixel for pixel.
 
 Not supported yet: shadows, patterns (stripes...), images and sprites, circled
 characters, the image map of links, the watermark; text is always drawn with
-Liberation Sans (no serif nor monospaced font embedded yet). TeaVM's
+Liberation Sans, and the fonts of the machine for the characters it lacks (see
+"Fonts of the machine"; no serif nor monospaced font embedded yet). TeaVM's
 `System.getenv` always returns null, so `PLANTUML_LIMIT_SIZE` is not read: the
 size of the image is limited to 4096 pixels.
 
@@ -205,10 +206,14 @@ Native sources (`native/`, copied by Gradle next to the generated C):
 - `plantuml_png.h` / `.c`: the PNG encoder (see above).
 - `miniz/`: miniz 3.1.2 (MIT), the amalgamated release (`miniz.c`, `miniz.h`),
   unmodified: deflate and CRC of the PNG encoder only.
-- `plutovg/`: plutovg 1.3.3, unmodified (MIT; its rasterizer and stroker come
-  from FreeType, see `source/FTL.TXT`). It brings `stb_truetype` for fonts (its
-  `stb_image_write` is not used). Built as a static library, without its
-  system font loading: the output must not depend on the machine.
+- `plutovg/`: plutovg 1.3.3 (MIT; its rasterizer and stroker come
+  from FreeType, see `source/FTL.TXT`), with one function added,
+  `plutovg_font_face_glyph_outline_size` (marked "PlantUML addition" in
+  `plutovg.h` and `source/plutovg-font.c`). It brings `stb_truetype` for fonts
+  (its `stb_image_write` is not used). Built as a static library, without its
+  system font loading: the output must not depend on the machine (see "Fonts of
+  the machine" for the only exception).
+- `plantuml_fonts.h` / `.c`: the fallback to the fonts of the machine.
 - `fonts/`: Liberation Sans 2.1.5 (SIL Open Font License 1.1), metric
   compatible with Arial, i.e. with what Java's "SansSerif" is on Windows.
   `embed_font.cmake` turns the 4 TTF files (regular, bold, italic, bold italic)
@@ -254,6 +259,40 @@ java tools/font-metrics/GenerateFontMetrics.java
 `StringBounderEmbeddedFontTest` checks the tables against Java2D on the same
 TTF files and the measured widths (any OS), and the whole bounder against
 `StringBounderAwt` on Windows.
+
+## Fonts of the machine
+
+The embedded Liberation Sans has no Chinese, Japanese, Korean or Arabic, no
+symbols (✓, ☃...) and no emoji: they were drawn as the empty box of the missing
+glyph. `plantuml_fonts.c` now looks for them in the fonts of the machine, glyph by
+glyph, only for the code points Liberation Sans has no outline for:
+
+- Text that Liberation Sans covers is measured and drawn by plutovg as a whole,
+  exactly as before: its PNG does not depend on the machine (the Vega tests
+  stay the same).
+- The fonts are looked for in `/usr/share/fonts`, `/usr/local/share/fonts`,
+  `~/.fonts` and `~/.local/share/fonts` (Linux), `/System/Library/Fonts`,
+  `/Library/Fonts` and `~/Library/Fonts` (macOS), `%WINDIR%\Fonts` and
+  `%LOCALAPPDATA%\Microsoft\Windows\Fonts` (Windows), after the folders of the
+  `PLANTUML_FONT_DIRS` environment variable (separated by `:`, or `;` on
+  Windows), which win. In a Docker image, install a font package such as
+  `fonts-noto-cjk`.
+- The fonts with the widest coverage (Noto Sans CJK, Source Han Sans, Noto Sans,
+  DejaVu Sans, Arial Unicode, the Windows and macOS CJK fonts...) are tried
+  first, regular before bold or light; the others follow, `unifont` last. A file
+  is read at most once, and the answer for a code point is kept. Up to 192 MB of
+  fonts are read; with no suitable font, the box of the missing glyph is drawn as
+  before.
+- Regular weight only: bold and italic text uses the regular fallback glyphs.
+  Color emoji fonts (bitmaps) are skipped, as plutovg only draws outlines: emoji
+  stay boxes unless a font with outlines has them (DejaVu Sans has a few
+  symbols).
+- No shaping and no right-to-left layout (plutovg has none): Arabic letters are
+  drawn isolated and left to right.
+- The layout is not changed: it is measured in Java (see above), with widths that
+  do not depend on the machine. A fallback glyph keeps the advance of the font it
+  comes from, which can differ slightly from the width reserved for it (full width
+  CJK characters match).
 
 ## What differs from the JavaScript build
 

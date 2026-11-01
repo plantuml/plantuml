@@ -854,6 +854,17 @@ PLUTOVG_API void plutovg_font_face_get_metrics(const plutovg_font_face_t* face, 
 PLUTOVG_API void plutovg_font_face_get_glyph_metrics(plutovg_font_face_t* face, float size, plutovg_codepoint_t codepoint, float* advance_width, float* left_side_bearing, plutovg_rect_t* extents);
 
 /**
+ * @brief PlantUML addition (not in upstream plutovg): tells whether a face has a glyph for a code point.
+ *
+ * @param face A pointer to a `plutovg_font_face_t` object.
+ * @param codepoint The Unicode code point of the glyph.
+ * @return -1 if the face has no glyph for the code point (the other functions then use its
+ * notdef glyph), otherwise the number of segments of the outline of the glyph: 0 for a blank glyph
+ * such as a space, and also for a glyph that is not an outline (the bitmaps of a color emoji font).
+ */
+PLUTOVG_API int plutovg_font_face_glyph_outline_size(plutovg_font_face_t* face, plutovg_codepoint_t codepoint);
+
+/**
  * @brief Retrieves the path of a glyph and its advance width.
  *
  * @param face A pointer to a `plutovg_font_face_t` object.
