@@ -9,6 +9,7 @@ Python 3.9+ and nothing else.
 python tools/vega-c/run_vega_c.py                    # every test
 python tools/vega-c/run_vega_c.py mindmap            # the paths containing "mindmap" (every test is listed)
 python tools/vega-c/run_vega_c.py --diff -j 8        # one .diff per failed test
+python tools/vega-c/run_vega_c.py -v                 # also list the PASS and SKIPPED (by default only FAIL, ERROR and TIMEOUT)
 python tools/vega-c/run_vega_c.py --exe path\to\plantuml.exe
 ```
 
