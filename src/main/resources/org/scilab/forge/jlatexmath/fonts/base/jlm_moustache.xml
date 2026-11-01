@@ -1,0 +1,16 @@
+<?xml version='1.0'?>
+<Font name="jlm_cmex10.ttf" id="jlm_moustache" space="0.0" xHeight="0.430555" quad="1.000003" >
+  <Char code="56" width="0.888891" depth="0.900009" />
+  <Char code="57" width="0.888891" depth="0.900009" />
+  <Char code="58" width="0.888891" depth="0.900009" />
+  <Char code="59" width="0.888891" depth="0.900009" />
+  <Char code="62" width="0.888891" depth="0.300003" >
+    <Extension rep="62" />
+  </Char>
+  <Char code="64" width="0.458336" height="0" depth="0" >
+    <Extension top="56" bot="59" rep="62" />
+  </Char>
+  <Char code="65" width="0.875003" height="0" depth="0" >
+    <Extension top="57" bot="58" rep="62" />
+  </Char>
+</Font>

@@ -1,0 +1,13 @@
+---
+output: latex
+expected-description: (2 entities)
+---
+@startuml
+class Circle {
+  area : <math>pi r^2</math>
+  perimeter : <latex>2 \pi r</latex>
+}
+note right of Circle
+  <latex>\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}</latex>
+end note
+@enduml

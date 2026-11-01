@@ -1,0 +1,12 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities) (2 entities)
+---
+@startuml
+class A
+note right of A : <math>x_1</math>
+newpage
+class B
+note right of B : <latex>x_2</latex>
+@enduml

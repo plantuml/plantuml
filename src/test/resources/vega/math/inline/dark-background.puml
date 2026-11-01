@@ -1,0 +1,13 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities)
+---
+@startuml
+skinparam backgroundColor #222222
+skinparam noteBackgroundColor #444444
+skinparam noteFontColor white
+skinparam noteBorderColor white
+class A
+note right of A : <math>x^2</math> <latex>\frac{a}{b}</latex>
+@enduml

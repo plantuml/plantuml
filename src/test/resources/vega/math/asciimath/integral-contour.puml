@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+oint_C vec F * d vec r = int int_S (grad xx vec F) * d vec S
+@endmath

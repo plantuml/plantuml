@@ -1,0 +1,8 @@
+---
+output: latex
+expected-description: (2 entities)
+---
+@startuml
+class A
+note right of A : <latex>\text{中文} + x</latex>
+@enduml

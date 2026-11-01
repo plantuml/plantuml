@@ -1,0 +1,14 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 participants)
+---
+@startuml
+participant "<math>alpha</math>" as A
+participant "<latex>\beta</latex>" as B
+A -> B : hello
+note over A, B : <math>a^2 + b^2 = c^2</math>
+note left of A : <latex>\gamma</latex>
+== <math>Phase 2</math> ==
+B -> A : <latex>\delta</latex>
+@enduml

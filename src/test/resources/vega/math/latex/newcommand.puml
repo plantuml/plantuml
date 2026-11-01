@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\newcommand{\R}{\mathbb{R}} \newcommand{\norm}[1]{\left\| #1 \right\|} \norm{x} \in \R^n
+@endlatex

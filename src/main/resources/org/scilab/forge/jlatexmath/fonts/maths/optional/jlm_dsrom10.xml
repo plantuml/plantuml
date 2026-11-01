@@ -1,0 +1,34 @@
+<?xml version='1.0'?>
+<Font name="jlm_dsrom10.ttf" id="jlm_dsrom10" space="0.300003" xHeight="0.462964" quad="1.0"> 
+   <Char code="49" width="0.611113" height="0.644444" />
+   <Char code="65" width="0.833336" height="0.683332" />
+   <Char code="66" width="0.763891" height="0.683332" />
+   <Char code="67" width="0.722224" height="0.683332" />
+   <Char code="68" width="0.791669" height="0.683332" />
+   <Char code="69" width="0.736113" height="0.683332" />
+   <Char code="70" width="0.708336" height="0.683332" />
+   <Char code="71" width="0.784724" height="0.683332" />
+   <Char code="72" width="0.833336" height="0.683332" />
+   <Char code="73" width="0.444446" height="0.683332" />
+   <Char code="74" width="0.597224" height="0.683332" />
+   <Char code="75" width="0.833336" height="0.683332" />
+   <Char code="76" width="0.680557" height="0.683332" />
+   <Char code="77" width="1.000003" height="0.683332" />
+   <Char code="78" width="0.833336" height="0.683332" />
+   <Char code="79" width="0.777781" height="0.683332" />
+   <Char code="80" width="0.736113" height="0.683332" />
+   <Char code="81" width="0.777781" height="0.683332" depth="0.194445" />
+   <Char code="82" width="0.791669" height="0.683332" />
+   <Char code="83" width="0.555557" height="0.683332" />
+   <Char code="84" width="0.750003" height="0.683332" />
+   <Char code="85" width="0.805557" height="0.683332" />
+   <Char code="86" width="0.805557" height="0.683332" italic="0.013888" />
+   <Char code="87" width="1.083336" height="0.683332" italic="0.013888" />
+   <Char code="88" width="0.861113" height="0.683332" />
+   <Char code="89" width="0.805557" height="0.683332" italic="0.025" />
+   <Char code="90" width="0.750003" height="0.683332" />
+   <Char code="97" width="0.833336" height="0.683332" />
+   <Char code="104" width="0.655558" height="0.694445" />
+   <Char code="107" width="0.62778" height="0.694445" />
+</Font>
+

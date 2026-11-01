@@ -14,8 +14,6 @@ licenseVariant {
 
 // The EPL flavor embeds its runtime dependencies (fat jar)
 dependencies {
-	implementation(libs.jlatexmath)
-
 	implementation(libs.elk.core)
 	implementation(libs.elk.alg.layered)
 	implementation(libs.elk.alg.mrtree)

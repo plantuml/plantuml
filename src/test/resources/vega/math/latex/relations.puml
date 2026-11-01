@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+a \leq b \geq c \neq d \approx e \sim f \simeq g \cong h \equiv i \propto j \ll k \gg l \prec m \succ n \parallel o \perp p \mid q
+@endlatex

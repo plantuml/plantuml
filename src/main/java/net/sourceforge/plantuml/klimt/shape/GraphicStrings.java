@@ -106,8 +106,13 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 		return new GraphicStrings(strings, sansSerif12(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL, false);
 	}
 
+	/**
+	 * The text as it is, no Creole: it is used to show the source of a formula that
+	 * cannot be drawn, where a backslash (\text, \nabla) is not an escape.
+	 */
 	public static TextBlock createBlackOnWhiteMonospaced(List<String> strings) {
-		return new GraphicStrings(strings, monospaced14(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.FULL, false);
+		return new GraphicStrings(strings, monospaced14(TEXTCOLOR), HColors.WHITE, null, null, CreoleMode.NO_CREOLE,
+				false);
 	}
 
 	public static TextBlock createBlackOnWhite(List<String> strings, PortableImage image, GraphicPosition position) {

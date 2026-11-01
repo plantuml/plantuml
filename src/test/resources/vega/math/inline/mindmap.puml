@@ -1,0 +1,11 @@
+---
+output: svg
+decimal: 1
+expected-description: MindMap
+---
+@startmindmap
+* <math>E = mc^2</math>
+** <latex>\alpha + \beta</latex>
+*** <math>sqrt(x)</math>
+** plain
+@endmindmap

@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\overset{a}{=} \quad \underset{b}{=} \quad \stackrel{def}{=} \quad \overset{!}{=} \quad \mathop{=}\limits^{\text{def}}
+@endlatex

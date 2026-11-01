@@ -1,0 +1,9 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 participants)
+---
+@startuml
+Alice -> Alice : <math>x^2</math>
+Alice -> Bob : <latex>\frac{a}{b}</latex>\nsecond line <math>y</math>
+@enduml

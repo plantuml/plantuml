@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+a\phantom{bcd}e \quad a\hphantom{bcd}e \quad \frac{\vphantom{X^2}a}{b} \quad \smash{\frac{a}{b}}
+@endlatex

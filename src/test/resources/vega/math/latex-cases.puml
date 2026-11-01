@@ -1,0 +1,7 @@
+---
+output: svg
+expected-description: (Latex)
+---
+@startlatex
+f(x) = \begin{cases} x^2 & \text{if } x \geq 0 \\ -x & \text{otherwise} \end{cases}
+@endlatex

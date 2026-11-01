@@ -1,0 +1,7 @@
+---
+output: pdf
+expected-description: (Latex)
+---
+@startlatex
+\text{中文} + x^2
+@endlatex

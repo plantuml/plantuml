@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+color(red)(x) + color(blue)(y) = color(green)(z)
+@endmath

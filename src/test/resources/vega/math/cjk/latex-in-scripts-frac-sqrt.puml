@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\frac{分子}{分母} + \sqrt{根} + x^{日} + y_{月}
+@endlatex

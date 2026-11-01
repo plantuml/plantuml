@@ -1,0 +1,15 @@
+---
+output: svg
+decimal: 1
+expected-description: activity3
+---
+@startuml
+start
+:Compute <math>x^2 + y^2</math>;
+if (<math>x > 0</math>?) then (yes)
+  :<latex>\sqrt{x}</latex>;
+else (no)
+  :<latex>\frac{1}{x}</latex>;
+endif
+stop
+@enduml

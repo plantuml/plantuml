@@ -303,7 +303,24 @@ public class CliOptions {
 		if (flags.isTrue(CliFlag.DARK_MODE))
 			this.fileFormatOption = this.fileFormatOption.withColorMapper(ColorMapper.DARK_MODE);
 
+		final int decimal = getDecimal();
+		if (decimal >= 0)
+			this.fileFormatOption = this.fileFormatOption.withDecimal(decimal);
+
 		return fileFormatOption;
+	}
+
+	/** The number of decimals asked by --decimal, or -1 (not asked, or not a number: the default). */
+	private int getDecimal() {
+		final String value = flags.getString(CliFlag.DECIMAL);
+		if (value == null)
+			return -1;
+		try {
+			final int result = Integer.parseInt(value.trim());
+			return result >= 0 ? result : -1;
+		} catch (NumberFormatException e) {
+			return -1;
+		}
 	}
 
 	public final int getNbThreads() {

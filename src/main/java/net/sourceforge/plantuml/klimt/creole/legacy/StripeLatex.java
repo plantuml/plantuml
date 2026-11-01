@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
-import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class StripeLatex implements StripeRaw {
 
@@ -86,14 +85,11 @@ public class StripeLatex implements StripeRaw {
 	}
 
 	private Atom getAtom() {
-		if (!TeaVM.isTeaVM()) {
-			if (atom == null) {
-				final ScientificEquationSafe math = ScientificEquationSafe.fromLatex(formula.toString());
-				atom = new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor());
-			}
-			return atom;
-		} else
-			return null;
+		if (atom == null) {
+			final ScientificEquationSafe math = ScientificEquationSafe.fromLatex(formula.toString());
+			atom = new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor());
+		}
+		return atom;
 	}
 
 	@Override

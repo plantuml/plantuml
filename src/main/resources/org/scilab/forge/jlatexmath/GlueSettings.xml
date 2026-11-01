@@ -1,0 +1,214 @@
+<?xml version='1.0'?>
+<!--
+  GlueSettings.xml
+  =========================================================================
+  This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+  
+  Copyright (C) 2004-2007 Universiteit Gent
+  Copyright (C) 2009 DENIZET Calixte
+  
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or (at
+  your option) any later version.
+  
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
+  
+  A copy of the GNU General Public License can be found in the file
+  LICENSE.txt provided with the source distribution of this program (see
+  the META-INF directory in the source jar). This license can also be
+  found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+  
+  If you did not receive a copy of the GNU General Public License along
+  with this program, contact the lead developer, or write to the Free
+  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+
+  Linking this library statically or dynamically with other modules 
+  is making a combined work based on this library. Thus, the terms 
+  and conditions of the GNU General Public License cover the whole 
+  combination.
+  
+  As a special exception, the copyright holders of this library give you 
+  permission to link this library with independent modules to produce 
+  an executable, regardless of the license terms of these independent 
+  modules, and to copy and distribute the resulting executable under terms 
+  of your choice, provided that you also meet, for each linked independent 
+  module, the terms and conditions of the license of that module. 
+  An independent module is a module which is not derived from or based 
+  on this library. If you modify this library, you may extend this exception 
+  to your version of the library, but you are not obliged to do so. 
+  If you do not wish to do so, delete this exception statement from your 
+  version.
+  
+-->
+
+<GlueSettings>
+
+<!-- different kinds of glue used in the glue table, values set in mu (math units); 1 mu = 1/18 em -->
+	
+	<GlueTypes>
+		<GlueType name="default" space="0" shrink="0" stretch="0"/>
+		<GlueType name="thin" space="3" shrink="0" stretch="0"/>
+		<GlueType name="med" space="4" shrink="4" stretch="2"/>
+		<GlueType name="thick" space="5" shrink="0" stretch="5"/>
+	</GlueTypes>
+
+<!-- Glue table for the 4 possible TeX-styles (display, text, script and script_script) and the 8 possible 
+atom types (rd, op, bin, rel, open, close, punct and inner). Other atom types (over, under, acc, rad and vcent) 
+are treated as type ord. No table entry for a specific lefttype, righttype and style means gluetype "default"
+Page 181 in TeXBook
+-->
+
+	<GlueTable>
+		<Glue lefttype="ord" righttype="op" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+			<Style name="script"/>
+			<Style name="script_script"/>
+		</Glue>
+		<Glue lefttype="ord" righttype="bin" gluetype="med">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="ord" righttype="rel" gluetype="thick">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="ord" righttype="inner" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="op" righttype="ord" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+			<Style name="script"/>
+			<Style name="script_script"/>
+		</Glue>
+		<Glue lefttype="op" righttype="op" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+			<Style name="script"/>
+			<Style name="script_script"/>
+		</Glue>
+		<Glue lefttype="op" righttype="rel" gluetype="thick">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="op" righttype="inner" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="bin" righttype="ord" gluetype="med">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="bin" righttype="op" gluetype="med">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="bin" righttype="open" gluetype="med">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="bin" righttype="inner" gluetype="med">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="rel" righttype="ord" gluetype="thick">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="rel" righttype="op" gluetype="thick">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="rel" righttype="open" gluetype="thick">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="rel" righttype="inner" gluetype="thick">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="close" righttype="op" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+			<Style name="script"/>
+			<Style name="script_script"/>
+		</Glue>
+		<Glue lefttype="close" righttype="bin" gluetype="med">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="close" righttype="rel" gluetype="thick">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="close" righttype="inner" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="punct" righttype="ord" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="punct" righttype="op" gluetype="med">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="punct" righttype="rel" gluetype="thick">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="punct" righttype="open" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="punct" righttype="close" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="punct" righttype="punct" gluetype="med">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="punct" righttype="inner" gluetype="thick">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="inner" righttype="ord" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="inner" righttype="op" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+			<Style name="script"/>
+			<Style name="script_script"/>
+		</Glue>
+		<Glue lefttype="inner" righttype="bin" gluetype="med">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="inner" righttype="rel" gluetype="thick">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="inner" righttype="open" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="inner" righttype="punct" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>
+		<Glue lefttype="inner" righttype="inner" gluetype="thin">
+			<Style name="display"/>
+			<Style name="text"/>
+		</Glue>			
+	</GlueTable>
+</GlueSettings>

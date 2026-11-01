@@ -1,0 +1,233 @@
+<?xml version='1.0'?>
+<!--
+  symbols_greek.xml
+  =========================================================================
+  This file is  part of the JLaTeXMath Library - http://forge.scilab.org/index.php/p/jlatexmath
+  
+  Copyright (C) 2009 DENIZET Calixte
+  
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or (at
+  your option) any later version.
+  
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
+  
+  A copy of the GNU General Public License can be found in the file
+  LICENSE.txt provided with the source distribution of this program (see
+  the META-INF directory in the source jar). This license can also be
+  found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+  
+  If you did not receive a copy of the GNU General Public License along
+  with this program, contact the lead developer, or write to the Free
+  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+  
+-->
+
+<TeXSymbols>
+  <Symbol name="ʹ" type="acc"/>
+  <Symbol name="͵" type="acc"/>
+  <Symbol name="ͺ" type="acc"/>
+  <Symbol name="΄" type="acc"/>
+  <Symbol name="΅" type="acc"/>
+  <Symbol name="·" type="acc"/>
+  <Symbol name="ΐ" type="ord"/>
+  <Symbol name="Α" type="ord"/>
+  <Symbol name="Β" type="ord"/>
+  <Symbol name="Γ" type="ord"/>
+  <Symbol name="Δ" type="ord"/>
+  <Symbol name="Ε" type="ord"/>
+  <Symbol name="Ζ" type="ord"/>
+  <Symbol name="Η" type="ord"/>
+  <Symbol name="Θ" type="ord"/>
+  <Symbol name="Ι" type="ord"/>
+  <Symbol name="Κ" type="ord"/>
+  <Symbol name="Λ" type="ord"/>
+  <Symbol name="Μ" type="ord"/>
+  <Symbol name="Ν" type="ord"/>
+  <Symbol name="Ξ" type="ord"/>
+  <Symbol name="Ο" type="ord"/>
+  <Symbol name="Π" type="ord"/>
+  <Symbol name="Ρ" type="ord"/>
+  <Symbol name="Σ" type="ord"/>
+  <Symbol name="Τ" type="ord"/>
+  <Symbol name="Υ" type="ord"/>
+  <Symbol name="Φ" type="ord"/>
+  <Symbol name="Χ" type="ord"/>
+  <Symbol name="Ψ" type="ord"/>
+  <Symbol name="Ω" type="ord"/>
+  <Symbol name="Ϊ" type="ord"/>
+  <Symbol name="Ϋ" type="ord"/>
+  <Symbol name="ά" type="ord"/>
+  <Symbol name="έ" type="ord"/>
+  <Symbol name="ή" type="ord"/>
+  <Symbol name="ί" type="ord"/>
+  <Symbol name="ΰ" type="ord"/>
+  <Symbol name="α" type="ord"/>
+  <Symbol name="β" type="ord"/>
+  <Symbol name="γ" type="ord"/>
+  <Symbol name="δ" type="ord"/>
+  <Symbol name="ε" type="ord"/>
+  <Symbol name="ζ" type="ord"/>
+  <Symbol name="η" type="ord"/>
+  <Symbol name="θ" type="ord"/>
+  <Symbol name="ι" type="ord"/>
+  <Symbol name="κ" type="ord"/>
+  <Symbol name="λ" type="ord"/>
+  <Symbol name="μ" type="ord"/>
+  <Symbol name="ν" type="ord"/>
+  <Symbol name="ξ" type="ord"/>
+  <Symbol name="ο" type="ord"/>
+  <Symbol name="π" type="ord"/>
+  <Symbol name="ρ" type="ord"/>
+  <Symbol name="ς" type="ord"/>
+  <Symbol name="σ" type="ord"/>
+  <Symbol name="τ" type="ord"/>
+  <Symbol name="υ" type="ord"/>
+  <Symbol name="φ" type="ord"/>
+  <Symbol name="χ" type="ord"/>
+  <Symbol name="ψ" type="ord"/>
+  <Symbol name="ω" type="ord"/>
+  <Symbol name="ϊ" type="ord"/>
+  <Symbol name="ϋ" type="ord"/>
+  <Symbol name="ό" type="ord"/>
+  <Symbol name="ύ" type="ord"/>
+  <Symbol name="ώ" type="ord"/>
+  <Symbol name="ϑ" type="ord"/>
+  <Symbol name="Ϙ" type="ord"/>
+  <Symbol name="ϙ" type="ord"/>
+  <Symbol name="Ϛ" type="ord"/>
+  <Symbol name="ϛ" type="ord"/>
+  <Symbol name="Ϝ" type="ord"/>
+  <Symbol name="ϝ" type="ord"/>
+  <Symbol name="ϟ" type="ord"/>
+  <Symbol name="Ϡ" type="ord"/>
+  <Symbol name="ϡ" type="ord"/>
+  <Symbol name="ἀ" type="ord"/>
+  <Symbol name="ἁ" type="ord"/>
+  <Symbol name="ἂ" type="ord"/>
+  <Symbol name="ἃ" type="ord"/>
+  <Symbol name="ἄ" type="ord"/>
+  <Symbol name="ἅ" type="ord"/>
+  <Symbol name="ἆ" type="ord"/>
+  <Symbol name="ἇ" type="ord"/>
+  <Symbol name="ἐ" type="ord"/>
+  <Symbol name="ἑ" type="ord"/>
+  <Symbol name="ἒ" type="ord"/>
+  <Symbol name="ἓ" type="ord"/>
+  <Symbol name="ἔ" type="ord"/>
+  <Symbol name="ἕ" type="ord"/>
+  <Symbol name="ἠ" type="ord"/>
+  <Symbol name="ἡ" type="ord"/>
+  <Symbol name="ἢ" type="ord"/>
+  <Symbol name="ἣ" type="ord"/>
+  <Symbol name="ἤ" type="ord"/>
+  <Symbol name="ἥ" type="ord"/>
+  <Symbol name="ἦ" type="ord"/>
+  <Symbol name="ἧ" type="ord"/>
+  <Symbol name="ἰ" type="ord"/>
+  <Symbol name="ἱ" type="ord"/>
+  <Symbol name="ἲ" type="ord"/>
+  <Symbol name="ἳ" type="ord"/>
+  <Symbol name="ἴ" type="ord"/>
+  <Symbol name="ἵ" type="ord"/>
+  <Symbol name="ἶ" type="ord"/>
+  <Symbol name="ἷ" type="ord"/>
+  <Symbol name="ὀ" type="ord"/>
+  <Symbol name="ὁ" type="ord"/>
+  <Symbol name="ὂ" type="ord"/>
+  <Symbol name="ὃ" type="ord"/>
+  <Symbol name="ὄ" type="ord"/>
+  <Symbol name="ὅ" type="ord"/>
+  <Symbol name="ὐ" type="ord"/>
+  <Symbol name="ὑ" type="ord"/>
+  <Symbol name="ὒ" type="ord"/>
+  <Symbol name="ὓ" type="ord"/>
+  <Symbol name="ὔ" type="ord"/>
+  <Symbol name="ὕ" type="ord"/>
+  <Symbol name="ὖ" type="ord"/>
+  <Symbol name="ὗ" type="ord"/>
+  <Symbol name="ὠ" type="ord"/>
+  <Symbol name="ὡ" type="ord"/>
+  <Symbol name="ὢ" type="ord"/>
+  <Symbol name="ὣ" type="ord"/>
+  <Symbol name="ὤ" type="ord"/>
+  <Symbol name="ὥ" type="ord"/>
+  <Symbol name="ὦ" type="ord"/>
+  <Symbol name="ὧ" type="ord"/>
+  <Symbol name="ὰ" type="ord"/>
+  <Symbol name="ὲ" type="ord"/>
+  <Symbol name="ὴ" type="ord"/>
+  <Symbol name="ὶ" type="ord"/>
+  <Symbol name="ὸ" type="ord"/>
+  <Symbol name="ὺ" type="ord"/>
+  <Symbol name="ὼ" type="ord"/>
+  <Symbol name="ᾀ" type="ord"/>
+  <Symbol name="ᾁ" type="ord"/>
+  <Symbol name="ᾂ" type="ord"/>
+  <Symbol name="ᾃ" type="ord"/>
+  <Symbol name="ᾄ" type="ord"/>
+  <Symbol name="ᾅ" type="ord"/>
+  <Symbol name="ᾆ" type="ord"/>
+  <Symbol name="ᾇ" type="ord"/>
+  <Symbol name="ᾐ" type="ord"/>
+  <Symbol name="ᾑ" type="ord"/>
+  <Symbol name="ᾒ" type="ord"/>
+  <Symbol name="ᾓ" type="ord"/>
+  <Symbol name="ᾔ" type="ord"/>
+  <Symbol name="ᾕ" type="ord"/>
+  <Symbol name="ᾖ" type="ord"/>
+  <Symbol name="ᾗ" type="ord"/>
+  <Symbol name="ᾠ" type="ord"/>
+  <Symbol name="ᾡ" type="ord"/>
+  <Symbol name="ᾢ" type="ord"/>
+  <Symbol name="ᾣ" type="ord"/>
+  <Symbol name="ᾤ" type="ord"/>
+  <Symbol name="ᾥ" type="ord"/>
+  <Symbol name="ᾦ" type="ord"/>
+  <Symbol name="ᾧ" type="ord"/>
+  <Symbol name="ᾲ" type="ord"/>
+  <Symbol name="ᾳ" type="ord"/>
+  <Symbol name="ᾴ" type="ord"/>
+  <Symbol name="ᾶ" type="ord"/>
+  <Symbol name="ᾷ" type="ord"/>
+  <Symbol name="ᾼ" type="ord"/>
+  <Symbol name="ι" type="acc"/>
+  <Symbol name="᾿" type="acc"/>
+  <Symbol name="῀" type="acc"/>
+  <Symbol name="῁" type="acc"/>
+  <Symbol name="ῂ" type="ord"/>
+  <Symbol name="ῃ" type="ord"/>
+  <Symbol name="ῄ" type="ord"/>
+  <Symbol name="ῆ" type="ord"/>
+  <Symbol name="ῇ" type="ord"/>
+  <Symbol name="ῌ" type="ord"/>
+  <Symbol name="῍" type="acc"/>
+  <Symbol name="῎" type="acc"/>
+  <Symbol name="῏" type="acc"/>
+  <Symbol name="ῒ" type="ord"/>
+  <Symbol name="ῖ" type="ord"/>
+  <Symbol name="ῗ" type="ord"/>
+  <Symbol name="῝" type="acc"/>
+  <Symbol name="῞" type="acc"/>
+  <Symbol name="῟" type="acc"/>
+  <Symbol name="ῢ" type="ord"/>
+  <Symbol name="ῤ" type="ord"/>
+  <Symbol name="ῥ" type="ord"/>
+  <Symbol name="ῦ" type="ord"/>
+  <Symbol name="ῧ" type="ord"/>
+  <Symbol name="῭" type="acc"/>
+  <Symbol name="`" type="acc"/>
+  <Symbol name="ῲ" type="ord"/>
+  <Symbol name="ῳ" type="ord"/>
+  <Symbol name="ῴ" type="ord"/>
+  <Symbol name="ῶ" type="ord"/>
+  <Symbol name="ῷ" type="ord"/>
+  <Symbol name="ῼ" type="ord"/>
+  <Symbol name="῾" type="acc"/>
+  <Symbol name="’" type="acc"/>
+</TeXSymbols>

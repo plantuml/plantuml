@@ -1,0 +1,17 @@
+<?xml version='1.0'?>
+<SymbolMappings>
+  <SymbolMapping name="rightleftharpoons" ch="173" fontId="jlm_msam10" />
+  <SymbolMapping name="angle" ch="92" fontId="jlm_msam10" />
+  <SymbolMapping name="hbar" ch="126" fontId="jlm_msbm10" />
+  <SymbolMapping name="sqsubset" ch="64" fontId="jlm_msam10" />
+  <SymbolMapping name="sqsupset" ch="65" fontId="jlm_msam10" />
+  <SymbolMapping name="mho" ch="102" fontId="jlm_msbm10" />
+  <SymbolMapping name="Box" ch="164" fontId="jlm_msam10" />
+  <SymbolMapping name="Diamond" ch="167" fontId="jlm_msam10" />
+  <SymbolMapping name="leadsto" ch="195" fontId="jlm_msam10" />
+  <SymbolMapping name="lhd" ch="67" fontId="jlm_msam10" />
+  <SymbolMapping name="unlhd" ch="69" fontId="jlm_msam10" />
+  <SymbolMapping name="rhd" ch="66" fontId="jlm_msam10" />
+  <SymbolMapping name="unrhd" ch="68" fontId="jlm_msam10" />
+  <SymbolMapping name="jlmEuler" ch="101" fontId="jlm_cmmi10_unchanged" />
+</SymbolMappings>
