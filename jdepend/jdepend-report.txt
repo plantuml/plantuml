@@ -8597,22 +8597,23 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 5
-    Concrete Classes: 3
+    Total Classes: 6
+    Concrete Classes: 4
     Abstract Classes: 2
 
     Ca: 40
     Ce: 5
 
-    A: 0.4
+    A: 0.33
     I: 0.11
-    D: 0.49
+    D: 0.56
 
 Abstract Classes:
     net.sourceforge.plantuml.nio.InputFile
     net.sourceforge.plantuml.nio.NFolder
 
 Concrete Classes:
+    net.sourceforge.plantuml.nio.InputFileBytes
     net.sourceforge.plantuml.nio.InputFileIo
     net.sourceforge.plantuml.nio.InputFileZip$ZipEntryInputStream
     net.sourceforge.plantuml.nio.ZipReaderIo$Entry
@@ -9814,16 +9815,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 7
-    Concrete Classes: 7
+    Total Classes: 8
+    Concrete Classes: 8
     Abstract Classes: 0
 
     Ca: 17
-    Ce: 19
+    Ce: 20
 
     A: 0
-    I: 0.53
-    D: 0.47
+    I: 0.54
+    D: 0.46
 
 Abstract Classes:
 
@@ -9835,6 +9836,7 @@ Concrete Classes:
     net.sourceforge.plantuml.security.SURL$3
     net.sourceforge.plantuml.security.SecurityProfile
     net.sourceforge.plantuml.security.URLCheck
+    net.sourceforge.plantuml.security.UrlPolicy
 
 Depends Upon:
     java.awt.image
@@ -9846,6 +9848,7 @@ Depends Upon:
     java.nio.file
     java.util
     java.util.concurrent
+    java.util.regex
     javax.imageio
     javax.imageio.stream
     javax.swing
@@ -11652,8 +11655,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 11
-    Concrete Classes: 11
+    Total Classes: 12
+    Concrete Classes: 12
     Abstract Classes: 0
 
     Ca: 2
@@ -11670,6 +11673,7 @@ Concrete Classes:
     net.sourceforge.plantuml.teavm.c.EmbeddedFiles
     net.sourceforge.plantuml.teavm.c.NativeCanvas
     net.sourceforge.plantuml.teavm.c.NativeExit
+    net.sourceforge.plantuml.teavm.c.NativeHttp
     net.sourceforge.plantuml.teavm.c.NativeResources
     net.sourceforge.plantuml.teavm.c.NativeStdin
     net.sourceforge.plantuml.teavm.c.PSystemBuilderC
@@ -15407,7 +15411,7 @@ java.util.concurrent,0,0,8,0,0,0,1,1
 java.util.concurrent.atomic,0,0,5,0,0,0,1,1
 java.util.function,0,0,3,0,0,0,1,1
 java.util.logging,0,0,2,0,0,0,1,1
-java.util.regex,0,0,14,0,0,0,1,1
+java.util.regex,0,0,15,0,0,0,1,1
 java.util.zip,0,0,4,0,0,0,1,1
 javax.crypto,0,0,1,0,0,0,1,1
 javax.crypto.spec,0,0,1,0,0,0,1,1
@@ -15555,7 +15559,7 @@ net.sourceforge.plantuml.math,13,1,3,18,0.08,0.86,0.07,1
 net.sourceforge.plantuml.mcp,3,0,0,9,0,1,0,1
 net.sourceforge.plantuml.mda,2,0,1,5,0,0.83,0.17,1
 net.sourceforge.plantuml.mindmap,11,1,2,22,0.09,0.92,0.01,1
-net.sourceforge.plantuml.nio,5,2,40,5,0.4,0.11,0.49,1
+net.sourceforge.plantuml.nio,6,2,40,5,0.33,0.11,0.56,1
 net.sourceforge.plantuml.nwdiag,12,0,2,16,0,0.89,0.11,1
 net.sourceforge.plantuml.nwdiag.core,2,1,1,14,0.5,0.93,0.43,1
 net.sourceforge.plantuml.nwdiag.next,6,1,1,12,0.17,0.92,0.09,1
@@ -15580,7 +15584,7 @@ net.sourceforge.plantuml.salt,9,1,3,21,0.11,0.88,0.01,1
 net.sourceforge.plantuml.salt.element,32,3,3,16,0.09,0.84,0.06,1
 net.sourceforge.plantuml.salt.factory,19,2,1,8,0.11,0.89,0.01,1
 net.sourceforge.plantuml.sdot,6,0,0,14,0,1,0,1
-net.sourceforge.plantuml.security,7,0,17,19,0,0.53,0.47,1
+net.sourceforge.plantuml.security,8,0,17,20,0,0.54,0.46,1
 net.sourceforge.plantuml.security.authentication,6,3,4,3,0.5,0.43,0.07,1
 net.sourceforge.plantuml.security.authentication.basicauth,1,0,1,3,0,0.75,0.25,1
 net.sourceforge.plantuml.security.authentication.oauth,4,1,0,11,0.25,1,0.25,1
@@ -15608,7 +15612,7 @@ net.sourceforge.plantuml.svg.parser,11,1,0,13,0.09,1,0.09,1
 net.sourceforge.plantuml.swing,36,0,0,16,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
 net.sourceforge.plantuml.teavm,2,0,46,3,0,0.06,0.94,1
-net.sourceforge.plantuml.teavm.c,11,0,2,39,0,0.95,0.05,1
+net.sourceforge.plantuml.teavm.c,12,0,2,39,0,0.95,0.05,1
 net.sourceforge.plantuml.teavm.js,18,0,2,16,0,0.89,0.11,1
 net.sourceforge.plantuml.teavm.js.browser,12,5,3,9,0.42,0.75,0.17,1
 net.sourceforge.plantuml.teavm.js.headless,3,1,0,4,0.33,1,0.33,1

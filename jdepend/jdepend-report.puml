@@ -2461,8 +2461,8 @@ Total Classes: 11
 "net.sourceforge.plantuml.mindmap" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.mindmap" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.nio" %lighten("red", 51) {
-Total Classes: 5
+class "net.sourceforge.plantuml.nio" %lighten("red", 43.99999999999999) {
+Total Classes: 6
 }
 "net.sourceforge.plantuml.nio" --> "java.io"
 "net.sourceforge.plantuml.nio" --> "java.lang"
@@ -2819,8 +2819,8 @@ Total Classes: 6
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek.image"
 
-class "net.sourceforge.plantuml.security" %lighten("red", 53) {
-Total Classes: 7
+class "net.sourceforge.plantuml.security" %lighten("red", 54) {
+Total Classes: 8
 }
 "net.sourceforge.plantuml.security" --> "java.awt.image"
 "net.sourceforge.plantuml.security" --> "java.io"
@@ -2831,6 +2831,7 @@ Total Classes: 7
 "net.sourceforge.plantuml.security" --> "java.nio.file"
 "net.sourceforge.plantuml.security" --> "java.util"
 "net.sourceforge.plantuml.security" --> "java.util.concurrent"
+"net.sourceforge.plantuml.security" --> "java.util.regex"
 "net.sourceforge.plantuml.security" --> "javax.imageio"
 "net.sourceforge.plantuml.security" --> "javax.imageio.stream"
 "net.sourceforge.plantuml.security" --> "javax.swing"
@@ -3290,7 +3291,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.teavm" --> "java.util"
 
 class "net.sourceforge.plantuml.teavm.c" %lighten("red", 95) {
-Total Classes: 11
+Total Classes: 12
 }
 "net.sourceforge.plantuml.teavm.c" --> "java.io"
 "net.sourceforge.plantuml.teavm.c" --> "java.lang"

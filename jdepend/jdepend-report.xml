@@ -12509,14 +12509,14 @@
 
         <Package name="net.sourceforge.plantuml.nio">
             <Stats>
-                <TotalClasses>5</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
+                <TotalClasses>6</TotalClasses>
+                <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>40</Ca>
                 <Ce>5</Ce>
-                <A>0.4</A>
+                <A>0.33</A>
                 <I>0.11</I>
-                <D>0.49</D>
+                <D>0.56</D>
                 <V>1</V>
             </Stats>
 
@@ -12530,6 +12530,9 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="InputFileBytes.java">
+                    net.sourceforge.plantuml.nio.InputFileBytes
+                </Class>
                 <Class sourceFile="InputFileIo.java">
                     net.sourceforge.plantuml.nio.InputFileIo
                 </Class>
@@ -14172,14 +14175,14 @@
 
         <Package name="net.sourceforge.plantuml.security">
             <Stats>
-                <TotalClasses>7</TotalClasses>
-                <ConcreteClasses>7</ConcreteClasses>
+                <TotalClasses>8</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>17</Ca>
-                <Ce>19</Ce>
+                <Ce>20</Ce>
                 <A>0</A>
-                <I>0.53</I>
-                <D>0.47</D>
+                <I>0.54</I>
+                <D>0.46</D>
                 <V>1</V>
             </Stats>
 
@@ -14208,6 +14211,9 @@
                 <Class sourceFile="URLCheck.java">
                     net.sourceforge.plantuml.security.URLCheck
                 </Class>
+                <Class sourceFile="UrlPolicy.java">
+                    net.sourceforge.plantuml.security.UrlPolicy
+                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
@@ -14220,6 +14226,7 @@
                 <Package>java.nio.file</Package>
                 <Package>java.util</Package>
                 <Package>java.util.concurrent</Package>
+                <Package>java.util.regex</Package>
                 <Package>javax.imageio</Package>
                 <Package>javax.imageio.stream</Package>
                 <Package>javax.swing</Package>
@@ -17035,8 +17042,8 @@
 
         <Package name="net.sourceforge.plantuml.teavm.c">
             <Stats>
-                <TotalClasses>11</TotalClasses>
-                <ConcreteClasses>11</ConcreteClasses>
+                <TotalClasses>12</TotalClasses>
+                <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>2</Ca>
                 <Ce>39</Ce>
@@ -17061,6 +17068,9 @@
                 </Class>
                 <Class sourceFile="NativeExit.java">
                     net.sourceforge.plantuml.teavm.c.NativeExit
+                </Class>
+                <Class sourceFile="NativeHttp.java">
+                    net.sourceforge.plantuml.teavm.c.NativeHttp
                 </Class>
                 <Class sourceFile="NativeResources.java">
                     net.sourceforge.plantuml.teavm.c.NativeResources

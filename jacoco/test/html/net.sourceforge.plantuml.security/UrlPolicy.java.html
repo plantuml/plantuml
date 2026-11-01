@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UrlPolicy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.security</a> &gt; <span class="el_source">UrlPolicy.java</span></div><h1>UrlPolicy.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.security;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.StringUtils;
+
+/**
+ * Decides which URL a diagram may read, working on the string of the URL only
+ * (no java.net, no DNS), for the C build.
+ * &lt;p&gt;
+ * It applies the rules of {@link SURL#isUrlOk()} and of {@link URLCheck} on the
+ * JVM. What needs the network is left to the native code: the refusal of the
+ * hosts that resolve to an inner address (loopback, link-local, private), which is
+ * told to it through {@link #isInnerAddressAllowed(String)}.
+ */
+public final class UrlPolicy {
+
+	/**
+	 * Regex to remove the UserInfo part from a URL.
+	 */
+<span class="nc" id="L56">	private static final Pattern PATTERN_USERINFO = Pattern.compile(&quot;(^https?://)([-_0-9a-zA-Z]+@)([^@]*)$&quot;);</span>
+
+	private UrlPolicy() {
+	}
+
+	/**
+	 * Whether the security profile lets a diagram read this URL.
+	 */
+	public static boolean isAllowed(String url) {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (url == null)</span>
+<span class="nc" id="L66">			return false;</span>
+
+<span class="nc" id="L68">		final SecurityProfile profile = SecurityUtils.getSecurityProfile();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (profile == SecurityProfile.SANDBOX)</span>
+			// In SANDBOX, we cannot read any URL
+<span class="nc" id="L71">			return false;</span>
+
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (isInAllowList(url))</span>
+<span class="nc" id="L74">			return true;</span>
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (profile == SecurityProfile.LEGACY)</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">			return isForbidden(cleanPath(url)) == false;</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (profile == SecurityProfile.INSECURE)</span>
+<span class="nc" id="L80">			return true;</span>
+
+<span class="nc bnc" id="L82" title="All 4 branches missed.">		if (profile == SecurityProfile.INTERNET || profile == SecurityProfile.INTERNET_WITH_DOTSVG) {</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (isForbidden(cleanPath(url)))</span>
+<span class="nc" id="L84">				return false;</span>
+
+<span class="nc" id="L86">			final int port = getPort(url);</span>
+			// Using INTERNET profile, port 80 and 443 are ok
+<span class="nc bnc" id="L88" title="All 6 branches missed.">			return port == 80 || port == 443 || port == -1;</span>
+		}
+<span class="nc" id="L90">		return false;</span>
+	}
+
+	/**
+	 * Whether the host may resolve to an inner address: only in INSECURE, and for
+	 * the URL of the allowlist, as on the JVM.
+	 */
+	public static boolean isInnerAddressAllowed(String url) {
+<span class="nc bnc" id="L98" title="All 4 branches missed.">		return SecurityUtils.getSecurityProfile() == SecurityProfile.INSECURE || isInAllowList(url);</span>
+	}
+
+	private static boolean isInAllowList(String url) {
+<span class="nc" id="L102">		final String full = cleanPath(url);</span>
+		// Thanks to Agasthya Kasturi
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (full.contains(&quot;@&quot;))</span>
+<span class="nc" id="L105">			return false;</span>
+
+<span class="nc" id="L107">		final String env = SecurityUtils.getenv(SecurityUtils.ALLOWLIST_URL);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (env == null)</span>
+<span class="nc" id="L109">			return false;</span>
+
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		for (String allow : StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(env).split(&quot;;&quot;)) {</span>
+			// An empty entry would allow every URL
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			if (allow.trim().isEmpty())</span>
+<span class="nc" id="L114">				continue;</span>
+
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (full.startsWith(cleanPath(allow)))</span>
+<span class="nc" id="L117">				return true;</span>
+		}
+<span class="nc" id="L119">		return false;</span>
+	}
+
+	/**
+	 * Same as the one of SURL.
+	 */
+	private static String cleanPath(String path) {
+		// Remove user information, because we don't like to store user/password or
+		// userTokens in allow-list
+<span class="nc" id="L128">		path = removeUserInfoFromUrlPath(path);</span>
+<span class="nc" id="L129">		path = path.trim().toLowerCase();</span>
+		// We simplify/normalize the url, removing default ports
+<span class="nc" id="L131">		path = path.replace(&quot;:80/&quot;, &quot;&quot;);</span>
+<span class="nc" id="L132">		path = path.replace(&quot;:443/&quot;, &quot;&quot;);</span>
+<span class="nc" id="L133">		return path;</span>
+	}
+
+	private static String removeUserInfoFromUrlPath(String url) {
+<span class="nc" id="L137">		final Matcher matcher = PATTERN_USERINFO.matcher(url);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (matcher.find())</span>
+<span class="nc" id="L139">			return matcher.replaceFirst(&quot;$1$3&quot;);</span>
+
+<span class="nc" id="L141">		return url;</span>
+	}
+
+	/**
+	 * Same checks as {@link URLCheck#isURLforbidden(String)}, without the one that
+	 * needs a DNS lookup.
+	 */
+	private static boolean isForbidden(String full) {
+		// Thanks to Agasthya Kasturi
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		if (full.contains(&quot;@&quot;))</span>
+<span class="nc" id="L151">			return true;</span>
+<span class="nc bnc" id="L152" title="All 4 branches missed.">		if (full.startsWith(&quot;https://&quot;) == false &amp;&amp; full.startsWith(&quot;http://&quot;) == false)</span>
+<span class="nc" id="L153">			return true;</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (full.matches(&quot;^https?://[-#.0-9:\\[\\]+]+/.*&quot;))</span>
+<span class="nc" id="L155">			return true;</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (full.matches(&quot;^https?://[^.]+/.*&quot;))</span>
+<span class="nc" id="L157">			return true;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (full.matches(&quot;^https?://[^.]+$&quot;))</span>
+<span class="nc" id="L159">			return true;</span>
+
+<span class="nc" id="L161">		final String host = getHost(full);</span>
+<span class="nc bnc" id="L162" title="All 6 branches missed.">		if (host == null || host.isEmpty() || host.contains(&quot;.&quot;) == false)</span>
+<span class="nc" id="L163">			return true;</span>
+
+		// Additional check for IP addresses or invalid host patterns
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (host.matches(&quot;^[-#.0-9:\\[\\]+]+$&quot;))</span>
+<span class="nc" id="L167">			return true;</span>
+
+		// The JVM refuses a host that changes when it is URL decoded
+<span class="nc" id="L170">		return host.contains(&quot;%&quot;);</span>
+	}
+
+	/**
+	 * The part of the URL between {@code ://} and the first {@code /}, {@code ?} or
+	 * {@code #}, without its user information.
+	 */
+	private static String getAuthority(String url) {
+<span class="nc" id="L178">		final int start = url.indexOf(&quot;://&quot;);</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (start == -1)</span>
+<span class="nc" id="L180">			return null;</span>
+
+<span class="nc" id="L182">		int end = start + 3;</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">		while (end &lt; url.length()) {</span>
+<span class="nc" id="L184">			final char c = url.charAt(end);</span>
+<span class="nc bnc" id="L185" title="All 6 branches missed.">			if (c == '/' || c == '?' || c == '#')</span>
+<span class="nc" id="L186">				break;</span>
+<span class="nc" id="L187">			end++;</span>
+<span class="nc" id="L188">		}</span>
+<span class="nc" id="L189">		final String authority = url.substring(start + 3, end);</span>
+<span class="nc" id="L190">		final int at = authority.lastIndexOf('@');</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		return at == -1 ? authority : authority.substring(at + 1);</span>
+	}
+
+	private static String getHost(String url) {
+<span class="nc" id="L195">		final String authority = getAuthority(url);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		if (authority == null)</span>
+<span class="nc" id="L197">			return null;</span>
+
+<span class="nc bnc" id="L199" title="All 2 branches missed.">		if (authority.startsWith(&quot;[&quot;)) {</span>
+<span class="nc" id="L200">			final int close = authority.indexOf(']');</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">			return close == -1 ? null : authority.substring(0, close + 1);</span>
+		}
+<span class="nc" id="L203">		final int colon = authority.indexOf(':');</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		return colon == -1 ? authority : authority.substring(0, colon);</span>
+	}
+
+	/**
+	 * The port of the URL, -1 if it is not written, -2 if it is not a number.
+	 */
+	private static int getPort(String url) {
+<span class="nc" id="L211">		final String authority = getAuthority(url);</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (authority == null)</span>
+<span class="nc" id="L213">			return -2;</span>
+
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		final int colon = authority.startsWith(&quot;[&quot;) ? authority.indexOf(&quot;]:&quot;) + 1 : authority.indexOf(':');</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (colon &lt;= 0)</span>
+<span class="nc" id="L217">			return -1;</span>
+
+<span class="nc" id="L219">		final String port = authority.substring(colon + 1);</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		if (port.isEmpty())</span>
+<span class="nc" id="L221">			return -1;</span>
+
+		try {
+<span class="nc" id="L224">			return Integer.parseInt(port);</span>
+<span class="nc" id="L225">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L226">			return -2;</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
