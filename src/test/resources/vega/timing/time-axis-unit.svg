@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="169px" preserveAspectRatio="none" style="width:277px;height:169px;background:#FFFFFF;" version="1.1" viewBox="0 0 277 169" width="277px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="137"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="256.7" x2="256.7" y1="20" y2="137"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="51.7" x2="51.7" y1="20" y2="137"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="101.7" x2="101.7" y1="20" y2="137"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="151.7" x2="151.7" y1="20" y2="137"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="201.7" x2="201.7" y1="20" y2="137"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="251.7" x2="251.7" y1="20" y2="137"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="256.7" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="39.025" x="25" y="30.889">Signal</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="65.025" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="65.025" x2="75.025" y1="35" y2="20"/>
+    <text fill="#333" font-size="12" textLength="19.35" x="25" y="69.333">Idle</text>
+    <text fill="#333" font-size="12" textLength="26.7" x="25" y="49.333">Busy</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="51.7" x2="101.7" y1="65" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="101.7" x2="201.7" y1="45" y2="45"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="201.7" x2="251.7" y1="65" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="101.7" x2="101.7" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="201.7" x2="201.7" y1="45" y2="65"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="256.7" y1="83" y2="83"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="24.15" x="25" y="93.889">Bus</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="50.15" y1="98" y2="98"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="50.15" x2="60.15" y1="98" y2="83"/>
+    <polygon fill="#E2E2F0" points="63.7,103,139.7,103,151.7,115,139.7,127,63.7,127,51.7,115" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="163.7,103,251.7,103,251.7,127,163.7,127,151.7,115" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M251.7,103 L163.7,103 L151.7,115 L163.7,127 L251.7,127" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="24.675" x="89.363" y="118.333">Free</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="25.35" x="163.7" y="118.333">Data</text>
+    <line style="stroke:#333;stroke-width:2;" x1="51.7" x2="51.7" y1="137" y2="142"/>
+    <line style="stroke:#333;stroke-width:2;" x1="101.7" x2="101.7" y1="137" y2="142"/>
+    <line style="stroke:#333;stroke-width:2;" x1="151.7" x2="151.7" y1="137" y2="142"/>
+    <line style="stroke:#333;stroke-width:2;" x1="201.7" x2="201.7" y1="137" y2="142"/>
+    <line style="stroke:#333;stroke-width:2;" x1="251.7" x2="251.7" y1="137" y2="142"/>
+    <line style="stroke:#333;stroke-width:2;" x1="51.7" x2="251.7" y1="137" y2="137"/>
+    <text fill="#333" font-size="11" x="48.641" y="151.556">0</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="92.522" y="151.556">100</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="142.522" y="151.556">200</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="192.522" y="151.556">300</text>
+    <text fill="#333" font-size="11" textLength="11.619" x="240.081" y="151.556">ns</text>
+  </g>
+</svg>
