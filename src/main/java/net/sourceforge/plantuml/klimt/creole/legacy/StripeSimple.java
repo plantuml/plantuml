@@ -66,7 +66,6 @@ import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.openiconic.OpenIconic;
 import net.sourceforge.plantuml.style.ISkinSimple;
-import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.CharHidder;
 import net.sourceforge.plantuml.utils.MyCollections;
@@ -265,8 +264,7 @@ public class StripeSimple implements Stripe {
 	}
 
 	public void addMath(ScientificEquationSafe math) {
-		if (TeaVM.isTeaVM() == false || TeaVM.isC())
-			atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));
+		atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));
 	}
 
 	private void modifyStripe(String line) {

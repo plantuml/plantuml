@@ -58,7 +58,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinSimple;
-import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class CreoleParser implements SheetBuilder {
 
@@ -103,8 +102,7 @@ public class CreoleParser implements SheetBuilder {
 			return Arrays.asList(new StripeTree(fontConfiguration, skinParam, line));
 		} else if (Parser.isCodeStart(line)) {
 			return Arrays.asList(new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED)));
-		} else if ((TeaVM.isTeaVM() == false || TeaVM.isC()) && Parser.isLatexStart(line)) {
-			// Not in the browser, see CommandCreoleBuilder
+		} else if (Parser.isLatexStart(line)) {
 			return Arrays.asList(new StripeLatex(fontConfiguration));
 		}
 		final HorizontalAlignment align = lastStripe instanceof StripeSimple

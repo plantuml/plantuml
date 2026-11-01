@@ -72,25 +72,22 @@ public class AtomMath extends AbstractAtom implements Atom {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		// On the JVM and in the C build; not in the browser (no resources for JLaTeXMath there yet)
-		if (TeaVM.isTeaVM() == false || TeaVM.isC()) {
-			// (TikZ is on the JVM only: the marker lets TeaVM prune this branch, and the AWT-based image)
-			if (TeaVM.isTeaVM() == false && ug.matchesProperty("TIKZ")) {
-				// TikZ gets the source of the formula, not a drawing
-				final XDimension2D dim = math.getDimension(ug.getStringBounder());
-				ug.draw(new UImage(new MathBlankImage(dim)).withFormula(math.getSource()));
-				return;
-			}
-			// Only a plain color can be used; the UGraphic maps it as it does for any shape
-			final HColor fore = foreground instanceof HColorSimple ? foreground : HColors.BLACK;
-			final HColor back;
-			if (background == null)
-				back = null;
-			else
-				back = background instanceof HColorSimple ? background : HColors.WHITE;
-
-			math.drawU(ug, fore, back);
+		// (TikZ is on the JVM only: the marker lets TeaVM prune this branch, and the AWT-based image)
+		if (TeaVM.isTeaVM() == false && ug.matchesProperty("TIKZ")) {
+			// TikZ gets the source of the formula, not a drawing
+			final XDimension2D dim = math.getDimension(ug.getStringBounder());
+			ug.draw(new UImage(new MathBlankImage(dim)).withFormula(math.getSource()));
+			return;
 		}
+		// Only a plain color can be used; the UGraphic maps it as it does for any shape
+		final HColor fore = foreground instanceof HColorSimple ? foreground : HColors.BLACK;
+		final HColor back;
+		if (background == null)
+			back = null;
+		else
+			back = background instanceof HColorSimple ? background : HColors.WHITE;
+
+		math.drawU(ug, fore, back);
 	}
 
 }

@@ -51,6 +51,7 @@ from copying ~100 MB on every build.
 |---|---|
 | `themes.js` | `java net.sourceforge.plantuml.theme.ThemesJsGenerator` (guarded by `ThemesJsTest`) |
 | `emoji.js` | `Emoji.main()` (generator code is commented out in `net.sourceforge.plantuml.emoji.Emoji`) |
+| `jlatexmath.js` | `java net.sourceforge.plantuml.math.JlatexmathJsGenerator` (guarded by `JlatexmathJsTest`; GPL, not in the MIT package) |
 | `openiconic.js` | `OpenIconic.main()` (generator code is commented out in `net.sourceforge.plantuml.openiconic.OpenIconic`) |
 
 **`stdlib/`** — in a plantuml-stdlib checkout, `gradlew run` (which chains

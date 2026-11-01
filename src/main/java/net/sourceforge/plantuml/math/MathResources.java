@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.math;
 import net.sourceforge.plantuml.teavm.TeaVM;
 // ::comment when JAVA8
 import net.sourceforge.plantuml.teavm.c.JlatexmathResources;
+import net.sourceforge.plantuml.teavm.js.JlatexmathResourcesJs;
+import net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs;
 // ::done
 import org.scilab.forge.jlatexmath.TeXClassLoaderResources;
 import org.scilab.forge.jlatexmath.TeXResources;
@@ -47,7 +49,7 @@ import org.scilab.forge.jlatexmath.TeXResources;
 /**
  * Tells JLaTeXMath where to read its resources (the XML files, the glyph
  * outlines): the files embedded in the executable in the C build (no class loader
- * there), the class loaders on the JVM ({@link TeXClassLoaderResources}). The
+ * there), {@code jlatexmath.js} in the browser build, the class loaders on the JVM ({@link TeXClassLoaderResources}). The
  * library itself has no class loader code, so that the C build never reaches it.
  * It is done before the first formula, by {@link TeXIconBuilder}.
  */
@@ -65,6 +67,16 @@ final class MathResources {
 		// ::comment when JAVA8
 		if (TeaVM.isC()) {
 			TeXResources.setProvider(new JlatexmathResources());
+			return;
+		}
+		// Browser: the resources come from jlatexmath.js (loaded on demand, like
+		// emoji.js). It never waits: when the script is not there yet, this attempt
+		// stops here (the formula is shown as text) and the diagram is rendered
+		// again once the script is loaded (PendingResources).
+		if (TeaVM.isTeaVM()) {
+			if (JlatexmathResourcesJs.isAvailable() == false && ScriptLoaderJs.require("jlatexmath.js") == false)
+				throw new IllegalStateException("jlatexmath.js is being loaded");
+			TeXResources.setProvider(new JlatexmathResourcesJs());
 			return;
 		}
 		// ::done

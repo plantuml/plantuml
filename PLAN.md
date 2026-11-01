@@ -229,10 +229,10 @@ a TeaVM build and as an `<image>` on the JVM: not a bug, see `tools/vega-c/READM
 | 0 | 5.1 corpus + references; answer the cheap open questions (XML in TeaVM, pinned upstream commit) | corpus committed, references reviewed (**done**) |
 | 1 | Vendor the sources as they are, call them directly (no reflection), JVM only, **no behaviour change** | corpus unchanged on the JVM (**done**) |
 | 2 | Canvas interface + `UGraphic` implementation, glyph outlines (5.2) | corpus renders without AWT fonts, differences understood (**done**, steps below) |
-| 3 | Remove `java.awt` / `javax.*` leftovers, XML and resources (5.3, 5.4) | the code compiles with TeaVM (JS and C) (**done for C**: JavaScript and Wasm have no provider of resources yet) |
+| 3 | Remove `java.awt` / `javax.*` leftovers, XML and resources (5.3, 5.4) | the code compiles with TeaVM (JS and C) (**done for C**; JavaScript and Wasm: `jlatexmath.js`, phase 6) |
 | 4 | Wire-up (5.5), first formulas in `plantuml.exe` | `@startmath`, `@startlatex`, `<math>` work in the C build (**done**: on `plantuml.exe` built on Windows ARM64, every SVG and PDF test of `vega/math` passes, see 5.7) |
 | 5 | Pruning (5.6), size and start-up measurements, Vega on C (5.7) | size delta acceptable, CI green |
-| 6 | Same for JavaScript / Wasm if wanted | |
+| 6 | Same for JavaScript / Wasm (steps below) | formulas render in the browser build (**written, to test**: `gradlew teavm`, `gradlew teavmWasm`) |
 
 Steps of phase 2:
 
@@ -254,6 +254,16 @@ Steps of phase 3:
 | 3c | No reflection (`MacroInfo` / `\newcommand`, the alphabets of the static block of `TeXFormula`), no `Character.UnicodeBlock` | done: `TeXUnicodeBlock`, `MacroHandler` |
 | 3d | XML: a mini reader (4 parsers) or binary files made at dev time | done: `XmlReader`; the binary files stay an option for phase 5 |
 | 3e | Resources: one abstraction (class path, `EmbeddedFiles`, bundle), also for `glyphs.bin` | done: `TeXResources`, `TeXResourceProvider` (the bundle of the browser is not done) |
+
+Steps of phase 6 (the size and start-up measurements of phase 5 come later):
+
+| Step | Content | State |
+|------|---------|-------|
+| 6a | `generated/jlatexmath.js`: the XML files and `glyphs.bin` (the files of the C build) in Base64 in `PLANTUML_JLATEXMATH`; made by `JlatexmathJsGenerator`, guarded by `JlatexmathJsTest`; GPL, so listed only in the packages of the root build, not in the MIT one | written |
+| 6b | `JlatexmathResourcesJs` (a `TeXResourceProvider`) reads that global; `MathResources.ensure()` loads `jlatexmath.js` through `ScriptLoaderJs.require` like `emoji.js`: it never waits, this attempt shows the source as text and is discarded, the diagram is rendered again once the script is there (`PendingResources`, `RenderQueue`) | written |
+| 6c | The gates `TeaVM.isTeaVM() == false \|\| TeaVM.isC()` of the Creole code are removed (`<math>`, `<latex>`, `AtomMath`); TikZ stays JVM only | written |
+| 6d | `@startmath` / `@startlatex` (`DirectOsDiagram`) implement `FormulaDiagram`; `PlantUMLBrowser` draws their block on the SVG context; both factories are in `PSystemBuilderJs` | written |
+| 6e | Not done: the headless / MCP path (`DiagramRendererTeaVM`) for formula diagrams, Web Worker hosts that must register `PLANTUML_JLATEXMATH` themselves, `jlatexmath.js` size (2.7 MB, Base64: see phase 5) | open |
 
 Notes on phase 1: the vendored classes live in the jar, so the external
 jar is no longer read by reflection and its Gradle dependency is removed in
