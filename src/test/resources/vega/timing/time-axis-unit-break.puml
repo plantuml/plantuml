@@ -1,0 +1,34 @@
+---
+output: svg, debug
+expected-description: (Timing Diagram)
+---
+@startuml
+time-axis unit "ms"
+robust "Web Browser" as WB
+concise "Web User" as WU
+binary "Enable" as EN
+clock "Clk" as CLK with period 100
+
+@0
+WU is Idle
+WB is Idle
+EN is low
+
+@100
+WU is Waiting
+WB is Processing
+EN is high
+
+@300 as :wait
+WB is Waiting
+
+@5000
+WB is Idle
+WU is Idle
+EN is low
+
+@5200
+WU is Waiting
+
+break :wait+100 to 4900
+@enduml

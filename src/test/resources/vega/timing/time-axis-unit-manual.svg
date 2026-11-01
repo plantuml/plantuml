@@ -28,11 +28,11 @@
     <path d="M251.7,103 L163.7,103 L151.7,115 L163.7,127 L251.7,127" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
     <text fill="#333" font-size="12" font-weight="700" textLength="24.675" x="89.363" y="118.333">Free</text>
     <text fill="#333" font-size="12" font-weight="700" textLength="25.35" x="163.7" y="118.333">Data</text>
+    <line style="stroke:#333;stroke-width:2;" x1="51.7" x2="251.7" y1="137" y2="137"/>
     <line style="stroke:#333;stroke-width:2;" x1="51.7" x2="51.7" y1="137" y2="142"/>
     <line style="stroke:#333;stroke-width:2;" x1="101.7" x2="101.7" y1="137" y2="142"/>
     <line style="stroke:#333;stroke-width:2;" x1="151.7" x2="151.7" y1="137" y2="142"/>
     <line style="stroke:#333;stroke-width:2;" x1="201.7" x2="201.7" y1="137" y2="142"/>
-    <line style="stroke:#333;stroke-width:2;" x1="51.7" x2="251.7" y1="137" y2="137"/>
     <text fill="#333" font-size="11" x="48.641" y="151.556">0</text>
     <text fill="#333" font-size="11" textLength="18.356" x="92.522" y="151.556">100</text>
     <text fill="#333" font-size="11" textLength="18.356" x="142.522" y="151.556">200</text>
