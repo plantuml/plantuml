@@ -195,6 +195,24 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
 
 ## 8. Open questions / decisions
 
+### Decisions
+
+- **Upstream version (was question 5): vendor tag `1.0.7`**, commit
+  `cb86da9c5747ba1788fcb913988b98d82cb0bc0d` of
+  https://github.com/opencollab/jlatexmath (2018-04-18). It is the version the
+  jar uses today, so phase 1 is "no behaviour change". The 9 upstream commits
+  after the tag only touch the build (Maven, Travis, javadoc), the changelog
+  and the LICENSE files of the font modules: nothing to take for the code.
+- **XML in TeaVM (was question 6): not available.** `javax.xml.parsers` is not
+  provided by TeaVM; the repository already works around it in
+  `SvgSpriteParserFactory` (compile-time `TeaVM.isTeaVM()` forces
+  `SvgNanoParser`). Consequence for 5.3: no point in a repro, the 44 XML
+  files of JLaTeXMath must be read either by a minimal reader of our own (the
+  files use only elements and attributes) or converted at dev time. To be
+  decided in phase 3, after looking at what `SvgNanoParser` can be reused.
+
+### Open questions
+
 1. **Package name**: keep `org.scilab.forge.jlatexmath` (easier to diff against
    upstream, like `org.openpdf`) or move under `net.sourceforge.plantuml`?
 2. **One code path or two**: new renderer everywhere (deterministic, no Batik,
@@ -204,9 +222,8 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
    with an embedded font (smaller, needs the font on the viewer side)?
 4. **Alphabets**: ship the Cyrillic and Greek font modules (size) or only the
    base fonts?
-5. **Upstream version to vendor**: the library is used at `1.0.7`; check which
-   upstream commit or tag matches, and whether later fixes are worth taking.
-6. **TeaVM support** of `javax.xml` in the C and JS class libraries (5.3).
+5. (answered, see Decisions: vendor tag `1.0.7`)
+6. (answered, see Decisions: no `javax.xml` in TeaVM)
 7. `AtomMath`'s TIKZ / LaTeX output path (`matchesProperty("TIKZ")`) must keep
    working: it only needs the formula source, no rendering.
 8. Static caches and global state in `TeXFormula` / `DefaultTeXFont` versus the
@@ -215,7 +232,7 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
 
 ## 9. First things to do in the next session
 
-1. Answer questions 5 and 6 (they are cheap and decide 5.3).
+1. ~~Answer questions 5 and 6~~ (done, see section 8).
 2. Write the corpus and the Vega references (phase 0).
 3. Vendor the upstream sources at the chosen commit and wire direct calls
    (phase 1), as one reviewable patch.
