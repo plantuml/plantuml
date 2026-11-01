@@ -28,8 +28,10 @@ import org.junit.jupiter.api.TestFactory;
  */
 class PyScriptsTest {
 
+	// Line endings depend on core.autocrlf, so CRLF is normalized to LF: the
+	// interpreter prints LF, and so do the reference .out files.
 	private static String read(Path path) throws IOException {
-		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8).replace("\r\n", "\n");
 	}
 
 	private static Path root() throws URISyntaxException {
