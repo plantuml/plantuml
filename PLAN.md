@@ -228,15 +228,21 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
   files use only elements and attributes) or converted at dev time. To be
   decided in phase 3, after looking at what `SvgNanoParser` can be reused.
 
+- **Package name (was question 1): keep `org.scilab.forge.jlatexmath`**, for
+  now. It stays easy to diff against upstream.
+- **One code path (was question 2): the new renderer everywhere**, on the JVM
+  too: deterministic, no Batik. The SVG of a formula changes from the source
+  text (without Batik) or Batik shapes to our own paths. The original library
+  is not kept next to it.
+- **Glyphs in SVG (was question 3): follows from the previous one.** The
+  renderer draws through `UGraphic`, so a glyph is a path (self-contained SVG,
+  larger than with `<text>`). Revisit only if the size of the SVG hurts.
+
 ### Open questions
 
-1. **Package name**: keep `org.scilab.forge.jlatexmath` (easier to diff against
-   upstream, like `org.openpdf`) or move under `net.sourceforge.plantuml`?
-2. **One code path or two**: new renderer everywhere (deterministic, no Batik,
-   but SVG output changes from text or Batik shapes to our paths on the JVM too)
-   or keep the original library on the JVM and the new one only in TeaVM?
-3. **Fonts in SVG**: glyphs as paths (self-contained, larger SVG) or `<text>`
-   with an embedded font (smaller, needs the font on the viewer side)?
+1. (answered, see Decisions: keep `org.scilab.forge.jlatexmath`)
+2. (answered, see Decisions: one code path, new renderer everywhere)
+3. (answered, see Decisions: glyphs as paths)
 4. **Alphabets**: ship the Cyrillic and Greek font modules (size) or only the
    base fonts?
 5. (answered, see Decisions: vendor tag `1.0.7`)
