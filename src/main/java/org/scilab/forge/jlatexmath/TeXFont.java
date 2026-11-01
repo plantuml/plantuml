@@ -56,16 +56,6 @@ public interface TeXFont {
 
     public static final int NO_FONT = -1;
 
-    /**
-     * Derives a new {@link TeXFont} object with the given point size
-     *
-     * @param pointSize the new size (in points) of the derived {@link TeXFont}
-     * @return a <b>copy</b> of this {@link TeXFont} with the new size
-     */
-    public TeXFont deriveFont(float pointSize);
-
-    public TeXFont scaleFont(float factor);
-
     public float getScaleFactor();
 
     public float getAxisHeight(int style);
@@ -231,23 +221,13 @@ public interface TeXFont {
 
     public void setBold(boolean bold);
 
-    public boolean getBold();
-
     public void setRoman(boolean rm);
-
-    public boolean getRoman();
 
     public void setTt(boolean tt);
 
-    public boolean getTt();
-
     public void setIt(boolean it);
 
-    public boolean getIt();
-
     public void setSs(boolean ss);
-
-    public boolean getSs();
 
     /**
      *

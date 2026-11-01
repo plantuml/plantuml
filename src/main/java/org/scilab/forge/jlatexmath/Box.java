@@ -162,22 +162,6 @@ public abstract class Box {
         background = bg;
     }
 
-    public void setParent(Box parent) {
-        this.parent = parent;
-    }
-
-    public Box getParent() {
-        return parent;
-    }
-
-    public void setElderParent(Box elderParent) {
-        this.elderParent = elderParent;
-    }
-
-    public Box getElderParent() {
-        return elderParent;
-    }
-
     /**
      * Get the width of this box.
      *

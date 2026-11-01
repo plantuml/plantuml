@@ -256,10 +256,6 @@ public class FontInfo {
         skewChar = c;
     }
 
-    public int getId() {
-        return fontId;
-    }
-
     public int getBoldId() {
         return boldId;
     }

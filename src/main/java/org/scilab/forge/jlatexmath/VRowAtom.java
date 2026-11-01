@@ -81,32 +81,16 @@ public class VRowAtom extends Atom {
         this.addInterline = addInterline;
     }
 
-    public boolean getAddInterline() {
-        return this.addInterline;
-    }
-
     public void setHalign(int halign) {
         this.halign = halign;
-    }
-
-    public int getHalign() {
-        return halign;
     }
 
     public void setVtop(boolean vtop) {
         this.vtop = vtop;
     }
 
-    public boolean getVtop() {
-        return vtop;
-    }
-
     public void setRaise(int unit, float r) {
         raise = new SpaceAtom(unit, r, 0, 0);
-    }
-
-    public Atom getLastAtom() {
-        return elements.removeLast();
     }
 
     public final void add(Atom el) {

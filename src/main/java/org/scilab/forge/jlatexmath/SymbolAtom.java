@@ -121,17 +121,9 @@ public class SymbolAtom extends CharSymbol {
         return this;
     }
 
-    public char getUnicode() {
-        return unicode;
-    }
-
     public static void addSymbolAtom(InputStream in, String name) {
         TeXSymbolParser tsp = new TeXSymbolParser(in, name);
         symbols.putAll(tsp.readSymbols());
-    }
-
-    public static void addSymbolAtom(SymbolAtom sym) {
-        symbols.put(sym.name, sym);
     }
 
     /**
@@ -151,14 +143,6 @@ public class SymbolAtom extends CharSymbol {
             // atom that they are given. On the one of the table they changed every later formula
             // of the JVM (a \sum\nolimits made all the following \sum have their limits as scripts).
             return (SymbolAtom) ((SymbolAtom) obj).clone();
-    }
-
-    /**
-     *
-     * @return true if this symbol can act as a delimiter to embrace formulas
-     */
-    public boolean isDelimiter() {
-        return delimiter;
     }
 
     public String getName() {

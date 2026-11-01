@@ -328,20 +328,10 @@ public class TeXParser {
         atIsLetter--;
     }
 
-    /** Return a boolean indicating if the character @ is considered as a letter or not
-     */
-    public boolean isAtLetter() {
-        return (atIsLetter != 0);
-    }
-
     /** Return a boolean indicating if the parser is used to parse an array or not
      */
     public boolean isArrayMode() {
         return arrayMode;
-    }
-
-    public void setArrayMode(boolean arrayMode) {
-        this.arrayMode = arrayMode;
     }
 
     /** Return a boolean indicating if the parser must ignore white spaces
@@ -359,15 +349,6 @@ public class TeXParser {
     /** Return the current position in the parsed string
      */
     public int getPos() {
-        return pos;
-    }
-
-    /** Rewind the current parsed string
-     * @param n the number of character to be rewinded
-     * @return the new position in the parsed string
-     */
-    public int rewind(int n) {
-        pos -= n;
         return pos;
     }
 

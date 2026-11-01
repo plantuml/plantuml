@@ -48,7 +48,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -138,14 +137,6 @@ public class TeXFormula {
         TeXFormulaSettingsParser tfsp = new TeXFormulaSettingsParser(in, name);
         tfsp.parseSymbolMappings(symbolMappings, symbolTextMappings);
         tfsp.parseSymbolToFormulaMappings(symbolFormulaMappings, symbolTextMappings);
-    }
-
-    /**
-     * Set the DPI of target
-     * @param dpi the target DPI
-     */
-    public static void setDPITarget(float dpi) {
-        PIXELS_PER_POINT = dpi / 72f;
     }
 
     // the root atom of the "atom tree" that represents the formula
@@ -294,48 +285,6 @@ public class TeXFormula {
         }
     }
 
-    public static TeXFormula getAsText(String text, int alignment) throws ParseException {
-        TeXFormula formula = new TeXFormula();
-        if (text == null || "".equals(text)) {
-            formula.add(new EmptyAtom());
-            return formula;
-        }
-
-        String[] arr = text.split("\n|\\\\\\\\|\\\\cr");
-        ArrayOfAtoms atoms = new ArrayOfAtoms();
-        for (String s : arr) {
-            TeXFormula f = new TeXFormula(s, "mathnormal", true, false);
-            atoms.add(new RomanAtom(f.root));
-            atoms.addRow();
-        }
-        atoms.checkDimensions();
-        formula.add(new MatrixAtom(false, atoms, MatrixAtom.ARRAY, alignment));
-
-        return formula;
-    }
-
-    /**
-     * @param a formula
-     * @return a partial TeXFormula containing the valid part of formula
-     */
-    public static TeXFormula getPartialTeXFormula(String formula) {
-        TeXFormula f = new TeXFormula();
-        if (formula == null) {
-            f.add(new EmptyAtom());
-            return f;
-        }
-        TeXParser parser = new TeXParser(true, formula, f);
-        try {
-            parser.parse();
-        } catch (Exception e) {
-            if (f.root == null) {
-                f.root = new EmptyAtom();
-            }
-        }
-
-        return f;
-    }
-
     /**
      * Change the text of the TeXFormula and regenerate the root
      *
@@ -373,44 +322,11 @@ public class TeXFormula {
         return this;
     }
 
-    /**
-     * Parses the given string and inserts the resulting formula
-     * at the end of the current TeXFormula.
-     *
-     * @param s the string to be parsed and inserted
-     * @throws ParseException if the string could not be parsed correctly
-     * @return the modified TeXFormula
-     */
-    public TeXFormula add(String s) throws ParseException {
-        if (s != null && s.length() != 0) {
-            // reset parsing variables
-            textStyle = null;
-            // parse and add the string
-            add(new TeXFormula(s));
-        }
-        return this;
-    }
-
-    public TeXFormula append(String s) throws ParseException {
-        return append(false, s);
-    }
-
     public TeXFormula append(boolean isPartial, String s) throws ParseException {
         if (s != null && s.length() != 0) {
             TeXParser tp = new TeXParser(isPartial, s, this);
             tp.parse();
         }
-        return this;
-    }
-
-    /**
-     * Inserts the given TeXFormula at the end of the current TeXFormula.
-     *
-     * @param f the TeXFormula to be inserted
-     * @return the modified TeXFormula
-     */
-    public TeXFormula add(TeXFormula f) {
-        addImpl(f);
         return this;
     }
 
@@ -422,79 +338,6 @@ public class TeXFormula {
             else
                 add(f.root);
         }
-    }
-
-    public void setLookAtLastAtom(boolean b) {
-        if (root instanceof RowAtom)
-            ((RowAtom)root).lookAtLastAtom = b;
-    }
-
-    public boolean getLookAtLastAtom() {
-        if (root instanceof RowAtom)
-            return ((RowAtom)root).lookAtLastAtom;
-        return false;
-    }
-
-    /**
-     * Centers the current TeXformula vertically on the axis (defined by the parameter
-     * "axisheight" in the resource "DefaultTeXFont.xml".
-     *
-     * @return the modified TeXFormula
-     */
-    public TeXFormula centerOnAxis() {
-        root = new VCenteredAtom(root);
-        return this;
-    }
-
-    /**
-     * Inserts a strut box (whitespace) with the given width, height and depth (in
-     * the given unit) at the end of the current TeXFormula.
-     *
-     * @param unit a unit constant (from {@link TeXConstants})
-     * @param width the width of the strut box
-     * @param height the height of the strut box
-     * @param depth the depth of the strut box
-     * @return the modified TeXFormula
-     * @throws InvalidUnitException if the given integer value does not represent
-     *                  a valid unit
-     */
-    public TeXFormula addStrut(int unit, float width, float height, float depth)
-    throws InvalidUnitException {
-        return add(new SpaceAtom(unit, width, height, depth));
-    }
-
-    /**
-     * Inserts a strut box (whitespace) with the given width, height and depth (in
-     * the given unit) at the end of the current TeXFormula.
-     *
-     * @param type thinmuskip, medmuskip or thickmuskip (from {@link TeXConstants})
-     * @return the modified TeXFormula
-     * @throws InvalidUnitException if the given integer value does not represent
-     *                  a valid unit
-     */
-    public TeXFormula addStrut(int type)
-    throws InvalidUnitException {
-        return add(new SpaceAtom(type));
-    }
-
-    /**
-     * Inserts a strut box (whitespace) with the given width (in widthUnits), height
-     * (in heightUnits) and depth (in depthUnits) at the end of the current TeXFormula.
-     *
-     * @param widthUnit a unit constant used for the width (from {@link TeXConstants})
-     * @param width the width of the strut box
-     * @param heightUnit a unit constant used for the height (from TeXConstants)
-     * @param height the height of the strut box
-     * @param depthUnit a unit constant used for the depth (from TeXConstants)
-     * @param depth the depth of the strut box
-     * @return the modified TeXFormula
-     * @throws InvalidUnitException if the given integer value does not represent
-     *                  a valid unit
-     */
-    public TeXFormula addStrut(int widthUnit, float width, int heightUnit,
-                               float height, int depthUnit, float depth) throws InvalidUnitException {
-        return add(new SpaceAtom(widthUnit, width, heightUnit, height, depthUnit,
-                                 depth));
     }
 
     /*
@@ -733,97 +576,6 @@ public class TeXFormula {
      */
     public TeXIcon createTeXIcon(int style, float size) {
         return new TeXIconBuilder().setStyle(style).setSize(size).build();
-    }
-
-    public TeXIcon createTeXIcon(int style, float size, int type) {
-        return new TeXIconBuilder().setStyle(style).setSize(size).setType(type).build();
-    }
-
-    public TeXIcon createTeXIcon(int style, float size, int type, TeXColor fgcolor) {
-        return new TeXIconBuilder().setStyle(style).setSize(size).setType(type).setFGColor(fgcolor).build();
-    }
-
-    public TeXIcon createTeXIcon(int style, float size, boolean trueValues) {
-        return new TeXIconBuilder().setStyle(style).setSize(size).setTrueValues(trueValues).build();
-    }
-
-    public TeXIcon createTeXIcon(int style, float size, int widthUnit, float textwidth, int align) {
-        return createTeXIcon(style, size, 0, widthUnit, textwidth, align);
-    }
-
-    public TeXIcon createTeXIcon(int style, float size, int type, int widthUnit, float textwidth, int align) {
-        return new TeXIconBuilder().setStyle(style).setSize(size).setType(type).setWidth(widthUnit, textwidth, align).build();
-    }
-
-    public TeXIcon createTeXIcon(int style, float size, int widthUnit, float textwidth, int align, int interlineUnit, float interline) {
-        return createTeXIcon(style, size, 0, widthUnit, textwidth, align, interlineUnit, interline);
-    }
-
-    public TeXIcon createTeXIcon(int style, float size, int type, int widthUnit, float textwidth, int align, int interlineUnit, float interline) {
-        return new TeXIconBuilder().setStyle(style).setSize(size).setType(type).setWidth(widthUnit, textwidth, align).setInterLineSpacing(interlineUnit, interline).build();
-    }
-
-    public void setDEBUG(boolean b) {
-        Box.DEBUG = b;
-    }
-
-    /**
-     * Changes the background color of the <i>current</i> TeXFormula into the given color.
-     * By default, a TeXFormula has no background color, it's transparent.
-     * The backgrounds of subformula's will be painted on top of the background of
-     * the whole formula! Any changes that will be made to this TeXFormula after this
-     * background color was set, will have the default background color (unless it will
-     * also be changed into another color afterwards)!
-     *
-     * @param c the desired background color for the <i>current</i> TeXFormula
-     * @return the modified TeXFormula
-     */
-    public TeXFormula setBackground(TeXColor c) {
-        if (c != null) {
-            if (root instanceof ColorAtom)
-                root = new ColorAtom(c, null, (ColorAtom) root);
-            else
-                root = new ColorAtom(root, c, null);
-        }
-        return this;
-    }
-
-    /**
-     * Changes the (foreground) color of the <i>current</i> TeXFormula into the given color.
-     * By default, the foreground color of a TeXFormula is the foreground color of the
-     * component on which the TeXIcon (created from this TeXFormula) will be painted. The
-     * color of subformula's overrides the color of the whole formula.
-     * Any changes that will be made to this TeXFormula after this color was set, will be
-     * painted in the default color (unless the color will also be changed afterwards into
-     * another color)!
-     *
-     * @param c the desired foreground color for the <i>current</i> TeXFormula
-     * @return the modified TeXFormula
-     */
-    public TeXFormula setColor(TeXColor c) {
-        if (c != null) {
-            if (root instanceof ColorAtom)
-                root = new ColorAtom(null, c, (ColorAtom) root);
-            else
-                root = new ColorAtom(root, null, c);
-        }
-        return this;
-    }
-
-    /**
-     * Sets a fixed left and right type of the current TeXFormula. This has an influence
-     * on the glue that will be inserted before and after this TeXFormula.
-     *
-     * @param leftType atom type constant (from {@link TeXConstants})
-     * @param rightType atom type constant (from TeXConstants)
-     * @return the modified TeXFormula
-     * @throws InvalidAtomTypeException if the given integer value does not represent
-     *                  a valid atom type
-     */
-    public TeXFormula setFixedTypes(int leftType, int rightType)
-    throws InvalidAtomTypeException {
-        root = new TypedAtom(leftType, rightType, root);
-        return this;
     }
 
     /**

@@ -141,28 +141,12 @@ public class DefaultTeXFont implements TeXFont {
         isIt = it;
     }
 
-    public static void addTeXFontDescription(InputStream in, String name) throws ResourceParseException {
-        DefaultTeXFontParser dtfp = new DefaultTeXFontParser(in, name);
-        fontInfo = dtfp.parseFontDescriptions(fontInfo);
-        textStyleMappings.putAll(dtfp.parseTextStyleMappings());
-        symbolMappings.putAll(dtfp.parseSymbolMappings());
-    }
-
     public static void addTeXFontDescription(Object base, InputStream in, String name) throws ResourceParseException {
         DefaultTeXFontParser dtfp = new DefaultTeXFontParser(base, in, name);
         fontInfo = dtfp.parseFontDescriptions(fontInfo);
         dtfp.parseExtraPath();
         textStyleMappings.putAll(dtfp.parseTextStyleMappings());
         symbolMappings.putAll(dtfp.parseSymbolMappings());
-    }
-
-    public static void addAlphabet(TeXUnicodeBlock alphabet, InputStream inlanguage, String language, InputStream insymbols, String symbols, InputStream inmappings, String mappings) throws ResourceParseException {
-        if (!loadedAlphabets.contains(alphabet)) {
-            addTeXFontDescription(inlanguage, language);
-            SymbolAtom.addSymbolAtom(insymbols, symbols);
-            TeXFormula.addSymbolMappings(inmappings, mappings);
-            loadedAlphabets.add(alphabet);
-        }
     }
 
     public static void addAlphabet(Object base, TeXUnicodeBlock[] alphabet, String language) throws ResourceParseException {
@@ -178,16 +162,6 @@ public class DefaultTeXFont implements TeXFont {
             }
             TeXParser.isLoading = false;
         }
-    }
-
-    public static void addAlphabet(TeXUnicodeBlock alphabet, String name) {
-        String lg = "fonts/" + name + "/language_" + name+ ".xml";
-        String sym = "fonts/" + name + "/symbols_" + name+ ".xml";
-        String map = "fonts/" + name + "/mappings_" + name+ ".xml";
-
-        try {
-            DefaultTeXFont.addAlphabet(alphabet, TeXResources.open(TeXFormula.class, lg), lg, TeXResources.open(TeXFormula.class, sym), sym, TeXResources.open(TeXFormula.class, map), map);
-        } catch (FontAlreadyLoadedException e) { }
     }
 
     public static void addAlphabet(AlphabetRegistration reg) {
@@ -209,14 +183,6 @@ public class DefaultTeXFont implements TeXFont {
     }
 
     public TeXFont copy() {
-        return new DefaultTeXFont(size, factor, isBold, isRoman, isSs, isTt, isIt);
-    }
-
-    public TeXFont deriveFont(float size) {
-        return new DefaultTeXFont(size, factor, isBold, isRoman, isSs, isTt, isIt);
-    }
-
-    public TeXFont scaleFont(float factor) {
         return new DefaultTeXFont(size, factor, isBold, isRoman, isSs, isTt, isIt);
     }
 
@@ -479,40 +445,20 @@ public class DefaultTeXFont implements TeXFont {
         isBold = bold;
     }
 
-    public boolean getBold() {
-        return isBold;
-    }
-
     public void setRoman(boolean rm) {
         isRoman = rm;
-    }
-
-    public boolean getRoman() {
-        return isRoman;
     }
 
     public void setTt(boolean tt) {
         isTt = tt;
     }
 
-    public boolean getTt() {
-        return isTt;
-    }
-
     public void setIt(boolean it) {
         isIt = it;
     }
 
-    public boolean getIt() {
-        return isIt;
-    }
-
     public void setSs(boolean ss) {
         isSs = ss;
-    }
-
-    public boolean getSs() {
-        return isSs;
     }
 
     public boolean hasSpace(int font) {
@@ -538,10 +484,6 @@ public class DefaultTeXFont implements TeXFont {
         if (magnificationEnable) {
             TeXIcon.magFactor = mag / 1000f;
         }
-    }
-
-    public static void enableMagnification(boolean b) {
-        magnificationEnable = b;
     }
 
     private static float getParameter(String parameterName) {
