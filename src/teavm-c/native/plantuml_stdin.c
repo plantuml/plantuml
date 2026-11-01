@@ -37,21 +37,14 @@ int32_t plantuml_stdin_read(int8_t* dest, int32_t length) {
 #endif
 }
 
-int32_t plantuml_stdout_write(const int8_t* src, int32_t length) {
-#ifdef _WIN32
-	static int binary = 0;
-	if (binary == 0) {
-		_setmode(1, _O_BINARY);
-		binary = 1;
-	}
-#endif
+static int32_t write_fd(int fd, const int8_t* src, int32_t length) {
 	while (length > 0) {
 #ifdef _WIN32
-		int count = _write(1, src, (unsigned int)length);
+		int count = _write(fd, src, (unsigned int)length);
 		if (count <= 0)
 			return -1;
 #else
-		ssize_t count = write(1, src, (size_t)length);
+		ssize_t count = write(fd, src, (size_t)length);
 		if (count < 0) {
 			if (errno == EINTR)
 				continue;
@@ -62,4 +55,26 @@ int32_t plantuml_stdout_write(const int8_t* src, int32_t length) {
 		length -= (int32_t)count;
 	}
 	return 0;
+}
+
+int32_t plantuml_stdout_write(const int8_t* src, int32_t length) {
+#ifdef _WIN32
+	static int binary = 0;
+	if (binary == 0) {
+		_setmode(1, _O_BINARY);
+		binary = 1;
+	}
+#endif
+	return write_fd(1, src, length);
+}
+
+int32_t plantuml_stderr_write(const int8_t* src, int32_t length) {
+#ifdef _WIN32
+	static int binary = 0;
+	if (binary == 0) {
+		_setmode(2, _O_BINARY);
+		binary = 1;
+	}
+#endif
+	return write_fd(2, src, length);
 }

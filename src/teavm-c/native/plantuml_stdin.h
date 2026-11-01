@@ -26,6 +26,10 @@ int32_t plantuml_stdin_read(int8_t* dest, int32_t length);
  * of -pipe are binary). Returns 0, or -1 on error. */
 int32_t plantuml_stdout_write(const int8_t* src, int32_t length);
 
+/* Same as plantuml_stdout_write, for the standard error (the diagnostics of
+ * -pipe: line number and message of a syntax error). Returns 0, or -1 on error. */
+int32_t plantuml_stderr_write(const int8_t* src, int32_t length);
+
 #ifdef __cplusplus
 }
 #endif

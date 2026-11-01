@@ -87,6 +87,7 @@ import net.sourceforge.plantuml.swing.MainWindow;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
 import net.sourceforge.plantuml.teavm.TeaVM;
 // ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.c.StderrStream;
 import net.sourceforge.plantuml.teavm.c.StdinStream;
 import net.sourceforge.plantuml.teavm.c.StdoutStream;
 // ::done
@@ -190,7 +191,7 @@ public class Run {
 					exit.eventuallyExit();
 					return;
 				}
-				new Pipe(option, standardOutput(), standardInput(), charset).managePipe(exit);
+				new Pipe(option, standardOutput(), standardError(), standardInput(), charset).managePipe(exit);
 				exit.eventuallyExit();
 				return;
 			}
@@ -271,6 +272,16 @@ public class Run {
 			return new PrintStream(new StdoutStream(), false);
 		// ::done
 		return System.out;
+	}
+
+	private static PrintStream standardError() {
+		// ::comment when JAVA8
+		// Kroki reads the line number and the message of a syntax error here: the
+		// System.err of the TeaVM C backend stayed empty
+		if (TeaVM.isC())
+			return new PrintStream(new StderrStream(), true);
+		// ::done
+		return System.err;
 	}
 
 	private static void detectDisplay(String[] argsArray) {

@@ -70,4 +70,10 @@ final class NativeStdin {
 	@Import(name = "plantuml_stdout_write")
 	static native int write(byte[] src, int length);
 
+	/**
+	 * Same as {@link #write(byte[], int)}, for the standard error.
+	 */
+	@Import(name = "plantuml_stderr_write")
+	static native int writeError(byte[] src, int length);
+
 }

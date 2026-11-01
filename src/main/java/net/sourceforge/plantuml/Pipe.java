@@ -65,10 +65,20 @@ public class Pipe {
 	private final CliOptions option;
 	private final BufferedReader br;
 	private final PrintStream ps;
+	private final PrintStream err;
 	private final Stdrpt stdrpt;
 
 	public Pipe(CliOptions option, PrintStream ps, InputStream is, String charset) {
+		this(option, ps, System.err, is, charset);
+	}
+
+	/**
+	 * @param err where the diagnostics of an erroneous diagram go (the C build
+	 *            gives its own stream: its {@code System.err} stays empty)
+	 */
+	public Pipe(CliOptions option, PrintStream ps, PrintStream err, InputStream is, String charset) {
 		this.option = option;
+		this.err = err;
 		try {
 			this.br = new BufferedReader(
 					new InputStreamReader(is, (charset != null) ? charset : Charset.defaultCharset().name()));
@@ -132,7 +142,7 @@ public class Pipe {
 		// Only -pipeNoStderr reroutes the per-diagram info line away from stderr: that
 		// is specifically what its name promises, and --no-error-image alone makes no
 		// claim about stderr, so it must not change where this goes.
-		printInfo(noStdErr ? ps : System.err, sourceStringReader);
+		printInfo(noStdErr ? ps : err, sourceStringReader);
 		if (result == null || "(error)".equalsIgnoreCase(result.getDescription()) == false) {
 			if (buffer) {
 				final ByteArrayOutputStream baos = (ByteArrayOutputStream) os;
