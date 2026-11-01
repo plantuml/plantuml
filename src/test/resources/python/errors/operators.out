@@ -30,7 +30,8 @@ mod: 16 calls ok
 mod-left: 8 calls raised TypeError
 mod-right: 8 calls raised TypeError
 -------- **
-power: 16 calls ok
+power: 8 calls ok
+power-negative: 4 calls ok
 power-left: 16 calls raised TypeError
 power-right: 16 calls raised TypeError
 -------- ==, !=

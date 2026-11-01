@@ -152,7 +152,10 @@ checkallerrors("mod-left", mod, [[None, [1, 2]], somenumber], "TypeError")
 checkallerrors("mod-right", mod, [somenumber, [None, [1, 2]]], "TypeError")
 
 banner("**")
-checkallpass("power", power, [somenumber, somenumber])
+# A negative base with a fractional exponent gives a complex number in CPython
+# (and a ValueError here: there is no complex type), so those pairs are left out.
+checkallpass("power", power, [[1, 0.75], somenumber])
+checkallpass("power-negative", power, [[-1, -0.25], [1, -1]])
 checkallerrors("power-left", power, [notanumber, somenumber], "TypeError")
 checkallerrors("power-right", power, [somenumber, notanumber], "TypeError")
 
