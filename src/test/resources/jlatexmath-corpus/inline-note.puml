@@ -1,0 +1,6 @@
+@startuml
+object Gauss
+note right of Gauss
+  <latex>\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}</latex>
+end note
+@enduml

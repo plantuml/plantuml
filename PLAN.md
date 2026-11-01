@@ -113,6 +113,11 @@ Keep the parser and the layout, replace the drawing.
 - Generate the reference outputs **with the current implementation** on the
   JVM (JLaTeXMath 1.0.7 + Batik). They are the target to compare with, not
   necessarily byte for byte (see open questions about text vs shapes).
+- Status: corpus (15 files) and PNG baselines are in
+  `src/test/resources/jlatexmath-corpus/` (see its `README.md`; outside `vega/` on purpose, so that Vega does not run it yet). The SVG references
+  are **not** done: Batik is not a dependency of the build, and without it the
+  SVG falls back to the formula source as text. They must be generated on a
+  machine that has Batik, or replaced by the output of the new renderer (phase 2).
 
 ### 5.2 Glyph outlines
 

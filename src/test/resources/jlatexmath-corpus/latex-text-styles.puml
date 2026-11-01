@@ -1,0 +1,3 @@
+@startlatex
+\mathbf{Bold} \mathit{Italic} \mathsf{Sans} \mathtt{Mono} \mathcal{CAL} \mathbb{R} \text{plain text}
+@endlatex

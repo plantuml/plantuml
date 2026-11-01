@@ -1,0 +1,4 @@
+@startuml
+Alice -> Bob : <math>sum_(i=1)^n i = (n(n+1))/2</math>
+Bob --> Alice : <latex>\frac{a}{b}</latex>
+@enduml

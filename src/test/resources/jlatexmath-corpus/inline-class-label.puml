@@ -1,0 +1,6 @@
+@startuml
+class Circle {
+  area : <math>pi r^2</math>
+  perimeter : <latex>2 \pi r</latex>
+}
+@enduml

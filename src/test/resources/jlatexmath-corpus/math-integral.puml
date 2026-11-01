@@ -1,0 +1,3 @@
+@startmath
+f(x) = int_-oo^oo hat f(xi) e^(2 pi i xi x) dxi
+@endmath
