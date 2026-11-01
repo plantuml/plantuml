@@ -112,7 +112,7 @@ public enum SecurityProfile {
 	 * @return the value
 	 */
 	static SecurityProfile init() {
-		if (TeaVM.isTeaVM())
+		if (TeaVM.isTeaVM() && TeaVM.isC() == false) // browser build: no file system, so nothing to protect
 			return INSECURE;
 
 		final String env = SecurityUtils.getenv("PLANTUML_SECURITY_PROFILE");

@@ -39,12 +39,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityUtils;
+
 /**
  * A folder read with java.io only, for the C build: TeaVM's C classlib has
  * java.io.File but no file system provider behind java.nio.file. It is what
  * the includes of a diagram resolve their relative paths against.
  * <p>
- * It carries no include path (plantuml.include.path) nor archive, unlike
+ * Every file goes through {@link SFile}, so that the security profile, the
+ * include path (plantuml.include.path) and the allowlist
+ * (plantuml.allowlist.path) apply as on the JVM. It carries no archive, unlike
  * {@link NFolderRegular}.
  */
 public class NFolderIo implements NFolder {
@@ -64,8 +69,16 @@ public class NFolderIo implements NFolder {
 		if (file.isAbsolute() == false)
 			file = new File(dir, nameOrPath);
 
-		if (file.isFile() && file.canRead())
+		if (file.isFile() && SFile.fromFile(file).canRead())
 			return new InputFileIo(file);
+
+		// Not found from this folder: the include path, as NFolderRegular does
+		if (new File(nameOrPath).isAbsolute() == false)
+			for (SFile d : SecurityUtils.getPath(PATHS_INCLUDES)) {
+				final File inInclude = new File(d.conv(), nameOrPath);
+				if (inInclude.isFile() && SFile.fromFile(inInclude).canRead())
+					return new InputFileIo(inInclude);
+			}
 
 		return null;
 	}

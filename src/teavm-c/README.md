@@ -33,6 +33,15 @@ processed one after the other), and the PNG is not split (`split` pages).
 The exit codes of the help are those of the JVM (`exit` of the C library, as
 `System.exit` does not exist in the classlib of the TeaVM C backend).
 
+The security profile works as on the JVM: `-DPLANTUML_SECURITY_PROFILE=SANDBOX`
+(or the environment variable) decides which local files a diagram may read
+(`!include`, `!include_once`, `!include_many`, `!includesub`, `!import`,
+`!theme ... from`, `%file_exists`), and `-Dplantuml.include.path=DIR` and
+`-Dplantuml.allowlist.path=DIR` list the folders that stay readable in the
+modes that restrict files. There is no URL access in the C build, so
+`plantuml.allowlist.url` has nothing to filter yet: every `http(s)` include is
+refused. The profile of the browser build is unchanged (no file system).
+
 The help is the one of the JVM: it is built from the annotations of `CliFlag`,
 which TeaVM cannot read, so `CliFlagDocTable` holds their values as plain code
 (`CliFlagDocTableTest` fails when they differ).

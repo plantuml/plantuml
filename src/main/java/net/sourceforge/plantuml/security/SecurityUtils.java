@@ -49,7 +49,9 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
@@ -170,6 +172,31 @@ public class SecurityUtils {
 
 	static private SecurityProfile current = null;
 
+	/**
+	 * Properties given on the command line (-Dname=value) in the C build, where
+	 * System.setProperty is not available. Keys are normalized, see
+	 * {@link #normalizeName(String)}.
+	 */
+	private static final Map<String, String> commandLineProperties = new HashMap<>();
+
+	private static String normalizeName(String name) {
+		return name.replace(".", "_").toUpperCase();
+	}
+
+	/**
+	 * Registers a property given on the command line, such as
+	 * PLANTUML_SECURITY_PROFILE or plantuml.include.path. It is read by
+	 * {@link #getenv(String)} before the system properties and the environment.
+	 * <p>
+	 * Only the launcher calls this, before any diagram is read: a diagram cannot
+	 * change the security profile.
+	 */
+	public static synchronized void setCommandLineProperty(String name, String value) {
+		commandLineProperties.put(normalizeName(name), value);
+		// The profile is computed on first use: compute it again with this value
+		current = null;
+	}
+
 	public static synchronized SecurityProfile getSecurityProfile() {
 		if (current == null)
 			current = SecurityProfile.init();
@@ -187,7 +214,11 @@ public class SecurityUtils {
 	}
 
 	public static String getenv(String name) {
-		String result = System.getProperty(name);
+		String result = commandLineProperties.get(normalizeName(name));
+		if (StringUtils.isNotEmpty(result))
+			return result;
+
+		result = System.getProperty(name);
 		if (StringUtils.isNotEmpty(result))
 			return result;
 
@@ -228,7 +259,7 @@ public class SecurityUtils {
 			return MyCollections.unmodifiableList(result);
 		}
 		paths = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(paths);
-		final StringTokenizer st = new StringTokenizer(paths, System.getProperty("path.separator"));
+		final StringTokenizer st = new StringTokenizer(paths, File.pathSeparator);
 		while (st.hasMoreTokens()) {
 			final String tmp = st.nextToken();
 			try {
