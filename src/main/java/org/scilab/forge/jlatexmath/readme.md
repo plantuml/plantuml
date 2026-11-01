@@ -69,6 +69,28 @@ Step 2d, the glyphs that follow each other with the same color are one path:
   difference but the cleaner crossings. The SVG of a formula is one path.
 - the points that a font repeats are not drawn twice.
 
+Phase 3, step 3a, what PlantUML does not use is removed (about 2,000 lines, all
+of it tied to AWT, to the class loader or to files):
+
+- images, Java fonts, GeoGebra logo, Fcscore: `GraphicsAtom`, `GraphicsBox`,
+  `JavaFontRenderingAtom`, `JavaFontRenderingBox`, `GeoGebraLogoAtom`,
+  `GeoGebraLogoBox`, `FcscoreAtom`, `FcscoreBox` and their macros
+  (`\includegraphics`, `\GeoGebra`, `\jlmText`, `\jlmTextit`, `\jlmTextbf`,
+  `\jlmTextitbf`, `\jlmExternalFont`, `\fcscore`);
+- the image cache (`cache/JLaTeXMathCache`, `internal/util/Images`);
+- the alphabets loaded from a URL or Web Start (`URLAlphabetRegistration`,
+  `WebStartAlphabetRegistration`);
+- the predefined formulas and commands read from a user XML file
+  (`TeXFormulaParser`, `PredefinedTeXFormulaParser`, `TeXFormula.addPredefined*`),
+  which worked by reflection;
+- the external fonts of `TeXFormula` (`externalFontMap`, `FontInfos`,
+  `registerExternalFont`).
+
+A character that has no TeX glyph (CJK, for instance) was drawn with a Java font
+by `JavaFontRenderingAtom`; since step 2c that box drew nothing (a blank gap).
+It is now a `ParseException` ("Unknown character"): PlantUML shows the source of
+the formula as text. See `PLAN.md`, section 8.
+
 Everything else is as upstream. The package is listed in `CLAUDE.md` among the
 external packages, so that edits stay deliberate.
 

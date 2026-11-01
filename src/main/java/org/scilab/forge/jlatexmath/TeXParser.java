@@ -126,11 +126,6 @@ public class TeXParser {
     private static final Set<String> unparsedContents = new HashSet<String>(6);
     static {
         unparsedContents.add("jlmDynamic");
-        unparsedContents.add("jlmText");
-        unparsedContents.add("jlmTextit");
-        unparsedContents.add("jlmTextbf");
-        unparsedContents.add("jlmTextitbf");
-        unparsedContents.add("jlmExternalFont");
     }
 
     /**
@@ -1121,28 +1116,6 @@ public class TeXParser {
 
             String symbolName = TeXFormula.symbolMappings[c];
             if (symbolName == null && (TeXFormula.symbolFormulaMappings == null || TeXFormula.symbolFormulaMappings[c] == null)) {
-                TeXFormula.FontInfos fontInfos = null;
-                boolean isLatin = Character.UnicodeBlock.BASIC_LATIN.equals(block);
-                if ((isLatin && TeXFormula.isRegisteredBlock(Character.UnicodeBlock.BASIC_LATIN)) || !isLatin) {
-                    fontInfos = TeXFormula.getExternalFont(block);
-                }
-                if (fontInfos != null) {
-                    if (oneChar) {
-                        return new JavaFontRenderingAtom(Character.toString(c), fontInfos);
-                    }
-                    int start = pos++;
-                    int end = len - 1;
-                    while (pos < len) {
-                        c = parseString.charAt(pos);
-                        if (!Character.UnicodeBlock.of(c).equals(block)) {
-                            end = --pos;
-                            break;
-                        }
-                        pos++;
-                    }
-                    return new JavaFontRenderingAtom(parseString.substring(start, end + 1), fontInfos);
-                }
-
                 if (!isPartial) {
                     throw new ParseException("Unknown character : '"
                                              + Character.toString(c) + "' (or " + ((int) c) + ")");
@@ -1170,24 +1143,6 @@ public class TeXParser {
             }
         } else {
             // alphanumeric character
-            TeXFormula.FontInfos fontInfos = TeXFormula.externalFontMap.get(Character.UnicodeBlock.BASIC_LATIN);
-            if (fontInfos != null) {
-                if (oneChar) {
-                    return new JavaFontRenderingAtom(Character.toString(c), fontInfos);
-                }
-                int start = pos++;
-                int end = len - 1;
-                while (pos < len) {
-                    c = parseString.charAt(pos);
-                    if (((c < '0' || c > '9') && (c < 'a' || c > 'z') && (c < 'A' || c > 'Z'))) {
-                        end = --pos;
-                        break;
-                    }
-                    pos++;
-                }
-                return new JavaFontRenderingAtom(parseString.substring(start, end + 1), fontInfos);
-            }
-
             return new CharAtom(c, formula.textStyle, ignoreWhiteSpace);
         }
     }

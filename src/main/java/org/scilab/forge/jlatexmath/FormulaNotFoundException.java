@@ -57,7 +57,6 @@ public class FormulaNotFoundException extends JMathTeXException {
 
     protected FormulaNotFoundException(String name) {
         super("There's no predefined TeXFormula with the name '" + name
-              + "' defined in '" + PredefinedTeXFormulaParser.RESOURCE_NAME
-              + "'!");
+              + "' defined in 'PredefinedTeXFormulas.xml'!");
     }
 }

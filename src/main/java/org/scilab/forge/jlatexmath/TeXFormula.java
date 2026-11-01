@@ -119,7 +119,6 @@ public class TeXFormula {
     public static String[] symbolMappings = new String[65536];
     public static String[] symbolTextMappings = new String[65536];
     public static String[] symbolFormulaMappings = new String[65536];
-    public static Map<Character.UnicodeBlock, FontInfos> externalFontMap = new HashMap<Character.UnicodeBlock, FontInfos>();
 
     public List<MiddleAtom> middle = new LinkedList<MiddleAtom>();
 
@@ -159,35 +158,6 @@ public class TeXFormula {
         TeXFormulaSettingsParser tfsp = new TeXFormulaSettingsParser(in, name);
         tfsp.parseSymbolMappings(symbolMappings, symbolTextMappings);
         tfsp.parseSymbolToFormulaMappings(symbolFormulaMappings, symbolTextMappings);
-    }
-
-    public static boolean isRegisteredBlock(Character.UnicodeBlock block) {
-        return externalFontMap.get(block) != null;
-    }
-
-    public static FontInfos getExternalFont(Character.UnicodeBlock block) {
-        FontInfos infos = externalFontMap.get(block);
-        if (infos == null) {
-            infos = new FontInfos("SansSerif", "Serif");
-            externalFontMap.put(block, infos);
-        }
-
-        return infos;
-    }
-
-    public static void registerExternalFont(Character.UnicodeBlock block, String sansserif, String serif) {
-        if (sansserif == null && serif == null) {
-            externalFontMap.remove(block);
-            return;
-        }
-        externalFontMap.put(block, new FontInfos(sansserif, serif));
-        if (block.equals(Character.UnicodeBlock.BASIC_LATIN)) {
-            predefinedTeXFormulas.clear();
-        }
-    }
-
-    public static void registerExternalFont(Character.UnicodeBlock block, String fontName) {
-        registerExternalFont(block, fontName, fontName);
     }
 
     /**
@@ -511,14 +481,6 @@ public class TeXFormula {
     public TeXFormula centerOnAxis() {
         root = new VCenteredAtom(root);
         return this;
-    }
-
-    public static void addPredefinedTeXFormula(InputStream xmlFile) throws ResourceParseException {
-        new PredefinedTeXFormulaParser(xmlFile, "TeXFormula").parse(predefinedTeXFormulas);
-    }
-
-    public static void addPredefinedCommands(InputStream xmlFile) throws ResourceParseException {
-        new PredefinedTeXFormulaParser(xmlFile, "Command").parse(MacroInfo.Commands);
     }
 
     /**
@@ -1003,17 +965,6 @@ public class TeXFormula {
             return tf;
         } else {
             return new TeXFormula(formula);
-        }
-    }
-
-    static class FontInfos {
-
-        String sansserif;
-        String serif;
-
-        FontInfos(String sansserif, String serif) {
-            this.sansserif = sansserif;
-            this.serif = serif;
         }
     }
 }

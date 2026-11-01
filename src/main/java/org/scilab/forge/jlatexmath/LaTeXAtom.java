@@ -59,14 +59,7 @@ public class LaTeXAtom extends Atom {
         env.getTeXFont().setRoman(true);
         float sc = env.getTeXFont().getScaleFactor();
 
-        TeXFormula.FontInfos fontInfos = TeXFormula.externalFontMap.get(Character.UnicodeBlock.BASIC_LATIN);
-        if (fontInfos != null) {
-            TeXFormula.externalFontMap.put(Character.UnicodeBlock.BASIC_LATIN, null);
-        }
         RowAtom rat = (RowAtom)((RomanAtom)new TeXFormula("\\mathrm{XETL}").root).base;
-        if (fontInfos != null) {
-            TeXFormula.externalFontMap.put(Character.UnicodeBlock.BASIC_LATIN, fontInfos);
-        }
 
         HorizontalBox hb = new HorizontalBox(rat.getLastAtom().createBox(env));
         hb.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.35f * sc, 0, 0).createBox(env));

@@ -46,7 +46,6 @@
 package org.scilab.forge.jlatexmath;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -120,22 +119,6 @@ public class PredefMacros {
         NewCommandMacro.addNewCommand("Join", "\\mathop{\\rlap{\\ltimes}\\rtimes}", 0);
     }
 
-    public static final Atom fcscore_macro(final TeXParser tp, final String[] args) throws ParseException {
-        int n = Integer.parseInt(args[1]);
-        if (n > 5) {
-            final int q = n / 5;
-            final int r = n % 5;
-            RowAtom rat = new RowAtom();
-            for (int i = 0; i < q; i++) {
-                rat.add(new FcscoreAtom(5));
-            }
-            rat.add(new FcscoreAtom(r));
-
-            return rat;
-        } else {
-            return new FcscoreAtom(n);
-        }
-    }
 
     public static final Atom longdiv_macro(final TeXParser tp, final String[] args) throws ParseException {
         try {
@@ -207,9 +190,6 @@ public class PredefMacros {
         return new LapedAtom(new TeXFormula(tp, args[1]).root, args[0].charAt(4));
     }
 
-    public static final Atom includegraphics_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new GraphicsAtom(args[1], args[2]);
-    }
 
     public static final Atom rule_macro(final TeXParser tp, final String[] args) throws ParseException {
         float[] winfo = SpaceAtom.getLength(args[1]);
@@ -471,14 +451,7 @@ public class PredefMacros {
         else if ("cal".equals(args[0]))
             style = "mathcal";
 
-        TeXFormula.FontInfos fontInfos = TeXFormula.externalFontMap.get(Character.UnicodeBlock.BASIC_LATIN);
-        if (fontInfos != null) {
-            TeXFormula.externalFontMap.put(Character.UnicodeBlock.BASIC_LATIN, null);
-        }
         Atom at = new TeXFormula(tp, args[1], false).root;
-        if (fontInfos != null) {
-            TeXFormula.externalFontMap.put(Character.UnicodeBlock.BASIC_LATIN, fontInfos);
-        }
 
         return new TextStyleAtom(at, style);
     }
@@ -1120,12 +1093,6 @@ public class PredefMacros {
         return new LaTeXAtom();
     }
 
-    public static final Atom GeoGebra_macro(final TeXParser tp, final String[] args) throws ParseException {
-        TeXFormula tf = new TeXFormula("\\mathbb{G}\\mathsf{e}");
-        tf.add(new GeoGebraLogoAtom());
-        tf.add("\\mathsf{Gebra}");
-        return new ColorAtom(tf.root, null, new Color(102, 102, 102));
-    }
 
     public static final Atom hphantom_macro(final TeXParser tp, final String[] args) throws ParseException {
         return new PhantomAtom(new TeXFormula(tp, args[1], false).root, true, false, false);
@@ -1395,26 +1362,10 @@ public class PredefMacros {
         }
     }
 
-    public static final Atom jlmExternalFont_macro(final TeXParser tp, final String[] args) throws ParseException {
-        JavaFontRenderingBox.setFont(args[1]);
-        return null;
-    }
 
-    public static final Atom jlmText_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new JavaFontRenderingAtom(args[1], Font.PLAIN);
-    }
 
-    public static final Atom jlmTextit_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new JavaFontRenderingAtom(args[1], Font.ITALIC);
-    }
 
-    public static final Atom jlmTextbf_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new JavaFontRenderingAtom(args[1], Font.BOLD);
-    }
 
-    public static final Atom jlmTextitbf_macro(final TeXParser tp, final String[] args) throws ParseException {
-        return new JavaFontRenderingAtom(args[1], Font.BOLD | Font.ITALIC);
-    }
 
     public static final Atom DeclareMathSizes_macro(final TeXParser tp, final String[] args) throws ParseException {
         DefaultTeXFont.setMathSizes(Float.parseFloat(args[1]), Float.parseFloat(args[2]), Float.parseFloat(args[3]), Float.parseFloat(args[4]));

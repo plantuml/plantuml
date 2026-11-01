@@ -61,7 +61,6 @@ final class PredefinedCommands {
         MacroInfo.Commands.put("mathllap", new PredefMacroInfo(8, 1));
         MacroInfo.Commands.put("mathrlap", new PredefMacroInfo(9, 1));
         MacroInfo.Commands.put("mathclap", new PredefMacroInfo(10, 1));
-        MacroInfo.Commands.put("includegraphics", new PredefMacroInfo(11, 1, 1));
         MacroInfo.Commands.put("cfrac", new PredefMacroInfo(12, 2, 1));
         MacroInfo.Commands.put("frac", new PredefMacroInfo(13, 2));
         MacroInfo.Commands.put("sfrac", new PredefMacroInfo(14, 2));
@@ -199,7 +198,6 @@ final class PredefinedCommands {
         MacroInfo.Commands.put("underset", new PredefMacroInfo(146, 2));
         MacroInfo.Commands.put("boldsymbol", new PredefMacroInfo(147, 1));
         MacroInfo.Commands.put("LaTeX", new PredefMacroInfo(148, 0));
-        MacroInfo.Commands.put("GeoGebra", new PredefMacroInfo(149, 0));
         MacroInfo.Commands.put("big", new PredefMacroInfo(150, 1));
         MacroInfo.Commands.put("Big", new PredefMacroInfo(151, 1));
         MacroInfo.Commands.put("bigg", new PredefMacroInfo(152, 1));
@@ -249,11 +247,6 @@ final class PredefinedCommands {
         MacroInfo.Commands.put("cong", new PredefMacroInfo(196, 0));
         MacroInfo.Commands.put("doteq", new PredefMacroInfo(197, 0));
         MacroInfo.Commands.put("jlmDynamic", new PredefMacroInfo(198, 1, 1));
-        MacroInfo.Commands.put("jlmExternalFont", new PredefMacroInfo(199, 1));
-        MacroInfo.Commands.put("jlmText", new PredefMacroInfo(200, 1));
-        MacroInfo.Commands.put("jlmTextit", new PredefMacroInfo(201, 1));
-        MacroInfo.Commands.put("jlmTextbf", new PredefMacroInfo(202, 1));
-        MacroInfo.Commands.put("jlmTextitbf", new PredefMacroInfo(203, 1));
         MacroInfo.Commands.put("DeclareMathSizes", new PredefMacroInfo(204, 4));
         MacroInfo.Commands.put("magnification", new PredefMacroInfo(205, 1));
         MacroInfo.Commands.put("hline", new PredefMacroInfo(206, 0));
@@ -326,7 +319,6 @@ final class PredefinedCommands {
         MacroInfo.Commands.put("above", new PredefMacroInfo(273, 0));
         MacroInfo.Commands.put("abovewithdelims", new PredefMacroInfo(274, 2));
         MacroInfo.Commands.put("st", new PredefMacroInfo(275, 1));
-        MacroInfo.Commands.put("fcscore", new PredefMacroInfo(276, 1));
         MacroInfo.Commands.put("mathnormal", new PredefMacroInfo(277, 1));
         MacroInfo.Commands.put("qquad", new PredefMacroInfo(278, 0));
         MacroInfo.Commands.put("longdiv", new PredefMacroInfo(279, 2));

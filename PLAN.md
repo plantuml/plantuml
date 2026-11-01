@@ -287,6 +287,17 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
   `TeXFormula` are upstream's and are not thread safe, as with the jar before:
   not a C build matter (single thread), and left as it was on the JVM.
 
+- **Text without a TeX glyph (CJK...), found at step 3a.** The parser drew any
+  character that has no TeX symbol (a Chinese character in `\text{}`, for
+  instance) with a Java font (`JavaFontRenderingAtom`). Since step 2c that box
+  draws nothing, so the character became a blank gap, silently. Step 3a removes
+  it: the character is now a parse error and PlantUML shows the source of the
+  formula as text, which is visible. The good fix is to draw such text with the
+  text engine of PlantUML (`UText`, which works in every build, C included):
+  the layout needs the width, height and depth of the text when the formula is
+  made, so the builder has to be given a `StringBounder`. To do after phase 3,
+  if CJK in formulas matters.
+
 ### Open questions
 
 1. (answered, see Decisions: keep `org.scilab.forge.jlatexmath`)

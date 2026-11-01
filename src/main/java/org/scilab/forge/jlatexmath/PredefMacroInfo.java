@@ -86,8 +86,6 @@ class PredefMacroInfo extends MacroInfo {
             case 9:
             case 10:
                 return PredefMacros.mathclrlap_macro(tp, args);
-            case 11:
-                return PredefMacros.includegraphics_macro(tp, args);
             case 12:
                 return PredefMacros.cfrac_macro(tp, args);
             case 13:
@@ -331,8 +329,6 @@ class PredefMacroInfo extends MacroInfo {
                 return PredefMacros.boldsymbol_macro(tp, args);
             case 148:
                 return PredefMacros.LaTeX_macro(tp, args);
-            case 149:
-                return PredefMacros.GeoGebra_macro(tp, args);
             case 150:
                 return PredefMacros.big_macro(tp, args);
             case 151:
@@ -431,16 +427,6 @@ class PredefMacroInfo extends MacroInfo {
                 return PredefMacros.doteq_macro(tp, args);
             case 198:
                 return PredefMacros.jlmDynamic_macro(tp, args);
-            case 199:
-                return PredefMacros.jlmExternalFont_macro(tp, args);
-            case 200:
-                return PredefMacros.jlmText_macro(tp, args);
-            case 201:
-                return PredefMacros.jlmTextit_macro(tp, args);
-            case 202:
-                return PredefMacros.jlmTextbf_macro(tp, args);
-            case 203:
-                return PredefMacros.jlmTextitbf_macro(tp, args);
             case 204:
                 return PredefMacros.DeclareMathSizes_macro(tp, args);
             case 205:
@@ -566,8 +552,6 @@ class PredefMacroInfo extends MacroInfo {
                 return PredefMacros.abovewithdelims_macro(tp, args);
             case 275:
                 return PredefMacros.st_macro(tp, args);
-            case 276:
-                return PredefMacros.fcscore_macro(tp, args);
             case 277:
                 return PredefMacros.textstyle_macros(tp, args);
             case 278:
