@@ -207,7 +207,7 @@ Steps of phase 2:
 | 2b-1 | `tools/jlatexmath-glyphs/GenerateGlyphOutlines.java` writes `glyphs.bin` (46 fonts, 4710 glyphs) | done, at most 0.8% area difference with AWT |
 | 2b-2 | `GlyphOutlines` (reader of `glyphs.bin`, no AWT) and `UGraphicTeXGraphics` (`TeXGraphics` on `UGraphic`, glyph = path) | done, not used yet by `AtomMath` |
 | 2c | `AtomMath` / `ScientificEquation*` draw through the canvas (PNG, SVG, PDF, EPS...), Batik and `ConverterSvg` go away, the corpus moves to Vega | done |
-| 2d | Review of the corpus rendering (hinting, seams of extensible arrows), decision on the open questions 4 and 7 | next |
+| 2d | Review of the corpus rendering (hinting, seams of extensible arrows), decision on the open questions 4, 7 and 8 | done: seams fixed, no hinting, see Decisions |
 
 Notes on phase 1: the vendored classes live in the jar, so the external
 jar is no longer read by reflection and its Gradle dependency is removed in
@@ -258,20 +258,45 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
   renderer draws through `UGraphic`, so a glyph is a path (self-contained SVG,
   larger than with `<text>`). Revisit only if the size of the SVG hurts.
 
+- **Hinting (step 2d): none.** AWT snaps the thin strokes on the pixel grid
+  (one crisp row for the shaft of an arrow), the paths give two grey rows in
+  PNG. The output is vector and deterministic, so there is no grid to hint for;
+  the PNG is a little softer. Revisit only if someone complains.
+- **Seams of the extensible arrows and braces (step 2d): fixed** by drawing the
+  glyphs that follow each other with the same color as one path (the
+  rasterizer fills the union), see the readme of the package. A side effect:
+  the SVG of a formula is one `<path>` per color, 3% smaller.
+- **Alphabets (was question 4): keep both for now.** Same behaviour as the jar
+  of today, and they are read only when a formula uses one of their characters
+  (lazy). Measured (`glyphs.bin`, raw / gzip): base 419 KB / 252 KB (2348
+  glyphs), Cyrillic 264 KB / 151 KB (760), Greek 427 KB / 107 KB (1602, the
+  polytonic Greek of the 8 fonts); together 1.1 MB / 0.5 MB. The real decision
+  is for phase 5, with the size of the C executable: the lever is then to keep
+  the two files out of the embedded resources (they are optional files, like
+  the other lazy bundles), not to cut glyphs. The TTF files (1.2 MB) go when the
+  AWT canvas goes (phase 3).
+- **TikZ / LaTeX output (was question 7): kept, and tested.** `AtomMath` gives
+  the source of the formula, as before (same `.tex` before and after step 2c);
+  `vega/tikz/tikz-math-inline` asserts it.
+- **Static state and `synchronized` (was question 8): nothing in the way.** The
+  only `synchronized` added is `GlyphOutlines.forBase` (the cache of the files);
+  the repository has 114 occurrences already (`JsonObject`, `Emoji`, ...), but
+  whether the C build accepts this one is to be confirmed when it compiles the
+  code (phase 4: if not, drop the keyword, the C build is single threaded). The
+  static maps of `FontInfo`, `DefaultTeXFont` and
+  `TeXFormula` are upstream's and are not thread safe, as with the jar before:
+  not a C build matter (single thread), and left as it was on the JVM.
+
 ### Open questions
 
 1. (answered, see Decisions: keep `org.scilab.forge.jlatexmath`)
 2. (answered, see Decisions: one code path, new renderer everywhere)
 3. (answered, see Decisions: glyphs as paths)
-4. **Alphabets**: ship the Cyrillic and Greek font modules (size) or only the
-   base fonts?
+4. (answered, see Decisions: keep both, decide with the size in phase 5)
 5. (answered, see Decisions: vendor tag `1.0.7`)
 6. (answered, see Decisions: no `javax.xml` in TeaVM)
-7. `AtomMath`'s TIKZ / LaTeX output path (`matchesProperty("TIKZ")`) must keep
-   working: it only needs the formula source, no rendering.
-8. Static caches and global state in `TeXFormula` / `DefaultTeXFont` versus the
-   C build (single-threaded, no monitors): confirm there is no `synchronized`
-   left that matters.
+7. (answered, see Decisions: TikZ output kept and tested)
+8. (answered, see Decisions: nothing in the way)
 
 ## 9. First things to do in the next session
 
@@ -281,8 +306,9 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
    (phase 1)~~ (done).
 4. ~~Phase 2, step 2c: draw `AtomMath` through `UGraphicTeXGraphics`, move the
    corpus to Vega~~ (done).
-5. Phase 2, step 2d: look at the rendering (see the table of steps in
-   section 6), then phase 3 (no `java.awt` / `javax.*` left, XML, resources).
+5. ~~Phase 2, step 2d: review of the rendering~~ (done, see Decisions).
+6. Phase 3 (no `java.awt` / `javax.*` left, XML, resources, remove the TTF
+   files and the AWT canvas, `Graphics2DTeXGraphics`, the 4 AWT boxes).
    `TeXGraphics` still uses `java.awt.Color`, `TeXIcon` `java.awt.Insets`, and
    `TeXIconBuilder` has `java.awt.Insets` too.
 

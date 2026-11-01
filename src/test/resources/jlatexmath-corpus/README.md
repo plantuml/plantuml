@@ -10,7 +10,7 @@ This directory only keeps `baseline-jvm-png/`: the PNG of every formula as the
 headless AWT, `-tpng`), before phase 2 of `PLAN.md`. They are not asserted,
 they are the reference to look at when reviewing the rendering of the new
 renderer (same layout and sizes; the pixels differ because AWT hints the thin
-strokes and the paths are not hinted).
+strokes and the paths are not hinted, a choice of step 2d: see `PLAN.md`).
 
 Known upstream behaviour kept in the baseline: in `latex-cases`, the text after
 `&` is not separated from the preceding `-x` (`-xotherwise`).
