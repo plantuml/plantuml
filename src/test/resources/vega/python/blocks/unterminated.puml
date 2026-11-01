@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 3
+expected-error-message: '!python without !endpy'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: !python without !endpy
+!python
+emit("title never")
+@enduml

@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: 'Python error: ValueError: Unknown format code 'd' for object of type 'str''
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: Python error: ValueError: Unknown format code 'd' for object of type 'str'
+!name = "Auth"
+title !{name:d}
+@enduml

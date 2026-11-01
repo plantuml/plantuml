@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: '!if without !endif (looks like Python, is the ':' missing?)'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: !if without !endif (looks like Python, is the ':' missing?)
+!x = 1
+!if x == 1
+title never
+@enduml

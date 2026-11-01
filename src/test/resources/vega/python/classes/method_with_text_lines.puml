@@ -1,0 +1,20 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant Web
+' note over Web : port 80
+' participant API
+' note over API : port 8080
+!class Server:
+!    def __init__(self, name, port):
+!        self.name = name
+!        self.port = port
+!    def declare(self):
+         participant !{self.name}
+         note over !{self.name} : port !{self.port}
+
+!for server in [Server("Web", 80), Server("API", 8080)]:
+!    server.declare()
+@enduml

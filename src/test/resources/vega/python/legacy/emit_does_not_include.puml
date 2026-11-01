@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title !include foo
+!emit("title !include foo")
+@enduml

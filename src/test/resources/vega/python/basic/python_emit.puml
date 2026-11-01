@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+!puml.emit("participant A\nparticipant B")
+!print("dropped")
+!emit("A -> B")
+@enduml

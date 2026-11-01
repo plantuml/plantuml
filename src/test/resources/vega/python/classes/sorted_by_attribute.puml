@@ -1,0 +1,17 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant A
+' participant B
+' participant C
+!class Actor:
+!    def __init__(self, name, order):
+!        self.name = name
+!        self.order = order
+
+!actors = [Actor("C", 3), Actor("A", 1), Actor("B", 2)]
+!for a in sorted(actors, key=lambda a: a.order):
+    participant !{a.name}
+@enduml

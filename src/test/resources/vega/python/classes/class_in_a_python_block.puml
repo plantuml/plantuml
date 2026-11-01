@@ -1,0 +1,19 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' Alice -> Bob : hello
+' Bob -> Alice : ok
+!python
+class Message:
+    def __init__(self, source, target, text):
+        self.source = source
+        self.target = target
+        self.text = text
+
+messages = [Message("Alice", "Bob", "hello"), Message("Bob", "Alice", "ok")]
+!endpy
+!for m in messages:
+    !{m.source} -> !{m.target} : !{m.text}
+@enduml

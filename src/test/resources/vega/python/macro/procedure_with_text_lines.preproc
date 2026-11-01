@@ -1,0 +1,5 @@
+@startuml
+
+participant Auth #FFCCCC
+note right of Auth : Auth is up
+@enduml

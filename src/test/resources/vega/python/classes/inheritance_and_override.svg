@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="131px" preserveAspectRatio="none" style="width:146px;height:131px;background:#FFFFFF;" version="1.1" viewBox="0 0 146 131" width="146px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity front-->
+    <g class="entity" data-qualified-name="front" data-source-line="23" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.912" x="12.5" y="16.5"/>
+      <text fill="#000" font-size="14" textLength="27.912" x="22.5" y="37.389">front</text>
+    </g>
+    <!--entity store-->
+    <g class="entity" data-qualified-name="store" data-source-line="23" id="ent0002">
+      <path d="M79,22 C79,12 104.531,12 104.531,12 C104.531,12 130.063,12 130.063,22 L130.063,45 C130.063,55 104.531,55 104.531,55 C104.531,55 79,55 79,45 L79,22" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M79,22 C79,32 104.531,32 104.531,32 C104.531,32 130.063,32 130.063,22" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="31.063" x="89" y="46.889">store</text>
+    </g>
+    <!--entity events-->
+    <g class="entity" data-qualified-name="events" data-source-line="23" id="ent0003">
+      <path d="M11,91 L62.212,91 C67.212,91 67.212,103 67.212,103 C67.212,103 67.212,115 62.212,115 L11,115 C6,115 6,103 6,103 C6,103 6,91 11,91" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M62.212,91 C57.212,91 57.212,103 57.212,103 C57.212,115 62.212,115 62.212,115" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="41.212" x="11" y="106.889">events</text>
+    </g>
+  </g>
+</svg>

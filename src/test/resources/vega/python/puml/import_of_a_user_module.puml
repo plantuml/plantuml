@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: 'Python error: ModuleNotFoundError: No module named 'mymodule''
+---
+@startuml
+' EXPECT (preproc):
+' ERROR line 4: only the builtin modules can be imported
+!python
+import mymodule
+!endpy
+@enduml

@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title caught boom
+!try:
+!    puml.error("boom")
+!except RuntimeError as e:
+    title caught !{e}
+@enduml

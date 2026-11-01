@@ -1,0 +1,24 @@
+---
+output: preproc
+---
+@startuml
+' A legacy procedure called as "!name()" (the standard library does it, see
+' adaml_constant) is a plain line, as before Python: the legacy preprocessor
+' calls the procedure, and the "!" stays in front of the next line it gives.
+' It is not a Python call (no NameError).
+' EXPECT (preproc):
+' !title A
+' !participant B
+!procedure mark()
+!$marked = "yes"
+!endprocedure
+!procedure decl($n)
+participant $n
+!endprocedure
+!procedure show($name)
+!mark()
+title $name
+!endprocedure
+show(A)
+!decl(B)
+@enduml

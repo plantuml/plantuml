@@ -1,0 +1,3 @@
+@startuml
+actor "Customer" as user
+@enduml

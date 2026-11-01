@@ -1,0 +1,10 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 5
+!def adder(n):
+!    return lambda x: x + n
+!emit("title " + str(adder(2)(3)))
+@enduml

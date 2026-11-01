@@ -1,0 +1,5 @@
+@startuml
+participant A
+A -> Auth : request 0
+A -> Billing : request 1
+@enduml

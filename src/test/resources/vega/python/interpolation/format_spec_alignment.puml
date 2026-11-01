@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title [    Auth] [***Auth***] [42    ] [  3.14]
+!name = "Auth"
+!n = 42
+!pi = 3.14159
+title [!{name:>8}] [!{name:*^10}] [!{n:<6}] [!{pi:6.2f}]
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+rectangle "DB" as db <<v1>>
+rectangle "Web" as web <<none>>
+rectangle "API" as api <<v2>>
+@enduml

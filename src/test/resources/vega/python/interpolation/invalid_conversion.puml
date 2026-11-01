@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: 'invalid conversion in !{n!a}: use !r or !s'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: invalid conversion in !{n!a}: use !r or !s
+!n = 42
+title !{n!a}
+@enduml

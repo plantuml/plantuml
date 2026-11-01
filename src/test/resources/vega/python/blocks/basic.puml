@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant A
+' participant B
+!python
+for n in ["A", "B"]:
+    emit("participant " + n)
+!endpy
+@enduml

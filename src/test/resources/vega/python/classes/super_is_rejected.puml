@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 8
+expected-error-message: 'Python syntax error: super() is not supported: call the base class explicitly, e.g. Base.__init__(self) (column 9)'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: Python syntax error: super() is not supported: call the base class explicitly, e.g. Base.__init__(self) (column 9)
+!class Base:
+!    def __init__(self):
+!        self.x = 1
+!class Child(Base):
+!    def __init__(self):
+!        super().__init__()
+@enduml

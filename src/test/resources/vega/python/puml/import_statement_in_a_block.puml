@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 3 a 2
+!python
+import math
+import json
+import puml
+emit("title " + str(int(math.sqrt(9))) + " " + json.loads('{"k": "a"}')["k"] + " " + str(json.loads("[1, 2]")[1]))
+!endpy
+@enduml

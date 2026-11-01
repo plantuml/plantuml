@@ -1,0 +1,5 @@
+@startuml
+participant "P 1.50" as P0
+participant "P 2.25" as P1
+note over P1 : 'last'
+@enduml

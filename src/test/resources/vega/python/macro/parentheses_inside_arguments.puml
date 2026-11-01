@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title [f(a, b)] [c]
+!python
+@macro
+def pair(x, y):
+    return "[" + x + "] [" + y + "]"
+!endpy
+title pair(f(a, b), c)
+@enduml

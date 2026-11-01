@@ -1,0 +1,4 @@
+@startuml
+participant P0 #FFCCCC
+participant P1 #FFCCCC
+@enduml

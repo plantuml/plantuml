@@ -1,0 +1,29 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' rectangle "front" as front
+' database "store" as store
+' queue "events" as events
+!class Component:
+!    def __init__(self, name):
+!        self.name = name
+!    def shape(self):
+!        return "rectangle"
+!    def declare(self):
+         !{self.shape()} "!{self.name}" as !{self.name}
+
+!class Database(Component):
+!    def shape(self):
+!        return "database"
+
+!class Queue(Component):
+!    def __init__(self, name):
+!        Component.__init__(self, name)
+!    def shape(self):
+!        return "queue"
+
+!for c in [Component("front"), Database("store"), Queue("events")]:
+!    c.declare()
+@enduml

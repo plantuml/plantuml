@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant P0
+' participant P1
+' participant top
+!for i in range(2):
+    participant P!{i}
+participant top
+@enduml

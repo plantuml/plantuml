@@ -1,0 +1,10 @@
+---
+output: preproc, svg
+---
+@startuml
+participant A
+!try:
+!    puml.error("oops")
+!except RuntimeError as e:
+    note over A : caught !{e}
+@enduml
