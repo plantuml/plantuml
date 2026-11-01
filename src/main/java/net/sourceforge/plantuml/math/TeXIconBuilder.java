@@ -52,6 +52,7 @@ public class TeXIconBuilder {
 
 	public TeXIconBuilder(String tex, StringBounder stringBounder) throws ClassNotFoundException {
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
+		MathResources.ensure();
 		final TeXFormula formula = new TeXFormula(tex);
 		final TeXIcon teXIcon = formula.new TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20)
 				.setTextMeasurer(new StringBounderTextMeasurer(stringBounder)).build();

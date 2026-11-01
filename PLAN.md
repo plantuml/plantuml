@@ -222,7 +222,7 @@ the C build itself.
 | 1 | Vendor the sources as they are, call them directly (no reflection), JVM only, **no behaviour change** | corpus unchanged on the JVM (**done**) |
 | 2 | Canvas interface + `UGraphic` implementation, glyph outlines (5.2) | corpus renders without AWT fonts, differences understood (**in progress**, steps below) |
 | 3 | Remove `java.awt` / `javax.*` leftovers, XML and resources (5.3, 5.4) | the code compiles with TeaVM (JS and C) |
-| 4 | Wire-up (5.5), first formulas in `plantuml.exe` | `@startmath`, `@startlatex`, `<math>` work in the C build |
+| 4 | Wire-up (5.5), first formulas in `plantuml.exe` | `@startmath`, `@startlatex`, `<math>` work in the C build (**wired, to test**: `python tools/vega-c/run_vega_c.py math`) |
 | 5 | Pruning (5.6), size and start-up measurements, Vega on C (5.7) | size delta acceptable, CI green |
 | 6 | Same for JavaScript / Wasm if wanted | |
 
@@ -245,7 +245,7 @@ Steps of phase 3:
 | 3b | `Color`, `Insets` and `Point2D` replaced by small classes of the package (`TeXGraphics` and `TeXIcon` without `java.awt`) | done: `TeXColor`, `TeXInsets` |
 | 3c | No reflection (`MacroInfo` / `\newcommand`, the alphabets of the static block of `TeXFormula`), no `Character.UnicodeBlock` | done: `TeXUnicodeBlock`, `MacroHandler` |
 | 3d | XML: a mini reader (4 parsers) or binary files made at dev time | done: `XmlReader`; the binary files stay an option for phase 5 |
-| 3e | Resources: one abstraction (class path, `EmbeddedFiles`, bundle), also for `glyphs.bin` | |
+| 3e | Resources: one abstraction (class path, `EmbeddedFiles`, bundle), also for `glyphs.bin` | done: `TeXResources`, `TeXResourceProvider` (the bundle of the browser is not done) |
 
 Notes on phase 1: the vendored classes live in the jar, so the external
 jar is no longer read by reflection and its Gradle dependency is removed in
@@ -340,6 +340,20 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
   in C and `1.01` on the JVM (not used by the library). The generation of the
   whole library (`new TeXFormula(...)`) failed on nothing else than the XML
   classes and `UnicodeBlock`: after step 3c, only the XML (step 3d) is left.
+- **Resources in the C build (step 3e): a provider, the same pattern as OpenPDF.**
+  Every read of the library goes through `TeXResources.open(class, name)`, which
+  asks the `TeXResourceProvider` that is installed (the whole name,
+  `org/scilab/forge/jlatexmath/...`) and nothing else: the library has no class
+  loader code (TeaVM compiles what it can reach, and its support of the resources
+  crashes the coroutine transformation, see the C README); `TeXClassLoaderResources`
+  is the provider of the JVM, in a class of its own that the C build never reaches.
+  `MathResources` installs one before the first formula. In the C
+  build it installs `JlatexmathResources`, which reads the files that
+  `copyNativeSources` copies to `native/resources/jlatexmath` and CMake embeds (71
+  files, about 2 MB, not compressed: brotli is an option if the size matters,
+  phase 5). The marker `TeaVM.isC()` is tested in `MathResources` itself so that
+  TeaVM prunes the class loader code. On the JVM nothing changes. The browser
+  (JavaScript, Wasm) has no provider yet: `<math>` and `<latex>` stay text there.
 - **XML: a reader of our own (step 3d), not binary files, for now.** `XmlReader`
   (about 250 lines with `XmlElement` and `XmlNodeList`) replaces `javax.xml` and
   `org.w3c.dom`; the four parsers changed by a few lines each. Checked by
@@ -393,13 +407,12 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
 4. ~~Phase 2, step 2c: draw `AtomMath` through `UGraphicTeXGraphics`, move the
    corpus to Vega~~ (done).
 5. ~~Phase 2, step 2d: review of the rendering~~ (done, see Decisions).
-6. Phase 3 (no `java.awt` / `javax.*` left, XML, resources): steps 3a to 3d are
-   done (see the table of steps in section 6); 3e (resources) is next. What is
-   left of the platform in the package: `getResourceAsStream` (the XML files,
-   `glyphs.bin`), and three methods that read a user file by its name with a
-   `FileInputStream` (`SymbolAtom.addSymbolAtom(String)`,
-   `TeXFormula.addSymbolMappings(String)`,
-   `DefaultTeXFont.addTeXFontDescription(String)`), which PlantUML does not call.
+6. ~~Phase 3 (no `java.awt` / `javax.*` left, XML, resources)~~ (done, steps 3a
+   to 3e).
+7. Phase 4: run `python tools/vega-c/run_vega_c.py math` on the `plantuml.exe`
+   of `compilec.bat` and look at what fails (the wiring was written without a C
+   compiler at hand). Then phase 5: size and start-up of the executable (about 2 MB
+   of resources, parsing of the XML at the first formula), and the browser.
 
 Working method, as usual: small patches (`git format-patch`), each with an
 English commit message starting with the emojis (here 🍵 for the C build plus

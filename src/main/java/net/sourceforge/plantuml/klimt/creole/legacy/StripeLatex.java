@@ -86,7 +86,7 @@ public class StripeLatex implements StripeRaw {
 	}
 
 	private Atom getAtom() {
-		if (!TeaVM.isTeaVM()) {
+		if (TeaVM.isTeaVM() == false || TeaVM.isC()) {
 			if (atom == null) {
 				final ScientificEquationSafe math = ScientificEquationSafe.fromLatex(formula.toString());
 				atom = new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor());

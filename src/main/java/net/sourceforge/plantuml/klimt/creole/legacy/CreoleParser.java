@@ -103,7 +103,7 @@ public class CreoleParser implements SheetBuilder {
 			return Arrays.asList(new StripeTree(fontConfiguration, skinParam, line));
 		} else if (Parser.isCodeStart(line)) {
 			return Arrays.asList(new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED)));
-		} else if (TeaVM.isTeaVM() == false && Parser.isLatexStart(line)) {
+		} else if ((TeaVM.isTeaVM() == false || TeaVM.isC()) && Parser.isLatexStart(line)) {
 			// Not in the browser, see CommandCreoleBuilder
 			return Arrays.asList(new StripeLatex(fontConfiguration));
 		}

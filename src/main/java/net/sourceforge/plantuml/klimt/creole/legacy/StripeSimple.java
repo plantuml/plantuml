@@ -265,7 +265,7 @@ public class StripeSimple implements Stripe {
 	}
 
 	public void addMath(ScientificEquationSafe math) {
-		if (!TeaVM.isTeaVM())
+		if (TeaVM.isTeaVM() == false || TeaVM.isC())
 			atoms.add(new AtomMath(math, fontConfiguration.getColor(), fontConfiguration.getExtendedColor()));
 	}
 

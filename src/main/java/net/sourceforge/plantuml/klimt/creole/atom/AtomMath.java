@@ -72,8 +72,10 @@ public class AtomMath extends AbstractAtom implements Atom {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		if (!TeaVM.isTeaVM()) {
-			if (ug.matchesProperty("TIKZ")) {
+		// On the JVM and in the C build; not in the browser (no resources for JLaTeXMath there yet)
+		if (TeaVM.isTeaVM() == false || TeaVM.isC()) {
+			// (TikZ is on the JVM only: the marker lets TeaVM prune this branch, and the AWT-based image)
+			if (TeaVM.isTeaVM() == false && ug.matchesProperty("TIKZ")) {
 				// TikZ gets the source of the formula, not a drawing
 				final XDimension2D dim = math.getDimension(ug.getStringBounder());
 				ug.draw(new UImage(new MathBlankImage(dim)).withFormula(math.getSource()));

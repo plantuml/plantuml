@@ -107,10 +107,10 @@ public class CommandCreoleBuilder {
 		addCommand(CommandCreoleQrcode.create());
 		addCommand(CommandCreoleOpenIcon.create());
 		addCommand(CommandCreoleEmoji.create());
-		// Formulas need JLaTeXMath, which still uses AWT and so cannot run in TeaVM yet: the browser
-		// keeps <math> and <latex> as plain text, and the AsciiMath converter stays
-		// out of the TeaVM output
-		if (TeaVM.isTeaVM() == false) {
+		// Formulas: on the JVM and in the C build (where JLaTeXMath reads the embedded files).
+		// The browser keeps <math> and <latex> as plain text, and the AsciiMath converter
+		// stays out of the JavaScript output: nothing there reads the resources of JLaTeXMath yet
+		if (TeaVM.isTeaVM() == false || TeaVM.isC()) {
 			addCommand(CommandCreoleMath.create());
 			addCommand(CommandCreoleLatex.create());
 		}

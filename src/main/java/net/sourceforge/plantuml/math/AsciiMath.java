@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.math;
 
-import javax.script.ScriptException;
-
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class AsciiMath implements ScientificEquation {
@@ -44,7 +42,7 @@ public class AsciiMath implements ScientificEquation {
 	private final LatexBuilder builder;
 	private final String tex;
 
-	public AsciiMath(String form) throws ScriptException, NoSuchMethodException {
+	public AsciiMath(String form) {
 		this.tex = new ASCIIMathTeXImg().getTeX(form);
 		this.builder = new LatexBuilder(tex);
 	}

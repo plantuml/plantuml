@@ -65,6 +65,8 @@ import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
 import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreoleFactory;
 import net.sourceforge.plantuml.klimt.sprite.ListSpriteDiagramFactory;
+import net.sourceforge.plantuml.math.PSystemLatexFactory;
+import net.sourceforge.plantuml.math.PSystemMathFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
@@ -108,6 +110,8 @@ public class PSystemBuilderC {
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 		factories.add(new PSystemSudokuFactory());
 		// ::done
+		factories.add(new PSystemMathFactory());
+		factories.add(new PSystemLatexFactory());
 		factories.add(new PSystemCreoleFactory());
 		factories.add(new TimingDiagramFactory());
 		factories.add(new ChartDiagramFactory());

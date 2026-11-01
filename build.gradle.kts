@@ -188,6 +188,12 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 				"*/image.spm")
 		into("native/resources/stdlib")
 	}
+	// The resources JLaTeXMath reads (the XML files of the font metrics, the symbols and the
+	// macros, and the glyph outlines): there is no class loader in the C build, see JlatexmathResources
+	from("src/main/resources/org/scilab/forge/jlatexmath") {
+		include("**/*.xml", "**/glyphs.bin")
+		into("native/resources/jlatexmath")
+	}
 	// The resources OpenPDF reads (AFM font metrics, glyph list, messages): there is no
 	// class loader in the C build, see OpenPdfResources
 	from("src/main/resources") {
