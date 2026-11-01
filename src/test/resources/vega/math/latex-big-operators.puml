@@ -1,3 +1,7 @@
+---
+output: svg
+expected-description: (Latex)
+---
 @startlatex
 \sum_{i=0}^{n} \prod_{j=1}^{m} \int_{0}^{\infty} \oint_C \bigcup_{k} A_k \lim_{x \to 0}
 @endlatex

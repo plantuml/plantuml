@@ -1,3 +1,7 @@
+---
+output: svg
+expected-description: (2 entities)
+---
 @startuml
 object Gauss
 note right of Gauss

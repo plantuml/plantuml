@@ -1,3 +1,7 @@
+---
+output: svg
+expected-description: (Latex)
+---
 @startlatex
 \hat{a} \tilde{n} \vec{v} \bar{x} \dot{y} \ddot{z} \overline{AB} \underline{CD}
 @endlatex

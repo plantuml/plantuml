@@ -1,3 +1,7 @@
+---
+output: svg
+expected-description: (Latex)
+---
 @startlatex
 \textcolor{red}{x^2} + \textcolor{blue}{y^2} = \colorbox{yellow}{r^2}
 @endlatex

@@ -1,3 +1,7 @@
+---
+output: svg
+expected-description: (1 entities)
+---
 @startuml
 class Circle {
   area : <math>pi r^2</math>

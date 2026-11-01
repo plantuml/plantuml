@@ -1,3 +1,7 @@
+---
+output: svg
+expected-description: (Math)
+---
 @startmath
 alpha + beta = gamma, Delta x -> 0, lim_(n->oo) (1 + 1/n)^n = e
 @endmath

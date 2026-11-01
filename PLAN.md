@@ -36,7 +36,11 @@ Success criteria:
    already done for PDF.
 5. The license variants (MIT, EPL, BSD, ASL, LGPL) keep building, see 7.
 
-## 2. How PlantUML uses JLaTeXMath today
+## 2. How PlantUML used JLaTeXMath (before phases 1 and 2)
+
+Historical: this is the starting point. Phase 1 removed the reflection, phase 2c
+removed `ConverterSvg`, `LatexBuilder.LatexImage` and the `getSvg` / `getImage`
+of `ScientificEquation`: a formula is now a `MathDrawing` drawn on a `UGraphic`.
 
 Everything goes through **reflection**, so that the jar works without the
 library (`implementation(libs.jlatexmath)`, version `1.0.7`; Batik is
@@ -121,11 +125,12 @@ Keep the parser and the layout, replace the drawing.
 - Generate the reference outputs **with the current implementation** on the
   JVM (JLaTeXMath 1.0.7 + Batik). They are the target to compare with, not
   necessarily byte for byte (see open questions about text vs shapes).
-- Status: done. Corpus (19 files) and PNG baselines are in
-  `src/test/resources/jlatexmath-corpus/` (see its `README.md`; outside `vega/` on purpose, so that Vega does not run it yet). The SVG references
-  are **not** done: Batik is not a dependency of the build, and without it the
-  SVG falls back to the formula source as text. They must be generated on a
-  machine that has Batik, or replaced by the output of the new renderer (phase 2).
+- Status: done. The PNG baselines of the original renderer are in
+  `src/test/resources/jlatexmath-corpus/baseline-jvm-png/` (see its
+  `README.md`). The SVG references could not be made with the original
+  renderer (Batik is not a dependency of the build): since step 2c they are the
+  output of the new renderer, in the Vega tests `src/test/resources/vega/math/`
+  (19 files).
 
 ### 5.2 Glyph outlines
 
@@ -201,13 +206,14 @@ Steps of phase 2:
 | 2a | `Box.draw` talks to `TeXGraphics` instead of `Graphics2D` (`Graphics2DTeXGraphics` keeps the AWT rendering) | done, corpus identical byte for byte |
 | 2b-1 | `tools/jlatexmath-glyphs/GenerateGlyphOutlines.java` writes `glyphs.bin` (46 fonts, 4710 glyphs) | done, at most 0.8% area difference with AWT |
 | 2b-2 | `GlyphOutlines` (reader of `glyphs.bin`, no AWT) and `UGraphicTeXGraphics` (`TeXGraphics` on `UGraphic`, glyph = path) | done, not used yet by `AtomMath` |
-| 2c | `AtomMath` / `ScientificEquation*` draw through the canvas (PNG, SVG, PDF...), Batik and `ConverterSvg` go away, the corpus moves to Vega | next |
-| 2d | Review of the corpus rendering (hinting, seams of extensible arrows), decision on the open questions 4 and 7 | after 2c |
+| 2c | `AtomMath` / `ScientificEquation*` draw through the canvas (PNG, SVG, PDF, EPS...), Batik and `ConverterSvg` go away, the corpus moves to Vega | done |
+| 2d | Review of the corpus rendering (hinting, seams of extensible arrows), decision on the open questions 4 and 7 | next |
 
 Notes on phase 1: the vendored classes live in the jar, so the external
 jar is no longer read by reflection and its Gradle dependency is removed in
-the same phase. The SVG output still goes through Batik (reflection, optional)
-until phase 2 replaces it: that is the only external jar left after phase 1.
+the same phase. The SVG output went through Batik (reflection, optional)
+until step 2c of phase 2 replaced it: that was the only external jar left
+after phase 1.
 
 Each phase should end with a patch that builds on the JVM (Java 8 target via
 `sjpp` with `JAVA8`, Java 11 for the jar) and with the C build.
@@ -273,8 +279,12 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
 2. ~~Write the corpus and the baselines (phase 0)~~ (done, PNG only, see 5.1).
 3. ~~Vendor the upstream sources at the chosen commit and wire direct calls
    (phase 1)~~ (done).
-4. Phase 2, step 2c: draw `AtomMath` through `UGraphicTeXGraphics` (see the
-   table of steps in section 6), then move the corpus to Vega.
+4. ~~Phase 2, step 2c: draw `AtomMath` through `UGraphicTeXGraphics`, move the
+   corpus to Vega~~ (done).
+5. Phase 2, step 2d: look at the rendering (see the table of steps in
+   section 6), then phase 3 (no `java.awt` / `javax.*` left, XML, resources).
+   `TeXGraphics` still uses `java.awt.Color`, `TeXIcon` `java.awt.Insets`, and
+   `TeXIconBuilder` has `java.awt.Insets` too.
 
 Working method, as usual: small patches (`git format-patch`), each with an
 English commit message starting with the emojis (here 🍵 for the C build plus
