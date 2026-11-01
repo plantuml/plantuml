@@ -120,14 +120,26 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addTime(net.sourceforge.plantuml.timingdiagram.TimeTick)" class="member-name-link">addTime</a><wbr>(<a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;time)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addBreak(net.sourceforge.plantuml.timingdiagram.TimeTick,net.sourceforge.plantuml.timingdiagram.TimeTick)" class="member-name-link">addBreak</a><wbr>(<a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;from,
+ <a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;to)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#applyForVLines(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">applyForVLines</a><wbr>(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addTime(net.sourceforge.plantuml.timingdiagram.TimeTick)" class="member-name-link">addTime</a><wbr>(<a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;time)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#applyForVLines(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">applyForVLines</a><wbr>(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style,
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawBreaks(net.sourceforge.plantuml.klimt.drawing.UGraphic,double,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">drawBreaks</a><wbr>(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ double&nbsp;height,
+ <a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;back)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Masks the squeezed part of each break over a player area, and draws its two
+ zigzag edges.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawTimeAxis(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.timingdiagram.TimeAxisStategy,java.util.Map)" class="member-name-link">drawTimeAxis</a><wbr>(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  <a href="TimeAxisStategy.html" title="enum class in net.sourceforge.plantuml.timingdiagram">TimeAxisStategy</a>&nbsp;timeAxisStategy,
@@ -215,6 +227,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="addBreak(net.sourceforge.plantuml.timingdiagram.TimeTick,net.sourceforge.plantuml.timingdiagram.TimeTick)">
+<h3>addBreak</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addBreak</span><wbr><span class="parameters">(<a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;from,
+ <a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;to)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="getPosInPixel(net.sourceforge.plantuml.timingdiagram.TimeTick)">
 <h3>getPosInPixel</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getPosInPixel</span><wbr><span class="parameters">(<a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;when)</span></div>
@@ -239,6 +258,16 @@ loadScripts(document, 'script');</script>
 <h3>drawVlines</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">drawVlines</span><wbr><span class="parameters">(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  double&nbsp;height)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="drawBreaks(net.sourceforge.plantuml.klimt.drawing.UGraphic,double,net.sourceforge.plantuml.klimt.color.HColor)">
+<h3>drawBreaks</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">drawBreaks</span><wbr><span class="parameters">(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ double&nbsp;height,
+ <a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;back)</span></div>
+<div class="block">Masks the squeezed part of each break over a player area, and draws its two
+ zigzag edges.</div>
 </section>
 </li>
 <li>

@@ -3462,8 +3462,8 @@ Total Classes: 16
 "net.sourceforge.plantuml.tim.iterator" --> "net.sourceforge.plantuml.tim.expression"
 "net.sourceforge.plantuml.tim.iterator" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.timingdiagram" %lighten("red", 94) {
-Total Classes: 25
+class "net.sourceforge.plantuml.timingdiagram" %lighten("red", 96) {
+Total Classes: 27
 }
 "net.sourceforge.plantuml.timingdiagram" --> "java.lang"
 "net.sourceforge.plantuml.timingdiagram" --> "java.math"

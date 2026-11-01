@@ -3620,35 +3620,43 @@ loadScripts(document, 'script');</script>
  <a href="../../../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style,
  <a href="../../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>final void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Player.</span><code><a href="../../../timingdiagram/Player.html#drawFrameTitle(net.sourceforge.plantuml.klimt.drawing.UGraphic)" class="member-name-link">drawFrameTitle</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug)</code></div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimingRuler.</span><code><a href="../../../timingdiagram/TimingRuler.html#drawBreaks(net.sourceforge.plantuml.klimt.drawing.UGraphic,double,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">drawBreaks</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ double&nbsp;height,
+ <a href="../../color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;back)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Masks the squeezed part of each break over a player area, and draws its two
+ zigzag edges.</div>
+</div>
+<div class="col-first even-row-color"><code>final void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Player.</span><code><a href="../../../timingdiagram/Player.html#drawFrameTitle(net.sourceforge.plantuml.klimt.drawing.UGraphic)" class="member-name-link">drawFrameTitle</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Highlight.</span><code><a href="../../../timingdiagram/Highlight.html#drawHighlightsBack(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.timingdiagram.TimingRuler,double)" class="member-name-link">drawHighlightsBack</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="../../../timingdiagram/TimingRuler.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingRuler</a>&nbsp;ruler,
+ double&nbsp;height)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Highlight.</span><code><a href="../../../timingdiagram/Highlight.html#drawHighlightsBack(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.timingdiagram.TimingRuler,double)" class="member-name-link">drawHighlightsBack</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+<div class="col-second even-row-color"><span class="type-name-label">Highlight.</span><code><a href="../../../timingdiagram/Highlight.html#drawHighlightsLines(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.timingdiagram.TimingRuler,double)" class="member-name-link">drawHighlightsLines</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  <a href="../../../timingdiagram/TimingRuler.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingRuler</a>&nbsp;ruler,
  double&nbsp;height)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Highlight.</span><code><a href="../../../timingdiagram/Highlight.html#drawHighlightsLines(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.timingdiagram.TimingRuler,double)" class="member-name-link">drawHighlightsLines</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
- <a href="../../../timingdiagram/TimingRuler.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingRuler</a>&nbsp;ruler,
- double&nbsp;height)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimingRuler.</span><code><a href="../../../timingdiagram/TimingRuler.html#drawTimeAxis(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.timingdiagram.TimeAxisStategy,java.util.Map)" class="member-name-link">drawTimeAxis</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+<div class="col-second odd-row-color"><span class="type-name-label">TimingRuler.</span><code><a href="../../../timingdiagram/TimingRuler.html#drawTimeAxis(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.timingdiagram.TimeAxisStategy,java.util.Map)" class="member-name-link">drawTimeAxis</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  <a href="../../../timingdiagram/TimeAxisStategy.html" title="enum class in net.sourceforge.plantuml.timingdiagram">TimeAxisStategy</a>&nbsp;timeAxisStategy,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="../../../timingdiagram/TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&gt;&nbsp;codes)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimeConstraint.</span><code><a href="../../../timingdiagram/TimeConstraint.html#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.timingdiagram.TimingRuler)" class="member-name-link">drawU</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
- <a href="../../../timingdiagram/TimingRuler.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingRuler</a>&nbsp;ruler)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimingNote.</span><code><a href="../../../timingdiagram/TimingNote.html#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic)" class="member-name-link">drawU</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeConstraint.</span><code><a href="../../../timingdiagram/TimeConstraint.html#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.timingdiagram.TimingRuler)" class="member-name-link">drawU</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="../../../timingdiagram/TimingRuler.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingRuler</a>&nbsp;ruler)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimingRuler.</span><code><a href="../../../timingdiagram/TimingRuler.html#drawVlines(net.sourceforge.plantuml.klimt.drawing.UGraphic,double)" class="member-name-link">drawVlines</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
- double&nbsp;height)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimingNote.</span><code><a href="../../../timingdiagram/TimingNote.html#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic)" class="member-name-link">drawU</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimingRuler.</span><code><a href="../../../timingdiagram/TimingRuler.html#drawVlines(net.sourceforge.plantuml.klimt.drawing.UGraphic,double)" class="member-name-link">drawVlines</a><wbr>(<a href="../UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ double&nbsp;height)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

@@ -111,11 +111,11 @@ public class CommandHighlight extends SingleLineCommand2&lt;TimingDiagram&gt; {
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L114">		final TimeTick tickFrom = TimeTickBuilder.parseTimeTick(&quot;FROM&quot;, arg, diagram);</span>
-<span class="nc" id="L115">		final TimeTick tickTo = TimeTickBuilder.parseTimeTick(&quot;TO&quot;, arg, diagram);</span>
-<span class="nc" id="L116">		final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;CAPTION&quot;, 0));</span>
-<span class="nc" id="L117">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L118">		return diagram.highlight(tickFrom, tickTo, display, colors);</span>
+<span class="fc" id="L114">		final TimeTick tickFrom = TimeTickBuilder.parseTimeTick(&quot;FROM&quot;, arg, diagram);</span>
+<span class="fc" id="L115">		final TimeTick tickTo = TimeTickBuilder.parseTimeTick(&quot;TO&quot;, arg, diagram);</span>
+<span class="fc" id="L116">		final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;CAPTION&quot;, 0));</span>
+<span class="fc" id="L117">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L118">		return diagram.highlight(tickFrom, tickTo, display, colors);</span>
 	}
 
 	@Override

@@ -70,14 +70,14 @@ import net.sourceforge.plantuml.timingdiagram.TimingFormat;
 
 	public static TimeTick parseTimeTick(String name, RegexResult arg, Clocks clock) {
 <span class="fc" id="L72">		final String code = arg.get(name + &quot;CODE&quot;, 0);</span>
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (code != null) {</span>
-<span class="nc" id="L74">			final String delta = arg.get(name + &quot;CODE&quot;, 1);</span>
-<span class="nc" id="L75">			TimeTick result = clock.getCodeValue(code);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">			if (delta == null)</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (code != null) {</span>
+<span class="fc" id="L74">			final String delta = arg.get(name + &quot;CODE&quot;, 1);</span>
+<span class="fc" id="L75">			TimeTick result = clock.getCodeValue(code);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">			if (delta == null)</span>
 <span class="nc" id="L77">				return result;</span>
 
-<span class="nc" id="L79">			final BigDecimal value = result.getTime().add(new BigDecimal(delta));</span>
-<span class="nc" id="L80">			return new TimeTick(value, TimingFormat.DECIMAL);</span>
+<span class="fc" id="L79">			final BigDecimal value = result.getTime().add(new BigDecimal(delta));</span>
+<span class="fc" id="L80">			return new TimeTick(value, TimingFormat.DECIMAL);</span>
 		}
 <span class="fc" id="L82">		final String clockName = arg.get(name + &quot;CLOCK&quot;, 0);</span>
 <span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (clockName != null) {</span>
