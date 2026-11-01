@@ -1,0 +1,12 @@
+---
+output: svg
+decimal: 1
+expected-description: (1 entities)
+---
+@startuml
+class A
+legend right
+  <math>a^2 + b^2 = c^2</math>
+  <latex>\sum_i x_i</latex>
+endlegend
+@enduml

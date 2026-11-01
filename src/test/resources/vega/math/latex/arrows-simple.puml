@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\leftarrow \rightarrow \leftrightarrow \Leftarrow \Rightarrow \Leftrightarrow \uparrow \downarrow \updownarrow \Uparrow \Downarrow \Updownarrow \mapsto \to \gets
+@endlatex

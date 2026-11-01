@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\text{Привет мир} \quad \text{αβγδ ΩΨΦ} \quad \text{Ελληνικά} \quad \text{Русский}
+@endlatex

@@ -1,0 +1,10 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+color white
+backgroundcolor #336699
+sum_(i=1)^n i
+@endmath

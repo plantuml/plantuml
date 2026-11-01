@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\left( \frac{a}{b} \right) \quad \left[ \sum_i x_i \right] \quad \left\{ \frac{1}{2} \right\} \quad \left| x \right| \quad \left\| v \right\| \quad \left\langle u, v \right\rangle \quad \left\lfloor x \right\rfloor \quad \left\lceil y \right\rceil
+@endlatex

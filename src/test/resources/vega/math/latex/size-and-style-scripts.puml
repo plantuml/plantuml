@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+x^{x^{x^{x}}} + \frac{1}{x_{1_{1_1}}} + \sqrt{\frac{\frac{a}{b}}{c}} + \sum_{i=1}^{\sum_{j=1}^{\sum_{k=1}^{n} 1} 1} 1
+@endlatex

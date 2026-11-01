@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\hat{a} \tilde{n} \bar{x} \vec{v} \dot{x} \ddot{x} \dddot{x} \breve{a} \check{a} \acute{a} \grave{a} \mathring{a}
+@endlatex

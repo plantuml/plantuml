@@ -1,0 +1,29 @@
+\definecolor{plantucolor0000}{RGB}{255,255,255}%
+\definecolor{plantucolor0001}{RGB}{24,24,24}%
+\definecolor{plantucolor0002}{RGB}{226,226,240}%
+\definecolor{plantucolor0003}{RGB}{0,0,0}%
+\begin{tikzpicture}[yscale=-1
+,pstyle0/.style={color=plantucolor0000,line width=0.0pt}
+,pstyle1/.style={color=plantucolor0001,line width=0.5pt,dash pattern=on 5.0pt off 5.0pt}
+,pstyle2/.style={color=plantucolor0001,fill=plantucolor0002,line width=0.5pt}
+,pstyle3/.style={color=plantucolor0001,fill=plantucolor0001,line width=1.0pt}
+]
+\draw[pstyle0] (28.725pt,39pt) rectangle (36.725pt,178pt);
+\draw[pstyle1] (32.225pt,39pt) -- (32.225pt,178pt);
+\draw[pstyle0] (139.725pt,39pt) rectangle (147.725pt,178pt);
+\draw[pstyle1] (143.225pt,39pt) -- (143.225pt,178pt);
+\draw[pstyle2] (10pt,15pt) arc (180:270:5pt) -- (15pt,10pt) -- (49.45pt,10pt) arc (270:360:5pt) -- (54.45pt,15pt) -- (54.45pt,33pt) arc (0:90:5pt) -- (49.45pt,38pt) -- (15pt,38pt) arc (90:180:5pt) -- (10pt,33pt) -- cycle;
+\node at (17pt,17pt)[below right,color=black,inner sep=0]{Alice};
+\draw[pstyle2] (123.7563pt,15pt) arc (180:270:5pt) -- (128.7563pt,10pt) -- (157.6938pt,10pt) arc (270:360:5pt) -- (162.6938pt,15pt) -- (162.6938pt,33pt) arc (0:90:5pt) -- (157.6938pt,38pt) -- (128.7563pt,38pt) arc (90:180:5pt) -- (123.7563pt,33pt) -- cycle;
+\node at (130.7563pt,17pt)[below right,color=black,inner sep=0]{Bob};
+\draw[pstyle2] (10pt,183pt) arc (180:270:5pt) -- (15pt,178pt) -- (49.45pt,178pt) arc (270:360:5pt) -- (54.45pt,183pt) -- (54.45pt,201pt) arc (0:90:5pt) -- (49.45pt,206pt) -- (15pt,206pt) arc (90:180:5pt) -- (10pt,201pt) -- cycle;
+\node at (17pt,185pt)[below right,color=black,inner sep=0]{Alice};
+\draw[pstyle2] (123.7563pt,183pt) arc (180:270:5pt) -- (128.7563pt,178pt) -- (157.6938pt,178pt) arc (270:360:5pt) -- (162.6938pt,183pt) -- (162.6938pt,201pt) arc (0:90:5pt) -- (157.6938pt,206pt) -- (128.7563pt,206pt) arc (90:180:5pt) -- (123.7563pt,201pt) -- cycle;
+\node at (130.7563pt,185pt)[below right,color=black,inner sep=0]{Bob};
+\draw[pstyle3] (131.225pt,91pt) -- (141.225pt,95pt) -- (131.225pt,99pt) -- (135.225pt,95pt) -- cycle;
+\draw[color=plantucolor0001,line width=1.0pt] (32.225pt,95pt) -- (137.225pt,95pt);
+\node at (39.225pt,51pt)[below right,inner sep=0]{${\sum_{{{i}={1}}}^{{n}}}{i}$};
+\draw[pstyle3] (43.225pt,156pt) -- (33.225pt,160pt) -- (43.225pt,164pt) -- (39.225pt,160pt) -- cycle;
+\draw[color=plantucolor0001,line width=1.0pt,dash pattern=on 2.0pt off 2.0pt] (37.225pt,160pt) -- (142.225pt,160pt);
+\node at (49.225pt,107pt)[below right,inner sep=0]{$\frac{n(n+1)}{2}$};
+\end{tikzpicture}%

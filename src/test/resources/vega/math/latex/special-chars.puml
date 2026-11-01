@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\% \& \# \$ \_ \{ \} \lbrace \rbrace \backslash
+@endlatex

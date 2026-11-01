@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\definecolor{c1}{rgb}{0.2,0.4,0.6}\textcolor{c1}{rgb} \definecolor{g2}{gray}{0.5}\textcolor{g2}{gray} \definecolor{c2}{cmyk}{0.1,0.2,0.3,0.4}\textcolor{c2}{cmyk}
+@endlatex

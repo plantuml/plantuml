@@ -1,0 +1,14 @@
+---
+output: svg
+decimal: 1
+expected-description: (3 entities)
+---
+@startuml
+node "<math>n_1</math>" {
+  [<latex>\Sigma</latex> engine]
+}
+component C [
+  <math>f(x) = x^2</math>
+]
+database "<latex>\int</latex> store"
+@enduml

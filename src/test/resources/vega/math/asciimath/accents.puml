@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+hat x, bar y, vec z, tilde w, dot a, ddot b, ul c, overarc(AB), obrace(1+2+3)^(n), ubrace(a+b+c)_(m)
+@endmath

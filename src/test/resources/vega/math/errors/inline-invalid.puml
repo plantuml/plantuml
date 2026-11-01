@@ -1,0 +1,9 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities)
+---
+@startuml
+class A
+note right of A : <latex>\frac{1}{</latex> and <math>sqrt(</math> and <latex>\nosuchmacro</latex>
+@enduml

@@ -1,0 +1,13 @@
+---
+output: svg
+decimal: 1
+expected-description: (1 entities)
+---
+@startuml
+class Circle {
+  radius : double
+  area : <math>pi r^2</math>
+  perimeter : <latex>2 \pi r</latex>
+  +scale(k : double) : <math>k^2</math>
+}
+@enduml

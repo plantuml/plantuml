@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\sqrt{x} \quad \sqrt[3]{x+1} \quad \sqrt[n]{\frac{a}{b}} \quad \sqrt{1+\sqrt{1+\sqrt{1+x}}} \quad \sqrt{\frac{a^2+b^2}{c}}
+@endlatex

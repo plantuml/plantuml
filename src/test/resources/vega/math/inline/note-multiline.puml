@@ -1,0 +1,13 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities)
+---
+@startuml
+object Gauss
+note right of Gauss
+  The integral:
+  <latex>\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}</latex>
+  and the sum <math>sum_(i=1)^n i = (n(n+1))/2</math>.
+end note
+@enduml

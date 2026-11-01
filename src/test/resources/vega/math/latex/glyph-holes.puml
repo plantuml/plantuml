@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\mathbb{R}\mathbb{N}\mathcal{O}\mathfrak{B} \Vert \| \boxed{\not\ni} 8 0 4 6 9 \oint \varnothing \emptyset \oplus \circledcirc \bullet \circ
+@endlatex

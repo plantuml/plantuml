@@ -182,6 +182,21 @@ list of what was removed so that it can be restored.
 
 ### 5.7 Tests, docs, CI
 
+Status: `src/test/resources/vega/math` has about 220 Vega tests: AsciiMath
+(`asciimath/`), LaTeX by theme (`latex/`: fractions, roots, scripts, big
+operators, delimiters, matrices, accents, fonts, spacing, colors, boxes,
+transforms, relations, arrows, symbols, functions, text, unicode, macros,
+formulas of physics...), formulas in the diagrams (`inline/`: class, note,
+sequence, usecase, activity, state, component, mindmap, WBS, Gantt, salt, JSON,
+timing, ER, tables, legend, colors, styles, skinparams `monochrome`,
+`handwritten`, `dpi`, `scale`), the options of `@startmath` / `@startlatex`
+(`options/`), the formulas that cannot be made (`errors/`), CJK and other
+scripts (`cjk/`), and the other outputs (`formats/`: PDF, TikZ, text). The unit
+tests are in `src/test/java/org/scilab/forge/jlatexmath` (`GlyphOutlinesTest`,
+`ForeignTextTest`). The SVG references are made with `decimal: 1` (0.1 pixel):
+a third smaller than with 3 decimals, and enough to see a change of a shape or
+of the layout. Vega on the C build is still to do.
+
 - Vega tests from 5.1 on the JVM, and on the C build through
   `tools/vega-c/run_vega_c.py` (once the Vega headers are there).
 - Update `net/sourceforge/plantuml/math/readme.md`, `CHANGES.md`, and the
@@ -214,6 +229,7 @@ Steps of phase 3:
 | Step | Content | State |
 |------|---------|-------|
 | 3a | Remove what PlantUML does not use (images, Java fonts, GeoGebra, Fcscore, URL alphabets, user XML formulas), the AWT canvas, `Icon`, `java.awt.Font`; the TTF files leave the jar | done |
+| 3a+ | Text without a TeX glyph (CJK...) drawn by PlantUML; the fallback shows the source as it is; about 200 Vega tests (`vega/math`) and the unit tests of the package | done |
 | 3b | `Color`, `Insets` and `Point2D` replaced by small classes of the package (`TeXGraphics` and `TeXIcon` without `java.awt`) | next |
 | 3c | No reflection (`MacroInfo` / `\newcommand`, the alphabets of the static block of `TeXFormula`), no `Character.UnicodeBlock` (to check with TeaVM) | |
 | 3d | XML: a mini reader (5 parsers) or binary files made at dev time | |
@@ -297,16 +313,21 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
   `TeXFormula` are upstream's and are not thread safe, as with the jar before:
   not a C build matter (single thread), and left as it was on the JVM.
 
-- **Text without a TeX glyph (CJK...), found at step 3a.** The parser drew any
-  character that has no TeX symbol (a Chinese character in `\text{}`, for
-  instance) with a Java font (`JavaFontRenderingAtom`). Since step 2c that box
-  draws nothing, so the character became a blank gap, silently. Step 3a removes
-  it: the character is now a parse error and PlantUML shows the source of the
-  formula as text, which is visible. The good fix is to draw such text with the
-  text engine of PlantUML (`UText`, which works in every build, C included):
-  the layout needs the width, height and depth of the text when the formula is
-  made, so the builder has to be given a `StringBounder`. To do after phase 3,
-  if CJK in formulas matters.
+- **Text without a TeX glyph (CJK...): drawn by PlantUML (after step 3a).** The
+  parser drew any character that has no TeX symbol (a Chinese character in
+  `\text{}`, for instance) with a Java font (`JavaFontRenderingAtom`). Since
+  step 2c that box drew nothing, a blank gap, silently; step 3a made it a parse
+  error; it is now drawn with the text engine of PlantUML (`UText`, which works
+  in every build, C included). The layout needs the size of the text before
+  anything is drawn, so the formula is made with a `TeXTextMeasurer` (a field of
+  the `TeXEnvironment`, not a static one) that PlantUML implements with the
+  `StringBounder` of the diagram. A run of such characters is one atom. Limits:
+  the text is sans serif, whatever the TeX font style (`\textbf`, `\mathit`
+  do not apply), it cannot be rotated or flipped, and its size is a whole number
+  of pixels.
+- **The fallback shows the source as it is.** When a formula cannot be made,
+  the source is shown as text. It went through Creole, so `\text` was shown as
+  a tab and "ext", `\n` as a newline, `**x**` as bold. It is now raw text.
 
 ### Open questions
 

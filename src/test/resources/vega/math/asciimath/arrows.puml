@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+a -> b, a |-> b, a => b, a <=> b, uarr darr larr rarr harr, uArr dArr lArr rArr hArr, >-> ->>
+@endmath
