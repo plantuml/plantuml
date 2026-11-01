@@ -6,10 +6,14 @@ next working sessions. Update it as decisions are made (move items from
 
 ## 1. Goal
 
-Make math and LaTeX work in the TeaVM builds (C first, then JavaScript / Wasm),
-which today cannot render them:
+Make math and LaTeX work in the TeaVM builds (C first, then JavaScript / Wasm)
+**and in regular Java without the need of an external .jar file** (no
+JLaTeXMath jar, no Batik jar: the code is part of PlantUML).
 
-| Feature                                   | JVM | TeaVM C build today                                     |
+Today the TeaVM builds cannot render them, and the JVM needs the optional
+JLaTeXMath jar (and Batik for the SVG output):
+
+| Feature                                   | JVM (with the jars) | TeaVM C build today                                     |
 |-------------------------------------------|-----|---------------------------------------------------------|
 | `@startmath` (AsciiMath)                  | ok  | "Diagram not supported by this release of PlantUML"    |
 | `@startlatex`                             | ok  | same                                                    |
@@ -22,11 +26,14 @@ Success criteria:
 
 1. The same formulas render in the JVM jar and in the C executable, with the
    same layout, in SVG, PNG and PDF (and the TXT/TIKZ paths that exist today).
-2. No reflection and no dependency on `java.awt`, `javax.swing`, `javax.imageio`,
+2. The regular jar renders math and LaTeX on its own: the `jlatexmath`
+   dependency disappears from `build.gradle.kts`, `gradle/libs.versions.toml`
+   and the license variants, and Batik is no longer needed for the SVG.
+3. No reflection and no dependency on `java.awt`, `javax.swing`, `javax.imageio`,
    `javax.xml` or Batik in the code used by the TeaVM builds.
-3. Output is deterministic across platforms (needed by the Vega tests), as
+4. Output is deterministic across platforms (needed by the Vega tests), as
    already done for PDF.
-4. The license variants (MIT, EPL, BSD, ASL, LGPL) keep building, see 7.
+5. The license variants (MIT, EPL, BSD, ASL, LGPL) keep building, see 7.
 
 ## 2. How PlantUML uses JLaTeXMath today
 
@@ -182,6 +189,11 @@ list of what was removed so that it can be restored.
 | 4 | Wire-up (5.5), first formulas in `plantuml.exe` | `@startmath`, `@startlatex`, `<math>` work in the C build |
 | 5 | Pruning (5.6), size and start-up measurements, Vega on C (5.7) | size delta acceptable, CI green |
 | 6 | Same for JavaScript / Wasm if wanted | |
+
+Notes on phase 1: the vendored classes live in the jar, so the external
+jar is no longer read by reflection and its Gradle dependency is removed in
+the same phase. The SVG output still goes through Batik (reflection, optional)
+until phase 2 replaces it: that is the only external jar left after phase 1.
 
 Each phase should end with a patch that builds on the JVM (Java 8 target via
 `sjpp` with `JAVA8`, Java 11 for the jar) and with the C build.
