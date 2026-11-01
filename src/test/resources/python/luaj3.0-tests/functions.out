@@ -1,0 +1,68 @@
+f0:
+f0:
+f0:
+f0:
+f0:
+f1: None
+f1: a1/1
+f1: a1/2
+f1: a1/3
+f1: a1/4
+f2: None None
+f2: a1/1 None
+f2: a1/2 a2/2
+f2: a1/3 a2/3
+f2: a1/4 a2/4
+f3: None None None
+f3: a1/1 None None
+f3: a1/2 a2/2 None
+f3: a1/3 a2/3 a3/3
+f3: a1/4 a2/4 a3/4
+f4: None None None None
+f4: a1/1 None None None
+f4: a1/2 a2/2 None None
+f4: a1/3 a2/3 a3/3 None
+f4: a1/4 a2/4 a3/4 a4/4
+z0: (None, None, None, None)
+z2: (None, None, 'c2.3/4', 'c2.4/4')
+z4: ('c4.1/4', 'c4.2/4', 'c4.3/4', 'c4.4/4')
+g0: None None None None (eol)
+g2: None None b2.3/4 b2.4/4 (eol)
+g4: b4.1/4 b4.2/4 b4.3/4 b4.4/4 (eol)
+(11, 12, 13)
+(23, 22, 21)
+((32, 33, 34), (45, 46, 47), (58, 59, 50))
+a None
+...
+...,a None
+a,... None
+a q
+...
+...,a q
+a,... q
+a q
+... r
+...,a r q
+a,... q r
+a q
+... r s
+...,a r s q
+a,... q r s
+third ('abc', None, None, None, '|', None, None, None)
+third ('def', None, None, '|', None, None, None)
+third ('def', None, None, '|', None, None, None)
+third ('abc', 'p', None, None, '|', 'p', None, None)
+third ('def', None, None, '|', 'p', None, None)
+third ('def', None, None, '|', 'p', None, None)
+third ('abc', 'p', 'q', None, '|', 'p', 'q', None)
+third ('def', 'q', None, '|', 'p', 'q', None)
+third ('def', 'q', None, '|', 'p', 'q', None)
+third ('abc', 'p', 'q', 'r', '|', 'p', 'q', 'r')
+third ('def', 'q', 'r', '|', 'p', 'q', 'r')
+third ('def', 'q', 'r', '|', 'p', 'q', 'r')
+third ('abc', 'p', 'q', 'r', '|', 'p', 'q', 'r')
+third ('def', 'q', 'r', '|', 'p', 'q', 'r')
+third ('def', 'q', 'r', '|', 'p', 'q', 'r')
+third ('abc', None, None, None, '|', None, None, None)
+third ('def', None, None, '|', None, None, None)
+third ('def', None, None, '|', None, None, None)
