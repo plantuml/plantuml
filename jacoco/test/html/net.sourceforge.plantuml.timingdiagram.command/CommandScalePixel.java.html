@@ -116,18 +116,18 @@ public class CommandScalePixel extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L119">		final long tick = Long.parseLong(arg.get(&quot;TICK&quot;, 0)) * getUnitFactor(arg.get(&quot;UNIT&quot;, 0));</span>
-<span class="nc" id="L120">		final long pixel = Long.parseLong(arg.get(&quot;PIXEL&quot;, 0));</span>
-<span class="nc bnc" id="L121" title="All 4 branches missed.">		if (tick &lt;= 0 || pixel &lt;= 0)</span>
+<span class="fc" id="L119">		final long tick = Long.parseLong(arg.get(&quot;TICK&quot;, 0)) * getUnitFactor(arg.get(&quot;UNIT&quot;, 0));</span>
+<span class="fc" id="L120">		final long pixel = Long.parseLong(arg.get(&quot;PIXEL&quot;, 0));</span>
+<span class="pc bpc" id="L121" title="2 of 4 branches missed.">		if (tick &lt;= 0 || pixel &lt;= 0)</span>
 <span class="nc" id="L122">			return CommandExecutionResult.error(&quot;Bad value&quot;);</span>
 
-<span class="nc" id="L124">		diagram.scaleInPixels(tick, pixel);</span>
-<span class="nc" id="L125">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L124">		diagram.scaleInPixels(tick, pixel);</span>
+<span class="fc" id="L125">		return CommandExecutionResult.ok();</span>
 	}
 
 	private long getUnitFactor(String unit) {
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (unit == null)</span>
-<span class="nc" id="L130">			return 1;</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (unit == null)</span>
+<span class="fc" id="L130">			return 1;</span>
 
 <span class="nc bnc" id="L132" title="All 6 branches missed.">		switch (unit) {</span>
 		case &quot;s&quot;:

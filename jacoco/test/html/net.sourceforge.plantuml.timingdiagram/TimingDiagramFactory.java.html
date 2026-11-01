@@ -66,48 +66,50 @@ import net.sourceforge.plantuml.timingdiagram.command.CommandPixelHeight;
 import net.sourceforge.plantuml.timingdiagram.command.CommandRobustConcise;
 import net.sourceforge.plantuml.timingdiagram.command.CommandScalePixel;
 import net.sourceforge.plantuml.timingdiagram.command.CommandTicks;
+import net.sourceforge.plantuml.timingdiagram.command.CommandTimeAxisUnit;
 import net.sourceforge.plantuml.timingdiagram.command.CommandTimeMessage;
 import net.sourceforge.plantuml.timingdiagram.command.CommandUseDateFormat;
 
 public class TimingDiagramFactory extends PSystemCommandFactory {
 
 	public TimingDiagramFactory() {
-<span class="fc" id="L75">		super(DiagramType.TIMING);</span>
-<span class="fc" id="L76">	}</span>
+<span class="fc" id="L76">		super(DiagramType.TIMING);</span>
+<span class="fc" id="L77">	}</span>
 
 	@Override
 	public TimingDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
-<span class="fc" id="L81">		return new TimingDiagram(source, preprocessing);</span>
+<span class="fc" id="L82">		return new TimingDiagram(source, preprocessing);</span>
 	}
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
-<span class="fc" id="L86">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="fc" id="L87">		cmds.add(new CommandFootboxIgnored());</span>
-<span class="fc" id="L88">		cmds.add(new CommandRobustConcise());</span>
-<span class="fc" id="L89">		cmds.add(new CommandClock());</span>
-<span class="fc" id="L90">		cmds.add(new CommandAnalog());</span>
-<span class="fc" id="L91">		cmds.add(new CommandBinary());</span>
-<span class="fc" id="L92">		cmds.add(new CommandDefineStateShort());</span>
-<span class="fc" id="L93">		cmds.add(new CommandDefineStateLong());</span>
-<span class="fc" id="L94">		cmds.add(new CommandChangeStateByPlayerCode());</span>
-<span class="fc" id="L95">		cmds.add(new CommandChangeStateByTime());</span>
-<span class="fc" id="L96">		cmds.add(new CommandAtTime());</span>
-<span class="fc" id="L97">		cmds.add(new CommandAtPlayer());</span>
-<span class="fc" id="L98">		cmds.add(new CommandTimeMessage());</span>
-<span class="fc" id="L99">		cmds.add(new CommandNote());</span>
-<span class="fc" id="L100">		cmds.add(new CommandNoteLong());</span>
-<span class="fc" id="L101">		cmds.add(new CommandConstraint());</span>
-<span class="fc" id="L102">		cmds.add(new CommandScalePixel());</span>
-<span class="fc" id="L103">		cmds.add(new CommandHideTimeAxis());</span>
-<span class="fc" id="L104">		cmds.add(new CommandHighlight());</span>
-<span class="fc" id="L105">		cmds.add(new CommandBreak());</span>
-<span class="fc" id="L106">		cmds.add(new CommandModeCompact());</span>
-<span class="fc" id="L107">		cmds.add(new CommandTicks());</span>
-<span class="fc" id="L108">		cmds.add(new CommandPixelHeight());</span>
-<span class="fc" id="L109">		cmds.add(new CommandUseDateFormat());</span>
-<span class="fc" id="L110">	}</span>
+<span class="fc" id="L87">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="fc" id="L88">		cmds.add(new CommandFootboxIgnored());</span>
+<span class="fc" id="L89">		cmds.add(new CommandRobustConcise());</span>
+<span class="fc" id="L90">		cmds.add(new CommandClock());</span>
+<span class="fc" id="L91">		cmds.add(new CommandAnalog());</span>
+<span class="fc" id="L92">		cmds.add(new CommandBinary());</span>
+<span class="fc" id="L93">		cmds.add(new CommandDefineStateShort());</span>
+<span class="fc" id="L94">		cmds.add(new CommandDefineStateLong());</span>
+<span class="fc" id="L95">		cmds.add(new CommandChangeStateByPlayerCode());</span>
+<span class="fc" id="L96">		cmds.add(new CommandChangeStateByTime());</span>
+<span class="fc" id="L97">		cmds.add(new CommandAtTime());</span>
+<span class="fc" id="L98">		cmds.add(new CommandAtPlayer());</span>
+<span class="fc" id="L99">		cmds.add(new CommandTimeMessage());</span>
+<span class="fc" id="L100">		cmds.add(new CommandNote());</span>
+<span class="fc" id="L101">		cmds.add(new CommandNoteLong());</span>
+<span class="fc" id="L102">		cmds.add(new CommandConstraint());</span>
+<span class="fc" id="L103">		cmds.add(new CommandScalePixel());</span>
+<span class="fc" id="L104">		cmds.add(new CommandHideTimeAxis());</span>
+<span class="fc" id="L105">		cmds.add(new CommandTimeAxisUnit());</span>
+<span class="fc" id="L106">		cmds.add(new CommandHighlight());</span>
+<span class="fc" id="L107">		cmds.add(new CommandBreak());</span>
+<span class="fc" id="L108">		cmds.add(new CommandModeCompact());</span>
+<span class="fc" id="L109">		cmds.add(new CommandTicks());</span>
+<span class="fc" id="L110">		cmds.add(new CommandPixelHeight());</span>
+<span class="fc" id="L111">		cmds.add(new CommandUseDateFormat());</span>
+<span class="fc" id="L112">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

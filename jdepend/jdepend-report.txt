@@ -12329,14 +12329,14 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 27
-    Concrete Classes: 23
+    Total Classes: 28
+    Concrete Classes: 24
     Abstract Classes: 4
 
     Ca: 3
     Ce: 26
 
-    A: 0.15
+    A: 0.14
     I: 0.9
     D: 0.04
 
@@ -12369,6 +12369,7 @@ Concrete Classes:
     net.sourceforge.plantuml.timingdiagram.TimingRuler$1
     net.sourceforge.plantuml.timingdiagram.TimingRuler$2
     net.sourceforge.plantuml.timingdiagram.TimingRuler$Break
+    net.sourceforge.plantuml.timingdiagram.TimingRuler$TimeLabel
     net.sourceforge.plantuml.timingdiagram.TimingStyle
 
 Depends Upon:
@@ -15630,7 +15631,7 @@ net.sourceforge.plantuml.tim,40,4,4,16,0.1,0.8,0.1,1
 net.sourceforge.plantuml.tim.builtin,68,1,1,14,0.01,0.93,0.05,1
 net.sourceforge.plantuml.tim.expression,17,3,3,3,0.18,0.5,0.32,1
 net.sourceforge.plantuml.tim.iterator,16,3,1,9,0.19,0.9,0.09,1
-net.sourceforge.plantuml.timingdiagram,27,4,3,26,0.15,0.9,0.04,1
+net.sourceforge.plantuml.timingdiagram,28,4,3,26,0.14,0.9,0.04,1
 net.sourceforge.plantuml.timingdiagram.command,10,0,1,12,0,0.92,0.08,1
 net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,16,0.18,0.94,0.12,1
 net.sourceforge.plantuml.url,4,0,28,4,0,0.12,0.88,1

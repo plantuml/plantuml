@@ -18132,12 +18132,12 @@
 
         <Package name="net.sourceforge.plantuml.timingdiagram">
             <Stats>
-                <TotalClasses>27</TotalClasses>
-                <ConcreteClasses>23</ConcreteClasses>
+                <TotalClasses>28</TotalClasses>
+                <ConcreteClasses>24</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>3</Ca>
                 <Ce>26</Ce>
-                <A>0.15</A>
+                <A>0.14</A>
                 <I>0.9</I>
                 <D>0.04</D>
                 <V>1</V>
@@ -18224,6 +18224,9 @@
                 </Class>
                 <Class sourceFile="TimingRuler.java">
                     net.sourceforge.plantuml.timingdiagram.TimingRuler$Break
+                </Class>
+                <Class sourceFile="TimingRuler.java">
+                    net.sourceforge.plantuml.timingdiagram.TimingRuler$TimeLabel
                 </Class>
                 <Class sourceFile="TimingStyle.java">
                     net.sourceforge.plantuml.timingdiagram.TimingStyle

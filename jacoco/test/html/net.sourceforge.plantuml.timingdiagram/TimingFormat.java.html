@@ -59,10 +59,10 @@ public final class TimingFormat {
 	}
 
 	public String formatTime(BigDecimal time) {
-<span class="nc bnc" id="L62" title="All 6 branches missed.">		if (this == HOUR || this == DATE || sdf != null)</span>
+<span class="pc bpc" id="L62" title="3 of 6 branches missed.">		if (this == HOUR || this == DATE || sdf != null)</span>
 <span class="nc" id="L63">			return formatTime(time.longValueExact());</span>
 
-<span class="nc" id="L65">		return time.toPlainString();</span>
+<span class="fc" id="L65">		return time.toPlainString();</span>
 	}
 
 	public String formatTime(long time) {
