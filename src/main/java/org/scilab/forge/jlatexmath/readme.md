@@ -98,6 +98,25 @@ Phase 3, step 3a, no more AWT canvas, AWT fonts or Swing:
   `tools/jlatexmath-glyphs/ttf`, with the generator and the checker of
   `glyphs.bin` (the generator makes the same three files again).
 
+Phase 3, step 3d, no `javax.xml` and no `org.w3c.dom` (the TeaVM class library has
+neither):
+
+- added `XmlReader` (reads the XML files of the library: elements, attributes,
+  comments, `&#NNN;` `&#xHHH;` and the five named references in the values;
+  the text between the elements is dropped), with `XmlElement` and
+  `XmlNodeList`, which have what the parsers used of `Element` and `NodeList`
+  (`getAttribute` gives "" when there is none, `getElementsByTagName` gives all
+  the descendants in the order of the file, plus `getChildren` and
+  `getAttributeNames`);
+- `DefaultTeXFontParser`, `GlueSettingsParser`, `TeXFormulaSettingsParser` and
+  `TeXSymbolParser` use them; nothing else changed in them;
+- `XmlReaderTest` reads the 68 XML files of the library with the JDK and with
+  `XmlReader` and compares the trees (names, attributes, children), the results
+  of `getElementsByTagName`, and what the reader skips or refuses.
+
+On the JVM it is also faster: the first formula of a JVM costs about 85 ms
+instead of about 300 ms (class initialisation of `TeXFormula` and the first icon).
+
 Phase 3, step 3c, no reflection and no `Character.UnicodeBlock` (neither works in
 the TeaVM C build, see `PLAN.md`):
 

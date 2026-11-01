@@ -51,10 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 /**
  * Parses the glue settings (different types and rules) from an XML-file.
@@ -69,16 +66,13 @@ public class GlueSettingsParser {
 
     private final Map<String,Integer> styleMappings = new HashMap<String,Integer>();
 
-    private Element root;
+    private XmlElement root;
 
     public GlueSettingsParser() throws ResourceParseException {
         try {
             setTypeMappings();
             setStyleMappings();
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setIgnoringElementContentWhitespace(true);
-            factory.setIgnoringComments(true);
-            root = factory.newDocumentBuilder().parse(GlueSettingsParser.class.getResourceAsStream(RESOURCE_NAME)).getDocumentElement();
+            root = XmlReader.parse(GlueSettingsParser.class.getResourceAsStream(RESOURCE_NAME));
             parseGlueTypes();
         } catch (Exception e) { // JDOMException or IOException
             throw new XMLResourceParseException(RESOURCE_NAME, e);
@@ -94,13 +88,13 @@ public class GlueSettingsParser {
 
     private void parseGlueTypes() throws ResourceParseException {
         List<Glue> glueTypesList = new ArrayList<Glue> ();
-        Element types = (Element)root.getElementsByTagName("GlueTypes").item(0);
+        XmlElement types = (XmlElement)root.getElementsByTagName("GlueTypes").item(0);
         int defaultIndex = -1;
         int index = 0;
         if (types != null) { // element present
-            NodeList list = types.getElementsByTagName("GlueType");
+            XmlNodeList list = types.getElementsByTagName("GlueType");
             for (int i = 0; i < list.getLength(); i++) {
-                Element type = (Element)list.item(i);
+                XmlElement type = (XmlElement)list.item(i);
                 // retrieve required attribute value, throw exception if not set
                 String name = getAttrValueAndCheckIfNotNull("name", type);
                 Glue glue = createGlue(type, name);
@@ -131,7 +125,7 @@ public class GlueSettingsParser {
         }
     }
 
-    private Glue createGlue(Element type, String name) throws ResourceParseException {
+    private Glue createGlue(XmlElement type, String name) throws ResourceParseException {
         final String[] names = { "space", "stretch", "shrink" };
         float[] values = new float[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -168,20 +162,20 @@ public class GlueSettingsParser {
     public int[][][] createGlueTable() throws ResourceParseException {
         int size = typeMappings.size();
         int[][][] table = new int[size][size][styleMappings.size()];
-        Element glueTable = (Element)root.getElementsByTagName("GlueTable").item(0);
+        XmlElement glueTable = (XmlElement)root.getElementsByTagName("GlueTable").item(0);
         if (glueTable != null) { // element present
             // iterate all the "Glue"-elements
-            NodeList list = glueTable.getElementsByTagName("Glue");
+            XmlNodeList list = glueTable.getElementsByTagName("Glue");
             for (int i = 0; i < list.getLength(); i++) {
-                Element glue = (Element)list.item(i);
+                XmlElement glue = (XmlElement)list.item(i);
                 // retrieve required attribute values and throw exception if they're not set
                 String left = getAttrValueAndCheckIfNotNull("lefttype", glue);
                 String right = getAttrValueAndCheckIfNotNull("righttype", glue);
                 String type = getAttrValueAndCheckIfNotNull("gluetype", glue);
                 // iterate all the "Style"-elements
-                NodeList listG = glue.getElementsByTagName("Style");
+                XmlNodeList listG = glue.getElementsByTagName("Style");
                 for (int j = 0; j < listG.getLength(); j++) {
-                    Element style = (Element)listG.item(j);
+                    XmlElement style = (XmlElement)listG.item(j);
                     String styleName = getAttrValueAndCheckIfNotNull("name", style);
                     // retrieve mappings
                     Object l = typeMappings.get(left);
@@ -209,7 +203,7 @@ public class GlueSettingsParser {
     }
 
     private static String getAttrValueAndCheckIfNotNull(String attrName,
-            Element element) throws ResourceParseException {
+            XmlElement element) throws ResourceParseException {
         String attrValue = element.getAttribute(attrName);
         if (attrValue.equals(""))
             throw new XMLResourceParseException(RESOURCE_NAME, element.getTagName(),

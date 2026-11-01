@@ -232,7 +232,7 @@ Steps of phase 3:
 | 3a+ | Text without a TeX glyph (CJK...) drawn by PlantUML; the fallback shows the source as it is; about 200 Vega tests (`vega/math`) and the unit tests of the package | done |
 | 3b | `Color`, `Insets` and `Point2D` replaced by small classes of the package (`TeXGraphics` and `TeXIcon` without `java.awt`) | done: `TeXColor`, `TeXInsets` |
 | 3c | No reflection (`MacroInfo` / `\newcommand`, the alphabets of the static block of `TeXFormula`), no `Character.UnicodeBlock` | done: `TeXUnicodeBlock`, `MacroHandler` |
-| 3d | XML: a mini reader (5 parsers) or binary files made at dev time | |
+| 3d | XML: a mini reader (4 parsers) or binary files made at dev time | done: `XmlReader`; the binary files stay an option for phase 5 |
 | 3e | Resources: one abstraction (class path, `EmbeddedFiles`, bundle), also for `glyphs.bin` | |
 
 Notes on phase 1: the vendored classes live in the jar, so the external
@@ -328,6 +328,14 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
   in C and `1.01` on the JVM (not used by the library). The generation of the
   whole library (`new TeXFormula(...)`) failed on nothing else than the XML
   classes and `UnicodeBlock`: after step 3c, only the XML (step 3d) is left.
+- **XML: a reader of our own (step 3d), not binary files, for now.** `XmlReader`
+  (about 250 lines with `XmlElement` and `XmlNodeList`) replaces `javax.xml` and
+  `org.w3c.dom`; the four parsers changed by a few lines each. Checked by
+  comparing its trees with the DOM of the JDK on the 68 XML files. It made the
+  first formula of a JVM about 3.5 times faster (about 85 ms instead of about
+  300 ms on a cold JVM). A binary format (like `glyphs.bin`) would be faster
+  still and smaller in the C executable, but it is one more format to keep up:
+  to look at in phase 5, with the real numbers of the C build.
 - **Text without a TeX glyph (CJK...): drawn by PlantUML (after step 3a).** The
   parser drew any character that has no TeX symbol (a Chinese character in
   `\text{}`, for instance) with a Java font (`JavaFontRenderingAtom`). Since
@@ -373,12 +381,13 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
 4. ~~Phase 2, step 2c: draw `AtomMath` through `UGraphicTeXGraphics`, move the
    corpus to Vega~~ (done).
 5. ~~Phase 2, step 2d: review of the rendering~~ (done, see Decisions).
-6. Phase 3 (no `java.awt` / `javax.*` left, XML, resources): steps 3a and 3b are
-   done (see the table of steps in section 6); 3c is next (no reflection, no
-   `Character.UnicodeBlock`), then 3d (XML) and 3e (resources). What is left of
-   the platform in the package: `javax.xml` (5 parsers), the reflection of
-   `MacroInfo` (`\newcommand`) and of the alphabets in `TeXFormula`,
-   `Character.UnicodeBlock`, and `getResourceAsStream`.
+6. Phase 3 (no `java.awt` / `javax.*` left, XML, resources): steps 3a to 3d are
+   done (see the table of steps in section 6); 3e (resources) is next. What is
+   left of the platform in the package: `getResourceAsStream` (the XML files,
+   `glyphs.bin`), and three methods that read a user file by its name with a
+   `FileInputStream` (`SymbolAtom.addSymbolAtom(String)`,
+   `TeXFormula.addSymbolMappings(String)`,
+   `DefaultTeXFont.addTeXFontDescription(String)`), which PlantUML does not call.
 
 Working method, as usual: small patches (`git format-patch`), each with an
 English commit message starting with the emojis (here 🍵 for the C build plus

@@ -55,13 +55,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 
 /**
@@ -73,9 +67,8 @@ public class DefaultTeXFontParser {
      * if the register font cannot be found, we display an error message
      * but we do it only once
      */
-    private static DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     private static interface CharChildParser { // NOPMD
-        public void parse(Element el, char ch, FontInfo info) throws XMLResourceParseException;
+        public void parse(XmlElement el, char ch, FontInfo info) throws XMLResourceParseException;
     }
 
     private static class ExtensionParser implements CharChildParser {
@@ -84,7 +77,7 @@ public class DefaultTeXFontParser {
             // avoid generation of access class
         }
 
-        public void parse(Element el, char ch, FontInfo info) throws ResourceParseException {
+        public void parse(XmlElement el, char ch, FontInfo info) throws ResourceParseException {
             int[] extensionChars = new int[4];
             // get required integer attributes
             extensionChars[DefaultTeXFont.REP] = DefaultTeXFontParser
@@ -108,7 +101,7 @@ public class DefaultTeXFontParser {
             // avoid generation of access class
         }
 
-        public void parse(Element el, char ch, FontInfo info) throws ResourceParseException {
+        public void parse(XmlElement el, char ch, FontInfo info) throws ResourceParseException {
             // get required integer attribute
             int code = DefaultTeXFontParser.getIntAndCheck("code", el);
             // get required float attribute
@@ -125,7 +118,7 @@ public class DefaultTeXFontParser {
             // avoid generation of access class
         }
 
-        public void parse(Element el, char ch, FontInfo info) throws ResourceParseException {
+        public void parse(XmlElement el, char ch, FontInfo info) throws ResourceParseException {
             // get required integer attributes
             int code = DefaultTeXFontParser.getIntAndCheck("code", el);
             int ligCode = DefaultTeXFontParser.getIntAndCheck("ligCode", el);
@@ -141,7 +134,7 @@ public class DefaultTeXFontParser {
             // avoid generation of access class
         }
 
-        public void parse(Element el, char ch, FontInfo info) throws ResourceParseException {
+        public void parse(XmlElement el, char ch, FontInfo info) throws ResourceParseException {
             // get required integer attributes
             String fontId = DefaultTeXFontParser.getAttrValueAndCheckIfNotNull("fontId", el);
             int code = DefaultTeXFontParser.getIntAndCheck("code", el);
@@ -165,7 +158,7 @@ public class DefaultTeXFontParser {
 
     private Map<String,CharFont[]> parsedTextStyles;
 
-    private Element root;
+    private XmlElement root;
     private Object base = null;
 
     static {
@@ -180,10 +173,8 @@ public class DefaultTeXFontParser {
     }
 
     public DefaultTeXFontParser(InputStream file, String name) throws ResourceParseException {
-        factory.setIgnoringElementContentWhitespace(true);
-        factory.setIgnoringComments(true);
         try {
-            root = factory.newDocumentBuilder().parse(file).getDocumentElement();
+            root = XmlReader.parse(file);
         } catch (Exception e) { // JDOMException or IOException
             throw new XMLResourceParseException(name, e);
         }
@@ -191,10 +182,8 @@ public class DefaultTeXFontParser {
 
     public DefaultTeXFontParser(Object base, InputStream file, String name) throws ResourceParseException {
         this.base = base;
-        factory.setIgnoringElementContentWhitespace(true);
-        factory.setIgnoringComments(true);
         try {
-            root = factory.newDocumentBuilder().parse(file).getDocumentElement();
+            root = XmlReader.parse(file);
         } catch (Exception e) { // JDOMException or IOException
             throw new XMLResourceParseException(name, e);
         }
@@ -212,9 +201,9 @@ public class DefaultTeXFontParser {
             return fi;
         }
         ArrayList<FontInfo> res = new ArrayList<FontInfo>(Arrays.asList(fi));
-        Element font;
+        XmlElement font;
         try {
-            font = factory.newDocumentBuilder().parse(file).getDocumentElement();
+            font = XmlReader.parse(file);
         } catch (Exception e) {
             throw new XMLResourceParseException("Cannot find the file " + name + "!" + e.toString());
         }
@@ -265,9 +254,9 @@ public class DefaultTeXFontParser {
             info.setSkewChar((char) skewChar);
 
         // process all "Char"-elements
-        NodeList listF = font.getElementsByTagName("Char");
+        XmlNodeList listF = font.getElementsByTagName("Char");
         for (int j = 0; j < listF.getLength(); j++)
-            processCharElement((Element) listF.item(j), info);
+            processCharElement((XmlElement) listF.item(j), info);
 
         // parsing OK, add to table
         res.add(info);
@@ -286,12 +275,12 @@ public class DefaultTeXFontParser {
     }
 
     public FontInfo[] parseFontDescriptions(FontInfo[] fi) throws ResourceParseException {
-        Element fontDescriptions = (Element)root.getElementsByTagName("FontDescriptions").item(0);
+        XmlElement fontDescriptions = (XmlElement)root.getElementsByTagName("FontDescriptions").item(0);
         if (fontDescriptions != null) { // element present
-            NodeList list = fontDescriptions.getElementsByTagName("Metrics");
+            XmlNodeList list = fontDescriptions.getElementsByTagName("Metrics");
             for (int i = 0; i < list.getLength(); i++) {
                 // get required string attribute
-                String include = getAttrValueAndCheckIfNotNull("include", (Element)list.item(i));
+                String include = getAttrValueAndCheckIfNotNull("include", (XmlElement)list.item(i));
                 if (base == null) {
                     fi = parseFontDescriptions(fi, DefaultTeXFontParser.class.getResourceAsStream(include), include);
                 } else {
@@ -303,13 +292,13 @@ public class DefaultTeXFontParser {
     }
 
     protected void parseExtraPath() throws ResourceParseException {
-        Element syms = (Element)root.getElementsByTagName("TeXSymbols").item(0);
+        XmlElement syms = (XmlElement)root.getElementsByTagName("TeXSymbols").item(0);
         if (syms != null) { // element present
             // get required string attribute
             String include = getAttrValueAndCheckIfNotNull("include", syms);
             SymbolAtom.addSymbolAtom(base.getClass().getResourceAsStream(include), include);
         }
-        Element settings = (Element)root.getElementsByTagName("FormulaSettings").item(0);
+        XmlElement settings = (XmlElement)root.getElementsByTagName("FormulaSettings").item(0);
         if (settings != null) { // element present
             // get required string attribute
             String include = getAttrValueAndCheckIfNotNull("include", settings);
@@ -317,7 +306,7 @@ public class DefaultTeXFontParser {
         }
     }
 
-    private static void processCharElement(Element charElement, FontInfo info)
+    private static void processCharElement(XmlElement charElement, FontInfo info)
     throws ResourceParseException {
         // retrieve required integer attribute
         char ch = (char) getIntAndCheck("code", charElement);
@@ -331,47 +320,42 @@ public class DefaultTeXFontParser {
         info.setMetrics(ch, metrics);
 
         // process children
-        NodeList list = charElement.getChildNodes();
-        for (int i = 0; i < list.getLength(); i++) {
-            Node node = list.item(i);
-            if (node.getNodeType() != Node.TEXT_NODE) {
-                Element el = (Element)node;
-                Object parser = charChildParsers.get(el.getTagName());
-                if (parser == null) // unknown element
-                    throw new XMLResourceParseException(RESOURCE_NAME
-                                                        + ": a <Char>-element has an unknown child element '"
-                                                        + el.getTagName() + "'!");
-                else
-                    // process the child element
-                    ((CharChildParser) parser).parse(el, ch, info);
-            }
+        for (XmlElement el : charElement.getChildren()) {
+            Object parser = charChildParsers.get(el.getTagName());
+            if (parser == null) // unknown element
+                throw new XMLResourceParseException(RESOURCE_NAME
+                                                    + ": a <Char>-element has an unknown child element '"
+                                                    + el.getTagName() + "'!");
+            else
+                // process the child element
+                ((CharChildParser) parser).parse(el, ch, info);
         }
     }
 
     public Map<String,CharFont> parseSymbolMappings() throws ResourceParseException {
         Map<String,CharFont> res = new HashMap<String,CharFont>();
-        Element symbolMappings = (Element)root.getElementsByTagName("SymbolMappings").item(0);
+        XmlElement symbolMappings = (XmlElement)root.getElementsByTagName("SymbolMappings").item(0);
         if (symbolMappings == null)
             // "SymbolMappings" is required!
             throw new XMLResourceParseException(RESOURCE_NAME, "SymbolMappings");
         else { // element present
             // iterate all mappings
-            NodeList list = symbolMappings.getElementsByTagName("Mapping");
+            XmlNodeList list = symbolMappings.getElementsByTagName("Mapping");
             for (int i = 0; i < list.getLength(); i++) {
-                String include = getAttrValueAndCheckIfNotNull("include", (Element)list.item(i));
-                Element map;
+                String include = getAttrValueAndCheckIfNotNull("include", (XmlElement)list.item(i));
+                XmlElement map;
                 try {
                     if (base == null) {
-                        map = factory.newDocumentBuilder().parse(DefaultTeXFontParser.class.getResourceAsStream(include)).getDocumentElement();
+                        map = XmlReader.parse(DefaultTeXFontParser.class.getResourceAsStream(include));
                     } else {
-                        map = factory.newDocumentBuilder().parse(base.getClass().getResourceAsStream(include)).getDocumentElement();
+                        map = XmlReader.parse(base.getClass().getResourceAsStream(include));
                     }
                 } catch (Exception e) {
                     throw new XMLResourceParseException("Cannot find the file " + include + "!");
                 }
-                NodeList listM = map.getElementsByTagName(SYMBOL_MAPPING_EL);
+                XmlNodeList listM = map.getElementsByTagName(SYMBOL_MAPPING_EL);
                 for (int j = 0; j < listM.getLength(); j++) {
-                    Element mapping = (Element)listM.item(j);
+                    XmlElement mapping = (XmlElement)listM.item(j);
                     // get string attribute
                     String symbolName = getAttrValueAndCheckIfNotNull("name", mapping);
                     // get integer attributes
@@ -398,15 +382,15 @@ public class DefaultTeXFontParser {
     public String[] parseDefaultTextStyleMappings()
     throws ResourceParseException {
         String[] res = new String[4];
-        Element defaultTextStyleMappings = (Element)root
+        XmlElement defaultTextStyleMappings = (XmlElement)root
                                            .getElementsByTagName("DefaultTextStyleMapping").item(0);
         if (defaultTextStyleMappings == null)
             return res;
         else { // element present
             // iterate all mappings
-            NodeList list = defaultTextStyleMappings.getElementsByTagName("MapStyle");
+            XmlNodeList list = defaultTextStyleMappings.getElementsByTagName("MapStyle");
             for (int i = 0; i < list.getLength(); i++) {
-                Element mapping = (Element)list.item(i);
+                XmlElement mapping = (XmlElement)list.item(i);
                 // get range name and check if it's valid
                 String code = getAttrValueAndCheckIfNotNull("code", mapping);
                 Object codeMapping = rangeTypeMappings.get(code);
@@ -440,15 +424,13 @@ public class DefaultTeXFontParser {
 
     public Map<String,Float> parseParameters() throws ResourceParseException {
         Map<String,Float> res = new HashMap<String,Float>();
-        Element parameters = (Element)root.getElementsByTagName("Parameters").item(0);
+        XmlElement parameters = (XmlElement)root.getElementsByTagName("Parameters").item(0);
         if (parameters == null)
             // "Parameters" is required!
             throw new XMLResourceParseException(RESOURCE_NAME, "Parameters");
         else { // element present
             // iterate all attributes
-            NamedNodeMap list = parameters.getAttributes();
-            for (int i = 0; i < list.getLength(); i++) {
-                String name = ((Attr)list.item(i)).getName();
+            for (String name : parameters.getAttributeNames()) {
                 // set float value (if valid)
                 res.put(name, new Float(getFloatAndCheck(name, parameters)));
             }
@@ -459,7 +441,7 @@ public class DefaultTeXFontParser {
     public Map<String,Number> parseGeneralSettings() throws ResourceParseException {
         Map <String,Number>res = new HashMap<String,Number>();
         // TODO: must this be 'Number' ?
-        Element generalSettings = (Element)root.getElementsByTagName("GeneralSettings").item(0);
+        XmlElement generalSettings = (XmlElement)root.getElementsByTagName("GeneralSettings").item(0);
         if (generalSettings == null)
             // "GeneralSettings" is required!
             throw new XMLResourceParseException(RESOURCE_NAME, "GeneralSettings");
@@ -483,14 +465,14 @@ public class DefaultTeXFontParser {
 
     private Map<String,CharFont[]> parseStyleMappings() throws ResourceParseException {
         Map<String,CharFont[]> res = new HashMap<String,CharFont[]>();
-        Element textStyleMappings = (Element)root.getElementsByTagName("TextStyleMappings").item(0);
+        XmlElement textStyleMappings = (XmlElement)root.getElementsByTagName("TextStyleMappings").item(0);
         if (textStyleMappings == null)
             return res;
         else { // element present
             // iterate all mappings
-            NodeList list = textStyleMappings.getElementsByTagName(STYLE_MAPPING_EL);
+            XmlNodeList list = textStyleMappings.getElementsByTagName(STYLE_MAPPING_EL);
             for (int i = 0; i < list.getLength(); i++) {
-                Element mapping = (Element)list.item(i);
+                XmlElement mapping = (XmlElement)list.item(i);
                 // get required string attribute
                 String textStyleName = getAttrValueAndCheckIfNotNull("name",
                                        mapping);
@@ -499,11 +481,11 @@ public class DefaultTeXFontParser {
                     boldFontId = getAttrValueAndCheckIfNotNull("bold", mapping);
                 } catch (ResourceParseException e) {}
 
-                NodeList mapRangeList = mapping.getElementsByTagName("MapRange");
+                XmlNodeList mapRangeList = mapping.getElementsByTagName("MapRange");
                 // iterate all mapping ranges
                 CharFont[] charFonts = new CharFont[4];
                 for (int j = 0; j < mapRangeList.getLength(); j++) {
-                    Element mapRange = (Element)mapRangeList.item(j);
+                    XmlElement mapRange = (XmlElement)mapRangeList.item(j);
                     // get required integer attributes
                     String fontId = getAttrValueAndCheckIfNotNull("fontId", mapRange);
                     int ch = getIntAndCheck("start", mapRange);
@@ -532,7 +514,7 @@ public class DefaultTeXFontParser {
     }
 
     private static String getAttrValueAndCheckIfNotNull(String attrName,
-            Element element) throws ResourceParseException {
+            XmlElement element) throws ResourceParseException {
         String attrValue = element.getAttribute(attrName);
         if (attrValue.equals(""))
             throw new XMLResourceParseException(RESOURCE_NAME, element.getTagName(),
@@ -540,7 +522,7 @@ public class DefaultTeXFontParser {
         return attrValue;
     }
 
-    public static float getFloatAndCheck(String attrName, Element element)
+    public static float getFloatAndCheck(String attrName, XmlElement element)
     throws ResourceParseException {
         String attrValue = getAttrValueAndCheckIfNotNull(attrName, element);
 
@@ -556,7 +538,7 @@ public class DefaultTeXFontParser {
         return res;
     }
 
-    public static int getIntAndCheck(String attrName, Element element)
+    public static int getIntAndCheck(String attrName, XmlElement element)
     throws ResourceParseException {
         String attrValue = getAttrValueAndCheckIfNotNull(attrName, element);
 
@@ -572,7 +554,7 @@ public class DefaultTeXFontParser {
         return res;
     }
 
-    public static int getOptionalInt(String attrName, Element element,
+    public static int getOptionalInt(String attrName, XmlElement element,
                                      int defaultValue) throws ResourceParseException {
         String attrValue = element.getAttribute(attrName);
         if (attrValue.equals("")) // attribute not present
@@ -591,7 +573,7 @@ public class DefaultTeXFontParser {
         }
     }
 
-    public static float getOptionalFloat(String attrName, Element element,
+    public static float getOptionalFloat(String attrName, XmlElement element,
                                          float defaultValue) throws ResourceParseException {
         String attrValue = element.getAttribute(attrName);
         if (attrValue.equals("")) // attribute not present

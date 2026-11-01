@@ -50,10 +50,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 /**
  * Parses TeX symbol definitions from an XML-file.
@@ -65,7 +62,7 @@ public class TeXSymbolParser {
 
     private static Map<String,Integer> typeMappings = new HashMap<String,Integer>();
 
-    private Element root;
+    private XmlElement root;
 
     public TeXSymbolParser() throws ResourceParseException {
         this(TeXSymbolParser.class.getResourceAsStream(RESOURCE_NAME), RESOURCE_NAME);
@@ -73,10 +70,7 @@ public class TeXSymbolParser {
 
     public TeXSymbolParser(InputStream file, String name) throws ResourceParseException {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setIgnoringElementContentWhitespace(true);
-            factory.setIgnoringComments(true);
-            root = factory.newDocumentBuilder().parse(file).getDocumentElement();
+            root = XmlReader.parse(file);
             // set possible valid symbol type mappings
             setTypeMappings();
         } catch (Exception e) { // JDOMException or IOException
@@ -87,9 +81,9 @@ public class TeXSymbolParser {
     public Map<String,SymbolAtom> readSymbols() throws ResourceParseException {
         Map<String,SymbolAtom> res = new HashMap<String,SymbolAtom>();
         // iterate all "symbol"-elements
-        NodeList list = root.getElementsByTagName("Symbol");
+        XmlNodeList list = root.getElementsByTagName("Symbol");
         for (int i = 0; i < list.getLength(); i++) {
-            Element symbol = (Element)list.item(i);
+            XmlElement symbol = (XmlElement)list.item(i);
             // retrieve and check required attributes
             String name = getAttrValueAndCheckIfNotNull("name", symbol), type = getAttrValueAndCheckIfNotNull(
                               TYPE_ATTR, symbol);
@@ -120,7 +114,7 @@ public class TeXSymbolParser {
     }
 
     private static String getAttrValueAndCheckIfNotNull(String attrName,
-            Element element) throws ResourceParseException {
+            XmlElement element) throws ResourceParseException {
         String attrValue = element.getAttribute(attrName);
         if (attrValue.equals(""))
             throw new XMLResourceParseException(RESOURCE_NAME, element.getTagName(),

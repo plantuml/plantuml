@@ -52,8 +52,8 @@ package org.scilab.forge.jlatexmath;
 
 
 /**
- * An {@link javax.swing.Icon} implementation that will paint the TeXFormula
- * that created it.
+ * The icon of a TeXFormula: its size, and the way to paint it on a
+ * {@link TeXGraphics}.
  * <p>
  * This class cannot be instantiated directly. It can be constructed from a
  * TeXFormula using the {@link TeXFormula#createTeXIcon(int,float)} method.
