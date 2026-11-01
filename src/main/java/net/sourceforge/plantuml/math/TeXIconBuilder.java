@@ -35,45 +35,52 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.awt.Color;
-import java.awt.Insets;
-import java.lang.reflect.InvocationTargetException;
-
-import javax.swing.Icon;
-
-import net.sourceforge.plantuml.klimt.awt.XColor;
-
-
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
+import org.scilab.forge.jlatexmath.TeXConstants;
+import org.scilab.forge.jlatexmath.TeXFormula;
+import org.scilab.forge.jlatexmath.TeXIcon;
+import org.scilab.forge.jlatexmath.TeXInsets;
+// ::done
 
 public class TeXIconBuilder {
 
-	private Icon icon;
+	private MathDrawing drawing;
 
-	public TeXIconBuilder(String tex, XColor foregroundColor2)
-			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-
-		// TeXFormula formula = new TeXFormula(latex);
-		final Class<?> clTeXFormula = Class.forName("org.scilab.forge.jlatexmath.TeXFormula");
-		final Object formula = clTeXFormula.getConstructor(String.class).newInstance(tex);
-
-		// TeXIcon icon = formula.new
-		// TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20).build();
-		final Class<?> clTeXIconBuilder = clTeXFormula.getClasses()[0];
-		final Object builder = clTeXIconBuilder.getConstructors()[0].newInstance(formula);
-		clTeXIconBuilder.getMethod("setStyle", int.class).invoke(builder, 0);
-		clTeXIconBuilder.getMethod("setSize", float.class).invoke(builder, (float) 20);
-		icon = (Icon) clTeXIconBuilder.getMethod("build").invoke(builder);
+	public TeXIconBuilder(String tex, StringBounder stringBounder) throws ClassNotFoundException {
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
+		MathResources.ensure();
+		final TeXFormula formula = new TeXFormula(tex);
+		final TeXIcon teXIcon = formula.new TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20)
+				.setTextMeasurer(new StringBounderTextMeasurer(stringBounder)).build();
 
 		final int margin = 1;
-		final Insets insets = new Insets(margin, margin, margin, margin);
-		icon.getClass().getMethod("setInsets", insets.getClass()).invoke(icon, insets);
-		final Color awtColor = foregroundColor2.toAwtColor();
-		icon.getClass().getMethod("setForeground", awtColor.getClass()).invoke(icon, awtColor);
+		teXIcon.setInsets(new TeXInsets(margin, margin, margin, margin));
+		final XDimension2D dimension = new XDimension2D(teXIcon.getIconWidth(), teXIcon.getIconHeight());
+		drawing = new MathDrawing() {
+
+			public XDimension2D getDimension() {
+				return dimension;
+			}
+
+			public void draw(UGraphic ug, HColor foreground) {
+				final UGraphicTeXGraphics canvas = new UGraphicTeXGraphics(ug, foreground);
+				teXIcon.paint(canvas, null, 0, 0);
+				canvas.flush();
+			}
+		};
+		// ::done
+		// ::uncomment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
+//		// JLaTeXMath is GPL: this license variant does not contain it
+//		throw new ClassNotFoundException("org.scilab.forge.jlatexmath.TeXFormula");
+		// ::done
 	}
 
-	public Icon getIcon() {
-		return icon;
+	public MathDrawing getDrawing() {
+		return drawing;
 	}
 
 }

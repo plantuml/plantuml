@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+alpha beta gamma delta epsi varepsilon zeta eta theta vartheta iota kappa lambda mu nu xi pi rho sigma tau upsilon phi varphi chi psi omega
+@endmath

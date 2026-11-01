@@ -1,0 +1,14 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 participants)
+---
+@startuml
+Alice -> Bob : start
+alt <math>x > 0</math>
+  Bob -> Alice : <latex>\sqrt{x}</latex>
+else <math>x <= 0</math>
+  Bob -> Alice : error
+end
+... <latex>t \to \infty</latex> ...
+@enduml

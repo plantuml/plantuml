@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+α + β = γ \quad Σ_{i} x_i \quad ∫ f \quad ≤ \quad ∞ \quad π r²
+@endlatex

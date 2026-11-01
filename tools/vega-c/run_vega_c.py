@@ -14,6 +14,8 @@ regression.
 What is checked, per test file:
   * output: svg      -> `plantuml.exe --svg-vega`, compared (XML-normalised, as SvgCleaner
                         does in the Java tests) with <name>.svg / <name>-N.svg
+                        (with a `decimal: N` key, `--decimal N` is added: the number of
+                        decimals of the numbers of the SVG, as on the JVM)
   * output: preproc  -> `plantuml.exe --preproc`, compared with <name>.preproc
   * output: pdf      -> `plantuml.exe --pdf-vega` (deterministic PDF: fixed dates and /ID, no
                         compression), compared byte for byte with <name>.pdf / <name>-N.pdf
@@ -26,6 +28,7 @@ expected-image-count...) are not checked.
 Usage (from anywhere):
     python tools/vega-c/run_vega_c.py                       # all the tests
     python tools/vega-c/run_vega_c.py mindmap               # paths containing "mindmap"
+    python tools/vega-c/run_vega_c.py -v                    # also list the PASS and SKIPPED
     python tools/vega-c/run_vega_c.py --exe path\to\plantuml.exe -j 8 --diff
 
 Each test is also run with `-tpng` (unless --no-png): there is no reference file,
@@ -394,18 +397,26 @@ def run_checks(puml, exe, timeout, workdir):
         if key in header:
             result["message"] = "test expects an error (%s): not checked" % key
             return result
+    svg_flags = []
     if "decimal" in header:
-        result["message"] = "decimal option: not supported by this script"
-        return result
+        # the number of decimals of the SVG (the "decimal:" key of the JVM tests): --decimal N
+        try:
+            decimal = int(header["decimal"].strip())
+        except ValueError:
+            decimal = -1
+        if decimal < 0:
+            result["message"] = "bad decimal option: %r" % header["decimal"]
+            return result
+        svg_flags = ["--decimal", str(decimal)]
 
     source = write_source_copy(puml)
     try:
-        return check_formats(puml, source, supported, exe, timeout, workdir, relative, result)
+        return check_formats(puml, source, supported, exe, timeout, workdir, relative, result, svg_flags)
     finally:
         source.unlink()
 
 
-def check_formats(puml, source, supported, exe, timeout, workdir, relative, result):
+def check_formats(puml, source, supported, exe, timeout, workdir, relative, result, svg_flags=()):
     start = time.time()
     problems = []
     diffs = []
@@ -414,7 +425,7 @@ def check_formats(puml, source, supported, exe, timeout, workdir, relative, resu
         flags, extension = SUPPORTED_FORMATS[fmt]
         outdir = Path(tempfile.mkdtemp(prefix="vega-c-", dir=workdir))
         try:
-            command = [str(exe)] + flags + ["-o", str(outdir), str(source)]
+            command = [str(exe)] + flags + (list(svg_flags) if fmt == "svg" else []) + ["-o", str(outdir), str(source)]
             try:
                 proc = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
                                       stderr=subprocess.PIPE, timeout=timeout, cwd=str(puml.parent))
@@ -558,6 +569,8 @@ def main(argv=None):
     parser.add_argument("--out", default=str(OUT_DIR), help="folder of the reports (default: %(default)s)")
     parser.add_argument("--no-png", action="store_true", help="do not run the PNG generation")
     parser.add_argument("--strict", action="store_true", help="exit code 1 when a test fails (default: always 0)")
+    parser.add_argument("-v", "--verbose", action="store_true",
+                        help="also show the PASS and SKIPPED lines (default: only FAIL, ERROR and TIMEOUT)")
     args = parser.parse_args(argv)
 
     VEGA_DIR = Path(args.vega_dir).resolve()
@@ -597,7 +610,8 @@ def main(argv=None):
                     result = {"file": puml.relative_to(VEGA_DIR).as_posix(), "status": ERROR,
                               "message": "script error: %r" % e, "duration_ms": 0}
                 results.append(result)
-                print("%-8s %s  %s" % (result["status"].upper(), result["file"], result["message"][:160]))
+                if args.verbose or result["status"] not in (PASS, SKIPPED):
+                    print("%-8s %s  %s" % (result["status"].upper(), result["file"], result["message"][:160]))
                 if done % 100 == 0:
                     print("... %d / %d" % (done, len(files)))
     finally:
@@ -665,7 +679,7 @@ def main(argv=None):
 
     print()
     print("\n".join(lines[:head]))
-    print("Reports: %s" % OUT_DIR)
+    print("Reports: %s%s" % (OUT_DIR, "" if args.verbose else "  (-v: also list the PASS and SKIPPED)"))
     if pdf_zip_count:
         print("PDF that differ (%d): %s" % (pdf_zip_count, pdf_zip))
     return 1 if args.strict and (counts[FAIL] or counts[ERROR] or counts[TIMEOUT] or png_bad) else 0

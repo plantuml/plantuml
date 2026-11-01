@@ -1,0 +1,11 @@
+---
+output: svg
+decimal: 1
+expected-description: (Salt)
+---
+@startsalt
+{
+  <math>x^2</math> | "input"
+  <latex>\alpha</latex> | [ OK ]
+}
+@endsalt

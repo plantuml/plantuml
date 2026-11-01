@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\nearrow \searrow \swarrow \nwarrow \rightharpoonup \rightharpoondown \leftharpoonup \leftharpoondown \circlearrowleft \circlearrowright \twoheadrightarrow
+@endlatex

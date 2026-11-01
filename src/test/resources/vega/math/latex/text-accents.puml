@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\text{caf\'e na\"ive \^{o} \~{n} \c{c} \ss \ae \oe \aa \o \L \i \v{s} \H{o}} \quad \text{\% \& \# \$ \_ \{ \}}
+@endlatex

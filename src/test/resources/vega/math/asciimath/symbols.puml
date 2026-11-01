@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+... cdots vdots ddots aleph oo del grad +- -+ :. ':  xx -: @ o+ ox o. * ** ***
+@endmath

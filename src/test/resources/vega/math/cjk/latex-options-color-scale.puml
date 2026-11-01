@@ -1,0 +1,10 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+color red
+scale 1.5
+\text{中文} + x
+@endlatex

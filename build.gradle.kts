@@ -45,7 +45,6 @@ dependencies {
 
 	testImplementation(libs.xmlunit.core)
 	testImplementation(libs.junit.pioneer)
-	implementation(libs.jlatexmath)
     implementation(libs.elk.core)
     implementation(libs.elk.alg.layered)
     implementation(libs.elk.alg.mrtree)
@@ -188,6 +187,12 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 		include("home.spm", "*/info.spm", "*/puml.spm", "*/json.spm", "*/sprite.spm", "*/svg.spm",
 				"*/image.spm")
 		into("native/resources/stdlib")
+	}
+	// The resources JLaTeXMath reads (the XML files of the font metrics, the symbols and the
+	// macros, and the glyph outlines): there is no class loader in the C build, see JlatexmathResources
+	from("src/main/resources/org/scilab/forge/jlatexmath") {
+		include("**/*.xml", "**/glyphs.bin")
+		into("native/resources/jlatexmath")
 	}
 	// The resources OpenPDF reads (AFM font metrics, glyph list, messages): there is no
 	// class loader in the C build, see OpenPdfResources
@@ -925,7 +930,7 @@ tasks.register("teavm") {
 		// PLANTUML_STDLIB_LOADER hooks and the integration docs rely on.
 		copy {
 			from(teavmSrcDir.dir("web"))        // hand-written pages/scripts (keeps preview/)
-			from(teavmSrcDir.dir("generated"))  // themes.js, emoji.js, openiconic.js
+			from(teavmSrcDir.dir("generated"))  // themes.js, emoji.js, openiconic.js, jlatexmath.js (GPL: not in the other license variants)
 			from(teavmSrcDir.dir("stdlib"))     // <lib>.min.js from plantuml-stdlib
 			from(teavmSrcDir.dir("vendor")) {   // third-party code
 				// viz-global.js is historically loaded from the root
@@ -1111,6 +1116,7 @@ tasks.register("npmPackage") {
 			"plantuml.js",
 			"viz-global.js",
 			"emoji.js",
+			"jlatexmath.js",
 			"openiconic.js",
 			"themes.js",
 			"main.js",
@@ -1150,6 +1156,7 @@ tasks.register("npmPackage") {
 			    "./plantuml.js": "./plantuml.js",
 			    "./viz-global.js": "./viz-global.js",
 			    "./emoji.js": "./emoji.js",
+			    "./jlatexmath.js": "./jlatexmath.js",
 			    "./openiconic.js": "./openiconic.js",
 			    "./themes.js": "./themes.js",
 			    "./package.json": "./package.json"
@@ -1158,6 +1165,7 @@ tasks.register("npmPackage") {
 			    "plantuml.js",
 			    "viz-global.js",
 			    "emoji.js",
+			    "jlatexmath.js",
 			    "openiconic.js",
 			    "themes.js",
 			    "main.js",
@@ -1196,7 +1204,7 @@ tasks.register("npmPackage") {
 			  },
 			  "author": "Arnaud Roques",
 			  "license": "GPL-3.0-or-later",
-			  "sideEffects": ["./viz-global.js", "./emoji.js", "./openiconic.js", "./themes.js"]
+			  "sideEffects": ["./viz-global.js", "./emoji.js", "./jlatexmath.js", "./openiconic.js", "./themes.js"]
 			}
 		""".trimIndent()
 		file("$pkgDir/package.json").writeText(packageJson + "\n")

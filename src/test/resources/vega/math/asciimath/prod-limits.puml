@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+prod_(k=2)^oo (1 - 1/k^2) = 1/2
+@endmath

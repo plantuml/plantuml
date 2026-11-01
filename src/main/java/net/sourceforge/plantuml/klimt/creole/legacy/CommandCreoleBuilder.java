@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.klimt.creole.command.CommandCreoleUrl;
 import net.sourceforge.plantuml.klimt.font.FontPosition;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class CommandCreoleBuilder {
 
@@ -107,13 +106,10 @@ public class CommandCreoleBuilder {
 		addCommand(CommandCreoleQrcode.create());
 		addCommand(CommandCreoleOpenIcon.create());
 		addCommand(CommandCreoleEmoji.create());
-		// Formulas need JLaTeXMath and Batik, which TeaVM cannot provide: the browser
-		// keeps <math> and <latex> as plain text, and the AsciiMath converter stays
-		// out of the TeaVM output
-		if (TeaVM.isTeaVM() == false) {
-			addCommand(CommandCreoleMath.create());
-			addCommand(CommandCreoleLatex.create());
-		}
+		// Formulas: JLaTeXMath reads its resources through MathResources (class path,
+		// embedded files in C, jlatexmath.js in the browser)
+		addCommand(CommandCreoleMath.create());
+		addCommand(CommandCreoleLatex.create());
 		addCommand(CommandCreoleSprite.create());
 		addCommand(CommandCreoleSpace.create());
 		addCommand(CommandCreoleFontFamilyChange.create());

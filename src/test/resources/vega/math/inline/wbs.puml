@@ -1,0 +1,10 @@
+---
+output: svg
+decimal: 1
+expected-description: Work Breakdown Structure
+---
+@startwbs
+* <math>x^2</math>
+** <latex>\frac{a}{b}</latex>
+** <math>sum_i a_i</math>
+@endwbs

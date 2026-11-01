@@ -1,0 +1,8 @@
+License
+-------
+
+You may use and distribute these fonts as you like.
+You may modify these fonts as long as you do not
+rename the files to one of those names that 
+Donald E. Knuth chose for the Computer Modern fonts.
+(And seriously, who would want to do that?)

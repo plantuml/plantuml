@@ -1,0 +1,160 @@
+<?xml version='1.0'?>
+<!--
+  DefaultTeXFont.xml
+  =========================================================================
+  This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+  
+  Copyright (C) 2004-2007 Universiteit Gent
+  Copyright (C) 2009 DENIZET Calixte
+  
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or (at
+  your option) any later version.
+  
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
+  
+  A copy of the GNU General Public License can be found in the file
+  LICENSE.txt provided with the source distribution of this program (see
+  the META-INF directory in the source jar). This license can also be
+  found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+  
+  If you did not receive a copy of the GNU General Public License along
+  with this program, contact the lead developer, or write to the Free
+  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+
+  Linking this library statically or dynamically with other modules 
+  is making a combined work based on this library. Thus, the terms 
+  and conditions of the GNU General Public License cover the whole 
+  combination.
+  
+  As a special exception, the copyright holders of this library give you 
+  permission to link this library with independent modules to produce 
+  an executable, regardless of the license terms of these independent 
+  modules, and to copy and distribute the resulting executable under terms 
+  of your choice, provided that you also meet, for each linked independent 
+  module, the terms and conditions of the license of that module. 
+  An independent module is a module which is not derived from or based 
+  on this library. If you modify this library, you may extend this exception 
+  to your version of the library, but you are not obliged to do so. 
+  If you do not wish to do so, delete this exception statement from your 
+  version.
+  
+-->
+
+<TeXFont>
+
+<!-- general parameters used in the TeX algorithms, specific for the computer modern font family -->
+
+	<Parameters num1="0.676508" num2="0.393732" num3="0.443731" denom1="0.685951" denom2="0.344841" 
+	sup1="0.412892" sup2="0.362892" sup3="0.288889" sub1="0.15" sub2="0.247217" supdrop="0.386108" 
+	subdrop="0.05" axisheight="0.25" defaultrulethickness="0.039999" bigopspacing1="0.111112" 
+	bigopspacing2="0.166667" bigopspacing3="0.2" bigopspacing4="0.6" bigopspacing5="0.1" />
+	
+<!-- general settings -->
+
+	<GeneralSettings mufontid="jlm_cmsy10" spacefontid="jlm_cmr10" scriptfactor="0.7" scriptscriptfactor="0.5" />
+
+<!-- the mappings for the text styles defined in "FormulaSettings.xml" -->
+
+	<TextStyleMappings>
+		<TextStyleMapping name="mathnormal">
+			<MapRange code="numbers" fontId="jlm_cmr10" start="48"/>
+			<MapRange code="capitals" fontId="jlm_cmmi10" start="65"/>
+			<MapRange code="small" fontId="jlm_cmmi10" start="97"/>
+			<MapRange code="unicode" fontId="jlm_cmmi10" start="0"/>
+		</TextStyleMapping>
+
+		<TextStyleMapping name="mathfrak">
+			<MapRange code="numbers" fontId="jlm_eufm10" start="48"/>
+			<MapRange code="capitals" fontId="jlm_eufm10" start="65"/>
+			<MapRange code="small" fontId="jlm_eufm10" start="97"/>	
+		</TextStyleMapping>
+
+		<TextStyleMapping name="mathcal">
+			<MapRange code="capitals" fontId="jlm_cmsy10" start="65"/>		
+		</TextStyleMapping>
+
+		<TextStyleMapping name="mathbb">
+			<MapRange code="capitals" fontId="jlm_msbm10" start="65"/>		
+		</TextStyleMapping>
+
+		<TextStyleMapping name="mathscr">
+			<MapRange code="capitals" fontId="jlm_rsfs10" start="65"/>		
+		</TextStyleMapping>
+
+		<TextStyleMapping name="mathds">
+			<MapRange code="capitals" fontId="jlm_dsrom10" start="65"/>
+		</TextStyleMapping>
+
+		<TextStyleMapping name="oldstylenums">
+			<MapRange code="numbers" fontId="jlm_cmmi10" start="48"/>
+		</TextStyleMapping>
+
+	</TextStyleMappings>
+
+<!-- the default text style mappings, used when no text style is specified or when a specific mapping 
+for a text style is not defined (e.g. "numbers" and "small" in "mathcal") -->
+
+	<DefaultTextStyleMapping>
+		<MapStyle code="numbers" textStyle="mathnormal"/>
+		<MapStyle code="capitals" textStyle="mathnormal"/>
+		<MapStyle code="small" textStyle="mathnormal"/>
+		<MapStyle code="unicode" textStyle="mathnormal"/>
+	</DefaultTextStyleMapping>
+
+<!-- the mappings for the symbols defined in "TeXSymbols.xml" -->
+
+<SymbolMappings>
+  <Mapping include="fonts/base/jlm_base.map.xml" />
+  <Mapping include="fonts/base/jlm_amssymb.map.xml" />
+  <Mapping include="fonts/base/jlm_amsfonts.map.xml" />
+  <Mapping include="fonts/maths/jlm_stmaryrd.map.xml" />
+  <Mapping include="fonts/maths/jlm_special.map.xml" />
+</SymbolMappings>
+
+<!-- font descriptions -->
+
+<FontDescriptions>
+  <Metrics include="fonts/maths/jlm_msbm10.xml" />
+  <Metrics include="fonts/base/jlm_cmex10.xml" />
+  <Metrics include="fonts/base/jlm_cmmi10.xml" />
+  <Metrics include="fonts/base/jlm_cmmib10.xml" />
+  <Metrics include="fonts/base/jlm_moustache.xml" />
+  <Metrics include="fonts/base/jlm_cmmi10_unchanged.xml" />
+  <Metrics include="fonts/base/jlm_cmmib10_unchanged.xml" />
+  <Metrics include="fonts/maths/jlm_stmary10.xml" />
+  <Metrics include="fonts/maths/jlm_cmsy10.xml" />
+  <Metrics include="fonts/maths/jlm_msam10.xml" />
+  <Metrics include="fonts/maths/jlm_cmbsy10.xml" />
+  <Metrics include="fonts/maths/optional/jlm_dsrom10.xml" /> 
+  <Metrics include="fonts/maths/jlm_rsfs10.xml" />
+  <Metrics include="fonts/euler/jlm_eufm10.xml" />  
+  <Metrics include="fonts/euler/jlm_eufb10.xml" />
+  <Metrics include="fonts/latin/optional/jlm_cmti10.xml" />
+  <Metrics include="fonts/latin/optional/jlm_cmti10_unchanged.xml" />
+  <Metrics include="fonts/latin/optional/jlm_cmbxti10.xml" />
+  <Metrics include="fonts/latin/jlm_cmr10.xml" />
+  <Metrics include="fonts/latin/optional/jlm_cmss10.xml" />
+  <Metrics include="fonts/latin/optional/jlm_cmssi10.xml" />
+  <Metrics include="fonts/latin/optional/jlm_cmtt10.xml" />
+  <Metrics include="fonts/latin/optional/jlm_cmbx10.xml" />
+  <Metrics include="fonts/latin/optional/jlm_cmssbx10.xml" />
+  <Metrics include="fonts/maths/jlm_special.xml" />
+  <Metrics include="fonts/latin/jlm_jlmr10.xml" />
+  <Metrics include="fonts/latin/jlm_jlmr10_unchanged.xml" />
+  <Metrics include="fonts/latin/jlm_jlmss10.xml" />
+  <Metrics include="fonts/latin/jlm_jlmsi10.xml" />
+  <Metrics include="fonts/latin/jlm_jlmi10.xml" />
+  <Metrics include="fonts/latin/jlm_jlmbx10.xml" />
+  <Metrics include="fonts/latin/jlm_jlmbi10.xml" />
+  <Metrics include="fonts/latin/jlm_jlmsbi10.xml" />
+  <Metrics include="fonts/latin/jlm_jlmsb10.xml" />
+  <Metrics include="fonts/latin/jlm_jlmtt10.xml" />
+</FontDescriptions>
+
+</TeXFont>

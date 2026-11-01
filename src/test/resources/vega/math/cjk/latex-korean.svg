@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="30px" preserveAspectRatio="none" style="width:136px;height:30px;background:#FFFFFF;" version="1.1" viewBox="0 0 136 30" width="136px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="29" style="stroke:none;" width="135" x="0" y="0"/>
+    <text fill="#000" font-size="20" textLength="60" x="4" y="19.6">한국어</text>
+    <text fill="#000" font-size="20" textLength="60" x="70.7" y="19.6">테스트</text>
+  </g>
+</svg>

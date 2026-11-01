@@ -1,0 +1,11 @@
+---
+output: svg
+decimal: 1
+expected-description: (1 entities)
+---
+@startuml
+note as N
+  <math>E = m c^2</math>
+  <latex>F = G\frac{m_1 m_2}{r^2}</latex>
+end note
+@enduml

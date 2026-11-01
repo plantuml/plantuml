@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+sin^2 x + cos^2 x = 1, tan x, ln x, log x, exp x, det A, dim V, gcd(a,b), lcm(a,b), min, max, mod
+@endmath

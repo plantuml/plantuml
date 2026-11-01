@@ -1,0 +1,12 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities)
+---
+@startuml
+class A
+note right of A
+  <color:red><math>x^2</math></color> and <color:blue><latex>y^2</latex></color>
+  <back:yellow><math>z^2</math></back>
+end note
+@enduml

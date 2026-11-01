@@ -1,0 +1,7 @@
+---
+output: svg
+expected-description: (Latex)
+---
+@startlatex
+\fbox{boxed} \quad \ovalbox{oval} \quad \shadowbox{shadow} \quad \doublebox{double} \quad \boxed{a^2+b^2=c^2}
+@endlatex

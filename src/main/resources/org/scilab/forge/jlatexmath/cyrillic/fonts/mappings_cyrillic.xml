@@ -1,0 +1,158 @@
+<?xml version='1.0'?>
+<!--
+  mappings_cyrillic.xml
+  =========================================================================
+  This file is of the JLaTeXMath Library - http://jmathtex.sourceforge.net
+  
+  Copyright (C) 2004-2007 Universiteit Gent
+  
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or (at
+  your option) any later version.
+  
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
+  
+  A copy of the GNU General Public License can be found in the file
+  LICENSE.txt provided with the source distribution of this program (see
+  the META-INF directory in the source jar). This license can also be
+  found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+  
+  If you did not receive a copy of the GNU General Public License along
+  with this program, contact the lead developer, or write to the Free
+  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+ 
+  Linking this library statically or dynamically with other modules 
+  is making a combined work based on this library. Thus, the terms 
+  and conditions of the GNU General Public License cover the whole 
+  combination.
+  
+  As a special exception, the copyright holders of this library give you 
+  permission to link this library with independent modules to produce 
+  an executable, regardless of the license terms of these independent 
+  modules, and to copy and distribute the resulting executable under terms 
+  of your choice, provided that you also meet, for each linked independent 
+  module, the terms and conditions of the license of that module. 
+  An independent module is a module which is not derived from or based 
+  on this library. If you modify this library, you may extend this exception 
+  to your version of the library, but you are not obliged to do so. 
+  If you do not wish to do so, delete this exception statement from your 
+  version.
+  
+-->
+
+<FormulaSettings>
+  <CharacterToSymbolMappings>
+    <Map char="&#305;" symbol="dotlessi"/>
+    <Map char="&#1040;" symbol="CYRA"/>
+    <Map char="&#1041;" symbol="CYRB"/>
+    <Map char="&#1042;" symbol="CYRV"/>
+    <Map char="&#1043;" symbol="CYRG"/>
+    <Map char="&#1044;" symbol="CYRD"/>
+    <Map char="&#1045;" symbol="CYRE"/>
+    <Map char="&#1025;" symbol="CYRYO"/>
+    <Map char="&#1046;" symbol="CYRZH"/>
+    <Map char="&#1047;" symbol="CYRZ"/>
+    <Map char="&#1048;" symbol="CYRI"/>
+    <Map char="&#1049;" symbol="CYRIO"/>
+    <Map char="&#1050;" symbol="CYRK"/>
+    <Map char="&#1051;" symbol="CYRL"/>
+    <Map char="&#1052;" symbol="CYRM"/>
+    <Map char="&#1053;" symbol="CYRN"/>
+    <Map char="&#1054;" symbol="CYRO"/>
+    <Map char="&#1055;" symbol="CYRP"/>
+    <Map char="&#1056;" symbol="CYRR"/>
+    <Map char="&#1057;" symbol="CYRS"/>
+    <Map char="&#1058;" symbol="CYRT"/>
+    <Map char="&#1059;" symbol="CYRU"/>
+    <Map char="&#1060;" symbol="CYRF"/>
+    <Map char="&#1061;" symbol="CYRH"/>
+    <Map char="&#1062;" symbol="CYRC"/>
+    <Map char="&#1063;" symbol="CYRCH"/>
+    <Map char="&#1064;" symbol="CYRSH"/>
+    <Map char="&#1065;" symbol="CYRSHCH"/>
+    <Map char="&#1066;" symbol="CYRHRDSN"/>
+    <Map char="&#1067;" symbol="CYRY"/>
+    <Map char="&#1068;" symbol="CYRSFTSN"/>
+    <Map char="&#1069;" symbol="CYREREV"/>
+    <Map char="&#1070;" symbol="CYRYU"/>
+    <Map char="&#1071;" symbol="CYRYA"/>
+    <Map char="&#1072;" symbol="cyra"/>
+    <Map char="&#1073;" symbol="cyrb"/>
+    <Map char="&#1074;" symbol="cyrv"/>
+    <Map char="&#1075;" symbol="cyrg"/>
+    <Map char="&#1076;" symbol="cyrd"/>
+    <Map char="&#1077;" symbol="cyre"/>
+    <Map char="&#1105;" symbol="cyryo"/>
+    <Map char="&#1078;" symbol="cyrzh"/>
+    <Map char="&#1079;" symbol="cyrz"/>
+    <Map char="&#1080;" symbol="cyri"/>
+    <Map char="&#1081;" symbol="cyrio"/>
+    <Map char="&#1082;" symbol="cyrk"/>
+    <Map char="&#1083;" symbol="cyrl"/>
+    <Map char="&#1084;" symbol="cyrm"/>
+    <Map char="&#1085;" symbol="cyrn"/>
+    <Map char="&#1086;" symbol="cyro"/>
+    <Map char="&#1087;" symbol="cyrp"/>
+    <Map char="&#1088;" symbol="cyrr"/>
+    <Map char="&#1089;" symbol="cyrs"/>
+    <Map char="&#1090;" symbol="cyrt"/>
+    <Map char="&#1091;" symbol="cyru"/>
+    <Map char="&#1092;" symbol="cyrf"/>
+    <Map char="&#1093;" symbol="cyrh"/>
+    <Map char="&#1094;" symbol="cyrc"/>
+    <Map char="&#1095;" symbol="cyrch"/>
+    <Map char="&#1096;" symbol="cyrsh"/>
+    <Map char="&#1097;" symbol="cyrshch"/>
+    <Map char="&#1098;" symbol="cyrhrdsn"/>
+    <Map char="&#1099;" symbol="cyry"/>
+    <Map char="&#1100;" symbol="cyrsftsn"/>
+    <Map char="&#1101;" symbol="cyrerev"/>
+    <Map char="&#1102;" symbol="cyryu"/>
+    <Map char="&#1103;" symbol="cyrya"/>
+    <Map char="&#1028;" symbol="CYRIE"/>
+    <Map char="&#1030;" symbol="CYRII"/>
+    <Map char="&#1108;" symbol="cyrie"/>
+    <Map char="&#1110;" symbol="cyrii"/>
+    <Map char="&#1026;" symbol="CYRDJE"/>
+    <Map char="&#1029;" symbol="CYRDZE"/>
+    <Map char="&#1032;" symbol="CYRJE"/>
+    <Map char="&#1033;" symbol="CYRLJE"/>
+    <Map char="&#1034;" symbol="CYRNJE"/>
+    <Map char="&#1035;" symbol="CYRTSHE"/>
+    <Map char="&#1039;" symbol="CYRDZHE"/>
+    <Map char="&#1140;" symbol="CYRIZH"/>
+    <Map char="&#1122;" symbol="CYRYAT"/>
+    <Map char="&#1138;" symbol="CYRFITA"/>
+    <Map char="&#1106;" symbol="cyrdje"/>
+    <Map char="&#1109;" symbol="cyrdze"/>
+    <Map char="&#1112;" symbol="cyrje"/>
+    <Map char="&#1113;" symbol="cyrlje"/>
+    <Map char="&#1114;" symbol="cyrnje"/>
+    <Map char="&#1115;" symbol="cyrtshe"/>
+    <Map char="&#1119;" symbol="cyrdzhe"/>
+    <Map char="&#1141;" symbol="cyrizh"/>
+    <Map char="&#1123;" symbol="cyryat"/>
+    <Map char="&#1139;" symbol="cyrfita"/>
+  </CharacterToSymbolMappings>
+  
+  <CharacterToFormulaMappings>
+    <Map char="&#1024;" formula="\`\CYRE"/>
+    <Map char="&#1027;" formula="\'\CYRG"/>
+    <Map char="&#1031;" formula="\cyrddot\CYRII"/>
+    <Map char="&#1111;" formula="\cyrddot\dotlessi"/>
+    <Map char="&#1027;" formula="\'\CYRG"/>
+    <Map char="&#1027;" formula="\'\CYRK"/>
+    <Map char="&#1037;" formula="\`\CYRI"/>
+    <Map char="&#1038;" formula="\cyrbreve\CYRU"/>
+    <Map char="&#1104;" formula="\`\cyre"/>
+    <Map char="&#1107;" formula="\'\cyrg"/>
+    <Map char="&#1116;" formula="\'\cyrk"/>
+    <Map char="&#1117;" formula="\`\cyri"/>
+    <Map char="&#1118;" formula="\cyrbreve\cyru"/>
+  </CharacterToFormulaMappings>
+</FormulaSettings>

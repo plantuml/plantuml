@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+(a), [b], {c}, |d|, (: e :), {: f :}, |__x__|, |~y~|, abs(z), norm(w)
+@endmath

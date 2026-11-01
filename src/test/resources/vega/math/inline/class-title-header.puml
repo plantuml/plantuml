@@ -1,0 +1,11 @@
+---
+output: svg
+decimal: 1
+expected-description: (1 entities)
+---
+@startuml
+title <math>E = mc^2</math> and <latex>\int_0^1 x\,dx</latex>
+header <math>a^2+b^2=c^2</math>
+footer <latex>\sum_{i=1}^n i</latex>
+class A
+@enduml

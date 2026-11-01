@@ -1,0 +1,9 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+backgroundcolor yellow
+x^2 + y^2
+@endmath

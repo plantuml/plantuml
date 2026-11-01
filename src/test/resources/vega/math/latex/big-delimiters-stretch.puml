@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\left( \frac{\frac{a}{b}}{\frac{c}{d}} \right) \quad \left[ \begin{matrix} a \\ b \\ c \\ d \end{matrix} \right] \quad \left\{ \begin{array}{c} x \\ y \\ z \end{array} \right. \quad \left\lfloor \frac{x}{y} \right\rfloor
+@endlatex

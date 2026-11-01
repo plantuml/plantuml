@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+f(x) = {(x^2, "if " x > 0), (0, "if " x = 0), (-x, "otherwise") :}
+@endmath

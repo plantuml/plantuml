@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Json)
+---
+@startjson
+{ "formula" : "<math>x^2</math>", "plain" : "text" }
+@endjson

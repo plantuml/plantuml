@@ -1,0 +1,9 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+backgroundcolor lightgray
+\frac{a}{b} + \sqrt{c}
+@endlatex
