@@ -49,7 +49,6 @@
 package org.scilab.forge.jlatexmath;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.LinkedList;
 
 /**
@@ -59,10 +58,10 @@ import java.util.LinkedList;
  * that can possibly be shifted (up, down, left or right). Child boxes can also be positioned
  * outside their parent's box (defined by it's dimensions).
  * <p>
- * Subclasses must implement the abstract {@link #draw(Graphics2D, float, float)} method
+ * Subclasses must implement the abstract {@link #draw(TeXGraphics, float, float)} method
  * (that paints the box). <b> This implementation must start with calling the method
- * {@link #startDraw(Graphics2D, float, float)} and end with calling the method
- * {@link #endDraw(Graphics2D)} to set and restore the color's that must be used for
+ * {@link #startDraw(TeXGraphics, float, float)} and end with calling the method
+ * {@link #endDraw(TeXGraphics)} to set and restore the color's that must be used for
  * painting the box and to draw the background!</b> They must also implement the abstract
  * {@link #getLastFontId()} method (the last font
  * that will be used when this box will be painted).

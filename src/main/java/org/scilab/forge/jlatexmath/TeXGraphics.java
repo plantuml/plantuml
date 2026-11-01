@@ -8,7 +8,6 @@
 package org.scilab.forge.jlatexmath;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 /**
  * The small drawing surface that the boxes need, in place of
@@ -63,12 +62,5 @@ public interface TeXGraphics {
 	void saveTransform();
 
 	void restoreTransform();
-
-	/**
-	 * The underlying AWT graphics, or null if this canvas is not made on AWT. The
-	 * few boxes that cannot be drawn without AWT (images, Java font rendering,
-	 * GeoGebra logo, Fcscore) draw nothing when it is null.
-	 */
-	Graphics2D getGraphics2D();
 
 }

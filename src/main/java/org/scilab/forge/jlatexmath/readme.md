@@ -86,6 +86,18 @@ of it tied to AWT, to the class loader or to files):
 - the external fonts of `TeXFormula` (`externalFontMap`, `FontInfos`,
   `registerExternalFont`).
 
+Phase 3, step 3a, no more AWT canvas, AWT fonts or Swing:
+
+- removed: `Graphics2DTeXGraphics`, `TeXGraphics.getGraphics2D()`,
+  `TeXIcon.paintIcon` (and `implements Icon`: `getIconWidth` and `getIconHeight`
+  stay), the image API of `TeXFormula` (`createImage`, `createPNG`,
+  `createBufferedImage`, `setDefaultDPI` with `Toolkit`), `registerFonts`,
+  `DefaultTeXFontParser.createFont` and every `java.awt.Font`
+  (`Char.getFont`, `FontInfo.getFont`);
+- the 46 TTF files are not in the jar any more: they moved to
+  `tools/jlatexmath-glyphs/ttf`, with the generator and the checker of
+  `glyphs.bin` (the generator makes the same three files again).
+
 A character that has no TeX glyph (CJK, for instance) was drawn with a Java font
 by `JavaFontRenderingAtom`; since step 2c that box drew nothing (a blank gap).
 It is now a `ParseException` ("Unknown character"): PlantUML shows the source of

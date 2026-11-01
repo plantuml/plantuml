@@ -46,7 +46,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Font;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -321,8 +320,7 @@ public class DefaultTeXFont implements TeXFont {
             info = fontInfo[id];
             cf = new CharFont(cf.c, id, style);
         }
-        Font font = info.getFont();
-        return new Char(cf.c, font, id, getMetrics(cf, factor * fsize));
+        return new Char(cf.c, id, getMetrics(cf, factor * fsize));
     }
 
     public Char getChar(String symbolName, int style) throws SymbolMappingNotFoundException {
@@ -359,7 +357,6 @@ public class DefaultTeXFont implements TeXFont {
     }
 
     public Extension getExtension(Char c, int style) {
-        Font f = c.getFont();
         int fc = c.getFontCode();
         float s = getSizeFactor(style);
 
@@ -371,7 +368,7 @@ public class DefaultTeXFont implements TeXFont {
             if (ext[i] == NONE) {
                 parts[i] = null;
             } else {
-                parts[i] = new Char((char) ext[i], f, fc, getMetrics(new CharFont((char) ext[i], fc), s));
+                parts[i] = new Char((char) ext[i], fc, getMetrics(new CharFont((char) ext[i], fc), s));
             }
         }
 
@@ -409,8 +406,7 @@ public class DefaultTeXFont implements TeXFont {
     public Char getNextLarger(Char c, int style) {
         FontInfo info = fontInfo[c.getFontCode()];
         CharFont ch = info.getNextLarger(c.getChar());
-        FontInfo newInfo = fontInfo[ch.fontId];
-        return new Char(ch.c, newInfo.getFont(), ch.fontId, getMetrics(ch, getSizeFactor(style)));
+        return new Char(ch.c, ch.fontId, getMetrics(ch, getSizeFactor(style)));
     }
 
     public float getNum1(int style) {

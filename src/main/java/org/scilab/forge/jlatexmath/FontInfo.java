@@ -46,7 +46,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Font;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,10 +84,8 @@ public class FontInfo {
     private final int fontId;
 
     // font
-    private Font font;
     private GlyphOutlines.GlyphFont glyphs;
     private final Object base;
-    private final String path;
     private final String fontName;
 
     private final Map<CharCouple,Character> lig = new HashMap<CharCouple,Character> ();
@@ -116,10 +113,9 @@ public class FontInfo {
     protected final String ttVersion;
     protected final String itVersion;
 
-    public FontInfo(int fontId, Object base, String path, String fontName, int unicode, float xHeight, float space, float quad, String boldVersion, String romanVersion, String ssVersion, String ttVersion, String itVersion) {
+    public FontInfo(int fontId, Object base, String fontName, int unicode, float xHeight, float space, float quad, String boldVersion, String romanVersion, String ssVersion, String ttVersion, String itVersion) {
         this.fontId = fontId;
         this.base = base;
-        this.path = path;
         this.fontName = fontName;
         this.xHeight = xHeight;
         this.space = space;
@@ -304,20 +300,9 @@ public class FontInfo {
         boldId = id == -1 ? fontId : id;
     }
 
-    public Font getFont() {
-        if (font == null) {
-            if (base == null) {
-                font = DefaultTeXFontParser.createFont(path);
-            } else {
-                font = DefaultTeXFontParser.createFont(base.getClass().getResourceAsStream(path), fontName);
-            }
-        }
-        return font;
-    }
-
     /**
      * The outlines of the glyphs of this font (read from glyphs.bin), or null
-     * if there are none for it. Replaces {@link #getFont()} for drawing.
+     * if there are none for it. 
      */
     public GlyphOutlines.GlyphFont getGlyphs() {
         if (glyphs == null)
@@ -329,8 +314,5 @@ public class FontInfo {
         return fonts.get(id);
     }
 
-    public static Font getFont(int id) {
-        return fonts.get(id).getFont();
-    }
 }
 

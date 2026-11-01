@@ -46,7 +46,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Font;
 
 /**
  * Represents a character together with its font, font ID and metric information.
@@ -54,12 +53,10 @@ import java.awt.Font;
 public class Char {
 
     private final char c;
-    private final Font font;
     private final Metrics m;
     private final int fontCode;
 
-    public Char(char c, Font f, int fc, Metrics m) {
-        font = f;
+    public Char(char c, int fc, Metrics m) {
         fontCode = fc;
         this.c = c;
         this.m = m;
@@ -71,10 +68,6 @@ public class Char {
 
     public char getChar() {
         return c;
-    }
-
-    public Font getFont() {
-        return font;
     }
 
     public int getFontCode() {

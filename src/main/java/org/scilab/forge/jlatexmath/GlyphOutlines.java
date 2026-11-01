@@ -14,8 +14,10 @@ package org.scilab.forge.jlatexmath;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The outlines of the glyphs of the TeX fonts, read from a {@code glyphs.bin}
@@ -148,6 +150,11 @@ public final class GlyphOutlines {
 	private final Map<String, GlyphFont> fonts = new HashMap<String, GlyphFont>();
 
 	private GlyphOutlines() {
+	}
+
+	/** The names of the fonts of this file (TTF file names without ".ttf"). */
+	public Set<String> getFontNames() {
+		return Collections.unmodifiableSet(fonts.keySet());
 	}
 
 	/** The font of a TTF file name, with or without ".ttf", or null. */

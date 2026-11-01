@@ -50,14 +50,8 @@
 package org.scilab.forge.jlatexmath;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Insets;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
 
-import javax.swing.Icon;
 
 /**
  * An {@link javax.swing.Icon} implementation that will paint the TeXFormula
@@ -68,7 +62,7 @@ import javax.swing.Icon;
  *
  * @author Kurt Vermeulen
  */
-public class TeXIcon implements Icon {
+public class TeXIcon {
 
     private static final Color defaultColor = new Color(0, 0, 0);
 
@@ -253,42 +247,6 @@ public class TeXIcon implements Icon {
             g2.setColor(foreground);
         box.draw(g2, (x + insets.left) / size, (y + insets.top) / size + box.getHeight());
         g2.restoreTransform();
-        g2.setColor(oldColor);
-    }
-
-    /**
-     * Paint the {@link TeXFormula} that created this icon.
-     */
-    public void paintIcon(Component c, Graphics g, int x, int y) {
-        Graphics2D g2 = (Graphics2D) g;
-        // copy graphics settings
-        RenderingHints oldHints = g2.getRenderingHints();
-        AffineTransform oldAt = g2.getTransform();
-        Color oldColor = g2.getColor();
-
-        // new settings
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                            RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setRenderingHint(RenderingHints.KEY_RENDERING,
-                            RenderingHints.VALUE_RENDER_QUALITY);
-        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                            RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
-        g2.scale(size, size); // the point size
-        if (fg != null) {
-            g2.setColor(fg);
-        } else if (c != null) {
-            g2.setColor(c.getForeground()); // foreground will be used as default painting color
-        } else {
-            g2.setColor(defaultColor);
-        }
-
-        // draw formula box
-        box.draw(new Graphics2DTeXGraphics(g2), (x + insets.left) / size, (y + insets.top) / size+ box.getHeight());
-
-        // restore graphics settings
-        g2.setRenderingHints(oldHints);
-        g2.setTransform(oldAt);
         g2.setColor(oldColor);
     }
 }

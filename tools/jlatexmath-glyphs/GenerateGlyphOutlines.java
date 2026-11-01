@@ -16,7 +16,10 @@
  * characters that the XML metrics of the font declare (<Char code="...">): the
  * other glyphs of the TTF are never drawn.
  *
- * Three files are written, next to the TTF files they come from:
+ * The TTF files are in tools/jlatexmath-glyphs/ttf (they are not needed at run
+ * time, so they are not in the jar), with the same relative paths as the XML
+ * metrics in src/main/resources/org/scilab/forge/jlatexmath. Three files are
+ * written in the resources, next to the XML metrics:
  *   fonts/glyphs.bin            the base fonts (latin, maths, euler, base)
  *   cyrillic/fonts/glyphs.bin   the Cyrillic alphabet
  *   greek/fonts/glyphs.bin      the Greek alphabet
@@ -58,6 +61,7 @@ import org.w3c.dom.NodeList;
 public class GenerateGlyphOutlines {
 
 	private static final Path RES = Paths.get("src/main/resources/org/scilab/forge/jlatexmath");
+	private static final Path TTF = Paths.get("tools/jlatexmath-glyphs/ttf");
 
 	private static final int MOVE = 0;
 	private static final int LINE = 1;
@@ -66,12 +70,13 @@ public class GenerateGlyphOutlines {
 	private static final int END = 4;
 
 	public static void main(String[] args) throws Exception {
-		generate(RES.resolve("fonts"));
-		generate(RES.resolve("cyrillic/fonts"));
-		generate(RES.resolve("greek/fonts"));
+		generate("fonts");
+		generate("cyrillic/fonts");
+		generate("greek/fonts");
 	}
 
-	private static void generate(Path dir) throws Exception {
+	private static void generate(String relativeDir) throws Exception {
+		final Path dir = TTF.resolve(relativeDir);
 		final List<Path> ttfs;
 		try (Stream<Path> walk = Files.walk(dir)) {
 			ttfs = walk.filter(p -> p.toString().endsWith(".ttf")).sorted().collect(Collectors.toList());
@@ -85,7 +90,7 @@ public class GenerateGlyphOutlines {
 		long ttfBytes = 0;
 		for (Path ttf : ttfs) {
 			final String name = ttf.getFileName().toString().replace(".ttf", "");
-			final Path xml = ttf.resolveSibling(name + ".xml");
+			final Path xml = RES.resolve(TTF.relativize(ttf)).resolveSibling(name + ".xml");
 			if (Files.exists(xml) == false)
 				throw new IOException("No metrics for " + ttf);
 			final Font font = new Font(Files.readAllBytes(ttf));
@@ -106,7 +111,7 @@ public class GenerateGlyphOutlines {
 			glyphs += codes.size();
 		}
 		out.flush();
-		final Path target = dir.resolve("glyphs.bin");
+		final Path target = RES.resolve(relativeDir).resolve("glyphs.bin");
 		Files.write(target, bytes.toByteArray());
 		System.out.printf("%-60s %3d fonts %5d glyphs %8d bytes (TTF files: %d bytes)%n", target, ttfs.size(), glyphs,
 				bytes.size(), ttfBytes);

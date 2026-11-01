@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.math;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -296,10 +295,6 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 		d = m[3];
 		e = m[4];
 		f = m[5];
-	}
-
-	public Graphics2D getGraphics2D() {
-		return null;
 	}
 
 	// ------------------------------------------------------------------ helpers

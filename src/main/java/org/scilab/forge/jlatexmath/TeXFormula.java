@@ -49,13 +49,7 @@
 package org.scilab.forge.jlatexmath;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.GraphicsEnvironment;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -65,8 +59,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageOutputStream;
 
 /**
  * Represents a logical mathematical formula that will be displayed (by creating a
@@ -166,15 +158,6 @@ public class TeXFormula {
      */
     public static void setDPITarget(float dpi) {
         PIXELS_PER_POINT = dpi / 72f;
-    }
-
-    /**
-     * Set the default target DPI to the screen dpi (only if we're in non-headless mode)
-     */
-    public static void setDefaultDPI() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            setDPITarget((float) Toolkit.getDefaultToolkit().getScreenResolution());
-        }
     }
 
     // the root atom of the "atom tree" that represents the formula
@@ -363,14 +346,6 @@ public class TeXFormula {
         }
 
         return f;
-    }
-
-    /**
-     * @param b true if the fonts should be registered (Java 1.6 only) to be used
-     * with FOP.
-     */
-    public static void registerFonts(boolean b) {
-        DefaultTeXFontParser.registerFonts(b);
     }
 
     /**
@@ -784,98 +759,6 @@ public class TeXFormula {
 
     public TeXIcon createTeXIcon(int style, float size, int type, int widthUnit, float textwidth, int align, int interlineUnit, float interline) {
         return new TeXIconBuilder().setStyle(style).setSize(size).setType(type).setWidth(widthUnit, textwidth, align).setInterLineSpacing(interlineUnit, interline).build();
-    }
-
-    public void createImage(String format, int style, float size, String out, Color bg, Color fg, boolean transparency) {
-        TeXIcon icon = createTeXIcon(style, size);
-        icon.setInsets(new Insets(1, 1, 1, 1));
-        int w = icon.getIconWidth(), h = icon.getIconHeight();
-
-        BufferedImage image = new BufferedImage(w, h, transparency ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2 = image.createGraphics();
-        if (bg != null && !transparency) {
-            g2.setColor(bg);
-            g2.fillRect(0, 0, w, h);
-        }
-
-        icon.setForeground(fg);
-        icon.paintIcon(null, g2, 0, 0);
-        try {
-            FileImageOutputStream imout = new FileImageOutputStream(new File(out));
-            ImageIO.write(image, format, imout);
-            imout.flush();
-            imout.close();
-        } catch (IOException ex) {
-            System.err.println("I/O error : Cannot generate " + out);
-        }
-
-        g2.dispose();
-    }
-
-    public void createPNG(int style, float size, String out, Color bg, Color fg) {
-        createImage("png", style, size, out, bg, fg, bg == null);
-    }
-
-    public void createGIF(int style, float size, String out, Color bg, Color fg) {
-        createImage("gif", style, size, out, bg, fg, bg == null);
-    }
-
-    public void createJPEG(int style, float size, String out, Color bg, Color fg) {
-        //There is a bug when a BufferedImage has a component alpha so we disabel it
-        createImage("jpeg", style, size, out, bg, fg, false);
-    }
-
-    /**
-     * @param formula the formula
-     * @param style the style
-     * @param size the size
-     * @param transparency, if true the background is transparent
-     * @return the generated image
-     */
-    public static Image createBufferedImage(String formula, int style, float size, Color fg, Color bg) throws ParseException {
-        TeXFormula f = new TeXFormula(formula);
-        TeXIcon icon = f.createTeXIcon(style, size);
-        icon.setInsets(new Insets(2, 2, 2, 2));
-        int w = icon.getIconWidth(), h = icon.getIconHeight();
-
-        BufferedImage image = new BufferedImage(w, h, bg == null ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2 = image.createGraphics();
-        if (bg != null) {
-            g2.setColor(bg);
-            g2.fillRect(0, 0, w, h);
-        }
-
-        icon.setForeground(fg == null ? Color.BLACK : fg);
-        icon.paintIcon(null, g2, 0, 0);
-        g2.dispose();
-
-        return image;
-    }
-
-    /**
-     * @param formula the formula
-     * @param style the style
-     * @param size the size
-     * @param transparency, if true the background is transparent
-     * @return the generated image
-     */
-    public Image createBufferedImage(int style, float size, Color fg, Color bg) throws ParseException {
-        TeXIcon icon = createTeXIcon(style, size);
-        icon.setInsets(new Insets(2, 2, 2, 2));
-        int w = icon.getIconWidth(), h = icon.getIconHeight();
-
-        BufferedImage image = new BufferedImage(w, h, bg == null ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2 = image.createGraphics();
-        if (bg != null) {
-            g2.setColor(bg);
-            g2.fillRect(0, 0, w, h);
-        }
-
-        icon.setForeground(fg == null ? Color.BLACK : fg);
-        icon.paintIcon(null, g2, 0, 0);
-        g2.dispose();
-
-        return image;
     }
 
     public void setDEBUG(boolean b) {

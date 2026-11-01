@@ -48,8 +48,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
@@ -76,8 +74,6 @@ public class DefaultTeXFontParser {
      * if the register font cannot be found, we display an error message
      * but we do it only once
      */
-    private static boolean registerFontExceptionDisplayed = false;
-    private static boolean shouldRegisterFonts = true;
     private static DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     private static interface CharChildParser { // NOPMD
         public void parse(Element el, char ch, FontInfo info) throws XMLResourceParseException;
@@ -263,10 +259,8 @@ public class DefaultTeXFontParser {
             it = getAttrValueAndCheckIfNotNull("itVersion", font);
         } catch (ResourceParseException e) {}
 
-        String path = name.substring(0, name.lastIndexOf("/") + 1) + fontName;
-
         // create FontInfo-object
-        FontInfo info = new FontInfo(Font_ID.indexOf(fontId), base, path, fontName, unicode, xHeight, space, quad, bold, roman, ss, tt, it);
+        FontInfo info = new FontInfo(Font_ID.indexOf(fontId), base, fontName, unicode, xHeight, space, quad, bold, roman, ss, tt, it);
 
         if (skewChar != -1) // attribute set
             info.setSkewChar((char) skewChar);
@@ -351,52 +345,6 @@ public class DefaultTeXFontParser {
                 else
                     // process the child element
                     ((CharChildParser) parser).parse(el, ch, info);
-            }
-        }
-    }
-
-    public static void registerFonts(boolean b) {
-        shouldRegisterFonts = b;
-    }
-
-    public static Font createFont(String name) throws ResourceParseException {
-        return createFont(DefaultTeXFontParser.class.getResourceAsStream(name), name);
-    }
-
-    public static Font createFont(InputStream fontIn, String name) throws ResourceParseException {
-        try {
-            Font f = Font.createFont(Font.TRUETYPE_FONT, fontIn)
-                     .deriveFont(TeXFormula.PIXELS_PER_POINT * TeXFormula.FONT_SCALE_FACTOR);
-            GraphicsEnvironment graphicEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            /**
-             * The following fails under java 1.5
-             * graphicEnv.registerFont(f);
-             * dynamic load then
-             */
-            if (shouldRegisterFonts) {
-                try {
-                    Method registerFontMethod = graphicEnv.getClass().getMethod("registerFont", new Class[] { Font.class });
-                    if ((Boolean) registerFontMethod.invoke(graphicEnv, new Object[] { f }) == Boolean.FALSE) {
-                        System.err.println("Cannot register the font " + f.getFontName());
-                    }
-                } catch (Exception ex) {
-                    if (!registerFontExceptionDisplayed) {
-                        System.err.println("Warning: Jlatexmath: Could not access to registerFont. Please update to java 6");
-                        registerFontExceptionDisplayed = true;
-                    }
-                }
-            }
-            return f;
-        } catch (Exception e) {
-            throw new XMLResourceParseException(RESOURCE_NAME
-                                                + ": error reading font '" + name + "'. Error message: "
-                                                + e.getMessage());
-        } finally {
-            try {
-                if (fontIn != null)
-                    fontIn.close();
-            } catch (IOException ioex) {
-                throw new RuntimeException("Close threw exception", ioex);
             }
         }
     }
