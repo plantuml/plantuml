@@ -1,0 +1,83 @@
+<?xml version='1.0'?>
+<Font name="jlm_rsfs10.ttf" id="jlm_rsfs10" space="0.0" xHeight="0.233333" quad="1.000003" >
+   <Char code="65" width="0.802526" height="0.7" italic="0.229254" >
+      <Kern code="196" val="0.388901"/>
+   </Char>
+   <Char code="66" width="0.907575" height="0.7" italic="0.040873" >
+      <Kern code="196" val="0.19445"/>
+   </Char>
+   <Char code="67" width="0.666188" height="0.7" italic="0.168904" >
+      <Kern code="196" val="0.277786"/>
+   </Char>
+   <Char code="68" width="0.774431" height="0.7" italic="0.093714" >
+      <Kern code="196" val="0.1111145"/>
+   </Char>
+   <Char code="69" width="0.561621" height="0.7" italic="0.185831" >
+      <Kern code="196" val="0.138893"/>
+   </Char>
+   <Char code="70" width="0.895442" height="0.7" italic="0.136339" >
+      <Kern code="196" val="0.222229"/>
+   </Char>
+   <Char code="71" width="0.60961" height="0.7" italic="0.173218" >
+      <Kern code="196" val="0.250008"/>
+   </Char>
+   <Char code="72" width="0.969194" height="0.7" italic="0.296942" >
+      <Kern code="196" val="0.3333435"/>
+   </Char>
+   <Char code="73" width="0.80907" height="0.7" italic="0.191895" >
+      <Kern code="196" val="0.3333435"/>
+   </Char>
+   <Char code="74" width="1.05159" height="0.7" depth="0.277777" italic="0.191895" >
+      <Kern code="196" val="0.416679"/>
+   </Char>
+   <Char code="75" width="0.913638" height="0.7" italic="0.312587" >
+      <Kern code="196" val="0.361122"/>
+   </Char>
+   <Char code="76" width="0.873729" height="0.7" italic="0.191895" >
+      <Kern code="196" val="0.305565"/>
+   </Char>
+   <Char code="77" width="1.080305" height="0.7" italic="0.15981" >
+      <Kern code="196" val="0.444458"/>
+   </Char>
+   <Char code="78" width="0.9015045" height="0.7" italic="0.352499" >
+      <Kern code="196" val="0.388901"/>
+   </Char>
+   <Char code="79" width="0.737871" height="0.7" italic="0.080783" >
+      <Kern code="196" val="0.166672"/>
+   </Char>
+   <Char code="80" width="1.012616" height="0.7" italic="0.080783" >
+      <Kern code="196" val="0.222229"/>
+   </Char>
+   <Char code="81" width="0.882822" height="0.7" italic="0.033052" >
+      <Kern code="196" val="0.277786"/>
+   </Char>
+   <Char code="82" width="0.850003" height="0.7" italic="0.062587" >
+      <Kern code="196" val="0.19445"/>
+   </Char>
+   <Char code="83" width="0.867665" height="0.7" italic="0.191895" >
+      <Kern code="196" val="0.3333435"/>
+   </Char>
+   <Char code="84" width="0.746969" height="0.7" italic="0.290874" >
+      <Kern code="196" val="0.222229"/>
+   </Char>
+   <Char code="85" width="0.799963" height="0.7" italic="0.258148" >
+      <Kern code="196" val="0.250008"/>
+   </Char>
+   <Char code="86" width="0.622035" height="0.7" italic="0.275228" >
+      <Kern code="196" val="0.222229"/>
+   </Char>
+   <Char code="87" width="0.805315" height="0.7" italic="0.275228" >
+      <Kern code="196" val="0.250008"/>
+   </Char>
+   <Char code="88" width="0.9444475" height="0.7" italic="0.260063" >
+      <Kern code="196" val="0.277786"/>
+   </Char>
+   <Char code="89" width="0.70961" height="0.7" italic="0.293904" >
+      <Kern code="196" val="0.19445"/>
+   </Char>
+   <Char code="90" width="0.821203" height="0.7" italic="0.240366" >
+      <Kern code="196" val="0.305565"/>
+   </Char>
+   <Char code="196" width="0.277779" height="0.555555" italic="0.52594" />
+</Font>
+

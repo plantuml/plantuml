@@ -1,0 +1,958 @@
+<?xml version='1.0'?>
+<!--
+  TeXFormulaSettings.xml
+  =========================================================================
+  This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+
+  Copyright (C) 2004-2007 Universiteit Gent
+  Copyright (C) 2009 DENIZET Calixte
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or (at
+  your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
+
+  A copy of the GNU General Public License can be found in the file
+  LICENSE.txt provided with the source distribution of this program (see
+  the META-INF directory in the source jar). This license can also be
+  found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+
+  If you did not receive a copy of the GNU General Public License along
+  with this program, contact the lead developer, or write to the Free
+  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+ 
+  Linking this library statically or dynamically with other modules 
+  is making a combined work based on this library. Thus, the terms 
+  and conditions of the GNU General Public License cover the whole 
+  combination.
+  
+  As a special exception, the copyright holders of this library give you 
+  permission to link this library with independent modules to produce 
+  an executable, regardless of the license terms of these independent 
+  modules, and to copy and distribute the resulting executable under terms 
+  of your choice, provided that you also meet, for each linked independent 
+  module, the terms and conditions of the license of that module. 
+  An independent module is a module which is not derived from or based 
+  on this library. If you modify this library, you may extend this exception 
+  to your version of the library, but you are not obliged to do so. 
+  If you do not wish to do so, delete this exception statement from your 
+  version.
+  
+-->
+
+<!-- all the symbolnames that appear here, must be defined in "TeXSymbols.xml"! -->
+
+<FormulaSettings>
+
+<!-- non-alphanumeric character-to-symbol-mappings -->
+
+	<CharacterToSymbolMappings>
+	  <Map char="+" symbol="plus"/>
+	  <Map char="-" symbol="minus" text="textminus"/>
+	  <Map char="/" symbol="slash" text="textfractionsolidus"/>
+	  <Map char="*" symbol="ast" />
+      	  <Map char="(" symbol="lbrack"/>
+      	  <Map char="." symbol="normaldot" text="textnormaldot"/>
+      	  <Map char=";" symbol="semicolon"/>
+      	  <Map char="&gt;" symbol="gt"/>
+      	  <Map char="{" symbol="lbrace"/>
+      	  <Map char="!" symbol="faculty"/>
+      	  <Map char=")" symbol="rbrack"/>
+      	  <Map char="," symbol="comma"/>
+      	  <Map char="&lt;" symbol="lt"/>
+      	  <Map char="?" symbol="question"/>
+      	  <Map char="]" symbol="rsqbrack"/>
+      	  <Map char="|" symbol="vert"/>
+      	  <Map char=":" symbol="colon"/>
+      	  <Map char="=" symbol="equals"/>
+      	  <Map char="[" symbol="lsqbrack"/>
+      	  <Map char="}" symbol="rbrace"/>
+	  <Map char="&apos;" symbol="textapos"/>
+	  <Map char="`" symbol="jlatexmathlapos"/>
+	  <Map char="#" symbol="jlatexmathsharp"/>
+	  <Map char="&#163;" symbol="mathsterling"/>
+	  <Map char="&#165;" symbol="yen"/>
+	  <Map char="&#167;" symbol="S"/>
+	  <Map char="&#171;" symbol="guillemotleft"/>
+	  <Map char="&#174;" symbol="textregistered"/>
+	  <Map char="&#181;" symbol="textmu"/>
+	  <Map char="&#182;" symbol="P"/>
+	  <Map char="&#187;" symbol="guillemotright"/>
+	  <Map char="&#191;" symbol="questiondown"/>
+	  <Map char="&#945;" symbol="alpha" text="α"/>
+	  <Map char="&#946;" symbol="beta" text="β"/>
+	  <Map char="&#947;" symbol="gamma" text="γ"/>
+	  <Map char="&#948;" symbol="delta" text="δ"/>
+	  <Map char="&#949;" symbol="varepsilon" text="ε"/>
+	  <Map char="&#950;" symbol="zeta" text="ζ"/>
+	  <Map char="&#951;" symbol="eta" text="η"/>
+	  <Map char="&#952;" symbol="theta" text="θ"/>
+	  <Map char="&#953;" symbol="iota" text="ι"/>
+	  <Map char="&#954;" symbol="kappa" text="κ"/>
+	  <Map char="&#955;" symbol="lambda" text="λ"/>
+	  <Map char="&#956;" symbol="mu" text="μ"/>
+	  <Map char="&#957;" symbol="nu" text="ν"/>
+	  <Map char="&#958;" symbol="xi" text="ξ"/>
+	  <Map char="&#959;" symbol="omicron" text="ο"/>
+	  <Map char="&#960;" symbol="pi" text="π"/>
+	  <Map char="&#961;" symbol="rho" text="ρ"/>
+	  <Map char="&#962;" symbol="varsigma" text="ς"/>
+	  <Map char="&#963;" symbol="sigma" text="σ"/>
+	  <Map char="&#964;" symbol="tau" text="τ"/>
+	  <Map char="&#965;" symbol="upsilon" text="υ"/>
+	  <Map char="&#966;" symbol="varphi" text="φ"/>
+	  <Map char="&#967;" symbol="chi" text="χ"/>
+	  <Map char="&#968;" symbol="psi" text="ψ"/>
+	  <Map char="&#969;" symbol="omega" text="ω"/>
+	  <Map char="&#977;" symbol="vartheta" text="ϑ"/>
+	  <Map char="&#981;" symbol="phi"/>
+	  <Map char="&#982;" symbol="varpi"/>
+	  <Map char="&#1008;" symbol="varkappa"/>
+	  <Map char="&#1009;" symbol="varrho"/>
+	</CharacterToSymbolMappings>
+
+	<CharacterToFormulaMappings>
+	  <Map char="&#160;" formula="\ "/>
+	  <Map char="&#161;" formula="!`"/>
+	  <Map char="&#169;" formula="\copyright"/>
+ 	  <Map char="&#192;" formula="\`A"/>
+	  <Map char="&#193;" formula="\'A"/>
+	  <Map char="&#194;" formula="\^A"/>
+	  <Map char="&#195;" formula="\~A"/>
+	  <Map char="&#196;" formula="\&quot;A"/>
+	  <Map char="&#197;" formula="\r A"/>
+	  <Map char="&#198;" formula="\AE"/>
+	  <Map char="&#199;" formula="\c C"/>
+	  <Map char="&#200;" formula="\`E"/>
+	  <Map char="&#201;" formula="\'E"/>
+	  <Map char="&#202;" formula="\^E"/>
+	  <Map char="&#203;" formula="\&quot;E"/>
+	  <Map char="&#204;" formula="\`I"/>
+	  <Map char="&#205;" formula="\'I"/>
+	  <Map char="&#206;" formula="\^I"/>
+	  <Map char="&#207;" formula="\&quot;I"/>
+	  <!-- ETH Map char="&#208;" formula=""/-->
+	  <Map char="&#209;" formula="\~N"/>
+	  <Map char="&#210;" formula="\`O"/>
+	  <Map char="&#211;" formula="\'O"/>
+	  <Map char="&#212;" formula="\^O"/>
+	  <Map char="&#213;" formula="\~O"/>
+	  <Map char="&#214;" formula="\&quot;O"/>
+	  <Map char="&#216;" formula="\O"/>
+	  <Map char="&#217;" formula="\`U"/>
+	  <Map char="&#218;" formula="\'U"/>
+	  <Map char="&#219;" formula="\^U"/>
+	  <Map char="&#220;" formula="\&quot;U"/>
+	  <Map char="&#221;" formula="\'Y"/>
+	  <!-- THORN Map char="&#222;" formula=""/-->
+	  <Map char="&#223;" formula="\ss"/>
+	  <Map char="&#224;" formula="\`a"/>
+	  <Map char="&#225;" formula="\'a"/>
+	  <Map char="&#226;" formula="\^a"/>
+	  <Map char="&#227;" formula="\~a"/>
+	  <Map char="&#228;" formula="\&quot;a"/>
+	  <Map char="&#229;" formula="\aa"/>
+	  <Map char="&#230;" formula="\ae"/>
+	  <Map char="&#231;" formula="\c c"/>
+	  <Map char="&#232;" formula="\`e"/>
+	  <Map char="&#233;" formula="\'e"/>
+	  <Map char="&#234;" formula="\^e"/>
+	  <Map char="&#235;" formula="\&quot;e"/>
+	  <Map char="&#236;" formula="\`\i"/>
+	  <Map char="&#237;" formula="\'\i"/>
+	  <Map char="&#238;" formula="\^\i"/>
+	  <Map char="&#239;" formula="\&quot;\i"/>
+	  <Map char="&#240;" formula="\eth"/>
+	  <Map char="&#241;" formula="\~n"/>
+	  <Map char="&#242;" formula="\`o"/>
+	  <Map char="&#243;" formula="\'o"/>
+	  <Map char="&#244;" formula="\^o"/>
+	  <Map char="&#245;" formula="\~o"/>
+	  <Map char="&#246;" formula="\&quot;o"/>
+	  <Map char="&#247;" formula="\div"/>
+	  <Map char="&#248;" formula="\o"/>
+	  <Map char="&#249;" formula="\`u"/>
+	  <Map char="&#250;" formula="\'u"/>
+	  <Map char="&#251;" formula="\^u"/>
+	  <Map char="&#252;" formula="\&quot;u"/>
+	  <Map char="&#253;" formula="\'y"/>
+	  <!-- thorn Map char="&#254;" formula=""/-->
+	  <Map char="&#255;" formula="\&quot;y"/>
+	  <Map char="&#256;" formula="\=A"/>
+	  <Map char="&#257;" formula="\=a"/>
+	  <Map char="&#258;" formula="\u A"/>
+	  <Map char="&#259;" formula="\u a"/>
+	  <Map char="&#260;" formula="\k A"/>
+	  <Map char="&#261;" formula="\k a"/>
+	  <Map char="&#262;" formula="\'C"/>
+	  <Map char="&#263;" formula="\'c"/>
+	  <Map char="&#264;" formula="\^C"/>
+	  <Map char="&#265;" formula="\^c"/>
+	  <Map char="&#266;" formula="\.C"/>
+	  <Map char="&#267;" formula="\.c"/>
+	  <Map char="&#268;" formula="\v C"/>
+	  <Map char="&#269;" formula="\v c"/>
+	  <Map char="&#270;" formula="\v D"/>
+	  <Map char="&#271;" formula="d\text{'}"/>
+	  <Map char="&#272;" formula="\Dstrok"/>
+	  <Map char="&#273;" formula="\dstrok"/>
+	  <Map char="&#274;" formula="\=E"/>
+	  <Map char="&#275;" formula="\=e"/>
+	  <Map char="&#276;" formula="\u E"/>
+	  <Map char="&#277;" formula="\u e"/>
+	  <Map char="&#278;" formula="\.E"/>
+	  <Map char="&#279;" formula="\.e"/>
+	  <Map char="&#280;" formula="\k E"/>
+	  <Map char="&#281;" formula="\k e"/>
+	  <Map char="&#282;" formula="\v E"/>
+	  <Map char="&#283;" formula="\v e"/>
+	  <Map char="&#284;" formula="\^G"/>
+	  <Map char="&#285;" formula="\^g"/>
+	  <Map char="&#286;" formula="\u G"/>
+	  <Map char="&#287;" formula="\u g"/>
+	  <Map char="&#288;" formula="\.G"/>
+	  <Map char="&#289;" formula="\.g"/>
+	  <Map char="&#290;" formula="\underaccent{,}G"/>
+	  <Map char="&#291;" formula="\'g"/>
+	  <Map char="&#292;" formula="\^H"/>
+	  <Map char="&#293;" formula="\^h"/>
+	  <Map char="&#294;" formula="\Hstrok"/>
+	  <Map char="&#295;" formula="\hstrok"/>
+	  <Map char="&#296;" formula="\~I"/>
+	  <Map char="&#297;" formula="\~\i"/>
+	  <Map char="&#298;" formula="\=I"/>
+	  <Map char="&#299;" formula="\=\i"/>
+	  <Map char="&#300;" formula="\u I"/>
+	  <Map char="&#301;" formula="\u \i"/>
+	  <Map char="&#302;" formula="\k I"/>
+	  <Map char="&#303;" formula="\k i"/>
+	  <Map char="&#304;" formula="\.I"/>
+	  <Map char="&#305;" formula="\i"/>
+	  <Map char="&#306;" formula="\IJ"/>
+	  <Map char="&#307;" formula="\ij"/>
+	  <Map char="&#308;" formula="\^J"/>
+	  <Map char="&#309;" formula="\^\j"/>
+	  <Map char="&#310;" formula="\underaccent{,}K"/>
+	  <Map char="&#311;" formula="\underaccent{,}k"/>
+	  <!-- kra groenland-->
+	  <Map char="&#313;" formula="\'L"/>
+	  <Map char="&#314;" formula="\'l"/>
+	  <Map char="&#315;" formula="\underaccent{,}L"/>
+	  <Map char="&#316;" formula="\underaccent{,}l"/>
+	  <Map char="&#317;" formula="\Lcaron"/>
+	  <Map char="&#318;" formula="\lcaron"/>
+	  <Map char="&#319;" formula="L\cdot"/>
+	  <Map char="&#320;" formula="l\cdot"/>
+	  <Map char="&#321;" formula="\L"/>
+	  <Map char="&#322;" formula="\l"/>
+	  <!-- L barre-->
+	  <Map char="&#323;" formula="\'N"/>
+	  <Map char="&#324;" formula="\'n"/>
+	  <Map char="&#325;" formula="\underaccent{,}N"/>
+	  <Map char="&#326;" formula="\underaccent{,}n"/>
+	  <Map char="&#327;" formula="\v N"/>
+	  <Map char="&#328;" formula="\v n"/>
+	  <Map char="&#329;" formula="\text{'}n"/>
+	  <!-- Nj-->
+	  <Map char="&#332;" formula="\=O"/>
+	  <Map char="&#333;" formula="\=o"/>
+	  <Map char="&#334;" formula="\u O"/>
+	  <Map char="&#335;" formula="\u o"/>
+	  <Map char="&#336;" formula="\H O"/>
+	  <Map char="&#337;" formula="\H o"/>
+	  <Map char="&#338;" formula="\OE"/>
+	  <Map char="&#339;" formula="\oe"/>
+	  <Map char="&#340;" formula="\'R"/>
+	  <Map char="&#341;" formula="\'r"/>
+	  <Map char="&#342;" formula="\underaccent{,}R"/>
+	  <Map char="&#343;" formula="\underaccent{,}r"/>
+	  <Map char="&#344;" formula="\v R"/>
+	  <Map char="&#345;" formula="\v r"/>
+	  <Map char="&#346;" formula="\'S"/>
+	  <Map char="&#347;" formula="\'s"/>
+	  <Map char="&#348;" formula="\^S"/>
+	  <Map char="&#349;" formula="\^s"/>
+	  <Map char="&#350;" formula="\c S"/>
+	  <Map char="&#351;" formula="\c s"/>
+	  <Map char="&#352;" formula="\v S"/>
+	  <Map char="&#353;" formula="\v s"/>
+	  <Map char="&#354;" formula="\c T"/>
+	  <Map char="&#355;" formula="\c t"/>
+	  <Map char="&#356;" formula="\v T"/>
+	  <Map char="&#357;" formula="\tcaron"/>
+	  <Map char="&#358;" formula="\TStroke"/>
+	  <Map char="&#359;" formula="\tStroke"/>
+	  <Map char="&#360;" formula="\~U"/>
+	  <Map char="&#361;" formula="\~u"/>
+	  <Map char="&#362;" formula="\=U"/>
+	  <Map char="&#363;" formula="\=u"/>
+	  <Map char="&#364;" formula="\u U"/>
+	  <Map char="&#365;" formula="\u u"/>
+	  <Map char="&#366;" formula="\r U"/>
+	  <Map char="&#367;" formula="\r u"/>
+	  <Map char="&#368;" formula="\H U"/>
+	  <Map char="&#369;" formula="\H u"/>
+	  <Map char="&#370;" formula="\k U"/>
+	  <Map char="&#371;" formula="\k u"/>
+	  <Map char="&#372;" formula="\^W"/>
+	  <Map char="&#373;" formula="\^w"/>
+	  <Map char="&#374;" formula="\^Y"/>
+	  <Map char="&#375;" formula="\^y"/>
+	  <Map char="&#376;" formula="\&quot;Y"/>
+	  <Map char="&#377;" formula="\'Z"/>
+	  <Map char="&#378;" formula="\'z"/>
+	  <Map char="&#379;" formula="\.Z"/>
+	  <Map char="&#380;" formula="\.z"/>
+	  <Map char="&#381;" formula="\v Z"/>
+	  <Map char="&#382;" formula="\v z"/>
+	  <!-- f avec demi-barre-->
+	  <!-- Mapping for greek capitals -->
+	  <Map char="&#913;" formula="\Alpha" text="Α"/>
+	  <Map char="&#914;" formula="\Beta" text="Β"/>
+	  <Map char="&#915;" formula="\Gamma" text="Γ"/>
+	  <Map char="&#916;" formula="\Delta" text="Δ"/>
+	  <Map char="&#917;" formula="\Epsilon" text="Ε"/>
+	  <Map char="&#918;" formula="\Zeta" text="Ζ"/>
+	  <Map char="&#919;" formula="\Eta" text="Η"/>
+	  <Map char="&#920;" formula="\Theta" text="Θ"/>
+	  <Map char="&#921;" formula="\Iota" text="Ι"/>
+	  <Map char="&#922;" formula="\Kappa" text="Κ"/>
+	  <Map char="&#923;" formula="\Lambda" text="Λ"/>
+	  <Map char="&#924;" formula="\Mu" text="Μ"/>
+	  <Map char="&#925;" formula="\Nu" text="Ν"/>
+	  <Map char="&#926;" formula="\Xi" text="Ξ"/>
+	  <Map char="&#927;" formula="\Omicron" text="Ο"/>
+	  <Map char="&#928;" formula="\Pi" text="Π"/>
+	  <Map char="&#929;" formula="\Rho" text="Ρ"/>
+	  <Map char="&#931;" formula="\Sigma" text="Σ"/>
+	  <Map char="&#932;" formula="\Tau" text="Τ"/>
+	  <Map char="&#933;" formula="\Upsilon" text="Υ"/>
+	  <Map char="&#934;" formula="\Phi" text="Φ"/>
+	  <Map char="&#935;" formula="\Chi" text="Χ"/>
+	  <Map char="&#936;" formula="\Psi" text="Ψ"/>
+	  <Map char="&#937;" formula="\Omega" text="Ω"/>
+	  <!-- Unicode to symbols -->
+	  <Map char="&#8742;" formula="\nshortparallel"/>
+	  <Map char="&#8651;" formula="\leftrightharpoons"/>
+	  <Map char="&#8667;" formula="\Rrightarrow"/>
+	  <Map char="&#10956;" formula="\supsetneqq"/>
+	  <Map char="&#8805;" formula="\ge"/>
+	  <Map char="&#8883;" formula="\rhd"/>
+	  <Map char="&#10877;" formula="\leqslant"/>
+	  <Map char="&#8650;" formula="\downdownarrows"/>
+	  <Map char="&#8819;" formula="\gtrsim"/>
+	  <Map char="&#8822;" formula="\lessgtr"/>
+	  <Map char="&#10230;" formula="\longrightarrow"/>
+	  <Map char="&#8660;" formula="\Leftrightarrow"/>
+	  <Map char="&#8592;" formula="\leftarrow"/>
+	  <Map char="&#8854;" formula="\ominus"/>
+	  <Map char="&#8203;" formula="\!"/>
+	  <Map char="&#8855;" formula="\otimes"/>
+	  <Map char="&#8968;" formula="\lceil"/>
+	  <Map char="&#8706;" formula="\partial"/>
+	  <Map char="&#8994;" formula="\smallfrown"/>
+	  <Map char="&#8196;" formula="\,"/>
+	  <Map char="&#10914;" formula="\gg"/>
+	  <Map char="&#10916;" formula="\mathbin{\rlap{&gt;}\!&lt;"/>
+	  <Map char="&#10917;" formula="\mathbin{&gt;&lt;}"/>
+	  <Map char="&#10918;" formula="\leftslice"/>
+	  <Map char="&#10919;" formula="\rightslice"/>
+	  <Map char="&#8194;" formula="\;"/>
+	  <Map char="&#8197;" formula="\:"/>
+	  <Map char="&#8463;" formula="\hbar"/>
+	  <Map char="&#8601;" formula="\swarrow"/>
+	  <Map char="&#8809;" formula="\gneqq"/>
+	  <Map char="&#8800;" formula="\neq"/>
+	  <Map char="&#0215;" formula="\times"/>
+	  <Map char="&#0172;" formula="\lnot"/>
+	  <Map char="&#10949;" formula="\nsubseteqq"/>
+	  <Map char="&#8593;" formula="\uparrow"/>
+	  <Map char="&#8910;" formula="\curlyvee"/>
+	  <Map char="&#8726;" formula="\setminus"/>
+	  <Map char="&#8727;" formula="{}_\ast"/>
+	  <Map char="&#8843;" formula="\supsetneq"/>
+	  <Map char="&#8602;" formula="\nleftarrow"/>
+	  <Map char="&#8654;" formula="\nLeftrightarrow"/>
+	  <Map char="&#9662;" formula="\blacktriangledown"/>
+	  <Map char="&#8642;" formula="\downharpoonright"/>
+	  <Map char="&#10949;" formula="\subseteqq"/>
+	  <Map char="&#8707;" formula="\exists"/>
+	  <Map char="&#8709;" formula="\emptyset"/>
+	  <Map char="&#8921;" formula="\ggg"/>
+	  <Map char="&#8764;" formula="\sim"/>
+	  <Map char="&#8808;" formula="\lvertneqq"/>
+	  <Map char="&#8214;" formula="\|"/>
+	  <Map char="&#8744;" formula="\vee"/>
+	  <Map char="&#8729;" formula="\bullet"/>
+	  <Map char="&#10955;" formula="\subsetneqq"/>
+	  <Map char="&#9663;" formula="\triangledown"/>
+	  <Map char="&#8771;" formula="\simeq"/>
+	  <Map char="&#8649;" formula="\rightrightarrows"/>
+	  <Map char="&#9661;" formula="\bigtriangledown"/>
+	  <Map char="&#8816;" formula="\nleqslant"/>
+	  <Map char="&#8625;" formula="\Rsh"/>
+	  <Map char="&#8600;" formula="\searrow"/>
+	  <Map char="&#9664;" formula="\blacktriangleleft"/>
+	  <Map char="&#8805;" formula="\geq"/>
+	  <Map char="&#8741;" formula="\Vert"/>
+	  <Map char="&#8941;" formula="\ntrianglerighteq"/>
+	  <Map char="&#8596;" formula="\leftrightarrow"/>
+	  <Map char="&#8965;" formula="\barwedge"/>
+	  <Map char="&#8939;" formula="\ntriangleright"/>
+	  <Map char="&#8906;" formula="\rtimes"/>
+	  <Map char="&#8660;" formula="\iff"/>
+	  <Map char="&#8861;" formula="\circleddash"/>
+	  <Map char="&#8915;" formula="\Cup"/>
+	  <Map char="&#8648;" formula="\upuparrows"/>
+	  <Map char="&#8815;" formula="\ngtr"/>
+	  <Map char="&#8937;" formula="\succnsim"/>
+	  <Map char="&#10868;" formula="\coloncolonequals"/>
+	  <Map char="&#10889;" formula="\lnapprox"/>
+	  <Map char="&#8919;" formula="\gtrdot"/>
+	  <Map char="&#8230;" formula="\ldots"/>
+	  <Map char="&#8776;" formula="\approx"/>
+	  <Map char="&#10885;" formula="\lessapprox"/>
+	  <Map char="&#8911;" formula="\curlywedge"/>
+	  <Map char="&#8809;" formula="\gvertneqq"/>
+	  <Map char="&#8775;" formula="\ncong"/>
+	  <Map char="&#8783;" formula="\bumpeq"/>
+	  <Map char="&#10232;" formula="\Longleftarrow"/>
+	  <Map char="&#8741;" formula="\parallel"/>
+	  <Map char="&#8196;" formula="\thinspace"/>
+	  <Map char="&#9002;" formula="\rangle"/>
+	  <Map char="&#8898;" formula="\bigcap"/>
+	  <Map char="&#9827;" formula="\clubsuit"/>
+	  <Map char="&#8835;" formula="\supset"/>
+	  <Map char="&#8836;" formula="\not\subset"/>
+	  <Map char="&#8837;" formula="\not\supset"/>
+	  <Map char="&#8856;" formula="\oslash"/>
+	  <Map char="&#8756;" formula="\therefore"/>
+	  <Map char="&#8758;" formula="\ratio"/>
+	  <Map char="&#8759;" formula="\mathbin{\ratio\ratio}"/>
+	  <Map char="&#10936;" formula="\succapprox"/>
+	  <Map char="&#8869;" formula="\bot"/>
+	  <Map char="&#8923;" formula="\gtreqless"/>
+	  <Map char="&#8782;" formula="\Bumpeq"/>
+	  <Map char="&#8661;" formula="\Updownarrow"/>
+	  <Map char="&#1014;" formula="\backepsilon"/>
+	  <Map char="&#8746;" formula="\cup"/>
+	  <Map char="&#10234;" formula="\Longleftrightarrow"/>
+	  <Map char="&#10927;" formula="\preceq"/>
+	  <Map char="&#8915;" formula="\doublecup"/>
+	  <Map char="&#8214;" formula="\lVert"/>
+	  <Map char="&#8839;" formula="\supseteq"/>
+	  <Map char="&#8817;" formula="\ngeqslant"/>
+	  <Map char="&#8224;" formula="\dagger"/>
+	  <Map char="&#10928;" formula="\nsucceq"/>
+	  <Map char="&#10815;" formula="\amalg"/>
+	  <Map char="&#10891;" formula="\lesseqqgtr"/>
+	  <Map char="&#8806;" formula="\leqq"/>
+	  <Map char="&#8791;" formula="\circeq"/>
+	  <Map char="&#8792;" formula="\smallfrowneq"/>
+	  <Map char="&#8793;" formula="\stackrel{\wedge}{=}"/>
+	  <Map char="&#8794;" formula="\stackrel{\vee}{=}"/>
+	  <Map char="&#8795;" formula="\stackrel{\scalebox{0.8}{\bigstar}}{=}"/>
+	  <Map char="&#8796;" formula="\triangleq"/>
+	  <Map char="&#8797;" formula="\stackrel{\scalebox{0.75}{\mathrm{def}}}{=}"/>
+	  <Map char="&#8798;" formula="\stackrel{\scalebox{0.75}{\mathrm{m}}}{=}"/>
+	  <Map char="&#8799;" formula="\questeq"/>
+	  <Map char="&#8636;" formula="\leftharpoonup"/>
+	  <Map char="&#8858;" formula="\circledcirc"/>
+	  <Map char="&#8598;" formula="\nwarrow"/>
+	  <Map char="&#8934;" formula="\lnsim"/>
+	  <Map char="&#8995;" formula="\smallsmile"/>
+	  <Map char="&#8857;" formula="\odot"/>
+	  <Map char="&#8740;" formula="\nmid"/>
+	  <Map char="&#8918;" formula="\lessdot"/>
+	  <Map char="&#8242;" formula="\prime"/>
+	  <Map char="&#0177;" formula="\pm"/>
+	  <Map char="&#8850;" formula="\sqsupseteq"/>
+	  <Map char="&#8784;" formula="\doteq"/>
+	  <Map char="&#8810;" formula="\ll"/>
+	  <Map char="&#8807;" formula="\geqq"/>
+	  <Map char="&#9825;" formula="\heartsuit"/>
+	  <Map char="&#8638;" formula="\upharpoonright"/>
+	  <Map char="&#8646;" formula="\leftrightarrows"/>
+	  <Map char="&#8908;" formula="\rightthreetimes"/>
+	  <Map char="&#8723;" formula="\mp"/>
+	  <Map char="&#10927;" formula="\npreceq"/>
+	  <Map char="&#8942;" formula="\vdots"/>
+	  <Map char="&#8938;" formula="\ntriangleleft"/>
+	  <Map char="&#8733;" formula="\varpropto"/>
+	  <Map char="&#8902;" formula="\star"/>
+	  <Map char="&#8761;" formula="\minuscolon"/>
+	  <Map char="&#8762;" formula="\geoprop"/>
+	  <Map char="&#8764;" formula="\thicksim"/>
+	  <Map char="&#8882;" formula="\vartriangleleft"/>
+	  <Map char="&#9642;" formula="\blacksquare"/>
+	  <Map char="&#9646;" formula="\marker"/>
+	  <Map char="&#9653;" formula="\triangle"/>
+	  <Map char="&#10756;" formula="\biguplus"/>
+	  <Map char="&#10938;" formula="\succnapprox"/>
+	  <Map char="&#10890;" formula="\gnapprox"/>
+	  <Map char="&#8800;" formula="\ne"/>
+	  <Map char="&#9633;" formula="\square"/>
+	  <Map char="&#8717;" formula="\ni"/>
+	  <Map char="&#8944;" formula="\iddots"/>
+	  <Map char="&#8945;" formula="\ddots"/>
+	  <Map char="&#8948;" formula="\inplus"/>
+	  <Map char="&#8876;" formula="\nvdash"/>
+	  <Map char="&#8720;" formula="\coprod"/>
+	  <Map char="&#8739;" formula="\shortmid"/>
+	  <Map char="&#8617;" formula="\hookleftarrow"/>
+	  <Map char="&#8655;" formula="\nRightarrow"/>
+	  <Map char="&#8639;" formula="\upharpoonleft"/>
+	  <Map char="&#8865;" formula="\boxdot"/>
+	  <Map char="&#8841;" formula="\nsupseteq"/>
+	  <Map char="&#8712;" formula="\in"/>
+	  <Map char="&#8713;" formula="\notin"/>
+	  <Map char="&#8905;" formula="\ltimes"/>
+	  <Map char="&#8827;" formula="\succ"/>
+	  <Map char="&#8722;" formula="\minus"/>
+	  <Map char="&#10928;" formula="\succeq"/>
+	  <Map char="&#8638;" formula="\restriction"/>
+	  <Map char="&#8747;" formula="\int"/>
+	  <Map char="&#9837;" formula="\flat"/>
+	  <Map char="&#8513;" formula="\Game"/>
+	  <Map char="&#8523;" formula="\parr"/>
+	  <Map char="&#8829;" formula="\succcurlyeq"/>
+	  <Map char="&#9001;" formula="\langle"/>
+	  <Map char="&#8901;" formula="\cdot"/>
+	  <Map char="&#8852;" formula="\sqcup"/>
+	  <Map char="&#8503;" formula="\gimel"/>
+	  <Map char="&#8859;" formula="\circledast"/>
+	  <Map char="&#10901;" formula="\eqslantless"/>
+	  <Map char="&#8804;" formula="\le"/>
+	  <Map char="&#8823;" formula="\gtrless"/>
+	  <Map char="&#8733;" formula="\propto"/>
+	  <Map char="&#9665;" formula="\triangleleft"/>
+	  <Map char="&#9652;" formula="\blacktriangle"/>
+	  <Map char="&#8465;" formula="\Im"/>
+	  <Map char="&#10753;" formula="\bigoplus"/>
+	  <Map char="&#10764;" formula="\iiiint"/>
+	  <Map char="&#8765;" formula="\backsim"/>
+	  <Map char="&#8734;" formula="\infty"/>
+	  <Map char="&#8834;" formula="\subset"/>
+	  <Map char="&#8914;" formula="\Cap"/>
+	  <Map char="&#8900;" formula="\diamond"/>
+	  <Map char="&#8878;" formula="\nVdash"/>
+	  <Map char="&#8786;" formula="\fallingdotseq"/>
+	  <Map char="&#8788;" formula="\colonequals"/>
+	  <Map char="&#8789;" formula="\equalscolon"/>
+	  <Map char="&#8812;" formula="\between"/>
+	  <Map char="&#8595;" formula="\downarrow"/>
+	  <Map char="&#8592;" formula="\gets"/>
+	  <Map char="&#8927;" formula="\curlyeqsucc"/>
+	  <Map char="&#8846;" formula="\uplus"/>
+	  <Map char="&#8714;" formula="\in"/>
+	  <Map char="&#8840;" formula="\nsubseteq"/>
+	  <Map char="&#8903;" formula="\divideontimes"/>
+	  <Map char="&#8808;" formula="\lneqq"/>
+	  <Map char="&#8936;" formula="\precnsim"/>
+	  <Map char="&#8956;" formula="\niplus"/>
+	  <Map char="&#8197;" formula="\medspace"/>
+	  <Map char="&#10878;" formula="\geqslant"/>
+	  <Map char="&#8781;" formula="\asymp"/>
+	  <Map char="&#8966;" formula="\doublebarwedge"/>
+	  <Map char="&#8849;" formula="\sqsubseteq"/>
+	  <Map char="&#9136;" formula="\lmoustache"/>
+	  <Map char="&#8769;" formula="\nsim"/>
+	  <Map char="&#8851;" formula="\sqcap"/>
+	  <Map char="&#10950;" formula="\supseteqq"/>
+	  <Map char="&#8907;" formula="\leftthreetimes"/>
+	  <Map char="&#8741;" formula="\shortparallel"/>
+	  <Map char="&#8866;" formula="\vdash"/>
+	  <Map char="&#8737;" formula="\measuredangle"/>
+	  <Map char="&#8838;" formula="\subseteq"/>
+	  <Map char="&#8920;" formula="\llless"/>
+	  <Map char="&#8744;" formula="\lor"/>
+	  <Map char="&#8656;" formula="\Leftarrow"/>
+	  <Map char="&#8472;" formula="\wp"/>
+	  <Map char="&#8768;" formula="\wr"/>
+	  <Map char="&#10754;" formula="\bigotimes"/>
+	  <Map char="&#8807;" formula="\ngeqq"/>
+	  <Map char="&#8871;" formula="\models"/>
+	  <Map char="&#8862;" formula="\boxplus"/>
+	  <Map char="&#8611;" formula="\rightarrowtail"/>
+	  <Map char="&#8863;" formula="\boxminus"/>
+	  <Map char="&#8726;" formula="\smallsetminus"/>
+	  <Map char="&#10886;" formula="\gtrapprox"/>
+	  <Map char="&#8826;" formula="\prec"/>
+	  <Map char="&#8643;" formula="\downharpoonleft"/>
+	  <Map char="&#10239;" formula="\leadsto"/>
+	  <Map char="&#8717;" formula="\owns"/>
+	  <Map char="&#10902;" formula="\eqslantgtr"/>
+	  <Map char="&#8773;" formula="\cong"/>
+	  <Map char="&#8619;" formula="\looparrowleft"/>
+	  <Map char="&#8502;" formula="\beth"/>
+	  <Map char="&#8748;" formula="\iint"/>
+	  <Map char="&#9653;" formula="\vartriangle"/>
+	  <Map char="&#8869;" formula="\perp"/>
+	  <Map char="&#8653;" formula="\nLeftarrow"/>
+	  <Map char="&#10758;" formula="\bigsqcup"/>
+	  <Map char="&#8711;" formula="\nabla"/>
+	  <Map char="&#8884;" formula="\trianglelefteq"/>
+	  <Map char="&#8847;" formula="\sqsubset"/>
+	  <Map char="&#8708;" formula="\nexists"/>
+	  <Map char="&#9654;" formula="\blacktriangleright"/>
+	  <Map char="&#8743;" formula="\wedge"/>
+	  <Map char="&#8736;" formula="\angle"/>
+	  <Map char="&#8242;" formula="\&apos;"/>
+	  <Map char="&#10752;" formula="\bigodot"/>
+	  <Map char="&#8195;" formula="\quad"/>
+	  <Map char="&#9416;" formula="\circledS"/>
+	  <Map char="&#8874;" formula="\Vvdash"/>
+	  <Map char="&#8828;" formula="\preccurlyeq"/>
+	  <Map char="&#9655;" formula="\triangleright"/>
+	  <Map char="&#8778;" formula="\approxeq"/>
+	  <Map char="&#8594;" formula="\to"/>
+	  <Map char="&#10849;" formula="\veebar"/>
+	  <Map char="&#8659;" formula="\Downarrow"/>
+	  <Map char="&#8877;" formula="\nvDash"/>
+	  <Map char="&#8818;" formula="\lesssim"/>
+	  <Map char="&#8830;" formula="\precsim"/>
+	  <Map char="&#8750;" formula="\oint"/>
+	  <Map char="&#8842;" formula="\subsetneq"/>
+	  <Map char="&#8873;" formula="\Vdash"/>
+	  <Map char="&#9585;" formula="\diagup"/>
+	  <Map char="&#8738;" formula="\sphericalangle"/>
+	  <Map char="&#9826;" formula="\diamondsuit"/>
+	  <Map char="&#8867;" formula="\dashv"/>
+	  <Map char="&#8599;" formula="\nearrow"/>
+	  <Map char="&#8603;" formula="\nrightarrow"/>
+	  <Map char="&#10892;" formula="\gtreqqless"/>
+	  <Map char="&#8904;" formula="\bowtie"/>
+	  <Map char="&#8916;" formula="\pitchfork"/>
+	  <Map char="&#9838;" formula="\natural"/>
+	  <Map char="&#10934;" formula="\succneqq"/>
+	  <Map char="&#8843;" formula="\varsupsetneq"/>
+	  <Map char="&#8621;" formula="\leftrightsquigarrow"/>
+	  <Map char="&#8745;" formula="\cap"/>
+	  <Map char="&#9137;" formula="\rmoustache"/>
+	  <Map char="&#8743;" formula="\land"/>
+	  <Map char="&#8913;" formula="\Supset"/>
+	  <Map char="&#8721;" formula="\sum"/>
+	  <Map char="&#8888;" formula="\multimap"/>
+	  <Map char="&#8971;" formula="\rfloor"/>
+	  <Map char="&#8622;" formula="\nleftrightarrow"/>
+	  <Map char="&#9674;" formula="\lozenge"/>
+	  <Map char="&#8647;" formula="\leftleftarrows"/>
+	  <Map char="&#8605;" formula="\rightsquigarrow"/>
+	  <Map char="&#8864;" formula="\boxtimes"/>
+	  <Map char="&#8644;" formula="\rightleftarrows"/>
+	  <Map char="&#8940;" formula="\ntrianglelefteq"/>
+	  <Map char="&#8749;" formula="\iiint"/>
+	  <Map char="&#8868;" formula="\top"/>
+	  <Map char="&#8594;" formula="\rightarrow"/>
+	  <Map char="&#8476;" formula="\Re"/>
+	  <Map char="&#8848;" formula="\sqsupset"/>
+	  <Map char="&#8608;" formula="\twoheadrightarrow"/>
+	  <Map char="&#9632;" formula="\blacksquare"/>
+	  <Map char="&#10956;" formula="\varsupsetneqq"/>
+	  <Map char="&#8630;" formula="\curvearrowleft"/>
+	  <Map char="&#8504;" formula="\daleth"/>
+	  <Map char="&#8194;" formula="\thickspace"/>
+	  <Map char="&#8921;" formula="\gggtr"/>
+	  <Map char="&#8790;" formula="\eqcirc"/>
+	  <Map char="&#10955;" formula="\varsubsetneqq"/>
+	  <Map char="&#8739;" formula="\vert"/>
+	  <Map char="&#8831;" formula="\succsim"/>
+	  <Map char="&#8657;" formula="\Uparrow"/>
+	  <Map char="&#8806;" formula="\nleqq"/>
+	  <Map char="&#8487;" formula="\mho"/>
+	  <Map char="&#8491;" formula="\text{\AA}"/>
+	  <Map char="&#8770;" formula="\eqsim"/>
+	  <Map char="&#8620;" formula="\looparrowright"/>
+	  <Map char="&#8640;" formula="\rightharpoonup"/>
+	  <Map char="&#8801;" formula="\equiv"/>
+	  <Map char="&#8802;" formula="\not\equiv"/>
+	  <Map char="&#8610;" formula="\leftarrowtail"/>
+	  <Map char="&#8882;" formula="\lhd"/>
+	  <Map char="&#9733;" formula="\bigstar"/>
+	  <Map char="&#8935;" formula="\gnsim"/>
+	  <Map char="&#8872;" formula="\vDash"/>
+	  <Map char="&#10731;" formula="\blacklozenge"/>
+	  <Map char="&#0183;" formula="\cdot"/>
+	  <Map char="&#8814;" formula="\nless"/>
+	  <Map char="&#8225;" formula="\ddagger"/>
+	  <Map char="&#8787;" formula="\risingdotseq"/>
+	  <Map char="&#8467;" formula="\ell"/>
+	  <Map char="&#8785;" formula="\doteqdot"/>
+	  <Map char="&#10887;" formula="\lneq"/>
+	  <Map char="&#8658;" formula="\Rightarrow"/>
+	  <Map char="&#10233;" formula="\Longrightarrow"/>
+	  <Map char="&#8631;" formula="\curvearrowright"/>
+	  <Map char="&#8618;" formula="\hookrightarrow"/>
+	  <Map char="&#8214;" formula="\rVert"/>
+	  <Map char="&#10231;" formula="\longleftrightarrow"/>
+	  <Map char="&#8926;" formula="\curlyeqprec"/>
+	  <Map char="&#10229;" formula="\longleftarrow"/>
+	  <Map char="&#8641;" formula="\rightharpoondown"/>
+	  <Map char="&#8463;" formula="\hslash"/>
+	  <Map char="&#8914;" formula="\doublecap"/>
+	  <Map char="&#8719;" formula="\prod"/>
+	  <Map char="&#8597;" formula="\updownarrow"/>
+	  <Map char="&#8624;" formula="\Lsh"/>
+	  <Map char="&#8833;" formula="\nsucc"/>
+	  <Map char="&#8725;" formula="\slash"/>
+	  <Map char="&#8637;" formula="\leftharpoondown"/>
+	  <Map char="&#8804;" formula="\leq"/>
+	  <Map char="&#8500;" formula="\mathit{o}"/>
+	  <Map char="&#8501;" formula="\aleph"/>
+	  <Map char="&#8879;" formula="\nVDash"/>
+	  <Map char="&#8970;" formula="\lfloor"/>
+	  <Map char="&#8728;" formula="\circ"/>
+	  <Map char="&#8899;" formula="\bigcup"/>
+	  <Map char="&#8740;" formula="\nshortmid"/>
+	  <Map char="&#10935;" formula="\precapprox"/>
+	  <Map char="&#8885;" formula="\trianglerighteq"/>
+	  <Map char="&#8739;" formula="\mid"/>
+	  <Map char="&#8724;" formula="\dotplus"/>
+	  <Map char="&#8832;" formula="\nprec"/>
+	  <Map char="&#8943;" formula="\cdots"/>
+	  <Map char="&#8666;" formula="\Lleftarrow"/>
+	  <Map char="&#10933;" formula="\precneqq"/>
+	  <Map char="&#8495;" formula="e"/>
+	  <Map char="&#8498;" formula="\Finv"/>
+	  <Map char="&#8890;" formula="\intercal"/>
+	  <Map char="&#8730;" formula="\surd"/>
+	  <Map char="&#8897;" formula="\bigvee"/>
+	  <Map char="&#10888;" formula="\gneq"/>
+	  <Map char="&#8704;" formula="\forall"/>
+	  <Map char="&#10937;" formula="\precnapprox"/>
+	  <Map char="&#9824;" formula="\spadesuit"/>
+	  <Map char="&#10236;" formula="\longmapsto"/>
+	  <Map char="&#10214;" formula="\llbracket"/>
+	  <Map char="&#10215;" formula="\rrbracket"/>
+	  <Map char="&#10216;" formula="\langle"/>
+	  <Map char="&#10217;" formula="\rangle"/>
+	  <Map char="&#9711;" formula="\bigcirc"/>
+	  <Map char="&#8909;" formula="\backsimeq"/>
+	  <Map char="&#0247;" formula="\div"/>
+	  <Map char="&#0125;" formula="\rbrace"/>
+	  <Map char="&#8705;" formula="\complement"/>
+	  <Map char="&#8757;" formula="\because"/>
+	  <Map char="&#8760;" formula="\dotminus"/>
+	  <Map char="&#9651;" formula="\bigtriangleup"/>
+	  <Map char="&#8606;" formula="\twoheadleftarrow"/>
+	  <Map char="&#1013;" formula="\epsilon"/>
+	  <Map char="&#8741;" formula="\Arrowvert"/>
+	  <Map char="&#9674;" formula="\Diamond"/>
+	  <Map char="&#8842;" formula="\varsubsetneq"/>
+	  <Map char="&#8739;" formula="\arrowvert"/>
+	  <Map char="&#9839;" formula="\sharp"/>
+	  <Map char="&#8896;" formula="\bigwedge"/>
+	  <Map char="&#8709;" formula="\varnothing"/>
+	  <Map char="&#9586;" formula="\diagdown"/>
+	  <Map char="&#8614;" formula="\mapsto"/>
+	  <Map char="&#8883;" formula="\vartriangleright"/>
+	  <Map char="&#8853;" formula="\oplus"/>
+	  <Map char="&#8776;" formula="\thickapprox"/>
+	  <Map char="&#8969;" formula="\rceil"/>
+	  <Map char="&#8912;" formula="\Subset"/>
+	  <Map char="&#8652;" formula="\rightleftharpoons"/>
+	  <Map char="&#0769;" formula="\acute"/>
+	  <Map char="&#0768;" formula="\grave"/>
+	  <Map char="&#0776;" formula="\ddot"/>
+	  <Map char="&#0779;" formula="\doubleacute"/>
+	  <Map char="&#0771;" formula="\tilde"/>
+	  <Map char="&#0730;" formula="\jlatexmathring"/>
+	  <Map char="&#0772;" formula="\bar"/>
+	  <Map char="&#0774;" formula="\breve"/>
+	  <Map char="&#0780;" formula="\check"/>
+	  <Map char="&#0770;" formula="\hat"/>
+	  <Map char="&#8407;" formula="\vec"/>
+	  <Map char="&#0775;" formula="\dot"/>
+	  <Map char="&#0770;" formula="\widehat"/>
+	  <Map char="&#0771;" formula="\widetilde"/>
+	  <Map char="&#8450;" formula="\mathbb{C}"/>
+	  <Map char="&#8451;" formula="\sideset{^\circ}{}\text{C}"/>
+	  <Map char="&#8455;" formula="\jlmEuler"/>
+	  <Map char="&#8457;" formula="\sideset{^\circ}{}\text{F}"/>
+	  <Map char="&#8461;" formula="\mathbb{H}"/>
+	  <Map char="&#8469;" formula="\mathbb{N}"/>
+	  <Map char="&#8473;" formula="\mathbb{P}"/>
+	  <Map char="&#8474;" formula="\mathbb{Q}"/>
+	  <Map char="&#8477;" formula="\mathbb{R}"/>
+	  <Map char="&#8484;" formula="\mathbb{Z}"/>
+	  <Map char="&#8488;" formula="\mathfrak{Z}"/>
+	  <Map char="&#8459;" formula="\mathscr{H}"/>
+	  <Map char="&#8460;" formula="\mathfrak{H}"/>
+	  <Map char="&#8464;" formula="\mathscr{I}"/>
+	  <Map char="&#8466;" formula="\mathscr{L}"/>
+	  <Map char="&#8475;" formula="\mathscr{R}"/>
+	  <Map char="&#8492;" formula="\mathscr{B}"/>
+	  <Map char="&#8493;" formula="\mathfrak{C}"/>
+	  <Map char="&#8496;" formula="\mathscr{E}"/>
+	  <Map char="&#8497;" formula="\mathscr{F}"/>
+	  <Map char="&#8499;" formula="\mathscr{M}"/>
+	  <Map char="&#64256;" formula="ff"/>
+	  <Map char="&#64257;" formula="fi"/>
+	  <Map char="&#58290;" formula="fj"/>
+	  <Map char="&#64258;" formula="fl"/>
+	  <Map char="&#64259;" formula="ffi"/>
+	  <Map char="&#64260;" formula="ffl"/>
+	  <Map char="&#10643;" formula="\mathbin{\rlap{&lt;}\;(}"/>
+	  <Map char="&#10644;" formula="\mathbin{\rlap{&gt;}\,)}"/>
+	  <Map char="&#10677;" formula="\minuso"/>
+	  <Map char="&#10686;" formula="\varocircle"/>
+	  <Map char="&#10688;" formula="\olessthan"/>
+	  <Map char="&#10689;" formula="\ogreaterthan"/>
+	  <Map char="&#10692;" formula="\boxslash"/>
+	  <Map char="&#10693;" formula="\boxbslash"/>
+	  <Map char="&#10016;" formula="\maltese"/>
+	  <Map char="&#10016;" formula="\checkmark"/>
+	  <Map char="&#8254;" formula="\mathpunct{\={\ }}"/>
+	  <Map char="&#8259;" formula="\hybull"/>
+	  <Map char="&#8240;" formula="\textperthousand"/>
+	  <Map char="&#8241;" formula="\textpertenthousand"/>
+	  <Map char="&#8249;" formula="\guilsinglleft"/>
+	  <Map char="&#8250;" formula="\guilsinglright"/>
+	  <Map char="&#8772;" formula="\not\simeq"/>
+	  <Map char="&#8244;" formula="&apos;&apos;&apos;"/>
+	  <Map char="&#8411;" formula="&apos;&apos;"/>
+	  <Map char="&#8216;" formula="`"/>
+	  <Map char="&#8220;" formula="``"/>
+	  <Map char="&#8217;" formula="\textapos"/>
+	  <Map char="&#8218;" formula=","/>
+	  <Map char="&#8221;" formula="\textapos\textapos"/>
+	  <Map char="&#8222;" formula=",,"/>
+	  <Map char="&#8206;" formula=" "/>
+	  <Map char="&#8207;" formula=" "/>
+	  <Map char="&#8364;" formula="\euro"/>
+	  <Map char="&#8208;" formula="\textminus"/>
+	  <Map char="&#8211;" formula="\textendash"/>
+	  <Map char="&#8212;" formula="\textemdash"/>
+	  <Map char="&#8448;" formula="\sfrac{a}{c}"/>
+	  <Map char="&#8449;" formula="\sfrac{a}{s}"/>
+	  <Map char="&#8453;" formula="\sfrac{c}{o}"/>
+	  <Map char="&#8454;" formula="\sfrac{c}{u}"/>
+	  <Map char="&#8480;" formula="{}^{\text{TM}}"/>
+	  <Map char="&#8988;" formula="\ulcorner"/>
+	  <Map char="&#8989;" formula="\urcorner"/>
+	  <Map char="&#8990;" formula="\llcorner"/>
+	  <Map char="&#8991;" formula="\lrcorner"/>
+	  <Map char="&#8531;" formula="\text{\sfrac13}"/>
+	  <Map char="&#8532;" formula="\text{sfrac23}"/>
+	  <Map char="&#8533;" formula="\text{\sfrac15}"/>
+	  <Map char="&#8534;" formula="\text{\sfrac25}"/>
+	  <Map char="&#8535;" formula="\text{\sfrac35}"/>
+	  <Map char="&#8536;" formula="\text{\sfrac45}"/>
+	  <Map char="&#8537;" formula="\text{\sfrac16}"/>
+	  <Map char="&#8538;" formula="\text{\sfrac56}"/>
+	  <Map char="&#189;" formula="\text{\sfrac12}"/>
+	  <Map char="&#188;" formula="\text{\sfrac14}"/>
+	  <Map char="&#190;" formula="\text{\sfrac34}"/>
+	  <Map char="&#8539;" formula="\text{\sfrac18}"/>
+	  <Map char="&#8540;" formula="\text{\sfrac38}"/>
+	  <Map char="&#8541;" formula="\text{\sfrac58}"/>
+	  <Map char="&#8542;" formula="\text{\sfrac78}"/>
+	  <Map char="&#8543;" formula="\text{\sfrac{1}{\ }}"/>
+	  <Map char="&#8544;" formula="\text{I}"/>
+	  <Map char="&#8545;" formula="\text{II}"/>
+	  <Map char="&#8546;" formula="\text{III}"/>
+	  <Map char="&#8547;" formula="\text{IV}"/>
+	  <Map char="&#8548;" formula="\text{V}"/>
+	  <Map char="&#8549;" formula="\text{VI}"/>
+	  <Map char="&#8550;" formula="\text{VII}"/>
+	  <Map char="&#8551;" formula="\text{VIII}"/>
+	  <Map char="&#8552;" formula="\text{IX}"/>
+	  <Map char="&#8553;" formula="\text{X}"/>
+	  <Map char="&#8554;" formula="\text{XI}"/>
+	  <Map char="&#8555;" formula="\text{XII}"/>
+	  <Map char="&#8556;" formula="\text{L}"/>
+	  <Map char="&#8557;" formula="\text{C}"/>
+	  <Map char="&#8558;" formula="\text{D}"/>
+	  <Map char="&#8559;" formula="\text{M}"/>
+	  <Map char="&#8560;" formula="\text{i}"/>
+	  <Map char="&#8561;" formula="\text{ii}"/>
+	  <Map char="&#8562;" formula="\text{iii}"/>
+	  <Map char="&#8563;" formula="\text{iv}"/>
+	  <Map char="&#8564;" formula="\text{v}"/>
+	  <Map char="&#8565;" formula="\text{vi}"/>
+	  <Map char="&#8566;" formula="\text{vii}"/>
+	  <Map char="&#8567;" formula="\text{viii}"/>
+	  <Map char="&#8568;" formula="\text{ix}"/>
+	  <Map char="&#8569;" formula="\text{x}"/>
+	  <Map char="&#8570;" formula="\text{xi}"/>
+	  <Map char="&#8571;" formula="\text{xii}"/>
+	  <Map char="&#8572;" formula="\text{l}"/>
+	  <Map char="&#8573;" formula="\text{c}"/>
+	  <Map char="&#8574;" formula="\text{d}"/>
+	  <Map char="&#8575;" formula="\text{m}"/>
+	  <Map char="&#9600;" formula="\uhblk"/>
+	  <Map char="&#9601;" formula="\lhblk"/>
+	  <Map char="&#9608;" formula="\block"/>
+	  <Map char="&#9617;" formula="\fgcolor{bfbfbf}{\block}"/>
+	  <Map char="&#9618;" formula="\fgcolor{808080}{\block}"/>
+	  <Map char="&#9619;" formula="\fgcolor{404040}{\block}"/>
+	  <Map char="&#9312;" formula="\textcircled{\texttt 1}"/>
+	  <Map char="&#9313;" formula="\textcircled{\texttt 2}"/>
+	  <Map char="&#9314;" formula="\textcircled{\texttt 3}"/>
+	  <Map char="&#9315;" formula="\textcircled{\texttt 4}"/>
+	  <Map char="&#9316;" formula="\textcircled{\texttt 5}"/>
+	  <Map char="&#9317;" formula="\textcircled{\texttt 6}"/>
+	  <Map char="&#9318;" formula="\textcircled{\texttt 7}"/>
+	  <Map char="&#9319;" formula="\textcircled{\texttt 8}"/>
+	  <Map char="&#9320;" formula="\textcircled{\texttt 9}"/>
+	  <Map char="&#9398;" formula="\textcircled{\texttt A}"/>
+	  <Map char="&#9399;" formula="\textcircled{\texttt B}"/>
+	  <Map char="&#9400;" formula="\textcircled{\texttt C}"/>
+	  <Map char="&#9401;" formula="\textcircled{\texttt D}"/>
+	  <Map char="&#9402;" formula="\textcircled{\texttt E}"/>
+	  <Map char="&#9403;" formula="\textcircled{\texttt F}"/>
+	  <Map char="&#9404;" formula="\textcircled{\texttt G}"/>
+	  <Map char="&#9405;" formula="\textcircled{\texttt H}"/>
+	  <Map char="&#9406;" formula="\textcircled{\texttt I}"/>
+	  <Map char="&#9407;" formula="\textcircled{\texttt J}"/>
+	  <Map char="&#9408;" formula="\textcircled{\texttt K}"/>
+	  <Map char="&#9409;" formula="\textcircled{\texttt L}"/>
+	  <Map char="&#9410;" formula="\textcircled{\texttt M}"/>
+	  <Map char="&#9411;" formula="\textcircled{\texttt N}"/>
+	  <Map char="&#9412;" formula="\textcircled{\texttt O}"/>
+	  <Map char="&#9413;" formula="\textcircled{\texttt P}"/>
+	  <Map char="&#9414;" formula="\textcircled{\texttt Q}"/>
+	  <Map char="&#9415;" formula="\textcircled{\texttt R}"/>
+	  <Map char="&#9416;" formula="\textcircled{\texttt S}"/>
+	  <Map char="&#9417;" formula="\textcircled{\texttt T}"/>
+	  <Map char="&#9418;" formula="\textcircled{\texttt U}"/>
+	  <Map char="&#9419;" formula="\textcircled{\texttt V}"/>
+	  <Map char="&#9420;" formula="\textcircled{\texttt W}"/>
+	  <Map char="&#9421;" formula="\textcircled{\texttt X}"/>
+	  <Map char="&#9422;" formula="\textcircled{\texttt Y}"/>
+	  <Map char="&#9423;" formula="\textcircled{\texttt Z}"/>
+	  <Map char="&#9424;" formula="\textcircled{\texttt a}"/>
+	  <Map char="&#9425;" formula="\textcircled{\texttt b}"/>
+	  <Map char="&#9426;" formula="\textcircled{\texttt c}"/>
+	  <Map char="&#9427;" formula="\textcircled{\texttt d}"/>
+	  <Map char="&#9428;" formula="\textcircled{\texttt e}"/>
+	  <Map char="&#9429;" formula="\textcircled{\texttt f}"/>
+	  <Map char="&#9430;" formula="\textcircled{\texttt g}"/>
+	  <Map char="&#9431;" formula="\textcircled{\texttt h}"/>
+	  <Map char="&#9432;" formula="\textcircled{\texttt i}"/>
+	  <Map char="&#9433;" formula="\textcircled{\texttt j}"/>
+	  <Map char="&#9434;" formula="\textcircled{\texttt k}"/>
+	  <Map char="&#9435;" formula="\textcircled{\texttt l}"/>
+	  <Map char="&#9436;" formula="\textcircled{\texttt m}"/>
+	  <Map char="&#9437;" formula="\textcircled{\texttt n}"/>
+	  <Map char="&#9438;" formula="\textcircled{\texttt o}"/>
+	  <Map char="&#9439;" formula="\textcircled{\texttt p}"/>
+	  <Map char="&#9440;" formula="\textcircled{\texttt q}"/>
+	  <Map char="&#9441;" formula="\textcircled{\texttt r}"/>
+	  <Map char="&#9442;" formula="\textcircled{\texttt s}"/>
+	  <Map char="&#9443;" formula="\textcircled{\texttt t}"/>
+	  <Map char="&#9444;" formula="\textcircled{\texttt u}"/>
+	  <Map char="&#9445;" formula="\textcircled{\texttt v}"/>
+	  <Map char="&#9446;" formula="\textcircled{\texttt w}"/>
+	  <Map char="&#9447;" formula="\textcircled{\texttt x}"/>
+	  <Map char="&#9448;" formula="\textcircled{\texttt y}"/>
+	  <Map char="&#9449;" formula="\textcircled{\texttt z}"/>
+	</CharacterToFormulaMappings>
+
+</FormulaSettings>

@@ -1,0 +1,306 @@
+<?xml version='1.0'?>
+<!--
+  mappings_greek.xml
+  =========================================================================
+  This file is  part of the JLaTeXMath Library - http://forge.scilab.org/index.php/p/jlatexmath
+  
+  Copyright (C) 2009 DENIZET Calixte
+  
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or (at
+  your option) any later version.
+  
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
+  
+  A copy of the GNU General Public License can be found in the file
+  LICENSE.txt provided with the source distribution of this program (see
+  the META-INF directory in the source jar). This license can also be
+  found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+  
+  If you did not receive a copy of the GNU General Public License along
+  with this program, contact the lead developer, or write to the Free
+  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+  
+-->
+
+<FormulaSettings>
+  <CharacterToSymbolMappings>
+    <Map char="&#884;" symbol="ʹ"/>
+    <Map char="&#885;" symbol="͵"/>
+    <Map char="&#890;" symbol="ͺ"/>
+    <Map char="&#900;" symbol="΄"/>
+    <Map char="&#901;" symbol="΅"/>
+    <Map char="&#903;" symbol="·"/>
+    <Map char="&#912;" symbol="ΐ"/>
+    <Map char="&#938;" symbol="Ϊ"/>
+    <Map char="&#939;" symbol="Ϋ"/>
+    <Map char="&#940;" symbol="ά"/>
+    <Map char="&#941;" symbol="έ"/>
+    <Map char="&#942;" symbol="ή"/>
+    <Map char="&#943;" symbol="ί"/>
+    <Map char="&#944;" symbol="ΰ"/>
+    <Map char="&#970;" symbol="ϊ"/>
+    <Map char="&#971;" symbol="ϋ"/>
+    <Map char="&#972;" symbol="ό"/>
+    <Map char="&#973;" symbol="ύ"/>
+    <Map char="&#974;" symbol="ώ"/>
+    <Map char="&#984;" symbol="Ϙ"/>
+    <Map char="&#985;" symbol="ϙ"/>
+    <Map char="&#986;" symbol="Ϛ"/>
+    <Map char="&#987;" symbol="ϛ"/>
+    <Map char="&#988;" symbol="Ϝ"/>
+    <Map char="&#989;" symbol="ϝ"/>
+    <Map char="&#991;" symbol="ϟ"/>
+    <Map char="&#992;" symbol="Ϡ"/>
+    <Map char="&#993;" symbol="ϡ"/>
+    <Map char="&#7936;" symbol="ἀ"/>
+    <Map char="&#7937;" symbol="ἁ"/>
+    <Map char="&#7938;" symbol="ἂ"/>
+    <Map char="&#7939;" symbol="ἃ"/>
+    <Map char="&#7940;" symbol="ἄ"/>
+    <Map char="&#7941;" symbol="ἅ"/>
+    <Map char="&#7942;" symbol="ἆ"/>
+    <Map char="&#7943;" symbol="ἇ"/>
+    <Map char="&#7952;" symbol="ἐ"/>
+    <Map char="&#7953;" symbol="ἑ"/>
+    <Map char="&#7954;" symbol="ἒ"/>
+    <Map char="&#7955;" symbol="ἓ"/>
+    <Map char="&#7956;" symbol="ἔ"/>
+    <Map char="&#7957;" symbol="ἕ"/>
+    <Map char="&#7968;" symbol="ἠ"/>
+    <Map char="&#7969;" symbol="ἡ"/>
+    <Map char="&#7970;" symbol="ἢ"/>
+    <Map char="&#7971;" symbol="ἣ"/>
+    <Map char="&#7972;" symbol="ἤ"/>
+    <Map char="&#7973;" symbol="ἥ"/>
+    <Map char="&#7974;" symbol="ἦ"/>
+    <Map char="&#7975;" symbol="ἧ"/>
+    <Map char="&#7984;" symbol="ἰ"/>
+    <Map char="&#7985;" symbol="ἱ"/>
+    <Map char="&#7986;" symbol="ἲ"/>
+    <Map char="&#7987;" symbol="ἳ"/>
+    <Map char="&#7988;" symbol="ἴ"/>
+    <Map char="&#7989;" symbol="ἵ"/>
+    <Map char="&#7990;" symbol="ἶ"/>
+    <Map char="&#7991;" symbol="ἷ"/>
+    <Map char="&#8000;" symbol="ὀ"/>
+    <Map char="&#8001;" symbol="ὁ"/>
+    <Map char="&#8002;" symbol="ὂ"/>
+    <Map char="&#8003;" symbol="ὃ"/>
+    <Map char="&#8004;" symbol="ὄ"/>
+    <Map char="&#8005;" symbol="ὅ"/>
+    <Map char="&#8016;" symbol="ὐ"/>
+    <Map char="&#8017;" symbol="ὑ"/>
+    <Map char="&#8018;" symbol="ὒ"/>
+    <Map char="&#8019;" symbol="ὓ"/>
+    <Map char="&#8020;" symbol="ὔ"/>
+    <Map char="&#8021;" symbol="ὕ"/>
+    <Map char="&#8022;" symbol="ὖ"/>
+    <Map char="&#8023;" symbol="ὗ"/>
+    <Map char="&#8032;" symbol="ὠ"/>
+    <Map char="&#8033;" symbol="ὡ"/>
+    <Map char="&#8034;" symbol="ὢ"/>
+    <Map char="&#8035;" symbol="ὣ"/>
+    <Map char="&#8036;" symbol="ὤ"/>
+    <Map char="&#8037;" symbol="ὥ"/>
+    <Map char="&#8038;" symbol="ὦ"/>
+    <Map char="&#8039;" symbol="ὧ"/>
+    <Map char="&#8048;" symbol="ὰ"/>
+    <Map char="&#8050;" symbol="ὲ"/>
+    <Map char="&#8052;" symbol="ὴ"/>
+    <Map char="&#8054;" symbol="ὶ"/>
+    <Map char="&#8056;" symbol="ὸ"/>
+    <Map char="&#8058;" symbol="ὺ"/>
+    <Map char="&#8060;" symbol="ὼ"/>
+    <Map char="&#8064;" symbol="ᾀ"/>
+    <Map char="&#8065;" symbol="ᾁ"/>
+    <Map char="&#8066;" symbol="ᾂ"/>
+    <Map char="&#8067;" symbol="ᾃ"/>
+    <Map char="&#8068;" symbol="ᾄ"/>
+    <Map char="&#8069;" symbol="ᾅ"/>
+    <Map char="&#8070;" symbol="ᾆ"/>
+    <Map char="&#8071;" symbol="ᾇ"/>
+    <Map char="&#8080;" symbol="ᾐ"/>
+    <Map char="&#8081;" symbol="ᾑ"/>
+    <Map char="&#8082;" symbol="ᾒ"/>
+    <Map char="&#8083;" symbol="ᾓ"/>
+    <Map char="&#8084;" symbol="ᾔ"/>
+    <Map char="&#8085;" symbol="ᾕ"/>
+    <Map char="&#8086;" symbol="ᾖ"/>
+    <Map char="&#8087;" symbol="ᾗ"/>
+    <Map char="&#8096;" symbol="ᾠ"/>
+    <Map char="&#8097;" symbol="ᾡ"/>
+    <Map char="&#8098;" symbol="ᾢ"/>
+    <Map char="&#8099;" symbol="ᾣ"/>
+    <Map char="&#8100;" symbol="ᾤ"/>
+    <Map char="&#8101;" symbol="ᾥ"/>
+    <Map char="&#8102;" symbol="ᾦ"/>
+    <Map char="&#8103;" symbol="ᾧ"/>
+    <Map char="&#8114;" symbol="ᾲ"/>
+    <Map char="&#8115;" symbol="ᾳ"/>
+    <Map char="&#8116;" symbol="ᾴ"/>
+    <Map char="&#8118;" symbol="ᾶ"/>
+    <Map char="&#8119;" symbol="ᾷ"/>
+    <Map char="&#8124;" symbol="ᾼ"/>
+    <Map char="&#8125;" symbol="᾿"/>
+    <Map char="&#8126;" symbol="ι"/>
+    <Map char="&#8127;" symbol="᾿"/>
+    <Map char="&#8128;" symbol="῀"/>
+    <Map char="&#8129;" symbol="῁"/>
+    <Map char="&#8130;" symbol="ῂ"/>
+    <Map char="&#8131;" symbol="ῃ"/>
+    <Map char="&#8132;" symbol="ῄ"/>
+    <Map char="&#8134;" symbol="ῆ"/>
+    <Map char="&#8135;" symbol="ῇ"/>
+    <Map char="&#8140;" symbol="ῌ"/>
+    <Map char="&#8141;" symbol="῍"/>
+    <Map char="&#8142;" symbol="῎"/>
+    <Map char="&#8143;" symbol="῏"/>
+    <Map char="&#8146;" symbol="ῒ"/>
+    <Map char="&#8150;" symbol="ῖ"/>
+    <Map char="&#8151;" symbol="ῗ"/>
+    <Map char="&#8157;" symbol="῝"/>
+    <Map char="&#8158;" symbol="῞"/>
+    <Map char="&#8159;" symbol="῟"/>
+    <Map char="&#8162;" symbol="ῢ"/>
+    <Map char="&#8164;" symbol="ῤ"/>
+    <Map char="&#8165;" symbol="ῥ"/>
+    <Map char="&#8166;" symbol="ῦ"/>
+    <Map char="&#8167;" symbol="ῧ"/>
+    <Map char="&#8173;" symbol="῭"/>
+    <Map char="&#8174;" symbol="΅"/>
+    <Map char="&#8175;" symbol="`"/>
+    <Map char="&#8178;" symbol="ῲ"/>
+    <Map char="&#8179;" symbol="ῳ"/>
+    <Map char="&#8180;" symbol="ῴ"/>
+    <Map char="&#8182;" symbol="ῶ"/>
+    <Map char="&#8183;" symbol="ῷ"/>
+    <Map char="&#8188;" symbol="ῼ"/>
+    <Map char="&#8189;" symbol="ʹ"/>
+    <Map char="&#8190;" symbol="῾"/>
+    <Map char="&#8217;" symbol="’"/>
+  </CharacterToSymbolMappings>
+  
+  <CharacterToFormulaMappings>
+    <Map char="&#902;" formula="\grkaccent{ʹ}{\phantom{ι}}\!\!A"/>
+    <Map char="&#904;" formula="\grkaccent{ʹ}{\phantom{ι}}Ε"/>
+    <Map char="&#905;" formula="\grkaccent{ʹ}{\phantom{ι}}H"/>
+    <Map char="&#906;" formula="\grkaccent{ʹ}{\phantom{ι}}Ι"/>
+    <Map char="&#908;" formula="\grkaccent{ʹ}{\phantom{ι}}\!Ο"/>
+    <Map char="&#910;" formula="\grkaccent{ʹ}{\phantom{ι}}Υ"/>
+    <Map char="&#911;" formula="\grkaccent{ʹ}{\phantom{ι}}\!Ω"/>
+    <Map char="&#7944;" formula="’Α"/>
+    <Map char="&#7945;" formula="῾Α"/>
+    <Map char="&#7946;" formula="῍Α"/>
+    <Map char="&#7947;" formula="῝Α"/>
+    <Map char="&#7948;" formula="῎Α"/>
+    <Map char="&#7949;" formula="῞Α"/>
+    <Map char="&#7950;" formula="῏Α"/>
+    <Map char="&#7951;" formula="῟Α"/>
+    <Map char="&#7960;" formula="’Ε"/>
+    <Map char="&#7961;" formula="῾Ε"/>
+    <Map char="&#7962;" formula="῍Ε"/>
+    <Map char="&#7963;" formula="῝Ε"/>
+    <Map char="&#7964;" formula="῎Ε"/>
+    <Map char="&#7965;" formula="῞Ε"/>
+    <Map char="&#7976;" formula="’Η"/>
+    <Map char="&#7977;" formula="῾Η"/>
+    <Map char="&#7978;" formula="῍Η"/>
+    <Map char="&#7979;" formula="῝Η"/>
+    <Map char="&#7980;" formula="῎Η"/>
+    <Map char="&#7981;" formula="῞Η"/>
+    <Map char="&#7982;" formula="῏Η"/>
+    <Map char="&#7983;" formula="῟Η"/>
+    <Map char="&#7992;" formula="’Ι"/>
+    <Map char="&#7993;" formula="῾Ι"/>
+    <Map char="&#7994;" formula="῍Ι"/>
+    <Map char="&#7995;" formula="῝Ι"/>
+    <Map char="&#7996;" formula="῎Ι"/>
+    <Map char="&#7997;" formula="῞Ι"/>
+    <Map char="&#7998;" formula="῏Ι"/>
+    <Map char="&#7999;" formula="῟Ι"/>
+    <Map char="&#8008;" formula="’Ο"/>
+    <Map char="&#8009;" formula="῾Ο"/>
+    <Map char="&#8010;" formula="῍Ο"/>
+    <Map char="&#8011;" formula="῝Ο"/>
+    <Map char="&#8012;" formula="῎Ο"/>
+    <Map char="&#8013;" formula="῞Ο"/>
+    <Map char="&#8025;" formula="῾Υ"/>
+    <Map char="&#8026;" formula="῝Υ"/>
+    <Map char="&#8027;" formula="῞Υ"/>
+    <Map char="&#8028;" formula="῟Υ"/>
+    <Map char="&#8040;" formula="’Ω"/>
+    <Map char="&#8041;" formula="῾Ω"/>
+    <Map char="&#8042;" formula="῍Ω"/>
+    <Map char="&#8043;" formula="῝Ω"/>
+    <Map char="&#8044;" formula="῎Ω"/>
+    <Map char="&#8045;" formula="῞Ω"/>
+    <Map char="&#8046;" formula="῏Ω"/>
+    <Map char="&#8047;" formula="῟Ω"/>
+    <Map char="&#8049;" formula="\grkaccent{΄}α"/>
+    <Map char="&#8051;" formula="\grkaccent{΄}ε"/>
+    <Map char="&#8053;" formula="\grkaccent{΄}η"/>
+    <Map char="&#8055;" formula="\grkaccent{΄}ι"/>
+    <Map char="&#8057;" formula="\grkaccent{΄}ο"/>
+    <Map char="&#8059;" formula="\grkaccent{΄}υ"/>
+    <Map char="&#8061;" formula="\grkaccent{΄}ω"/>
+    <Map char="&#8072;" formula="’ᾼ"/>
+    <Map char="&#8073;" formula="῾ᾼ"/>
+    <Map char="&#8074;" formula="῍ᾼ"/>
+    <Map char="&#8075;" formula="῝ᾼ"/>
+    <Map char="&#8076;" formula="῎ᾼ"/>
+    <Map char="&#8077;" formula="῞ᾼ"/>
+    <Map char="&#8078;" formula="῏ᾼ"/>
+    <Map char="&#8079;" formula="῟ᾼ"/>
+    <Map char="&#8088;" formula="’ῌ"/>
+    <Map char="&#8089;" formula="῾ῌ"/>
+    <Map char="&#8090;" formula="῍ῌ"/>
+    <Map char="&#8091;" formula="῝ῌ"/>
+    <Map char="&#8092;" formula="῎ῌ"/>
+    <Map char="&#8093;" formula="῞ῌ"/>
+    <Map char="&#8094;" formula="῏ῌ"/>
+    <Map char="&#8095;" formula="῟ῌ"/>
+    <Map char="&#8100;" formula="\grkaccent{῎}ῳ"/>
+    <Map char="&#8104;" formula="’ῼ"/>
+    <Map char="&#8105;" formula="῾ῼ"/>
+    <Map char="&#8106;" formula="῍ῼ"/>
+    <Map char="&#8107;" formula="῝ῼ"/>
+    <Map char="&#8108;" formula="῎ῼ"/>
+    <Map char="&#8109;" formula="῞ῼ"/>
+    <Map char="&#8110;" formula="῏ῼ"/>
+    <Map char="&#8111;" formula="῟ῼ"/>
+    <Map char="&#8112;" formula="\u α"/>
+    <Map char="&#8113;" formula="\= α"/>
+    <Map char="&#8120;" formula="\u Α"/>
+    <Map char="&#8121;" formula="\= Α"/>
+    <Map char="&#8122;" formula="\grkaccent{`}{\vphantom{ι}}Α"/>
+    <Map char="&#8123;" formula="\grkaccent{ʹ}{\vphantom{ι}}\!\!Α"/>
+    <Map char="&#8136;" formula="\grkaccent{`}{\vphantom{ι}}Ε"/>
+    <Map char="&#8137;" formula="\grkaccent{ʹ}{\vphantom{ι}}Ε"/>
+    <Map char="&#8138;" formula="\grkaccent{`}{\vphantom{ι}}Η"/>
+    <Map char="&#8139;" formula="\grkaccent{ʹ}{\vphantom{ι}}Η"/>
+    <Map char="&#8144;" formula="\u ι"/>
+    <Map char="&#8145;" formula="\= ι"/>
+    <Map char="&#8147;" formula="\grkaccent{΅}ι"/>
+    <Map char="&#8152;" formula="\u Ι"/>
+    <Map char="&#8153;" formula="\= Ι"/>
+    <Map char="&#8154;" formula="\grkaccent{`}{\phantom{ι}}Ι"/>
+    <Map char="&#8155;" formula="\grkaccent{ʹ}{\phantom{ι}}Ι"/>
+    <Map char="&#8160;" formula="\u υ"/>
+    <Map char="&#8161;" formula="\= υ"/>
+    <Map char="&#8163;" formula="\grkaccent{΅}υ"/>
+    <Map char="&#8168;" formula="\u Υ"/>
+    <Map char="&#8169;" formula="\= Υ"/>
+    <Map char="&#8170;" formula="\grkaccent{`}{\phantom{ι}}Υ"/>
+    <Map char="&#8171;" formula="\grkaccent{ʹ}{\phantom{ι}}Υ"/>
+    <Map char="&#8184;" formula="\grkaccent{`}{\vphantom{ι}}Ο"/>
+    <Map char="&#8185;" formula="\grkaccent{ʹ}{\vphantom{ι}}\!Ο"/>
+    <Map char="&#8186;" formula="\grkaccent{`}{\vphantom{ι}}Ω"/>
+    <Map char="&#8187;" formula="\grkaccent{ʹ}{\vphantom{ι}}\!Ω"/>
+  </CharacterToFormulaMappings>
+</FormulaSettings>

@@ -1,0 +1,707 @@
+<?xml version='1.0'?>
+<!--
+  TeXSymbols.xml
+  =========================================================================
+  This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+
+  Copyright (C) 2004-2007 Universiteit Gent
+  Copyright (C) 2009 DENIZET Calixte
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or (at
+  your option) any later version.
+
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
+
+  A copy of the GNU General Public License can be found in the file
+  LICENSE.txt provided with the source distribution of this program (see
+  the META-INF directory in the source jar). This license can also be
+  found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+
+  If you did not receive a copy of the GNU General Public License along
+  with this program, contact the lead developer, or write to the Free
+  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+ 
+  Linking this library statically or dynamically with other modules 
+  is making a combined work based on this library. Thus, the terms 
+  and conditions of the GNU General Public License cover the whole 
+  combination.
+  
+  As a special exception, the copyright holders of this library give you 
+  permission to link this library with independent modules to produce 
+  an executable, regardless of the license terms of these independent 
+  modules, and to copy and distribute the resulting executable under terms 
+  of your choice, provided that you also meet, for each linked independent 
+  module, the terms and conditions of the license of that module. 
+  An independent module is a module which is not derived from or based 
+  on this library. If you modify this library, you may extend this exception 
+  to your version of the library, but you are not obliged to do so. 
+  If you do not wish to do so, delete this exception statement from your 
+  version.
+  
+-->
+
+<!-- Modified by Calixte Denizet -->
+
+<TeXSymbols>
+  <Symbol name="ae" type="ord" />
+  <Symbol name="AE" type="ord" />
+  <Symbol name="OE" type="ord" />
+  <Symbol name="oe" type="ord" />
+  <Symbol name="ss" type="ord" />
+  <Symbol name="o" type="ord" />
+  <Symbol name="O" type="ord" />
+  <Symbol name="i" type="ord" />
+  <Symbol name="j" type="ord" />
+  <Symbol name="jlmEuler" type="ord" />
+  <Symbol name="textapos" type="ord" />
+  <Symbol name="jlatexmathlapos" type="ord" />
+  <Symbol name="jlatexmathcedilla" type="ord" />
+  <Symbol name="ogonek" type="acc" />
+  <Symbol name="polishlcross" type="ord" />
+  <Symbol name="lq" type="ord" />
+  <Symbol name="rq" type="ord" />
+  <Symbol name="textdbend" type="ord" />
+  <Symbol name="dbend" type="ord" />
+  <Symbol name="shortleftarrow" type="rel" />
+  <Symbol name="shortrightarrow" type="rel" />
+  <Symbol name="shortuparrow" type="rel" />
+  <Symbol name="shortdownarrow" type="rel" />
+  <Symbol name="Yup" type="bin" />
+  <Symbol name="Ydown" type="bin" />
+  <Symbol name="Yleft" type="bin" />
+  <Symbol name="Yright" type="bin" />
+  <Symbol name="varcurlyvee" type="bin" />
+  <Symbol name="varcurlywedge" type="bin" />
+  <Symbol name="minuso" type="bin" />
+  <Symbol name="baro" type="bin" />
+  <Symbol name="sslash" type="bin" />
+  <Symbol name="bbslash" type="bin" />
+  <Symbol name="moo" type="bin" />
+  <Symbol name="varotimes" type="bin" />
+  <Symbol name="varoast" type="bin" />
+  <Symbol name="varobar" type="bin" />
+  <Symbol name="varodot" type="bin" />
+  <Symbol name="varoslash" type="bin" />
+  <Symbol name="varobslash" type="bin" />
+  <Symbol name="varocircle" type="bin" />
+  <Symbol name="varoplus" type="bin" />
+  <Symbol name="varominus" type="bin" />
+  <Symbol name="boxast" type="bin" />
+  <Symbol name="boxbar" type="bin" />
+  <Symbol name="boxdot" type="bin" />
+  <Symbol name="boxslash" type="bin" />
+  <Symbol name="boxbslash" type="bin" />
+  <Symbol name="boxcircle" type="bin" />
+  <Symbol name="boxbox" type="bin" />
+  <Symbol name="boxempty" type="bin" />
+  <Symbol name="lightning" type="ord" />
+  <Symbol name="merge" type="bin" />
+  <Symbol name="vartimes" type="bin" />
+  <Symbol name="fatsemi" type="bin" />
+  <Symbol name="sswarrow" type="rel" />
+  <Symbol name="ssearrow" type="rel" />
+  <Symbol name="curlywedgeuparrow" type="rel" />
+  <Symbol name="curlywedgedownarrow" type="rel" />
+  <Symbol name="fatslash" type="bin" />
+  <Symbol name="fatbslash" type="bin" />
+  <Symbol name="lbag" type="bin" />
+  <Symbol name="rbag" type="bin" />
+  <Symbol name="varbigcirc" type="bin" />
+  <Symbol name="leftrightarroweq" type="rel" />
+  <Symbol name="curlyveedownarrow" type="rel" />
+  <Symbol name="curlyveeuparrow" type="rel" />
+  <Symbol name="nnwarrow" type="rel" />
+  <Symbol name="nnearrow" type="rel" />
+  <Symbol name="leftslice" type="bin" />
+  <Symbol name="rightslice" type="bin" />
+  <Symbol name="varolessthan" type="bin" />
+  <Symbol name="varogreaterthan" type="bin" />
+  <Symbol name="varovee" type="bin" />
+  <Symbol name="varowedge" type="bin" />
+  <Symbol name="talloblong" type="bin" />
+  <Symbol name="interleave" type="bin" />
+  <Symbol name="obar" type="bin" />
+  <Symbol name="obslash" type="bin" />
+  <Symbol name="olessthan" type="bin" />
+  <Symbol name="ogreaterthan" type="bin" />
+  <Symbol name="ovee" type="bin" />
+  <Symbol name="owedge" type="bin" />
+  <Symbol name="oblong" type="bin" />
+  <Symbol name="inplus" type="rel" />
+  <Symbol name="niplus" type="rel" />
+  <Symbol name="nplus" type="bin" />
+  <Symbol name="subsetplus" type="rel" />
+  <Symbol name="supsetplus" type="rel" />
+  <Symbol name="subsetpluseq" type="rel" />
+  <Symbol name="supsetpluseq" type="rel" />
+  <Symbol name="Lbag" type="open" />
+  <Symbol name="Rbag" type="close" />
+  <Symbol name="llbracket" type="open" />
+  <Symbol name="rrbracket" type="close" />
+  <Symbol name="llparenthesis" type="open" />
+  <Symbol name="rrparenthesis" type="close" />
+  <Symbol name="binampersand" type="open" />
+  <Symbol name="bindnasrepma" type="close" />
+  <Symbol name="trianglelefteqslant" type="rel" />
+  <Symbol name="trianglerighteqslant" type="rel" />
+  <Symbol name="ntrianglelefteqslant" type="rel" />
+  <Symbol name="ntrianglerighteqslant" type="rel" />
+  <Symbol name="llfloor" type="open" />
+  <Symbol name="rrfloor" type="close" />
+  <Symbol name="llceil" type="open" />
+  <Symbol name="rrceil" type="close" />
+  <Symbol name="arrownot" type="rel" />
+  <Symbol name="Arrownot" type="rel" />
+  <Symbol name="Mapstochar" type="rel" />
+  <Symbol name="mapsfromchar" type="rel" />
+  <Symbol name="Mapsfromchar" type="rel" />
+  <Symbol name="leftrightarrowtriangle" type="bin" />
+  <Symbol name="leftarrowtriangle" type="rel" />
+  <Symbol name="rightarrowtriangle" type="rel" />
+  <Symbol name="bigtriangledown" type="op" />
+  <Symbol name="bigtriangleup" type="op" />
+  <Symbol name="bigcurlyvee" type="op" />
+  <Symbol name="bigcurlywedge" type="op" />
+  <Symbol name="bigsqcap" type="op" />
+  <Symbol name="bigbox" type="op" />
+  <Symbol name="bigparallel" type="op" />
+  <Symbol name="biginterleave" type="op" />
+  <Symbol name="bignplus" type="op" />
+  <Symbol name="ulcorner" type="open" />
+  <Symbol name="urcorner" type="close" />
+  <Symbol name="llcorner" type="open" />
+  <Symbol name="lrcorner" type="close" />
+  <Symbol name="maltese" type="ord" />
+  <Symbol name="textregistered" type="ord" />
+  <Symbol name="lhook" type="ord" />
+  <Symbol name="rhook" type="ord" />
+  <Symbol name="mapstochar" type="rel" />
+  <Symbol name="angle" type="ord" />
+  <Symbol name="hbar" type="ord" />
+  <Symbol name="sqsubset" type="rel" />
+  <Symbol name="sqsupset" type="rel" />
+  <Symbol name="mho" type="ord" />
+  <Symbol name="square" type="ord" />
+  <Symbol name="lozenge" type="ord" />
+  <Symbol name="vartriangleright" type="rel" />
+  <Symbol name="vartriangleleft" type="rel" />
+  <Symbol name="trianglerighteq" type="rel" />
+  <Symbol name="trianglelefteq" type="rel" />
+  <Symbol name="rightsquigarrow" type="rel" />
+  <Symbol name="lhd" type="rel" />
+  <Symbol name="unlhd" type="rel" />
+  <Symbol name="rhd" type="rel" />
+  <Symbol name="unrhd" type="rel" />
+  <Symbol name="Box" type="ord" />
+
+  <Symbol name="boxdot" type="bin" />
+  <Symbol name="boxplus" type="bin" />
+  <Symbol name="boxtimes" type="bin" />
+  <Symbol name="square" type="ord" />
+  <Symbol name="blacksquare" type="ord" />
+  <Symbol name="centerdot" type="bin" />
+  <Symbol name="lozenge" type="ord" />
+  <Symbol name="blacklozenge" type="ord" />
+  <Symbol name="circlearrowright" type="rel" />
+  <Symbol name="circlearrowleft" type="rel" />
+  <Symbol name="leftrightharpoons" type="rel" />
+  <Symbol name="rightleftharpoons" type="rel" />
+  <Symbol name="boxminus" type="bin" />
+  <Symbol name="Vdash" type="rel" />
+  <Symbol name="Vvdash" type="rel" />
+  <Symbol name="vDash" type="rel" />
+  <Symbol name="twoheadrightarrow" type="rel" />
+  <Symbol name="twoheadleftarrow" type="rel" />
+  <Symbol name="leftleftarrows" type="rel" />
+  <Symbol name="rightrightarrows" type="rel" />
+  <Symbol name="upuparrows" type="rel" />
+  <Symbol name="downdownarrows" type="rel" />
+  <Symbol name="upharpoonright" type="rel" />
+  <Symbol name="downharpoonright" type="rel" />
+  <Symbol name="upharpoonleft" type="rel" />
+  <Symbol name="downharpoonleft" type="rel" />
+  <Symbol name="rightarrowtail" type="rel" />
+  <Symbol name="leftarrowtail" type="rel" />
+  <Symbol name="leftrightarrows" type="rel" />
+  <Symbol name="rightleftarrows" type="rel" />
+  <Symbol name="Lsh" type="rel" />
+  <Symbol name="Rsh" type="rel" />
+  <Symbol name="rightsquigarrow" type="rel" />
+  <Symbol name="leftrightsquigarrow" type="rel" />
+  <Symbol name="looparrowleft" type="rel" />
+  <Symbol name="looparrowright" type="rel" />
+  <Symbol name="circeq" type="rel" />
+  <Symbol name="succsim" type="rel" />
+  <Symbol name="gtrsim" type="rel" />
+  <Symbol name="gtrapprox" type="rel" />
+  <Symbol name="multimap" type="rel" />
+  <Symbol name="therefore" type="rel" />
+  <Symbol name="because" type="rel" />
+  <Symbol name="doteqdot" type="rel" />
+  <Symbol name="triangleq" type="rel" />
+  <Symbol name="precsim" type="rel" />
+  <Symbol name="lesssim" type="rel" />
+  <Symbol name="lessapprox" type="rel" />
+  <Symbol name="eqslantless" type="rel" />
+  <Symbol name="eqslantgtr" type="rel" />
+  <Symbol name="curlyeqprec" type="rel" />
+  <Symbol name="curlyeqsucc" type="rel" />
+  <Symbol name="preccurlyeq" type="rel" />
+  <Symbol name="leqq" type="rel" />
+  <Symbol name="leqslant" type="rel" />
+  <Symbol name="lessgtr" type="rel" />
+  <Symbol name="backprime" type="ord" />
+  <Symbol name="risingdotseq" type="rel" />
+  <Symbol name="fallingdotseq" type="rel" />
+  <Symbol name="succcurlyeq" type="rel" />
+  <Symbol name="geqq" type="rel" />
+  <Symbol name="geqslant" type="rel" />
+  <Symbol name="gtrless" type="rel" />
+  <Symbol name="vartriangleright" type="rel" />
+  <Symbol name="vartriangleleft" type="rel" />
+  <Symbol name="trianglerighteq" type="rel" />
+  <Symbol name="trianglelefteq" type="rel" />
+  <Symbol name="bigstar" type="ord" />
+  <Symbol name="between" type="rel" />
+  <Symbol name="blacktriangledown" type="ord" />
+  <Symbol name="blacktriangleright" type="rel" />
+  <Symbol name="blacktriangleleft" type="rel" />
+  <Symbol name="vartriangle" type="rel" />
+  <Symbol name="blacktriangle" type="ord" />
+  <Symbol name="triangledown" type="ord" />
+  <Symbol name="eqcirc" type="rel" />
+  <Symbol name="lesseqgtr" type="rel" />
+  <Symbol name="gtreqless" type="rel" />
+  <Symbol name="lesseqqgtr" type="rel" />
+  <Symbol name="gtreqqless" type="rel" />
+  <Symbol name="Rrightarrow" type="rel" />
+  <Symbol name="Lleftarrow" type="rel" />
+  <Symbol name="veebar" type="bin" />
+  <Symbol name="barwedge" type="bin" />
+  <Symbol name="doublebarwedge" type="bin" />
+  <Symbol name="measuredangle" type="ord" />
+  <Symbol name="sphericalangle" type="ord" />
+  <Symbol name="varpropto" type="rel" />
+  <Symbol name="smallsmile" type="rel" />
+  <Symbol name="smallfrown" type="rel" />
+  <Symbol name="Subset" type="rel" />
+  <Symbol name="Supset" type="rel" />
+  <Symbol name="Cup" type="bin" />
+  <Symbol name="Cap" type="bin" />
+  <Symbol name="curlywedge" type="bin" />
+  <Symbol name="curlyvee" type="bin" />
+  <Symbol name="leftthreetimes" type="bin" />
+  <Symbol name="rightthreetimes" type="bin" />
+  <Symbol name="subseteqq" type="rel" />
+  <Symbol name="supseteqq" type="rel" />
+  <Symbol name="bumpeq" type="rel" />
+  <Symbol name="Bumpeq" type="rel" />
+  <Symbol name="lll" type="rel" />
+  <Symbol name="ggg" type="rel" />
+  <Symbol name="circledS" type="ord" />
+  <Symbol name="pitchfork" type="rel" />
+  <Symbol name="dotplus" type="bin" />
+  <Symbol name="backsim" type="rel" />
+  <Symbol name="backsimeq" type="rel" />
+  <Symbol name="complement" type="ord" />
+  <Symbol name="intercal" type="bin" />
+  <Symbol name="circledcirc" type="bin" />
+  <Symbol name="circledast" type="bin" />
+  <Symbol name="circleddash" type="bin" />
+  <Symbol name="lvertneqq" type="rel" />
+  <Symbol name="gvertneqq" type="rel" />
+  <Symbol name="nleq" type="rel" />
+  <Symbol name="ngeq" type="rel" />
+  <Symbol name="nless" type="rel" />
+  <Symbol name="ngtr" type="rel" />
+  <Symbol name="nprec" type="rel" />
+  <Symbol name="nsucc" type="rel" />
+  <Symbol name="lneqq" type="rel" />
+  <Symbol name="gneqq" type="rel" />
+  <Symbol name="nleqslant" type="rel" />
+  <Symbol name="ngeqslant" type="rel" />
+  <Symbol name="lneq" type="rel" />
+  <Symbol name="gneq" type="rel" />
+  <Symbol name="npreceq" type="rel" />
+  <Symbol name="nsucceq" type="rel" />
+  <Symbol name="precnsim" type="rel" />
+  <Symbol name="succnsim" type="rel" />
+  <Symbol name="lnsim" type="rel" />
+  <Symbol name="gnsim" type="rel" />
+  <Symbol name="nleqq" type="rel" />
+  <Symbol name="ngeqq" type="rel" />
+  <Symbol name="precneqq" type="rel" />
+  <Symbol name="succneqq" type="rel" />
+  <Symbol name="precnapprox" type="rel" />
+  <Symbol name="succnapprox" type="rel" />
+  <Symbol name="lnapprox" type="rel" />
+  <Symbol name="gnapprox" type="rel" />
+  <Symbol name="nsim" type="rel" />
+  <Symbol name="ncong" type="rel" />
+  <Symbol name="diagup" type="ord" />
+  <Symbol name="diagdown" type="ord" />
+  <Symbol name="varsubsetneq" type="rel" />
+  <Symbol name="varsupsetneq" type="rel" />
+  <Symbol name="nsubseteqq" type="rel" />
+  <Symbol name="nsupseteqq" type="rel" />
+  <Symbol name="subsetneqq" type="rel" />
+  <Symbol name="supsetneqq" type="rel" />
+  <Symbol name="varsubsetneqq" type="rel" />
+  <Symbol name="varsupsetneqq" type="rel" />
+  <Symbol name="subsetneq" type="rel" />
+  <Symbol name="supsetneq" type="rel" />
+  <Symbol name="nsubseteq" type="rel" />
+  <Symbol name="nsupseteq" type="rel" />
+  <Symbol name="nparallel" type="rel" />
+  <Symbol name="nmid" type="rel" />
+  <Symbol name="nshortmid" type="rel" />
+  <Symbol name="nshortparallel" type="rel" />
+  <Symbol name="nvdash" type="rel" />
+  <Symbol name="nVdash" type="rel" />
+  <Symbol name="nvDash" type="rel" />
+  <Symbol name="nVDash" type="rel" />
+  <Symbol name="ntrianglerighteq" type="rel" />
+  <Symbol name="ntrianglelefteq" type="rel" />
+  <Symbol name="ntriangleleft" type="rel" />
+  <Symbol name="ntriangleright" type="rel" />
+  <Symbol name="nleftarrow" type="rel" />
+  <Symbol name="nrightarrow" type="rel" />
+  <Symbol name="nLeftarrow" type="rel" />
+  <Symbol name="nRightarrow" type="rel" />
+  <Symbol name="nLeftrightarrow" type="rel" />
+  <Symbol name="nleftrightarrow" type="rel" />
+  <Symbol name="divideontimes" type="bin" />
+  <Symbol name="varnothing" type="ord" />
+  <Symbol name="nexists" type="ord" />
+  <Symbol name="Finv" type="ord" />
+  <Symbol name="Game" type="ord" />
+  <Symbol name="eth" type="ord" />
+  <Symbol name="eqsim" type="rel" />
+  <Symbol name="beth" type="ord" />
+  <Symbol name="gimel" type="ord" />
+  <Symbol name="daleth" type="ord" />
+  <Symbol name="lessdot" type="bin" />
+  <Symbol name="gtrdot" type="bin" />
+  <Symbol name="ltimes" type="bin" />
+  <Symbol name="rtimes" type="bin" />
+  <Symbol name="shortmid" type="rel" />
+  <Symbol name="shortparallel" type="rel" />
+  <Symbol name="smallsetminus" type="bin" />
+  <Symbol name="thicksim" type="rel" />
+  <Symbol name="thickapprox" type="rel" />
+  <Symbol name="approxeq" type="rel" />
+  <Symbol name="succapprox" type="rel" />
+  <Symbol name="precapprox" type="rel" />
+  <Symbol name="curvearrowleft" type="rel" />
+  <Symbol name="curvearrowright" type="rel" />
+  <Symbol name="digamma" type="ord" />
+  <Symbol name="varkappa" type="ord" />
+  <Symbol name="Bbbk" type="ord" />
+  <Symbol name="hslash" type="ord" />
+  <Symbol name="backepsilon" type="rel" />
+  <Symbol name="Diamond" type="rel" />
+  <Symbol name="leadsto" type="rel" />
+  <!-- miscellaneous symbols -->
+
+  <Symbol name="guillemotleft" type="punct"/>
+  <Symbol name="guillemotright" type="punct"/>
+  <Symbol name="guilsinglleft" type="punct"/>
+  <Symbol name="guilsinglright" type="punct"/>
+  <Symbol name="fg" type="punct"/>
+  <Symbol name="og" type="punct"/>
+  <Symbol name="textperthousand" type="ord"/>
+  <Symbol name="textpertenthousand" type="ord"/>
+  <Symbol name="textminus" type="ord"/>
+  <Symbol name="textendash" type="ord"/>
+  <Symbol name="textemdash" type="ord"/>
+  <Symbol name="S" type="ord"/>
+  <Symbol name="P" type="ord"/>
+  <Symbol name="comma" type="punct"/>
+  <Symbol name="ldotp" type="punct"/>
+  <Symbol name="cdotp" type="punct"/>
+  <Symbol name="normaldot" type="ord"/>
+  <Symbol name="textnormaldot" type="punct"/>
+  <Symbol name="slash" type="ord"/>
+  <Symbol name="semicolon" type="punct"/>
+  <Symbol name="faculty" type="ord"/>
+  <Symbol name="question" type="ord"/>
+  <Symbol name="questiondown" type="ord"/>
+  <Symbol name="jlatexmathsharp" type="ord"/>
+  <Symbol name="textdollar" type="ord"/>
+  <Symbol name="textpercent" type="ord"/>
+  <Symbol name="textampersand" type="ord"/>
+  <Symbol name="textfractionsolidus" type="ord"/>
+  <Symbol name="jlatexmatharobase" type="ord"/>
+  <Symbol name="underscore" type="ord"/>
+  <Symbol name="checkmark" type="ord"/>
+  <Symbol name="mathsterling" type="ord"/>
+  <Symbol name="yen" type="ord"/>
+
+  <!-- math accents -->
+
+  <Symbol name="acute" type="acc"/>
+  <Symbol name="grave" type="acc"/>
+  <Symbol name="ddot" type="acc"/>
+  <Symbol name="doubleacute" type="acc"/>
+  <Symbol name="tilde" type="acc"/>
+  <Symbol name="jlatexmathring" type="acc"/>
+  <Symbol name="mathring" type="acc"/>
+  <Symbol name="bar" type="acc"/>
+  <Symbol name="breve" type="acc"/>
+  <Symbol name="check" type="acc"/>
+  <Symbol name="hat" type="acc"/>
+  <Symbol name="vec" type="acc"/>
+  <Symbol name="dot" type="acc"/>
+  <Symbol name="widehat" type="acc"/>
+  <Symbol name="widetilde" type="acc"/>
+  <Symbol name="tie" type="acc"/>
+  <!-- delimiters that can change size -->
+
+  <Symbol name="lbrace" type="open" del="true"/>
+  <Symbol name="rbrace" type="close" del="true"/>
+  <Symbol name="lbrack" type="open" del="true"/>
+  <Symbol name="rbrack" type="close" del="true"/>
+  <Symbol name="rsqbrack" type="close" del="true"/>
+  <Symbol name="lsqbrack" type="open" del="true"/>
+  <Symbol name="langle" type="open" del="true"/>
+  <Symbol name="rangle" type="close" del="true"/>
+  <Symbol name="lfloor" type="open" del="true"/>
+  <Symbol name="rfloor" type="close" del="true"/>
+  <Symbol name="lceil" type="open" del="true"/>
+  <Symbol name="rceil" type="close" del="true"/>
+  <Symbol name="uparrow" type="rel" del="true"/>
+  <Symbol name="Uparrow" type="rel" del="true"/>
+  <Symbol name="downarrow" type="rel" del="true"/>
+  <Symbol name="Downarrow" type="rel" del="true"/>
+  <Symbol name="updownarrow" type="rel" del="true"/>
+  <Symbol name="Updownarrow" type="rel" del="true"/>
+  <Symbol name="vert" type="ord" del="true"/>
+  <Symbol name="Vert" type="ord" del="true"/>
+  <Symbol name="slashdel" type="open" del="true"/>
+  <Symbol name="Relbar" type="rel" del="true"/>
+  <Symbol name="lgroup" type="open" del="true"/>
+  <Symbol name="rgroup" type="close" del="true"/>
+  <Symbol name="bracevert" type="ord" del="true"/>
+  <Symbol name="lmoustache" type="open" del="true"/>
+  <Symbol name="rmoustache" type="close" del="true"/>
+  <!-- lowercase Greek letters -->
+
+  <Symbol name="alpha" type="ord"/>
+  <Symbol name="beta" type="ord"/>
+  <Symbol name="gamma" type="ord"/>
+  <Symbol name="delta" type="ord"/>
+  <Symbol name="epsilon" type="ord"/>
+  <Symbol name="varepsilon" type="ord"/>
+  <Symbol name="zeta" type="ord"/>
+  <Symbol name="eta" type="ord"/>
+  <Symbol name="theta" type="ord"/>
+  <Symbol name="vartheta" type="ord"/>
+  <Symbol name="iota" type="ord"/>
+  <Symbol name="kappa" type="ord"/>
+  <Symbol name="lambda" type="ord"/>
+  <Symbol name="mu" type="ord"/>
+  <Symbol name="nu" type="ord"/>
+  <Symbol name="xi" type="ord"/>
+  <Symbol name="omicron" type="ord"/>
+  <Symbol name="pi" type="ord"/>
+  <Symbol name="varpi" type="ord"/>
+  <Symbol name="rho" type="ord"/>
+  <Symbol name="varrho" type="ord"/>
+  <Symbol name="sigma" type="ord"/>
+  <Symbol name="varsigma" type="ord"/>
+  <Symbol name="tau" type="ord"/>
+  <Symbol name="upsilon" type="ord"/>
+  <Symbol name="phi" type="ord"/>
+  <Symbol name="varphi" type="ord"/>
+  <Symbol name="chi" type="ord"/>
+  <Symbol name="psi" type="ord"/>
+  <Symbol name="omega" type="ord"/>
+
+  <!-- uppercase Greek letters -->
+
+  <Symbol name="Gamma" type="ord"/>
+  <Symbol name="Delta" type="ord"/>
+  <Symbol name="Theta" type="ord"/>
+  <Symbol name="Lambda" type="ord"/>
+  <Symbol name="Xi" type="ord"/>
+  <Symbol name="Pi" type="ord"/>
+  <Symbol name="Sigma" type="ord"/>
+  <Symbol name="Upsilon" type="ord"/>
+  <Symbol name="Phi" type="ord"/>
+  <Symbol name="Psi" type="ord"/>
+  <Symbol name="Omega" type="ord"/>
+  <Symbol name="varGamma" type="ord"/>
+  <Symbol name="varDelta" type="ord"/>
+  <Symbol name="varTheta" type="ord"/>
+  <Symbol name="varLambda" type="ord"/>
+  <Symbol name="varXi" type="ord"/>
+  <Symbol name="varPi" type="ord"/>
+  <Symbol name="varSigma" type="ord"/>
+  <Symbol name="varUpsilon" type="ord"/>
+  <Symbol name="varPhi" type="ord"/>
+  <Symbol name="varPsi" type="ord"/>
+  <Symbol name="varOmega" type="ord"/>
+
+  <!-- miscellaneous symbols of type "ord" -->
+
+  <Symbol name="aleph" type="ord"/>
+  <Symbol name="imath" type="ord"/>
+  <Symbol name="jmath" type="ord"/>
+  <Symbol name="ell" type="ord"/>
+  <Symbol name="wp" type="ord"/>
+  <Symbol name="Re" type="ord"/>
+  <Symbol name="Im" type="ord"/>
+  <Symbol name="partial" type="ord"/>
+  <Symbol name="infty" type="ord"/>
+  <Symbol name="prime" type="ord"/>
+  <Symbol name="emptyset" type="ord"/>
+  <Symbol name="nabla" type="ord"/>
+  <Symbol name="surdsign" type="ord"/>
+  <Symbol name="top" type="ord"/>
+  <Symbol name="bot" type="ord"/>
+  <Symbol name="|" type="ord"/>
+  <Symbol name="triangle" type="ord"/>
+  <Symbol name="backslash" type="ord" del="true"/>
+  <Symbol name="forall" type="ord"/>
+  <Symbol name="exists" type="ord"/>
+  <Symbol name="neg" type="ord"/>
+  <Symbol name="lnot" type="ord"/>
+  <Symbol name="flat" type="ord"/>
+  <Symbol name="natural" type="ord"/>
+  <Symbol name="sharp" type="ord"/>
+  <Symbol name="clubsuit" type="ord"/>
+  <Symbol name="diamondsuit" type="ord"/>
+  <Symbol name="heartsuit" type="ord"/>
+  <Symbol name="spadesuit" type="ord"/>
+  <Symbol name="lacc" type="ord"/>
+  <Symbol name="racc" type="ord"/>
+
+  <!-- "large" operators -->
+
+  <Symbol name="bigcap" type="op"/>
+  <Symbol name="bigcup" type="op"/>
+  <Symbol name="bigodot" type="op"/>
+  <Symbol name="bigoplus" type="op"/>
+  <Symbol name="bigotimes" type="op"/>
+  <Symbol name="bigsqcup" type="op"/>
+  <Symbol name="biguplus" type="op"/>
+  <Symbol name="bigvee" type="op"/>
+  <Symbol name="bigwedge" type="op"/>
+  <Symbol name="coprod" type="op"/>
+  <Symbol name="int" type="op"/>
+  <Symbol name="oint" type="op"/>
+  <Symbol name="sum" type="op"/>
+  <Symbol name="prod" type="op"/>
+  <Symbol name="smallint" type="op"/>
+
+  <!-- binary operations -->
+
+  <Symbol name="minus" type="bin"/>
+  <Symbol name="plus" type="bin"/>
+  <Symbol name="pm" type="bin"/>
+  <Symbol name="mp" type="bin"/>
+  <Symbol name="setminus" type="bin"/>
+  <Symbol name="cdot" type="bin"/>
+  <Symbol name="times" type="bin"/>
+  <Symbol name="ast" type="bin"/>
+  <Symbol name="star" type="bin"/>
+  <Symbol name="diamond" type="bin"/>
+  <Symbol name="circ" type="bin"/>
+  <Symbol name="bullet" type="bin"/>
+  <Symbol name="div" type="bin"/>
+  <Symbol name="cap" type="bin"/>
+  <Symbol name="cup" type="bin"/>
+  <Symbol name="uplus" type="bin"/>
+  <Symbol name="sqcap" type="bin"/>
+  <Symbol name="sqcup" type="bin"/>
+  <Symbol name="triangleleft" type="bin"/>
+  <Symbol name="triangleright" type="bin"/>
+  <Symbol name="wr" type="bin"/>
+  <Symbol name="bigcirc" type="bin"/>
+  <Symbol name="vee" type="bin"/>
+  <Symbol name="lor" type="bin"/>
+  <Symbol name="land" type="bin"/>
+  <Symbol name="wedge" type="bin"/>
+  <Symbol name="oplus" type="bin"/>
+  <Symbol name="ominus" type="bin"/>
+  <Symbol name="otimes" type="bin"/>
+  <Symbol name="oslash" type="bin"/>
+  <Symbol name="odot" type="bin"/>
+  <Symbol name="dagger" type="bin"/>
+  <Symbol name="ddagger" type="bin"/>
+  <Symbol name="amalg" type="bin"/>
+
+  <!-- relations -->
+
+  <Symbol name="equals" type="rel"/>
+  <Symbol name="gt" type="rel"/>
+  <Symbol name="lt" type="rel"/>
+  <Symbol name="leq" type="rel"/>
+  <Symbol name="le" type="rel"/>
+  <Symbol name="prec" type="rel"/>
+  <Symbol name="preceq" type="rel"/>
+  <Symbol name="ll" type="rel"/>
+  <Symbol name="subset" type="rel"/>
+  <Symbol name="subseteq" type="rel"/>
+  <Symbol name="sqsubseteq" type="rel"/>
+  <Symbol name="in" type="rel"/>
+  <Symbol name="vdash" type="rel"/>
+  <Symbol name="smile" type="rel"/>
+  <Symbol name="frown" type="rel"/>
+  <Symbol name="geq" type="rel"/>
+  <Symbol name="ge" type="rel"/>
+  <Symbol name="succ" type="rel"/>
+  <Symbol name="succeq" type="rel"/>
+  <Symbol name="gg" type="rel"/>
+  <Symbol name="supset" type="rel"/>
+  <Symbol name="supseteq" type="rel"/>
+  <Symbol name="sqsupseteq" type="rel"/>
+  <Symbol name="ni" type="rel"/>
+  <Symbol name="owns" type="rel"/>
+  <Symbol name="dashv" type="rel"/>
+  <Symbol name="mid" type="rel"/>
+  <Symbol name="parallel" type="rel"/>
+  <Symbol name="equiv" type="rel"/>
+  <Symbol name="sim" type="rel"/>
+  <Symbol name="simeq" type="rel"/>
+  <Symbol name="asymp" type="rel"/>
+  <Symbol name="approx" type="rel"/>
+  <Symbol name="propto" type="rel"/>
+  <Symbol name="perp" type="rel"/>
+
+  <!-- special relation symbol with "width=0" (to overlap other relational symbols) -->
+
+  <Symbol name="not" type="rel"/>
+
+  <!-- arrows = pointing relations -->
+
+  <Symbol name="colon" type="rel"/>
+  <Symbol name="nearrow" type="rel"/>
+  <Symbol name="searrow" type="rel"/>
+  <Symbol name="swarrow" type="rel"/>
+  <Symbol name="nwarrow" type="rel"/>
+  <Symbol name="leftarrow" type="rel"/>
+  <Symbol name="gets" type="rel"/>
+  <Symbol name="Leftarrow" type="rel"/>
+  <Symbol name="rightarrow" type="rel"/>
+  <Symbol name="to" type="rel"/>
+  <Symbol name="Rightarrow" type="rel"/>
+  <Symbol name="leftrightarrow" type="rel"/>
+  <Symbol name="Leftrightarrow" type="rel"/>
+  <Symbol name="leftharpoonup" type="rel"/>
+  <Symbol name="leftharpoondown" type="rel"/>
+  <Symbol name="rightharpoonup" type="rel"/>
+  <Symbol name="rightharpoondown" type="rel"/>
+
+  <!-- specials -->
+  <Symbol name="textmu" type="ord" />
+  <Symbol name="texteuro" type="ord" />
+  <Symbol name="euro" type="ord" />
+
+</TeXSymbols>
