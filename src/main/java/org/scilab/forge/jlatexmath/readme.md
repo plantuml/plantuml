@@ -41,6 +41,20 @@ Step 2b-2, the glyphs as paths (no AWT font any more for the new canvas):
   (base, Cyrillic, Greek) and 5229 glyphs read through `GlyphOutlines` differ
   from the AWT outlines by 0.84% of the area at most.
 
+Step 2b-2, the canvas on `UGraphic`:
+
+- added: `UGraphicTeXGraphics` (in `net.sourceforge.plantuml.math`, so that this
+  package does not depend on PlantUML): a `TeXGraphics` that keeps its own
+  affine transformation and gives paths to a `UGraphic`;
+- modified: `TeXIcon.paint(TeXGraphics, Color, x, y)` draws the formula on any
+  canvas (`paintIcon` is unchanged).
+- checked on the 11 `latex-*` formulas of the corpus, PNG and SVG: same size as
+  the baselines, same layout and shapes. The pixels are not the same, as
+  expected: AWT hints the thin horizontal strokes (the shaft of an extensible
+  arrow is one crisp pixel row), the path is not hinted (two grey rows), and
+  the pieces of an extensible arrow, drawn as separate paths, show their seams.
+  Step 2d of `PLAN.md` decides what to do about it, if anything.
+
 Everything else is as upstream. The package is listed in `CLAUDE.md` among the
 external packages, so that edits stay deliberate.
 

@@ -239,6 +239,21 @@ public class TeXIcon implements Icon {
     }
 
     /**
+     * Paints the formula on a canvas that is not AWT (see PLAN.md, phase 2). The
+     * origin of the canvas is the top left corner of the icon; the foreground
+     * color is the one of {@link #setForeground(Color)}, else the one given.
+     */
+    public void paint(TeXGraphics g2, Color defaultForeground, int x, int y) {
+        final Color oldColor = g2.getColor();
+        g2.saveTransform();
+        g2.scale(size, size); // the point size
+        g2.setColor(fg != null ? fg : defaultForeground);
+        box.draw(g2, (x + insets.left) / size, (y + insets.top) / size + box.getHeight());
+        g2.restoreTransform();
+        g2.setColor(oldColor);
+    }
+
+    /**
      * Paint the {@link TeXFormula} that created this icon.
      */
     public void paintIcon(Component c, Graphics g, int x, int y) {

@@ -129,9 +129,8 @@ Keep the parser and the layout, replace the drawing.
 
 ### 5.2 Glyph outlines
 
-Status: the tool and the three `glyphs.bin` files are done (commit "Extract
-JLaTeXMath glyph outlines"); the reader and the canvas on `UGraphic` are step
-2b-2 of phase 2.
+Status: done. The tool and the three `glyphs.bin` files (step 2b-1), the reader
+`GlyphOutlines` and the canvas `UGraphicTeXGraphics` (step 2b-2).
 
 - Dev-time tool: read the 30 TTF files and extract, for each character that the
   XML metrics declare, its outline (move/line/quadratic/cubic) into a compact
@@ -201,7 +200,7 @@ Steps of phase 2:
 |------|---------|-------|
 | 2a | `Box.draw` talks to `TeXGraphics` instead of `Graphics2D` (`Graphics2DTeXGraphics` keeps the AWT rendering) | done, corpus identical byte for byte |
 | 2b-1 | `tools/jlatexmath-glyphs/GenerateGlyphOutlines.java` writes `glyphs.bin` (46 fonts, 4710 glyphs) | done, at most 0.8% area difference with AWT |
-| 2b-2 | `GlyphOutlines` (reader of `glyphs.bin`, no AWT) and `UGraphicTeXGraphics` (`TeXGraphics` on `UGraphic`, glyph = path) | in progress |
+| 2b-2 | `GlyphOutlines` (reader of `glyphs.bin`, no AWT) and `UGraphicTeXGraphics` (`TeXGraphics` on `UGraphic`, glyph = path) | done, not used yet by `AtomMath` |
 | 2c | `AtomMath` / `ScientificEquation*` draw through the canvas (PNG, SVG, PDF...), Batik and `ConverterSvg` go away, the corpus moves to Vega | next |
 | 2d | Review of the corpus rendering (hinting, seams of extensible arrows), decision on the open questions 4 and 7 | after 2c |
 
