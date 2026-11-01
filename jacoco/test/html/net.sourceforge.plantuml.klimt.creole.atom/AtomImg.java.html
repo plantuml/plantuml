@@ -106,15 +106,15 @@ public class AtomImg extends AbstractAtom implements Atom {
 <span class="fc" id="L106">		final UFont font = UFontFactory.monospace(14);</span>
 <span class="fc" id="L107">		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);</span>
 
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (src.startsWith(UmlSource.BASE64_TAG_REPLACEMENT)) {</span>
-<span class="nc" id="L110">			final String md5 = src.substring(UmlSource.BASE64_TAG_REPLACEMENT.length());</span>
-<span class="nc" id="L111">			final String base64 = skinParam.getFromMd5(md5);</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">			if (base64 == null)</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (src.startsWith(UmlSource.BASE64_TAG_REPLACEMENT)) {</span>
+<span class="fc" id="L110">			final String md5 = src.substring(UmlSource.BASE64_TAG_REPLACEMENT.length());</span>
+<span class="fc" id="L111">			final String base64 = skinParam.getFromMd5(md5);</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			if (base64 == null)</span>
 <span class="nc" id="L113">				return AtomTextUtils.createLegacy(&quot;[md5:&quot; + md5 + &quot;]&quot;, fc);</span>
 
 			try {
-<span class="nc" id="L116">				final byte[] bytes = Base64Coder.decode(base64);</span>
-<span class="nc" id="L117">				return buildRasterFromData(DATA_IMAGE_PNG_BASE64 + base64, fc, bytes, scale, url);</span>
+<span class="fc" id="L116">				final byte[] bytes = Base64Coder.decode(base64);</span>
+<span class="fc" id="L117">				return buildRasterFromData(DATA_IMAGE_PNG_BASE64 + base64, fc, bytes, scale, url);</span>
 <span class="nc" id="L118">			} catch (Exception e) {</span>
 <span class="nc" id="L119">				return AtomTextUtils.createLegacy(&quot;ERROR &quot; + e.toString(), fc);</span>
 			}
@@ -204,11 +204,11 @@ public class AtomImg extends AbstractAtom implements Atom {
 
 	private static Atom buildRasterFromData(String source, final FontConfiguration fc, final byte[] data, double scale,
 			Url url) throws IOException {
-<span class="nc" id="L207">		final PortableImage read = SImageIO.read(data);</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (read == null)</span>
+<span class="fc" id="L207">		final PortableImage read = SImageIO.read(data);</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (read == null)</span>
 <span class="nc" id="L209">			return AtomTextUtils.createLegacy(&quot;(Cannot decode: &quot; + source + &quot;)&quot;, fc);</span>
 
-<span class="nc" id="L211">		return new AtomImg(read, scale, url, null);</span>
+<span class="fc" id="L211">		return new AtomImg(read, scale, url, null);</span>
 	}
 
 	private static Atom buildRasterFromUrl(String text, final FontConfiguration fc, SURL source, double scale, Url url)

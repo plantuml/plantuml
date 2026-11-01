@@ -62,7 +62,7 @@ import net.sourceforge.plantuml.klimt.shape.UText;
  * no AWT).
  *
  * &lt;p&gt;
- * Not supported yet: shadows, patterns, images, links (image map).
+ * Not supported yet: shadows, patterns, SVG and TikZ images, links (image map).
  */
 public class UGraphicRaster extends AbstractUGraphic&lt;RasterCanvas&gt; {
 
@@ -99,7 +99,7 @@ public class UGraphicRaster extends AbstractUGraphic&lt;RasterCanvas&gt; {
 <span class="fc" id="L99">		registerDriver(DotPath.class, new DriverDotPathRaster());</span>
 <span class="fc" id="L100">		registerDriver(UPath.class, new DriverPathRaster());</span>
 <span class="fc" id="L101">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterRaster());</span>
-<span class="fc" id="L102">		ignoreShape(UImage.class);</span>
+<span class="fc" id="L102">		registerDriver(UImage.class, new DriverImageRaster(dpiFactor));</span>
 <span class="fc" id="L103">		ignoreShape(UImageSvg.class);</span>
 <span class="fc" id="L104">		ignoreShape(UImageTikz.class);</span>
 <span class="fc" id="L105">	}</span>

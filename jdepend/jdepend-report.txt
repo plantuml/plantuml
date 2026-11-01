@@ -7525,16 +7525,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 17
-    Concrete Classes: 13
+    Total Classes: 18
+    Concrete Classes: 14
     Abstract Classes: 4
 
     Ca: 2
     Ce: 13
 
-    A: 0.24
+    A: 0.22
     I: 0.87
-    D: 0.1
+    D: 0.09
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.drawing.raster.ArcsToCubics
@@ -7545,6 +7545,7 @@ Abstract Classes:
 Concrete Classes:
     net.sourceforge.plantuml.klimt.drawing.raster.DriverDotPathRaster
     net.sourceforge.plantuml.klimt.drawing.raster.DriverEllipseRaster
+    net.sourceforge.plantuml.klimt.drawing.raster.DriverImageRaster
     net.sourceforge.plantuml.klimt.drawing.raster.DriverLineRaster
     net.sourceforge.plantuml.klimt.drawing.raster.DriverPathRaster
     net.sourceforge.plantuml.klimt.drawing.raster.DriverPixelRaster
@@ -15547,7 +15548,7 @@ net.sourceforge.plantuml.klimt.drawing.font,7,0,1,7,0,0.88,0.12,1
 net.sourceforge.plantuml.klimt.drawing.g2d,14,1,3,20,0.07,0.87,0.06,1
 net.sourceforge.plantuml.klimt.drawing.hand,8,0,0,8,0,1,0,1
 net.sourceforge.plantuml.klimt.drawing.html5,3,0,0,8,0,1,0,1
-net.sourceforge.plantuml.klimt.drawing.raster,17,4,2,13,0.24,0.87,0.1,1
+net.sourceforge.plantuml.klimt.drawing.raster,18,4,2,13,0.22,0.87,0.09,1
 net.sourceforge.plantuml.klimt.drawing.svg,21,3,2,16,0.14,0.89,0.03,1
 net.sourceforge.plantuml.klimt.drawing.tikz,11,0,0,13,0,1,0,1
 net.sourceforge.plantuml.klimt.drawing.txt,1,0,2,13,0,0.87,0.13,1

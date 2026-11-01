@@ -177,68 +177,73 @@ public final class PngCanvas implements RasterCanvas {
 <span class="nc" id="L177">	}</span>
 
 	@Override
+	public void drawImage(int[] argb, int width, int height, double x, double y, double scale) {
+<span class="nc" id="L181">		NativeCanvas.drawImage(handle(), argb, width, height, x, y, scale);</span>
+<span class="nc" id="L182">	}</span>
+
+	@Override
 	public void drawString(String text, UFont font, double x, double y, double angle) {
-<span class="nc" id="L181">		setFont(font);</span>
-<span class="nc" id="L182">		final char[] chars = text.toCharArray();</span>
-<span class="nc" id="L183">		NativeCanvas.fillText(handle, chars, chars.length, x, y, angle);</span>
-<span class="nc" id="L184">	}</span>
+<span class="nc" id="L186">		setFont(font);</span>
+<span class="nc" id="L187">		final char[] chars = text.toCharArray();</span>
+<span class="nc" id="L188">		NativeCanvas.fillText(handle, chars, chars.length, x, y, angle);</span>
+<span class="nc" id="L189">	}</span>
 
 	/**
 	 * Advance width of the text, as the native canvas draws it.
 	 */
 	public double getTextWidth(String text, UFont font) {
-<span class="nc" id="L190">		setFont(font);</span>
-<span class="nc" id="L191">		final char[] chars = text.toCharArray();</span>
-<span class="nc" id="L192">		return NativeCanvas.textWidth(handle, chars, chars.length);</span>
+<span class="nc" id="L195">		setFont(font);</span>
+<span class="nc" id="L196">		final char[] chars = text.toCharArray();</span>
+<span class="nc" id="L197">		return NativeCanvas.textWidth(handle, chars, chars.length);</span>
 	}
 
 	/**
 	 * @return ascent, descent (both positive) and line gap of the font
 	 */
 	public double[] getFontMetrics(UFont font) {
-<span class="nc" id="L199">		setFont(font);</span>
-<span class="nc" id="L200">		final double[] metrics = new double[3];</span>
-<span class="nc" id="L201">		NativeCanvas.fontMetrics(handle, metrics);</span>
-<span class="nc" id="L202">		return metrics;</span>
+<span class="nc" id="L204">		setFont(font);</span>
+<span class="nc" id="L205">		final double[] metrics = new double[3];</span>
+<span class="nc" id="L206">		NativeCanvas.fontMetrics(handle, metrics);</span>
+<span class="nc" id="L207">		return metrics;</span>
 	}
 
 	@Override
 	public double[] getInkBounds(String text, UFont font) {
-<span class="nc" id="L207">		setFont(font);</span>
-<span class="nc" id="L208">		final char[] chars = text.toCharArray();</span>
-<span class="nc" id="L209">		final double[] bounds = new double[4];</span>
-<span class="nc" id="L210">		NativeCanvas.textBounds(handle, chars, chars.length, bounds);</span>
-<span class="nc" id="L211">		return bounds;</span>
+<span class="nc" id="L212">		setFont(font);</span>
+<span class="nc" id="L213">		final char[] chars = text.toCharArray();</span>
+<span class="nc" id="L214">		final double[] bounds = new double[4];</span>
+<span class="nc" id="L215">		NativeCanvas.textBounds(handle, chars, chars.length, bounds);</span>
+<span class="nc" id="L216">		return bounds;</span>
 	}
 
 	private void setFont(UFont font) {
-<span class="nc" id="L215">		final UFontFace face = font.getFontFace();</span>
+<span class="nc" id="L220">		final UFontFace face = font.getFontFace();</span>
 		final int id;
-<span class="nc bnc" id="L217" title="All 2 branches missed.">		if (face.isBold())</span>
-<span class="nc bnc" id="L218" title="All 2 branches missed.">			id = face.isItalic() ? NativeCanvas.FONT_SANS_BOLD_ITALIC : NativeCanvas.FONT_SANS_BOLD;</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (face.isBold())</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">			id = face.isItalic() ? NativeCanvas.FONT_SANS_BOLD_ITALIC : NativeCanvas.FONT_SANS_BOLD;</span>
 		else
-<span class="nc bnc" id="L220" title="All 2 branches missed.">			id = face.isItalic() ? NativeCanvas.FONT_SANS_ITALIC : NativeCanvas.FONT_SANS;</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">		if (NativeCanvas.setFont(handle(), id, font.getSize2D()) != 0)</span>
-<span class="nc" id="L222">			throw new IllegalStateException(&quot;No embedded font&quot;);</span>
-<span class="nc" id="L223">	}</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">			id = face.isItalic() ? NativeCanvas.FONT_SANS_ITALIC : NativeCanvas.FONT_SANS;</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (NativeCanvas.setFont(handle(), id, font.getSize2D()) != 0)</span>
+<span class="nc" id="L227">			throw new IllegalStateException(&quot;No embedded font&quot;);</span>
+<span class="nc" id="L228">	}</span>
 
 	@Override
 	public byte[] toPng() {
-<span class="nc bnc" id="L227" title="All 2 branches missed.">		final int size = NativeCanvas.encodePng(handle(), opaque ? 1 : 0);</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (size &lt; 0)</span>
-<span class="nc" id="L229">			throw new IllegalStateException(&quot;PNG encoding failed&quot;);</span>
-<span class="nc" id="L230">		final byte[] result = new byte[size];</span>
-<span class="nc" id="L231">		NativeCanvas.copyPng(handle, result);</span>
-<span class="nc" id="L232">		return result;</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		final int size = NativeCanvas.encodePng(handle(), opaque ? 1 : 0);</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		if (size &lt; 0)</span>
+<span class="nc" id="L234">			throw new IllegalStateException(&quot;PNG encoding failed&quot;);</span>
+<span class="nc" id="L235">		final byte[] result = new byte[size];</span>
+<span class="nc" id="L236">		NativeCanvas.copyPng(handle, result);</span>
+<span class="nc" id="L237">		return result;</span>
 	}
 
 	@Override
 	public void dispose() {
-<span class="nc bnc" id="L237" title="All 2 branches missed.">		if (handle != 0) {</span>
-<span class="nc" id="L238">			NativeCanvas.destroy(handle);</span>
-<span class="nc" id="L239">			handle = 0;</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">		if (handle != 0) {</span>
+<span class="nc" id="L243">			NativeCanvas.destroy(handle);</span>
+<span class="nc" id="L244">			handle = 0;</span>
 		}
-<span class="nc" id="L241">	}</span>
+<span class="nc" id="L246">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

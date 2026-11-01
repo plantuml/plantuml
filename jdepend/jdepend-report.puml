@@ -2217,8 +2217,8 @@ Total Classes: 3
 "net.sourceforge.plantuml.klimt.drawing.html5" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.klimt.drawing.html5" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml.klimt.drawing.raster" %lighten("red", 90) {
-Total Classes: 17
+class "net.sourceforge.plantuml.klimt.drawing.raster" %lighten("red", 91) {
+Total Classes: 18
 }
 "net.sourceforge.plantuml.klimt.drawing.raster" --> "java.io"
 "net.sourceforge.plantuml.klimt.drawing.raster" --> "java.lang"

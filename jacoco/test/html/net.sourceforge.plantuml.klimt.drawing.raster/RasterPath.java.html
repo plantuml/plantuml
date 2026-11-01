@@ -109,7 +109,7 @@ import java.util.Arrays;
 	}
 
 	public RasterPath closePath() {
-<span class="nc" id="L112">		return add(CLOSE);</span>
+<span class="fc" id="L112">		return add(CLOSE);</span>
 	}
 
 	private RasterPath add(int type, double... values) {
@@ -136,7 +136,7 @@ import java.util.Arrays;
 <span class="fc" id="L136">		int c = 0;</span>
 <span class="fc bfc" id="L137" title="All 2 branches covered.">		for (int i = 0; i &lt; count; i++) {</span>
 <span class="fc" id="L138">			final double[] v = coords;</span>
-<span class="pc bpc" id="L139" title="5 of 9 branches missed.">			switch (types[i]) {</span>
+<span class="pc bpc" id="L139" title="4 of 9 branches missed.">			switch (types[i]) {</span>
 			case MOVE_TO:
 <span class="fc" id="L141">				visitor.moveTo(v[c], v[c + 1]);</span>
 <span class="fc" id="L142">				break;</span>
@@ -147,8 +147,8 @@ import java.util.Arrays;
 <span class="fc" id="L147">				visitor.cubicTo(v[c], v[c + 1], v[c + 2], v[c + 3], v[c + 4], v[c + 5]);</span>
 <span class="fc" id="L148">				break;</span>
 			case CLOSE:
-<span class="nc" id="L150">				visitor.closePath();</span>
-<span class="nc" id="L151">				break;</span>
+<span class="fc" id="L150">				visitor.closePath();</span>
+<span class="fc" id="L151">				break;</span>
 			case RECTANGLE:
 <span class="fc" id="L153">				visitor.rectangle(v[c], v[c + 1], v[c + 2], v[c + 3], v[c + 4], v[c + 5]);</span>
 <span class="fc" id="L154">				break;</span>

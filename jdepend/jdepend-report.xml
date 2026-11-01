@@ -11009,14 +11009,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.drawing.raster">
             <Stats>
-                <TotalClasses>17</TotalClasses>
-                <ConcreteClasses>13</ConcreteClasses>
+                <TotalClasses>18</TotalClasses>
+                <ConcreteClasses>14</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>2</Ca>
                 <Ce>13</Ce>
-                <A>0.24</A>
+                <A>0.22</A>
                 <I>0.87</I>
-                <D>0.1</D>
+                <D>0.09</D>
                 <V>1</V>
             </Stats>
 
@@ -11041,6 +11041,9 @@
                 </Class>
                 <Class sourceFile="DriverEllipseRaster.java">
                     net.sourceforge.plantuml.klimt.drawing.raster.DriverEllipseRaster
+                </Class>
+                <Class sourceFile="DriverImageRaster.java">
+                    net.sourceforge.plantuml.klimt.drawing.raster.DriverImageRaster
                 </Class>
                 <Class sourceFile="DriverLineRaster.java">
                     net.sourceforge.plantuml.klimt.drawing.raster.DriverLineRaster

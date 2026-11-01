@@ -47,32 +47,32 @@ import net.sourceforge.plantuml.klimt.shape.DotPath;
 
 	@Override
 	public void draw(DotPath shape, double x, double y, ColorMapper mapper, UParam param, RasterCanvas canvas) {
-<span class="nc" id="L50">		RasterPaints.setStroke(param.getStroke(), canvas);</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">		if (param.getColor().isTransparent())</span>
+<span class="fc" id="L50">		RasterPaints.setStroke(param.getStroke(), canvas);</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (param.getColor().isTransparent())</span>
 <span class="nc" id="L52">			return;</span>
 
-<span class="nc" id="L54">		canvas.setColor(RasterPaints.argb(param.getColor(), mapper));</span>
+<span class="fc" id="L54">		canvas.setColor(RasterPaints.argb(param.getColor(), mapper));</span>
 		// As DotPath.draw(Graphics2D): curves appended to a GeneralPath (float
 		// coordinates), each one connected to the previous one
-<span class="nc" id="L57">		final RasterPath p = new RasterPath();</span>
-<span class="nc" id="L58">		boolean first = true;</span>
-<span class="nc" id="L59">		double lastX = 0;</span>
-<span class="nc" id="L60">		double lastY = 0;</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">		for (XCubicCurve2D bez : shape.getBeziers()) {</span>
-<span class="nc" id="L62">			final double x1 = (float) (x + bez.getX1());</span>
-<span class="nc" id="L63">			final double y1 = (float) (y + bez.getY1());</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">			if (first)</span>
-<span class="nc" id="L65">				p.moveTo(x1, y1);</span>
+<span class="fc" id="L57">		final RasterPath p = new RasterPath();</span>
+<span class="fc" id="L58">		boolean first = true;</span>
+<span class="fc" id="L59">		double lastX = 0;</span>
+<span class="fc" id="L60">		double lastY = 0;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		for (XCubicCurve2D bez : shape.getBeziers()) {</span>
+<span class="fc" id="L62">			final double x1 = (float) (x + bez.getX1());</span>
+<span class="fc" id="L63">			final double y1 = (float) (y + bez.getY1());</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">			if (first)</span>
+<span class="fc" id="L65">				p.moveTo(x1, y1);</span>
 <span class="nc bnc" id="L66" title="All 4 branches missed.">			else if (x1 != lastX || y1 != lastY)</span>
 <span class="nc" id="L67">				p.lineTo(x1, y1);</span>
-<span class="nc" id="L68">			lastX = (float) (x + bez.getX2());</span>
-<span class="nc" id="L69">			lastY = (float) (y + bez.getY2());</span>
-<span class="nc" id="L70">			p.cubicTo((float) (x + bez.getCtrlX1()), (float) (y + bez.getCtrlY1()), (float) (x + bez.getCtrlX2()),</span>
-<span class="nc" id="L71">					(float) (y + bez.getCtrlY2()), lastX, lastY);</span>
-<span class="nc" id="L72">			first = false;</span>
-<span class="nc" id="L73">		}</span>
-<span class="nc" id="L74">		canvas.stroke(p);</span>
-<span class="nc" id="L75">	}</span>
+<span class="fc" id="L68">			lastX = (float) (x + bez.getX2());</span>
+<span class="fc" id="L69">			lastY = (float) (y + bez.getY2());</span>
+<span class="fc" id="L70">			p.cubicTo((float) (x + bez.getCtrlX1()), (float) (y + bez.getCtrlY1()), (float) (x + bez.getCtrlX2()),</span>
+<span class="fc" id="L71">					(float) (y + bez.getCtrlY2()), lastX, lastY);</span>
+<span class="fc" id="L72">			first = false;</span>
+<span class="fc" id="L73">		}</span>
+<span class="fc" id="L74">		canvas.stroke(p);</span>
+<span class="fc" id="L75">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

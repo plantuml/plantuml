@@ -11360,6 +11360,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/text/TLineType.html#DECLARE_RETURN_FUNCTION" class="member-name-link">DECLARE_RETURN_FUNCTION</a> - Enum constant in enum class net.sourceforge.plantuml.text.<a href="net/sourceforge/plantuml/text/TLineType.html" title="enum class in net.sourceforge.plantuml.text">TLineType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/teavm/c/PngImageC.html#decode(byte%5B%5D,int%5B%5D)" class="member-name-link">decode(byte[], int[])</a> - Static method in class net.sourceforge.plantuml.teavm.c.<a href="net/sourceforge/plantuml/teavm/c/PngImageC.html" title="class in net.sourceforge.plantuml.teavm.c">PngImageC</a></dt>
+<dd>
+<div class="block">Decodes an image file (a PNG), as javax.imageio does.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/utils/Base64Coder.html#decode(char%5B%5D)" class="member-name-link">decode(char[])</a> - Static method in class net.sourceforge.plantuml.utils.<a href="net/sourceforge/plantuml/utils/Base64Coder.html" title="class in net.sourceforge.plantuml.utils">Base64Coder</a></dt>
 <dd>
 <div class="block">Decodes a byte array from Base64 format.</div>
@@ -12589,6 +12593,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverImageEps.html#draw(net.sourceforge.plantuml.klimt.shape.UImage,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.klimt.drawing.eps.EpsGraphics)" class="member-name-link">draw(UImage, double, double, ColorMapper, UParam, EpsGraphics)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/DriverImageEps.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">DriverImageEps</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/raster/DriverImageRaster.html#draw(net.sourceforge.plantuml.klimt.shape.UImage,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.klimt.drawing.raster.RasterCanvas)" class="member-name-link">draw(UImage, double, double, ColorMapper, UParam, RasterCanvas)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.raster.<a href="net/sourceforge/plantuml/klimt/drawing/raster/DriverImageRaster.html" title="class in net.sourceforge.plantuml.klimt.drawing.raster">DriverImageRaster</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverImagePng.html#draw(net.sourceforge.plantuml.klimt.shape.UImage,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics)" class="member-name-link">draw(UImage, double, double, ColorMapper, UParam, SvgGraphics)</a> - Method in class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverImagePng.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverImagePng</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/openpdf/DriverImagePdf.html#draw(net.sourceforge.plantuml.klimt.shape.UImage,double,double,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.UParam,net.sourceforge.plantuml.openpdf.PdfGraphics)" class="member-name-link">draw(UImage, double, double, ColorMapper, UParam, PdfGraphics)</a> - Method in class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/DriverImagePdf.html" title="class in net.sourceforge.plantuml.openpdf">DriverImagePdf</a></dt>
@@ -12938,6 +12944,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/klimt/UMotif.html#drawHorizontal(net.sourceforge.plantuml.klimt.drawing.UGraphic,double,double,int)" class="member-name-link">drawHorizontal(UGraphic, double, double, int)</a> - Method in class net.sourceforge.plantuml.klimt.<a href="net/sourceforge/plantuml/klimt/UMotif.html" title="class in net.sourceforge.plantuml.klimt">UMotif</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/timingdiagram/graphic/Panels.html#drawHorizontalBetweenTimes(net.sourceforge.plantuml.klimt.drawing.UGraphic,double,double)" class="member-name-link">drawHorizontalBetweenTimes(UGraphic, double, double)</a> - Method in class net.sourceforge.plantuml.timingdiagram.graphic.<a href="net/sourceforge/plantuml/timingdiagram/graphic/Panels.html" title="class in net.sourceforge.plantuml.timingdiagram.graphic">Panels</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/raster/RasterCanvas.html#drawImage(int%5B%5D,int,int,double,double,double)" class="member-name-link">drawImage(int[], int, int, double, double, double)</a> - Method in interface net.sourceforge.plantuml.klimt.drawing.raster.<a href="net/sourceforge/plantuml/klimt/drawing/raster/RasterCanvas.html" title="interface in net.sourceforge.plantuml.klimt.drawing.raster">RasterCanvas</a></dt>
+<dd>
+<div class="block">Draws an image, given as 0xAARRGGBB pixels (not premultiplied) row by row,
+ with its top left corner at (x, y), each of its pixels being <code>scale</code>
+ units wide (1 copies the pixels when (x, y) is on the device grid).</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/teavm/c/PngCanvas.html#drawImage(int%5B%5D,int,int,double,double,double)" class="member-name-link">drawImage(int[], int, int, double, double, double)</a> - Method in class net.sourceforge.plantuml.teavm.c.<a href="net/sourceforge/plantuml/teavm/c/PngCanvas.html" title="class in net.sourceforge.plantuml.teavm.c">PngCanvas</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/teavm/js/SvgGraphicsJs.html#drawImage(java.lang.String,double,double,int,int)" class="member-name-link">drawImage(String, double, double, int, int)</a> - Method in class net.sourceforge.plantuml.teavm.js.<a href="net/sourceforge/plantuml/teavm/js/SvgGraphicsJs.html" title="class in net.sourceforge.plantuml.teavm.js">SvgGraphicsJs</a></dt>
 <dd>
@@ -14123,6 +14137,13 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverImagePng.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverImagePng</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/svg/package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverImagePng.html#%3Cinit%3E()" class="member-name-link">DriverImagePng()</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/DriverImagePng.html" title="class in net.sourceforge.plantuml.klimt.drawing.svg">DriverImagePng</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/raster/DriverImageRaster.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.raster">DriverImageRaster</a> - Class in <a href="net/sourceforge/plantuml/klimt/drawing/raster/package-summary.html">net.sourceforge.plantuml.klimt.drawing.raster</a></dt>
+<dd>
+<div class="block">As <code>DriverImageG2d</code>: the image is drawn at the resolution of the
+ output, on the device grid.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/klimt/drawing/raster/DriverImageRaster.html#%3Cinit%3E(double)" class="member-name-link">DriverImageRaster(double)</a> - Constructor for class net.sourceforge.plantuml.klimt.drawing.raster.<a href="net/sourceforge/plantuml/klimt/drawing/raster/DriverImageRaster.html" title="class in net.sourceforge.plantuml.klimt.drawing.raster">DriverImageRaster</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/teavm/js/DriverImageSvgJs.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm.js">DriverImageSvgJs</a> - Class in <a href="net/sourceforge/plantuml/teavm/js/package-summary.html">net.sourceforge.plantuml.teavm.js</a></dt>
 <dd>
@@ -43834,7 +43855,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Encodes a raster image (ARGB pixels) as a PNG in C, losslessly (no palette,
  no packing of the channels), as javax.imageio does for an image embedded in an
- SVG (src/teavm-c/native/plantuml_png.h).</div>
+ SVG (src/teavm-c/native/plantuml_png.h), and decodes an image file into
+ pixels.</div>
 </dd>
 <dt><a href="net/sourceforge/plantuml/png/PngIO.html" class="type-name-link" title="class in net.sourceforge.plantuml.png">PngIO</a> - Class in <a href="net/sourceforge/plantuml/png/package-summary.html">net.sourceforge.plantuml.png</a></dt>
 <dd>&nbsp;</dd>

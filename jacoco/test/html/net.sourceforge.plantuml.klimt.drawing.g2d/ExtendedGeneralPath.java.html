@@ -335,20 +335,20 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 	 */
 	public void closePath() {
 		// Don't double close path.
-<span class="nc bnc" id="L338" title="All 4 branches missed.">		if (numSeg != 0 &amp;&amp; types[numSeg - 1] == PathIterator.SEG_CLOSE) {</span>
+<span class="pc bpc" id="L338" title="2 of 4 branches missed.">		if (numSeg != 0 &amp;&amp; types[numSeg - 1] == PathIterator.SEG_CLOSE) {</span>
 <span class="nc" id="L339">			return;</span>
 		}
 
 		// Only close path if the previous command wasn't a moveto
-<span class="nc bnc" id="L343" title="All 4 branches missed.">		if (numSeg != 0 &amp;&amp; types[numSeg - 1] != PathIterator.SEG_MOVETO) {</span>
-<span class="nc" id="L344">			path.closePath();</span>
+<span class="pc bpc" id="L343" title="2 of 4 branches missed.">		if (numSeg != 0 &amp;&amp; types[numSeg - 1] != PathIterator.SEG_MOVETO) {</span>
+<span class="fc" id="L344">			path.closePath();</span>
 		}
 
-<span class="nc" id="L347">		makeRoom(0);</span>
-<span class="nc" id="L348">		types[numSeg++] = PathIterator.SEG_CLOSE;</span>
-<span class="nc" id="L349">		cx = mx;</span>
-<span class="nc" id="L350">		cy = my;</span>
-<span class="nc" id="L351">	}</span>
+<span class="fc" id="L347">		makeRoom(0);</span>
+<span class="fc" id="L348">		types[numSeg++] = PathIterator.SEG_CLOSE;</span>
+<span class="fc" id="L349">		cx = mx;</span>
+<span class="fc" id="L350">		cy = my;</span>
+<span class="fc" id="L351">	}</span>
 
 	/**
 	 * Checks if previous command was a moveto command, skipping a close command (if

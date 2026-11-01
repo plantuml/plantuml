@@ -95,8 +95,8 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Encodes a raster image (ARGB pixels) as a PNG in C, losslessly (no palette,
  no packing of the channels), as javax.imageio does for an image embedded in an
- SVG (src/teavm-c/native/plantuml_png.h). Only call it when
- <code>TeaVM.isC()</code>.</div>
+ SVG (src/teavm-c/native/plantuml_png.h), and decodes an image file into
+ pixels. Only call it when <code>TeaVM.isC()</code>.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -111,12 +111,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#encode(int%5B%5D,int,int,boolean)" class="member-name-link">encode</a><wbr>(int[]&nbsp;argb,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#decode(byte%5B%5D,int%5B%5D)" class="member-name-link">decode</a><wbr>(byte[]&nbsp;data,
+ int[]&nbsp;size)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Decodes an image file (a PNG), as javax.imageio does.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#encode(int%5B%5D,int,int,boolean)" class="member-name-link">encode</a><wbr>(int[]&nbsp;argb,
  int&nbsp;width,
  int&nbsp;height,
  boolean&nbsp;opaque)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -145,6 +151,21 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>argb</code> - the pixels, row by row, as 0xAARRGGBB (not premultiplied)</dd>
 <dd><code>opaque</code> - whether the alpha channel is ignored (RGB instead of RGBA)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="decode(byte[],int[])">
+<h3>decode</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int[]</span>&nbsp;<span class="element-name">decode</span><wbr><span class="parameters">(byte[]&nbsp;data,
+ int[]&nbsp;size)</span></div>
+<div class="block">Decodes an image file (a PNG), as javax.imageio does.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>size</code> - receives the width and the height</dd>
+<dt>Returns:</dt>
+<dd>the pixels, row by row, as 0xAARRGGBB (not premultiplied), or null
+         when the data is not an image that can be decoded</dd>
 </dl>
 </section>
 </li>
