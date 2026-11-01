@@ -86,6 +86,7 @@ public class FontInfo {
 
     // font
     private Font font;
+    private GlyphOutlines.GlyphFont glyphs;
     private final Object base;
     private final String path;
     private final String fontName;
@@ -312,6 +313,20 @@ public class FontInfo {
             }
         }
         return font;
+    }
+
+    /**
+     * The outlines of the glyphs of this font (read from glyphs.bin), or null
+     * if there are none for it. Replaces {@link #getFont()} for drawing.
+     */
+    public GlyphOutlines.GlyphFont getGlyphs() {
+        if (glyphs == null)
+            glyphs = GlyphOutlines.forBase(base).getFont(fontName);
+        return glyphs;
+    }
+
+    public static FontInfo getFontInfo(int id) {
+        return fonts.get(id);
     }
 
     public static Font getFont(int id) {

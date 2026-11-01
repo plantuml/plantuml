@@ -30,6 +30,17 @@ Step 2a, drawing through a canvas instead of `java.awt.Graphics2D`:
   need AWT (images, Java fonts): they use `TeXGraphics.getGraphics2D()` and draw
   nothing on a canvas that is not AWT. Their removal is planned (phase 3).
 
+Step 2b-2, the glyphs as paths (no AWT font any more for the new canvas):
+
+- added: `GlyphOutlines`, the reader of the `glyphs.bin` files made by
+  `tools/jlatexmath-glyphs/GenerateGlyphOutlines.java` (no AWT, no `javax.*`,
+  no reflection: it gives the outline of a glyph to a `Sink`, in font units);
+- modified: `FontInfo` has `getGlyphs()` (the outlines of its font, read on the
+  first use) and `getFontInfo(int)`. `getFont()` stays for the AWT canvas.
+- checked by `tools/jlatexmath-glyphs/CheckGlyphOutlines.java`: the 51 fonts
+  (base, Cyrillic, Greek) and 5229 glyphs read through `GlyphOutlines` differ
+  from the AWT outlines by 0.84% of the area at most.
+
 Everything else is as upstream. The package is listed in `CLAUDE.md` among the
 external packages, so that edits stay deliberate.
 
