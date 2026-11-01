@@ -48,11 +48,8 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
 /**
@@ -266,7 +263,7 @@ public abstract class Box {
      * @param x the x-coordinate
      * @param y the y-coordinate
      */
-    public abstract void draw(Graphics2D g2, float x, float y);
+    public abstract void draw(TeXGraphics g2, float x, float y);
 
     /**
      * Get the id of the font that will be used the last when this box will be painted.
@@ -283,12 +280,12 @@ public abstract class Box {
      * @param x the x-coordinate
      * @param y the y-coordinate
      */
-    protected void startDraw(Graphics2D g2, float x, float y) {
+    protected void startDraw(TeXGraphics g2, float x, float y) {
         // old color
         prevColor = g2.getColor();
         if (background != null) { // draw background
             g2.setColor(background);
-            g2.fill(new Rectangle2D.Float(x, y - height, width, height + depth));
+            g2.fillRect(x, y - height, width, height + depth);
         }
         if (foreground == null) {
             g2.setColor(prevColor); // old foreground color
@@ -298,41 +295,41 @@ public abstract class Box {
         drawDebug(g2, x, y);
     }
 
-    protected void drawDebug(Graphics2D g2, float x, float y, boolean showDepth) {
+    protected void drawDebug(TeXGraphics g2, float x, float y, boolean showDepth) {
         if (DEBUG) {
-            Stroke st = g2.getStroke();
+            g2.saveStroke();
             if (markForDEBUG != null) {
                 Color c = g2.getColor();
                 g2.setColor(markForDEBUG);
-                g2.fill(new Rectangle2D.Float(x, y - height, width, height + depth));
+                g2.fillRect(x, y - height, width, height + depth);
                 g2.setColor(c);
             }
-            g2.setStroke(new BasicStroke((float) (Math.abs(1 / g2.getTransform().getScaleX())), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
+            g2.setLineWidth((float) (Math.abs(1 / g2.getScaleX())));
             if (width < 0) {
                 x += width;
                 width = -width;
             }
-            g2.draw(new Rectangle2D.Float(x, y - height, width, height + depth));
+            g2.drawRect(x, y - height, width, height + depth);
             if (showDepth) {
                 Color c = g2.getColor();
                 g2.setColor(Color.RED);
                 if (depth > 0) {
-                    g2.fill(new Rectangle2D.Float(x, y, width, depth));
+                    g2.fillRect(x, y, width, depth);
                     g2.setColor(c);
-                    g2.draw(new Rectangle2D.Float(x, y, width, depth));
+                    g2.drawRect(x, y, width, depth);
                 } else if (depth < 0) {
-                    g2.fill(new Rectangle2D.Float(x, y + depth, width, -depth));
+                    g2.fillRect(x, y + depth, width, -depth);
                     g2.setColor(c);
-                    g2.draw(new Rectangle2D.Float(x, y + depth, width, -depth));
+                    g2.drawRect(x, y + depth, width, -depth);
                 } else {
                     g2.setColor(c);
                 }
             }
-            g2.setStroke(st);
+            g2.restoreStroke();
         }
     }
 
-    protected void drawDebug(Graphics2D g2, float x, float y) {
+    protected void drawDebug(TeXGraphics g2, float x, float y) {
         if (DEBUG) {
             drawDebug(g2, x, y, true);
         }
@@ -343,7 +340,7 @@ public abstract class Box {
      *
      * @param g2 the graphics (2D) context
      */
-    protected void endDraw(Graphics2D g2) {
+    protected void endDraw(TeXGraphics g2) {
         g2.setColor(prevColor);
     }
 }

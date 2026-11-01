@@ -45,10 +45,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.BasicStroke;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.geom.RoundRectangle2D;
 
 /**
  * A box representing a rotated box.
@@ -59,15 +55,15 @@ public class OvalBox extends FramedBox {
         super(fbox.box, fbox.thickness, fbox.space);
     }
 
-    public void draw(Graphics2D g2, float x, float y) {
+    public void draw(TeXGraphics g2, float x, float y) {
         box.draw(g2, x + space + thickness, y);
-        Stroke st = g2.getStroke();
-        g2.setStroke(new BasicStroke(thickness, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER));
+        g2.saveStroke();
+        g2.setLineWidth(thickness);
         float th = thickness / 2;
         float r = 0.5f * Math.min(width - thickness, height + depth - thickness);
-        g2.draw(new RoundRectangle2D.Float(x + th, y - height + th, width - thickness, height + depth - thickness, r, r));
+        g2.drawRoundRect(x + th, y - height + th, width - thickness, height + depth - thickness, r, r);
         //drawDebug(g2, x, y);
-        g2.setStroke(st);
+        g2.restoreStroke();
     }
 
     public int getLastFontId() {

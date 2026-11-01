@@ -45,7 +45,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Graphics2D;
 
 /**
  * A box representing a rotated box.
@@ -62,7 +61,7 @@ public class ReflectBox extends Box {
         shift = b.shift;
     }
 
-    public void draw(Graphics2D g2, float x, float y) {
+    public void draw(TeXGraphics g2, float x, float y) {
         drawDebug(g2, x, y);
         g2.translate(x, y);
         g2.scale(-1, 1);

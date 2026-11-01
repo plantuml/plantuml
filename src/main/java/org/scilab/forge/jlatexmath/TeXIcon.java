@@ -266,7 +266,7 @@ public class TeXIcon implements Icon {
         }
 
         // draw formula box
-        box.draw(g2, (x + insets.left) / size, (y + insets.top) / size+ box.getHeight());
+        box.draw(new Graphics2DTeXGraphics(g2), (x + insets.left) / size, (y + insets.top) / size+ box.getHeight());
 
         // restore graphics settings
         g2.setRenderingHints(oldHints);

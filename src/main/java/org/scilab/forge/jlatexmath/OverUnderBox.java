@@ -46,8 +46,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 
 /**
  * A box representing another box with a delimiter box and a script box above or under it,
@@ -96,7 +94,7 @@ public class OverUnderBox extends Box {
                 + (!over && script != null ? script.height + script.depth + kern : 0);
     }
 
-    public void draw(Graphics2D g2, float x, float y) {
+    public void draw(TeXGraphics g2, float x, float y) {
         drawDebug(g2, x, y);
         base.draw(g2, x, y);
 
@@ -105,11 +103,11 @@ public class OverUnderBox extends Box {
         del.setHeight(0);
         if (over) { // draw delimiter and script above base box
             double transX = x + (del.height + del.depth) * 0.75, transY = yVar;
-            AffineTransform oldAt = g2.getTransform();
+            g2.saveTransform();
             g2.translate(transX, transY);
             g2.rotate(Math.PI / 2);
             del.draw(g2, 0, 0);
-            g2.setTransform(oldAt);
+            g2.restoreTransform();
 
             // draw superscript
             if (script != null) {
@@ -120,11 +118,11 @@ public class OverUnderBox extends Box {
         yVar = y + base.depth;
         if (!over) { // draw delimiter and script under base box
             double transX = x + (del.getHeight() + del.depth) * 0.75, transY = yVar;
-            AffineTransform oldAt = g2.getTransform();
+            g2.saveTransform();
             g2.translate(transX, transY);
             g2.rotate(Math.PI / 2);
             del.draw(g2, 0, 0);
-            g2.setTransform(oldAt);
+            g2.restoreTransform();
             yVar += del.getWidth();
 
             // draw subscript

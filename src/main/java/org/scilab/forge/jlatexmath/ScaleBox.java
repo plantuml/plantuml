@@ -45,7 +45,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Graphics2D;
 
 /**
  * A box representing a scaled box.
@@ -69,7 +68,7 @@ public class ScaleBox extends Box {
         this(b, (double) factor, (double) factor);
     }
 
-    public void draw(Graphics2D g2, float x, float y) {
+    public void draw(TeXGraphics g2, float x, float y) {
         drawDebug(g2, x, y);
         if (xscl != 0 && yscl != 0) {
             float dec = xscl < 0 ? width : 0;

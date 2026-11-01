@@ -46,7 +46,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Graphics2D;
 import java.util.ListIterator;
 
 /**
@@ -110,7 +109,7 @@ class VerticalBox extends Box {
         recalculateWidth(b);
     }
 
-    public void draw(Graphics2D g2, float x, float y) {
+    public void draw(TeXGraphics g2, float x, float y) {
         float yPos = y - height;
         for (Box b : children) {
             yPos += b.getHeight();

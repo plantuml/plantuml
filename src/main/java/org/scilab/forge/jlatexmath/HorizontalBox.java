@@ -47,7 +47,6 @@
 package org.scilab.forge.jlatexmath;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -105,7 +104,7 @@ public class HorizontalBox extends Box {
         return b;
     }
 
-    public void draw(Graphics2D g2, float x, float y) {
+    public void draw(TeXGraphics g2, float x, float y) {
         startDraw(g2, x, y);
         float xPos = x;
         for (Box box: children) {

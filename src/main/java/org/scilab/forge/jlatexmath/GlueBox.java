@@ -46,7 +46,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Graphics2D;
 
 /**
  * A box representing glue.
@@ -61,7 +60,7 @@ public class GlueBox extends Box {
         this.shrink = shrink;
     }
 
-    public void draw(Graphics2D g2, float x, float y) {
+    public void draw(TeXGraphics g2, float x, float y) {
         // no visible effect
     }
 

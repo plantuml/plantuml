@@ -45,7 +45,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
 /**
@@ -194,7 +193,7 @@ public class RotateBox extends Box {
         return p;
     }
 
-    public void draw(Graphics2D g2, float x, float y) {
+    public void draw(TeXGraphics g2, float x, float y) {
         drawDebug(g2, x, y);
         box.drawDebug(g2, x, y, true);
         y -= shiftY;

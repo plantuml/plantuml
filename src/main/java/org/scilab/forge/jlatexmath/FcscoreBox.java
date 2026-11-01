@@ -71,7 +71,12 @@ public class FcscoreBox extends Box {
         this.thickness = thickness;
     }
 
-    public void draw(Graphics2D g2, float x, float y) {
+    public void draw(TeXGraphics tg, float x, float y) {
+        // These boxes need AWT (images, Java fonts...): nothing is drawn on another canvas
+        final Graphics2D g2 = tg.getGraphics2D();
+        if (g2 == null) {
+            return;
+        }
         AffineTransform transf = g2.getTransform();
         Stroke oldStroke = g2.getStroke();
 

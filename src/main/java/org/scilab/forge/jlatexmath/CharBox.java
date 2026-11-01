@@ -46,9 +46,6 @@
 
 package org.scilab.forge.jlatexmath;
 
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 
 /**
  * A box representing a single character.
@@ -58,8 +55,6 @@ public class CharBox extends Box {
     private final CharFont cf;
     private final float size;
     private float italic;
-
-    private final char[] arr = new char[1];
 
     /**
      * Create a new CharBox that will represent the character defined by the given
@@ -81,24 +76,18 @@ public class CharBox extends Box {
         italic = 0;
     }
 
-    public void draw(Graphics2D g2, float x, float y) {
+    public void draw(TeXGraphics g2, float x, float y) {
         drawDebug(g2, x, y);
-        AffineTransform at = g2.getTransform();
+        g2.saveTransform();
         g2.translate(x, y);
-        Font font = FontInfo.getFont(cf.fontId);
 
         if (Math.abs(size - TeXFormula.FONT_SCALE_FACTOR) > TeXFormula.PREC) {
             g2.scale(size / TeXFormula.FONT_SCALE_FACTOR,
                      size / TeXFormula.FONT_SCALE_FACTOR);
         }
 
-        if (g2.getFont() != font) {
-            g2.setFont(font);
-        }
-
-        arr[0] = cf.c;
-        g2.drawChars(arr, 0, 1, 0, 0);
-        g2.setTransform(at);
+        g2.drawChar(cf.fontId, cf.c);
+        g2.restoreTransform();
     }
 
     public int getLastFontId() {

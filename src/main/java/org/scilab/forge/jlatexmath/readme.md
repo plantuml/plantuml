@@ -14,11 +14,24 @@ Vendored copy of **JLaTeXMath**, a Java library that renders LaTeX formulas.
 
 ## State
 
-The upstream files are **unmodified** (phase 1 of `PLAN.md`): the diff with
-the upstream tag only shows the three files added here (`readme.md`, `COPYING`
-and `package-info.java`), which makes an update or a review easy. They are listed
-in `CLAUDE.md` among the external packages that must not be modified, until
-the plan decides to prune and adapt them (phases 2 to 5).
+Phase 1 vendored the upstream files unmodified. **Phase 2 of `PLAN.md` has
+started to modify them**, in small steps that each keep the rendering identical
+(checked byte for byte on the corpus in `src/test/resources/jlatexmath-corpus`).
+
+Step 2a, drawing through a canvas instead of `java.awt.Graphics2D`:
+
+- added: `TeXGraphics` (the subset of Graphics2D that the boxes use) and
+  `Graphics2DTeXGraphics` (the same calls on a real Graphics2D);
+- modified: `Box.draw` and its subclasses (`CharBox`, `FramedBox`, `OvalBox`,
+  `ShadowBox`, `HorizontalRule`, `OverUnderBox`, `GlueBox`, `StrutBox`,
+  `HorizontalBox`, `VerticalBox`, `ReflectBox`, `RotateBox`, `ScaleBox`) take a
+  `TeXGraphics`; `TeXIcon.paintIcon` wraps its Graphics2D in one;
+- `GraphicsBox`, `GeoGebraLogoBox`, `FcscoreBox` and `JavaFontRenderingBox`
+  need AWT (images, Java fonts): they use `TeXGraphics.getGraphics2D()` and draw
+  nothing on a canvas that is not AWT. Their removal is planned (phase 3).
+
+Everything else is as upstream. The package is listed in `CLAUDE.md` among the
+external packages, so that edits stay deliberate.
 
 ## License variants
 
