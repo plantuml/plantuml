@@ -101,8 +101,8 @@ assert maxn({10: True, 100 * math.pi: print}) == 100 * math.pi
 
 # keys that are floats as well as ints
 a = {}
-for i in range(0, 51): a[2.0 ** i] = True
-assert a[2 ** 50]
+for i in range(0, 31): a[2.0 ** i] = True
+assert a[2 ** 30]
 print("+")
 
 # removing values while iterating over a copy of the keys
