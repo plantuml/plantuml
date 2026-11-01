@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\frac{a}{b} \quad \dfrac{a+b}{c+d} \quad \tfrac{1}{2} \quad \cfrac{1}{1+\cfrac{1}{1+\cfrac{1}{x}}} \quad {a \over b} \quad {n \atop k}
+@endlatex

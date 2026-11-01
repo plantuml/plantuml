@@ -1,0 +1,12 @@
+---
+output: svg
+decimal: 1
+expected-description: (4 entities)
+---
+@startuml
+state "<math>S_0</math>" as S0
+state "<latex>S_1</latex>" as S1 : <math>x := x + 1</math>
+[*] --> S0
+S0 --> S1 : <latex>\alpha</latex>
+S1 --> [*]
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\left\{ x \;\middle|\; x > 0 \right\} \quad \left( \frac{a}{b} \middle/ c \right) \quad \left. \frac{df}{dx} \right|_{x=0}
+@endlatex

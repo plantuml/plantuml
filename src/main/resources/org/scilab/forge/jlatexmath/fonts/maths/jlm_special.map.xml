@@ -1,0 +1,6 @@
+<?xml version='1.0'?>
+<SymbolMappings>
+  <SymbolMapping name="euro" ch="69" fontId="jlm_special" />
+  <SymbolMapping name="texteuro" ch="101" fontId="jlm_special" />
+  <SymbolMapping name="textmu" ch="109" fontId="jlm_special" />
+</SymbolMappings>

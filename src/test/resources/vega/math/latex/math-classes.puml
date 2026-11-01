@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+a \mathbin{\star} b \quad a \mathrel{\sim} b \quad \mathop{\mathrm{Tr}} A \quad \mathopen{[} x \mathclose{]} \quad \mathord{+} \quad a \mathpunct{;} b \quad \mathinner{\frac{a}{b}}
+@endlatex

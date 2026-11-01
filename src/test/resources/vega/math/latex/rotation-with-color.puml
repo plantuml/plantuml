@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\textcolor{red}{\rotatebox{20}{\boxed{rot}}} \colorbox{yellow}{\scalebox{1.5}{$x^2$}} \fcolorbox{blue}{white}{\reflectbox{ab}}
+@endlatex

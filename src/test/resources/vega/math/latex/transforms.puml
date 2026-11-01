@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\rotatebox{30}{rotated} \quad \rotatebox{-45}{negative} \quad \scalebox{2}{scaled} \quad \scalebox{-1}{flip} \quad \reflectbox{reflected} \quad \resizebox{2cm}{!}{resized} \quad \raisebox{5pt}{raised}
+@endlatex

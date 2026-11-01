@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+a \bmod b \quad a \equiv b \pmod{n} \quad a \equiv b \pod{n} \quad a \mod b
+@endlatex

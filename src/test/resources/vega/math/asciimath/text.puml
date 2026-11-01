@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+"if " x > 0 " then " y = 1 " else " y = 0
+@endmath

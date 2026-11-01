@@ -34,7 +34,7 @@
 	<!-- Standalone single-file programs (java File.java): they have no package on purpose -->
 	<module name="SuppressionSingleFilter">
 		<property name="checks" value="PackageDeclaration"/>
-		<property name="files" value="[\\/]tools[\\/]font-metrics[\\/]"/>
+		<property name="files" value="[\\/]tools[\\/](font-metrics|jlatexmath-glyphs)[\\/]"/>
 	</module>
 
 	<module name="TreeWalker">

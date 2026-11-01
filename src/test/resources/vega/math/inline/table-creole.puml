@@ -1,0 +1,12 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities)
+---
+@startuml
+class A
+note right of A
+  |= <math>x</math> |= <latex>y</latex> |
+  | <math>x^2</math> | <latex>y^2</latex> |
+end note
+@enduml

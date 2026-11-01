@@ -1,0 +1,10 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 participants)
+---
+@startuml
+Alice -> Bob : <math>sum_(i=1)^n i</math>
+Bob --> Alice : <latex>\frac{n(n+1)}{2}</latex>
+Alice ->> Bob : <math>x^2</math> then <latex>y^2</latex>
+@enduml

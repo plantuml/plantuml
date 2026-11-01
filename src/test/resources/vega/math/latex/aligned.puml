@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\begin{aligned} a &= b + c \\ d &= e + f + g \end{aligned}
+@endlatex

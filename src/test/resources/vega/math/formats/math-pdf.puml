@@ -1,0 +1,7 @@
+---
+output: pdf
+expected-description: (Math)
+---
+@startmath
+x = (-b +- sqrt(b^2 - 4ac))/(2a)
+@endmath

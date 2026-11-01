@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+a \rule{1cm}{1pt} b \quad \rule[-2pt]{2pt}{1cm}
+@endlatex

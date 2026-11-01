@@ -1,0 +1,13 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities)
+---
+@startuml
+object Euler
+note right of Euler
+<latex>
+e^{i\pi} + 1 = 0
+</latex>
+end note
+@enduml

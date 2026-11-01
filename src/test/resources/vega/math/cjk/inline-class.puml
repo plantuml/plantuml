@@ -1,0 +1,11 @@
+---
+output: svg
+decimal: 1
+expected-description: (1 entities)
+---
+@startuml
+class Circle {
+  area : <math>"面积" = pi r^2</math>
+  perimeter : <latex>\text{周长} = 2\pi r</latex>
+}
+@enduml

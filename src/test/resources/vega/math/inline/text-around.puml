@@ -1,0 +1,9 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities)
+---
+@startuml
+class A
+note right of A : the area is <math>pi r^2</math> and the perimeter is <latex>2\pi r</latex>, thus.
+@enduml

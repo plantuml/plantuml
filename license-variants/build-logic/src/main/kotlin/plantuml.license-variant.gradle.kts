@@ -51,7 +51,6 @@ dependencies {
 	compileOnly(lib("ant"))
 	compileOnly(lib("teavm-jso-apis"))
 	testImplementation(lib("junit-jupiter"))
-	testImplementation(lib("jlatexmath"))
 	testImplementation(lib("xmlunit-core"))
 }
 
@@ -77,6 +76,13 @@ sourceSets {
 			srcDir(rootProject.layout.projectDirectory.dir("src/main/resources"))
 		}
 	}
+}
+
+// JLaTeXMath (GPL v2 or later) is vendored in src/main: only the GPL variants keep it.
+// SJPP removes its Java sources (see the "::remove folder" directive in
+// org/scilab/forge/jlatexmath/package-info.java); this removes its resources.
+tasks.processResources {
+	exclude { it.path.startsWith("org/scilab/") && licenseVariant.id.get() != "gplv2" }
 }
 
 tasks.compileJava {

@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\sum_{i=1}^{n} i^2 \quad \prod_{k=1}^{m} k \quad \int_0^1 x\,dx \quad \oint_C f\,dz \quad \bigcup_{i} A_i \quad \bigcap_{i} A_i
+@endlatex

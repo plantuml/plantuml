@@ -1,0 +1,8 @@
+---
+output: svg, pdf
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\int_0^1 x^2\,dx = \frac{1}{3}
+@endlatex

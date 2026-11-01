@@ -1,0 +1,7 @@
+---
+output: svg
+expected-description: (Math)
+---
+@startmath
+(a + b) / (c + d) = 1 / (1 + x / y)
+@endmath

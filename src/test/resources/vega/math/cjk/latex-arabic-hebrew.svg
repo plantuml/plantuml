@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="30px" preserveAspectRatio="none" style="width:102px;height:30px;background:#FFFFFF;" version="1.1" viewBox="0 0 102 30" width="102px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="29" style="stroke:none;" width="101" x="0" y="0"/>
+    <text fill="#000" font-size="20" textLength="46.1" x="4" y="19.6">مرحبا</text>
+    <text fill="#000" font-size="20" textLength="40.1" x="56.8" y="19.6">שלום</text>
+  </g>
+</svg>

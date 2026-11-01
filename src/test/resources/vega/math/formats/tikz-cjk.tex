@@ -1,0 +1,19 @@
+\definecolor{plantucolor0000}{RGB}{241,241,241}%
+\definecolor{plantucolor0001}{RGB}{24,24,24}%
+\definecolor{plantucolor0002}{RGB}{173,209,178}%
+\definecolor{plantucolor0003}{RGB}{0,0,0}%
+\definecolor{plantucolor0004}{RGB}{254,255,221}%
+\begin{tikzpicture}[yscale=-1
+,pstyle2/.style={color=plantucolor0001,line width=0.5pt}
+,pstyle3/.style={color=plantucolor0001,fill=plantucolor0004,line width=0.5pt}
+]
+\draw[color=plantucolor0001,fill=plantucolor0000,line width=0.5pt] (6pt,17pt) arc (180:270:5pt) -- (11pt,12pt) -- (42.3625pt,12pt) arc (270:360:5pt) -- (47.3625pt,17pt) -- (47.3625pt,55pt) arc (0:90:5pt) -- (42.3625pt,60pt) -- (11pt,60pt) arc (90:180:5pt) -- (6pt,55pt) -- cycle;
+\draw[color=plantucolor0001,fill=plantucolor0002,line width=1.0pt] (21pt,28pt) ellipse (11pt and 11pt);
+\node at (21pt,28pt)[]{\textbf{\Large C}};
+\node at (35pt,21pt)[below right,color=black,inner sep=0]{A};
+\draw[pstyle2] (7pt,44pt) -- (46.3625pt,44pt);
+\draw[pstyle2] (7pt,52pt) -- (46.3625pt,52pt);
+\draw[pstyle3] (65pt,16.5pt) -- (65pt,32pt) -- (47.1172pt,36pt) -- (65pt,40pt) -- (65pt,55.5pt) -- (65pt,55.5pt) -- (170pt,55.5pt) -- (170pt,55.5pt) -- (170pt,26.5pt) -- (160pt,16.5pt) -- (65pt,16.5pt) -- (65pt,16.5pt);
+\draw[pstyle3] (160pt,16.5pt) -- (160pt,26.5pt) -- (170pt,26.5pt) -- (160pt,16.5pt);
+\node at (71pt,21.5pt)[below right,inner sep=0]{$\text{中文} + x$};
+\end{tikzpicture}%

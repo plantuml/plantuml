@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+a \pm b \mp c \times d \div e \cdot f \ast g \star h \circ i \bullet j \cap k \cup l \wedge m \vee n \oplus o \otimes p \odot q \setminus r
+@endlatex

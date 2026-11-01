@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+A uu B nn C, x in A, x !in B, A sub B, A sube B, A sup B, A supe B, O/, NN ZZ QQ RR CC
+@endmath

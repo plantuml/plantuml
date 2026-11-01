@@ -35,41 +35,20 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
-import javax.script.ScriptException;
-
-import net.sourceforge.plantuml.klimt.MutableImage;
-import net.sourceforge.plantuml.klimt.awt.XColor;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class AsciiMath implements ScientificEquation {
-	
 
 	private final LatexBuilder builder;
 	private final String tex;
 
-	public AsciiMath(String form) throws ScriptException, NoSuchMethodException {
+	public AsciiMath(String form) {
 		this.tex = new ASCIIMathTeXImg().getTeX(form);
 		this.builder = new LatexBuilder(tex);
 	}
 
-	public XDimension2D getDimension() {
-		return builder.getDimension();
-	}
-
-	public UImageSvg getSvg(double scale, XColor foregroundColor, XColor backgroundColor)
-			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, InstantiationException, IOException {
-		return builder.getSvg(scale, foregroundColor, backgroundColor);
-	}
-
-	public MutableImage getImage(XColor foregroundColor, XColor backgroundColor)
-			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		return builder.getImage(foregroundColor, backgroundColor);
+	public MathDrawing getDrawing(StringBounder stringBounder) throws ClassNotFoundException {
+		return builder.getDrawing(stringBounder);
 	}
 
 	public String getSource() {

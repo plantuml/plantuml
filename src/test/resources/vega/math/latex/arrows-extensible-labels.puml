@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+A \xrightarrow{a very long label} B \xleftarrow[under]{over} C
+@endlatex

@@ -1,0 +1,9 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities)
+---
+@startuml
+class A
+note right of A : <math>a</math> <math>b</math> <latex>c</latex> <math>d</math> text <latex>\epsilon</latex>
+@enduml

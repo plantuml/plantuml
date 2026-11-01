@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i \quad \sigma^2 = \frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})^2 \quad P(A|B)=\frac{P(B|A)P(A)}{P(B)}
+@endlatex

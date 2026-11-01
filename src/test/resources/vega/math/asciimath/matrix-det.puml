@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+det [[a, b], [c, d]] = ad - bc
+@endmath

@@ -24,6 +24,7 @@ import net.sourceforge.plantuml.klimt.drawing.hand.UGraphicHandwritten;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.math.FormulaDiagram;
 import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
 import net.sourceforge.plantuml.teavm.js.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.js.SvgGraphicsJs;
@@ -366,6 +367,9 @@ public class PlantUMLBrowser {
 			return null;
 		final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);
 
+		if (diagram instanceof FormulaDiagram)
+			return buildFormulaSvg((FormulaDiagram) diagram, darkMode, colorMapper, lines);
+
 		if (diagram instanceof UgDiagram == false)
 			throw new RuntimeException("Unsupported diagram type");
 
@@ -412,6 +416,26 @@ public class PlantUMLBrowser {
 		// https://github.com/plantuml/plantuml/issues/2761
 		svg.addCommentMetadata(String.join("\n", lines));
 
+		return svg;
+	}
+
+	/**
+	 * A formula (@startmath, @startlatex): one text block, in its own colors, on its
+	 * own background. Its resources arrive asynchronously (jlatexmath.js), so
+	 * this attempt may be discarded, see {@link RenderQueue}.
+	 */
+	private static SvgGraphicsJs buildFormulaSvg(FormulaDiagram diagram, boolean darkMode, ColorMapper colorMapper,
+			String[] lines) {
+		final TextBlock tb = diagram.getFormulaBlock();
+		final HColor back = diagram.getFormulaBackground();
+		final SvgGraphicsJs svg = back == null ? new SvgGraphicsJs() : new SvgGraphicsJs(back.toSvg(colorMapper));
+		final UGraphic ug = UGraphicJs.build(back == null ? (darkMode ? HColors.BLACK : HColors.WHITE) : back,
+				colorMapper, STRING_BOUNDER, svg);
+
+		tb.drawU(ug);
+		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);
+		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), diagram.getFormulaScale());
+		svg.addCommentMetadata(String.join("\n", lines));
 		return svg;
 	}
 

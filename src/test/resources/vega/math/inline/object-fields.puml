@@ -1,0 +1,11 @@
+---
+output: svg
+decimal: 1
+expected-description: (1 entities)
+---
+@startuml
+object Point {
+  x = <math>1/2</math>
+  y = <latex>\sqrt{2}</latex>
+}
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\begin{array}{lcr} left & center & right \\ a & b & c \\ \hline x & y & z \end{array}
+@endlatex

@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\colorbox{yellow}{back} \quad \fcolorbox{red}{yellow}{framed} \quad \colorbox{cyan}{$x^2$} \quad \textcolor{white}{\colorbox{black}{inverse}}
+@endlatex

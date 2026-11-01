@@ -1,0 +1,23 @@
+\definecolor{plantucolor0000}{RGB}{241,241,241}%
+\definecolor{plantucolor0001}{RGB}{24,24,24}%
+\definecolor{plantucolor0002}{RGB}{173,209,178}%
+\definecolor{plantucolor0003}{RGB}{0,0,0}%
+\definecolor{plantucolor0004}{RGB}{254,255,221}%
+\begin{tikzpicture}[yscale=-1
+,pstyle2/.style={color=plantucolor0001,line width=0.5pt}
+,pstyle3/.style={color=plantucolor0001,fill=plantucolor0004,line width=0.5pt}
+]
+\draw[color=plantucolor0001,fill=plantucolor0000,line width=0.5pt] (6pt,17pt) arc (180:270:5pt) -- (11pt,12pt) -- (114.9125pt,12pt) arc (270:360:5pt) -- (119.9125pt,17pt) -- (119.9125pt,102pt) arc (0:90:5pt) -- (114.9125pt,107pt) -- (11pt,107pt) arc (90:180:5pt) -- (6pt,102pt) -- cycle;
+\draw[color=plantucolor0001,fill=plantucolor0002,line width=1.0pt] (41.7169pt,28pt) ellipse (11pt and 11pt);
+\node at (41.7169pt,28pt)[]{\textbf{\Large C}};
+\node at (60.3206pt,21pt)[below right,color=black,inner sep=0]{Circle};
+\draw[pstyle2] (7pt,44pt) -- (118.9125pt,44pt);
+\node at (12pt,60pt)[below right,color=black,inner sep=0]{area :~};
+\node at (43.85pt,48pt)[below right,inner sep=0]{$\pi{r}^{{2}}$};
+\node at (12pt,81pt)[below right,color=black,inner sep=0]{perimeter :~};
+\node at (74.9125pt,74pt)[below right,inner sep=0]{$2 \pi r$};
+\draw[pstyle2] (7pt,99pt) -- (118.9125pt,99pt);
+\draw[pstyle3] (138pt,26.5pt) -- (138pt,55.5pt) -- (120.0938pt,59.5pt) -- (138pt,63.5pt) -- (138pt,92.5pt) -- (138pt,92.5pt) -- (324pt,92.5pt) -- (324pt,92.5pt) -- (324pt,36.5pt) -- (314pt,26.5pt) -- (138pt,26.5pt) -- (138pt,26.5pt);
+\draw[pstyle3] (314pt,26.5pt) -- (314pt,36.5pt) -- (324pt,36.5pt) -- (314pt,26.5pt);
+\node at (144pt,31.5pt)[below right,inner sep=0]{$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$};
+\end{tikzpicture}%

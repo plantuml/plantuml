@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\infty \partial \nabla \forall \exists \nexists \emptyset \varnothing \ell \hbar \imath \jmath \aleph \wp \Re \Im \angle \triangle \square \diamond \prime \surd \top \bot \neg \flat \natural \sharp
+@endlatex

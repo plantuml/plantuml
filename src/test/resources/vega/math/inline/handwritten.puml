@@ -1,0 +1,10 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities)
+---
+@startuml
+!option handwritten true
+class A
+note right of A : <math>x^2</math> <latex>\sqrt{b}</latex>
+@enduml

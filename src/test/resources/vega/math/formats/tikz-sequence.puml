@@ -1,0 +1,8 @@
+---
+output: latex
+expected-description: (2 participants)
+---
+@startuml
+Alice -> Bob : <math>sum_(i=1)^n i</math>
+Bob --> Alice : <latex>\frac{n(n+1)}{2}</latex>
+@enduml

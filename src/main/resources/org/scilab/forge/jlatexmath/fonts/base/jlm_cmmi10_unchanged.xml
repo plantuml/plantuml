@@ -1,0 +1,133 @@
+<?xml version='1.0'?>
+<Font name="jlm_cmmi10.ttf" id="jlm_cmmi10_unchanged" space="0.0" xHeight="0.430555" quad="1.000003" skewChar="196" boldVersion="jlm_cmmib10_unchanged" >
+   <Char code="33" width="0.622455" height="0.430555" italic="0.035879" />
+   <Char code="34" width="0.466318" height="0.430555" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="35" width="0.59144" height="0.694445" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="36" width="0.82813" height="0.430555" italic="0.027779" />
+   <Char code="37" width="0.517015" height="0.430555" depth="0.194445" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="38" width="0.362848" height="0.430555" depth="0.097223" italic="0.07986" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="39" width="0.654167" height="0.430555" depth="0.194445" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="40" width="1.000003" height="0.366875" depth="-0.133125" />
+   <Char code="41" width="1.000003" height="0.366875" depth="-0.133125" />
+   <Char code="42" width="1.000003" height="0.366875" depth="-0.133125" />
+   <Char code="43" width="1.000003" height="0.366875" depth="-0.133125" />
+   <Char code="44" width="0.277779" height="0.463748" depth="-0.036252" />
+   <Char code="45" width="0.277779" height="0.463748" depth="-0.036252" />
+   <Char code="46" width="0.500002" height="0.465279" depth="-0.034721" />
+   <Char code="47" width="0.500002" height="0.465279" depth="-0.034721" />
+   <Char code="58" width="0.277779" height="0.105556" />
+   <Char code="59" width="0.277779" height="0.105556" depth="0.194445" />
+   <Char code="60" width="0.777781" height="0.539098" depth="0.039098" >
+     <NextLarger fontId="jlm_cmex10" code="173" />
+   </Char>
+   <Char code="61" width="0.500002" height="0.75" depth="0.25" >
+      <NextLarger fontId="jlm_cmex10" code="177" />
+   </Char>
+   <Char code="62" width="0.777781" height="0.539098" depth="0.039098" >
+     <NextLarger fontId="jlm_cmex10" code="174" />
+   </Char>
+   <Char code="63" width="0.500002" height="0.465279" depth="-0.034721" />
+   <Char code="64" width="0.530904" height="0.694445" italic="0.055555" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="91" width="0.38889" height="0.75" />
+   <Char code="92" width="0.38889" height="0.694445" depth="0.194445" />
+   <Char code="93" width="0.38889" height="0.694445" depth="0.194445" />
+   <Char code="94" width="1.000003" height="0.35764" depth="-0.14236" />
+   <Char code="95" width="1.000003" height="0.35764" depth="-0.14236" />
+   <Char code="96" width="0.41667" height="0.694445" >
+      <Kern code="196" val="0.1111145"/>
+   </Char>
+   <Char code="101" width="0.465627" height="0.430555" >
+      <Kern code="196" val="0.055557"/>
+   </Char>
+   <Char code="111" width="0.484723" height="0.430555" >
+      <Kern code="196" val="0.055557"/>
+   </Char>
+   <Char code="174" width="0.639702" height="0.430555" italic="0.003702" >
+      <Kern code="196" val="0.027779"/>
+   </Char>
+   <Char code="175" width="0.565626" height="0.694445" depth="0.194445" italic="0.052778" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="176" width="0.517731" height="0.430555" depth="0.194445" italic="0.055555" />
+   <Char code="177" width="0.444445" height="0.694445" italic="0.037847" >
+      <Kern code="59" val="-0.055555"/>
+      <Kern code="58" val="-0.055555"/>
+      <Kern code="196" val="0.055557"/>
+   </Char>
+   <Char code="178" width="0.405904" height="0.430555" >
+      <Kern code="196" val="0.055557"/>
+   </Char>
+   <Char code="179" width="0.437502" height="0.694445" depth="0.194445" italic="0.073784" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="180" width="0.4965315" height="0.430555" depth="0.194445" italic="0.035879" >
+      <Kern code="196" val="0.055557"/>
+   </Char>
+   <Char code="181" width="0.469444" height="0.694445" italic="0.027779" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="182" width="0.353937" height="0.430555" >
+      <Kern code="196" val="0.055557"/>
+   </Char>
+   <Char code="183" width="0.5761595" height="0.430555" />
+   <Char code="184" width="0.583336" height="0.694445" />
+   <Char code="185" width="0.60255" height="0.430555" depth="0.194445" >
+      <Kern code="196" val="0.027779"/>
+   </Char>
+   <Char code="186" width="0.493983" height="0.430555" italic="0.063658" >
+      <Kern code="59" val="-0.055555"/>
+      <Kern code="58" val="-0.055555"/>
+      <Kern code="196" val="0.027779"/>
+   </Char>
+   <Char code="187" width="0.437502" height="0.694445" depth="0.194445" italic="0.046007" >
+      <Kern code="196" val="0.1111145"/>
+   </Char>
+   <Char code="188" width="0.570027" height="0.430555" italic="0.035879" />
+   <Char code="189" width="0.517015" height="0.430555" depth="0.194445" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="190" width="0.571414" height="0.430555" italic="0.035879" >
+      <Kern code="59" val="-0.055555"/>
+      <Kern code="58" val="-0.055555"/>
+   </Char>
+   <Char code="191" width="0.437155" height="0.430555" italic="0.113195" >
+      <Kern code="59" val="-0.055555"/>
+      <Kern code="58" val="-0.055555"/>
+      <Kern code="196" val="0.027779"/>
+   </Char>
+   <Char code="192" width="0.54028" height="0.430555" italic="0.035879" >
+      <Kern code="196" val="0.027779"/>
+   </Char>
+   <Char code="193" width="0.595835" height="0.694445" depth="0.194445" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="194" width="0.625692" height="0.430555" depth="0.194445" >
+      <Kern code="196" val="0.055557"/>
+   </Char>
+   <Char code="195" width="0.651392" height="0.694445" depth="0.194445" italic="0.035879" >
+      <Kern code="196" val="0.1111145"/>
+   </Char>
+   <Char code="123" width="0.322456" height="0.430555" >
+      <Kern code="196" val="0.027779"/>
+   </Char>
+   <Char code="124" width="0.38403" height="0.430555" depth="0.194445" >
+      <Kern code="196" val="0.083336"/>
+   </Char>
+   <Char code="125" width="0.636459" height="0.430555" depth="0.194445" >
+      <Kern code="196" val="0.1111145"/>
+   </Char>
+   <Char code="126" width="0.500002" height="0.714444" italic="0.153819" />
+   <Char code="196" width="0.277779" height="0.694445" italic="0.399462" />
+</Font>

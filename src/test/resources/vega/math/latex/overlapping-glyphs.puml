@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\not\in \not= \neq \not\subset \oint \bigcirc \ominus \otimes \odot \oplus \ddot{o}\bar{A}\tilde{e}\hat{O}\vec{B} \bigoplus \bigotimes \bigodot \biguplus \bigsqcup \circledast \boxplus \boxtimes \Join \bowtie \xrightarrow{abc}
+@endlatex

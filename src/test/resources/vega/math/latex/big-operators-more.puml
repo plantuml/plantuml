@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\iint_D f \quad \iiint_V g \quad \bigoplus_i V_i \quad \bigotimes_i W_i \quad \bigvee_i p_i \quad \bigwedge_i q_i \quad \coprod_i X_i \quad \bigsqcup_i Y_i \quad \biguplus_i Z_i
+@endlatex

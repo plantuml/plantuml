@@ -1,0 +1,9 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+dpi 192
+x^2
+@endmath

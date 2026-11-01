@@ -1,0 +1,10 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities)
+---
+@startuml
+skinparam monochrome true
+class A
+note right of A : <color:red><math>x^2</math></color> <latex>\frac{a}{b}</latex>
+@enduml

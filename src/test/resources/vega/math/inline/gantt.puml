@@ -1,0 +1,9 @@
+---
+output: svg
+decimal: 1
+expected-description: (Gantt)
+---
+@startgantt
+[<math>T_1</math>] lasts 3 days
+[<latex>T_2</latex>] starts at [<math>T_1</math>]'s end and lasts 2 days
+@endgantt

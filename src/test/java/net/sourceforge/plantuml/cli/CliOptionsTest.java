@@ -7,6 +7,8 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+import net.sourceforge.plantuml.FileFormat;
+
 class CliOptionsTest {
 
 	@Test
@@ -24,6 +26,21 @@ class CliOptionsTest {
 		
 		assertEquals(new File("mydir"), options.getOutputDir());
 		
+	}
+
+	@Test
+	void testDecimal() throws InterruptedException, IOException, CliParsingException {
+		// --decimal N: the number of decimals of the numbers of an SVG (used by the Vega tests of the C build)
+		assertEquals(-1, new CliOptions("--svg-vega").getFileFormatOption().getDecimal());
+		assertEquals(1, new CliOptions("--svg-vega", "--decimal", "1").getFileFormatOption().getDecimal());
+		assertEquals(0, new CliOptions("--decimal", "0", "--svg-vega").getFileFormatOption().getDecimal());
+		assertEquals(3, new CliOptions("--svg", "--decimal", " 3 ").getFileFormatOption().getDecimal());
+		// a value that is not a number, or is negative, is ignored
+		assertEquals(-1, new CliOptions("--svg", "--decimal", "many").getFileFormatOption().getDecimal());
+		assertEquals(-1, new CliOptions("--svg", "--decimal", "-2").getFileFormatOption().getDecimal());
+		// the other options of the format are kept
+		assertEquals(FileFormat.SVG_DETERMINISTIC,
+				new CliOptions("--svg-vega", "--decimal", "2").getFileFormatOption().getFileFormat());
 	}
 
 	@Test

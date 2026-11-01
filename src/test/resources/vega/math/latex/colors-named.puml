@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\textcolor{red}{R} \textcolor{blue}{B} \textcolor{green}{G} \textcolor{magenta}{M} \textcolor{cyan}{C} \textcolor{orange}{O} \textcolor{gray}{Gr} \textcolor{brown}{Br} \textcolor{purple}{P}
+@endlatex

@@ -1,0 +1,9 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+scale 0.5
+sum_(i=1)^n i^2
+@endmath

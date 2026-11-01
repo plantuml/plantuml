@@ -1,0 +1,10 @@
+---
+output: svg
+decimal: 1
+expected-description: (4 activities)
+---
+@startuml
+(*) --> "<math>x^2</math>"
+--> "<latex>\sqrt{y}</latex>" as Y
+Y --> (*)
+@enduml

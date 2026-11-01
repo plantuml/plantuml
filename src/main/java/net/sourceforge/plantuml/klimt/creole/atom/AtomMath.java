@@ -35,16 +35,14 @@
  */
 package net.sourceforge.plantuml.klimt.creole.atom;
 
-import net.sourceforge.plantuml.klimt.awt.PortableImage;
-import net.sourceforge.plantuml.klimt.awt.XColor;
-import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UImage;
-import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.math.MathBlankImage;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
@@ -65,8 +63,7 @@ public class AtomMath extends AbstractAtom implements Atom {
 		if (stringBounder.matchesProperty("TIKZ")) {
 			return stringBounder.calculateDimension(null, math.getSource());
 		}
-		final PortableImage image = math.getImage(XColor.BLACK, XColor.WHITE).withScale(1).getImage();
-		return new XDimension2D(image.getWidth(), image.getHeight());
+		return math.getDimension(stringBounder);
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
@@ -75,32 +72,22 @@ public class AtomMath extends AbstractAtom implements Atom {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		if (!TeaVM.isTeaVM()) {
-			final ColorMapper colorMapper = ug.getColorMapper();
-			final boolean isSvg = ug.matchesProperty("SVG");
-			final XColor back;
-			if (background == null)
-				back = null;
-			else
-				back = getColor(colorMapper, background, XColor.WHITE);
-
-			final XColor fore = getColor(colorMapper, foreground, XColor.BLACK);
-			// final double dpiFactor = ug.dpiFactor();
-			if (isSvg) {
-				final UImageSvg svg = math.getSvg(1, fore, back);
-				ug.draw(svg);
-			} else {
-				final UImage image = new UImage(math.getImage(fore, back)).withFormula(math.getSource());
-				ug.draw(image);
-			}
+		// (TikZ is on the JVM only: the marker lets TeaVM prune this branch, and the AWT-based image)
+		if (TeaVM.isTeaVM() == false && ug.matchesProperty("TIKZ")) {
+			// TikZ gets the source of the formula, not a drawing
+			final XDimension2D dim = math.getDimension(ug.getStringBounder());
+			ug.draw(new UImage(new MathBlankImage(dim)).withFormula(math.getSource()));
+			return;
 		}
+		// Only a plain color can be used; the UGraphic maps it as it does for any shape
+		final HColor fore = foreground instanceof HColorSimple ? foreground : HColors.BLACK;
+		final HColor back;
+		if (background == null)
+			back = null;
+		else
+			back = background instanceof HColorSimple ? background : HColors.WHITE;
+
+		math.drawU(ug, fore, back);
 	}
 
-	private XColor getColor(ColorMapper colorMapper, HColor color, XColor defaultValue) {
-		if (color instanceof HColorSimple)
-			return color.toColor(colorMapper);
-
-		return defaultValue;
-
-	}
 }

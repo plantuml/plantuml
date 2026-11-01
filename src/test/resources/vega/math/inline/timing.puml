@@ -1,0 +1,11 @@
+---
+output: svg
+decimal: 1
+expected-description: (Timing Diagram)
+---
+@startuml
+robust "<math>S_1</math>" as S
+S is "<latex>\alpha</latex>"
+@5
+S is "<math>beta</math>"
+@enduml

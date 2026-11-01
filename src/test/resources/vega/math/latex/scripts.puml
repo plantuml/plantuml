@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+x_1^2 \quad x_{i,j}^{k+1} \quad a^{b^{c^d}} \quad x_{a_{b_c}} \quad f\prime \quad f\prime\prime \quad x^\prime
+@endlatex

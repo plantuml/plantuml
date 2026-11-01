@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\lim_{n\to\infty} \quad \limsup_{n} \quad \liminf_{n} \quad \max_{i} \quad \min_{j} \quad \sup_{x} \quad \inf_{y} \quad \varlimsup \quad \varliminf \quad \injlim_{i}
+@endlatex

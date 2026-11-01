@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="25px" preserveAspectRatio="none" style="width:140px;height:25px;background:#FFFFFF;" version="1.1" viewBox="0 0 140 25" width="140px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-family="monospace" font-size="14" textLength="129.8" x="5" y="19">\begin{foo} x \end{foo}</text>
+  </g>
+</svg>

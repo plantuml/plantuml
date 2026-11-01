@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\frac{1}{\frac{1}{x}+\frac{1}{y}} \quad \frac{\frac{a}{b}}{\frac{c}{d}} \quad \frac{x^{\frac{1}{2}}}{\sqrt{y}}
+@endlatex

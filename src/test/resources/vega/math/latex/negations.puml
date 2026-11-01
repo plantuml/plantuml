@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\not= \not< \not> \not\in \not\subset \not\equiv \not\leq \not\sim \not\approx \nless \ngtr \nleq \ngeq \nsubseteq \nparallel \nmid
+@endlatex

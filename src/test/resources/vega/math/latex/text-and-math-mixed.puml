@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\text{The area of a circle is } \pi r^2 \text{ and its perimeter } 2\pi r
+@endlatex

@@ -1,0 +1,12 @@
+---
+output: svg
+decimal: 1
+expected-description: (1 entities)
+---
+@startuml
+rectangle "<math>R_1</math>" {
+  package "<latex>\Pi</latex> pack" {
+    [<math>c</math>]
+  }
+}
+@enduml

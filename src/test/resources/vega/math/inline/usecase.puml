@@ -1,0 +1,12 @@
+---
+output: svg
+decimal: 1
+expected-description: (3 entities)
+---
+@startuml
+usecase UC1 as "Compute <math>pi r^2</math>"
+usecase UC2 as "Compute <latex>2\pi r</latex>"
+actor User
+User --> UC1
+User --> UC2
+@enduml

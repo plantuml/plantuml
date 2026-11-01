@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+a\,b \quad a\:b \quad a\;b \quad a\!b \quad a\ b \quad a\quad b \quad a\qquad b \quad a\hspace{1cm}b
+@endlatex

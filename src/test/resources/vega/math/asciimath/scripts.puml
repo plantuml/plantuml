@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+x_1^2 + x_(i,j)^(k+1) + a_b^c
+@endmath

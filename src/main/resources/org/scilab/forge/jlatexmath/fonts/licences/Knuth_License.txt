@@ -1,0 +1,5 @@
+Knuth License
+
+This software is copyright and you are explicitly granted a license which gives you, the "user" of the software, legal permission to copy, distribute and/or modify the software, so long as if you modify the software then it carry a different name from the original software.
+
+All the same, please check the specific details of the software's license before making modifications. 

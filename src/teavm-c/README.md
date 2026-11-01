@@ -353,6 +353,33 @@ library) are embedded in the executable, since the C build has no classpath:
 To embed more files, add `name=path` pairs to `RESOURCE_PAIRS` in
 `CMakeLists.txt` and have Gradle copy them.
 
+## Formulas (`@startmath`, `@startlatex`, `<math>`, `<latex>`)
+
+JLaTeXMath (`org.scilab.forge.jlatexmath`, vendored) draws a formula as paths on
+a `UGraphic`, so the SVG, PNG and PDF of the C build get the same shapes as the
+JVM (see `PLAN.md`). The library has no `java.awt`, no `javax.*`, no reflection and
+no `Character.UnicodeBlock`, none of which the C class library has. The text that
+no TeX font can draw (CJK...) is measured with the `StringBounder` of the diagram and
+drawn as a `UText`.
+
+It reads 71 files (68 XML files and 3 `glyphs.bin`), through `TeXResources`: there is no
+class loader in the C build, and TeaVM's resource support crashes its coroutine
+transformation. `copyNativeSources` copies them from
+`src/main/resources/org/scilab/forge/jlatexmath` into `native/resources/jlatexmath`,
+CMake embeds them, and `MathResources` gives the library a `JlatexmathResources`,
+which reads the embedded files (`jlatexmath/...`); on the JVM, the class loaders are
+used. About 2 MB are added to the executable. The XML files are read by `XmlReader`
+(no `javax.xml` either).
+
+`PSystemBuilderC` has `PSystemMathFactory` and `PSystemLatexFactory`, and the
+`TeaVM.isTeaVM() == false || TeaVM.isC()` tests of the Creole parser let `<math>` and
+`<latex>` through (the browser build still shows them as text). Not in the C build:
+the TikZ output of a formula, and EPS.
+
+Test it with `python tools/vega-c/run_vega_c.py math`: 216 of the 221 tests of
+`vega/math` are SVG or PDF ones that the script checks (the others are TikZ and
+text outputs); `decimal:` is given to `plantuml.exe` as `--decimal`.
+
 ## PDF
 
 PDF output goes through the OpenPDF sources, pruned and kept in

@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\hslash \beth \gimel \daleth \complement \blacksquare \checkmark \maltese \measuredangle \backprime \eth \square \lozenge \blacklozenge \bigstar \clubsuit \diamondsuit \heartsuit \spadesuit
+@endlatex

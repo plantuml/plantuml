@@ -49,10 +49,12 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemMath extends DirectOsDiagram {
+public class PSystemMath extends DirectOsDiagram implements FormulaDiagram {
 
 	private String math = "";
 	private float scale = 1;
@@ -72,6 +74,18 @@ public class PSystemMath extends DirectOsDiagram {
 			throws IOException {
 		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromAsciiMath(math);
 		return asciiMath.export(os, fileFormat, scale, color, backColor);
+	}
+
+	public TextBlock getFormulaBlock() {
+		return ScientificEquationSafe.fromAsciiMath(math).getTextBlock(HColors.simple(color), getFormulaBackground());
+	}
+
+	public HColor getFormulaBackground() {
+		return backColor == null ? null : HColors.simple(backColor);
+	}
+
+	public double getFormulaScale() {
+		return scale;
 	}
 
 	public void doCommandLine(String line) {

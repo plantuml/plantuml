@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\sum\nolimits_{i=1}^{n} i \quad \sum_{i=1}^{n} i \quad \sum\limits_{i=1}^{n} i \quad \sum_{i=1}^{n} i \quad \int\limits_0^1 x \quad \int_0^1 x \quad \prod\nolimits_k a_k \quad \prod_{k} a_k
+@endlatex

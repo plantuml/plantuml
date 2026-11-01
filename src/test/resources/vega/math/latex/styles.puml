@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\displaystyle\sum_i x_i \quad \textstyle\sum_i x_i \quad \scriptstyle\sum_i x_i \quad \scriptscriptstyle\sum_i x_i
+@endlatex

@@ -9,6 +9,7 @@ Python 3.9+ and nothing else.
 python tools/vega-c/run_vega_c.py                    # every test
 python tools/vega-c/run_vega_c.py mindmap            # the paths containing "mindmap" (every test is listed)
 python tools/vega-c/run_vega_c.py --diff -j 8        # one .diff per failed test
+python tools/vega-c/run_vega_c.py -v                 # also list the PASS and SKIPPED (by default only FAIL, ERROR and TIMEOUT)
 python tools/vega-c/run_vega_c.py --exe path\to\plantuml.exe
 ```
 
@@ -19,6 +20,7 @@ reports, it does not judge. The exit code is 0 unless `--strict` is given.
 |---|---|
 | `output: svg` | `plantuml.exe --svg-vega` (the deterministic SVG of the JVM Vega tests), compared with `<name>.svg` (or `<name>-N.svg`) once both are parsed and pretty-printed, as `SvgCleaner` does for the JVM |
 | `output: pdf` | `plantuml.exe --pdf-vega` (the deterministic PDF of the JVM Vega tests: fixed dates and file identifier, no compression), compared byte for byte with `<name>.pdf` (or `<name>-N.pdf`), ignoring carriage returns |
+| `decimal: N` (with `output: svg`) | adds `--decimal N` to the command line of the SVG: the number of decimals of the numbers, as on the JVM |
 | `output: preproc` | `plantuml.exe --preproc`, compared with `<name>.preproc` |
 | other formats, tests that expect an error | `skipped` |
 
@@ -27,6 +29,18 @@ no reference file: it only checks that the executable does not crash, does not
 hang, and writes a file that starts like a PNG. This is reported apart from
 the results above (`png` in `report.json`, "PNG problems" in `summary.txt`), and
 it also covers the tests that are `skipped` above.
+
+### Known differences (a `FAIL` that is not a bug)
+
+An embedded diagram (`{{ ... }}`) is a different SVG on the C build. On the JVM the
+inner diagram is made apart and put in the SVG of the parent as one
+`<image href="data:image/svg+xml;base64,...">`; in a TeaVM build
+(`EmbeddedDiagram`, the branch of `TeaVM.isTeaVM()`) it is drawn straight into the
+`UGraphic` of the parent, as shapes. The two SVG cannot be the same text. The five
+Vega tests that have a `{{` are in `vega/tikz`: `tikz-1926`, `tikz-1926-svg`,
+`tikz-scale-down`, `tikz-scale-up` and `tikz-scale-nested-scale`; they `FAIL`
+here, with no consequence for the other tests (checked: there is no other `{{` in
+`vega/`).
 
 The other expectations of the YAML header (`expected-description`,
 `expected-stderr`...) are not checked. A test that crashes the executable is

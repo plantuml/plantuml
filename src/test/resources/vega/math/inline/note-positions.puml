@@ -1,0 +1,12 @@
+---
+output: svg
+decimal: 1
+expected-description: (5 entities)
+---
+@startuml
+class A
+note left of A : <math>x_1 + x_2</math>
+note right of A : <latex>\frac{a}{b}</latex>
+note top of A : <math>sqrt(2)</math>
+note bottom of A : <latex>\alpha + \beta</latex>
+@enduml

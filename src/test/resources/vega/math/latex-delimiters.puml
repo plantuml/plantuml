@@ -1,0 +1,7 @@
+---
+output: svg
+expected-description: (Latex)
+---
+@startlatex
+\left( \frac{1}{2} \left[ \frac{a}{b} \left\{ \frac{c}{d} \right\} \right] \right)
+@endlatex

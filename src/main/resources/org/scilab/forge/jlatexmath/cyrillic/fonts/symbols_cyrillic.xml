@@ -1,0 +1,146 @@
+<?xml version='1.0'?>
+<!--
+  symbols_cyrillic.xml
+  =========================================================================
+  This file is  part of the JLaTeXMath Library - http://forge.scilab.org/index.php/p/jlatexmath
+  
+  Copyright (C) 2009 DENIZET Calixte
+  
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or (at
+  your option) any later version.
+  
+  This program is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  General Public License for more details.
+  
+  A copy of the GNU General Public License can be found in the file
+  LICENSE.txt provided with the source distribution of this program (see
+  the META-INF directory in the source jar). This license can also be
+  found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+  
+  If you did not receive a copy of the GNU General Public License along
+  with this program, contact the lead developer, or write to the Free
+  Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA.
+
+  Linking this library statically or dynamically with other modules 
+  is making a combined work based on this library. Thus, the terms 
+  and conditions of the GNU General Public License cover the whole 
+  combination.
+  
+  As a special exception, the copyright holders of this library give you 
+  permission to link this library with independent modules to produce 
+  an executable, regardless of the license terms of these independent 
+  modules, and to copy and distribute the resulting executable under terms 
+  of your choice, provided that you also meet, for each linked independent 
+  module, the terms and conditions of the license of that module. 
+  An independent module is a module which is not derived from or based 
+  on this library. If you modify this library, you may extend this exception 
+  to your version of the library, but you are not obliged to do so. 
+  If you do not wish to do so, delete this exception statement from your 
+  version.
+  
+-->
+
+<TeXSymbols>
+  <Symbol name="dotlessi" type="ord"/>
+  <Symbol name="cyrbreve" type="acc"/>
+  <Symbol name="cyrddot" type="acc"/>
+  <Symbol name="CYRA" type="ord"/>
+  <Symbol name="CYRB" type="ord"/> 
+  <Symbol name="CYRV" type="ord"/>
+  <Symbol name="CYRG" type="ord"/>
+  <Symbol name="CYRD" type="ord"/>
+  <Symbol name="CYRE" type="ord"/>
+  <Symbol name="CYRYO" type="ord"/>
+  <Symbol name="CYRZH" type="ord"/>
+  <Symbol name="CYRZ" type="ord"/>
+  <Symbol name="CYRE" type="ord"/>
+  <Symbol name="CYRI" type="ord"/>
+  <Symbol name="CYRIO" type="ord"/>
+  <Symbol name="CYRK" type="ord"/>
+  <Symbol name="CYRL" type="ord"/>
+  <Symbol name="CYRM" type="ord"/>
+  <Symbol name="CYRN" type="ord"/>
+  <Symbol name="CYRO" type="ord"/>
+  <Symbol name="CYRP" type="ord"/>
+  <Symbol name="CYRR" type="ord"/>
+  <Symbol name="CYRS" type="ord"/>
+  <Symbol name="CYRT" type="ord"/>
+  <Symbol name="CYRU" type="ord"/>
+  <Symbol name="CYRF" type="ord"/>
+  <Symbol name="CYRH" type="ord"/>
+  <Symbol name="CYRC" type="ord"/>
+  <Symbol name="CYRCH" type="ord"/>
+  <Symbol name="CYRSH" type="ord"/>
+  <Symbol name="CYRSHCH" type="ord"/>
+  <Symbol name="CYRHRDSN" type="ord"/>
+  <Symbol name="CYRY" type="ord"/>
+  <Symbol name="CYRSFTSN" type="ord"/>
+  <Symbol name="CYREREV" type="ord"/>
+  <Symbol name="CYRYU" type="ord"/>
+  <Symbol name="CYRYA" type="ord"/>
+  <Symbol name="cyra" type="ord"/>
+  <Symbol name="cyrb" type="ord"/> 
+  <Symbol name="cyrv" type="ord"/>
+  <Symbol name="cyrg" type="ord"/>
+  <Symbol name="cyrd" type="ord"/>
+  <Symbol name="cyre" type="ord"/>
+  <Symbol name="cyryo" type="ord"/>
+  <Symbol name="cyrzh" type="ord"/>
+  <Symbol name="cyrz" type="ord"/>
+  <Symbol name="cyre" type="ord"/>
+  <Symbol name="cyri" type="ord"/>
+  <Symbol name="cyrio" type="ord"/>
+  <Symbol name="cyrk" type="ord"/>
+  <Symbol name="cyrl" type="ord"/>
+  <Symbol name="cyrm" type="ord"/>
+  <Symbol name="cyrn" type="ord"/>
+  <Symbol name="cyro" type="ord"/>
+  <Symbol name="cyrp" type="ord"/>
+  <Symbol name="cyrr" type="ord"/>
+  <Symbol name="cyrs" type="ord"/>
+  <Symbol name="cyrt" type="ord"/>
+  <Symbol name="cyru" type="ord"/>
+  <Symbol name="cyrf" type="ord"/>
+  <Symbol name="cyrh" type="ord"/>
+  <Symbol name="cyrc" type="ord"/>
+  <Symbol name="cyrch" type="ord"/>
+  <Symbol name="cyrsh" type="ord"/>
+  <Symbol name="cyrshch" type="ord"/>
+  <Symbol name="cyrhrdsn" type="ord"/>
+  <Symbol name="cyry" type="ord"/>
+  <Symbol name="cyrsftsn" type="ord"/>
+  <Symbol name="cyrerev" type="ord"/>
+  <Symbol name="cyryu" type="ord"/>
+  <Symbol name="cyrya" type="ord"/>
+<!-- Ukrainian -->
+  <Symbol name="CYRIE" type="ord"/>
+  <Symbol name="CYRII" type="ord"/>
+  <Symbol name="cyrie" type="ord"/>
+  <Symbol name="cyrii" type="ord"/>
+<!-- Other slavic languages and Old Russian -->
+  <Symbol name="CYRDJE" type="ord"/>
+  <Symbol name="CYRDZE" type="ord"/>
+  <Symbol name="CYRJE" type="ord"/>
+  <Symbol name="CYRLJE" type="ord"/>
+  <Symbol name="CYRNJE" type="ord"/>
+  <Symbol name="CYRTSHE" type="ord"/>
+  <Symbol name="CYRDZHE" type="ord"/>
+  <Symbol name="CYRIZH" type="ord"/>
+  <Symbol name="CYRYAT" type="ord"/>
+  <Symbol name="CYRFITA" type="ord"/>
+  <Symbol name="cyrdje" type="ord"/>
+  <Symbol name="cyrdze" type="ord"/>
+  <Symbol name="cyrje" type="ord"/>
+  <Symbol name="cyrlje" type="ord"/>
+  <Symbol name="cyrnje" type="ord"/>
+  <Symbol name="cyrtshe" type="ord"/>
+  <Symbol name="cyrdzhe" type="ord"/>
+  <Symbol name="cyrizh" type="ord"/>
+  <Symbol name="cyryat" type="ord"/>
+  <Symbol name="cyrfita" type="ord"/>
+</TeXSymbols>

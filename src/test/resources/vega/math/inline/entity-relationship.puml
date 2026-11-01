@@ -1,0 +1,12 @@
+---
+output: svg
+decimal: 1
+expected-description: (1 entities)
+---
+@startuml
+entity E {
+  *id : <math>n</math>
+  --
+  value : <latex>\alpha</latex>
+}
+@enduml

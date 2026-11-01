@@ -1,0 +1,13 @@
+---
+output: svg
+decimal: 1
+expected-description: (1 entities)
+---
+@startuml
+title
+  <math>E = mc^2</math>
+  <latex>\frac{a}{b}</latex>
+end title
+caption <math>Fig. 1</math>
+class A
+@enduml

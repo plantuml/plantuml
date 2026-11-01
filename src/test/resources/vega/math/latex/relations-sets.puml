@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+x \in A \ni y \notin B \subset C \supset D \subseteq E \supseteq F \sqsubset G \sqsupset H \vdash I \dashv J \models K
+@endlatex

@@ -1,0 +1,10 @@
+---
+output: svg
+decimal: 1
+expected-description: (2 entities)
+---
+@startuml
+skinparam noteFontColor red
+class A
+note right of A : <math>x^2</math> <latex>y^2</latex>
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\big( x \big) \quad \Big( x \Big) \quad \bigg( x \bigg) \quad \Bigg( x \Bigg) \quad \big| x \big| \quad \bigg[ y \bigg] \quad \Bigg\{ z \Bigg\}
+@endlatex

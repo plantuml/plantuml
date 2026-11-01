@@ -1,0 +1,8 @@
+---
+output: svg
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\overbrace{a+b+c}^{3} \quad \underbrace{x+y}_{2} \quad \overbrace{1+\cdots+n}^{n \text{ terms}} \quad \underbrace{a_1 + \cdots + a_m}_{m}
+@endlatex
