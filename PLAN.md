@@ -1,7 +1,8 @@
 # PLAN: JLaTeXMath inside PlantUML (branch `master-jlatexmath`)
 
-Status: **phases 0 and 1 are done, phase 2 is in progress** (see the table of
-section 6 and the steps below it). This file is the hand-over for the next
+Status: **phases 0 to 4 are done** (the formulas are drawn without AWT, and they
+work in the JVM jar without an external jar and in the C build); **phase 5 is
+next** (see the table of section 6 and the steps below it). This file is the hand-over for the next
 working sessions. Update it as decisions are made (move items from
 "Open questions" to "Decisions").
 
@@ -209,6 +210,13 @@ driven through the JVM command line instead of `plantuml.exe` gives 216 passed,
 references, the script and `--decimal` agree, and what is left to compare is
 the C build itself.
 
+Result on the C build (step 4, `plantuml.exe` built with `compilec.bat` on Windows
+ARM64, `run_vega_c.py`): every SVG and PDF test of `vega/math` passes, the same
+references as on the JVM, so the formulas are the same text in SVG and the same
+bytes in PDF. The only `FAIL` of the whole Vega tree are the five tests of
+`vega/tikz` that have an embedded diagram (`{{ ... }}`), which is drawn in line in
+a TeaVM build and as an `<image>` on the JVM: not a bug, see `tools/vega-c/README.md`.
+
 - Vega tests from 5.1 on the JVM, and on the C build through
   `tools/vega-c/run_vega_c.py` (once the Vega headers are there).
 - Update `net/sourceforge/plantuml/math/readme.md`, `CHANGES.md`, and the
@@ -220,9 +228,9 @@ the C build itself.
 |-------|---------|-----------|
 | 0 | 5.1 corpus + references; answer the cheap open questions (XML in TeaVM, pinned upstream commit) | corpus committed, references reviewed (**done**) |
 | 1 | Vendor the sources as they are, call them directly (no reflection), JVM only, **no behaviour change** | corpus unchanged on the JVM (**done**) |
-| 2 | Canvas interface + `UGraphic` implementation, glyph outlines (5.2) | corpus renders without AWT fonts, differences understood (**in progress**, steps below) |
-| 3 | Remove `java.awt` / `javax.*` leftovers, XML and resources (5.3, 5.4) | the code compiles with TeaVM (JS and C) |
-| 4 | Wire-up (5.5), first formulas in `plantuml.exe` | `@startmath`, `@startlatex`, `<math>` work in the C build (**wired, to test**: `python tools/vega-c/run_vega_c.py math`) |
+| 2 | Canvas interface + `UGraphic` implementation, glyph outlines (5.2) | corpus renders without AWT fonts, differences understood (**done**, steps below) |
+| 3 | Remove `java.awt` / `javax.*` leftovers, XML and resources (5.3, 5.4) | the code compiles with TeaVM (JS and C) (**done for C**: JavaScript and Wasm have no provider of resources yet) |
+| 4 | Wire-up (5.5), first formulas in `plantuml.exe` | `@startmath`, `@startlatex`, `<math>` work in the C build (**done**: on `plantuml.exe` built on Windows ARM64, every SVG and PDF test of `vega/math` passes, see 5.7) |
 | 5 | Pruning (5.6), size and start-up measurements, Vega on C (5.7) | size delta acceptable, CI green |
 | 6 | Same for JavaScript / Wasm if wanted | |
 
@@ -409,10 +417,13 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
 5. ~~Phase 2, step 2d: review of the rendering~~ (done, see Decisions).
 6. ~~Phase 3 (no `java.awt` / `javax.*` left, XML, resources)~~ (done, steps 3a
    to 3e).
-7. Phase 4: run `python tools/vega-c/run_vega_c.py math` on the `plantuml.exe`
-   of `compilec.bat` and look at what fails (the wiring was written without a C
-   compiler at hand). Then phase 5: size and start-up of the executable (about 2 MB
-   of resources, parsing of the XML at the first formula), and the browser.
+7. ~~Phase 4: the formulas in the C build~~ (done: every SVG and PDF test of
+   `vega/math` passes on `plantuml.exe`, see 5.7).
+8. Phase 5: size and start-up of the executable (about 2 MB of resources, the
+   parsing of the XML at the first formula: a binary format is the option), pruning
+   (5.6: the macros and symbols that nobody uses), and what the C build says about
+   the time of a formula. Then phase 6, the browser (JavaScript, Wasm): a provider
+   of resources (a lazy bundle, like `themes.js`) and the gates of the Creole parser.
 
 Working method, as usual: small patches (`git format-patch`), each with an
 English commit message starting with the emojis (here 🍵 for the C build plus

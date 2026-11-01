@@ -30,6 +30,18 @@ hang, and writes a file that starts like a PNG. This is reported apart from
 the results above (`png` in `report.json`, "PNG problems" in `summary.txt`), and
 it also covers the tests that are `skipped` above.
 
+### Known differences (a `FAIL` that is not a bug)
+
+An embedded diagram (`{{ ... }}`) is a different SVG on the C build. On the JVM the
+inner diagram is made apart and put in the SVG of the parent as one
+`<image href="data:image/svg+xml;base64,...">`; in a TeaVM build
+(`EmbeddedDiagram`, the branch of `TeaVM.isTeaVM()`) it is drawn straight into the
+`UGraphic` of the parent, as shapes. The two SVG cannot be the same text. The five
+Vega tests that have a `{{` are in `vega/tikz`: `tikz-1926`, `tikz-1926-svg`,
+`tikz-scale-down`, `tikz-scale-up` and `tikz-scale-nested-scale`; they `FAIL`
+here, with no consequence for the other tests (checked: there is no other `{{` in
+`vega/`).
+
 The other expectations of the YAML header (`expected-description`,
 `expected-stderr`...) are not checked. A test that crashes the executable is
 `error`, one that does not answer in `--timeout` seconds is `timeout`.
