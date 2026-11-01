@@ -112,7 +112,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	 * @return the value
 	 */
 	static SecurityProfile init() {
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="pc bpc" id="L115" title="3 of 4 branches missed.">		if (TeaVM.isTeaVM() &amp;&amp; TeaVM.isC() == false) // browser build: no file system, so nothing to protect</span>
 <span class="nc" id="L116">			return INSECURE;</span>
 
 <span class="fc" id="L118">		final String env = SecurityUtils.getenv(&quot;PLANTUML_SECURITY_PROFILE&quot;);</span>

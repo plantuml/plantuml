@@ -228,6 +228,13 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../klimt/awt/PortableImage.html" title="interface in net.sourceforge.plantuml.klimt.awt">PortableImage</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#readRasterImage(javax.swing.ImageIcon)" class="member-name-link">readRasterImage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/ImageIcon.html" title="class or interface in javax.swing" class="external-link">ImageIcon</a>&nbsp;imageIcon)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setCommandLineProperty(java.lang.String,java.lang.String)" class="member-name-link">setCommandLineProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Registers a property given on the command line, such as
+ PLANTUML_SECURITY_PROFILE or plantuml.include.path.</div>
+</div>
 </div>
 </div>
 </div>
@@ -337,6 +344,19 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="readRasterImage(javax.swing.ImageIcon)">
 <h3>readRasterImage</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../klimt/awt/PortableImage.html" title="interface in net.sourceforge.plantuml.klimt.awt">PortableImage</a></span>&nbsp;<span class="element-name">readRasterImage</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/ImageIcon.html" title="class or interface in javax.swing" class="external-link">ImageIcon</a>&nbsp;imageIcon)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setCommandLineProperty(java.lang.String,java.lang.String)">
+<h3>setCommandLineProperty</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCommandLineProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</span></div>
+<div class="block">Registers a property given on the command line, such as
+ PLANTUML_SECURITY_PROFILE or plantuml.include.path. It is read by
+ <a href="#getenv(java.lang.String)"><code>getenv(String)</code></a> before the system properties and the environment.
+ <p>
+ Only the launcher calls this, before any diagram is read: a diagram cannot
+ change the security profile.</div>
 </section>
 </li>
 <li>

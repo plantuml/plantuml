@@ -39,50 +39,63 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityUtils;
+
 /**
  * A folder read with java.io only, for the C build: TeaVM's C classlib has
  * java.io.File but no file system provider behind java.nio.file. It is what
  * the includes of a diagram resolve their relative paths against.
  * &lt;p&gt;
- * It carries no include path (plantuml.include.path) nor archive, unlike
+ * Every file goes through {@link SFile}, so that the security profile, the
+ * include path (plantuml.include.path) and the allowlist
+ * (plantuml.allowlist.path) apply as on the JVM. It carries no archive, unlike
  * {@link NFolderRegular}.
  */
 public class NFolderIo implements NFolder {
 
 	private final File dir;
 
-<span class="nc" id="L54">	public NFolderIo(File dir) {</span>
-<span class="nc" id="L55">		this.dir = dir;</span>
-<span class="nc" id="L56">	}</span>
+<span class="nc" id="L59">	public NFolderIo(File dir) {</span>
+<span class="nc" id="L60">		this.dir = dir;</span>
+<span class="nc" id="L61">	}</span>
 
 	/**
 	 * The readable file of this name or path (relative to this folder unless it is
 	 * absolute), or null.
 	 */
 	public InputFile getInputFile(String nameOrPath) {
-<span class="nc" id="L63">		File file = new File(nameOrPath);</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (file.isAbsolute() == false)</span>
-<span class="nc" id="L65">			file = new File(dir, nameOrPath);</span>
+<span class="nc" id="L68">		File file = new File(nameOrPath);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (file.isAbsolute() == false)</span>
+<span class="nc" id="L70">			file = new File(dir, nameOrPath);</span>
 
-<span class="nc bnc" id="L67" title="All 4 branches missed.">		if (file.isFile() &amp;&amp; file.canRead())</span>
-<span class="nc" id="L68">			return new InputFileIo(file);</span>
+<span class="nc bnc" id="L72" title="All 4 branches missed.">		if (file.isFile() &amp;&amp; SFile.fromFile(file).canRead())</span>
+<span class="nc" id="L73">			return new InputFileIo(file);</span>
 
-<span class="nc" id="L70">		return null;</span>
+		// Not found from this folder: the include path, as NFolderRegular does
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (new File(nameOrPath).isAbsolute() == false)</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">			for (SFile d : SecurityUtils.getPath(PATHS_INCLUDES)) {</span>
+<span class="nc" id="L78">				final File inInclude = new File(d.conv(), nameOrPath);</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">				if (inInclude.isFile() &amp;&amp; SFile.fromFile(inInclude).canRead())</span>
+<span class="nc" id="L80">					return new InputFileIo(inInclude);</span>
+<span class="nc" id="L81">			}</span>
+
+<span class="nc" id="L83">		return null;</span>
 	}
 
 	@Override
 	public InputFile getInputFile(Path nameOrPath) throws IOException {
-<span class="nc" id="L75">		return getInputFile(nameOrPath.toString());</span>
+<span class="nc" id="L88">		return getInputFile(nameOrPath.toString());</span>
 	}
 
 	@Override
 	public NFolder getSubfolder(Path nameOrPath) throws IOException {
-<span class="nc" id="L80">		return new NFolderIo(new File(dir, nameOrPath.toString()));</span>
+<span class="nc" id="L93">		return new NFolderIo(new File(dir, nameOrPath.toString()));</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L85">		return &quot;NFolderIo[&quot; + dir + &quot;]&quot;;</span>
+<span class="nc" id="L98">		return &quot;NFolderIo[&quot; + dir + &quot;]&quot;;</span>
 	}
 
 }

@@ -102,7 +102,9 @@ implements <a href="NFolder.html" title="interface in net.sourceforge.plantuml.n
  java.io.File but no file system provider behind java.nio.file. It is what
  the includes of a diagram resolve their relative paths against.
  <p>
- It carries no include path (plantuml.include.path) nor archive, unlike
+ Every file goes through <a href="../security/SFile.html" title="class in net.sourceforge.plantuml.security"><code>SFile</code></a>, so that the security profile, the
+ include path (plantuml.include.path) and the allowlist
+ (plantuml.allowlist.path) apply as on the JVM. It carries no archive, unlike
  <a href="NFolderRegular.html" title="class in net.sourceforge.plantuml.nio"><code>NFolderRegular</code></a>.</div>
 </section>
 <section class="summary">
