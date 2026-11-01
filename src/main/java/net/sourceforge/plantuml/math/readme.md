@@ -16,5 +16,5 @@ This package provides classes used to manage [PlantUML ASCII Math](https://plant
 - :octocat: [Opencollab/Jlatexmath](https://github.com/opencollab/jlatexmath)
 
 ## Dependency _(if available)_
-- `org.scilab.forge.jlatexmath`
-- `org.apache.batik`
+- `org.scilab.forge.jlatexmath` is part of PlantUML (vendored, see [its readme](../../../../org/scilab/forge/jlatexmath/readme.md)), except in the MIT, EPL, BSD, ASL and LGPL variants
+- `org.apache.batik` (optional, SVG output only, until `PLAN.md` phase 2 replaces it)

@@ -37,39 +37,35 @@ package net.sourceforge.plantuml.math;
 
 import java.awt.Color;
 import java.awt.Insets;
-import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.Icon;
 
 import net.sourceforge.plantuml.klimt.awt.XColor;
-
-
+// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
+import org.scilab.forge.jlatexmath.TeXConstants;
+import org.scilab.forge.jlatexmath.TeXFormula;
+import org.scilab.forge.jlatexmath.TeXIcon;
+// ::done
 
 public class TeXIconBuilder {
 
 	private Icon icon;
 
-	public TeXIconBuilder(String tex, XColor foregroundColor2)
-			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-
-		// TeXFormula formula = new TeXFormula(latex);
-		final Class<?> clTeXFormula = Class.forName("org.scilab.forge.jlatexmath.TeXFormula");
-		final Object formula = clTeXFormula.getConstructor(String.class).newInstance(tex);
-
-		// TeXIcon icon = formula.new
-		// TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20).build();
-		final Class<?> clTeXIconBuilder = clTeXFormula.getClasses()[0];
-		final Object builder = clTeXIconBuilder.getConstructors()[0].newInstance(formula);
-		clTeXIconBuilder.getMethod("setStyle", int.class).invoke(builder, 0);
-		clTeXIconBuilder.getMethod("setSize", float.class).invoke(builder, (float) 20);
-		icon = (Icon) clTeXIconBuilder.getMethod("build").invoke(builder);
+	public TeXIconBuilder(String tex, XColor foregroundColor2) throws ClassNotFoundException {
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
+		final TeXFormula formula = new TeXFormula(tex);
+		final TeXIcon teXIcon = formula.new TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20).build();
 
 		final int margin = 1;
-		final Insets insets = new Insets(margin, margin, margin, margin);
-		icon.getClass().getMethod("setInsets", insets.getClass()).invoke(icon, insets);
+		teXIcon.setInsets(new Insets(margin, margin, margin, margin));
 		final Color awtColor = foregroundColor2.toAwtColor();
-		icon.getClass().getMethod("setForeground", awtColor.getClass()).invoke(icon, awtColor);
+		teXIcon.setForeground(awtColor);
+		icon = teXIcon;
+		// ::done
+		// ::uncomment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
+//		// JLaTeXMath is GPL: this license variant does not contain it
+//		throw new ClassNotFoundException("org.scilab.forge.jlatexmath.TeXFormula");
+		// ::done
 	}
 
 	public Icon getIcon() {

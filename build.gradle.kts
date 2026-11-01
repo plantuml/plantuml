@@ -45,7 +45,6 @@ dependencies {
 
 	testImplementation(libs.xmlunit.core)
 	testImplementation(libs.junit.pioneer)
-	implementation(libs.jlatexmath)
     implementation(libs.elk.core)
     implementation(libs.elk.alg.layered)
     implementation(libs.elk.alg.mrtree)

@@ -14,7 +14,23 @@ Vendored copy of **JLaTeXMath**, a Java library that renders LaTeX formulas.
 
 ## State
 
-The sources are **unmodified** (phase 1 of `PLAN.md`): the diff with the
-upstream tag is empty, which makes an update or a review easy. They are listed
+The upstream files are **unmodified** (phase 1 of `PLAN.md`): the diff with
+the upstream tag only shows the three files added here (`readme.md`, `COPYING`
+and `package-info.java`), which makes an update or a review easy. They are listed
 in `CLAUDE.md` among the external packages that must not be modified, until
 the plan decides to prune and adapt them (phases 2 to 5).
+
+## License variants
+
+This code is GPL, so it is removed from the MIT, EPL, BSD, ASL and LGPL
+variants:
+
+- the Java sources, by the `// ::remove folder` directive of
+  [`package-info.java`](./package-info.java), the only file of this directory
+  that is not from upstream (apart from this readme and `COPYING`);
+- the resources, by the `processResources` exclusion in
+  `license-variants/build-logic/.../plantuml.license-variant.gradle.kts`;
+- the callers in `net.sourceforge.plantuml.math` (`TeXIconBuilder`,
+  `ConverterSvg`) are guarded with `// ::comment when ...` and, for
+  `TeXIconBuilder`, replaced by a `ClassNotFoundException`: the formula is then
+  shown as text, exactly as when the jar was missing.

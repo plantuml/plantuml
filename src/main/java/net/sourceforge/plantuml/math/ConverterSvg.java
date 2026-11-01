@@ -42,7 +42,6 @@ import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import javax.swing.Icon;
 
@@ -51,7 +50,11 @@ import org.w3c.dom.Document;
 
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.log.Logme;
+// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
+import org.scilab.forge.jlatexmath.DefaultTeXFont;
+import org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration;
+import org.scilab.forge.jlatexmath.greek.GreekRegistration;
+// ::done
 
 public class ConverterSvg {
 
@@ -62,21 +65,10 @@ public class ConverterSvg {
 	}
 
 	static {
-		try {
-			// DefaultTeXFont.registerAlphabet(new CyrillicRegistration());
-			// DefaultTeXFont.registerAlphabet(new GreekRegistration());
-			final Class<?> clDefaultTeXFont = Class.forName("org.scilab.forge.jlatexmath.DefaultTeXFont");
-			final Class<?> clAlphabetRegistration = Class.forName("org.scilab.forge.jlatexmath.AlphabetRegistration");
-			final Method registerAlphabet = clDefaultTeXFont.getMethod("registerAlphabet", clAlphabetRegistration);
-			registerAlphabet.invoke(null,
-					Class.forName("org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration").newInstance());
-			registerAlphabet.invoke(null,
-					Class.forName("org.scilab.forge.jlatexmath.greek.GreekRegistration").newInstance());
-
-		} catch (Exception e) {
-			Logme.error(e);
-		}
-
+		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
+		DefaultTeXFont.registerAlphabet(new CyrillicRegistration());
+		DefaultTeXFont.registerAlphabet(new GreekRegistration());
+		// ::done
 	}
 
 	private Dimension dimension;
