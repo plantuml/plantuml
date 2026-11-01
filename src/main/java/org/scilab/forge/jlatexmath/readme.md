@@ -53,9 +53,21 @@ Step 2b-2, the canvas on `UGraphic`:
 - checked on the 11 `latex-*` formulas of the corpus, PNG and SVG: same size as
   the baselines, same layout and shapes. The pixels are not the same, as
   expected: AWT hints the thin horizontal strokes (the shaft of an extensible
-  arrow is one crisp pixel row), the path is not hinted (two grey rows), and
-  the pieces of an extensible arrow, drawn as separate paths, show their seams.
-  Step 2d of `PLAN.md` decides what to do about it, if anything.
+  arrow is one crisp pixel row), the path is not hinted (two grey rows). This
+  is kept (step 2d of `PLAN.md`): a vector output has no pixel grid to hint for.
+
+Step 2d, the glyphs that follow each other with the same color are one path:
+
+- `UGraphicTeXGraphics` gathers them, and the rasterizer fills their union.
+  Drawn one by one, the pieces of an extensible arrow or brace overlap and their
+  shared edge pixels are painted twice (dark dots on the shaft), as the
+  strokes of `\not` and of the crossing symbols. Nothing is drawn out of order:
+  the glyphs are flushed before any other shape, at a color change and at the
+  end of the formula (`flush()`). A glyph that covers the hole of another one
+  would fill it (non-zero rule): checked on the corpus and on a formula of about 60 symbols
+  that overlap (`\not\in`, `\oint`, `\bigoplus`, accents on letters, ...), no
+  difference but the cleaner crossings. The SVG of a formula is one path.
+- the points that a font repeats are not drawn twice.
 
 Everything else is as upstream. The package is listed in `CLAUDE.md` among the
 external packages, so that edits stay deliberate.

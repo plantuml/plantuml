@@ -65,7 +65,9 @@ public class TeXIconBuilder {
 			}
 
 			public void draw(UGraphic ug, HColor foreground) {
-				teXIcon.paint(new UGraphicTeXGraphics(ug, foreground), null, 0, 0);
+				final UGraphicTeXGraphics canvas = new UGraphicTeXGraphics(ug, foreground);
+				teXIcon.paint(canvas, null, 0, 0);
+				canvas.flush();
 			}
 		};
 		// ::done

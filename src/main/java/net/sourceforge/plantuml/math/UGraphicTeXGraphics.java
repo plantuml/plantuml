@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.USegment;
 
 /**
  * The canvas of JLaTeXMath (see PLAN.md, phase 2) drawn on a {@link UGraphic}:
@@ -91,6 +92,15 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 	private Color color = foregroundMark;
 	private float lineWidth = 1;
 
+	/**
+	 * The glyphs that follow each other with the same color are gathered in one
+	 * path: the rasterizer then fills their union. Drawn one by one, the parts
+	 * that overlap (the pieces of an extensible arrow or brace) are painted
+	 * twice, and the edge pixels that they share get darker.
+	 */
+	private UPath pendingGlyphs;
+	private HColor pendingColor;
+
 	private final List<double[]> savedTransforms = new ArrayList<double[]>();
 	private final List<Float> savedStrokes = new ArrayList<Float>();
 
@@ -104,6 +114,8 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 	}
 
 	public void setColor(Color color) {
+		if (color != this.color)
+			flush();
 		this.color = color;
 	}
 
@@ -181,8 +193,13 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 			}
 
 			public void lineTo(int x, int y) {
-				px = x * k;
-				py = -y * k;
+				final double nx = x * k;
+				final double ny = -y * k;
+				// some fonts repeat a point: nothing to draw, and a shorter path
+				if (nx == px && ny == py)
+					return;
+				px = nx;
+				py = ny;
 				UGraphicTeXGraphics.this.lineTo(path, px, py);
 			}
 
@@ -202,8 +219,31 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 				path.closePath();
 			}
 		});
-		if (path.isEmpty() == false)
-			fill(path);
+		if (path.isEmpty())
+			return;
+		final HColor fore = current();
+		if (pendingGlyphs != null && pendingColor.equals(fore) == false)
+			flush();
+		if (pendingGlyphs == null) {
+			pendingGlyphs = UPath.none();
+			pendingColor = fore;
+		}
+		for (USegment segment : path)
+			pendingGlyphs.add(segment.getCoord(), segment.getSegmentType());
+	}
+
+	/**
+	 * Draws the glyphs that are waiting. Done before anything else is drawn, so
+	 * that the order of the drawing is kept, and at the end of the formula.
+	 */
+	public void flush() {
+		if (pendingGlyphs == null)
+			return;
+		final UPath path = pendingGlyphs;
+		final HColor fore = pendingColor;
+		pendingGlyphs = null;
+		pendingColor = null;
+		ug.apply(HColors.transparent()).apply(fore.bg()).apply(UStroke.withThickness(0)).draw(path);
 	}
 
 	// ------------------------------------------------------------------ transformation
@@ -301,12 +341,14 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 
 	/** Filled with the current color, no outline. */
 	private void fill(UPath path) {
+		flush();
 		final HColor fore = current();
 		ug.apply(HColors.transparent()).apply(fore.bg()).apply(UStroke.withThickness(0)).draw(path);
 	}
 
 	/** Outline only, with the current color and line width (scaled as the lines were). */
 	private void stroke(UPath path) {
+		flush();
 		final double scale = Math.sqrt(Math.abs(a * d - b * c));
 		ug.apply(current()).apply(HColors.transparent().bg()).apply(UStroke.withThickness(lineWidth * scale)).draw(path);
 	}
