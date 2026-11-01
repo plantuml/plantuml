@@ -128,4 +128,5 @@ git clone --depth 1 https://github.com/plantuml/plantuml
 - `jcckit` - external charting library
 - `zext` - external library
 - `org.stathissideris` - external library (ditaa)
+- `org.scilab.forge.jlatexmath` - external library (JLaTeXMath 1.0.7, vendored unmodified, see its `readme.md`)
 
