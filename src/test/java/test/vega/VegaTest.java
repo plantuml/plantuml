@@ -74,7 +74,7 @@ class VegaTest {
 	}
 
 	@AfterAll
-	static void writeJsonReport() throws IOException {
+	static void writeJsonReport() {
 		results.sort((a, b) -> a.getString("file", "").compareTo(b.getString("file", "")));
 
 		final JsonObject report = new JsonObject();
@@ -90,9 +90,14 @@ class VegaTest {
 		report.add("summary", new JsonObject().add("total", total).add("passed", passed).add("failed", failed)
 				.add("skipped", skipped));
 
+		// The reports below are only regenerated outputs: if one of them cannot be
+		// written (on Windows, typically because another process holds it open),
+		// warn instead of failing the whole test run.
 		final Path jsonFile = VEGA_RESOURCES.resolve("vega.json");
 		try (Writer writer = Files.newBufferedWriter(jsonFile, UTF_8)) {
 			report.writeTo(writer, WriterConfig.PRETTY_PRINT);
+		} catch (IOException e) {
+			warnReportNotWritten(jsonFile, e);
 		}
 
 		final List<String> failedFiles = results.stream()
@@ -107,12 +112,25 @@ class VegaTest {
 	
 		// Write a plain-text summary for Gradle console output
 		final Path summaryFile = VEGA_RESOURCES.resolve("vega-summary.txt");
-		Files.write(summaryFile, textSummary(total, passed, failed, skipped, failedFiles, skippedFiles).getBytes(UTF_8));
+		try {
+			Files.write(summaryFile, textSummary(total, passed, failed, skipped, failedFiles, skippedFiles).getBytes(UTF_8));
+		} catch (IOException e) {
+			warnReportNotWritten(summaryFile, e);
+		}
 
 		// Write a Markdown summary (useful for CI artifacts / GitHub display)
 		final Path mdSummaryFile = VEGA_RESOURCES.resolve("vega-summary.md");
-		Files.write(mdSummaryFile, mdSummary(total, passed, failed, skipped, failedFiles, skippedFiles).getBytes(UTF_8));
+		try {
+			Files.write(mdSummaryFile, mdSummary(total, passed, failed, skipped, failedFiles, skippedFiles).getBytes(UTF_8));
+		} catch (IOException e) {
+			warnReportNotWritten(mdSummaryFile, e);
+		}
 
+	}
+
+	private static void warnReportNotWritten(Path file, IOException e) {
+		System.err.println("[Vega] WARNING: cannot write " + file.getFileName() + " (" + e
+				+ "), the report is left as it was. Is the file open in another process?");
 	}
 
 	private static String textSummary(int total, int passed, int failed, int skipped, List<String> failedFiles, List<String> skippedFiles) {
