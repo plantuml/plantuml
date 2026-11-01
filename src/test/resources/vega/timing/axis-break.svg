@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="TIMING" height="234px" preserveAspectRatio="none" style="width:535px;height:234px;background:#FFFFFF;" version="1.1" viewBox="0 0 535 234" width="535px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="20" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="514.4" x2="514.4" y1="20" y2="202"/>
+    <rect fill="#FFD700" height="182" style="stroke:none;" width="200" x="209.4" y="20"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="84.4" x2="84.4" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="134.4" x2="134.4" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="184.4" x2="184.4" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="234.4" x2="234.4" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="284.4" x2="284.4" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="309.4" x2="309.4" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="359.4" x2="359.4" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="409.4" x2="409.4" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="459.4" x2="459.4" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:0.5;stroke-dasharray:3,5;" x1="509.4" x2="509.4" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="514.4" y1="20" y2="20"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="80.15" x="25" y="30.889">Web Browser</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="106.15" y1="35" y2="35"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="106.15" x2="116.15" y1="35" y2="20"/>
+    <text fill="#333" font-size="12" textLength="19.35" x="25" y="89.333">Idle</text>
+    <text fill="#333" font-size="12" textLength="59.4" x="25" y="69.333">Processing</text>
+    <text fill="#333" font-size="12" textLength="40.05" x="25" y="49.333">Waiting</text>
+    <line style="stroke:#006400;stroke-width:2;" x1="84.4" x2="134.4" y1="85" y2="85"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="134.4" x2="234.4" y1="65" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="234.4" x2="359.4" y1="45" y2="45"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="359.4" x2="509.4" y1="85" y2="85"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="134.4" x2="134.4" y1="65" y2="85"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="234.4" x2="234.4" y1="45" y2="65"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="359.4" x2="359.4" y1="45" y2="85"/>
+    <path d="M284.4,35 L285.9,41.182 L282.9,47.364 L285.9,53.545 L282.9,59.727 L285.9,65.909 L282.9,72.091 L285.9,78.273 L282.9,84.455 L285.9,90.636 L282.9,96.818 L284.4,103 L309.4,103 L307.9,96.818 L310.9,90.636 L307.9,84.455 L310.9,78.273 L307.9,72.091 L310.9,65.909 L307.9,59.727 L310.9,53.545 L307.9,47.364 L310.9,41.182 L309.4,35" fill="#FFF"/>
+    <path d="M284.4,35 L285.9,41.182 L282.9,47.364 L285.9,53.545 L282.9,59.727 L285.9,65.909 L282.9,72.091 L285.9,78.273 L282.9,84.455 L285.9,90.636 L282.9,96.818 L284.4,103" fill="none" style="stroke:#333;stroke-width:2;"/>
+    <path d="M309.4,35 L310.9,41.182 L307.9,47.364 L310.9,53.545 L307.9,59.727 L310.9,65.909 L307.9,72.091 L310.9,78.273 L307.9,84.455 L310.9,90.636 L307.9,96.818 L309.4,103" fill="none" style="stroke:#333;stroke-width:2;"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="514.4" y1="103" y2="103"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="58.363" x="25" y="113.889">Web User</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="84.363" y1="118" y2="118"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="84.363" x2="94.363" y1="118" y2="103"/>
+    <polygon fill="#E2E2F0" points="96.4,123,122.4,123,134.4,135,122.4,147,96.4,147,84.4,135" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="146.4,123,347.4,123,359.4,135,347.4,147,146.4,147,134.4,135" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="371.4,123,447.4,123,459.4,135,447.4,147,371.4,147,359.4,135" style="stroke:#006400;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="#E2E2F0" points="471.4,123,509.4,123,509.4,147,471.4,147,459.4,135" style="stroke:#E2E2F0;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <path d="M509.4,123 L471.4,123 L459.4,135 L471.4,147 L509.4,147" fill="#E2E2F0" style="stroke:#006400;stroke-width:1.5;"/>
+    <text fill="#333" font-size="12" font-weight="700" textLength="19.35" x="99.725" y="138.333">Idle</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="40.05" x="226.875" y="138.333">Waiting</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="19.35" x="399.725" y="138.333">Idle</text>
+    <text fill="#333" font-size="12" font-weight="700" textLength="40.05" x="471.4" y="138.333">Waiting</text>
+    <path d="M284.4,118 L285.9,123.571 L282.9,129.143 L285.9,134.714 L282.9,140.286 L285.9,145.857 L282.9,151.429 L284.4,157 L309.4,157 L307.9,151.429 L310.9,145.857 L307.9,140.286 L310.9,134.714 L307.9,129.143 L310.9,123.571 L309.4,118" fill="#FFF"/>
+    <path d="M284.4,118 L285.9,123.571 L282.9,129.143 L285.9,134.714 L282.9,140.286 L285.9,145.857 L282.9,151.429 L284.4,157" fill="none" style="stroke:#333;stroke-width:2;"/>
+    <path d="M309.4,118 L310.9,123.571 L307.9,129.143 L310.9,134.714 L307.9,140.286 L310.9,145.857 L307.9,151.429 L309.4,157" fill="none" style="stroke:#333;stroke-width:2;"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="514.4" y1="157" y2="157"/>
+    <text fill="#333" font-size="14" font-weight="700" textLength="43.663" x="25" y="167.889">Enable</text>
+    <line style="stroke:#333;stroke-width:0.5;" x1="20" x2="69.663" y1="172" y2="172"/>
+    <line style="stroke:#333;stroke-width:0.5;" x1="69.663" x2="79.663" y1="172" y2="157"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="84.4" x2="84.4" y1="194" y2="194"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="84.4" x2="134.4" y1="194" y2="194"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="134.4" x2="134.4" y1="180" y2="194"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="134.4" x2="359.4" y1="180" y2="180"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="359.4" x2="359.4" y1="180" y2="194"/>
+    <line style="stroke:#006400;stroke-width:2;" x1="359.4" x2="509.4" y1="194" y2="194"/>
+    <path d="M284.4,172 L285.9,178 L282.9,184 L285.9,190 L282.9,196 L284.4,202 L309.4,202 L307.9,196 L310.9,190 L307.9,184 L310.9,178 L309.4,172" fill="#FFF"/>
+    <path d="M284.4,172 L285.9,178 L282.9,184 L285.9,190 L282.9,196 L284.4,202" fill="none" style="stroke:#333;stroke-width:2;"/>
+    <path d="M309.4,172 L310.9,178 L307.9,184 L310.9,190 L307.9,196 L309.4,202" fill="none" style="stroke:#333;stroke-width:2;"/>
+    <line style="stroke:#333;stroke-width:2;" x1="84.4" x2="84.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="134.4" x2="134.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="184.4" x2="184.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="234.4" x2="234.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="284.4" x2="284.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="309.4" x2="309.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="359.4" x2="359.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="409.4" x2="409.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="459.4" x2="459.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="509.4" x2="509.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="284.4" x2="284.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="309.4" x2="309.4" y1="202" y2="207"/>
+    <line style="stroke:#333;stroke-width:2;" x1="84.4" x2="284.4" y1="202" y2="202"/>
+    <line style="stroke:#333;stroke-width:2;" x1="309.4" x2="509.4" y1="202" y2="202"/>
+    <text fill="#333" font-size="11" x="81.341" y="216.556">0</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="125.222" y="216.556">100</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="225.222" y="216.556">300</text>
+    <text fill="#333" font-size="11" textLength="18.356" x="266.044" y="216.556">400</text>
+    <text fill="#333" font-size="11" textLength="24.475" x="309.4" y="216.556">4900</text>
+    <text fill="#333" font-size="11" textLength="24.475" x="347.163" y="216.556">5000</text>
+    <text fill="#333" font-size="11" textLength="24.475" x="447.163" y="216.556">5200</text>
+    <line style="stroke:#00008B;stroke-width:1.5;" x1="459.4" x2="359.4" y1="135" y2="85"/>
+    <polygon fill="#00008B" points="367.348,85.915,364.9,90.809,359.4,85" style="stroke:#00008B;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#00008B" font-family="serif" font-size="14" textLength="22.575" x="366.124" y="99.251">late</text>
+    <line style="stroke:#333;stroke-width:2;stroke-dasharray:4,4;" x1="209.4" x2="209.4" y1="20" y2="202"/>
+    <line style="stroke:#333;stroke-width:2;stroke-dasharray:4,4;" x1="409.4" x2="409.4" y1="20" y2="202"/>
+    <text fill="#000" font-size="12" textLength="25.35" x="212.4" y="31.333">busy</text>
+  </g>
+</svg>
