@@ -48,11 +48,26 @@ final class Resolver {
 	private void statement(Scope s, Node n) {
 		switch (n.type) {
 		case "FunctionDef": {
+			decorators(s, n);
 			bind(s, n.str("name"), n);
 			Node args = n.node("args");
 			defaults(s, args);
 			Scope child = function(s, n.str("name"), n, args);
 			statements(child, n.nodes("body"));
+			break;
+		}
+		case "ClassDef": {
+			decorators(s, n);
+			bind(s, n.str("name"), n);
+			for (Node b : n.nodes("bases"))
+				expression(s, b);
+			Scope child = new Scope(Scope.CLASS, n.str("name"), s, n);
+			n.info = child;
+			all.add(child);
+			for (Node m : n.nodes("body")) {
+				checkClassStatement(m);
+				statement(child, m);
+			}
 			break;
 		}
 		case "Return":
@@ -149,6 +164,70 @@ final class Resolver {
 		default:
 			throw error("unsupported statement " + n.type, n);
 		}
+	}
+
+	/**
+	 * The decorators of a def or a class, evaluated in the enclosing scope. A
+	 * decorator is a name, an attribute or a call of one of those
+	 * ({@code @macro}, {@code @puml.macro}, {@code @macro("$color")}). The
+	 * decorators of the builtin descriptors are rejected: they would need
+	 * descriptors, which the interpreter does not have.
+	 */
+	private void decorators(Scope s, Node n) {
+		for (Node d : n.nodes("decorator_list")) {
+			Node callee = d.is("Call") ? d.node("func") : d;
+			Node root = callee;
+			while (root.is("Attribute"))
+				root = root.node("value");
+			if (root.is("Name") == false)
+				throw error("this form of decorator is not supported: use a name, an attribute or a call", d);
+			if (callee.is("Name")) {
+				String name = callee.str("id");
+				if (name.equals("staticmethod") || name.equals("classmethod") || name.equals("property"))
+					throw error("@" + name + " is not supported", d);
+			}
+			expression(s, d);
+		}
+	}
+
+	/**
+	 * Only straight-line statements are accepted in a class body: every name it
+	 * binds is then bound when the body ends, and becomes an attribute. Special
+	 * methods other than __init__ are rejected rather than ignored.
+	 */
+	private static void checkClassStatement(Node m) {
+		switch (m.type) {
+		case "FunctionDef":
+		case "ClassDef":
+			checkClassMember(m.str("name"), m);
+			break;
+		case "Assign":
+			for (Node t : m.nodes("targets"))
+				checkClassTarget(t);
+			break;
+		case "AugAssign":
+			checkClassTarget(m.node("target"));
+			break;
+		case "Expr":
+		case "Pass":
+			break;
+		default:
+			throw error("this statement is not supported in a class body", m);
+		}
+	}
+
+	private static void checkClassTarget(Node t) {
+		if (t.is("Name")) {
+			checkClassMember(t.str("id"), t);
+		} else if (t.is("Tuple") || t.is("List")) {
+			for (Node e : t.nodes("elts"))
+				checkClassTarget(e);
+		}
+	}
+
+	private static void checkClassMember(String name, Node at) {
+		if (name.startsWith("__") && name.endsWith("__") && name.length() > 4 && name.equals("__init__") == false)
+			throw error("special method or attribute '" + name + "' is not supported", at);
 	}
 
 	private void defaults(Scope s, Node args) {
@@ -256,6 +335,9 @@ final class Resolver {
 				expression(s, c);
 			break;
 		case "Call":
+			if (e.node("func").is("Name") && e.node("func").str("id").equals("super"))
+				throw error("super() is not supported: call the base class explicitly, e.g. Base.__init__(self)",
+						e);
 			expression(s, e.node("func"));
 			for (Node a : e.nodes("args"))
 				expression(s, a);
@@ -349,11 +431,22 @@ final class Resolver {
 
 	/** Looks for the binding of a name in the enclosing functions; makes it a cell there and free in between. */
 	private boolean markFree(Scope s, String name) {
+		Scope shadowing = null;
 		for (Scope p = s.parent; p != null && p.kind != Scope.MODULE; p = p.parent) {
+			if (p.kind == Scope.CLASS) {
+				// the names of a class body are not visible from the functions nested in it
+				if (p.isLocal(name))
+					shadowing = p;
+				continue;
+			}
 			int pf = p.flags(name);
 			if ((pf & Scope.GLOBAL) != 0)
 				return false;
 			if (p.isLocal(name)) {
+				if (shadowing != null)
+					throw new PySyntaxError("class attribute '" + name
+							+ "' has the name of a variable of the enclosing function used inside the class",
+							shadowing.node.line, shadowing.node.col);
 				p.addFlags(name, Scope.CELL);
 				for (Scope q = s; q != p; q = q.parent)
 					q.freeNames.add(name);

@@ -50,6 +50,8 @@ final class PyOps {
 			return Types.BUILTIN;
 		if (o instanceof BoundMethod)
 			return Types.METHOD;
+		if (o instanceof PyInstance)
+			return ((PyInstance) o).type;
 		if (o instanceof PyException)
 			return ((PyException) o).type;
 		if (o instanceof PyType)
@@ -1093,14 +1095,26 @@ final class PyOps {
 			}
 			sb.append(')');
 		} else if (o instanceof PyType) {
-			sb.append("<class '").append(((PyType) o).name).append("'>");
+			PyType t = (PyType) o;
+			sb.append("<class '").append(t.fullName()).append("'>");
+		} else if (o instanceof PyInstance) {
+			PyType t = ((PyInstance) o).type;
+			// CPython adds the address, which is not deterministic
+			sb.append('<').append(t.fullName()).append(" object>");
 		} else if (o instanceof PyFunction) {
 			sb.append("<function ").append(((PyFunction) o).code.name).append('>');
 		} else if (o instanceof Builtin) {
 			sb.append("<built-in function ").append(((Builtin) o).name).append('>');
 		} else if (o instanceof BoundMethod) {
-			sb.append("<built-in method ").append(((BoundMethod) o).method.name).append(" of ")
-					.append(typeName(((BoundMethod) o).self)).append(" object>");
+			BoundMethod m = (BoundMethod) o;
+			if (m.function != null) {
+				sb.append("<bound method ").append(typeName(m.self)).append('.').append(m.name()).append(" of ");
+				repr(m.self, sb, depth + 1);
+				sb.append('>');
+			} else {
+				sb.append("<built-in method ").append(m.method.name).append(" of ").append(typeName(m.self))
+						.append(" object>");
+			}
 		} else if (o instanceof PyModule) {
 			sb.append("<module '").append(((PyModule) o).name).append("'>");
 		} else if (o instanceof PySlice) {
@@ -1143,13 +1157,92 @@ final class PyOps {
 						"module '" + ((PyModule) o).name + "' has no attribute '" + name + "'");
 			return v;
 		}
-		if (o instanceof PyException && name.equals("args"))
-			return new PyTuple(((PyException) o).args);
-		if (o instanceof PyType && name.equals("__name__"))
-			return ((PyType) o).name;
+		if (o instanceof PyInstance) {
+			Object v = ((PyInstance) o).attrs.get(name);
+			if (v != null)
+				return v;
+			return classAttr(o, ((PyInstance) o).type, name);
+		}
+		if (o instanceof PyException) {
+			PyException e = (PyException) o;
+			if (e.attrs != null) {
+				Object v = e.attrs.get(name);
+				if (v != null)
+					return v;
+			}
+			if (name.equals("args"))
+				return new PyTuple(e.args);
+			if (e.type.isClass())
+				return classAttr(o, e.type, name);
+		}
+		if (o instanceof PyType && ((PyType) o).isClass()) {
+			PyType t = (PyType) o;
+			if (name.equals("__qualname__"))
+				return t.qualname;
+			if (name.equals("__name__") == false) {
+				Object v = t.lookup(name);
+				if (v == null)
+					throw err(Types.ATTRIBUTE_ERROR, "type object '" + t.name + "' has no attribute '" + name + "'");
+				return v;
+			}
+		}
+		if (name.equals("__name__")) {
+			if (o instanceof PyType)
+				return ((PyType) o).name;
+			if (o instanceof PyFunction)
+				return ((PyFunction) o).code.name;
+			if (o instanceof Builtin)
+				return ((Builtin) o).name;
+			if (o instanceof BoundMethod)
+				return ((BoundMethod) o).name();
+		}
+		if (o instanceof PyType && name.equals("__init__")) {
+			// Exception.__init__(self, ...) or object.__init__(self), called by a class
+			Object v = ((PyType) o).lookup(name);
+			if (v != null)
+				return v;
+		}
 		Builtin m = Methods.lookup(o, name);
 		if (m != null)
 			return new BoundMethod(o, m);
 		throw err(Types.ATTRIBUTE_ERROR, "'" + typeName(o) + "' object has no attribute '" + name + "'");
+	}
+
+	/** An attribute found on the class of an instance: a function becomes a method bound to the instance. */
+	private static Object classAttr(Object self, PyType type, String name) {
+		Object v = type.lookup(name);
+		if (v == null)
+			throw err(Types.ATTRIBUTE_ERROR, "'" + type.name + "' object has no attribute '" + name + "'");
+		if (v instanceof PyFunction)
+			return new BoundMethod(self, (PyFunction) v);
+		if (v == Builtins.EXCEPTION_INIT || v == Builtins.OBJECT_INIT)
+			return new BoundMethod(self, (Builtin) v);
+		return v; // as in CPython, a builtin function stored in a class is not bound
+	}
+
+	/** Attributes can be set on instances and classes of the program, and on exceptions. */
+	static void setattr(Object o, String name, Object v) {
+		if (o instanceof PyInstance && ((PyInstance) o).type.isClass()) {
+			((PyInstance) o).attrs.put(name, v);
+		} else if (o instanceof PyException) {
+			((PyException) o).attrs().put(name, v);
+		} else if (o instanceof PyType && ((PyType) o).isClass()) {
+			((PyType) o).dict.put(name, v);
+		} else {
+			throw err(Types.ATTRIBUTE_ERROR, "'" + typeName(o) + "' object has no attribute '" + name
+					+ "' and no __dict__ for setting new attributes");
+		}
+	}
+
+	static void delattr(Object o, String name) {
+		Map<String, Object> attrs = null;
+		if (o instanceof PyInstance && ((PyInstance) o).type.isClass())
+			attrs = ((PyInstance) o).attrs;
+		else if (o instanceof PyException)
+			attrs = ((PyException) o).attrs;
+		else if (o instanceof PyType && ((PyType) o).isClass())
+			attrs = ((PyType) o).dict;
+		if (attrs == null || attrs.remove(name) == null)
+			throw err(Types.ATTRIBUTE_ERROR, "'" + typeName(o) + "' object has no attribute '" + name + "'");
 	}
 }
