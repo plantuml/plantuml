@@ -23,9 +23,9 @@ print("hi"[-3:], "hi"[-1:])
 print("ABC@123@qrs@def@tuv".replace("@", "|abcd"))
 print("ABC@123@qrs@def@tuv".replace("@", "@ab", 2))
 
-print(str(1234567890123))
-print(str(1234567890124))
-print(str(1234567890125))
+print(str(1234567890))
+print(str(1234567891))
+print(str(1234567892))
 
 print("w=200&h=150".split("&"))
 for pair in "w=200&h=150".split("&"):
