@@ -1,0 +1,3 @@
+@startlatex
+\sqrt{x} \quad \sqrt[3]{y^2+1} \quad \frac{\sqrt{a^2+b^2}}{\sqrt[4]{c}} \quad \rule{1cm}{1pt}
+@endlatex

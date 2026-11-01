@@ -1,0 +1,3 @@
+@startlatex
+\overbrace{a+b+c}^{3} \quad \underbrace{x+y}_{2} \quad \xrightarrow{f} \quad \xleftarrow[under]{over} \quad \widehat{ABC} \quad \overrightarrow{AB}
+@endlatex

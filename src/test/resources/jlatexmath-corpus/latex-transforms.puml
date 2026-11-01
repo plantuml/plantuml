@@ -1,0 +1,3 @@
+@startlatex
+\rotatebox{30}{rotated} \quad \scalebox{2}{S} \quad \scalebox{1}{-1}{F} \quad \reflectbox{R} \quad \resizebox{3cm}{!}{wide}
+@endlatex
