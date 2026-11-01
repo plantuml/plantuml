@@ -107,7 +107,7 @@ public class CommandCreoleBuilder {
 		addCommand(CommandCreoleQrcode.create());
 		addCommand(CommandCreoleOpenIcon.create());
 		addCommand(CommandCreoleEmoji.create());
-		// Formulas need JLaTeXMath and Batik, which TeaVM cannot provide: the browser
+		// Formulas need JLaTeXMath, which still uses AWT and so cannot run in TeaVM yet: the browser
 		// keeps <math> and <latex> as plain text, and the AsciiMath converter stays
 		// out of the TeaVM output
 		if (TeaVM.isTeaVM() == false) {

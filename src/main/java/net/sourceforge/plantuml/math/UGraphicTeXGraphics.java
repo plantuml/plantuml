@@ -64,6 +64,10 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
  * <p>
  * The origin of the formula is the origin of the {@code UGraphic} given to the
  * constructor.
+ * <p>
+ * The color of the formula is an {@link HColor}, given as is to the UGraphic
+ * (which applies its color mapper, as for any shape). A color set by the boxes
+ * (an AWT color, from \color) replaces it until it is set back.
  */
 public class UGraphicTeXGraphics implements TeXGraphics {
 	// ::remove file when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
@@ -81,14 +85,18 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 	private double e = 0;
 	private double f = 0;
 
-	private Color color = Color.BLACK;
+	/** Stands for the foreground HColor in the colors that the boxes save and restore. */
+	private final Color foregroundMark = new Color(0, 0, 0);
+	private final HColor foreground;
+	private Color color = foregroundMark;
 	private float lineWidth = 1;
 
 	private final List<double[]> savedTransforms = new ArrayList<double[]>();
 	private final List<Float> savedStrokes = new ArrayList<Float>();
 
-	public UGraphicTeXGraphics(UGraphic ug) {
+	public UGraphicTeXGraphics(UGraphic ug, HColor foreground) {
 		this.ug = ug;
+		this.foreground = foreground == null ? HColors.BLACK : foreground;
 	}
 
 	public Color getColor() {
@@ -213,8 +221,9 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 	}
 
 	public void rotate(double theta) {
-		final double cos = Math.cos(theta);
-		final double sin = Math.sin(theta);
+		// StrictMath: the same result on every platform, so that the output is deterministic
+		final double cos = StrictMath.cos(theta);
+		final double sin = StrictMath.sin(theta);
 		final double na = a * cos + c * sin;
 		final double nb = b * cos + d * sin;
 		final double nc = -a * sin + c * cos;
@@ -285,6 +294,8 @@ public class UGraphicTeXGraphics implements TeXGraphics {
 	}
 
 	private HColor current() {
+		if (color == foregroundMark)
+			return foreground;
 		return HColors.simple(new XColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()));
 	}
 

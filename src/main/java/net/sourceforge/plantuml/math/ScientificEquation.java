@@ -35,26 +35,14 @@
  */
 package net.sourceforge.plantuml.math;
 
-
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
-import net.sourceforge.plantuml.klimt.MutableImage;
-import net.sourceforge.plantuml.klimt.awt.XColor;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.UImageSvg;
-
 public interface ScientificEquation {
 
-	public XDimension2D getDimension();
-
-	public UImageSvg getSvg(double scale, XColor foregroundColor, XColor backgroundColor)
-			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, InstantiationException, IOException;
-
-	public MutableImage getImage(XColor foregroundColor, XColor backgroundColor)
-			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException;
+	/**
+	 * The formula, ready to be drawn.
+	 *
+	 * @throws ClassNotFoundException when this license variant has no JLaTeXMath
+	 */
+	public MathDrawing getDrawing() throws ClassNotFoundException;
 
 	public String getSource();
 

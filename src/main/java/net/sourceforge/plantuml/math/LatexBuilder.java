@@ -35,112 +35,19 @@
  */
 package net.sourceforge.plantuml.math;
 
-
-import java.awt.Graphics2D;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
-import javax.swing.Icon;
-
-import net.sourceforge.plantuml.klimt.MutableImage;
-import net.sourceforge.plantuml.klimt.awt.PortableImage;
-import net.sourceforge.plantuml.klimt.awt.PortableImageFactory;
-import net.sourceforge.plantuml.klimt.awt.XColor;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.UImageSvg;
-
 public class LatexBuilder implements ScientificEquation {
 
 	private final String tex;
+	private MathDrawing drawing;
 
 	public LatexBuilder(String tex) {
 		this.tex = tex;
 	}
 
-	private XDimension2D dimension;
-
-	public XDimension2D getDimension() {
-		return dimension;
-	}
-
-	private Icon buildIcon(XColor foregroundColor)
-			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		return new TeXIconBuilder(tex, foregroundColor).getIcon();
-	}
-
-	public UImageSvg getSvg(double scale, XColor foregroundColor, XColor backgroundColor)
-			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, InstantiationException, IOException {
-		final Icon icon = buildIcon(foregroundColor);
-		final ConverterSvg converterSvg = new ConverterSvg(icon);
-		final String svg = converterSvg.getSvg(scale, true, backgroundColor);
-		dimension = converterSvg.getDimension();
-		return new UImageSvg(svg, scale);
-	}
-
-	public MutableImage getImage(XColor foregroundColor, XColor backgroundColor)
-			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		final Icon icon = buildIcon(foregroundColor);
-		return new LatexImage(icon, 1, foregroundColor, backgroundColor);
-	}
-
-	class LatexImage implements MutableImage {
-
-		private final double scale;
-		private final Icon icon;
-		private final XColor foregroundColor;
-		private final XColor backgroundColor;
-		private PortableImage cache = null;
-
-		public LatexImage(Icon icon, double scale, XColor foregroundColor, XColor backgroundColor) {
-			this.scale = scale;
-			this.foregroundColor = foregroundColor;
-			this.backgroundColor = backgroundColor;
-			this.icon = icon;
-		}
-
-		@Override
-		public PortableImage getImage() {
-			if (cache == null) {
-				cache = PortableImageFactory.build((int) (icon.getIconWidth() * scale), (int) (icon.getIconHeight() * scale),
-						PortableImage.TYPE_INT_ARGB);
-				final Graphics2D g2 = cache.createGraphics();
-				g2.scale(scale, scale);
-				if (backgroundColor != null) {
-					g2.setColor(backgroundColor.toAwtColor());
-					g2.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());
-				}
-				icon.paintIcon(null, g2, 0, 0);
-			}
-			return cache;
-		}
-
-		public MutableImage withScale(double scale) {
-			return new LatexImage(icon, this.scale * scale, foregroundColor, backgroundColor);
-		}
-
-		@Override
-		public MutableImage muteColor(XColor newColor) {
-			return this;
-		}
-
-		@Override
-		public MutableImage muteTransparentColor(XColor newColor) {
-			return this;
-		}
-
-		@Override
-		public MutableImage monochrome() {
-			return this;
-		}
-
-		@Override
-		public double getScale() {
-			return scale;
-		}
-
+	public MathDrawing getDrawing() throws ClassNotFoundException {
+		if (drawing == null)
+			drawing = new TeXIconBuilder(tex).getDrawing();
+		return drawing;
 	}
 
 	public String getSource() {

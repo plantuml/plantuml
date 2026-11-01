@@ -16,7 +16,9 @@ Vendored copy of **JLaTeXMath**, a Java library that renders LaTeX formulas.
 
 Phase 1 vendored the upstream files unmodified. **Phase 2 of `PLAN.md` has
 started to modify them**, in small steps that each keep the rendering identical
-(checked byte for byte on the corpus in `src/test/resources/jlatexmath-corpus`).
+(checked byte for byte on the corpus, then in `src/test/resources/vega/math` since
+step 2c; the PNG baselines of the original renderer are in
+`src/test/resources/jlatexmath-corpus`).
 
 Step 2a, drawing through a canvas instead of `java.awt.Graphics2D`:
 
@@ -47,7 +49,7 @@ Step 2b-2, the canvas on `UGraphic`:
   package does not depend on PlantUML): a `TeXGraphics` that keeps its own
   affine transformation and gives paths to a `UGraphic`;
 - modified: `TeXIcon.paint(TeXGraphics, Color, x, y)` draws the formula on any
-  canvas (`paintIcon` is unchanged).
+  canvas (`paintIcon` is unchanged); if no color is given, the canvas keeps its own.
 - checked on the 11 `latex-*` formulas of the corpus, PNG and SVG: same size as
   the baselines, same layout and shapes. The pixels are not the same, as
   expected: AWT hints the thin horizontal strokes (the shaft of an extensible

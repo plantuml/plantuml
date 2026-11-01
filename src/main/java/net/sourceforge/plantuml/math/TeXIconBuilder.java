@@ -35,12 +35,11 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.awt.Color;
 import java.awt.Insets;
 
-import javax.swing.Icon;
-
-import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 // ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 import org.scilab.forge.jlatexmath.TeXConstants;
 import org.scilab.forge.jlatexmath.TeXFormula;
@@ -49,18 +48,26 @@ import org.scilab.forge.jlatexmath.TeXIcon;
 
 public class TeXIconBuilder {
 
-	private Icon icon;
+	private MathDrawing drawing;
 
-	public TeXIconBuilder(String tex, XColor foregroundColor2) throws ClassNotFoundException {
+	public TeXIconBuilder(String tex) throws ClassNotFoundException {
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 		final TeXFormula formula = new TeXFormula(tex);
 		final TeXIcon teXIcon = formula.new TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setSize(20).build();
 
 		final int margin = 1;
 		teXIcon.setInsets(new Insets(margin, margin, margin, margin));
-		final Color awtColor = foregroundColor2.toAwtColor();
-		teXIcon.setForeground(awtColor);
-		icon = teXIcon;
+		final XDimension2D dimension = new XDimension2D(teXIcon.getIconWidth(), teXIcon.getIconHeight());
+		drawing = new MathDrawing() {
+
+			public XDimension2D getDimension() {
+				return dimension;
+			}
+
+			public void draw(UGraphic ug, HColor foreground) {
+				teXIcon.paint(new UGraphicTeXGraphics(ug, foreground), null, 0, 0);
+			}
+		};
 		// ::done
 		// ::uncomment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
 //		// JLaTeXMath is GPL: this license variant does not contain it
@@ -68,8 +75,8 @@ public class TeXIconBuilder {
 		// ::done
 	}
 
-	public Icon getIcon() {
-		return icon;
+	public MathDrawing getDrawing() {
+		return drawing;
 	}
 
 }

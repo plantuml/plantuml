@@ -17,5 +17,5 @@ This package provides classes used to manage [PlantUML ASCII Math](https://plant
 
 ## Dependency _(if available)_
 - `org.scilab.forge.jlatexmath` is part of PlantUML (vendored, see [its readme](../../../../org/scilab/forge/jlatexmath/readme.md)), except in the MIT, EPL, BSD, ASL and LGPL variants
-- [`UGraphicTeXGraphics.java`](./UGraphicTeXGraphics.java) is the canvas of JLaTeXMath drawn on a `UGraphic` (glyphs and lines as paths, no AWT font, no Batik). Not used by `AtomMath` yet (`PLAN.md`, step 2c).
-- `org.apache.batik` (optional, SVG output only, until `PLAN.md` phase 2 replaces it)
+- [`UGraphicTeXGraphics.java`](./UGraphicTeXGraphics.java) is the canvas of JLaTeXMath drawn on a `UGraphic`: glyphs and lines are paths, there is no AWT font and no Batik. A formula is a [`MathDrawing`](./MathDrawing.java) (built by `TeXIconBuilder`), drawn by `AtomMath` or exported (PNG, SVG, EPS, PDF) by `ScientificEquationSafe` through `TextBlockExporter`, so every output gets the same shapes.
+- No `org.apache.batik` any more (`PLAN.md`, step 2c). When JLaTeXMath is not in the variant (MIT, EPL, BSD, ASL, LGPL) or fails, the source of the formula is shown as text.

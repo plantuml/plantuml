@@ -35,33 +35,34 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.TextBlockExporter;
-import net.sourceforge.plantuml.klimt.AffineTransformType;
-import net.sourceforge.plantuml.klimt.MutableImage;
-import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
-import net.sourceforge.plantuml.klimt.drawing.eps.EpsGraphics;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 
 public class ScientificEquationSafe {
 
 	private final ScientificEquation equation;
 	private final String formula;
+
+	private MathDrawing drawing;
+	private boolean drawingDone;
 
 	private ScientificEquationSafe(String formula, ScientificEquation equation) {
 		this.formula = formula;
@@ -88,42 +89,58 @@ public class ScientificEquationSafe {
 		}
 	}
 
-	private ImageData dimSvg;
-
-	public UImageSvg getSvg(double scale, XColor foregroundColor, XColor backgroundColor) {
-		if (equation != null)
-			try {
-				final UImageSvg svg = equation.getSvg(scale, foregroundColor, backgroundColor);
-				dimSvg = new ImageDataSimple(equation.getDimension());
-				return svg;
-			} catch (Exception e) {
-				printTrace(e);
-			}
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try {
-			dimSvg = TextBlockExporter.builder(getRollback(), new FileFormatOption(FileFormat.SVG), false)
-					.build().exportTo(baos);
-		} catch (IOException e1) {
-			return null;
+	/** The formula, or null if it cannot be made (the source is then shown as text). */
+	private MathDrawing getDrawing() {
+		if (drawingDone == false) {
+			drawingDone = true;
+			if (equation != null)
+				try {
+					drawing = equation.getDrawing();
+				} catch (Exception e) {
+					printTrace(e);
+				}
 		}
-		return new UImageSvg(new String(baos.toByteArray()), scale);
+		return drawing;
 	}
 
-	public MutableImage getImage(XColor foregroundColor, XColor backgroundColor) {
-		if (equation != null)
-			try {
-				return equation.getImage(foregroundColor, backgroundColor);
-			} catch (Exception e) {
-				printTrace(e);
-			}
-		try {
-			final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			TextBlockExporter.builder(getRollback(), new FileFormatOption(FileFormat.PNG), false)
-					.build().exportTo(baos);
-			return new PixelImage(SImageIO.read(baos.toByteArray()), AffineTransformType.TYPE_BILINEAR);
-		} catch (IOException e1) {
-			return null;
+	public XDimension2D getDimension(StringBounder stringBounder) {
+		final MathDrawing result = getDrawing();
+		if (result != null)
+			return result.getDimension();
+		return getRollback().calculateDimension(stringBounder);
+	}
+
+	/**
+	 * Draws the formula, or its source as text if it cannot be made.
+	 *
+	 * @param foreground the color of the formula, null for black
+	 * @param background the color behind the formula, null for none
+	 */
+	public void drawU(UGraphic ug, HColor foreground, HColor background) {
+		final MathDrawing result = getDrawing();
+		if (result == null) {
+			getRollback().drawU(ug);
+			return;
 		}
+		if (background != null) {
+			final XDimension2D dim = result.getDimension();
+			ug.apply(HColors.transparent()).apply(background.bg())
+					.draw(URectangle.build(dim.getWidth(), dim.getHeight()));
+		}
+		result.draw(ug, foreground);
+	}
+
+	public TextBlock getTextBlock(final HColor foreground, final HColor background) {
+		return new TextBlock() {
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return getDimension(stringBounder);
+			}
+
+			public void drawU(UGraphic ug) {
+				ScientificEquationSafe.this.drawU(ug, foreground, background);
+			}
+		};
 	}
 
 	private void printTrace(Exception e) {
@@ -140,22 +157,13 @@ public class ScientificEquationSafe {
 
 	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, XColor foregroundColor,
 			XColor backgroundColor) throws IOException {
-		if (fileFormat.getFileFormat() == FileFormat.PNG) {
-			final PortableImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();
-			SImageIO.write(image, "png", os);
-			return new ImageDataSimple(image.getWidth(), image.getHeight());
-		}
-		if (fileFormat.getFileFormat() == FileFormat.SVG) {
-			os.write(getSvg(1, foregroundColor, backgroundColor).getSvg(true).getBytes());
-			return dimSvg;
-		}
-		if (fileFormat.getFileFormat() == FileFormat.EPS) {
-			final PortableImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();
-			final EpsGraphics out = new EpsGraphics();
-			out.drawImage(image, 0, 0);
-			out.close();
-			os.write(out.getEPSCode().getBytes());
-			return new ImageDataSimple(image.getWidth(), image.getHeight());
+		final FileFormat format = fileFormat.getFileFormat();
+		if (format == FileFormat.PNG || format == FileFormat.SVG || format == FileFormat.SVG_DETERMINISTIC
+				|| format == FileFormat.EPS || format == FileFormat.PDF || format == FileFormat.PDF_DETERMINISTIC) {
+			final TextBlock block = getTextBlock(HColors.simple(foregroundColor),
+					backgroundColor == null ? null : HColors.simple(backgroundColor));
+			return TextBlockExporter.builder(block, fileFormat, false).scale(new ScaleSimple(scale)).build()
+					.exportTo(os);
 		}
 		throw new UnsupportedOperationException();
 	}
