@@ -325,6 +325,15 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
   the text is sans serif, whatever the TeX font style (`\textbf`, `\mathit`
   do not apply), it cannot be rotated or flipped, and its size is a whole number
   of pixels.
+- **A formula must not change the next ones (found by a Vega run on another
+  machine).** `SymbolAtom.get` gave the shared symbol of the table, and the
+  macros `\limits`, `\nolimits`, `\normal` and `setUnicode` changed it: after
+  one `\sum\nolimits`, every later `\sum` of the JVM had its limits as scripts
+  (a server, a test suite in another order). `get` returns a copy now. The
+  Vega references had been made after such a formula, so 14 of them were wrong,
+  8 of which failed on the other machine. Still global, as upstream: the
+  definitions of `\newcommand` and `\definecolor` stay for the next formulas;
+  to change only if it matters on a server.
 - **The fallback shows the source as it is.** When a formula cannot be made,
   the source is shown as text. It went through Creole, so `\text` was shown as
   a tab and "ext", `\n` as a newline, `**x**` as bold. It is now raw text.

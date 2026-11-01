@@ -17,6 +17,14 @@ jar. The SVG references have `decimal: 1`.
 | `cjk/` | text that no TeX font can draw (Chinese, Japanese, Korean, Arabic, emoji): drawn with the font of the diagram |
 | `formats/` | PDF, TikZ (`output: latex`) and text outputs of a formula |
 
+A test must give the same result whatever ran before it: Vega runs all the tests
+in one JVM, in the order of the paths, and a formula that changes the next ones
+makes a reference true only in one order (this happened: `\sum\nolimits` changed
+every later `\sum`, see `latex/limits-do-not-leak` and `StateLeakTest`). So a test
+defines what it uses (`\newcommand`, `\definecolor` are global in the library, a
+later formula could use them without defining them). The references were made in
+five different orders (normal, reverse, three shuffles) with identical results.
+
 To make or change a test, write the `.puml` with its header and run Vega with
 `VEGA_FORCE_WRITE=true` (see `VegaTest`), then look at the result: a reference
 that was never looked at only freezes what the code does. A quick way to look is

@@ -123,6 +123,15 @@ library, with its own font:
   format. A text can be neither rotated nor flipped (UGraphic cannot), and its
   size is a whole number of pixels.
 
+A formula no longer changes the formulas made after it (a bug of upstream, found
+by a Vega run in another order): `SymbolAtom.get` returns a copy of the symbol
+of the table. `\limits`, `\nolimits` and `\normal` change the atom that they are
+given, and `setUnicode` too; it was the shared one, so after a single
+`\sum\nolimits` every `\sum` of the JVM had its limits as scripts. What is still
+global, as upstream, on purpose: the commands of `\newcommand` and the colors of
+`\definecolor` stay defined for the next formulas (a formula that uses `\R`
+works after another one has defined it).
+
 Everything else is as upstream. The package is listed in `CLAUDE.md` among the
 external packages, so that edits stay deliberate.
 

@@ -159,7 +159,10 @@ public class SymbolAtom extends CharSymbol {
         if (obj == null) // not found
             throw new SymbolNotFoundException(name);
         else
-            return (SymbolAtom) obj;
+            // A copy: the macros (\limits, \nolimits, \normal), setUnicode and others change the
+            // atom that they are given. On the one of the table they changed every later formula
+            // of the JVM (a \sum\nolimits made all the following \sum have their limits as scripts).
+            return (SymbolAtom) ((SymbolAtom) obj).clone();
     }
 
     /**
