@@ -17042,8 +17042,8 @@
 
         <Package name="net.sourceforge.plantuml.teavm.c">
             <Stats>
-                <TotalClasses>12</TotalClasses>
-                <ConcreteClasses>12</ConcreteClasses>
+                <TotalClasses>13</TotalClasses>
+                <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>2</Ca>
                 <Ce>39</Ce>
@@ -17086,6 +17086,9 @@
                 </Class>
                 <Class sourceFile="PngImageC.java">
                     net.sourceforge.plantuml.teavm.c.PngImageC
+                </Class>
+                <Class sourceFile="StderrStream.java">
+                    net.sourceforge.plantuml.teavm.c.StderrStream
                 </Class>
                 <Class sourceFile="StdinStream.java">
                     net.sourceforge.plantuml.teavm.c.StdinStream
