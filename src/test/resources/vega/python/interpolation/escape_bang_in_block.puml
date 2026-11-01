@@ -1,0 +1,9 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title !{i} 0
+!for i in range(1):
+    title !!{i} !{i}
+@enduml

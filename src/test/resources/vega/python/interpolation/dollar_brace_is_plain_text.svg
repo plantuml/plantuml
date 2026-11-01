@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:356px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 356 72" width="356px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity app-->
+    <g class="entity" data-qualified-name="app" data-source-line="5" id="ent0001">
+      <polygon fill="#F1F1F1" points="10,22,20,12,73.363,12,73.363,46,63.363,56,10,56,10,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="63.363" x2="73.363" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="63.363" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="63.363" x2="63.363" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="25" y="42.889">app</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="6" id="ent0003">
+      <path d="M91,22 L91,30 L73.105,34 L91,38 L91,45 A0,0 0 0 0 91,45 L339.581,45 A0,0 0 0 0 339.581,45 L339.581,32 L329.581,22 L91,22 A0,0 0 0 0 91,22" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M329.581,22 L329.581,32 L339.581,32 L329.581,22" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="227.581" x="97" y="37.111">run ${JAVA_HOME}/bin/java on port 8080</text>
+    </g>
+  </g>
+</svg>

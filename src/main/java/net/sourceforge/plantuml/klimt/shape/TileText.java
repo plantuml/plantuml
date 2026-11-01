@@ -98,7 +98,7 @@ public class TileText extends TextBlockMemoized {
 			while (tokenizer.hasMoreTokens()) {
 				final String s = tokenizer.nextToken();
 				if (s.equals("\t") || s.equals("" + Jaws.BLOCK_E1_REAL_TABULATION)) {
-					final double remainder = x % tabSize;
+					final double remainder = tabSize > 0 ? x % tabSize : 0;
 					x += tabSize - remainder;
 				} else {
 					final UText utext = UText.build(s, fontConfiguration);
@@ -128,7 +128,8 @@ public class TileText extends TextBlockMemoized {
 		while (tokenizer.hasMoreTokens()) {
 			final String s = tokenizer.nextToken();
 			if (s.equals("\t") || s.equals("" + Jaws.BLOCK_E1_REAL_TABULATION)) {
-				final double remainder = x % tabSize;
+				// a string bounder may give no width to blanks: x % 0 would be NaN
+				final double remainder = tabSize > 0 ? x % tabSize : 0;
 				x += tabSize - remainder;
 			} else {
 				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);

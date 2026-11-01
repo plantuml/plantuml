@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 3
+!n = 1
+!python
+n = n + 1
+!endpy
+!n += 1
+title !{n}
+@enduml

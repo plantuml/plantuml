@@ -1,0 +1,14 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title a
+' title b
+!python
+emit("title a")
+!endpy
+!python
+emit("title b")
+!endpy
+@enduml

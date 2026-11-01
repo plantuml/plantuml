@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 3.14 007 x
+!emit(f"title {3.14159:.2f} {7:03d} {'x'}")
+@enduml

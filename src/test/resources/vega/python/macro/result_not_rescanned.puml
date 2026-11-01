@@ -1,0 +1,17 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title inner(x)
+!python
+@macro
+def inner(x):
+    return "never"
+
+@macro
+def outer(x):
+    return "inner(" + x + ")"
+!endpy
+title outer(x)
+@enduml

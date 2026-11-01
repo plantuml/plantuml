@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' A -> B : <1> and <2>
+!python
+@macro
+def tag(x):
+    return "<" + x + ">"
+!endpy
+A -> B : tag(1) and tag(2)
+@enduml

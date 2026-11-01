@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+!python
+def color(n):
+    return "#FFCCCC"
+!endpy
+
+participant P !{color("P")}
+
+@enduml

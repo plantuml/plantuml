@@ -1,0 +1,4 @@
+@startuml
+database "Orders" as orders <<v1>>
+queue "Events" as events <<none>>
+@enduml

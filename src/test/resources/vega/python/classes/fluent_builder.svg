@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="178px" preserveAspectRatio="none" style="width:169px;height:178px;background:#FFFFFF;" version="1.1" viewBox="0 0 169 178" width="169px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="User" data-source-line="15" id="part1-lifeline">
+      <g>
+        <title>User</title>
+        <rect fill="#000" fill-opacity="0" height="99" width="8" x="28.287" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="31.787" x2="31.787" y1="39" y2="138"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Web" data-source-line="15" id="part2-lifeline">
+      <g>
+        <title>Web</title>
+        <rect fill="#000" fill-opacity="0" height="99" width="8" x="81.469" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="84.969" x2="84.969" y1="39" y2="138"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="DB" data-source-line="15" id="part3-lifeline">
+      <g>
+        <title>DB</title>
+        <rect fill="#000" fill-opacity="0" height="99" width="8" x="137.969" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="141.469" x2="141.469" y1="39" y2="138"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="User" data-source-line="15" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="43.575" x="10" y="10"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="17" y="27.889">User</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Web" data-source-line="15" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.787" x="63.575" y="10"/>
+      <text fill="#000" font-size="14" textLength="28.787" x="70.575" y="27.889">Web</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part3" data-qualified-name="DB" data-source-line="15" id="part3-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="33.512" x="124.713" y="10"/>
+      <text fill="#000" font-size="14" textLength="19.512" x="131.713" y="27.889">DB</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="User" data-source-line="15" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="43.575" x="10" y="138"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="17" y="155.889">User</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Web" data-source-line="15" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.787" x="63.575" y="138"/>
+      <text fill="#000" font-size="14" textLength="28.787" x="70.575" y="155.889">Web</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="DB" data-source-line="15" id="part3-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="33.512" x="124.713" y="138"/>
+      <text fill="#000" font-size="14" textLength="19.512" x="131.713" y="155.889">DB</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="15" id="msg1">
+      <polygon fill="#181818" points="72.969,62,82.969,66,72.969,70,76.969,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="31.787" x2="78.969" y1="66" y2="66"/>
+      <text fill="#000" font-size="13" textLength="27.544" x="38.787" y="61.111">login</text>
+    </g>
+    <g class="message" data-entity-1="part2" data-entity-2="part3" data-source-line="15" id="msg2">
+      <polygon fill="#181818" points="129.469,89,139.469,93,129.469,97,133.469,93" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="84.969" x2="135.469" y1="93" y2="93"/>
+      <text fill="#000" font-size="13" textLength="32.5" x="91.969" y="88.111">query</text>
+    </g>
+    <g class="message" data-entity-1="part3" data-entity-2="part2" data-source-line="15" id="msg3">
+      <polygon fill="#181818" points="95.969,116,85.969,120,95.969,124,91.969,120" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="89.969" x2="140.469" y1="120" y2="120"/>
+      <text fill="#000" font-size="13" textLength="27.463" x="101.969" y="115.111">rows</text>
+    </g>
+  </g>
+</svg>

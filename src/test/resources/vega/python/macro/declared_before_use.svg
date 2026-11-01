@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="132px" preserveAspectRatio="none" style="width:90px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 90 132" width="90px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="4">
+      <text fill="#000" font-size="14" font-weight="700" textLength="58.362" x="15" y="25.889">A color(A)</text>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="B" data-source-line="10" id="part1-lifeline">
+      <g>
+        <title>B</title>
+        <rect fill="#000" fill-opacity="0" height="18" width="8" x="41.181" y="74"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="44.681" x2="44.681" y1="74" y2="92"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="B" data-source-line="10" id="part1-head">
+      <rect fill="#FCC" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="33" y="45"/>
+      <text fill="#000" font-size="14" x="40" y="62.889">B</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="B" data-source-line="10" id="part1-tail">
+      <rect fill="#FCC" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="33" y="92"/>
+      <text fill="#000" font-size="14" x="40" y="109.889">B</text>
+    </g>
+  </g>
+</svg>

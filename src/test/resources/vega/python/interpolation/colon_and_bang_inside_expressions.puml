@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title [2, 3] 7 2 6 3.1 True
+!l = [1, 2, 3, 4]
+!d = {"a:b": 7}
+!pi = 3.14159
+!a = 1
+!b = 2
+title !{l[1:3]} !{d["a:b"]} !{ {"k": 2}["k"] } !{(lambda x: x * 2)(3)} !{f"{pi:.1f}"} !{a != b}
+@enduml

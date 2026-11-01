@@ -85,6 +85,17 @@ public class Defines implements Truth {
 
 	}
 
+	/**
+	 * The defined variables (the command line ones, <code>-Dname=value</code>) as strings,
+	 * in the order they were defined: <code>puml.args</code> of Python.
+	 */
+	public Map<String, String> asStrings() {
+		final Map<String, String> result = new LinkedHashMap<String, String>();
+		for (Entry<String, TValue> ent : values.entrySet())
+			result.put(ent.getKey(), ent.getValue().toString());
+		return result;
+	}
+
 	public void overrideFilename(String filename) {
 		if (filename != null) {
 			environment.put("filename", filename);

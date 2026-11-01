@@ -1,0 +1,22 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' User -> Web : login
+' Web -> DB : query
+' DB --> Web : rows
+!class Flow:
+!    def __init__(self):
+!        self.steps = []
+!    def call(self, source, target, text):
+!        self.steps.append((source, target, "->", text))
+!        return self
+!    def reply(self, source, target, text):
+!        self.steps.append((source, target, "-->", text))
+!        return self
+
+!flow = Flow().call("User", "Web", "login").call("Web", "DB", "query").reply("DB", "Web", "rows")
+!for source, target, arrow, text in flow.steps:
+    !{source} !{arrow} !{target} : !{text}
+@enduml

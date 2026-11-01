@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title str str
+title !{type(puml.version).__name__} !{type(puml.edition).__name__}
+@enduml

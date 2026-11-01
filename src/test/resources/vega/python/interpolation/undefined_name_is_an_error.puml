@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: 'Python error: NameError: name 'undefined' is not defined'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: Python error: NameError: name 'undefined' is not defined
+!x = 1
+title !{undefined}
+@enduml

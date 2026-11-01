@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' actor "Customer" as user
+!python
+@macro("Person")
+def person(alias, label):
+    return f'actor "{label}" as {alias}'
+!endpy
+Person(user, "Customer")
+@enduml

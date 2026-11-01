@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="163px" preserveAspectRatio="none" style="width:82px;height:163px;background:#FFFFFF;" version="1.1" viewBox="0 0 82 163" width="82px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="A" data-source-line="5" id="part1-lifeline">
+      <g>
+        <title>A</title>
+        <rect fill="#000" fill-opacity="0" height="84" width="8" x="37.194" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="40.694" x2="40.694" y1="39" y2="123"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="A" data-source-line="5" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="29.013" y="10"/>
+      <text fill="#000" font-size="14" x="36.013" y="27.889">A</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="A" data-source-line="5" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="29.013" y="123"/>
+      <text fill="#000" font-size="14" x="36.013" y="140.889">A</text>
+    </g>
+    <path d="M15,52 L15,75 L66,75 L66,62 L56,52 L15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M56,52 L56,62 L66,62 L56,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="30.388" x="21" y="67.111">small</text>
+    <path d="M21.5,85 L21.5,108 L59.5,108 L59.5,95 L49.5,85 L21.5,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M49.5,85 L49.5,95 L59.5,95 L49.5,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="17.388" x="27.5" y="100.111">big</text>
+  </g>
+</svg>

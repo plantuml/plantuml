@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' !pragma teoz true
+' participant A
+!pragma teoz true
+!name = "A"
+participant !{name}
+@enduml

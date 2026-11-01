@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title caught
+!try:
+!    x = 1 / 0
+!except ZeroDivisionError:
+!    emit("title caught")
+@enduml

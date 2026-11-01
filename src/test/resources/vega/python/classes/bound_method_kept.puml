@@ -1,0 +1,18 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title DB, Web
+!class Registry:
+!    def __init__(self):
+!        self.names = []
+!    def add(self, name):
+!        self.names.append(name)
+
+!r = Registry()
+!add = r.add
+!add("DB")
+!add("Web")
+title !{", ".join(r.names)}
+@enduml

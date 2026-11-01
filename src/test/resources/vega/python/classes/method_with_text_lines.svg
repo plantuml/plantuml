@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="163px" preserveAspectRatio="none" style="width:145px;height:163px;background:#FFFFFF;" version="1.1" viewBox="0 0 145 163" width="145px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Web" data-source-line="14" id="part1-lifeline">
+      <g>
+        <title>Web</title>
+        <rect fill="#000" fill-opacity="0" height="84" width="8" x="40.403" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="43.903" x2="43.903" y1="39" y2="123"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="API" data-source-line="14" id="part2-lifeline">
+      <g>
+        <title>API</title>
+        <rect fill="#000" fill-opacity="0" height="84" width="8" x="90.084" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="93.584" x2="93.584" y1="39" y2="123"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Web" data-source-line="14" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.787" x="22.509" y="10"/>
+      <text fill="#000" font-size="14" textLength="28.787" x="29.509" y="27.889">Web</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="API" data-source-line="14" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="36.575" x="75.297" y="10"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="82.297" y="27.889">API</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Web" data-source-line="14" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.787" x="22.509" y="123"/>
+      <text fill="#000" font-size="14" textLength="28.787" x="29.509" y="140.889">Web</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="API" data-source-line="14" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="36.575" x="75.297" y="123"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="82.297" y="140.889">API</text>
+    </g>
+    <path d="M15,52 L15,75 L72,75 L72,62 L62,52 L15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M62,52 L62,62 L72,62 L62,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="36.806" x="21" y="67.111">port 80</text>
+    <path d="M57.45,85 L57.45,108 L129.45,108 L129.45,95 L119.45,85 L57.45,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M119.45,85 L119.45,95 L129.45,95 L119.45,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="51.269" x="63.45" y="100.111">port 8080</text>
+  </g>
+</svg>

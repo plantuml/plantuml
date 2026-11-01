@@ -153,9 +153,11 @@ public final class PyParser {
 				out.add(tryStatement());
 				return;
 			case "def":
-				out.add(defStatement());
+				out.add(defStatement(new ArrayList<Node>()));
 				return;
 			case "class":
+				out.add(classStatement(new ArrayList<Node>()));
+				return;
 			case "with":
 			case "async":
 				throw error("'" + t.text + "' is not supported");
@@ -163,9 +165,33 @@ public final class PyParser {
 				break;
 			}
 		}
-		if (t.isOp("@"))
-			throw error("decorators are not supported");
+		if (t.isOp("@")) {
+			out.add(decorated());
+			return;
+		}
 		simpleStatements(out);
+	}
+
+	/** One or more "@expr" lines, then the def or class they apply to. */
+	private Node decorated() {
+		List<Node> decorators = new ArrayList<Node>();
+		while (acceptOp("@")) {
+			decorators.add(test());
+			Token end = peek();
+			if (end.kind != Token.NEWLINE)
+				throw error("expected end of line after a decorator but found '" + end + "'");
+			next();
+			while (peek().kind == Token.NEWLINE)
+				next();
+		}
+		Token t = peek();
+		if (t.kind == Token.KEYWORD && t.text.equals("def"))
+			return defStatement(decorators);
+		if (t.kind == Token.KEYWORD && t.text.equals("class"))
+			return classStatement(decorators);
+		if (t.kind == Token.KEYWORD && t.text.equals("async"))
+			throw error("'async' is not supported");
+		throw error("a decorator must be followed by def or class");
 	}
 
 	private void simpleStatements(List<Node> out) {
@@ -278,7 +304,7 @@ public final class PyParser {
 				new ArrayList<Node>());
 	}
 
-	private Node defStatement() {
+	private Node defStatement(List<Node> decorators) {
 		Token t = next();
 		String name = expectName();
 		expectOp("(");
@@ -287,8 +313,29 @@ public final class PyParser {
 		if (isOp("->"))
 			throw error("return annotations are not supported");
 		List<Node> body = block();
-		return n("FunctionDef", t, "name", name, "args", args, "body", body, "decorator_list",
-				new ArrayList<Node>(), "returns", null);
+		return n("FunctionDef", t, "name", name, "args", args, "body", body, "decorator_list", decorators,
+				"returns", null);
+	}
+
+	private Node classStatement(List<Node> decorators) {
+		Token t = next();
+		String name = expectName();
+		List<Node> bases = new ArrayList<Node>();
+		if (acceptOp("(")) {
+			while (isOp(")") == false) {
+				if (isOp("*") || isOp("**"))
+					throw error("starred class bases are not supported");
+				bases.add(test());
+				if (isOp("="))
+					throw error("class keyword arguments are not supported");
+				if (acceptOp(",") == false)
+					break;
+			}
+			expectOp(")");
+		}
+		List<Node> body = block();
+		return n("ClassDef", t, "name", name, "bases", bases, "keywords", new ArrayList<Node>(), "body", body,
+				"decorator_list", decorators);
 	}
 
 	/** Parameters of a def or lambda, up to (not including) the closing token. */
@@ -968,7 +1015,6 @@ public final class PyParser {
 		switch (t.text) {
 		case "yield":
 		case "await":
-		case "class":
 		case "with":
 		case "async":
 			return error("'" + t.text + "' is not supported");

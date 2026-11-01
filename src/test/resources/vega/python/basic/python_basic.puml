@@ -1,0 +1,14 @@
+---
+output: preproc, svg
+---
+@startuml
+!n = 2
+!for i in range(n):
+!    emit("participant P" + str(i))
+!python
+s = 'it''s'
+emit("Alice -> P0 : " + s)
+!endpy
+!$v = 1
+Bob -> P1 : $v
+@enduml

@@ -1,0 +1,198 @@
+Module(
+  body=[
+    ClassDef(
+      name="A",
+      bases=[],
+      keywords=[],
+      body=[
+        Pass
+      ],
+      decorator_list=[]
+    ),
+    ClassDef(
+      name="B",
+      bases=[
+        Name(id="A", ctx=Load)
+      ],
+      keywords=[],
+      body=[
+        Expr(
+          value=Constant(value="Doc.")
+        ),
+        Assign(
+          targets=[
+            Name(id="size", ctx=Store)
+          ],
+          value=Constant(value=1)
+        ),
+        FunctionDef(
+          name="__init__",
+          args=arguments(
+            posonlyargs=[],
+            args=[
+              arg(arg="self", annotation=None),
+              arg(arg="x", annotation=None),
+              arg(arg="y", annotation=None)
+            ],
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[
+              Constant(value=2)
+            ]
+          ),
+          body=[
+            Assign(
+              targets=[
+                Attribute(
+                  value=Name(id="self", ctx=Load),
+                  attr="x",
+                  ctx=Store
+                )
+              ],
+              value=Name(id="x", ctx=Load)
+            ),
+            Assign(
+              targets=[
+                Attribute(
+                  value=Name(id="self", ctx=Load),
+                  attr="y",
+                  ctx=Store
+                )
+              ],
+              value=Name(id="y", ctx=Load)
+            )
+          ],
+          decorator_list=[],
+          returns=None
+        ),
+        FunctionDef(
+          name="area",
+          args=arguments(
+            posonlyargs=[],
+            args=[
+              arg(arg="self", annotation=None)
+            ],
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[]
+          ),
+          body=[
+            Return(
+              value=BinOp(
+                left=Attribute(
+                  value=Name(id="self", ctx=Load),
+                  attr="x",
+                  ctx=Load
+                ),
+                op=Mult,
+                right=Attribute(
+                  value=Name(id="self", ctx=Load),
+                  attr="y",
+                  ctx=Load
+                )
+              )
+            )
+          ],
+          decorator_list=[],
+          returns=None
+        )
+      ],
+      decorator_list=[]
+    ),
+    ClassDef(
+      name="C",
+      bases=[],
+      keywords=[],
+      body=[
+        Pass
+      ],
+      decorator_list=[]
+    ),
+    ClassDef(
+      name="D",
+      bases=[
+        Attribute(
+          value=Name(id="mod", ctx=Load),
+          attr="Base",
+          ctx=Load
+        )
+      ],
+      keywords=[],
+      body=[
+        ClassDef(
+          name="Inner",
+          bases=[],
+          keywords=[],
+          body=[
+            Pass
+          ],
+          decorator_list=[]
+        )
+      ],
+      decorator_list=[]
+    ),
+    Assign(
+      targets=[
+        Attribute(
+          value=Attribute(
+            value=Name(id="obj", ctx=Load),
+            attr="a",
+            ctx=Load
+          ),
+          attr="b",
+          ctx=Store
+        )
+      ],
+      value=Constant(value=1)
+    ),
+    AugAssign(
+      target=Attribute(
+        value=Name(id="obj", ctx=Load),
+        attr="n",
+        ctx=Store
+      ),
+      op=Add,
+      value=Constant(value=2)
+    ),
+    Delete(
+      targets=[
+        Attribute(
+          value=Name(id="obj", ctx=Load),
+          attr="a",
+          ctx=Del
+        ),
+        Attribute(
+          value=Name(id="obj", ctx=Load),
+          attr="b",
+          ctx=Del
+        )
+      ]
+    ),
+    Assign(
+      targets=[
+        Tuple(
+          elts=[
+            Name(id="x", ctx=Store),
+            Attribute(
+              value=Name(id="obj", ctx=Load),
+              attr="y",
+              ctx=Store
+            )
+          ],
+          ctx=Store
+        )
+      ],
+      value=Tuple(
+        elts=[
+          Constant(value=1),
+          Constant(value=2)
+        ],
+        ctx=Load
+      )
+    )
+  ]
+)

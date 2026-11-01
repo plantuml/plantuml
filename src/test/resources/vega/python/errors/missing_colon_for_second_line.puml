@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 3
+expected-error-message: 'Python syntax error: expected ':' but found 'NEWLINE' (column 18)'
+---
+@startuml
+title demo
+!x = 1
+!for i in range(3)
+    participant P!{i}
+@enduml
