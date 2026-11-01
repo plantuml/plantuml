@@ -1,0 +1,9 @@
+target
+['evaluate outer', 'evaluate inner', 'apply inner to target', 'apply outer to target']
+['hello ann!', 'hello ann!'] ['hello bob?', 'hello bob?']
+wrapper
+['$size', 'color'] #FFCCCC 3 #FFCCCC
+['first', 'second'] 3
+BOX A BIG BOX A tagged Box tagged Box
+42
+<x >x

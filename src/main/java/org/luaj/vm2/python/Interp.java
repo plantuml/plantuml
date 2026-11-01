@@ -32,6 +32,21 @@ public final class Interp {
 		globals.put("__name__", "__main__");
 	}
 
+	/** Makes a module importable ({@code import name}). Done by the host, before running anything. */
+	public void addModule(PyModule m) {
+		modules.put(m.name, m);
+	}
+
+	/** A builtin module (math, json, or one added by {@link #addModule}), or null. */
+	public PyModule getModule(String name) {
+		return modules.get(name);
+	}
+
+	/** Defines a global variable: a module, or a member of a module such as {@link PyModule#get}. */
+	public void setGlobal(String name, Object value) {
+		globals.put(name, value);
+	}
+
 	public void setMaxSteps(long n) {
 		maxSteps = n;
 	}
@@ -80,6 +95,56 @@ public final class Interp {
 		return v == null ? null : PyOps.str(v);
 	}
 
+	// ------------------------------------------------------------ host API
+
+	/**
+	 * Calls a Python callable from the host, with positional arguments and
+	 * keyword arguments (Python values; kwargs may be null). A Python exception
+	 * is thrown as a {@link PyError}; the call counts against the limits.
+	 */
+	public Object callFunction(Object fn, Object[] args, Map<String, Object> kwargs) {
+		String[] kwn = null;
+		Object[] kwv = null;
+		if (kwargs != null && kwargs.isEmpty() == false) {
+			kwn = new String[kwargs.size()];
+			kwv = new Object[kwargs.size()];
+			int i = 0;
+			for (Map.Entry<String, Object> e : kwargs.entrySet()) {
+				kwn[i] = e.getKey();
+				kwv[i] = e.getValue();
+				i++;
+			}
+		}
+		return callGeneric(fn, args, 0, args.length, kwn, kwv);
+	}
+
+	/** True for what Python's callable() accepts. */
+	public static boolean isCallable(Object v) {
+		return v instanceof PyFunction || v instanceof Builtin || v instanceof BoundMethod
+				|| (v instanceof PyType && (((PyType) v).ctor != null || ((PyType) v).isClass()));
+	}
+
+	/** The __name__ of a function, a builtin function or a method; null for anything else. */
+	public static String functionName(Object v) {
+		if (v instanceof PyFunction)
+			return ((PyFunction) v).code.name;
+		if (v instanceof Builtin)
+			return ((Builtin) v).name;
+		if (v instanceof BoundMethod)
+			return ((BoundMethod) v).name();
+		return null;
+	}
+
+	/** True for the Python value None. */
+	public static boolean isNone(Object v) {
+		return v == PyNone.NONE;
+	}
+
+	/** str(v), for the host. */
+	public static String str(Object v) {
+		return PyOps.str(v);
+	}
+
 	// ------------------------------------------------------------ calls
 
 	Object call(Object f, Object... args) {
@@ -89,6 +154,12 @@ public final class Interp {
 	Object callGeneric(Object fn, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
 		if (fn instanceof PyFunction)
 			return invoke((PyFunction) fn, src, off, n, kwn, kwv);
+		if (fn instanceof BoundMethod && ((BoundMethod) fn).function != null) {
+			BoundMethod m = (BoundMethod) fn;
+			return invoke(m.function, withSelf(m.self, src, off, n), 0, n + 1, kwn, kwv);
+		}
+		if (fn instanceof PyType && ((PyType) fn).isClass())
+			return instantiate((PyType) fn, src, off, n, kwn, kwv);
 		Builtin b;
 		Object[] args;
 		if (fn instanceof Builtin) {
@@ -121,6 +192,42 @@ public final class Interp {
 			r = b.callKw(this, args, kw);
 		}
 		return r == null ? PyNone.NONE : r;
+	}
+
+	private static Object[] withSelf(Object self, Object[] src, int off, int n) {
+		Object[] args = new Object[n + 1];
+		args[0] = self;
+		System.arraycopy(src, off, args, 1, n);
+		return args;
+	}
+
+	/** Calls a class of the program: creates the instance, then runs __init__ on it. */
+	private Object instantiate(PyType t, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
+		Object self;
+		if (t.exception) {
+			// as BaseException.__new__ does, the arguments of the call are the args of the exception
+			Object[] args = new Object[n];
+			System.arraycopy(src, off, args, 0, n);
+			self = new PyException(t, args);
+		} else {
+			self = new PyInstance(t);
+		}
+		Object init = t.lookup("__init__");
+		if (init instanceof PyFunction) {
+			Object r = invoke((PyFunction) init, withSelf(self, src, off, n), 0, n + 1, kwn, kwv);
+			if (r != PyNone.NONE)
+				throw PyOps.err(Types.TYPE_ERROR, "__init__() should return None, not '" + PyOps.typeName(r) + "'");
+		} else if (init == null || init == Builtins.OBJECT_INIT) {
+			if (n > 0 || (kwn != null && kwn.length > 0))
+				throw PyOps.err(Types.TYPE_ERROR, t.name + "() takes no arguments");
+		} else {
+			// BaseException.__init__: the args are already set
+			if (kwn != null && kwn.length > 0)
+				throw PyOps.err(Types.TYPE_ERROR, t.name + "() takes no keyword arguments");
+			if (init != Builtins.EXCEPTION_INIT)
+				throw PyOps.err(Types.TYPE_ERROR, "__init__ of class '" + t.name + "' must be a function");
+		}
+		return self;
 	}
 
 	private Object invoke(PyFunction fn, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
@@ -290,8 +397,12 @@ public final class Interp {
 	private PyError toRaise(Object v) {
 		if (v instanceof PyException)
 			return new PyError((PyException) v);
-		if (v instanceof PyType && ((PyType) v).exception)
-			return new PyError(new PyException((PyType) v, new Object[0]));
+		if (v instanceof PyType && ((PyType) v).exception) {
+			PyType t = (PyType) v;
+			if (t.isClass())
+				return toRaise(instantiate(t, new Object[0], 0, 0, null, null));
+			return new PyError(new PyException(t, new Object[0]));
+		}
 		return PyOps.err(Types.TYPE_ERROR, "exceptions must derive from BaseException");
 	}
 
@@ -401,6 +512,15 @@ public final class Interp {
 						break;
 					case Op.LOAD_ATTR:
 						f[sp - 1] = PyOps.getattr(f[sp - 1], names[arg]);
+						break;
+					case Op.STORE_ATTR:
+						PyOps.setattr(f[sp - 1], names[arg], f[sp - 2]);
+						f[--sp] = null;
+						f[--sp] = null;
+						break;
+					case Op.DELETE_ATTR:
+						PyOps.delattr(f[sp - 1], names[arg]);
+						f[--sp] = null;
 						break;
 					case Op.BINARY_OP: {
 						Object b = f[--sp];
@@ -641,6 +761,10 @@ public final class Interp {
 						Object r;
 						if (fn instanceof PyFunction) {
 							r = invoke((PyFunction) fn, f, base, arg, null, null);
+						} else if (fn instanceof BoundMethod && ((BoundMethod) fn).function != null) {
+							// the slot of the callee receives self: no copy of the arguments
+							f[base - 1] = ((BoundMethod) fn).self;
+							r = invoke(((BoundMethod) fn).function, f, base - 1, arg + 1, null, null);
 						} else {
 							r = callGeneric(fn, f, base, arg, null, null);
 						}

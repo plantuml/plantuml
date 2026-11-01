@@ -22,11 +22,11 @@ def main():
 
     fs[1] = f1
     fs[2] = f2
-    for i in range(3, 200):
+    for i in range(3, 47):
         fs[i] = make(i)
 
     print("5th fibonacci number is", fs[5]())
     print("10th fibonacci number is", fs[10]())
-    print("199th fibonacci number is", fs[199]())
+    print("46th fibonacci number is", fs[46]())
 
 main()

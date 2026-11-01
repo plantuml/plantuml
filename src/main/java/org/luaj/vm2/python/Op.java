@@ -80,7 +80,10 @@ final class Op {
 	/** Argument: bits 0-1 conversion (0 none, 1 str, 2 repr, 3 ascii), bit 2 a format spec is on the stack. */
 	static final int FORMAT_VALUE = 57;
 
-	static final int COUNT = 58;
+	/** obj.name = value: obj on top, the value under it. */
+	static final int STORE_ATTR = 58;
+	static final int DELETE_ATTR = 59;
+	static final int COUNT = 60;
 
 	// BINARY_OP operators
 	static final int BIN_ADD = 0;
@@ -112,7 +115,8 @@ final class Op {
 			"BUILD_SLICE", "BUILD_LIST", "BUILD_TUPLE", "BUILD_DICT", "BUILD_STRING", "LIST_APPEND", "LIST_EXTEND",
 			"MAP_ADD", "DICT_ADD_KW", "DICT_MERGE_KW", "UNPACK", "JUMP", "JUMP_IF_FALSE", "JUMP_IF_TRUE",
 			"JUMP_IF_FALSE_KEEP", "JUMP_IF_TRUE_KEEP", "GET_ITER", "FOR_ITER", "CALL", "CALL_KW", "CALL_EX",
-			"MAKE_FUNCTION", "RETURN", "RAISE", "RERAISE", "EXC_MATCH", "IMPORT", "FORMAT_VALUE" };
+			"MAKE_FUNCTION", "RETURN", "RAISE", "RERAISE", "EXC_MATCH", "IMPORT", "FORMAT_VALUE",
+			"STORE_ATTR", "DELETE_ATTR" };
 
 	static boolean isJump(int op) {
 		return op >= JUMP && op <= JUMP_IF_TRUE_KEEP || op == FOR_ITER;
@@ -156,6 +160,7 @@ final class Op {
 		case RAISE:
 		case RERAISE:
 		case EXC_MATCH:
+		case DELETE_ATTR:
 			return -1;
 		case DUP:
 		case LOAD_CONST:
@@ -171,6 +176,7 @@ final class Op {
 		case SETITEM:
 			return -3;
 		case DELITEM:
+		case STORE_ATTR:
 		case BUILD_SLICE:
 		case MAP_ADD:
 		case DICT_ADD_KW:
