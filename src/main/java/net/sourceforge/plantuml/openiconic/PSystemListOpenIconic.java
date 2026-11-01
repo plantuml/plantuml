@@ -36,10 +36,15 @@
 package net.sourceforge.plantuml.openiconic;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+// ::comment when JAVA8
+import net.sourceforge.plantuml.teavm.c.EmbeddedFiles;
+// ::done
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UgDiagram;
@@ -50,6 +55,7 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockHorizontal;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.teavm.TeaVM;
 
 public class PSystemListOpenIconic extends UgDiagram {
 
@@ -76,6 +82,11 @@ public class PSystemListOpenIconic extends UgDiagram {
 	}
 
 	private InputStream getResourceAllTxt() {
+		// ::comment when JAVA8
+		// The C build embeds the list in the executable, there is no class loader
+		if (TeaVM.isC())
+			return new ByteArrayInputStream(EmbeddedFiles.read("openiconic/all.txt"));
+		// ::done
 		return getClass().getResourceAsStream("/openiconic/all.txt");
 	}
 

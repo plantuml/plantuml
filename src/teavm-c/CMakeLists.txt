@@ -100,7 +100,7 @@ file(GLOB_RECURSE RESOURCE_FILES CONFIGURE_DEPENDS
 	${PROJECT_SOURCE_DIR}/native/resources/themes/*.puml
 	${PROJECT_SOURCE_DIR}/native/resources/svg/*.min.*
 	${PROJECT_SOURCE_DIR}/native/resources/sprites/*.svg
-	${PROJECT_SOURCE_DIR}/native/resources/openiconic/*.svg
+	${PROJECT_SOURCE_DIR}/native/resources/openiconic/*
 	${PROJECT_SOURCE_DIR}/native/resources/openpdf/*
 	${PROJECT_SOURCE_DIR}/native/resources/emoji/*
 	${PROJECT_SOURCE_DIR}/native/resources/stdlib/*.spm)

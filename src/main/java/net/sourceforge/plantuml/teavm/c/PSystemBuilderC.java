@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.klimt.sprite.ListSpriteDiagramFactory;
 import net.sourceforge.plantuml.mindmap.MindMapDiagramFactory;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
+import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.packetdiag.PacketDiagramFactory;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -117,6 +118,7 @@ public class PSystemBuilderC {
 		factories.add(new PSystemRegexFactory());
 		factories.add(new ChenEerDiagramFactory());
 		factories.add(new ListSpriteDiagramFactory());
+		factories.add(new PSystemListOpenIconicFactory());
 	}
 
 	public static PSystemBuilderC getInstance() {

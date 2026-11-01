@@ -172,9 +172,9 @@ val copyNativeSources = tasks.register<Copy>("copyNativeSources") {
 		include("**/*.svg")
 		into("native/resources/sprites")
 	}
-	// The OpenIconic icons (<&name>)
+	// The OpenIconic icons (<&name>), and their list (listopeniconic)
 	from("src/main/resources/openiconic") {
-		include("*.svg")
+		include("*.svg", "all.txt")
 		into("native/resources/openiconic")
 	}
 	// The emoji (<:name:>): the list and one SVG file per emoji
