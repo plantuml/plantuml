@@ -12835,11 +12835,11 @@
                 <TotalClasses>7</TotalClasses>
                 <ConcreteClasses>6</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>1</Ca>
+                <Ca>2</Ca>
                 <Ce>14</Ce>
                 <A>0.14</A>
-                <I>0.93</I>
-                <D>0.08</D>
+                <I>0.88</I>
+                <D>0.02</D>
                 <V>1</V>
             </Stats>
 
@@ -12889,6 +12889,7 @@
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
+                <Package>net.sourceforge.plantuml.teavm.c</Package>
             </UsedBy>
         </Package>
 
@@ -17046,7 +17047,7 @@
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>2</Ca>
-                <Ce>39</Ce>
+                <Ce>40</Ce>
                 <A>0</A>
                 <I>0.95</I>
                 <D>0.05</D>
@@ -17124,6 +17125,7 @@
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
+                <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>

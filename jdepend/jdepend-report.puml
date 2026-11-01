@@ -2546,7 +2546,7 @@ class "net.sourceforge.plantuml.objectdiagram.command"{
 
 }
 
-class "net.sourceforge.plantuml.openiconic" %lighten("red", 92) {
+class "net.sourceforge.plantuml.openiconic" %lighten("red", 98) {
 Total Classes: 7
 }
 "net.sourceforge.plantuml.openiconic" --> "com.plantuml.ubrex"
@@ -3318,6 +3318,7 @@ Total Classes: 13
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.mindmap"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.nwdiag"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.openiconic"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.packetdiag"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.regexdiagram"

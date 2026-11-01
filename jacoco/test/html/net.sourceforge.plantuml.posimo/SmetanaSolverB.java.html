@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SmetanaSolverB.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.posimo</a> &gt; <span class="el_source">SmetanaSolverB.java</span></div><h1>SmetanaSolverB.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.posimo;
+
+import static gen.lib.cgraph.attr__c.agsafeset;
+import static gen.lib.cgraph.edge__c.agedge;
+import static gen.lib.cgraph.graph__c.agopen;
+import static gen.lib.cgraph.node__c.agnode;
+import static gen.lib.gvc.gvc__c.gvContext;
+import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
+
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import h.ST_Agedge_s;
+import h.ST_Agedgeinfo_t;
+import h.ST_Agnode_s;
+import h.ST_Agnodeinfo_t;
+import h.ST_Agraph_s;
+import h.ST_Agraphinfo_t;
+import h.ST_GVC_s;
+import h.ST_bezier;
+import h.ST_boxf;
+import h.ST_pointf;
+import h.ST_splines;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.teavm.TeaVM;
+import smetana.core.CString;
+import smetana.core.Globals;
+
+/**
+ * Same job as {@link GraphvizSolverB}, but with Smetana (the Java port of
+ * Graphviz) instead of the external {@code dot} program: it places the blocks
+ * and computes the paths between them. It is what the builds without any
+ * process (TeaVM) have to use.
+ * &lt;p&gt;
+ * Only the blocks directly inside the root cluster are supported, which is all
+ * the text (TXT) output of the class diagrams needs.
+ */
+<span class="nc" id="L76">public class SmetanaSolverB {</span>
+
+	// The smetana port keeps its state in Globals, so layout runs are serialized
+	// process-wide
+<span class="nc" id="L80">	private static final Object lock = new Object();</span>
+
+	public XDimension2D solve(Cluster root, Collection&lt;Path&gt; paths) {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (root.getSubClusters().size() &gt; 0)</span>
+<span class="nc" id="L84">			throw new UnsupportedOperationException(&quot;Clusters are not supported by SmetanaSolverB&quot;);</span>
+
+		// No monitor in the C build: it is single-threaded, and its monitors do not
+		// survive a garbage collection happening while they are held
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (TeaVM.isC())</span>
+<span class="nc" id="L89">			return solveOpen(root, paths);</span>
+
+<span class="nc" id="L91">		synchronized (lock) {</span>
+<span class="nc" id="L92">			return solveOpen(root, paths);</span>
+		}
+	}
+
+	private XDimension2D solveOpen(Cluster root, Collection&lt;Path&gt; paths) {
+<span class="nc" id="L97">		final Globals zz = Globals.open();</span>
+		try {
+<span class="nc" id="L99">			return solveInternal(zz, root, paths);</span>
+		} finally {
+<span class="nc" id="L101">			Globals.close();</span>
+		}
+	}
+
+	private XDimension2D solveInternal(Globals zz, Cluster root, Collection&lt;Path&gt; paths) {
+<span class="nc" id="L106">		final ST_Agraph_s g = agopen(zz, new CString(&quot;g&quot;), zz.Agdirected, null);</span>
+		// The same separations as in GraphvizSolverB, in inches
+<span class="nc" id="L108">		agsafeset(zz, g, new CString(&quot;nodesep&quot;), new CString(&quot;0.2&quot;), new CString(&quot;&quot;));</span>
+<span class="nc" id="L109">		agsafeset(zz, g, new CString(&quot;ranksep&quot;), new CString(&quot;0.2&quot;), new CString(&quot;&quot;));</span>
+
+<span class="nc" id="L111">		final Map&lt;Block, ST_Agnode_s&gt; nodes = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		for (Block b : root.getContents()) {</span>
+<span class="nc" id="L113">			final ST_Agnode_s node = agnode(zz, g, new CString(&quot;b&quot; + b.getUid()), true);</span>
+<span class="nc" id="L114">			agsafeset(zz, node, new CString(&quot;shape&quot;), new CString(&quot;box&quot;), new CString(&quot;&quot;));</span>
+			// Without an explicit empty label, the node is enlarged to fit its name
+<span class="nc" id="L116">			agsafeset(zz, node, new CString(&quot;label&quot;), new CString(&quot;&quot;), new CString(&quot;&quot;));</span>
+<span class="nc" id="L117">			final XDimension2D size = b.getSize();</span>
+<span class="nc" id="L118">			agsafeset(zz, node, new CString(&quot;width&quot;), new CString(&quot;&quot; + size.getWidth() / 72.0), new CString(&quot;&quot;));</span>
+<span class="nc" id="L119">			agsafeset(zz, node, new CString(&quot;height&quot;), new CString(&quot;&quot; + size.getHeight() / 72.0), new CString(&quot;&quot;));</span>
+<span class="nc" id="L120">			nodes.put(b, node);</span>
+<span class="nc" id="L121">		}</span>
+
+<span class="nc" id="L123">		final Map&lt;Path, ST_Agedge_s&gt; edges = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		for (Path p : paths) {</span>
+<span class="nc" id="L125">			final ST_Agnode_s node1 = nodes.get(p.getStart());</span>
+<span class="nc" id="L126">			final ST_Agnode_s node2 = nodes.get(p.getEnd());</span>
+<span class="nc bnc" id="L127" title="All 4 branches missed.">			if (node1 == null || node2 == null)</span>
+<span class="nc" id="L128">				continue;</span>
+
+<span class="nc" id="L130">			final ST_Agedge_s e = agedge(zz, g, node1, node2, null, true);</span>
+<span class="nc" id="L131">			agsafeset(zz, e, new CString(&quot;arrowtail&quot;), new CString(&quot;none&quot;), new CString(&quot;&quot;));</span>
+<span class="nc" id="L132">			agsafeset(zz, e, new CString(&quot;arrowhead&quot;), new CString(&quot;none&quot;), new CString(&quot;&quot;));</span>
+<span class="nc" id="L133">			agsafeset(zz, e, new CString(&quot;minlen&quot;), new CString(&quot;&quot; + (p.getLength() - 1)), new CString(&quot;&quot;));</span>
+<span class="nc" id="L134">			edges.put(p, e);</span>
+<span class="nc" id="L135">		}</span>
+
+<span class="nc" id="L137">		final ST_GVC_s gvc = gvContext(zz);</span>
+<span class="nc" id="L138">		gvLayoutJobs(zz, gvc, g);</span>
+
+		// Graphviz has the y axis going up, and the result is expected with the origin
+		// at the top left corner, like the SVG output read by GraphvizSolverB
+<span class="nc" id="L142">		final ST_boxf bb = (ST_boxf) ((ST_Agraphinfo_t) g.data).bb;</span>
+<span class="nc" id="L143">		final double minX = bb.LL.x;</span>
+<span class="nc" id="L144">		final double maxY = bb.UR.y;</span>
+
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		for (Map.Entry&lt;Block, ST_Agnode_s&gt; entry : nodes.entrySet()) {</span>
+<span class="nc" id="L147">			final ST_Agnodeinfo_t data = (ST_Agnodeinfo_t) entry.getValue().data;</span>
+<span class="nc" id="L148">			final double width = data.width * 72;</span>
+<span class="nc" id="L149">			final double height = data.height * 72;</span>
+<span class="nc" id="L150">			entry.getKey().setX(data.coord.x - width / 2 - minX);</span>
+<span class="nc" id="L151">			entry.getKey().setY(maxY - (data.coord.y + height / 2));</span>
+<span class="nc" id="L152">		}</span>
+
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		for (Map.Entry&lt;Path, ST_Agedge_s&gt; entry : edges.entrySet())</span>
+<span class="nc" id="L155">			entry.getKey().setDotPath(toDotPath((ST_Agedgeinfo_t) entry.getValue().data, minX, maxY));</span>
+
+<span class="nc" id="L157">		return new XDimension2D(bb.UR.x - bb.LL.x, bb.UR.y - bb.LL.y);</span>
+	}
+
+	private static DotPath toDotPath(ST_Agedgeinfo_t data, double minX, double maxY) {
+<span class="nc" id="L161">		DotPath result = new DotPath();</span>
+<span class="nc" id="L162">		final ST_splines splines = data.spl;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (splines == null)</span>
+<span class="nc" id="L164">			return result;</span>
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		for (int i = 0; i &lt; splines.size; i++) {</span>
+<span class="nc" id="L167">			final ST_bezier bezier = splines.list.get__(i);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			for (int j = 0; j + 3 &lt; bezier.size; j += 3)</span>
+<span class="nc" id="L169">				result = result.addCurve(getPoint(bezier, j, minX, maxY), getPoint(bezier, j + 1, minX, maxY),</span>
+<span class="nc" id="L170">						getPoint(bezier, j + 2, minX, maxY), getPoint(bezier, j + 3, minX, maxY));</span>
+
+		}
+<span class="nc" id="L173">		return result;</span>
+	}
+
+	private static XPoint2D getPoint(ST_bezier bezier, int i, double minX, double maxY) {
+<span class="nc" id="L177">		final ST_pointf pt = bezier.list.get__(i);</span>
+<span class="nc" id="L178">		return new XPoint2D(pt.x - minX, maxY - pt.y);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
