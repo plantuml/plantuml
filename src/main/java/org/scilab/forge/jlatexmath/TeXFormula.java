@@ -57,6 +57,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration;
+import org.scilab.forge.jlatexmath.greek.GreekRegistration;
+
 
 /**
  * Represents a logical mathematical formula that will be displayed (by creating a
@@ -126,10 +129,9 @@ public class TeXFormula {
 
         parser.parseSymbolToFormulaMappings(symbolFormulaMappings, symbolTextMappings);
 
-        try {
-            DefaultTeXFont.registerAlphabet((AlphabetRegistration) Class.forName("org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration").newInstance());
-            DefaultTeXFont.registerAlphabet((AlphabetRegistration) Class.forName("org.scilab.forge.jlatexmath.greek.GreekRegistration").newInstance());
-        } catch (Exception e) { }
+        // direct: the reflection (Class.forName + newInstance) does not work in the TeaVM C build
+        DefaultTeXFont.registerAlphabet(new CyrillicRegistration());
+        DefaultTeXFont.registerAlphabet(new GreekRegistration());
 
         //setDefaultDPI();
     }

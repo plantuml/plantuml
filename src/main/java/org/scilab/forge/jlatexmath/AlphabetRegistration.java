@@ -47,10 +47,10 @@ package org.scilab.forge.jlatexmath;
 
 public interface AlphabetRegistration {
 
-    public static final Character.UnicodeBlock[] JLM_GREEK = new Character.UnicodeBlock[] {Character.UnicodeBlock.GREEK, Character.UnicodeBlock.GREEK_EXTENDED};
-    public static final	Character.UnicodeBlock[] JLM_CYRILLIC = new Character.UnicodeBlock[] {Character.UnicodeBlock.CYRILLIC};
+    public static final TeXUnicodeBlock[] JLM_GREEK = new TeXUnicodeBlock[] {TeXUnicodeBlock.GREEK, TeXUnicodeBlock.GREEK_EXTENDED};
+    public static final	TeXUnicodeBlock[] JLM_CYRILLIC = new TeXUnicodeBlock[] {TeXUnicodeBlock.CYRILLIC};
 
-    public Character.UnicodeBlock[] getUnicodeBlock();
+    public TeXUnicodeBlock[] getUnicodeBlock();
 
     public Object getPackage() throws AlphabetRegistrationException;
 

@@ -84,8 +84,8 @@ public class DefaultTeXFont implements TeXFont {
 
     protected static final int WIDTH = 0, HEIGHT = 1, DEPTH = 2, IT = 3;
 
-    public static List<Character.UnicodeBlock> loadedAlphabets = new ArrayList<Character.UnicodeBlock>();
-    public static Map<Character.UnicodeBlock, AlphabetRegistration> registeredAlphabets = new HashMap<Character.UnicodeBlock, AlphabetRegistration>();
+    public static List<TeXUnicodeBlock> loadedAlphabets = new ArrayList<TeXUnicodeBlock>();
+    public static Map<TeXUnicodeBlock, AlphabetRegistration> registeredAlphabets = new HashMap<TeXUnicodeBlock, AlphabetRegistration>();
 
     protected float factor = 1f;
 
@@ -98,7 +98,7 @@ public class DefaultTeXFont implements TeXFont {
     static {
         DefaultTeXFontParser parser = new DefaultTeXFontParser();
         //load LATIN block
-        loadedAlphabets.add(Character.UnicodeBlock.of('a'));
+        loadedAlphabets.add(TeXUnicodeBlock.of('a'));
         // fonts + font descriptions
         fontInfo = parser.parseFontDescriptions(fontInfo);
         // general font parameters
@@ -168,7 +168,7 @@ public class DefaultTeXFont implements TeXFont {
         symbolMappings.putAll(dtfp.parseSymbolMappings());
     }
 
-    public static void addAlphabet(Character.UnicodeBlock alphabet, InputStream inlanguage, String language, InputStream insymbols, String symbols, InputStream inmappings, String mappings) throws ResourceParseException {
+    public static void addAlphabet(TeXUnicodeBlock alphabet, InputStream inlanguage, String language, InputStream insymbols, String symbols, InputStream inmappings, String mappings) throws ResourceParseException {
         if (!loadedAlphabets.contains(alphabet)) {
             addTeXFontDescription(inlanguage, language);
             SymbolAtom.addSymbolAtom(insymbols, symbols);
@@ -177,7 +177,7 @@ public class DefaultTeXFont implements TeXFont {
         }
     }
 
-    public static void addAlphabet(Object base, Character.UnicodeBlock[] alphabet, String language) throws ResourceParseException {
+    public static void addAlphabet(Object base, TeXUnicodeBlock[] alphabet, String language) throws ResourceParseException {
         boolean b = false;
         for (int i = 0; !b && i < alphabet.length; i++) {
             b = loadedAlphabets.contains(alphabet[i]) || b;
@@ -192,7 +192,7 @@ public class DefaultTeXFont implements TeXFont {
         }
     }
 
-    public static void addAlphabet(Character.UnicodeBlock alphabet, String name) {
+    public static void addAlphabet(TeXUnicodeBlock alphabet, String name) {
         String lg = "fonts/" + name + "/language_" + name+ ".xml";
         String sym = "fonts/" + name + "/symbols_" + name+ ".xml";
         String map = "fonts/" + name + "/mappings_" + name+ ".xml";
@@ -214,7 +214,7 @@ public class DefaultTeXFont implements TeXFont {
     }
 
     public static void registerAlphabet(AlphabetRegistration reg) {
-        Character.UnicodeBlock[] blocks = reg.getUnicodeBlock();
+        TeXUnicodeBlock[] blocks = reg.getUnicodeBlock();
         for (int i = 0; i < blocks.length; i++) {
             registeredAlphabets.put(blocks[i], reg);
         }

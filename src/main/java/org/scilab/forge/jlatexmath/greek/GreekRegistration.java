@@ -29,14 +29,15 @@
 package org.scilab.forge.jlatexmath.greek;
 
 import org.scilab.forge.jlatexmath.AlphabetRegistration;
+import org.scilab.forge.jlatexmath.TeXUnicodeBlock;
 
 public class GreekRegistration implements AlphabetRegistration {
 
     public GreekRegistration() {
     }
 
-    public Character.UnicodeBlock[] getUnicodeBlock() {
-        return new Character.UnicodeBlock[] {Character.UnicodeBlock.GREEK, Character.UnicodeBlock.GREEK_EXTENDED};
+    public TeXUnicodeBlock[] getUnicodeBlock() {
+        return new TeXUnicodeBlock[] {TeXUnicodeBlock.GREEK, TeXUnicodeBlock.GREEK_EXTENDED};
     }
 
     public Object getPackage() {

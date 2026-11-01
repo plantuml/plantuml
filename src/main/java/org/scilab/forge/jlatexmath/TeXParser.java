@@ -1108,7 +1108,7 @@ public class TeXParser {
 
         c = convertToRomanNumber(c);
         if (((c < '0' || c > '9') && (c < 'a' || c > 'z') && (c < 'A' || c > 'Z'))) {
-            Character.UnicodeBlock block = Character.UnicodeBlock.of(c);
+            TeXUnicodeBlock block = TeXUnicodeBlock.of(c);
             if (!isLoading && !DefaultTeXFont.loadedAlphabets.contains(block)) {
                 DefaultTeXFont.addAlphabet(DefaultTeXFont.registeredAlphabets.get(block));
             }
@@ -1169,7 +1169,7 @@ public class TeXParser {
             return false;
         if (TeXFormula.symbolMappings[c] != null || TeXFormula.symbolFormulaMappings[c] != null)
             return false;
-        return DefaultTeXFont.registeredAlphabets.get(Character.UnicodeBlock.of(c)) == null;
+        return DefaultTeXFont.registeredAlphabets.get(TeXUnicodeBlock.of(c)) == null;
     }
 
     private String getCommand() {

@@ -48,7 +48,10 @@ package org.scilab.forge.jlatexmath;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
-public class NewCommandMacro {
+public class NewCommandMacro implements MacroInfo.MacroHandler {
+
+    /** The one that runs the commands defined by \\newcommand. */
+    private static final NewCommandMacro INSTANCE = new NewCommandMacro();
 
     protected static HashMap<String, String> macrocode = new HashMap<String, String>();
     protected static HashMap<String, String> macroreplacement = new HashMap<String, String>();
@@ -60,7 +63,7 @@ public class NewCommandMacro {
         //if (macrocode.get(name) != null)
         //throw new ParseException("Command " + name + " already exists ! Use renewcommand instead ...");
         macrocode.put(name, code);
-        MacroInfo.Commands.put(name, new MacroInfo("org.scilab.forge.jlatexmath.NewCommandMacro", "executeMacro", nbargs));
+        MacroInfo.Commands.put(name, new MacroInfo(INSTANCE, nbargs));
     }
 
     public static void addNewCommand(String name, String code, int nbargs, String def) throws ParseException {
@@ -68,7 +71,7 @@ public class NewCommandMacro {
             throw new ParseException("Command " + name + " already exists ! Use renewcommand instead ...");
         macrocode.put(name, code);
         macroreplacement.put(name, def);
-        MacroInfo.Commands.put(name, new MacroInfo("org.scilab.forge.jlatexmath.NewCommandMacro", "executeMacro", nbargs, 1));
+        MacroInfo.Commands.put(name, new MacroInfo(INSTANCE, nbargs, 1));
     }
 
     public static boolean isMacro(String name) {
@@ -79,7 +82,11 @@ public class NewCommandMacro {
         if (macrocode.get(name) == null)
             throw new ParseException("Command " + name + " is not defined ! Use newcommand instead ...");
         macrocode.put(name, code);
-        MacroInfo.Commands.put(name, new MacroInfo("org.scilab.forge.jlatexmath.NewCommandMacro", "executeMacro", nbargs));
+        MacroInfo.Commands.put(name, new MacroInfo(INSTANCE, nbargs));
+    }
+
+    public Object invoke(TeXParser tp, String[] args) {
+        return executeMacro(tp, args);
     }
 
     public String executeMacro(TeXParser tp, String[] args) {

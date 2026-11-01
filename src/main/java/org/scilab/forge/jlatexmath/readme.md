@@ -98,6 +98,21 @@ Phase 3, step 3a, no more AWT canvas, AWT fonts or Swing:
   `tools/jlatexmath-glyphs/ttf`, with the generator and the checker of
   `glyphs.bin` (the generator makes the same three files again).
 
+Phase 3, step 3c, no reflection and no `Character.UnicodeBlock` (neither works in
+the TeaVM C build, see `PLAN.md`):
+
+- added `TeXUnicodeBlock` (Basic Latin, Greek, Greek extended, Cyrillic, and
+  `OTHER` for all the rest: the blocks that have TeX fonts); the ranges are those
+  of `Character.UnicodeBlock`, checked for the 65,536 characters by
+  `TeXUnicodeBlockTest`. Used by `AlphabetRegistration` (and the Greek and
+  Cyrillic registrations), `DefaultTeXFont` and `TeXParser`;
+- `MacroInfo` has no `Method` and no `Class.forName` any more: a command defined
+  by a formula (`\newcommand`, `\renewcommand`) is a `MacroHandler`, which
+  `NewCommandMacro` implements; the predefined commands are as before;
+- `TeXFormula` registers the two alphabets with `new CyrillicRegistration()` and
+  `new GreekRegistration()`; with `Class.forName(...).newInstance()` they were
+  silently not registered in the C build.
+
 Phase 3, step 3b, no `java.awt` at all in the package:
 
 - added `TeXColor` (an sRGB color with an alpha: the constants, the constructors
