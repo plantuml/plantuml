@@ -4,6 +4,8 @@
 # and diffed byte for byte: always LF, whatever core.autocrlf says (on Windows it
 # would check them out as CRLF, and git would warn every time a test rewrites them).
 src/test/resources/vega/** text eol=lf
+# ... except the data file of puml/read_newlines, whose point is its CR and CRLF
+src/test/resources/vega/python/puml/read_crlf.txt -text
 
 # Files shipped next to plantuml.js that are not hand-written (issue #2870):
 # collapsed in GitHub diffs and left out of the language statistics.
