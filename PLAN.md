@@ -1,7 +1,8 @@
 # PLAN: JLaTeXMath inside PlantUML (branch `master-jlatexmath`)
 
-Status: **draft, nothing implemented yet.** This file is the hand-over for the
-next working sessions. Update it as decisions are made (move items from
+Status: **phases 0 and 1 are done, phase 2 is in progress** (see the table of
+section 6 and the steps below it). This file is the hand-over for the next
+working sessions. Update it as decisions are made (move items from
 "Open questions" to "Decisions").
 
 ## 1. Goal
@@ -120,13 +121,17 @@ Keep the parser and the layout, replace the drawing.
 - Generate the reference outputs **with the current implementation** on the
   JVM (JLaTeXMath 1.0.7 + Batik). They are the target to compare with, not
   necessarily byte for byte (see open questions about text vs shapes).
-- Status: corpus (15 files) and PNG baselines are in
+- Status: done. Corpus (19 files) and PNG baselines are in
   `src/test/resources/jlatexmath-corpus/` (see its `README.md`; outside `vega/` on purpose, so that Vega does not run it yet). The SVG references
   are **not** done: Batik is not a dependency of the build, and without it the
   SVG falls back to the formula source as text. They must be generated on a
   machine that has Batik, or replaced by the output of the new renderer (phase 2).
 
 ### 5.2 Glyph outlines
+
+Status: the tool and the three `glyphs.bin` files are done (commit "Extract
+JLaTeXMath glyph outlines"); the reader and the canvas on `UGraphic` are step
+2b-2 of phase 2.
 
 - Dev-time tool: read the 30 TTF files and extract, for each character that the
   XML metrics declare, its outline (move/line/quadratic/cubic) into a compact
@@ -182,13 +187,23 @@ list of what was removed so that it can be restored.
 
 | Phase | Content | Done when |
 |-------|---------|-----------|
-| 0 | 5.1 corpus + references; answer the cheap open questions (XML in TeaVM, pinned upstream commit) | corpus committed, references reviewed |
-| 1 | Vendor the sources as they are, call them directly (no reflection), JVM only, **no behaviour change** | corpus unchanged on the JVM |
-| 2 | Canvas interface + `UGraphic` implementation, glyph outlines (5.2) | corpus renders without AWT fonts, differences understood |
+| 0 | 5.1 corpus + references; answer the cheap open questions (XML in TeaVM, pinned upstream commit) | corpus committed, references reviewed (**done**) |
+| 1 | Vendor the sources as they are, call them directly (no reflection), JVM only, **no behaviour change** | corpus unchanged on the JVM (**done**) |
+| 2 | Canvas interface + `UGraphic` implementation, glyph outlines (5.2) | corpus renders without AWT fonts, differences understood (**in progress**, steps below) |
 | 3 | Remove `java.awt` / `javax.*` leftovers, XML and resources (5.3, 5.4) | the code compiles with TeaVM (JS and C) |
 | 4 | Wire-up (5.5), first formulas in `plantuml.exe` | `@startmath`, `@startlatex`, `<math>` work in the C build |
 | 5 | Pruning (5.6), size and start-up measurements, Vega on C (5.7) | size delta acceptable, CI green |
 | 6 | Same for JavaScript / Wasm if wanted | |
+
+Steps of phase 2:
+
+| Step | Content | State |
+|------|---------|-------|
+| 2a | `Box.draw` talks to `TeXGraphics` instead of `Graphics2D` (`Graphics2DTeXGraphics` keeps the AWT rendering) | done, corpus identical byte for byte |
+| 2b-1 | `tools/jlatexmath-glyphs/GenerateGlyphOutlines.java` writes `glyphs.bin` (46 fonts, 4710 glyphs) | done, at most 0.8% area difference with AWT |
+| 2b-2 | `GlyphOutlines` (reader of `glyphs.bin`, no AWT) and `UGraphicTeXGraphics` (`TeXGraphics` on `UGraphic`, glyph = path) | in progress |
+| 2c | `AtomMath` / `ScientificEquation*` draw through the canvas (PNG, SVG, PDF...), Batik and `ConverterSvg` go away, the corpus moves to Vega | next |
+| 2d | Review of the corpus rendering (hinting, seams of extensible arrows), decision on the open questions 4 and 7 | after 2c |
 
 Notes on phase 1: the vendored classes live in the jar, so the external
 jar is no longer read by reflection and its Gradle dependency is removed in
@@ -256,9 +271,11 @@ Each phase should end with a patch that builds on the JVM (Java 8 target via
 ## 9. First things to do in the next session
 
 1. ~~Answer questions 5 and 6~~ (done, see section 8).
-2. Write the corpus and the Vega references (phase 0).
-3. Vendor the upstream sources at the chosen commit and wire direct calls
-   (phase 1), as one reviewable patch.
+2. ~~Write the corpus and the baselines (phase 0)~~ (done, PNG only, see 5.1).
+3. ~~Vendor the upstream sources at the chosen commit and wire direct calls
+   (phase 1)~~ (done).
+4. Phase 2, step 2c: draw `AtomMath` through `UGraphicTeXGraphics` (see the
+   table of steps in section 6), then move the corpus to Vega.
 
 Working method, as usual: small patches (`git format-patch`), each with an
 English commit message starting with the emojis (here 🍵 for the C build plus
