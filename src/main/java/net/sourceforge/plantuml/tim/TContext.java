@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -200,8 +201,17 @@ public class TContext {
 		}
 	}
 
+	/** Groups the Python lines of a body in chunks, and notes that the diagram has Python. */
+	private List<StringLocated> collapsePython(List<StringLocated> body) {
+		final int before = pythonSources.size();
+		final List<StringLocated> result = PythonChunks.collapse(body, pythonSources);
+		if (pythonSources.size() > before)
+			hasPython = true;
+		return result;
+	}
+
 	private CodeIterator buildCodeIterator(TMemory memory, List<StringLocated> body) {
-		final CodeIterator it10 = new CodeIteratorImpl(body);
+		final CodeIterator it10 = new CodeIteratorImpl(collapsePython(body));
 		final CodeIterator it20 = new CodeIteratorLongComment(it10, debug);
 		final CodeIterator it30 = new CodeIteratorShortComment(it20, debug);
 		final CodeIterator it40 = new CodeIteratorInnerComment(it30);
@@ -221,32 +231,49 @@ public class TContext {
 	public TValue executeLines(TMemory memory, List<StringLocated> body, TFunctionType ftype, boolean modeSpecial)
 			throws EaterException {
 		BrowserLog.consoleLog(TContext.class, "executeLines start (" + body.size() + " lines)");
-		final CodeIterator it = buildCodeIterator(memory, body);
+		try {
+			final CodeIterator it = buildCodeIterator(memory, body);
 
-		StringLocated s = null;
-		while ((s = it.peek()) != null) {
-			final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);
-			if (result != null) {
-				BrowserLog.consoleLog(TContext.class, "executeLines ok -> " + result);
-				return result;
+			StringLocated s = null;
+			while ((s = it.peek()) != null) {
+				final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);
+				if (result != null) {
+					BrowserLog.consoleLog(TContext.class, "executeLines ok -> " + result);
+					return result;
+				}
+				it.next();
 			}
-			it.next();
+			BrowserLog.consoleLog(TContext.class, "executeLines return null");
+			return null;
+		} catch (EaterException e) {
+			throw withPythonHint(e);
 		}
-		BrowserLog.consoleLog(TContext.class, "executeLines return null");
-		return null;
+	}
 
+	/**
+	 * In a diagram that has Python, an error on a line that would be Python with a
+	 * colon gets a hint about the colon. A legacy diagram is left alone.
+	 */
+	private EaterException withPythonHint(EaterException e) {
+		final String hint = python == null ? null : PythonHint.hint(e.getLocation());
+		if (hint == null || e.getMessage().endsWith(hint))
+			return e;
+		return new EaterException(e.getMessage() + hint, e.getLocation());
 	}
 
 	private void executeLinesInternal(TMemory memory, List<StringLocated> body, TFunctionType ftype)
 			throws EaterException {
-		final CodeIterator it = buildCodeIterator(memory, body);
+		try {
+			final CodeIterator it = buildCodeIterator(memory, body);
 
-		StringLocated s = null;
-		while ((s = it.peek()) != null) {
-			executeOneLineSafe(memory, s, ftype, false);
-			it.next();
+			StringLocated s = null;
+			while ((s = it.peek()) != null) {
+				executeOneLineSafe(memory, s, ftype, false);
+				it.next();
+			}
+		} catch (EaterException e) {
+			throw withPythonHint(e);
 		}
-
 	}
 
 	private TValue executeOneLineSafe(TMemory memory, StringLocated s, TFunctionType ftype, boolean modeSpecial)
@@ -312,6 +339,19 @@ public class TContext {
 		} else if (ftype == TFunctionType.RETURN_FUNCTION && type == TLineType.PLAIN) {
 			this.simulatePlain(memory, s);
 			return null;
+		} else if (type == TLineType.PYTHON) {
+			final List<StringLocated> legacyCalls = legacyCalls(s);
+			if (legacyCalls == null) {
+				this.executePython(s);
+			} else {
+				// as before Python: plain lines in which the legacy preprocessor calls the function
+				for (StringLocated call : legacyCalls)
+					if (ftype == TFunctionType.RETURN_FUNCTION)
+						this.simulatePlain(memory, call);
+					else
+						this.addPlain(memory, call);
+			}
+			return null;
 		} else if (type == TLineType.AFFECTATION_DEFINE) {
 			this.executeAffectationDefine(memory, s);
 			return null;
@@ -330,6 +370,77 @@ public class TContext {
 
 	private static final Pattern ONLY_WHITESPACE_NON_EMPTY = Pattern.compile("^\\s+$");
 
+	/** Created at the first Python chunk of the diagram. */
+	private PythonRunner python;
+
+	/** The variables defined from outside (the command line): puml.args of Python. */
+	private Map<String, String> arguments = new HashMap<String, String>();
+
+	public void setArguments(Map<String, String> arguments) {
+		this.arguments = arguments;
+	}
+
+	/** True once the diagram is known to contain Python code (a chunk was found). */
+	private boolean hasPython;
+
+	/** For each Python chunk, the diagram line of each of its code lines. */
+	private final Map<StringLocated, List<StringLocated>> pythonSources = new IdentityHashMap<>();
+
+	/** The Python state of the diagram, created when first needed (a Python chunk or a !{expr}). */
+	private PythonRunner python() {
+		if (python == null) {
+			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments,
+					name -> functionsSet.doesFunctionExist(name));
+			// and the other way round: a legacy function may not take the name of a macro
+			functionsSet.setReservedNames(name -> python.isMacro(name));
+		}
+		return python;
+	}
+
+	/**
+	 * The lines of a Python chunk when every one of them is "!name(...)" where
+	 * name is a legacy function or procedure declared in the diagram, or null.
+	 * The standard library writes such calls ("!__attr_line()" in adaml): before
+	 * Python they were plain lines, and they stay so. The decision is taken
+	 * here, when the chunk runs, because the chunk is built before the legacy
+	 * declarations of the file are read.
+	 */
+	private List<StringLocated> legacyCalls(StringLocated chunk) {
+		final List<StringLocated> lines = pythonSources.get(chunk);
+		if (lines == null || lines.isEmpty())
+			return null;
+		for (StringLocated line : lines)
+			if (isLegacyCall(line.getString()) == false)
+				return null;
+		return lines;
+	}
+
+	private boolean isLegacyCall(String line) {
+		final String s = line.trim();
+		if (s.startsWith("!") == false)
+			return false;
+		int end = 1;
+		while (end < s.length() && (Character.isLetterOrDigit(s.charAt(end)) || s.charAt(end) == '_'))
+			end++;
+		if (end == 1 || end >= s.length() || s.charAt(end) != '(')
+			return false;
+		return functionsSet.doesFunctionExist(s.substring(1, end));
+	}
+
+	private void executePython(StringLocated s) throws EaterException {
+		try {
+			// Output of Python is not sent back to the legacy preprocessor.
+			for (String line : python().run(PythonChunks.code(s), pythonSources.get(s)))
+				addToResultList(new StringLocated(line, s.getLocation()));
+		} catch (PythonRunner.EaterExceptionMessage e) {
+			if (e.at == null)
+				throw new EaterException(e.getMessage(), s);
+			// the debug list ends with the chunk: the error belongs to the line that caused it
+			debug.set(debug.size() - 1, e.at);
+			throw new EaterException(e.getMessage(), e.at);
+		}
+	}
+
 	private void addPlain(TMemory memory, StringLocated s) throws EaterException {
 		final StringLocated tmp[] = applyFunctionsAndVariablesInternal(memory, s);
 		if (tmp != null) {
@@ -338,9 +449,54 @@ public class TContext {
 				pendingAdd = null;
 			}
 			for (StringLocated line : tmp)
-				addToResultList(line);
+				addExpandingMacros(interpolatePython(line));
 
 		}
+	}
+
+	/**
+	 * Replaces the !{expr} of a text line by the Python value. The interpreter is
+	 * created by the first !{ of the diagram, with or without Python lines. In a
+	 * diagram without Python code, an expression that fails is not an error: it is
+	 * kept as it is, !{expr}, so that a legacy text which contains one is unchanged.
+	 * A ${ is plain text.
+	 */
+	private StringLocated interpolatePython(StringLocated line) throws EaterException {
+		// The signature only tells that !, { and } are somewhere in the line: the exact test follows.
+		if (line.mayContainInterpolation() == false || line.getString().contains("!{") == false)
+			return line;
+		try {
+			final String result = python().interpolate(line.getString(), hasPython == false);
+			if (result.equals(line.getString()))
+				return line;
+			return new StringLocated(result, line.getLocation(), line.getPreprocessorError());
+		} catch (PythonRunner.EaterExceptionMessage e) {
+			throw new EaterException(e.getMessage(), line);
+		}
+	}
+
+	/**
+	 * Adds a text line, its Python macros replaced by their result (section
+	 * 11.5 of PYTHON_PREPROCESSOR.md): a result with several lines gives several
+	 * lines. Nothing happens until a macro is declared.
+	 */
+	private void addExpandingMacros(StringLocated line) throws EaterException {
+		if (python == null || python.hasMacros() == false || line.getString().indexOf('(') == -1) {
+			addToResultList(line);
+			return;
+		}
+		final String result;
+		try {
+			result = python.expandMacros(line.getString(), line);
+		} catch (PythonRunner.EaterExceptionMessage e) {
+			throw new EaterException(e.getMessage(), e.at == null ? line : e.at);
+		}
+		if (result.equals(line.getString())) {
+			addToResultList(line);
+			return;
+		}
+		for (String part : result.split("\n", -1))
+			addToResultList(new StringLocated(part, line.getLocation(), line.getPreprocessorError()));
 	}
 
 	private boolean addToResultList(StringLocated line) {

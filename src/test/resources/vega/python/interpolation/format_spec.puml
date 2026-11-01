@@ -1,0 +1,9 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 3.14
+!pi = 3.14159
+title !{pi:.2f}
+@enduml

@@ -1,0 +1,10 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title a
+' title b
+!puml.emit("title a")
+!emit("title b")
+@enduml

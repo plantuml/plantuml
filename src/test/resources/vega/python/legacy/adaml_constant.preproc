@@ -1,0 +1,122 @@
+@startuml
+
+skinparam {
+  arrowColor black
+  arrowThickness 0.8
+  boxpadding 0
+  classAttributeIconSize 10
+  classBackgroundColor white
+  classBorderColor black
+  classBorderThickness 1.3
+  classFontSize 14
+  classFontName CMU Bright SemiBold
+  classHeaderBackgroundColor #dadada
+  classHeaderBackgroundColor<< object >> #ffd700
+  classHeaderBackgroundColor<< protected object >> #ffd700
+  circledCharacterFontName CMU Bright SemiBold
+  circledCharacterFontSize 12
+  circledCharacterRadius<< access >> 5
+  circledCharacterRadius 10
+  componentStyle uml2
+  defaultFontName CMU Bright Roman
+  defaultFontSize 12
+  genericDisplay true
+  handwritten false
+  monochrome false
+  NoteBackgroundColor #ffff99
+  NoteBorderColor #333333
+  NoteBorderThickness .88
+  NoteFontColor #222222
+  NoteFontName CMU Bright Regular
+  NoteFontSize 10
+  NoteShadowing true
+  NoteTextAlignment left
+  objectBorderThickness 0.8
+  packageBackgroundColor #f6f6f6
+  packageStyle frame
+  packageFontName CMU Bright Bold
+  packageFontStyle regular
+  packageFontSize 14
+  padding 2
+  shadowing false
+}
+
+allow_mixing
+hide empty attributes
+hide empty methods
+hide <<object>> circle
+hide <<object>> stereotype
+set namespaceSeparator .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    package "package Config is" {
+  !    + {field} MAX : constant  Integer := 10
+  !    + {field} NAME : constant  String := "ada"
+  }
+@enduml

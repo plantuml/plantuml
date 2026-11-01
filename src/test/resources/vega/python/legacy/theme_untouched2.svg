@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="109px" preserveAspectRatio="none" style="width:60px;height:109px;background:#FFFFFF;" version="1.1" viewBox="0 0 60 109" width="60px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="A" data-source-line="5" id="part1-lifeline">
+      <g>
+        <title>A</title>
+        <rect fill="#000" fill-opacity="0" height="18" width="8" x="26.181" y="45"/>
+        <line style="stroke:#000;stroke-width:1;stroke-dasharray:5,5;" x1="29.681" x2="29.681" y1="45" y2="63"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="A" data-source-line="5" id="part1-head">
+      <rect fill="#FFF" height="24" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1;" width="19.362" x="20" y="15"/>
+      <text fill="#000" font-family="Verdana" font-size="14" x="25" y="30.889">A</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="A" data-source-line="5" id="part1-tail">
+      <rect fill="#FFF" height="24" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1;" width="19.362" x="20" y="68"/>
+      <text fill="#000" font-family="Verdana" font-size="14" x="25" y="83.889">A</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title v1
+!python
+@macro
+def version():
+    return "v1"
+!endpy
+title version()
+@enduml

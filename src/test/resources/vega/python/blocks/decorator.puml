@@ -1,0 +1,27 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant Auth #FFCCCC
+' participant Billing #CCE5FF
+!python
+colors = {}
+
+def palette(name):
+    def register(f):
+        colors[name] = f
+        return f
+    return register
+
+@palette("warm")
+def warm(n):
+    return "#FFCCCC"
+
+@palette("cold")
+def cold(n):
+    return "#CCE5FF"
+!endpy
+participant Auth !{colors["warm"]("Auth")}
+participant Billing !{cold("Billing")}
+@enduml

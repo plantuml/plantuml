@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="187px" preserveAspectRatio="none" style="width:87px;height:187px;background:#FFFFFF;" version="1.1" viewBox="0 0 87 187" width="87px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="user" data-source-line="8" id="part1-lifeline">
+      <g>
+        <title>Customer</title>
+        <rect fill="#000" fill-opacity="0" height="18" width="8" x="39.819" y="84"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="43.319" x2="43.319" y1="84" y2="102"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="user" data-source-line="8" id="part1-head">
+      <text fill="#000" font-size="14" textLength="60.637" x="10" y="80.889">Customer</text>
+      <ellipse cx="43.319" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M43.319,26.5 L43.319,53.5 M30.319,34.5 L56.319,34.5 M43.319,53.5 L30.319,68.5 M43.319,53.5 L56.319,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="user" data-source-line="8" id="part1-tail">
+      <text fill="#000" font-size="14" textLength="60.637" x="10" y="112.889">Customer</text>
+      <ellipse cx="43.319" cy="124.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M43.319,132.5 L43.319,159.5 M30.319,140.5 L56.319,140.5 M43.319,159.5 L30.319,174.5 M43.319,159.5 L56.319,174.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+  </g>
+</svg>

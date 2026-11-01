@@ -1,0 +1,6 @@
+@startuml
+
+
+participant Web
+note over Web : unknown state 'lost' (code 404)
+@enduml

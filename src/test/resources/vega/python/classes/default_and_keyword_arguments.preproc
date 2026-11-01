@@ -1,0 +1,5 @@
+@startuml
+
+node "web" #EEEEEE
+node "db" #FFCCCC
+@enduml

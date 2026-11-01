@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 3
+expected-error-message: 'Python syntax error: expected end of line but found 'foo' (column 8)'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: Python syntax error: expected end of line but found 'foo' (column 8)
+!inclde foo.puml
+participant A
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+
+
+participant A
+participant B
+A -> B : ping
+@enduml

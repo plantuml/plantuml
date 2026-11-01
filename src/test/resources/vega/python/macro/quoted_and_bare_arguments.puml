@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' rectangle "Data, base" as db
+!python
+@macro
+def box(alias, label):
+    return f'rectangle "{label}" as {alias}'
+!endpy
+box( db , "Data, base")
+@enduml

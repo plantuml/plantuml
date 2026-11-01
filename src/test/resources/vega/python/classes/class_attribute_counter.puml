@@ -1,0 +1,23 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' rectangle "first" as N1
+' rectangle "second" as N2
+' rectangle "third" as N3
+' N1 --> N2
+' N2 --> N3
+!class Box:
+!    count = 0
+!    def __init__(self, label):
+!        Box.count += 1
+!        self.alias = "N" + str(Box.count)
+!        self.label = label
+
+!boxes = [Box("first"), Box("second"), Box("third")]
+!for b in boxes:
+    rectangle "!{b.label}" as !{b.alias}
+!for i in range(1, len(boxes)):
+    !{boxes[i - 1].alias} --> !{boxes[i].alias}
+@enduml

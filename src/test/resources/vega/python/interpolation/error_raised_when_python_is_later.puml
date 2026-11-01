@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 1
+expected-error-message: 'Python error: NameError: name 'toto' is not defined'
+---
+@startuml
+title !{toto}
+!x = 1
+@enduml

@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 1 2 3 4
+!1 + 1
+!(a, b) = (1, 2)
+![c, d] = [3, 4]
+![a, b]
+title !{a} !{b} !{c} !{d}
+@enduml

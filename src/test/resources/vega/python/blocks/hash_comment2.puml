@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title ok
+!python
+# a python comment
+t = "ok"  # another one
+!endpy
+title !{t}
+@enduml

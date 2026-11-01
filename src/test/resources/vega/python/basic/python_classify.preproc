@@ -1,0 +1,6 @@
+@startuml
+title python if 5
+title legacy if 7
+title 4
+title x=True
+@enduml

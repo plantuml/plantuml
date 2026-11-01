@@ -1,0 +1,24 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' actor User
+' participant API
+' database DB
+!class Element:
+!    def __init__(self, name):
+!        self.name = name
+!class Person(Element):
+!    pass
+!class Store(Element):
+!    pass
+
+!for e in [Person("User"), Element("API"), Store("DB")]:
+!    if isinstance(e, Person):
+         actor !{e.name}
+!    elif isinstance(e, Store):
+         database !{e.name}
+!    else:
+         participant !{e.name}
+@enduml

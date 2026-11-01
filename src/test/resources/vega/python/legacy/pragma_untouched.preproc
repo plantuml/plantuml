@@ -1,0 +1,4 @@
+@startuml
+!pragma teoz true
+participant A
+@enduml

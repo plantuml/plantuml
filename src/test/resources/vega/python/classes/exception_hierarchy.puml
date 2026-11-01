@@ -1,0 +1,14 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title caught as LookupError: MissingNode
+!class MissingNode(KeyError):
+!    pass
+
+!try:
+!    raise MissingNode("db")
+!except LookupError as e:
+    title caught as LookupError: !{type(e).__name__}
+@enduml

@@ -1,0 +1,15 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' Alice -> Bob : hello
+'   Bob -> Alice : back
+' Carol -> Alice
+!a = "Alice"
+!b = "Bob"
+!{a} -> !{b} : hello
+  !{b} -> !{a} : back
+!for n in ["Carol"]:
+    !{n} -> !{a}
+@enduml

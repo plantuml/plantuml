@@ -1,0 +1,10 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 1 2
+!$v = 1
+!w = 2
+title $v !{w}
+@enduml

@@ -111,6 +111,23 @@ public class FunctionsSet {
 		return base.getLonguestMatchStartingIn(s, pos);
 	}
 
+	/** Names that a legacy function, procedure or !define may not take: the Python macros of the diagram. */
+	public interface ReservedNames {
+		boolean isReserved(String name);
+	}
+
+	private ReservedNames reservedNames;
+
+	public void setReservedNames(ReservedNames reservedNames) {
+		this.reservedNames = reservedNames;
+	}
+
+	private void checkNotReserved(TFunctionSignature signature, StringLocated s) throws EaterException {
+		final String name = signature.getFunctionName();
+		if (reservedNames != null && reservedNames.isReserved(name))
+			throw new EaterException("'" + name + "' is already a Python macro of the diagram", s);
+	}
+
 	public TFunctionImpl pendingFunction() {
 		return pendingFunction;
 	}
@@ -166,6 +183,7 @@ public class FunctionsSet {
 		final EaterLegacyDefine legacyDefine = new EaterLegacyDefine(s);
 		legacyDefine.analyze(context, memory);
 		final TFunction function = legacyDefine.getFunction();
+		checkNotReserved(function.getSignature(), s);
 		this.functions.put(function.getSignature(), function);
 		this.functions3.add(function.getSignature().getFunctionName() + "(");
 		this.updateFunctionsByName(function);
@@ -178,6 +196,7 @@ public class FunctionsSet {
 
 		final EaterLegacyDefineLong legacyDefineLong = new EaterLegacyDefineLong(s);
 		legacyDefineLong.analyze(context, memory);
+		checkNotReserved(legacyDefineLong.getFunction().getSignature(), s);
 		this.pendingFunction = legacyDefineLong.getFunction();
 	}
 
@@ -190,6 +209,7 @@ public class FunctionsSet {
 		declareFunction.analyze(context, memory);
 		final boolean finalFlag = declareFunction.getFinalFlag();
 		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();
+		checkNotReserved(declaredSignature, s);
 		final TFunction previous = this.getExact(declaredSignature);
 		if (previous != null && (finalFlag || this.functionsFinal.contains(declaredSignature)))
 			throw new EaterException("This function is already defined", s);
@@ -213,6 +233,7 @@ public class FunctionsSet {
 		declareFunction.analyze(context, memory);
 		final boolean finalFlag = declareFunction.getFinalFlag();
 		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();
+		checkNotReserved(declaredSignature, s);
 		final TFunction previous = this.getExact(declaredSignature);
 		if (previous != null && (finalFlag || this.functionsFinal.contains(declaredSignature)))
 			throw new EaterException("This function is already defined", s);

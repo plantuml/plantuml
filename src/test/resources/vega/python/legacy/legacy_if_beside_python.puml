@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title yes
+!x = 3
+!if %strlen("a") == 1
+title yes
+!endif
+@enduml
