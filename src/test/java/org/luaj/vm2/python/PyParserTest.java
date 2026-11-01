@@ -33,8 +33,10 @@ class PyParserTest {
 
 	private static final String[] SYNTAX_FILES = { "statements", "expressions", "strings", "numbers", "layout" };
 
+	// Line endings depend on core.autocrlf, so CRLF is normalized to LF: AstDump
+	// and the reference dumps always use LF.
 	private static String read(Path path) throws IOException {
-		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8).replace("\r\n", "\n");
 	}
 
 	private static Path resource(String name) throws URISyntaxException {
