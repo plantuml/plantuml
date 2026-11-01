@@ -250,6 +250,104 @@ void plantuml_canvas_fill_text(int64_t handle, const uint16_t* text, int32_t len
 	plutovg_canvas_restore(c->canvas);
 }
 
+/* plutovg keeps premultiplied pixels, Java gives (and expects) straight ones */
+static uint32_t premultiply(uint32_t argb) {
+	const uint32_t a = argb >> 24;
+	if (a == 255)
+		return argb;
+	if (a == 0)
+		return 0;
+	const uint32_t r = (((argb >> 16) & 0xFF) * a + 127) / 255;
+	const uint32_t g = (((argb >> 8) & 0xFF) * a + 127) / 255;
+	const uint32_t b = ((argb & 0xFF) * a + 127) / 255;
+	return (a << 24) | (r << 16) | (g << 8) | b;
+}
+
+static uint32_t unpremultiply(uint32_t argb) {
+	const uint32_t a = argb >> 24;
+	if (a == 255 || a == 0)
+		return argb;
+	uint32_t r = (((argb >> 16) & 0xFF) * 255 + a / 2) / a;
+	uint32_t g = (((argb >> 8) & 0xFF) * 255 + a / 2) / a;
+	uint32_t b = ((argb & 0xFF) * 255 + a / 2) / a;
+	if (r > 255)
+		r = 255;
+	if (g > 255)
+		g = 255;
+	if (b > 255)
+		b = 255;
+	return (a << 24) | (r << 16) | (g << 8) | b;
+}
+
+void plantuml_canvas_draw_image(int64_t handle, const int32_t* argb, int32_t width, int32_t height, double x,
+		double y, double scale) {
+	plantuml_canvas_t* c = CANVAS(handle);
+	if (width <= 0 || height <= 0)
+		return;
+	plutovg_surface_t* image = plutovg_surface_create(width, height);
+	if (image == NULL)
+		return;
+	const int stride = plutovg_surface_get_stride(image);
+	unsigned char* data = plutovg_surface_get_data(image);
+	for (int j = 0; j < height; j++) {
+		uint32_t* row = (uint32_t*) (data + (size_t) j * stride);
+		const int32_t* source = argb + (size_t) j * width;
+		for (int i = 0; i < width; i++)
+			row[i] = premultiply((uint32_t) source[i]);
+	}
+	/* The paint is part of the saved state: restored with it */
+	plutovg_canvas_save(c->canvas);
+	plutovg_canvas_translate(c->canvas, (float) x, (float) y);
+	plutovg_canvas_scale(c->canvas, (float) scale, (float) scale);
+	plutovg_canvas_set_texture(c->canvas, image, PLUTOVG_TEXTURE_TYPE_PLAIN, 1.f, NULL);
+	plutovg_canvas_fill_rect(c->canvas, 0, 0, (float) width, (float) height);
+	plutovg_canvas_restore(c->canvas);
+	plutovg_surface_destroy(image);
+}
+
+static uint32_t* decoded_image = NULL;
+static size_t decoded_image_count = 0;
+
+int32_t plantuml_image_decode(const int8_t* data, int32_t length, int32_t* size) {
+	free(decoded_image);
+	decoded_image = NULL;
+	decoded_image_count = 0;
+	if (length <= 0)
+		return -1;
+	plutovg_surface_t* image = plutovg_surface_load_from_image_data(data, length);
+	if (image == NULL)
+		return -1;
+	const int width = plutovg_surface_get_width(image);
+	const int height = plutovg_surface_get_height(image);
+	const int stride = plutovg_surface_get_stride(image);
+	const unsigned char* source = plutovg_surface_get_data(image);
+	const size_t count = (size_t) width * (size_t) height;
+	uint32_t* pixels = (uint32_t*) malloc(count * sizeof(uint32_t));
+	if (pixels == NULL) {
+		plutovg_surface_destroy(image);
+		return -1;
+	}
+	for (int j = 0; j < height; j++) {
+		const uint32_t* row = (const uint32_t*) (source + (size_t) j * stride);
+		for (int i = 0; i < width; i++)
+			pixels[(size_t) j * width + i] = unpremultiply(row[i]);
+	}
+	plutovg_surface_destroy(image);
+	decoded_image = pixels;
+	decoded_image_count = count;
+	size[0] = width;
+	size[1] = height;
+	return 0;
+}
+
+void plantuml_image_decoded_copy(int32_t* dest) {
+	if (decoded_image_count > 0)
+		memcpy(dest, decoded_image, decoded_image_count * sizeof(uint32_t));
+	free(decoded_image);
+	decoded_image = NULL;
+	decoded_image_count = 0;
+}
+
 int32_t plantuml_canvas_encode_png(int64_t handle, int32_t opaque) {
 	plantuml_canvas_t* c = CANVAS(handle);
 	free(c->png);

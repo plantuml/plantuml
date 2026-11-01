@@ -177,6 +177,11 @@ public final class PngCanvas implements RasterCanvas {
 	}
 
 	@Override
+	public void drawImage(int[] argb, int width, int height, double x, double y, double scale) {
+		NativeCanvas.drawImage(handle(), argb, width, height, x, y, scale);
+	}
+
+	@Override
 	public void drawString(String text, UFont font, double x, double y, double angle) {
 		setFont(font);
 		final char[] chars = text.toCharArray();

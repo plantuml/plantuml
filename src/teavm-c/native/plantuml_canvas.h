@@ -91,6 +91,20 @@ void plantuml_canvas_fill_text(int64_t canvas, const uint16_t* text, int32_t len
 int32_t plantuml_canvas_encode_png(int64_t canvas, int32_t opaque);
 void plantuml_canvas_copy_png(int64_t canvas, int8_t* dest);
 
+/* Draws a raster image (ARGB pixels, not premultiplied, row by row) with its
+ * top left corner at (x, y), each of its pixels being scale units wide (scale
+ * 1 copies the pixels when (x, y) is on the device grid). The paint, the clip
+ * and the scale of plantuml_canvas_scale apply; the current paint is kept. */
+void plantuml_canvas_draw_image(int64_t canvas, const int32_t* argb, int32_t width, int32_t height, double x,
+		double y, double scale);
+
+/* Decodes an image file (PNG, among others) held in memory into ARGB pixels (not
+ * premultiplied). Returns 0 and sets size[0] = width, size[1] = height, or
+ * returns -1; image_decoded_copy then copies the width * height pixels into dest
+ * and releases them. */
+int32_t plantuml_image_decode(const int8_t* data, int32_t length, int32_t* size);
+void plantuml_image_decoded_copy(int32_t* dest);
+
 /* PNG of a raster image given as ARGB pixels (not premultiplied), row by row.
  * Returns the size in bytes (or -1); png_image_copy then copies the bytes into
  * dest and releases them. */

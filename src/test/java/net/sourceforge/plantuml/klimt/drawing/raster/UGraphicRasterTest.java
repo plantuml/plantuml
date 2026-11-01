@@ -102,6 +102,45 @@ class UGraphicRasterTest {
 	}
 
 	@Test
+	void testEmbeddedImagesAreTheSameAsTpng() throws Exception {
+		final String data = "<img:data:image/png;base64," + embeddedPng();
+		final String source = "@startuml\n" //
+				+ "rectangle \"" + data + ">\\nsame size\" as A\n" //
+				+ "rectangle \"" + data + "{scale=2.5}>\\ntwice and a half\" as B\n" //
+				+ "A -> B\n" //
+				+ "@enduml\n";
+		assertSamePixels(source);
+		// Not blank: the image has a red pixel (a diagram without it has none)
+		final BufferedImage actual = ImageIO.read(new ByteArrayInputStream(exportRaster(source)));
+		boolean red = false;
+		for (int y = 0; y < actual.getHeight(); y++)
+			for (int x = 0; x < actual.getWidth(); x++)
+				if ((actual.getRGB(x, y) & 0xFFFFFF) == 0xFF0000)
+					red = true;
+		assertTrue(red, "the embedded image is not drawn");
+	}
+
+	@Test
+	void testSpritesAreTheSameAsTpng() throws Exception {
+		final String source = "@startuml\n" //
+				+ "sprite $icon [8x8/16] {\n" //
+				+ "0123456789ABCDEF\n" //
+				+ "FEDCBA9876543210\n" //
+				+ "0000FFFF0000FFFF\n" //
+				+ "FFFF0000FFFF0000\n" //
+				+ "0123456789ABCDEF\n" //
+				+ "FEDCBA9876543210\n" //
+				+ "0000FFFF0000FFFF\n" //
+				+ "FFFF0000FFFF0000\n" //
+				+ "}\n" //
+				+ "rectangle \"<$icon,scale=2>\\nsprite\" as A #lightyellow\n" //
+				+ "rectangle \"<$icon,color=red>\\nred sprite\" as B\n" //
+				+ "A -> B\n" //
+				+ "@enduml\n";
+		assertSamePixels(source);
+	}
+
+	@Test
 	void testChunks() throws Exception {
 		final byte[] png = exportRaster(MINDMAP);
 		boolean copyleft = false;
@@ -143,6 +182,20 @@ class UGraphicRasterTest {
 								expected.getRGB(x, y));
 				}
 		assertEquals(0, differences, differences + " pixels differ, first " + first);
+	}
+
+	/**
+	 * A small PNG with transparency, as base64.
+	 */
+	private static String embeddedPng() throws IOException {
+		final BufferedImage image = new BufferedImage(12, 8, BufferedImage.TYPE_INT_ARGB);
+		for (int y = 0; y < image.getHeight(); y++)
+			for (int x = 0; x < image.getWidth(); x++)
+				image.setRGB(x, y, x < 4 ? 0xFF0000FF : x < 8 ? 0x8000FF00 : 0x00000000);
+		image.setRGB(5, 3, 0xFFFF0000);
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(image, "png", baos);
+		return java.util.Base64.getEncoder().encodeToString(baos.toByteArray());
 	}
 
 	private static UgDiagram diagram(String source) {

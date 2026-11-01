@@ -97,6 +97,15 @@ public interface RasterCanvas {
 	public void stroke(RasterPath path);
 
 	/**
+	 * Draws an image, given as 0xAARRGGBB pixels (not premultiplied) row by row,
+	 * with its top left corner at (x, y), each of its pixels being {@code scale}
+	 * units wide (1 copies the pixels when (x, y) is on the device grid). The color
+	 * and the paint of the canvas are unchanged. As {@code Graphics2D.drawImage()}:
+	 * the clip applies, the alpha channel is blended.
+	 */
+	public void drawImage(int[] argb, int width, int height, double x, double y, double scale);
+
+	/**
 	 * Draws the text with its baseline at (x, y), rotated by angle (radians,
 	 * clockwise on screen) around that point, with the current color.
 	 */

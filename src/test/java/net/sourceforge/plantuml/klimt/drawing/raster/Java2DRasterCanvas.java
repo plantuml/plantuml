@@ -146,6 +146,17 @@ class Java2DRasterCanvas implements RasterCanvas {
 	}
 
 	@Override
+	public void drawImage(int[] argb, int width, int height, double x, double y, double scale) {
+		final BufferedImage bitmap = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		bitmap.setRGB(0, 0, width, height, argb, 0, width);
+		final AffineTransform orig = g2d.getTransform();
+		g2d.translate(x, y);
+		g2d.scale(scale, scale);
+		g2d.drawImage(bitmap, 0, 0, null);
+		g2d.setTransform(orig);
+	}
+
+	@Override
 	public void drawString(String text, UFont font, double x, double y, double angle) {
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);

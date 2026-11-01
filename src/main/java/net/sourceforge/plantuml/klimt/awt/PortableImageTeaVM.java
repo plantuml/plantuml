@@ -72,18 +72,31 @@ class PortableImageTeaVM implements PortableImage {
 	 * stored as a data URL so that {@link #toPngDataUrl()} can return them
 	 * directly without re-encoding.
 	 * <p>
-	 * Pixel data is not decoded; {@link #getRGB(int, int)} returns 0.
-	 * This is acceptable because in TeaVM the image is rendered via the
-	 * SVG {@code <image>} element using the data URL.
+	 * In the JavaScript build, pixel data is not decoded; {@link #getRGB(int, int)}
+	 * returns 0. This is acceptable because there the image is rendered via the
+	 * SVG {@code <image>} element using the data URL. The C build decodes the
+	 * pixels, which the PNG output draws (see {@code DriverImageRaster}).
 	 */
 	PortableImageTeaVM(byte[] pngBytes, String base64) {
 		if (pngBytes.length < 24)
 			throw new IllegalArgumentException("Invalid PNG: too short (" + pngBytes.length + " bytes)");
 
-		this.width = readInt32BE(pngBytes, 16);
-		this.height = readInt32BE(pngBytes, 20);
+		int decodedWidth = readInt32BE(pngBytes, 16);
+		int decodedHeight = readInt32BE(pngBytes, 20);
+		int[] decodedPixels = new int[0];
+		if (TeaVM.isC()) {
+			final int[] size = new int[2];
+			final int[] decoded = PngImageC.decode(pngBytes, size);
+			if (decoded != null) {
+				decodedWidth = size[0];
+				decodedHeight = size[1];
+				decodedPixels = decoded;
+			}
+		}
+		this.width = decodedWidth;
+		this.height = decodedHeight;
 		this.imageType = TYPE_INT_ARGB;
-		this.pixels = new int[0];
+		this.pixels = decodedPixels;
 		this.pngDataUrl = "data:image/png;base64," + base64;
 	}
 

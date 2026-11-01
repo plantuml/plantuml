@@ -37,8 +37,8 @@ package net.sourceforge.plantuml.teavm.c;
 /**
  * Encodes a raster image (ARGB pixels) as a PNG in C, losslessly (no palette,
  * no packing of the channels), as javax.imageio does for an image embedded in an
- * SVG (src/teavm-c/native/plantuml_png.h). Only call it when
- * {@code TeaVM.isC()}.
+ * SVG (src/teavm-c/native/plantuml_png.h), and decodes an image file into
+ * pixels. Only call it when {@code TeaVM.isC()}.
  */
 public final class PngImageC {
 	// ::remove file when JAVA8
@@ -56,6 +56,21 @@ public final class PngImageC {
 			throw new IllegalStateException("PNG encoding failed");
 		final byte[] result = new byte[size];
 		NativeCanvas.copyImage(result);
+		return result;
+	}
+
+	/**
+	 * Decodes an image file (a PNG), as javax.imageio does.
+	 *
+	 * @param size receives the width and the height
+	 * @return the pixels, row by row, as 0xAARRGGBB (not premultiplied), or null
+	 *         when the data is not an image that can be decoded
+	 */
+	public static int[] decode(byte[] data, int[] size) {
+		if (NativeCanvas.decodeImage(data, data.length, size) != 0)
+			return null;
+		final int[] result = new int[size[0] * size[1]];
+		NativeCanvas.copyDecodedImage(result);
 		return result;
 	}
 

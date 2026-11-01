@@ -132,6 +132,15 @@ final class NativeCanvas {
 	@Import(name = "plantuml_canvas_fill_text")
 	static native void fillText(long canvas, char[] text, int length, double x, double y, double angle);
 
+	@Import(name = "plantuml_canvas_draw_image")
+	static native void drawImage(long canvas, int[] argb, int width, int height, double x, double y, double scale);
+
+	@Import(name = "plantuml_image_decode")
+	static native int decodeImage(byte[] data, int length, int[] size);
+
+	@Import(name = "plantuml_image_decoded_copy")
+	static native void copyDecodedImage(int[] dest);
+
 	@Import(name = "plantuml_canvas_encode_png")
 	static native int encodePng(long canvas, int opaque);
 
