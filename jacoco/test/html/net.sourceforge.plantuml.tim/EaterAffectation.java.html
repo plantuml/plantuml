@@ -59,21 +59,22 @@ public class EaterAffectation extends Eater {
 			} else
 <span class="fc" id="L60">				varname = eatAndGetVarname();</span>
 		}
-<span class="fc" id="L62">		skipSpaces();</span>
-<span class="fc" id="L63">		boolean conditional = false;</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (peekChar() == '?') {</span>
-<span class="fc" id="L65">			checkAndEatChar('?');</span>
-<span class="fc" id="L66">			conditional = true;</span>
+<span class="fc" id="L62">		checkVariableStartsWithDollar(context, varname);</span>
+<span class="fc" id="L63">		skipSpaces();</span>
+<span class="fc" id="L64">		boolean conditional = false;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (peekChar() == '?') {</span>
+<span class="fc" id="L66">			checkAndEatChar('?');</span>
+<span class="fc" id="L67">			conditional = true;</span>
 		}
-<span class="fc" id="L68">		checkAndEatChar('=');</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (conditional)</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">			if (memory.getVariable(varname) != null)</span>
-<span class="fc" id="L71">				return;</span>
+<span class="fc" id="L69">		checkAndEatChar('=');</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (conditional)</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">			if (memory.getVariable(varname) != null)</span>
+<span class="fc" id="L72">				return;</span>
 
-<span class="fc" id="L73">		skipSpaces();</span>
-<span class="fc" id="L74">		final TValue value = eatExpression(context, memory);</span>
-<span class="fc" id="L75">		memory.putVariable(varname, value, scope, getStringLocated());</span>
-<span class="fc" id="L76">	}</span>
+<span class="fc" id="L74">		skipSpaces();</span>
+<span class="fc" id="L75">		final TValue value = eatExpression(context, memory);</span>
+<span class="fc" id="L76">		memory.putVariable(varname, value, scope, getStringLocated());</span>
+<span class="fc" id="L77">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

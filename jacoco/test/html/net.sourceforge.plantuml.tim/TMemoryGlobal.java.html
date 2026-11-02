@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.utils.MyCollections;
 
 	@Override
 	public TValue getVariable(String varname) {
-<span class="fc" id="L55">		return this.globalVariables.get(varname);</span>
+<span class="fc" id="L55">		return VariableAlias.get(globalVariables, varname);</span>
 	}
 
 	@Override
@@ -78,34 +78,36 @@ import net.sourceforge.plantuml.utils.MyCollections;
 <span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (scope == TVariableScope.LOCAL)</span>
 <span class="nc" id="L79">			throw new EaterException(&quot;Cannot use local variable here&quot;, location);</span>
 
-<span class="fc" id="L81">		this.globalVariables.put(varname, value);</span>
-<span class="fc" id="L82">		this.variables.add(varname);</span>
-<span class="fc" id="L83">	}</span>
+<span class="fc" id="L81">		final String key = VariableAlias.resolveKey(globalVariables, varname);</span>
+<span class="fc" id="L82">		this.globalVariables.put(key, value);</span>
+<span class="fc" id="L83">		variables.add(key);</span>
+<span class="fc" id="L84">	}</span>
 
 	@Override
 	public void removeVariable(String varname) {
-<span class="nc" id="L87">		this.globalVariables.remove(varname);</span>
-<span class="nc" id="L88">		this.variables.remove(varname);</span>
-<span class="nc" id="L89">	}</span>
+<span class="fc" id="L88">		final String key = VariableAlias.resolveKey(globalVariables, varname);</span>
+<span class="fc" id="L89">		this.globalVariables.remove(key);</span>
+<span class="fc" id="L90">		variables.remove(key);</span>
+<span class="fc" id="L91">	}</span>
 
 	@Override
 	public boolean isEmpty() {
-<span class="nc" id="L93">		return globalVariables.isEmpty();</span>
+<span class="nc" id="L95">		return globalVariables.isEmpty();</span>
 	}
 
 	@Override
 	public Set&lt;String&gt; variablesNames() {
-<span class="nc" id="L98">		return MyCollections.unmodifiableSet(globalVariables.keySet());</span>
+<span class="nc" id="L100">		return MyCollections.unmodifiableSet(globalVariables.keySet());</span>
 	}
 
 	@Override
 	public Trie variablesNames3() {
-<span class="fc" id="L103">		return variables;</span>
+<span class="fc" id="L105">		return variables;</span>
 	}
 
 	@Override
 	public TMemory forkFromGlobal(Map&lt;String, TValue&gt; input) {
-<span class="fc" id="L108">		return new TMemoryLocal(this, input);</span>
+<span class="fc" id="L110">		return new TMemoryLocal(this, input);</span>
 	}
 
 }

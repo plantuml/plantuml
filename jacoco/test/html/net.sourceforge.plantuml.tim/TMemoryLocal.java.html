@@ -84,75 +84,79 @@ public class TMemoryLocal extends ExecutionContexts implements TMemory {
 <span class="fc" id="L84">			memoryGlobal.putVariable(varname, value, scope, location);</span>
 <span class="fc" id="L85">			return;</span>
 		}
-<span class="pc bpc" id="L87" title="1 of 4 branches missed.">		if (scope == TVariableScope.LOCAL || overridenVariables01.containsKey(varname)) {</span>
-<span class="fc" id="L88">			this.overridenVariables01.put(varname, value);</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">			if (this.overridenVariables00 != null)</span>
-<span class="fc" id="L90">				this.overridenVariables00.add(varname);</span>
+<span class="fc" id="L87">		final String overridenKey = VariableAlias.resolveKey(overridenVariables01, varname);</span>
+<span class="pc bpc" id="L88" title="1 of 4 branches missed.">		if (scope == TVariableScope.LOCAL || overridenVariables01.containsKey(overridenKey)) {</span>
+<span class="fc" id="L89">			this.overridenVariables01.put(overridenKey, value);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			if (this.overridenVariables00 != null)</span>
+<span class="fc" id="L91">				this.overridenVariables00.add(overridenKey);</span>
 
-<span class="pc" id="L92">			Log.info(() -&gt; &quot;[MemLocal/overridden] Setting &quot; + varname);</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">		} else if (memoryGlobal.getVariable(varname) != null) {</span>
-<span class="fc" id="L94">			memoryGlobal.putVariable(varname, value, scope, location);</span>
+<span class="pc" id="L93">			Log.info(() -&gt; &quot;[MemLocal/overridden] Setting &quot; + varname);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		} else if (memoryGlobal.getVariable(varname) != null) {</span>
+<span class="fc" id="L95">			memoryGlobal.putVariable(varname, value, scope, location);</span>
 		} else {
-<span class="fc" id="L96">			this.localVariables01.put(varname, value);</span>
-<span class="fc" id="L97">			this.localVariables00.add(varname);</span>
-<span class="pc" id="L98">			Log.info(() -&gt; &quot;[MemLocal/local] Setting &quot; + varname);</span>
+<span class="fc" id="L97">			final String localKey = VariableAlias.resolveKey(localVariables01, varname);</span>
+<span class="fc" id="L98">			this.localVariables01.put(localKey, value);</span>
+<span class="fc" id="L99">			this.localVariables00.add(localKey);</span>
+<span class="pc" id="L100">			Log.info(() -&gt; &quot;[MemLocal/local] Setting &quot; + varname);</span>
 		}
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L102">	}</span>
 
 	@Override
 	public void removeVariable(String varname) {
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (overridenVariables01.containsKey(varname)) {</span>
-<span class="nc" id="L105">			this.overridenVariables01.remove(varname);</span>
-<span class="nc bnc" id="L106" title="All 2 branches missed.">			if (this.overridenVariables00 != null)</span>
-<span class="nc" id="L107">				this.overridenVariables00.remove(varname);</span>
+<span class="nc" id="L106">		final String overridenKey = VariableAlias.resolveKey(overridenVariables01, varname);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (overridenVariables01.containsKey(overridenKey)) {</span>
+<span class="nc" id="L108">			this.overridenVariables01.remove(overridenKey);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (this.overridenVariables00 != null)</span>
+<span class="nc" id="L110">				this.overridenVariables00.remove(overridenKey);</span>
 
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		} else if (memoryGlobal.getVariable(varname) != null) {</span>
-<span class="nc" id="L110">			memoryGlobal.removeVariable(varname);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		} else if (memoryGlobal.getVariable(varname) != null) {</span>
+<span class="nc" id="L113">			memoryGlobal.removeVariable(varname);</span>
 		} else {
-<span class="nc" id="L112">			this.localVariables01.remove(varname);</span>
-<span class="nc" id="L113">			this.localVariables00.remove(varname);</span>
+<span class="nc" id="L115">			final String localKey = VariableAlias.resolveKey(localVariables01, varname);</span>
+<span class="nc" id="L116">			this.localVariables01.remove(localKey);</span>
+<span class="nc" id="L117">			this.localVariables00.remove(localKey);</span>
 		}
-<span class="nc" id="L115">	}</span>
+<span class="nc" id="L119">	}</span>
 
 	@Override
 	public TValue getVariable(String varname) {
-<span class="fc" id="L119">		TValue result = overridenVariables01.get(varname);</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (result != null)</span>
-<span class="fc" id="L121">			return result;</span>
-
-<span class="fc" id="L123">		result = memoryGlobal.getVariable(varname);</span>
+<span class="fc" id="L123">		TValue result = VariableAlias.get(overridenVariables01, varname);</span>
 <span class="fc bfc" id="L124" title="All 2 branches covered.">		if (result != null)</span>
 <span class="fc" id="L125">			return result;</span>
 
-<span class="fc" id="L127">		result = localVariables01.get(varname);</span>
-<span class="fc" id="L128">		return result;</span>
+<span class="fc" id="L127">		result = memoryGlobal.getVariable(varname);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L129">			return result;</span>
+
+<span class="fc" id="L131">		result = VariableAlias.get(localVariables01, varname);</span>
+<span class="fc" id="L132">		return result;</span>
 	}
 
 	@Override
 	public Trie variablesNames3() {
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (overridenVariables00 == null) {</span>
-<span class="fc" id="L134">			overridenVariables00 = new TrieImpl();</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">			for (String name : overridenVariables01.keySet())</span>
-<span class="fc" id="L136">				overridenVariables00.add(name);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (overridenVariables00 == null) {</span>
+<span class="fc" id="L138">			overridenVariables00 = new TrieImpl();</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">			for (String name : overridenVariables01.keySet())</span>
+<span class="fc" id="L140">				overridenVariables00.add(name);</span>
 
 		}
-<span class="fc" id="L139">		return new Trie() {</span>
+<span class="fc" id="L143">		return new Trie() {</span>
 			public void add(String s) {
-<span class="nc" id="L141">				throw new UnsupportedOperationException();</span>
+<span class="nc" id="L145">				throw new UnsupportedOperationException();</span>
 			}
 
 			public String getLonguestMatchStartingIn(String s, int pos) {
-<span class="fc" id="L145">				final String s1 = memoryGlobal.variablesNames3().getLonguestMatchStartingIn(s, pos);</span>
-<span class="fc" id="L146">				final String s2 = overridenVariables00.getLonguestMatchStartingIn(s, pos);</span>
-<span class="fc" id="L147">				final String s3 = localVariables00.getLonguestMatchStartingIn(s, pos);</span>
+<span class="fc" id="L149">				final String s1 = memoryGlobal.variablesNames3().getLonguestMatchStartingIn(s, pos);</span>
+<span class="fc" id="L150">				final String s2 = overridenVariables00.getLonguestMatchStartingIn(s, pos);</span>
+<span class="fc" id="L151">				final String s3 = localVariables00.getLonguestMatchStartingIn(s, pos);</span>
 
-<span class="fc bfc" id="L149" title="All 4 branches covered.">				if (s1.length() &gt;= s2.length() &amp;&amp; s1.length() &gt;= s3.length())</span>
-<span class="fc" id="L150">					return s1;</span>
+<span class="fc bfc" id="L153" title="All 4 branches covered.">				if (s1.length() &gt;= s2.length() &amp;&amp; s1.length() &gt;= s3.length())</span>
+<span class="fc" id="L154">					return s1;</span>
 
-<span class="pc bpc" id="L152" title="1 of 4 branches missed.">				if (s2.length() &gt;= s3.length() &amp;&amp; s2.length() &gt;= s1.length())</span>
-<span class="fc" id="L153">					return s2;</span>
+<span class="pc bpc" id="L156" title="1 of 4 branches missed.">				if (s2.length() &gt;= s3.length() &amp;&amp; s2.length() &gt;= s1.length())</span>
+<span class="fc" id="L157">					return s2;</span>
 
-<span class="fc" id="L155">				return s3;</span>
+<span class="fc" id="L159">				return s3;</span>
 			}
 		};
 		// final Trie result = new TrieImpl();
@@ -170,17 +174,17 @@ public class TMemoryLocal extends ExecutionContexts implements TMemory {
 
 	@Override
 	public boolean isEmpty() {
-<span class="nc bnc" id="L173" title="All 6 branches missed.">		return memoryGlobal.isEmpty() &amp;&amp; localVariables01.isEmpty() &amp;&amp; overridenVariables01.isEmpty();</span>
+<span class="nc bnc" id="L177" title="All 6 branches missed.">		return memoryGlobal.isEmpty() &amp;&amp; localVariables01.isEmpty() &amp;&amp; overridenVariables01.isEmpty();</span>
 	}
 
 	@Override
 	public Set&lt;String&gt; variablesNames() {
-<span class="nc" id="L178">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L182">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public TMemory forkFromGlobal(Map&lt;String, TValue&gt; input) {
-<span class="fc" id="L183">		return new TMemoryLocal(memoryGlobal, input);</span>
+<span class="fc" id="L187">		return new TMemoryLocal(memoryGlobal, input);</span>
 	}
 
 	// public final TMemoryGlobal getGlobalForInternalUseOnly() {

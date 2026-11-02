@@ -39,17 +39,17 @@ import net.sourceforge.plantuml.text.StringLocated;
 public class EaterUndef extends Eater {
 
 	public EaterUndef(StringLocated s) {
-<span class="nc" id="L42">		super(s.getTrimmed());</span>
-<span class="nc" id="L43">	}</span>
+<span class="fc" id="L42">		super(s.getTrimmed());</span>
+<span class="fc" id="L43">	}</span>
 
 	@Override
 	public void analyze(TContext context, TMemory memory) throws EaterException {
-<span class="nc" id="L47">		skipSpaces();</span>
-<span class="nc" id="L48">		checkAndEatChar(&quot;!undef&quot;);</span>
-<span class="nc" id="L49">		skipSpaces();</span>
-<span class="nc" id="L50">		final String varname = eatAndGetVarname();</span>
-<span class="nc" id="L51">		memory.removeVariable(varname);</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L47">		skipSpaces();</span>
+<span class="fc" id="L48">		checkAndEatChar(&quot;!undef&quot;);</span>
+<span class="fc" id="L49">		skipSpaces();</span>
+<span class="fc" id="L50">		final String varname = eatAndGetVarname();</span>
+<span class="fc" id="L51">		memory.removeVariable(varname);</span>
+<span class="fc" id="L52">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

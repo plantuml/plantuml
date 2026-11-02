@@ -65,28 +65,55 @@ public final class JlatexmathJsGenerator {
 <span class="fc" id="L65">		out.append(&quot;g.PLANTUML_JLATEXMATH = g.PLANTUML_JLATEXMATH || {};\n&quot;);</span>
 <span class="fc" id="L66">		out.append(&quot;\n&quot;);</span>
 <span class="fc bfc" id="L67" title="All 2 branches covered.">		for (String name : names) {</span>
-<span class="fc" id="L68">			final byte[] data = Files.readAllBytes(new File(dir, name).toPath());</span>
-<span class="fc" id="L69">			out.append(&quot;g.PLANTUML_JLATEXMATH[\&quot;&quot;).append(name).append(&quot;\&quot;]=\&quot;&quot;)</span>
-<span class="fc" id="L70">					.append(Base64.getEncoder().encodeToString(data)).append(&quot;\&quot;;\n&quot;);</span>
-<span class="fc" id="L71">		}</span>
-<span class="fc" id="L72">		out.append(&quot;})();\n&quot;);</span>
-<span class="fc" id="L73">		return out.toString();</span>
+<span class="fc" id="L68">			byte[] data = Files.readAllBytes(new File(dir, name).toPath());</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">			if (name.endsWith(&quot;.xml&quot;))</span>
+<span class="fc" id="L70">				data = removeCarriageReturns(data);</span>
+<span class="fc" id="L71">			out.append(&quot;g.PLANTUML_JLATEXMATH[\&quot;&quot;).append(name).append(&quot;\&quot;]=\&quot;&quot;)</span>
+<span class="fc" id="L72">					.append(Base64.getEncoder().encodeToString(data)).append(&quot;\&quot;;\n&quot;);</span>
+<span class="fc" id="L73">		}</span>
+<span class="fc" id="L74">		out.append(&quot;})();\n&quot;);</span>
+<span class="fc" id="L75">		return out.toString();</span>
+	}
+
+	/**
+	 * jlatexmath.js must be the same on every platform: with a CRLF checkout (git
+	 * autocrlf on Windows) the XML files have CRLF, and the generated file would
+	 * not be the committed one. A CR is only a whitespace in these XML files and
+	 * is never part of a UTF-8 multi-byte character, so removing it is harmless.
+	 * Not applied to the binary glyphs.
+	 */
+	static byte[] removeCarriageReturns(byte[] data) {
+<span class="fc" id="L86">		int count = 0;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		for (byte b : data)</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">			if (b == '\r')</span>
+<span class="nc" id="L89">				count++;</span>
+
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (count == 0)</span>
+<span class="fc" id="L92">			return data;</span>
+
+<span class="nc" id="L94">		final byte[] result = new byte[data.length - count];</span>
+<span class="nc" id="L95">		int i = 0;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (byte b : data)</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (b != '\r')</span>
+<span class="nc" id="L98">				result[i++] = b;</span>
+
+<span class="nc" id="L100">		return result;</span>
 	}
 
 	private static void collect(File dir, String prefix, List&lt;String&gt; names) throws IOException {
-<span class="fc" id="L77">		final File[] files = dir.listFiles();</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (files == null)</span>
-<span class="nc" id="L79">			throw new IOException(&quot;Cannot list &quot; + dir.getAbsolutePath());</span>
+<span class="fc" id="L104">		final File[] files = dir.listFiles();</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (files == null)</span>
+<span class="nc" id="L106">			throw new IOException(&quot;Cannot list &quot; + dir.getAbsolutePath());</span>
 
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		for (File file : files) {</span>
-<span class="fc" id="L82">			final String name = prefix + file.getName();</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">			if (file.isDirectory())</span>
-<span class="fc" id="L84">				collect(file, name + &quot;/&quot;, names);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		for (File file : files) {</span>
+<span class="fc" id="L109">			final String name = prefix + file.getName();</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			if (file.isDirectory())</span>
+<span class="fc" id="L111">				collect(file, name + &quot;/&quot;, names);</span>
 			// Same files as the C build embeds (copyNativeSources)
-<span class="fc bfc" id="L86" title="All 4 branches covered.">			else if (name.endsWith(&quot;.xml&quot;) || name.endsWith(&quot;/glyphs.bin&quot;))</span>
-<span class="fc" id="L87">				names.add(name);</span>
+<span class="fc bfc" id="L113" title="All 4 branches covered.">			else if (name.endsWith(&quot;.xml&quot;) || name.endsWith(&quot;/glyphs.bin&quot;))</span>
+<span class="fc" id="L114">				names.add(name);</span>
 		}
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L116">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
