@@ -200,12 +200,12 @@ skinparam useBetaStyle false
 ''
 '' HTTP Methods
 ''
-!_POST   = "<color #007a3e>POST</color>"
-!_PUT    = "<color #ea7400>PUT</color>"
-!_DELETE = "<color #cf2a2a>DELETE</color>"
-!_GET    = "<color #009fdb>GET</color>"
-!_PATCH  = "<color #b5bd00>PATCH</color>"
-!_HEAD   = "<color #9012fe>HEAD</color>"
+!$_POST   = "<color #007a3e>POST</color>"
+!$_PUT    = "<color #ea7400>PUT</color>"
+!$_DELETE = "<color #cf2a2a>DELETE</color>"
+!$_GET    = "<color #009fdb>GET</color>"
+!$_PATCH  = "<color #b5bd00>PATCH</color>"
+!$_HEAD   = "<color #9012fe>HEAD</color>"
 ''
 '' Global Default Values
 ''

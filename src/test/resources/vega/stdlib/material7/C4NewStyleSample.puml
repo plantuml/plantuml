@@ -4,7 +4,7 @@ output: svg
 @startuml
 
 ' Activate new C4 style
-!NEW_C4_STYLE = 1
+!$NEW_C4_STYLE = 1
 !include <C4/C4_Container>
 
 ' No common.puml loaded, text alignment remains left
