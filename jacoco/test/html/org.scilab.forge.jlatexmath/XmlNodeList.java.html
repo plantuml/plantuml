@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmlNodeList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">XmlNodeList.java</span></div><h1>XmlNodeList.java</h1><pre class="source lang-java linenums">/* XmlNodeList.java
+ * =========================================================================
+ * This file is NOT part of upstream JLaTeXMath, it was added for PLAN.md
+ * (phase 3, step 3d). The list that XmlElement.getElementsByTagName gives, as org.w3c.dom.NodeList did.
+ * It is released under the same terms as the library: GNU GPL version 2 or
+ * later, with the GNU linking exception (see the header of the other files of
+ * this package).
+ * =========================================================================
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.List;
+
+public final class XmlNodeList {
+
+    private final List&lt;XmlElement&gt; elements;
+
+<span class="fc" id="L19">    XmlNodeList(List&lt;XmlElement&gt; elements) {</span>
+<span class="fc" id="L20">        this.elements = elements;</span>
+<span class="fc" id="L21">    }</span>
+
+    public int getLength() {
+<span class="fc" id="L24">        return elements.size();</span>
+    }
+
+    /** The element at this index, or null if there is none. */
+    public XmlElement item(int index) {
+<span class="pc bpc" id="L29" title="1 of 4 branches missed.">        if (index &lt; 0 || index &gt;= elements.size()) {</span>
+<span class="fc" id="L30">            return null;</span>
+        }
+<span class="fc" id="L32">        return elements.get(index);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -35,27 +35,25 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
-import net.atmp.PixelImage;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.TextBlockExporter;
-import net.sourceforge.plantuml.klimt.AffineTransformType;
-import net.sourceforge.plantuml.klimt.MutableImage;
-import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.awt.XColor;
-import net.sourceforge.plantuml.klimt.drawing.eps.EpsGraphics;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.utils.Log;
 
 public class ScientificEquationSafe {
@@ -63,109 +61,119 @@ public class ScientificEquationSafe {
 	private final ScientificEquation equation;
 	private final String formula;
 
-<span class="nc" id="L66">	private ScientificEquationSafe(String formula, ScientificEquation equation) {</span>
-<span class="nc" id="L67">		this.formula = formula;</span>
-<span class="nc" id="L68">		this.equation = equation;</span>
-<span class="nc" id="L69">	}</span>
+	private MathDrawing drawing;
+	private boolean drawingDone;
+
+<span class="fc" id="L67">	private ScientificEquationSafe(String formula, ScientificEquation equation) {</span>
+<span class="fc" id="L68">		this.formula = formula;</span>
+<span class="fc" id="L69">		this.equation = equation;</span>
+<span class="fc" id="L70">	}</span>
 
 	public static ScientificEquationSafe fromAsciiMath(String formula) {
 		try {
-<span class="nc" id="L73">			return new ScientificEquationSafe(formula, new AsciiMath(formula));</span>
-<span class="nc" id="L74">		} catch (Exception e) {</span>
-<span class="nc" id="L75">			Logme.error(e);</span>
-<span class="nc" id="L76">			Log.info(() -&gt; &quot;Error parsing &quot; + formula);</span>
-<span class="nc" id="L77">			return new ScientificEquationSafe(formula, null);</span>
+<span class="fc" id="L74">			return new ScientificEquationSafe(formula, new AsciiMath(formula));</span>
+<span class="nc" id="L75">		} catch (Exception e) {</span>
+<span class="nc" id="L76">			Logme.error(e);</span>
+<span class="nc" id="L77">			Log.info(() -&gt; &quot;Error parsing &quot; + formula);</span>
+<span class="nc" id="L78">			return new ScientificEquationSafe(formula, null);</span>
 		}
 	}
 
 	public static ScientificEquationSafe fromLatex(String formula) {
 		try {
-<span class="nc" id="L83">			return new ScientificEquationSafe(formula, new LatexBuilder(formula));</span>
-<span class="nc" id="L84">		} catch (Exception e) {</span>
-<span class="nc" id="L85">			Logme.error(e);</span>
-<span class="nc" id="L86">			Log.info(() -&gt; &quot;Error parsing &quot; + formula);</span>
-<span class="nc" id="L87">			return new ScientificEquationSafe(formula, null);</span>
+<span class="fc" id="L84">			return new ScientificEquationSafe(formula, new LatexBuilder(formula));</span>
+<span class="nc" id="L85">		} catch (Exception e) {</span>
+<span class="nc" id="L86">			Logme.error(e);</span>
+<span class="nc" id="L87">			Log.info(() -&gt; &quot;Error parsing &quot; + formula);</span>
+<span class="nc" id="L88">			return new ScientificEquationSafe(formula, null);</span>
 		}
 	}
 
-	private ImageData dimSvg;
-
-	public UImageSvg getSvg(double scale, XColor foregroundColor, XColor backgroundColor) {
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (equation != null)</span>
-			try {
-<span class="nc" id="L96">				final UImageSvg svg = equation.getSvg(scale, foregroundColor, backgroundColor);</span>
-<span class="nc" id="L97">				dimSvg = new ImageDataSimple(equation.getDimension());</span>
-<span class="nc" id="L98">				return svg;</span>
-<span class="nc" id="L99">			} catch (Exception e) {</span>
-<span class="nc" id="L100">				printTrace(e);</span>
-			}
-<span class="nc" id="L102">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-		try {
-<span class="nc" id="L104">			dimSvg = TextBlockExporter.builder(getRollback(), new FileFormatOption(FileFormat.SVG), false)</span>
-<span class="nc" id="L105">					.build().exportTo(baos);</span>
-<span class="nc" id="L106">		} catch (IOException e1) {</span>
-<span class="nc" id="L107">			return null;</span>
-<span class="nc" id="L108">		}</span>
-<span class="nc" id="L109">		return new UImageSvg(new String(baos.toByteArray()), scale);</span>
+	/** The formula, or null if it cannot be made (the source is then shown as text). */
+	private MathDrawing getDrawing(StringBounder stringBounder) {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (drawingDone == false) {</span>
+<span class="fc" id="L95">			drawingDone = true;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">			if (equation != null)</span>
+				try {
+<span class="fc" id="L98">					drawing = equation.getDrawing(stringBounder);</span>
+<span class="fc" id="L99">				} catch (Exception e) {</span>
+<span class="fc" id="L100">					printTrace(e);</span>
+<span class="fc" id="L101">				}</span>
+		}
+<span class="fc" id="L103">		return drawing;</span>
 	}
 
-	public MutableImage getImage(XColor foregroundColor, XColor backgroundColor) {
-<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (equation != null)</span>
-			try {
-<span class="nc" id="L115">				return equation.getImage(foregroundColor, backgroundColor);</span>
-<span class="nc" id="L116">			} catch (Exception e) {</span>
-<span class="nc" id="L117">				printTrace(e);</span>
-			}
-		try {
-<span class="nc" id="L120">			final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L121">			TextBlockExporter.builder(getRollback(), new FileFormatOption(FileFormat.PNG), false)</span>
-<span class="nc" id="L122">					.build().exportTo(baos);</span>
-<span class="nc" id="L123">			return new PixelImage(SImageIO.read(baos.toByteArray()), AffineTransformType.TYPE_BILINEAR);</span>
-<span class="nc" id="L124">		} catch (IOException e1) {</span>
-<span class="nc" id="L125">			return null;</span>
+	public XDimension2D getDimension(StringBounder stringBounder) {
+<span class="fc" id="L107">		final MathDrawing result = getDrawing(stringBounder);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L109">			return result.getDimension();</span>
+<span class="fc" id="L110">		return getRollback().calculateDimension(stringBounder);</span>
+	}
+
+	/**
+	 * Draws the formula, or its source as text if it cannot be made.
+	 *
+	 * @param foreground the color of the formula, null for black
+	 * @param background the color behind the formula, null for none
+	 */
+	public void drawU(UGraphic ug, HColor foreground, HColor background) {
+<span class="fc" id="L120">		final MathDrawing result = getDrawing(ug.getStringBounder());</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L122">			getRollback().drawU(ug);</span>
+<span class="fc" id="L123">			return;</span>
 		}
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (background != null) {</span>
+<span class="fc" id="L126">			final XDimension2D dim = result.getDimension();</span>
+<span class="fc" id="L127">			ug.apply(HColors.transparent()).apply(background.bg())</span>
+<span class="fc" id="L128">					.draw(URectangle.build(dim.getWidth(), dim.getHeight()));</span>
+		}
+<span class="fc" id="L130">		result.draw(ug, foreground);</span>
+<span class="fc" id="L131">	}</span>
+
+	public TextBlock getTextBlock(final HColor foreground, final HColor background) {
+<span class="fc" id="L134">		return new TextBlock() {</span>
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L137">				return getDimension(stringBounder);</span>
+			}
+
+			public void drawU(UGraphic ug) {
+<span class="fc" id="L141">				ScientificEquationSafe.this.drawU(ug, foreground, background);</span>
+<span class="fc" id="L142">			}</span>
+		};
 	}
 
 	private void printTrace(Exception e) {
-<span class="nc" id="L130">		System.err.println(&quot;formula=&quot; + formula);</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (equation != null) {</span>
-<span class="nc" id="L132">			System.err.println(&quot;Latex=&quot; + equation.getSource());</span>
+<span class="fc" id="L147">		System.err.println(&quot;formula=&quot; + formula);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (equation != null) {</span>
+<span class="fc" id="L149">			System.err.println(&quot;Latex=&quot; + equation.getSource());</span>
 		}
-<span class="nc" id="L134">		Logme.error(e);</span>
-<span class="nc" id="L135">	}</span>
+<span class="fc" id="L151">		Logme.error(e);</span>
+<span class="fc" id="L152">	}</span>
 
 	private TextBlock getRollback() {
-<span class="nc" id="L138">		return GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));</span>
+<span class="fc" id="L155">		return GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));</span>
 	}
 
 	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, XColor foregroundColor,
 			XColor backgroundColor) throws IOException {
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.PNG) {</span>
-<span class="nc" id="L144">			final PortableImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();</span>
-<span class="nc" id="L145">			SImageIO.write(image, &quot;png&quot;, os);</span>
-<span class="nc" id="L146">			return new ImageDataSimple(image.getWidth(), image.getHeight());</span>
+<span class="fc" id="L160">		final FileFormat format = fileFormat.getFileFormat();</span>
+<span class="pc bpc" id="L161" title="5 of 12 branches missed.">		if (format == FileFormat.PNG || format == FileFormat.SVG || format == FileFormat.SVG_DETERMINISTIC</span>
+				|| format == FileFormat.EPS || format == FileFormat.PDF || format == FileFormat.PDF_DETERMINISTIC) {
+<span class="fc" id="L163">			final TextBlock block = getTextBlock(HColors.simple(foregroundColor),</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">					backgroundColor == null ? null : HColors.simple(backgroundColor));</span>
+<span class="fc" id="L165">			return TextBlockExporter.builder(block, fileFormat, false).scale(new ScaleSimple(scale)).build()</span>
+<span class="fc" id="L166">					.exportTo(os);</span>
 		}
-<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.SVG) {</span>
-<span class="nc" id="L149">			os.write(getSvg(1, foregroundColor, backgroundColor).getSvg(true).getBytes());</span>
-<span class="nc" id="L150">			return dimSvg;</span>
-		}
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (fileFormat.getFileFormat() == FileFormat.EPS) {</span>
-<span class="nc" id="L153">			final PortableImage image = getImage(foregroundColor, backgroundColor).withScale(scale).getImage();</span>
-<span class="nc" id="L154">			final EpsGraphics out = new EpsGraphics();</span>
-<span class="nc" id="L155">			out.drawImage(image, 0, 0);</span>
-<span class="nc" id="L156">			out.close();</span>
-<span class="nc" id="L157">			os.write(out.getEPSCode().getBytes());</span>
-<span class="nc" id="L158">			return new ImageDataSimple(image.getWidth(), image.getHeight());</span>
-		}
-<span class="nc" id="L160">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L168">		throw new UnsupportedOperationException();</span>
 	}
 
 	public final String getFormula() {
-<span class="nc" id="L164">		return formula;</span>
+<span class="nc" id="L172">		return formula;</span>
 	}
 
 	public final String getSource() {
-<span class="nc" id="L168">		return equation.getSource();</span>
+<span class="fc" id="L176">		return equation.getSource();</span>
 	}
 
 }

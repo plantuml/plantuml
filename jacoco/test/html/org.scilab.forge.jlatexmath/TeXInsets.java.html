@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeXInsets.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">TeXInsets.java</span></div><h1>TeXInsets.java</h1><pre class="source lang-java linenums">/* TeXInsets.java
+ * =========================================================================
+ * This file is NOT part of upstream JLaTeXMath, it was added for PLAN.md
+ * (phase 3: no java.awt). It replaces java.awt.Insets.
+ * It is released under the same terms as the library: GNU GPL version 2 or
+ * later, with the GNU linking exception (see the header of the other files of
+ * this package).
+ * =========================================================================
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * The space around a {@link TeXIcon}, in pixels (what {@code java.awt.Insets}
+ * was).
+ */
+public class TeXInsets {
+
+    public int top;
+    public int left;
+    public int bottom;
+    public int right;
+
+<span class="fc" id="L24">    public TeXInsets(int top, int left, int bottom, int right) {</span>
+<span class="fc" id="L25">        this.top = top;</span>
+<span class="fc" id="L26">        this.left = left;</span>
+<span class="fc" id="L27">        this.bottom = bottom;</span>
+<span class="fc" id="L28">        this.right = right;</span>
+<span class="fc" id="L29">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

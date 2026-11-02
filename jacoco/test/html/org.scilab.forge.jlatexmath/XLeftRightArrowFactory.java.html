@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XLeftRightArrowFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">XLeftRightArrowFactory.java</span></div><h1>XLeftRightArrowFactory.java</h1><pre class="source lang-java linenums">/* XLeftRightArrowFactory.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://jlatexmath.sourceforge.net
+ *
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * Responsible for creating a box containing a delimiter symbol that exists
+ * in different sizes.
+ */
+<span class="nc" id="L52">public class XLeftRightArrowFactory {</span>
+
+<span class="fc" id="L54">    private static final Atom MINUS = SymbolAtom.get(&quot;minus&quot;);</span>
+<span class="fc" id="L55">    private static final Atom LEFT = SymbolAtom.get(&quot;leftarrow&quot;);</span>
+<span class="fc" id="L56">    private static final Atom RIGHT = SymbolAtom.get(&quot;rightarrow&quot;);</span>
+
+    public static Box create(boolean left, TeXEnvironment env, float width) {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        Box arr = left ? LEFT.createBox(env) : RIGHT.createBox(env);</span>
+<span class="fc" id="L60">        float h = arr.getHeight();</span>
+<span class="fc" id="L61">        float d = arr.getDepth();</span>
+
+<span class="fc" id="L63">        float swidth = arr.getWidth();</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (width &lt;= swidth) {</span>
+<span class="nc" id="L65">            arr.setDepth(d / 2);</span>
+<span class="nc" id="L66">            return arr;</span>
+        }
+
+<span class="fc" id="L69">        Box minus = new SmashedAtom(MINUS, &quot;&quot;).createBox(env);</span>
+<span class="fc" id="L70">        Box kern = new SpaceAtom(TeXConstants.UNIT_MU, -4f, 0, 0).createBox(env);</span>
+<span class="fc" id="L71">        float mwidth = minus.getWidth() + kern.getWidth();</span>
+<span class="fc" id="L72">        swidth += kern.getWidth();</span>
+<span class="fc" id="L73">        HorizontalBox hb = new HorizontalBox();</span>
+        float w;
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        for (w = 0; w &lt; width - swidth - mwidth; w += mwidth) {</span>
+<span class="fc" id="L76">            hb.add(minus);</span>
+<span class="fc" id="L77">            hb.add(kern);</span>
+        }
+
+<span class="fc" id="L80">        float sf = (width - swidth - w) / minus.getWidth();</span>
+
+<span class="fc" id="L82">        hb.add(new SpaceAtom(TeXConstants.UNIT_MU, -2f * sf, 0, 0).createBox(env));</span>
+<span class="fc" id="L83">        hb.add(new ScaleAtom(MINUS, sf, 1).createBox(env));</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (left) {</span>
+<span class="fc" id="L86">            hb.add(0, new SpaceAtom(TeXConstants.UNIT_MU, -3.5f, 0, 0).createBox(env));</span>
+<span class="fc" id="L87">            hb.add(0, arr);</span>
+        } else {
+<span class="fc" id="L89">            hb.add(new SpaceAtom(TeXConstants.UNIT_MU, -2f * sf - 2f, 0, 0).createBox(env));</span>
+<span class="fc" id="L90">            hb.add(arr);</span>
+        }
+
+<span class="fc" id="L93">        hb.setDepth(d / 2);</span>
+<span class="fc" id="L94">        hb.setHeight(h);</span>
+
+<span class="fc" id="L96">        return hb;</span>
+    }
+
+    public static Box create(TeXEnvironment env, float width) {
+<span class="fc" id="L100">        Box left = LEFT.createBox(env);</span>
+<span class="fc" id="L101">        Box right = RIGHT.createBox(env);</span>
+<span class="fc" id="L102">        float swidth = left.getWidth() + right.getWidth();</span>
+
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (width &lt; swidth) {</span>
+<span class="fc" id="L105">            HorizontalBox hb = new HorizontalBox(left);</span>
+<span class="fc" id="L106">            hb.add(new StrutBox(-Math.min(swidth - width, left.getWidth()), 0, 0, 0));</span>
+<span class="fc" id="L107">            hb.add(right);</span>
+<span class="fc" id="L108">            return hb;</span>
+        }
+
+<span class="nc" id="L111">        Box minus = new SmashedAtom(MINUS, &quot;&quot;).createBox(env);</span>
+<span class="nc" id="L112">        Box kern = new SpaceAtom(TeXConstants.UNIT_MU, -3.4f, 0, 0).createBox(env);</span>
+<span class="nc" id="L113">        float mwidth = minus.getWidth() + kern.getWidth();</span>
+<span class="nc" id="L114">        swidth += 2 * kern.getWidth();</span>
+
+<span class="nc" id="L116">        HorizontalBox hb = new HorizontalBox();</span>
+        float w;
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        for (w = 0; w &lt; width - swidth - mwidth; w += mwidth) {</span>
+<span class="nc" id="L119">            hb.add(minus);</span>
+<span class="nc" id="L120">            hb.add(kern);</span>
+        }
+
+<span class="nc" id="L123">        hb.add(new ScaleBox(minus, (width - swidth - w) / minus.getWidth(), 1));</span>
+
+<span class="nc" id="L125">        hb.add(0, kern);</span>
+<span class="nc" id="L126">        hb.add(0, left);</span>
+<span class="nc" id="L127">        hb.add(kern);</span>
+<span class="nc" id="L128">        hb.add(right);</span>
+
+<span class="nc" id="L130">        return hb;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

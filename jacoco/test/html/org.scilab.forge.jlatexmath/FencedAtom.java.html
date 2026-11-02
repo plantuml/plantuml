@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FencedAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">FencedAtom.java</span></div><h1>FencedAtom.java</h1><pre class="source lang-java linenums">/* FencedAtom.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+/* Modified by Calixte Denizet */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.List;
+
+/**
+ * An atom representing a base atom surrounded with delimiters that change their size
+ * according to the height of the base.
+ */
+public class FencedAtom extends Atom {
+
+    // parameters used in the TeX algorithm
+    private static final int DELIMITER_FACTOR = 901;
+
+    private static final float DELIMITER_SHORTFALL = 5f;
+
+    // base atom
+    private final Atom base;
+
+    // delimiters
+<span class="fc" id="L68">    private SymbolAtom left = null;</span>
+<span class="fc" id="L69">    private SymbolAtom right = null;</span>
+    private final List&lt;MiddleAtom&gt; middle;
+
+    /**
+     * Creates a new FencedAtom from the given base and delimiters
+     *
+     * @param base the base to be surrounded with delimiters
+     * @param l the left delimiter
+     * @param r the right delimiter
+     */
+    public FencedAtom(Atom base, SymbolAtom l, SymbolAtom r) {
+<span class="fc" id="L80">        this(base, l, null, r);</span>
+<span class="fc" id="L81">    }</span>
+
+<span class="fc" id="L83">    public FencedAtom(Atom base, SymbolAtom l, List&lt;MiddleAtom&gt; m, SymbolAtom r) {</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (base == null)</span>
+<span class="nc" id="L85">            this.base = new RowAtom(); // empty base</span>
+        else
+<span class="fc" id="L87">            this.base = base;</span>
+<span class="fc bfc" id="L88" title="All 4 branches covered.">        if (l == null || !l.getName().equals(&quot;normaldot&quot;)) {</span>
+<span class="fc" id="L89">            left = l;</span>
+        }
+<span class="fc bfc" id="L91" title="All 4 branches covered.">        if (r == null || !r.getName().equals(&quot;normaldot&quot;)) {</span>
+<span class="fc" id="L92">            right = r;</span>
+        }
+<span class="fc" id="L94">        middle =  m;</span>
+<span class="fc" id="L95">    }</span>
+
+    public int getLeftType() {
+<span class="fc" id="L98">        return TeXConstants.TYPE_INNER;</span>
+    }
+
+    public int getRightType() {
+<span class="fc" id="L102">        return TeXConstants.TYPE_INNER;</span>
+    }
+
+    /**
+     * Centers the given box with resprect to the given axis, by setting an appropriate
+     * shift value.
+     *
+     * @param box
+     *           box to be vertically centered with respect to the axis
+     */
+    private static void center(Box box, float axis) {
+<span class="fc" id="L113">        float h = box.getHeight(), total = h + box.getDepth();</span>
+<span class="fc" id="L114">        box.setShift(-(total / 2 - h) - axis);</span>
+<span class="fc" id="L115">    }</span>
+
+    public Box createBox(TeXEnvironment env) {
+<span class="fc" id="L118">        TeXFont tf = env.getTeXFont();</span>
+<span class="fc" id="L119">        Box content = base.createBox(env);</span>
+<span class="fc" id="L120">        float shortfall = DELIMITER_SHORTFALL * SpaceAtom.getFactor(TeXConstants.UNIT_POINT, env);</span>
+<span class="fc" id="L121">        float axis = tf.getAxisHeight(env.getStyle());</span>
+<span class="fc" id="L122">        float delta = Math.max(content.getHeight() - axis, content.getDepth() + axis);</span>
+<span class="fc" id="L123">        float minHeight = Math.max((delta / 500) * DELIMITER_FACTOR, 2 * delta - shortfall);</span>
+
+        // construct box
+<span class="fc" id="L126">        HorizontalBox hBox = new HorizontalBox();</span>
+
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (middle != null) {</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            for (int i = 0; i &lt; middle.size(); i++) {</span>
+<span class="fc" id="L130">                MiddleAtom at = middle.get(i);</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">                if (at.base instanceof SymbolAtom) {</span>
+<span class="fc" id="L132">                    Box b = DelimiterFactory.create(((SymbolAtom) at.base).getName(), env, minHeight);</span>
+<span class="fc" id="L133">                    center(b, axis);</span>
+<span class="fc" id="L134">                    at.box = b;</span>
+                }
+            }
+<span class="fc bfc" id="L137" title="All 2 branches covered.">            if (middle.size() != 0) {</span>
+<span class="fc" id="L138">                content = base.createBox(env);</span>
+            }
+        }
+
+        // left delimiter
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (left != null) {</span>
+<span class="fc" id="L144">            Box b = DelimiterFactory.create(left.getName(), env, minHeight);</span>
+<span class="fc" id="L145">            center(b, axis);</span>
+<span class="fc" id="L146">            hBox.add(b);</span>
+        }
+
+        // glue between left delimiter and content (if not whitespace)
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (!(base instanceof SpaceAtom)) {</span>
+<span class="fc" id="L151">            hBox.add(Glue.get(TeXConstants.TYPE_OPENING, base.getLeftType(), env));</span>
+        }
+
+        // add content
+<span class="fc" id="L155">        hBox.add(content);</span>
+
+        // glue between right delimiter and content (if not whitespace)
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">        if (!(base instanceof SpaceAtom)) {</span>
+<span class="fc" id="L159">            hBox.add(Glue.get(base.getRightType(), TeXConstants.TYPE_CLOSING, env));</span>
+        }
+
+        // right delimiter
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        if (right != null) {</span>
+<span class="fc" id="L164">            Box b = DelimiterFactory.create(right.getName(), env, minHeight);</span>
+<span class="fc" id="L165">            center(b, axis);</span>
+<span class="fc" id="L166">            hBox.add(b);</span>
+        }
+
+<span class="fc" id="L169">        return hBox;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

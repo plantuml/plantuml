@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RotateBox.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">RotateBox.java</span></div><h1>RotateBox.java</h1><pre class="source lang-java linenums">/* RotateBox.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2009-2011 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+
+/**
+ * A box representing a rotated box.
+ */
+public class RotateBox extends Box {
+
+    public static final int BL = 0;
+    public static final int BC = 1;
+    public static final int BR = 2;
+    public static final int TL = 3;
+    public static final int TC = 4;
+    public static final int TR = 5;
+    public static final int BBL = 6;
+    public static final int BBR = 7;
+    public static final int BBC = 8;
+    public static final int CL = 9;
+    public static final int CC = 10;
+    public static final int CR = 11;
+
+<span class="fc" id="L67">    protected double angle = 0;</span>
+    private Box box;
+    private float xmax, xmin, ymax, ymin;
+
+    private float shiftX;
+    private float shiftY;
+
+<span class="fc" id="L74">    public RotateBox(Box b, double angle, float x, float y) {</span>
+<span class="fc" id="L75">        this.box = b;</span>
+<span class="fc" id="L76">        this.angle = angle * Math.PI / 180;</span>
+<span class="fc" id="L77">        height = b.height;</span>
+<span class="fc" id="L78">        depth = b.depth;</span>
+<span class="fc" id="L79">        width = b.width;</span>
+<span class="fc" id="L80">        double s = Math.sin(this.angle);</span>
+<span class="fc" id="L81">        double c = Math.cos(this.angle);</span>
+<span class="fc" id="L82">        shiftX = (float) (x * (1 - c) + y * s);</span>
+<span class="fc" id="L83">        shiftY = (float) (y * (1 - c) - x * s);</span>
+<span class="fc" id="L84">        xmax = (float) Math.max(-height * s, Math.max(depth * s, Math.max(width * c + depth * s, width * c - height * s))) + shiftX;</span>
+<span class="fc" id="L85">        xmin = (float) Math.min(-height * s, Math.min(depth * s, Math.min(width * c + depth * s, width * c - height * s))) + shiftX;</span>
+<span class="fc" id="L86">        ymax = (float) Math.max(height * c, Math.max(-depth * c, Math.max(width * s - depth * c, width * s + height * c)));</span>
+<span class="fc" id="L87">        ymin = (float) Math.min(height * c, Math.min(-depth * c, Math.min(width * s - depth * c, width * s + height * c)));</span>
+<span class="fc" id="L88">        width = xmax - xmin;</span>
+<span class="fc" id="L89">        height = ymax + shiftY;</span>
+<span class="fc" id="L90">        depth = -ymin - shiftY;</span>
+<span class="fc" id="L91">    }</span>
+
+    private RotateBox(Box b, double angle, Point origin) {
+<span class="nc" id="L94">        this(b, angle, origin.x, origin.y);</span>
+<span class="nc" id="L95">    }</span>
+
+    public RotateBox(Box b, double angle, int option) {
+<span class="nc" id="L98">        this(b, angle, calculateShift(b, option));</span>
+<span class="nc" id="L99">    }</span>
+
+    public static int getOrigin(String option) {
+<span class="nc bnc" id="L102" title="All 4 branches missed.">        if (option == null || option.length() == 0) {</span>
+<span class="nc" id="L103">            return BBL;</span>
+        }
+
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        if (option.length() == 1) {</span>
+<span class="nc" id="L107">            option += &quot;c&quot;;</span>
+        }
+<span class="nc bnc" id="L109" title="All 4 branches missed.">        if (option.equals(&quot;bl&quot;) || option.equals(&quot;lb&quot;)) {</span>
+<span class="nc" id="L110">            return BL;</span>
+<span class="nc bnc" id="L111" title="All 4 branches missed.">        } else if (option.equals(&quot;bc&quot;) || option.equals(&quot;cb&quot;)) {</span>
+<span class="nc" id="L112">            return BC;</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">        } else if (option.equals(&quot;br&quot;) || option.equals(&quot;rb&quot;)) {</span>
+<span class="nc" id="L114">            return BR;</span>
+<span class="nc bnc" id="L115" title="All 4 branches missed.">        } else if (option.equals(&quot;cl&quot;) || option.equals(&quot;lc&quot;)) {</span>
+<span class="nc" id="L116">            return CL;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        } else if (option.equals(&quot;cc&quot;)) {</span>
+<span class="nc" id="L118">            return CC;</span>
+<span class="nc bnc" id="L119" title="All 4 branches missed.">        } else if (option.equals(&quot;cr&quot;) || option.equals(&quot;cr&quot;)) {</span>
+<span class="nc" id="L120">            return CR;</span>
+<span class="nc bnc" id="L121" title="All 4 branches missed.">        } else if (option.equals(&quot;tl&quot;) || option.equals(&quot;lt&quot;)) {</span>
+<span class="nc" id="L122">            return TL;</span>
+<span class="nc bnc" id="L123" title="All 4 branches missed.">        } else if (option.equals(&quot;tc&quot;) || option.equals(&quot;ct&quot;)) {</span>
+<span class="nc" id="L124">            return TC;</span>
+<span class="nc bnc" id="L125" title="All 4 branches missed.">        } else if (option.equals(&quot;tr&quot;) || option.equals(&quot;rt&quot;)) {</span>
+<span class="nc" id="L126">            return TR;</span>
+<span class="nc bnc" id="L127" title="All 4 branches missed.">        } else if (option.equals(&quot;Bl&quot;) || option.equals(&quot;lB&quot;)) {</span>
+<span class="nc" id="L128">            return BBL;</span>
+<span class="nc bnc" id="L129" title="All 4 branches missed.">        } else if (option.equals(&quot;Bc&quot;) || option.equals(&quot;cB&quot;)) {</span>
+<span class="nc" id="L130">            return BBC;</span>
+<span class="nc bnc" id="L131" title="All 4 branches missed.">        } else if (option.equals(&quot;Br&quot;) || option.equals(&quot;rB&quot;)) {</span>
+<span class="nc" id="L132">            return BBR;</span>
+        } else
+
+<span class="nc" id="L135">            return BBL;</span>
+    }
+
+    private static Point calculateShift(Box b, int option) {
+<span class="nc" id="L139">        Point p = new Point(0, -b.depth);</span>
+<span class="nc bnc" id="L140" title="All 13 branches missed.">        switch (option) {</span>
+        case BL :
+<span class="nc" id="L142">            p.x = 0;</span>
+<span class="nc" id="L143">            p.y = -b.depth;</span>
+<span class="nc" id="L144">            break;</span>
+        case BR :
+<span class="nc" id="L146">            p.x = b.width;</span>
+<span class="nc" id="L147">            p.y = -b.depth;</span>
+<span class="nc" id="L148">            break;</span>
+        case BC :
+<span class="nc" id="L150">            p.x = b.width / 2;</span>
+<span class="nc" id="L151">            p.y = - b.depth;</span>
+<span class="nc" id="L152">            break;</span>
+        case TL :
+<span class="nc" id="L154">            p.x = 0;</span>
+<span class="nc" id="L155">            p.y = b.height;</span>
+<span class="nc" id="L156">            break;</span>
+        case TR :
+<span class="nc" id="L158">            p.x = b.width;</span>
+<span class="nc" id="L159">            p.y = b.height;</span>
+<span class="nc" id="L160">            break;</span>
+        case TC :
+<span class="nc" id="L162">            p.x = b.width / 2;</span>
+<span class="nc" id="L163">            p.y = b.height;</span>
+<span class="nc" id="L164">            break;</span>
+        case BBL :
+<span class="nc" id="L166">            p.x = 0;</span>
+<span class="nc" id="L167">            p.y = 0;</span>
+<span class="nc" id="L168">            break;</span>
+        case BBR :
+<span class="nc" id="L170">            p.x = b.width;</span>
+<span class="nc" id="L171">            p.y = 0;</span>
+<span class="nc" id="L172">            break;</span>
+        case BBC :
+<span class="nc" id="L174">            p.x = b.width / 2;</span>
+<span class="nc" id="L175">            p.y = 0;</span>
+<span class="nc" id="L176">            break;</span>
+        case CL :
+<span class="nc" id="L178">            p.x = 0;</span>
+<span class="nc" id="L179">            p.y = (b.height - b.depth) / 2;</span>
+<span class="nc" id="L180">            break;</span>
+        case CR :
+<span class="nc" id="L182">            p.x = b.width;</span>
+<span class="nc" id="L183">            p.y = (b.height - b.depth) / 2;</span>
+<span class="nc" id="L184">            break;</span>
+        case CC :
+<span class="nc" id="L186">            p.x = b.width / 2;</span>
+<span class="nc" id="L187">            p.y = (b.height - b.depth) / 2;</span>
+<span class="nc" id="L188">            break;</span>
+        default :
+        }
+
+<span class="nc" id="L192">        return p;</span>
+    }
+
+    public void draw(TeXGraphics g2, float x, float y) {
+<span class="fc" id="L196">        drawDebug(g2, x, y);</span>
+<span class="fc" id="L197">        box.drawDebug(g2, x, y, true);</span>
+<span class="fc" id="L198">        y -= shiftY;</span>
+<span class="fc" id="L199">        x += shiftX - xmin;</span>
+<span class="fc" id="L200">        g2.rotate(-angle, x, y);</span>
+<span class="fc" id="L201">        box.draw(g2, x, y);</span>
+<span class="fc" id="L202">        box.drawDebug(g2, x, y, true);</span>
+<span class="fc" id="L203">        g2.rotate(angle, x, y);</span>
+<span class="fc" id="L204">    }</span>
+
+    public int getLastFontId() {
+<span class="fc" id="L207">        return box.getLastFontId();</span>
+    }
+
+    /** A point of the box, as java.awt.geom.Point2D.Float was. */
+    private static final class Point {
+        float x;
+        float y;
+
+<span class="nc" id="L215">        Point(float x, float y) {</span>
+<span class="nc" id="L216">            this.x = x;</span>
+<span class="nc" id="L217">            this.y = y;</span>
+<span class="nc" id="L218">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

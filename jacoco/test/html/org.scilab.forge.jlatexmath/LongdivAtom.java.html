@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LongdivAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">LongdivAtom.java</span></div><h1>LongdivAtom.java</h1><pre class="source lang-java linenums">/* GraphicsAtom.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2017 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.ArrayList;
+
+/**
+ * An atom representing a long division.
+ */
+public class LongdivAtom extends VRowAtom {
+
+<span class="nc" id="L55">    public LongdivAtom(long divisor, long dividend) {</span>
+<span class="nc" id="L56">        setHalign(TeXConstants.ALIGN_RIGHT);</span>
+<span class="nc" id="L57">        setVtop(true);</span>
+<span class="nc" id="L58">        String[] res = makeResults(divisor, dividend);</span>
+<span class="nc" id="L59">        Atom rule = new RuleAtom(TeXConstants.UNIT_EX, 0f,</span>
+                                 TeXConstants.UNIT_EX, 2.6f,
+                                 TeXConstants.UNIT_EX, 0.5f);
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        for (int i = 0; i &lt; res.length; ++i) {</span>
+<span class="nc" id="L63">            Atom num = new TeXFormula(res[i]).root;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">            if (i % 2 == 0) {</span>
+<span class="nc" id="L65">                RowAtom ra = new RowAtom(num);</span>
+<span class="nc" id="L66">                ra.add(rule);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">                if (i == 0) {</span>
+<span class="nc" id="L68">                    append(ra);</span>
+                } else {
+<span class="nc" id="L70">                    append(new UnderlinedAtom(ra));</span>
+                }
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            } else if (i == 1) {</span>
+<span class="nc" id="L73">                String div = Long.toString(divisor);</span>
+<span class="nc" id="L74">                SymbolAtom rparen = SymbolAtom.get(TeXFormula.symbolMappings[')']);</span>
+<span class="nc" id="L75">                Atom big = new BigDelimiterAtom(rparen, 1);</span>
+<span class="nc" id="L76">                Atom ph = new PhantomAtom(big, false, true, true);</span>
+<span class="nc" id="L77">                RowAtom ra = new RowAtom(ph);</span>
+<span class="nc" id="L78">                Atom raised = new RaiseAtom(big,</span>
+                                            TeXConstants.UNIT_X8, 3.5f,
+                                            TeXConstants.UNIT_X8, 0f,
+                                            TeXConstants.UNIT_X8, 0f);
+<span class="nc" id="L82">                ra.add(new SmashedAtom(raised));</span>
+<span class="nc" id="L83">                ra.add(num);</span>
+<span class="nc" id="L84">                Atom a = new OverlinedAtom(ra);</span>
+<span class="nc" id="L85">                RowAtom ra1 = new RowAtom(new TeXFormula(div).root);</span>
+<span class="nc" id="L86">                ra1.add(new SpaceAtom(TeXConstants.THINMUSKIP));</span>
+<span class="nc" id="L87">                ra1.add(a);</span>
+<span class="nc" id="L88">                append(ra1);</span>
+<span class="nc" id="L89">            } else {</span>
+<span class="nc" id="L90">                RowAtom ra = new RowAtom(num);</span>
+<span class="nc" id="L91">                ra.add(rule);</span>
+<span class="nc" id="L92">                append(ra);</span>
+            }
+        }
+<span class="nc" id="L95">    }</span>
+
+    private String[] makeResults(long divisor, long dividend) {
+<span class="nc" id="L98">        ArrayList&lt;String&gt; vec = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L99">        long q = dividend / divisor;</span>
+<span class="nc" id="L100">        vec.add(Long.toString(q));</span>
+<span class="nc" id="L101">        vec.add(Long.toString(dividend));</span>
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        while (q != 0) {</span>
+<span class="nc" id="L104">            final double p = (double) Math.floor(Math.log10((double) q));</span>
+<span class="nc" id="L105">            final double p10 = Math.pow(10., p);</span>
+<span class="nc" id="L106">            final long d = (long) (Math.floor(((double) q) / p10) * p10);</span>
+<span class="nc" id="L107">            final long dd = d * divisor;</span>
+<span class="nc" id="L108">            vec.add(Long.toString(dd));</span>
+<span class="nc" id="L109">            dividend -= dd;</span>
+<span class="nc" id="L110">            vec.add(Long.toString(dividend));</span>
+<span class="nc" id="L111">            q -= d;</span>
+<span class="nc" id="L112">        }</span>
+
+<span class="nc" id="L114">        String[] res = new String[vec.size()];</span>
+<span class="nc" id="L115">        return vec.toArray(res);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

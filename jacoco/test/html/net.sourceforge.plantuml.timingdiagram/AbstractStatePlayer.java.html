@@ -74,9 +74,9 @@ public abstract class AbstractStatePlayer extends Player {
 <span class="fc bfc" id="L74" title="All 2 branches covered.">		for (int i = 0; i &lt; states.length; i++)</span>
 <span class="fc" id="L75">			states[i] = decodeState(states[i]);</span>
 
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (now == null) {</span>
-<span class="nc" id="L78">			this.initialState = states[0];</span>
-<span class="nc" id="L79">			this.initialColors = color;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (now == null) {</span>
+<span class="fc" id="L78">			this.initialState = states[0];</span>
+<span class="fc" id="L79">			this.initialColors = color;</span>
 		} else {
 <span class="fc" id="L81">			this.changes.add(new ChangeState(now, comment, color, states));</span>
 		}

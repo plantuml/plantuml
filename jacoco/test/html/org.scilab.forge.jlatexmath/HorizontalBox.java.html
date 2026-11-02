@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HorizontalBox.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">HorizontalBox.java</span></div><h1>HorizontalBox.java</h1><pre class="source lang-java linenums">/* HorizontalBox.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
+/**
+ * A box composed of a horizontal row of child boxes.
+ */
+public class HorizontalBox extends Box {
+
+<span class="fc" id="L58">    private float curPos = 0; // NOPMD</span>
+    protected List&lt;Integer&gt; breakPositions;
+
+<span class="fc" id="L61">    public HorizontalBox(Box b, float w, int alignment) {</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (w != Float.POSITIVE_INFINITY) {</span>
+<span class="fc" id="L63">            float rest = w - b.getWidth();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            if (rest &gt; 0) {</span>
+<span class="fc bfc" id="L65" title="All 4 branches covered.">                if (alignment == TeXConstants.ALIGN_CENTER || alignment == TeXConstants.ALIGN_NONE) {</span>
+<span class="fc" id="L66">                    StrutBox s = new StrutBox(rest / 2, 0, 0, 0);</span>
+<span class="fc" id="L67">                    add(s);</span>
+<span class="fc" id="L68">                    add(b);</span>
+<span class="fc" id="L69">                    add(s);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">                } else if (alignment == TeXConstants.ALIGN_LEFT) {</span>
+<span class="fc" id="L71">                    add(b);</span>
+<span class="fc" id="L72">                    add(new StrutBox(rest, 0, 0, 0));</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">                } else if (alignment == TeXConstants.ALIGN_RIGHT) {</span>
+<span class="fc" id="L74">                    add(new StrutBox(rest, 0, 0, 0));</span>
+<span class="fc" id="L75">                    add(b);</span>
+                } else {
+<span class="nc" id="L77">                    add(b);</span>
+                }
+            } else {
+<span class="fc" id="L80">                add(b);</span>
+            }
+<span class="fc" id="L82">        } else {</span>
+<span class="nc" id="L83">            add(b);</span>
+        }
+<span class="fc" id="L85">    }</span>
+
+<span class="fc" id="L87">    public HorizontalBox(Box b) {</span>
+<span class="fc" id="L88">        add(b);</span>
+<span class="fc" id="L89">    }</span>
+
+<span class="fc" id="L91">    public HorizontalBox() {</span>
+        // basic horizontal box
+<span class="fc" id="L93">    }</span>
+
+    public HorizontalBox(TeXColor fg, TeXColor bg) {
+<span class="fc" id="L96">        super(fg, bg);</span>
+<span class="fc" id="L97">    }</span>
+
+    public HorizontalBox cloneBox() {
+<span class="nc" id="L100">        HorizontalBox b = new HorizontalBox(foreground, background);</span>
+<span class="nc" id="L101">        b.shift = shift;</span>
+
+<span class="nc" id="L103">        return b;</span>
+    }
+
+    public void draw(TeXGraphics g2, float x, float y) {
+<span class="fc" id="L107">        startDraw(g2, x, y);</span>
+<span class="fc" id="L108">        float xPos = x;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        for (Box box: children) {</span>
+            /*int i = children.indexOf(box);
+              if (breakPositions != null &amp;&amp; breakPositions.indexOf(i) != -1) {
+              box.markForDEBUG = TeXColor.BLUE;
+              }*/
+
+<span class="fc" id="L115">            box.draw(g2, xPos, y + box.shift);</span>
+<span class="fc" id="L116">            xPos += box.getWidth();</span>
+<span class="fc" id="L117">        }</span>
+<span class="fc" id="L118">        endDraw(g2);</span>
+<span class="fc" id="L119">    }</span>
+
+    public final void add(Box b) {
+<span class="fc" id="L122">        recalculate(b);</span>
+<span class="fc" id="L123">        super.add(b);</span>
+<span class="fc" id="L124">    }</span>
+
+    public final void add(int pos, Box b) {
+<span class="fc" id="L127">        recalculate(b);</span>
+<span class="fc" id="L128">        super.add(pos, b);</span>
+<span class="fc" id="L129">    }</span>
+
+    private void recalculate(Box b) {
+        // Commented for ticket 764
+        // \left(\!\!\!\begin{array}{c}n\\\\r\end{array}\!\!\!\right)+123
+        //curPos += b.getWidth();
+        //width = Math.max(width, curPos);
+<span class="fc" id="L136">        width += b.getWidth();</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        height = Math.max((children.size() == 0 ? Float.NEGATIVE_INFINITY : height), b.height - b.shift);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        depth = Math.max((children.size() == 0 ? Float.NEGATIVE_INFINITY : depth), b.depth + b.shift);</span>
+<span class="fc" id="L139">    }</span>
+
+    public int getLastFontId() {
+        // iterate from the last child box to the first untill a font id is found
+        // that's not equal to NO_FONT
+<span class="fc" id="L144">        int fontId = TeXFont.NO_FONT;</span>
+<span class="fc bfc" id="L145" title="All 4 branches covered.">        for (ListIterator&lt;Box&gt; it = children.listIterator(children.size()); fontId == TeXFont.NO_FONT &amp;&amp; it.hasPrevious();)</span>
+<span class="fc" id="L146">            fontId = ((Box) it.previous()).getLastFontId();</span>
+
+<span class="fc" id="L148">        return fontId;</span>
+    }
+
+    public void addBreakPosition(int pos) {
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (breakPositions == null) {</span>
+<span class="fc" id="L153">            breakPositions = new ArrayList&lt;Integer&gt;();</span>
+        }
+<span class="fc" id="L155">        breakPositions.add(pos);</span>
+<span class="fc" id="L156">    }</span>
+
+    protected HorizontalBox[] split(int position) {
+<span class="nc" id="L159">        return split(position, 1);</span>
+    }
+
+    protected HorizontalBox[] splitRemove(int position) {
+<span class="nc" id="L163">        return split(position, 2);</span>
+    }
+
+    private HorizontalBox[] split(int position, int shift) {
+<span class="nc" id="L167">        HorizontalBox hb1 = cloneBox();</span>
+<span class="nc" id="L168">        HorizontalBox hb2 = cloneBox();</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        for (int i = 0; i &lt;= position; i++) {</span>
+<span class="nc" id="L170">            hb1.add(children.get(i));</span>
+        }
+
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        for (int i = position + shift; i &lt; children.size(); i++) {</span>
+<span class="nc" id="L174">            hb2.add(children.get(i));</span>
+        }
+
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if (breakPositions != null) {</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">            for (int i = 0; i &lt; breakPositions.size(); i++) {</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">                if (breakPositions.get(i) &gt; position + 1) {</span>
+<span class="nc" id="L180">                    hb2.addBreakPosition(breakPositions.get(i) - position - 1);</span>
+                }
+            }
+        }
+
+<span class="nc" id="L185">        return new HorizontalBox[] {hb1, hb2};</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

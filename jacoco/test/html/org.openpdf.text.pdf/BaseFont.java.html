@@ -616,10 +616,10 @@ public abstract class BaseFont {
 <span class="fc" id="L616">            int len = text.length();</span>
 <span class="fc bfc" id="L617" title="All 2 branches covered.">            for (int k = 0; k &lt; len; ++k) {</span>
 <span class="fc" id="L618">                char char1 = text.charAt(k);</span>
-<span class="pc bpc" id="L619" title="5 of 6 branches missed.">                if (char1 &lt; 128 || char1 &gt;= 160 &amp;&amp; char1 &lt;= 255) {</span>
+<span class="pc bpc" id="L619" title="2 of 6 branches missed.">                if (char1 &lt; 128 || char1 &gt;= 160 &amp;&amp; char1 &lt;= 255) {</span>
 <span class="fc" id="L620">                    total += widths[char1];</span>
                 } else {
-<span class="nc" id="L622">                    total += widths[PdfEncodings.winansi.get(char1)];</span>
+<span class="fc" id="L622">                    total += widths[PdfEncodings.winansi.get(char1)];</span>
                 }
             }
 <span class="fc" id="L625">            return total;</span>

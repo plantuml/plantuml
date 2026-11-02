@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeXFormulaSettingsParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">TeXFormulaSettingsParser.java</span></div><h1>TeXFormulaSettingsParser.java</h1><pre class="source lang-java linenums">/* TeXFormulaSettingsParser.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.io.InputStream;
+
+
+
+/**
+ * Parses predefined TeXFormula's from an XML-file.
+ */
+public class TeXFormulaSettingsParser {
+
+    public static final String RESOURCE_NAME = &quot;TeXFormulaSettings.xml&quot;;
+    public static final String CHARTODEL_MAPPING_EL = &quot;Map&quot;;
+
+    private XmlElement root;
+
+    public TeXFormulaSettingsParser() throws ResourceParseException {
+<span class="fc" id="L64">        this(TeXResources.open(GlueSettingsParser.class, RESOURCE_NAME), RESOURCE_NAME);</span>
+<span class="fc" id="L65">    }</span>
+
+<span class="fc" id="L67">    public TeXFormulaSettingsParser(InputStream file, String name) throws ResourceParseException {</span>
+        try {
+<span class="fc" id="L69">            root = XmlReader.parse(file);</span>
+<span class="nc" id="L70">        } catch (Exception e) { // JDOMException or IOException</span>
+<span class="nc" id="L71">            throw new XMLResourceParseException(name, e);</span>
+<span class="fc" id="L72">        }</span>
+<span class="fc" id="L73">    }</span>
+
+    public void parseSymbolToFormulaMappings(String[] mappings, String[] textMappings) throws ResourceParseException {
+<span class="fc" id="L76">        XmlElement charToSymbol = (XmlElement)root.getElementsByTagName(&quot;CharacterToFormulaMappings&quot;).item(0);</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        if (charToSymbol != null) // element present</span>
+<span class="fc" id="L78">            addFormulaToMap(charToSymbol.getElementsByTagName(&quot;Map&quot;), mappings, textMappings);</span>
+<span class="fc" id="L79">    }</span>
+
+    public void parseSymbolMappings(String[] mappings, String[] textMappings) throws ResourceParseException {
+<span class="fc" id="L82">        XmlElement charToSymbol = (XmlElement)root.getElementsByTagName(&quot;CharacterToSymbolMappings&quot;).item(0);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (charToSymbol != null) // element present</span>
+<span class="fc" id="L84">            addToMap(charToSymbol.getElementsByTagName(&quot;Map&quot;), mappings, textMappings);</span>
+<span class="fc" id="L85">    }</span>
+
+    private static void addToMap(XmlNodeList mapList, String[] tableMath, String[] tableText) throws ResourceParseException {
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        for (int i = 0; i &lt; mapList.getLength(); i++) {</span>
+<span class="fc" id="L89">            XmlElement map = (XmlElement) mapList.item(i);</span>
+<span class="fc" id="L90">            String ch = map.getAttribute(&quot;char&quot;);</span>
+<span class="fc" id="L91">            String symbol = map.getAttribute(&quot;symbol&quot;);</span>
+<span class="fc" id="L92">            String text = map.getAttribute(&quot;text&quot;);</span>
+            // both attributes are required!
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">            if (ch.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L95">                throw new XMLResourceParseException(RESOURCE_NAME, map.getTagName(), &quot;char&quot;, null);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">            } else if (symbol.equals(&quot;&quot;)) {</span>
+<span class="nc" id="L97">                throw new XMLResourceParseException(RESOURCE_NAME, map.getTagName(), &quot;symbol&quot;, null);</span>
+            }
+
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">            if (ch.length() == 1) {// valid element found</span>
+<span class="fc" id="L101">                tableMath[ch.charAt(0)] =  symbol;</span>
+            } else {
+                // only single-character mappings allowed, ignore others
+<span class="nc" id="L104">                throw new XMLResourceParseException(RESOURCE_NAME, map.getTagName(), &quot;char&quot;, &quot;must have a value that contains exactly 1 character!&quot;);</span>
+            }
+
+<span class="pc bpc" id="L107" title="1 of 4 branches missed.">            if (tableText != null &amp;&amp; !text.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L108">                tableText[ch.charAt(0)] = text;</span>
+            }
+        }
+<span class="fc" id="L111">    }</span>
+
+    private static void addFormulaToMap(XmlNodeList mapList, String[] tableMath, String[] tableText) throws ResourceParseException {
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        for (int i = 0; i &lt; mapList.getLength(); i++) {</span>
+<span class="fc" id="L115">            XmlElement map = (XmlElement)mapList.item(i);</span>
+<span class="fc" id="L116">            String ch = map.getAttribute(&quot;char&quot;);</span>
+<span class="fc" id="L117">            String formula = map.getAttribute(&quot;formula&quot;);</span>
+<span class="fc" id="L118">            String text = map.getAttribute(&quot;text&quot;);</span>
+            // both attributes are required!
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">            if (ch.equals(&quot;&quot;))</span>
+<span class="nc" id="L121">                throw new XMLResourceParseException(RESOURCE_NAME, map.getTagName(),</span>
+                                                    &quot;char&quot;, null);
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">            else if (formula.equals(&quot;&quot;))</span>
+<span class="nc" id="L124">                throw new XMLResourceParseException(RESOURCE_NAME, map.getTagName(),</span>
+                                                    &quot;formula&quot;, null);
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">            if (ch.length() == 1) {// valid element found</span>
+<span class="fc" id="L127">                tableMath[ch.charAt(0)] = formula;</span>
+            } else
+                // only single-character mappings allowed, ignore others
+<span class="nc" id="L130">                throw new XMLResourceParseException(RESOURCE_NAME, map.getTagName(),</span>
+                                                    &quot;char&quot;,
+                                                    &quot;must have a value that contains exactly 1 character!&quot;);
+
+<span class="pc bpc" id="L134" title="1 of 4 branches missed.">            if (tableText != null &amp;&amp; !text.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L135">                tableText[ch.charAt(0)] = text;</span>
+            }
+        }
+<span class="fc" id="L138">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

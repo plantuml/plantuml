@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeXUnicodeBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">TeXUnicodeBlock.java</span></div><h1>TeXUnicodeBlock.java</h1><pre class="source lang-java linenums">/* TeXUnicodeBlock.java
+ * =========================================================================
+ * This file is NOT part of upstream JLaTeXMath, it was added for PLAN.md
+ * (phase 3, step 3c). It replaces java.lang.Character.UnicodeBlock, which the TeaVM class library does not have.
+ * It is released under the same terms as the library: GNU GPL version 2 or
+ * later, with the GNU linking exception (see the header of the other files of
+ * this package).
+ * =========================================================================
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * The Unicode blocks that the library tells apart: Basic Latin, the two blocks of
+ * the Greek alphabet, Cyrillic, and all the others together. They are the ones that
+ * have, or may have, TeX fonts ({@link AlphabetRegistration}); for every other
+ * character there is nothing to choose, so {@link #OTHER} is enough.
+ * &lt;p&gt;
+ * The ranges are those of {@code java.lang.Character.UnicodeBlock} (checked for
+ * the 65,536 characters by {@code TeXUnicodeBlockTest}). Each block is one
+ * object, so {@code ==} and {@code equals} are the same, and it can be a key of a
+ * map.
+ */
+public final class TeXUnicodeBlock {
+
+<span class="fc" id="L26">    public static final TeXUnicodeBlock BASIC_LATIN = new TeXUnicodeBlock(&quot;BASIC_LATIN&quot;);</span>
+<span class="fc" id="L27">    public static final TeXUnicodeBlock GREEK = new TeXUnicodeBlock(&quot;GREEK&quot;);</span>
+<span class="fc" id="L28">    public static final TeXUnicodeBlock GREEK_EXTENDED = new TeXUnicodeBlock(&quot;GREEK_EXTENDED&quot;);</span>
+<span class="fc" id="L29">    public static final TeXUnicodeBlock CYRILLIC = new TeXUnicodeBlock(&quot;CYRILLIC&quot;);</span>
+    /** Any character that is in none of the blocks above. */
+<span class="fc" id="L31">    public static final TeXUnicodeBlock OTHER = new TeXUnicodeBlock(&quot;OTHER&quot;);</span>
+
+    private final String name;
+
+<span class="fc" id="L35">    private TeXUnicodeBlock(String name) {</span>
+<span class="fc" id="L36">        this.name = name;</span>
+<span class="fc" id="L37">    }</span>
+
+    public static TeXUnicodeBlock of(char c) {
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (c &lt; 0x0080) {</span>
+<span class="fc" id="L41">            return BASIC_LATIN;</span>
+        }
+<span class="fc bfc" id="L43" title="All 4 branches covered.">        if (c &gt;= 0x0370 &amp;&amp; c &lt;= 0x03FF) {</span>
+<span class="fc" id="L44">            return GREEK;</span>
+        }
+<span class="fc bfc" id="L46" title="All 4 branches covered.">        if (c &gt;= 0x0400 &amp;&amp; c &lt;= 0x04FF) {</span>
+<span class="fc" id="L47">            return CYRILLIC;</span>
+        }
+<span class="fc bfc" id="L49" title="All 4 branches covered.">        if (c &gt;= 0x1F00 &amp;&amp; c &lt;= 0x1FFF) {</span>
+<span class="fc" id="L50">            return GREEK_EXTENDED;</span>
+        }
+<span class="fc" id="L52">        return OTHER;</span>
+    }
+
+    public String toString() {
+<span class="fc" id="L56">        return name;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

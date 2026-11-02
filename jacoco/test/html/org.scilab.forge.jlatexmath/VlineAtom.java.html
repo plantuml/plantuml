@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VlineAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">VlineAtom.java</span></div><h1>VlineAtom.java</h1><pre class="source lang-java linenums">/* VlineAtom.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * An atom representing a hline in array environment
+ */
+public class VlineAtom extends Atom {
+
+    private float height;
+    private float shift;
+    private int n;
+
+<span class="fc" id="L57">    public VlineAtom(int n) {</span>
+<span class="fc" id="L58">        this.n = n;</span>
+<span class="fc" id="L59">    }</span>
+
+    public void setHeight(float height) {
+<span class="fc" id="L62">        this.height = height;</span>
+<span class="fc" id="L63">    }</span>
+
+    public void setShift(float shift) {
+<span class="fc" id="L66">        this.shift = shift;</span>
+<span class="fc" id="L67">    }</span>
+
+    public float getWidth(TeXEnvironment env) {
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (n != 0) {</span>
+<span class="fc" id="L71">            float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());</span>
+<span class="fc" id="L72">            return drt * (3 * n - 2);</span>
+        } else
+<span class="nc" id="L74">            return 0;</span>
+    }
+
+    public Box createBox(TeXEnvironment env) {
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        if (n != 0) {</span>
+<span class="fc" id="L79">            float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());</span>
+<span class="fc" id="L80">            Box b = new HorizontalRule(height, drt, shift);</span>
+<span class="fc" id="L81">            Box sep = new StrutBox(2 * drt, 0, 0, 0);</span>
+<span class="fc" id="L82">            HorizontalBox hb = new HorizontalBox();</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">            for (int i = 0; i &lt; n - 1; i++) {</span>
+<span class="nc" id="L84">                hb.add(b);</span>
+<span class="nc" id="L85">                hb.add(sep);</span>
+            }
+
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">            if (n &gt; 0) {</span>
+<span class="fc" id="L89">                hb.add(b);</span>
+            }
+
+<span class="fc" id="L92">            return hb;</span>
+        }
+
+<span class="nc" id="L95">        return new StrutBox(0, 0, 0, 0);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

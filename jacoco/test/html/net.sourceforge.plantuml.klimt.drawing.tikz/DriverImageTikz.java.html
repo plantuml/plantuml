@@ -43,8 +43,8 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 <span class="fc" id="L43">public class DriverImageTikz implements UDriver&lt;UImage, TikzGraphics&gt; {</span>
 
 	public void draw(UImage shape, double x, double y, ColorMapper mapper, UParam param, TikzGraphics tikz) {
-<span class="nc" id="L46">		final String rawFileName = shape.getRawFileName();</span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (rawFileName != null) {</span>
+<span class="fc" id="L46">		final String rawFileName = shape.getRawFileName();</span>
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">		if (rawFileName != null) {</span>
 <span class="nc" id="L48">			final double scale = shape.getScale();</span>
 			final String raw;
 <span class="nc bnc" id="L50" title="All 2 branches missed.">			if (scale == 1)</span>
@@ -54,10 +54,10 @@ import net.sourceforge.plantuml.tikz.TikzGraphics;
 <span class="nc" id="L54">			tikz.appendRaw(x, y, raw);</span>
 <span class="nc" id="L55">			return;</span>
 		}
-<span class="nc" id="L57">		final String formula = shape.getFormula();</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (formula != null) {</span>
-<span class="nc" id="L59">			tikz.appendRaw(x, y, formula);</span>
+<span class="fc" id="L57">		final String formula = shape.getFormula();</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (formula != null) {</span>
+<span class="fc" id="L59">			tikz.appendRaw(x, y, formula);</span>
 		}
-<span class="nc" id="L61">	}</span>
+<span class="fc" id="L61">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

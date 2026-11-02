@@ -66,8 +66,8 @@ public abstract class BodyEnhancedAbstract implements TextBlock {
 
 	public static boolean isBlockSeparator(CharSequence cs) {
 <span class="fc" id="L68">		final String s = cs.toString();</span>
-<span class="pc bpc" id="L69" title="3 of 4 branches missed.">		if (s.startsWith(&quot;--&quot;) &amp;&amp; s.endsWith(&quot;--&quot;))</span>
-<span class="nc" id="L70">			return true;</span>
+<span class="pc bpc" id="L69" title="1 of 4 branches missed.">		if (s.startsWith(&quot;--&quot;) &amp;&amp; s.endsWith(&quot;--&quot;))</span>
+<span class="fc" id="L70">			return true;</span>
 
 <span class="fc bfc" id="L72" title="All 4 branches covered.">		if (s.startsWith(&quot;==&quot;) &amp;&amp; s.endsWith(&quot;==&quot;))</span>
 <span class="fc" id="L73">			return true;</span>

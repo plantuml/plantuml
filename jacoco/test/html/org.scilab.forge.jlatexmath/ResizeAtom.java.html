@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResizeAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">ResizeAtom.java</span></div><h1>ResizeAtom.java</h1><pre class="source lang-java linenums">/* ResizeAtom.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2011 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * An atom representing a scaled Atom.
+ */
+public class ResizeAtom extends Atom {
+
+    private Atom base;
+    private int wunit, hunit;
+    private float w, h;
+    private boolean keepaspectratio;
+
+<span class="fc" id="L58">    public ResizeAtom(Atom base, String ws, String hs, boolean keepaspectratio) {</span>
+<span class="fc" id="L59">        this.type = base.type;</span>
+<span class="fc" id="L60">        this.base = base;</span>
+<span class="fc" id="L61">        this.keepaspectratio = keepaspectratio;</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        float[] w = SpaceAtom.getLength(ws == null ? &quot;&quot; : ws);</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        float[] h = SpaceAtom.getLength(hs == null ? &quot;&quot; : hs);</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        if (w.length != 2) {</span>
+<span class="nc" id="L65">            this.wunit = -1;</span>
+        } else {
+<span class="fc" id="L67">            this.wunit = (int) w[0];</span>
+<span class="fc" id="L68">            this.w = w[1];</span>
+        }
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (h.length != 2) {</span>
+<span class="fc" id="L71">            this.hunit = -1;</span>
+        } else {
+<span class="nc" id="L73">            this.hunit = (int) h[0];</span>
+<span class="nc" id="L74">            this.h = h[1];</span>
+        }
+<span class="fc" id="L76">    }</span>
+
+    public int getLeftType() {
+<span class="fc" id="L79">        return base.getLeftType();</span>
+    }
+
+    public int getRightType() {
+<span class="fc" id="L83">        return base.getRightType();</span>
+    }
+
+    public Box createBox(TeXEnvironment env) {
+<span class="fc" id="L87">        Box bbox = base.createBox(env);</span>
+<span class="pc bpc" id="L88" title="3 of 4 branches missed.">        if (wunit == -1 &amp;&amp; hunit == -1) {</span>
+<span class="nc" id="L89">            return bbox;</span>
+        } else {
+<span class="fc" id="L91">            double xscl = 1;</span>
+<span class="fc" id="L92">            double yscl = 1;</span>
+<span class="pc bpc" id="L93" title="2 of 4 branches missed.">            if (wunit != -1 &amp;&amp; hunit != -1) {</span>
+<span class="nc" id="L94">                xscl = w * SpaceAtom.getFactor(wunit, env) / bbox.width;</span>
+<span class="nc" id="L95">                yscl = h * SpaceAtom.getFactor(hunit, env) / bbox.height;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">                if (keepaspectratio) {</span>
+<span class="nc" id="L97">                    xscl = Math.min(xscl, yscl);</span>
+<span class="nc" id="L98">                    yscl = xscl;</span>
+                }
+<span class="pc bpc" id="L100" title="2 of 4 branches missed.">            } else if (wunit != -1 &amp;&amp; hunit == -1) {</span>
+<span class="fc" id="L101">                xscl = w * SpaceAtom.getFactor(wunit, env) / bbox.width;</span>
+<span class="fc" id="L102">                yscl = xscl;</span>
+            } else {
+<span class="nc" id="L104">                yscl = h * SpaceAtom.getFactor(hunit, env) / bbox.height;</span>
+<span class="nc" id="L105">                xscl = yscl;</span>
+            }
+
+<span class="fc" id="L108">            return new ScaleBox(bbox, xscl, yscl);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

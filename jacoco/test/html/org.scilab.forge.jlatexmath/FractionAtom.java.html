@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FractionAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">FractionAtom.java</span></div><h1>FractionAtom.java</h1><pre class="source lang-java linenums">/* FractionAtom.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * An atom representing a fraction.
+ */
+public class FractionAtom extends Atom {
+
+    // whether the default thickness should not be used for the fraction line
+<span class="fc" id="L55">    private boolean noDefault = false;</span>
+
+    // unit used for the thickness of the fraction line
+    private int unit;
+
+    // alignment settings for the numerator and denominator
+<span class="fc" id="L61">    private int numAlign = TeXConstants.ALIGN_CENTER,</span>
+                denomAlign = TeXConstants.ALIGN_CENTER;
+
+    // the atoms representing the numerator and denominator
+    private Atom numerator, denominator;
+
+    // thickness of the fraction line
+    private float thickness;
+
+    // thickness of the fraction line relative to the default thickness
+    private float defFactor;
+
+    // whether the &quot;defFactor&quot; value should be used
+<span class="fc" id="L74">    private boolean defFactorSet = false;</span>
+
+    /**
+     * Uses the default thickness for the fraction line
+     *
+     * @param num the numerator
+     * @param den the denominator
+     */
+    public FractionAtom(Atom num, Atom den) {
+<span class="nc" id="L83">        this(num, den, true);</span>
+<span class="nc" id="L84">    }</span>
+
+    /**
+     * Uses the default thickness for the fraction line
+     *
+     * @param num the numerator
+     * @param den the denominator
+     * @param rule whether the fraction line should be drawn
+     */
+    public FractionAtom(Atom num, Atom den, boolean rule) {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        this(num, den, !rule, TeXConstants.UNIT_PIXEL, 0f);</span>
+<span class="fc" id="L95">    }</span>
+
+    /**
+     * Depending on noDef, the given thickness and unit will be used (as opposed to the default
+     * thickness).
+     *
+     * @param num the numerator
+     * @param den the denominator
+     * @param noDef whether the default thickness should not be used for the fraction line
+     * @param unit a unit constant for the line thickness
+     * @param t the thickness of the fraction line (in the given unit)
+     * @throws InvalidUnitException if the given integer is not a valid unit constant
+     */
+    public FractionAtom(Atom num, Atom den, boolean noDef, int unit, float t)
+<span class="fc" id="L109">    throws InvalidUnitException {</span>
+        // check unit
+<span class="fc" id="L111">        SpaceAtom.checkUnit(unit);</span>
+
+        // unit ok
+<span class="fc" id="L114">        numerator = num;</span>
+<span class="fc" id="L115">        denominator = den;</span>
+<span class="fc" id="L116">        noDefault = noDef;</span>
+<span class="fc" id="L117">        thickness = t;</span>
+<span class="fc" id="L118">        this.unit = unit;</span>
+<span class="fc" id="L119">        type = TeXConstants.TYPE_INNER;</span>
+<span class="fc" id="L120">    }</span>
+
+    /**
+     * Uses the default thickness for the fraction line.
+     *
+     * @param num the numerator
+     * @param den the denominator
+     * @param rule whether the fraction line should be drawn
+     * @param numAlign alignment of the numerator
+     * @param denomAlign alignment of the denominator
+     */
+    public FractionAtom(Atom num, Atom den, boolean rule, int numAlign,
+                        int denomAlign) {
+<span class="fc" id="L133">        this(num, den, rule);</span>
+<span class="fc" id="L134">        this.numAlign = checkAlignment(numAlign);</span>
+<span class="fc" id="L135">        this.denomAlign = checkAlignment(denomAlign);</span>
+<span class="fc" id="L136">    }</span>
+
+    /**
+     * The thickness of the fraction line will be &quot;defFactor&quot; times the default thickness.
+     *
+     * @param num the numerator
+     * @param den the denominator
+     * @param defFactor the thickness of the fraction line relative to the default thickness
+     * @param numAlign alignment of the numerator
+     * @param denomAlign alignment of the denominator
+     */
+    public FractionAtom(Atom num, Atom den, float defFactor, int numAlign,
+                        int denomAlign) {
+<span class="nc" id="L149">        this(num, den, true, numAlign, denomAlign);</span>
+<span class="nc" id="L150">        this.defFactor = defFactor;</span>
+<span class="nc" id="L151">        defFactorSet = true;</span>
+<span class="nc" id="L152">    }</span>
+
+    /**
+     * The thickness of the fraction line is determined by the given value &quot;t&quot; in the
+     * given unit.
+     *
+     * @param num the numerator
+     * @param den the denominator
+     * @param unit a unit constant for the line thickness
+     * @param t the thickness of the fraction line (in the given unit)
+     * @param numAlign alignment of the numerator
+     * @param denomAlign alignment of the denominator
+     */
+    public FractionAtom(Atom num, Atom den, int unit, float t, int numAlign,
+                        int denomAlign) {
+<span class="nc" id="L167">        this(num, den, unit, t);</span>
+<span class="nc" id="L168">        this.numAlign = checkAlignment(numAlign);</span>
+<span class="nc" id="L169">        this.denomAlign = checkAlignment(denomAlign);</span>
+<span class="nc" id="L170">    }</span>
+
+    /**
+     * The thickness of the fraction line is determined by the given value &quot;t&quot; in the
+     * given unit.
+     *
+     * @param num the numerator
+     * @param den the denominator
+     * @param unit a unit constant for the line thickness
+     * @param t the thickness of the fraction line (in the given unit)
+     */
+    public FractionAtom(Atom num, Atom den, int unit, float t) {
+<span class="nc" id="L182">        this(num, den, true, unit, t);</span>
+<span class="nc" id="L183">    }</span>
+
+    // Checks if the alignment constant is valid.
+    // If not, a default value will be used.
+    private int checkAlignment(int align) {
+<span class="pc bpc" id="L188" title="2 of 4 branches missed.">        if (align == TeXConstants.ALIGN_LEFT ||</span>
+                align == TeXConstants.ALIGN_RIGHT)
+<span class="nc" id="L190">            return align;</span>
+        else
+<span class="fc" id="L192">            return TeXConstants.ALIGN_CENTER;</span>
+    }
+
+    public Box createBox(TeXEnvironment env) {
+<span class="fc" id="L196">        TeXFont tf = env.getTeXFont();</span>
+<span class="fc" id="L197">        int style = env.getStyle();</span>
+        // set thickness to default if default value should be used
+<span class="fc" id="L199">        float drt = tf.getDefaultRuleThickness(style);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        if (noDefault)</span>
+            // convert the thickness to pixels
+<span class="fc" id="L202">            thickness *= SpaceAtom.getFactor(unit, env);</span>
+        else
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">            thickness = (defFactorSet ? defFactor * drt : drt);</span>
+
+        // create equal width boxes (in appropriate styles)
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">        Box num = (numerator == null ? new StrutBox(0, 0, 0, 0) : numerator</span>
+<span class="fc" id="L208">                   .createBox(env.numStyle()));</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">        Box denom = (denominator == null ? new StrutBox(0, 0, 0, 0) : denominator</span>
+<span class="fc" id="L210">                     .createBox(env.denomStyle()));</span>
+
+<span class="fc bfc" id="L212" title="All 2 branches covered.">        if (num.getWidth() &lt; denom.getWidth())</span>
+<span class="fc" id="L213">            num = new HorizontalBox(num, denom.getWidth(), numAlign);</span>
+        else
+<span class="fc" id="L215">            denom = new HorizontalBox(denom, num.getWidth(), denomAlign);</span>
+
+        // calculate default shift amounts
+        float shiftUp, shiftDown;
+<span class="fc bfc" id="L219" title="All 2 branches covered.">        if (style &lt; TeXConstants.STYLE_TEXT) {</span>
+<span class="fc" id="L220">            shiftUp = tf.getNum1(style);</span>
+<span class="fc" id="L221">            shiftDown = tf.getDenom1(style);</span>
+        } else {
+<span class="fc" id="L223">            shiftDown = tf.getDenom2(style);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">            if (thickness &gt; 0)</span>
+<span class="fc" id="L225">                shiftUp = tf.getNum2(style);</span>
+            else
+<span class="fc" id="L227">                shiftUp = tf.getNum3(style);</span>
+        }
+
+        // upper part of vertical box = numerator
+<span class="fc" id="L231">        VerticalBox vBox = new VerticalBox();</span>
+<span class="fc" id="L232">        vBox.add(num);</span>
+
+        // calculate clearance clr, adjust shift amounts and create vertical box
+<span class="fc" id="L235">        float clr, delta, axis = tf.getAxisHeight(style);</span>
+
+<span class="fc bfc" id="L237" title="All 2 branches covered.">        if (thickness &gt; 0) { // WITH fraction rule</span>
+            // clearance clr
+<span class="fc bfc" id="L239" title="All 2 branches covered.">            if (style &lt; TeXConstants.STYLE_TEXT)</span>
+<span class="fc" id="L240">                clr = 3 * thickness;</span>
+            else
+<span class="fc" id="L242">                clr = thickness;</span>
+
+            // adjust shift amounts
+<span class="fc" id="L245">            delta = thickness / 2;</span>
+<span class="fc" id="L246">            float kern1 = shiftUp - num.getDepth() - (axis + delta), kern2 = axis</span>
+<span class="fc" id="L247">                          - delta - (denom.getHeight() - shiftDown);</span>
+<span class="fc" id="L248">            float delta1 = clr - kern1, delta2 = clr - kern2;</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">            if (delta1 &gt; 0) {</span>
+<span class="fc" id="L250">                shiftUp += delta1;</span>
+<span class="fc" id="L251">                kern1 += delta1;</span>
+            }
+<span class="fc bfc" id="L253" title="All 2 branches covered.">            if (delta2 &gt; 0) {</span>
+<span class="fc" id="L254">                shiftDown += delta2;</span>
+<span class="fc" id="L255">                kern2 += delta2;</span>
+            }
+
+            // fill vertical box
+<span class="fc" id="L259">            vBox.add(new StrutBox(0, kern1, 0, 0));</span>
+<span class="fc" id="L260">            vBox.add(new HorizontalRule(thickness, num.getWidth(), 0));</span>
+<span class="fc" id="L261">            vBox.add(new StrutBox(0, kern2, 0, 0));</span>
+<span class="fc" id="L262">        } else { // WITHOUT fraction rule</span>
+            // clearance clr
+<span class="fc bfc" id="L264" title="All 2 branches covered.">            if (style &lt; TeXConstants.STYLE_TEXT)</span>
+<span class="fc" id="L265">                clr = 7 * drt;</span>
+            else
+<span class="fc" id="L267">                clr = 3 * drt;</span>
+
+            // adjust shift amounts
+<span class="fc" id="L270">            float kern = shiftUp - num.getDepth()</span>
+<span class="fc" id="L271">                         - (denom.getHeight() - shiftDown);</span>
+<span class="fc" id="L272">            delta = (clr - kern) / 2;</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">            if (delta &gt; 0) {</span>
+<span class="nc" id="L274">                shiftUp += delta;</span>
+<span class="nc" id="L275">                shiftDown += delta;</span>
+<span class="nc" id="L276">                kern += 2 * delta;</span>
+            }
+
+            // fill vertical box
+<span class="fc" id="L280">            vBox.add(new StrutBox(0, kern, 0, 0));</span>
+        }
+
+        // finish vertical box
+<span class="fc" id="L284">        vBox.add(denom);</span>
+<span class="fc" id="L285">        vBox.setHeight(shiftUp + num.getHeight());</span>
+<span class="fc" id="L286">        vBox.setDepth(shiftDown + denom.getDepth());</span>
+
+        // \nulldelimiterspace is set by default to 1.2pt = 0.12em)
+<span class="fc" id="L289">        float f = new SpaceAtom(TeXConstants.UNIT_EM, 0.12f, 0, 0).createBox(env).getWidth();</span>
+
+<span class="fc" id="L291">        return new HorizontalBox(vBox, vBox.getWidth() + 2 * f, TeXConstants.ALIGN_CENTER);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

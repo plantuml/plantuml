@@ -248,10 +248,6 @@ class "javax.imageio.stream"{
 
 }
 
-class "javax.script"{
-
-}
-
 class "javax.swing"{
 
 }
@@ -1991,7 +1987,7 @@ Total Classes: 21
 "net.sourceforge.plantuml.klimt" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.klimt" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.awt" %lighten("red", 37) {
+class "net.sourceforge.plantuml.klimt.awt" %lighten("red", 38) {
 Total Classes: 4
 }
 "net.sourceforge.plantuml.klimt.awt" --> "java.awt"
@@ -2045,14 +2041,13 @@ Total Classes: 19
 "net.sourceforge.plantuml.klimt.creole" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.klimt.creole" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.creole.atom" %lighten("red", 99) {
+class "net.sourceforge.plantuml.klimt.creole.atom" %lighten("red", 98) {
 Total Classes: 14
 }
 "net.sourceforge.plantuml.klimt.creole.atom" --> "java.lang"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "java.util"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.emoji"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt"
-"net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt.creole"
 "net.sourceforge.plantuml.klimt.creole.atom" --> "net.sourceforge.plantuml.klimt.drawing"
@@ -2084,7 +2079,7 @@ Total Classes: 19
 "net.sourceforge.plantuml.klimt.creole.command" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.klimt.creole.command" --> "net.sourceforge.plantuml.url"
 
-class "net.sourceforge.plantuml.klimt.creole.legacy" %lighten("red", 87) {
+class "net.sourceforge.plantuml.klimt.creole.legacy" %lighten("red", 86) {
 Total Classes: 15
 }
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "java.lang"
@@ -2109,11 +2104,10 @@ Total Classes: 15
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.style"
-"net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.klimt.creole.legacy" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.drawing" %lighten("red", 51) {
+class "net.sourceforge.plantuml.klimt.drawing" %lighten("red", 50) {
 Total Classes: 14
 }
 "net.sourceforge.plantuml.klimt.drawing" --> "java.io"
@@ -2391,27 +2385,29 @@ Total Classes: 2
 "net.sourceforge.plantuml.log" --> "java.util.logging"
 "net.sourceforge.plantuml.log" --> "net.sourceforge.plantuml.teavm"
 
-class "net.sourceforge.plantuml.math" %lighten("red", 93) {
-Total Classes: 13
+class "net.sourceforge.plantuml.math" %lighten("red", 98) {
+Total Classes: 20
 }
-"net.sourceforge.plantuml.math" --> "java.awt"
 "net.sourceforge.plantuml.math" --> "java.io"
 "net.sourceforge.plantuml.math" --> "java.lang"
-"net.sourceforge.plantuml.math" --> "java.lang.reflect"
 "net.sourceforge.plantuml.math" --> "java.util"
-"net.sourceforge.plantuml.math" --> "javax.script"
-"net.sourceforge.plantuml.math" --> "javax.swing"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.klimt.awt"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.log"
 "net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.math" --> "org.w3c.dom"
+"net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.teavm"
+"net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.teavm.c"
+"net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.teavm.js"
+"net.sourceforge.plantuml.math" --> "net.sourceforge.plantuml.teavm.js.browser"
+"net.sourceforge.plantuml.math" --> "org.scilab.forge.jlatexmath"
 
 class "net.sourceforge.plantuml.mcp" %lighten("red", 100) {
 Total Classes: 3
@@ -3290,7 +3286,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.teavm" --> "java.lang"
 "net.sourceforge.plantuml.teavm" --> "java.util"
 
-class "net.sourceforge.plantuml.teavm.c" %lighten("red", 95) {
+class "net.sourceforge.plantuml.teavm.c" %lighten("red", 93) {
 Total Classes: 13
 }
 "net.sourceforge.plantuml.teavm.c" --> "java.io"
@@ -3315,6 +3311,7 @@ Total Classes: 13
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.klimt.creole.legacy"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.klimt.drawing.raster"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.klimt.sprite"
+"net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.math"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.mindmap"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.nwdiag"
@@ -3334,8 +3331,8 @@ Total Classes: 13
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.wbs"
 "net.sourceforge.plantuml.teavm.c" --> "net.sourceforge.plantuml.yaml"
 
-class "net.sourceforge.plantuml.teavm.js" %lighten("red", 89) {
-Total Classes: 18
+class "net.sourceforge.plantuml.teavm.js" %lighten("red", 85) {
+Total Classes: 19
 }
 "net.sourceforge.plantuml.teavm.js" --> "java.io"
 "net.sourceforge.plantuml.teavm.js" --> "java.lang"
@@ -3351,10 +3348,11 @@ Total Classes: 18
 "net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.teavm.js.browser"
 "net.sourceforge.plantuml.teavm.js" --> "net.sourceforge.plantuml.url"
+"net.sourceforge.plantuml.teavm.js" --> "org.scilab.forge.jlatexmath"
 "net.sourceforge.plantuml.teavm.js" --> "org.teavm.jso"
 "net.sourceforge.plantuml.teavm.js" --> "org.teavm.jso.dom.xml"
 
-class "net.sourceforge.plantuml.teavm.js.browser" %lighten("red", 83) {
+class "net.sourceforge.plantuml.teavm.js.browser" %lighten("red", 89) {
 Total Classes: 12
 }
 "net.sourceforge.plantuml.teavm.js.browser" --> "java.io"
@@ -3807,6 +3805,34 @@ Total Classes: 1
 "org.openpdf.text.pdf.internal" --> "org.openpdf.text"
 "org.openpdf.text.pdf.internal" --> "org.openpdf.text.pdf"
 "org.openpdf.text.pdf.internal" --> "org.openpdf.text.pdf.interfaces"
+
+class "org.scilab.forge.jlatexmath" %lighten("red", 63) {
+Total Classes: 146
+}
+"org.scilab.forge.jlatexmath" --> "java.io"
+"org.scilab.forge.jlatexmath" --> "java.lang"
+"org.scilab.forge.jlatexmath" --> "java.util"
+"org.scilab.forge.jlatexmath" --> "org.scilab.forge.jlatexmath.cyrillic"
+"org.scilab.forge.jlatexmath" --> "org.scilab.forge.jlatexmath.dynamic"
+"org.scilab.forge.jlatexmath" --> "org.scilab.forge.jlatexmath.greek"
+
+class "org.scilab.forge.jlatexmath.cyrillic" %lighten("red", 67) {
+Total Classes: 1
+}
+"org.scilab.forge.jlatexmath.cyrillic" --> "java.lang"
+"org.scilab.forge.jlatexmath.cyrillic" --> "org.scilab.forge.jlatexmath"
+
+class "org.scilab.forge.jlatexmath.dynamic" %lighten("red", 67) {
+Total Classes: 3
+}
+"org.scilab.forge.jlatexmath.dynamic" --> "java.lang"
+"org.scilab.forge.jlatexmath.dynamic" --> "org.scilab.forge.jlatexmath"
+
+class "org.scilab.forge.jlatexmath.greek" %lighten("red", 67) {
+Total Classes: 1
+}
+"org.scilab.forge.jlatexmath.greek" --> "java.lang"
+"org.scilab.forge.jlatexmath.greek" --> "org.scilab.forge.jlatexmath"
 
 class "org.stathissideris.ascii2image.core" %lighten("red", 78) {
 Total Classes: 10

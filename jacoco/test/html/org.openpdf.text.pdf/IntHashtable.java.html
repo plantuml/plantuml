@@ -148,15 +148,15 @@ public class IntHashtable implements Cloneable {
      * @see     #put(int, int)
      */
     public int get(int key) {
-<span class="nc" id="L151">        Entry[] tab = table;</span>
-<span class="nc" id="L152">        int hash = key;</span>
-<span class="nc" id="L153">        int index = (hash &amp; 0x7FFFFFFF) % tab.length;</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">        for (Entry e = tab[index]; e != null; e = e.next) {</span>
+<span class="fc" id="L151">        Entry[] tab = table;</span>
+<span class="fc" id="L152">        int hash = key;</span>
+<span class="fc" id="L153">        int index = (hash &amp; 0x7FFFFFFF) % tab.length;</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">        for (Entry e = tab[index]; e != null; e = e.next) {</span>
 <span class="nc bnc" id="L155" title="All 4 branches missed.">            if (e.hash == hash &amp;&amp; e.key == key) {</span>
 <span class="nc" id="L156">                return e.value;</span>
             }
         }
-<span class="nc" id="L159">        return 0;</span>
+<span class="fc" id="L159">        return 0;</span>
     }
 
     /***

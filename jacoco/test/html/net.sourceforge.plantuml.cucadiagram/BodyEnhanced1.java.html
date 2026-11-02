@@ -69,7 +69,7 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 	private final ISkinParam skinParam;
 	private final boolean lineFirst;
-<span class="pc" id="L72">	private final List&lt;Url&gt; urls = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L72">	private final List&lt;Url&gt; urls = new ArrayList&lt;&gt;();</span>
 
 	private final Entity entity;
 	private final boolean inEllipse;
@@ -77,17 +77,17 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 	BodyEnhanced1(HorizontalAlignment align, List&lt;CharSequence&gt; rawBody, ISkinParam skinParam, Entity entity,
 			Style style) {
-<span class="nc" id="L80">		super(align, style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()), style);</span>
-<span class="nc" id="L81">		this.style = style;</span>
-<span class="nc" id="L82">		this.rawBody2 = Display.create(rawBody);</span>
+<span class="fc" id="L80">		super(align, style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()), style);</span>
+<span class="fc" id="L81">		this.style = style;</span>
+<span class="fc" id="L82">		this.rawBody2 = Display.create(rawBody);</span>
 
-<span class="nc" id="L84">		this.skinParam = skinParam;</span>
+<span class="fc" id="L84">		this.skinParam = skinParam;</span>
 
-<span class="nc" id="L86">		this.lineFirst = true;</span>
+<span class="fc" id="L86">		this.lineFirst = true;</span>
 
-<span class="nc" id="L88">		this.entity = entity;</span>
-<span class="nc" id="L89">		this.inEllipse = false;</span>
-<span class="nc" id="L90">	}</span>
+<span class="fc" id="L88">		this.entity = entity;</span>
+<span class="fc" id="L89">		this.inEllipse = false;</span>
+<span class="fc" id="L90">	}</span>
 
 	BodyEnhanced1(HorizontalAlignment align, Display display, ISkinParam skinParam, Entity entity, Style style) {
 <span class="fc" id="L93">		super(align, style.getFontConfiguration(skinParam.getIHtmlColorSet(), entity.getColors()), style);</span>
@@ -111,36 +111,36 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 	@Override
 	protected double getMarginX() {
-<span class="nc" id="L114">		return 6;</span>
+<span class="fc" id="L114">		return 6;</span>
 	}
 
 	private static boolean isTreeOrTable(CharSequence s) {
-<span class="nc" id="L118">		s = StringUtils.trim2(s);</span>
-<span class="nc bnc" id="L119" title="All 4 branches missed.">		return Parser.isTreeStart(s) || CreoleParser.isTableLine(s);</span>
+<span class="fc" id="L118">		s = StringUtils.trim2(s);</span>
+<span class="pc bpc" id="L119" title="2 of 4 branches missed.">		return Parser.isTreeStart(s) || CreoleParser.isTableLine(s);</span>
 	}
 
 	@Override
 	final protected TextBlock getArea(StringBounder stringBounder) {
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (area != null)</span>
-<span class="nc" id="L125">			return area;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (area != null)</span>
+<span class="fc" id="L125">			return area;</span>
 
-<span class="nc" id="L127">		urls.clear();</span>
-<span class="nc" id="L128">		final List&lt;TextBlock&gt; blocks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L127">		urls.clear();</span>
+<span class="fc" id="L128">		final List&lt;TextBlock&gt; blocks = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		char separator = lineFirst ? '_' : 0;</span>
-<span class="nc" id="L131">		TextBlock title = null;</span>
-<span class="nc" id="L132">		Display display = null;</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		for (ListIterator&lt;CharSequence&gt; it = rawBody2.iterator(); it.hasNext();) {</span>
-<span class="nc" id="L134">			final CharSequence cs = it.next();</span>
-<span class="nc" id="L135">			final String s = cs.toString();</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">			if (isBlockSeparator(s)) {</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">				if (display == null)</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		char separator = lineFirst ? '_' : 0;</span>
+<span class="fc" id="L131">		TextBlock title = null;</span>
+<span class="fc" id="L132">		Display display = null;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (ListIterator&lt;CharSequence&gt; it = rawBody2.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L134">			final CharSequence cs = it.next();</span>
+<span class="fc" id="L135">			final String s = cs.toString();</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">			if (isBlockSeparator(s)) {</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">				if (display == null)</span>
 <span class="nc" id="L138">					display = Display.empty();</span>
-<span class="nc" id="L139">				blocks.add(buildTextBlock(display, separator, title, stringBounder));</span>
-<span class="nc" id="L140">				separator = s.charAt(0);</span>
-<span class="nc" id="L141">				title = getTitle(s, skinParam);</span>
-<span class="nc" id="L142">				display = null;</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">			} else if (isTreeOrTable(s)) {</span>
+<span class="fc" id="L139">				blocks.add(buildTextBlock(display, separator, title, stringBounder));</span>
+<span class="fc" id="L140">				separator = s.charAt(0);</span>
+<span class="fc" id="L141">				title = getTitle(s, skinParam);</span>
+<span class="fc" id="L142">				display = null;</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">			} else if (isTreeOrTable(s)) {</span>
 <span class="nc" id="L144">				final boolean isTable = CreoleParser.isTableLine(s);</span>
 <span class="nc bnc" id="L145" title="All 2 branches missed.">				if (display == null)</span>
 <span class="nc" id="L146">					display = Display.empty();</span>
@@ -157,41 +157,41 @@ public class BodyEnhanced1 extends BodyEnhancedAbstract implements TextBlock, Wi
 
 <span class="nc" id="L158">				blocks.add(block);</span>
 <span class="nc" id="L159">			} else {</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">				if (display == null)</span>
-<span class="nc" id="L161">					display = Display.empty();</span>
-<span class="nc" id="L162">				display = display.add(cs);</span>
-<span class="nc bnc" id="L163" title="All 4 branches missed.">				if (cs instanceof Member &amp;&amp; ((Member) cs).getUrl() != null)</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">				if (display == null)</span>
+<span class="fc" id="L161">					display = Display.empty();</span>
+<span class="fc" id="L162">				display = display.add(cs);</span>
+<span class="pc bpc" id="L163" title="2 of 4 branches missed.">				if (cs instanceof Member &amp;&amp; ((Member) cs).getUrl() != null)</span>
 <span class="nc" id="L164">					urls.add(((Member) cs).getUrl());</span>
 
 			}
 //			}
-<span class="nc" id="L168">		}</span>
+<span class="fc" id="L168">		}</span>
 
-<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (display == null)</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (display == null)</span>
 <span class="nc" id="L171">			display = Display.empty();</span>
-<span class="nc bnc" id="L172" title="All 4 branches missed.">		if (inEllipse &amp;&amp; display.size() == 0)</span>
+<span class="pc bpc" id="L172" title="3 of 4 branches missed.">		if (inEllipse &amp;&amp; display.size() == 0)</span>
 <span class="nc" id="L173">			display = display.add(&quot;&quot;);</span>
 
-<span class="nc" id="L175">		blocks.add(buildTextBlock(display, separator, title, stringBounder));</span>
+<span class="fc" id="L175">		blocks.add(buildTextBlock(display, separator, title, stringBounder));</span>
 
-<span class="nc bnc" id="L177" title="All 2 branches missed.">		if (blocks.size() == 1)</span>
-<span class="nc" id="L178">			this.area = blocks.get(0);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		if (blocks.size() == 1)</span>
+<span class="fc" id="L178">			this.area = blocks.get(0);</span>
 		else
-<span class="nc" id="L180">			this.area = new TextBlockVertical(blocks, align);</span>
+<span class="fc" id="L180">			this.area = new TextBlockVertical(blocks, align);</span>
 
-<span class="nc" id="L182">		final double minClassWidth = style.value(PName.MinimumWidth).asDouble();</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		if (minClassWidth &gt; 0)</span>
+<span class="fc" id="L182">		final double minClassWidth = style.value(PName.MinimumWidth).asDouble();</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (minClassWidth &gt; 0)</span>
 <span class="nc" id="L184">			this.area = TextBlockUtils.withMinWidth(this.area, minClassWidth, align);</span>
 
-<span class="nc" id="L186">		return area;</span>
+<span class="fc" id="L186">		return area;</span>
 	}
 
 	private TextBlock buildTextBlock(Display display, char separator, TextBlock title, StringBounder stringBounder) {
 		// TextBlock result = display.create9(titleConfig, align, skinParam,
 		// LineBreakStrategy.NONE);
-<span class="nc" id="L192">		TextBlock result = new MethodsOrFieldsArea(display, skinParam, align, entity, style);</span>
-<span class="nc" id="L193">		result = decorate(result, separator, title, stringBounder);</span>
-<span class="nc" id="L194">		return result;</span>
+<span class="fc" id="L192">		TextBlock result = new MethodsOrFieldsArea(display, skinParam, align, entity, style);</span>
+<span class="fc" id="L193">		result = decorate(result, separator, title, stringBounder);</span>
+<span class="fc" id="L194">		return result;</span>
 	}
 
 <span class="fc" id="L197">	private static final Pattern p = Pattern.compile(&quot;^(\\s+)&quot;);</span>

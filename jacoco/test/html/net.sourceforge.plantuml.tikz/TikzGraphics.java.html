@@ -367,16 +367,16 @@ import net.sourceforge.plantuml.version.Version;
 <span class="fc" id="L367">	}</span>
 
 	public void appendRaw(double x, double y, String formula) {
-<span class="nc" id="L370">		Objects.requireNonNull(formula);</span>
-<span class="nc" id="L371">		final StringBuilder sb = new StringBuilder(&quot;\\node at &quot; + couple(x, y));</span>
-<span class="nc" id="L372">		sb.append(&quot;[below right&quot;);</span>
-<span class="nc" id="L373">		sb.append(&quot;,inner sep=0]{&quot;);</span>
-<span class="nc" id="L374">		sb.append(&quot;$&quot;);</span>
-<span class="nc" id="L375">		sb.append(formula);</span>
-<span class="nc" id="L376">		sb.append(&quot;$&quot;);</span>
-<span class="nc" id="L377">		sb.append(&quot;};&quot;);</span>
-<span class="nc" id="L378">		addCommand(sb);</span>
-<span class="nc" id="L379">	}</span>
+<span class="fc" id="L370">		Objects.requireNonNull(formula);</span>
+<span class="fc" id="L371">		final StringBuilder sb = new StringBuilder(&quot;\\node at &quot; + couple(x, y));</span>
+<span class="fc" id="L372">		sb.append(&quot;[below right&quot;);</span>
+<span class="fc" id="L373">		sb.append(&quot;,inner sep=0]{&quot;);</span>
+<span class="fc" id="L374">		sb.append(&quot;$&quot;);</span>
+<span class="fc" id="L375">		sb.append(formula);</span>
+<span class="fc" id="L376">		sb.append(&quot;$&quot;);</span>
+<span class="fc" id="L377">		sb.append(&quot;};&quot;);</span>
+<span class="fc" id="L378">		addCommand(sb);</span>
+<span class="fc" id="L379">	}</span>
 
 	private void appendPendingUrl(final StringBuilder sb) {
 <span class="nc bnc" id="L382" title="All 2 branches missed.">		if (Url.isLatex(pendingUrl)) {</span>
@@ -528,7 +528,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="fc" id="L528">				lasty = coord[1] + y;</span>
 <span class="pc bpc" id="L529" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_QUADTO) {</span>
 <span class="nc" id="L530">				throw new UnsupportedOperationException();</span>
-<span class="pc bpc" id="L531" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
+<span class="fc bfc" id="L531" title="All 2 branches covered.">			} else if (type == USegmentType.SEG_CUBICTO) {</span>
 				// curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y,
 				// coord[4] + x, coord[5] + y);
 <span class="fc" id="L534">				sb.append(&quot; ..controls &quot;);</span>
@@ -539,43 +539,43 @@ import net.sourceforge.plantuml.version.Version;
 <span class="fc" id="L539">				sb.append(couple(coord[4] + x, coord[5] + y));</span>
 <span class="fc" id="L540">				lastx = coord[4] + x;</span>
 <span class="fc" id="L541">				lasty = coord[5] + y;</span>
-<span class="nc bnc" id="L542" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_CLOSE) {</span>
+<span class="pc bpc" id="L542" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_CLOSE) {</span>
 				// Nothing
-<span class="nc bnc" id="L544" title="All 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
+<span class="pc bpc" id="L544" title="1 of 2 branches missed.">			} else if (type == USegmentType.SEG_ARCTO) {</span>
 
-<span class="nc" id="L546">				final double newx = coord[5] + x;</span>
-<span class="nc" id="L547">				final double newy = coord[6] + y;</span>
-<span class="nc bnc" id="L548" title="All 6 branches missed.">				final boolean easyCase = coord[2] == 0 &amp;&amp; coord[3] == 0 &amp;&amp; coord[4] == 1;</span>
+<span class="fc" id="L546">				final double newx = coord[5] + x;</span>
+<span class="fc" id="L547">				final double newy = coord[6] + y;</span>
+<span class="pc bpc" id="L548" title="3 of 6 branches missed.">				final boolean easyCase = coord[2] == 0 &amp;&amp; coord[3] == 0 &amp;&amp; coord[4] == 1;</span>
 
-<span class="nc bnc" id="L550" title="All 6 branches missed.">				if (easyCase &amp;&amp; newx &gt; lastx &amp;&amp; newy &lt; lasty) {</span>
+<span class="pc bpc" id="L550" title="5 of 6 branches missed.">				if (easyCase &amp;&amp; newx &gt; lastx &amp;&amp; newy &lt; lasty) {</span>
 <span class="nc" id="L551">					final int start = 180;</span>
 <span class="nc" id="L552">					final int end = 270;</span>
 <span class="nc" id="L553">					final String radius = format(coord[0]);</span>
 <span class="nc" id="L554">					sb.append(&quot; arc(&quot; + start + &quot;:&quot; + end + &quot;:&quot; + radius + &quot;pt) &quot;);</span>
-<span class="nc bnc" id="L555" title="All 6 branches missed.">				} else if (easyCase &amp;&amp; newx &gt; lastx &amp;&amp; newy &gt; lasty) {</span>
+<span class="pc bpc" id="L555" title="5 of 6 branches missed.">				} else if (easyCase &amp;&amp; newx &gt; lastx &amp;&amp; newy &gt; lasty) {</span>
 <span class="nc" id="L556">					final int start = 270;</span>
 <span class="nc" id="L557">					final int end = 360;</span>
 <span class="nc" id="L558">					final String radius = format(coord[0]);</span>
 <span class="nc" id="L559">					sb.append(&quot; arc(&quot; + start + &quot;:&quot; + end + &quot;:&quot; + radius + &quot;pt) &quot;);</span>
-<span class="nc bnc" id="L560" title="All 6 branches missed.">				} else if (easyCase &amp;&amp; newx &lt; lastx &amp;&amp; newy &gt; lasty) {</span>
+<span class="pc bpc" id="L560" title="5 of 6 branches missed.">				} else if (easyCase &amp;&amp; newx &lt; lastx &amp;&amp; newy &gt; lasty) {</span>
 <span class="nc" id="L561">					final int start = 0;</span>
 <span class="nc" id="L562">					final int end = 90;</span>
 <span class="nc" id="L563">					final String radius = format(coord[0]);</span>
 <span class="nc" id="L564">					sb.append(&quot; arc(&quot; + start + &quot;:&quot; + end + &quot;:&quot; + radius + &quot;pt) &quot;);</span>
-<span class="nc bnc" id="L565" title="All 6 branches missed.">				} else if (easyCase &amp;&amp; newx &lt; lastx &amp;&amp; newy &lt; lasty) {</span>
+<span class="pc bpc" id="L565" title="5 of 6 branches missed.">				} else if (easyCase &amp;&amp; newx &lt; lastx &amp;&amp; newy &lt; lasty) {</span>
 <span class="nc" id="L566">					final int start = 90;</span>
 <span class="nc" id="L567">					final int end = 180;</span>
 <span class="nc" id="L568">					final String radius = format(coord[0]);</span>
 <span class="nc" id="L569">					sb.append(&quot; arc(&quot; + start + &quot;:&quot; + end + &quot;:&quot; + radius + &quot;pt) &quot;);</span>
 <span class="nc" id="L570">				} else {</span>
-<span class="nc" id="L571">					sb.append(&quot; -- &quot;);</span>
-<span class="nc" id="L572">					sb.append(couple(coord[5] + x, coord[6] + y));</span>
+<span class="fc" id="L571">					sb.append(&quot; -- &quot;);</span>
+<span class="fc" id="L572">					sb.append(couple(coord[5] + x, coord[6] + y));</span>
 				}
 
-<span class="nc" id="L575">				lastx = newx;</span>
-<span class="nc" id="L576">				lasty = newy;</span>
+<span class="fc" id="L575">				lastx = newx;</span>
+<span class="fc" id="L576">				lasty = newy;</span>
 
-<span class="nc" id="L578">			} else {</span>
+<span class="fc" id="L578">			} else {</span>
 <span class="nc" id="L579">				Log.println(&quot;unknown4 &quot; + seg);</span>
 			}
 <span class="fc" id="L581">		}</span>
@@ -612,12 +612,12 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L612">	}</span>
 
 	public void drawSingleCharacter(double x, double y, char c) {
-<span class="nc" id="L615">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L616">		sb.append(&quot;\\node at &quot;);</span>
-<span class="nc" id="L617">		sb.append(couple(x, y));</span>
-<span class="nc" id="L618">		sb.append(&quot;[]{\\textbf{\\Large &quot; + c + &quot;}};&quot;);</span>
-<span class="nc" id="L619">		addCommand(sb);</span>
-<span class="nc" id="L620">	}</span>
+<span class="fc" id="L615">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L616">		sb.append(&quot;\\node at &quot;);</span>
+<span class="fc" id="L617">		sb.append(couple(x, y));</span>
+<span class="fc" id="L618">		sb.append(&quot;[]{\\textbf{\\Large &quot; + c + &quot;}};&quot;);</span>
+<span class="fc" id="L619">		addCommand(sb);</span>
+<span class="fc" id="L620">	}</span>
 
 	public void drawPathIterator(double x, double y, PathIterator path) {
 <span class="nc" id="L623">		final StringBuilder sb = new StringBuilder(</span>

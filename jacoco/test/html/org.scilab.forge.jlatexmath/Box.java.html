@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Box.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">Box.java</span></div><h1>Box.java</h1><pre class="source lang-java linenums">/* Box.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+/* Modified by Calixte Denizet */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.LinkedList;
+
+/**
+ * An abstract graphical representation of a formula, that can be painted. All characters, font
+ * sizes, positions are fixed. Only special Glue boxes could possibly stretch or shrink.
+ * A box has 3 dimensions (width, height and depth), can be composed of other child boxes
+ * that can possibly be shifted (up, down, left or right). Child boxes can also be positioned
+ * outside their parent's box (defined by it's dimensions).
+ * &lt;p&gt;
+ * Subclasses must implement the abstract {@link #draw(TeXGraphics, float, float)} method
+ * (that paints the box). &lt;b&gt; This implementation must start with calling the method
+ * {@link #startDraw(TeXGraphics, float, float)} and end with calling the method
+ * {@link #endDraw(TeXGraphics)} to set and restore the color's that must be used for
+ * painting the box and to draw the background!&lt;/b&gt; They must also implement the abstract
+ * {@link #getLastFontId()} method (the last font
+ * that will be used when this box will be painted).
+ */
+public abstract class Box {
+
+<span class="fc" id="L70">    public static boolean DEBUG = false;</span>
+
+    /**
+     * The foreground color of the whole box. Child boxes can override this color.
+     * If it's null and it has a parent box, the foreground color of the parent will
+     * be used. If it has no parent, the foreground color of the component on which it
+     * will be painted, will be used.
+     */
+    protected TeXColor foreground;
+
+    /**
+     * The background color of the whole box. Child boxes can paint a background on top of
+     * this background. If it's null, no background will be painted.
+     */
+    protected TeXColor background;
+
+    private TeXColor prevColor; // used temporarily in startDraw and endDraw
+
+    /**
+     * The width of this box, i.e. the value that will be used for further
+     * calculations.
+     */
+<span class="fc" id="L92">    protected float width = 0;</span>
+
+    /**
+     * The height of this box, i.e. the value that will be used for further
+     * calculations.
+     */
+<span class="fc" id="L98">    protected float height = 0;</span>
+
+    /**
+     * The depth of this box, i.e. the value that will be used for further
+     * calculations.
+     */
+<span class="fc" id="L104">    protected float depth = 0;</span>
+
+    /**
+     * The shift amount: the meaning depends on the particular kind of box
+     * (up, down, left, right)
+     */
+<span class="fc" id="L110">    protected float shift = 0;</span>
+
+<span class="fc" id="L112">    protected int type = -1;</span>
+
+    /**
+     * List of child boxes
+     */
+<span class="fc" id="L117">    protected LinkedList&lt;Box&gt; children = new LinkedList&lt;Box&gt;();</span>
+    protected Box parent;
+    protected Box elderParent;
+    protected TeXColor markForDEBUG;
+
+    /**
+     * Inserts the given box at the end of the list of child boxes.
+     *
+     * @param b the box to be inserted
+     */
+    public void add(Box b) {
+<span class="fc" id="L128">        children.add(b);</span>
+<span class="fc" id="L129">        b.parent = this;</span>
+<span class="fc" id="L130">        b.elderParent = elderParent;</span>
+<span class="fc" id="L131">    }</span>
+
+    /**
+     * Inserts the given box at the given position in the list of child boxes.
+     *
+     * @param pos the position at which to insert the given box
+     * @param b the box to be inserted
+     */
+    public void add(int pos, Box b) {
+<span class="fc" id="L140">        children.add(pos, b);</span>
+<span class="fc" id="L141">        b.parent = this;</span>
+<span class="fc" id="L142">        b.elderParent = elderParent;</span>
+<span class="fc" id="L143">    }</span>
+
+    /**
+     * Creates an empty box (no children) with all dimensions set to 0 and no
+     * foreground and background color set (default values will be used: null)
+     */
+    protected Box() {
+<span class="fc" id="L150">        this(null, null);</span>
+<span class="fc" id="L151">    }</span>
+
+    /**
+     * Creates an empty box (no children) with all dimensions set to 0 and sets
+     * the foreground and background color of the box.
+     *
+     * @param fg the foreground color
+     * @param bg the background color
+     */
+<span class="fc" id="L160">    protected Box(TeXColor fg, TeXColor bg) {</span>
+<span class="fc" id="L161">        foreground = fg;</span>
+<span class="fc" id="L162">        background = bg;</span>
+<span class="fc" id="L163">    }</span>
+
+    /**
+     * Get the width of this box.
+     *
+     * @return the width of this box
+     */
+    public float getWidth() {
+<span class="fc" id="L171">        return width;</span>
+    }
+
+    public void negWidth() {
+<span class="fc" id="L175">        width = -width;</span>
+<span class="fc" id="L176">    }</span>
+
+    /**
+     * Get the height of this box.
+     *
+     * @return the height of this box
+     */
+    public float getHeight() {
+<span class="fc" id="L184">        return height;</span>
+    }
+
+    /**
+     * Get the depth of this box.
+     *
+     * @return the depth of this box
+     */
+    public float getDepth() {
+<span class="fc" id="L193">        return depth;</span>
+    }
+
+    /**
+     * Get the shift amount for this box.
+     *
+     * @return the shift amount
+     */
+    public float getShift() {
+<span class="fc" id="L202">        return shift;</span>
+    }
+
+    /**
+     * Set the width for this box.
+     *
+     * @param w the width
+     */
+    public void setWidth(float w) {
+<span class="fc" id="L211">        width = w;</span>
+<span class="fc" id="L212">    }</span>
+
+    /**
+     * Set the depth for this box.
+     *
+     * @param d the depth
+     */
+    public void setDepth(float d) {
+<span class="fc" id="L220">        depth = d;</span>
+<span class="fc" id="L221">    }</span>
+
+    /**
+     * Set the height for this box.
+     *
+     * @param h the height
+     */
+    public void setHeight(float h) {
+<span class="fc" id="L229">        height = h;</span>
+<span class="fc" id="L230">    }</span>
+
+    /**
+     * Set the shift amount for this box.
+     *
+     * @param s the shift amount
+     */
+    public void setShift(float s) {
+<span class="fc" id="L238">        shift = s;</span>
+<span class="fc" id="L239">    }</span>
+
+    /**
+     * Paints this box at the given coordinates using the given graphics context.
+     *
+     * @param g2 the graphics (2D) context to use for painting
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     */
+    public abstract void draw(TeXGraphics g2, float x, float y);
+
+    /**
+     * Get the id of the font that will be used the last when this box will be painted.
+     *
+     * @return the id of the last font that will be used.
+     */
+    public abstract int getLastFontId();
+
+    /**
+     * Stores the old color setting, draws the background of the box (if not null)
+     * and sets the foreground color (if not null).
+     *
+     * @param g2 the graphics (2D) context
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     */
+    protected void startDraw(TeXGraphics g2, float x, float y) {
+        // old color
+<span class="fc" id="L267">        prevColor = g2.getColor();</span>
+<span class="pc bpc" id="L268" title="1 of 2 branches missed.">        if (background != null) { // draw background</span>
+<span class="nc" id="L269">            g2.setColor(background);</span>
+<span class="nc" id="L270">            g2.fillRect(x, y - height, width, height + depth);</span>
+        }
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        if (foreground == null) {</span>
+<span class="fc" id="L273">            g2.setColor(prevColor); // old foreground color</span>
+        } else {
+<span class="fc" id="L275">            g2.setColor(foreground); // overriding foreground color</span>
+        }
+<span class="fc" id="L277">        drawDebug(g2, x, y);</span>
+<span class="fc" id="L278">    }</span>
+
+    protected void drawDebug(TeXGraphics g2, float x, float y, boolean showDepth) {
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">        if (DEBUG) {</span>
+<span class="nc" id="L282">            g2.saveStroke();</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">            if (markForDEBUG != null) {</span>
+<span class="nc" id="L284">                TeXColor c = g2.getColor();</span>
+<span class="nc" id="L285">                g2.setColor(markForDEBUG);</span>
+<span class="nc" id="L286">                g2.fillRect(x, y - height, width, height + depth);</span>
+<span class="nc" id="L287">                g2.setColor(c);</span>
+            }
+<span class="nc" id="L289">            g2.setLineWidth((float) (Math.abs(1 / g2.getScaleX())));</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">            if (width &lt; 0) {</span>
+<span class="nc" id="L291">                x += width;</span>
+<span class="nc" id="L292">                width = -width;</span>
+            }
+<span class="nc" id="L294">            g2.drawRect(x, y - height, width, height + depth);</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">            if (showDepth) {</span>
+<span class="nc" id="L296">                TeXColor c = g2.getColor();</span>
+<span class="nc" id="L297">                g2.setColor(TeXColor.RED);</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">                if (depth &gt; 0) {</span>
+<span class="nc" id="L299">                    g2.fillRect(x, y, width, depth);</span>
+<span class="nc" id="L300">                    g2.setColor(c);</span>
+<span class="nc" id="L301">                    g2.drawRect(x, y, width, depth);</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">                } else if (depth &lt; 0) {</span>
+<span class="nc" id="L303">                    g2.fillRect(x, y + depth, width, -depth);</span>
+<span class="nc" id="L304">                    g2.setColor(c);</span>
+<span class="nc" id="L305">                    g2.drawRect(x, y + depth, width, -depth);</span>
+                } else {
+<span class="nc" id="L307">                    g2.setColor(c);</span>
+                }
+            }
+<span class="nc" id="L310">            g2.restoreStroke();</span>
+        }
+<span class="fc" id="L312">    }</span>
+
+    protected void drawDebug(TeXGraphics g2, float x, float y) {
+<span class="pc bpc" id="L315" title="1 of 2 branches missed.">        if (DEBUG) {</span>
+<span class="nc" id="L316">            drawDebug(g2, x, y, true);</span>
+        }
+<span class="fc" id="L318">    }</span>
+
+    /**
+     * Restores the previous color setting.
+     *
+     * @param g2 the graphics (2D) context
+     */
+    protected void endDraw(TeXGraphics g2) {
+<span class="fc" id="L326">        g2.setColor(prevColor);</span>
+<span class="fc" id="L327">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -303,60 +303,77 @@ public class CliOptions {
 <span class="fc bfc" id="L303" title="All 2 branches covered.">		if (flags.isTrue(CliFlag.DARK_MODE))</span>
 <span class="fc" id="L304">			this.fileFormatOption = this.fileFormatOption.withColorMapper(ColorMapper.DARK_MODE);</span>
 
-<span class="fc" id="L306">		return fileFormatOption;</span>
+<span class="fc" id="L306">		final int decimal = getDecimal();</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">		if (decimal &gt;= 0)</span>
+<span class="fc" id="L308">			this.fileFormatOption = this.fileFormatOption.withDecimal(decimal);</span>
+
+<span class="fc" id="L310">		return fileFormatOption;</span>
+	}
+
+	/** The number of decimals asked by --decimal, or -1 (not asked, or not a number: the default). */
+	private int getDecimal() {
+<span class="fc" id="L315">		final String value = flags.getString(CliFlag.DECIMAL);</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">		if (value == null)</span>
+<span class="fc" id="L317">			return -1;</span>
+		try {
+<span class="fc" id="L319">			final int result = Integer.parseInt(value.trim());</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">			return result &gt;= 0 ? result : -1;</span>
+<span class="fc" id="L321">		} catch (NumberFormatException e) {</span>
+<span class="fc" id="L322">			return -1;</span>
+		}
 	}
 
 	public final int getNbThreads() {
-<span class="fc" id="L310">		final String value = flags.getString(CliFlag.NB_THREAD);</span>
-<span class="pc bpc" id="L311" title="1 of 4 branches missed.">		if (value != null &amp;&amp; &quot;auto&quot;.equalsIgnoreCase(value) == false)</span>
+<span class="fc" id="L327">		final String value = flags.getString(CliFlag.NB_THREAD);</span>
+<span class="pc bpc" id="L328" title="1 of 4 branches missed.">		if (value != null &amp;&amp; &quot;auto&quot;.equalsIgnoreCase(value) == false)</span>
 			try {
-<span class="fc" id="L313">				return Integer.parseInt(value);</span>
-<span class="nc" id="L314">			} catch (Throwable t) {</span>
+<span class="fc" id="L330">				return Integer.parseInt(value);</span>
+<span class="nc" id="L331">			} catch (Throwable t) {</span>
 			}
-<span class="fc" id="L316">		return defaultNbThreads();</span>
+<span class="fc" id="L333">		return defaultNbThreads();</span>
 	}
 
 	public final int getLoop() {
-<span class="fc" id="L320">		final String value = flags.getString(CliFlag.LOOP);</span>
+<span class="fc" id="L337">		final String value = flags.getString(CliFlag.LOOP);</span>
 		try {
-<span class="fc" id="L322">			return Integer.parseInt(value);</span>
-<span class="nc" id="L323">		} catch (Throwable t) {</span>
+<span class="fc" id="L339">			return Integer.parseInt(value);</span>
+<span class="nc" id="L340">		} catch (Throwable t) {</span>
 		}
-<span class="nc" id="L325">		return 1;</span>
+<span class="nc" id="L342">		return 1;</span>
 	}
 
 	public static int defaultNbThreads() {
-<span class="fc" id="L329">		return Runtime.getRuntime().availableProcessors();</span>
+<span class="fc" id="L346">		return Runtime.getRuntime().availableProcessors();</span>
 	}
 
 	public final boolean isFailfastOrFailfast2() {
-<span class="pc bpc" id="L333" title="3 of 4 branches missed.">		return isTrue(CliFlag.FAIL_FAST) || isTrue(CliFlag.FAIL_FAST2);</span>
+<span class="pc bpc" id="L350" title="3 of 4 branches missed.">		return isTrue(CliFlag.FAIL_FAST) || isTrue(CliFlag.FAIL_FAST2);</span>
 	}
 
 	public final int getImageIndex() {
 		try {
-<span class="fc" id="L338">			return Integer.parseInt(flags.getString(CliFlag.PIPE_IMAGE_INDEX));</span>
-<span class="nc" id="L339">		} catch (Exception e) {</span>
-<span class="nc" id="L340">			return 0;</span>
+<span class="fc" id="L355">			return Integer.parseInt(flags.getString(CliFlag.PIPE_IMAGE_INDEX));</span>
+<span class="nc" id="L356">		} catch (Exception e) {</span>
+<span class="nc" id="L357">			return 0;</span>
 		}
 	}
 
 	public String getFileDir() {
-<span class="fc" id="L345">		return flags.getString(CliFlag.FILE_DIR);</span>
+<span class="fc" id="L362">		return flags.getString(CliFlag.FILE_DIR);</span>
 	}
 
 	public boolean isTrue(CliFlag flag) {
-<span class="fc" id="L349">		return flags.isTrue(flag);</span>
+<span class="fc" id="L366">		return flags.isTrue(flag);</span>
 	}
 
 	public String getString(CliFlag flag) {
-<span class="fc" id="L353">		return flags.getString(flag);</span>
+<span class="fc" id="L370">		return flags.getString(flag);</span>
 	}
 
 	public void setValue(CliFlag flag, Object value) {
-<span class="nc" id="L357">		flags.putValue(flag, value);</span>
+<span class="nc" id="L374">		flags.putValue(flag, value);</span>
 
-<span class="nc" id="L359">	}</span>
+<span class="nc" id="L376">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

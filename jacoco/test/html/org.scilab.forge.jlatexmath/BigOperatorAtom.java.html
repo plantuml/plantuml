@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BigOperatorAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">BigOperatorAtom.java</span></div><h1>BigOperatorAtom.java</h1><pre class="source lang-java linenums">/* BigOperatorAtom.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+/* Modified by Calixte Denizet */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * An atom representing a &quot;big operator&quot; (or an atom that acts as one) together
+ * with its limits.
+ */
+public class BigOperatorAtom extends Atom {
+
+    // limits
+<span class="fc" id="L58">    private Atom under = null, over = null;</span>
+
+    // atom representing a big operator
+<span class="fc" id="L61">    protected Atom base = null;</span>
+
+    // whether the &quot;limits&quot;-value should be taken into account
+    // (otherwise the default rules will be applied)
+<span class="fc" id="L65">    private boolean limitsSet = false;</span>
+
+    // whether limits should be drawn over and under the base (&lt;-&gt; as scripts)
+<span class="fc" id="L68">    private boolean limits = false;</span>
+
+    /**
+     * Creates a new BigOperatorAtom from the given atoms.
+     * The default rules the positioning of the limits will be applied.
+     *
+     * @param base atom representing the big operator
+     * @param under atom representing the under limit
+     * @param over atom representing the over limit
+     */
+<span class="fc" id="L78">    public BigOperatorAtom(Atom base, Atom under, Atom over) {</span>
+<span class="fc" id="L79">        this.base = base;</span>
+<span class="fc" id="L80">        this.under = under;</span>
+<span class="fc" id="L81">        this.over = over;</span>
+<span class="fc" id="L82">        type = TeXConstants.TYPE_BIG_OPERATOR;</span>
+<span class="fc" id="L83">    }</span>
+
+    /**
+     * Creates a new BigOperatorAtom from the given atoms.
+     * Limits will be drawn according to the &quot;limits&quot;-value
+     *
+     * @param base atom representing the big operator
+     * @param under atom representing the under limit
+     * @param over atom representing the over limit
+     * @param limits whether limits should be drawn over and under the base (rather than as scripts)
+     */
+    public BigOperatorAtom(Atom base, Atom under, Atom over, boolean limits) {
+<span class="nc" id="L95">        this(base, under, over);</span>
+<span class="nc" id="L96">        this.limits = limits;</span>
+<span class="nc" id="L97">        limitsSet = true;</span>
+<span class="nc" id="L98">    }</span>
+
+    public Box createBox(TeXEnvironment env) {
+<span class="fc" id="L101">        TeXFont tf = env.getTeXFont();</span>
+<span class="fc" id="L102">        int style = env.getStyle();</span>
+
+        Box y;
+        float delta;
+
+<span class="fc" id="L107">        RowAtom bbase = null;</span>
+<span class="fc" id="L108">        Atom Base = base;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (base instanceof TypedAtom) {</span>
+<span class="fc" id="L110">            Atom at = ((TypedAtom)base).getBase();</span>
+<span class="pc bpc" id="L111" title="2 of 6 branches missed.">            if (at instanceof RowAtom &amp;&amp; ((RowAtom)at).lookAtLastAtom &amp;&amp; base.type_limits != TeXConstants.SCRIPT_LIMITS) {</span>
+<span class="fc" id="L112">                base = ((RowAtom)at).getLastAtom();</span>
+<span class="fc" id="L113">                bbase = (RowAtom)at;</span>
+            } else
+<span class="fc" id="L115">                base = at;</span>
+        }
+
+<span class="pc bpc" id="L118" title="5 of 14 branches missed.">        if ((limitsSet &amp;&amp; !limits)</span>
+                || (!limitsSet &amp;&amp; style &gt;= TeXConstants.STYLE_TEXT)
+                || (base.type_limits == TeXConstants.SCRIPT_NOLIMITS)
+                || (base.type_limits == TeXConstants.SCRIPT_NORMAL &amp;&amp; style &gt;= TeXConstants.STYLE_TEXT)) {
+            // if explicitly set to not display as limits or if not set and style
+            // is not display, then attach over and under as regular sub- en
+            // superscript
+<span class="fc bfc" id="L125" title="All 2 branches covered.">            if (bbase != null) {</span>
+<span class="fc" id="L126">                bbase.add(new ScriptsAtom(base, under, over));</span>
+<span class="fc" id="L127">                Box b = bbase.createBox(env);</span>
+<span class="fc" id="L128">                bbase.getLastAtom();</span>
+<span class="fc" id="L129">                bbase.add(base);</span>
+<span class="fc" id="L130">                base = Base;</span>
+<span class="fc" id="L131">                return b;</span>
+            }
+<span class="fc" id="L133">            return new ScriptsAtom(base, under, over).createBox(env);</span>
+        } else {
+<span class="fc bfc" id="L135" title="All 4 branches covered.">            if (base instanceof SymbolAtom</span>
+                    &amp;&amp; base.type == TeXConstants.TYPE_BIG_OPERATOR) { // single
+                // bigop
+                // symbol
+<span class="fc" id="L139">                Char c = tf.getChar(((SymbolAtom) base).getName(), style);</span>
+<span class="fc" id="L140">                y = base.createBox(env);</span>
+
+                // include delta in width
+<span class="fc" id="L143">                delta = c.getItalic();</span>
+<span class="fc" id="L144">            } else { // formula</span>
+<span class="fc" id="L145">                delta = 0;</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">                y = new HorizontalBox(base == null ? new StrutBox(0, 0, 0, 0)</span>
+<span class="fc" id="L147">                                      : base.createBox(env));</span>
+            }
+
+            // limits
+<span class="fc" id="L151">            Box x = null, z = null;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">            if (over != null)</span>
+<span class="fc" id="L153">                x = over.createBox(env.supStyle());</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">            if (under != null)</span>
+<span class="fc" id="L155">                z = under.createBox(env.subStyle());</span>
+
+            // make boxes equally wide
+<span class="fc bfc" id="L158" title="All 2 branches covered.">            float maxWidth = Math.max(Math.max(x == null ? 0 : x.getWidth(), y</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">                                               .getWidth()), z == null ? 0 : z.getWidth());</span>
+<span class="fc" id="L160">            x = changeWidth(x, maxWidth);</span>
+<span class="fc" id="L161">            y = changeWidth(y, maxWidth);</span>
+<span class="fc" id="L162">            z = changeWidth(z, maxWidth);</span>
+
+            // build vertical box
+<span class="fc" id="L165">            VerticalBox vBox = new VerticalBox();</span>
+
+<span class="fc" id="L167">            float bigop5 = tf.getBigOpSpacing5(style), kern = 0;</span>
+<span class="fc" id="L168">            float xh = 0; // TODO: check why this is not used // NOPMD</span>
+
+            // over
+<span class="fc bfc" id="L171" title="All 2 branches covered.">            if (over != null) {</span>
+<span class="fc" id="L172">                vBox.add(new StrutBox(0, bigop5, 0, 0));</span>
+<span class="fc" id="L173">                x.setShift(delta / 2);</span>
+<span class="fc" id="L174">                vBox.add(x);</span>
+<span class="fc" id="L175">                kern = Math.max(tf.getBigOpSpacing1(style), tf</span>
+<span class="fc" id="L176">                                .getBigOpSpacing3(style)</span>
+<span class="fc" id="L177">                                - x.getDepth());</span>
+<span class="fc" id="L178">                vBox.add(new StrutBox(0, kern, 0, 0));</span>
+<span class="fc" id="L179">                xh = vBox.getHeight() + vBox.getDepth();</span>
+            }
+
+            // base
+<span class="fc" id="L183">            vBox.add(y);</span>
+
+            // under
+<span class="fc bfc" id="L186" title="All 2 branches covered.">            if (under != null) {</span>
+<span class="fc" id="L187">                float k = Math.max(tf.getBigOpSpacing2(style), tf</span>
+<span class="fc" id="L188">                                   .getBigOpSpacing4(style)</span>
+<span class="fc" id="L189">                                   - z.getHeight());</span>
+<span class="fc" id="L190">                vBox.add(new StrutBox(0, k, 0, 0));</span>
+<span class="fc" id="L191">                z.setShift(-delta / 2);</span>
+<span class="fc" id="L192">                vBox.add(z);</span>
+<span class="fc" id="L193">                vBox.add(new StrutBox(0, bigop5, 0, 0));</span>
+            }
+
+            // set height and depth vertical box and return it
+<span class="fc" id="L197">            float h = y.getHeight(), total = vBox.getHeight() + vBox.getDepth();</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">            if (x != null)</span>
+<span class="fc" id="L199">                h += bigop5 + kern + x.getHeight() + x.getDepth();</span>
+<span class="fc" id="L200">            vBox.setHeight(h);</span>
+<span class="fc" id="L201">            vBox.setDepth(total - h);</span>
+
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">            if (bbase != null) {</span>
+<span class="nc" id="L204">                HorizontalBox hb = new HorizontalBox(bbase.createBox(env));</span>
+<span class="nc" id="L205">                bbase.add(base);</span>
+<span class="nc" id="L206">                hb.add(vBox);</span>
+<span class="nc" id="L207">                base = Base;</span>
+<span class="nc" id="L208">                return hb;</span>
+            }
+
+<span class="fc" id="L211">            return vBox;</span>
+        }
+    }
+
+    /*
+     * Centers the given box in a new box that has the given width
+     */
+    private static Box changeWidth(Box b, float maxWidth) {
+<span class="fc bfc" id="L219" title="All 4 branches covered.">        if (b != null &amp;&amp; Math.abs(maxWidth - b.getWidth()) &gt; TeXFormula.PREC)</span>
+<span class="fc" id="L220">            return new HorizontalBox(b, maxWidth, TeXConstants.ALIGN_CENTER);</span>
+        else
+<span class="fc" id="L222">            return b;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

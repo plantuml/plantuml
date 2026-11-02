@@ -371,7 +371,7 @@ import net.sourceforge.plantuml.utils.MyCollections;
 //	}
 
 	public static int getHeight(List&lt;? extends CharSequence&gt; stringsToDisplay) {
-<span class="nc" id="L374">		return stringsToDisplay.size();</span>
+<span class="fc" id="L374">		return stringsToDisplay.size();</span>
 	}
 
 	public static int getHeight(Display stringsToDisplay) {
@@ -731,8 +731,8 @@ import net.sourceforge.plantuml.utils.MyCollections;
 <span class="nc" id="L731">				continue;</span>
 
 <span class="fc" id="L733">			final int length = Wcwidth.length(s);</span>
-<span class="pc bpc" id="L734" title="1 of 2 branches missed.">			if (result &lt; length)</span>
-<span class="nc" id="L735">				result = length;</span>
+<span class="fc bfc" id="L734" title="All 2 branches covered.">			if (result &lt; length)</span>
+<span class="fc" id="L735">				result = length;</span>
 
 <span class="fc" id="L737">		}</span>
 <span class="fc" id="L738">		return result;</span>

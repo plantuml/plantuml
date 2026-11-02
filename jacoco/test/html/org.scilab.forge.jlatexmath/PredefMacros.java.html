@@ -1,0 +1,1828 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PredefMacros.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">PredefMacros.java</span></div><h1>PredefMacros.java</h1><pre class="source lang-java linenums">/* predefMacros.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.Map;
+import java.util.StringTokenizer;
+
+import org.scilab.forge.jlatexmath.dynamic.DynamicAtom;
+
+/**
+ * This class contains the most of basic commands of LaTeX, they're activated in
+ * byt the class PredefinedCommands.java.
+ **/
+<span class="fc" id="L57">public class PredefMacros {</span>
+
+    static {
+<span class="fc" id="L60">        NewEnvironmentMacro.addNewEnvironment(&quot;array&quot;, &quot;\\array@@env{#1}{&quot;, &quot;}&quot;, 1);</span>
+<span class="fc" id="L61">        NewEnvironmentMacro.addNewEnvironment(&quot;tabular&quot;, &quot;\\array@@env{#1}{&quot;, &quot;}&quot;, 1);</span>
+<span class="fc" id="L62">        NewEnvironmentMacro.addNewEnvironment(&quot;matrix&quot;, &quot;\\matrix@@env{&quot;, &quot;}&quot;, 0);</span>
+<span class="fc" id="L63">        NewEnvironmentMacro.addNewEnvironment(&quot;smallmatrix&quot;, &quot;\\smallmatrix@@env{&quot;, &quot;}&quot;, 0);</span>
+<span class="fc" id="L64">        NewEnvironmentMacro.addNewEnvironment(&quot;pmatrix&quot;, &quot;\\left(\\begin{matrix}&quot;, &quot;\\end{matrix}\\right)&quot;, 0);</span>
+<span class="fc" id="L65">        NewEnvironmentMacro.addNewEnvironment(&quot;bmatrix&quot;, &quot;\\left[\\begin{matrix}&quot;, &quot;\\end{matrix}\\right]&quot;, 0);</span>
+<span class="fc" id="L66">        NewEnvironmentMacro.addNewEnvironment(&quot;Bmatrix&quot;, &quot;\\left\\{\\begin{matrix}&quot;, &quot;\\end{matrix}\\right\\}&quot;, 0);</span>
+<span class="fc" id="L67">        NewEnvironmentMacro.addNewEnvironment(&quot;vmatrix&quot;, &quot;\\left|\\begin{matrix}&quot;, &quot;\\end{matrix}\\right|&quot;, 0);</span>
+<span class="fc" id="L68">        NewEnvironmentMacro.addNewEnvironment(&quot;Vmatrix&quot;, &quot;\\left\\|\\begin{matrix}&quot;, &quot;\\end{matrix}\\right\\|&quot;, 0);</span>
+<span class="fc" id="L69">        NewEnvironmentMacro.addNewEnvironment(&quot;eqnarray&quot;, &quot;\\begin{array}{rcl}&quot;, &quot;\\end{array}&quot;, 0);</span>
+<span class="fc" id="L70">        NewEnvironmentMacro.addNewEnvironment(&quot;align&quot;, &quot;\\align@@env{&quot;, &quot;}&quot;, 0);</span>
+<span class="fc" id="L71">        NewEnvironmentMacro.addNewEnvironment(&quot;flalign&quot;, &quot;\\flalign@@env{&quot;, &quot;}&quot;, 0);</span>
+<span class="fc" id="L72">        NewEnvironmentMacro.addNewEnvironment(&quot;alignat&quot;, &quot;\\alignat@@env{#1}{&quot;, &quot;}&quot;, 1);</span>
+<span class="fc" id="L73">        NewEnvironmentMacro.addNewEnvironment(&quot;aligned&quot;, &quot;\\aligned@@env{&quot;, &quot;}&quot;, 0);</span>
+<span class="fc" id="L74">        NewEnvironmentMacro.addNewEnvironment(&quot;alignedat&quot;, &quot;\\alignedat@@env{#1}{&quot;, &quot;}&quot;, 1);</span>
+<span class="fc" id="L75">        NewEnvironmentMacro.addNewEnvironment(&quot;multline&quot;, &quot;\\multline@@env{&quot;, &quot;}&quot;, 0);</span>
+<span class="fc" id="L76">        NewEnvironmentMacro.addNewEnvironment(&quot;cases&quot;, &quot;\\left\\{\\begin{array}{l@{\\!}l}&quot;, &quot;\\end{array}\\right.&quot;, 0);</span>
+<span class="fc" id="L77">        NewEnvironmentMacro.addNewEnvironment(&quot;split&quot;, &quot;\\begin{array}{rl}&quot;, &quot;\\end{array}&quot;, 0);</span>
+<span class="fc" id="L78">        NewEnvironmentMacro.addNewEnvironment(&quot;gather&quot;, &quot;\\gather@@env{&quot;, &quot;}&quot;, 0);</span>
+<span class="fc" id="L79">        NewEnvironmentMacro.addNewEnvironment(&quot;gathered&quot;, &quot;\\gathered@@env{&quot;, &quot;}&quot;, 0);</span>
+<span class="fc" id="L80">        NewEnvironmentMacro.addNewEnvironment(&quot;math&quot;, &quot;\\(&quot;, &quot;\\)&quot;, 0);</span>
+<span class="fc" id="L81">        NewEnvironmentMacro.addNewEnvironment(&quot;displaymath&quot;, &quot;\\[&quot;, &quot;\\]&quot;, 0);</span>
+<span class="fc" id="L82">        NewCommandMacro.addNewCommand(&quot;operatorname&quot;, &quot;\\mathop{\\mathrm{#1}}\\nolimits &quot;, 1);</span>
+<span class="fc" id="L83">        NewCommandMacro.addNewCommand(&quot;DeclareMathOperator&quot;, &quot;\\newcommand{#1}{\\mathop{\\mathrm{#2}}\\nolimits}&quot;, 2);</span>
+<span class="fc" id="L84">        NewCommandMacro.addNewCommand(&quot;substack&quot;, &quot;{\\scriptstyle\\begin{array}{c}#1\\end{array}}&quot;, 1);</span>
+<span class="fc" id="L85">        NewCommandMacro.addNewCommand(&quot;dfrac&quot;, &quot;\\genfrac{}{}{}{}{#1}{#2}&quot;, 2);</span>
+<span class="fc" id="L86">        NewCommandMacro.addNewCommand(&quot;tfrac&quot;, &quot;\\genfrac{}{}{}{1}{#1}{#2}&quot;, 2);</span>
+<span class="fc" id="L87">        NewCommandMacro.addNewCommand(&quot;dbinom&quot;, &quot;\\genfrac{(}{)}{0pt}{}{#1}{#2}&quot;, 2);</span>
+<span class="fc" id="L88">        NewCommandMacro.addNewCommand(&quot;tbinom&quot;, &quot;\\genfrac{(}{)}{0pt}{1}{#1}{#2}&quot;, 2);</span>
+<span class="fc" id="L89">        NewCommandMacro.addNewCommand(&quot;pmod&quot;, &quot;\\qquad\\mathbin{(\\mathrm{mod}\\ #1)}&quot;, 1);</span>
+<span class="fc" id="L90">        NewCommandMacro.addNewCommand(&quot;mod&quot;, &quot;\\qquad\\mathbin{\\mathrm{mod}\\ #1}&quot;, 1);</span>
+<span class="fc" id="L91">        NewCommandMacro.addNewCommand(&quot;pod&quot;, &quot;\\qquad\\mathbin{(#1)}&quot;, 1);</span>
+<span class="fc" id="L92">        NewCommandMacro.addNewCommand(&quot;dddot&quot;, &quot;\\mathop{#1}\\limits^{...}&quot;, 1);</span>
+<span class="fc" id="L93">        NewCommandMacro.addNewCommand(&quot;ddddot&quot;, &quot;\\mathop{#1}\\limits^{....}&quot;, 1);</span>
+<span class="fc" id="L94">        NewCommandMacro.addNewCommand(&quot;spdddot&quot;, &quot;^{\\mathrm{...}}&quot;, 0);</span>
+<span class="fc" id="L95">        NewCommandMacro.addNewCommand(&quot;spbreve&quot;, &quot;^{\\makeatletter\\sp@breve\\makeatother}&quot;, 0);</span>
+<span class="fc" id="L96">        NewCommandMacro.addNewCommand(&quot;sphat&quot;, &quot;^{\\makeatletter\\sp@hat\\makeatother}&quot;, 0);</span>
+<span class="fc" id="L97">        NewCommandMacro.addNewCommand(&quot;spddot&quot;, &quot;^{\\displaystyle..}&quot;, 0);</span>
+<span class="fc" id="L98">        NewCommandMacro.addNewCommand(&quot;spcheck&quot;, &quot;^{\\vee}&quot;, 0);</span>
+<span class="fc" id="L99">        NewCommandMacro.addNewCommand(&quot;sptilde&quot;, &quot;^{\\sim}&quot;, 0);</span>
+<span class="fc" id="L100">        NewCommandMacro.addNewCommand(&quot;spdot&quot;, &quot;^{\\displaystyle.}&quot;, 0);</span>
+<span class="fc" id="L101">        NewCommandMacro.addNewCommand(&quot;d&quot;, &quot;\\underaccent{\\dot}{#1}&quot;, 1);</span>
+<span class="fc" id="L102">        NewCommandMacro.addNewCommand(&quot;b&quot;, &quot;\\underaccent{\\bar}{#1}&quot;, 1);</span>
+<span class="fc" id="L103">        NewCommandMacro.addNewCommand(&quot;Bra&quot;, &quot;\\left\\langle{#1}\\right\\vert&quot;, 1);</span>
+<span class="fc" id="L104">        NewCommandMacro.addNewCommand(&quot;Ket&quot;, &quot;\\left\\vert{#1}\\right\\rangle&quot;, 1);</span>
+<span class="fc" id="L105">        NewCommandMacro.addNewCommand(&quot;textsuperscript&quot;, &quot;{}^{\\text{#1}}&quot;, 1);</span>
+<span class="fc" id="L106">        NewCommandMacro.addNewCommand(&quot;textsubscript&quot;, &quot;{}_{\\text{#1}}&quot;, 1);</span>
+<span class="fc" id="L107">        NewCommandMacro.addNewCommand(&quot;textit&quot;, &quot;\\mathit{\\text{#1}}&quot;, 1);</span>
+<span class="fc" id="L108">        NewCommandMacro.addNewCommand(&quot;textbf&quot;, &quot;\\mathbf{\\text{#1}}&quot;, 1);</span>
+<span class="fc" id="L109">        NewCommandMacro.addNewCommand(&quot;textsf&quot;, &quot;\\mathsf{\\text{#1}}&quot;, 1);</span>
+<span class="fc" id="L110">        NewCommandMacro.addNewCommand(&quot;texttt&quot;, &quot;\\mathtt{\\text{#1}}&quot;, 1);</span>
+<span class="fc" id="L111">        NewCommandMacro.addNewCommand(&quot;textrm&quot;, &quot;\\text{#1}&quot;, 1);</span>
+<span class="fc" id="L112">        NewCommandMacro.addNewCommand(&quot;degree&quot;, &quot;^\\circ&quot;, 0);</span>
+<span class="fc" id="L113">        NewCommandMacro.addNewCommand(&quot;with&quot;, &quot;\\mathbin{\\&amp;}&quot;, 0);</span>
+<span class="fc" id="L114">        NewCommandMacro.addNewCommand(&quot;parr&quot;, &quot;\\mathbin{\\rotatebox[origin=c]{180}{\\&amp;}}&quot;, 0);</span>
+<span class="fc" id="L115">        NewCommandMacro.addNewCommand(&quot;copyright&quot;, &quot;\\textcircled{\\raisebox{0.2ex}{c}}&quot;, 0);</span>
+<span class="fc" id="L116">        NewCommandMacro.addNewCommand(&quot;L&quot;, &quot;\\mathrm{\\polishlcross L}&quot;, 0);</span>
+<span class="fc" id="L117">        NewCommandMacro.addNewCommand(&quot;l&quot;, &quot;\\mathrm{\\polishlcross l}&quot;, 0);</span>
+<span class="fc" id="L118">        NewCommandMacro.addNewCommand(&quot;Join&quot;, &quot;\\mathop{\\rlap{\\ltimes}\\rtimes}&quot;, 0);</span>
+<span class="fc" id="L119">    }</span>
+
+
+    public static final Atom longdiv_macro(final TeXParser tp, final String[] args) throws ParseException {
+        try {
+<span class="nc" id="L124">            long dividend = Long.valueOf(args[1]);</span>
+<span class="nc" id="L125">            long divisor = Long.valueOf(args[2]);</span>
+<span class="nc" id="L126">            return new LongdivAtom(divisor, dividend);</span>
+<span class="nc" id="L127">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L128">            throw new ParseException(&quot;Divisor and dividend must be integer numbers&quot;);</span>
+        }
+    }
+
+    public static final Atom st_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L133">        return new StrikeThroughAtom(new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom Braket_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L137">        String str = args[1].replaceAll(&quot;\\|&quot;, &quot;\\\\middle\\\\vert &quot;);</span>
+<span class="nc" id="L138">        return new TeXFormula(tp, &quot;\\left\\langle &quot; + str + &quot;\\right\\rangle&quot;).root;</span>
+    }
+
+    public static final Atom Set_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L142">        String str = args[1].replaceFirst(&quot;\\|&quot;, &quot;\\\\middle\\\\vert &quot;);</span>
+<span class="nc" id="L143">        return new TeXFormula(tp, &quot;\\left\\{&quot; + str + &quot;\\right\\}&quot;).root;</span>
+    }
+
+    public static final Atom spATbreve_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L147">        VRowAtom vra = new VRowAtom(new TeXFormula(&quot;\\displaystyle\\!\\breve{}&quot;).root);</span>
+<span class="nc" id="L148">        vra.setRaise(TeXConstants.UNIT_EX, 0.6f);</span>
+
+<span class="nc" id="L150">        return new SmashedAtom(vra, null);</span>
+    }
+
+    public static final Atom spAThat_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L154">        VRowAtom vra = new VRowAtom(new TeXFormula(&quot;\\displaystyle\\widehat{}&quot;).root);</span>
+<span class="nc" id="L155">        vra.setRaise(TeXConstants.UNIT_EX, 0.6f);</span>
+
+<span class="nc" id="L157">        return new SmashedAtom(vra, null);</span>
+    }
+
+    public static final Atom hvspace_macro(final TeXParser tp, final String[] args) throws ParseException {
+        int i;
+<span class="pc bpc" id="L162" title="1 of 4 branches missed.">        for (i = 0; i &lt; args[1].length() &amp;&amp; !Character.isLetter(args[1].charAt(i)); i++);</span>
+<span class="fc" id="L163">        float f = 0;</span>
+        try {
+<span class="fc" id="L165">            f = Float.parseFloat(args[1].substring(0, i));</span>
+<span class="nc" id="L166">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L167">            throw new ParseException(e.toString());</span>
+<span class="fc" id="L168">        }</span>
+
+        int unit;
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">        if (i != args[1].length()) {</span>
+<span class="fc" id="L172">            unit = SpaceAtom.getUnit(args[1].substring(i).toLowerCase());</span>
+        } else {
+<span class="nc" id="L174">            unit = TeXConstants.UNIT_POINT;</span>
+        }
+
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">        if (unit == -1) {</span>
+<span class="nc" id="L178">            throw new ParseException(&quot;Unknown unit \&quot;&quot; + args[1].substring(i) + &quot;\&quot; !&quot;);</span>
+        }
+
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        return args[0].charAt(0) == 'h' ? new SpaceAtom(unit, f, 0, 0) : new SpaceAtom(unit, 0, f, 0);</span>
+    }
+
+    public static final Atom clrlap_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L185">        return new LapedAtom(new TeXFormula(tp, args[1]).root, args[0].charAt(0));</span>
+    }
+
+    public static final Atom mathclrlap_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L189">        return new LapedAtom(new TeXFormula(tp, args[1]).root, args[0].charAt(4));</span>
+    }
+
+
+    public static final Atom rule_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L194">        float[] winfo = SpaceAtom.getLength(args[1]);</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">        if (winfo.length == 1) {</span>
+<span class="nc" id="L196">            throw new ParseException(&quot;Error in getting width in \\rule command !&quot;);</span>
+        }
+<span class="fc" id="L198">        float[] hinfo = SpaceAtom.getLength(args[2]);</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if (hinfo.length == 1) {</span>
+<span class="nc" id="L200">            throw new ParseException(&quot;Error in getting height in \\rule command !&quot;);</span>
+        }
+
+<span class="fc" id="L203">        float[] rinfo = SpaceAtom.getLength(args[3]);</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if (rinfo.length == 1) {</span>
+<span class="nc" id="L205">            throw new ParseException(&quot;Error in getting raise in \\rule command !&quot;);</span>
+        }
+
+<span class="fc" id="L208">        return new RuleAtom((int) winfo[0], winfo[1], (int) hinfo[0], hinfo[1], (int) rinfo[0], -rinfo[1]);</span>
+    }
+
+    /* Thanks to Juan Enrique Escobar Robles for this macro */
+    public static final Atom cfrac_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L213">        int alig = TeXConstants.ALIGN_CENTER;</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">        if (&quot;r&quot;.equals(args[3])) {</span>
+<span class="nc" id="L215">            alig = TeXConstants.ALIGN_RIGHT;</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">        } else if (&quot;l&quot;.equals(args[3])) {</span>
+<span class="nc" id="L217">            alig = TeXConstants.ALIGN_LEFT;</span>
+        }
+<span class="fc" id="L219">        TeXFormula num = new TeXFormula(tp, args[1], false);</span>
+<span class="fc" id="L220">        TeXFormula denom = new TeXFormula(tp, args[2], false);</span>
+<span class="pc bpc" id="L221" title="2 of 4 branches missed.">        if (num.root == null || denom.root == null) {</span>
+<span class="nc" id="L222">            throw new ParseException(&quot;Both numerator and denominator of a fraction can't be empty!&quot;);</span>
+        }
+<span class="fc" id="L224">        Atom f = new FractionAtom(num.root, denom.root, true, alig, TeXConstants.ALIGN_CENTER);</span>
+<span class="fc" id="L225">        RowAtom rat = new RowAtom();</span>
+<span class="fc" id="L226">        rat.add(new StyleAtom(TeXConstants.STYLE_DISPLAY, f));</span>
+<span class="fc" id="L227">        return rat;</span>
+    }
+
+    public static final Atom frac_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L231">        TeXFormula num = new TeXFormula(tp, args[1], false);</span>
+<span class="fc" id="L232">        TeXFormula denom = new TeXFormula(tp, args[2], false);</span>
+<span class="pc bpc" id="L233" title="2 of 4 branches missed.">        if (num.root == null || denom.root == null)</span>
+<span class="nc" id="L234">            throw new ParseException(&quot;Both numerator and denominator of a fraction can't be empty!&quot;);</span>
+<span class="fc" id="L235">        return new FractionAtom(num.root, denom.root, true);</span>
+    }
+
+    public static final Atom sfrac_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L239">        TeXFormula num = new TeXFormula(tp, args[1], false);</span>
+<span class="nc" id="L240">        TeXFormula denom = new TeXFormula(tp, args[2], false);</span>
+<span class="nc bnc" id="L241" title="All 4 branches missed.">        if (num.root == null || denom.root == null)</span>
+<span class="nc" id="L242">            throw new ParseException(&quot;Both numerator and denominator of a fraction can't be empty!&quot;);</span>
+
+<span class="nc" id="L244">        double scaleX = 0.75;</span>
+<span class="nc" id="L245">        double scaleY = 0.75;</span>
+<span class="nc" id="L246">        float raise1 = 0.45f;</span>
+<span class="nc" id="L247">        float shiftL = -0.13f;</span>
+<span class="nc" id="L248">        float shiftR = -0.065f;</span>
+<span class="nc" id="L249">        Atom slash = SymbolAtom.get(&quot;slash&quot;);</span>
+
+<span class="nc bnc" id="L251" title="All 2 branches missed.">        if (!tp.isMathMode()) {</span>
+<span class="nc" id="L252">            scaleX = 0.6;</span>
+<span class="nc" id="L253">            scaleY = 0.5;</span>
+<span class="nc" id="L254">            raise1 = 0.75f;</span>
+<span class="nc" id="L255">            shiftL = -0.24f;</span>
+<span class="nc" id="L256">            shiftR = -0.24f;</span>
+<span class="nc" id="L257">            slash = new VRowAtom(new ScaleAtom(SymbolAtom.get(&quot;textfractionsolidus&quot;), 1.25, 0.65));</span>
+<span class="nc" id="L258">            ((VRowAtom) slash).setRaise(TeXConstants.UNIT_EX, 0.4f);</span>
+        }
+
+<span class="nc" id="L261">        VRowAtom snum = new VRowAtom(new ScaleAtom(num.root, scaleX, scaleY));</span>
+<span class="nc" id="L262">        snum.setRaise(TeXConstants.UNIT_EX, raise1);</span>
+<span class="nc" id="L263">        RowAtom at = new RowAtom(snum);</span>
+<span class="nc" id="L264">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, shiftL, 0f, 0f));</span>
+<span class="nc" id="L265">        at.add(slash);</span>
+<span class="nc" id="L266">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, shiftR, 0f, 0f));</span>
+<span class="nc" id="L267">        at.add(new ScaleAtom(denom.root, scaleX, scaleY));</span>
+
+<span class="nc" id="L269">        return at;</span>
+    }
+
+    public static final Atom genfrac_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L273">        TeXFormula left = new TeXFormula(tp, args[1], false);</span>
+<span class="fc" id="L274">        SymbolAtom L = null, R = null;</span>
+<span class="pc bpc" id="L275" title="1 of 4 branches missed.">        if (left != null &amp;&amp; left.root instanceof SymbolAtom) {</span>
+<span class="fc" id="L276">            L = (SymbolAtom) left.root;</span>
+        }
+
+<span class="fc" id="L279">        TeXFormula right = new TeXFormula(tp, args[2], false);</span>
+<span class="pc bpc" id="L280" title="1 of 4 branches missed.">        if (right != null &amp;&amp; right.root instanceof SymbolAtom) {</span>
+<span class="fc" id="L281">            R = (SymbolAtom) right.root;</span>
+        }
+
+<span class="fc" id="L284">        boolean rule = true;</span>
+<span class="fc" id="L285">        float[] ths = SpaceAtom.getLength(args[3]);</span>
+<span class="pc bpc" id="L286" title="2 of 6 branches missed.">        if (args[3] == null || args[3].length() == 0 || ths.length == 1) {</span>
+<span class="fc" id="L287">            ths = new float[] {0.0f, 0.0f};</span>
+<span class="fc" id="L288">            rule = false;</span>
+        }
+
+<span class="fc" id="L291">        int style = 0;</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">        if (args[4].length() != 0) {</span>
+<span class="fc" id="L293">            style = Integer.parseInt(args[4]);</span>
+        }
+<span class="fc" id="L295">        TeXFormula num = new TeXFormula(tp, args[5], false);</span>
+<span class="fc" id="L296">        TeXFormula denom = new TeXFormula(tp, args[6], false);</span>
+<span class="pc bpc" id="L297" title="2 of 4 branches missed.">        if (num.root == null || denom.root == null)</span>
+<span class="nc" id="L298">            throw new ParseException(&quot;Both numerator and denominator of a fraction can't be empty!&quot;);</span>
+<span class="fc" id="L299">        Atom at = new FractionAtom(num.root, denom.root, rule, (int) ths[0], ths[1]);</span>
+<span class="fc" id="L300">        RowAtom rat = new RowAtom();</span>
+<span class="fc" id="L301">        rat.add(new StyleAtom(style * 2, new FencedAtom(at, L, R)));</span>
+
+<span class="fc" id="L303">        return rat;</span>
+    }
+
+    public static final Atom over_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L307">        Atom num = tp.getFormulaAtom();</span>
+<span class="fc" id="L308">        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;</span>
+<span class="pc bpc" id="L309" title="2 of 4 branches missed.">        if (num == null || denom == null)</span>
+<span class="nc" id="L310">            throw new ParseException(&quot;Both numerator and denominator of a fraction can't be empty!&quot;);</span>
+<span class="fc" id="L311">        return new FractionAtom(num, denom, true);</span>
+    }
+
+    public static final Atom overwithdelims_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L315">        Atom num = tp.getFormulaAtom();</span>
+<span class="nc" id="L316">        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;</span>
+
+<span class="nc bnc" id="L318" title="All 4 branches missed.">        if (num == null || denom == null)</span>
+<span class="nc" id="L319">            throw new ParseException(&quot;Both numerator and denominator of a fraction can't be empty!&quot;);</span>
+
+<span class="nc" id="L321">        Atom left = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">        if (left instanceof BigDelimiterAtom)</span>
+<span class="nc" id="L323">            left = ((BigDelimiterAtom)left).delim;</span>
+<span class="nc" id="L324">        Atom right = new TeXFormula(tp, args[2], false).root;</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">        if (right instanceof BigDelimiterAtom)</span>
+<span class="nc" id="L326">            right = ((BigDelimiterAtom)right).delim;</span>
+<span class="nc bnc" id="L327" title="All 4 branches missed.">        if (left instanceof SymbolAtom &amp;&amp; right instanceof SymbolAtom) {</span>
+<span class="nc" id="L328">            return new FencedAtom(new FractionAtom(num, denom, true), (SymbolAtom) left, (SymbolAtom) right);</span>
+        }
+
+<span class="nc" id="L331">        RowAtom ra = new RowAtom();</span>
+<span class="nc" id="L332">        ra.add(left);</span>
+<span class="nc" id="L333">        ra.add(new FractionAtom(num, denom, true));</span>
+<span class="nc" id="L334">        ra.add(right);</span>
+<span class="nc" id="L335">        return ra;</span>
+    }
+
+    public static final Atom atop_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L339">        Atom num = tp.getFormulaAtom();</span>
+<span class="fc" id="L340">        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;</span>
+<span class="pc bpc" id="L341" title="2 of 4 branches missed.">        if (num == null || denom == null)</span>
+<span class="nc" id="L342">            throw new ParseException(&quot;Both numerator and denominator of a fraction can't be empty!&quot;);</span>
+<span class="fc" id="L343">        return new FractionAtom(num, denom, false);</span>
+    }
+
+    public static final Atom atopwithdelims_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L347">        Atom num = tp.getFormulaAtom();</span>
+<span class="nc" id="L348">        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;</span>
+
+<span class="nc bnc" id="L350" title="All 4 branches missed.">        if (num == null || denom == null)</span>
+<span class="nc" id="L351">            throw new ParseException(&quot;Both numerator and denominator of a fraction can't be empty!&quot;);</span>
+
+<span class="nc" id="L353">        Atom left = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">        if (left instanceof BigDelimiterAtom)</span>
+<span class="nc" id="L355">            left = ((BigDelimiterAtom)left).delim;</span>
+<span class="nc" id="L356">        Atom right = new TeXFormula(tp, args[2], false).root;</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">        if (right instanceof BigDelimiterAtom)</span>
+<span class="nc" id="L358">            right = ((BigDelimiterAtom)right).delim;</span>
+<span class="nc bnc" id="L359" title="All 4 branches missed.">        if (left instanceof SymbolAtom &amp;&amp; right instanceof SymbolAtom) {</span>
+<span class="nc" id="L360">            return new FencedAtom(new FractionAtom(num, denom, false), (SymbolAtom) left, (SymbolAtom) right);</span>
+        }
+
+<span class="nc" id="L363">        RowAtom ra = new RowAtom();</span>
+<span class="nc" id="L364">        ra.add(left);</span>
+<span class="nc" id="L365">        ra.add(new FractionAtom(num, denom, false));</span>
+<span class="nc" id="L366">        ra.add(right);</span>
+<span class="nc" id="L367">        return ra;</span>
+    }
+
+    public static final Atom choose_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L371">        return choose_brackets(&quot;lbrack&quot;, &quot;rbrack&quot;, tp, args);</span>
+    }
+
+    public static final Atom brack_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L375">        return choose_brackets(&quot;lsqbrack&quot;, &quot;rsqbrack&quot;, tp, args);</span>
+    }
+
+    public static final Atom bangle_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L379">        return choose_brackets(&quot;langle&quot;, &quot;rangle&quot;, tp, args);</span>
+    }
+
+    public static final Atom brace_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L383">        return choose_brackets(&quot;lbrace&quot;, &quot;rbrace&quot;, tp, args);</span>
+    }
+
+    public static final Atom choose_brackets(final String left, final String right, final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L387">        Atom num = tp.getFormulaAtom();</span>
+<span class="fc" id="L388">        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;</span>
+<span class="pc bpc" id="L389" title="2 of 4 branches missed.">        if (num == null || denom == null)</span>
+<span class="nc" id="L390">            throw new ParseException(&quot;Both numerator and denominator of choose can't be empty!&quot;);</span>
+<span class="fc" id="L391">        return new FencedAtom(new FractionAtom(num, denom, false), new SymbolAtom(left, TeXConstants.TYPE_OPENING, true), new SymbolAtom(right, TeXConstants.TYPE_CLOSING, true));</span>
+    }
+
+    public static final Atom binom_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L395">        TeXFormula num = new TeXFormula(tp, args[1], false);</span>
+<span class="fc" id="L396">        TeXFormula denom = new TeXFormula(tp, args[2], false);</span>
+<span class="pc bpc" id="L397" title="2 of 4 branches missed.">        if (num.root == null || denom.root == null)</span>
+<span class="nc" id="L398">            throw new ParseException(&quot;Both binomial coefficients must be not empty !!&quot;);</span>
+<span class="fc" id="L399">        return new FencedAtom(new FractionAtom(num.root, denom.root, false), new SymbolAtom(&quot;lbrack&quot;, TeXConstants.TYPE_OPENING, true), new SymbolAtom(&quot;rbrack&quot;, TeXConstants.TYPE_CLOSING, true));</span>
+    }
+
+    public static final Atom above_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L403">        Atom num = tp.getFormulaAtom();</span>
+<span class="nc" id="L404">        float[] dim = tp.getLength();</span>
+<span class="nc" id="L405">        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;</span>
+<span class="nc bnc" id="L406" title="All 4 branches missed.">        if (dim == null || dim.length != 2) {</span>
+<span class="nc" id="L407">            throw new ParseException(&quot;Invalid length in above macro&quot;);</span>
+        }
+<span class="nc bnc" id="L409" title="All 4 branches missed.">        if (num == null || denom == null)</span>
+<span class="nc" id="L410">            throw new ParseException(&quot;Both numerator and denominator of a fraction can't be empty!&quot;);</span>
+
+<span class="nc" id="L412">        return new FractionAtom(num, denom, (int) dim[0], dim[1]);</span>
+    }
+
+    public static final Atom abovewithdelims_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L416">        Atom num = tp.getFormulaAtom();</span>
+<span class="nc" id="L417">        float[] dim = tp.getLength();</span>
+<span class="nc" id="L418">        Atom denom = new TeXFormula(tp, tp.getOverArgument(), false).root;</span>
+<span class="nc bnc" id="L419" title="All 4 branches missed.">        if (dim == null || dim.length != 2) {</span>
+<span class="nc" id="L420">            throw new ParseException(&quot;Invalid length in above macro&quot;);</span>
+        }
+<span class="nc bnc" id="L422" title="All 4 branches missed.">        if (num == null || denom == null)</span>
+<span class="nc" id="L423">            throw new ParseException(&quot;Both numerator and denominator of a fraction can't be empty!&quot;);</span>
+
+<span class="nc" id="L425">        Atom left = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc bnc" id="L426" title="All 2 branches missed.">        if (left instanceof BigDelimiterAtom)</span>
+<span class="nc" id="L427">            left = ((BigDelimiterAtom)left).delim;</span>
+<span class="nc" id="L428">        Atom right = new TeXFormula(tp, args[2], false).root;</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">        if (right instanceof BigDelimiterAtom)</span>
+<span class="nc" id="L430">            right = ((BigDelimiterAtom)right).delim;</span>
+<span class="nc bnc" id="L431" title="All 4 branches missed.">        if (left instanceof SymbolAtom &amp;&amp; right instanceof SymbolAtom) {</span>
+<span class="nc" id="L432">            return new FencedAtom(new FractionAtom(num, denom, (int) dim[0], dim[1]), (SymbolAtom) left, (SymbolAtom) right);</span>
+        }
+
+<span class="nc" id="L435">        RowAtom ra = new RowAtom();</span>
+<span class="nc" id="L436">        ra.add(left);</span>
+<span class="nc" id="L437">        ra.add(new FractionAtom(num, denom, true));</span>
+<span class="nc" id="L438">        ra.add(right);</span>
+<span class="nc" id="L439">        return ra;</span>
+    }
+
+    public static final Atom textstyle_macros(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L443">        String style = args[0];</span>
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">        if (&quot;frak&quot;.equals(args[0]))</span>
+<span class="nc" id="L445">            style = &quot;mathfrak&quot;;</span>
+<span class="pc bpc" id="L446" title="1 of 2 branches missed.">        else if (&quot;Bbb&quot;.equals(args[0]))</span>
+<span class="nc" id="L447">            style = &quot;mathbb&quot;;</span>
+<span class="pc bpc" id="L448" title="1 of 2 branches missed.">        else if (&quot;bold&quot;.equals(args[0]))</span>
+<span class="nc" id="L449">            return new BoldAtom(new TeXFormula(tp, args[1], false).root);</span>
+<span class="pc bpc" id="L450" title="1 of 2 branches missed.">        else if (&quot;cal&quot;.equals(args[0]))</span>
+<span class="nc" id="L451">            style = &quot;mathcal&quot;;</span>
+
+<span class="fc" id="L453">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+
+<span class="fc" id="L455">        return new TextStyleAtom(at, style);</span>
+    }
+
+    public static final Atom mbox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L459">        Atom group = new RomanAtom(new TeXFormula(tp, args[1], &quot;mathnormal&quot;, false, false).root);</span>
+<span class="nc" id="L460">        return new StyleAtom(TeXConstants.STYLE_TEXT, group);</span>
+    }
+
+    public static final Atom text_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L464">        return new RomanAtom(new TeXFormula(tp, args[1], &quot;mathnormal&quot;, false, false).root);</span>
+    }
+
+    public static final Atom underscore_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L468">        return new UnderscoreAtom();</span>
+    }
+
+    public static final Atom accent_macros(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L472">        return new AccentedAtom(new TeXFormula(tp, args[1], false).root, args[0]);</span>
+    }
+
+    public static final Atom grkaccent_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L476">        return new AccentedAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root, false);</span>
+    }
+
+    public static final Atom accent_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L480">        return new AccentedAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom accentbis_macros(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L484">        String acc = &quot;&quot;;</span>
+<span class="pc bpc" id="L485" title="6 of 14 branches missed.">        switch (args[0].charAt(0)) {</span>
+        case '~' :
+<span class="fc" id="L487">            acc = &quot;tilde&quot;;</span>
+<span class="fc" id="L488">            break;</span>
+        case '\'' :
+<span class="fc" id="L490">            acc = &quot;acute&quot;;</span>
+<span class="fc" id="L491">            break;</span>
+        case '^' :
+<span class="fc" id="L493">            acc = &quot;hat&quot;;</span>
+<span class="fc" id="L494">            break;</span>
+        case '\&quot;' :
+<span class="fc" id="L496">            acc = &quot;ddot&quot;;</span>
+<span class="fc" id="L497">            break;</span>
+        case '`' :
+<span class="fc" id="L499">            acc = &quot;grave&quot;;</span>
+<span class="fc" id="L500">            break;</span>
+        case '=' :
+<span class="nc" id="L502">            acc = &quot;bar&quot;;</span>
+<span class="nc" id="L503">            break;</span>
+        case '.' :
+<span class="nc" id="L505">            acc = &quot;dot&quot;;</span>
+<span class="nc" id="L506">            break;</span>
+        case 'u' :
+<span class="nc" id="L508">            acc = &quot;breve&quot;;</span>
+<span class="nc" id="L509">            break;</span>
+        case 'v' :
+<span class="fc" id="L511">            acc = &quot;check&quot;;</span>
+<span class="fc" id="L512">            break;</span>
+        case 'H' :
+<span class="fc" id="L514">            acc = &quot;doubleacute&quot;;</span>
+<span class="fc" id="L515">            break;</span>
+        case 't' :
+<span class="nc" id="L517">            acc = &quot;tie&quot;;</span>
+<span class="nc" id="L518">            break;</span>
+        case 'r' :
+<span class="fc" id="L520">            acc = &quot;mathring&quot;;</span>
+<span class="fc" id="L521">            break;</span>
+        case 'U' :
+<span class="nc" id="L523">            acc = &quot;cyrbreve&quot;;</span>
+        }
+
+<span class="fc" id="L526">        return new AccentedAtom(new TeXFormula(tp, args[1], false).root, acc);</span>
+    }
+
+    public static final Atom cedilla_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L530">        return new CedillaAtom(new TeXFormula(tp, args[1]).root);</span>
+    }
+
+    public static final Atom IJ_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc bnc" id="L534" title="All 2 branches missed.">        return new IJAtom(args[0].charAt(0) == 'I');</span>
+    }
+
+    public static final Atom TStroke_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc bnc" id="L538" title="All 2 branches missed.">        return new TStrokeAtom(args[0].charAt(0) == 'T');</span>
+    }
+
+    public static final Atom LCaron_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc bnc" id="L542" title="All 2 branches missed.">        return new LCaronAtom(args[0].charAt(0) == 'L');</span>
+    }
+
+    public static final Atom tcaron_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L546">        return new tcaronAtom();</span>
+    }
+
+    public static final Atom ogonek_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L550">        return new OgonekAtom(new TeXFormula(tp, args[1]).root);</span>
+    }
+
+    public static final Atom nbsp_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L554">        return new SpaceAtom();</span>
+    }
+
+    public static final Atom sqrt_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc bfc" id="L558" title="All 2 branches covered.">        if (args[2] == null)</span>
+<span class="fc" id="L559">            return new NthRoot(new TeXFormula(tp, args[1], false).root, null);</span>
+<span class="fc" id="L560">        return new NthRoot(new TeXFormula(tp, args[1], false).root, new TeXFormula(tp, args[2], false).root);</span>
+    }
+
+    public static final Atom overrightarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L564">        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, false, true);</span>
+    }
+
+    public static final Atom overleftarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L568">        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, true, true);</span>
+    }
+
+    public static final Atom overleftrightarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L572">        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, true);</span>
+    }
+
+    public static final Atom underrightarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L576">        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, false, false);</span>
+    }
+
+    public static final Atom underleftarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L580">        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, true, false);</span>
+    }
+
+    public static final Atom underleftrightarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L584">        return new UnderOverArrowAtom(new TeXFormula(tp, args[1], false).root, false);</span>
+    }
+
+    public static final Atom xleftarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L588">        return new XArrowAtom(new TeXFormula(tp, args[1], false).root, new TeXFormula(tp, args[2]).root, true);</span>
+    }
+
+    public static final Atom xrightarrow_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L592">        return new XArrowAtom(new TeXFormula(tp, args[1], false).root, new TeXFormula(tp, args[2]).root, false);</span>
+    }
+
+    public static final Atom sideset_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L596">        TeXFormula tf = new TeXFormula();</span>
+<span class="nc" id="L597">        tf.add(new PhantomAtom(new TeXFormula(tp, args[3]).root, false, true, true));</span>
+<span class="nc" id="L598">        tf.append(tp.getIsPartial(), args[1]);</span>
+<span class="nc" id="L599">        tf.add(new SpaceAtom(TeXConstants.UNIT_MU, -0.3f, 0f, 0f));</span>
+<span class="nc" id="L600">        tf.append(tp.getIsPartial(), args[3] + &quot;\\nolimits&quot; + args[2]);</span>
+<span class="nc" id="L601">        return new TypedAtom(TeXConstants.TYPE_ORDINARY, TeXConstants.TYPE_ORDINARY, tf.root);</span>
+    }
+
+    public static final Atom prescript_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L605">        Atom base = new TeXFormula(tp, args[3]).root;</span>
+<span class="nc" id="L606">        tp.addAtom(new ScriptsAtom(new PhantomAtom(base, false, true, true), new TeXFormula(tp, args[2]).root, new TeXFormula(tp, args[1]).root, false));</span>
+<span class="nc" id="L607">        tp.addAtom(new SpaceAtom(TeXConstants.UNIT_MU, -0.3f, 0f, 0f));</span>
+<span class="nc" id="L608">        return new TypedAtom(TeXConstants.TYPE_ORDINARY, TeXConstants.TYPE_ORDINARY, base);</span>
+    }
+
+    public static final Atom underbrace_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L612">        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get(&quot;rbrace&quot;), TeXConstants.UNIT_EX, 0, false);</span>
+    }
+
+    public static final Atom overbrace_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L616">        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get(&quot;lbrace&quot;), TeXConstants.UNIT_EX, 0, true);</span>
+    }
+
+    public static final Atom underbrack_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L620">        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get(&quot;rsqbrack&quot;), TeXConstants.UNIT_EX, 0, false);</span>
+    }
+
+    public static final Atom overbrack_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L624">        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get(&quot;lsqbrack&quot;), TeXConstants.UNIT_EX, 0, true);</span>
+    }
+
+    public static final Atom underparen_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L628">        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get(&quot;rbrack&quot;), TeXConstants.UNIT_EX, 0, false);</span>
+    }
+
+    public static final Atom overparen_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L632">        return new OverUnderDelimiter(new TeXFormula(tp, args[1], false).root, null, SymbolAtom.get(&quot;lbrack&quot;), TeXConstants.UNIT_EX, 0, true);</span>
+    }
+
+    public static final Atom overline_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L636">        return new OverlinedAtom(new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom underline_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L640">        return new UnderlinedAtom(new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom mathop_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L644">        TypedAtom at =  new TypedAtom(TeXConstants.TYPE_BIG_OPERATOR, TeXConstants.TYPE_BIG_OPERATOR, new TeXFormula(tp, args[1], false).root);</span>
+<span class="fc" id="L645">        at.type_limits = TeXConstants.SCRIPT_NORMAL;</span>
+<span class="fc" id="L646">        return at;</span>
+    }
+
+    public static final Atom mathpunct_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L650">        return new TypedAtom(TeXConstants.TYPE_PUNCTUATION, TeXConstants.TYPE_PUNCTUATION, new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom mathord_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L654">        return new TypedAtom(TeXConstants.TYPE_ORDINARY, TeXConstants.TYPE_ORDINARY, new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom mathrel_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L658">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom mathinner_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L662">        return new TypedAtom(TeXConstants.TYPE_INNER, TeXConstants.TYPE_INNER, new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom mathbin_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L666">        return new TypedAtom(TeXConstants.TYPE_BINARY_OPERATOR, TeXConstants.TYPE_BINARY_OPERATOR, new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom mathopen_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L670">        return new TypedAtom(TeXConstants.TYPE_OPENING, TeXConstants.TYPE_OPENING, new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom mathclose_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L674">        return new TypedAtom(TeXConstants.TYPE_CLOSING, TeXConstants.TYPE_CLOSING, new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom joinrel_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L678">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, new SpaceAtom(TeXConstants.UNIT_MU, -2.6f, 0, 0));</span>
+    }
+
+    public static final Atom smash_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L682">        return new SmashedAtom(new TeXFormula(tp, args[1], false).root, args[2]);</span>
+    }
+
+    public static final Atom vdots_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L686">        return new VdotsAtom();</span>
+    }
+
+    public static final Atom ddots_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L690">        return new TypedAtom(TeXConstants.TYPE_INNER, TeXConstants.TYPE_INNER, new DdotsAtom());</span>
+    }
+
+    public static final Atom iddots_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L694">        return new TypedAtom(TeXConstants.TYPE_INNER, TeXConstants.TYPE_INNER, new IddotsAtom());</span>
+    }
+
+    public static final Atom nolimits_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L698">        Atom at = tp.getLastAtom();</span>
+<span class="fc" id="L699">        at.type_limits = TeXConstants.SCRIPT_NOLIMITS;</span>
+<span class="fc" id="L700">        return at.clone();</span>
+    }
+
+    public static final Atom limits_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L704">        Atom at = tp.getLastAtom();</span>
+<span class="fc" id="L705">        at.type_limits = TeXConstants.SCRIPT_LIMITS;</span>
+<span class="fc" id="L706">        return at.clone();</span>
+    }
+
+    public static final Atom normal_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L710">        Atom at = tp.getLastAtom();</span>
+<span class="fc" id="L711">        at.type_limits = TeXConstants.SCRIPT_NORMAL;</span>
+<span class="fc" id="L712">        return at.clone();</span>
+    }
+
+    public static final Atom left_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L716">        String grp = tp.getGroup(&quot;\\left&quot;, &quot;\\right&quot;);</span>
+<span class="fc" id="L717">        Atom left = new TeXFormula(tp, args[1], false).root;</span>
+<span class="pc bpc" id="L718" title="1 of 2 branches missed.">        if (left instanceof BigDelimiterAtom)</span>
+<span class="nc" id="L719">            left = ((BigDelimiterAtom)left).delim;</span>
+<span class="fc" id="L720">        Atom right = tp.getArgument();</span>
+<span class="pc bpc" id="L721" title="1 of 2 branches missed.">        if (right instanceof BigDelimiterAtom)</span>
+<span class="nc" id="L722">            right = ((BigDelimiterAtom)right).delim;</span>
+<span class="pc bpc" id="L723" title="2 of 4 branches missed.">        if (left instanceof SymbolAtom &amp;&amp; right instanceof SymbolAtom) {</span>
+<span class="fc" id="L724">            TeXFormula tf = new TeXFormula(tp, grp, false);</span>
+<span class="fc" id="L725">            return new FencedAtom(tf.root, (SymbolAtom)left, tf.middle, (SymbolAtom)right);</span>
+        }
+
+<span class="nc" id="L728">        RowAtom ra = new RowAtom();</span>
+<span class="nc" id="L729">        ra.add(left);</span>
+<span class="nc" id="L730">        ra.add(new TeXFormula(tp, grp, false).root);</span>
+<span class="nc" id="L731">        ra.add(right);</span>
+<span class="nc" id="L732">        return ra;</span>
+    }
+
+    public static final Atom leftparenthesis_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L736">        String grp = tp.getGroup(&quot;\\(&quot;, &quot;\\)&quot;);</span>
+<span class="nc" id="L737">        return new MathAtom(new TeXFormula(tp, grp, false).root, TeXConstants.STYLE_TEXT);</span>
+    }
+
+    public static final Atom leftbracket_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L741">        String grp = tp.getGroup(&quot;\\[&quot;, &quot;\\]&quot;);</span>
+<span class="nc" id="L742">        return new MathAtom(new TeXFormula(tp, grp, false).root, TeXConstants.STYLE_DISPLAY);</span>
+    }
+
+    public static final Atom middle_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L746">        return new MiddleAtom(new TeXFormula(tp, args[1]).root);</span>
+    }
+
+    public static final Atom cr_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc bfc" id="L750" title="All 2 branches covered.">        if (tp.isArrayMode()) {</span>
+<span class="fc" id="L751">            tp.addRow();</span>
+        } else {
+<span class="fc" id="L753">            ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="fc" id="L754">            array.add(tp.formula.root);</span>
+<span class="fc" id="L755">            array.addRow();</span>
+<span class="fc" id="L756">            TeXParser parser = new TeXParser(tp.getIsPartial(), tp.getStringFromCurrentPos(), array, false, tp.isIgnoreWhiteSpace());</span>
+<span class="fc" id="L757">            parser.parse();</span>
+<span class="fc" id="L758">            array.checkDimensions();</span>
+<span class="fc" id="L759">            tp.finish();</span>
+<span class="fc" id="L760">            tp.formula.root = array.getAsVRow();//new MatrixAtom(tp.getIsPartial(), array, MatrixAtom.ARRAY, TeXConstants.ALIGN_LEFT, false);</span>
+        }
+
+<span class="fc" id="L763">        return null;</span>
+    }
+
+    public static final Atom backslashcr_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L767">        return cr_macro(tp, args);</span>
+    }
+
+    public static final Atom intertext_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc bnc" id="L771" title="All 2 branches missed.">        if (!tp.isArrayMode()) {</span>
+<span class="nc" id="L772">            throw new ParseException(&quot;Bad environment for \\intertext command !&quot;);</span>
+        }
+
+<span class="nc" id="L775">        String str = args[1].replaceAll(&quot;\\^\\{\\\\prime\\}&quot;, &quot;\'&quot;);</span>
+<span class="nc" id="L776">        str = str.replaceAll(&quot;\\^\\{\\\\prime\\\\prime\\}&quot;, &quot;\'\'&quot;);</span>
+<span class="nc" id="L777">        Atom at = new RomanAtom(new TeXFormula(tp, str, &quot;mathnormal&quot;, false, false).root);</span>
+<span class="nc" id="L778">        at.type = TeXConstants.TYPE_INTERTEXT;</span>
+<span class="nc" id="L779">        tp.addAtom(at);</span>
+<span class="nc" id="L780">        tp.addRow();</span>
+<span class="nc" id="L781">        return null;</span>
+    }
+
+    public static final Atom smallmatrixATATenv_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L785">        ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="nc" id="L786">        TeXParser parser = new TeXParser(tp.getIsPartial(), args[1], array, false);</span>
+<span class="nc" id="L787">        parser.parse();</span>
+<span class="nc" id="L788">        array.checkDimensions();</span>
+<span class="nc" id="L789">        return new MatrixAtom(tp.getIsPartial(), array, MatrixAtom.SMALLMATRIX);</span>
+    }
+
+    public static final Atom matrixATATenv_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L793">        ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="fc" id="L794">        TeXParser parser = new TeXParser(tp.getIsPartial(), args[1], array, false);</span>
+<span class="fc" id="L795">        parser.parse();</span>
+<span class="fc" id="L796">        array.checkDimensions();</span>
+<span class="fc" id="L797">        return new MatrixAtom(tp.getIsPartial(), array, MatrixAtom.MATRIX);</span>
+    }
+
+    public static final Atom multicolumn_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L801">        int n = Integer.parseInt(args[1]);</span>
+<span class="nc" id="L802">        tp.addAtom(new MulticolumnAtom(n, args[2], new TeXFormula(tp, args[3]).root));</span>
+<span class="nc" id="L803">        ((ArrayOfAtoms)tp.formula).addCol(n);</span>
+<span class="nc" id="L804">        return null;</span>
+    }
+
+    public static final Atom hdotsfor_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L808">        int n = Integer.parseInt(args[1]);</span>
+<span class="nc" id="L809">        float f = 1;</span>
+<span class="nc bnc" id="L810" title="All 2 branches missed.">        if (args[2] != null) {</span>
+<span class="nc" id="L811">            f = Float.parseFloat(args[2]);</span>
+        }
+<span class="nc" id="L813">        tp.addAtom(new HdotsforAtom(n, f));</span>
+<span class="nc" id="L814">        ((ArrayOfAtoms)tp.formula).addCol(n);</span>
+<span class="nc" id="L815">        return null;</span>
+    }
+
+    public static final Atom arrayATATenv_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L819">        ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="fc" id="L820">        TeXParser parser = new TeXParser(tp.getIsPartial(), args[2], array, false);</span>
+<span class="fc" id="L821">        parser.parse();</span>
+<span class="fc" id="L822">        array.checkDimensions();</span>
+<span class="fc" id="L823">        return new MatrixAtom(tp.getIsPartial(), array, args[1], true);</span>
+    }
+
+    public static final Atom alignATATenv_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L827">        ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="nc" id="L828">        TeXParser parser = new TeXParser(tp.getIsPartial(), args[1], array, false);</span>
+<span class="nc" id="L829">        parser.parse();</span>
+<span class="nc" id="L830">        array.checkDimensions();</span>
+<span class="nc" id="L831">        return new MatrixAtom(tp.getIsPartial(), array, MatrixAtom.ALIGN);</span>
+    }
+
+    public static final Atom flalignATATenv_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L835">        ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="nc" id="L836">        TeXParser parser = new TeXParser(tp.getIsPartial(), args[1], array, false);</span>
+<span class="nc" id="L837">        parser.parse();</span>
+<span class="nc" id="L838">        array.checkDimensions();</span>
+<span class="nc" id="L839">        return new MatrixAtom(tp.getIsPartial(), array, MatrixAtom.FLALIGN);</span>
+    }
+
+    public static final Atom alignatATATenv_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L843">        ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="nc" id="L844">        TeXParser parser = new TeXParser(tp.getIsPartial(), args[2], array, false);</span>
+<span class="nc" id="L845">        parser.parse();</span>
+<span class="nc" id="L846">        array.checkDimensions();</span>
+<span class="nc" id="L847">        int n = Integer.parseInt(args[1]);</span>
+<span class="nc bnc" id="L848" title="All 2 branches missed.">        if (array.col != 2 * n) {</span>
+<span class="nc" id="L849">            throw new ParseException(&quot;Bad number of equations in alignat environment !&quot;);</span>
+        }
+
+<span class="nc" id="L852">        return new MatrixAtom(tp.getIsPartial(), array, MatrixAtom.ALIGNAT);</span>
+    }
+
+    public static final Atom alignedATATenv_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L856">        ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="fc" id="L857">        TeXParser parser = new TeXParser(tp.getIsPartial(), args[1], array, false);</span>
+<span class="fc" id="L858">        parser.parse();</span>
+<span class="fc" id="L859">        array.checkDimensions();</span>
+<span class="fc" id="L860">        return new MatrixAtom(tp.getIsPartial(), array, MatrixAtom.ALIGNED);</span>
+    }
+
+    public static final Atom alignedatATATenv_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L864">        ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="nc" id="L865">        TeXParser parser = new TeXParser(tp.getIsPartial(), args[2], array, false);</span>
+<span class="nc" id="L866">        parser.parse();</span>
+<span class="nc" id="L867">        array.checkDimensions();</span>
+<span class="nc" id="L868">        int n = Integer.parseInt(args[1]);</span>
+<span class="nc bnc" id="L869" title="All 2 branches missed.">        if (array.col != 2 * n) {</span>
+<span class="nc" id="L870">            throw new ParseException(&quot;Bad number of equations in alignedat environment !&quot;);</span>
+        }
+
+<span class="nc" id="L873">        return new MatrixAtom(tp.getIsPartial(), array, MatrixAtom.ALIGNEDAT);</span>
+    }
+
+    public static final Atom multlineATATenv_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L877">        ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="nc" id="L878">        TeXParser parser = new TeXParser(tp.getIsPartial(), args[1], array, false);</span>
+<span class="nc" id="L879">        parser.parse();</span>
+<span class="nc" id="L880">        array.checkDimensions();</span>
+<span class="nc bnc" id="L881" title="All 2 branches missed.">        if (array.col &gt; 1) {</span>
+<span class="nc" id="L882">            throw new ParseException(&quot;Character '&amp;' is only available in array mode !&quot;);</span>
+        }
+<span class="nc bnc" id="L884" title="All 2 branches missed.">        if (array.col == 0) {</span>
+<span class="nc" id="L885">            return null;</span>
+        }
+
+<span class="nc" id="L888">        return new MultlineAtom(tp.getIsPartial(), array, MultlineAtom.MULTLINE);</span>
+    }
+
+    public static final Atom gatherATATenv_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L892">        ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="nc" id="L893">        TeXParser parser = new TeXParser(tp.getIsPartial(), args[1], array, false);</span>
+<span class="nc" id="L894">        parser.parse();</span>
+<span class="nc" id="L895">        array.checkDimensions();</span>
+<span class="nc bnc" id="L896" title="All 2 branches missed.">        if (array.col &gt; 1) {</span>
+<span class="nc" id="L897">            throw new ParseException(&quot;Character '&amp;' is only available in array mode !&quot;);</span>
+        }
+<span class="nc bnc" id="L899" title="All 2 branches missed.">        if (array.col == 0) {</span>
+<span class="nc" id="L900">            return null;</span>
+        }
+
+<span class="nc" id="L903">        return new MultlineAtom(tp.getIsPartial(), array, MultlineAtom.GATHER);</span>
+    }
+
+    public static final Atom gatheredATATenv_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L907">        ArrayOfAtoms array = new ArrayOfAtoms();</span>
+<span class="nc" id="L908">        TeXParser parser = new TeXParser(tp.getIsPartial(), args[1], array, false);</span>
+<span class="nc" id="L909">        parser.parse();</span>
+<span class="nc" id="L910">        array.checkDimensions();</span>
+<span class="nc bnc" id="L911" title="All 2 branches missed.">        if (array.col &gt; 1) {</span>
+<span class="nc" id="L912">            throw new ParseException(&quot;Character '&amp;' is only available in array mode !&quot;);</span>
+        }
+<span class="nc bnc" id="L914" title="All 2 branches missed.">        if (array.col == 0) {</span>
+<span class="nc" id="L915">            return null;</span>
+        }
+
+<span class="nc" id="L918">        return new MultlineAtom(tp.getIsPartial(), array, MultlineAtom.GATHERED);</span>
+    }
+
+    public static final Atom shoveright_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L922">        Atom at = new TeXFormula(tp, args[1]).root;</span>
+<span class="nc" id="L923">        at.alignment = TeXConstants.ALIGN_RIGHT;</span>
+<span class="nc" id="L924">        return at;</span>
+    }
+
+    public static final Atom shoveleft_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L928">        Atom at = new TeXFormula(tp, args[1]).root;</span>
+<span class="nc" id="L929">        at.alignment = TeXConstants.ALIGN_LEFT;</span>
+<span class="nc" id="L930">        return at;</span>
+    }
+
+    public static final Atom newcommand_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L934">        String newcom = args[1];</span>
+        Integer nbArgs;
+<span class="pc bpc" id="L936" title="1 of 2 branches missed.">        if (!tp.isValidName(newcom)) {</span>
+<span class="nc" id="L937">            throw new ParseException(&quot;Invalid name for the command :&quot; + newcom);</span>
+        }
+
+<span class="fc bfc" id="L940" title="All 2 branches covered.">        if (args[3] == null)</span>
+<span class="fc" id="L941">            nbArgs = new Integer(0);</span>
+        else
+<span class="fc" id="L943">            nbArgs = Integer.parseInt(args[3]);</span>
+
+<span class="pc bpc" id="L945" title="1 of 2 branches missed.">        if (nbArgs == null) {</span>
+<span class="nc" id="L946">            throw new ParseException(&quot;The optional argument should be an integer !&quot;);</span>
+        }
+
+<span class="pc bpc" id="L949" title="1 of 2 branches missed.">        if (args[4] == null)</span>
+<span class="fc" id="L950">            NewCommandMacro.addNewCommand(newcom.substring(1), args[2], nbArgs.intValue());</span>
+        else
+<span class="nc" id="L952">            NewCommandMacro.addNewCommand(newcom.substring(1), args[2], nbArgs.intValue(), args[4]);</span>
+
+<span class="fc" id="L954">        return null;</span>
+    }
+
+    public static final Atom renewcommand_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L958">        String newcom = args[1];</span>
+        Integer nbArgs;
+<span class="pc bpc" id="L960" title="1 of 2 branches missed.">        if (!tp.isValidName(newcom)) {</span>
+<span class="nc" id="L961">            throw new ParseException(&quot;Invalid name for the command :&quot; + newcom);</span>
+        }
+
+<span class="pc bpc" id="L964" title="1 of 2 branches missed.">        if (args[3] == null)</span>
+<span class="nc" id="L965">            nbArgs = new Integer(0);</span>
+        else
+<span class="fc" id="L967">            nbArgs = Integer.parseInt(args[3]);</span>
+
+<span class="pc bpc" id="L969" title="1 of 2 branches missed.">        if (nbArgs == null)</span>
+<span class="nc" id="L970">            throw new ParseException(&quot;The optional argument should be an integer !&quot;);</span>
+
+<span class="fc" id="L972">        NewCommandMacro.addReNewCommand(newcom.substring(1), args[2], nbArgs.intValue());</span>
+
+<span class="fc" id="L974">        return null;</span>
+    }
+
+    public static final Atom makeatletter_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L978">        tp.makeAtLetter();</span>
+<span class="fc" id="L979">        return null;</span>
+    }
+
+    public static final Atom makeatother_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L983">        tp.makeAtOther();</span>
+<span class="fc" id="L984">        return null;</span>
+    }
+
+    public static final Atom newenvironment_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc bnc" id="L988" title="All 2 branches missed.">        Integer opt = args[4] == null ? 0 : Integer.parseInt(args[4]);</span>
+<span class="nc bnc" id="L989" title="All 2 branches missed.">        if (opt == null)</span>
+<span class="nc" id="L990">            throw new ParseException(&quot;The optional argument should be an integer !&quot;);</span>
+
+<span class="nc" id="L992">        NewEnvironmentMacro.addNewEnvironment(args[1], args[2], args[3], opt.intValue());</span>
+<span class="nc" id="L993">        return null;</span>
+    }
+
+    public static final Atom renewenvironment_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc bnc" id="L997" title="All 2 branches missed.">        Integer opt = args[4] == null ? 0 : Integer.parseInt(args[4]);</span>
+<span class="nc bnc" id="L998" title="All 2 branches missed.">        if (opt == null)</span>
+<span class="nc" id="L999">            throw new ParseException(&quot;The optional argument should be an integer !&quot;);</span>
+
+<span class="nc" id="L1001">        NewEnvironmentMacro.addReNewEnvironment(args[1], args[2], args[3], opt.intValue());</span>
+<span class="nc" id="L1002">        return null;</span>
+    }
+
+    public static final Atom fbox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1006">        return new FBoxAtom(new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom questeq_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1010">        Atom at = new UnderOverAtom(SymbolAtom.get(TeXFormula.symbolMappings['=']), new ScaleAtom(SymbolAtom.get(TeXFormula.symbolMappings['?']), 0.75f), TeXConstants.UNIT_MU, 2.5f, true, true);</span>
+<span class="nc" id="L1011">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom stackrel_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1015">        Atom at = new UnderOverAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[3], false).root, TeXConstants.UNIT_MU, 0.5f, true, new TeXFormula(tp, args[1], false).root, TeXConstants.UNIT_MU, 2.5f, true);</span>
+<span class="fc" id="L1016">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom stackbin_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1020">        Atom at = new UnderOverAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[3], false).root, TeXConstants.UNIT_MU, 0.5f, true, new TeXFormula(tp, args[1], false).root, TeXConstants.UNIT_MU, 2.5f, true);</span>
+<span class="nc" id="L1021">        return new TypedAtom(TeXConstants.TYPE_BINARY_OPERATOR, TeXConstants.TYPE_BINARY_OPERATOR, at);</span>
+    }
+
+    public static final Atom overset_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1025">        Atom at = new UnderOverAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root, TeXConstants.UNIT_MU, 2.5f, true, true);</span>
+<span class="fc" id="L1026">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom underset_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1030">        Atom at = new UnderOverAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root, TeXConstants.UNIT_MU, 0.5f, true, false);</span>
+<span class="fc" id="L1031">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom accentset_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1035">        return new AccentedAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom underaccent_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1039">        return new UnderOverAtom(new TeXFormula(tp, args[2], false).root, new TeXFormula(tp, args[1], false).root, TeXConstants.UNIT_MU, 0.3f, true, false);</span>
+    }
+
+    public static final Atom undertilde_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1043">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc" id="L1044">        return new UnderOverAtom(at, new AccentedAtom(new PhantomAtom(at, true, false, false), &quot;widetilde&quot;), TeXConstants.UNIT_MU, 0.3f, true, false);</span>
+    }
+
+    public static final Atom boldsymbol_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1048">        return new BoldAtom(new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom mathrm_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1052">        return new RomanAtom(new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom rm_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1056">        return new RomanAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);</span>
+    }
+
+    public static final Atom mathbf_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1060">        return new BoldAtom(new RomanAtom(new TeXFormula(tp, args[1], false).root));</span>
+    }
+
+    public static final Atom bf_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1064">        return new BoldAtom(new RomanAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root));</span>
+    }
+
+    public static final Atom mathtt_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1068">        return new TtAtom(new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom tt_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1072">        return new TtAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);</span>
+    }
+
+    public static final Atom mathit_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1076">        return new ItAtom(new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom it_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1080">        return new ItAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);</span>
+    }
+
+    public static final Atom mathsf_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1084">        return new SsAtom(new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom sf_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1088">        return new SsAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);</span>
+    }
+
+    public static final Atom LaTeX_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1092">        return new LaTeXAtom();</span>
+    }
+
+
+    public static final Atom hphantom_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1097">        return new PhantomAtom(new TeXFormula(tp, args[1], false).root, true, false, false);</span>
+    }
+
+    public static final Atom vphantom_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1101">        return new PhantomAtom(new TeXFormula(tp, args[1], false).root, false, true, true);</span>
+    }
+
+    public static final Atom phantom_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1105">        return new PhantomAtom(new TeXFormula(tp, args[1], false).root, true, true, true);</span>
+    }
+
+    public static final Atom big_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1109">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="pc bpc" id="L1110" title="1 of 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1111">            return at;</span>
+        }
+<span class="fc" id="L1113">        return new BigDelimiterAtom((SymbolAtom) at, 1);</span>
+    }
+
+    public static final Atom Big_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1117">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="pc bpc" id="L1118" title="1 of 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1119">            return at;</span>
+        }
+<span class="fc" id="L1121">        return new BigDelimiterAtom((SymbolAtom) at, 2);</span>
+    }
+
+    public static final Atom bigg_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1125">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="pc bpc" id="L1126" title="1 of 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1127">            return at;</span>
+        }
+<span class="fc" id="L1129">        return new BigDelimiterAtom((SymbolAtom) at, 3);</span>
+    }
+
+    public static final Atom Bigg_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1133">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="pc bpc" id="L1134" title="1 of 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1135">            return at;</span>
+        }
+<span class="fc" id="L1137">        return new BigDelimiterAtom((SymbolAtom) at, 4);</span>
+    }
+
+    public static final Atom bigl_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1141">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc bnc" id="L1142" title="All 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1143">            return at;</span>
+        }
+<span class="nc" id="L1145">        Atom att = new BigDelimiterAtom((SymbolAtom) at, 1);</span>
+<span class="nc" id="L1146">        att.type = TeXConstants.TYPE_OPENING;</span>
+<span class="nc" id="L1147">        return att;</span>
+    }
+
+    public static final Atom Bigl_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1151">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc bnc" id="L1152" title="All 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1153">            return at;</span>
+        }
+<span class="nc" id="L1155">        Atom att = new BigDelimiterAtom((SymbolAtom) at, 2);</span>
+<span class="nc" id="L1156">        att.type = TeXConstants.TYPE_OPENING;</span>
+<span class="nc" id="L1157">        return att;</span>
+    }
+
+    public static final Atom biggl_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1161">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc bnc" id="L1162" title="All 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1163">            return at;</span>
+        }
+<span class="nc" id="L1165">        Atom att = new BigDelimiterAtom((SymbolAtom) at, 3);</span>
+<span class="nc" id="L1166">        att.type = TeXConstants.TYPE_OPENING;</span>
+<span class="nc" id="L1167">        return att;</span>
+    }
+
+    public static final Atom Biggl_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1171">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc bnc" id="L1172" title="All 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1173">            return at;</span>
+        }
+<span class="nc" id="L1175">        Atom att = new BigDelimiterAtom((SymbolAtom) at, 4);</span>
+<span class="nc" id="L1176">        att.type = TeXConstants.TYPE_OPENING;</span>
+<span class="nc" id="L1177">        return att;</span>
+    }
+
+    public static final Atom bigr_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1181">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc bnc" id="L1182" title="All 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1183">            return at;</span>
+        }
+<span class="nc" id="L1185">        Atom att = new BigDelimiterAtom((SymbolAtom) at, 1);</span>
+<span class="nc" id="L1186">        att.type = TeXConstants.TYPE_CLOSING;</span>
+<span class="nc" id="L1187">        return att;</span>
+    }
+
+    public static final Atom Bigr_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1191">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc bnc" id="L1192" title="All 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1193">            return at;</span>
+        }
+<span class="nc" id="L1195">        Atom att = new BigDelimiterAtom((SymbolAtom) at, 2);</span>
+<span class="nc" id="L1196">        att.type = TeXConstants.TYPE_CLOSING;</span>
+<span class="nc" id="L1197">        return att;</span>
+    }
+
+    public static final Atom biggr_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1201">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc bnc" id="L1202" title="All 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1203">            return at;</span>
+        }
+<span class="nc" id="L1205">        Atom att = new BigDelimiterAtom((SymbolAtom) at, 3);</span>
+<span class="nc" id="L1206">        att.type = TeXConstants.TYPE_CLOSING;</span>
+<span class="nc" id="L1207">        return att;</span>
+    }
+
+    public static final Atom Biggr_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1211">        Atom at = new TeXFormula(tp, args[1], false).root;</span>
+<span class="nc bnc" id="L1212" title="All 2 branches missed.">        if (!(at instanceof SymbolAtom)) {</span>
+<span class="nc" id="L1213">            return at;</span>
+        }
+<span class="nc" id="L1215">        Atom att = new BigDelimiterAtom((SymbolAtom) at, 4);</span>
+<span class="nc" id="L1216">        att.type = TeXConstants.TYPE_CLOSING;</span>
+<span class="nc" id="L1217">        return att;</span>
+    }
+
+    public static final Atom displaystyle_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1221">        Atom group = new TeXFormula(tp, tp.getOverArgument(), false).root;</span>
+<span class="fc" id="L1222">        return new StyleAtom(TeXConstants.STYLE_DISPLAY, group);</span>
+    }
+
+    public static final Atom scriptstyle_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1226">        Atom group = new TeXFormula(tp, tp.getOverArgument(), false).root;</span>
+<span class="fc" id="L1227">        return new StyleAtom(TeXConstants.STYLE_SCRIPT, group);</span>
+    }
+
+    public static final Atom textstyle_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1231">        Atom group = new TeXFormula(tp, tp.getOverArgument(), false).root;</span>
+<span class="fc" id="L1232">        return new StyleAtom(TeXConstants.STYLE_TEXT, group);</span>
+    }
+
+    public static final Atom scriptscriptstyle_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1236">        Atom group = new TeXFormula(tp, tp.getOverArgument(), false).root;</span>
+<span class="fc" id="L1237">        return new StyleAtom(TeXConstants.STYLE_SCRIPT_SCRIPT, group);</span>
+    }
+
+    public static final Atom rotatebox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="pc bpc" id="L1241" title="1 of 2 branches missed.">        return new RotateAtom(new TeXFormula(tp, args[2]).root, args[1] == null ? 0 : Double.parseDouble(args[1]), args[3]);</span>
+    }
+
+    public static final Atom reflectbox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1245">        return new ReflectAtom(new TeXFormula(tp, args[1]).root);</span>
+    }
+
+    public static final Atom scalebox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="pc bpc" id="L1249" title="1 of 2 branches missed.">        return new ScaleAtom(new TeXFormula(tp, args[2]).root, Double.parseDouble(args[1]), args[3] == null ? Double.parseDouble(args[1]) : Double.parseDouble(args[3]));</span>
+    }
+
+    public static final Atom resizebox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="pc bpc" id="L1253" title="2 of 4 branches missed.">        return new ResizeAtom(new TeXFormula(tp, args[3]).root, args[1], args[2], args[1].equals(&quot;!&quot;) || args[2].equals(&quot;!&quot;));</span>
+    }
+
+    public static final Atom raisebox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1257">        float[] raise = SpaceAtom.getLength(args[1]);</span>
+<span class="pc bpc" id="L1258" title="1 of 2 branches missed.">        if (raise.length == 1) {</span>
+<span class="nc" id="L1259">            throw new ParseException(&quot;Error in getting raise in \\raisebox command !&quot;);</span>
+        }
+<span class="fc" id="L1261">        float[] height = SpaceAtom.getLength(args[3]);</span>
+<span class="fc" id="L1262">        float[] depth = SpaceAtom.getLength(args[4]);</span>
+<span class="pc bpc" id="L1263" title="2 of 4 branches missed.">        if (height.length == 1 || height[1] == 0) {</span>
+<span class="fc" id="L1264">            height = new float[] {-1, 0};</span>
+        }
+<span class="pc bpc" id="L1266" title="2 of 4 branches missed.">        if (depth.length == 1 || depth[1] == 0) {</span>
+<span class="fc" id="L1267">            depth = new float[] {-1, 0};</span>
+        }
+
+<span class="fc" id="L1270">        return new RaiseAtom(new TeXFormula(tp, args[2]).root, (int) raise[0], raise[1], (int) height[0], height[1], (int) depth[0], depth[1]);</span>
+    }
+
+    public static final Atom shadowbox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1274">        return new ShadowAtom(new TeXFormula(tp, args[1]).root);</span>
+    }
+
+    public static final Atom ovalbox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1278">        return new OvalAtom(new TeXFormula(tp, args[1]).root);</span>
+    }
+
+    public static final Atom doublebox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1282">        return new DoubleFramedAtom(new TeXFormula(tp, args[1]).root);</span>
+    }
+
+    public static final Atom definecolor_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1286">        TeXColor color = null;</span>
+<span class="fc bfc" id="L1287" title="All 2 branches covered.">        if (&quot;gray&quot;.equals(args[2])) {</span>
+<span class="fc" id="L1288">            float f = Float.parseFloat(args[3]);</span>
+<span class="fc" id="L1289">            color = new TeXColor(f, f, f);</span>
+<span class="fc bfc" id="L1290" title="All 2 branches covered.">        } else if (&quot;rgb&quot;.equals(args[2])) {</span>
+<span class="fc" id="L1291">            StringTokenizer stok = new StringTokenizer(args[3], &quot;;,&quot;);</span>
+<span class="pc bpc" id="L1292" title="1 of 2 branches missed.">            if (stok.countTokens() != 3)</span>
+<span class="nc" id="L1293">                throw new ParseException(&quot;The color definition must have three components !&quot;);</span>
+<span class="fc" id="L1294">            float r = Float.parseFloat(stok.nextToken().trim());</span>
+<span class="fc" id="L1295">            float g = Float.parseFloat(stok.nextToken().trim());</span>
+<span class="fc" id="L1296">            float b = Float.parseFloat(stok.nextToken().trim());</span>
+<span class="fc" id="L1297">            color = new TeXColor(r, g, b);</span>
+<span class="pc bpc" id="L1298" title="1 of 2 branches missed.">        } else if (&quot;cmyk&quot;.equals(args[2])) {</span>
+<span class="fc" id="L1299">            StringTokenizer stok = new StringTokenizer(args[3], &quot;,;&quot;);</span>
+<span class="pc bpc" id="L1300" title="1 of 2 branches missed.">            if (stok.countTokens() != 4)</span>
+<span class="nc" id="L1301">                throw new ParseException(&quot;The color definition must have four components !&quot;);</span>
+<span class="fc" id="L1302">            float[] cmyk = new float[4];</span>
+<span class="fc bfc" id="L1303" title="All 2 branches covered.">            for (int i = 0; i &lt; 4; i++)</span>
+<span class="fc" id="L1304">                cmyk[i] = Float.parseFloat(stok.nextToken().trim());</span>
+<span class="fc" id="L1305">            float k = 1 - cmyk[3];</span>
+<span class="fc" id="L1306">            color = new TeXColor(k * (1 - cmyk[0]), k * (1 - cmyk[1]), k * (1 - cmyk[2]));</span>
+<span class="fc" id="L1307">        } else</span>
+<span class="nc" id="L1308">            throw new ParseException(&quot;The color model is incorrect !&quot;);</span>
+
+<span class="fc" id="L1310">        ColorAtom.Colors.put(args[1], color);</span>
+<span class="fc" id="L1311">        return null;</span>
+    }
+
+    public static final Atom fgcolor_macro(final TeXParser tp, final String[] args) throws ParseException {
+        try {
+<span class="nc" id="L1316">            return new ColorAtom(new TeXFormula(tp, args[2]).root, null, ColorAtom.getColor(args[1]));</span>
+<span class="nc" id="L1317">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L1318">            throw new ParseException(e.toString());</span>
+        }
+    }
+
+    public static final Atom bgcolor_macro(final TeXParser tp, final String[] args) throws ParseException {
+        try {
+<span class="nc" id="L1324">            return new ColorAtom(new TeXFormula(tp, args[2]).root, ColorAtom.getColor(args[1]), null);</span>
+<span class="nc" id="L1325">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L1326">            throw new ParseException(e.toString());</span>
+        }
+    }
+
+    public static final Atom textcolor_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1331">        return new ColorAtom(new TeXFormula(tp, args[2]).root, null, ColorAtom.getColor(args[1]));</span>
+    }
+
+    public static final Atom colorbox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1335">        TeXColor c = ColorAtom.getColor(args[1]);</span>
+<span class="fc" id="L1336">        return new FBoxAtom(new TeXFormula(tp, args[2]).root, c, c);</span>
+    }
+
+    public static final Atom fcolorbox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1340">        return new FBoxAtom(new TeXFormula(tp, args[3]).root, ColorAtom.getColor(args[2]), ColorAtom.getColor(args[1]));</span>
+    }
+
+    public static final Atom cong_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1344">        VRowAtom vra = new VRowAtom(SymbolAtom.get(&quot;equals&quot;));</span>
+<span class="fc" id="L1345">        vra.add(new SpaceAtom(TeXConstants.UNIT_MU, 0f, 1.5f, 0f));</span>
+<span class="fc" id="L1346">        vra.add(SymbolAtom.get(&quot;sim&quot;));</span>
+<span class="fc" id="L1347">        vra.setRaise(TeXConstants.UNIT_MU, -1f);</span>
+<span class="fc" id="L1348">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, vra);</span>
+    }
+
+    public static final Atom doteq_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1352">        Atom at = new UnderOverAtom(SymbolAtom.get(&quot;equals&quot;), SymbolAtom.get(&quot;ldotp&quot;), TeXConstants.UNIT_MU, 3.7f, false, true);</span>
+<span class="nc" id="L1353">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom jlmDynamic_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc bnc" id="L1357" title="All 2 branches missed.">        if (DynamicAtom.hasAnExternalConverterFactory()) {</span>
+<span class="nc" id="L1358">            return new DynamicAtom(args[1], args[2]);</span>
+        } else {
+<span class="nc" id="L1360">            throw new ParseException(&quot;No ExternalConverterFactory set !&quot;);</span>
+        }
+    }
+
+
+
+
+
+
+    public static final Atom DeclareMathSizes_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1370">        DefaultTeXFont.setMathSizes(Float.parseFloat(args[1]), Float.parseFloat(args[2]), Float.parseFloat(args[3]), Float.parseFloat(args[4]));</span>
+<span class="nc" id="L1371">        return null;</span>
+    }
+
+    public static final Atom magnification_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1375">        DefaultTeXFont.setMagnification(Float.parseFloat(args[1]));</span>
+<span class="nc" id="L1376">        return null;</span>
+    }
+
+    public static final Atom hline_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="pc bpc" id="L1380" title="1 of 2 branches missed.">        if (!tp.isArrayMode())</span>
+<span class="nc" id="L1381">            throw new ParseException(&quot;The macro \\hline is only available in array mode !&quot;);</span>
+<span class="fc" id="L1382">        return new HlineAtom();</span>
+    }
+
+    public static final Atom size_macros(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1386">        float f = 1f;</span>
+<span class="nc bnc" id="L1387" title="All 2 branches missed.">        if (&quot;tiny&quot;.equals(args[0])) {</span>
+<span class="nc" id="L1388">            f = 0.5f;</span>
+<span class="nc bnc" id="L1389" title="All 2 branches missed.">        } else if (&quot;scriptsize&quot;.equals(args[0])) {</span>
+<span class="nc" id="L1390">            f = 0.7f;</span>
+<span class="nc bnc" id="L1391" title="All 2 branches missed.">        } else if (&quot;footnotesize&quot;.equals(args[0])) {</span>
+<span class="nc" id="L1392">            f = 0.8f;</span>
+<span class="nc bnc" id="L1393" title="All 2 branches missed.">        } else if (&quot;small&quot;.equals(args[0])) {</span>
+<span class="nc" id="L1394">            f = 0.9f;</span>
+<span class="nc bnc" id="L1395" title="All 2 branches missed.">        } else if (&quot;normalsize&quot;.equals(args[0])) {</span>
+<span class="nc" id="L1396">            f = 1f;</span>
+<span class="nc bnc" id="L1397" title="All 2 branches missed.">        } else if (&quot;large&quot;.equals(args[0])) {</span>
+<span class="nc" id="L1398">            f = 1.2f;</span>
+<span class="nc bnc" id="L1399" title="All 2 branches missed.">        } else if (&quot;Large&quot;.equals(args[0])) {</span>
+<span class="nc" id="L1400">            f = 1.4f;</span>
+<span class="nc bnc" id="L1401" title="All 2 branches missed.">        } else if (&quot;LARGE&quot;.equals(args[0])) {</span>
+<span class="nc" id="L1402">            f = 1.8f;</span>
+<span class="nc bnc" id="L1403" title="All 2 branches missed.">        } else if (&quot;huge&quot;.equals(args[0])) {</span>
+<span class="nc" id="L1404">            f = 2f;</span>
+<span class="nc bnc" id="L1405" title="All 2 branches missed.">        } else if (&quot;Huge&quot;.equals(args[0])) {</span>
+<span class="nc" id="L1406">            f = 2.5f;</span>
+        }
+
+<span class="nc" id="L1409">        return new MonoScaleAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root, f);</span>
+    }
+
+    public static final Atom jlatexmathcumsup_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1413">        return new CumulativeScriptsAtom(tp.getLastAtom(), null, new TeXFormula(tp, args[1]).root);</span>
+    }
+
+    public static final Atom jlatexmathcumsub_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1417">        return new CumulativeScriptsAtom(tp.getLastAtom(), new TeXFormula(tp, args[1]).root, null);</span>
+    }
+
+    public static final Atom dotminus_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1421">        Atom at = new UnderOverAtom(SymbolAtom.get(&quot;minus&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, -3.3f, false, true);</span>
+<span class="nc" id="L1422">        return new TypedAtom(TeXConstants.TYPE_BINARY_OPERATOR, TeXConstants.TYPE_BINARY_OPERATOR, at);</span>
+    }
+
+    public static final Atom ratio_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1426">        Atom at = new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true);</span>
+<span class="nc" id="L1427">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom geoprop_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1431">        RowAtom ddot = new RowAtom(SymbolAtom.get(&quot;normaldot&quot;));</span>
+<span class="nc" id="L1432">        ddot.add(new SpaceAtom(TeXConstants.UNIT_MU, 4f, 0f, 0f));</span>
+<span class="nc" id="L1433">        ddot.add(SymbolAtom.get(&quot;normaldot&quot;));</span>
+<span class="nc" id="L1434">        Atom at = new UnderOverAtom(SymbolAtom.get(&quot;minus&quot;), ddot, TeXConstants.UNIT_MU, -3.4f, false, ddot, TeXConstants.UNIT_MU, -3.4f, false);</span>
+<span class="nc" id="L1435">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom minuscolon_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1439">        RowAtom at = new RowAtom(SymbolAtom.get(&quot;minus&quot;));</span>
+<span class="nc" id="L1440">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.095f, 0f, 0f));</span>
+<span class="nc" id="L1441">        at.add(new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true));</span>
+<span class="nc" id="L1442">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom minuscoloncolon_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1446">        RowAtom at = new RowAtom(SymbolAtom.get(&quot;minus&quot;));</span>
+<span class="nc" id="L1447">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.095f, 0f, 0f));</span>
+<span class="nc" id="L1448">        Atom colon = new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true);</span>
+<span class="nc" id="L1449">        at.add(colon);</span>
+<span class="nc" id="L1450">        at.add(colon);</span>
+<span class="nc" id="L1451">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom simcolon_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1455">        RowAtom at = new RowAtom(SymbolAtom.get(&quot;sim&quot;));</span>
+<span class="nc" id="L1456">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.095f, 0f, 0f));</span>
+<span class="nc" id="L1457">        at.add(new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true));</span>
+<span class="nc" id="L1458">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom simcoloncolon_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1462">        RowAtom at = new RowAtom(SymbolAtom.get(&quot;sim&quot;));</span>
+<span class="nc" id="L1463">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.095f, 0f, 0f));</span>
+<span class="nc" id="L1464">        Atom colon = new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true);</span>
+<span class="nc" id="L1465">        at.add(colon);</span>
+<span class="nc" id="L1466">        at.add(colon);</span>
+<span class="nc" id="L1467">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom approxcolon_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1471">        RowAtom at = new RowAtom(SymbolAtom.get(&quot;approx&quot;));</span>
+<span class="nc" id="L1472">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.095f, 0f, 0f));</span>
+<span class="nc" id="L1473">        at.add(new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true));</span>
+<span class="nc" id="L1474">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom approxcoloncolon_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1478">        RowAtom at = new RowAtom(SymbolAtom.get(&quot;approx&quot;));</span>
+<span class="nc" id="L1479">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.095f, 0f, 0f));</span>
+<span class="nc" id="L1480">        Atom colon = new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true);</span>
+<span class="nc" id="L1481">        at.add(colon);</span>
+<span class="nc" id="L1482">        at.add(colon);</span>
+<span class="nc" id="L1483">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom equalscolon_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1487">        RowAtom at = new RowAtom(SymbolAtom.get(&quot;equals&quot;));</span>
+<span class="nc" id="L1488">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.095f, 0f, 0f));</span>
+<span class="nc" id="L1489">        at.add(new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true));</span>
+<span class="nc" id="L1490">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom equalscoloncolon_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1494">        RowAtom at = new RowAtom(SymbolAtom.get(&quot;equals&quot;));</span>
+<span class="nc" id="L1495">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.095f, 0f, 0f));</span>
+<span class="nc" id="L1496">        Atom colon = new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true);</span>
+<span class="nc" id="L1497">        at.add(colon);</span>
+<span class="nc" id="L1498">        at.add(colon);</span>
+<span class="nc" id="L1499">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom colonminus_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1503">        RowAtom at = new RowAtom(new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true));</span>
+<span class="nc" id="L1504">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.32f, 0f, 0f));</span>
+<span class="nc" id="L1505">        at.add(SymbolAtom.get(&quot;minus&quot;));</span>
+<span class="nc" id="L1506">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom coloncolonminus_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1510">        Atom colon = new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true);</span>
+<span class="nc" id="L1511">        RowAtom at = new RowAtom(colon);</span>
+<span class="nc" id="L1512">        at.add(colon);</span>
+<span class="nc" id="L1513">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.32f, 0f, 0f));</span>
+<span class="nc" id="L1514">        at.add(SymbolAtom.get(&quot;minus&quot;));</span>
+<span class="nc" id="L1515">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom colonequals_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1519">        RowAtom at = new RowAtom(new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true));</span>
+<span class="nc" id="L1520">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.32f, 0f, 0f));</span>
+<span class="nc" id="L1521">        at.add(SymbolAtom.get(&quot;equals&quot;));</span>
+<span class="nc" id="L1522">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom coloncolonequals_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1526">        Atom colon = new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true);</span>
+<span class="nc" id="L1527">        RowAtom at = new RowAtom(colon);</span>
+<span class="nc" id="L1528">        at.add(colon);</span>
+<span class="nc" id="L1529">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.32f, 0f, 0f));</span>
+<span class="nc" id="L1530">        at.add(SymbolAtom.get(&quot;equals&quot;));</span>
+<span class="nc" id="L1531">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom coloncolon_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1535">        Atom colon = new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true);</span>
+<span class="nc" id="L1536">        RowAtom at = new RowAtom(colon);</span>
+<span class="nc" id="L1537">        at.add(colon);</span>
+<span class="nc" id="L1538">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom colonsim_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1542">        RowAtom at = new RowAtom(new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true));</span>
+<span class="nc" id="L1543">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.32f, 0f, 0f));</span>
+<span class="nc" id="L1544">        at.add(SymbolAtom.get(&quot;sim&quot;));</span>
+<span class="nc" id="L1545">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom coloncolonsim_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1549">        Atom colon = new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true);</span>
+<span class="nc" id="L1550">        RowAtom at = new RowAtom(colon);</span>
+<span class="nc" id="L1551">        at.add(colon);</span>
+<span class="nc" id="L1552">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.32f, 0f, 0f));</span>
+<span class="nc" id="L1553">        at.add(SymbolAtom.get(&quot;sim&quot;));</span>
+<span class="nc" id="L1554">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom colonapprox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1558">        RowAtom at = new RowAtom(new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true));</span>
+<span class="nc" id="L1559">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.32f, 0f, 0f));</span>
+<span class="nc" id="L1560">        at.add(SymbolAtom.get(&quot;approx&quot;));</span>
+<span class="nc" id="L1561">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom coloncolonapprox_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1565">        Atom colon = new UnderOverAtom(SymbolAtom.get(&quot;normaldot&quot;), SymbolAtom.get(&quot;normaldot&quot;), TeXConstants.UNIT_MU, 5.2f, false, true);</span>
+<span class="nc" id="L1566">        RowAtom at = new RowAtom(colon);</span>
+<span class="nc" id="L1567">        at.add(colon);</span>
+<span class="nc" id="L1568">        at.add(new SpaceAtom(TeXConstants.UNIT_EM, -0.32f, 0f, 0f));</span>
+<span class="nc" id="L1569">        at.add(SymbolAtom.get(&quot;approx&quot;));</span>
+<span class="nc" id="L1570">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom smallfrowneq_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1574">        Atom at = new UnderOverAtom(SymbolAtom.get(&quot;equals&quot;), SymbolAtom.get(&quot;smallfrown&quot;), TeXConstants.UNIT_MU, -2f, true, true);</span>
+<span class="nc" id="L1575">        return new TypedAtom(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_RELATION, at);</span>
+    }
+
+    public static final Atom hstrok_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1579">        RowAtom ra = new RowAtom(new SpaceAtom(TeXConstants.UNIT_EX, -0.1f, 0f, 0f));</span>
+<span class="nc" id="L1580">        ra.add(SymbolAtom.get(&quot;bar&quot;));</span>
+<span class="nc" id="L1581">        VRowAtom vra = new VRowAtom(new LapedAtom(ra, 'r'));</span>
+<span class="nc" id="L1582">        vra.setRaise(TeXConstants.UNIT_EX, -0.1f);</span>
+<span class="nc" id="L1583">        RowAtom at = new RowAtom(vra);</span>
+<span class="nc" id="L1584">        at.add(new RomanAtom(new CharAtom('h', tp.formula.textStyle)));</span>
+<span class="nc" id="L1585">        return at;</span>
+    }
+
+    public static final Atom Hstrok_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1589">        RowAtom ra = new RowAtom(new SpaceAtom(TeXConstants.UNIT_EX, 0.28f, 0f, 0f));</span>
+<span class="nc" id="L1590">        ra.add(SymbolAtom.get(&quot;textendash&quot;));</span>
+<span class="nc" id="L1591">        VRowAtom vra = new VRowAtom(new LapedAtom(ra, 'r'));</span>
+<span class="nc" id="L1592">        vra.setRaise(TeXConstants.UNIT_EX, 0.55f);</span>
+<span class="nc" id="L1593">        RowAtom at = new RowAtom(vra);</span>
+<span class="nc" id="L1594">        at.add(new RomanAtom(new CharAtom('H', tp.formula.textStyle)));</span>
+<span class="nc" id="L1595">        return at;</span>
+    }
+
+    public static final Atom dstrok_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1599">        RowAtom ra = new RowAtom(new SpaceAtom(TeXConstants.UNIT_EX, 0.25f, 0f, 0f));</span>
+<span class="nc" id="L1600">        ra.add(SymbolAtom.get(&quot;bar&quot;));</span>
+<span class="nc" id="L1601">        VRowAtom vra = new VRowAtom(new LapedAtom(ra, 'r'));</span>
+<span class="nc" id="L1602">        vra.setRaise(TeXConstants.UNIT_EX, -0.1f);</span>
+<span class="nc" id="L1603">        RowAtom at = new RowAtom(vra);</span>
+<span class="nc" id="L1604">        at.add(new RomanAtom(new CharAtom('d', tp.formula.textStyle)));</span>
+<span class="nc" id="L1605">        return at;</span>
+    }
+
+    public static final Atom Dstrok_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1609">        RowAtom ra = new RowAtom(new SpaceAtom(TeXConstants.UNIT_EX, -0.1f, 0f, 0f));</span>
+<span class="nc" id="L1610">        ra.add(SymbolAtom.get(&quot;bar&quot;));</span>
+<span class="nc" id="L1611">        VRowAtom vra = new VRowAtom(new LapedAtom(ra, 'r'));</span>
+<span class="nc" id="L1612">        vra.setRaise(TeXConstants.UNIT_EX, -0.55f);</span>
+<span class="nc" id="L1613">        RowAtom at = new RowAtom(vra);</span>
+<span class="nc" id="L1614">        at.add(new RomanAtom(new CharAtom('D', tp.formula.textStyle)));</span>
+<span class="nc" id="L1615">        return at;</span>
+    }
+
+    public static final Atom kern_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1619">        float[] info = SpaceAtom.getLength(args[1]);</span>
+<span class="nc bnc" id="L1620" title="All 2 branches missed.">        if (info.length == 1) {</span>
+<span class="nc" id="L1621">            throw new ParseException(&quot;Error in getting kern in \\kern command !&quot;);</span>
+        }
+
+<span class="nc" id="L1624">        return new SpaceAtom((int) info[0], info[1], 0f, 0f);</span>
+    }
+
+    public static final Atom char_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1628">        String number = args[1];</span>
+<span class="nc" id="L1629">        int radix = 10;</span>
+<span class="nc bnc" id="L1630" title="All 4 branches missed.">        if (number.startsWith(&quot;0x&quot;) || number.startsWith(&quot;0X&quot;)) {</span>
+<span class="nc" id="L1631">            number = number.substring(2);</span>
+<span class="nc" id="L1632">            radix = 16;</span>
+<span class="nc bnc" id="L1633" title="All 4 branches missed.">        } else if (number.startsWith(&quot;x&quot;) || number.startsWith(&quot;X&quot;)) {</span>
+<span class="nc" id="L1634">            number = number.substring(1);</span>
+<span class="nc" id="L1635">            radix = 16;</span>
+<span class="nc bnc" id="L1636" title="All 2 branches missed.">        } else if (number.startsWith(&quot;0&quot;)) {</span>
+<span class="nc" id="L1637">            number = number.substring(1);</span>
+<span class="nc" id="L1638">            radix = 8;</span>
+        }
+<span class="nc" id="L1640">        int n = Integer.parseInt(number, radix);</span>
+<span class="nc" id="L1641">        return tp.convertCharacter((char) n, true);</span>
+    }
+
+    public static final Atom T_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1645">        return new RotateAtom(new TeXFormula(tp, args[1]).root, 180, &quot;origin=cc&quot;);</span>
+    }
+
+    public static final Atom romannumeral_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1649">        int[] numbers = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};</span>
+<span class="nc" id="L1650">        String[] letters = { &quot;M&quot;, &quot;CM&quot;, &quot;D&quot;, &quot;CD&quot;, &quot;C&quot;, &quot;XC&quot;, &quot;L&quot;, &quot;XL&quot;, &quot;X&quot;, &quot;IX&quot;, &quot;V&quot;, &quot;IV&quot;, &quot;I&quot;};</span>
+<span class="nc" id="L1651">        String roman = &quot;&quot;;</span>
+<span class="nc" id="L1652">        int num = Integer.parseInt(args[1].trim());</span>
+<span class="nc bnc" id="L1653" title="All 2 branches missed.">        for (int i = 0; i &lt; numbers.length; i++) {</span>
+<span class="nc bnc" id="L1654" title="All 2 branches missed.">            while (num &gt;= numbers[i]) {</span>
+<span class="nc" id="L1655">                roman += letters[i];</span>
+<span class="nc" id="L1656">                num -= numbers[i];</span>
+            }
+        }
+
+<span class="nc bnc" id="L1660" title="All 2 branches missed.">        if (args[0].charAt(0) == 'r') {</span>
+<span class="nc" id="L1661">            roman = roman.toLowerCase();</span>
+        }
+
+<span class="nc" id="L1664">        return new TeXFormula(roman, false).root;</span>
+    }
+
+    public static final Atom textcircled_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1668">        return new TextCircledAtom(new RomanAtom(new TeXFormula(tp, args[1]).root));</span>
+    }
+
+    public static final Atom textsc_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1672">        return new SmallCapAtom(new TeXFormula(tp, args[1], false).root);</span>
+    }
+
+    public static final Atom sc_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1676">        return new SmallCapAtom(new TeXFormula(tp, tp.getOverArgument(), null, false, tp.isIgnoreWhiteSpace()).root);</span>
+    }
+
+    public static final Atom quad_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1680">        return new SpaceAtom(TeXConstants.UNIT_EM, 1f, 0f, 0f);</span>
+    }
+
+    public static final Atom qquad_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1684">        return new SpaceAtom(TeXConstants.UNIT_EM, 2f, 0f, 0f);</span>
+    }
+
+    public static final Atom muskip_macros(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1688">        int type = 0;</span>
+<span class="fc bfc" id="L1689" title="All 2 branches covered.">        if (args[0].equals(&quot;,&quot;)) {</span>
+<span class="fc" id="L1690">            type = TeXConstants.THINMUSKIP;</span>
+<span class="fc bfc" id="L1691" title="All 2 branches covered.">        } else if (args[0].equals(&quot;:&quot;)) {</span>
+<span class="fc" id="L1692">            type = TeXConstants.MEDMUSKIP;</span>
+<span class="fc bfc" id="L1693" title="All 2 branches covered.">        } else if (args[0].equals(&quot;;&quot;)) {</span>
+<span class="fc" id="L1694">            type = TeXConstants.THICKMUSKIP;</span>
+<span class="pc bpc" id="L1695" title="1 of 2 branches missed.">        } else if (args[0].equals(&quot;thinspace&quot;)) {</span>
+<span class="nc" id="L1696">            type = TeXConstants.THINMUSKIP;</span>
+<span class="pc bpc" id="L1697" title="1 of 2 branches missed.">        } else if (args[0].equals(&quot;medspace&quot;)) {</span>
+<span class="nc" id="L1698">            type = TeXConstants.MEDMUSKIP;</span>
+<span class="pc bpc" id="L1699" title="1 of 2 branches missed.">        } else if (args[0].equals(&quot;thickspace&quot;)) {</span>
+<span class="nc" id="L1700">            type = TeXConstants.THICKMUSKIP;</span>
+<span class="pc bpc" id="L1701" title="1 of 2 branches missed.">        } else if (args[0].equals(&quot;!&quot;)) {</span>
+<span class="fc" id="L1702">            type = TeXConstants.NEGTHINMUSKIP;</span>
+<span class="nc bnc" id="L1703" title="All 2 branches missed.">        } else if (args[0].equals(&quot;negthinspace&quot;)) {</span>
+<span class="nc" id="L1704">            type = TeXConstants.NEGTHINMUSKIP;</span>
+<span class="nc bnc" id="L1705" title="All 2 branches missed.">        } else if (args[0].equals(&quot;negmedspace&quot;)) {</span>
+<span class="nc" id="L1706">            type = TeXConstants.NEGMEDMUSKIP;</span>
+<span class="nc bnc" id="L1707" title="All 2 branches missed.">        } else if (args[0].equals(&quot;negthickspace&quot;)) {</span>
+<span class="nc" id="L1708">            type = TeXConstants.NEGTHICKMUSKIP;</span>
+        }
+
+<span class="fc" id="L1711">        return new SpaceAtom(type);</span>
+    }
+
+    public static final Atom surd_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1715">        return new VCenteredAtom(SymbolAtom.get(&quot;surdsign&quot;));</span>
+    }
+
+    public static final Atom int_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1719">        Atom integral = SymbolAtom.get(&quot;int&quot;).clone();</span>
+<span class="fc" id="L1720">        integral.type_limits = TeXConstants.SCRIPT_NOLIMITS;</span>
+<span class="fc" id="L1721">        return integral;</span>
+    }
+
+    public static final Atom oint_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1725">        Atom integral = SymbolAtom.get(&quot;oint&quot;).clone();</span>
+<span class="fc" id="L1726">        integral.type_limits = TeXConstants.SCRIPT_NOLIMITS;</span>
+<span class="fc" id="L1727">        return integral;</span>
+    }
+
+    public static final Atom iint_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1731">        Atom integral = SymbolAtom.get(&quot;int&quot;).clone();</span>
+<span class="fc" id="L1732">        integral.type_limits = TeXConstants.SCRIPT_NOLIMITS;</span>
+<span class="fc" id="L1733">        RowAtom ra = new RowAtom(integral);</span>
+<span class="fc" id="L1734">        ra.add(new SpaceAtom(TeXConstants.UNIT_MU, -6f, 0f, 0f));</span>
+<span class="fc" id="L1735">        ra.add(integral);</span>
+<span class="fc" id="L1736">        ra.lookAtLastAtom = true;</span>
+<span class="fc" id="L1737">        return new TypedAtom(TeXConstants.TYPE_BIG_OPERATOR, TeXConstants.TYPE_BIG_OPERATOR, ra);</span>
+    }
+
+    public static final Atom iiint_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L1741">        Atom integral = SymbolAtom.get(&quot;int&quot;).clone();</span>
+<span class="fc" id="L1742">        integral.type_limits = TeXConstants.SCRIPT_NOLIMITS;</span>
+<span class="fc" id="L1743">        RowAtom ra = new RowAtom(integral);</span>
+<span class="fc" id="L1744">        ra.add(new SpaceAtom(TeXConstants.UNIT_MU, -6f, 0f, 0f));</span>
+<span class="fc" id="L1745">        ra.add(integral);</span>
+<span class="fc" id="L1746">        ra.add(new SpaceAtom(TeXConstants.UNIT_MU, -6f, 0f, 0f));</span>
+<span class="fc" id="L1747">        ra.add(integral);</span>
+<span class="fc" id="L1748">        ra.lookAtLastAtom = true;</span>
+<span class="fc" id="L1749">        return new TypedAtom(TeXConstants.TYPE_BIG_OPERATOR, TeXConstants.TYPE_BIG_OPERATOR, ra);</span>
+    }
+
+    public static final Atom iiiint_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1753">        Atom integral = SymbolAtom.get(&quot;int&quot;).clone();</span>
+<span class="nc" id="L1754">        integral.type_limits = TeXConstants.SCRIPT_NOLIMITS;</span>
+<span class="nc" id="L1755">        RowAtom ra = new RowAtom(integral);</span>
+<span class="nc" id="L1756">        ra.add(new SpaceAtom(TeXConstants.UNIT_MU, -6f, 0f, 0f));</span>
+<span class="nc" id="L1757">        ra.add(integral);</span>
+<span class="nc" id="L1758">        ra.add(new SpaceAtom(TeXConstants.UNIT_MU, -6f, 0f, 0f));</span>
+<span class="nc" id="L1759">        ra.add(integral);</span>
+<span class="nc" id="L1760">        ra.add(new SpaceAtom(TeXConstants.UNIT_MU, -6f, 0f, 0f));</span>
+<span class="nc" id="L1761">        ra.add(integral);</span>
+<span class="nc" id="L1762">        ra.lookAtLastAtom = true;</span>
+<span class="nc" id="L1763">        return new TypedAtom(TeXConstants.TYPE_BIG_OPERATOR, TeXConstants.TYPE_BIG_OPERATOR, ra);</span>
+    }
+
+    public static final Atom idotsint_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1767">        Atom integral = SymbolAtom.get(&quot;int&quot;).clone();</span>
+<span class="nc" id="L1768">        integral.type_limits = TeXConstants.SCRIPT_NOLIMITS;</span>
+<span class="nc" id="L1769">        RowAtom ra = new RowAtom(integral);</span>
+<span class="nc" id="L1770">        ra.add(new SpaceAtom(TeXConstants.UNIT_MU, -1f, 0f, 0f));</span>
+<span class="nc" id="L1771">        Atom cdotp = SymbolAtom.get(&quot;cdotp&quot;);</span>
+<span class="nc" id="L1772">        RowAtom cdots = new RowAtom(cdotp);</span>
+<span class="nc" id="L1773">        cdots.add(cdotp);</span>
+<span class="nc" id="L1774">        cdots.add(cdotp);</span>
+<span class="nc" id="L1775">        ra.add(new TypedAtom(TeXConstants.TYPE_INNER, TeXConstants.TYPE_INNER, cdots));</span>
+<span class="nc" id="L1776">        ra.add(new SpaceAtom(TeXConstants.UNIT_MU, -1f, 0f, 0f));</span>
+<span class="nc" id="L1777">        ra.add(integral);</span>
+<span class="nc" id="L1778">        ra.lookAtLastAtom = true;</span>
+<span class="nc" id="L1779">        return new TypedAtom(TeXConstants.TYPE_BIG_OPERATOR, TeXConstants.TYPE_BIG_OPERATOR, ra);</span>
+    }
+
+    public static final Atom lmoustache_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1783">        Atom at = new BigDelimiterAtom((SymbolAtom) SymbolAtom.get(&quot;lmoustache&quot;).clone(), 1);</span>
+<span class="nc" id="L1784">        at.type = TeXConstants.TYPE_OPENING;</span>
+<span class="nc" id="L1785">        return at;</span>
+    }
+
+    public static final Atom rmoustache_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1789">        Atom at = new BigDelimiterAtom((SymbolAtom) SymbolAtom.get(&quot;rmoustache&quot;).clone(), 1);</span>
+<span class="nc" id="L1790">        at.type = TeXConstants.TYPE_CLOSING;</span>
+<span class="nc" id="L1791">        return at;</span>
+    }
+
+    public static final Atom insertBreakMark_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1795">        return new BreakMarkAtom();</span>
+    }
+
+    public static final Atom jlmXML_macro(final TeXParser tp, final String[] args) throws ParseException {
+<span class="nc" id="L1799">        Map&lt;String, String&gt; map = tp.formula.jlmXMLMap;</span>
+<span class="nc" id="L1800">        String str = args[1];</span>
+<span class="nc" id="L1801">        StringBuffer buffer = new StringBuffer();</span>
+<span class="nc" id="L1802">        int start = 0;</span>
+        int pos;
+<span class="nc bnc" id="L1804" title="All 2 branches missed.">        while ((pos = str.indexOf(&quot;$&quot;)) != -1) {</span>
+<span class="nc bnc" id="L1805" title="All 2 branches missed.">            if (pos &lt; str.length() - 1) {</span>
+<span class="nc" id="L1806">                start = pos;</span>
+<span class="nc bnc" id="L1807" title="All 4 branches missed.">                while (++start &lt; str.length() &amp;&amp; Character.isLetter(str.charAt(start)));</span>
+<span class="nc" id="L1808">                String key = str.substring(pos + 1, start);</span>
+<span class="nc" id="L1809">                String value = map.get(key);</span>
+<span class="nc bnc" id="L1810" title="All 2 branches missed.">                if (value != null) {</span>
+<span class="nc" id="L1811">                    buffer.append(str.substring(0, pos));</span>
+<span class="nc" id="L1812">                    buffer.append(value);</span>
+                } else {
+<span class="nc" id="L1814">                    buffer.append(str.substring(0, start));</span>
+                }
+<span class="nc" id="L1816">                str = str.substring(start);</span>
+<span class="nc" id="L1817">            } else {</span>
+<span class="nc" id="L1818">                buffer.append(str);</span>
+<span class="nc" id="L1819">                str = &quot;&quot;;</span>
+            }
+        }
+<span class="nc" id="L1822">        buffer.append(str);</span>
+<span class="nc" id="L1823">        str = buffer.toString();</span>
+
+<span class="nc" id="L1825">        return new TeXFormula(tp, str).root;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

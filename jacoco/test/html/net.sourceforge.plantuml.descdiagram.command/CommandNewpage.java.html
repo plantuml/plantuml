@@ -81,15 +81,15 @@ public class CommandNewpage extends SingleLineCommand2&lt;TitledDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L84">		final int dpi = diagram.getSkinParam().getDpi();</span>
-<span class="nc" id="L85">		final TitledDiagram emptyDiagram = (TitledDiagram) factory.createEmptyDiagram(diagram.getPathSystem(),</span>
-<span class="nc" id="L86">				diagram.getSource(), diagram.getPrevious(), diagram.getPreprocessingArtifact());</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (dpi != 96)</span>
+<span class="fc" id="L84">		final int dpi = diagram.getSkinParam().getDpi();</span>
+<span class="fc" id="L85">		final TitledDiagram emptyDiagram = (TitledDiagram) factory.createEmptyDiagram(diagram.getPathSystem(),</span>
+<span class="fc" id="L86">				diagram.getSource(), diagram.getPrevious(), diagram.getPreprocessingArtifact());</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (dpi != 96)</span>
 <span class="nc" id="L88">			emptyDiagram.setParam(&quot;dpi&quot;, &quot;&quot; + dpi);</span>
 
-<span class="nc" id="L90">		final NewpagedDiagram result = new NewpagedDiagram(diagram.getSource(), diagram, emptyDiagram,</span>
-<span class="nc" id="L91">				diagram.getPreprocessingArtifact());</span>
-<span class="nc" id="L92">		return CommandExecutionResult.newDiagram(result);</span>
+<span class="fc" id="L90">		final NewpagedDiagram result = new NewpagedDiagram(diagram.getSource(), diagram, emptyDiagram,</span>
+<span class="fc" id="L91">				diagram.getPreprocessingArtifact());</span>
+<span class="fc" id="L92">		return CommandExecutionResult.newDiagram(result);</span>
 	}
 
 	@Override

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrayOfAtoms.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">ArrayOfAtoms.java</span></div><h1>ArrayOfAtoms.java</h1><pre class="source lang-java linenums">/* ArrayOfAtoms.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2009-2010 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.LinkedList;
+
+public class ArrayOfAtoms extends TeXFormula {
+
+    public LinkedList&lt;LinkedList&lt;Atom&gt;&gt; array;
+    public int col, row;
+
+    public ArrayOfAtoms() {
+<span class="fc" id="L56">        super();</span>
+<span class="fc" id="L57">        array = new LinkedList&lt;LinkedList&lt;Atom&gt;&gt;();</span>
+<span class="fc" id="L58">        array.add(new LinkedList&lt;Atom&gt;());</span>
+<span class="fc" id="L59">        row = 0;</span>
+<span class="fc" id="L60">    }</span>
+
+    public void addCol() {
+<span class="fc" id="L63">        array.get(row).add(root);</span>
+<span class="fc" id="L64">        root = null;</span>
+<span class="fc" id="L65">    }</span>
+
+    public void addCol(int n) {
+<span class="nc" id="L68">        array.get(row).add(root);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        for (int i = 1; i &lt; n - 1; i++) {</span>
+<span class="nc" id="L70">            array.get(row).add(null);</span>
+        }
+<span class="nc" id="L72">        root = null;</span>
+<span class="nc" id="L73">    }</span>
+
+    public void addRow() {
+<span class="fc" id="L76">        addCol();</span>
+<span class="fc" id="L77">        array.add(new LinkedList&lt;Atom&gt;());</span>
+<span class="fc" id="L78">        row++;</span>
+<span class="fc" id="L79">    }</span>
+
+    public VRowAtom getAsVRow() {
+<span class="fc" id="L82">        VRowAtom vr = new VRowAtom();</span>
+<span class="fc" id="L83">        vr.setAddInterline(true);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        for (LinkedList&lt;Atom&gt; r : array) {</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            for (Atom a : r) {</span>
+<span class="fc" id="L86">                vr.append(a);</span>
+<span class="fc" id="L87">            }</span>
+<span class="fc" id="L88">        }</span>
+
+<span class="fc" id="L90">        return vr;</span>
+    }
+
+    public void checkDimensions() {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (array.getLast().size() != 0)</span>
+<span class="fc" id="L95">            addRow();</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        else if (root != null)</span>
+<span class="fc" id="L97">            addRow();</span>
+
+<span class="fc" id="L99">        row = array.size() - 1;</span>
+<span class="fc" id="L100">        col = array.get(0).size();</span>
+
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        for (int i = 1; i &lt; row; i++) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            if (array.get(i).size() &gt; col) {</span>
+<span class="fc" id="L104">                col = array.get(i).size();</span>
+            }
+        }
+
+        /* Thanks to Juan Enrique Escobar Robles for this patch
+           which let the user have empty columns */
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        for (int i = 0; i &lt; row; i++) {</span>
+<span class="fc" id="L111">            int  j = array.get(i).size();</span>
+<span class="pc bpc" id="L112" title="2 of 6 branches missed.">            if (j != col &amp;&amp; array.get(i).get(0) != null &amp;&amp; array.get(i).get(0).type != TeXConstants.TYPE_INTERTEXT) {</span>
+<span class="fc" id="L113">                LinkedList&lt;Atom&gt; r = array.get(i);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                for(; j &lt; col; j++) {</span>
+<span class="fc" id="L115">                    r.add(null);</span>
+                }
+            }
+        }
+<span class="fc" id="L119">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -136,18 +136,18 @@ public class XCubicCurve2D {
 	}
 
 	public double getFlatness() {
-<span class="nc" id="L139">		return getFlatness(getX1(), getY1(), getCtrlX1(), getCtrlY1(), getCtrlX2(), getCtrlY2(), getX2(), getY2());</span>
+<span class="fc" id="L139">		return getFlatness(getX1(), getY1(), getCtrlX1(), getCtrlY1(), getCtrlX2(), getCtrlY2(), getX2(), getY2());</span>
 	}
 
 	private static double getFlatness(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2, double ctrly2,
 			double x2, double y2) {
-<span class="nc" id="L144">		return Math.sqrt(getFlatnessSq(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2));</span>
+<span class="fc" id="L144">		return Math.sqrt(getFlatnessSq(x1, y1, ctrlx1, ctrly1, ctrlx2, ctrly2, x2, y2));</span>
 	}
 
 	private static double getFlatnessSq(double x1, double y1, double ctrlx1, double ctrly1, double ctrlx2,
 			double ctrly2, double x2, double y2) {
-<span class="nc" id="L149">		return Math.max(XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx1, ctrly1),</span>
-<span class="nc" id="L150">				XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx2, ctrly2));</span>
+<span class="fc" id="L149">		return Math.max(XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx1, ctrly1),</span>
+<span class="fc" id="L150">				XLine2D.ptSegDistSq(x1, y1, x2, y2, ctrlx2, ctrly2));</span>
 
 	}
 

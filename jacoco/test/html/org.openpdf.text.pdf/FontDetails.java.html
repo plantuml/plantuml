@@ -142,19 +142,19 @@ class FontDetails {
         try {
             int firstChar;
             int lastChar;
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">            for (firstChar = 0; firstChar &lt; 256; ++firstChar) {</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">            for (firstChar = 0; firstChar &lt; 256; ++firstChar) {</span>
 <span class="fc bfc" id="L146" title="All 2 branches covered.">                if (shortTag[firstChar] != 0) {</span>
 <span class="fc" id="L147">                    break;</span>
                 }
             }
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">            for (lastChar = 255; lastChar &gt;= firstChar; --lastChar) {</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            for (lastChar = 255; lastChar &gt;= firstChar; --lastChar) {</span>
 <span class="fc bfc" id="L151" title="All 2 branches covered.">                if (shortTag[lastChar] != 0) {</span>
 <span class="fc" id="L152">                    break;</span>
                 }
             }
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">            if (firstChar &gt; 255) {</span>
-<span class="nc" id="L156">                firstChar = 255;</span>
-<span class="nc" id="L157">                lastChar = 255;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">            if (firstChar &gt; 255) {</span>
+<span class="fc" id="L156">                firstChar = 255;</span>
+<span class="fc" id="L157">                lastChar = 255;</span>
             }
 <span class="fc" id="L159">            baseFont.writeFont(writer, indirectReference, new Object[]{firstChar, lastChar, shortTag, subset});</span>
 <span class="nc" id="L160">        } catch (Exception e) {</span>

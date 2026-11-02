@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UGraphicTeXGraphics.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.math</a> &gt; <span class="el_source">UGraphicTeXGraphics.java</span></div><h1>UGraphicTeXGraphics.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.math;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.scilab.forge.jlatexmath.FontInfo;
+import org.scilab.forge.jlatexmath.GlyphOutlines;
+import org.scilab.forge.jlatexmath.TeXColor;
+import org.scilab.forge.jlatexmath.TeXFormula;
+import org.scilab.forge.jlatexmath.TeXGraphics;
+
+import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.geom.USegment;
+
+/**
+ * The canvas of JLaTeXMath (see PLAN.md, phase 2) drawn on a {@link UGraphic}:
+ * a formula is only paths, so that every output (SVG, PNG, PDF, EMF, the C
+ * build...) gets it the same way, with no font and no Batik.
+ * &lt;p&gt;
+ * UGraphic only knows translations, so this class keeps its own affine
+ * transformation (scale, rotate, translate of the boxes) and gives the shapes
+ * to the UGraphic with their points already transformed. A glyph is a filled
+ * path made from glyphs.bin, a line is a stroked path.
+ * &lt;p&gt;
+ * The origin of the formula is the origin of the {@code UGraphic} given to the
+ * constructor.
+ * &lt;p&gt;
+ * The color of the formula is an {@link HColor}, given as is to the UGraphic
+ * (which applies its color mapper, as for any shape). A color set by the boxes
+ * (an AWT color, from \color) replaces it until it is set back.
+ */
+public class UGraphicTeXGraphics implements TeXGraphics {
+	// ::remove file when __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+
+	/** Control point of a cubic curve that approximates a quarter of circle. */
+	private static final double KAPPA = 0.5522847498307936;
+
+	private final UGraphic ug;
+
+	// x' = a x + c y + e ; y' = b x + d y + f
+<span class="fc" id="L85">	private double a = 1;</span>
+<span class="fc" id="L86">	private double b = 0;</span>
+<span class="fc" id="L87">	private double c = 0;</span>
+<span class="fc" id="L88">	private double d = 1;</span>
+<span class="fc" id="L89">	private double e = 0;</span>
+<span class="fc" id="L90">	private double f = 0;</span>
+
+	/** Stands for the foreground HColor in the colors that the boxes save and restore. */
+<span class="fc" id="L93">	private final TeXColor foregroundMark = new TeXColor(0, 0, 0);</span>
+	private final HColor foreground;
+<span class="fc" id="L95">	private TeXColor color = foregroundMark;</span>
+<span class="fc" id="L96">	private float lineWidth = 1;</span>
+
+	/**
+	 * The glyphs that follow each other with the same color are gathered in one
+	 * path: the rasterizer then fills their union. Drawn one by one, the parts
+	 * that overlap (the pieces of an extensible arrow or brace) are painted
+	 * twice, and the edge pixels that they share get darker.
+	 */
+	private UPath pendingGlyphs;
+	private HColor pendingColor;
+
+<span class="fc" id="L107">	private final List&lt;double[]&gt; savedTransforms = new ArrayList&lt;double[]&gt;();</span>
+<span class="fc" id="L108">	private final List&lt;Float&gt; savedStrokes = new ArrayList&lt;Float&gt;();</span>
+
+<span class="fc" id="L110">	public UGraphicTeXGraphics(UGraphic ug, HColor foreground) {</span>
+<span class="fc" id="L111">		this.ug = ug;</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		this.foreground = foreground == null ? HColors.BLACK : foreground;</span>
+<span class="fc" id="L113">	}</span>
+
+	public TeXColor getColor() {
+<span class="fc" id="L116">		return color;</span>
+	}
+
+	public void setColor(TeXColor color) {
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (color != this.color)</span>
+<span class="fc" id="L121">			flush();</span>
+<span class="fc" id="L122">		this.color = color;</span>
+<span class="fc" id="L123">	}</span>
+
+	public void setLineWidth(float width) {
+<span class="fc" id="L126">		this.lineWidth = width;</span>
+<span class="fc" id="L127">	}</span>
+
+	public void saveStroke() {
+<span class="fc" id="L130">		savedStrokes.add(Float.valueOf(lineWidth));</span>
+<span class="fc" id="L131">	}</span>
+
+	public void restoreStroke() {
+<span class="fc" id="L134">		lineWidth = savedStrokes.remove(savedStrokes.size() - 1).floatValue();</span>
+<span class="fc" id="L135">	}</span>
+
+	// ------------------------------------------------------------------ shapes
+
+	public void fillRect(float x, float y, float width, float height) {
+<span class="fc" id="L140">		final UPath path = UPath.none();</span>
+<span class="fc" id="L141">		rect(path, x, y, width, height);</span>
+<span class="fc" id="L142">		fill(path);</span>
+<span class="fc" id="L143">	}</span>
+
+	public void drawRect(float x, float y, float width, float height) {
+<span class="fc" id="L146">		final UPath path = UPath.none();</span>
+<span class="fc" id="L147">		rect(path, x, y, width, height);</span>
+<span class="fc" id="L148">		stroke(path);</span>
+<span class="fc" id="L149">	}</span>
+
+	public void drawRoundRect(float x, float y, float width, float height, float arcWidth, float arcHeight) {
+		// As java.awt.geom.RoundRectangle2D: the arcs are the diameters of the corners
+<span class="fc" id="L153">		final double rx = Math.min(Math.max(arcWidth, 0) / 2, width / 2);</span>
+<span class="fc" id="L154">		final double ry = Math.min(Math.max(arcHeight, 0) / 2, height / 2);</span>
+<span class="fc" id="L155">		final double x2 = x + width;</span>
+<span class="fc" id="L156">		final double y2 = y + height;</span>
+<span class="fc" id="L157">		final double kx = rx * KAPPA;</span>
+<span class="fc" id="L158">		final double ky = ry * KAPPA;</span>
+<span class="fc" id="L159">		final UPath path = UPath.none();</span>
+<span class="fc" id="L160">		moveTo(path, x + rx, y);</span>
+<span class="fc" id="L161">		lineTo(path, x2 - rx, y);</span>
+<span class="fc" id="L162">		cubicTo(path, x2 - rx + kx, y, x2, y + ry - ky, x2, y + ry);</span>
+<span class="fc" id="L163">		lineTo(path, x2, y2 - ry);</span>
+<span class="fc" id="L164">		cubicTo(path, x2, y2 - ry + ky, x2 - rx + kx, y2, x2 - rx, y2);</span>
+<span class="fc" id="L165">		lineTo(path, x + rx, y2);</span>
+<span class="fc" id="L166">		cubicTo(path, x + rx - kx, y2, x, y2 - ry + ky, x, y2 - ry);</span>
+<span class="fc" id="L167">		lineTo(path, x, y + ry);</span>
+<span class="fc" id="L168">		cubicTo(path, x, y + ry - ky, x + rx - kx, y, x + rx, y);</span>
+<span class="fc" id="L169">		stroke(path);</span>
+<span class="fc" id="L170">	}</span>
+
+	public void drawLine(float x1, float y1, float x2, float y2) {
+<span class="nc" id="L173">		final UPath path = UPath.none();</span>
+<span class="nc" id="L174">		moveTo(path, x1, y1);</span>
+<span class="nc" id="L175">		lineTo(path, x2, y2);</span>
+<span class="nc" id="L176">		stroke(path);</span>
+<span class="nc" id="L177">	}</span>
+
+	public void drawChar(int fontId, char ch) {
+<span class="fc" id="L180">		final FontInfo info = FontInfo.getFontInfo(fontId);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		final GlyphOutlines.GlyphFont glyphs = info == null ? null : info.getGlyphs();</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (glyphs == null)</span>
+<span class="nc" id="L183">			return;</span>
+		// The AWT font was at PIXELS_PER_POINT * FONT_SCALE_FACTOR, 1 em
+<span class="fc" id="L185">		final double k = TeXFormula.PIXELS_PER_POINT * TeXFormula.FONT_SCALE_FACTOR / glyphs.getUnitsPerEm();</span>
+<span class="fc" id="L186">		final UPath path = UPath.none();</span>
+<span class="fc" id="L187">		glyphs.visit(ch, new GlyphOutlines.Sink() {</span>
+
+			private double px;
+			private double py;
+
+			public void moveTo(int x, int y) {
+<span class="fc" id="L193">				px = x * k;</span>
+<span class="fc" id="L194">				py = -y * k;</span>
+<span class="fc" id="L195">				UGraphicTeXGraphics.this.moveTo(path, px, py);</span>
+<span class="fc" id="L196">			}</span>
+
+			public void lineTo(int x, int y) {
+<span class="fc" id="L199">				final double nx = x * k;</span>
+<span class="fc" id="L200">				final double ny = -y * k;</span>
+				// some fonts repeat a point: nothing to draw, and a shorter path
+<span class="fc bfc" id="L202" title="All 4 branches covered.">				if (nx == px &amp;&amp; ny == py)</span>
+<span class="fc" id="L203">					return;</span>
+<span class="fc" id="L204">				px = nx;</span>
+<span class="fc" id="L205">				py = ny;</span>
+<span class="fc" id="L206">				UGraphicTeXGraphics.this.lineTo(path, px, py);</span>
+<span class="fc" id="L207">			}</span>
+
+			public void quadTo(int cx, int cy, int x, int y) {
+<span class="fc" id="L210">				final double qx = cx * k;</span>
+<span class="fc" id="L211">				final double qy = -cy * k;</span>
+<span class="fc" id="L212">				final double ex = x * k;</span>
+<span class="fc" id="L213">				final double ey = -y * k;</span>
+				// quadratic to cubic: control points at 2/3 of the way to the control point
+<span class="fc" id="L215">				UGraphicTeXGraphics.this.cubicTo(path, px + 2.0 / 3.0 * (qx - px), py + 2.0 / 3.0 * (qy - py),</span>
+						ex + 2.0 / 3.0 * (qx - ex), ey + 2.0 / 3.0 * (qy - ey), ex, ey);
+<span class="fc" id="L217">				px = ex;</span>
+<span class="fc" id="L218">				py = ey;</span>
+<span class="fc" id="L219">			}</span>
+
+			public void close() {
+<span class="fc" id="L222">				path.closePath();</span>
+<span class="fc" id="L223">			}</span>
+		});
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">		if (path.isEmpty())</span>
+<span class="nc" id="L226">			return;</span>
+<span class="fc" id="L227">		final HColor fore = current();</span>
+<span class="pc bpc" id="L228" title="1 of 4 branches missed.">		if (pendingGlyphs != null &amp;&amp; pendingColor.equals(fore) == false)</span>
+<span class="nc" id="L229">			flush();</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		if (pendingGlyphs == null) {</span>
+<span class="fc" id="L231">			pendingGlyphs = UPath.none();</span>
+<span class="fc" id="L232">			pendingColor = fore;</span>
+		}
+<span class="fc bfc" id="L234" title="All 2 branches covered.">		for (USegment segment : path)</span>
+<span class="fc" id="L235">			pendingGlyphs.add(segment.getCoord(), segment.getSegmentType());</span>
+<span class="fc" id="L236">	}</span>
+
+	/**
+	 * Draws the glyphs that are waiting. Done before anything else is drawn, so
+	 * that the order of the drawing is kept, and at the end of the formula.
+	 */
+	public void flush() {
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		if (pendingGlyphs == null)</span>
+<span class="fc" id="L244">			return;</span>
+<span class="fc" id="L245">		final UPath path = pendingGlyphs;</span>
+<span class="fc" id="L246">		final HColor fore = pendingColor;</span>
+<span class="fc" id="L247">		pendingGlyphs = null;</span>
+<span class="fc" id="L248">		pendingColor = null;</span>
+<span class="fc" id="L249">		ug.apply(HColors.transparent()).apply(fore.bg()).apply(UStroke.withThickness(0)).draw(path);</span>
+<span class="fc" id="L250">	}</span>
+
+	public void drawText(String text, double fontSize) {
+		// The text is drawn by the font engine of the UGraphic: it can be neither rotated nor
+		// flipped, and its size is a whole number of pixels
+<span class="fc" id="L255">		flush();</span>
+<span class="fc" id="L256">		final double scale = Math.sqrt(Math.abs(a * d - b * c));</span>
+<span class="fc" id="L257">		final int size = Math.max(1, (int) Math.round(fontSize * scale));</span>
+<span class="fc" id="L258">		final HColor fore = current();</span>
+<span class="fc" id="L259">		final FontConfiguration fontConfiguration = FontConfiguration.create(UFontFactory.sansSerif(size), fore, fore,</span>
+<span class="fc" id="L260">				UStroke.simple(), 8);</span>
+<span class="fc" id="L261">		ug.apply(new UTranslate(tx(0, 0), ty(0, 0))).draw(UText.build(text, fontConfiguration));</span>
+<span class="fc" id="L262">	}</span>
+
+	// ------------------------------------------------------------------ transformation
+
+	public void translate(double tx, double ty) {
+<span class="fc" id="L267">		e += a * tx + c * ty;</span>
+<span class="fc" id="L268">		f += b * tx + d * ty;</span>
+<span class="fc" id="L269">	}</span>
+
+	public void scale(double sx, double sy) {
+<span class="fc" id="L272">		a *= sx;</span>
+<span class="fc" id="L273">		b *= sx;</span>
+<span class="fc" id="L274">		c *= sy;</span>
+<span class="fc" id="L275">		d *= sy;</span>
+<span class="fc" id="L276">	}</span>
+
+	public void rotate(double theta) {
+		// StrictMath: the same result on every platform, so that the output is deterministic
+<span class="fc" id="L280">		final double cos = StrictMath.cos(theta);</span>
+<span class="fc" id="L281">		final double sin = StrictMath.sin(theta);</span>
+<span class="fc" id="L282">		final double na = a * cos + c * sin;</span>
+<span class="fc" id="L283">		final double nb = b * cos + d * sin;</span>
+<span class="fc" id="L284">		final double nc = -a * sin + c * cos;</span>
+<span class="fc" id="L285">		final double nd = -b * sin + d * cos;</span>
+<span class="fc" id="L286">		a = na;</span>
+<span class="fc" id="L287">		b = nb;</span>
+<span class="fc" id="L288">		c = nc;</span>
+<span class="fc" id="L289">		d = nd;</span>
+<span class="fc" id="L290">	}</span>
+
+	public void rotate(double theta, double x, double y) {
+<span class="fc" id="L293">		translate(x, y);</span>
+<span class="fc" id="L294">		rotate(theta);</span>
+<span class="fc" id="L295">		translate(-x, -y);</span>
+<span class="fc" id="L296">	}</span>
+
+	public double getScaleX() {
+<span class="fc" id="L299">		return a;</span>
+	}
+
+	public void saveTransform() {
+<span class="fc" id="L303">		savedTransforms.add(new double[] { a, b, c, d, e, f });</span>
+<span class="fc" id="L304">	}</span>
+
+	public void restoreTransform() {
+<span class="fc" id="L307">		final double[] m = savedTransforms.remove(savedTransforms.size() - 1);</span>
+<span class="fc" id="L308">		a = m[0];</span>
+<span class="fc" id="L309">		b = m[1];</span>
+<span class="fc" id="L310">		c = m[2];</span>
+<span class="fc" id="L311">		d = m[3];</span>
+<span class="fc" id="L312">		e = m[4];</span>
+<span class="fc" id="L313">		f = m[5];</span>
+<span class="fc" id="L314">	}</span>
+
+	// ------------------------------------------------------------------ helpers
+
+	private void rect(UPath path, double x, double y, double width, double height) {
+<span class="fc" id="L319">		moveTo(path, x, y);</span>
+<span class="fc" id="L320">		lineTo(path, x + width, y);</span>
+<span class="fc" id="L321">		lineTo(path, x + width, y + height);</span>
+<span class="fc" id="L322">		lineTo(path, x, y + height);</span>
+<span class="fc" id="L323">		lineTo(path, x, y);</span>
+<span class="fc" id="L324">		path.closePath();</span>
+<span class="fc" id="L325">	}</span>
+
+	private double tx(double x, double y) {
+<span class="fc" id="L328">		return a * x + c * y + e;</span>
+	}
+
+	private double ty(double x, double y) {
+<span class="fc" id="L332">		return b * x + d * y + f;</span>
+	}
+
+	private void moveTo(UPath path, double x, double y) {
+<span class="fc" id="L336">		path.moveTo(tx(x, y), ty(x, y));</span>
+<span class="fc" id="L337">	}</span>
+
+	private void lineTo(UPath path, double x, double y) {
+<span class="fc" id="L340">		path.lineTo(tx(x, y), ty(x, y));</span>
+<span class="fc" id="L341">	}</span>
+
+	private void cubicTo(UPath path, double x1, double y1, double x2, double y2, double x, double y) {
+<span class="fc" id="L344">		path.cubicTo(tx(x1, y1), ty(x1, y1), tx(x2, y2), ty(x2, y2), tx(x, y), ty(x, y));</span>
+<span class="fc" id="L345">	}</span>
+
+	private HColor current() {
+<span class="fc bfc" id="L348" title="All 2 branches covered.">		if (color == foregroundMark)</span>
+<span class="fc" id="L349">			return foreground;</span>
+<span class="fc" id="L350">		return HColors.simple(new XColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()));</span>
+	}
+
+	/** Filled with the current color, no outline. */
+	private void fill(UPath path) {
+<span class="fc" id="L355">		flush();</span>
+<span class="fc" id="L356">		final HColor fore = current();</span>
+<span class="fc" id="L357">		ug.apply(HColors.transparent()).apply(fore.bg()).apply(UStroke.withThickness(0)).draw(path);</span>
+<span class="fc" id="L358">	}</span>
+
+	/** Outline only, with the current color and line width (scaled as the lines were). */
+	private void stroke(UPath path) {
+<span class="fc" id="L362">		flush();</span>
+<span class="fc" id="L363">		final double scale = Math.sqrt(Math.abs(a * d - b * c));</span>
+<span class="fc" id="L364">		ug.apply(current()).apply(HColors.transparent().bg()).apply(UStroke.withThickness(lineWidth * scale)).draw(path);</span>
+<span class="fc" id="L365">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

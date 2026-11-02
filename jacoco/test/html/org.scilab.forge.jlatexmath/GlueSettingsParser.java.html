@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlueSettingsParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">GlueSettingsParser.java</span></div><h1>GlueSettingsParser.java</h1><pre class="source lang-java linenums">/* GlueSettingsParser.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+
+/**
+ * Parses the glue settings (different types and rules) from an XML-file.
+ */
+public class GlueSettingsParser {
+
+    private static final String RESOURCE_NAME = &quot;GlueSettings.xml&quot;;
+
+<span class="fc" id="L63">    private final Map&lt;String,Integer&gt; typeMappings = new HashMap&lt;String,Integer&gt;();</span>
+<span class="fc" id="L64">    private final Map&lt;String,Integer&gt; glueTypeMappings = new HashMap&lt;String,Integer&gt;();</span>
+    private Glue[] glueTypes;
+
+<span class="fc" id="L67">    private final Map&lt;String,Integer&gt; styleMappings = new HashMap&lt;String,Integer&gt;();</span>
+
+    private XmlElement root;
+
+<span class="fc" id="L71">    public GlueSettingsParser() throws ResourceParseException {</span>
+        try {
+<span class="fc" id="L73">            setTypeMappings();</span>
+<span class="fc" id="L74">            setStyleMappings();</span>
+<span class="fc" id="L75">            root = XmlReader.parse(TeXResources.open(GlueSettingsParser.class, RESOURCE_NAME));</span>
+<span class="fc" id="L76">            parseGlueTypes();</span>
+<span class="nc" id="L77">        } catch (Exception e) { // JDOMException or IOException</span>
+<span class="nc" id="L78">            throw new XMLResourceParseException(RESOURCE_NAME, e);</span>
+<span class="fc" id="L79">        }</span>
+<span class="fc" id="L80">    }</span>
+
+    private void setStyleMappings() {
+<span class="fc" id="L83">        styleMappings.put(&quot;display&quot;, TeXConstants.STYLE_DISPLAY / 2);</span>
+<span class="fc" id="L84">        styleMappings.put(&quot;text&quot;, TeXConstants.STYLE_TEXT / 2);</span>
+<span class="fc" id="L85">        styleMappings.put(&quot;script&quot;, TeXConstants.STYLE_SCRIPT / 2);</span>
+<span class="fc" id="L86">        styleMappings.put(&quot;script_script&quot;, TeXConstants.STYLE_SCRIPT_SCRIPT / 2); // autoboxing</span>
+<span class="fc" id="L87">    }</span>
+
+    private void parseGlueTypes() throws ResourceParseException {
+<span class="fc" id="L90">        List&lt;Glue&gt; glueTypesList = new ArrayList&lt;Glue&gt; ();</span>
+<span class="fc" id="L91">        XmlElement types = (XmlElement)root.getElementsByTagName(&quot;GlueTypes&quot;).item(0);</span>
+<span class="fc" id="L92">        int defaultIndex = -1;</span>
+<span class="fc" id="L93">        int index = 0;</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (types != null) { // element present</span>
+<span class="fc" id="L95">            XmlNodeList list = types.getElementsByTagName(&quot;GlueType&quot;);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            for (int i = 0; i &lt; list.getLength(); i++) {</span>
+<span class="fc" id="L97">                XmlElement type = (XmlElement)list.item(i);</span>
+                // retrieve required attribute value, throw exception if not set
+<span class="fc" id="L99">                String name = getAttrValueAndCheckIfNotNull(&quot;name&quot;, type);</span>
+<span class="fc" id="L100">                Glue glue = createGlue(type, name);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">                if (name.equalsIgnoreCase(&quot;default&quot;)) // default must have value</span>
+<span class="fc" id="L102">                    defaultIndex = index;</span>
+<span class="fc" id="L103">                glueTypesList.add(glue);</span>
+<span class="fc" id="L104">                index ++;</span>
+            }
+        }
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (defaultIndex &lt; 0) {</span>
+            // create a default glue object if missing
+<span class="nc" id="L109">            defaultIndex = index;</span>
+<span class="nc" id="L110">            glueTypesList.add(new Glue(0,0,0,&quot;default&quot;));</span>
+        }
+
+<span class="fc" id="L113">        glueTypes = glueTypesList.toArray(new Glue[glueTypesList.size()]);</span>
+
+        // make sure default glue is at the front
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        if (defaultIndex &gt; 0) {</span>
+<span class="nc" id="L117">            Glue tmp = glueTypes[defaultIndex];</span>
+<span class="nc" id="L118">            glueTypes[defaultIndex] = glueTypes[0];</span>
+<span class="nc" id="L119">            glueTypes[0] = tmp;</span>
+        }
+
+        // make reverse map
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        for (int i = 0; i &lt; glueTypes.length; i++) {</span>
+<span class="fc" id="L124">            glueTypeMappings.put(glueTypes[i].getName(), i);</span>
+        }
+<span class="fc" id="L126">    }</span>
+
+    private Glue createGlue(XmlElement type, String name) throws ResourceParseException {
+<span class="fc" id="L129">        final String[] names = { &quot;space&quot;, &quot;stretch&quot;, &quot;shrink&quot; };</span>
+<span class="fc" id="L130">        float[] values = new float[names.length];</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (int i = 0; i &lt; names.length; i++) {</span>
+<span class="fc" id="L132">            double val = 0; // default value if attribute not present</span>
+<span class="fc" id="L133">            String attrVal = null;</span>
+            try {
+<span class="fc" id="L135">                attrVal = type.getAttribute(names[i]);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">                if (!attrVal.equals(&quot;&quot;)) // attribute present</span>
+<span class="fc" id="L137">                    val = Double.parseDouble(attrVal);</span>
+<span class="nc" id="L138">            } catch (NumberFormatException e) {</span>
+<span class="nc" id="L139">                throw new XMLResourceParseException(RESOURCE_NAME, &quot;GlueType&quot;,</span>
+                                                    names[i], &quot;has an invalid real value '&quot; + attrVal + &quot;'!&quot;);
+<span class="fc" id="L141">            }</span>
+<span class="fc" id="L142">            values[i] = (float) val;</span>
+        }
+<span class="fc" id="L144">        return new Glue(values[0], values[1], values[2], name);</span>
+    }
+
+    private void setTypeMappings() {
+<span class="fc" id="L148">        typeMappings.put(&quot;ord&quot;,   TeXConstants.TYPE_ORDINARY);</span>
+<span class="fc" id="L149">        typeMappings.put(&quot;op&quot;,    TeXConstants.TYPE_BIG_OPERATOR);</span>
+<span class="fc" id="L150">        typeMappings.put(&quot;bin&quot;,   TeXConstants.TYPE_BINARY_OPERATOR);</span>
+<span class="fc" id="L151">        typeMappings.put(&quot;rel&quot;,   TeXConstants.TYPE_RELATION);</span>
+<span class="fc" id="L152">        typeMappings.put(&quot;open&quot;,  TeXConstants.TYPE_OPENING);</span>
+<span class="fc" id="L153">        typeMappings.put(&quot;close&quot;, TeXConstants.TYPE_CLOSING);</span>
+<span class="fc" id="L154">        typeMappings.put(&quot;punct&quot;, TeXConstants.TYPE_PUNCTUATION);</span>
+<span class="fc" id="L155">        typeMappings.put(&quot;inner&quot;, TeXConstants.TYPE_INNER); // autoboxing</span>
+<span class="fc" id="L156">    }</span>
+
+    public Glue[] getGlueTypes() {
+<span class="fc" id="L159">        return glueTypes;</span>
+    }
+
+    public int[][][] createGlueTable() throws ResourceParseException {
+<span class="fc" id="L163">        int size = typeMappings.size();</span>
+<span class="fc" id="L164">        int[][][] table = new int[size][size][styleMappings.size()];</span>
+<span class="fc" id="L165">        XmlElement glueTable = (XmlElement)root.getElementsByTagName(&quot;GlueTable&quot;).item(0);</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">        if (glueTable != null) { // element present</span>
+            // iterate all the &quot;Glue&quot;-elements
+<span class="fc" id="L168">            XmlNodeList list = glueTable.getElementsByTagName(&quot;Glue&quot;);</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">            for (int i = 0; i &lt; list.getLength(); i++) {</span>
+<span class="fc" id="L170">                XmlElement glue = (XmlElement)list.item(i);</span>
+                // retrieve required attribute values and throw exception if they're not set
+<span class="fc" id="L172">                String left = getAttrValueAndCheckIfNotNull(&quot;lefttype&quot;, glue);</span>
+<span class="fc" id="L173">                String right = getAttrValueAndCheckIfNotNull(&quot;righttype&quot;, glue);</span>
+<span class="fc" id="L174">                String type = getAttrValueAndCheckIfNotNull(&quot;gluetype&quot;, glue);</span>
+                // iterate all the &quot;Style&quot;-elements
+<span class="fc" id="L176">                XmlNodeList listG = glue.getElementsByTagName(&quot;Style&quot;);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">                for (int j = 0; j &lt; listG.getLength(); j++) {</span>
+<span class="fc" id="L178">                    XmlElement style = (XmlElement)listG.item(j);</span>
+<span class="fc" id="L179">                    String styleName = getAttrValueAndCheckIfNotNull(&quot;name&quot;, style);</span>
+                    // retrieve mappings
+<span class="fc" id="L181">                    Object l = typeMappings.get(left);</span>
+<span class="fc" id="L182">                    Object r = typeMappings.get(right);</span>
+<span class="fc" id="L183">                    Object st = styleMappings.get(styleName);</span>
+<span class="fc" id="L184">                    Object val = glueTypeMappings.get(type);</span>
+                    // throw exception if unknown value set
+<span class="fc" id="L186">                    checkMapping(l, &quot;Glue&quot;, &quot;lefttype&quot;, left);</span>
+<span class="fc" id="L187">                    checkMapping(r, &quot;Glue&quot;, &quot;righttype&quot;, right);</span>
+<span class="fc" id="L188">                    checkMapping(val, &quot;Glue&quot;, &quot;gluetype&quot;, type);</span>
+<span class="fc" id="L189">                    checkMapping(st, &quot;Style&quot;, &quot;name&quot;, styleName);</span>
+                    // put value in table
+<span class="fc" id="L191">                    table[((Integer) l).intValue()][((Integer) r).intValue()][((Integer) st).intValue()] = ((Integer) val).intValue();</span>
+                }
+            }
+        }
+<span class="fc" id="L195">        return table;</span>
+    }
+
+    private static void checkMapping(Object val, String elementName,
+                                     String attrName, String attrValue) throws ResourceParseException {
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">        if (val == null)</span>
+<span class="nc" id="L201">            throw new XMLResourceParseException(RESOURCE_NAME, elementName,</span>
+                                                attrName, &quot;has an unknown value '&quot; + attrValue + &quot;'!&quot;);
+<span class="fc" id="L203">    }</span>
+
+    private static String getAttrValueAndCheckIfNotNull(String attrName,
+            XmlElement element) throws ResourceParseException {
+<span class="fc" id="L207">        String attrValue = element.getAttribute(attrName);</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">        if (attrValue.equals(&quot;&quot;))</span>
+<span class="nc" id="L209">            throw new XMLResourceParseException(RESOURCE_NAME, element.getTagName(),</span>
+                                                attrName, null);
+<span class="fc" id="L211">        return attrValue;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

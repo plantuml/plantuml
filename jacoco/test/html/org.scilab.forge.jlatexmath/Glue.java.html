@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Glue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">Glue.java</span></div><h1>Glue.java</h1><pre class="source lang-java linenums">/* Glue.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * Represents glue by its 3 components. Contains the &quot;glue rules&quot;.
+ */
+public class Glue {
+
+    // the glue components
+    private final float space;
+    private final float stretch;
+    private final float shrink;
+
+    private final String name;
+
+    // contains the different glue types
+    private static Glue[] glueTypes;
+
+    // the glue table representing the &quot;glue rules&quot; (as in TeX)
+    private static final int[][][] glueTable;
+
+    static {
+<span class="fc" id="L68">        GlueSettingsParser parser = new GlueSettingsParser();</span>
+<span class="fc" id="L69">        glueTypes = parser.getGlueTypes();</span>
+<span class="fc" id="L70">        glueTable = parser.createGlueTable();</span>
+<span class="fc" id="L71">    }</span>
+
+<span class="fc" id="L73">    public Glue(float space, float stretch, float shrink, String name) {</span>
+<span class="fc" id="L74">        this.space = space;</span>
+<span class="fc" id="L75">        this.stretch = stretch;</span>
+<span class="fc" id="L76">        this.shrink = shrink;</span>
+<span class="fc" id="L77">        this.name = name;</span>
+<span class="fc" id="L78">    }</span>
+
+    /**
+     * Name of this glue object.
+     */
+    public String getName () {
+<span class="fc" id="L84">        return this.name;</span>
+    }
+
+    /**
+     * Creates a box representing the glue type according to the &quot;glue rules&quot; based
+     * on the atom types between which the glue must be inserted.
+     *
+     * @param lType left atom type
+     * @param rType right atom type
+     * @param env the TeXEnvironment
+     * @return a box containing representing the glue
+     */
+    public static Box get(int lType, int rType, TeXEnvironment env) {
+        // types &gt; INNER are considered of type ORD for glue calculations
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        int l = (lType &gt; TeXConstants.TYPE_INNER ? TeXConstants.TYPE_ORDINARY : lType);</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        int r = (rType &gt; TeXConstants.TYPE_INNER ? TeXConstants.TYPE_ORDINARY : rType);</span>
+
+        // search right glue-type in &quot;glue-table&quot;
+<span class="fc" id="L102">        int glueType = glueTable[l][r][env.getStyle() / 2];</span>
+
+<span class="fc" id="L104">        return glueTypes[glueType].createBox(env);</span>
+    }
+
+    private Box createBox(TeXEnvironment env) {
+<span class="fc" id="L108">        TeXFont tf = env.getTeXFont();</span>
+        // use &quot;quad&quot; from a font marked as an &quot;mu font&quot;
+<span class="fc" id="L110">        float quad = tf.getQuad(env.getStyle(), tf.getMuFontId());</span>
+
+<span class="fc" id="L112">        return new GlueBox((space / 18.0f) * quad, (stretch / 18.0f) * quad, (shrink / 18.0f) * quad);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RotateAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">RotateAtom.java</span></div><h1>RotateAtom.java</h1><pre class="source lang-java linenums">/* RotateAtom.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.Map;
+
+/**
+ * An atom representing a rotated Atom.
+ */
+public class RotateAtom extends Atom {
+
+    private Atom base;
+    private double angle;
+<span class="pc" id="L57">    private int option = -1;</span>
+    private int xunit, yunit;
+    private float x, y;
+
+<span class="nc" id="L61">    public RotateAtom(Atom base, String angle, String option) {</span>
+<span class="nc" id="L62">        this.type = base.type;</span>
+<span class="nc" id="L63">        this.base = base;</span>
+<span class="nc" id="L64">        this.angle = Double.parseDouble(angle);</span>
+<span class="nc" id="L65">        this.option = RotateBox.getOrigin(option);</span>
+<span class="nc" id="L66">    }</span>
+
+<span class="fc" id="L68">    public RotateAtom(Atom base, double angle, String option) {</span>
+<span class="fc" id="L69">        this.type = base.type;</span>
+<span class="fc" id="L70">        this.base = base;</span>
+<span class="fc" id="L71">        this.angle = angle;</span>
+<span class="fc" id="L72">        Map&lt;String, String&gt; map = ParseOption.parseMap(option);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (map.containsKey(&quot;origin&quot;)) {</span>
+<span class="nc" id="L74">            this.option = RotateBox.getOrigin(map.get(&quot;origin&quot;));</span>
+        } else {
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">            if (map.containsKey(&quot;x&quot;)) {</span>
+<span class="nc" id="L77">                float[] xinfo = SpaceAtom.getLength(map.get(&quot;x&quot;));</span>
+<span class="nc" id="L78">                this.xunit = (int) xinfo[0];</span>
+<span class="nc" id="L79">                this.x = xinfo[1];</span>
+<span class="nc" id="L80">            } else {</span>
+<span class="fc" id="L81">                this.xunit = TeXConstants.UNIT_POINT;</span>
+<span class="fc" id="L82">                this.x = 0;</span>
+            }
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">            if (map.containsKey(&quot;y&quot;)) {</span>
+<span class="nc" id="L85">                float[] yinfo = SpaceAtom.getLength(map.get(&quot;y&quot;));</span>
+<span class="nc" id="L86">                this.yunit = (int) yinfo[0];</span>
+<span class="nc" id="L87">                this.y = yinfo[1];</span>
+<span class="nc" id="L88">            } else {</span>
+<span class="fc" id="L89">                this.yunit = TeXConstants.UNIT_POINT;</span>
+<span class="fc" id="L90">                this.y = 0;</span>
+            }
+        }
+<span class="fc" id="L93">    }</span>
+
+    public Box createBox(TeXEnvironment env) {
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (option != -1) {</span>
+<span class="nc" id="L97">            return new RotateBox(base.createBox(env), angle, option);</span>
+        } else {
+<span class="fc" id="L99">            return new RotateBox(base.createBox(env), angle, x * SpaceAtom.getFactor(xunit, env), y * SpaceAtom.getFactor(yunit, env));</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

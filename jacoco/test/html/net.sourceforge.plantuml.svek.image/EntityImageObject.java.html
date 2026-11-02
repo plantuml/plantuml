@@ -108,12 +108,12 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 
 <span class="fc" id="L109">		showFields = portionShower.showPortion(EntityPortion.FIELD, entity);</span>
 
-<span class="pc bpc" id="L111" title="2 of 4 branches missed.">		if (entity.getBodier().getFieldsToDisplay().size() == 0 &amp;&amp; showFields)</span>
+<span class="pc bpc" id="L111" title="1 of 4 branches missed.">		if (entity.getBodier().getFieldsToDisplay().size() == 0 &amp;&amp; showFields)</span>
 <span class="fc" id="L112">			this.fields = new TextBlockLineBefore(getStyle().value(PName.LineThickness).asDouble(),</span>
 					new TextBlockEmpty(10, 16));
 		else
-<span class="nc" id="L115">			this.fields = entity.getBodier().getBody(getSkinParam(), false, showFields, entity.getStereotype(),</span>
-<span class="nc" id="L116">					getStyle(), null);</span>
+<span class="fc" id="L115">			this.fields = entity.getBodier().getBody(getSkinParam(), false, showFields, entity.getStereotype(),</span>
+<span class="fc" id="L116">					getStyle(), null);</span>
 
 <span class="fc" id="L118">		this.url = entity.getUrl99();</span>
 

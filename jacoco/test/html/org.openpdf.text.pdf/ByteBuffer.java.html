@@ -363,7 +363,7 @@ public class ByteBuffer extends OutputStream {
 <span class="fc bfc" id="L363" title="All 2 branches covered.">                if (v % 100 != 0) {</span>
 <span class="fc" id="L364">                    res.append('.');</span>
 <span class="fc" id="L365">                    res.append(chars[(v / 10) % 10]);</span>
-<span class="pc bpc" id="L366" title="1 of 2 branches missed.">                    if (v % 10 != 0) {</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">                    if (v % 10 != 0) {</span>
 <span class="fc" id="L367">                        res.append(chars[v % 10]);</span>
                     }
                 }

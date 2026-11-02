@@ -96,11 +96,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code>, <code><a href="../warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></code></dd>
+<dd><code><a href="../core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code>, <code><a href="FormulaDiagram.html" title="interface in net.sourceforge.plantuml.math">FormulaDiagram</a></code>, <code><a href="../warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PSystemMath</span>
-<span class="extends-implements">extends <a href="../DirectOsDiagram.html" title="class in net.sourceforge.plantuml">DirectOsDiagram</a></span></div>
+<span class="extends-implements">extends <a href="../DirectOsDiagram.html" title="class in net.sourceforge.plantuml">DirectOsDiagram</a>
+implements <a href="FormulaDiagram.html" title="interface in net.sourceforge.plantuml.math">FormulaDiagram</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -140,6 +141,19 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../core/DiagramDescription.html" title="class in net.sourceforge.plantuml.core">DiagramDescription</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFormulaBackground()" class="member-name-link">getFormulaBackground</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The color behind the formula.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFormulaBlock()" class="member-name-link">getFormulaBlock</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The formula, in its color.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFormulaScale()" class="member-name-link">getFormulaScale</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -182,6 +196,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getDescription()">
 <h3>getDescription</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../core/DiagramDescription.html" title="class in net.sourceforge.plantuml.core">DiagramDescription</a></span>&nbsp;<span class="element-name">getDescription</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../core/Diagram.html#getDescription()">getDescription</a></code>&nbsp;in interface&nbsp;<code><a href="../core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></dd>
+</dl>
 </section>
 </li>
 <li>
@@ -196,6 +214,40 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="../DirectOsDiagram.html#exportDiagramNow(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)">exportDiagramNow</a></code>&nbsp;in class&nbsp;<code><a href="../DirectOsDiagram.html" title="class in net.sourceforge.plantuml">DirectOsDiagram</a></code></dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFormulaBlock()">
+<h3>getFormulaBlock</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></span>&nbsp;<span class="element-name">getFormulaBlock</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="FormulaDiagram.html#getFormulaBlock()">FormulaDiagram</a></code></span></div>
+<div class="block">The formula, in its color.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="FormulaDiagram.html#getFormulaBlock()">getFormulaBlock</a></code>&nbsp;in interface&nbsp;<code><a href="FormulaDiagram.html" title="interface in net.sourceforge.plantuml.math">FormulaDiagram</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFormulaBackground()">
+<h3>getFormulaBackground</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></span>&nbsp;<span class="element-name">getFormulaBackground</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="FormulaDiagram.html#getFormulaBackground()">FormulaDiagram</a></code></span></div>
+<div class="block">The color behind the formula.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="FormulaDiagram.html#getFormulaBackground()">getFormulaBackground</a></code>&nbsp;in interface&nbsp;<code><a href="FormulaDiagram.html" title="interface in net.sourceforge.plantuml.math">FormulaDiagram</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFormulaScale()">
+<h3>getFormulaScale</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getFormulaScale</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="FormulaDiagram.html#getFormulaScale()">getFormulaScale</a></code>&nbsp;in interface&nbsp;<code><a href="FormulaDiagram.html" title="interface in net.sourceforge.plantuml.math">FormulaDiagram</a></code></dd>
 </dl>
 </section>
 </li>

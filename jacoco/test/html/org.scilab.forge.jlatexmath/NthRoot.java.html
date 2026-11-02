@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NthRoot.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">NthRoot.java</span></div><h1>NthRoot.java</h1><pre class="source lang-java linenums">/* NthRoot.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * An atom representing an nth-root construction.
+ */
+public class NthRoot extends Atom {
+
+    private static final String sqrtSymbol = &quot;sqrt&quot;;
+
+    private static final float FACTOR = 0.55f;
+
+    // base atom to be put under the root sign
+    private final Atom base;
+
+    // root atom to be put in the upper left corner above the root sign
+    private final Atom root;
+
+<span class="fc" id="L64">    public NthRoot(Atom base, Atom root) {</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">        this.base = base == null ? new EmptyAtom() : base;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        this.root = root == null ? new EmptyAtom() : root;</span>
+<span class="fc" id="L67">    }</span>
+
+    public Box createBox(TeXEnvironment env) {
+        // first create a simple square root construction
+
+<span class="fc" id="L72">        TeXFont tf = env.getTeXFont();</span>
+<span class="fc" id="L73">        int style = env.getStyle();</span>
+        // calculate minimum clearance clr
+<span class="fc" id="L75">        float clr, drt = tf.getDefaultRuleThickness(style);</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (style &lt; TeXConstants.STYLE_TEXT)</span>
+<span class="fc" id="L77">            clr = tf.getXHeight(style, tf.getChar(sqrtSymbol, style).getFontCode());</span>
+        else
+<span class="fc" id="L79">            clr = drt;</span>
+<span class="fc" id="L80">        clr = drt + Math.abs(clr) / 4 ;</span>
+
+        // cramped style for the formula under the root sign
+<span class="fc" id="L83">        Box bs = base.createBox(env.crampStyle());</span>
+<span class="fc" id="L84">        HorizontalBox b = new HorizontalBox(bs);</span>
+<span class="fc" id="L85">        b.add(new SpaceAtom(TeXConstants.UNIT_MU, 1, 0, 0).createBox(env.crampStyle()));</span>
+        // create root sign
+<span class="fc" id="L87">        float totalH = b.getHeight() + b.getDepth();</span>
+<span class="fc" id="L88">        Box rootSign = DelimiterFactory.create(sqrtSymbol, env, totalH + clr + drt);</span>
+
+        // add half the excess to clr
+<span class="fc" id="L91">        float delta = rootSign.getDepth() - (totalH + clr);</span>
+<span class="fc" id="L92">        clr += delta / 2;</span>
+
+        // create total box
+<span class="fc" id="L95">        rootSign.setShift(-(b.getHeight() + clr));</span>
+<span class="fc" id="L96">        OverBar ob = new OverBar(b, clr, rootSign.getHeight());</span>
+<span class="fc" id="L97">        ob.setShift(-(b.getHeight() + clr + drt));</span>
+<span class="fc" id="L98">        HorizontalBox squareRoot = new HorizontalBox(rootSign);</span>
+<span class="fc" id="L99">        squareRoot.add(ob);</span>
+
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (root == null)</span>
+            // simple square root
+<span class="nc" id="L103">            return squareRoot;</span>
+        else { // nthRoot, not a simple square root
+
+            // create box from root
+<span class="fc" id="L107">            Box r = root.createBox(env.rootStyle());</span>
+
+            // shift root up
+<span class="fc" id="L110">            float bottomShift = FACTOR * (squareRoot.getHeight() + squareRoot.getDepth());</span>
+<span class="fc" id="L111">            r.setShift(squareRoot.getDepth() - r.getDepth() - bottomShift);</span>
+
+            // negative kern
+<span class="fc" id="L114">            Box negativeKern = new SpaceAtom(TeXConstants.UNIT_MU, -10f, 0, 0).createBox(env);</span>
+
+            // arrange both boxes together with the negative kern
+<span class="fc" id="L117">            Box res = new HorizontalBox();</span>
+<span class="fc" id="L118">            float pos = r.getWidth() + negativeKern.getWidth();</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">            if (pos &lt; 0)</span>
+<span class="fc" id="L120">                res.add(new StrutBox(-pos, 0, 0, 0));</span>
+
+<span class="fc" id="L122">            res.add(r);</span>
+<span class="fc" id="L123">            res.add(negativeKern);</span>
+<span class="fc" id="L124">            res.add(squareRoot);</span>
+<span class="fc" id="L125">            return res;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

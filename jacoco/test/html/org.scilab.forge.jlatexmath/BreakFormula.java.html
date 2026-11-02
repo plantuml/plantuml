@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BreakFormula.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">BreakFormula.java</span></div><h1>BreakFormula.java</h1><pre class="source lang-java linenums">/* BreakFormula.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2011 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.List;
+import java.util.Stack;
+
+<span class="nc" id="L51">public final class BreakFormula {</span>
+
+    public static Box split(Box box, float width, float interline) {
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (box instanceof HorizontalBox) {</span>
+<span class="nc" id="L55">            return split((HorizontalBox) box, width, interline);</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        } else if (box instanceof VerticalBox) {</span>
+<span class="nc" id="L57">            return split((VerticalBox) box, width, interline);</span>
+        } else {
+<span class="nc" id="L59">            return box;</span>
+        }
+    }
+
+    public static Box split(HorizontalBox hbox, float width, float interline) {
+<span class="nc" id="L64">        VerticalBox vbox = new VerticalBox();</span>
+        HorizontalBox first;
+<span class="nc" id="L66">        HorizontalBox second = null;</span>
+<span class="nc" id="L67">        Stack&lt;Position&gt; positions = new Stack&lt;Position&gt;();</span>
+<span class="nc" id="L68">        float w = -1;</span>
+<span class="nc bnc" id="L69" title="All 4 branches missed.">        while (hbox.width &gt; width &amp;&amp; (w = canBreak(positions, hbox, width)) != hbox.width) {</span>
+<span class="nc" id="L70">            Position pos = positions.pop();</span>
+<span class="nc" id="L71">            HorizontalBox[] hboxes = pos.hbox.split(pos.index - 1);</span>
+<span class="nc" id="L72">            first = hboxes[0];</span>
+<span class="nc" id="L73">            second = hboxes[1];</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            while (!positions.isEmpty()) {</span>
+<span class="nc" id="L75">                pos = positions.pop();</span>
+<span class="nc" id="L76">                hboxes = pos.hbox.splitRemove(pos.index);</span>
+<span class="nc" id="L77">                hboxes[0].add(first);</span>
+<span class="nc" id="L78">                hboxes[1].add(0, second);</span>
+<span class="nc" id="L79">                first = hboxes[0];</span>
+<span class="nc" id="L80">                second = hboxes[1];</span>
+            }
+<span class="nc" id="L82">            vbox.add(first, interline);</span>
+<span class="nc" id="L83">            hbox = second;</span>
+<span class="nc" id="L84">        }</span>
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (second != null) {</span>
+<span class="nc" id="L87">            vbox.add(second, interline);</span>
+<span class="nc" id="L88">            return vbox;</span>
+        }
+
+<span class="nc" id="L91">        return hbox;</span>
+    }
+
+    private static Box split(VerticalBox vbox, float width, float interline) {
+<span class="nc" id="L95">        VerticalBox newBox = new VerticalBox();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        for (Box box:vbox.children) {</span>
+<span class="nc" id="L97">            newBox.add(split(box, width, interline));</span>
+<span class="nc" id="L98">        }</span>
+
+<span class="nc" id="L100">        return newBox;</span>
+    }
+
+    private static float canBreak(Stack&lt;Position&gt; stack, HorizontalBox hbox, float width) {
+<span class="nc" id="L104">        List&lt;Box&gt; children = hbox.children;</span>
+<span class="nc" id="L105">        float[] cumWidth = new float[children.size() + 1];</span>
+<span class="nc" id="L106">        cumWidth[0] = 0;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        for (int i = 0; i &lt; children.size(); i++) {</span>
+<span class="nc" id="L108">            Box box = children.get(i);</span>
+<span class="nc" id="L109">            cumWidth[i + 1] = cumWidth[i] + box.width;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">            if (cumWidth[i + 1] &gt; width) {</span>
+<span class="nc" id="L111">                int pos = getBreakPosition(hbox, i);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">                if (box instanceof HorizontalBox) {</span>
+<span class="nc" id="L113">                    Stack&lt;Position&gt; newStack = new Stack&lt;Position&gt;();</span>
+<span class="nc" id="L114">                    float w = canBreak(newStack, (HorizontalBox) box, width - cumWidth[i]);</span>
+<span class="nc bnc" id="L115" title="All 6 branches missed.">                    if (w != box.width &amp;&amp; (cumWidth[i] + w &lt;= width || pos == -1)) {</span>
+<span class="nc" id="L116">                        stack.push(new Position(i - 1, hbox));</span>
+<span class="nc" id="L117">                        stack.addAll(newStack);</span>
+<span class="nc" id="L118">                        return cumWidth[i] + w;</span>
+                    }
+                }
+
+<span class="nc bnc" id="L122" title="All 2 branches missed.">                if (pos != -1) {</span>
+<span class="nc" id="L123">                    stack.push(new Position(pos, hbox));</span>
+<span class="nc" id="L124">                    return cumWidth[pos];</span>
+                }
+            }
+        }
+
+<span class="nc" id="L129">        return hbox.width;</span>
+    }
+
+    private static int getBreakPosition(HorizontalBox hb, int i) {
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        if (hb.breakPositions == null) {</span>
+<span class="nc" id="L134">            return -1;</span>
+        }
+
+<span class="nc bnc" id="L137" title="All 4 branches missed.">        if (hb.breakPositions.size() == 1 &amp;&amp; hb.breakPositions.get(0) &lt;= i) {</span>
+<span class="nc" id="L138">            return hb.breakPositions.get(0);</span>
+        }
+
+<span class="nc" id="L141">        int pos = 0;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        for (; pos &lt; hb.breakPositions.size(); pos++) {</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            if (hb.breakPositions.get(pos) &gt; i) {</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">                if (pos == 0) {</span>
+<span class="nc" id="L145">                    return -1;</span>
+                }
+<span class="nc" id="L147">                return hb.breakPositions.get(pos - 1);</span>
+            }
+        }
+
+<span class="nc" id="L151">        return hb.breakPositions.get(pos - 1);</span>
+    }
+
+    private static class Position {
+
+        int index;
+        HorizontalBox hbox;
+
+<span class="nc" id="L159">        Position(int index, HorizontalBox hbox) {</span>
+<span class="nc" id="L160">            this.index = index;</span>
+<span class="nc" id="L161">            this.hbox = hbox;</span>
+<span class="nc" id="L162">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

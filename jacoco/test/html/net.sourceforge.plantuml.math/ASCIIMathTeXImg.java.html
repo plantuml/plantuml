@@ -493,7 +493,7 @@ import java.util.List;
 			}
 <span class="fc" id="L494">			return h;</span>
 		} else {
-<span class="pc bpc" id="L496" title="1 of 4 branches missed.">			for (i = n; i &lt; arr.length &amp;&amp; arr[i].compareTo(str) &lt; 0; i++)</span>
+<span class="fc bfc" id="L496" title="All 4 branches covered.">			for (i = n; i &lt; arr.length &amp;&amp; arr[i].compareTo(str) &lt; 0; i++)</span>
 				;
 		}
 <span class="fc" id="L499">		return i; // i=arr.length || arr[i]&gt;=str</span>
@@ -513,12 +513,12 @@ import java.util.List;
 <span class="fc" id="L513">			st = str.substring(0, i); // initial substring of length i</span>
 <span class="fc" id="L514">			j = k;</span>
 <span class="fc" id="L515">			k = aAMposition(aAMnames, st, j);</span>
-<span class="pc bpc" id="L516" title="1 of 4 branches missed.">			if (k &lt; aAMnames.length &amp;&amp; slice(str, 0, aAMnames[k].length()).equals(aAMnames[k])) {</span>
+<span class="fc bfc" id="L516" title="All 4 branches covered.">			if (k &lt; aAMnames.length &amp;&amp; slice(str, 0, aAMnames[k].length()).equals(aAMnames[k])) {</span>
 <span class="fc" id="L517">				match = aAMnames[k];</span>
 <span class="fc" id="L518">				mk = k;</span>
 <span class="fc" id="L519">				i = match.length();</span>
 			}
-<span class="pc bpc" id="L521" title="1 of 4 branches missed.">			more = k &lt; aAMnames.length &amp;&amp; slice(str, 0, aAMnames[k].length()).compareTo(aAMnames[k]) &gt;= 0;</span>
+<span class="fc bfc" id="L521" title="All 4 branches covered.">			more = k &lt; aAMnames.length &amp;&amp; slice(str, 0, aAMnames[k].length()).compareTo(aAMnames[k]) &gt;= 0;</span>
 		}
 <span class="fc" id="L523">		aAMpreviousSymbol = aAMcurrentSymbol;</span>
 <span class="fc bfc" id="L524" title="All 2 branches covered.">		if (!match.equals(&quot;&quot;)) {</span>
@@ -538,7 +538,7 @@ import java.util.List;
 
 <span class="fc bfc" id="L539" title="All 2 branches covered.">		if (st.equals(&quot;.&quot;)) {</span>
 <span class="fc" id="L540">			st = slice(str, k, k + 1);</span>
-<span class="pc bpc" id="L541" title="2 of 4 branches missed.">			if (&quot;0&quot;.compareTo(st) &lt;= 0 &amp;&amp; st.compareTo(&quot;9&quot;) &lt;= 0) {</span>
+<span class="pc bpc" id="L541" title="1 of 4 branches missed.">			if (&quot;0&quot;.compareTo(st) &lt;= 0 &amp;&amp; st.compareTo(&quot;9&quot;) &lt;= 0) {</span>
 <span class="fc" id="L542">				integ = false;</span>
 <span class="fc" id="L543">				k++;</span>
 <span class="pc bpc" id="L544" title="1 of 6 branches missed.">				while (&quot;0&quot;.compareTo(st) &lt;= 0 &amp;&amp; st.compareTo(&quot;9&quot;) &lt;= 0 &amp;&amp; k &lt;= str.length()) {</span>
@@ -662,14 +662,14 @@ import java.util.List;
 <span class="fc" id="L662">			int leftchop = 0;</span>
 <span class="fc bfc" id="L663" title="All 2 branches covered.">			if (substr(result[0], 0, 6).equals(&quot;\\right&quot;)) {</span>
 <span class="fc" id="L664">				st = &quot;&quot; + result[0].charAt(6);</span>
-<span class="pc bpc" id="L665" title="2 of 6 branches missed.">				if (st.equals(&quot;)&quot;) || st.equals(&quot;]&quot;) || st.equals(&quot;}&quot;)) {</span>
+<span class="pc bpc" id="L665" title="1 of 6 branches missed.">				if (st.equals(&quot;)&quot;) || st.equals(&quot;]&quot;) || st.equals(&quot;}&quot;)) {</span>
 <span class="fc" id="L666">					leftchop = 6;</span>
-<span class="pc bpc" id="L667" title="1 of 2 branches missed.">				} else if (st.equals(&quot;.&quot;)) {</span>
+<span class="fc bfc" id="L667" title="All 2 branches covered.">				} else if (st.equals(&quot;.&quot;)) {</span>
 <span class="fc" id="L668">					leftchop = 7;</span>
 				} else {
-<span class="nc" id="L670">					st = substr(result[0], 6, 7);</span>
-<span class="nc bnc" id="L671" title="All 2 branches missed.">					if (st.equals(&quot;\\rbrace&quot;)) {</span>
-<span class="nc" id="L672">						leftchop = 13;</span>
+<span class="fc" id="L670">					st = substr(result[0], 6, 7);</span>
+<span class="pc bpc" id="L671" title="1 of 2 branches missed.">					if (st.equals(&quot;\\rbrace&quot;)) {</span>
+<span class="fc" id="L672">						leftchop = 13;</span>
 					}
 				}
 			}
@@ -728,7 +728,7 @@ import java.util.List;
 <span class="fc" id="L728">				return new String[] { &quot;{&quot; + aAMTgetTeXsymbol(symbol) + &quot;}&quot;, str };</span>
 <span class="fc bfc" id="L729" title="All 2 branches covered.">			if (symbol.hasFlag(Flag.FUNC)) { // functions hack</span>
 <span class="fc bfc" id="L730" title="All 2 branches covered.">				st = &quot;&quot; + (str.isEmpty() ? &quot;&quot; : str.charAt(0));</span>
-<span class="pc bpc" id="L731" title="3 of 10 branches missed.">				if (st.equals(&quot;^&quot;) || st.equals(&quot;_&quot;) || st.equals(&quot;/&quot;) || st.equals(&quot;|&quot;) || st.equals(&quot;,&quot;)</span>
+<span class="pc bpc" id="L731" title="2 of 10 branches missed.">				if (st.equals(&quot;^&quot;) || st.equals(&quot;_&quot;) || st.equals(&quot;/&quot;) || st.equals(&quot;|&quot;) || st.equals(&quot;,&quot;)</span>
 <span class="fc bfc" id="L732" title="All 6 branches covered.">						|| (symbol.input.length() == 1 &amp;&amp; symbol.input.matches(&quot;\\w&quot;) &amp;&amp; !st.equals(&quot;(&quot;))) {</span>
 <span class="fc" id="L733">					return new String[] { &quot;{&quot; + aAMTgetTeXsymbol(symbol) + &quot;}&quot;, str };</span>
 				} else {

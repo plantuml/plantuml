@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmlElement.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">XmlElement.java</span></div><h1>XmlElement.java</h1><pre class="source lang-java linenums">/* XmlElement.java
+ * =========================================================================
+ * This file is NOT part of upstream JLaTeXMath, it was added for PLAN.md
+ * (phase 3, step 3d). A small element of an XML file, for the reader that replaces javax.xml and org.w3c.dom (not in the TeaVM class library).
+ * It is released under the same terms as the library: GNU GPL version 2 or
+ * later, with the GNU linking exception (see the header of the other files of
+ * this package).
+ * =========================================================================
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * An element of an XML file: its name, its attributes and its child elements. It
+ * has what the parsers of the library used of {@code org.w3c.dom.Element}, with
+ * the same results: {@link #getAttribute} gives &quot;&quot; for an attribute that is not
+ * there, and {@link #getElementsByTagName} gives all the descendants of that
+ * name, in the order of the document. The text between the elements is not kept
+ * (the files have none that matters).
+ */
+public final class XmlElement {
+
+    private final String tagName;
+<span class="fc" id="L27">    private final List&lt;String&gt; attributeNames = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L28">    private final List&lt;String&gt; attributeValues = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L29">    private final List&lt;XmlElement&gt; children = new ArrayList&lt;XmlElement&gt;();</span>
+
+<span class="fc" id="L31">    XmlElement(String tagName) {</span>
+<span class="fc" id="L32">        this.tagName = tagName;</span>
+<span class="fc" id="L33">    }</span>
+
+    void addAttribute(String name, String value) {
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        for (int i = 0; i &lt; attributeNames.size(); i++) {</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">            if (attributeNames.get(i).equals(name)) {</span>
+                // the last one wins, as DOM does when the file is not valid
+<span class="nc" id="L39">                attributeValues.set(i, value);</span>
+<span class="nc" id="L40">                return;</span>
+            }
+        }
+<span class="fc" id="L43">        attributeNames.add(name);</span>
+<span class="fc" id="L44">        attributeValues.add(value);</span>
+<span class="fc" id="L45">    }</span>
+
+    void addChild(XmlElement child) {
+<span class="fc" id="L48">        children.add(child);</span>
+<span class="fc" id="L49">    }</span>
+
+    public String getTagName() {
+<span class="fc" id="L52">        return tagName;</span>
+    }
+
+    /** The value of the attribute, or &quot;&quot; if there is none. */
+    public String getAttribute(String name) {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        for (int i = 0; i &lt; attributeNames.size(); i++) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            if (attributeNames.get(i).equals(name)) {</span>
+<span class="fc" id="L59">                return attributeValues.get(i);</span>
+            }
+        }
+<span class="fc" id="L62">        return &quot;&quot;;</span>
+    }
+
+    public boolean hasAttribute(String name) {
+<span class="fc" id="L66">        return attributeNames.contains(name);</span>
+    }
+
+    /** The names of the attributes, in the order of the file. */
+    public List&lt;String&gt; getAttributeNames() {
+<span class="fc" id="L71">        return new ArrayList&lt;String&gt;(attributeNames);</span>
+    }
+
+    /** The child elements, in the order of the file. */
+    public List&lt;XmlElement&gt; getChildren() {
+<span class="fc" id="L76">        return new ArrayList&lt;XmlElement&gt;(children);</span>
+    }
+
+    /** All the descendants with this name (not the element itself), in the order of the file. */
+    public XmlNodeList getElementsByTagName(String name) {
+<span class="fc" id="L81">        final List&lt;XmlElement&gt; result = new ArrayList&lt;XmlElement&gt;();</span>
+<span class="fc" id="L82">        collect(name, result);</span>
+<span class="fc" id="L83">        return new XmlNodeList(result);</span>
+    }
+
+    private void collect(String name, List&lt;XmlElement&gt; result) {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        for (int i = 0; i &lt; children.size(); i++) {</span>
+<span class="fc" id="L88">            final XmlElement child = children.get(i);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">            if (child.tagName.equals(name)) {</span>
+<span class="fc" id="L90">                result.add(child);</span>
+            }
+<span class="fc" id="L92">            child.collect(name, result);</span>
+        }
+<span class="fc" id="L94">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

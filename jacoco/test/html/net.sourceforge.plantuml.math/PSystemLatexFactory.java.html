@@ -48,14 +48,14 @@ public class PSystemLatexFactory extends PSystemBasicFactory&lt;PSystemLatex&gt;
 
 	@Override
 	public PSystemLatex initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L51">		return new PSystemLatex(source, preprocessing);</span>
+<span class="fc" id="L51">		return new PSystemLatex(source, preprocessing);</span>
 	}
 
 	@Override
 	public PSystemLatex executeLine(UmlSource source, PSystemLatex system, String line,
 			PreprocessingArtifact preprocessing) {
-<span class="nc" id="L57">		system.doCommandLine(line);</span>
-<span class="nc" id="L58">		return system;</span>
+<span class="fc" id="L57">		system.doCommandLine(line);</span>
+<span class="fc" id="L58">		return system;</span>
 	}
 
 }

@@ -134,7 +134,7 @@ import net.sourceforge.plantuml.style.StyleQuery;
 
 <span class="fc" id="L135">		ug = ug.apply(foregroundColor);</span>
 <span class="fc" id="L136">		size = ensureEven(size);</span>
-<span class="pc bpc" id="L137" title="4 of 10 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L137" title="3 of 10 branches missed.">		switch (this) {</span>
 		case PACKAGE_PRIVATE_FIELD:
 <span class="fc" id="L139">			drawTriangle(ug, false, size, x, y);</span>
 <span class="fc" id="L140">			break;</span>
@@ -168,8 +168,8 @@ import net.sourceforge.plantuml.style.StyleQuery;
 <span class="fc" id="L168">			break;</span>
 
 		case IE_MANDATORY:
-<span class="nc" id="L171">			drawCircle(ug, true, size, x, y);</span>
-<span class="nc" id="L172">			break;</span>
+<span class="fc" id="L171">			drawCircle(ug, true, size, x, y);</span>
+<span class="fc" id="L172">			break;</span>
 
 		default:
 <span class="nc" id="L175">			throw new IllegalStateException();</span>
@@ -229,8 +229,8 @@ import net.sourceforge.plantuml.style.StyleQuery;
 <span class="fc bfc" id="L229" title="All 2 branches covered.">		if (c == '~')</span>
 <span class="fc" id="L230">			return true;</span>
 
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (c == '*')</span>
-<span class="nc" id="L233">			return true;</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">		if (c == '*')</span>
+<span class="fc" id="L233">			return true;</span>
 
 <span class="fc" id="L235">		return false;</span>
 	}
@@ -278,8 +278,8 @@ import net.sourceforge.plantuml.style.StyleQuery;
 <span class="fc bfc" id="L278" title="All 2 branches covered.">		if (c == '~')</span>
 <span class="fc" id="L279">			return VisibilityModifier.PACKAGE_PRIVATE_FIELD;</span>
 
-<span class="pc bpc" id="L281" title="1 of 2 branches missed.">		if (c == '*')</span>
-<span class="nc" id="L282">			return VisibilityModifier.IE_MANDATORY;</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">		if (c == '*')</span>
+<span class="fc" id="L282">			return VisibilityModifier.IE_MANDATORY;</span>
 
 <span class="fc" id="L284">		return null;</span>
 	}
@@ -335,8 +335,8 @@ import net.sourceforge.plantuml.style.StyleQuery;
 	}
 
 	public StyleQuery getStyleSignature() {
-<span class="pc bpc" id="L338" title="1 of 2 branches missed.">		if (this == IE_MANDATORY)</span>
-<span class="nc" id="L339">			return StyleQueries.VISIBILITYICON_IE_MANDATORY;</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">		if (this == IE_MANDATORY)</span>
+<span class="fc" id="L339">			return StyleQueries.VISIBILITYICON_IE_MANDATORY;</span>
 
 <span class="fc bfc" id="L341" title="All 4 branches covered.">		if (this == PUBLIC_FIELD || this == PUBLIC_METHOD)</span>
 <span class="fc" id="L342">			return StyleQueries.VISIBILITYICON_PUBLIC;</span>

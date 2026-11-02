@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScriptsAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">ScriptsAtom.java</span></div><h1>ScriptsAtom.java</h1><pre class="source lang-java linenums">/* ScriptsAtom.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+/* Modified by Calixte Denizet */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * An atom representing scripts to be attached to another atom.
+ */
+public class ScriptsAtom extends Atom {
+
+    // TeX constant: what's the use???
+<span class="fc" id="L57">    private final static SpaceAtom SCRIPT_SPACE = new SpaceAtom(TeXConstants.UNIT_POINT, 0.5f, 0, 0);</span>
+
+    // base atom
+    private final Atom base;
+
+    // subscript and superscript to be attached to the base (if not null)
+    private final Atom subscript;
+    private final Atom superscript;
+<span class="fc" id="L65">    private int align = TeXConstants.ALIGN_LEFT;</span>
+
+<span class="fc" id="L67">    public ScriptsAtom(Atom base, Atom sub, Atom sup) {</span>
+<span class="fc" id="L68">        this.base = base;</span>
+<span class="fc" id="L69">        subscript = sub;</span>
+<span class="fc" id="L70">        superscript = sup;</span>
+<span class="fc" id="L71">    }</span>
+
+    public ScriptsAtom(Atom base, Atom sub, Atom sup, boolean left) {
+<span class="nc" id="L74">        this(base, sub, sup);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (!left)</span>
+<span class="nc" id="L76">            align = TeXConstants.ALIGN_RIGHT;</span>
+<span class="nc" id="L77">    }</span>
+
+    public Box createBox(TeXEnvironment env) {
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        Box b = (base == null ? new StrutBox(0, 0, 0, 0) : base.createBox(env));</span>
+<span class="fc" id="L81">        Box deltaSymbol = new StrutBox(0, 0, 0, 0);</span>
+<span class="fc bfc" id="L82" title="All 4 branches covered.">        if (subscript == null &amp;&amp; superscript == null)</span>
+<span class="fc" id="L83">            return b;</span>
+        else {
+<span class="fc" id="L85">            TeXFont tf = env.getTeXFont();</span>
+<span class="fc" id="L86">            int style = env.getStyle();</span>
+
+<span class="pc bpc" id="L88" title="2 of 6 branches missed.">            if (base.type_limits == TeXConstants.SCRIPT_LIMITS || (base.type_limits == TeXConstants.SCRIPT_NORMAL &amp;&amp; style == TeXConstants.STYLE_DISPLAY))</span>
+<span class="nc" id="L89">                return new UnderOverAtom(new UnderOverAtom(base, subscript, TeXConstants.UNIT_POINT, 0.3f, true, false),</span>
+<span class="nc" id="L90">                                         superscript, TeXConstants.UNIT_POINT, 3.0f, true, true).createBox(env);</span>
+
+<span class="fc" id="L92">            HorizontalBox hor = new HorizontalBox(b);</span>
+
+<span class="fc" id="L94">            int lastFontId = b.getLastFontId();</span>
+            // if no last font found (whitespace box), use default &quot;mu font&quot;
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            if (lastFontId == TeXFont.NO_FONT)</span>
+<span class="fc" id="L97">                lastFontId = tf.getMuFontId();</span>
+
+<span class="fc" id="L99">            TeXEnvironment subStyle = env.subStyle(), supStyle = env.supStyle();</span>
+
+            // set delta and preliminary shift-up and shift-down values
+<span class="fc" id="L102">            float delta = 0, shiftUp, shiftDown;</span>
+
+            // TODO: use polymorphism?
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">            if (base instanceof AccentedAtom) { // special case :</span>
+                // accent. This positions superscripts better next to the accent!
+<span class="nc" id="L107">                Box box = ((AccentedAtom) base).base.createBox(env.crampStyle());</span>
+<span class="nc" id="L108">                shiftUp = box.getHeight() - tf.getSupDrop(supStyle.getStyle());</span>
+<span class="nc" id="L109">                shiftDown = box.getDepth() + tf.getSubDrop(subStyle.getStyle());</span>
+<span class="pc bfc" id="L110" title="All 4 branches covered.">            } else if (base instanceof SymbolAtom</span>
+                       &amp;&amp; base.type == TeXConstants.TYPE_BIG_OPERATOR) { // single big operator symbol
+<span class="fc" id="L112">                Char c = tf.getChar(((SymbolAtom) base).getName(), style);</span>
+<span class="pc bpc" id="L113" title="1 of 4 branches missed.">                if (style &lt; TeXConstants.STYLE_TEXT &amp;&amp; tf.hasNextLarger(c)) // display</span>
+                    // style
+<span class="fc" id="L115">                    c = tf.getNextLarger(c, style);</span>
+<span class="fc" id="L116">                Box x = new CharBox(c);</span>
+
+<span class="fc" id="L118">                x.setShift(-(x.getHeight() + x.getDepth()) / 2</span>
+<span class="fc" id="L119">                           - env.getTeXFont().getAxisHeight(env.getStyle()));</span>
+<span class="fc" id="L120">                hor = new HorizontalBox(x);</span>
+
+                // include delta in width or not?
+<span class="fc" id="L123">                delta = c.getItalic();</span>
+<span class="fc" id="L124">                deltaSymbol = new SpaceAtom(TeXConstants.MEDMUSKIP).createBox(env);</span>
+<span class="pc bpc" id="L125" title="1 of 4 branches missed.">                if (delta &gt; TeXFormula.PREC &amp;&amp; subscript == null)</span>
+<span class="nc" id="L126">                    hor.add(new StrutBox(delta, 0, 0, 0));</span>
+
+<span class="fc" id="L128">                shiftUp = hor.getHeight() - tf.getSupDrop(supStyle.getStyle());</span>
+<span class="fc" id="L129">                shiftDown = hor.getDepth() + tf.getSubDrop(subStyle.getStyle());</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">            } else if (base instanceof CharSymbol) {</span>
+<span class="fc" id="L131">                shiftUp = shiftDown = 0;</span>
+<span class="fc" id="L132">                CharFont cf = ((CharSymbol) base).getCharFont(tf);</span>
+<span class="pc bpc" id="L133" title="3 of 4 branches missed.">                if (!((CharSymbol) base).isMarkedAsTextSymbol() || !tf.hasSpace(cf.fontId)) {</span>
+<span class="fc" id="L134">                    delta = tf.getChar(cf, style).getItalic();</span>
+                }
+<span class="fc bfc" id="L136" title="All 4 branches covered.">                if (delta &gt; TeXFormula.PREC &amp;&amp; subscript == null) {</span>
+<span class="fc" id="L137">                    hor.add(new StrutBox(delta, 0, 0, 0));</span>
+<span class="fc" id="L138">                    delta = 0;</span>
+                }
+<span class="fc" id="L140">            } else {</span>
+<span class="fc" id="L141">                shiftUp = b.getHeight() - tf.getSupDrop(supStyle.getStyle());</span>
+<span class="fc" id="L142">                shiftDown = b.getDepth() + tf.getSubDrop(subStyle.getStyle());</span>
+            }
+
+<span class="fc bfc" id="L145" title="All 2 branches covered.">            if (superscript == null) { // only subscript</span>
+<span class="fc" id="L146">                Box x = subscript.createBox(subStyle);</span>
+                // calculate and set shift amount
+<span class="fc" id="L148">                x.setShift(Math.max(Math.max(shiftDown, tf.getSub1(style)), x.getHeight() - 4 * Math.abs(tf.getXHeight(style, lastFontId)) / 5));</span>
+<span class="fc" id="L149">                hor.add(x);</span>
+<span class="fc" id="L150">                hor.add(deltaSymbol);</span>
+
+<span class="fc" id="L152">                return hor;</span>
+            } else {
+<span class="fc" id="L154">                Box x = superscript.createBox(supStyle);</span>
+<span class="fc" id="L155">                float msiz = x.getWidth();</span>
+<span class="pc bpc" id="L156" title="1 of 4 branches missed.">                if (subscript != null &amp;&amp; align == TeXConstants.ALIGN_RIGHT) {</span>
+<span class="nc" id="L157">                    msiz = Math.max(msiz, subscript.createBox(subStyle).getWidth());</span>
+                }
+
+<span class="fc" id="L160">                HorizontalBox sup = new HorizontalBox(x, msiz, align);</span>
+                // add scriptspace (constant value!)
+<span class="fc" id="L162">                sup.add(SCRIPT_SPACE.createBox(env));</span>
+                // adjust shift-up
+                float p;
+<span class="fc bfc" id="L165" title="All 2 branches covered.">                if (style == TeXConstants.STYLE_DISPLAY)</span>
+<span class="fc" id="L166">                    p = tf.getSup1(style);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">                else if (env.crampStyle().getStyle() == style)</span>
+<span class="fc" id="L168">                    p = tf.getSup3(style);</span>
+                else
+<span class="fc" id="L170">                    p = tf.getSup2(style);</span>
+<span class="fc" id="L171">                shiftUp = Math.max(Math.max(shiftUp, p), x.getDepth()</span>
+<span class="fc" id="L172">                                   + Math.abs(tf.getXHeight(style, lastFontId)) / 4);</span>
+
+<span class="fc bfc" id="L174" title="All 2 branches covered.">                if (subscript == null) { // only superscript</span>
+<span class="fc" id="L175">                    sup.setShift(-shiftUp);</span>
+<span class="fc" id="L176">                    hor.add(sup);</span>
+                } else { // both superscript and subscript
+<span class="fc" id="L178">                    Box y = subscript.createBox(subStyle);</span>
+<span class="fc" id="L179">                    HorizontalBox sub = new HorizontalBox(y, msiz, align);</span>
+                    // add scriptspace (constant value!)
+<span class="fc" id="L181">                    sub.add(SCRIPT_SPACE.createBox(env));</span>
+                    // adjust shift-down
+<span class="fc" id="L183">                    shiftDown = Math.max(shiftDown, tf.getSub2(style));</span>
+                    // position both sub- and superscript
+<span class="fc" id="L185">                    float drt = tf.getDefaultRuleThickness(style);</span>
+<span class="fc" id="L186">                    float interSpace = shiftUp - x.getDepth() + shiftDown</span>
+<span class="fc" id="L187">                                       - y.getHeight(); // space between sub- en</span>
+                    // superscript
+<span class="fc bfc" id="L189" title="All 2 branches covered.">                    if (interSpace &lt; 4 * drt) { // too small</span>
+<span class="fc" id="L190">                        shiftUp += 4 * drt - interSpace;</span>
+                        // set bottom superscript at least 4/5 of X-height
+                        // above
+                        // baseline
+<span class="fc" id="L194">                        float psi = 4 * Math.abs(tf.getXHeight(style, lastFontId))</span>
+<span class="fc" id="L195">                                    / 5 - (shiftUp - x.getDepth());</span>
+
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">                        if (psi &gt; 0) {</span>
+<span class="nc" id="L198">                            shiftUp += psi;</span>
+<span class="nc" id="L199">                            shiftDown -= psi;</span>
+                        }
+                    }
+                    // create total box
+
+<span class="fc" id="L204">                    VerticalBox vBox = new VerticalBox();</span>
+<span class="fc" id="L205">                    sup.setShift(delta);</span>
+<span class="fc" id="L206">                    vBox.add(sup);</span>
+                    // recalculate interspace
+<span class="fc" id="L208">                    interSpace = shiftUp - x.getDepth() + shiftDown - y.getHeight();</span>
+<span class="fc" id="L209">                    vBox.add(new StrutBox(0, interSpace, 0, 0));</span>
+<span class="fc" id="L210">                    vBox.add(sub);</span>
+<span class="fc" id="L211">                    vBox.setHeight(shiftUp + x.getHeight());</span>
+<span class="fc" id="L212">                    vBox.setDepth(shiftDown + y.getDepth());</span>
+<span class="fc" id="L213">                    hor.add(vBox);</span>
+                }
+<span class="fc" id="L215">                hor.add(deltaSymbol);</span>
+
+<span class="fc" id="L217">                return hor;</span>
+            }
+        }
+    }
+
+    public int getLeftType() {
+<span class="fc" id="L223">        return base.getLeftType();</span>
+    }
+
+    public int getRightType() {
+<span class="fc" id="L227">        return base.getRightType();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MacroInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">MacroInfo.java</span></div><h1>MacroInfo.java</h1><pre class="source lang-java linenums">/* MacroInfo.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.HashMap;
+
+/**
+ * A command of the formulas: its number of arguments, and what it does. The
+ * predefined commands are {@link PredefMacroInfo}, which override {@link #invoke};
+ * the commands that a formula defines ({@code \newcommand}) have a
+ * {@link MacroHandler}. There is no reflection ({@code Method.invoke}): it does
+ * not work in the TeaVM C build.
+ */
+public class MacroInfo {
+
+    /** What a command defined by a formula does. */
+    public interface MacroHandler {
+        Object invoke(TeXParser tp, String[] args) throws ParseException;
+    }
+
+<span class="fc" id="L64">    public static HashMap&lt;String, MacroInfo&gt; Commands = new HashMap&lt;String, MacroInfo&gt;(300);</span>
+
+    private final MacroHandler handler;
+    public int nbArgs;
+<span class="fc" id="L68">    public boolean hasOptions = false;</span>
+    public int posOpts;
+
+<span class="fc" id="L71">    public MacroInfo(MacroHandler handler, int nbArgs) {</span>
+<span class="fc" id="L72">        this.handler = handler;</span>
+<span class="fc" id="L73">        this.nbArgs = nbArgs;</span>
+<span class="fc" id="L74">    }</span>
+
+    public MacroInfo(MacroHandler handler, int nbArgs, int posOpts) {
+<span class="fc" id="L77">        this(handler, nbArgs);</span>
+<span class="fc" id="L78">        this.hasOptions = true;</span>
+<span class="fc" id="L79">        this.posOpts = posOpts;</span>
+<span class="fc" id="L80">    }</span>
+
+    public MacroInfo(int nbArgs, int posOpts) {
+<span class="fc" id="L83">        this(null, nbArgs, posOpts);</span>
+<span class="fc" id="L84">    }</span>
+
+    public MacroInfo(int nbArgs) {
+<span class="fc" id="L87">        this(null, nbArgs);</span>
+<span class="fc" id="L88">    }</span>
+
+    public Object invoke(final TeXParser tp, final String[] args) throws ParseException {
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (handler == null) {</span>
+<span class="nc" id="L92">            throw new ParseException(&quot;Problem with command &quot; + args[0] + &quot; at position &quot; + tp.getLine() + &quot;:&quot; + tp.getCol() + &quot;\n&quot;);</span>
+        }
+        try {
+<span class="fc" id="L95">            return handler.invoke(tp, args);</span>
+<span class="nc" id="L96">        } catch (ParseException e) {</span>
+<span class="nc" id="L97">            throw e;</span>
+<span class="nc" id="L98">        } catch (RuntimeException e) {</span>
+<span class="nc" id="L99">            throw new ParseException(&quot;Problem with command &quot; + args[0] + &quot; at position &quot; + tp.getLine() + &quot;:&quot; + tp.getCol() + &quot;\n&quot; + e.getMessage());</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

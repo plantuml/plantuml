@@ -35,45 +35,24 @@
  */
 package net.sourceforge.plantuml.math;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-
-import javax.script.ScriptException;
-
-import net.sourceforge.plantuml.klimt.MutableImage;
-import net.sourceforge.plantuml.klimt.awt.XColor;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class AsciiMath implements ScientificEquation {
-	
 
 	private final LatexBuilder builder;
 	private final String tex;
 
-<span class="nc" id="L54">	public AsciiMath(String form) throws ScriptException, NoSuchMethodException {</span>
-<span class="nc" id="L55">		this.tex = new ASCIIMathTeXImg().getTeX(form);</span>
-<span class="nc" id="L56">		this.builder = new LatexBuilder(tex);</span>
-<span class="nc" id="L57">	}</span>
+<span class="fc" id="L45">	public AsciiMath(String form) {</span>
+<span class="fc" id="L46">		this.tex = new ASCIIMathTeXImg().getTeX(form);</span>
+<span class="fc" id="L47">		this.builder = new LatexBuilder(tex);</span>
+<span class="fc" id="L48">	}</span>
 
-	public XDimension2D getDimension() {
-<span class="nc" id="L60">		return builder.getDimension();</span>
-	}
-
-	public UImageSvg getSvg(double scale, XColor foregroundColor, XColor backgroundColor)
-			throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, InstantiationException, IOException {
-<span class="nc" id="L66">		return builder.getSvg(scale, foregroundColor, backgroundColor);</span>
-	}
-
-	public MutableImage getImage(XColor foregroundColor, XColor backgroundColor)
-			throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException,
-			IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-<span class="nc" id="L72">		return builder.getImage(foregroundColor, backgroundColor);</span>
+	public MathDrawing getDrawing(StringBounder stringBounder) throws ClassNotFoundException {
+<span class="fc" id="L51">		return builder.getDrawing(stringBounder);</span>
 	}
 
 	public String getSource() {
-<span class="nc" id="L76">		return tex;</span>
+<span class="fc" id="L55">		return tex;</span>
 	}
 
 }

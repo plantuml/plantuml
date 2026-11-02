@@ -118,9 +118,9 @@ public class HandJiggle {
 <span class="fc" id="L118">	}</span>
 
 	public void curveTo(XCubicCurve2D curve) {
-<span class="nc" id="L121">		final double flatness = curve.getFlatness();</span>
-<span class="nc" id="L122">		final double dist = curve.getP1().distance(curve.getP2());</span>
-<span class="nc bnc" id="L123" title="All 4 branches missed.">		if (flatness &gt; 0.1 &amp;&amp; dist &gt; 20) {</span>
+<span class="fc" id="L121">		final double flatness = curve.getFlatness();</span>
+<span class="fc" id="L122">		final double dist = curve.getP1().distance(curve.getP2());</span>
+<span class="pc bpc" id="L123" title="1 of 4 branches missed.">		if (flatness &gt; 0.1 &amp;&amp; dist &gt; 20) {</span>
 <span class="nc" id="L124">			final XCubicCurve2D left = XCubicCurve2D.none();</span>
 <span class="nc" id="L125">			final XCubicCurve2D right = XCubicCurve2D.none();</span>
 <span class="nc" id="L126">			curve.subdivide(left, right);</span>
@@ -128,8 +128,8 @@ public class HandJiggle {
 <span class="nc" id="L128">			curveTo(right);</span>
 <span class="nc" id="L129">			return;</span>
 		}
-<span class="nc" id="L131">		lineTo(curve.getP2());</span>
-<span class="nc" id="L132">	}</span>
+<span class="fc" id="L131">		lineTo(curve.getP2());</span>
+<span class="fc" id="L132">	}</span>
 
 	public UPolygon toUPolygon() {
 <span class="fc" id="L135">		final UPolygon result = new UPolygon();</span>
@@ -156,10 +156,10 @@ public class HandJiggle {
 	}
 
 	public void appendTo(UPath result) {
-<span class="nc bnc" id="L159" title="All 2 branches missed.">		for (XPoint2D p : points)</span>
-<span class="nc" id="L160">			result.lineTo(p);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (XPoint2D p : points)</span>
+<span class="fc" id="L160">			result.lineTo(p);</span>
 
-<span class="nc" id="L162">	}</span>
+<span class="fc" id="L162">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

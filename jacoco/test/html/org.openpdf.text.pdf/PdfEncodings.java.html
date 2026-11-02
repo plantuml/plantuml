@@ -166,21 +166,21 @@ import java.util.concurrent.ConcurrentHashMap;
 <span class="fc" id="L166">            byte[] b = new byte[len];</span>
 <span class="fc" id="L167">            int c = 0;</span>
 <span class="fc bfc" id="L168" title="All 2 branches covered.">            for (char char1 : cc) {</span>
-<span class="pc bpc" id="L169" title="5 of 6 branches missed.">                if (char1 &lt; 128 || char1 &gt; 160 &amp;&amp; char1 &lt;= 255) {</span>
+<span class="pc bpc" id="L169" title="2 of 6 branches missed.">                if (char1 &lt; 128 || char1 &gt; 160 &amp;&amp; char1 &lt;= 255) {</span>
 <span class="fc" id="L170">                    c = char1;</span>
                 } else {
-<span class="nc" id="L172">                    c = hash.get(char1);</span>
+<span class="fc" id="L172">                    c = hash.get(char1);</span>
                 }
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">                if (c != 0) {</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">                if (c != 0) {</span>
 <span class="fc" id="L175">                    b[ptr++] = (byte) c;</span>
                 }
             }
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">            if (ptr == len) {</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">            if (ptr == len) {</span>
 <span class="fc" id="L179">                return b;</span>
             }
-<span class="nc" id="L181">            byte[] b2 = new byte[ptr];</span>
-<span class="nc" id="L182">            System.arraycopy(b, 0, b2, 0, ptr);</span>
-<span class="nc" id="L183">            return b2;</span>
+<span class="fc" id="L181">            byte[] b2 = new byte[ptr];</span>
+<span class="fc" id="L182">            System.arraycopy(b, 0, b2, 0, ptr);</span>
+<span class="fc" id="L183">            return b2;</span>
         }
 <span class="nc bnc" id="L185" title="All 2 branches missed.">        if (encoding.equals(PdfObject.TEXT_UNICODE)) {</span>
             // workaround for jdk 1.2.2 bug

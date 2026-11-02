@@ -49,75 +49,89 @@ import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
-public class PSystemMath extends DirectOsDiagram {
+public class PSystemMath extends DirectOsDiagram implements FormulaDiagram {
 
-<span class="nc" id="L57">	private String math = &quot;&quot;;</span>
-<span class="nc" id="L58">	private float scale = 1;</span>
-<span class="nc" id="L59">	private XColor color = XColor.BLACK;</span>
-<span class="nc" id="L60">	private XColor backColor = XColor.WHITE;</span>
+<span class="fc" id="L59">	private String math = &quot;&quot;;</span>
+<span class="fc" id="L60">	private float scale = 1;</span>
+<span class="fc" id="L61">	private XColor color = XColor.BLACK;</span>
+<span class="fc" id="L62">	private XColor backColor = XColor.WHITE;</span>
 
 	public PSystemMath(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L63">		super(source, preprocessing);</span>
-<span class="nc" id="L64">	}</span>
+<span class="fc" id="L65">		super(source, preprocessing);</span>
+<span class="fc" id="L66">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L67">		return new DiagramDescription(&quot;(Math)&quot;);</span>
+<span class="fc" id="L69">		return new DiagramDescription(&quot;(Math)&quot;);</span>
 	}
 
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-<span class="nc" id="L73">		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromAsciiMath(math);</span>
-<span class="nc" id="L74">		return asciiMath.export(os, fileFormat, scale, color, backColor);</span>
+<span class="fc" id="L75">		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromAsciiMath(math);</span>
+<span class="fc" id="L76">		return asciiMath.export(os, fileFormat, scale, color, backColor);</span>
+	}
+
+	public TextBlock getFormulaBlock() {
+<span class="nc" id="L80">		return ScientificEquationSafe.fromAsciiMath(math).getTextBlock(HColors.simple(color), getFormulaBackground());</span>
+	}
+
+	public HColor getFormulaBackground() {
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		return backColor == null ? null : HColors.simple(backColor);</span>
+	}
+
+	public double getFormulaScale() {
+<span class="nc" id="L88">		return scale;</span>
 	}
 
 	public void doCommandLine(String line) {
-<span class="nc" id="L78">		final String lineLower = StringUtils.trin(StringUtils.goLowerCase(line));</span>
-<span class="nc" id="L79">		final String colorParam = &quot;color &quot;;</span>
-<span class="nc" id="L80">		final String backParam = &quot;backgroundcolor &quot;;</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (lineLower.startsWith(colorParam)) {</span>
-<span class="nc" id="L82">			final XColor col3 = getColor(line.substring(colorParam.length()));</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (col3 != null) {</span>
-<span class="nc" id="L84">				color = col3;</span>
+<span class="fc" id="L92">		final String lineLower = StringUtils.trin(StringUtils.goLowerCase(line));</span>
+<span class="fc" id="L93">		final String colorParam = &quot;color &quot;;</span>
+<span class="fc" id="L94">		final String backParam = &quot;backgroundcolor &quot;;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (lineLower.startsWith(colorParam)) {</span>
+<span class="fc" id="L96">			final XColor col3 = getColor(line.substring(colorParam.length()));</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">			if (col3 != null) {</span>
+<span class="fc" id="L98">				color = col3;</span>
 			}
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		} else if (lineLower.startsWith(backParam)) {</span>
-<span class="nc" id="L87">			final XColor col3 = getColor(line.substring(backParam.length()));</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (col3 != null) {</span>
-<span class="nc" id="L89">				backColor = col3;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		} else if (lineLower.startsWith(backParam)) {</span>
+<span class="fc" id="L101">			final XColor col3 = getColor(line.substring(backParam.length()));</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">			if (col3 != null) {</span>
+<span class="fc" id="L103">				backColor = col3;</span>
 			}
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		} else if (lineLower.startsWith(&quot;scale &quot;)) {</span>
-<span class="nc" id="L92">			final String value = line.substring(&quot;scale &quot;.length());</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		} else if (lineLower.startsWith(&quot;scale &quot;)) {</span>
+<span class="fc" id="L106">			final String value = line.substring(&quot;scale &quot;.length());</span>
 			try {
-<span class="nc" id="L94">				final float scale1 = Float.parseFloat(value);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">				if (scale1 &gt; 0) {</span>
-<span class="nc" id="L96">					scale = scale1;</span>
+<span class="fc" id="L108">				final float scale1 = Float.parseFloat(value);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">				if (scale1 &gt; 0) {</span>
+<span class="fc" id="L110">					scale = scale1;</span>
 				}
-<span class="nc" id="L98">			} catch (Exception e) {</span>
-<span class="nc" id="L99">				Logme.error(e);</span>
-<span class="nc" id="L100">			}</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		} else if (lineLower.startsWith(&quot;dpi &quot;)) {</span>
-<span class="nc" id="L102">			final String value = line.substring(&quot;dpi &quot;.length());</span>
+<span class="nc" id="L112">			} catch (Exception e) {</span>
+<span class="nc" id="L113">				Logme.error(e);</span>
+<span class="fc" id="L114">			}</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		} else if (lineLower.startsWith(&quot;dpi &quot;)) {</span>
+<span class="fc" id="L116">			final String value = line.substring(&quot;dpi &quot;.length());</span>
 			try {
-<span class="nc" id="L104">				final float dpi1 = Float.parseFloat(value);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">				if (dpi1 &gt; 0) {</span>
-<span class="nc" id="L106">					scale = dpi1 / 96;</span>
+<span class="fc" id="L118">				final float dpi1 = Float.parseFloat(value);</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">				if (dpi1 &gt; 0) {</span>
+<span class="fc" id="L120">					scale = dpi1 / 96;</span>
 				}
-<span class="nc" id="L108">			} catch (Exception e) {</span>
-<span class="nc" id="L109">				Logme.error(e);</span>
-<span class="nc" id="L110">			}</span>
-<span class="nc" id="L111">		} else {</span>
-<span class="nc" id="L112">			this.math = line;</span>
+<span class="nc" id="L122">			} catch (Exception e) {</span>
+<span class="nc" id="L123">				Logme.error(e);</span>
+<span class="fc" id="L124">			}</span>
+<span class="fc" id="L125">		} else {</span>
+<span class="fc" id="L126">			this.math = line;</span>
 
 		}
-<span class="nc" id="L115">	}</span>
+<span class="fc" id="L129">	}</span>
 
 	private XColor getColor(final String col) {
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		final HColor col2 = col == null ? null : HColorSet.instance().getColorOrWhite(col);</span>
-<span class="nc" id="L119">		final XColor col3 = col2.toColor(ColorMapper.IDENTITY);</span>
-<span class="nc" id="L120">		return col3;</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		final HColor col2 = col == null ? null : HColorSet.instance().getColorOrWhite(col);</span>
+<span class="fc" id="L133">		final XColor col3 = col2.toColor(ColorMapper.IDENTITY);</span>
+<span class="fc" id="L134">		return col3;</span>
 	}
 
 }

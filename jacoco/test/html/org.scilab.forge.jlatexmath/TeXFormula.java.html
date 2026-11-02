@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeXFormula.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">TeXFormula.java</span></div><h1>TeXFormula.java</h1><pre class="source lang-java linenums">/* TeXFormula.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+/* Modified by Calixte Denizet */
+
+package org.scilab.forge.jlatexmath;
+
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration;
+import org.scilab.forge.jlatexmath.greek.GreekRegistration;
+
+
+/**
+ * Represents a logical mathematical formula that will be displayed (by creating a
+ * {@link TeXIcon} from it and painting it) using algorithms that are based on the
+ * TeX algorithms.
+ * &lt;p&gt;
+ * These formula's can be built using the built-in primitive TeX parser
+ * (methods with String arguments) or using other TeXFormula objects. Most methods
+ * have (an) equivalent(s) where one or more TeXFormula arguments are replaced with
+ * String arguments. These are just shorter notations, because all they do is parse
+ * the string(s) to TeXFormula's and call an equivalent method with (a) TeXFormula argument(s).
+ * Most methods also come in 2 variants. One kind will use this TeXFormula to build
+ * another mathematical construction and then change this object to represent the newly
+ * build construction. The other kind will only use other
+ * TeXFormula's (or parse strings), build a mathematical construction with them and
+ * insert this newly build construction at the end of this TeXFormula.
+ * Because all the provided methods return a pointer to this (modified) TeXFormula
+ * (except for the createTeXIcon method that returns a TeXIcon pointer),
+ * method chaining is also possible.
+ * &lt;p&gt;
+ * &lt;b&gt; Important: All the provided methods modify this TeXFormula object, but all the
+ * TeXFormula arguments of these methods will remain unchanged and independent of
+ * this TeXFormula object!&lt;/b&gt;
+ */
+public class TeXFormula {
+
+    public static final String VERSION = &quot;1.0.3&quot;;
+
+    public static final int SERIF = 0;
+    public static final int SANSSERIF = 1;
+    public static final int BOLD = 2;
+    public static final int ITALIC = 4;
+    public static final int ROMAN = 8;
+    public static final int TYPEWRITER = 16;
+
+    // point-to-pixel conversion
+<span class="fc" id="L96">    public static float PIXELS_PER_POINT = 1f;</span>
+
+    // font scale for deriving
+<span class="fc" id="L99">    public static float FONT_SCALE_FACTOR = 100f;</span>
+
+    // for comparing floats with 0
+    protected static final float PREC = 0.0000001f;
+
+    // predefined TeXFormula's
+<span class="fc" id="L105">    public static Map&lt;String, TeXFormula&gt; predefinedTeXFormulas = new HashMap&lt;String, TeXFormula&gt;(150);</span>
+<span class="fc" id="L106">    public static Map&lt;String, String&gt; predefinedTeXFormulasAsString = new HashMap&lt;String, String&gt;(150);</span>
+
+    // character-to-symbol and character-to-delimiter mappings
+<span class="fc" id="L109">    public static String[] symbolMappings = new String[65536];</span>
+<span class="fc" id="L110">    public static String[] symbolTextMappings = new String[65536];</span>
+<span class="fc" id="L111">    public static String[] symbolFormulaMappings = new String[65536];</span>
+
+<span class="pc" id="L113">    public List&lt;MiddleAtom&gt; middle = new LinkedList&lt;MiddleAtom&gt;();</span>
+
+    protected Map&lt;String, String&gt; jlmXMLMap;
+    private TeXParser parser;
+
+    static {
+        // character-to-symbol and character-to-delimiter mappings
+<span class="fc" id="L120">        TeXFormulaSettingsParser parser = new TeXFormulaSettingsParser();</span>
+<span class="fc" id="L121">        parser.parseSymbolMappings(symbolMappings, symbolTextMappings);</span>
+
+<span class="fc" id="L123">        new PredefinedCommands();</span>
+<span class="fc" id="L124">        new PredefinedTeXFormulas();</span>
+<span class="fc" id="L125">        new PredefMacros();</span>
+
+<span class="fc" id="L127">        parser.parseSymbolToFormulaMappings(symbolFormulaMappings, symbolTextMappings);</span>
+
+        // direct: the reflection (Class.forName + newInstance) does not work in the TeaVM C build
+<span class="fc" id="L130">        DefaultTeXFont.registerAlphabet(new CyrillicRegistration());</span>
+<span class="fc" id="L131">        DefaultTeXFont.registerAlphabet(new GreekRegistration());</span>
+
+        //setDefaultDPI();
+<span class="fc" id="L134">    }</span>
+
+    public static void addSymbolMappings(InputStream in, String name) throws ResourceParseException {
+<span class="fc" id="L137">        TeXFormulaSettingsParser tfsp = new TeXFormulaSettingsParser(in, name);</span>
+<span class="fc" id="L138">        tfsp.parseSymbolMappings(symbolMappings, symbolTextMappings);</span>
+<span class="fc" id="L139">        tfsp.parseSymbolToFormulaMappings(symbolFormulaMappings, symbolTextMappings);</span>
+<span class="fc" id="L140">    }</span>
+
+    // the root atom of the &quot;atom tree&quot; that represents the formula
+<span class="pc" id="L143">    public Atom root = null;</span>
+
+    // the current text style
+<span class="pc" id="L146">    public String textStyle = null;</span>
+
+<span class="pc" id="L148">    public boolean isColored = false;</span>
+
+    /**
+     * Creates an empty TeXFormula.
+     *
+     */
+<span class="fc" id="L154">    public TeXFormula() {</span>
+<span class="fc" id="L155">        parser = new TeXParser(&quot;&quot;, this, false);</span>
+<span class="fc" id="L156">    }</span>
+
+    /**
+     * Creates a new TeXFormula by parsing the given string (using a primitive TeX parser).
+     *
+     * @param s the string to be parsed
+     * @throws ParseException if the string could not be parsed correctly
+     */
+<span class="nc" id="L164">    public TeXFormula(String s, Map&lt;String, String&gt; map) throws ParseException {</span>
+<span class="nc" id="L165">        this.jlmXMLMap = map;</span>
+<span class="nc" id="L166">        parser = new TeXParser(s, this);</span>
+<span class="nc" id="L167">        parser.parse();</span>
+<span class="nc" id="L168">    }</span>
+
+    /**
+     * Creates a new TeXFormula by parsing the given string (using a primitive TeX parser).
+     *
+     * @param s the string to be parsed
+     * @throws ParseException if the string could not be parsed correctly
+     */
+    public TeXFormula(String s) throws ParseException {
+<span class="fc" id="L177">        this(s, (String) null);</span>
+<span class="fc" id="L178">    }</span>
+
+<span class="nc" id="L180">    public TeXFormula(String s, boolean firstpass) throws ParseException {</span>
+<span class="nc" id="L181">        this.textStyle = null;</span>
+<span class="nc" id="L182">        parser = new TeXParser(s, this, firstpass);</span>
+<span class="nc" id="L183">        parser.parse();</span>
+<span class="nc" id="L184">    }</span>
+
+    /*
+     * Creates a TeXFormula by parsing the given string in the given text style.
+     * Used when a text style command was found in the parse string.
+     */
+<span class="fc" id="L190">    public TeXFormula(String s, String textStyle) throws ParseException {</span>
+<span class="fc" id="L191">        this.textStyle = textStyle;</span>
+<span class="fc" id="L192">        parser = new TeXParser(s, this);</span>
+<span class="fc" id="L193">        parser.parse();</span>
+<span class="fc" id="L194">    }</span>
+
+<span class="nc" id="L196">    public TeXFormula(String s, String textStyle, boolean firstpass, boolean space) throws ParseException {</span>
+<span class="nc" id="L197">        this.textStyle = textStyle;</span>
+<span class="nc" id="L198">        parser = new TeXParser(s, this, firstpass, space);</span>
+<span class="nc" id="L199">        parser.parse();</span>
+<span class="nc" id="L200">    }</span>
+
+    /**
+     * Creates a new TeXFormula that is a copy of the given TeXFormula.
+     * &lt;p&gt;
+     * &lt;b&gt;Both TeXFormula's are independent of one another!&lt;/b&gt;
+     *
+     * @param f the formula to be copied
+     */
+<span class="fc" id="L209">    public TeXFormula(TeXFormula f) {</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        if (f != null) {</span>
+<span class="fc" id="L211">            addImpl(f);</span>
+        }
+<span class="fc" id="L213">    }</span>
+
+    /**
+     * Creates an empty TeXFormula.
+     *
+     */
+<span class="nc" id="L219">    protected TeXFormula(TeXParser tp) {</span>
+<span class="nc" id="L220">        this.jlmXMLMap = tp.formula.jlmXMLMap;</span>
+<span class="nc" id="L221">        parser = new TeXParser(tp.getIsPartial(), &quot;&quot;, this, false);</span>
+<span class="nc" id="L222">    }</span>
+
+    /**
+     * Creates a new TeXFormula by parsing the given string (using a primitive TeX parser).
+     *
+     * @param s the string to be parsed
+     * @throws ParseException if the string could not be parsed correctly
+     */
+    protected TeXFormula(TeXParser tp, String s) throws ParseException {
+<span class="fc" id="L231">        this(tp, s, null);</span>
+<span class="fc" id="L232">    }</span>
+
+<span class="fc" id="L234">    protected TeXFormula(TeXParser tp, String s, boolean firstpass) throws ParseException {</span>
+<span class="fc" id="L235">        this.textStyle = null;</span>
+<span class="fc" id="L236">        this.jlmXMLMap = tp.formula.jlmXMLMap;</span>
+<span class="fc" id="L237">        boolean isPartial = tp.getIsPartial();</span>
+<span class="fc" id="L238">        parser = new TeXParser(isPartial, s, this, firstpass);</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">        if (isPartial) {</span>
+            try {
+<span class="nc" id="L241">                parser.parse();</span>
+<span class="nc" id="L242">            } catch (Exception e) { }</span>
+        } else {
+<span class="fc" id="L244">            parser.parse();</span>
+        }
+<span class="fc" id="L246">    }</span>
+
+    /*
+     * Creates a TeXFormula by parsing the given string in the given text style.
+     * Used when a text style command was found in the parse string.
+     */
+<span class="fc" id="L252">    protected TeXFormula(TeXParser tp, String s, String textStyle) throws ParseException {</span>
+<span class="fc" id="L253">        this.textStyle = textStyle;</span>
+<span class="fc" id="L254">        this.jlmXMLMap = tp.formula.jlmXMLMap;</span>
+<span class="fc" id="L255">        boolean isPartial = tp.getIsPartial();</span>
+<span class="fc" id="L256">        parser = new TeXParser(isPartial, s, this);</span>
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">        if (isPartial) {</span>
+            try {
+<span class="nc" id="L259">                parser.parse();</span>
+<span class="nc" id="L260">            } catch (Exception e) {</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">                if (root == null) {</span>
+<span class="nc" id="L262">                    root = new EmptyAtom();</span>
+                }
+<span class="nc" id="L264">            }</span>
+        } else {
+<span class="fc" id="L266">            parser.parse();</span>
+        }
+<span class="fc" id="L268">    }</span>
+
+<span class="fc" id="L270">    protected TeXFormula(TeXParser tp, String s, String textStyle, boolean firstpass, boolean space) throws ParseException {</span>
+<span class="fc" id="L271">        this.textStyle = textStyle;</span>
+<span class="fc" id="L272">        this.jlmXMLMap = tp.formula.jlmXMLMap;</span>
+<span class="fc" id="L273">        boolean isPartial = tp.getIsPartial();</span>
+<span class="fc" id="L274">        parser = new TeXParser(isPartial, s, this, firstpass, space);</span>
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">        if (isPartial) {</span>
+            try {
+<span class="nc" id="L277">                parser.parse();</span>
+<span class="nc" id="L278">            } catch (Exception e) {</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">                if (root == null) {</span>
+<span class="nc" id="L280">                    root = new EmptyAtom();</span>
+                }
+<span class="nc" id="L282">            }</span>
+        } else {
+<span class="fc" id="L284">            parser.parse();</span>
+        }
+<span class="fc" id="L286">    }</span>
+
+    /**
+     * Change the text of the TeXFormula and regenerate the root
+     *
+     * @param ltx the latex formula
+     */
+    public void setLaTeX(String ltx) throws ParseException {
+<span class="nc" id="L294">        parser.reset(ltx);</span>
+<span class="nc bnc" id="L295" title="All 4 branches missed.">        if (ltx != null &amp;&amp; ltx.length() != 0)</span>
+<span class="nc" id="L296">            parser.parse();</span>
+<span class="nc" id="L297">    }</span>
+
+    /**
+     * Inserts an atom at the end of the current formula
+     */
+    public TeXFormula add(Atom el) {
+<span class="fc bfc" id="L303" title="All 2 branches covered.">        if (el != null) {</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">            if (el instanceof MiddleAtom)</span>
+<span class="fc" id="L305">                middle.add((MiddleAtom) el);</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">            if (root == null) {</span>
+<span class="fc" id="L307">                root = el;</span>
+            } else {
+<span class="fc bfc" id="L309" title="All 2 branches covered.">                if (!(root instanceof RowAtom)) {</span>
+<span class="fc" id="L310">                    root = new RowAtom(root);</span>
+                }
+<span class="fc" id="L312">                ((RowAtom) root).add(el);</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">                if (el instanceof TypedAtom) {</span>
+<span class="fc" id="L314">                    TypedAtom ta = (TypedAtom) el;</span>
+<span class="fc" id="L315">                    int rtype = ta.getRightType();</span>
+<span class="fc bfc" id="L316" title="All 4 branches covered.">                    if (rtype == TeXConstants.TYPE_BINARY_OPERATOR || rtype == TeXConstants.TYPE_RELATION) {</span>
+<span class="fc" id="L317">                        ((RowAtom) root).add(new BreakMarkAtom());</span>
+                    }
+                }
+            }
+        }
+<span class="fc" id="L322">        return this;</span>
+    }
+
+    public TeXFormula append(boolean isPartial, String s) throws ParseException {
+<span class="nc bnc" id="L326" title="All 4 branches missed.">        if (s != null &amp;&amp; s.length() != 0) {</span>
+<span class="nc" id="L327">            TeXParser tp = new TeXParser(isPartial, s, this);</span>
+<span class="nc" id="L328">            tp.parse();</span>
+        }
+<span class="nc" id="L330">        return this;</span>
+    }
+
+    private void addImpl(TeXFormula f) {
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">        if (f.root != null) {</span>
+            // special copy-treatment for Mrow as a root!!
+<span class="pc bpc" id="L336" title="1 of 2 branches missed.">            if (f.root instanceof RowAtom)</span>
+<span class="nc" id="L337">                add(new RowAtom(f.root));</span>
+            else
+<span class="fc" id="L339">                add(f.root);</span>
+        }
+<span class="fc" id="L341">    }</span>
+
+    /*
+     * Convert this TeXFormula into a box, starting form the given style
+     */
+    private Box createBox(TeXEnvironment style) {
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">        if (root == null)</span>
+<span class="nc" id="L348">            return new StrutBox(0, 0, 0, 0);</span>
+        else
+<span class="fc" id="L350">            return root.createBox(style);</span>
+    }
+
+    private DefaultTeXFont createFont(float size, int type) {
+<span class="nc" id="L354">        DefaultTeXFont dtf = new DefaultTeXFont(size);</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">        if (type == 0) {</span>
+<span class="nc" id="L356">            dtf.setSs(false);</span>
+        }
+<span class="nc bnc" id="L358" title="All 2 branches missed.">        if ((type &amp; ROMAN) != 0) {</span>
+<span class="nc" id="L359">            dtf.setRoman(true);</span>
+        }
+<span class="nc bnc" id="L361" title="All 2 branches missed.">        if ((type &amp; TYPEWRITER) != 0) {</span>
+<span class="nc" id="L362">            dtf.setTt(true);</span>
+        }
+<span class="nc bnc" id="L364" title="All 2 branches missed.">        if ((type &amp; SANSSERIF) != 0) {</span>
+<span class="nc" id="L365">            dtf.setSs(true);</span>
+        }
+<span class="nc bnc" id="L367" title="All 2 branches missed.">        if ((type &amp; ITALIC) != 0) {</span>
+<span class="nc" id="L368">            dtf.setIt(true);</span>
+        }
+<span class="nc bnc" id="L370" title="All 2 branches missed.">        if ((type &amp; BOLD) != 0) {</span>
+<span class="nc" id="L371">            dtf.setBold(true);</span>
+        }
+
+<span class="nc" id="L374">        return dtf;</span>
+    }
+
+    /**
+     * Apply the Builder pattern instead of using the createTeXIcon(...) factories
+     * @author Felix Natter
+     *
+     */
+<span class="fc" id="L382">    public class TeXIconBuilder {</span>
+        private Integer style;
+        private Float size;
+        private Integer type;
+        private TeXColor fgcolor;
+<span class="fc" id="L387">        private boolean trueValues = false;</span>
+        private Integer widthUnit;
+        private Float textWidth;
+        private Integer align;
+<span class="fc" id="L391">        private boolean isMaxWidth = false;</span>
+        private Integer interLineUnit;
+        private Float interLineSpacing;
+
+        private TeXTextMeasurer textMeasurer;
+
+        /**
+         * Specify the style for rendering the given TeXFormula
+         * @param style the style
+         * @return the builder, used for chaining
+         */
+        public TeXIconBuilder setStyle(final int style) {
+<span class="fc" id="L403">            this.style = style;</span>
+<span class="fc" id="L404">            return this;</span>
+        }
+
+        /**
+         * Specify the font size for rendering the given TeXFormula
+         * @param size the size
+         * @return the builder, used for chaining
+         */
+        public TeXIconBuilder setSize(final float size) {
+<span class="fc" id="L413">            this.size = size;</span>
+<span class="fc" id="L414">            return this;</span>
+        }
+
+        /**
+         * Specify the font type for rendering the given TeXFormula
+         * @param type the font type
+         * @return the builder, used for chaining
+         */
+        public TeXIconBuilder setType(final int type) {
+<span class="nc" id="L423">            this.type = type;</span>
+<span class="nc" id="L424">            return this;</span>
+        }
+
+        /**
+         * Specify the background color for rendering the given TeXFormula
+         * @param fgcolor the foreground color
+         * @return the builder, used for chaining
+         */
+        public TeXIconBuilder setFGColor(final TeXColor fgcolor) {
+<span class="nc" id="L433">            this.fgcolor = fgcolor;</span>
+<span class="nc" id="L434">            return this;</span>
+        }
+
+        /**
+         * Specify the &quot;true values&quot; parameter for rendering the given TeXFormula
+         * @param trueValues the &quot;true values&quot; value
+         * @return the builder, used for chaining
+         */
+        public TeXIconBuilder setTrueValues(final boolean trueValues) {
+<span class="nc" id="L443">            this.trueValues = trueValues;</span>
+<span class="nc" id="L444">            return this;</span>
+        }
+
+        /**
+         * Specify the width of the formula (may be exact or maximum width, see {@link #setIsMaxWidth(boolean)})
+         * @param widthUnit the width unit
+         * @param textWidth the width
+         * @param align the alignment
+         * @return the builder, used for chaining
+         */
+        public TeXIconBuilder setWidth(final int widthUnit, final float textWidth, final int align) {
+<span class="nc" id="L455">            this.widthUnit = widthUnit;</span>
+<span class="nc" id="L456">            this.textWidth = textWidth;</span>
+<span class="nc" id="L457">            this.align = align;</span>
+<span class="nc" id="L458">            trueValues = true; // TODO: is this necessary?</span>
+<span class="nc" id="L459">            return this;</span>
+        }
+
+        /**
+         * Specifies whether the width is the exact or the maximum width
+         * @param isMaxWidth whether the width is a maximum width
+         * @return the builder, used for chaining
+         */
+        public TeXIconBuilder setIsMaxWidth(final boolean isMaxWidth) {
+<span class="nc bnc" id="L468" title="All 2 branches missed.">            if (widthUnit == null) {</span>
+<span class="nc" id="L469">                throw new IllegalStateException(&quot;Cannot set 'isMaxWidth' without having specified a width!&quot;);</span>
+            }
+<span class="nc bnc" id="L471" title="All 2 branches missed.">            if (isMaxWidth) {</span>
+                // NOTE: Currently isMaxWidth==true does not work with ALIGN_CENTER or ALIGN_RIGHT (see HorizontalBox ctor)
+                // The case (1) we don't support by setting align := ALIGN_LEFT here is this:
+                //  \text{hello world\\hello} with align=ALIGN_CENTER (but forced to ALIGN_LEFT) and isMaxWidth==true results in:
+                // [hello world]
+                // [hello      ]
+                // and NOT:
+                // [hello world]
+                // [   hello   ]
+                // However, this case (2) is currently not supported anyway (ALIGN_CENTER with isMaxWidth==false):
+                // [  hello world  ]
+                // [  hello        ]
+                // and NOT:
+                // [  hello world  ]
+                // [     hello     ]
+                // =&gt; until (2) is solved, we stick with the hack to set align := ALIGN_LEFT!
+<span class="nc" id="L487">                this.align = TeXConstants.ALIGN_LEFT;</span>
+            }
+<span class="nc" id="L489">            this.isMaxWidth = isMaxWidth;</span>
+<span class="nc" id="L490">            return this;</span>
+        }
+
+        /**
+         * Specify the inter line spacing unit and value. NOTE: this is required for automatic linebreaks to work!
+         * @param interLineUnit the unit
+         * @param interLineSpacing the value
+         * @return the builder, used for chaining
+         */
+        public TeXIconBuilder setInterLineSpacing(final int interLineUnit, final float interLineSpacing) {
+<span class="nc bnc" id="L500" title="All 2 branches missed.">            if (widthUnit == null) {</span>
+<span class="nc" id="L501">                throw new IllegalStateException(&quot;Cannot set inter line spacing without having specified a width!&quot;);</span>
+            }
+<span class="nc" id="L503">            this.interLineUnit = interLineUnit;</span>
+<span class="nc" id="L504">            this.interLineSpacing = interLineSpacing;</span>
+<span class="nc" id="L505">            return this;</span>
+        }
+
+        /**
+         * Gives the measure of the text that has no TeX glyph (CJK, ...), which the
+         * canvas draws. Without it, a rough estimate is used.
+         * @param textMeasurer the measurer
+         * @return the builder, used for chaining
+         */
+        public TeXIconBuilder setTextMeasurer(final TeXTextMeasurer textMeasurer) {
+<span class="fc" id="L515">            this.textMeasurer = textMeasurer;</span>
+<span class="fc" id="L516">            return this;</span>
+        }
+
+        /**
+         * Create a TeXIcon from the information gathered by the (chained) setXXX() methods.
+         * (see Builder pattern)
+         * @return the TeXIcon
+         */
+        public TeXIcon build() {
+<span class="pc bpc" id="L525" title="1 of 2 branches missed.">            if (style == null) {</span>
+<span class="nc" id="L526">                throw new IllegalStateException(&quot;A style is required. Use setStyle()&quot;);</span>
+            }
+<span class="pc bpc" id="L528" title="1 of 2 branches missed.">            if (size == null) {</span>
+<span class="nc" id="L529">                throw new IllegalStateException(&quot;A size is required. Use setStyle()&quot;);</span>
+            }
+<span class="pc bpc" id="L531" title="1 of 2 branches missed.">            DefaultTeXFont font = (type == null) ? new DefaultTeXFont(size) : createFont(size, type);</span>
+            TeXEnvironment te;
+<span class="pc bpc" id="L533" title="1 of 2 branches missed.">            if (widthUnit != null) {</span>
+<span class="nc" id="L534">                te = new TeXEnvironment(style, font, widthUnit, textWidth);</span>
+            } else {
+<span class="fc" id="L536">                te = new TeXEnvironment(style, font);</span>
+            }
+
+<span class="pc bpc" id="L539" title="1 of 2 branches missed.">            if (interLineUnit != null) {</span>
+<span class="nc" id="L540">                te.setInterline(interLineUnit, interLineSpacing);</span>
+            }
+<span class="fc" id="L542">            te.setTextMeasurer(textMeasurer);</span>
+
+<span class="fc" id="L544">            Box box = createBox(te);</span>
+            TeXIcon ti;
+<span class="pc bpc" id="L546" title="1 of 2 branches missed.">            if (widthUnit != null) {</span>
+                HorizontalBox hb;
+<span class="nc bnc" id="L548" title="All 2 branches missed.">                if (interLineUnit != null) {</span>
+<span class="nc" id="L549">                    float il = interLineSpacing * SpaceAtom.getFactor(interLineUnit, te);</span>
+<span class="nc" id="L550">                    Box b = BreakFormula.split(box, te.getTextwidth(), il);</span>
+<span class="nc bnc" id="L551" title="All 2 branches missed.">                    hb = new HorizontalBox(b, isMaxWidth ? b.getWidth() : te.getTextwidth(), align);</span>
+<span class="nc" id="L552">                } else {</span>
+<span class="nc bnc" id="L553" title="All 2 branches missed.">                    hb = new HorizontalBox(box, isMaxWidth ? box.getWidth() : te.getTextwidth(), align);</span>
+                }
+<span class="nc" id="L555">                ti = new TeXIcon(hb, size, trueValues);</span>
+<span class="nc" id="L556">            } else {</span>
+<span class="fc" id="L557">                ti = new TeXIcon(box, size, trueValues);</span>
+            }
+<span class="pc bpc" id="L559" title="1 of 2 branches missed.">            if (fgcolor != null) {</span>
+<span class="nc" id="L560">                ti.setForeground(fgcolor);</span>
+            }
+<span class="fc" id="L562">            ti.isColored = te.isColored;</span>
+<span class="fc" id="L563">            return ti;</span>
+        }
+    }
+
+    /**
+     * Creates a TeXIcon from this TeXFormula using the default TeXFont in the given
+     * point size and starting from the given TeX style. If the given integer value
+     * does not represent a valid TeX style, the default style
+     * TeXConstants.STYLE_DISPLAY will be used.
+     *
+     * @param style a TeX style constant (from {@link TeXConstants}) to start from
+     * @param size the default TeXFont's point size
+     * @return the created TeXIcon
+     */
+    public TeXIcon createTeXIcon(int style, float size) {
+<span class="nc" id="L578">        return new TeXIconBuilder().setStyle(style).setSize(size).build();</span>
+    }
+
+    /**
+     * Get a predefined TeXFormula.
+     *
+     * @param name the name of the predefined TeXFormula
+     * @return a copy of the predefined TeXFormula
+     * @throws FormulaNotFoundException if no predefined TeXFormula is found with the
+     *                  given name
+     */
+    public static TeXFormula get(String name) throws FormulaNotFoundException {
+<span class="fc" id="L590">        TeXFormula formula = predefinedTeXFormulas.get(name);</span>
+<span class="fc bfc" id="L591" title="All 2 branches covered.">        if (formula == null) {</span>
+<span class="fc" id="L592">            String f = predefinedTeXFormulasAsString.get(name);</span>
+<span class="fc bfc" id="L593" title="All 2 branches covered.">            if (f == null) {</span>
+<span class="fc" id="L594">                throw new FormulaNotFoundException(name);</span>
+            }
+<span class="fc" id="L596">            TeXFormula tf = new TeXFormula(f);</span>
+<span class="fc bfc" id="L597" title="All 2 branches covered.">            if (!(tf.root instanceof RowAtom)) {</span>
+                // depending of the context a RowAtom can be modified
+                // so we can't reuse it
+<span class="fc" id="L600">                predefinedTeXFormulas.put(name, tf);</span>
+            }
+<span class="fc" id="L602">            return tf;</span>
+        } else {
+<span class="fc" id="L604">            return new TeXFormula(formula);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

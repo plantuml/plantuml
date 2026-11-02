@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeXSymbolParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">TeXSymbolParser.java</span></div><h1>TeXSymbolParser.java</h1><pre class="source lang-java linenums">/* TeXSymbolParser.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+
+
+/**
+ * Parses TeX symbol definitions from an XML-file.
+ */
+public class TeXSymbolParser {
+
+    public static final String RESOURCE_NAME = &quot;TeXSymbols.xml&quot;,
+                               DELIMITER_ATTR = &quot;del&quot;, TYPE_ATTR = &quot;type&quot;;
+
+<span class="fc" id="L63">    private static Map&lt;String,Integer&gt; typeMappings = new HashMap&lt;String,Integer&gt;();</span>
+
+    private XmlElement root;
+
+    public TeXSymbolParser() throws ResourceParseException {
+<span class="fc" id="L68">        this(TeXResources.open(TeXSymbolParser.class, RESOURCE_NAME), RESOURCE_NAME);</span>
+<span class="fc" id="L69">    }</span>
+
+<span class="fc" id="L71">    public TeXSymbolParser(InputStream file, String name) throws ResourceParseException {</span>
+        try {
+<span class="fc" id="L73">            root = XmlReader.parse(file);</span>
+            // set possible valid symbol type mappings
+<span class="fc" id="L75">            setTypeMappings();</span>
+<span class="nc" id="L76">        } catch (Exception e) { // JDOMException or IOException</span>
+<span class="nc" id="L77">            throw new XMLResourceParseException(name, e);</span>
+<span class="fc" id="L78">        }</span>
+<span class="fc" id="L79">    }</span>
+
+    public Map&lt;String,SymbolAtom&gt; readSymbols() throws ResourceParseException {
+<span class="fc" id="L82">        Map&lt;String,SymbolAtom&gt; res = new HashMap&lt;String,SymbolAtom&gt;();</span>
+        // iterate all &quot;symbol&quot;-elements
+<span class="fc" id="L84">        XmlNodeList list = root.getElementsByTagName(&quot;Symbol&quot;);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (int i = 0; i &lt; list.getLength(); i++) {</span>
+<span class="fc" id="L86">            XmlElement symbol = (XmlElement)list.item(i);</span>
+            // retrieve and check required attributes
+<span class="fc" id="L88">            String name = getAttrValueAndCheckIfNotNull(&quot;name&quot;, symbol), type = getAttrValueAndCheckIfNotNull(</span>
+                              TYPE_ATTR, symbol);
+            // retrieve optional attribute
+<span class="fc" id="L91">            String del = symbol.getAttribute(DELIMITER_ATTR);</span>
+<span class="pc bpc" id="L92" title="1 of 4 branches missed.">            boolean isDelimiter = (del != null &amp;&amp; del.equals(&quot;true&quot;));</span>
+            // check if type is known
+<span class="fc" id="L94">            Object typeVal = typeMappings.get(type);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">            if (typeVal == null) // unknown type</span>
+<span class="nc" id="L96">                throw new XMLResourceParseException(RESOURCE_NAME, &quot;Symbol&quot;,</span>
+                                                    &quot;type&quot;, &quot;has an unknown value '&quot; + type + &quot;'!&quot;);
+            // add symbol to the hash table
+<span class="fc" id="L99">            res.put(name, new SymbolAtom(name, ((Integer) typeVal).intValue(),</span>
+                                         isDelimiter));
+        }
+<span class="fc" id="L102">        return res;</span>
+    }
+
+    private void setTypeMappings() {
+<span class="fc" id="L106">        typeMappings.put(&quot;ord&quot;, TeXConstants.TYPE_ORDINARY);</span>
+<span class="fc" id="L107">        typeMappings.put(&quot;op&quot;, TeXConstants.TYPE_BIG_OPERATOR);</span>
+<span class="fc" id="L108">        typeMappings.put(&quot;bin&quot;, TeXConstants.TYPE_BINARY_OPERATOR);</span>
+<span class="fc" id="L109">        typeMappings.put(&quot;rel&quot;, TeXConstants.TYPE_RELATION);</span>
+<span class="fc" id="L110">        typeMappings.put(&quot;open&quot;, TeXConstants.TYPE_OPENING);</span>
+<span class="fc" id="L111">        typeMappings.put(&quot;close&quot;, TeXConstants.TYPE_CLOSING);</span>
+<span class="fc" id="L112">        typeMappings.put(&quot;punct&quot;, TeXConstants.TYPE_PUNCTUATION);</span>
+<span class="fc" id="L113">        typeMappings.put(&quot;acc&quot;, TeXConstants.TYPE_ACCENT);</span>
+<span class="fc" id="L114">    }</span>
+
+    private static String getAttrValueAndCheckIfNotNull(String attrName,
+            XmlElement element) throws ResourceParseException {
+<span class="fc" id="L118">        String attrValue = element.getAttribute(attrName);</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        if (attrValue.equals(&quot;&quot;))</span>
+<span class="nc" id="L120">            throw new XMLResourceParseException(RESOURCE_NAME, element.getTagName(),</span>
+                                                attrName, null);
+<span class="fc" id="L122">        return attrValue;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

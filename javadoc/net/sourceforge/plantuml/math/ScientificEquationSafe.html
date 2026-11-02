@@ -107,34 +107,39 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../core/ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#export(java.io.OutputStream,net.sourceforge.plantuml.FileFormatOption,float,net.sourceforge.plantuml.klimt.awt.XColor,net.sourceforge.plantuml.klimt.awt.XColor)" class="member-name-link">export</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">drawU</a><wbr>(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;foreground,
+ <a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;background)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Draws the formula, or its source as text if it cannot be made.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../core/ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#export(java.io.OutputStream,net.sourceforge.plantuml.FileFormatOption,float,net.sourceforge.plantuml.klimt.awt.XColor,net.sourceforge.plantuml.klimt.awt.XColor)" class="member-name-link">export</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
  <a href="../FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormat,
  float&nbsp;scale,
  <a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;foregroundColor,
  <a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;backgroundColor)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ScientificEquationSafe.html" title="class in net.sourceforge.plantuml.math">ScientificEquationSafe</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromAsciiMath(java.lang.String)" class="member-name-link">fromAsciiMath</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;formula)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ScientificEquationSafe.html" title="class in net.sourceforge.plantuml.math">ScientificEquationSafe</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromLatex(java.lang.String)" class="member-name-link">fromLatex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;formula)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromAsciiMath(java.lang.String)" class="member-name-link">fromAsciiMath</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;formula)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ScientificEquationSafe.html" title="class in net.sourceforge.plantuml.math">ScientificEquationSafe</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromLatex(java.lang.String)" class="member-name-link">fromLatex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;formula)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDimension(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getDimension</a><wbr>(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFormula()" class="member-name-link">getFormula</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/MutableImage.html" title="interface in net.sourceforge.plantuml.klimt">MutableImage</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getImage(net.sourceforge.plantuml.klimt.awt.XColor,net.sourceforge.plantuml.klimt.awt.XColor)" class="member-name-link">getImage</a><wbr>(<a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;foregroundColor,
- <a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;backgroundColor)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSource()" class="member-name-link">getSource</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSource()" class="member-name-link">getSource</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTextBlock(net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">getTextBlock</a><wbr>(<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;foreground,
+ <a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;background)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/shape/UImageSvg.html" title="class in net.sourceforge.plantuml.klimt.shape">UImageSvg</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSvg(double,net.sourceforge.plantuml.klimt.awt.XColor,net.sourceforge.plantuml.klimt.awt.XColor)" class="member-name-link">getSvg</a><wbr>(double&nbsp;scale,
- <a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;foregroundColor,
- <a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;backgroundColor)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -165,18 +170,30 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getSvg(double,net.sourceforge.plantuml.klimt.awt.XColor,net.sourceforge.plantuml.klimt.awt.XColor)">
-<h3>getSvg</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/shape/UImageSvg.html" title="class in net.sourceforge.plantuml.klimt.shape">UImageSvg</a></span>&nbsp;<span class="element-name">getSvg</span><wbr><span class="parameters">(double&nbsp;scale,
- <a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;foregroundColor,
- <a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;backgroundColor)</span></div>
+<section class="detail" id="getDimension(net.sourceforge.plantuml.klimt.font.StringBounder)">
+<h3>getDimension</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></span>&nbsp;<span class="element-name">getDimension</span><wbr><span class="parameters">(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="getImage(net.sourceforge.plantuml.klimt.awt.XColor,net.sourceforge.plantuml.klimt.awt.XColor)">
-<h3>getImage</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/MutableImage.html" title="interface in net.sourceforge.plantuml.klimt">MutableImage</a></span>&nbsp;<span class="element-name">getImage</span><wbr><span class="parameters">(<a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;foregroundColor,
- <a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;backgroundColor)</span></div>
+<section class="detail" id="drawU(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.HColor)">
+<h3>drawU</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">drawU</span><wbr><span class="parameters">(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;foreground,
+ <a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;background)</span></div>
+<div class="block">Draws the formula, or its source as text if it cannot be made.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>foreground</code> - the color of the formula, null for black</dd>
+<dd><code>background</code> - the color behind the formula, null for none</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTextBlock(net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.HColor)">
+<h3>getTextBlock</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></span>&nbsp;<span class="element-name">getTextBlock</span><wbr><span class="parameters">(<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;foreground,
+ <a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;background)</span></div>
 </section>
 </li>
 <li>

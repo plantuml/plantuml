@@ -271,9 +271,9 @@ public class Display implements Iterable&lt;CharSequence&gt;, AsciiBlock {
 <span class="fc bfc" id="L271" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
 <span class="fc" id="L272">			final char c = s.charAt(i);</span>
 <span class="fc" id="L273">			final String sub = s.substring(i);</span>
-<span class="pc bpc" id="L274" title="2 of 6 branches missed.">			if (sub.startsWith(&quot;&lt;math&gt;&quot;) || sub.startsWith(&quot;&lt;latex&gt;&quot;) || sub.startsWith(&quot;[[&quot;))</span>
+<span class="fc bfc" id="L274" title="All 6 branches covered.">			if (sub.startsWith(&quot;&lt;math&gt;&quot;) || sub.startsWith(&quot;&lt;latex&gt;&quot;) || sub.startsWith(&quot;[[&quot;))</span>
 <span class="fc" id="L275">				rawMode = true;</span>
-<span class="pc bpc" id="L276" title="2 of 6 branches missed.">			else if (sub.startsWith(&quot;&lt;/math&gt;&quot;) || sub.startsWith(&quot;&lt;/latex&gt;&quot;) || sub.startsWith(&quot;]]&quot;))</span>
+<span class="fc bfc" id="L276" title="All 6 branches covered.">			else if (sub.startsWith(&quot;&lt;/math&gt;&quot;) || sub.startsWith(&quot;&lt;/latex&gt;&quot;) || sub.startsWith(&quot;]]&quot;))</span>
 <span class="fc" id="L277">				rawMode = false;</span>
 
 			if (JawsFlags.SPECIAL_NEWLINE_IN_DISPLAY_CLASS &amp;&amp; sub.startsWith(&quot;%newline()&quot;)) {

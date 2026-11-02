@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RowAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">RowAtom.java</span></div><h1>RowAtom.java</h1><pre class="source lang-java linenums">/* RowAtom.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+/* Modified by Calixte Denizet to handle the case where several ligatures occure*/
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.BitSet;
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+import org.scilab.forge.jlatexmath.dynamic.DynamicAtom;
+
+/**
+ * An atom representing a horizontal row of other atoms, to be seperated by glue.
+ * It's also responsible for inserting kerns and ligatures.
+ */
+public class RowAtom extends Atom implements Row {
+
+    // atoms to be displayed horizontally next to eachother
+<span class="fc" id="L64">    protected LinkedList&lt;Atom&gt; elements = new LinkedList&lt;Atom&gt;();</span>
+
+<span class="fc" id="L66">    public boolean lookAtLastAtom = false;</span>
+
+    // previous atom (for nested Row atoms)
+<span class="fc" id="L69">    private Dummy previousAtom = null;</span>
+
+    // set of atom types that make a previous bin atom change to ord
+    private static BitSet binSet;
+
+    // set of atom types that can possibly need a kern or, together with the
+    // previous atom, be replaced by a ligature
+    private static BitSet ligKernSet;
+
+    static {
+        // fill binSet
+<span class="fc" id="L80">        binSet = new BitSet (16);</span>
+<span class="fc" id="L81">        binSet.set(TeXConstants.TYPE_BINARY_OPERATOR);</span>
+<span class="fc" id="L82">        binSet.set(TeXConstants.TYPE_BIG_OPERATOR);</span>
+<span class="fc" id="L83">        binSet.set(TeXConstants.TYPE_RELATION);</span>
+<span class="fc" id="L84">        binSet.set(TeXConstants.TYPE_OPENING);</span>
+<span class="fc" id="L85">        binSet.set(TeXConstants.TYPE_PUNCTUATION);</span>
+
+        // fill ligKernSet
+<span class="fc" id="L88">        ligKernSet = new BitSet (16);</span>
+<span class="fc" id="L89">        ligKernSet.set(TeXConstants.TYPE_ORDINARY);</span>
+<span class="fc" id="L90">        ligKernSet.set(TeXConstants.TYPE_BIG_OPERATOR);</span>
+<span class="fc" id="L91">        ligKernSet.set(TeXConstants.TYPE_BINARY_OPERATOR);</span>
+<span class="fc" id="L92">        ligKernSet.set(TeXConstants.TYPE_RELATION);</span>
+<span class="fc" id="L93">        ligKernSet.set(TeXConstants.TYPE_OPENING);</span>
+<span class="fc" id="L94">        ligKernSet.set(TeXConstants.TYPE_CLOSING);</span>
+<span class="fc" id="L95">        ligKernSet.set(TeXConstants.TYPE_PUNCTUATION);</span>
+<span class="fc" id="L96">    }</span>
+
+<span class="fc" id="L98">    protected RowAtom() {</span>
+        // empty
+<span class="fc" id="L100">    }</span>
+
+<span class="fc" id="L102">    public RowAtom(Atom el) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (el != null) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">            if (el instanceof RowAtom)</span>
+                // no need to make an mrow the only element of an mrow
+<span class="fc" id="L106">                elements.addAll(((RowAtom) el).elements);</span>
+            else
+<span class="fc" id="L108">                elements.add(el);</span>
+        }
+<span class="fc" id="L110">    }</span>
+
+    public Atom getLastAtom() {
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">        if (elements.size() != 0) {</span>
+<span class="fc" id="L114">            return elements.removeLast();</span>
+        }
+
+<span class="nc" id="L117">        return new SpaceAtom(TeXConstants.UNIT_POINT, 0.0f, 0.0f, 0.0f);</span>
+    }
+
+    public final void add(Atom el) {
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        if (el != null) {</span>
+<span class="fc" id="L122">            elements.add(el);</span>
+        }
+<span class="fc" id="L124">    }</span>
+
+    /**
+     *
+     * @param cur
+     *           current atom being processed
+     * @param prev
+     *           previous atom
+     */
+    private void changeToOrd(Dummy cur, Dummy prev, Atom next) {
+<span class="fc" id="L134">        int type = cur.getLeftType();</span>
+<span class="fc bfc" id="L135" title="All 8 branches covered.">        if (type == TeXConstants.TYPE_BINARY_OPERATOR &amp;&amp; ((prev == null || binSet.get(prev.getRightType())) || next == null)) {</span>
+<span class="fc" id="L136">            cur.setType(TeXConstants.TYPE_ORDINARY);</span>
+<span class="fc bfc" id="L137" title="All 4 branches covered.">        } else if (next != null &amp;&amp; cur.getRightType() == TeXConstants.TYPE_BINARY_OPERATOR) {</span>
+<span class="fc" id="L138">            int nextType = next.getLeftType();</span>
+<span class="pc bpc" id="L139" title="3 of 6 branches missed.">            if (nextType == TeXConstants.TYPE_RELATION || nextType == TeXConstants.TYPE_CLOSING || nextType == TeXConstants.TYPE_PUNCTUATION) {</span>
+<span class="nc" id="L140">                cur.setType(TeXConstants.TYPE_ORDINARY);</span>
+            }
+        }
+<span class="fc" id="L143">    }</span>
+
+    public Box createBox(TeXEnvironment env) {
+<span class="fc" id="L146">        TeXFont tf = env.getTeXFont();</span>
+<span class="fc" id="L147">        HorizontalBox hBox = new HorizontalBox(env.getColor(), env.getBackground());</span>
+<span class="fc" id="L148">        int position = 0;</span>
+<span class="fc" id="L149">        env.reset();</span>
+
+        // convert atoms to boxes and add to the horizontal box
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        for (ListIterator&lt;Atom&gt; it = elements.listIterator(); it.hasNext();) {</span>
+<span class="fc" id="L153">            Atom at = it.next();</span>
+<span class="fc" id="L154">            position++;</span>
+
+<span class="fc" id="L156">            boolean markAdded = false;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">            while (at instanceof BreakMarkAtom) {</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">                if (!markAdded) {</span>
+<span class="fc" id="L159">                    markAdded = true;</span>
+                }
+<span class="fc bfc" id="L161" title="All 2 branches covered.">                if (it.hasNext()) {</span>
+<span class="fc" id="L162">                    at = it.next();</span>
+<span class="fc" id="L163">                    position++;</span>
+                } else {
+                    break;
+                }
+            }
+
+<span class="pc bpc" id="L169" title="3 of 4 branches missed.">            if (at instanceof DynamicAtom &amp;&amp; ((DynamicAtom) at).getInsertMode()) {</span>
+<span class="nc" id="L170">                Atom a = ((DynamicAtom) at).getAtom();</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">                if (a instanceof RowAtom) {</span>
+<span class="nc" id="L172">                    elements.remove(position - 1);</span>
+<span class="nc" id="L173">                    elements.addAll(position - 1, ((RowAtom) a).elements);</span>
+<span class="nc" id="L174">                    it = elements.listIterator(position - 1);</span>
+<span class="nc" id="L175">                    at = it.next();</span>
+                } else {
+<span class="nc" id="L177">                    at = a;</span>
+                }
+            }
+
+<span class="fc" id="L181">            Dummy atom = new Dummy(at);</span>
+
+            // if necessary, change BIN type to ORD
+<span class="fc" id="L184">            Atom nextAtom = null;</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">            if (it.hasNext()) {</span>
+<span class="fc" id="L186">                nextAtom = it.next();</span>
+<span class="fc" id="L187">                it.previous();</span>
+            }
+<span class="fc" id="L189">            changeToOrd(atom, previousAtom, nextAtom);</span>
+
+            // check for ligatures or kerning
+<span class="fc" id="L192">            float kern = 0;</span>
+            // Calixte : I put a while to handle the case where there are
+            // several ligatures as in ffi or ffl
+<span class="fc bfc" id="L195" title="All 6 branches covered.">            while (it.hasNext() &amp;&amp; atom.getRightType() == TeXConstants.TYPE_ORDINARY &amp;&amp; atom.isCharSymbol()) {</span>
+<span class="fc" id="L196">                Atom next = it.next();</span>
+<span class="fc" id="L197">                position++;</span>
+<span class="pc bpc" id="L198" title="1 of 4 branches missed.">                if (next instanceof CharSymbol &amp;&amp; ligKernSet.get(next.getLeftType())) {</span>
+<span class="fc" id="L199">                    atom.markAsTextSymbol();</span>
+<span class="fc" id="L200">                    CharFont l = atom.getCharFont(tf), r = ((CharSymbol) next).getCharFont(tf);</span>
+<span class="fc" id="L201">                    CharFont lig = tf.getLigature(l, r);</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">                    if (lig == null) {</span>
+<span class="fc" id="L203">                        kern = tf.getKern(l, r, env.getStyle());</span>
+<span class="fc" id="L204">                        it.previous();</span>
+<span class="fc" id="L205">                        position--;</span>
+<span class="fc" id="L206">                        break; // iterator remains unchanged (no ligature!)</span>
+                    } else { // ligature
+<span class="nc" id="L208">                        atom.changeAtom(new FixedCharAtom(lig)); // go on with the</span>
+                        // ligature
+                    }
+<span class="nc" id="L211">                } else {</span>
+<span class="fc" id="L212">                    it.previous();</span>
+<span class="fc" id="L213">                    position--;</span>
+<span class="fc" id="L214">                    break;</span>
+                }// iterator remains unchanged
+<span class="nc" id="L216">            }</span>
+
+            // insert glue, unless it's the first element of the row
+            // OR this element or the next is a Kern.
+<span class="pc bpc" id="L220" title="1 of 8 branches missed.">            if (it.previousIndex() != 0 &amp;&amp; previousAtom != null &amp;&amp; !previousAtom.isKern() &amp;&amp; !atom.isKern()) {</span>
+<span class="fc" id="L221">                hBox.add(Glue.get(previousAtom.getRightType(), atom.getLeftType(), env));</span>
+            }
+
+            // insert atom's box
+<span class="fc" id="L225">            atom.setPreviousAtom(previousAtom);</span>
+<span class="fc" id="L226">            Box b = atom.createBox(env);</span>
+<span class="fc bfc" id="L227" title="All 4 branches covered.">            if (atom.isCharInMathMode() &amp;&amp; b instanceof CharBox) {</span>
+                // When we've a single char, we need to add italic correction
+                // As an example: (TVY) looks crappy...
+<span class="fc" id="L230">                CharBox cb = (CharBox) b;</span>
+<span class="fc" id="L231">                cb.addItalicCorrectionToWidth();</span>
+            }
+<span class="fc bfc" id="L233" title="All 6 branches covered.">            if (markAdded || (at instanceof CharAtom &amp;&amp; Character.isDigit(((CharAtom) at).getCharacter()))) {</span>
+<span class="fc" id="L234">                hBox.addBreakPosition(hBox.children.size());</span>
+            }
+<span class="fc" id="L236">            hBox.add(b);</span>
+
+            // set last used fontId (for next atom)
+<span class="fc" id="L239">            env.setLastFontId(b.getLastFontId());</span>
+
+            // insert kern
+<span class="fc bfc" id="L242" title="All 2 branches covered.">            if (Math.abs(kern) &gt; TeXFormula.PREC) {</span>
+<span class="fc" id="L243">                hBox.add(new StrutBox(kern, 0, 0, 0));</span>
+            }
+
+            // kerns do not interfere with the normal glue-rules without kerns
+<span class="fc bfc" id="L247" title="All 2 branches covered.">            if (!atom.isKern()) {</span>
+<span class="fc" id="L248">                previousAtom = atom;</span>
+            }
+<span class="fc" id="L250">        }</span>
+        // reset previousAtom
+<span class="fc" id="L252">        previousAtom = null;</span>
+
+<span class="fc" id="L254">        return hBox;</span>
+    }
+
+    public void setPreviousAtom(Dummy prev) {
+<span class="fc" id="L258">        previousAtom = prev;</span>
+<span class="fc" id="L259">    }</span>
+
+    public int getLeftType() {
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">        if (elements.size() == 0) {</span>
+<span class="nc" id="L263">            return TeXConstants.TYPE_ORDINARY;</span>
+        } else {
+<span class="fc" id="L265">            return (elements.get(0)).getLeftType();</span>
+        }
+    }
+
+    public int getRightType() {
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">        if (elements.size() == 0) {</span>
+<span class="nc" id="L271">            return TeXConstants.TYPE_ORDINARY;</span>
+        } else {
+<span class="fc" id="L273">            return (elements.get(elements.size() - 1)).getRightType();</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

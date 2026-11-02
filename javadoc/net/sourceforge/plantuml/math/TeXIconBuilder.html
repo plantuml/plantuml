@@ -104,8 +104,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,net.sourceforge.plantuml.klimt.awt.XColor)" class="member-name-link">TeXIconBuilder</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tex,
- <a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;foregroundColor2)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">TeXIconBuilder</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tex,
+ <a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -121,8 +121,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/Icon.html" title="class or interface in javax.swing" class="external-link">Icon</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIcon()" class="member-name-link">getIcon</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="MathDrawing.html" title="interface in net.sourceforge.plantuml.math">MathDrawing</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDrawing()" class="member-name-link">getDrawing</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -142,26 +142,14 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,net.sourceforge.plantuml.klimt.awt.XColor)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,net.sourceforge.plantuml.klimt.font.StringBounder)">
 <h3>TeXIconBuilder</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TeXIconBuilder</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tex,
- <a href="../klimt/awt/XColor.html" title="class in net.sourceforge.plantuml.klimt.awt">XColor</a>&nbsp;foregroundColor2)</span>
-               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassNotFoundException.html" title="class or interface in java.lang" class="external-link">ClassNotFoundException</a>,
-<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NoSuchMethodException.html" title="class or interface in java.lang" class="external-link">NoSuchMethodException</a>,
-<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/SecurityException.html" title="class or interface in java.lang" class="external-link">SecurityException</a>,
-<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InstantiationException.html" title="class or interface in java.lang" class="external-link">InstantiationException</a>,
-<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalAccessException.html" title="class or interface in java.lang" class="external-link">IllegalAccessException</a>,
-<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a>,
-<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/InvocationTargetException.html" title="class or interface in java.lang.reflect" class="external-link">InvocationTargetException</a></span></div>
+ <a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</span>
+               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassNotFoundException.html" title="class or interface in java.lang" class="external-link">ClassNotFoundException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassNotFoundException.html" title="class or interface in java.lang" class="external-link">ClassNotFoundException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NoSuchMethodException.html" title="class or interface in java.lang" class="external-link">NoSuchMethodException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/SecurityException.html" title="class or interface in java.lang" class="external-link">SecurityException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/InstantiationException.html" title="class or interface in java.lang" class="external-link">InstantiationException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalAccessException.html" title="class or interface in java.lang" class="external-link">IllegalAccessException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/InvocationTargetException.html" title="class or interface in java.lang.reflect" class="external-link">InvocationTargetException</a></code></dd>
 </dl>
 </section>
 </li>
@@ -174,9 +162,9 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="getIcon()">
-<h3>getIcon</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/javax/swing/Icon.html" title="class or interface in javax.swing" class="external-link">Icon</a></span>&nbsp;<span class="element-name">getIcon</span>()</div>
+<section class="detail" id="getDrawing()">
+<h3>getDrawing</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="MathDrawing.html" title="interface in net.sourceforge.plantuml.math">MathDrawing</a></span>&nbsp;<span class="element-name">getDrawing</span>()</div>
 </section>
 </li>
 </ul>

@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultTeXFont.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">DefaultTeXFont.java</span></div><h1>DefaultTeXFont.java</h1><pre class="source lang-java linenums">/* DefaultTeXFont.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * The default implementation of the TeXFont-interface. All font information is read
+ * from an xml-file.
+ */
+public class DefaultTeXFont implements TeXFont {
+
+    private static String[] defaultTextStyleMappings;
+
+    /**
+     * No extension part for that kind (TOP,MID,REP or BOT)
+     */
+    protected static final int NONE = -1;
+
+    protected final static int NUMBERS = 0;
+    protected final static int CAPITALS = 1;
+    protected final static int SMALL = 2;
+    protected final static int UNICODE = 3;
+
+    private static Map&lt;String, CharFont[]&gt; textStyleMappings;
+    private static Map&lt;String, CharFont&gt; symbolMappings;
+<span class="fc" id="L75">    private static FontInfo[] fontInfo = new FontInfo[0];</span>
+    private static Map&lt;String, Float&gt; parameters;
+    private static Map&lt;String, Number&gt; generalSettings;
+
+<span class="fc" id="L79">    private static boolean magnificationEnable = true;</span>
+
+    protected static final int TOP = 0, MID = 1, REP = 2, BOT = 3;
+
+    protected static final int WIDTH = 0, HEIGHT = 1, DEPTH = 2, IT = 3;
+
+<span class="fc" id="L85">    public static List&lt;TeXUnicodeBlock&gt; loadedAlphabets = new ArrayList&lt;TeXUnicodeBlock&gt;();</span>
+<span class="fc" id="L86">    public static Map&lt;TeXUnicodeBlock, AlphabetRegistration&gt; registeredAlphabets = new HashMap&lt;TeXUnicodeBlock, AlphabetRegistration&gt;();</span>
+
+<span class="fc" id="L88">    protected float factor = 1f;</span>
+
+<span class="fc" id="L90">    public boolean isBold = false;</span>
+<span class="fc" id="L91">    public boolean isRoman = false;</span>
+<span class="fc" id="L92">    public boolean isSs = false;</span>
+<span class="fc" id="L93">    public boolean isTt = false;</span>
+<span class="fc" id="L94">    public boolean isIt = false;</span>
+
+    static {
+<span class="fc" id="L97">        DefaultTeXFontParser parser = new DefaultTeXFontParser();</span>
+        //load LATIN block
+<span class="fc" id="L99">        loadedAlphabets.add(TeXUnicodeBlock.of('a'));</span>
+        // fonts + font descriptions
+<span class="fc" id="L101">        fontInfo = parser.parseFontDescriptions(fontInfo);</span>
+        // general font parameters
+<span class="fc" id="L103">        parameters = parser.parseParameters();</span>
+        // text style mappings
+<span class="fc" id="L105">        textStyleMappings = parser.parseTextStyleMappings();</span>
+        // default text style : style mappings
+<span class="fc" id="L107">        defaultTextStyleMappings = parser.parseDefaultTextStyleMappings();</span>
+        // symbol mappings
+<span class="fc" id="L109">        symbolMappings = parser.parseSymbolMappings();</span>
+        // general settings
+<span class="fc" id="L111">        generalSettings = parser.parseGeneralSettings();</span>
+<span class="fc" id="L112">        generalSettings.put(&quot;textfactor&quot;, 1);</span>
+
+        // check if mufontid exists
+<span class="fc" id="L115">        int muFontId = generalSettings.get(DefaultTeXFontParser.MUFONTID_ATTR).intValue();</span>
+<span class="pc bpc" id="L116" title="3 of 6 branches missed.">        if (muFontId &lt; 0 || muFontId &gt;= fontInfo.length || fontInfo[muFontId] == null)</span>
+<span class="nc" id="L117">            throw new XMLResourceParseException(</span>
+                DefaultTeXFontParser.RESOURCE_NAME,
+                DefaultTeXFontParser.GEN_SET_EL,
+                DefaultTeXFontParser.MUFONTID_ATTR,
+                &quot;contains an unknown font id!&quot;);
+<span class="fc" id="L122">    }</span>
+
+    private final float size; // standard size
+
+<span class="fc" id="L126">    public DefaultTeXFont(float pointSize) {</span>
+<span class="fc" id="L127">        size = pointSize;</span>
+<span class="fc" id="L128">    }</span>
+
+    public DefaultTeXFont(float pointSize, boolean b, boolean rm, boolean ss, boolean tt, boolean it) {
+<span class="nc" id="L131">        this(pointSize, 1, b, rm, ss, tt, it);</span>
+<span class="nc" id="L132">    }</span>
+
+<span class="fc" id="L134">    public DefaultTeXFont(float pointSize, float f, boolean b, boolean rm, boolean ss, boolean tt, boolean it) {</span>
+<span class="fc" id="L135">        size = pointSize;</span>
+<span class="fc" id="L136">        factor = f;</span>
+<span class="fc" id="L137">        isBold = b;</span>
+<span class="fc" id="L138">        isRoman = rm;</span>
+<span class="fc" id="L139">        isSs = ss;</span>
+<span class="fc" id="L140">        isTt = tt;</span>
+<span class="fc" id="L141">        isIt = it;</span>
+<span class="fc" id="L142">    }</span>
+
+    public static void addTeXFontDescription(Object base, InputStream in, String name) throws ResourceParseException {
+<span class="fc" id="L145">        DefaultTeXFontParser dtfp = new DefaultTeXFontParser(base, in, name);</span>
+<span class="fc" id="L146">        fontInfo = dtfp.parseFontDescriptions(fontInfo);</span>
+<span class="fc" id="L147">        dtfp.parseExtraPath();</span>
+<span class="fc" id="L148">        textStyleMappings.putAll(dtfp.parseTextStyleMappings());</span>
+<span class="fc" id="L149">        symbolMappings.putAll(dtfp.parseSymbolMappings());</span>
+<span class="fc" id="L150">    }</span>
+
+    public static void addAlphabet(Object base, TeXUnicodeBlock[] alphabet, String language) throws ResourceParseException {
+<span class="fc" id="L153">        boolean b = false;</span>
+<span class="pc bpc" id="L154" title="1 of 4 branches missed.">        for (int i = 0; !b &amp;&amp; i &lt; alphabet.length; i++) {</span>
+<span class="pc bpc" id="L155" title="2 of 4 branches missed.">            b = loadedAlphabets.contains(alphabet[i]) || b;</span>
+        }
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (!b) {</span>
+<span class="fc" id="L158">            TeXParser.isLoading = true;</span>
+<span class="fc" id="L159">            addTeXFontDescription(base, TeXResources.open(base.getClass(), language), language);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">            for (int i = 0; i &lt; alphabet.length; i++) {</span>
+<span class="fc" id="L161">                loadedAlphabets.add(alphabet[i]);</span>
+            }
+<span class="fc" id="L163">            TeXParser.isLoading = false;</span>
+        }
+<span class="fc" id="L165">    }</span>
+
+    public static void addAlphabet(AlphabetRegistration reg) {
+        try {
+<span class="fc bfc" id="L169" title="All 2 branches covered.">            if (reg != null) {</span>
+<span class="fc" id="L170">                DefaultTeXFont.addAlphabet(reg.getPackage(), reg.getUnicodeBlock(), reg.getTeXFontFileName());</span>
+            }
+<span class="nc" id="L172">        } catch (FontAlreadyLoadedException e) {</span>
+<span class="nc" id="L173">        } catch (AlphabetRegistrationException e) {</span>
+<span class="nc" id="L174">            System.err.println(e.toString());</span>
+<span class="pc" id="L175">        }</span>
+<span class="fc" id="L176">    }</span>
+
+    public static void registerAlphabet(AlphabetRegistration reg) {
+<span class="fc" id="L179">        TeXUnicodeBlock[] blocks = reg.getUnicodeBlock();</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        for (int i = 0; i &lt; blocks.length; i++) {</span>
+<span class="fc" id="L181">            registeredAlphabets.put(blocks[i], reg);</span>
+        }
+<span class="fc" id="L183">    }</span>
+
+    public TeXFont copy() {
+<span class="fc" id="L186">        return new DefaultTeXFont(size, factor, isBold, isRoman, isSs, isTt, isIt);</span>
+    }
+
+    public float getScaleFactor() {
+<span class="fc" id="L190">        return factor;</span>
+    }
+
+    public float getAxisHeight(int style) {
+<span class="fc" id="L194">        return getParameter(&quot;axisheight&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getBigOpSpacing1(int style) {
+<span class="fc" id="L198">        return getParameter(&quot;bigopspacing1&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getBigOpSpacing2(int style) {
+<span class="fc" id="L202">        return getParameter(&quot;bigopspacing2&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getBigOpSpacing3(int style) {
+<span class="fc" id="L206">        return getParameter(&quot;bigopspacing3&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getBigOpSpacing4(int style) {
+<span class="fc" id="L210">        return getParameter(&quot;bigopspacing4&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getBigOpSpacing5(int style) {
+<span class="fc" id="L214">        return getParameter(&quot;bigopspacing5&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    private Char getChar(char c, CharFont[] cf, int style) {
+        int kind, offset;
+<span class="pc bpc" id="L219" title="1 of 4 branches missed.">        if (c &gt;= '0' &amp;&amp; c &lt;= '9') {</span>
+<span class="fc" id="L220">            kind = NUMBERS;</span>
+<span class="fc" id="L221">            offset = c - '0';</span>
+<span class="pc bpc" id="L222" title="1 of 4 branches missed.">        } else if (c &gt;= 'a' &amp;&amp; c &lt;= 'z') {</span>
+<span class="fc" id="L223">            kind = SMALL;</span>
+<span class="fc" id="L224">            offset = c - 'a';</span>
+<span class="pc bpc" id="L225" title="2 of 4 branches missed.">        } else if (c &gt;= 'A' &amp;&amp; c  &lt;= 'Z') {</span>
+<span class="fc" id="L226">            kind = CAPITALS;</span>
+<span class="fc" id="L227">            offset = c - 'A';</span>
+        } else {
+<span class="nc" id="L229">            kind = UNICODE;</span>
+<span class="nc" id="L230">            offset = c;</span>
+        }
+
+        // if the mapping for the character's range, then use the default style
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">        if (cf[kind] == null)</span>
+<span class="nc" id="L235">            return getDefaultChar(c, style);</span>
+        else
+<span class="fc" id="L237">            return getChar(new CharFont((char) (cf[kind].c + offset), cf[kind].fontId), style);</span>
+    }
+
+    public Char getChar(char c, String textStyle, int style) throws TextStyleMappingNotFoundException {
+<span class="fc" id="L241">        Object mapping = textStyleMappings.get(textStyle);</span>
+<span class="pc bpc" id="L242" title="1 of 2 branches missed.">        if (mapping == null) // text style mapping not found</span>
+<span class="nc" id="L243">            throw new TextStyleMappingNotFoundException(textStyle);</span>
+        else
+<span class="fc" id="L245">            return getChar(c, (CharFont[]) mapping, style);</span>
+    }
+
+    public Char getChar(CharFont cf, int style) {
+<span class="fc" id="L249">        float fsize = getSizeFactor(style);</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        int id = isBold ? cf.boldFontId : cf.fontId;</span>
+<span class="fc" id="L251">        FontInfo info = fontInfo[id];</span>
+<span class="pc bpc" id="L252" title="1 of 4 branches missed.">        if (isBold &amp;&amp; cf.fontId == cf.boldFontId) {</span>
+<span class="fc" id="L253">            id = info.getBoldId();</span>
+<span class="fc" id="L254">            info = fontInfo[id];</span>
+<span class="fc" id="L255">            cf = new CharFont(cf.c, id, style);</span>
+        }
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        if (isRoman) {</span>
+<span class="fc" id="L258">            id = info.getRomanId();</span>
+<span class="fc" id="L259">            info = fontInfo[id];</span>
+<span class="fc" id="L260">            cf = new CharFont(cf.c, id, style);</span>
+        }
+<span class="fc bfc" id="L262" title="All 2 branches covered.">        if (isSs) {</span>
+<span class="fc" id="L263">            id = info.getSsId();</span>
+<span class="fc" id="L264">            info = fontInfo[id];</span>
+<span class="fc" id="L265">            cf = new CharFont(cf.c, id, style);</span>
+        }
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        if (isTt) {</span>
+<span class="fc" id="L268">            id = info.getTtId();</span>
+<span class="fc" id="L269">            info = fontInfo[id];</span>
+<span class="fc" id="L270">            cf = new CharFont(cf.c, id, style);</span>
+        }
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        if (isIt) {</span>
+<span class="fc" id="L273">            id = info.getItId();</span>
+<span class="fc" id="L274">            info = fontInfo[id];</span>
+<span class="fc" id="L275">            cf = new CharFont(cf.c, id, style);</span>
+        }
+<span class="fc" id="L277">        return new Char(cf.c, id, getMetrics(cf, factor * fsize));</span>
+    }
+
+    public Char getChar(String symbolName, int style) throws SymbolMappingNotFoundException {
+<span class="fc" id="L281">        Object obj = symbolMappings.get(symbolName);</span>
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">        if (obj == null) {// no symbol mapping found!</span>
+<span class="nc" id="L283">            throw new SymbolMappingNotFoundException(symbolName);</span>
+        } else {
+<span class="fc" id="L285">            return getChar((CharFont) obj, style);</span>
+        }
+    }
+
+    public Char getDefaultChar(char c, int style) {
+        // these default text style mappings will allways exist,
+        // because it's checked during parsing
+<span class="pc bpc" id="L292" title="1 of 4 branches missed.">        if (c &gt;= '0' &amp;&amp; c &lt;= '9') {</span>
+<span class="fc" id="L293">            return getChar(c, defaultTextStyleMappings[NUMBERS], style);</span>
+<span class="pc bpc" id="L294" title="1 of 4 branches missed.">        } else if (c &gt;= 'a' &amp;&amp; c &lt;= 'z') {</span>
+<span class="fc" id="L295">            return getChar(c, defaultTextStyleMappings[SMALL], style);</span>
+        } else {
+<span class="fc" id="L297">            return getChar(c, defaultTextStyleMappings[CAPITALS], style);</span>
+        }
+    }
+
+    public float getDefaultRuleThickness(int style) {
+<span class="fc" id="L302">        return getParameter(&quot;defaultrulethickness&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getDenom1(int style) {
+<span class="fc" id="L306">        return getParameter(&quot;denom1&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getDenom2(int style) {
+<span class="fc" id="L310">        return getParameter(&quot;denom2&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public Extension getExtension(Char c, int style) {
+<span class="fc" id="L314">        int fc = c.getFontCode();</span>
+<span class="fc" id="L315">        float s = getSizeFactor(style);</span>
+
+        // construct Char for every part
+<span class="fc" id="L318">        FontInfo info = fontInfo[fc];</span>
+<span class="fc" id="L319">        int[] ext = info.getExtension(c.getChar());</span>
+<span class="fc" id="L320">        Char[] parts = new Char[ext.length];</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">        for (int i = 0; i &lt; ext.length; i++) {</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">            if (ext[i] == NONE) {</span>
+<span class="fc" id="L323">                parts[i] = null;</span>
+            } else {
+<span class="fc" id="L325">                parts[i] = new Char((char) ext[i], fc, getMetrics(new CharFont((char) ext[i], fc), s));</span>
+            }
+        }
+
+<span class="fc" id="L329">        return new Extension(parts[TOP], parts[MID], parts[REP], parts[BOT]);</span>
+    }
+
+    public float getKern(CharFont left, CharFont right, int style) {
+<span class="fc bfc" id="L333" title="All 2 branches covered.">        if (left.fontId == right.fontId) {</span>
+<span class="fc" id="L334">            FontInfo info = fontInfo[left.fontId];</span>
+<span class="fc" id="L335">            return info.getKern(left.c, right.c, getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT);</span>
+        } else {
+<span class="fc" id="L337">            return 0;</span>
+        }
+    }
+
+    public CharFont getLigature(CharFont left, CharFont right) {
+<span class="fc bfc" id="L342" title="All 2 branches covered.">        if (left.fontId == right.fontId) {</span>
+<span class="fc" id="L343">            FontInfo info =  fontInfo[left.fontId];</span>
+<span class="fc" id="L344">            return info.getLigature(left.c, right.c);</span>
+        } else {
+<span class="fc" id="L346">            return null;</span>
+        }
+    }
+
+    private Metrics getMetrics(CharFont cf, float size) {
+<span class="fc" id="L351">        FontInfo info = fontInfo[cf.fontId];</span>
+<span class="fc" id="L352">        float[] m = info.getMetrics(cf.c);</span>
+<span class="fc" id="L353">        return new Metrics(m[WIDTH], m[HEIGHT], m[DEPTH], m[IT], size * TeXFormula.PIXELS_PER_POINT, size);</span>
+    }
+
+    public int getMuFontId() {
+<span class="fc" id="L357">        return generalSettings.get(DefaultTeXFontParser.MUFONTID_ATTR).intValue();</span>
+    }
+
+    public Char getNextLarger(Char c, int style) {
+<span class="fc" id="L361">        FontInfo info = fontInfo[c.getFontCode()];</span>
+<span class="fc" id="L362">        CharFont ch = info.getNextLarger(c.getChar());</span>
+<span class="fc" id="L363">        return new Char(ch.c, ch.fontId, getMetrics(ch, getSizeFactor(style)));</span>
+    }
+
+    public float getNum1(int style) {
+<span class="fc" id="L367">        return getParameter(&quot;num1&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getNum2(int style) {
+<span class="fc" id="L371">        return getParameter(&quot;num2&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getNum3(int style) {
+<span class="fc" id="L375">        return getParameter(&quot;num3&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getQuad(int style, int fontCode) {
+<span class="fc" id="L379">        FontInfo info = fontInfo[fontCode];</span>
+<span class="fc" id="L380">        return info.getQuad(getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT);</span>
+    }
+
+    public float getSize() {
+<span class="fc" id="L384">        return size;</span>
+    }
+
+    public float getSkew(CharFont cf, int style) {
+<span class="fc" id="L388">        FontInfo info = fontInfo[cf.fontId];</span>
+<span class="fc" id="L389">        char skew = info.getSkewChar();</span>
+<span class="pc bpc" id="L390" title="1 of 2 branches missed.">        if (skew == -1)</span>
+<span class="nc" id="L391">            return 0;</span>
+        else
+<span class="fc" id="L393">            return getKern(cf, new CharFont(skew, cf.fontId), style);</span>
+    }
+
+    public float getSpace(int style) {
+<span class="fc" id="L397">        int spaceFontId = generalSettings.get(DefaultTeXFontParser.SPACEFONTID_ATTR).intValue();</span>
+<span class="fc" id="L398">        FontInfo info = fontInfo[spaceFontId];</span>
+<span class="fc" id="L399">        return info.getSpace(getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT);</span>
+    }
+
+    public float getSub1(int style) {
+<span class="fc" id="L403">        return getParameter(&quot;sub1&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getSub2(int style) {
+<span class="fc" id="L407">        return getParameter(&quot;sub2&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getSubDrop(int style) {
+<span class="fc" id="L411">        return getParameter(&quot;subdrop&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getSup1(int style) {
+<span class="fc" id="L415">        return getParameter(&quot;sup1&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getSup2(int style) {
+<span class="fc" id="L419">        return getParameter(&quot;sup2&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getSup3(int style) {
+<span class="fc" id="L423">        return getParameter(&quot;sup3&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getSupDrop(int style) {
+<span class="fc" id="L427">        return getParameter(&quot;supdrop&quot;) * getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public float getXHeight(int style, int fontCode) {
+<span class="fc" id="L431">        FontInfo info = fontInfo[fontCode];</span>
+<span class="fc" id="L432">        return info.getXHeight(getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT);</span>
+    }
+
+    public float getEM(int style) {
+<span class="fc" id="L436">        return getSizeFactor(style) * TeXFormula.PIXELS_PER_POINT;</span>
+    }
+
+    public boolean hasNextLarger(Char c) {
+<span class="fc" id="L440">        FontInfo info = fontInfo[c.getFontCode()];</span>
+<span class="fc bfc" id="L441" title="All 2 branches covered.">        return (info.getNextLarger(c.getChar()) != null);</span>
+    }
+
+    public void setBold(boolean bold) {
+<span class="fc" id="L445">        isBold = bold;</span>
+<span class="fc" id="L446">    }</span>
+
+    public void setRoman(boolean rm) {
+<span class="fc" id="L449">        isRoman = rm;</span>
+<span class="fc" id="L450">    }</span>
+
+    public void setTt(boolean tt) {
+<span class="fc" id="L453">        isTt = tt;</span>
+<span class="fc" id="L454">    }</span>
+
+    public void setIt(boolean it) {
+<span class="fc" id="L457">        isIt = it;</span>
+<span class="fc" id="L458">    }</span>
+
+    public void setSs(boolean ss) {
+<span class="fc" id="L461">        isSs = ss;</span>
+<span class="fc" id="L462">    }</span>
+
+    public boolean hasSpace(int font) {
+<span class="nc" id="L465">        FontInfo info = fontInfo[font];</span>
+<span class="nc" id="L466">        return info.hasSpace();</span>
+    }
+
+    public boolean isExtensionChar(Char c) {
+<span class="fc" id="L470">        FontInfo info = fontInfo[c.getFontCode()];</span>
+<span class="pc bpc" id="L471" title="1 of 2 branches missed.">        return info.getExtension(c.getChar()) != null;</span>
+    }
+
+    public static void setMathSizes(float ds, float ts, float ss, float sss) {
+<span class="nc bnc" id="L475" title="All 2 branches missed.">        if (magnificationEnable) {</span>
+<span class="nc" id="L476">            generalSettings.put(&quot;scriptfactor&quot;, Math.abs(ss / ds));</span>
+<span class="nc" id="L477">            generalSettings.put(&quot;scriptscriptfactor&quot;, Math.abs(sss / ds));</span>
+<span class="nc" id="L478">            generalSettings.put(&quot;textfactor&quot;, Math.abs(ts / ds));</span>
+<span class="nc" id="L479">            TeXIcon.defaultSize = Math.abs(ds);</span>
+        }
+<span class="nc" id="L481">    }</span>
+
+    public static void setMagnification(float mag) {
+<span class="nc bnc" id="L484" title="All 2 branches missed.">        if (magnificationEnable) {</span>
+<span class="nc" id="L485">            TeXIcon.magFactor = mag / 1000f;</span>
+        }
+<span class="nc" id="L487">    }</span>
+
+    private static float getParameter(String parameterName) {
+<span class="fc" id="L490">        Object param = parameters.get(parameterName);</span>
+<span class="pc bpc" id="L491" title="1 of 2 branches missed.">        if (param == null)</span>
+<span class="nc" id="L492">            return 0;</span>
+        else
+<span class="fc" id="L494">            return ((Float) param).floatValue();</span>
+    }
+
+    public static float getSizeFactor(int style) {
+<span class="fc bfc" id="L498" title="All 2 branches covered.">        if (style &lt; TeXConstants.STYLE_TEXT)</span>
+<span class="fc" id="L499">            return 1;</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">        else if (style &lt; TeXConstants.STYLE_SCRIPT)</span>
+<span class="fc" id="L501">            return generalSettings.get(&quot;textfactor&quot;).floatValue();</span>
+<span class="fc bfc" id="L502" title="All 2 branches covered.">        else if (style &lt; TeXConstants.STYLE_SCRIPT_SCRIPT)</span>
+<span class="fc" id="L503">            return generalSettings.get(&quot;scriptfactor&quot;).floatValue();</span>
+        else
+<span class="fc" id="L505">            return generalSettings.get(&quot;scriptscriptfactor&quot;).floatValue();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

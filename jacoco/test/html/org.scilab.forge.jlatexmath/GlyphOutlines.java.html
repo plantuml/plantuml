@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlyphOutlines.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">GlyphOutlines.java</span></div><h1>GlyphOutlines.java</h1><pre class="source lang-java linenums">/* GlyphOutlines.java
+ * =========================================================================
+ * Reader of the glyphs.bin files (outlines of the JLaTeXMath fonts).
+ *
+ * This file is NOT part of upstream JLaTeXMath, it was added for PLAN.md
+ * (phase 2, step 2b): a glyph is a path, not a call to the font engine of AWT.
+ * It is released under the same terms as the library: GNU GPL version 2 or
+ * later, with the GNU linking exception (see the header of the other files of
+ * this package).
+ * =========================================================================
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * The outlines of the glyphs of the TeX fonts, read from a {@code glyphs.bin}
+ * file made by {@code tools/jlatexmath-glyphs/GenerateGlyphOutlines.java} (the
+ * format is described there).
+ * &lt;p&gt;
+ * No dependency on {@code java.awt}, {@code javax.*} or reflection: the same
+ * code runs on the JVM and in the TeaVM builds, and gives the same numbers
+ * everywhere. A glyph is given to a {@link Sink} as a sequence of absolute
+ * points, in font units, y axis up.
+ */
+public final class GlyphOutlines {
+
+	private static final int MOVE = 0;
+	private static final int LINE = 1;
+	private static final int QUAD = 2;
+	private static final int CLOSE = 3;
+	private static final int END = 4;
+
+	/** Receives the outline of a glyph. */
+	public interface Sink {
+
+		void moveTo(int x, int y);
+
+		void lineTo(int x, int y);
+
+		/** Quadratic curve from the current point. */
+		void quadTo(int controlX, int controlY, int x, int y);
+
+		void close();
+	}
+
+	/** The glyphs of one font (one TTF file). */
+	public static final class GlyphFont {
+
+		private final byte[] data;
+		private final String name;
+		private final int unitsPerEm;
+		/** The codes, in increasing order. */
+		private final int[] codes;
+		/** For each code, the offset in data of its first command. */
+		private final int[] starts;
+
+<span class="fc" id="L64">		private GlyphFont(byte[] data, String name, int unitsPerEm, int[] codes, int[] starts) {</span>
+<span class="fc" id="L65">			this.data = data;</span>
+<span class="fc" id="L66">			this.name = name;</span>
+<span class="fc" id="L67">			this.unitsPerEm = unitsPerEm;</span>
+<span class="fc" id="L68">			this.codes = codes;</span>
+<span class="fc" id="L69">			this.starts = starts;</span>
+<span class="fc" id="L70">		}</span>
+
+		/** The name of the TTF file, without &quot;.ttf&quot;. */
+		public String getName() {
+<span class="fc" id="L74">			return name;</span>
+		}
+
+		/** The size of the em square: one unit of the outlines is 1/unitsPerEm em. */
+		public int getUnitsPerEm() {
+<span class="fc" id="L79">			return unitsPerEm;</span>
+		}
+
+		public int getNumberOfGlyphs() {
+<span class="fc" id="L83">			return codes.length;</span>
+		}
+
+		public boolean hasGlyph(int code) {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">			return indexOf(code) &gt;= 0;</span>
+		}
+
+		/**
+		 * Gives the outline of a glyph to the sink.
+		 *
+		 * @return false if the font has no glyph for this code (nothing is given to
+		 *         the sink); a blank glyph (a space) returns true and draws nothing.
+		 */
+		public boolean visit(int code, Sink sink) {
+<span class="fc" id="L97">			final int index = indexOf(code);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (index &lt; 0)</span>
+<span class="fc" id="L99">				return false;</span>
+<span class="fc" id="L100">			final int[] pos = { starts[index] };</span>
+<span class="fc" id="L101">			int x = 0;</span>
+<span class="fc" id="L102">			int y = 0;</span>
+			while (true) {
+<span class="fc" id="L104">				final int command = data[pos[0]++] &amp; 0xFF;</span>
+<span class="pc bpc" id="L105" title="1 of 6 branches missed.">				switch (command) {</span>
+				case MOVE:
+<span class="fc" id="L107">					x += varint(data, pos);</span>
+<span class="fc" id="L108">					y += varint(data, pos);</span>
+<span class="fc" id="L109">					sink.moveTo(x, y);</span>
+<span class="fc" id="L110">					break;</span>
+				case LINE:
+<span class="fc" id="L112">					x += varint(data, pos);</span>
+<span class="fc" id="L113">					y += varint(data, pos);</span>
+<span class="fc" id="L114">					sink.lineTo(x, y);</span>
+<span class="fc" id="L115">					break;</span>
+				case QUAD:
+<span class="fc" id="L117">					final int cx = x + varint(data, pos);</span>
+<span class="fc" id="L118">					final int cy = y + varint(data, pos);</span>
+<span class="fc" id="L119">					x = cx + varint(data, pos);</span>
+<span class="fc" id="L120">					y = cy + varint(data, pos);</span>
+<span class="fc" id="L121">					sink.quadTo(cx, cy, x, y);</span>
+<span class="fc" id="L122">					break;</span>
+				case CLOSE:
+<span class="fc" id="L124">					sink.close();</span>
+<span class="fc" id="L125">					break;</span>
+				case END:
+<span class="fc" id="L127">					return true;</span>
+				default:
+<span class="nc" id="L129">					throw new IllegalStateException(&quot;Bad command &quot; + command + &quot; in glyphs of &quot; + name);</span>
+				}
+<span class="fc" id="L131">			}</span>
+		}
+
+		private int indexOf(int code) {
+<span class="fc" id="L135">			int low = 0;</span>
+<span class="fc" id="L136">			int high = codes.length - 1;</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">			while (low &lt;= high) {</span>
+<span class="fc" id="L138">				final int mid = (low + high) &gt;&gt;&gt; 1;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">				if (codes[mid] &lt; code)</span>
+<span class="fc" id="L140">					low = mid + 1;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">				else if (codes[mid] &gt; code)</span>
+<span class="fc" id="L142">					high = mid - 1;</span>
+				else
+<span class="fc" id="L144">					return mid;</span>
+<span class="fc" id="L145">			}</span>
+<span class="fc" id="L146">			return -1;</span>
+		}
+	}
+
+<span class="fc" id="L150">	private final Map&lt;String, GlyphFont&gt; fonts = new HashMap&lt;String, GlyphFont&gt;();</span>
+
+<span class="fc" id="L152">	private GlyphOutlines() {</span>
+<span class="fc" id="L153">	}</span>
+
+	/** The names of the fonts of this file (TTF file names without &quot;.ttf&quot;). */
+	public Set&lt;String&gt; getFontNames() {
+<span class="fc" id="L157">		return Collections.unmodifiableSet(fonts.keySet());</span>
+	}
+
+	/** The font of a TTF file name, with or without &quot;.ttf&quot;, or null. */
+	public GlyphFont getFont(String ttfName) {
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (ttfName.endsWith(&quot;.ttf&quot;))</span>
+<span class="fc" id="L163">			ttfName = ttfName.substring(0, ttfName.length() - 4);</span>
+<span class="fc" id="L164">		return fonts.get(ttfName);</span>
+	}
+
+	// ------------------------------------------------------------------ loading
+
+<span class="fc" id="L169">	private static final Map&lt;Class&lt;?&gt;, GlyphOutlines&gt; CACHE = new HashMap&lt;Class&lt;?&gt;, GlyphOutlines&gt;();</span>
+
+	/**
+	 * The outlines that go with the fonts of a registration object: the file
+	 * {@code fonts/glyphs.bin} of the package of its class. {@code base} is null
+	 * for the base fonts, the registration object for an alphabet (Cyrillic,
+	 * Greek), as in {@link FontInfo}.
+	 * &lt;p&gt;
+	 * Read on the first use only, nothing is parsed by a diagram without math.
+	 */
+	public static synchronized GlyphOutlines forBase(Object base) {
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		final Class&lt;?&gt; clazz = base == null ? GlyphOutlines.class : base.getClass();</span>
+<span class="fc" id="L181">		GlyphOutlines result = CACHE.get(clazz);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (result == null) {</span>
+			// TODO phase 3: resource abstraction (class path, EmbeddedFiles, bundle).
+<span class="fc" id="L184">			final InputStream in = TeXResources.open(clazz, &quot;fonts/glyphs.bin&quot;);</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">			if (in == null)</span>
+<span class="nc" id="L186">				throw new IllegalStateException(&quot;No fonts/glyphs.bin next to &quot; + clazz.getName());</span>
+			try {
+<span class="fc" id="L188">				result = parse(readAll(in));</span>
+<span class="nc" id="L189">			} catch (IOException e) {</span>
+<span class="nc" id="L190">				throw new IllegalStateException(&quot;Cannot read fonts/glyphs.bin of &quot; + clazz.getName(), e);</span>
+			} finally {
+				try {
+<span class="fc" id="L193">					in.close();</span>
+<span class="nc" id="L194">				} catch (IOException e) {</span>
+					// Nothing to do
+<span class="fc" id="L196">				}</span>
+			}
+<span class="fc" id="L198">			CACHE.put(clazz, result);</span>
+		}
+<span class="fc" id="L200">		return result;</span>
+	}
+
+	private static byte[] readAll(InputStream in) throws IOException {
+<span class="fc" id="L204">		byte[] buffer = new byte[1 &lt;&lt; 16];</span>
+<span class="fc" id="L205">		int size = 0;</span>
+		while (true) {
+<span class="fc bfc" id="L207" title="All 2 branches covered.">			if (size == buffer.length) {</span>
+<span class="fc" id="L208">				final byte[] bigger = new byte[buffer.length * 2];</span>
+<span class="fc" id="L209">				System.arraycopy(buffer, 0, bigger, 0, size);</span>
+<span class="fc" id="L210">				buffer = bigger;</span>
+			}
+<span class="fc" id="L212">			final int n = in.read(buffer, size, buffer.length - size);</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">			if (n &lt; 0)</span>
+<span class="fc" id="L214">				break;</span>
+<span class="fc" id="L215">			size += n;</span>
+<span class="fc" id="L216">		}</span>
+<span class="fc" id="L217">		final byte[] result = new byte[size];</span>
+<span class="fc" id="L218">		System.arraycopy(buffer, 0, result, 0, size);</span>
+<span class="fc" id="L219">		return result;</span>
+	}
+
+	/** Parses the content of a glyphs.bin file: finds the glyphs, decodes none. */
+	public static GlyphOutlines parse(byte[] data) {
+<span class="pc bpc" id="L224" title="3 of 10 branches missed.">		if (data.length &lt; 7 || data[0] != 'J' || data[1] != 'L' || data[2] != 'M' || data[3] != 'G')</span>
+<span class="fc" id="L225">			throw new IllegalArgumentException(&quot;Not a glyphs.bin file&quot;);</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		if (data[4] != 1)</span>
+<span class="fc" id="L227">			throw new IllegalArgumentException(&quot;Unknown glyphs.bin version &quot; + data[4]);</span>
+<span class="fc" id="L228">		final GlyphOutlines result = new GlyphOutlines();</span>
+<span class="fc" id="L229">		final int[] pos = { 5 };</span>
+<span class="fc" id="L230">		final int numberOfFonts = u16(data, pos);</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">		for (int f = 0; f &lt; numberOfFonts; f++) {</span>
+<span class="fc" id="L232">			final int nameLength = u16(data, pos);</span>
+			// DataOutputStream.writeUTF: the names are plain ASCII
+<span class="fc" id="L234">			final char[] chars = new char[nameLength];</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">			for (int i = 0; i &lt; nameLength; i++)</span>
+<span class="fc" id="L236">				chars[i] = (char) (data[pos[0]++] &amp; 0xFF);</span>
+<span class="fc" id="L237">			final String name = new String(chars);</span>
+<span class="fc" id="L238">			final int unitsPerEm = u16(data, pos);</span>
+<span class="fc" id="L239">			final int numberOfGlyphs = u16(data, pos);</span>
+<span class="fc" id="L240">			final int[] codes = new int[numberOfGlyphs];</span>
+<span class="fc" id="L241">			final int[] starts = new int[numberOfGlyphs];</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">			for (int g = 0; g &lt; numberOfGlyphs; g++) {</span>
+<span class="fc" id="L243">				codes[g] = u16(data, pos);</span>
+<span class="fc" id="L244">				starts[g] = pos[0];</span>
+<span class="fc" id="L245">				skipOutline(data, pos);</span>
+<span class="pc bpc" id="L246" title="1 of 4 branches missed.">				if (g &gt; 0 &amp;&amp; codes[g] &lt;= codes[g - 1])</span>
+<span class="nc" id="L247">					throw new IllegalArgumentException(&quot;Codes not sorted in &quot; + name);</span>
+			}
+<span class="fc" id="L249">			result.fonts.put(name, new GlyphFont(data, name, unitsPerEm, codes, starts));</span>
+		}
+<span class="fc" id="L251">		return result;</span>
+	}
+
+	private static void skipOutline(byte[] data, int[] pos) {
+		while (true) {
+<span class="fc" id="L256">			final int command = data[pos[0]++] &amp; 0xFF;</span>
+<span class="pc bpc" id="L257" title="1 of 5 branches missed.">			switch (command) {</span>
+			case MOVE:
+			case LINE:
+<span class="fc" id="L260">				varint(data, pos);</span>
+<span class="fc" id="L261">				varint(data, pos);</span>
+<span class="fc" id="L262">				break;</span>
+			case QUAD:
+<span class="fc" id="L264">				varint(data, pos);</span>
+<span class="fc" id="L265">				varint(data, pos);</span>
+<span class="fc" id="L266">				varint(data, pos);</span>
+<span class="fc" id="L267">				varint(data, pos);</span>
+<span class="fc" id="L268">				break;</span>
+			case CLOSE:
+<span class="fc" id="L270">				break;</span>
+			case END:
+<span class="fc" id="L272">				return;</span>
+			default:
+<span class="nc" id="L274">				throw new IllegalArgumentException(&quot;Bad command &quot; + command);</span>
+			}
+<span class="fc" id="L276">		}</span>
+	}
+
+	private static int u16(byte[] data, int[] pos) {
+<span class="fc" id="L280">		final int result = ((data[pos[0]] &amp; 0xFF) &lt;&lt; 8) | (data[pos[0] + 1] &amp; 0xFF);</span>
+<span class="fc" id="L281">		pos[0] += 2;</span>
+<span class="fc" id="L282">		return result;</span>
+	}
+
+	/** Zigzag varint. */
+	private static int varint(byte[] data, int[] pos) {
+<span class="fc" id="L287">		int result = 0;</span>
+<span class="fc" id="L288">		int shift = 0;</span>
+		while (true) {
+<span class="fc" id="L290">			final int b = data[pos[0]++] &amp; 0xFF;</span>
+<span class="fc" id="L291">			result |= (b &amp; 0x7F) &lt;&lt; shift;</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">			if ((b &amp; 0x80) == 0)</span>
+<span class="fc" id="L293">				break;</span>
+<span class="fc" id="L294">			shift += 7;</span>
+<span class="fc" id="L295">		}</span>
+<span class="fc" id="L296">		return (result &gt;&gt;&gt; 1) ^ -(result &amp; 1);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

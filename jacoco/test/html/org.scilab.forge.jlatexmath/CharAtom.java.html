@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CharAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">CharAtom.java</span></div><h1>CharAtom.java</h1><pre class="source lang-java linenums">/* CharAtom.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * An atom representing exactly one alphanumeric character and the text style in which
+ * it should be drawn.
+ */
+public class CharAtom extends CharSymbol {
+
+    // alphanumeric character
+    private final char c;
+
+    // text style (null means the default text style)
+    private String textStyle;
+    private boolean mathMode;
+
+    /**
+     * Creates a CharAtom that will represent the given character in the given text style.
+     * Null for the text style means the default text style.
+     *
+     * @param c the alphanumeric character
+     * @param textStyle the text style in which the character should be drawn
+     */
+<span class="fc" id="L69">    public CharAtom(char c, String textStyle, boolean mathMode) {</span>
+<span class="fc" id="L70">        this.c = c;</span>
+<span class="fc" id="L71">        this.textStyle = textStyle;</span>
+<span class="fc" id="L72">        this.mathMode = mathMode;</span>
+<span class="fc" id="L73">    }</span>
+
+    public CharAtom(char c, String textStyle) {
+<span class="nc" id="L76">        this(c, textStyle, false);</span>
+<span class="nc" id="L77">    }</span>
+
+    public boolean isMathMode() {
+<span class="fc" id="L80">        return mathMode;</span>
+    }
+
+    public Box createBox(TeXEnvironment env) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (textStyle == null) {</span>
+<span class="fc" id="L85">            String ts = env.getTextStyle();</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            if (ts != null) {</span>
+<span class="fc" id="L87">                textStyle = ts;</span>
+            }
+        }
+<span class="fc" id="L90">        boolean smallCap = env.getSmallCap();</span>
+<span class="fc" id="L91">        Char ch = getChar(env.getTeXFont(), env.getStyle(), smallCap);</span>
+<span class="fc" id="L92">        Box box = new CharBox(ch);</span>
+<span class="fc bfc" id="L93" title="All 4 branches covered.">        if (smallCap &amp;&amp; Character.isLowerCase(c)) {</span>
+            // We have a small capital
+<span class="fc" id="L95">            box = new ScaleBox(box, 0.8f, 0.8f);</span>
+        }
+
+<span class="fc" id="L98">        return box;</span>
+    }
+
+    public char getCharacter() {
+<span class="fc" id="L102">        return c;</span>
+    }
+
+    /*
+     * Get the Char-object representing this character (&quot;c&quot;) in the right text style
+     */
+    private Char getChar(TeXFont tf, int style, boolean smallCap) {
+<span class="fc" id="L109">        char chr = c;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (smallCap) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if (Character.isLowerCase(c)) {</span>
+<span class="fc" id="L112">                chr = Character.toUpperCase(c);</span>
+            }
+        }
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (textStyle == null) {</span>
+<span class="fc" id="L116">            return tf.getDefaultChar(chr, style);</span>
+        } else {
+<span class="fc" id="L118">            return tf.getChar(chr, textStyle, style);</span>
+        }
+    }
+
+    public CharFont getCharFont(TeXFont tf) {
+<span class="fc" id="L123">        return getChar(tf, TeXConstants.STYLE_DISPLAY, false).getCharFont();</span>
+    }
+
+    public String toString() {
+<span class="nc" id="L127">        return &quot;CharAtom: \'&quot; + c + &quot;\'&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

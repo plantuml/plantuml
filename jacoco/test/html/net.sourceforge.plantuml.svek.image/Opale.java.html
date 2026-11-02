@@ -112,8 +112,8 @@ public class Opale extends TextBlockMemoized {
 <span class="fc" id="L112">			polygon = getPolygonLeft(stringBounder, pp1, pp2);</span>
 <span class="fc bfc" id="L113" title="All 2 branches covered.">		else if (strategy == Direction.RIGHT)</span>
 <span class="fc" id="L114">			polygon = getPolygonRight(stringBounder, pp1, pp2);</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		else if (strategy == Direction.UP)</span>
-<span class="nc" id="L116">			polygon = getPolygonUp(stringBounder, pp1, pp2);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		else if (strategy == Direction.UP)</span>
+<span class="fc" id="L116">			polygon = getPolygonUp(stringBounder, pp1, pp2);</span>
 <span class="pc bpc" id="L117" title="1 of 2 branches missed.">		else if (strategy == Direction.DOWN)</span>
 <span class="fc" id="L118">			polygon = getPolygonDown(stringBounder, pp1, pp2);</span>
 		else
@@ -219,26 +219,26 @@ public class Opale extends TextBlockMemoized {
 	}
 
 	private UPath getPolygonUp(final StringBounder stringBounder, final XPoint2D pp1, final XPoint2D pp2) {
-<span class="nc" id="L222">		final UPath polygon = UPath.none();</span>
-<span class="nc" id="L223">		polygon.moveTo(0, roundCorner / 2);</span>
-<span class="nc" id="L224">		polygon.lineTo(0, getHeight(stringBounder) - roundCorner / 2);</span>
-<span class="nc" id="L225">		polygon.arcTo(new XPoint2D(roundCorner / 2, getHeight(stringBounder)), roundCorner / 2, 0, 0);</span>
-<span class="nc" id="L226">		polygon.lineTo(getWidth(stringBounder) - roundCorner / 2, getHeight(stringBounder));</span>
-<span class="nc" id="L227">		polygon.arcTo(new XPoint2D(getWidth(stringBounder), getHeight(stringBounder) - roundCorner / 2),</span>
+<span class="fc" id="L222">		final UPath polygon = UPath.none();</span>
+<span class="fc" id="L223">		polygon.moveTo(0, roundCorner / 2);</span>
+<span class="fc" id="L224">		polygon.lineTo(0, getHeight(stringBounder) - roundCorner / 2);</span>
+<span class="fc" id="L225">		polygon.arcTo(new XPoint2D(roundCorner / 2, getHeight(stringBounder)), roundCorner / 2, 0, 0);</span>
+<span class="fc" id="L226">		polygon.lineTo(getWidth(stringBounder) - roundCorner / 2, getHeight(stringBounder));</span>
+<span class="fc" id="L227">		polygon.arcTo(new XPoint2D(getWidth(stringBounder), getHeight(stringBounder) - roundCorner / 2),</span>
 				roundCorner / 2, 0, 0);
-<span class="nc" id="L229">		polygon.lineTo(getWidth(stringBounder), cornersize);</span>
-<span class="nc" id="L230">		polygon.lineTo(getWidth(stringBounder) - cornersize, 0);</span>
+<span class="fc" id="L229">		polygon.lineTo(getWidth(stringBounder), cornersize);</span>
+<span class="fc" id="L230">		polygon.lineTo(getWidth(stringBounder) - cornersize, 0);</span>
 
-<span class="nc" id="L232">		double x1 = pp1.getX() - delta;</span>
-<span class="nc" id="L233">		x1 = MathUtils.limitation(x1, 0, getWidth(stringBounder) - cornersize);</span>
-<span class="nc" id="L234">		polygon.lineTo(x1 + 2 * delta, 0);</span>
-<span class="nc" id="L235">		polygon.lineTo(pp2.getX(), pp2.getY());</span>
+<span class="fc" id="L232">		double x1 = pp1.getX() - delta;</span>
+<span class="fc" id="L233">		x1 = MathUtils.limitation(x1, 0, getWidth(stringBounder) - cornersize);</span>
+<span class="fc" id="L234">		polygon.lineTo(x1 + 2 * delta, 0);</span>
+<span class="fc" id="L235">		polygon.lineTo(pp2.getX(), pp2.getY());</span>
 
-<span class="nc" id="L237">		polygon.lineTo(x1, 0);</span>
-<span class="nc" id="L238">		polygon.lineTo(roundCorner / 2, 0);</span>
-<span class="nc" id="L239">		polygon.arcTo(new XPoint2D(0, roundCorner / 2), roundCorner / 2, 0, 0);</span>
-<span class="nc" id="L240">		polygon.closePath();</span>
-<span class="nc" id="L241">		return polygon;</span>
+<span class="fc" id="L237">		polygon.lineTo(x1, 0);</span>
+<span class="fc" id="L238">		polygon.lineTo(roundCorner / 2, 0);</span>
+<span class="fc" id="L239">		polygon.arcTo(new XPoint2D(0, roundCorner / 2), roundCorner / 2, 0, 0);</span>
+<span class="fc" id="L240">		polygon.closePath();</span>
+<span class="fc" id="L241">		return polygon;</span>
 	}
 
 	private UPath getPolygonDown(final StringBounder stringBounder, final XPoint2D pp1, final XPoint2D pp2) {

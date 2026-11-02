@@ -347,7 +347,7 @@ public class CommandLinkActivity extends SingleLineCommand2&lt;ActivityDiagram&g
 
 <span class="fc" id="L348">			final LeafType type = getTypeIfExisting(diagram, ident);</span>
 <span class="fc" id="L349">			Entity result = ident.getData();</span>
-<span class="pc bpc" id="L350" title="1 of 2 branches missed.">			if (result == null)</span>
+<span class="fc bfc" id="L350" title="All 2 branches covered.">			if (result == null)</span>
 <span class="fc" id="L351">				result = diagram.reallyCreateLeaf(location, ident,</span>
 <span class="fc" id="L352">						Display.getWithNewlines(diagram.getPragma(), idShort), type, null);</span>
 
@@ -366,25 +366,25 @@ public class CommandLinkActivity extends SingleLineCommand2&lt;ActivityDiagram&g
 <span class="fc" id="L366">			return result;</span>
 		}
 <span class="fc" id="L368">		final RegexPartialMatch quoted = arg.get(&quot;QUOTED&quot; + suf);</span>
-<span class="pc bpc" id="L369" title="1 of 2 branches missed.">		if (quoted.get(0) != null) {</span>
-<span class="nc bnc" id="L370" title="All 2 branches missed.">			final String quotedString = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);</span>
-<span class="nc bnc" id="L371" title="All 2 branches missed.">			if (partition != null) {</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">		if (quoted.get(0) != null) {</span>
+<span class="fc bfc" id="L370" title="All 2 branches covered.">			final String quotedString = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);</span>
+<span class="pc bpc" id="L371" title="1 of 2 branches missed.">			if (partition != null) {</span>
 <span class="nc" id="L372">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(partition));</span>
 <span class="nc" id="L373">				diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), partition),</span>
 						GroupType.PACKAGE);
 			}
 
-<span class="nc" id="L377">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(quotedString));</span>
+<span class="fc" id="L377">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(quotedString));</span>
 
-<span class="nc" id="L379">			final LeafType type = getTypeIfExisting(diagram, quark);</span>
-<span class="nc" id="L380">			Entity result = quark.getData();</span>
-<span class="nc bnc" id="L381" title="All 2 branches missed.">			if (result == null)</span>
-<span class="nc" id="L382">				result = diagram.reallyCreateLeaf(location, quark,</span>
-<span class="nc" id="L383">						Display.getWithNewlines(diagram.getPragma(), quoted.get(0)), type, null);</span>
-<span class="nc bnc" id="L384" title="All 2 branches missed.">			if (partition != null)</span>
+<span class="fc" id="L379">			final LeafType type = getTypeIfExisting(diagram, quark);</span>
+<span class="fc" id="L380">			Entity result = quark.getData();</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">			if (result == null)</span>
+<span class="fc" id="L382">				result = diagram.reallyCreateLeaf(location, quark,</span>
+<span class="fc" id="L383">						Display.getWithNewlines(diagram.getPragma(), quoted.get(0)), type, null);</span>
+<span class="pc bpc" id="L384" title="1 of 2 branches missed.">			if (partition != null)</span>
 <span class="nc" id="L385">				diagram.endGroup();</span>
 
-<span class="nc" id="L387">			return result;</span>
+<span class="fc" id="L387">			return result;</span>
 		}
 <span class="fc" id="L389">		final String quoteInvisibleString = arg.get(&quot;QUOTED_INVISIBLE&quot; + suf, 0);</span>
 <span class="pc bpc" id="L390" title="1 of 2 branches missed.">		if (quoteInvisibleString != null) {</span>

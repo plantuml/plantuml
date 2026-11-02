@@ -173,11 +173,11 @@ public final class CucaDiagramTxtMaker {
 <span class="fc" id="L173">			int y = 2;</span>
 <span class="fc" id="L174">			ug.getCharArea().drawHLine('-', y, 1, w - 1);</span>
 <span class="fc" id="L175">			y++;</span>
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">			for (CharSequence att : ent.getBodier().getRawBody()) {</span>
-<span class="nc" id="L177">				final List&lt;String&gt; disp = Display.getWithNewlines3(att.toString());</span>
-<span class="nc" id="L178">				ug.getCharArea().drawStringsLRSimple(disp, 1, y);</span>
-<span class="nc" id="L179">				y += StringUtils.getHeight(disp);</span>
-<span class="nc" id="L180">			}</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">			for (CharSequence att : ent.getBodier().getRawBody()) {</span>
+<span class="fc" id="L177">				final List&lt;String&gt; disp = Display.getWithNewlines3(att.toString());</span>
+<span class="fc" id="L178">				ug.getCharArea().drawStringsLRSimple(disp, 1, y);</span>
+<span class="fc" id="L179">				y += StringUtils.getHeight(disp);</span>
+<span class="fc" id="L180">			}</span>
 //			for (Member att : ent.getBodier().getFieldsToDisplay()) {
 //				final List&lt;String&gt; disp = BackSlash.getWithNewlines(att.getDisplay(true));
 //				ug.getCharArea().drawStringsLR(disp, 1, y);
@@ -204,11 +204,11 @@ public final class CucaDiagramTxtMaker {
 <span class="fc" id="L204">			ug.getCharArea().drawChar('\u251C', 0, y);</span>
 <span class="fc" id="L205">			ug.getCharArea().drawChar('\u2524', w - 1, y);</span>
 <span class="fc" id="L206">			y++;</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">			for (CharSequence att : ent.getBodier().getRawBody()) {</span>
-<span class="nc" id="L208">				final List&lt;String&gt; disp = Display.getWithNewlines3(att.toString());</span>
-<span class="nc" id="L209">				ug.getCharArea().drawStringsLRUnicode(disp, 1, y);</span>
-<span class="nc" id="L210">				y += StringUtils.getHeight(disp);</span>
-<span class="nc" id="L211">			}</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">			for (CharSequence att : ent.getBodier().getRawBody()) {</span>
+<span class="fc" id="L208">				final List&lt;String&gt; disp = Display.getWithNewlines3(att.toString());</span>
+<span class="fc" id="L209">				ug.getCharArea().drawStringsLRUnicode(disp, 1, y);</span>
+<span class="fc" id="L210">				y += StringUtils.getHeight(disp);</span>
+<span class="fc" id="L211">			}</span>
 		}
 <span class="fc" id="L213">	}</span>
 
@@ -224,8 +224,8 @@ public final class CucaDiagramTxtMaker {
 	private int getHeight(Entity entity) {
 <span class="fc" id="L225">		int result = StringUtils.getHeight(entity.getDisplay());</span>
 <span class="pc bpc" id="L226" title="1 of 2 branches missed.">		if (showMember(entity)) {</span>
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">			for (CharSequence att : entity.getBodier().getRawBody())</span>
-<span class="nc" id="L228">				result += StringUtils.getHeight(Display.getWithNewlines(pragma, att.toString()));</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">			for (CharSequence att : entity.getBodier().getRawBody())</span>
+<span class="fc" id="L228">				result += StringUtils.getHeight(Display.getWithNewlines(pragma, att.toString()));</span>
 
 //			for (Member att : entity.getBodier().getMethodsToDisplay()) {
 //				result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
@@ -242,12 +242,12 @@ public final class CucaDiagramTxtMaker {
 	private int getWidth(Entity entity) {
 <span class="fc" id="L243">		int result = StringUtils.getWcWidth(entity.getDisplay());</span>
 <span class="pc bpc" id="L244" title="1 of 2 branches missed.">		if (showMember(entity)) {</span>
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">			for (CharSequence att : entity.getBodier().getRawBody()) {</span>
-<span class="nc" id="L246">				final int w = StringUtils.getWcWidth(Display.getWithNewlines(pragma, att.toString()));</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">				if (w &gt; result)</span>
-<span class="nc" id="L248">					result = w;</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">			for (CharSequence att : entity.getBodier().getRawBody()) {</span>
+<span class="fc" id="L246">				final int w = StringUtils.getWcWidth(Display.getWithNewlines(pragma, att.toString()));</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">				if (w &gt; result)</span>
+<span class="fc" id="L248">					result = w;</span>
 
-<span class="nc" id="L250">			}</span>
+<span class="fc" id="L250">			}</span>
 //			for (Member att : entity.getBodier().getMethodsToDisplay()) {
 //			final int w = StringUtils.getWcWidth(Display.getWithNewlines(att.getDisplay(true)));
 //			if (w &gt; result) {

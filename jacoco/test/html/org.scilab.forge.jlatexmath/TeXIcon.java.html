@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeXIcon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">TeXIcon.java</span></div><h1>TeXIcon.java</h1><pre class="source lang-java linenums">/* TeXIcon.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+/* Modified by Calixte Denizet */
+
+
+package org.scilab.forge.jlatexmath;
+
+
+
+/**
+ * The icon of a TeXFormula: its size, and the way to paint it on a
+ * {@link TeXGraphics}.
+ * &lt;p&gt;
+ * This class cannot be instantiated directly. It can be constructed from a
+ * TeXFormula using the {@link TeXFormula#createTeXIcon(int,float)} method.
+ *
+ * @author Kurt Vermeulen
+ */
+public class TeXIcon {
+
+
+<span class="fc" id="L66">    public static float defaultSize = -1;</span>
+<span class="fc" id="L67">    public static float magFactor = 0;</span>
+
+    private Box box;
+
+    private final float size;
+
+<span class="fc" id="L73">    private TeXInsets insets = new TeXInsets(0, 0, 0, 0);</span>
+
+<span class="fc" id="L75">    private TeXColor fg = null;</span>
+
+<span class="fc" id="L77">    public boolean isColored = false;</span>
+
+    /**
+     * Creates a new icon that will paint the given formula box in the given point size.
+     *
+     * @param b the formula box to be painted
+     * @param size the point size
+     */
+    protected TeXIcon(Box b, float size) {
+<span class="nc" id="L86">        this(b, size, false);</span>
+<span class="nc" id="L87">    }</span>
+
+<span class="fc" id="L89">    protected TeXIcon(Box b, float size, boolean trueValues) {</span>
+<span class="fc" id="L90">        box = b;</span>
+
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (defaultSize != -1) {</span>
+<span class="nc" id="L93">            size = defaultSize;</span>
+        }
+
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (magFactor != 0) {</span>
+<span class="nc" id="L97">            this.size = size * Math.abs(magFactor);</span>
+        } else {
+<span class="fc" id="L99">            this.size = size;</span>
+        }
+
+        /* I add this little value because it seems that tftopl calculates badly
+           the height and the depth of certains characters.
+        */
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (!trueValues) {</span>
+<span class="fc" id="L106">            insets.top += (int)(0.18f * size);</span>
+<span class="fc" id="L107">            insets.bottom += (int)(0.18f * size);</span>
+<span class="fc" id="L108">            insets.left += (int)(0.18f * size);</span>
+<span class="fc" id="L109">            insets.right += (int)(0.18f * size);</span>
+        }
+<span class="fc" id="L111">    }</span>
+
+    public void setForeground(TeXColor fg) {
+<span class="nc" id="L114">        this.fg = fg;</span>
+<span class="nc" id="L115">    }</span>
+
+    /**
+     * Set the insets of the TeXIcon.
+     *
+     * @param insets the insets
+     * @param trueValues true to force the true values
+     */
+    public void setInsets(TeXInsets insets, boolean trueValues) {
+<span class="fc" id="L124">        this.insets = insets;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if (!trueValues) {</span>
+<span class="fc" id="L126">            this.insets.top += (int)(0.18f * size);</span>
+<span class="fc" id="L127">            this.insets.bottom += (int)(0.18f * size);</span>
+<span class="fc" id="L128">            this.insets.left += (int)(0.18f * size);</span>
+<span class="fc" id="L129">            this.insets.right += (int)(0.18f * size);</span>
+        }
+<span class="fc" id="L131">    }</span>
+
+    /**
+     * Set the insets of the TeXIcon.
+     *
+     * @param insets the insets
+     */
+    public void setInsets(TeXInsets insets) {
+<span class="fc" id="L139">        setInsets(insets, false);</span>
+<span class="fc" id="L140">    }</span>
+
+    /**
+     * Get the total height of the TeXIcon. This also includes the insets.
+     */
+    public int getIconHeight() {
+<span class="fc" id="L146">        return ((int) ((box.getHeight()) * size + 0.99 + insets.top)) +  ((int) ((box.getDepth()) * size + 0.99 + insets.bottom));</span>
+    }
+
+    /**
+     * Get the total width of the TeXIcon. This also includes the insets.
+     */
+
+    public int getIconWidth() {
+<span class="fc" id="L154">        return (int) (box.getWidth() * size + 0.99 + insets.left + insets.right);</span>
+    }
+
+    /**
+     * Get the total width of the TeXIcon. This also includes the insets.
+     */
+
+    /**
+     * Paints the formula on a canvas that is not AWT (see PLAN.md, phase 2). The
+     * origin of the canvas is the top left corner of the icon; the foreground
+     * color is the one of {@link #setForeground(TeXColor)}, else the one given. If
+     * both are null, the color of the canvas is kept.
+     */
+    public void paint(TeXGraphics g2, TeXColor defaultForeground, int x, int y) {
+<span class="fc" id="L168">        final TeXColor oldColor = g2.getColor();</span>
+<span class="fc" id="L169">        g2.saveTransform();</span>
+<span class="fc" id="L170">        g2.scale(size, size); // the point size</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">        final TeXColor foreground = fg != null ? fg : defaultForeground;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        if (foreground != null)</span>
+<span class="fc" id="L173">            g2.setColor(foreground);</span>
+<span class="fc" id="L174">        box.draw(g2, (x + insets.left) / size, (y + insets.top) / size + box.getHeight());</span>
+<span class="fc" id="L175">        g2.restoreTransform();</span>
+<span class="fc" id="L176">        g2.setColor(oldColor);</span>
+<span class="fc" id="L177">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

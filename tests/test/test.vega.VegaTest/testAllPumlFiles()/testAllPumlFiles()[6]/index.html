@@ -24,7 +24,7 @@
 </ul>
 <div class="tab">
 <h2>Gradle Test Run :test</h2>
-<h1>mvp</h1>
+<h1>math/cjk</h1>
 <div class="tab-container">
 <ul class="tabLinks">
 <li>
@@ -43,7 +43,7 @@
 <tr>
 <td>
 <div class="infoBox">
-<div class="counter">4</div>
+<div class="counter">15</div>
 <p>tests</p>
 </div>
 </td>
@@ -55,13 +55,13 @@
 </td>
 <td>
 <div class="infoBox">
-<div class="counter">1</div>
+<div class="counter">0</div>
 <p>skipped</p>
 </div>
 </td>
 <td>
 <div class="infoBox duration">
-<div class="counter">0.012s</div>
+<div class="counter">0.034s</div>
 <p>duration</p>
 </div>
 </td>
@@ -70,7 +70,7 @@
 </div>
 </td>
 <td>
-<div class="infoBox skipped successRate">
+<div class="infoBox success successRate">
 <div class="percent">100%</div>
 <p>successful</p>
 </div>
@@ -78,17 +78,6 @@
 </tr>
 </table>
 </div>
-<div class="tab-container">
-<ul class="tabLinks">
-<li>
-<a class="" href="#">Skipped</a>
-</li>
-<li>
-<a class="" href="#">All</a>
-</li>
-</ul>
-<div class="tab">
-<h2>Skipped</h2>
 <table class="test-results sortable">
 <thead>
 <tr>
@@ -103,56 +92,79 @@
 </thead>
 <tbody>
 <tr>
-<td class="skipped">
-<a href="testAllPumlFiles()%5B6%5D%5B2%5D.html">hello-debug-skipped.puml</a>
-</td>
-<td class="path">testAllPumlFiles()[6][2]</td>
+<td class="success">latex-japanese.puml</td>
+<td class="path">testAllPumlFiles()[6][10]</td>
 <td>1</td>
 <td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">latex-korean.puml</td>
+<td class="path">testAllPumlFiles()[6][11]</td>
 <td>1</td>
-<td data-sort-value="4">0.004s</td>
-<td class="skipped" data-sort-value="100">100%</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
 </tr>
-</tbody>
-</table>
-</div>
-<div class="tab">
-<h2>All</h2>
-<table class="test-results sortable">
-<thead>
 <tr>
-<th>Child</th>
-<th>Name</th>
-<th data-sort-default="desc">Tests</th>
-<th data-sort-default="desc">Failures</th>
-<th data-sort-default="desc">Skipped</th>
-<th data-sort-default="desc">Duration</th>
-<th>Success rate</th>
+<td class="success">latex-mixed-alphabets.puml</td>
+<td class="path">testAllPumlFiles()[6][12]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
 </tr>
-</thead>
-<tbody>
 <tr>
-<td class="success">hello-both.puml</td>
+<td class="success">latex-options-color-scale.puml</td>
+<td class="path">testAllPumlFiles()[6][13]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">math-quoted-text.puml</td>
+<td class="path">testAllPumlFiles()[6][14]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">math-sum-label.puml</td>
+<td class="path">testAllPumlFiles()[6][15]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">inline-class.puml</td>
 <td class="path">testAllPumlFiles()[6][1]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="4">0.004s</td>
+<td data-sort-value="7">0.007s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="skipped">
-<a href="testAllPumlFiles()%5B6%5D%5B2%5D.html">hello-debug-skipped.puml</a>
-</td>
+<td class="success">inline-note-sequence.puml</td>
 <td class="path">testAllPumlFiles()[6][2]</td>
 <td>1</td>
 <td>0</td>
-<td>1</td>
-<td data-sort-value="4">0.004s</td>
-<td class="skipped" data-sort-value="100">100%</td>
+<td>0</td>
+<td data-sort-value="3">0.003s</td>
+<td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">hello-debug.puml</td>
+<td class="success">latex-arabic-hebrew.puml</td>
 <td class="path">testAllPumlFiles()[6][3]</td>
 <td>1</td>
 <td>0</td>
@@ -161,8 +173,53 @@
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">hello-svg.puml</td>
+<td class="success">latex-chinese-math-mode.puml</td>
 <td class="path">testAllPumlFiles()[6][4]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="3">0.003s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">latex-chinese-text.puml</td>
+<td class="path">testAllPumlFiles()[6][5]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">latex-colors-boxes.puml</td>
+<td class="path">testAllPumlFiles()[6][6]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">latex-emoji-and-symbols.puml</td>
+<td class="path">testAllPumlFiles()[6][7]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="5">0.005s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">latex-fullwidth-punctuation.puml</td>
+<td class="path">testAllPumlFiles()[6][8]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">latex-in-scripts-frac-sqrt.puml</td>
+<td class="path">testAllPumlFiles()[6][9]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
@@ -171,8 +228,6 @@
 </tr>
 </tbody>
 </table>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -185,7 +240,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.8.2</a> at Nov 1, 2026, 9:00:21 PM</p>
+<a href="https://www.gradle.org">Gradle 9.8.2</a> at Nov 2, 2026, 6:47:00 PM</p>
 </div>
 </div>
 </body>

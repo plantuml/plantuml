@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccentedAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">AccentedAtom.java</span></div><h1>AccentedAtom.java</h1><pre class="source lang-java linenums">/* AccentedAtom.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * An atom representing another atom with an accent symbol above it.
+ */
+public class AccentedAtom extends Atom {
+
+    // accent symbol
+    private final SymbolAtom accent;
+<span class="pc" id="L56">    private boolean acc = false;</span>
+<span class="pc" id="L57">    private boolean changeSize = true;</span>
+
+    // base atom
+<span class="pc" id="L60">    protected Atom base = null;</span>
+<span class="pc" id="L61">    protected Atom underbase = null;</span>
+
+<span class="nc" id="L63">    public AccentedAtom(Atom base, Atom accent) throws InvalidSymbolTypeException {</span>
+<span class="nc" id="L64">        this.base = base;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (base instanceof AccentedAtom)</span>
+<span class="nc" id="L66">            underbase = ((AccentedAtom)base).underbase;</span>
+        else
+<span class="nc" id="L68">            underbase = base;</span>
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (!(accent instanceof SymbolAtom))</span>
+<span class="nc" id="L71">            throw new InvalidSymbolTypeException(&quot;Invalid accent&quot;);</span>
+
+<span class="nc" id="L73">        this.accent = (SymbolAtom)accent;</span>
+<span class="nc" id="L74">        this.acc = true;</span>
+<span class="nc" id="L75">    }</span>
+
+    public AccentedAtom(Atom base, Atom accent, boolean changeSize) throws InvalidSymbolTypeException {
+<span class="nc" id="L78">        this(base, accent);</span>
+<span class="nc" id="L79">        this.changeSize = changeSize;</span>
+<span class="nc" id="L80">    }</span>
+
+    /**
+     * Creates an AccentedAtom from a base atom and an accent symbol defined by its name
+     *
+     * @param base base atom
+     * @param accentName name of the accent symbol to be put over the base atom
+     * @throws InvalidSymbolTypeException if the symbol is not defined as an accent ('acc')
+     * @throws SymbolNotFoundException if there's no symbol defined with the given name
+     */
+    public AccentedAtom(Atom base, String accentName)
+<span class="fc" id="L91">    throws InvalidSymbolTypeException, SymbolNotFoundException {</span>
+<span class="fc" id="L92">        accent = SymbolAtom.get(accentName);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        if (accent.type == TeXConstants.TYPE_ACCENT) {</span>
+<span class="fc" id="L94">            this.base = base;</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">            if (base instanceof AccentedAtom)</span>
+<span class="nc" id="L96">                underbase = ((AccentedAtom)base).underbase;</span>
+            else
+<span class="fc" id="L98">                underbase = base;</span>
+        } else
+<span class="nc" id="L100">            throw new InvalidSymbolTypeException(&quot;The symbol with the name '&quot;</span>
+                                                 + accentName + &quot;' is not defined as an accent (&quot;
+                                                 + TeXSymbolParser.TYPE_ATTR + &quot;='acc') in '&quot;
+                                                 + TeXSymbolParser.RESOURCE_NAME + &quot;'!&quot;);
+<span class="fc" id="L104">    }</span>
+
+    /**
+     * Creates an AccentedAtom from a base atom and an accent symbol defined as a TeXFormula.
+     * This is used for parsing MathML.
+     *
+     * @param base base atom
+     * @param acc TeXFormula representing an accent (SymbolAtom)
+     * @throws InvalidTeXFormulaException if the given TeXFormula does not represent a
+     * 			single SymbolAtom (type &quot;TeXConstants.TYPE_ACCENT&quot;)
+     * @throws InvalidSymbolTypeException if the symbol is not defined as an accent ('acc')
+     */
+    public AccentedAtom(Atom base, TeXFormula acc)
+<span class="nc" id="L117">    throws InvalidTeXFormulaException, InvalidSymbolTypeException {</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (acc == null)</span>
+<span class="nc" id="L119">            throw new InvalidTeXFormulaException(</span>
+                &quot;The accent TeXFormula can't be null!&quot;);
+        else {
+<span class="nc" id="L122">            Atom root = acc.root;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            if (root instanceof SymbolAtom) {</span>
+<span class="nc" id="L124">                accent = (SymbolAtom) root;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">                if (accent.type == TeXConstants.TYPE_ACCENT)</span>
+<span class="nc" id="L126">                    this.base = base;</span>
+                else
+<span class="nc" id="L128">                    throw new InvalidSymbolTypeException(</span>
+                        &quot;The accent TeXFormula represents a single symbol with the name '&quot;
+<span class="nc" id="L130">                        + accent.getName()</span>
+                        + &quot;', but this symbol is not defined as an accent (&quot;
+                        + TeXSymbolParser.TYPE_ATTR + &quot;='acc') in '&quot;
+                        + TeXSymbolParser.RESOURCE_NAME + &quot;'!&quot;);
+            } else
+<span class="nc" id="L135">                throw new InvalidTeXFormulaException(</span>
+                    &quot;The accent TeXFormula does not represent a single symbol!&quot;);
+        }
+<span class="nc" id="L138">    }</span>
+
+    public Box createBox(TeXEnvironment env) {
+<span class="fc" id="L141">        TeXFont tf = env.getTeXFont();</span>
+<span class="fc" id="L142">        int style = env.getStyle();</span>
+
+        // set base in cramped style
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">        Box b = (base == null ? new StrutBox(0, 0, 0, 0) : base.createBox(env.crampStyle()));</span>
+
+<span class="fc" id="L147">        float u = b.getWidth();</span>
+<span class="fc" id="L148">        float s = 0;</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (underbase instanceof CharSymbol)</span>
+<span class="fc" id="L150">            s = tf.getSkew(((CharSymbol) underbase).getCharFont(tf), style);</span>
+
+        // retrieve best Char from the accent symbol
+<span class="fc" id="L153">        Char ch = tf.getChar(accent.getName(), style);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        while (tf.hasNextLarger(ch)) {</span>
+<span class="fc" id="L155">            Char larger = tf.getNextLarger(ch, style);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">            if (larger.getWidth() &lt;= u)</span>
+<span class="fc" id="L157">                ch = larger;</span>
+            else
+                break;
+<span class="fc" id="L160">        }</span>
+
+        // calculate delta
+<span class="fc" id="L163">        float ec = -SpaceAtom.getFactor(TeXConstants.UNIT_MU, env);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        float delta = acc ? ec : Math.min(b.getHeight(), tf.getXHeight(style, ch.getFontCode()));</span>
+
+        // create vertical box
+<span class="fc" id="L167">        VerticalBox vBox = new VerticalBox();</span>
+
+        // accent
+        Box y;
+<span class="fc" id="L171">        float italic = ch.getItalic();</span>
+<span class="fc" id="L172">        Box cb = new CharBox(ch);</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (acc)</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            cb = accent.createBox(changeSize ? env.subStyle() : env);</span>
+
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if (Math.abs(italic) &gt; TeXFormula.PREC) {</span>
+<span class="fc" id="L177">            y = new HorizontalBox(new StrutBox(-italic, 0, 0, 0));</span>
+<span class="fc" id="L178">            y.add(cb);</span>
+        } else
+<span class="fc" id="L180">            y = cb;</span>
+
+        // if diff &gt; 0, center accent, otherwise center base
+<span class="fc" id="L183">        float diff = (u - y.getWidth()) / 2;</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        y.setShift(s + (diff &gt; 0 ? diff : 0));</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">        if (diff &lt; 0)</span>
+<span class="fc" id="L186">            b = new HorizontalBox(b, y.getWidth(), TeXConstants.ALIGN_CENTER);</span>
+<span class="fc" id="L187">        vBox.add(y);</span>
+
+        // kern
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">        vBox.add(new StrutBox(0, changeSize ? -delta : -b.getHeight(), 0, 0));</span>
+        // base
+<span class="fc" id="L192">        vBox.add(b);</span>
+
+        // set height and depth vertical box
+<span class="fc" id="L195">        float total = vBox.getHeight() + vBox.getDepth(), d = b.getDepth();</span>
+<span class="fc" id="L196">        vBox.setDepth(d);</span>
+<span class="fc" id="L197">        vBox.setHeight(total - d);</span>
+
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        if (diff &lt; 0) {</span>
+<span class="fc" id="L200">            HorizontalBox hb = new HorizontalBox(new StrutBox(diff, 0, 0, 0));</span>
+<span class="fc" id="L201">            hb.add(vBox);</span>
+<span class="fc" id="L202">            hb.setWidth(u);</span>
+<span class="fc" id="L203">            return hb;</span>
+        }
+
+<span class="fc" id="L206">        return vBox;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UnderOverArrowAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">UnderOverArrowAtom.java</span></div><h1>UnderOverArrowAtom.java</h1><pre class="source lang-java linenums">/* UnderOverArrowAtom.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * An atom representing an other atom with an extensible arrow or doublearrow over or under it.
+ */
+public class UnderOverArrowAtom extends Atom {
+
+    private Atom base;
+<span class="fc" id="L54">    private boolean over, left = false, dble = false;</span>
+
+<span class="fc" id="L56">    public UnderOverArrowAtom(Atom base, boolean left, boolean over) {</span>
+<span class="fc" id="L57">        this.base = base;</span>
+<span class="fc" id="L58">        this.left = left;</span>
+<span class="fc" id="L59">        this.over = over;</span>
+<span class="fc" id="L60">    }</span>
+
+<span class="fc" id="L62">    public UnderOverArrowAtom(Atom base, boolean over) {</span>
+<span class="fc" id="L63">        this.base = base;</span>
+<span class="fc" id="L64">        this.over = over;</span>
+<span class="fc" id="L65">        this.dble = true;</span>
+<span class="fc" id="L66">    }</span>
+
+    public Box createBox(TeXEnvironment env) {
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        Box b = base != null ? base.createBox(env) : new StrutBox(0, 0, 0, 0);</span>
+<span class="fc" id="L70">        float sep = new SpaceAtom(TeXConstants.UNIT_POINT, 1f, 0, 0).createBox(env).getWidth();</span>
+        Box arrow;
+
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (dble) {</span>
+<span class="fc" id="L74">            arrow = XLeftRightArrowFactory.create(env, b.getWidth());</span>
+<span class="fc" id="L75">            sep = 4 * sep;</span>
+        } else {
+<span class="fc" id="L77">            arrow = XLeftRightArrowFactory.create(left, env, b.getWidth());</span>
+<span class="fc" id="L78">            sep = -sep;</span>
+        }
+
+<span class="fc" id="L81">        VerticalBox vb = new VerticalBox();</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (over) {</span>
+<span class="fc" id="L83">            vb.add(arrow);</span>
+<span class="fc" id="L84">            vb.add(new HorizontalBox(b, arrow.getWidth(), TeXConstants.ALIGN_CENTER));</span>
+<span class="fc" id="L85">            float h = vb.getDepth() + vb.getHeight();</span>
+<span class="fc" id="L86">            vb.setDepth(b.getDepth());</span>
+<span class="fc" id="L87">            vb.setHeight(h - b.getDepth());</span>
+<span class="fc" id="L88">        } else {</span>
+<span class="fc" id="L89">            vb.add(new HorizontalBox(b, arrow.getWidth(), TeXConstants.ALIGN_CENTER));</span>
+<span class="fc" id="L90">            vb.add(new StrutBox(0, sep, 0, 0));</span>
+<span class="fc" id="L91">            vb.add(arrow);</span>
+<span class="fc" id="L92">            float h = vb.getDepth() + vb.getHeight();</span>
+<span class="fc" id="L93">            vb.setDepth(h - b.getHeight());</span>
+<span class="fc" id="L94">            vb.setHeight(b.getHeight());</span>
+        }
+
+<span class="fc" id="L97">        return vb;</span>
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

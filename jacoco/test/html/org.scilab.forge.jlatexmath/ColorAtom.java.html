@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColorAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">ColorAtom.java</span></div><h1>ColorAtom.java</h1><pre class="source lang-java linenums">/* ColorAtom.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+/**
+ * An atom representing the foreground and background color of an other atom.
+ */
+public class ColorAtom extends Atom implements Row {
+
+<span class="fc" id="L58">    public static Map&lt;String,TeXColor&gt; Colors = new HashMap&lt;String,TeXColor&gt;();</span>
+
+    // background color
+    private final TeXColor background;
+
+    // foreground color
+    private final TeXColor color;
+
+    // RowAtom for which the colorsettings apply
+    private final RowAtom elements;
+
+    static {
+<span class="fc" id="L70">        initColors();</span>
+<span class="fc" id="L71">    }</span>
+
+    /**
+     * Creates a new ColorAtom that sets the given colors for the given atom.
+     * Null for a color means: no specific color set for this atom.
+     *
+     * @param atom the atom for which the given colors have to be set
+     * @param bg the background color
+     * @param c the foreground color
+     */
+<span class="fc" id="L81">    public ColorAtom(Atom atom, TeXColor bg, TeXColor c) {</span>
+<span class="fc" id="L82">        elements = new RowAtom(atom);</span>
+<span class="fc" id="L83">        background = bg;</span>
+<span class="fc" id="L84">        color = c;</span>
+<span class="fc" id="L85">    }</span>
+
+    /**
+     * Creates a ColorAtom that overrides the colors of the given ColorAtom if the given
+     * colors are not null. If they're null, the old values are used.
+     *
+     * @param bg the background color
+     * @param c the foreground color
+     * @param old the ColorAtom for which the colorsettings should be overriden with the
+     *                  given colors.
+     */
+<span class="nc" id="L96">    public ColorAtom(TeXColor bg, TeXColor c, ColorAtom old) {</span>
+<span class="nc" id="L97">        elements = new RowAtom(old.elements);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        background = (bg == null ? old.background : bg);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        color = (c == null ? old.color : c);</span>
+<span class="nc" id="L100">    }</span>
+
+    public Box createBox(TeXEnvironment env) {
+<span class="fc" id="L103">        env.isColored = true;</span>
+<span class="fc" id="L104">        TeXEnvironment copy = env.copy();</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (background != null)</span>
+<span class="nc" id="L106">            copy.setBackground(background);</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (color != null)</span>
+<span class="fc" id="L108">            copy.setColor(color);</span>
+<span class="fc" id="L109">        return elements.createBox(copy);</span>
+    }
+
+    public int getLeftType() {
+<span class="fc" id="L113">        return elements.getLeftType();</span>
+    }
+
+    public int getRightType() {
+<span class="fc" id="L117">        return elements.getRightType();</span>
+    }
+
+    public void setPreviousAtom(Dummy prev) {
+<span class="fc" id="L121">        elements.setPreviousAtom(prev);</span>
+<span class="fc" id="L122">    }</span>
+
+    public static TeXColor getColor(String s) {
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if (s != null) {</span>
+<span class="fc" id="L126">            s = s.trim();</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">            if (s.length() &gt;= 1) {</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">                if (s.charAt(0) == '#') {</span>
+<span class="fc" id="L129">                    return TeXColor.decode(s);</span>
+<span class="pc bpc" id="L130" title="2 of 4 branches missed.">                } else if (s.indexOf(',') != -1 || s.indexOf(';') != -1) {</span>
+<span class="nc" id="L131">                    StringTokenizer toks = new StringTokenizer(s, &quot;;,&quot;);</span>
+<span class="nc" id="L132">                    int n = toks.countTokens();</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                    if (n == 3) {</span>
+                        // RGB model
+                        try  {
+<span class="nc" id="L136">                            String R = toks.nextToken().trim();</span>
+<span class="nc" id="L137">                            String G = toks.nextToken().trim();</span>
+<span class="nc" id="L138">                            String B = toks.nextToken().trim();</span>
+
+<span class="nc" id="L140">                            float r = Float.parseFloat(R);</span>
+<span class="nc" id="L141">                            float g = Float.parseFloat(G);</span>
+<span class="nc" id="L142">                            float b = Float.parseFloat(B);</span>
+
+<span class="nc bnc" id="L144" title="All 12 branches missed.">                            if (r == (int) r &amp;&amp; g == (int) g &amp;&amp; b == (int) b &amp;&amp; R.indexOf('.') == -1 &amp;&amp; G.indexOf('.') == -1 &amp;&amp; B.indexOf('.') == -1) {</span>
+<span class="nc" id="L145">                                int ir = (int) Math.min(255, Math.max(0, r));</span>
+<span class="nc" id="L146">                                int ig = (int) Math.min(255, Math.max(0, g));</span>
+<span class="nc" id="L147">                                int ib = (int) Math.min(255, Math.max(0, b));</span>
+<span class="nc" id="L148">                                return new TeXColor(ir, ig, ib);</span>
+                            } else {
+<span class="nc" id="L150">                                r = (float) Math.min(1, Math.max(0, r));</span>
+<span class="nc" id="L151">                                g = (float) Math.min(1, Math.max(0, g));</span>
+<span class="nc" id="L152">                                b = (float) Math.min(1, Math.max(0, b));</span>
+<span class="nc" id="L153">                                return new TeXColor(r, g, b);</span>
+                            }
+<span class="nc" id="L155">                        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L156">                            return TeXColor.BLACK;</span>
+                        }
+<span class="nc bnc" id="L158" title="All 2 branches missed.">                    } else if (n == 4) {</span>
+                        // CMYK model
+                        try  {
+<span class="nc" id="L161">                            float c = Float.parseFloat(toks.nextToken().trim());</span>
+<span class="nc" id="L162">                            float m = Float.parseFloat(toks.nextToken().trim());</span>
+<span class="nc" id="L163">                            float y = Float.parseFloat(toks.nextToken().trim());</span>
+<span class="nc" id="L164">                            float k = Float.parseFloat(toks.nextToken().trim());</span>
+
+<span class="nc" id="L166">                            c = (float) Math.min(1, Math.max(0, c));</span>
+<span class="nc" id="L167">                            m = (float) Math.min(1, Math.max(0, m));</span>
+<span class="nc" id="L168">                            y = (float) Math.min(1, Math.max(0, y));</span>
+<span class="nc" id="L169">                            k = (float) Math.min(1, Math.max(0, k));</span>
+
+<span class="nc" id="L171">                            return convColor(c, m, y, k);</span>
+<span class="nc" id="L172">                        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L173">                            return TeXColor.BLACK;</span>
+                        }
+                    }
+                }
+
+<span class="fc" id="L178">                TeXColor c = Colors.get(s.toLowerCase());</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">                if (c != null) {</span>
+<span class="fc" id="L180">                    return c;</span>
+                } else {
+<span class="nc bnc" id="L182" title="All 2 branches missed.">                    if (s.indexOf('.') != -1) {</span>
+                        try {
+<span class="nc" id="L184">                            float g = (float) Math.min(1, Math.max(Float.parseFloat(s), 0));</span>
+
+<span class="nc" id="L186">                            return new TeXColor(g, g, g);</span>
+<span class="nc" id="L187">                        } catch (NumberFormatException e) { }</span>
+                    }
+
+<span class="nc" id="L190">                    return TeXColor.decode(&quot;#&quot; + s);</span>
+                }
+            }
+        }
+
+<span class="nc" id="L195">        return TeXColor.BLACK;</span>
+    }
+
+    private static void initColors() {
+<span class="fc" id="L199">        Colors.put(&quot;black&quot;, TeXColor.BLACK);</span>
+<span class="fc" id="L200">        Colors.put(&quot;white&quot;, TeXColor.WHITE);</span>
+<span class="fc" id="L201">        Colors.put(&quot;red&quot;, TeXColor.RED);</span>
+<span class="fc" id="L202">        Colors.put(&quot;green&quot;, TeXColor.GREEN);</span>
+<span class="fc" id="L203">        Colors.put(&quot;blue&quot;, TeXColor.BLUE);</span>
+<span class="fc" id="L204">        Colors.put(&quot;cyan&quot;, TeXColor.CYAN);</span>
+<span class="fc" id="L205">        Colors.put(&quot;magenta&quot;, TeXColor.MAGENTA);</span>
+<span class="fc" id="L206">        Colors.put(&quot;yellow&quot;, TeXColor.YELLOW);</span>
+<span class="fc" id="L207">        Colors.put(&quot;greenyellow&quot;, convColor(0.15f, 0f, 0.69f, 0f));</span>
+<span class="fc" id="L208">        Colors.put(&quot;goldenrod&quot;, convColor(0f, 0.10f, 0.84f, 0f));</span>
+<span class="fc" id="L209">        Colors.put(&quot;dandelion&quot;, convColor(0f, 0.29f, 0.84f, 0f));</span>
+<span class="fc" id="L210">        Colors.put(&quot;apricot&quot;, convColor(0f, 0.32f, 0.52f, 0f));</span>
+<span class="fc" id="L211">        Colors.put(&quot;peach&quot;, convColor(0f, 0.50f, 0.70f, 0f));</span>
+<span class="fc" id="L212">        Colors.put(&quot;melon&quot;, convColor(0f, 0.46f, 0.50f, 0f));</span>
+<span class="fc" id="L213">        Colors.put(&quot;yelloworange&quot;, convColor(0f, 0.42f, 1f, 0f));</span>
+<span class="fc" id="L214">        Colors.put(&quot;orange&quot;, convColor(0f, 0.61f, 0.87f, 0f));</span>
+<span class="fc" id="L215">        Colors.put(&quot;burntorange&quot;, convColor(0f, 0.51f, 1f, 0f));</span>
+<span class="fc" id="L216">        Colors.put(&quot;bittersweet&quot;, convColor(0f, 0.75f, 1f, 0.24f));</span>
+<span class="fc" id="L217">        Colors.put(&quot;redorange&quot;, convColor(0f, 0.77f, 0.87f, 0f));</span>
+<span class="fc" id="L218">        Colors.put(&quot;mahogany&quot;, convColor(0f, 0.85f, 0.87f, 0.35f));</span>
+<span class="fc" id="L219">        Colors.put(&quot;maroon&quot;, convColor(0f, 0.87f, 0.68f, 0.32f));</span>
+<span class="fc" id="L220">        Colors.put(&quot;brickred&quot;, convColor(0f, 0.89f, 0.94f, 0.28f));</span>
+<span class="fc" id="L221">        Colors.put(&quot;orangered&quot;, convColor(0f, 1f, 0.50f, 0f));</span>
+<span class="fc" id="L222">        Colors.put(&quot;rubinered&quot;, convColor(0f, 1f, 0.13f, 0f));</span>
+<span class="fc" id="L223">        Colors.put(&quot;wildstrawberry&quot;, convColor(0f, 0.96f, 0.39f, 0f));</span>
+<span class="fc" id="L224">        Colors.put(&quot;salmon&quot;, convColor(0f, 0.53f, 0.38f, 0f));</span>
+<span class="fc" id="L225">        Colors.put(&quot;carnationpink&quot;, convColor(0f, 0.63f, 0f, 0f));</span>
+<span class="fc" id="L226">        Colors.put(&quot;magenta&quot;, convColor(0f, 1f, 0f, 0f));</span>
+<span class="fc" id="L227">        Colors.put(&quot;violetred&quot;, convColor(0f, 0.81f, 0f, 0f));</span>
+<span class="fc" id="L228">        Colors.put(&quot;rhodamine&quot;, convColor(0f, 0.82f, 0f, 0f));</span>
+<span class="fc" id="L229">        Colors.put(&quot;mulberry&quot;, convColor(0.34f, 0.90f, 0f, 0.02f));</span>
+<span class="fc" id="L230">        Colors.put(&quot;redviolet&quot;, convColor(0.07f, 0.90f, 0f, 0.34f));</span>
+<span class="fc" id="L231">        Colors.put(&quot;fuchsia&quot;, convColor(0.47f, 0.91f, 0f, 0.08f));</span>
+<span class="fc" id="L232">        Colors.put(&quot;lavender&quot;, convColor(0f, 0.48f, 0f, 0f));</span>
+<span class="fc" id="L233">        Colors.put(&quot;thistle&quot;, convColor(0.12f, 0.59f, 0f, 0f));</span>
+<span class="fc" id="L234">        Colors.put(&quot;orchid&quot;, convColor(0.32f, 0.64f, 0f, 0f));</span>
+<span class="fc" id="L235">        Colors.put(&quot;darkorchid&quot;, convColor(0.40f, 0.80f, 0.20f, 0f));</span>
+<span class="fc" id="L236">        Colors.put(&quot;purple&quot;, convColor(0.45f, 0.86f, 0f, 0f));</span>
+<span class="fc" id="L237">        Colors.put(&quot;plum&quot;, convColor(0.50f, 1f, 0f, 0f));</span>
+<span class="fc" id="L238">        Colors.put(&quot;violet&quot;, convColor(0.79f, 0.88f, 0f, 0f));</span>
+<span class="fc" id="L239">        Colors.put(&quot;royalpurple&quot;, convColor(0.75f, 0.90f, 0f, 0f));</span>
+<span class="fc" id="L240">        Colors.put(&quot;blueviolet&quot;, convColor(0.86f, 0.91f, 0f, 0.04f));</span>
+<span class="fc" id="L241">        Colors.put(&quot;periwinkle&quot;, convColor(0.57f, 0.55f, 0f, 0f));</span>
+<span class="fc" id="L242">        Colors.put(&quot;cadetblue&quot;, convColor(0.62f, 0.57f, 0.23f, 0f));</span>
+<span class="fc" id="L243">        Colors.put(&quot;cornflowerblue&quot;, convColor(0.65f, 0.13f, 0f, 0f));</span>
+<span class="fc" id="L244">        Colors.put(&quot;midnightblue&quot;, convColor(0.98f, 0.13f, 0f, 0.43f));</span>
+<span class="fc" id="L245">        Colors.put(&quot;navyblue&quot;, convColor(0.94f, 0.54f, 0f, 0f));</span>
+<span class="fc" id="L246">        Colors.put(&quot;royalblue&quot;, convColor(1f, 0.50f, 0f, 0f));</span>
+<span class="fc" id="L247">        Colors.put(&quot;cerulean&quot;, convColor(0.94f, 0.11f, 0f, 0f));</span>
+<span class="fc" id="L248">        Colors.put(&quot;processblue&quot;, convColor(0.96f, 0f, 0f, 0f));</span>
+<span class="fc" id="L249">        Colors.put(&quot;skyblue&quot;, convColor(0.62f, 0f, 0.12f, 0f));</span>
+<span class="fc" id="L250">        Colors.put(&quot;turquoise&quot;, convColor(0.85f, 0f, 0.20f, 0f));</span>
+<span class="fc" id="L251">        Colors.put(&quot;tealblue&quot;, convColor(0.86f, 0f, 0.34f, 0.02f));</span>
+<span class="fc" id="L252">        Colors.put(&quot;aquamarine&quot;, convColor(0.82f, 0f, 0.30f, 0f));</span>
+<span class="fc" id="L253">        Colors.put(&quot;bluegreen&quot;, convColor(0.85f, 0f, 0.33f, 0f));</span>
+<span class="fc" id="L254">        Colors.put(&quot;emerald&quot;, convColor(1f, 0f, 0.50f, 0f));</span>
+<span class="fc" id="L255">        Colors.put(&quot;junglegreen&quot;, convColor(0.99f, 0f, 0.52f, 0f));</span>
+<span class="fc" id="L256">        Colors.put(&quot;seagreen&quot;, convColor(0.69f, 0f, 0.50f, 0f));</span>
+<span class="fc" id="L257">        Colors.put(&quot;forestgreen&quot;, convColor(0.91f, 0f, 0.88f, 0.12f));</span>
+<span class="fc" id="L258">        Colors.put(&quot;pinegreen&quot;, convColor(0.92f, 0f, 0.59f, 0.25f));</span>
+<span class="fc" id="L259">        Colors.put(&quot;limegreen&quot;, convColor(0.50f, 0f, 1f, 0f));</span>
+<span class="fc" id="L260">        Colors.put(&quot;yellowgreen&quot;, convColor(0.44f, 0f, 0.74f, 0f));</span>
+<span class="fc" id="L261">        Colors.put(&quot;springgreen&quot;, convColor(0.26f, 0f, 0.76f, 0f));</span>
+<span class="fc" id="L262">        Colors.put(&quot;olivegreen&quot;, convColor(0.64f, 0f, 0.95f, 0.40f));</span>
+<span class="fc" id="L263">        Colors.put(&quot;rawsienna&quot;, convColor(0f, 0.72f, 1f, 0.45f));</span>
+<span class="fc" id="L264">        Colors.put(&quot;sepia&quot;, convColor(0f, 0.83f, 1f, 0.70f));</span>
+<span class="fc" id="L265">        Colors.put(&quot;brown&quot;, convColor(0f, 0.81f, 1f, 0.60f));</span>
+<span class="fc" id="L266">        Colors.put(&quot;tan&quot;, convColor(0.14f, 0.42f, 0.56f, 0f));</span>
+<span class="fc" id="L267">        Colors.put(&quot;gray&quot;, convColor(0f, 0f, 0f, 0.50f));</span>
+<span class="fc" id="L268">    }</span>
+
+    private static TeXColor convColor(final float c, final float m, final float y, final float k) {
+<span class="fc" id="L271">        final float kk = 1f - k;</span>
+<span class="fc" id="L272">        return new TeXColor(kk * (1f - c), kk * (1f - m), kk * (1f - y));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

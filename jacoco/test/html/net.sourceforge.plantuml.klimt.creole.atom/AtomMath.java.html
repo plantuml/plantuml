@@ -35,16 +35,14 @@
  */
 package net.sourceforge.plantuml.klimt.creole.atom;
 
-import net.sourceforge.plantuml.klimt.awt.PortableImage;
-import net.sourceforge.plantuml.klimt.awt.XColor;
-import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UImage;
-import net.sourceforge.plantuml.klimt.shape.UImageSvg;
+import net.sourceforge.plantuml.math.MathBlankImage;
 import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
@@ -54,54 +52,43 @@ public class AtomMath extends AbstractAtom implements Atom {
 	private final HColor foreground;
 	private final HColor background;
 
-<span class="nc" id="L57">	public AtomMath(ScientificEquationSafe math, HColor foreground, HColor background) {</span>
-<span class="nc" id="L58">		this.math = math;</span>
-<span class="nc" id="L59">		this.foreground = foreground;</span>
-<span class="nc" id="L60">		this.background = background;</span>
-<span class="nc" id="L61">	}</span>
+<span class="fc" id="L55">	public AtomMath(ScientificEquationSafe math, HColor foreground, HColor background) {</span>
+<span class="fc" id="L56">		this.math = math;</span>
+<span class="fc" id="L57">		this.foreground = foreground;</span>
+<span class="fc" id="L58">		this.background = background;</span>
+<span class="fc" id="L59">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
-<span class="nc" id="L66">			return stringBounder.calculateDimension(null, math.getSource());</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (stringBounder.matchesProperty(&quot;TIKZ&quot;)) {</span>
+<span class="nc" id="L64">			return stringBounder.calculateDimension(null, math.getSource());</span>
 		}
-<span class="nc" id="L68">		final PortableImage image = math.getImage(XColor.BLACK, XColor.WHITE).withScale(1).getImage();</span>
-<span class="nc" id="L69">		return new XDimension2D(image.getWidth(), image.getHeight());</span>
+<span class="fc" id="L66">		return math.getDimension(stringBounder);</span>
 	}
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L73">		return 0;</span>
+<span class="fc" id="L70">		return 0;</span>
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L79">			final ColorMapper colorMapper = ug.getColorMapper();</span>
-<span class="nc" id="L80">			final boolean isSvg = ug.matchesProperty(&quot;SVG&quot;);</span>
-			final XColor back;
-<span class="nc bnc" id="L82" title="All 2 branches missed.">			if (background == null)</span>
-<span class="nc" id="L83">				back = null;</span>
-			else
-<span class="nc" id="L85">				back = getColor(colorMapper, background, XColor.WHITE);</span>
-
-<span class="nc" id="L87">			final XColor fore = getColor(colorMapper, foreground, XColor.BLACK);</span>
-			// final double dpiFactor = ug.dpiFactor();
-<span class="nc bnc" id="L89" title="All 2 branches missed.">			if (isSvg) {</span>
-<span class="nc" id="L90">				final UImageSvg svg = math.getSvg(1, fore, back);</span>
-<span class="nc" id="L91">				ug.draw(svg);</span>
-<span class="nc" id="L92">			} else {</span>
-<span class="nc" id="L93">				final UImage image = new UImage(math.getImage(fore, back)).withFormula(math.getSource());</span>
-<span class="nc" id="L94">				ug.draw(image);</span>
-			}
+		// (TikZ is on the JVM only: the marker lets TeaVM prune this branch, and the AWT-based image)
+<span class="pc bpc" id="L76" title="1 of 4 branches missed.">		if (TeaVM.isTeaVM() == false &amp;&amp; ug.matchesProperty(&quot;TIKZ&quot;)) {</span>
+			// TikZ gets the source of the formula, not a drawing
+<span class="fc" id="L78">			final XDimension2D dim = math.getDimension(ug.getStringBounder());</span>
+<span class="fc" id="L79">			ug.draw(new UImage(new MathBlankImage(dim)).withFormula(math.getSource()));</span>
+<span class="fc" id="L80">			return;</span>
 		}
-<span class="nc" id="L97">	}</span>
+		// Only a plain color can be used; the UGraphic maps it as it does for any shape
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		final HColor fore = foreground instanceof HColorSimple ? foreground : HColors.BLACK;</span>
+		final HColor back;
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (background == null)</span>
+<span class="fc" id="L86">			back = null;</span>
+		else
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">			back = background instanceof HColorSimple ? background : HColors.WHITE;</span>
 
-	private XColor getColor(ColorMapper colorMapper, HColor color, XColor defaultValue) {
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (color instanceof HColorSimple)</span>
-<span class="nc" id="L101">			return color.toColor(colorMapper);</span>
+<span class="fc" id="L90">		math.drawU(ug, fore, back);</span>
+<span class="fc" id="L91">	}</span>
 
-<span class="nc" id="L103">		return defaultValue;</span>
-
-	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

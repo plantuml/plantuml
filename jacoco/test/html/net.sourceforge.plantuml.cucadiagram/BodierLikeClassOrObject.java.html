@@ -92,9 +92,9 @@ public class BodierLikeClassOrObject extends BodierAbstract {
 
 	private boolean isBodyEnhanced() {
 <span class="fc bfc" id="L94" title="All 2 branches covered.">		for (CharSequence s : rawBody)</span>
-<span class="pc bpc" id="L95" title="2 of 4 branches missed.">			if (BodyEnhanced1.isBlockSeparator(s) || CreoleParser.isTableLine(s.toString())</span>
+<span class="pc bpc" id="L95" title="1 of 4 branches missed.">			if (BodyEnhanced1.isBlockSeparator(s) || CreoleParser.isTableLine(s.toString())</span>
 <span class="pc bpc" id="L96" title="2 of 4 branches missed.">					|| Parser.isTreeStart(s.toString()) || EmbeddedDiagram.getEmbeddedType(s) != null)</span>
-<span class="nc" id="L97">				return true;</span>
+<span class="fc" id="L97">				return true;</span>
 
 <span class="fc" id="L99">		return false;</span>
 	}
@@ -151,7 +151,7 @@ public class BodierLikeClassOrObject extends BodierAbstract {
 <span class="fc bfc" id="L151" title="All 2 branches covered.">		if (fieldsToDisplay == null) {</span>
 <span class="fc" id="L152">			fieldsToDisplay = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L153" title="All 2 branches covered.">			for (CharSequence s : rawBody) {</span>
-<span class="pc bpc" id="L154" title="1 of 4 branches missed.">				if (type != LeafType.OBJECT &amp;&amp; isMethod(s) == true)</span>
+<span class="fc bfc" id="L154" title="All 4 branches covered.">				if (type != LeafType.OBJECT &amp;&amp; isMethod(s) == true)</span>
 <span class="fc" id="L155">					continue;</span>
 
 <span class="pc bpc" id="L157" title="3 of 4 branches missed.">				if (s.length() == 0 &amp;&amp; fieldsToDisplay.size() == 0)</span>
@@ -195,19 +195,19 @@ public class BodierLikeClassOrObject extends BodierAbstract {
 	}
 
 	private List&lt;CharSequence&gt; rawBodyWithoutHidden() {
-<span class="nc" id="L198">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L199" title="All 2 branches missed.">		for (CharSequence s : rawBody) {</span>
+<span class="fc" id="L198">		final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		for (CharSequence s : rawBody) {</span>
 			final Member m;
-<span class="nc bnc" id="L201" title="All 2 branches missed.">			if (isMethod(s))</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">			if (isMethod(s))</span>
 <span class="nc" id="L202">				m = Member.method(s);</span>
 			else
-<span class="nc" id="L204">				m = Member.field(s);</span>
+<span class="fc" id="L204">				m = Member.field(s);</span>
 
-<span class="nc bnc" id="L206" title="All 2 branches missed.">			if (hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
-<span class="nc" id="L207">				result.add(m);</span>
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">			if (hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)</span>
+<span class="fc" id="L207">				result.add(m);</span>
 
-<span class="nc" id="L209">		}</span>
-<span class="nc" id="L210">		return result;</span>
+<span class="fc" id="L209">		}</span>
+<span class="fc" id="L210">		return result;</span>
 	}
 
 	@Override
@@ -217,24 +217,24 @@ public class BodierLikeClassOrObject extends BodierAbstract {
 		if (BodyFactory.BODY3)
 			return new Body3(rawBody, skinParam, style);
 
-<span class="pc bpc" id="L220" title="2 of 4 branches missed.">		if (type.isLikeClass() &amp;&amp; isBodyEnhanced()) {</span>
-<span class="nc bnc" id="L221" title="All 4 branches missed.">			if (showMethods || showFields)</span>
-<span class="nc" id="L222">				return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
-<span class="nc" id="L223">						rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);</span>
+<span class="fc bfc" id="L220" title="All 4 branches covered.">		if (type.isLikeClass() &amp;&amp; isBodyEnhanced()) {</span>
+<span class="pc bpc" id="L221" title="3 of 4 branches missed.">			if (showMethods || showFields)</span>
+<span class="fc" id="L222">				return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
+<span class="fc" id="L223">						rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);</span>
 
 <span class="nc" id="L225">			return null;</span>
 		}
 <span class="pc bpc" id="L227" title="1 of 2 branches missed.">		if (leaf == null)</span>
 <span class="nc" id="L228">			throw new IllegalStateException();</span>
 
-<span class="pc bpc" id="L230" title="1 of 2 branches missed.">		if (type == LeafType.OBJECT) {</span>
-<span class="nc bnc" id="L231" title="All 2 branches missed.">			if (showFields == false)</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		if (type == LeafType.OBJECT) {</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">			if (showFields == false)</span>
 				// return new TextBlockLineBefore(style.value(PName.LineThickness).asDouble(),
 				// TextBlockUtils.empty(0, 0));
 <span class="nc" id="L234">				return TextBlockUtils.empty(0, 0);</span>
 
-<span class="nc" id="L236">			return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
-<span class="nc" id="L237">					rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);</span>
+<span class="fc" id="L236">			return BodyFactory.create1(skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT),</span>
+<span class="fc" id="L237">					rawBodyWithoutHidden(), skinParam, stereotype, leaf, style);</span>
 		}
 <span class="pc bpc" id="L239" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
 <span class="pc bpc" id="L240" title="1 of 2 branches missed.">			assert type.isLikeClass();</span>

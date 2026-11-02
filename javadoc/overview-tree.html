@@ -294,6 +294,10 @@ loadScripts(document, 'script');</script>
 <li><a href="org/openpdf/text/pdf/fonts/package-tree.html">org.openpdf.text.pdf.fonts</a>, </li>
 <li><a href="org/openpdf/text/pdf/interfaces/package-tree.html">org.openpdf.text.pdf.interfaces</a>, </li>
 <li><a href="org/openpdf/text/pdf/internal/package-tree.html">org.openpdf.text.pdf.internal</a>, </li>
+<li><a href="org/scilab/forge/jlatexmath/package-tree.html">org.scilab.forge.jlatexmath</a>, </li>
+<li><a href="org/scilab/forge/jlatexmath/cyrillic/package-tree.html">org.scilab.forge.jlatexmath.cyrillic</a>, </li>
+<li><a href="org/scilab/forge/jlatexmath/dynamic/package-tree.html">org.scilab.forge.jlatexmath.dynamic</a>, </li>
+<li><a href="org/scilab/forge/jlatexmath/greek/package-tree.html">org.scilab.forge.jlatexmath.greek</a>, </li>
 <li><a href="org/stathissideris/ascii2image/core/package-tree.html">org.stathissideris.ascii2image.core</a>, </li>
 <li><a href="org/stathissideris/ascii2image/graphics/package-tree.html">org.stathissideris.ascii2image.graphics</a>, </li>
 <li><a href="org/stathissideris/ascii2image/text/package-tree.html">org.stathissideris.ascii2image.text</a>, </li>
@@ -432,8 +436,8 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.ditaa.<a href="net/sourceforge/plantuml/ditaa/PSystemDitaa.html" class="type-name-link" title="class in net.sourceforge.plantuml.ditaa">PSystemDitaa</a></li>
 <li class="circle">net.sourceforge.plantuml.directdot.<a href="net/sourceforge/plantuml/directdot/PSystemDot.html" class="type-name-link" title="class in net.sourceforge.plantuml.directdot">PSystemDot</a></li>
 <li class="circle">net.sourceforge.plantuml.jcckit.<a href="net/sourceforge/plantuml/jcckit/PSystemJcckit.html" class="type-name-link" title="class in net.sourceforge.plantuml.jcckit">PSystemJcckit</a></li>
-<li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/PSystemLatex.html" class="type-name-link" title="class in net.sourceforge.plantuml.math">PSystemLatex</a></li>
-<li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/PSystemMath.html" class="type-name-link" title="class in net.sourceforge.plantuml.math">PSystemMath</a></li>
+<li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/PSystemLatex.html" class="type-name-link" title="class in net.sourceforge.plantuml.math">PSystemLatex</a> (implements net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/FormulaDiagram.html" title="interface in net.sourceforge.plantuml.math">FormulaDiagram</a>)</li>
+<li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/PSystemMath.html" class="type-name-link" title="class in net.sourceforge.plantuml.math">PSystemMath</a> (implements net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/FormulaDiagram.html" title="interface in net.sourceforge.plantuml.math">FormulaDiagram</a>)</li>
 <li class="circle">net.sourceforge.plantuml.eggs.<a href="net/sourceforge/plantuml/eggs/PSystemPath.html" class="type-name-link" title="class in net.sourceforge.plantuml.eggs">PSystemPath</a></li>
 </ul>
 </li>
@@ -768,6 +772,96 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.asciiverse.<a href="net/sourceforge/plantuml/asciiverse/AsciiSnake.html" class="type-name-link" title="class in net.sourceforge.plantuml.asciiverse">AsciiSnake</a></li>
 <li class="circle">gen.lib.dotgen.<a href="gen/lib/dotgen/aspect__c.html" class="type-name-link" title="class in gen.lib.dotgen">aspect__c</a></li>
 <li class="circle">net.sourceforge.plantuml.asciiverse.<a href="net/sourceforge/plantuml/asciiverse/ATable.html" class="type-name-link" title="class in net.sourceforge.plantuml.asciiverse">ATable</a> (implements net.sourceforge.plantuml.asciiverse.<a href="net/sourceforge/plantuml/asciiverse/AsciiBlock.html" title="interface in net.sourceforge.plantuml.asciiverse">AsciiBlock</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Atom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">Atom</a> (implements java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Cloneable.html" title="class or interface in java.lang" class="external-link">Cloneable</a>)
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/AccentedAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">AccentedAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/BigDelimiterAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">BigDelimiterAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/BigOperatorAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">BigOperatorAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/BoldAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">BoldAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/BreakMarkAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">BreakMarkAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/CedillaAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">CedillaAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/CharSymbol.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">CharSymbol</a>
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/CharAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">CharAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/FixedCharAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">FixedCharAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/SymbolAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">SymbolAtom</a></li>
+</ul>
+</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ColorAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ColorAtom</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Row.html" title="interface in org.scilab.forge.jlatexmath">Row</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/CumulativeScriptsAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">CumulativeScriptsAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/DdotsAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">DdotsAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.dynamic.<a href="org/scilab/forge/jlatexmath/dynamic/DynamicAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath.dynamic">DynamicAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/EmptyAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">EmptyAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/FBoxAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">FBoxAtom</a>
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/DoubleFramedAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">DoubleFramedAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/OvalAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">OvalAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ShadowAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ShadowAtom</a></li>
+</ul>
+</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/FencedAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">FencedAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ForeignTextAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ForeignTextAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/FractionAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">FractionAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/HlineAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">HlineAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/IddotsAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">IddotsAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/IJAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">IJAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ItAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ItAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/LapedAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">LapedAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/LaTeXAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">LaTeXAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/LCaronAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">LCaronAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/MathAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">MathAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/MatrixAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">MatrixAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/MiddleAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">MiddleAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/MulticolumnAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">MulticolumnAtom</a>
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/HdotsforAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">HdotsforAtom</a></li>
+</ul>
+</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/MultlineAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">MultlineAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/NthRoot.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">NthRoot</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/OgonekAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">OgonekAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/OverlinedAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">OverlinedAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/OverUnderDelimiter.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">OverUnderDelimiter</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/PhantomAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">PhantomAtom</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Row.html" title="interface in org.scilab.forge.jlatexmath">Row</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/RaiseAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">RaiseAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ReflectAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ReflectAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ResizeAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ResizeAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/RomanAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">RomanAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/RotateAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">RotateAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/RowAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">RowAtom</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Row.html" title="interface in org.scilab.forge.jlatexmath">Row</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/RuleAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">RuleAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ScaleAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ScaleAtom</a>
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/MonoScaleAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">MonoScaleAtom</a></li>
+</ul>
+</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ScriptsAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ScriptsAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/SmallCapAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">SmallCapAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/SmashedAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">SmashedAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/SpaceAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">SpaceAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/SsAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">SsAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/StrikeThroughAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">StrikeThroughAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/StyleAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">StyleAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/tcaronAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">tcaronAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TextCircledAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TextCircledAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TextStyleAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TextStyleAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TStrokeAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TStrokeAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TtAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TtAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TypedAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TypedAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/UnderOverArrowAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">UnderOverArrowAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/UnderOverAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">UnderOverAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/UnderscoreAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">UnderscoreAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/VCenteredAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">VCenteredAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/VdotsAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">VdotsAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/VlineAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">VlineAtom</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/VRowAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">VRowAtom</a>
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/LongdivAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">LongdivAtom</a></li>
+</ul>
+</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/XArrowAtom.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">XArrowAtom</a></li>
+</ul>
+</li>
 <li class="circle">net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/AtomArray.html" class="type-name-link" title="class in net.sourceforge.plantuml.style">AtomArray</a> (implements java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;T&gt;)</li>
 <li class="circle">com.plantuml.ubrex.<a href="com/plantuml/ubrex/AtomicParser.html" class="type-name-link" title="class in com.plantuml.ubrex">AtomicParser</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.creole.legacy.<a href="net/sourceforge/plantuml/klimt/creole/legacy/AtomTextUtils.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.creole.legacy">AtomTextUtils</a></li>
@@ -844,6 +938,27 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.nwdiag.next.<a href="net/sourceforge/plantuml/nwdiag/next/BooleanGrid.html" class="type-name-link" title="class in net.sourceforge.plantuml.nwdiag.next">BooleanGrid</a></li>
 <li class="circle">net.sourceforge.plantuml.licensing.<a href="net/sourceforge/plantuml/licensing/BooleanOutputStream.html" class="type-name-link" title="class in net.sourceforge.plantuml.licensing">BooleanOutputStream</a> (implements java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a>)</li>
 <li class="circle">net.sourceforge.plantuml.svek.<a href="net/sourceforge/plantuml/svek/Boundary.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek">Boundary</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Box.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">Box</a>
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/CharBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">CharBox</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ForeignTextBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ForeignTextBox</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/FramedBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">FramedBox</a>
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/OvalBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">OvalBox</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ShadowBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ShadowBox</a></li>
+</ul>
+</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/GlueBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">GlueBox</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/HorizontalBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">HorizontalBox</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/HorizontalRule.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">HorizontalRule</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/OverBar.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">OverBar</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/OverUnderBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">OverUnderBox</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ReflectBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ReflectBox</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/RotateBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">RotateBox</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ScaleBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ScaleBox</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/StrutBox.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">StrutBox</a></li>
+</ul>
+</li>
 <li class="circle">net.sourceforge.plantuml.descdiagram.<a href="net/sourceforge/plantuml/descdiagram/BoxedCharacter.html" class="type-name-link" title="class in net.sourceforge.plantuml.descdiagram">BoxedCharacter</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>)</li>
 <li class="circle">net.sourceforge.plantuml.sdot.<a href="net/sourceforge/plantuml/sdot/BoxInfo.html" class="type-name-link" title="class in net.sourceforge.plantuml.sdot">BoxInfo</a></li>
 <li class="circle">net.sourceforge.plantuml.activitydiagram3.ftile.<a href="net/sourceforge/plantuml/activitydiagram3/ftile/BoxStyle.html" class="type-name-link" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">BoxStyle</a></li>
@@ -860,6 +975,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.braille.<a href="net/sourceforge/plantuml/braille/BrailleGrid.html" class="type-name-link" title="class in net.sourceforge.plantuml.braille">BrailleGrid</a></li>
 <li class="circle">net.sourceforge.plantuml.braille.<a href="net/sourceforge/plantuml/braille/BrailleUtils.html" class="type-name-link" title="class in net.sourceforge.plantuml.braille">BrailleUtils</a></li>
 <li class="circle">net.sourceforge.plantuml.activitydiagram3.<a href="net/sourceforge/plantuml/activitydiagram3/Branch.html" class="type-name-link" title="class in net.sourceforge.plantuml.activitydiagram3">Branch</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/BreakFormula.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">BreakFormula</a></li>
 <li class="circle">net.sourceforge.plantuml.teavm.js.browser.<a href="net/sourceforge/plantuml/teavm/js/browser/BrowserLog.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm.js.browser">BrowserLog</a></li>
 <li class="circle">net.sourceforge.plantuml.zopfli.<a href="net/sourceforge/plantuml/zopfli/Buffer.html" class="type-name-link" title="class in net.sourceforge.plantuml.zopfli">Buffer</a></li>
 <li class="circle">net.sourceforge.plantuml.code.<a href="net/sourceforge/plantuml/code/ByteArray.html" class="type-name-link" title="class in net.sourceforge.plantuml.code">ByteArray</a></li>
@@ -891,7 +1007,9 @@ loadScripts(document, 'script');</script>
 <li class="circle">com.plantuml.ubrex.<a href="com/plantuml/ubrex/ChallengeUpTo.html" class="type-name-link" title="class in com.plantuml.ubrex">ChallengeUpTo</a> (implements com.plantuml.ubrex.<a href="com/plantuml/ubrex/Challenge.html" title="interface in com.plantuml.ubrex">Challenge</a>)</li>
 <li class="circle">com.plantuml.ubrex.<a href="com/plantuml/ubrex/ChallengeZeroOrMore.html" class="type-name-link" title="class in com.plantuml.ubrex">ChallengeZeroOrMore</a> (implements com.plantuml.ubrex.<a href="com/plantuml/ubrex/Challenge.html" title="interface in com.plantuml.ubrex">Challenge</a>)</li>
 <li class="circle">net.sourceforge.plantuml.timingdiagram.<a href="net/sourceforge/plantuml/timingdiagram/ChangeState.html" class="type-name-link" title="class in net.sourceforge.plantuml.timingdiagram">ChangeState</a> (implements java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;T&gt;)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Char.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">Char</a></li>
 <li class="circle">com.plantuml.ubrex.<a href="com/plantuml/ubrex/CharClass.html" class="type-name-link" title="class in com.plantuml.ubrex">CharClass</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/CharFont.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">CharFont</a></li>
 <li class="circle">net.sourceforge.plantuml.utils.<a href="net/sourceforge/plantuml/utils/CharHidder.html" class="type-name-link" title="class in net.sourceforge.plantuml.utils">CharHidder</a></li>
 <li class="circle">net.sourceforge.plantuml.utils.<a href="net/sourceforge/plantuml/utils/CharInspectorImpl.html" class="type-name-link" title="class in net.sourceforge.plantuml.utils">CharInspectorImpl</a> (implements net.sourceforge.plantuml.utils.<a href="net/sourceforge/plantuml/utils/CharInspector.html" title="interface in net.sourceforge.plantuml.utils">CharInspector</a>)</li>
 <li class="circle">com.plantuml.ubrex.<a href="com/plantuml/ubrex/CharSet.html" class="type-name-link" title="class in com.plantuml.ubrex">CharSet</a></li>
@@ -1142,7 +1260,6 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.svek.image.<a href="net/sourceforge/plantuml/svek/image/ContainingEllipse.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek.image">ContainingEllipse</a></li>
 <li class="circle">net.sourceforge.plantuml.svek.<a href="net/sourceforge/plantuml/svek/Control.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek">Control</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>)</li>
 <li class="circle">org.stathissideris.ascii2image.core.<a href="org/stathissideris/ascii2image/core/ConversionOptions.html" class="type-name-link" title="class in org.stathissideris.ascii2image.core">ConversionOptions</a></li>
-<li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/ConverterSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml.math">ConverterSvg</a></li>
 <li class="circle">net.sourceforge.plantuml.bpm.<a href="net/sourceforge/plantuml/bpm/Coord.html" class="type-name-link" title="class in net.sourceforge.plantuml.bpm">Coord</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/CoordinateChange.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.geom">CoordinateChange</a></li>
 <li class="circle">net.sourceforge.plantuml.braille.<a href="net/sourceforge/plantuml/braille/Coords.html" class="type-name-link" title="class in net.sourceforge.plantuml.braille">Coords</a></li>
@@ -1174,6 +1291,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.abel.<a href="net/sourceforge/plantuml/abel/CucaNote.html" class="type-name-link" title="class in net.sourceforge.plantuml.abel">CucaNote</a></li>
 <li class="circle">net.sourceforge.plantuml.gitlog.<a href="net/sourceforge/plantuml/gitlog/CursorPosition.html" class="type-name-link" title="class in net.sourceforge.plantuml.gitlog">CursorPosition</a></li>
 <li class="circle">org.stathissideris.ascii2image.graphics.<a href="org/stathissideris/ascii2image/graphics/CustomShapeDefinition.html" class="type-name-link" title="class in org.stathissideris.ascii2image.graphics">CustomShapeDefinition</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.cyrillic.<a href="org/scilab/forge/jlatexmath/cyrillic/CyrillicRegistration.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath.cyrillic">CyrillicRegistration</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/AlphabetRegistration.html" title="interface in org.scilab.forge.jlatexmath">AlphabetRegistration</a>)</li>
 <li class="circle">net.sourceforge.plantuml.style.value.<a href="net/sourceforge/plantuml/style/value/DarkString.html" class="type-name-link" title="class in net.sourceforge.plantuml.style.value">DarkString</a></li>
 <li class="circle">jcckit.data.<a href="jcckit/data/DataContainer.html" class="type-name-link" title="class in jcckit.data">DataContainer</a>
 <ul>
@@ -1200,7 +1318,10 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.dedication.<a href="net/sourceforge/plantuml/dedication/DedicationEncrypted.html" class="type-name-link" title="class in net.sourceforge.plantuml.dedication">DedicationEncrypted</a> (implements net.sourceforge.plantuml.dedication.<a href="net/sourceforge/plantuml/dedication/Dedication.html" title="interface in net.sourceforge.plantuml.dedication">Dedication</a>)</li>
 <li class="circle">net.sourceforge.plantuml.dedication.<a href="net/sourceforge/plantuml/dedication/Dedications.html" class="type-name-link" title="class in net.sourceforge.plantuml.dedication">Dedications</a></li>
 <li class="circle">net.sourceforge.plantuml.dedication.<a href="net/sourceforge/plantuml/dedication/DedicationSimple.html" class="type-name-link" title="class in net.sourceforge.plantuml.dedication">DedicationSimple</a> (implements net.sourceforge.plantuml.dedication.<a href="net/sourceforge/plantuml/dedication/Dedication.html" title="interface in net.sourceforge.plantuml.dedication">Dedication</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/DefaultTeXFont.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">DefaultTeXFont</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXFont.html" title="interface in org.scilab.forge.jlatexmath">TeXFont</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/DefaultTeXFontParser.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">DefaultTeXFontParser</a></li>
 <li class="circle">net.sourceforge.plantuml.preproc.<a href="net/sourceforge/plantuml/preproc/Defines.html" class="type-name-link" title="class in net.sourceforge.plantuml.preproc">Defines</a> (implements net.sourceforge.plantuml.preproc.<a href="net/sourceforge/plantuml/preproc/Truth.html" title="interface in net.sourceforge.plantuml.preproc">Truth</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/DelimiterFactory.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">DelimiterFactory</a></li>
 <li class="circle">net.sourceforge.plantuml.webp.<a href="net/sourceforge/plantuml/webp/DeltaQ.html" class="type-name-link" title="class in net.sourceforge.plantuml.webp">DeltaQ</a></li>
 <li class="circle">zext.plantuml.com.google.zxing.common.<a href="zext/plantuml/com/google/zxing/common/DetectorResult.html" class="type-name-link" title="class in zext.plantuml.com.google.zxing.common">DetectorResult</a></li>
 <li class="circle">org.stathissideris.ascii2image.graphics.<a href="org/stathissideris/ascii2image/graphics/Diagram.html" class="type-name-link" title="class in org.stathissideris.ascii2image.graphics">Diagram</a></li>
@@ -1352,6 +1473,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">gen.lib.cdt.<a href="gen/lib/cdt/dttree__c.html" class="type-name-link" title="class in gen.lib.cdt">dttree__c</a></li>
 <li class="circle">gen.lib.cdt.<a href="gen/lib/cdt/dtview__c.html" class="type-name-link" title="class in gen.lib.cdt">dtview__c</a></li>
 <li class="circle">net.sourceforge.plantuml.emoji.data.<a href="net/sourceforge/plantuml/emoji/data/Dummy.html" class="type-name-link" title="class in net.sourceforge.plantuml.emoji.data">Dummy</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Dummy.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">Dummy</a></li>
 <li class="circle">net.sourceforge.plantuml.tim.<a href="net/sourceforge/plantuml/tim/Eater.html" class="type-name-link" title="class in net.sourceforge.plantuml.tim">Eater</a>
 <ul>
 <li class="circle">net.sourceforge.plantuml.tim.<a href="net/sourceforge/plantuml/tim/EaterAffectation.html" class="type-name-link" title="class in net.sourceforge.plantuml.tim">EaterAffectation</a></li>
@@ -1465,6 +1587,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.explain.<a href="net/sourceforge/plantuml/explain/Explanation.html" class="type-name-link" title="class in net.sourceforge.plantuml.explain">Explanation</a></li>
 <li class="circle">net.sourceforge.plantuml.tim.expression.<a href="net/sourceforge/plantuml/tim/expression/Expression.html" class="type-name-link" title="class in net.sourceforge.plantuml.tim.expression">Expression</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.drawing.g2d.<a href="net/sourceforge/plantuml/klimt/drawing/g2d/ExtendedGeneralPath.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.g2d">ExtendedGeneralPath</a> (implements java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Cloneable.html" title="class or interface in java.lang" class="external-link">Cloneable</a>, java.awt.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.desktop/java/awt/Shape.html" title="class or interface in java.awt" class="external-link">Shape</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Extension.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">Extension</a></li>
 <li class="circle">net.sourceforge.plantuml.svek.extremity.<a href="net/sourceforge/plantuml/svek/extremity/Extremity.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek.extremity">Extremity</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/UDrawable.html" title="interface in net.sourceforge.plantuml.klimt.shape">UDrawable</a>)
 <ul>
 <li class="circle">net.sourceforge.plantuml.svek.extremity.<a href="net/sourceforge/plantuml/svek/extremity/ExtremityArrow.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek.extremity">ExtremityArrow</a></li>
@@ -1506,6 +1629,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.<a href="net/sourceforge/plantuml/activitydiagram3/ftile/vcompact/FloatingNote.html" class="type-name-link" title="class in net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">FloatingNote</a> (implements net.sourceforge.plantuml.klimt.creole.<a href="net/sourceforge/plantuml/klimt/creole/Stencil.html" title="interface in net.sourceforge.plantuml.klimt.creole">Stencil</a>, net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>)</li>
 <li class="circle">net.sourceforge.plantuml.swing.<a href="net/sourceforge/plantuml/swing/FontChecker.html" class="type-name-link" title="class in net.sourceforge.plantuml.swing">FontChecker</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.font.<a href="net/sourceforge/plantuml/klimt/font/FontConfiguration.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/FontInfo.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">FontInfo</a></li>
 <li class="circle">org.stathissideris.ascii2image.graphics.<a href="org/stathissideris/ascii2image/graphics/FontMeasurer.html" class="type-name-link" title="class in org.stathissideris.ascii2image.graphics">FontMeasurer</a></li>
 <li class="circle">org.openpdf.text.pdf.fonts.<a href="org/openpdf/text/pdf/fonts/FontsResourceAnchor.html" class="type-name-link" title="class in org.openpdf.text.pdf.fonts">FontsResourceAnchor</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.font.<a href="net/sourceforge/plantuml/klimt/font/FontStack.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.font">FontStack</a></li>
@@ -1585,7 +1709,11 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.cli.<a href="net/sourceforge/plantuml/cli/GlobalConfig.html" class="type-name-link" title="class in net.sourceforge.plantuml.cli">GlobalConfig</a></li>
 <li class="circle">net.sourceforge.plantuml.webp.<a href="net/sourceforge/plantuml/webp/Globals.html" class="type-name-link" title="class in net.sourceforge.plantuml.webp">Globals</a></li>
 <li class="circle">smetana.core.<a href="smetana/core/Globals.html" class="type-name-link" title="class in smetana.core">Globals</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Glue.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">Glue</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/GlueSettingsParser.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">GlueSettingsParser</a></li>
 <li class="circle">org.openpdf.text.pdf.<a href="org/openpdf/text/pdf/GlyphList.html" class="type-name-link" title="class in org.openpdf.text.pdf">GlyphList</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/GlyphOutlines.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">GlyphOutlines</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/GlyphOutlines.GlyphFont.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">GlyphOutlines.GlyphFont</a></li>
 <li class="circle">net.sourceforge.plantuml.gitlog.<a href="net/sourceforge/plantuml/gitlog/GNode.html" class="type-name-link" title="class in net.sourceforge.plantuml.gitlog">GNode</a></li>
 <li class="circle">net.sourceforge.plantuml.gitlog.<a href="net/sourceforge/plantuml/gitlog/GNodeBuilder.html" class="type-name-link" title="class in net.sourceforge.plantuml.gitlog">GNodeBuilder</a></li>
 <li class="circle">net.sourceforge.plantuml.activitydiagram3.ftile.<a href="net/sourceforge/plantuml/activitydiagram3/ftile/GotoInterceptor.html" class="type-name-link" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">GotoInterceptor</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>)</li>
@@ -1604,6 +1732,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.posimo.<a href="net/sourceforge/plantuml/posimo/GraphvizSolverB.html" class="type-name-link" title="class in net.sourceforge.plantuml.posimo">GraphvizSolverB</a></li>
 <li class="circle">net.sourceforge.plantuml.dot.<a href="net/sourceforge/plantuml/dot/GraphvizUtils.html" class="type-name-link" title="class in net.sourceforge.plantuml.dot">GraphvizUtils</a></li>
 <li class="circle">net.sourceforge.plantuml.dot.<a href="net/sourceforge/plantuml/dot/GraphvizVersionFinder.html" class="type-name-link" title="class in net.sourceforge.plantuml.dot">GraphvizVersionFinder</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.greek.<a href="org/scilab/forge/jlatexmath/greek/GreekRegistration.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath.greek">GreekRegistration</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/AlphabetRegistration.html" title="interface in org.scilab.forge.jlatexmath">AlphabetRegistration</a>)</li>
 <li class="circle">net.sourceforge.plantuml.bpm.<a href="net/sourceforge/plantuml/bpm/Grid.html" class="type-name-link" title="class in net.sourceforge.plantuml.bpm">Grid</a></li>
 <li class="circle">net.sourceforge.plantuml.salt.element.<a href="net/sourceforge/plantuml/salt/element/Grid.html" class="type-name-link" title="class in net.sourceforge.plantuml.salt.element">Grid</a></li>
 <li class="circle">net.sourceforge.plantuml.salt.element.<a href="net/sourceforge/plantuml/salt/element/Grid2.html" class="type-name-link" title="class in net.sourceforge.plantuml.salt.element">Grid2</a></li>
@@ -1718,6 +1847,9 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.version.<a href="net/sourceforge/plantuml/version/IteratorCounter2Impl.html" class="type-name-link" title="class in net.sourceforge.plantuml.version">IteratorCounter2Impl</a> (implements net.sourceforge.plantuml.version.<a href="net/sourceforge/plantuml/version/IteratorCounter2.html" title="interface in net.sourceforge.plantuml.version">IteratorCounter2</a>)</li>
 <li class="circle">net.sourceforge.plantuml.jaws.<a href="net/sourceforge/plantuml/jaws/Jaws.html" class="type-name-link" title="class in net.sourceforge.plantuml.jaws">Jaws</a></li>
 <li class="circle">net.sourceforge.plantuml.jaws.<a href="net/sourceforge/plantuml/jaws/JawsFlags.html" class="type-name-link" title="class in net.sourceforge.plantuml.jaws">JawsFlags</a></li>
+<li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/JlatexmathJsGenerator.html" class="type-name-link" title="class in net.sourceforge.plantuml.math">JlatexmathJsGenerator</a></li>
+<li class="circle">net.sourceforge.plantuml.teavm.c.<a href="net/sourceforge/plantuml/teavm/c/JlatexmathResources.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm.c">JlatexmathResources</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXResourceProvider.html" title="interface in org.scilab.forge.jlatexmath">TeXResourceProvider</a>)</li>
+<li class="circle">net.sourceforge.plantuml.teavm.js.<a href="net/sourceforge/plantuml/teavm/js/JlatexmathResourcesJs.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm.js">JlatexmathResourcesJs</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXResourceProvider.html" title="interface in org.scilab.forge.jlatexmath">TeXResourceProvider</a>)</li>
 <li class="circle">smetana.core.<a href="smetana/core/jmp_buf.html" class="type-name-link" title="class in smetana.core">jmp_buf</a></li>
 <li class="circle">net.sourceforge.plantuml.json.<a href="net/sourceforge/plantuml/json/Json.html" class="type-name-link" title="class in net.sourceforge.plantuml.json">Json</a></li>
 <li class="circle">net.sourceforge.plantuml.jsondiagram.<a href="net/sourceforge/plantuml/jsondiagram/JsonCurve.html" class="type-name-link" title="class in net.sourceforge.plantuml.jsondiagram">JsonCurve</a></li>
@@ -1779,6 +1911,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.webp.<a href="net/sourceforge/plantuml/webp/LoopFilter.html" class="type-name-link" title="class in net.sourceforge.plantuml.webp">LoopFilter</a></li>
 <li class="circle">smetana.core.<a href="smetana/core/Macro.html" class="type-name-link" title="class in smetana.core">Macro</a></li>
 <li class="circle">net.sourceforge.plantuml.webp.<a href="net/sourceforge/plantuml/webp/MacroBlock.html" class="type-name-link" title="class in net.sourceforge.plantuml.webp">MacroBlock</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/MacroInfo.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">MacroInfo</a></li>
 <li class="circle">net.sourceforge.plantuml.api.<a href="net/sourceforge/plantuml/api/MagicArray.html" class="type-name-link" title="class in net.sourceforge.plantuml.api">MagicArray</a></li>
 <li class="circle">net.sourceforge.plantuml.gitlog.<a href="net/sourceforge/plantuml/gitlog/MagicBox.html" class="type-name-link" title="class in net.sourceforge.plantuml.gitlog">MagicBox</a></li>
 <li class="circle">net.sourceforge.plantuml.cucadiagram.<a href="net/sourceforge/plantuml/cucadiagram/Magma.html" class="type-name-link" title="class in net.sourceforge.plantuml.cucadiagram">Magma</a></li>
@@ -1789,6 +1922,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">zext.plantuml.com.google.zxing.qrcode.encoder.<a href="zext/plantuml/com/google/zxing/qrcode/encoder/MaskUtil.html" class="type-name-link" title="class in zext.plantuml.com.google.zxing.qrcode.encoder">MaskUtil</a></li>
 <li class="circle">net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/Matcher2.html" class="type-name-link" title="class in net.sourceforge.plantuml.regex">Matcher2</a></li>
 <li class="circle">net.sourceforge.plantuml.regex.<a href="net/sourceforge/plantuml/regex/MatcherIterator.html" class="type-name-link" title="class in net.sourceforge.plantuml.regex">MatcherIterator</a> (implements java.util.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;E&gt;)</li>
+<li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/MathBlankImage.html" class="type-name-link" title="class in net.sourceforge.plantuml.math">MathBlankImage</a> (implements net.sourceforge.plantuml.klimt.<a href="net/sourceforge/plantuml/klimt/MutableImage.html" title="interface in net.sourceforge.plantuml.klimt">MutableImage</a>)</li>
 <li class="circle">net.sourceforge.plantuml.utils.<a href="net/sourceforge/plantuml/utils/MathUtils.html" class="type-name-link" title="class in net.sourceforge.plantuml.utils">MathUtils</a></li>
 <li class="circle">zext.plantuml.com.google.zxing.client.j2se.<a href="zext/plantuml/com/google/zxing/client/j2se/MatrixToImageWriter.html" class="type-name-link" title="class in zext.plantuml.com.google.zxing.client.j2se">MatrixToImageWriter</a></li>
 <li class="circle">zext.plantuml.com.google.zxing.qrcode.encoder.<a href="zext/plantuml/com/google/zxing/qrcode/encoder/MatrixUtil.html" class="type-name-link" title="class in zext.plantuml.com.google.zxing.qrcode.encoder">MatrixUtil</a></li>
@@ -1809,6 +1943,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">org.openpdf.text.<a href="org/openpdf/text/Meta.html" class="type-name-link" title="class in org.openpdf.text">Meta</a> (implements org.openpdf.text.<a href="org/openpdf/text/Element.html" title="interface in org.openpdf.text">Element</a>)</li>
 <li class="circle">net.sourceforge.plantuml.png.<a href="net/sourceforge/plantuml/png/Metadata.html" class="type-name-link" title="class in net.sourceforge.plantuml.png">Metadata</a></li>
 <li class="circle">net.sourceforge.plantuml.png.<a href="net/sourceforge/plantuml/png/MetadataTag.html" class="type-name-link" title="class in net.sourceforge.plantuml.png">MetadataTag</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Metrics.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">Metrics</a></li>
 <li class="circle">net.sourceforge.plantuml.svek.extremity.<a href="net/sourceforge/plantuml/svek/extremity/MiddleFactoryCircle.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek.extremity">MiddleFactoryCircle</a> (implements net.sourceforge.plantuml.svek.extremity.<a href="net/sourceforge/plantuml/svek/extremity/MiddleFactory.html" title="interface in net.sourceforge.plantuml.svek.extremity">MiddleFactory</a>)</li>
 <li class="circle">net.sourceforge.plantuml.svek.extremity.<a href="net/sourceforge/plantuml/svek/extremity/MiddleFactoryCircleCircled.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek.extremity">MiddleFactoryCircleCircled</a> (implements net.sourceforge.plantuml.svek.extremity.<a href="net/sourceforge/plantuml/svek/extremity/MiddleFactory.html" title="interface in net.sourceforge.plantuml.svek.extremity">MiddleFactory</a>)</li>
 <li class="circle">net.sourceforge.plantuml.svek.extremity.<a href="net/sourceforge/plantuml/svek/extremity/MiddleFactorySubset.html" class="type-name-link" title="class in net.sourceforge.plantuml.svek.extremity">MiddleFactorySubset</a> (implements net.sourceforge.plantuml.svek.extremity.<a href="net/sourceforge/plantuml/svek/extremity/MiddleFactory.html" title="interface in net.sourceforge.plantuml.svek.extremity">MiddleFactory</a>)</li>
@@ -1840,6 +1975,11 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.dot.<a href="net/sourceforge/plantuml/dot/Neighborhood.html" class="type-name-link" title="class in net.sourceforge.plantuml.dot">Neighborhood</a></li>
 <li class="circle">net.sourceforge.plantuml.nwdiag.core.<a href="net/sourceforge/plantuml/nwdiag/core/Network.html" class="type-name-link" title="class in net.sourceforge.plantuml.nwdiag.core">Network</a> (implements net.sourceforge.plantuml.nwdiag.core.<a href="net/sourceforge/plantuml/nwdiag/core/NStackable.html" title="interface in net.sourceforge.plantuml.nwdiag.core">NStackable</a>)</li>
 <li class="circle">net.sourceforge.plantuml.klimt.creole.<a href="net/sourceforge/plantuml/klimt/creole/Neutron.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.creole">Neutron</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/NewCommandMacro.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">NewCommandMacro</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/MacroInfo.MacroHandler.html" title="interface in org.scilab.forge.jlatexmath">MacroInfo.MacroHandler</a>)
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/NewEnvironmentMacro.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">NewEnvironmentMacro</a></li>
+</ul>
+</li>
 <li class="circle">net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/NFolderIo.html" class="type-name-link" title="class in net.sourceforge.plantuml.nio">NFolderIo</a> (implements net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>)</li>
 <li class="circle">net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/NFolderRegular.html" class="type-name-link" title="class in net.sourceforge.plantuml.nio">NFolderRegular</a> (implements net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>)</li>
 <li class="circle">net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/NFolderStdlib.html" class="type-name-link" title="class in net.sourceforge.plantuml.nio">NFolderStdlib</a> (implements net.sourceforge.plantuml.nio.<a href="net/sourceforge/plantuml/nio/NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>)</li>
@@ -1921,6 +2061,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li class="circle">net.sourceforge.plantuml.stats.<a href="net/sourceforge/plantuml/stats/ParsedGenerated.html" class="type-name-link" title="class in net.sourceforge.plantuml.stats">ParsedGenerated</a></li>
 <li class="circle">net.sourceforge.plantuml.gantt.ulang.<a href="net/sourceforge/plantuml/gantt/ulang/ParsedSentence.html" class="type-name-link" title="class in net.sourceforge.plantuml.gantt.ulang">ParsedSentence</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ParseOption.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ParseOption</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.creole.<a href="net/sourceforge/plantuml/klimt/creole/Parser.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.creole">Parser</a></li>
 <li class="circle">net.sourceforge.plantuml.sequencediagram.<a href="net/sourceforge/plantuml/sequencediagram/Participant.html" class="type-name-link" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a> (implements net.sourceforge.plantuml.asciiverse.<a href="net/sourceforge/plantuml/asciiverse/AsciiBlock.html" title="interface in net.sourceforge.plantuml.asciiverse">AsciiBlock</a>, net.sourceforge.plantuml.abel.<a href="net/sourceforge/plantuml/abel/SpecificBackcolorable.html" title="interface in net.sourceforge.plantuml.abel">SpecificBackcolorable</a>, net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/WithStyle.html" title="interface in net.sourceforge.plantuml.style">WithStyle</a>)</li>
 <li class="circle">net.sourceforge.plantuml.sequencediagram.graphic.<a href="net/sourceforge/plantuml/sequencediagram/graphic/ParticipantBox.html" class="type-name-link" title="class in net.sourceforge.plantuml.sequencediagram.graphic">ParticipantBox</a> (implements net.sourceforge.plantuml.sequencediagram.graphic.<a href="net/sourceforge/plantuml/sequencediagram/graphic/Pushable.html" title="interface in net.sourceforge.plantuml.sequencediagram.graphic">Pushable</a>)</li>
@@ -2085,6 +2226,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/PostScriptCommandRaw.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.eps">PostScriptCommandRaw</a> (implements net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/PostScriptCommand.html" title="interface in net.sourceforge.plantuml.klimt.drawing.eps">PostScriptCommand</a>)</li>
 <li class="circle">net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/PostScriptData.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.eps">PostScriptData</a></li>
 <li class="circle">net.sourceforge.plantuml.skin.<a href="net/sourceforge/plantuml/skin/Pragma.html" class="type-name-link" title="class in net.sourceforge.plantuml.skin">Pragma</a> (implements net.sourceforge.plantuml.warning.<a href="net/sourceforge/plantuml/warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/PredefMacros.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">PredefMacros</a></li>
 <li class="circle">net.sourceforge.plantuml.preproc.<a href="net/sourceforge/plantuml/preproc/PreprocessingArtifact.html" class="type-name-link" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a> (implements net.sourceforge.plantuml.warning.<a href="net/sourceforge/plantuml/warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a>)</li>
 <li class="circle">net.sourceforge.plantuml.preproc2.<a href="net/sourceforge/plantuml/preproc2/Preprocessor.html" class="type-name-link" title="class in net.sourceforge.plantuml.preproc2">Preprocessor</a> (implements net.sourceforge.plantuml.preproc.<a href="net/sourceforge/plantuml/preproc/ReadLineNumbered.html" title="interface in net.sourceforge.plantuml.preproc">ReadLineNumbered</a>)</li>
 <li class="circle">net.sourceforge.plantuml.preproc2.<a href="net/sourceforge/plantuml/preproc2/PreprocessorUtils.html" class="type-name-link" title="class in net.sourceforge.plantuml.preproc2">PreprocessorUtils</a></li>
@@ -2754,6 +2896,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/StringBounderOpenPdf.html" class="type-name-link" title="class in net.sourceforge.plantuml.openpdf">StringBounderOpenPdf</a> (implements net.sourceforge.plantuml.klimt.font.<a href="net/sourceforge/plantuml/klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>)</li>
 <li class="circle">net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/StringBounderSvg.html" class="type-name-link" title="class in net.sourceforge.plantuml">StringBounderSvg</a> (implements net.sourceforge.plantuml.klimt.font.<a href="net/sourceforge/plantuml/klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>)</li>
 <li class="circle">net.sourceforge.plantuml.teavm.js.<a href="net/sourceforge/plantuml/teavm/js/StringBounderTeaVM.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm.js">StringBounderTeaVM</a> (implements net.sourceforge.plantuml.klimt.font.<a href="net/sourceforge/plantuml/klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>)</li>
+<li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/StringBounderTextMeasurer.html" class="type-name-link" title="class in net.sourceforge.plantuml.math">StringBounderTextMeasurer</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXTextMeasurer.html" title="interface in org.scilab.forge.jlatexmath">TeXTextMeasurer</a>)</li>
 <li class="circle">net.sourceforge.plantuml.tikz.<a href="net/sourceforge/plantuml/tikz/StringBounderTikz.html" class="type-name-link" title="class in net.sourceforge.plantuml.tikz">StringBounderTikz</a> (implements net.sourceforge.plantuml.klimt.font.<a href="net/sourceforge/plantuml/klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>)</li>
 <li class="circle">net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/StringBuilder2.html" class="type-name-link" title="class in net.sourceforge.plantuml">StringBuilder2</a></li>
 <li class="circle">net.sourceforge.plantuml.code.<a href="net/sourceforge/plantuml/code/StringCompressorNone.html" class="type-name-link" title="class in net.sourceforge.plantuml.code">StringCompressorNone</a> (implements net.sourceforge.plantuml.code.<a href="net/sourceforge/plantuml/code/StringCompressor.html" title="interface in net.sourceforge.plantuml.code">StringCompressor</a>)</li>
@@ -2830,7 +2973,23 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.sequencediagram.teoz.<a href="net/sourceforge/plantuml/sequencediagram/teoz/TeozLayer.html" class="type-name-link" title="class in net.sourceforge.plantuml.sequencediagram.teoz">TeozLayer</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>)</li>
 <li class="circle">net.sourceforge.plantuml.salt.<a href="net/sourceforge/plantuml/salt/Terminated.html" class="type-name-link" title="class in net.sourceforge.plantuml.salt">Terminated</a>&lt;O&gt;</li>
 <li class="circle">net.sourceforge.plantuml.mindmap.<a href="net/sourceforge/plantuml/mindmap/Tetris.html" class="type-name-link" title="class in net.sourceforge.plantuml.mindmap">Tetris</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXClassLoaderResources.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXClassLoaderResources</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXResourceProvider.html" title="interface in org.scilab.forge.jlatexmath">TeXResourceProvider</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXColor.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXColor</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXConstants.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXConstants</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXEnvironment.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXEnvironment</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXFormula.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXFormula</a>
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ArrayOfAtoms.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ArrayOfAtoms</a></li>
+</ul>
+</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXFormula.TeXIconBuilder.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXFormula.TeXIconBuilder</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXFormulaSettingsParser.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXFormulaSettingsParser</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXIcon.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXIcon</a></li>
 <li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/TeXIconBuilder.html" class="type-name-link" title="class in net.sourceforge.plantuml.math">TeXIconBuilder</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXInsets.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXInsets</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXParser.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXParser</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXResources.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXResources</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXSymbolParser.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXSymbolParser</a></li>
 <li class="circle">net.sourceforge.plantuml.teavm.<a href="net/sourceforge/plantuml/teavm/TextareaSource.html" class="type-name-link" title="class in net.sourceforge.plantuml.teavm">TextareaSource</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/TextBlockArrow.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockArrow</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>)</li>
 <li class="circle">net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/TextBlockArrow2.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">TextBlockArrow2</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>)</li>
@@ -3042,6 +3201,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">gen.lib.common.<a href="gen/lib/common/textspan__c.html" class="type-name-link" title="class in gen.lib.common">textspan__c</a></li>
 <li class="circle">net.sourceforge.plantuml.asciiart.<a href="net/sourceforge/plantuml/asciiart/TextStringBounder.html" class="type-name-link" title="class in net.sourceforge.plantuml.asciiart">TextStringBounder</a> (implements net.sourceforge.plantuml.klimt.font.<a href="net/sourceforge/plantuml/klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>)</li>
 <li class="circle">net.sourceforge.plantuml.stats.<a href="net/sourceforge/plantuml/stats/TextTable.html" class="type-name-link" title="class in net.sourceforge.plantuml.stats">TextTable</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXUnicodeBlock.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TeXUnicodeBlock</a></li>
 <li class="circle">net.sourceforge.plantuml.tim.<a href="net/sourceforge/plantuml/tim/TFunctionArgument.html" class="type-name-link" title="class in net.sourceforge.plantuml.tim">TFunctionArgument</a></li>
 <li class="circle">net.sourceforge.plantuml.tim.<a href="net/sourceforge/plantuml/tim/TFunctionImpl.html" class="type-name-link" title="class in net.sourceforge.plantuml.tim">TFunctionImpl</a> (implements net.sourceforge.plantuml.tim.<a href="net/sourceforge/plantuml/tim/TFunction.html" title="interface in net.sourceforge.plantuml.tim">TFunction</a>)</li>
 <li class="circle">net.sourceforge.plantuml.tim.<a href="net/sourceforge/plantuml/tim/TFunctionSignature.html" class="type-name-link" title="class in net.sourceforge.plantuml.tim">TFunctionSignature</a></li>
@@ -3054,6 +3214,7 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Exception.html" class="type-name-link external-link" title="class or interface in java.lang">Exception</a>
 <ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/AlphabetRegistrationException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">AlphabetRegistrationException</a></li>
 <li class="circle">net.sourceforge.plantuml.cli.<a href="net/sourceforge/plantuml/cli/CliParsingException.html" class="type-name-link" title="class in net.sourceforge.plantuml.cli">CliParsingException</a></li>
 <li class="circle">net.sourceforge.plantuml.tim.<a href="net/sourceforge/plantuml/tim/EaterException.html" class="type-name-link" title="class in net.sourceforge.plantuml.tim">EaterException</a></li>
 <li class="circle">java.io.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" class="type-name-link external-link" title="class or interface in java.io">IOException</a>
@@ -3096,6 +3257,27 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">net.sourceforge.plantuml.gantt.solver.<a href="net/sourceforge/plantuml/gantt/solver/ImpossibleSolvingException.html" class="type-name-link" title="class in net.sourceforge.plantuml.gantt.solver">ImpossibleSolvingException</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/JMathTeXException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">JMathTeXException</a>
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/FormulaNotFoundException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">FormulaNotFoundException</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/InvalidSymbolTypeException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">InvalidSymbolTypeException</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/InvalidTeXFormulaException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">InvalidTeXFormulaException</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/InvalidUnitException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">InvalidUnitException</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ParseException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ParseException</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/ResourceParseException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">ResourceParseException</a>
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/XMLResourceParseException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">XMLResourceParseException</a>
+<ul>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/FontAlreadyLoadedException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">FontAlreadyLoadedException</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/SymbolMappingNotFoundException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">SymbolMappingNotFoundException</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/SymbolNotFoundException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">SymbolNotFoundException</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TextStyleMappingNotFoundException.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">TextStyleMappingNotFoundException</a></li>
+</ul>
+</li>
 <li class="circle">net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/NoStyleAvailableException.html" class="type-name-link" title="class in net.sourceforge.plantuml.style">NoStyleAvailableException</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.color.<a href="net/sourceforge/plantuml/klimt/color/NoSuchColorRuntimeException.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.color">NoSuchColorRuntimeException</a></li>
 <li class="circle">net.sourceforge.plantuml.json.<a href="net/sourceforge/plantuml/json/ParseException.html" class="type-name-link" title="class in net.sourceforge.plantuml.json">ParseException</a></li>
@@ -3239,6 +3421,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.activitydiagram3.ftile.<a href="net/sourceforge/plantuml/activitydiagram3/ftile/ZadBuilder.html" class="type-name-link" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">ZadBuilder</a></li>
 </ul>
 </li>
+<li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/UGraphicTeXGraphics.html" class="type-name-link" title="class in net.sourceforge.plantuml.math">UGraphicTeXGraphics</a> (implements org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXGraphics.html" title="interface in org.scilab.forge.jlatexmath">TeXGraphics</a>)</li>
 <li class="circle">net.sourceforge.plantuml.emoji.<a href="net/sourceforge/plantuml/emoji/UGraphicWithScale.html" class="type-name-link" title="class in net.sourceforge.plantuml.emoji">UGraphicWithScale</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.<a href="net/sourceforge/plantuml/klimt/UGroup.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt">UGroup</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/UHorizontalLine.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.shape">UHorizontalLine</a> (implements net.sourceforge.plantuml.klimt.<a href="net/sourceforge/plantuml/klimt/UShape.html" title="interface in net.sourceforge.plantuml.klimt">UShape</a>)</li>
@@ -3465,6 +3648,7 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">gen.lib.label.<a href="gen/lib/label/xlabels__c.html" class="type-name-link" title="class in gen.lib.label">xlabels__c</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/XLeftRightArrowFactory.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">XLeftRightArrowFactory</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/XLine2D.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.geom">XLine2D</a> (implements net.sourceforge.plantuml.klimt.shape.<a href="net/sourceforge/plantuml/klimt/shape/UDrawable.html" title="interface in net.sourceforge.plantuml.klimt.shape">UDrawable</a>)</li>
 <li class="circle">net.sourceforge.plantuml.xmi.<a href="net/sourceforge/plantuml/xmi/XmiClassDiagramArgo.html" class="type-name-link" title="class in net.sourceforge.plantuml.xmi">XmiClassDiagramArgo</a> (implements net.sourceforge.plantuml.xmi.<a href="net/sourceforge/plantuml/xmi/XmlDiagramTransformer.html" title="interface in net.sourceforge.plantuml.xmi">XmlDiagramTransformer</a>)</li>
 <li class="circle">net.sourceforge.plantuml.xmi.<a href="net/sourceforge/plantuml/xmi/XmiClassDiagramScript.html" class="type-name-link" title="class in net.sourceforge.plantuml.xmi">XmiClassDiagramScript</a> (implements net.sourceforge.plantuml.xmi.<a href="net/sourceforge/plantuml/xmi/XmlDiagramTransformer.html" title="interface in net.sourceforge.plantuml.xmi">XmlDiagramTransformer</a>)</li>
@@ -3485,8 +3669,11 @@ loadScripts(document, 'script');</script>
 </li>
 <li class="circle">net.sourceforge.plantuml.xmi.<a href="net/sourceforge/plantuml/xmi/XmiStateDiagram.html" class="type-name-link" title="class in net.sourceforge.plantuml.xmi">XmiStateDiagram</a> (implements net.sourceforge.plantuml.xmi.<a href="net/sourceforge/plantuml/xmi/XmlDiagramTransformer.html" title="interface in net.sourceforge.plantuml.xmi">XmlDiagramTransformer</a>)</li>
 <li class="circle">net.sourceforge.plantuml.stats.<a href="net/sourceforge/plantuml/stats/XmlConverter.html" class="type-name-link" title="class in net.sourceforge.plantuml.stats">XmlConverter</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/XmlElement.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">XmlElement</a></li>
 <li class="circle">net.sourceforge.plantuml.xml.<a href="net/sourceforge/plantuml/xml/XmlFactories.html" class="type-name-link" title="class in net.sourceforge.plantuml.xml">XmlFactories</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/XmlNode.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">XmlNode</a> (implements net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/IElement.html" title="interface in net.sourceforge.plantuml.klimt.drawing.svg">IElement</a>)</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/XmlNodeList.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">XmlNodeList</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/XmlReader.html" class="type-name-link" title="class in org.scilab.forge.jlatexmath">XmlReader</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/XmlWriter.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">XmlWriter</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/XPoint2D.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.geom">XPoint2D</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/XRectangle2D.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.geom">XRectangle2D</a></li>
@@ -3516,6 +3703,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li class="circle">smetana.core.<a href="smetana/core/__struct__.html" class="type-name-link" title="interface in smetana.core">__struct__</a>&lt;C&gt;</li>
 <li class="circle">smetana.core.<a href="smetana/core/ACCESS.html" class="type-name-link" title="interface in smetana.core">ACCESS</a>&lt;O&gt;</li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/AlphabetRegistration.html" class="type-name-link" title="interface in org.scilab.forge.jlatexmath">AlphabetRegistration</a></li>
 <li class="circle">net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/Annotated.html" class="type-name-link" title="interface in net.sourceforge.plantuml">Annotated</a></li>
 <li class="circle">net.sourceforge.plantuml.svek.<a href="net/sourceforge/plantuml/svek/ArithmeticStrategy.html" class="type-name-link" title="interface in net.sourceforge.plantuml.svek">ArithmeticStrategy</a></li>
 <li class="circle">net.sourceforge.plantuml.asciiverse.<a href="net/sourceforge/plantuml/asciiverse/AsciiBlock.html" class="type-name-link" title="interface in net.sourceforge.plantuml.asciiverse">AsciiBlock</a>
@@ -3612,13 +3800,17 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">net.sourceforge.plantuml.klimt.drawing.g2d.<a href="net/sourceforge/plantuml/klimt/drawing/g2d/ExtendedPathIterator.html" class="type-name-link" title="interface in net.sourceforge.plantuml.klimt.drawing.g2d">ExtendedPathIterator</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.dynamic.<a href="org/scilab/forge/jlatexmath/dynamic/ExternalConverter.html" class="type-name-link" title="interface in org.scilab.forge.jlatexmath.dynamic">ExternalConverter</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.dynamic.<a href="org/scilab/forge/jlatexmath/dynamic/ExternalConverterFactory.html" class="type-name-link" title="interface in org.scilab.forge.jlatexmath.dynamic">ExternalConverterFactory</a></li>
 <li class="circle">org.openpdf.text.pdf.<a href="org/openpdf/text/pdf/ExtraEncoding.html" class="type-name-link" title="interface in org.openpdf.text.pdf">ExtraEncoding</a></li>
 <li class="circle">net.sourceforge.plantuml.svek.extremity.<a href="net/sourceforge/plantuml/svek/extremity/ExtremityFactory.html" class="type-name-link" title="interface in net.sourceforge.plantuml.svek.extremity">ExtremityFactory</a></li>
 <li class="circle">net.sourceforge.plantuml.sequencediagram.graphic.<a href="net/sourceforge/plantuml/sequencediagram/graphic/FileMaker.html" class="type-name-link" title="interface in net.sourceforge.plantuml.sequencediagram.graphic">FileMaker</a></li>
 <li class="circle">net.sourceforge.plantuml.flashcode.<a href="net/sourceforge/plantuml/flashcode/FlashCodeUtils.html" class="type-name-link" title="interface in net.sourceforge.plantuml.flashcode">FlashCodeUtils</a></li>
+<li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/FormulaDiagram.html" class="type-name-link" title="interface in net.sourceforge.plantuml.math">FormulaDiagram</a></li>
 <li class="circle">net.sourceforge.plantuml.activitydiagram3.ftile.<a href="net/sourceforge/plantuml/activitydiagram3/ftile/FtileFactory.html" class="type-name-link" title="interface in net.sourceforge.plantuml.activitydiagram3.ftile">FtileFactory</a></li>
 <li class="circle">net.sourceforge.plantuml.gantt.<a href="net/sourceforge/plantuml/gantt/GanttStyle.html" class="type-name-link" title="interface in net.sourceforge.plantuml.gantt">GanttStyle</a></li>
 <li class="circle">net.sourceforge.plantuml.activitydiagram3.gtile.<a href="net/sourceforge/plantuml/activitydiagram3/gtile/Gluon.html" class="type-name-link" title="interface in net.sourceforge.plantuml.activitydiagram3.gtile">Gluon</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/GlyphOutlines.Sink.html" class="type-name-link" title="interface in org.scilab.forge.jlatexmath">GlyphOutlines.Sink</a></li>
 <li class="circle">jcckit.graphic.<a href="jcckit/graphic/GraphicalElement.html" class="type-name-link" title="interface in jcckit.graphic">GraphicalElement</a></li>
 <li class="circle">jcckit.graphic.<a href="jcckit/graphic/GraphicAttributes.html" class="type-name-link" title="interface in jcckit.graphic">GraphicAttributes</a>
 <ul>
@@ -3682,7 +3874,9 @@ loadScripts(document, 'script');</script>
 </li>
 <li class="circle">net.sourceforge.plantuml.tim.expression.<a href="net/sourceforge/plantuml/tim/expression/Knowledge.html" class="type-name-link" title="interface in net.sourceforge.plantuml.tim.expression">Knowledge</a></li>
 <li class="circle">net.sourceforge.plantuml.abel.<a href="net/sourceforge/plantuml/abel/LineConfigurable.html" class="type-name-link" title="interface in net.sourceforge.plantuml.abel">LineConfigurable</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/MacroInfo.MacroHandler.html" class="type-name-link" title="interface in org.scilab.forge.jlatexmath">MacroInfo.MacroHandler</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/MagneticBorder.html" class="type-name-link" title="interface in net.sourceforge.plantuml.klimt.geom">MagneticBorder</a></li>
+<li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/MathDrawing.html" class="type-name-link" title="interface in net.sourceforge.plantuml.math">MathDrawing</a></li>
 <li class="circle">net.sourceforge.plantuml.api.mda.option2.<a href="net/sourceforge/plantuml/api/mda/option2/MDADiagram.html" class="type-name-link" title="interface in net.sourceforge.plantuml.api.mda.option2">MDADiagram</a></li>
 <li class="circle">net.sourceforge.plantuml.api.mda.option2.<a href="net/sourceforge/plantuml/api/mda/option2/MDAEntity.html" class="type-name-link" title="interface in net.sourceforge.plantuml.api.mda.option2">MDAEntity</a></li>
 <li class="circle">net.sourceforge.plantuml.api.mda.option2.<a href="net/sourceforge/plantuml/api/mda/option2/MDAPackage.html" class="type-name-link" title="interface in net.sourceforge.plantuml.api.mda.option2">MDAPackage</a></li>
@@ -3749,6 +3943,7 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">org.openpdf.text.pdf.<a href="org/openpdf/text/pdf/ResourceProvider.html" class="type-name-link" title="interface in org.openpdf.text.pdf">ResourceProvider</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Row.html" class="type-name-link" title="interface in org.scilab.forge.jlatexmath">Row</a></li>
 <li class="circle">net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/Scale.html" class="type-name-link" title="interface in net.sourceforge.plantuml">Scale</a></li>
 <li class="circle">net.sourceforge.plantuml.math.<a href="net/sourceforge/plantuml/math/ScientificEquation.html" class="type-name-link" title="interface in net.sourceforge.plantuml.math">ScientificEquation</a></li>
 <li class="circle">net.sourceforge.plantuml.security.authentication.<a href="net/sourceforge/plantuml/security/authentication/SecurityAccessInterceptor.html" class="type-name-link" title="interface in net.sourceforge.plantuml.security.authentication">SecurityAccessInterceptor</a></li>
@@ -3821,7 +4016,11 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">jcckit.plot.<a href="jcckit/plot/SymbolFactory.html" class="type-name-link" title="interface in jcckit.plot">SymbolFactory</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXFont.html" class="type-name-link" title="interface in org.scilab.forge.jlatexmath">TeXFont</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXGraphics.html" class="type-name-link" title="interface in org.scilab.forge.jlatexmath">TeXGraphics</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXResourceProvider.html" class="type-name-link" title="interface in org.scilab.forge.jlatexmath">TeXResourceProvider</a></li>
 <li class="circle">net.sourceforge.plantuml.ebnf.<a href="net/sourceforge/plantuml/ebnf/TextBlockable.html" class="type-name-link" title="interface in net.sourceforge.plantuml.ebnf">TextBlockable</a></li>
+<li class="circle">org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXTextMeasurer.html" class="type-name-link" title="interface in org.scilab.forge.jlatexmath">TeXTextMeasurer</a></li>
 <li class="circle">net.sourceforge.plantuml.tim.<a href="net/sourceforge/plantuml/tim/TFunction.html" class="type-name-link" title="interface in net.sourceforge.plantuml.tim">TFunction</a></li>
 <li class="circle">jcckit.util.<a href="jcckit/util/TicLabelFormat.html" class="type-name-link" title="interface in jcckit.util">TicLabelFormat</a></li>
 <li class="circle">net.sourceforge.plantuml.timingdiagram.<a href="net/sourceforge/plantuml/timingdiagram/TimeProjected.html" class="type-name-link" title="interface in net.sourceforge.plantuml.timingdiagram">TimeProjected</a></li>

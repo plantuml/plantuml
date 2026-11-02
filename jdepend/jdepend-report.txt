@@ -842,11 +842,6 @@ No stats available: package referenced, but not analyzed.
 No stats available: package referenced, but not analyzed.
 
 --------------------------------------------------
-- Package: javax.script
---------------------------------------------------
-No stats available: package referenced, but not analyzed.
-
---------------------------------------------------
 - Package: javax.swing
 --------------------------------------------------
 No stats available: package referenced, but not analyzed.
@@ -6557,12 +6552,12 @@ Stats:
     Concrete Classes: 3
     Abstract Classes: 1
 
-    Ca: 29
+    Ca: 28
     Ce: 4
 
     A: 0.25
     I: 0.12
-    D: 0.63
+    D: 0.62
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.awt.PortableImage
@@ -6590,7 +6585,6 @@ Used By:
     net.sourceforge.plantuml.jcckit
     net.sourceforge.plantuml.klimt
     net.sourceforge.plantuml.klimt.color
-    net.sourceforge.plantuml.klimt.creole.atom
     net.sourceforge.plantuml.klimt.drawing.eps
     net.sourceforge.plantuml.klimt.drawing.g2d
     net.sourceforge.plantuml.klimt.drawing.raster
@@ -6947,11 +6941,11 @@ Stats:
     Abstract Classes: 2
 
     Ca: 3
-    Ce: 17
+    Ce: 16
 
     A: 0.14
-    I: 0.85
-    D: 0.01
+    I: 0.84
+    D: 0.02
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.creole.atom.AbstractAtom
@@ -6976,7 +6970,6 @@ Depends Upon:
     java.util
     net.sourceforge.plantuml.emoji
     net.sourceforge.plantuml.klimt
-    net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole
     net.sourceforge.plantuml.klimt.drawing
@@ -7063,11 +7056,11 @@ Stats:
     Abstract Classes: 2
 
     Ca: 9
-    Ce: 25
+    Ce: 24
 
     A: 0.13
-    I: 0.74
-    D: 0.13
+    I: 0.73
+    D: 0.14
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.creole.legacy.AtomText$DelayedDouble
@@ -7111,7 +7104,6 @@ Depends Upon:
     net.sourceforge.plantuml.skin
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
-    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.text
     net.sourceforge.plantuml.utils
 
@@ -7135,12 +7127,12 @@ Stats:
     Concrete Classes: 9
     Abstract Classes: 5
 
-    Ca: 80
+    Ca: 81
     Ce: 14
 
     A: 0.36
     I: 0.15
-    D: 0.49
+    D: 0.5
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic
@@ -7232,6 +7224,7 @@ Used By:
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.klimt.sprite
+    net.sourceforge.plantuml.math
     net.sourceforge.plantuml.mindmap
     net.sourceforge.plantuml.nwdiag
     net.sourceforge.plantuml.nwdiag.next
@@ -7781,7 +7774,7 @@ Stats:
     Concrete Classes: 9
     Abstract Classes: 2
 
-    Ca: 90
+    Ca: 91
     Ce: 6
 
     A: 0.18
@@ -7872,6 +7865,7 @@ Used By:
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.klimt.sprite
+    net.sourceforge.plantuml.math
     net.sourceforge.plantuml.mindmap
     net.sourceforge.plantuml.nwdiag
     net.sourceforge.plantuml.nwdiag.core
@@ -8412,18 +8406,20 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 13
-    Concrete Classes: 12
-    Abstract Classes: 1
+    Total Classes: 20
+    Concrete Classes: 17
+    Abstract Classes: 3
 
-    Ca: 3
-    Ce: 18
+    Ca: 4
+    Ce: 20
 
-    A: 0.08
-    I: 0.86
-    D: 0.07
+    A: 0.15
+    I: 0.83
+    D: 0.02
 
 Abstract Classes:
+    net.sourceforge.plantuml.math.FormulaDiagram
+    net.sourceforge.plantuml.math.MathDrawing
     net.sourceforge.plantuml.math.ScientificEquation
 
 Concrete Classes:
@@ -8431,39 +8427,47 @@ Concrete Classes:
     net.sourceforge.plantuml.math.ASCIIMathTeXImg$Ttype
     net.sourceforge.plantuml.math.ASCIIMathTeXImg$Tuple
     net.sourceforge.plantuml.math.AsciiMath
-    net.sourceforge.plantuml.math.ConverterSvg
     net.sourceforge.plantuml.math.LatexBuilder
-    net.sourceforge.plantuml.math.LatexBuilder$LatexImage
+    net.sourceforge.plantuml.math.MathBlankImage
+    net.sourceforge.plantuml.math.MathResources
     net.sourceforge.plantuml.math.PSystemLatex
     net.sourceforge.plantuml.math.PSystemLatexFactory
     net.sourceforge.plantuml.math.PSystemMath
     net.sourceforge.plantuml.math.PSystemMathFactory
+    net.sourceforge.plantuml.math.ScientificEquationSafe$1
+    net.sourceforge.plantuml.math.StringBounderTextMeasurer
     net.sourceforge.plantuml.math.TeXIconBuilder
+    net.sourceforge.plantuml.math.TeXIconBuilder$1
+    net.sourceforge.plantuml.math.UGraphicTeXGraphics
+    net.sourceforge.plantuml.math.UGraphicTeXGraphics$1
 
 Depends Upon:
-    java.awt
     java.io
     java.lang
-    java.lang.reflect
     java.util
-    javax.script
-    javax.swing
     net.sourceforge.plantuml
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.klimt
     net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
+    net.sourceforge.plantuml.klimt.drawing
+    net.sourceforge.plantuml.klimt.font
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.log
     net.sourceforge.plantuml.preproc
-    org.w3c.dom
+    net.sourceforge.plantuml.teavm
+    net.sourceforge.plantuml.teavm.c
+    net.sourceforge.plantuml.teavm.js
+    net.sourceforge.plantuml.teavm.js.browser
+    org.scilab.forge.jlatexmath
 
 Used By:
     net.sourceforge.plantuml.klimt.creole.atom
     net.sourceforge.plantuml.klimt.creole.command
     net.sourceforge.plantuml.klimt.creole.legacy
+    net.sourceforge.plantuml.teavm.c
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.mcp
@@ -11626,12 +11630,12 @@ Used By:
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.klimt.creole.atom
     net.sourceforge.plantuml.klimt.creole.command
-    net.sourceforge.plantuml.klimt.creole.legacy
     net.sourceforge.plantuml.klimt.drawing.hand
     net.sourceforge.plantuml.klimt.drawing.svg
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.sprite
     net.sourceforge.plantuml.log
+    net.sourceforge.plantuml.math
     net.sourceforge.plantuml.mindmap
     net.sourceforge.plantuml.nwdiag
     net.sourceforge.plantuml.objectdiagram
@@ -11661,12 +11665,12 @@ Stats:
     Concrete Classes: 13
     Abstract Classes: 0
 
-    Ca: 2
-    Ce: 40
+    Ca: 3
+    Ce: 41
 
     A: 0
-    I: 0.95
-    D: 0.05
+    I: 0.93
+    D: 0.07
 
 Abstract Classes:
 
@@ -11708,6 +11712,7 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.creole.legacy
     net.sourceforge.plantuml.klimt.drawing.raster
     net.sourceforge.plantuml.klimt.sprite
+    net.sourceforge.plantuml.math
     net.sourceforge.plantuml.mindmap
     net.sourceforge.plantuml.nio
     net.sourceforge.plantuml.nwdiag
@@ -11729,6 +11734,7 @@ Depends Upon:
 
 Used By:
     net.sourceforge.plantuml.cli
+    net.sourceforge.plantuml.math
     net.sourceforge.plantuml.openpdf
 
 --------------------------------------------------
@@ -11736,16 +11742,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 18
-    Concrete Classes: 18
+    Total Classes: 19
+    Concrete Classes: 19
     Abstract Classes: 0
 
-    Ca: 2
-    Ce: 16
+    Ca: 3
+    Ce: 17
 
     A: 0
-    I: 0.89
-    D: 0.11
+    I: 0.85
+    D: 0.15
 
 Abstract Classes:
 
@@ -11763,6 +11769,7 @@ Concrete Classes:
     net.sourceforge.plantuml.teavm.js.DriverTextJs$ExtraLines
     net.sourceforge.plantuml.teavm.js.ElementAdapterJs
     net.sourceforge.plantuml.teavm.js.GraphVizEngineJs
+    net.sourceforge.plantuml.teavm.js.JlatexmathResourcesJs
     net.sourceforge.plantuml.teavm.js.StringBounderTeaVM$1
     net.sourceforge.plantuml.teavm.js.StringBounderTeaVM$2
     net.sourceforge.plantuml.teavm.js.StringBounderTeaVM$CacheKey
@@ -11784,10 +11791,12 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.teavm.js.browser
     net.sourceforge.plantuml.url
+    org.scilab.forge.jlatexmath
     org.teavm.jso
     org.teavm.jso.dom.xml
 
 Used By:
+    net.sourceforge.plantuml.math
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.teavm.js.browser
 
@@ -11800,12 +11809,12 @@ Stats:
     Concrete Classes: 7
     Abstract Classes: 5
 
-    Ca: 3
+    Ca: 4
     Ce: 9
 
     A: 0.42
-    I: 0.75
-    D: 0.17
+    I: 0.69
+    D: 0.11
 
 Abstract Classes:
     net.sourceforge.plantuml.teavm.js.browser.FileLoaderJs$Loaded
@@ -11835,6 +11844,7 @@ Depends Upon:
     org.teavm.jso.dom.html
 
 Used By:
+    net.sourceforge.plantuml.math
     net.sourceforge.plantuml.teavm.js
     net.sourceforge.plantuml.teavm.js.headless
     net.sourceforge.plantuml.tim
@@ -13554,6 +13564,273 @@ Depends Upon:
 
 Used By:
     org.openpdf.text.pdf
+
+--------------------------------------------------
+- Package: org.scilab.forge.jlatexmath
+--------------------------------------------------
+
+Stats:
+    Total Classes: 146
+    Concrete Classes: 133
+    Abstract Classes: 13
+
+    Ca: 5
+    Ce: 6
+
+    A: 0.09
+    I: 0.55
+    D: 0.37
+
+Abstract Classes:
+    org.scilab.forge.jlatexmath.AlphabetRegistration
+    org.scilab.forge.jlatexmath.Atom
+    org.scilab.forge.jlatexmath.Box
+    org.scilab.forge.jlatexmath.CharSymbol
+    org.scilab.forge.jlatexmath.DefaultTeXFontParser$CharChildParser
+    org.scilab.forge.jlatexmath.GlyphOutlines$Sink
+    org.scilab.forge.jlatexmath.MacroInfo$MacroHandler
+    org.scilab.forge.jlatexmath.Row
+    org.scilab.forge.jlatexmath.SpaceAtom$UnitConversion
+    org.scilab.forge.jlatexmath.TeXFont
+    org.scilab.forge.jlatexmath.TeXGraphics
+    org.scilab.forge.jlatexmath.TeXResourceProvider
+    org.scilab.forge.jlatexmath.TeXTextMeasurer
+
+Concrete Classes:
+    org.scilab.forge.jlatexmath.AlphabetRegistrationException
+    org.scilab.forge.jlatexmath.ArrayOfAtoms
+    org.scilab.forge.jlatexmath.BigDelimiterAtom
+    org.scilab.forge.jlatexmath.BigOperatorAtom
+    org.scilab.forge.jlatexmath.BoldAtom
+    org.scilab.forge.jlatexmath.BreakFormula
+    org.scilab.forge.jlatexmath.BreakFormula$Position
+    org.scilab.forge.jlatexmath.BreakMarkAtom
+    org.scilab.forge.jlatexmath.CedillaAtom
+    org.scilab.forge.jlatexmath.Char
+    org.scilab.forge.jlatexmath.CharFont
+    org.scilab.forge.jlatexmath.CumulativeScriptsAtom
+    org.scilab.forge.jlatexmath.DdotsAtom
+    org.scilab.forge.jlatexmath.DefaultTeXFont
+    org.scilab.forge.jlatexmath.DefaultTeXFontParser$ExtensionParser
+    org.scilab.forge.jlatexmath.DefaultTeXFontParser$KernParser
+    org.scilab.forge.jlatexmath.DefaultTeXFontParser$LigParser
+    org.scilab.forge.jlatexmath.DefaultTeXFontParser$NextLargerParser
+    org.scilab.forge.jlatexmath.DelimiterFactory
+    org.scilab.forge.jlatexmath.DoubleFramedAtom
+    org.scilab.forge.jlatexmath.Dummy
+    org.scilab.forge.jlatexmath.EmptyAtom
+    org.scilab.forge.jlatexmath.Extension
+    org.scilab.forge.jlatexmath.FBoxAtom
+    org.scilab.forge.jlatexmath.FencedAtom
+    org.scilab.forge.jlatexmath.FixedCharAtom
+    org.scilab.forge.jlatexmath.FontAlreadyLoadedException
+    org.scilab.forge.jlatexmath.FontInfo
+    org.scilab.forge.jlatexmath.FontInfo$CharCouple
+    org.scilab.forge.jlatexmath.ForeignTextAtom
+    org.scilab.forge.jlatexmath.ForeignTextBox
+    org.scilab.forge.jlatexmath.FractionAtom
+    org.scilab.forge.jlatexmath.FramedBox
+    org.scilab.forge.jlatexmath.Glue
+    org.scilab.forge.jlatexmath.GlueBox
+    org.scilab.forge.jlatexmath.HdotsforAtom
+    org.scilab.forge.jlatexmath.HlineAtom
+    org.scilab.forge.jlatexmath.HorizontalBox
+    org.scilab.forge.jlatexmath.HorizontalRule
+    org.scilab.forge.jlatexmath.IJAtom
+    org.scilab.forge.jlatexmath.IddotsAtom
+    org.scilab.forge.jlatexmath.InvalidSymbolTypeException
+    org.scilab.forge.jlatexmath.InvalidTeXFormulaException
+    org.scilab.forge.jlatexmath.InvalidUnitException
+    org.scilab.forge.jlatexmath.ItAtom
+    org.scilab.forge.jlatexmath.JMathTeXException
+    org.scilab.forge.jlatexmath.LCaronAtom
+    org.scilab.forge.jlatexmath.LaTeXAtom
+    org.scilab.forge.jlatexmath.LapedAtom
+    org.scilab.forge.jlatexmath.LongdivAtom
+    org.scilab.forge.jlatexmath.MathAtom
+    org.scilab.forge.jlatexmath.Metrics
+    org.scilab.forge.jlatexmath.MiddleAtom
+    org.scilab.forge.jlatexmath.MonoScaleAtom
+    org.scilab.forge.jlatexmath.MulticolumnAtom
+    org.scilab.forge.jlatexmath.MultlineAtom
+    org.scilab.forge.jlatexmath.NthRoot
+    org.scilab.forge.jlatexmath.OgonekAtom
+    org.scilab.forge.jlatexmath.OvalAtom
+    org.scilab.forge.jlatexmath.OvalBox
+    org.scilab.forge.jlatexmath.OverBar
+    org.scilab.forge.jlatexmath.OverUnderBox
+    org.scilab.forge.jlatexmath.OverUnderDelimiter
+    org.scilab.forge.jlatexmath.OverlinedAtom
+    org.scilab.forge.jlatexmath.ParseException
+    org.scilab.forge.jlatexmath.ParseOption
+    org.scilab.forge.jlatexmath.PhantomAtom
+    org.scilab.forge.jlatexmath.PredefinedCommands
+    org.scilab.forge.jlatexmath.PredefinedTeXFormulas
+    org.scilab.forge.jlatexmath.RaiseAtom
+    org.scilab.forge.jlatexmath.ReflectAtom
+    org.scilab.forge.jlatexmath.ReflectBox
+    org.scilab.forge.jlatexmath.ResizeAtom
+    org.scilab.forge.jlatexmath.ResourceParseException
+    org.scilab.forge.jlatexmath.RomanAtom
+    org.scilab.forge.jlatexmath.RotateAtom
+    org.scilab.forge.jlatexmath.RotateBox$Point
+    org.scilab.forge.jlatexmath.RowAtom
+    org.scilab.forge.jlatexmath.RuleAtom
+    org.scilab.forge.jlatexmath.ScaleAtom
+    org.scilab.forge.jlatexmath.ScaleBox
+    org.scilab.forge.jlatexmath.ScriptsAtom
+    org.scilab.forge.jlatexmath.ShadowAtom
+    org.scilab.forge.jlatexmath.ShadowBox
+    org.scilab.forge.jlatexmath.SmallCapAtom
+    org.scilab.forge.jlatexmath.SmashedAtom
+    org.scilab.forge.jlatexmath.SpaceAtom
+    org.scilab.forge.jlatexmath.SpaceAtom$1
+    org.scilab.forge.jlatexmath.SpaceAtom$10
+    org.scilab.forge.jlatexmath.SpaceAtom$11
+    org.scilab.forge.jlatexmath.SpaceAtom$12
+    org.scilab.forge.jlatexmath.SpaceAtom$13
+    org.scilab.forge.jlatexmath.SpaceAtom$14
+    org.scilab.forge.jlatexmath.SpaceAtom$2
+    org.scilab.forge.jlatexmath.SpaceAtom$3
+    org.scilab.forge.jlatexmath.SpaceAtom$4
+    org.scilab.forge.jlatexmath.SpaceAtom$5
+    org.scilab.forge.jlatexmath.SpaceAtom$6
+    org.scilab.forge.jlatexmath.SpaceAtom$7
+    org.scilab.forge.jlatexmath.SpaceAtom$8
+    org.scilab.forge.jlatexmath.SpaceAtom$9
+    org.scilab.forge.jlatexmath.SsAtom
+    org.scilab.forge.jlatexmath.StrikeThroughAtom
+    org.scilab.forge.jlatexmath.StrutBox
+    org.scilab.forge.jlatexmath.StyleAtom
+    org.scilab.forge.jlatexmath.SymbolAtom
+    org.scilab.forge.jlatexmath.TStrokeAtom
+    org.scilab.forge.jlatexmath.TeXConstants
+    org.scilab.forge.jlatexmath.TeXEnvironment
+    org.scilab.forge.jlatexmath.TeXFormula
+    org.scilab.forge.jlatexmath.TeXFormula$TeXIconBuilder
+    org.scilab.forge.jlatexmath.TeXFormulaSettingsParser
+    org.scilab.forge.jlatexmath.TeXIcon
+    org.scilab.forge.jlatexmath.TeXInsets
+    org.scilab.forge.jlatexmath.TeXUnicodeBlock
+    org.scilab.forge.jlatexmath.TextCircledAtom
+    org.scilab.forge.jlatexmath.TextStyleAtom
+    org.scilab.forge.jlatexmath.TtAtom
+    org.scilab.forge.jlatexmath.TypedAtom
+    org.scilab.forge.jlatexmath.UnderOverArrowAtom
+    org.scilab.forge.jlatexmath.UnderOverAtom
+    org.scilab.forge.jlatexmath.UnderlinedAtom
+    org.scilab.forge.jlatexmath.UnderscoreAtom
+    org.scilab.forge.jlatexmath.VCenteredAtom
+    org.scilab.forge.jlatexmath.VRowAtom
+    org.scilab.forge.jlatexmath.VdotsAtom
+    org.scilab.forge.jlatexmath.VerticalBox
+    org.scilab.forge.jlatexmath.VlineAtom
+    org.scilab.forge.jlatexmath.XArrowAtom
+    org.scilab.forge.jlatexmath.XLeftRightArrowFactory
+    org.scilab.forge.jlatexmath.XmlElement
+    org.scilab.forge.jlatexmath.XmlNodeList
+    org.scilab.forge.jlatexmath.tcaronAtom
+
+Depends Upon:
+    java.io
+    java.lang
+    java.util
+    org.scilab.forge.jlatexmath.cyrillic
+    org.scilab.forge.jlatexmath.dynamic
+    org.scilab.forge.jlatexmath.greek
+
+Used By:
+    net.sourceforge.plantuml.math
+    net.sourceforge.plantuml.teavm.js
+    org.scilab.forge.jlatexmath.cyrillic
+    org.scilab.forge.jlatexmath.dynamic
+    org.scilab.forge.jlatexmath.greek
+
+--------------------------------------------------
+- Package: org.scilab.forge.jlatexmath.cyrillic
+--------------------------------------------------
+
+Stats:
+    Total Classes: 1
+    Concrete Classes: 1
+    Abstract Classes: 0
+
+    Ca: 1
+    Ce: 2
+
+    A: 0
+    I: 0.67
+    D: 0.33
+
+Abstract Classes:
+
+Concrete Classes:
+    org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration
+
+Depends Upon:
+    java.lang
+    org.scilab.forge.jlatexmath
+
+Used By:
+    org.scilab.forge.jlatexmath
+
+--------------------------------------------------
+- Package: org.scilab.forge.jlatexmath.dynamic
+--------------------------------------------------
+
+Stats:
+    Total Classes: 3
+    Concrete Classes: 1
+    Abstract Classes: 2
+
+    Ca: 1
+    Ce: 2
+
+    A: 0.67
+    I: 0.67
+    D: 0.33
+
+Abstract Classes:
+    org.scilab.forge.jlatexmath.dynamic.ExternalConverter
+    org.scilab.forge.jlatexmath.dynamic.ExternalConverterFactory
+
+Concrete Classes:
+    org.scilab.forge.jlatexmath.dynamic.DynamicAtom
+
+Depends Upon:
+    java.lang
+    org.scilab.forge.jlatexmath
+
+Used By:
+    org.scilab.forge.jlatexmath
+
+--------------------------------------------------
+- Package: org.scilab.forge.jlatexmath.greek
+--------------------------------------------------
+
+Stats:
+    Total Classes: 1
+    Concrete Classes: 1
+    Abstract Classes: 0
+
+    Ca: 1
+    Ce: 2
+
+    A: 0
+    I: 0.67
+    D: 0.33
+
+Abstract Classes:
+
+Concrete Classes:
+    org.scilab.forge.jlatexmath.greek.GreekRegistration
+
+Depends Upon:
+    java.lang
+    org.scilab.forge.jlatexmath
+
+Used By:
+    org.scilab.forge.jlatexmath
 
 --------------------------------------------------
 - Package: org.stathissideris.ascii2image.core
@@ -15323,6 +15600,28 @@ org.openpdf.text.pdf.internal
     |   org.openpdf.text
     |-> org.openpdf.text.pdf
 
+org.scilab.forge.jlatexmath
+    |
+    |   org.scilab.forge.jlatexmath.greek
+    |-> org.scilab.forge.jlatexmath
+
+org.scilab.forge.jlatexmath.cyrillic
+    |
+    |-> org.scilab.forge.jlatexmath
+    |   org.scilab.forge.jlatexmath.greek
+    |-> org.scilab.forge.jlatexmath
+
+org.scilab.forge.jlatexmath.dynamic
+    |
+    |-> org.scilab.forge.jlatexmath
+    |   org.scilab.forge.jlatexmath.greek
+    |-> org.scilab.forge.jlatexmath
+
+org.scilab.forge.jlatexmath.greek
+    |
+    |   org.scilab.forge.jlatexmath
+    |-> org.scilab.forge.jlatexmath.greek
+
 org.stathissideris.ascii2image.core
     |
     |   org.stathissideris.ascii2image.graphics
@@ -15393,16 +15692,16 @@ gen.lib.pack,1,0,1,5,0,0.83,0.17,1
 gen.lib.pathplan,4,0,1,4,0,0.8,0.2,1
 gen.plugin.dot_layout,2,0,0,1,0,1,0,1
 h,95,2,12,3,0.02,0.2,0.78,1
-java.awt,0,0,22,0,0,0,1,1
+java.awt,0,0,21,0,0,0,1,1
 java.awt.datatransfer,0,0,1,0,0,0,1,1
 java.awt.event,0,0,1,0,0,0,1,1
 java.awt.font,0,0,3,0,0,0,1,1
 java.awt.geom,0,0,6,0,0,0,1,1
 java.awt.image,0,0,13,0,0,0,1,1
-java.io,0,0,83,0,0,0,1,1
-java.lang,0,0,242,0,0,0,1,1
+java.io,0,0,84,0,0,0,1,1
+java.lang,0,0,246,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
-java.lang.reflect,0,0,4,0,0,0,1,1
+java.lang.reflect,0,0,3,0,0,0,1,1
 java.math,0,0,5,0,0,0,1,1
 java.net,0,0,6,0,0,0,1,1
 java.nio,0,0,1,0,0,0,1,1
@@ -15413,7 +15712,7 @@ java.security.spec,0,0,2,0,0,0,1,1
 java.text,0,0,5,0,0,0,1,1
 java.time,0,0,12,0,0,0,1,1
 java.time.temporal,0,0,2,0,0,0,1,1
-java.util,0,0,189,0,0,0,1,1
+java.util,0,0,190,0,0,0,1,1
 java.util.concurrent,0,0,8,0,0,0,1,1
 java.util.concurrent.atomic,0,0,5,0,0,0,1,1
 java.util.function,0,0,3,0,0,0,1,1
@@ -15425,8 +15724,7 @@ javax.crypto.spec,0,0,1,0,0,0,1,1
 javax.imageio,0,0,3,0,0,0,1,1
 javax.imageio.metadata,0,0,1,0,0,0,1,1
 javax.imageio.stream,0,0,2,0,0,0,1,1
-javax.script,0,0,1,0,0,0,1,1
-javax.swing,0,0,4,0,0,0,1,1
+javax.swing,0,0,3,0,0,0,1,1
 javax.xml,0,0,1,0,0,0,1,1
 javax.xml.parsers,0,0,4,0,0,0,1,1
 javax.xml.transform,0,0,4,0,0,0,1,1
@@ -15537,14 +15835,14 @@ net.sourceforge.plantuml.jcckit,1,0,0,12,0,1,0,1
 net.sourceforge.plantuml.json,18,2,11,4,0.11,0.27,0.62,1
 net.sourceforge.plantuml.jsondiagram,6,0,5,23,0,0.82,0.18,1
 net.sourceforge.plantuml.klimt,21,10,83,19,0.48,0.19,0.34,1
-net.sourceforge.plantuml.klimt.awt,4,1,29,4,0.25,0.12,0.63,1
+net.sourceforge.plantuml.klimt.awt,4,1,28,4,0.25,0.12,0.62,1
 net.sourceforge.plantuml.klimt.color,30,1,94,11,0.03,0.1,0.86,1
 net.sourceforge.plantuml.klimt.compress,11,2,3,9,0.18,0.75,0.07,1
 net.sourceforge.plantuml.klimt.creole,19,4,65,14,0.21,0.18,0.61,1
-net.sourceforge.plantuml.klimt.creole.atom,14,2,3,17,0.14,0.85,0.01,1
+net.sourceforge.plantuml.klimt.creole.atom,14,2,3,16,0.14,0.84,0.02,1
 net.sourceforge.plantuml.klimt.creole.command,19,2,1,14,0.11,0.93,0.04,1
-net.sourceforge.plantuml.klimt.creole.legacy,15,2,9,25,0.13,0.74,0.13,1
-net.sourceforge.plantuml.klimt.drawing,14,5,80,14,0.36,0.15,0.49,1
+net.sourceforge.plantuml.klimt.creole.legacy,15,2,9,24,0.13,0.73,0.14,1
+net.sourceforge.plantuml.klimt.drawing,14,5,81,14,0.36,0.15,0.5,1
 net.sourceforge.plantuml.klimt.drawing.debug,1,0,1,5,0,0.83,0.17,1
 net.sourceforge.plantuml.klimt.drawing.eps,15,1,0,14,0.07,1,0.07,1
 net.sourceforge.plantuml.klimt.drawing.font,7,0,1,7,0,0.88,0.12,1
@@ -15556,13 +15854,13 @@ net.sourceforge.plantuml.klimt.drawing.svg,21,3,2,16,0.14,0.89,0.03,1
 net.sourceforge.plantuml.klimt.drawing.tikz,11,0,0,13,0,1,0,1
 net.sourceforge.plantuml.klimt.drawing.txt,1,0,2,13,0,0.87,0.13,1
 net.sourceforge.plantuml.klimt.drawing.visio,8,1,0,10,0.12,1,0.12,1
-net.sourceforge.plantuml.klimt.font,11,2,90,6,0.18,0.06,0.76,1
+net.sourceforge.plantuml.klimt.font,11,2,91,6,0.18,0.06,0.76,1
 net.sourceforge.plantuml.klimt.geom,35,6,94,9,0.17,0.09,0.74,1
 net.sourceforge.plantuml.klimt.shape,41,3,87,16,0.07,0.16,0.77,1
 net.sourceforge.plantuml.klimt.sprite,18,2,13,25,0.11,0.66,0.23,1
 net.sourceforge.plantuml.licensing,7,0,0,5,0,1,0,1
 net.sourceforge.plantuml.log,2,0,27,4,0,0.13,0.87,1
-net.sourceforge.plantuml.math,13,1,3,18,0.08,0.86,0.07,1
+net.sourceforge.plantuml.math,20,3,4,20,0.15,0.83,0.02,1
 net.sourceforge.plantuml.mcp,3,0,0,9,0,1,0,1
 net.sourceforge.plantuml.mda,2,0,1,5,0,0.83,0.17,1
 net.sourceforge.plantuml.mindmap,11,1,2,22,0.09,0.92,0.01,1
@@ -15619,9 +15917,9 @@ net.sourceforge.plantuml.svg.parser,11,1,0,13,0.09,1,0.09,1
 net.sourceforge.plantuml.swing,36,0,0,16,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
 net.sourceforge.plantuml.teavm,2,0,46,3,0,0.06,0.94,1
-net.sourceforge.plantuml.teavm.c,13,0,2,40,0,0.95,0.05,1
-net.sourceforge.plantuml.teavm.js,18,0,2,16,0,0.89,0.11,1
-net.sourceforge.plantuml.teavm.js.browser,12,5,3,9,0.42,0.75,0.17,1
+net.sourceforge.plantuml.teavm.c,13,0,3,41,0,0.93,0.07,1
+net.sourceforge.plantuml.teavm.js,19,0,3,17,0,0.85,0.15,1
+net.sourceforge.plantuml.teavm.js.browser,12,5,4,9,0.42,0.69,0.11,1
 net.sourceforge.plantuml.teavm.js.headless,3,1,0,4,0.33,1,0.33,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,41,4,0.2,0.09,0.71,1
@@ -15656,13 +15954,17 @@ org.openpdf.text.pdf,45,4,3,10,0.09,0.77,0.14,1
 org.openpdf.text.pdf.fonts,1,0,0,1,0,1,0,1
 org.openpdf.text.pdf.interfaces,2,2,1,1,1,0.5,0.5,1
 org.openpdf.text.pdf.internal,1,0,1,5,0,0.83,0.17,1
+org.scilab.forge.jlatexmath,146,13,5,6,0.09,0.55,0.37,1
+org.scilab.forge.jlatexmath.cyrillic,1,0,1,2,0,0.67,0.33,1
+org.scilab.forge.jlatexmath.dynamic,3,2,1,2,0.67,0.67,0.33,1
+org.scilab.forge.jlatexmath.greek,1,0,1,2,0,0.67,0.33,1
 org.stathissideris.ascii2image.core,10,0,2,7,0,0.78,0.22,1
 org.stathissideris.ascii2image.graphics,6,0,2,11,0,0.85,0.15,1
 org.stathissideris.ascii2image.text,9,0,2,5,0,0.71,0.29,1
 org.teavm.jso,0,0,3,0,0,0,1,1
 org.teavm.jso.dom.html,0,0,1,0,0,0,1,1
 org.teavm.jso.dom.xml,0,0,1,0,0,0,1,1
-org.w3c.dom,0,0,5,0,0,0,1,1
+org.w3c.dom,0,0,4,0,0,0,1,1
 org.xml.sax,0,0,2,0,0,0,1,1
 org.xml.sax.helpers,0,0,2,0,0,0,1,1
 smetana.core,12,5,11,8,0.42,0.42,0.16,1

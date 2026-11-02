@@ -175,8 +175,8 @@ import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 <span class="fc" id="L175">		ug = ug.apply(UTranslate.dy(getHeightForConstraints(stringBounder)));</span>
 
 <span class="fc" id="L177">		double width = getStatesWidth(stringBounder);</span>
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (initialState != null)</span>
-<span class="nc" id="L179">			width += HISTOGRAM_INITIAL_WIDTH;</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (initialState != null)</span>
+<span class="fc" id="L179">			width += HISTOGRAM_INITIAL_WIDTH;</span>
 
 <span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (fullAvailableWidth &gt; width + 5)</span>
 <span class="nc" id="L182">			ug = ug.apply(UTranslate.dx(fullAvailableWidth - width - 5));</span>
@@ -214,15 +214,15 @@ import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 
 	@Override
 	public double getLeftPanelWidth(StringBounder stringBounder) {
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		if (initialState == null)</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (initialState == null)</span>
 <span class="fc" id="L218">			return getStatesWidth(stringBounder);</span>
-<span class="nc" id="L219">		return getStatesWidth(stringBounder) + HISTOGRAM_INITIAL_WIDTH;</span>
+<span class="fc" id="L219">		return getStatesWidth(stringBounder) + HISTOGRAM_INITIAL_WIDTH;</span>
 	}
 
 	private void drawHlines(UGraphic ug) {
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		if (initialState != null)</span>
-<span class="nc bnc" id="L224" title="All 2 branches missed.">			for (XPoint2D pt : getPoints(0))</span>
-<span class="nc" id="L225">				drawHLineFromPoint(ug, getInitialPoint(), HISTOGRAM_INITIAL_WIDTH + pt.getX());</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (initialState != null)</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">			for (XPoint2D pt : getPoints(0))</span>
+<span class="fc" id="L225">				drawHLineFromPoint(ug, getInitialPoint(), HISTOGRAM_INITIAL_WIDTH + pt.getX());</span>
 
 <span class="fc bfc" id="L227" title="All 2 branches covered.">		for (int i = 0; i &lt; changes.size(); i++) {</span>
 <span class="pc bpc" id="L228" title="1 of 2 branches missed.">			if (changes.get(i).isCompletelyHidden())</span>
@@ -258,10 +258,10 @@ import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 <span class="nc" id="L258">	}</span>
 
 	private void drawVlines(UGraphic ug) {
-<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (initialState != null) {</span>
-<span class="nc" id="L262">			final XPoint2D before = getInitialPoint();</span>
-<span class="nc" id="L263">			final XPoint2D current = getPoints(0)[0];</span>
-<span class="nc" id="L264">			drawVline(ug, current.getX(), current.getY(), ULine.vline(before.getY() - current.getY()));</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">		if (initialState != null) {</span>
+<span class="fc" id="L262">			final XPoint2D before = getInitialPoint();</span>
+<span class="fc" id="L263">			final XPoint2D current = getPoints(0)[0];</span>
+<span class="fc" id="L264">			drawVline(ug, current.getX(), current.getY(), ULine.vline(before.getY() - current.getY()));</span>
 		}
 <span class="fc bfc" id="L266" title="All 2 branches covered.">		for (int i = 1; i &lt; changes.size(); i++) {</span>
 <span class="pc bpc" id="L267" title="2 of 4 branches missed.">			if (changes.get(i - 1).isCompletelyHidden() || changes.get(i).isCompletelyHidden())</span>
@@ -296,7 +296,7 @@ import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 	}
 
 	private XPoint2D getInitialPoint() {
-<span class="nc" id="L299">		return new XPoint2D(-HISTOGRAM_INITIAL_WIDTH, yOfState(initialState));</span>
+<span class="fc" id="L299">		return new XPoint2D(-HISTOGRAM_INITIAL_WIDTH, yOfState(initialState));</span>
 	}
 
 	@Override
@@ -337,8 +337,8 @@ import net.sourceforge.plantuml.timingdiagram.TimingRuler;
 
 	public void setInitialState(String initialState, Colors initialColors) {
 <span class="fc" id="L339">		this.initialState = initialState;</span>
-<span class="pc bpc" id="L340" title="3 of 4 branches missed.">		if (initialState != null &amp;&amp; allStates.contains(initialState) == false)</span>
-<span class="nc" id="L341">			allStates.add(initialState);</span>
+<span class="pc bpc" id="L340" title="1 of 4 branches missed.">		if (initialState != null &amp;&amp; allStates.contains(initialState) == false)</span>
+<span class="fc" id="L341">			allStates.add(initialState);</span>
 <span class="fc" id="L342">	}</span>
 
 }

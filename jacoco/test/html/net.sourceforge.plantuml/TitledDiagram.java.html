@@ -294,8 +294,8 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 <span class="fc" id="L294">		final String monochrome = getSkinParam().getValue(&quot;monochrome&quot;);</span>
 <span class="fc bfc" id="L295" title="All 2 branches covered.">		if (&quot;true&quot;.equals(monochrome))</span>
 <span class="fc" id="L296">			return ColorMapper.MONOCHROME;</span>
-<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		if (&quot;reverse&quot;.equals(monochrome))</span>
-<span class="nc" id="L298">			return ColorMapper.MONOCHROME_REVERSE;</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">		if (&quot;reverse&quot;.equals(monochrome))</span>
+<span class="fc" id="L298">			return ColorMapper.MONOCHROME_REVERSE;</span>
 
 <span class="fc" id="L300">		final String reversecolor = getSkinParam().getValue(&quot;reversecolor&quot;);</span>
 <span class="pc bpc" id="L301" title="1 of 2 branches missed.">		if (reversecolor == null)</span>
@@ -463,7 +463,7 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 <span class="fc" id="L463">	}</span>
 
 	public Previous getPrevious() {
-<span class="nc" id="L466">		return Previous.createFrom(getSkinParam().values());</span>
+<span class="fc" id="L466">		return Previous.createFrom(getSkinParam().values());</span>
 	}
 
 	@Override

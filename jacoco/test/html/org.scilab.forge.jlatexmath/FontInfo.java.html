@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FontInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">FontInfo.java</span></div><h1>FontInfo.java</h1><pre class="source lang-java linenums">/* FontInfo.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Contains all the font information for 1 font.
+ */
+public class FontInfo {
+
+    /**
+     * Maximum number of character codes in a TeX font.
+     */
+    public static final int NUMBER_OF_CHAR_CODES = 256;
+
+<span class="fc" id="L62">    private static Map&lt;Integer, FontInfo&gt; fonts = new HashMap&lt;Integer, FontInfo&gt;();</span>
+
+    private class CharCouple {
+
+        private final char left, right;
+
+<span class="fc" id="L68">        CharCouple(char l, char r) {</span>
+<span class="fc" id="L69">            left = l;</span>
+<span class="fc" id="L70">            right = r;</span>
+<span class="fc" id="L71">        }</span>
+
+        public boolean equals(Object o) {
+<span class="fc" id="L74">            CharCouple lig = (CharCouple) o;</span>
+<span class="fc bfc" id="L75" title="All 4 branches covered.">            return left == lig.left &amp;&amp; right == lig.right;</span>
+        }
+
+        public int hashCode() {
+<span class="fc" id="L79">            return (left + right) % 128;</span>
+        }
+    }
+
+    // ID
+    private final int fontId;
+
+    // font
+    private GlyphOutlines.GlyphFont glyphs;
+    private final Object base;
+    private final String fontName;
+
+<span class="fc" id="L91">    private final Map&lt;CharCouple,Character&gt; lig = new HashMap&lt;CharCouple,Character&gt; ();</span>
+<span class="fc" id="L92">    private final Map&lt;CharCouple,Float&gt; kern = new HashMap&lt;CharCouple,Float&gt;();</span>
+    private float[][] metrics;
+    private CharFont[] nextLarger;
+    private int[][] extensions;
+<span class="fc" id="L96">    private HashMap&lt;Character, Character&gt; unicode = null;</span>
+
+    // skew character of the font (used for positioning accents)
+<span class="fc" id="L99">    private char skewChar = (char) -1;</span>
+
+    // general parameters for this font
+    private final float xHeight;
+    private final float space;
+    private final float quad;
+    private int boldId;
+    private int romanId;
+    private int ssId;
+    private int ttId;
+    private int itId;
+    protected final String boldVersion;
+    protected final String romanVersion;
+    protected final String ssVersion;
+    protected final String ttVersion;
+    protected final String itVersion;
+
+<span class="fc" id="L116">    public FontInfo(int fontId, Object base, String fontName, int unicode, float xHeight, float space, float quad, String boldVersion, String romanVersion, String ssVersion, String ttVersion, String itVersion) {</span>
+<span class="fc" id="L117">        this.fontId = fontId;</span>
+<span class="fc" id="L118">        this.base = base;</span>
+<span class="fc" id="L119">        this.fontName = fontName;</span>
+<span class="fc" id="L120">        this.xHeight = xHeight;</span>
+<span class="fc" id="L121">        this.space = space;</span>
+<span class="fc" id="L122">        this.quad = quad;</span>
+<span class="fc" id="L123">        this.boldVersion = boldVersion;</span>
+<span class="fc" id="L124">        this.romanVersion = romanVersion;</span>
+<span class="fc" id="L125">        this.ssVersion = ssVersion;</span>
+<span class="fc" id="L126">        this.ttVersion = ttVersion;</span>
+<span class="fc" id="L127">        this.itVersion = itVersion;</span>
+<span class="fc" id="L128">        int num = NUMBER_OF_CHAR_CODES;</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (unicode != 0) {</span>
+<span class="fc" id="L130">            this.unicode = new HashMap&lt;Character, Character&gt;(unicode);</span>
+<span class="fc" id="L131">            num = unicode;</span>
+        }
+<span class="fc" id="L133">        metrics = new float[num][];</span>
+<span class="fc" id="L134">        nextLarger = new CharFont[num];</span>
+<span class="fc" id="L135">        extensions = new int[num][];</span>
+<span class="fc" id="L136">        fonts.put(fontId, this);</span>
+<span class="fc" id="L137">    }</span>
+
+    /**
+     *
+     * @param left
+     *           left character
+     * @param right
+     *           right character
+     * @param k
+     *           kern value
+     */
+    public void addKern(char left, char right, float k) {
+<span class="fc" id="L149">        kern.put(new CharCouple(left, right), new Float(k));</span>
+<span class="fc" id="L150">    }</span>
+
+    /**
+     * @param left
+     *           left character
+     * @param right
+     *           right character
+     * @param ligChar
+     *           ligature to replace left and right character
+     */
+    public void addLigature(char left, char right, char ligChar) {
+<span class="fc" id="L161">        lig.put(new CharCouple(left, right), new Character(ligChar));</span>
+<span class="fc" id="L162">    }</span>
+
+    public int[] getExtension(char ch) {
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">        if (unicode == null)</span>
+<span class="fc" id="L166">            return extensions[ch];</span>
+<span class="nc" id="L167">        return extensions[unicode.get(ch)];</span>
+    }
+
+    public float getKern(char left, char right, float factor) {
+<span class="fc" id="L171">        Object obj = kern.get(new CharCouple(left, right));</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        if (obj == null)</span>
+<span class="fc" id="L173">            return 0;</span>
+        else
+<span class="fc" id="L175">            return ((Float) obj).floatValue() * factor;</span>
+    }
+
+    public CharFont getLigature(char left, char right) {
+<span class="fc" id="L179">        Object obj = lig.get(new CharCouple(left, right));</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (obj == null)</span>
+<span class="fc" id="L181">            return null;</span>
+        else
+<span class="nc" id="L183">            return new CharFont(((Character) obj).charValue(), fontId);</span>
+    }
+
+    public float[] getMetrics(char c) {
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (unicode == null)</span>
+<span class="fc" id="L188">            return metrics[c];</span>
+<span class="fc" id="L189">        return metrics[unicode.get(c)];</span>
+    }
+
+    public CharFont getNextLarger(char ch) {
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">        if (unicode == null)</span>
+<span class="fc" id="L194">            return nextLarger[ch];</span>
+<span class="nc" id="L195">        return nextLarger[unicode.get(ch)];</span>
+    }
+
+    public float getQuad(float factor) {
+<span class="fc" id="L199">        return quad * factor;</span>
+    }
+
+    /**
+     * @return the skew character of the font (for the correct positioning of
+     *         accents)
+     */
+    public char getSkewChar() {
+<span class="fc" id="L207">        return skewChar;</span>
+    }
+
+    public float getSpace(float factor) {
+<span class="fc" id="L211">        return space * factor;</span>
+    }
+
+    public float getXHeight(float factor) {
+<span class="fc" id="L215">        return xHeight * factor;</span>
+    }
+
+    public boolean hasSpace() {
+<span class="nc bnc" id="L219" title="All 2 branches missed.">        return space &gt; TeXFormula.PREC;</span>
+    }
+
+    public void setExtension(char ch, int[] ext) {
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">        if (unicode == null)</span>
+<span class="fc" id="L224">            extensions[ch] = ext;</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">        else if (!unicode.containsKey(ch)) {</span>
+<span class="nc" id="L226">            char s = (char)unicode.size();</span>
+<span class="nc" id="L227">            unicode.put(ch, s);</span>
+<span class="nc" id="L228">            extensions[s] = ext;</span>
+<span class="nc" id="L229">        } else</span>
+<span class="nc" id="L230">            extensions[unicode.get(ch)] = ext;</span>
+<span class="fc" id="L231">    }</span>
+
+    public void setMetrics(char c, float[] arr) {
+<span class="fc bfc" id="L234" title="All 2 branches covered.">        if (unicode == null)</span>
+<span class="fc" id="L235">            metrics[c] = arr;</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">        else if (!unicode.containsKey(c)) {</span>
+<span class="fc" id="L237">            char s = (char)unicode.size();</span>
+<span class="fc" id="L238">            unicode.put(c, s);</span>
+<span class="fc" id="L239">            metrics[s] = arr;</span>
+<span class="fc" id="L240">        } else</span>
+<span class="nc" id="L241">            metrics[unicode.get(c)] = arr;</span>
+<span class="fc" id="L242">    }</span>
+
+    public void setNextLarger(char ch, char larger, int fontLarger) {
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">        if (unicode == null)</span>
+<span class="fc" id="L246">            nextLarger[ch] = new CharFont(larger, fontLarger);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">        else if (!unicode.containsKey(ch)) {</span>
+<span class="nc" id="L248">            char s = (char)unicode.size();</span>
+<span class="nc" id="L249">            unicode.put(ch, s);</span>
+<span class="nc" id="L250">            nextLarger[s] = new CharFont(larger, fontLarger);</span>
+<span class="nc" id="L251">        } else</span>
+<span class="nc" id="L252">            nextLarger[unicode.get(ch)] = new CharFont(larger, fontLarger);</span>
+<span class="fc" id="L253">    }</span>
+
+    public void setSkewChar(char c) {
+<span class="fc" id="L256">        skewChar = c;</span>
+<span class="fc" id="L257">    }</span>
+
+    public int getBoldId() {
+<span class="fc" id="L260">        return boldId;</span>
+    }
+
+    public int getRomanId() {
+<span class="fc" id="L264">        return romanId;</span>
+    }
+
+    public int getTtId() {
+<span class="fc" id="L268">        return ttId;</span>
+    }
+
+    public int getItId() {
+<span class="fc" id="L272">        return itId;</span>
+    }
+
+    public int getSsId() {
+<span class="fc" id="L276">        return ssId;</span>
+    }
+
+    public void setSsId(int id) {
+<span class="fc bfc" id="L280" title="All 2 branches covered.">        ssId = id == -1 ? fontId : id;</span>
+<span class="fc" id="L281">    }</span>
+
+    public void setTtId(int id) {
+<span class="fc bfc" id="L284" title="All 2 branches covered.">        ttId = id == -1 ? fontId : id;</span>
+<span class="fc" id="L285">    }</span>
+
+    public void setItId(int id) {
+<span class="fc bfc" id="L288" title="All 2 branches covered.">        itId = id == -1 ? fontId : id;</span>
+<span class="fc" id="L289">    }</span>
+
+    public void setRomanId(int id) {
+<span class="fc bfc" id="L292" title="All 2 branches covered.">        romanId = id == -1 ? fontId : id;</span>
+<span class="fc" id="L293">    }</span>
+
+    public void setBoldId(int id) {
+<span class="fc bfc" id="L296" title="All 2 branches covered.">        boldId = id == -1 ? fontId : id;</span>
+<span class="fc" id="L297">    }</span>
+
+    /**
+     * The outlines of the glyphs of this font (read from glyphs.bin), or null
+     * if there are none for it. 
+     */
+    public GlyphOutlines.GlyphFont getGlyphs() {
+<span class="fc bfc" id="L304" title="All 2 branches covered.">        if (glyphs == null)</span>
+<span class="fc" id="L305">            glyphs = GlyphOutlines.forBase(base).getFont(fontName);</span>
+<span class="fc" id="L306">        return glyphs;</span>
+    }
+
+    public static FontInfo getFontInfo(int id) {
+<span class="fc" id="L310">        return fonts.get(id);</span>
+    }
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

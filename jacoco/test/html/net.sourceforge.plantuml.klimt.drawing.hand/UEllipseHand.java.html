@@ -47,28 +47,28 @@ public class UEllipseHand {
 	private final Random rnd;
 
 	private double randomMe() {
-<span class="nc" id="L50">		return rnd.nextDouble();</span>
+<span class="fc" id="L50">		return rnd.nextDouble();</span>
 	}
 
-<span class="nc" id="L53">	public UEllipseHand(UEllipse source, Random rnd) {</span>
-<span class="nc" id="L54">		this.rnd = rnd;</span>
-<span class="nc bnc" id="L55" title="All 4 branches missed.">		if (source.getStart() != 0 || source.getExtend() != 0) {</span>
+<span class="fc" id="L53">	public UEllipseHand(UEllipse source, Random rnd) {</span>
+<span class="fc" id="L54">		this.rnd = rnd;</span>
+<span class="pc bpc" id="L55" title="2 of 4 branches missed.">		if (source.getStart() != 0 || source.getExtend() != 0) {</span>
 <span class="nc" id="L56">			this.poly = source;</span>
 <span class="nc" id="L57">			return;</span>
 		}
-<span class="nc" id="L59">		poly = new UPolygon();</span>
-<span class="nc" id="L60">		final double width = source.getWidth();</span>
-<span class="nc" id="L61">		final double height = source.getHeight();</span>
-<span class="nc" id="L62">		double angle = 0;</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (width == height) {</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">			while (angle &lt; Math.PI * 2) {</span>
-<span class="nc" id="L65">				angle += (10 + randomMe() * 10) * Math.PI / 180;</span>
-<span class="nc" id="L66">				final double variation = 1 + (randomMe() - 0.5) / 8;</span>
-<span class="nc" id="L67">				final double x = width / 2 + Math.cos(angle) * width * variation / 2;</span>
-<span class="nc" id="L68">				final double y = height / 2 + Math.sin(angle) * height * variation / 2;</span>
+<span class="fc" id="L59">		poly = new UPolygon();</span>
+<span class="fc" id="L60">		final double width = source.getWidth();</span>
+<span class="fc" id="L61">		final double height = source.getHeight();</span>
+<span class="fc" id="L62">		double angle = 0;</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (width == height) {</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">			while (angle &lt; Math.PI * 2) {</span>
+<span class="fc" id="L65">				angle += (10 + randomMe() * 10) * Math.PI / 180;</span>
+<span class="fc" id="L66">				final double variation = 1 + (randomMe() - 0.5) / 8;</span>
+<span class="fc" id="L67">				final double x = width / 2 + Math.cos(angle) * width * variation / 2;</span>
+<span class="fc" id="L68">				final double y = height / 2 + Math.sin(angle) * height * variation / 2;</span>
 				// final XPoint2D p = new XPoint2D(x, y);
-<span class="nc" id="L70">				((UPolygon) poly).addPoint(x, y);</span>
-<span class="nc" id="L71">			}</span>
+<span class="fc" id="L70">				((UPolygon) poly).addPoint(x, y);</span>
+<span class="fc" id="L71">			}</span>
 		} else {
 <span class="nc bnc" id="L73" title="All 2 branches missed.">			while (angle &lt; Math.PI * 2) {</span>
 <span class="nc" id="L74">				angle += Math.PI / 20;</span>
@@ -78,8 +78,8 @@ public class UEllipseHand {
 
 		}
 
-<span class="nc" id="L81">		this.poly.setDeltaShadow(source.getDeltaShadow());</span>
-<span class="nc" id="L82">	}</span>
+<span class="fc" id="L81">		this.poly.setDeltaShadow(source.getDeltaShadow());</span>
+<span class="fc" id="L82">	}</span>
 
 	private XPoint2D getPoint(double width, double height, double angle) {
 <span class="nc" id="L85">		final double x = width / 2 + Math.cos(angle) * width / 2;</span>
@@ -90,7 +90,7 @@ public class UEllipseHand {
 	}
 
 	public Shadowable getHanddrawn() {
-<span class="nc" id="L93">		return this.poly;</span>
+<span class="fc" id="L93">		return this.poly;</span>
 	}
 
 }

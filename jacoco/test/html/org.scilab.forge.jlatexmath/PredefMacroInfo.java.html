@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PredefMacroInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">PredefMacroInfo.java</span></div><h1>PredefMacroInfo.java</h1><pre class="source lang-java linenums">/* PredefMacroInfo.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2011 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * Class to load the predefined commands. Mainly wrote to avoid the use of the Java reflection.
+ */
+class PredefMacroInfo extends MacroInfo {
+
+    private int id;
+
+    public PredefMacroInfo(int id, int nbArgs, int posOpts) {
+<span class="fc" id="L56">        super(nbArgs, posOpts);</span>
+<span class="fc" id="L57">        this.id = id;</span>
+<span class="fc" id="L58">    }</span>
+
+    public PredefMacroInfo(int id, int nbArgs) {
+<span class="fc" id="L61">        super(nbArgs);</span>
+<span class="fc" id="L62">        this.id = id;</span>
+<span class="fc" id="L63">    }</span>
+
+    public Object invoke(final TeXParser tp, final String[] args) throws ParseException {
+<span class="fc" id="L66">        return invokeID(id, tp, args);</span>
+    }
+
+    private static final Object invokeID(final int id, final TeXParser tp, final String[] args) throws ParseException {
+        try {
+<span class="pc bpc" id="L71" title="121 of 222 branches missed.">            switch (id) {</span>
+            case 0:
+<span class="fc" id="L73">                return PredefMacros.newcommand_macro(tp, args);</span>
+            case 1:
+<span class="fc" id="L75">                return PredefMacros.renewcommand_macro(tp, args);</span>
+            case 2:
+<span class="fc" id="L77">                return PredefMacros.rule_macro(tp, args);</span>
+            case 3:
+            case 4:
+<span class="fc" id="L80">                return PredefMacros.hvspace_macro(tp, args);</span>
+            case 5:
+            case 6:
+            case 7:
+<span class="fc" id="L84">                return PredefMacros.clrlap_macro(tp, args);</span>
+            case 8:
+            case 9:
+            case 10:
+<span class="nc" id="L88">                return PredefMacros.mathclrlap_macro(tp, args);</span>
+            case 12:
+<span class="fc" id="L90">                return PredefMacros.cfrac_macro(tp, args);</span>
+            case 13:
+<span class="fc" id="L92">                return PredefMacros.frac_macro(tp, args);</span>
+            case 14:
+<span class="nc" id="L94">                return PredefMacros.sfrac_macro(tp, args);</span>
+            case 15:
+<span class="fc" id="L96">                return PredefMacros.genfrac_macro(tp, args);</span>
+            case 16:
+<span class="fc" id="L98">                return PredefMacros.over_macro(tp, args);</span>
+            case 17:
+<span class="nc" id="L100">                return PredefMacros.overwithdelims_macro(tp, args);</span>
+            case 18:
+<span class="fc" id="L102">                return PredefMacros.atop_macro(tp, args);</span>
+            case 19:
+<span class="nc" id="L104">                return PredefMacros.atopwithdelims_macro(tp, args);</span>
+            case 20:
+<span class="fc" id="L106">                return PredefMacros.choose_macro(tp, args);</span>
+            case 21:
+<span class="fc" id="L108">                return PredefMacros.underscore_macro(tp, args);</span>
+            case 22:
+<span class="nc" id="L110">                return PredefMacros.mbox_macro(tp, args);</span>
+            case 23:
+<span class="fc" id="L112">                return PredefMacros.text_macro(tp, args);</span>
+            case 24:
+<span class="nc" id="L114">                return PredefMacros.intertext_macro(tp, args);</span>
+            case 25:
+<span class="fc" id="L116">                return PredefMacros.binom_macro(tp, args);</span>
+            case 26:
+<span class="fc" id="L118">                return PredefMacros.mathbf_macro(tp, args);</span>
+            case 27:
+<span class="nc" id="L120">                return PredefMacros.bf_macro(tp, args);</span>
+            case 28:
+<span class="fc" id="L122">                return PredefMacros.textstyle_macros(tp, args);</span>
+            case 29:
+<span class="fc" id="L124">                return PredefMacros.textstyle_macros(tp, args);</span>
+            case 30:
+<span class="nc" id="L126">                return PredefMacros.textstyle_macros(tp, args);</span>
+            case 31:
+<span class="fc" id="L128">                return PredefMacros.mathit_macro(tp, args);</span>
+            case 32:
+<span class="nc" id="L130">                return PredefMacros.it_macro(tp, args);</span>
+            case 33:
+<span class="fc" id="L132">                return PredefMacros.mathrm_macro(tp, args);</span>
+            case 34:
+<span class="nc" id="L134">                return PredefMacros.rm_macro(tp, args);</span>
+            case 35:
+<span class="fc" id="L136">                return PredefMacros.textstyle_macros(tp, args);</span>
+            case 36:
+<span class="fc" id="L138">                return PredefMacros.mathsf_macro(tp, args);</span>
+            case 37:
+<span class="nc" id="L140">                return PredefMacros.sf_macro(tp, args);</span>
+            case 38:
+<span class="fc" id="L142">                return PredefMacros.mathtt_macro(tp, args);</span>
+            case 39:
+<span class="nc" id="L144">                return PredefMacros.tt_macro(tp, args);</span>
+            case 40:
+            case 41:
+            case 42:
+            case 43:
+            case 44:
+            case 45:
+<span class="fc" id="L151">                return PredefMacros.textstyle_macros(tp, args);</span>
+            case 46:
+            case 47:
+            case 48:
+            case 49:
+            case 50:
+            case 51:
+            case 52:
+            case 53:
+            case 54:
+            case 55:
+            case 56:
+            case 57:
+<span class="fc" id="L164">                return PredefMacros.accentbis_macros(tp, args);</span>
+            case 58:
+<span class="nc" id="L166">                return PredefMacros.T_macro(tp, args);</span>
+            case 59:
+<span class="nc" id="L168">                return PredefMacros.accentbis_macros(tp, args);</span>
+            case 60:
+<span class="nc" id="L170">                return PredefMacros.accent_macro(tp, args);</span>
+            case 61:
+<span class="nc" id="L172">                return PredefMacros.grkaccent_macro(tp, args);</span>
+            case 62:
+            case 63:
+            case 64:
+            case 65:
+            case 66:
+            case 67:
+            case 68:
+            case 69:
+            case 70:
+            case 71:
+            case 72:
+            case 73:
+            case 74:
+            case 75:
+<span class="fc" id="L187">                return PredefMacros.accent_macros(tp, args);</span>
+            case 76:
+<span class="fc" id="L189">                return PredefMacros.nbsp_macro(tp, args);</span>
+            case 77:
+<span class="nc" id="L191">                return PredefMacros.smallmatrixATATenv_macro(tp, args);</span>
+            case 78:
+<span class="fc" id="L193">                return PredefMacros.matrixATATenv_macro(tp, args);</span>
+            case 79:
+<span class="fc" id="L195">                return PredefMacros.overrightarrow_macro(tp, args);</span>
+            case 80:
+<span class="fc" id="L197">                return PredefMacros.overleftarrow_macro(tp, args);</span>
+            case 81:
+<span class="fc" id="L199">                return PredefMacros.overleftrightarrow_macro(tp, args);</span>
+            case 82:
+<span class="fc" id="L201">                return PredefMacros.underrightarrow_macro(tp, args);</span>
+            case 83:
+<span class="nc" id="L203">                return PredefMacros.underleftarrow_macro(tp, args);</span>
+            case 84:
+<span class="nc" id="L205">                return PredefMacros.underleftrightarrow_macro(tp, args);</span>
+            case 85:
+<span class="fc" id="L207">                return PredefMacros.xleftarrow_macro(tp, args);</span>
+            case 86:
+<span class="fc" id="L209">                return PredefMacros.xrightarrow_macro(tp, args);</span>
+            case 87:
+<span class="fc" id="L211">                return PredefMacros.underbrace_macro(tp, args);</span>
+            case 88:
+<span class="fc" id="L213">                return PredefMacros.overbrace_macro(tp, args);</span>
+            case 89:
+<span class="nc" id="L215">                return PredefMacros.underbrack_macro(tp, args);</span>
+            case 90:
+<span class="nc" id="L217">                return PredefMacros.overbrack_macro(tp, args);</span>
+            case 91:
+<span class="nc" id="L219">                return PredefMacros.underparen_macro(tp, args);</span>
+            case 92:
+<span class="nc" id="L221">                return PredefMacros.overparen_macro(tp, args);</span>
+            case 93:
+            case 94:
+<span class="fc" id="L224">                return PredefMacros.sqrt_macro(tp, args);</span>
+            case 95:
+<span class="fc" id="L226">                return PredefMacros.overline_macro(tp, args);</span>
+            case 96:
+<span class="fc" id="L228">                return PredefMacros.underline_macro(tp, args);</span>
+            case 97:
+<span class="fc" id="L230">                return PredefMacros.mathop_macro(tp, args);</span>
+            case 98:
+<span class="fc" id="L232">                return PredefMacros.mathpunct_macro(tp, args);</span>
+            case 99:
+<span class="fc" id="L234">                return PredefMacros.mathord_macro(tp, args);</span>
+            case 100:
+<span class="fc" id="L236">                return PredefMacros.mathrel_macro(tp, args);</span>
+            case 101:
+<span class="fc" id="L238">                return PredefMacros.mathinner_macro(tp, args);</span>
+            case 102:
+<span class="fc" id="L240">                return PredefMacros.mathbin_macro(tp, args);</span>
+            case 103:
+<span class="fc" id="L242">                return PredefMacros.mathopen_macro(tp, args);</span>
+            case 104:
+<span class="fc" id="L244">                return PredefMacros.mathclose_macro(tp, args);</span>
+            case 105:
+<span class="fc" id="L246">                return PredefMacros.joinrel_macro(tp, args);</span>
+            case 106:
+<span class="fc" id="L248">                return PredefMacros.smash_macro(tp, args);</span>
+            case 107:
+<span class="fc" id="L250">                return PredefMacros.vdots_macro(tp, args);</span>
+            case 108:
+<span class="fc" id="L252">                return PredefMacros.ddots_macro(tp, args);</span>
+            case 109:
+<span class="nc" id="L254">                return PredefMacros.iddots_macro(tp, args);</span>
+            case 110:
+<span class="fc" id="L256">                return PredefMacros.nolimits_macro(tp, args);</span>
+            case 111:
+<span class="fc" id="L258">                return PredefMacros.limits_macro(tp, args);</span>
+            case 112:
+<span class="fc" id="L260">                return PredefMacros.normal_macro(tp, args);</span>
+            case 113:
+<span class="nc" id="L262">                return PredefMacros.leftparenthesis_macro(tp, args);</span>
+            case 114:
+<span class="nc" id="L264">                return PredefMacros.leftbracket_macro(tp, args);</span>
+            case 115:
+<span class="fc" id="L266">                return PredefMacros.left_macro(tp, args);</span>
+            case 116:
+<span class="fc" id="L268">                return PredefMacros.middle_macro(tp, args);</span>
+            case 117:
+<span class="nc" id="L270">                return PredefMacros.cr_macro(tp, args);</span>
+            case 118:
+<span class="nc" id="L272">                return PredefMacros.multicolumn_macro(tp, args);</span>
+            case 119:
+<span class="nc" id="L274">                return PredefMacros.hdotsfor_macro(tp, args);</span>
+            case 120:
+<span class="fc" id="L276">                return PredefMacros.arrayATATenv_macro(tp, args);</span>
+            case 121:
+<span class="nc" id="L278">                return PredefMacros.alignATATenv_macro(tp, args);</span>
+            case 122:
+<span class="fc" id="L280">                return PredefMacros.alignedATATenv_macro(tp, args);</span>
+            case 123:
+<span class="nc" id="L282">                return PredefMacros.flalignATATenv_macro(tp, args);</span>
+            case 124:
+<span class="nc" id="L284">                return PredefMacros.alignatATATenv_macro(tp, args);</span>
+            case 125:
+<span class="nc" id="L286">                return PredefMacros.alignedatATATenv_macro(tp, args);</span>
+            case 126:
+<span class="nc" id="L288">                return PredefMacros.multlineATATenv_macro(tp, args);</span>
+            case 127:
+<span class="nc" id="L290">                return PredefMacros.gatherATATenv_macro(tp, args);</span>
+            case 128:
+<span class="nc" id="L292">                return PredefMacros.gatheredATATenv_macro(tp, args);</span>
+            case 129:
+<span class="nc" id="L294">                return PredefMacros.shoveright_macro(tp, args);</span>
+            case 130:
+<span class="nc" id="L296">                return PredefMacros.shoveleft_macro(tp, args);</span>
+            case 131:
+<span class="fc" id="L298">                return PredefMacros.backslashcr_macro(tp, args);</span>
+            case 132:
+<span class="nc" id="L300">                return PredefMacros.newenvironment_macro(tp, args);</span>
+            case 133:
+<span class="nc" id="L302">                return PredefMacros.renewenvironment_macro(tp, args);</span>
+            case 134:
+<span class="fc" id="L304">                return PredefMacros.makeatletter_macro(tp, args);</span>
+            case 135:
+<span class="fc" id="L306">                return PredefMacros.makeatother_macro(tp, args);</span>
+            case 136:
+            case 137:
+<span class="fc" id="L309">                return PredefMacros.fbox_macro(tp, args);</span>
+            case 138:
+<span class="fc" id="L311">                return PredefMacros.stackrel_macro(tp, args);</span>
+            case 139:
+<span class="nc" id="L313">                return PredefMacros.stackbin_macro(tp, args);</span>
+            case 140:
+<span class="nc" id="L315">                return PredefMacros.accentset_macro(tp, args);</span>
+            case 141:
+<span class="nc" id="L317">                return PredefMacros.underaccent_macro(tp, args);</span>
+            case 142:
+<span class="nc" id="L319">                return PredefMacros.undertilde_macro(tp, args);</span>
+            case 143:
+<span class="fc" id="L321">                return PredefMacros.overset_macro(tp, args);</span>
+            case 144:
+<span class="nc" id="L323">                return PredefMacros.Braket_macro(tp, args);</span>
+            case 145:
+<span class="nc" id="L325">                return PredefMacros.Set_macro(tp, args);</span>
+            case 146:
+<span class="fc" id="L327">                return PredefMacros.underset_macro(tp, args);</span>
+            case 147:
+<span class="fc" id="L329">                return PredefMacros.boldsymbol_macro(tp, args);</span>
+            case 148:
+<span class="nc" id="L331">                return PredefMacros.LaTeX_macro(tp, args);</span>
+            case 150:
+<span class="fc" id="L333">                return PredefMacros.big_macro(tp, args);</span>
+            case 151:
+<span class="fc" id="L335">                return PredefMacros.Big_macro(tp, args);</span>
+            case 152:
+<span class="fc" id="L337">                return PredefMacros.bigg_macro(tp, args);</span>
+            case 153:
+<span class="fc" id="L339">                return PredefMacros.Bigg_macro(tp, args);</span>
+            case 154:
+<span class="nc" id="L341">                return PredefMacros.bigl_macro(tp, args);</span>
+            case 155:
+<span class="nc" id="L343">                return PredefMacros.Bigl_macro(tp, args);</span>
+            case 156:
+<span class="nc" id="L345">                return PredefMacros.biggl_macro(tp, args);</span>
+            case 157:
+<span class="nc" id="L347">                return PredefMacros.Biggl_macro(tp, args);</span>
+            case 158:
+<span class="nc" id="L349">                return PredefMacros.bigr_macro(tp, args);</span>
+            case 159:
+<span class="nc" id="L351">                return PredefMacros.Bigr_macro(tp, args);</span>
+            case 160:
+<span class="nc" id="L353">                return PredefMacros.biggr_macro(tp, args);</span>
+            case 161:
+<span class="nc" id="L355">                return PredefMacros.Biggr_macro(tp, args);</span>
+            case 162:
+<span class="fc" id="L357">                return PredefMacros.displaystyle_macro(tp, args);</span>
+            case 163:
+<span class="fc" id="L359">                return PredefMacros.textstyle_macro(tp, args);</span>
+            case 164:
+<span class="fc" id="L361">                return PredefMacros.scriptstyle_macro(tp, args);</span>
+            case 165:
+<span class="fc" id="L363">                return PredefMacros.scriptscriptstyle_macro(tp, args);</span>
+            case 166:
+<span class="nc" id="L365">                return PredefMacros.sideset_macro(tp, args);</span>
+            case 167:
+<span class="nc" id="L367">                return PredefMacros.prescript_macro(tp, args);</span>
+            case 168:
+<span class="fc" id="L369">                return PredefMacros.rotatebox_macro(tp, args);</span>
+            case 169:
+<span class="fc" id="L371">                return PredefMacros.reflectbox_macro(tp, args);</span>
+            case 170:
+<span class="fc" id="L373">                return PredefMacros.scalebox_macro(tp, args);</span>
+            case 171:
+<span class="fc" id="L375">                return PredefMacros.resizebox_macro(tp, args);</span>
+            case 172:
+<span class="fc" id="L377">                return PredefMacros.raisebox_macro(tp, args);</span>
+            case 173:
+<span class="fc" id="L379">                return PredefMacros.shadowbox_macro(tp, args);</span>
+            case 174:
+<span class="fc" id="L381">                return PredefMacros.ovalbox_macro(tp, args);</span>
+            case 175:
+<span class="fc" id="L383">                return PredefMacros.doublebox_macro(tp, args);</span>
+            case 176:
+<span class="fc" id="L385">                return PredefMacros.phantom_macro(tp, args);</span>
+            case 177:
+<span class="fc" id="L387">                return PredefMacros.hphantom_macro(tp, args);</span>
+            case 178:
+<span class="fc" id="L389">                return PredefMacros.vphantom_macro(tp, args);</span>
+            case 179:
+<span class="nc" id="L391">                return PredefMacros.spATbreve_macro(tp, args);</span>
+            case 180:
+<span class="nc" id="L393">                return PredefMacros.spAThat_macro(tp, args);</span>
+            case 181:
+<span class="fc" id="L395">                return PredefMacros.definecolor_macro(tp, args);</span>
+            case 182:
+<span class="fc" id="L397">                return PredefMacros.textcolor_macro(tp, args);</span>
+            case 183:
+<span class="nc" id="L399">                return PredefMacros.fgcolor_macro(tp, args);</span>
+            case 184:
+<span class="nc" id="L401">                return PredefMacros.bgcolor_macro(tp, args);</span>
+            case 185:
+<span class="fc" id="L403">                return PredefMacros.colorbox_macro(tp, args);</span>
+            case 186:
+<span class="fc" id="L405">                return PredefMacros.fcolorbox_macro(tp, args);</span>
+            case 187:
+<span class="fc" id="L407">                return PredefMacros.cedilla_macro(tp, args);</span>
+            case 188:
+<span class="nc" id="L409">                return PredefMacros.IJ_macro(tp, args);</span>
+            case 189:
+<span class="nc" id="L411">                return PredefMacros.IJ_macro(tp, args);</span>
+            case 190:
+<span class="nc" id="L413">                return PredefMacros.TStroke_macro(tp, args);</span>
+            case 191:
+<span class="nc" id="L415">                return PredefMacros.TStroke_macro(tp, args);</span>
+            case 192:
+<span class="nc" id="L417">                return PredefMacros.LCaron_macro(tp, args);</span>
+            case 193:
+<span class="nc" id="L419">                return PredefMacros.tcaron_macro(tp, args);</span>
+            case 194:
+<span class="nc" id="L421">                return PredefMacros.LCaron_macro(tp, args);</span>
+            case 195:
+<span class="nc" id="L423">                return PredefMacros.ogonek_macro(tp, args);</span>
+            case 196:
+<span class="fc" id="L425">                return PredefMacros.cong_macro(tp, args);</span>
+            case 197:
+<span class="nc" id="L427">                return PredefMacros.doteq_macro(tp, args);</span>
+            case 198:
+<span class="nc" id="L429">                return PredefMacros.jlmDynamic_macro(tp, args);</span>
+            case 204:
+<span class="nc" id="L431">                return PredefMacros.DeclareMathSizes_macro(tp, args);</span>
+            case 205:
+<span class="nc" id="L433">                return PredefMacros.magnification_macro(tp, args);</span>
+            case 206:
+<span class="fc" id="L435">                return PredefMacros.hline_macro(tp, args);</span>
+            case 207:
+            case 208:
+            case 209:
+            case 210:
+            case 211:
+            case 212:
+            case 213:
+            case 214:
+            case 215:
+            case 216:
+<span class="nc" id="L446">                return PredefMacros.size_macros(tp, args);</span>
+            case 217:
+<span class="fc" id="L448">                return PredefMacros.jlatexmathcumsup_macro(tp, args);</span>
+            case 218:
+<span class="nc" id="L450">                return PredefMacros.jlatexmathcumsub_macro(tp, args);</span>
+            case 219:
+<span class="nc" id="L452">                return PredefMacros.hstrok_macro(tp, args);</span>
+            case 220:
+<span class="nc" id="L454">                return PredefMacros.Hstrok_macro(tp, args);</span>
+            case 221:
+<span class="nc" id="L456">                return PredefMacros.dstrok_macro(tp, args);</span>
+            case 222:
+<span class="nc" id="L458">                return PredefMacros.Dstrok_macro(tp, args);</span>
+            case 223:
+<span class="nc" id="L460">                return PredefMacros.dotminus_macro(tp, args);</span>
+            case 224:
+<span class="nc" id="L462">                return PredefMacros.ratio_macro(tp, args);</span>
+            case 225:
+<span class="nc" id="L464">                return PredefMacros.smallfrowneq_macro(tp, args);</span>
+            case 226:
+<span class="nc" id="L466">                return PredefMacros.geoprop_macro(tp, args);</span>
+            case 227:
+<span class="nc" id="L468">                return PredefMacros.minuscolon_macro(tp, args);</span>
+            case 228:
+<span class="nc" id="L470">                return PredefMacros.minuscoloncolon_macro(tp, args);</span>
+            case 229:
+<span class="nc" id="L472">                return PredefMacros.simcolon_macro(tp, args);</span>
+            case 230:
+<span class="nc" id="L474">                return PredefMacros.simcoloncolon_macro(tp, args);</span>
+            case 231:
+<span class="nc" id="L476">                return PredefMacros.approxcolon_macro(tp, args);</span>
+            case 232:
+<span class="nc" id="L478">                return PredefMacros.approxcoloncolon_macro(tp, args);</span>
+            case 233:
+<span class="nc" id="L480">                return PredefMacros.coloncolon_macro(tp, args);</span>
+            case 234:
+<span class="nc" id="L482">                return PredefMacros.equalscolon_macro(tp, args);</span>
+            case 235:
+<span class="nc" id="L484">                return PredefMacros.equalscoloncolon_macro(tp, args);</span>
+            case 236:
+<span class="nc" id="L486">                return PredefMacros.colonminus_macro(tp, args);</span>
+            case 237:
+<span class="nc" id="L488">                return PredefMacros.coloncolonminus_macro(tp, args);</span>
+            case 238:
+<span class="nc" id="L490">                return PredefMacros.colonequals_macro(tp, args);</span>
+            case 239:
+<span class="nc" id="L492">                return PredefMacros.coloncolonequals_macro(tp, args);</span>
+            case 240:
+<span class="nc" id="L494">                return PredefMacros.colonsim_macro(tp, args);</span>
+            case 241:
+<span class="nc" id="L496">                return PredefMacros.coloncolonsim_macro(tp, args);</span>
+            case 242:
+<span class="nc" id="L498">                return PredefMacros.colonapprox_macro(tp, args);</span>
+            case 243:
+<span class="nc" id="L500">                return PredefMacros.coloncolonapprox_macro(tp, args);</span>
+            case 244:
+<span class="nc" id="L502">                return PredefMacros.kern_macro(tp, args);</span>
+            case 245:
+<span class="nc" id="L504">                return PredefMacros.char_macro(tp, args);</span>
+            case 246:
+            case 247:
+<span class="nc" id="L507">                return PredefMacros.romannumeral_macro(tp, args);</span>
+            case 248:
+<span class="nc" id="L509">                return PredefMacros.textcircled_macro(tp, args);</span>
+            case 249:
+<span class="fc" id="L511">                return PredefMacros.textsc_macro(tp, args);</span>
+            case 250:
+<span class="nc" id="L513">                return PredefMacros.sc_macro(tp, args);</span>
+            case 251:
+            case 252:
+            case 253:
+            case 254:
+            case 255:
+            case 256:
+            case 257:
+            case 258:
+            case 259:
+            case 260:
+<span class="fc" id="L524">                return PredefMacros.muskip_macros(tp, args);</span>
+            case 261:
+<span class="fc" id="L526">                return PredefMacros.quad_macro(tp, args);</span>
+            case 262:
+<span class="fc" id="L528">                return PredefMacros.surd_macro(tp, args);</span>
+            case 263:
+<span class="fc" id="L530">                return PredefMacros.iint_macro(tp, args);</span>
+            case 264:
+<span class="fc" id="L532">                return PredefMacros.iiint_macro(tp, args);</span>
+            case 265:
+<span class="nc" id="L534">                return PredefMacros.iiiint_macro(tp, args);</span>
+            case 266:
+<span class="nc" id="L536">                return PredefMacros.idotsint_macro(tp, args);</span>
+            case 267:
+<span class="fc" id="L538">                return PredefMacros.int_macro(tp, args);</span>
+            case 268:
+<span class="fc" id="L540">                return PredefMacros.oint_macro(tp, args);</span>
+            case 269:
+<span class="nc" id="L542">                return PredefMacros.lmoustache_macro(tp, args);</span>
+            case 270:
+<span class="nc" id="L544">                return PredefMacros.rmoustache_macro(tp, args);</span>
+            case 271:
+<span class="nc" id="L546">                return PredefMacros.insertBreakMark_macro(tp, args);</span>
+            case 272:
+<span class="nc" id="L548">                return PredefMacros.jlmXML_macro(tp, args);</span>
+            case 273:
+<span class="nc" id="L550">                return PredefMacros.above_macro(tp, args);</span>
+            case 274:
+<span class="nc" id="L552">                return PredefMacros.abovewithdelims_macro(tp, args);</span>
+            case 275:
+<span class="nc" id="L554">                return PredefMacros.st_macro(tp, args);</span>
+            case 277:
+<span class="nc" id="L556">                return PredefMacros.textstyle_macros(tp, args);</span>
+            case 278:
+<span class="fc" id="L558">                return PredefMacros.qquad_macro(tp, args);</span>
+            case 279:
+<span class="nc" id="L560">                return PredefMacros.longdiv_macro(tp, args);</span>
+            case 280:
+<span class="nc" id="L562">                return PredefMacros.questeq_macro(tp, args);</span>
+            case 281:
+<span class="nc" id="L564">                return PredefMacros.bangle_macro(tp, args);</span>
+            case 282:
+<span class="nc" id="L566">                return PredefMacros.brace_macro(tp, args);</span>
+            case 283:
+<span class="nc" id="L568">                return PredefMacros.brack_macro(tp, args);</span>
+            default:
+<span class="nc" id="L570">                return null;</span>
+            }
+<span class="fc" id="L572">        } catch (Exception e) {</span>
+<span class="fc" id="L573">            throw new ParseException(&quot;Problem with command &quot; + args[0] + &quot; at position &quot; + tp.getLine() + &quot;:&quot; + tp.getCol() + &quot;\n&quot; + e.getMessage());</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

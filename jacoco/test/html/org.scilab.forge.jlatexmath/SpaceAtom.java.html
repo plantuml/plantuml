@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpaceAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">SpaceAtom.java</span></div><h1>SpaceAtom.java</h1><pre class="source lang-java linenums">/* SpaceAtom.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+/* Modified by Calixte Denizet */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * An atom representing whitespace. The dimension values can be set using different
+ * unit types.
+ */
+public class SpaceAtom extends Atom {
+
+<span class="fc" id="L60">    private static Map&lt;String, Integer&gt; units = new HashMap&lt;String, Integer&gt;();</span>
+    static {
+<span class="fc" id="L62">        units.put(&quot;em&quot;, TeXConstants.UNIT_EM);</span>
+<span class="fc" id="L63">        units.put(&quot;ex&quot;, TeXConstants.UNIT_EX);</span>
+<span class="fc" id="L64">        units.put(&quot;px&quot;, TeXConstants.UNIT_PIXEL);</span>
+<span class="fc" id="L65">        units.put(&quot;pix&quot;, TeXConstants.UNIT_PIXEL);</span>
+<span class="fc" id="L66">        units.put(&quot;pixel&quot;, TeXConstants.UNIT_PIXEL);</span>
+<span class="fc" id="L67">        units.put(&quot;pt&quot;, TeXConstants.UNIT_PT);</span>
+<span class="fc" id="L68">        units.put(&quot;bp&quot;, TeXConstants.UNIT_POINT);</span>
+<span class="fc" id="L69">        units.put(&quot;pica&quot;, TeXConstants.UNIT_PICA);</span>
+<span class="fc" id="L70">        units.put(&quot;pc&quot;, TeXConstants.UNIT_PICA);</span>
+<span class="fc" id="L71">        units.put(&quot;mu&quot;, TeXConstants.UNIT_MU);</span>
+<span class="fc" id="L72">        units.put(&quot;cm&quot;, TeXConstants.UNIT_CM);</span>
+<span class="fc" id="L73">        units.put(&quot;mm&quot;, TeXConstants.UNIT_MM);</span>
+<span class="fc" id="L74">        units.put(&quot;in&quot;, TeXConstants.UNIT_IN);</span>
+<span class="fc" id="L75">        units.put(&quot;sp&quot;, TeXConstants.UNIT_SP);</span>
+<span class="fc" id="L76">        units.put(&quot;dd&quot;, TeXConstants.UNIT_DD);</span>
+<span class="fc" id="L77">        units.put(&quot;cc&quot;, TeXConstants.UNIT_CC);</span>
+    }
+
+    private static interface UnitConversion { // NOPMD
+        public float getPixelConversion(TeXEnvironment env);
+    }
+
+<span class="fc" id="L84">    private static UnitConversion[] unitConversions = new UnitConversion[] {</span>
+
+<span class="fc" id="L86">    new UnitConversion() {//EM</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="fc" id="L88">            return env.getTeXFont().getEM(env.getStyle());</span>
+        }
+    },
+
+<span class="fc" id="L92">    new UnitConversion() {//EX</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="fc" id="L94">            return env.getTeXFont().getXHeight(env.getStyle(), env.getLastFontId());</span>
+        }
+    },
+
+<span class="fc" id="L98">    new UnitConversion() {//PIXEL</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="fc" id="L100">            return 1 / env.getSize();</span>
+        }
+    },
+
+<span class="fc" id="L104">    new UnitConversion() {//BP (or PostScript point)</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="fc" id="L106">            return TeXFormula.PIXELS_PER_POINT / env.getSize();</span>
+        }
+    },
+
+<span class="fc" id="L110">    new UnitConversion() {//PICA</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="nc" id="L112">            return (12 * TeXFormula.PIXELS_PER_POINT) / env.getSize();</span>
+        }
+    },
+
+<span class="fc" id="L116">    new UnitConversion() {//MU</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="fc" id="L118">            TeXFont tf = env.getTeXFont();</span>
+<span class="fc" id="L119">            return tf.getQuad(env.getStyle(), tf.getMuFontId()) / 18;</span>
+        }
+    },
+
+<span class="fc" id="L123">    new UnitConversion() {//CM</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="fc" id="L125">            return (28.346456693f * TeXFormula.PIXELS_PER_POINT) / env.getSize();</span>
+        }
+    },
+
+<span class="fc" id="L129">    new UnitConversion() {//MM</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="nc" id="L131">            return (2.8346456693f * TeXFormula.PIXELS_PER_POINT) / env.getSize();</span>
+        }
+    },
+
+<span class="fc" id="L135">    new UnitConversion() {//IN</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="nc" id="L137">            return (72 * TeXFormula.PIXELS_PER_POINT) / env.getSize();</span>
+        }
+    },
+
+<span class="fc" id="L141">    new UnitConversion() {//SP</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="nc" id="L143">            return (65536 * TeXFormula.PIXELS_PER_POINT) / env.getSize();</span>
+        }
+    },
+
+<span class="fc" id="L147">    new UnitConversion() {//PT (or Standard Anglo-American point)</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="fc" id="L149">            return (.9962640099f * TeXFormula.PIXELS_PER_POINT) / env.getSize();</span>
+        }
+    },
+
+<span class="fc" id="L153">    new UnitConversion() {//DD</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="nc" id="L155">            return (1.0660349422f * TeXFormula.PIXELS_PER_POINT) / env.getSize();</span>
+        }
+    },
+
+<span class="fc" id="L159">    new UnitConversion() {//CC</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="nc" id="L161">            return (12.7924193070f * TeXFormula.PIXELS_PER_POINT) / env.getSize();</span>
+        }
+    },
+
+<span class="fc" id="L165">    new UnitConversion() {//X8</span>
+        public float getPixelConversion(TeXEnvironment env) {
+<span class="nc" id="L167">            return env.getTeXFont().getDefaultRuleThickness(env.getStyle());</span>
+        }
+    }
+    };
+
+    // whether a hard space should be represented
+    private boolean blankSpace;
+
+    // thinmuskip, medmuskip, thickmuskip
+    private int blankType;
+
+    // dimensions
+    private float width;
+    private float height;
+    private float depth;
+
+    // units for the dimensions
+    private int wUnit;
+    private int hUnit;
+    private int dUnit;
+
+<span class="fc" id="L188">    public SpaceAtom() {</span>
+<span class="fc" id="L189">        blankSpace = true;</span>
+<span class="fc" id="L190">    }</span>
+
+<span class="fc" id="L192">    public SpaceAtom(int type) {</span>
+<span class="fc" id="L193">        blankSpace = true;</span>
+<span class="fc" id="L194">        blankType = type;</span>
+<span class="fc" id="L195">    }</span>
+
+<span class="fc" id="L197">    public SpaceAtom(int unit, float width, float height, float depth) throws InvalidUnitException {</span>
+        // check if unit is valid
+<span class="fc" id="L199">        checkUnit(unit);</span>
+
+        // unit valid
+<span class="fc" id="L202">        this.wUnit = unit;</span>
+<span class="fc" id="L203">        this.hUnit = unit;</span>
+<span class="fc" id="L204">        this.dUnit = unit;</span>
+<span class="fc" id="L205">        this.width = width;</span>
+<span class="fc" id="L206">        this.height = height;</span>
+<span class="fc" id="L207">        this.depth = depth;</span>
+<span class="fc" id="L208">    }</span>
+
+    /**
+     * Check if the given unit is valid
+     *
+     * @param unit the unit's integer representation (a constant)
+     * @throws InvalidUnitException if the given integer value does not represent
+     *                  a valid unit
+     */
+    public static void checkUnit(int unit) throws InvalidUnitException {
+<span class="pc bpc" id="L218" title="2 of 4 branches missed.">        if (unit &lt; 0 || unit &gt;= unitConversions.length)</span>
+<span class="nc" id="L219">            throw new InvalidUnitException();</span>
+<span class="fc" id="L220">    }</span>
+
+    public SpaceAtom(int widthUnit, float width, int heightUnit, float height,
+<span class="nc" id="L223">                     int depthUnit, float depth) throws InvalidUnitException {</span>
+        // check if units are valid
+<span class="nc" id="L225">        checkUnit(widthUnit);</span>
+<span class="nc" id="L226">        checkUnit(heightUnit);</span>
+<span class="nc" id="L227">        checkUnit(depthUnit);</span>
+
+        // all units valid
+<span class="nc" id="L230">        wUnit = widthUnit;</span>
+<span class="nc" id="L231">        hUnit = heightUnit;</span>
+<span class="nc" id="L232">        dUnit = depthUnit;</span>
+<span class="nc" id="L233">        this.width = width;</span>
+<span class="nc" id="L234">        this.height = height;</span>
+<span class="nc" id="L235">        this.depth = depth;</span>
+<span class="nc" id="L236">    }</span>
+
+    public static int getUnit(String unit) {
+<span class="fc" id="L239">        Integer u = (Integer) units.get(unit);</span>
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">        return u == null ? TeXConstants.UNIT_PIXEL : u.intValue();</span>
+    }
+
+    public static float[] getLength(String lgth) {
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        if (lgth == null) {</span>
+<span class="fc" id="L245">            return new float[] {TeXConstants.UNIT_PIXEL, 0f};</span>
+        }
+
+<span class="fc" id="L248">        int i = 0;</span>
+<span class="fc bfc" id="L249" title="All 4 branches covered.">        for (; i &lt; lgth.length() &amp;&amp; !Character.isLetter(lgth.charAt(i)); i++);</span>
+<span class="fc" id="L250">        float f = 0;</span>
+        try {
+<span class="fc" id="L252">            f = Float.parseFloat(lgth.substring(0, i));</span>
+<span class="fc" id="L253">        } catch (NumberFormatException e) {</span>
+<span class="fc" id="L254">            return new float[] {Float.NaN};</span>
+<span class="fc" id="L255">        }</span>
+
+        int unit;
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">        if (i != lgth.length()) {</span>
+<span class="fc" id="L259">            unit = getUnit(lgth.substring(i).toLowerCase());</span>
+        } else {
+<span class="nc" id="L261">            unit = TeXConstants.UNIT_PIXEL;</span>
+        }
+
+<span class="fc" id="L264">        return new float[] {(float) unit, f};</span>
+    }
+
+    public Box createBox(TeXEnvironment env) {
+<span class="fc bfc" id="L268" title="All 2 branches covered.">        if (blankSpace) {</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">            if (blankType == 0)</span>
+<span class="fc" id="L270">                return new StrutBox(env.getSpace(), 0, 0, 0);</span>
+            else {
+<span class="fc bfc" id="L272" title="All 2 branches covered.">                int bl = blankType &lt; 0 ? -blankType : blankType;</span>
+                Box b;
+<span class="fc bfc" id="L274" title="All 2 branches covered.">                if (bl == TeXConstants.THINMUSKIP) {</span>
+<span class="fc" id="L275">                    b = Glue.get(TeXConstants.TYPE_INNER, TeXConstants.TYPE_BIG_OPERATOR, env);</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">                } else if (bl == TeXConstants.MEDMUSKIP)</span>
+<span class="fc" id="L277">                    b = Glue.get(TeXConstants.TYPE_BINARY_OPERATOR, TeXConstants.TYPE_BIG_OPERATOR, env);</span>
+                else
+<span class="fc" id="L279">                    b = Glue.get(TeXConstants.TYPE_RELATION, TeXConstants.TYPE_BIG_OPERATOR, env);</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">                if (blankType &lt; 0)</span>
+<span class="fc" id="L281">                    b.negWidth();</span>
+<span class="fc" id="L282">                return b;</span>
+            }
+        } else {
+<span class="fc" id="L285">            return new StrutBox(width * getFactor(wUnit, env), height * getFactor(hUnit, env), depth * getFactor(dUnit, env), 0);</span>
+        }
+    }
+
+    public static float getFactor(int unit, TeXEnvironment env) {
+<span class="fc" id="L290">        return unitConversions[unit].getPixelConversion(env);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

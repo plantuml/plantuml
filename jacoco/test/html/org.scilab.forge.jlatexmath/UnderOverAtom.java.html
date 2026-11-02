@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UnderOverAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">UnderOverAtom.java</span></div><h1>UnderOverAtom.java</h1><pre class="source lang-java linenums">/* UnderOverAtom.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * An atom representing another atom with an atom above it (if not null) seperated
+ * by a kern and in a smaller size depending on &quot;overScriptSize&quot; and/or an atom under
+ * it (if not null) seperated by a kern and in a smaller size depending on &quot;underScriptSize&quot;
+ */
+public class UnderOverAtom extends Atom {
+
+    // base, underscript and overscript
+    private final Atom base;
+    private final Atom under;
+    private final Atom over;
+
+    // kern between base and under- and overscript
+    private final float underSpace;
+    private final float overSpace;
+
+    // units for the kerns
+    private final int underUnit; // NOPMD
+    // TODO: seems never to be used?
+    private final int overUnit;
+
+    // whether the under- and overscript should be drawn in a smaller size
+    private final boolean underScriptSize;
+    private final boolean overScriptSize;
+
+    public UnderOverAtom(Atom base, Atom underOver, int underOverUnit,
+<span class="fc" id="L75">                         float underOverSpace, boolean underOverScriptSize, boolean over) {</span>
+        // check if unit is valid
+<span class="fc" id="L77">        SpaceAtom.checkUnit(underOverUnit);</span>
+        // units valid
+<span class="fc" id="L79">        this.base = base;</span>
+
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (over) {</span>
+<span class="fc" id="L82">            this.under = null;</span>
+<span class="fc" id="L83">            this.underSpace = 0.0f;</span>
+<span class="fc" id="L84">            this.underUnit = 0;</span>
+<span class="fc" id="L85">            this.underScriptSize = false;</span>
+<span class="fc" id="L86">            this.over = underOver;</span>
+<span class="fc" id="L87">            this.overUnit = underOverUnit;</span>
+<span class="fc" id="L88">            this.overSpace = underOverSpace;</span>
+<span class="fc" id="L89">            this.overScriptSize = underOverScriptSize;</span>
+        } else {
+<span class="fc" id="L91">            this.under = underOver;</span>
+<span class="fc" id="L92">            this.underUnit = underOverUnit;</span>
+<span class="fc" id="L93">            this.underSpace = underOverSpace;</span>
+<span class="fc" id="L94">            this.underScriptSize = underOverScriptSize;</span>
+<span class="fc" id="L95">            this.overSpace = 0.0f;</span>
+<span class="fc" id="L96">            this.over = null;</span>
+<span class="fc" id="L97">            this.overUnit = 0;</span>
+<span class="fc" id="L98">            this.overScriptSize = false;</span>
+        }
+<span class="fc" id="L100">    }</span>
+
+    public UnderOverAtom(Atom base, Atom under, int underUnit, float underSpace,
+                         boolean underScriptSize, Atom over, int overUnit, float overSpace,
+<span class="fc" id="L104">                         boolean overScriptSize) throws InvalidUnitException {</span>
+        // check if units are valid
+<span class="fc" id="L106">        SpaceAtom.checkUnit(underUnit);</span>
+<span class="fc" id="L107">        SpaceAtom.checkUnit(overUnit);</span>
+
+        // units valid
+<span class="fc" id="L110">        this.base = base;</span>
+<span class="fc" id="L111">        this.under = under;</span>
+<span class="fc" id="L112">        this.underUnit = underUnit;</span>
+<span class="fc" id="L113">        this.underSpace = underSpace;</span>
+<span class="fc" id="L114">        this.underScriptSize = underScriptSize;</span>
+<span class="fc" id="L115">        this.over = over;</span>
+<span class="fc" id="L116">        this.overUnit = overUnit;</span>
+<span class="fc" id="L117">        this.overSpace = overSpace;</span>
+<span class="fc" id="L118">        this.overScriptSize = overScriptSize;</span>
+<span class="fc" id="L119">    }</span>
+
+    public Box createBox(TeXEnvironment env) {
+        // create boxes in right style and calculate maximum width
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        Box b = (base == null ? new StrutBox(0, 0, 0, 0) : base.createBox(env));</span>
+<span class="fc" id="L124">        Box o = null, u = null;</span>
+<span class="fc" id="L125">        float max = b.getWidth();</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if (over != null) {</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">            o = over.createBox(overScriptSize ? env.subStyle() : env);</span>
+<span class="fc" id="L128">            max = Math.max(max, o.getWidth());</span>
+        }
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        if (under != null) {</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">            u = under.createBox(underScriptSize ? env.subStyle() : env);</span>
+<span class="fc" id="L132">            max = Math.max(max, u.getWidth());</span>
+        }
+
+        // create vertical box
+<span class="fc" id="L136">        VerticalBox vBox = new VerticalBox();</span>
+
+        // last font used by the base (for Mspace atoms following)
+<span class="fc" id="L139">        env.setLastFontId(b.getLastFontId());</span>
+
+        // overscript + space
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (over != null) {</span>
+<span class="fc" id="L143">            vBox.add(changeWidth(o, max));</span>
+            // unit will be valid (checked in constructor)
+<span class="fc" id="L145">            vBox.add(new SpaceAtom(overUnit, 0, overSpace, 0).createBox(env));</span>
+        }
+
+        // base
+<span class="fc" id="L149">        Box c = changeWidth(b, max);</span>
+<span class="fc" id="L150">        vBox.add(c);</span>
+
+        // calculate future height of the vertical box (to make sure that the base
+        // stays on the baseline!)
+<span class="fc" id="L154">        float h = vBox.getHeight() + vBox.getDepth() - c.getDepth();</span>
+
+        // underscript + space
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (under != null) {</span>
+            // unit will be valid (checked in constructor)
+<span class="fc" id="L159">            vBox.add(new SpaceAtom(overUnit, 0, underSpace, 0).createBox(env));</span>
+<span class="fc" id="L160">            vBox.add(changeWidth(u, max));</span>
+        }
+
+        // set height and depth
+<span class="fc" id="L164">        vBox.setDepth(vBox.getHeight() + vBox.getDepth() - h);</span>
+<span class="fc" id="L165">        vBox.setHeight(h);</span>
+<span class="fc" id="L166">        return vBox;</span>
+    }
+
+    private static Box changeWidth(Box b, float maxWidth) {
+<span class="pc bpc" id="L170" title="1 of 4 branches missed.">        if (b != null &amp;&amp; Math.abs(maxWidth - b.getWidth()) &gt; TeXFormula.PREC)</span>
+<span class="fc" id="L171">            return new HorizontalBox(b, maxWidth, TeXConstants.ALIGN_CENTER);</span>
+        else
+<span class="fc" id="L173">            return b;</span>
+    }
+
+    public int getLeftType() {
+<span class="nc" id="L177">        return base.getLeftType();</span>
+    }
+
+    public int getRightType() {
+<span class="nc" id="L181">        return base.getRightType();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ScaleBox.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">ScaleBox.java</span></div><h1>ScaleBox.java</h1><pre class="source lang-java linenums">/* ScaleBox.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+
+/**
+ * A box representing a scaled box.
+ */
+public class ScaleBox extends Box {
+
+    private Box box;
+    private double xscl, yscl;
+
+<span class="fc" id="L57">    public ScaleBox(Box b, double xscl, double yscl) {</span>
+<span class="fc" id="L58">        this.box = b;</span>
+<span class="pc bpc" id="L59" title="2 of 4 branches missed.">        this.xscl = (Double.isNaN(xscl) || Double.isInfinite(xscl)) ? 0 : xscl;</span>
+<span class="pc bpc" id="L60" title="2 of 4 branches missed.">        this.yscl = (Double.isNaN(yscl) || Double.isInfinite(yscl)) ? 0 : yscl;</span>
+<span class="fc" id="L61">        width = b.width * (float) Math.abs(this.xscl);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        height = this.yscl &gt; 0 ? b.height * (float) this.yscl : -b.depth * (float) this.yscl;</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        depth = this.yscl &gt; 0 ? b.depth * (float) this.yscl : -b.height * (float) this.yscl;</span>
+<span class="fc" id="L64">        shift = b.shift * (float) this.yscl;</span>
+<span class="fc" id="L65">    }</span>
+
+    public ScaleBox(Box b, float factor) {
+<span class="nc" id="L68">        this(b, (double) factor, (double) factor);</span>
+<span class="nc" id="L69">    }</span>
+
+    public void draw(TeXGraphics g2, float x, float y) {
+<span class="fc" id="L72">        drawDebug(g2, x, y);</span>
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">        if (xscl != 0 &amp;&amp; yscl != 0) {</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">            float dec = xscl &lt; 0 ? width : 0;</span>
+<span class="fc" id="L75">            g2.translate(x + dec, y);</span>
+<span class="fc" id="L76">            g2.scale(xscl, yscl);</span>
+<span class="fc" id="L77">            box.draw(g2, 0, 0);</span>
+<span class="fc" id="L78">            g2.scale(1 / xscl, 1 / yscl);</span>
+<span class="fc" id="L79">            g2.translate(-x - dec, -y);</span>
+        }
+<span class="fc" id="L81">    }</span>
+
+    public int getLastFontId() {
+<span class="fc" id="L84">        return box.getLastFontId();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

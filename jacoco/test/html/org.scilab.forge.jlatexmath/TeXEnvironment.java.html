@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeXEnvironment.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">TeXEnvironment.java</span></div><h1>TeXEnvironment.java</h1><pre class="source lang-java linenums">/* TeXEnvironment.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+/* Modified by Calixte Denizet */
+
+package org.scilab.forge.jlatexmath;
+
+
+/**
+ * Contains the used TeXFont-object, color settings and the current style in which a
+ * formula must be drawn. It's used in the createBox-methods. Contains methods that
+ * apply the style changing rules for subformula's.
+ */
+public class TeXEnvironment {
+
+    // colors
+<span class="fc" id="L60">    private TeXColor background = null, color = null;</span>
+
+    // current style
+<span class="fc" id="L63">    private int style = TeXConstants.STYLE_DISPLAY;</span>
+
+    // TeXFont used
+    private TeXFont tf;
+
+    // last used font
+<span class="fc" id="L69">    private int lastFontId = TeXFont.NO_FONT;</span>
+
+<span class="fc" id="L71">    private float textwidth = Float.POSITIVE_INFINITY;</span>
+
+    private String textStyle;
+    private boolean smallCap;
+<span class="fc" id="L75">    private float scaleFactor = 1;</span>
+    private int interlineUnit;
+    private float interline;
+    private TeXTextMeasurer textMeasurer;
+
+<span class="fc" id="L80">    public boolean isColored = false;</span>
+
+    public TeXEnvironment(int style, TeXFont tf) {
+<span class="fc" id="L83">        this(style, tf, null, null);</span>
+<span class="fc" id="L84">    }</span>
+
+    public TeXEnvironment(int style, TeXFont tf, int widthUnit, float textwidth) {
+<span class="nc" id="L87">        this(style, tf, null, null);</span>
+<span class="nc" id="L88">        this.textwidth = textwidth * SpaceAtom.getFactor(widthUnit, this);</span>
+<span class="nc" id="L89">    }</span>
+
+<span class="fc" id="L91">    private TeXEnvironment(int style, TeXFont tf, TeXColor bg, TeXColor c) {</span>
+<span class="fc" id="L92">        this.style = style;</span>
+<span class="fc" id="L93">        this.tf = tf;</span>
+<span class="fc" id="L94">        background = bg;</span>
+<span class="fc" id="L95">        color = c;</span>
+<span class="fc" id="L96">        setInterline(TeXConstants.UNIT_EX, 1f);</span>
+<span class="fc" id="L97">    }</span>
+
+<span class="fc" id="L99">    private TeXEnvironment(int style, float scaleFactor, TeXFont tf, TeXColor bg, TeXColor c, String textStyle, boolean smallCap) {</span>
+<span class="fc" id="L100">        this.style = style;</span>
+<span class="fc" id="L101">        this.scaleFactor = scaleFactor;</span>
+<span class="fc" id="L102">        this.tf = tf;</span>
+<span class="fc" id="L103">        this.textStyle = textStyle;</span>
+<span class="fc" id="L104">        this.smallCap = smallCap;</span>
+<span class="fc" id="L105">        background = bg;</span>
+<span class="fc" id="L106">        color = c;</span>
+<span class="fc" id="L107">        setInterline(TeXConstants.UNIT_EX, 1f);</span>
+<span class="fc" id="L108">    }</span>
+
+    /** The measure of the text that has no TeX glyph, or null (a rough estimate is used). */
+    public TeXTextMeasurer getTextMeasurer() {
+<span class="fc" id="L112">        return textMeasurer;</span>
+    }
+
+    public void setTextMeasurer(TeXTextMeasurer textMeasurer) {
+<span class="fc" id="L116">        this.textMeasurer = textMeasurer;</span>
+<span class="fc" id="L117">    }</span>
+
+    public void setInterline(int unit, float len) {
+<span class="fc" id="L120">        this.interline = len;</span>
+<span class="fc" id="L121">        this.interlineUnit = unit;</span>
+<span class="fc" id="L122">    }</span>
+
+    public float getInterline() {
+<span class="fc" id="L125">        return interline * SpaceAtom.getFactor(interlineUnit, this);</span>
+    }
+
+    public float getTextwidth() {
+<span class="fc" id="L129">        return textwidth;</span>
+    }
+
+    public void setScaleFactor(float f) {
+<span class="nc" id="L133">        scaleFactor = f;</span>
+<span class="nc" id="L134">    }</span>
+
+    public float getScaleFactor() {
+<span class="nc" id="L137">        return scaleFactor;</span>
+    }
+
+    protected TeXEnvironment copy() {
+<span class="fc" id="L141">        TeXEnvironment te = new TeXEnvironment(style, scaleFactor, tf, background, color, textStyle, smallCap);</span>
+<span class="fc" id="L142">        te.textMeasurer = textMeasurer;</span>
+<span class="fc" id="L143">        return te;</span>
+    }
+
+    protected TeXEnvironment copy(TeXFont tf) {
+<span class="fc" id="L147">        TeXEnvironment te = new TeXEnvironment(style, scaleFactor, tf, background, color, textStyle, smallCap);</span>
+<span class="fc" id="L148">        te.textMeasurer = textMeasurer;</span>
+<span class="fc" id="L149">        te.textwidth = textwidth;</span>
+<span class="fc" id="L150">        te.interline = interline;</span>
+<span class="fc" id="L151">        te.interlineUnit = interlineUnit;</span>
+<span class="fc" id="L152">        return te;</span>
+    }
+
+    /**
+     * @return a copy of the environment, but in a cramped style.
+     */
+    public TeXEnvironment crampStyle() {
+<span class="fc" id="L159">        TeXEnvironment s = copy();</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        s.style = (style % 2 == 1 ? style : style + 1);</span>
+<span class="fc" id="L161">        return s;</span>
+    }
+
+    /**
+     *
+     * @return a copy of the environment, but in denominator style.
+     */
+    public TeXEnvironment denomStyle() {
+<span class="fc" id="L169">        TeXEnvironment s = copy();</span>
+<span class="fc" id="L170">        s.style = 2 * (style / 2) + 1 + 2 - 2 * (style / 6);</span>
+<span class="fc" id="L171">        return s;</span>
+    }
+
+    /**
+     *
+     * @return the background color setting
+     */
+    public TeXColor getBackground() {
+<span class="fc" id="L179">        return background;</span>
+    }
+
+    /**
+     *
+     * @return the foreground color setting
+     */
+    public TeXColor getColor() {
+<span class="fc" id="L187">        return color;</span>
+    }
+
+    /**
+     *
+     * @return the point size of the TeXFont
+     */
+    public float getSize() {
+<span class="fc" id="L195">        return tf.getSize();</span>
+    }
+
+    /**
+     *
+     * @return the current style
+     */
+    public int getStyle() {
+<span class="fc" id="L203">        return style;</span>
+    }
+
+    public void setStyle(int style) {
+<span class="fc" id="L207">        this.style = style;</span>
+<span class="fc" id="L208">    }</span>
+
+    /**
+     * @return the current textStyle
+     */
+    public String getTextStyle() {
+<span class="fc" id="L214">        return textStyle;</span>
+    }
+
+    public void setTextStyle(String textStyle) {
+<span class="fc" id="L218">        this.textStyle = textStyle;</span>
+<span class="fc" id="L219">    }</span>
+
+    /**
+     * @return the current textStyle
+     */
+    public boolean getSmallCap() {
+<span class="fc" id="L225">        return smallCap;</span>
+    }
+
+    public void setSmallCap(boolean smallCap) {
+<span class="fc" id="L229">        this.smallCap = smallCap;</span>
+<span class="fc" id="L230">    }</span>
+
+    /**
+     *
+     * @return the TeXFont to be used
+     */
+    public TeXFont getTeXFont() {
+<span class="fc" id="L237">        return tf;</span>
+    }
+
+    /**
+     *
+     * @return a copy of the environment, but in numerator style.
+     */
+    public TeXEnvironment numStyle() {
+<span class="fc" id="L245">        TeXEnvironment s = copy();</span>
+<span class="fc" id="L246">        s.style = style + 2 - 2 * (style / 6);</span>
+<span class="fc" id="L247">        return s;</span>
+    }
+
+    /**
+     * Resets the color settings.
+     *
+     */
+    public void reset() {
+<span class="fc" id="L255">        color = null;</span>
+<span class="fc" id="L256">        background = null;</span>
+<span class="fc" id="L257">    }</span>
+
+    /**
+     *
+     * @return a copy of the environment, but with the style changed for roots
+     */
+    public TeXEnvironment rootStyle() {
+<span class="fc" id="L264">        TeXEnvironment s = copy();</span>
+<span class="fc" id="L265">        s.style = TeXConstants.STYLE_SCRIPT_SCRIPT;</span>
+<span class="fc" id="L266">        return s;</span>
+    }
+
+    /**
+     *
+     * @param c the background color to be set
+     */
+    public void setBackground(TeXColor c) {
+<span class="nc" id="L274">        background = c;</span>
+<span class="nc" id="L275">    }</span>
+
+    /**
+     *
+     * @param c the foreground color to be set
+     */
+    public void setColor(TeXColor c) {
+<span class="fc" id="L282">        color = c;</span>
+<span class="fc" id="L283">    }</span>
+
+    /**
+     *
+     * @return a copy of the environment, but in subscript style.
+     */
+    public TeXEnvironment subStyle() {
+<span class="fc" id="L290">        TeXEnvironment s = copy();</span>
+<span class="fc" id="L291">        s.style = 2 * (style / 4) + 4 + 1;</span>
+<span class="fc" id="L292">        return s;</span>
+    }
+
+    /**
+     *
+     * @return a copy of the environment, but in superscript style.
+     */
+    public TeXEnvironment supStyle() {
+<span class="fc" id="L300">        TeXEnvironment s = copy();</span>
+<span class="fc" id="L301">        s.style = 2 * (style / 4) + 4 + (style % 2);</span>
+<span class="fc" id="L302">        return s;</span>
+    }
+
+    public float getSpace() {
+<span class="fc" id="L306">        return tf.getSpace(style) * tf.getScaleFactor();</span>
+    }
+
+    public void setLastFontId(int id) {
+<span class="fc" id="L310">        lastFontId = id;</span>
+<span class="fc" id="L311">    }</span>
+
+    public int getLastFontId() {
+        // if there was no last font id (whitespace boxes only), use default &quot;mu font&quot;
+<span class="fc bfc" id="L315" title="All 2 branches covered.">        return (lastFontId == TeXFont.NO_FONT ? tf.getMuFontId() : lastFontId);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

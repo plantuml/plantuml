@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MatrixAtom.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">MatrixAtom.java</span></div><h1>MatrixAtom.java</h1><pre class="source lang-java linenums">/* MatrixAtom.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * A box representing a matrix.
+ */
+public class MatrixAtom extends Atom {
+
+<span class="fc" id="L58">    public static SpaceAtom hsep = new SpaceAtom(TeXConstants.UNIT_EM, 1f, 0.0f, 0.0f);</span>
+<span class="fc" id="L59">    public static SpaceAtom semihsep = new SpaceAtom(TeXConstants.UNIT_EM, 0.5f, 0.0f, 0.0f);</span>
+<span class="fc" id="L60">    public static SpaceAtom vsep_in = new SpaceAtom(TeXConstants.UNIT_EX, 0.0f, 1f, 0.0f);</span>
+<span class="fc" id="L61">    public static SpaceAtom vsep_ext_top = new SpaceAtom(TeXConstants.UNIT_EX, 0.0f, 0.4f, 0.0f);</span>
+<span class="fc" id="L62">    public static SpaceAtom vsep_ext_bot = new SpaceAtom(TeXConstants.UNIT_EX, 0.0f, 0.4f, 0.0f);</span>
+
+    public static final int ARRAY = 0;
+    public static final int MATRIX = 1;
+    public static final int ALIGN = 2;
+    public static final int ALIGNAT = 3;
+    public static final int FLALIGN = 4;
+    public static final int SMALLMATRIX = 5;
+    public static final int ALIGNED = 6;
+    public static final int ALIGNEDAT = 7;
+
+<span class="fc" id="L73">    private static final Box nullBox = new StrutBox(0, 0, 0, 0);</span>
+
+    private ArrayOfAtoms matrix;
+    private int[] position;
+<span class="pc" id="L77">    private Map&lt;Integer, VlineAtom&gt; vlines = new HashMap&lt;Integer, VlineAtom&gt;();</span>
+    private int type;
+    private boolean isPartial;
+    private boolean spaceAround;
+
+<span class="fc" id="L82">    private static SpaceAtom align = new SpaceAtom(TeXConstants.MEDMUSKIP);</span>
+
+    /**
+     * Creates an empty matrix
+     *
+     */
+<span class="fc" id="L88">    public MatrixAtom(boolean isPartial, ArrayOfAtoms array, String options, boolean spaceAround) {</span>
+<span class="fc" id="L89">        this.isPartial = isPartial;</span>
+<span class="fc" id="L90">        this.matrix = array;</span>
+<span class="fc" id="L91">        this.type = ARRAY;</span>
+<span class="fc" id="L92">        this.spaceAround = spaceAround;</span>
+<span class="fc" id="L93">        parsePositions(new StringBuffer(options));</span>
+<span class="fc" id="L94">    }</span>
+
+    /**
+     * Creates an empty matrix
+     *
+     */
+    public MatrixAtom(boolean isPartial, ArrayOfAtoms array, String options) {
+<span class="nc" id="L101">        this(isPartial, array, options, false);</span>
+<span class="nc" id="L102">    }</span>
+
+    /**
+     * Creates an empty matrix
+     *
+     */
+    public MatrixAtom(ArrayOfAtoms array, String options) {
+<span class="nc" id="L109">        this(false, array, options);</span>
+<span class="nc" id="L110">    }</span>
+
+    public MatrixAtom(boolean isPartial, ArrayOfAtoms array, int type) {
+<span class="fc" id="L113">        this(isPartial, array, type, false);</span>
+<span class="fc" id="L114">    }</span>
+
+<span class="fc" id="L116">    public MatrixAtom(boolean isPartial, ArrayOfAtoms array, int type, boolean spaceAround) {</span>
+<span class="fc" id="L117">        this.isPartial = isPartial;</span>
+<span class="fc" id="L118">        this.matrix = array;</span>
+<span class="fc" id="L119">        this.type = type;</span>
+<span class="fc" id="L120">        this.spaceAround = spaceAround;</span>
+
+<span class="pc bpc" id="L122" title="1 of 4 branches missed.">        if (type != MATRIX &amp;&amp; type != SMALLMATRIX) {</span>
+<span class="fc" id="L123">            position = new int[matrix.col];</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            for (int i = 0; i &lt; matrix.col; i += 2) {</span>
+<span class="fc" id="L125">                position[i] = TeXConstants.ALIGN_RIGHT;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">                if (i + 1 &lt; matrix.col) {</span>
+<span class="fc" id="L127">                    position[i + 1] = TeXConstants.ALIGN_LEFT;</span>
+                }
+            }
+        } else {
+<span class="fc" id="L131">            position = new int[matrix.col];</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">            for (int i = 0; i &lt; matrix.col; i++) {</span>
+<span class="fc" id="L133">                position[i] = TeXConstants.ALIGN_CENTER;</span>
+            }
+        }
+<span class="fc" id="L136">    }</span>
+
+    public MatrixAtom(boolean isPartial, ArrayOfAtoms array, int type, int alignment) {
+<span class="nc" id="L139">        this(isPartial, array, type, alignment, true);</span>
+<span class="nc" id="L140">    }</span>
+
+<span class="nc" id="L142">    public MatrixAtom(boolean isPartial, ArrayOfAtoms array, int type, int alignment, boolean spaceAround) {</span>
+<span class="nc" id="L143">        this.isPartial = isPartial;</span>
+<span class="nc" id="L144">        this.matrix = array;</span>
+<span class="nc" id="L145">        this.type = type;</span>
+<span class="nc" id="L146">        this.spaceAround = spaceAround;</span>
+
+<span class="nc" id="L148">        position = new int[matrix.col];</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">        for (int i = 0; i &lt; matrix.col; i++) {</span>
+<span class="nc" id="L150">            position[i] = alignment;</span>
+        }
+<span class="nc" id="L152">    }</span>
+
+    public MatrixAtom(ArrayOfAtoms array, int type) {
+<span class="nc" id="L155">        this(false, array, type);</span>
+<span class="nc" id="L156">    }</span>
+
+    private void parsePositions(StringBuffer opt) {
+<span class="fc" id="L159">        int len = opt.length();</span>
+<span class="fc" id="L160">        int pos = 0;</span>
+        char ch;
+        TeXFormula tf;
+        TeXParser tp;
+<span class="fc" id="L164">        List&lt;Integer&gt; lposition = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        while (pos &lt; len) {</span>
+<span class="fc" id="L166">            ch = opt.charAt(pos);</span>
+<span class="pc bpc" id="L167" title="3 of 8 branches missed.">            switch (ch) {</span>
+            case 'l' :
+<span class="fc" id="L169">                lposition.add(TeXConstants.ALIGN_LEFT);</span>
+<span class="fc" id="L170">                break;</span>
+            case 'r' :
+<span class="fc" id="L172">                lposition.add(TeXConstants.ALIGN_RIGHT);</span>
+<span class="fc" id="L173">                break;</span>
+            case 'c' :
+<span class="fc" id="L175">                lposition.add(TeXConstants.ALIGN_CENTER);</span>
+<span class="fc" id="L176">                break;</span>
+            case '|' :
+<span class="fc" id="L178">                int nb = 1;</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">                while (++pos &lt; len) {</span>
+<span class="fc" id="L180">                    ch = opt.charAt(pos);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">                    if (ch != '|') {</span>
+<span class="fc" id="L182">                        pos--;</span>
+<span class="fc" id="L183">                        break;</span>
+                    } else {
+<span class="nc" id="L185">                        nb++;</span>
+                    }
+                }
+<span class="fc" id="L188">                vlines.put(lposition.size(), new VlineAtom(nb));</span>
+<span class="fc" id="L189">                break;</span>
+            case '@' :
+<span class="fc" id="L191">                pos++;</span>
+<span class="fc" id="L192">                tf = new TeXFormula();</span>
+<span class="fc" id="L193">                tp = new TeXParser(isPartial, opt.substring(pos), tf, false);</span>
+<span class="fc" id="L194">                Atom at = tp.getArgument();</span>
+<span class="fc" id="L195">                matrix.col++;</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">                for (int j = 0; j &lt; matrix.row; j++) {</span>
+<span class="fc" id="L197">                    matrix.array.get(j).add(lposition.size(), at);</span>
+                }
+
+<span class="fc" id="L200">                lposition.add(TeXConstants.ALIGN_NONE);</span>
+<span class="fc" id="L201">                pos += tp.getPos();</span>
+<span class="fc" id="L202">                pos--;</span>
+<span class="fc" id="L203">                break;</span>
+            case '*' :
+<span class="nc" id="L205">                pos++;</span>
+<span class="nc" id="L206">                tf = new TeXFormula();</span>
+<span class="nc" id="L207">                tp = new TeXParser(isPartial, opt.substring(pos), tf, false);</span>
+<span class="nc" id="L208">                String[] args = tp.getOptsArgs(2, 0);</span>
+<span class="nc" id="L209">                pos += tp.getPos();</span>
+<span class="nc" id="L210">                int nrep =  Integer.parseInt(args[1]);</span>
+<span class="nc" id="L211">                String str = &quot;&quot;;</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">                for (int j = 0; j &lt; nrep; j++) {</span>
+<span class="nc" id="L213">                    str += args[2];</span>
+                }
+<span class="nc" id="L215">                opt.insert(pos, str);</span>
+<span class="nc" id="L216">                len = opt.length();</span>
+<span class="nc" id="L217">                pos--;</span>
+<span class="nc" id="L218">                break;</span>
+            case ' ':
+            case '\t':
+<span class="nc" id="L221">                break;</span>
+            default :
+<span class="nc" id="L223">                lposition.add(TeXConstants.ALIGN_CENTER);</span>
+            }
+<span class="fc" id="L225">            pos++;</span>
+        }
+
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">        for (int j = lposition.size(); j &lt; matrix.col; j++) {</span>
+<span class="nc" id="L229">            lposition.add(TeXConstants.ALIGN_CENTER);</span>
+        }
+
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">        if (lposition.size() != 0) {</span>
+<span class="fc" id="L233">            Integer[] tab = lposition.toArray(new Integer[0]);</span>
+<span class="fc" id="L234">            position = new int[tab.length];</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">            for (int i = 0; i &lt; tab.length; i++) {</span>
+<span class="fc" id="L236">                position[i] = tab[i];</span>
+            }
+<span class="fc" id="L238">        } else {</span>
+<span class="nc" id="L239">            position = new int[] {TeXConstants.ALIGN_CENTER};</span>
+        }
+<span class="fc" id="L241">    }</span>
+
+    public Box[] getColumnSep(TeXEnvironment env, float width) {
+<span class="fc" id="L244">        int col = matrix.col;</span>
+<span class="fc" id="L245">        Box[] arr = new Box[col + 1];</span>
+        Box Align, AlignSep, Hsep;
+<span class="fc" id="L247">        float h, w = env.getTextwidth();</span>
+        int i;
+
+<span class="pc bpc" id="L250" title="1 of 4 branches missed.">        if (type == ALIGNED || type == ALIGNEDAT) {</span>
+<span class="fc" id="L251">            w = Float.POSITIVE_INFINITY;</span>
+        }
+
+<span class="pc bpc" id="L254" title="3 of 6 branches missed.">        switch (type) {</span>
+        case ARRAY :
+            //Array : hsep_col/2 elem hsep_col elem hsep_col ... hsep_col elem hsep_col/2
+<span class="fc" id="L257">            i = 1;</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">            if (position[0] == TeXConstants.ALIGN_NONE) {</span>
+<span class="nc" id="L259">                arr[1] = new StrutBox(0.0f, 0.0f, 0.0f, 0.0f);</span>
+<span class="nc" id="L260">                i = 2;</span>
+            }
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">            if (spaceAround) {</span>
+<span class="fc" id="L263">                arr[0] = semihsep.createBox(env);</span>
+            } else {
+<span class="nc" id="L265">                arr[0] = new StrutBox(0.0f, 0.0f, 0.0f, 0.0f);</span>
+            }
+<span class="fc" id="L267">            arr[col] = arr[0];</span>
+<span class="fc" id="L268">            Hsep = hsep.createBox(env);</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">            for (; i &lt; col; i++) {</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">                if (position[i] == TeXConstants.ALIGN_NONE) {</span>
+<span class="fc" id="L271">                    arr[i] = new StrutBox(0.0f, 0.0f, 0.0f, 0.0f);</span>
+<span class="fc" id="L272">                    arr[i + 1] = arr[i];</span>
+<span class="fc" id="L273">                    i++;</span>
+                } else {
+<span class="fc" id="L275">                    arr[i] = Hsep;</span>
+                }
+            }
+
+<span class="fc" id="L279">            return arr;</span>
+        case MATRIX :
+        case SMALLMATRIX :
+            //Simple matrix : (hsep_col/2 or 0) elem hsep_col elem hsep_col ... hsep_col elem (hsep_col/2 or 0)
+<span class="fc" id="L283">            arr[0] = nullBox;</span>
+<span class="fc" id="L284">            arr[col] = arr[0];</span>
+<span class="fc" id="L285">            Hsep = hsep.createBox(env);</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">            for (i = 1; i &lt; col; i++) {</span>
+<span class="fc" id="L287">                arr[i] = Hsep;</span>
+            }
+
+<span class="fc" id="L290">            return arr;</span>
+        case ALIGNED :
+        case ALIGN :
+            //Align env. : hsep=(textwidth-matWidth)/(2n+1) and hsep eq_lft \medskip el_rgt hsep ... hsep elem hsep
+<span class="fc" id="L294">            Align = align.createBox(env);</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">            if (w != Float.POSITIVE_INFINITY) {</span>
+<span class="nc" id="L296">                h = Math.max((w - width - (col / 2) * Align.getWidth()) / (float) Math.floor((col + 3)/ 2), 0);</span>
+<span class="nc" id="L297">                AlignSep = new StrutBox(h, 0.0f, 0.0f, 0.0f);</span>
+            } else {
+<span class="fc" id="L299">                AlignSep = hsep.createBox(env);</span>
+            }
+
+<span class="fc" id="L302">            arr[col] = AlignSep;</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">            for (i = 0; i &lt; col; i++) {</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">                if (i % 2 == 0) {</span>
+<span class="fc" id="L305">                    arr[i] = AlignSep;</span>
+                } else {
+<span class="fc" id="L307">                    arr[i] = Align;</span>
+                }
+            }
+
+            break;
+        case ALIGNEDAT :
+        case ALIGNAT :
+            //Alignat env. : hsep=(textwidth-matWidth)/2 and hsep elem ... elem hsep
+<span class="nc bnc" id="L315" title="All 2 branches missed.">            if (w != Float.POSITIVE_INFINITY) {</span>
+<span class="nc" id="L316">                h = Math.max((w - width) / 2, 0);</span>
+            } else {
+<span class="nc" id="L318">                h = 0;</span>
+            }
+
+<span class="nc" id="L321">            Align = align.createBox(env);</span>
+<span class="nc" id="L322">            Box empty = nullBox;</span>
+<span class="nc" id="L323">            arr[0] = new StrutBox(h, 0.0f, 0.0f, 0.0f);</span>
+<span class="nc" id="L324">            arr[col] = arr[0];</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">            for (i = 1; i &lt; col; i++) {</span>
+<span class="nc bnc" id="L326" title="All 2 branches missed.">                if (i % 2 == 0) {</span>
+<span class="nc" id="L327">                    arr[i] = empty;</span>
+                } else {
+<span class="nc" id="L329">                    arr[i] = Align;</span>
+                }
+            }
+
+            break;
+        case FLALIGN :
+            //flalign env. : hsep=(textwidth-matWidth)/(2n+1) and hsep eq_lft \medskip el_rgt hsep ... hsep elem hsep
+<span class="nc" id="L336">            Align = align.createBox(env);</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">            if (w != Float.POSITIVE_INFINITY) {</span>
+<span class="nc" id="L338">                h = Math.max((w - width - (col / 2) * Align.getWidth()) / (float) Math.floor((col - 1)/ 2), 0);</span>
+<span class="nc" id="L339">                AlignSep = new StrutBox(h, 0.0f, 0.0f, 0.0f);</span>
+            } else {
+<span class="nc" id="L341">                AlignSep = hsep.createBox(env);</span>
+            }
+
+<span class="nc" id="L344">            arr[0] = nullBox;</span>
+<span class="nc" id="L345">            arr[col] = arr[0];</span>
+<span class="nc bnc" id="L346" title="All 2 branches missed.">            for (i = 1; i &lt; col; i++) {</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">                if (i % 2 == 0) {</span>
+<span class="nc" id="L348">                    arr[i] = AlignSep;</span>
+                } else {
+<span class="nc" id="L350">                    arr[i] = Align;</span>
+                }
+            }
+
+            break;
+        }
+
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">        if (w == Float.POSITIVE_INFINITY) {</span>
+<span class="fc" id="L358">            arr[0] = nullBox;</span>
+<span class="fc" id="L359">            arr[col] = arr[0];</span>
+        }
+
+<span class="fc" id="L362">        return arr;</span>
+
+    }
+
+    public Box createBox(TeXEnvironment env) {
+<span class="fc" id="L367">        int row = matrix.row;</span>
+<span class="fc" id="L368">        int col = matrix.col;</span>
+<span class="fc" id="L369">        Box[][] boxarr = new Box[row][col];</span>
+<span class="fc" id="L370">        float[] lineDepth = new float[row];</span>
+<span class="fc" id="L371">        float[] lineHeight = new float[row];</span>
+<span class="fc" id="L372">        float[] rowWidth = new float[col];</span>
+<span class="fc" id="L373">        float matW = 0;</span>
+<span class="fc" id="L374">        float drt = env.getTeXFont().getDefaultRuleThickness(env.getStyle());</span>
+
+<span class="pc bpc" id="L376" title="1 of 2 branches missed.">        if (type == SMALLMATRIX) {</span>
+<span class="nc" id="L377">            env = env.copy();</span>
+<span class="nc" id="L378">            env.setStyle(TeXConstants.STYLE_SCRIPT);</span>
+        }
+
+<span class="fc" id="L381">        List&lt;MulticolumnAtom&gt; listMulti = new ArrayList&lt;MulticolumnAtom&gt;();</span>
+
+<span class="fc bfc" id="L383" title="All 2 branches covered.">        for (int i = 0; i &lt; row; i++) {</span>
+<span class="fc" id="L384">            lineDepth[i] = 0;</span>
+<span class="fc" id="L385">            lineHeight[i] = 0;</span>
+<span class="fc bfc" id="L386" title="All 2 branches covered.">            for (int j = 0; j &lt; col; j++) {</span>
+<span class="fc" id="L387">                Atom at = null;</span>
+                try {
+<span class="fc" id="L389">                    at = matrix.array.get(i).get(j);</span>
+<span class="nc" id="L390">                } catch (Exception e) {</span>
+                    //The previous atom was an intertext atom
+                    //position[j - 1] = -1;
+<span class="nc" id="L393">                    boxarr[i][j - 1].type = TeXConstants.TYPE_INTERTEXT;</span>
+<span class="nc" id="L394">                    j = col - 1;</span>
+<span class="fc" id="L395">                }</span>
+
+<span class="fc bfc" id="L397" title="All 2 branches covered.">                boxarr[i][j] = (at == null) ? nullBox : at.createBox(env);</span>
+
+<span class="fc" id="L399">                lineDepth[i] = Math.max(boxarr[i][j].getDepth(), lineDepth[i]);</span>
+<span class="fc" id="L400">                lineHeight[i] = Math.max(boxarr[i][j].getHeight(), lineHeight[i]);</span>
+
+<span class="pc bpc" id="L402" title="1 of 2 branches missed.">                if (boxarr[i][j].type != TeXConstants.TYPE_MULTICOLUMN) {</span>
+<span class="fc" id="L403">                    rowWidth[j] = Math.max(boxarr[i][j].getWidth(), rowWidth[j]);</span>
+                } else {
+<span class="nc" id="L405">                    ((MulticolumnAtom) at).setRowColumn(i, j);</span>
+<span class="nc" id="L406">                    listMulti.add((MulticolumnAtom) at);</span>
+                }
+            }
+        }
+
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">        for (int i = 0; i &lt; listMulti.size(); i++) {</span>
+<span class="nc" id="L412">            MulticolumnAtom multi = listMulti.get(i);</span>
+<span class="nc" id="L413">            int c = multi.getCol();</span>
+<span class="nc" id="L414">            int r = multi.getRow();</span>
+<span class="nc" id="L415">            int n = multi.getSkipped();</span>
+<span class="nc" id="L416">            float w = 0;</span>
+<span class="nc bnc" id="L417" title="All 2 branches missed.">            for (int j = c; j &lt; c + n; j++) {</span>
+<span class="nc" id="L418">                w += rowWidth[j];</span>
+            }
+<span class="nc bnc" id="L420" title="All 2 branches missed.">            if (boxarr[r][c].getWidth() &gt; w) {</span>
+<span class="nc" id="L421">                float extraW = (boxarr[r][c].getWidth() - w) / n;</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">                for (int j = c; j &lt; c + n; j++) {</span>
+<span class="nc" id="L423">                    rowWidth[j] += extraW;</span>
+                }
+            }
+        }
+
+<span class="fc bfc" id="L428" title="All 2 branches covered.">        for (int j = 0; j &lt; col; j++) {</span>
+<span class="fc" id="L429">            matW += rowWidth[j];</span>
+        }
+<span class="fc" id="L431">        Box[] Hsep = getColumnSep(env, matW);</span>
+
+<span class="fc bfc" id="L433" title="All 2 branches covered.">        for (int j = 0; j &lt; col + 1; j++) {</span>
+<span class="fc" id="L434">            matW += Hsep[j].getWidth();</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">            if (vlines.get(j) != null) {</span>
+<span class="fc" id="L436">                matW += vlines.get(j).getWidth(env);</span>
+            }
+        }
+
+<span class="fc" id="L440">        VerticalBox vb = new VerticalBox();</span>
+<span class="fc" id="L441">        Box Vsep = vsep_in.createBox(env);</span>
+<span class="fc" id="L442">        vb.add(vsep_ext_top.createBox(env));</span>
+<span class="fc" id="L443">        float totalHeight = 0;</span>
+
+<span class="fc bfc" id="L445" title="All 2 branches covered.">        for (int i = 0; i &lt; row; i++) {</span>
+<span class="fc" id="L446">            HorizontalBox hb = new HorizontalBox();</span>
+<span class="fc bfc" id="L447" title="All 2 branches covered.">            for (int j = 0; j &lt; col; j++) {</span>
+<span class="pc bpc" id="L448" title="2 of 4 branches missed.">                switch (boxarr[i][j].type) {</span>
+                case -1 :
+                case TeXConstants.TYPE_MULTICOLUMN :
+<span class="fc bfc" id="L451" title="All 2 branches covered.">                    if (j == 0) {</span>
+<span class="fc bfc" id="L452" title="All 2 branches covered.">                        if (vlines.get(0) != null) {</span>
+<span class="fc" id="L453">                            VlineAtom vat = vlines.get(0);</span>
+<span class="fc" id="L454">                            vat.setHeight(lineHeight[i] + lineDepth[i] + Vsep.getHeight());</span>
+<span class="fc" id="L455">                            vat.setShift(lineDepth[i] + Vsep.getHeight() / 2);</span>
+<span class="fc" id="L456">                            Box vatBox = vat.createBox(env);</span>
+<span class="fc" id="L457">                            hb.add(new HorizontalBox(vatBox, Hsep[0].getWidth() + vatBox.getWidth(), TeXConstants.ALIGN_LEFT));</span>
+<span class="fc" id="L458">                        } else {</span>
+<span class="fc" id="L459">                            hb.add(Hsep[0]);</span>
+                        }
+                    }
+
+<span class="fc" id="L463">                    boolean lastVline = true;</span>
+
+<span class="pc bpc" id="L465" title="1 of 2 branches missed.">                    if (boxarr[i][j].type == -1) {</span>
+<span class="fc" id="L466">                        hb.add(new HorizontalBox(boxarr[i][j], rowWidth[j], position[j]));</span>
+                    } else {
+<span class="nc" id="L468">                        Box b = generateMulticolumn(env, Hsep, rowWidth, i, j);</span>
+<span class="nc" id="L469">                        MulticolumnAtom matom = (MulticolumnAtom) matrix.array.get(i).get(j);</span>
+<span class="nc" id="L470">                        j += matom.getSkipped() - 1;</span>
+<span class="nc" id="L471">                        hb.add(b);</span>
+<span class="nc" id="L472">                        lastVline = matom.hasRightVline();</span>
+                    }
+
+<span class="pc bpc" id="L475" title="1 of 4 branches missed.">                    if (lastVline &amp;&amp; vlines.get(j + 1) != null) {</span>
+<span class="fc" id="L476">                        VlineAtom vat = vlines.get(j + 1);</span>
+<span class="fc" id="L477">                        vat.setHeight(lineHeight[i] + lineDepth[i] + Vsep.getHeight());</span>
+<span class="fc" id="L478">                        vat.setShift(lineDepth[i] + Vsep.getHeight() / 2);</span>
+<span class="fc" id="L479">                        Box vatBox = vat.createBox(env);</span>
+<span class="fc bfc" id="L480" title="All 2 branches covered.">                        if (j &lt; col - 1) {</span>
+<span class="fc" id="L481">                            hb.add(new HorizontalBox(vatBox, Hsep[j + 1].getWidth() + vatBox.getWidth(), TeXConstants.ALIGN_CENTER));</span>
+                        } else {
+<span class="fc" id="L483">                            hb.add(new HorizontalBox(vatBox, Hsep[j + 1].getWidth() + vatBox.getWidth(), TeXConstants.ALIGN_RIGHT));</span>
+                        }
+<span class="fc" id="L485">                    } else {</span>
+<span class="fc" id="L486">                        hb.add(Hsep[j + 1]);</span>
+                    }
+<span class="fc" id="L488">                    break;</span>
+                case TeXConstants.TYPE_INTERTEXT :
+<span class="nc" id="L490">                    float f = env.getTextwidth();</span>
+<span class="nc bnc" id="L491" title="All 2 branches missed.">                    f = f == Float.POSITIVE_INFINITY ? rowWidth[j] : f;</span>
+<span class="nc" id="L492">                    hb = new HorizontalBox(boxarr[i][j], f, TeXConstants.ALIGN_LEFT);</span>
+<span class="nc" id="L493">                    j = col - 1;</span>
+<span class="nc" id="L494">                    break;</span>
+                case TeXConstants.TYPE_HLINE :
+<span class="fc" id="L496">                    HlineAtom at = (HlineAtom) matrix.array.get(i).get(j);</span>
+<span class="fc" id="L497">                    at.setWidth(matW);</span>
+<span class="pc bpc" id="L498" title="1 of 4 branches missed.">                    if (i &gt;= 1 &amp;&amp; matrix.array.get(i - 1).get(j) instanceof HlineAtom) {</span>
+<span class="nc" id="L499">                        hb.add(new StrutBox(0, 2 * drt, 0, 0));</span>
+<span class="nc" id="L500">                        at.setShift(-Vsep.getHeight() / 2 + drt);</span>
+                    } else {
+<span class="fc" id="L502">                        at.setShift(-Vsep.getHeight() / 2);</span>
+                    }
+
+<span class="fc" id="L505">                    hb.add(at.createBox(env));</span>
+<span class="fc" id="L506">                    j = col;</span>
+                    break;
+                }
+            }
+
+<span class="fc bfc" id="L511" title="All 2 branches covered.">            if (boxarr[i][0].type != TeXConstants.TYPE_HLINE) {</span>
+<span class="fc" id="L512">                hb.setHeight(lineHeight[i]);</span>
+<span class="fc" id="L513">                hb.setDepth(lineDepth[i]);</span>
+<span class="fc" id="L514">                vb.add(hb);</span>
+
+<span class="fc bfc" id="L516" title="All 2 branches covered.">                if (i &lt; row - 1)</span>
+<span class="fc" id="L517">                    vb.add(Vsep);</span>
+            } else {
+<span class="fc" id="L519">                vb.add(hb);</span>
+            }
+        }
+
+<span class="fc" id="L523">        vb.add(vsep_ext_bot.createBox(env));</span>
+<span class="fc" id="L524">        totalHeight = vb.getHeight() + vb.getDepth();</span>
+
+<span class="fc" id="L526">        float axis = env.getTeXFont().getAxisHeight(env.getStyle());</span>
+<span class="fc" id="L527">        vb.setHeight(totalHeight / 2 + axis);</span>
+<span class="fc" id="L528">        vb.setDepth(totalHeight / 2 - axis);</span>
+
+<span class="fc" id="L530">        return vb;</span>
+    }
+
+    private Box generateMulticolumn(TeXEnvironment env, Box[] Hsep, float[] rowWidth, int i, int j) {
+<span class="nc" id="L534">        float w = 0;</span>
+<span class="nc" id="L535">        MulticolumnAtom mca = (MulticolumnAtom) matrix.array.get(i).get(j);</span>
+<span class="nc" id="L536">        int k, n = mca.getSkipped();</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">        for (k = j; k &lt; j + n - 1; k++) {</span>
+<span class="nc" id="L538">            w += rowWidth[k] + Hsep[k + 1].getWidth();</span>
+<span class="nc bnc" id="L539" title="All 2 branches missed.">            if (vlines.get(k + 1) != null) {</span>
+<span class="nc" id="L540">                w += vlines.get(k + 1).getWidth(env);</span>
+            }
+        }
+<span class="nc" id="L543">        w += rowWidth[k];</span>
+
+<span class="nc" id="L545">        Box b = mca.createBox(env);</span>
+<span class="nc" id="L546">        float bw = b.getWidth();</span>
+<span class="nc bnc" id="L547" title="All 2 branches missed.">        if (bw &gt; w) {</span>
+            // It isn't a good idea but for the moment I have no other solution !
+<span class="nc" id="L549">            w = 0;</span>
+        }
+
+<span class="nc" id="L552">        mca.setWidth(w);</span>
+<span class="nc" id="L553">        b = mca.createBox(env);</span>
+<span class="nc" id="L554">        return b;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

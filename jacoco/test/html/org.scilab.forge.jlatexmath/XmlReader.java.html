@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmlReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">XmlReader.java</span></div><h1>XmlReader.java</h1><pre class="source lang-java linenums">/* XmlReader.java
+ * =========================================================================
+ * This file is NOT part of upstream JLaTeXMath, it was added for PLAN.md
+ * (phase 3, step 3d). It reads the XML files of the library without javax.xml (not in the TeaVM class library).
+ * It is released under the same terms as the library: GNU GPL version 2 or
+ * later, with the GNU linking exception (see the header of the other files of
+ * this package).
+ * =========================================================================
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
+/**
+ * A reader for the XML files of the library (font metrics, symbols, macros,
+ * glue): elements, attributes, comments, processing instructions, and the
+ * references {@code &amp;#NNN;}, {@code &amp;#xHHH;}, {@code &amp;lt;} {@code &amp;gt;}
+ * {@code &amp;amp;} {@code &amp;quot;} {@code &amp;apos;} in the values of the attributes.
+ * It is not a validating parser: no DTD, no entity declaration, no namespace
+ * (a name with a colon is a name), the text between the elements is dropped.
+ * The file is in UTF-8, as it is when it has no encoding declaration.
+ * &lt;p&gt;
+ * Without {@code javax.xml.parsers}, which the TeaVM class library does not have.
+ * The tests compare its result with the one of the JDK on every XML file of the
+ * library.
+ */
+public final class XmlReader {
+
+    private final String text;
+    private final int length;
+    private int pos;
+
+<span class="fc" id="L36">    private XmlReader(String text) {</span>
+<span class="fc" id="L37">        this.text = text;</span>
+<span class="fc" id="L38">        this.length = text.length();</span>
+<span class="fc" id="L39">    }</span>
+
+    /**
+     * @return the root element
+     * @throws IOException if the stream cannot be read
+     * @throws IllegalArgumentException if there is no stream, or the file is not
+     *             what this reader knows
+     */
+    public static XmlElement parse(InputStream in) throws IOException {
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (in == null) {</span>
+<span class="fc" id="L49">            throw new IllegalArgumentException(&quot;No XML file&quot;);</span>
+        }
+<span class="fc" id="L51">        return new XmlReader(new String(readAll(in), StandardCharsets.UTF_8)).readDocument();</span>
+    }
+
+    public static XmlElement parse(String xml) {
+<span class="fc" id="L55">        return new XmlReader(xml).readDocument();</span>
+    }
+
+    private static byte[] readAll(InputStream in) throws IOException {
+        try {
+<span class="fc" id="L60">            byte[] buffer = new byte[1 &lt;&lt; 16];</span>
+<span class="fc" id="L61">            int size = 0;</span>
+            while (true) {
+<span class="fc bfc" id="L63" title="All 2 branches covered.">                if (size == buffer.length) {</span>
+<span class="fc" id="L64">                    final byte[] bigger = new byte[buffer.length * 2];</span>
+<span class="fc" id="L65">                    System.arraycopy(buffer, 0, bigger, 0, size);</span>
+<span class="fc" id="L66">                    buffer = bigger;</span>
+                }
+<span class="fc" id="L68">                final int n = in.read(buffer, size, buffer.length - size);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                if (n &lt; 0) {</span>
+<span class="fc" id="L70">                    break;</span>
+                }
+<span class="fc" id="L72">                size += n;</span>
+<span class="fc" id="L73">            }</span>
+<span class="fc" id="L74">            final byte[] result = new byte[size];</span>
+<span class="fc" id="L75">            System.arraycopy(buffer, 0, result, 0, size);</span>
+<span class="fc" id="L76">            return result;</span>
+        } finally {
+<span class="fc" id="L78">            in.close();</span>
+        }
+    }
+
+    private XmlElement readDocument() {
+<span class="fc bfc" id="L83" title="All 4 branches covered.">        if (pos &lt; length &amp;&amp; text.charAt(pos) == '﻿') {</span>
+<span class="fc" id="L84">            pos++; // byte order mark</span>
+        }
+<span class="fc" id="L86">        skipMisc();</span>
+<span class="fc bfc" id="L87" title="All 4 branches covered.">        if (pos &gt;= length || text.charAt(pos) != '&lt;') {</span>
+<span class="fc" id="L88">            throw error(&quot;No root element&quot;);</span>
+        }
+<span class="fc" id="L90">        final XmlElement root = readElement();</span>
+<span class="fc" id="L91">        skipMisc();</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (pos &lt; length) {</span>
+<span class="fc" id="L93">            throw error(&quot;Content after the root element&quot;);</span>
+        }
+<span class="fc" id="L95">        return root;</span>
+    }
+
+    /** Spaces, comments, processing instructions and the DOCTYPE. */
+    private void skipMisc() {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        while (pos &lt; length) {</span>
+<span class="fc" id="L101">            final char c = text.charAt(pos);</span>
+<span class="pc bpc" id="L102" title="3 of 8 branches missed.">            if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {</span>
+<span class="fc" id="L103">                pos++;</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">            } else if (text.startsWith(&quot;&lt;?&quot;, pos)) {</span>
+<span class="fc" id="L105">                skipTo(&quot;?&gt;&quot;);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            } else if (text.startsWith(&quot;&lt;!--&quot;, pos)) {</span>
+<span class="fc" id="L107">                skipTo(&quot;--&gt;&quot;);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            } else if (text.startsWith(&quot;&lt;!DOCTYPE&quot;, pos)) {</span>
+<span class="fc" id="L109">                skipDoctype();</span>
+            } else {
+<span class="fc" id="L111">                return;</span>
+            }
+<span class="fc" id="L113">        }</span>
+<span class="fc" id="L114">    }</span>
+
+    private void skipTo(String end) {
+<span class="fc" id="L117">        final int i = text.indexOf(end, pos);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (i &lt; 0) {</span>
+<span class="fc" id="L119">            throw error(&quot;Missing &quot; + end);</span>
+        }
+<span class="fc" id="L121">        pos = i + end.length();</span>
+<span class="fc" id="L122">    }</span>
+
+    private void skipDoctype() {
+<span class="fc" id="L125">        int depth = 0;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        while (pos &lt; length) {</span>
+<span class="fc" id="L127">            final char c = text.charAt(pos++);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">            if (c == '[') {</span>
+<span class="fc" id="L129">                depth++;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">            } else if (c == ']') {</span>
+<span class="fc" id="L131">                depth--;</span>
+<span class="fc bfc" id="L132" title="All 4 branches covered.">            } else if (c == '&gt;' &amp;&amp; depth &lt;= 0) {</span>
+<span class="fc" id="L133">                return;</span>
+            }
+<span class="fc" id="L135">        }</span>
+<span class="nc" id="L136">        throw error(&quot;Unfinished DOCTYPE&quot;);</span>
+    }
+
+    /** At a '&amp;lt;' that starts an element. */
+    private XmlElement readElement() {
+<span class="fc" id="L141">        pos++; // '&lt;'</span>
+<span class="fc" id="L142">        final XmlElement element = new XmlElement(readName());</span>
+        // attributes
+        while (true) {
+<span class="fc" id="L145">            skipSpaces();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            if (pos &gt;= length) {</span>
+<span class="fc" id="L147">                throw error(&quot;Unfinished tag &quot; + element.getTagName());</span>
+            }
+<span class="fc" id="L149">            final char c = text.charAt(pos);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            if (c == '&gt;') {</span>
+<span class="fc" id="L151">                pos++;</span>
+<span class="fc" id="L152">                break;</span>
+            }
+<span class="fc bfc" id="L154" title="All 2 branches covered.">            if (c == '/') {</span>
+<span class="pc bpc" id="L155" title="2 of 4 branches missed.">                if (pos + 1 &lt; length &amp;&amp; text.charAt(pos + 1) == '&gt;') {</span>
+<span class="fc" id="L156">                    pos += 2;</span>
+<span class="fc" id="L157">                    return element;</span>
+                }
+<span class="nc" id="L159">                throw error(&quot;Bad end of tag &quot; + element.getTagName());</span>
+            }
+<span class="fc" id="L161">            final String name = readName();</span>
+<span class="fc" id="L162">            skipSpaces();</span>
+<span class="pc bpc" id="L163" title="1 of 4 branches missed.">            if (pos &gt;= length || text.charAt(pos) != '=') {</span>
+<span class="fc" id="L164">                throw error(&quot;No value for the attribute &quot; + name);</span>
+            }
+<span class="fc" id="L166">            pos++;</span>
+<span class="fc" id="L167">            skipSpaces();</span>
+<span class="fc" id="L168">            element.addAttribute(name, readValue());</span>
+<span class="fc" id="L169">        }</span>
+        // content
+        while (true) {
+<span class="fc" id="L172">            final int lt = text.indexOf('&lt;', pos);</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">            if (lt &lt; 0) {</span>
+<span class="fc" id="L174">                throw error(&quot;Missing &lt;/&quot; + element.getTagName() + &quot;&gt;&quot;);</span>
+            }
+<span class="fc" id="L176">            pos = lt; // the text before is dropped</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">            if (text.startsWith(&quot;&lt;/&quot;, pos)) {</span>
+<span class="fc" id="L178">                pos += 2;</span>
+<span class="fc" id="L179">                final String name = readName();</span>
+<span class="fc" id="L180">                skipSpaces();</span>
+<span class="pc bpc" id="L181" title="2 of 6 branches missed.">                if (pos &gt;= length || text.charAt(pos) != '&gt;' || name.equals(element.getTagName()) == false) {</span>
+<span class="fc" id="L182">                    throw error(&quot;&lt;/&quot; + name + &quot;&gt; where &lt;/&quot; + element.getTagName() + &quot;&gt; is expected&quot;);</span>
+                }
+<span class="fc" id="L184">                pos++;</span>
+<span class="fc" id="L185">                return element;</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">            } else if (text.startsWith(&quot;&lt;!--&quot;, pos)) {</span>
+<span class="fc" id="L187">                skipTo(&quot;--&gt;&quot;);</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">            } else if (text.startsWith(&quot;&lt;![CDATA[&quot;, pos)) {</span>
+<span class="fc" id="L189">                skipTo(&quot;]]&gt;&quot;);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">            } else if (text.startsWith(&quot;&lt;?&quot;, pos)) {</span>
+<span class="fc" id="L191">                skipTo(&quot;?&gt;&quot;);</span>
+            } else {
+<span class="fc" id="L193">                element.addChild(readElement());</span>
+            }
+<span class="fc" id="L195">        }</span>
+    }
+
+    private void skipSpaces() {
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        while (pos &lt; length) {</span>
+<span class="fc" id="L200">            final char c = text.charAt(pos);</span>
+<span class="pc bpc" id="L201" title="1 of 8 branches missed.">            if (c != ' ' &amp;&amp; c != '\t' &amp;&amp; c != '\n' &amp;&amp; c != '\r') {</span>
+<span class="fc" id="L202">                return;</span>
+            }
+<span class="fc" id="L204">            pos++;</span>
+<span class="fc" id="L205">        }</span>
+<span class="fc" id="L206">    }</span>
+
+    private String readName() {
+<span class="fc" id="L209">        final int start = pos;</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">        while (pos &lt; length) {</span>
+<span class="fc" id="L211">            final char c = text.charAt(pos);</span>
+<span class="pc bpc" id="L212" title="6 of 20 branches missed.">            if (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '=' || c == '&gt;' || c == '/' || c == '&lt;'</span>
+                    || c == '&quot;' || c == '\'') {
+<span class="nc" id="L214">                break;</span>
+            }
+<span class="fc" id="L216">            pos++;</span>
+<span class="fc" id="L217">        }</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">        if (pos == start) {</span>
+<span class="nc" id="L219">            throw error(&quot;A name is expected&quot;);</span>
+        }
+<span class="fc" id="L221">        return text.substring(start, pos);</span>
+    }
+
+    private String readValue() {
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">        if (pos &gt;= length) {</span>
+<span class="nc" id="L226">            throw error(&quot;A value is expected&quot;);</span>
+        }
+<span class="fc" id="L228">        final char quote = text.charAt(pos);</span>
+<span class="fc bfc" id="L229" title="All 4 branches covered.">        if (quote != '&quot;' &amp;&amp; quote != '\'') {</span>
+<span class="fc" id="L230">            throw error(&quot;A quote is expected&quot;);</span>
+        }
+<span class="fc" id="L232">        pos++;</span>
+<span class="fc" id="L233">        final StringBuilder sb = new StringBuilder();</span>
+        while (true) {
+<span class="fc bfc" id="L235" title="All 2 branches covered.">            if (pos &gt;= length) {</span>
+<span class="fc" id="L236">                throw error(&quot;Unfinished value&quot;);</span>
+            }
+<span class="fc" id="L238">            final char c = text.charAt(pos++);</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">            if (c == quote) {</span>
+<span class="fc" id="L240">                return sb.toString();</span>
+            }
+<span class="fc bfc" id="L242" title="All 2 branches covered.">            if (c == '&lt;') {</span>
+<span class="fc" id="L243">                throw error(&quot;'&lt;' in a value&quot;);</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">            } else if (c == '&amp;') {</span>
+<span class="fc" id="L245">                readReference(sb);</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">            } else if (c == '\r') {</span>
+                // a line end is one space (\r\n too), as in the attributes of a parsed file
+<span class="pc bpc" id="L248" title="2 of 4 branches missed.">                if (pos &lt; length &amp;&amp; text.charAt(pos) == '\n') {</span>
+<span class="fc" id="L249">                    pos++;</span>
+                }
+<span class="fc" id="L251">                sb.append(' ');</span>
+<span class="fc bfc" id="L252" title="All 4 branches covered.">            } else if (c == '\n' || c == '\t') {</span>
+<span class="fc" id="L253">                sb.append(' ');</span>
+            } else {
+<span class="fc" id="L255">                sb.append(c);</span>
+            }
+<span class="fc" id="L257">        }</span>
+    }
+
+    /** After a '&amp;amp;'. */
+    private void readReference(StringBuilder sb) {
+<span class="fc" id="L262">        final int semicolon = text.indexOf(';', pos);</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">        if (semicolon &lt; 0) {</span>
+<span class="nc" id="L264">            throw error(&quot;Unfinished reference&quot;);</span>
+        }
+<span class="fc" id="L266">        final String ref = text.substring(pos, semicolon);</span>
+<span class="fc" id="L267">        pos = semicolon + 1;</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">        if (ref.equals(&quot;lt&quot;)) {</span>
+<span class="fc" id="L269">            sb.append('&lt;');</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">        } else if (ref.equals(&quot;gt&quot;)) {</span>
+<span class="fc" id="L271">            sb.append('&gt;');</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        } else if (ref.equals(&quot;amp&quot;)) {</span>
+<span class="fc" id="L273">            sb.append('&amp;');</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">        } else if (ref.equals(&quot;quot&quot;)) {</span>
+<span class="fc" id="L275">            sb.append('&quot;');</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">        } else if (ref.equals(&quot;apos&quot;)) {</span>
+<span class="fc" id="L277">            sb.append('\'');</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">        } else if (ref.startsWith(&quot;#&quot;)) {</span>
+            final int codePoint;
+            try {
+<span class="pc bpc" id="L281" title="1 of 4 branches missed.">                if (ref.startsWith(&quot;#x&quot;) || ref.startsWith(&quot;#X&quot;)) {</span>
+<span class="fc" id="L282">                    codePoint = Integer.parseInt(ref.substring(2), 16);</span>
+                } else {
+<span class="fc" id="L284">                    codePoint = Integer.parseInt(ref.substring(1));</span>
+                }
+<span class="fc" id="L286">            } catch (NumberFormatException e) {</span>
+<span class="fc" id="L287">                throw error(&quot;Bad reference &amp;&quot; + ref + &quot;;&quot;);</span>
+<span class="fc" id="L288">            }</span>
+<span class="pc bpc" id="L289" title="2 of 4 branches missed.">            if (codePoint &lt; 0 || codePoint &gt; 0x10FFFF) {</span>
+<span class="nc" id="L290">                throw error(&quot;Bad reference &amp;&quot; + ref + &quot;;&quot;);</span>
+            }
+<span class="fc bfc" id="L292" title="All 2 branches covered.">            if (codePoint &gt;= 0x10000) {</span>
+<span class="fc" id="L293">                final int v = codePoint - 0x10000;</span>
+<span class="fc" id="L294">                sb.append((char) (0xD800 + (v &gt;&gt; 10)));</span>
+<span class="fc" id="L295">                sb.append((char) (0xDC00 + (v &amp; 0x3FF)));</span>
+<span class="fc" id="L296">            } else {</span>
+<span class="fc" id="L297">                sb.append((char) codePoint);</span>
+            }
+<span class="fc" id="L299">        } else {</span>
+<span class="nc" id="L300">            throw error(&quot;Unknown reference &amp;&quot; + ref + &quot;;&quot;);</span>
+        }
+<span class="fc" id="L302">    }</span>
+
+    private IllegalArgumentException error(String message) {
+<span class="fc" id="L305">        int line = 1;</span>
+<span class="pc bpc" id="L306" title="1 of 4 branches missed.">        for (int i = 0; i &lt; pos &amp;&amp; i &lt; length; i++) {</span>
+<span class="pc bpc" id="L307" title="1 of 2 branches missed.">            if (text.charAt(i) == '\n') {</span>
+<span class="nc" id="L308">                line++;</span>
+            }
+        }
+<span class="fc" id="L311">        return new IllegalArgumentException(&quot;XML, line &quot; + line + &quot;: &quot; + message);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeXColor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">TeXColor.java</span></div><h1>TeXColor.java</h1><pre class="source lang-java linenums">/* TeXColor.java
+ * =========================================================================
+ * This file is NOT part of upstream JLaTeXMath, it was added for PLAN.md
+ * (phase 3: no java.awt). It replaces java.awt.Color.
+ * It is released under the same terms as the library: GNU GPL version 2 or
+ * later, with the GNU linking exception (see the header of the other files of
+ * this package).
+ * =========================================================================
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * An immutable sRGB color with an alpha, 8 bits each. It has what the library
+ * used of {@code java.awt.Color}, with the same results: the constants, the
+ * constructors with integers (0 to 255) and with floats (0 to 1, rounded as AWT
+ * does), and {@link #decode(String)}.
+ */
+public final class TeXColor {
+
+<span class="fc" id="L21">    public static final TeXColor BLACK = new TeXColor(0, 0, 0);</span>
+<span class="fc" id="L22">    public static final TeXColor WHITE = new TeXColor(255, 255, 255);</span>
+<span class="fc" id="L23">    public static final TeXColor RED = new TeXColor(255, 0, 0);</span>
+<span class="fc" id="L24">    public static final TeXColor GREEN = new TeXColor(0, 255, 0);</span>
+<span class="fc" id="L25">    public static final TeXColor BLUE = new TeXColor(0, 0, 255);</span>
+<span class="fc" id="L26">    public static final TeXColor CYAN = new TeXColor(0, 255, 255);</span>
+<span class="fc" id="L27">    public static final TeXColor MAGENTA = new TeXColor(255, 0, 255);</span>
+<span class="fc" id="L28">    public static final TeXColor YELLOW = new TeXColor(255, 255, 0);</span>
+
+    private final int red;
+    private final int green;
+    private final int blue;
+    private final int alpha;
+
+    public TeXColor(int r, int g, int b) {
+<span class="fc" id="L36">        this(r, g, b, 255);</span>
+<span class="fc" id="L37">    }</span>
+
+    /**
+     * @throws IllegalArgumentException if a component is not between 0 and 255
+     */
+<span class="fc" id="L42">    public TeXColor(int r, int g, int b, int a) {</span>
+<span class="pc bpc" id="L43" title="4 of 16 branches missed.">        if (r &lt; 0 || r &gt; 255 || g &lt; 0 || g &gt; 255 || b &lt; 0 || b &gt; 255 || a &lt; 0 || a &gt; 255) {</span>
+<span class="fc" id="L44">            throw new IllegalArgumentException(&quot;Color parameter outside of expected range&quot;);</span>
+        }
+<span class="fc" id="L46">        this.red = r;</span>
+<span class="fc" id="L47">        this.green = g;</span>
+<span class="fc" id="L48">        this.blue = b;</span>
+<span class="fc" id="L49">        this.alpha = a;</span>
+<span class="fc" id="L50">    }</span>
+
+    public TeXColor(float r, float g, float b) {
+<span class="fc" id="L53">        this(r, g, b, 1f);</span>
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * @throws IllegalArgumentException if a component is not between 0 and 1
+     */
+    public TeXColor(float r, float g, float b, float a) {
+<span class="fc" id="L60">        this((int) (r * 255 + 0.5), (int) (g * 255 + 0.5), (int) (b * 255 + 0.5), (int) (a * 255 + 0.5));</span>
+<span class="fc" id="L61">    }</span>
+
+    /**
+     * Converts &quot;#RRGGBB&quot;, &quot;0xRRGGBB&quot; or a decimal number.
+     *
+     * @throws NumberFormatException if the string is not a number
+     */
+    public static TeXColor decode(String s) {
+<span class="fc" id="L69">        final int i = Integer.decode(s).intValue();</span>
+<span class="fc" id="L70">        return new TeXColor((i &gt;&gt; 16) &amp; 0xFF, (i &gt;&gt; 8) &amp; 0xFF, i &amp; 0xFF);</span>
+    }
+
+    public int getRed() {
+<span class="fc" id="L74">        return red;</span>
+    }
+
+    public int getGreen() {
+<span class="fc" id="L78">        return green;</span>
+    }
+
+    public int getBlue() {
+<span class="fc" id="L82">        return blue;</span>
+    }
+
+    public int getAlpha() {
+<span class="fc" id="L86">        return alpha;</span>
+    }
+
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">        if (o instanceof TeXColor == false) {</span>
+<span class="nc" id="L91">            return false;</span>
+        }
+<span class="fc" id="L93">        final TeXColor other = (TeXColor) o;</span>
+<span class="pc bpc" id="L94" title="2 of 8 branches missed.">        return red == other.red &amp;&amp; green == other.green &amp;&amp; blue == other.blue &amp;&amp; alpha == other.alpha;</span>
+    }
+
+    public int hashCode() {
+<span class="fc" id="L98">        return (alpha &lt;&lt; 24) | (red &lt;&lt; 16) | (green &lt;&lt; 8) | blue;</span>
+    }
+
+    public String toString() {
+<span class="fc" id="L102">        return &quot;TeXColor[r=&quot; + red + &quot;,g=&quot; + green + &quot;,b=&quot; + blue + &quot;,a=&quot; + alpha + &quot;]&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

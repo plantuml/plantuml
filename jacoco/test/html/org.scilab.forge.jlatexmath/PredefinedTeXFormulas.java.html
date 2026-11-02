@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PredefinedTeXFormulas.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">PredefinedTeXFormulas.java</span></div><h1>PredefinedTeXFormulas.java</h1><pre class="source lang-java linenums">/* PredefinedTeXFormulas.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2011 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+final class PredefinedTeXFormulas {
+
+<span class="fc" id="L50">    PredefinedTeXFormulas() { }</span>
+
+    static {
+<span class="fc" id="L53">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;qquad&quot;, &quot;\\quad\\quad&quot;);</span>
+<span class="fc" id="L54">        TeXFormula.predefinedTeXFormulasAsString.put(&quot; &quot;, &quot;\\nbsp&quot;);</span>
+<span class="fc" id="L55">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;ne&quot;, &quot;\\not\\equals&quot;);</span>
+<span class="fc" id="L56">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;neq&quot;, &quot;\\not\\equals&quot;);</span>
+<span class="fc" id="L57">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;ldots&quot;, &quot;\\mathinner{\\ldotp\\ldotp\\ldotp}&quot;);</span>
+<span class="fc" id="L58">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;dotsc&quot;, &quot;\\ldots&quot;);</span>
+<span class="fc" id="L59">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;dots&quot;, &quot;\\ldots&quot;);</span>
+<span class="fc" id="L60">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;cdots&quot;, &quot;\\mathinner{\\cdotp\\cdotp\\cdotp}&quot;);</span>
+<span class="fc" id="L61">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;dotsb&quot;, &quot;\\cdots&quot;);</span>
+<span class="fc" id="L62">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;dotso&quot;, &quot;\\ldots&quot;);</span>
+<span class="fc" id="L63">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;dotsi&quot;, &quot;\\!\\cdots&quot;);</span>
+<span class="fc" id="L64">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;bowtie&quot;, &quot;\\mathrel\\triangleright\\joinrel\\mathrel\\triangleleft&quot;);</span>
+<span class="fc" id="L65">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;models&quot;, &quot;\\mathrel|\\joinrel\\equals&quot;);</span>
+<span class="fc" id="L66">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Doteq&quot;, &quot;\\doteqdot&quot;);</span>
+<span class="fc" id="L67">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;{&quot;, &quot;\\lbrace&quot;);</span>
+<span class="fc" id="L68">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;}&quot;, &quot;\\rbrace&quot;);</span>
+<span class="fc" id="L69">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;|&quot;, &quot;\\Vert&quot;);</span>
+<span class="fc" id="L70">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;&amp;&quot;, &quot;\\textampersand&quot;);</span>
+<span class="fc" id="L71">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;%&quot;, &quot;\\textpercent&quot;);</span>
+<span class="fc" id="L72">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;_&quot;, &quot;\\underscore&quot;);</span>
+<span class="fc" id="L73">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;$&quot;, &quot;\\textdollar&quot;);</span>
+<span class="fc" id="L74">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;@&quot;, &quot;\\jlatexmatharobase&quot;);</span>
+<span class="fc" id="L75">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;#&quot;, &quot;\\jlatexmathsharp&quot;);</span>
+<span class="fc" id="L76">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;relbar&quot;, &quot;\\mathrel{\\smash-}&quot;);</span>
+<span class="fc" id="L77">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;hookrightarrow&quot;, &quot;\\lhook\\joinrel\\joinrel\\joinrel\\rightarrow&quot;);</span>
+<span class="fc" id="L78">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;hookleftarrow&quot;, &quot;\\leftarrow\\joinrel\\joinrel\\joinrel\\rhook&quot;);</span>
+<span class="fc" id="L79">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Longrightarrow&quot;, &quot;\\Relbar\\joinrel\\Rightarrow&quot;);</span>
+<span class="fc" id="L80">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;longrightarrow&quot;, &quot;\\relbar\\joinrel\\rightarrow&quot;);</span>
+<span class="fc" id="L81">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Longleftarrow&quot;, &quot;\\Leftarrow\\joinrel\\Relbar&quot;);</span>
+<span class="fc" id="L82">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;longleftarrow&quot;, &quot;\\leftarrow\\joinrel\\relbar&quot;);</span>
+<span class="fc" id="L83">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Longleftrightarrow&quot;, &quot;\\Leftarrow\\joinrel\\Rightarrow&quot;);</span>
+<span class="fc" id="L84">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;longleftrightarrow&quot;, &quot;\\leftarrow\\joinrel\\rightarrow&quot;);</span>
+<span class="fc" id="L85">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;iff&quot;, &quot;\\;\\Longleftrightarrow\\;&quot;);</span>
+<span class="fc" id="L86">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;implies&quot;, &quot;\\;\\Longrightarrow\\;&quot;);</span>
+<span class="fc" id="L87">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;impliedby&quot;, &quot;\\;\\Longleftarrow\\;&quot;);</span>
+<span class="fc" id="L88">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;mapsto&quot;, &quot;\\mapstochar\\rightarrow&quot;);</span>
+<span class="fc" id="L89">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;longmapsto&quot;, &quot;\\mapstochar\\longrightarrow&quot;);</span>
+<span class="fc" id="L90">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;log&quot;, &quot;\\mathop{\\mathrm{log}}\\nolimits&quot;);</span>
+<span class="fc" id="L91">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;lg&quot;, &quot;\\mathop{\\mathrm{lg}}\\nolimits&quot;);</span>
+<span class="fc" id="L92">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;ln&quot;, &quot;\\mathop{\\mathrm{ln}}\\nolimits&quot;);</span>
+<span class="fc" id="L93">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;ln&quot;, &quot;\\mathop{\\mathrm{ln}}\\nolimits&quot;);</span>
+<span class="fc" id="L94">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;lim&quot;, &quot;\\mathop{\\mathrm{lim}}&quot;);</span>
+<span class="fc" id="L95">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;limsup&quot;, &quot;\\mathop{\\mathrm{lim\\,sup}}&quot;);</span>
+<span class="fc" id="L96">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;liminf&quot;, &quot;\\mathop{\\mathrm{lim\\,inf}}&quot;);</span>
+<span class="fc" id="L97">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;injlim&quot;, &quot;\\mathop{\\mathrm{inj\\,lim}}&quot;);</span>
+<span class="fc" id="L98">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;projlim&quot;, &quot;\\mathop{\\mathrm{proj\\,lim}}&quot;);</span>
+<span class="fc" id="L99">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;varinjlim&quot;, &quot;\\mathop{\\underrightarrow{\\mathrm{lim}}}&quot;);</span>
+<span class="fc" id="L100">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;varprojlim&quot;, &quot;\\mathop{\\underleftarrow{\\mathrm{lim}}}&quot;);</span>
+<span class="fc" id="L101">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;varliminf&quot;, &quot;\\mathop{\\underline{\\mathrm{lim}}}&quot;);</span>
+<span class="fc" id="L102">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;varlimsup&quot;, &quot;\\mathop{\\overline{\\mathrm{lim}}}&quot;);</span>
+<span class="fc" id="L103">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;sin&quot;, &quot;\\mathop{\\mathrm{sin}}\\nolimits&quot;);</span>
+<span class="fc" id="L104">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;arcsin&quot;, &quot;\\mathop{\\mathrm{arcsin}}\\nolimits&quot;);</span>
+<span class="fc" id="L105">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;sinh&quot;, &quot;\\mathop{\\mathrm{sinh}}\\nolimits&quot;);</span>
+<span class="fc" id="L106">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;cos&quot;, &quot;\\mathop{\\mathrm{cos}}\\nolimits&quot;);</span>
+<span class="fc" id="L107">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;arccos&quot;, &quot;\\mathop{\\mathrm{arccos}}\\nolimits&quot;);</span>
+<span class="fc" id="L108">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;cot&quot;, &quot;\\mathop{\\mathrm{cot}}\\nolimits&quot;);</span>
+<span class="fc" id="L109">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;arccot&quot;, &quot;\\mathop{\\mathrm{arccot}}\\nolimits&quot;);</span>
+<span class="fc" id="L110">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;cosh&quot;, &quot;\\mathop{\\mathrm{cosh}}\\nolimits&quot;);</span>
+<span class="fc" id="L111">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;tan&quot;, &quot;\\mathop{\\mathrm{tan}}\\nolimits&quot;);</span>
+<span class="fc" id="L112">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;arctan&quot;, &quot;\\mathop{\\mathrm{arctan}}\\nolimits&quot;);</span>
+<span class="fc" id="L113">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;tanh&quot;, &quot;\\mathop{\\mathrm{tanh}}\\nolimits&quot;);</span>
+<span class="fc" id="L114">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;coth&quot;, &quot;\\mathop{\\mathrm{coth}}\\nolimits&quot;);</span>
+<span class="fc" id="L115">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;sec&quot;, &quot;\\mathop{\\mathrm{sec}}\\nolimits&quot;);</span>
+<span class="fc" id="L116">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;arcsec&quot;, &quot;\\mathop{\\mathrm{arcsec}}\\nolimits&quot;);</span>
+<span class="fc" id="L117">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;arccsc&quot;, &quot;\\mathop{\\mathrm{arccsc}}\\nolimits&quot;);</span>
+<span class="fc" id="L118">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;sech&quot;, &quot;\\mathop{\\mathrm{sech}}\\nolimits&quot;);</span>
+<span class="fc" id="L119">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;csc&quot;, &quot;\\mathop{\\mathrm{csc}}\\nolimits&quot;);</span>
+<span class="fc" id="L120">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;csch&quot;, &quot;\\mathop{\\mathrm{csch}}\\nolimits&quot;);</span>
+<span class="fc" id="L121">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;max&quot;, &quot;\\mathop{\\mathrm{max}}&quot;);</span>
+<span class="fc" id="L122">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;min&quot;, &quot;\\mathop{\\mathrm{min}}&quot;);</span>
+<span class="fc" id="L123">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;sup&quot;, &quot;\\mathop{\\mathrm{sup}}&quot;);</span>
+<span class="fc" id="L124">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;inf&quot;, &quot;\\mathop{\\mathrm{inf}}&quot;);</span>
+<span class="fc" id="L125">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;arg&quot;, &quot;\\mathop{\\mathrm{arg}}\\nolimits&quot;);</span>
+<span class="fc" id="L126">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;ker&quot;, &quot;\\mathop{\\mathrm{ker}}\\nolimits&quot;);</span>
+<span class="fc" id="L127">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;dim&quot;, &quot;\\mathop{\\mathrm{dim}}\\nolimits&quot;);</span>
+<span class="fc" id="L128">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;hom&quot;, &quot;\\mathop{\\mathrm{hom}}\\nolimits&quot;);</span>
+<span class="fc" id="L129">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;det&quot;, &quot;\\mathop{\\mathrm{det}}&quot;);</span>
+<span class="fc" id="L130">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;exp&quot;, &quot;\\mathop{\\mathrm{exp}}\\nolimits&quot;);</span>
+<span class="fc" id="L131">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Pr&quot;, &quot;\\mathop{\\mathrm{Pr}}&quot;);</span>
+<span class="fc" id="L132">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;gcd&quot;, &quot;\\mathop{\\mathrm{gcd}}&quot;);</span>
+<span class="fc" id="L133">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;deg&quot;, &quot;\\mathop{\\mathrm{deg}}\\nolimits&quot;);</span>
+<span class="fc" id="L134">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;bmod&quot;, &quot;\\:\\mathbin{\\mathrm{mod}}\\:&quot;);</span>
+<span class="fc" id="L135">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;JLaTeXMath&quot;, &quot;\\mathbb{J}\\LaTeX Math&quot;);</span>
+<span class="fc" id="L136">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Mapsto&quot;, &quot;\\Mapstochar\\Rightarrow&quot;);</span>
+<span class="fc" id="L137">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;mapsfrom&quot;, &quot;\\leftarrow\\mapsfromchar&quot;);</span>
+<span class="fc" id="L138">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Mapsfrom&quot;, &quot;\\Leftarrow\\Mapsfromchar&quot;);</span>
+<span class="fc" id="L139">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Longmapsto&quot;, &quot;\\Mapstochar\\Longrightarrow&quot;);</span>
+<span class="fc" id="L140">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;longmapsfrom&quot;, &quot;\\longleftarrow\\mapsfromchar&quot;);</span>
+<span class="fc" id="L141">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Longmapsfrom&quot;, &quot;\\Longleftarrow\\Mapsfromchar&quot;);</span>
+<span class="fc" id="L142">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;arrowvert&quot;, &quot;\\vert&quot;);</span>
+<span class="fc" id="L143">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Arrowvert&quot;, &quot;\\Vert&quot;);</span>
+<span class="fc" id="L144">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;aa&quot;, &quot;\\mathring{a}&quot;);</span>
+<span class="fc" id="L145">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;AA&quot;, &quot;\\mathring{A}&quot;);</span>
+<span class="fc" id="L146">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;ddag&quot;, &quot;\\ddagger&quot;);</span>
+<span class="fc" id="L147">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;dag&quot;, &quot;\\dagger&quot;);</span>
+<span class="fc" id="L148">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Doteq&quot;, &quot;\\doteqdot&quot;);</span>
+<span class="fc" id="L149">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;doublecup&quot;, &quot;\\Cup&quot;);</span>
+<span class="fc" id="L150">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;doublecap&quot;, &quot;\\Cap&quot;);</span>
+<span class="fc" id="L151">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;llless&quot;, &quot;\\lll&quot;);</span>
+<span class="fc" id="L152">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;gggtr&quot;, &quot;\\ggg&quot;);</span>
+<span class="fc" id="L153">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Alpha&quot;, &quot;\\mathord{\\mathrm{A}}&quot;);</span>
+<span class="fc" id="L154">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Beta&quot;, &quot;\\mathord{\\mathrm{B}}&quot;);</span>
+<span class="fc" id="L155">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Epsilon&quot;, &quot;\\mathord{\\mathrm{E}}&quot;);</span>
+<span class="fc" id="L156">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Zeta&quot;, &quot;\\mathord{\\mathrm{Z}}&quot;);</span>
+<span class="fc" id="L157">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Eta&quot;, &quot;\\mathord{\\mathrm{H}}&quot;);</span>
+<span class="fc" id="L158">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Iota&quot;, &quot;\\mathord{\\mathrm{I}}&quot;);</span>
+<span class="fc" id="L159">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Kappa&quot;, &quot;\\mathord{\\mathrm{K}}&quot;);</span>
+<span class="fc" id="L160">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Mu&quot;, &quot;\\mathord{\\mathrm{M}}&quot;);</span>
+<span class="fc" id="L161">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Nu&quot;, &quot;\\mathord{\\mathrm{N}}&quot;);</span>
+<span class="fc" id="L162">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Omicron&quot;, &quot;\\mathord{\\mathrm{O}}&quot;);</span>
+<span class="fc" id="L163">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Rho&quot;, &quot;\\mathord{\\mathrm{P}}&quot;);</span>
+<span class="fc" id="L164">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Tau&quot;, &quot;\\mathord{\\mathrm{T}}&quot;);</span>
+<span class="fc" id="L165">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;Chi&quot;, &quot;\\mathord{\\mathrm{X}}&quot;);</span>
+<span class="fc" id="L166">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;hdots&quot;, &quot;\\ldots&quot;);</span>
+<span class="fc" id="L167">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;restriction&quot;, &quot;\\upharpoonright&quot;);</span>
+<span class="fc" id="L168">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;celsius&quot;, &quot;\\mathord{{}^\\circ\\mathrm{C}}&quot;);</span>
+<span class="fc" id="L169">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;micro&quot;, &quot;\\textmu&quot;);</span>
+<span class="fc" id="L170">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;marker&quot;, &quot;\\kern{0.25ex}\\rule{0.5ex}{1.2ex}\\kern{0.25ex}&quot;);</span>
+<span class="fc" id="L171">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;hybull&quot;, &quot;\\rule[0.6ex]{1ex}{0.2ex}&quot;);</span>
+<span class="fc" id="L172">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;block&quot;, &quot;\\rule{1ex}{1.2ex}&quot;);</span>
+<span class="fc" id="L173">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;uhblk&quot;, &quot;\\rule[0.6ex]{1ex}{0.6ex}&quot;);</span>
+<span class="fc" id="L174">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;lhblk&quot;, &quot;\\rule{1ex}{0.6ex}&quot;);</span>
+<span class="fc" id="L175">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;notin&quot;, &quot;\\not\\in&quot;);</span>
+<span class="fc" id="L176">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;rVert&quot;, &quot;\\Vert&quot;);</span>
+<span class="fc" id="L177">        TeXFormula.predefinedTeXFormulasAsString.put(&quot;lVert&quot;, &quot;\\Vert&quot;);</span>
+<span class="fc" id="L178">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

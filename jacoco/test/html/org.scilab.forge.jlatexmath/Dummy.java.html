@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dummy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">Dummy.java</span></div><h1>Dummy.java</h1><pre class="source lang-java linenums">/* Dummy.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+/**
+ * Used by RowAtom. The &quot;textSymbol&quot;-property and the type of an atom can change
+ * (according to the TeX-algorithms used). Or this atom can be replaced by a ligature,
+ * (if it was a CharAtom). But atoms cannot be changed, otherwise
+ * different boxes could be made from the same TeXFormula, and that is not desired!
+ * This &quot;dummy atom&quot; makes sure that changes to an atom (during the createBox-method of
+ * a RowAtom) will be reset.
+ */
+public class Dummy {
+
+    private Atom el;
+
+<span class="fc" id="L61">    private boolean textSymbol = false;</span>
+
+<span class="fc" id="L63">    private int type = -1;</span>
+
+    /**
+     * Creates a new Dummy for the given atom.
+     *
+     * @param a an atom
+     */
+<span class="fc" id="L70">    public Dummy(Atom a) {</span>
+<span class="fc" id="L71">        el = a;</span>
+<span class="fc" id="L72">    }</span>
+
+    /**
+     * Changes the type of the atom
+     *
+     * @param t the new type
+     */
+    public void setType(int t) {
+<span class="fc" id="L80">        type = t;</span>
+<span class="fc" id="L81">    }</span>
+
+    /**
+     * Gets the type of the atom
+     *
+     * @return the type
+     */
+    public int getType() {
+<span class="nc" id="L89">        return type;</span>
+    }
+
+    /**
+     *
+     * @return the changed type, or the old left type if it hasn't been changed
+     */
+    public int getLeftType() {
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        return (type &gt;= 0 ? type : el.getLeftType());</span>
+    }
+
+    /**
+     *
+     * @return the changed type, or the old right type if it hasn't been changed
+     */
+    public int getRightType() {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        return (type &gt;= 0 ? type : el.getRightType());</span>
+    }
+
+    public boolean isCharSymbol() {
+<span class="fc" id="L109">        return el instanceof CharSymbol;</span>
+    }
+
+    public boolean isCharInMathMode() {
+<span class="fc bfc" id="L113" title="All 4 branches covered.">        return el instanceof CharAtom &amp;&amp; ((CharAtom) el).isMathMode();</span>
+    }
+
+    /**
+     * This method will only be called if isCharSymbol returns true.
+     */
+    public CharFont getCharFont(TeXFont tf) {
+<span class="fc" id="L120">        return ((CharSymbol) el).getCharFont(tf);</span>
+    }
+
+    /**
+     * Changes this atom into the given &quot;ligature atom&quot;.
+     *
+     * @param a the ligature atom
+     */
+    public void changeAtom(FixedCharAtom a) {
+<span class="nc" id="L129">        textSymbol = false;</span>
+<span class="nc" id="L130">        type = -1;</span>
+<span class="nc" id="L131">        el = a;</span>
+<span class="nc" id="L132">    }</span>
+
+    public Box createBox(TeXEnvironment rs) {
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (textSymbol)</span>
+<span class="fc" id="L136">            ((CharSymbol) el).markAsTextSymbol();</span>
+<span class="fc" id="L137">        Box b = el.createBox(rs);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        if (textSymbol)</span>
+<span class="fc" id="L139">            ((CharSymbol) el).removeMark(); // atom remains unchanged!</span>
+<span class="fc" id="L140">        return b;</span>
+    }
+
+    public void markAsTextSymbol() {
+<span class="fc" id="L144">        textSymbol = true;</span>
+<span class="fc" id="L145">    }</span>
+
+    public boolean isKern() {
+<span class="fc" id="L148">        return el instanceof SpaceAtom;</span>
+    }
+
+    // only for Row-elements
+    public void setPreviousAtom(Dummy prev) {
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (el instanceof Row)</span>
+<span class="fc" id="L154">            ((Row) el).setPreviousAtom(prev);</span>
+<span class="fc" id="L155">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

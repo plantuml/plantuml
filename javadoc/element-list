@@ -239,6 +239,10 @@ org.openpdf.text.pdf
 org.openpdf.text.pdf.fonts
 org.openpdf.text.pdf.interfaces
 org.openpdf.text.pdf.internal
+org.scilab.forge.jlatexmath
+org.scilab.forge.jlatexmath.cyrillic
+org.scilab.forge.jlatexmath.dynamic
+org.scilab.forge.jlatexmath.greek
 org.stathissideris.ascii2image.core
 org.stathissideris.ascii2image.graphics
 org.stathissideris.ascii2image.text

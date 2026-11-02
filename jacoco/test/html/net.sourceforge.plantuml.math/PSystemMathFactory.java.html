@@ -48,14 +48,14 @@ public class PSystemMathFactory extends PSystemBasicFactory&lt;PSystemMath&gt; {
 
 	@Override
 	public PSystemMath initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L51">		return new PSystemMath(source, preprocessing);</span>
+<span class="fc" id="L51">		return new PSystemMath(source, preprocessing);</span>
 	}
 
 	@Override
 	public PSystemMath executeLine(UmlSource source, PSystemMath system, String line,
 			PreprocessingArtifact preprocessing) {
-<span class="nc" id="L57">		system.doCommandLine(line);</span>
-<span class="nc" id="L58">		return system;</span>
+<span class="fc" id="L57">		system.doCommandLine(line);</span>
+<span class="fc" id="L58">		return system;</span>
 	}
 
 }

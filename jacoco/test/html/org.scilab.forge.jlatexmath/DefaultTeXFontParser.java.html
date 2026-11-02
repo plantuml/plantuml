@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultTeXFontParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">DefaultTeXFontParser.java</span></div><h1>DefaultTeXFontParser.java</h1><pre class="source lang-java linenums">/* DefaultTeXFontParser.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+/* Modified by Calixte Denizet */
+
+package org.scilab.forge.jlatexmath;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+
+
+
+/**
+ * Parses the font information from an XML-file.
+ */
+public class DefaultTeXFontParser {
+
+    /**
+     * if the register font cannot be found, we display an error message
+     * but we do it only once
+     */
+    private static interface CharChildParser { // NOPMD
+        public void parse(XmlElement el, char ch, FontInfo info) throws XMLResourceParseException;
+    }
+
+    private static class ExtensionParser implements CharChildParser {
+
+<span class="fc" id="L75">        ExtensionParser() {</span>
+            // avoid generation of access class
+<span class="fc" id="L77">        }</span>
+
+        public void parse(XmlElement el, char ch, FontInfo info) throws ResourceParseException {
+<span class="fc" id="L80">            int[] extensionChars = new int[4];</span>
+            // get required integer attributes
+<span class="fc" id="L82">            extensionChars[DefaultTeXFont.REP] = DefaultTeXFontParser</span>
+<span class="fc" id="L83">                                                 .getIntAndCheck(&quot;rep&quot;, el);</span>
+            // get optional integer attributes
+<span class="fc" id="L85">            extensionChars[DefaultTeXFont.TOP] = DefaultTeXFontParser</span>
+<span class="fc" id="L86">                                                 .getOptionalInt(&quot;top&quot;, el, DefaultTeXFont.NONE);</span>
+<span class="fc" id="L87">            extensionChars[DefaultTeXFont.MID] = DefaultTeXFontParser</span>
+<span class="fc" id="L88">                                                 .getOptionalInt(&quot;mid&quot;, el, DefaultTeXFont.NONE);</span>
+<span class="fc" id="L89">            extensionChars[DefaultTeXFont.BOT] = DefaultTeXFontParser</span>
+<span class="fc" id="L90">                                                 .getOptionalInt(&quot;bot&quot;, el, DefaultTeXFont.NONE);</span>
+
+            // parsing OK, add extension info
+<span class="fc" id="L93">            info.setExtension(ch, extensionChars);</span>
+<span class="fc" id="L94">        }</span>
+    }
+
+    private static class KernParser implements CharChildParser {
+
+<span class="fc" id="L99">        KernParser() {</span>
+            // avoid generation of access class
+<span class="fc" id="L101">        }</span>
+
+        public void parse(XmlElement el, char ch, FontInfo info) throws ResourceParseException {
+            // get required integer attribute
+<span class="fc" id="L105">            int code = DefaultTeXFontParser.getIntAndCheck(&quot;code&quot;, el);</span>
+            // get required float attribute
+<span class="fc" id="L107">            float kernAmount = DefaultTeXFontParser.getFloatAndCheck(&quot;val&quot;, el);</span>
+
+            // parsing OK, add kern info
+<span class="fc" id="L110">            info.addKern(ch, (char) code, kernAmount);</span>
+<span class="fc" id="L111">        }</span>
+    }
+
+    private static class LigParser implements CharChildParser {
+
+<span class="fc" id="L116">        LigParser() {</span>
+            // avoid generation of access class
+<span class="fc" id="L118">        }</span>
+
+        public void parse(XmlElement el, char ch, FontInfo info) throws ResourceParseException {
+            // get required integer attributes
+<span class="fc" id="L122">            int code = DefaultTeXFontParser.getIntAndCheck(&quot;code&quot;, el);</span>
+<span class="fc" id="L123">            int ligCode = DefaultTeXFontParser.getIntAndCheck(&quot;ligCode&quot;, el);</span>
+
+            // parsing OK, add ligature info
+<span class="fc" id="L126">            info.addLigature(ch, (char) code, (char) ligCode);</span>
+<span class="fc" id="L127">        }</span>
+    }
+
+    private static class NextLargerParser implements CharChildParser {
+
+<span class="fc" id="L132">        NextLargerParser() {</span>
+            // avoid generation of access class
+<span class="fc" id="L134">        }</span>
+
+        public void parse(XmlElement el, char ch, FontInfo info) throws ResourceParseException {
+            // get required integer attributes
+<span class="fc" id="L138">            String fontId = DefaultTeXFontParser.getAttrValueAndCheckIfNotNull(&quot;fontId&quot;, el);</span>
+<span class="fc" id="L139">            int code = DefaultTeXFontParser.getIntAndCheck(&quot;code&quot;, el);</span>
+
+            // parsing OK, add &quot;next larger&quot; info
+<span class="fc" id="L142">            info.setNextLarger(ch, (char) code, Font_ID.indexOf(fontId));</span>
+<span class="fc" id="L143">        }</span>
+    }
+
+    public static final String RESOURCE_NAME = &quot;DefaultTeXFont.xml&quot;;
+
+    public static final String STYLE_MAPPING_EL = &quot;TextStyleMapping&quot;;
+    public static final String SYMBOL_MAPPING_EL = &quot;SymbolMapping&quot;;
+    public static final String GEN_SET_EL = &quot;GeneralSettings&quot;;
+    public static final String MUFONTID_ATTR = &quot;mufontid&quot;;
+    public static final String SPACEFONTID_ATTR = &quot;spacefontid&quot;;
+
+<span class="fc" id="L154">    protected static ArrayList&lt;String&gt; Font_ID = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L155">    private static Map&lt;String,Integer&gt; rangeTypeMappings = new HashMap&lt;String,Integer&gt;();</span>
+<span class="fc" id="L156">    private static Map&lt;String,CharChildParser&gt; charChildParsers = new HashMap&lt;String,CharChildParser&gt;();</span>
+
+    private Map&lt;String,CharFont[]&gt; parsedTextStyles;
+
+    private XmlElement root;
+<span class="fc" id="L161">    private Object base = null;</span>
+
+    static {
+        // string-to-constant mappings
+<span class="fc" id="L165">        setRangeTypeMappings();</span>
+        // parsers for the child elements of a &quot;Char&quot;-element
+<span class="fc" id="L167">        setCharChildParsers();</span>
+<span class="fc" id="L168">    }</span>
+
+    public DefaultTeXFontParser() throws ResourceParseException {
+<span class="fc" id="L171">        this(TeXResources.open(DefaultTeXFontParser.class, RESOURCE_NAME), RESOURCE_NAME);</span>
+<span class="fc" id="L172">    }</span>
+
+<span class="fc" id="L174">    public DefaultTeXFontParser(InputStream file, String name) throws ResourceParseException {</span>
+        try {
+<span class="fc" id="L176">            root = XmlReader.parse(file);</span>
+<span class="nc" id="L177">        } catch (Exception e) { // JDOMException or IOException</span>
+<span class="nc" id="L178">            throw new XMLResourceParseException(name, e);</span>
+<span class="fc" id="L179">        }</span>
+<span class="fc" id="L180">    }</span>
+
+<span class="fc" id="L182">    public DefaultTeXFontParser(Object base, InputStream file, String name) throws ResourceParseException {</span>
+<span class="fc" id="L183">        this.base = base;</span>
+        try {
+<span class="fc" id="L185">            root = XmlReader.parse(file);</span>
+<span class="nc" id="L186">        } catch (Exception e) { // JDOMException or IOException</span>
+<span class="nc" id="L187">            throw new XMLResourceParseException(name, e);</span>
+<span class="fc" id="L188">        }</span>
+<span class="fc" id="L189">    }</span>
+
+    private static void setCharChildParsers() {
+<span class="fc" id="L192">        charChildParsers.put(&quot;Kern&quot;, new KernParser());</span>
+<span class="fc" id="L193">        charChildParsers.put(&quot;Lig&quot;, new LigParser());</span>
+<span class="fc" id="L194">        charChildParsers.put(&quot;NextLarger&quot;, new NextLargerParser());</span>
+<span class="fc" id="L195">        charChildParsers.put(&quot;Extension&quot;, new ExtensionParser());</span>
+<span class="fc" id="L196">    }</span>
+
+    public FontInfo[] parseFontDescriptions(FontInfo[] fi, InputStream file, String name) throws ResourceParseException {
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if (file == null) {</span>
+<span class="nc" id="L200">            return fi;</span>
+        }
+<span class="fc" id="L202">        ArrayList&lt;FontInfo&gt; res = new ArrayList&lt;FontInfo&gt;(Arrays.asList(fi));</span>
+        XmlElement font;
+        try {
+<span class="fc" id="L205">            font = XmlReader.parse(file);</span>
+<span class="nc" id="L206">        } catch (Exception e) {</span>
+<span class="nc" id="L207">            throw new XMLResourceParseException(&quot;Cannot find the file &quot; + name + &quot;!&quot; + e.toString());</span>
+<span class="fc" id="L208">        }</span>
+
+<span class="fc" id="L210">        String fontName = getAttrValueAndCheckIfNotNull(&quot;name&quot;, font);</span>
+        // get required integer attribute
+<span class="fc" id="L212">        String fontId = getAttrValueAndCheckIfNotNull(&quot;id&quot;, font);</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">        if (Font_ID.indexOf(fontId) &lt; 0)</span>
+<span class="fc" id="L214">            Font_ID.add(fontId);</span>
+<span class="nc" id="L215">        else throw new FontAlreadyLoadedException(&quot;Font &quot; + fontId + &quot; is already loaded !&quot;);</span>
+        // get required real attributes
+<span class="fc" id="L217">        float space = getFloatAndCheck(&quot;space&quot;, font);</span>
+<span class="fc" id="L218">        float xHeight = getFloatAndCheck(&quot;xHeight&quot;, font);</span>
+<span class="fc" id="L219">        float quad = getFloatAndCheck(&quot;quad&quot;, font);</span>
+
+        // get optional integer attribute
+<span class="fc" id="L222">        int skewChar = getOptionalInt(&quot;skewChar&quot;, font, -1);</span>
+
+        // get optional boolean for unicode
+<span class="fc" id="L225">        int unicode = getOptionalInt(&quot;unicode&quot;, font, 0);</span>
+
+        // get different versions of a font
+<span class="fc" id="L228">        String bold = null;</span>
+        try {
+<span class="fc" id="L230">            bold = getAttrValueAndCheckIfNotNull(&quot;boldVersion&quot;, font);</span>
+<span class="fc" id="L231">        } catch (ResourceParseException e) {}</span>
+<span class="fc" id="L232">        String roman = null;</span>
+        try {
+<span class="fc" id="L234">            roman = getAttrValueAndCheckIfNotNull(&quot;romanVersion&quot;, font);</span>
+<span class="fc" id="L235">        } catch (ResourceParseException e) {}</span>
+<span class="fc" id="L236">        String ss = null;</span>
+        try {
+<span class="fc" id="L238">            ss = getAttrValueAndCheckIfNotNull(&quot;ssVersion&quot;, font);</span>
+<span class="fc" id="L239">        } catch (ResourceParseException e) {}</span>
+<span class="fc" id="L240">        String tt = null;</span>
+        try {
+<span class="fc" id="L242">            tt = getAttrValueAndCheckIfNotNull(&quot;ttVersion&quot;, font);</span>
+<span class="fc" id="L243">        } catch (ResourceParseException e) {}</span>
+<span class="fc" id="L244">        String it = null;</span>
+        try {
+<span class="fc" id="L246">            it = getAttrValueAndCheckIfNotNull(&quot;itVersion&quot;, font);</span>
+<span class="fc" id="L247">        } catch (ResourceParseException e) {}</span>
+
+        // create FontInfo-object
+<span class="fc" id="L250">        FontInfo info = new FontInfo(Font_ID.indexOf(fontId), base, fontName, unicode, xHeight, space, quad, bold, roman, ss, tt, it);</span>
+
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        if (skewChar != -1) // attribute set</span>
+<span class="fc" id="L253">            info.setSkewChar((char) skewChar);</span>
+
+        // process all &quot;Char&quot;-elements
+<span class="fc" id="L256">        XmlNodeList listF = font.getElementsByTagName(&quot;Char&quot;);</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        for (int j = 0; j &lt; listF.getLength(); j++)</span>
+<span class="fc" id="L258">            processCharElement((XmlElement) listF.item(j), info);</span>
+
+        // parsing OK, add to table
+<span class="fc" id="L261">        res.add(info);</span>
+
+<span class="fc bfc" id="L263" title="All 2 branches covered.">        for (int i = 0; i &lt; res.size(); i++) {</span>
+<span class="fc" id="L264">            FontInfo fin = res.get(i);</span>
+<span class="fc" id="L265">            fin.setBoldId(Font_ID.indexOf(fin.boldVersion));</span>
+<span class="fc" id="L266">            fin.setRomanId(Font_ID.indexOf(fin.romanVersion));</span>
+<span class="fc" id="L267">            fin.setSsId(Font_ID.indexOf(fin.ssVersion));</span>
+<span class="fc" id="L268">            fin.setTtId(Font_ID.indexOf(fin.ttVersion));</span>
+<span class="fc" id="L269">            fin.setItId(Font_ID.indexOf(fin.itVersion));</span>
+        }
+
+<span class="fc" id="L272">        parsedTextStyles = parseStyleMappings();</span>
+<span class="fc" id="L273">        return res.toArray(fi);</span>
+    }
+
+    public FontInfo[] parseFontDescriptions(FontInfo[] fi) throws ResourceParseException {
+<span class="fc" id="L277">        XmlElement fontDescriptions = (XmlElement)root.getElementsByTagName(&quot;FontDescriptions&quot;).item(0);</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">        if (fontDescriptions != null) { // element present</span>
+<span class="fc" id="L279">            XmlNodeList list = fontDescriptions.getElementsByTagName(&quot;Metrics&quot;);</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">            for (int i = 0; i &lt; list.getLength(); i++) {</span>
+                // get required string attribute
+<span class="fc" id="L282">                String include = getAttrValueAndCheckIfNotNull(&quot;include&quot;, (XmlElement)list.item(i));</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">                if (base == null) {</span>
+<span class="fc" id="L284">                    fi = parseFontDescriptions(fi, TeXResources.open(DefaultTeXFontParser.class, include), include);</span>
+                } else {
+<span class="fc" id="L286">                    fi = parseFontDescriptions(fi, TeXResources.open(base.getClass(), include), include);</span>
+                }
+            }
+        }
+<span class="fc" id="L290">        return fi;</span>
+    }
+
+    protected void parseExtraPath() throws ResourceParseException {
+<span class="fc" id="L294">        XmlElement syms = (XmlElement)root.getElementsByTagName(&quot;TeXSymbols&quot;).item(0);</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">        if (syms != null) { // element present</span>
+            // get required string attribute
+<span class="fc" id="L297">            String include = getAttrValueAndCheckIfNotNull(&quot;include&quot;, syms);</span>
+<span class="fc" id="L298">            SymbolAtom.addSymbolAtom(TeXResources.open(base.getClass(), include), include);</span>
+        }
+<span class="fc" id="L300">        XmlElement settings = (XmlElement)root.getElementsByTagName(&quot;FormulaSettings&quot;).item(0);</span>
+<span class="pc bpc" id="L301" title="1 of 2 branches missed.">        if (settings != null) { // element present</span>
+            // get required string attribute
+<span class="fc" id="L303">            String include = getAttrValueAndCheckIfNotNull(&quot;include&quot;, settings);</span>
+<span class="fc" id="L304">            TeXFormula.addSymbolMappings(TeXResources.open(base.getClass(), include), include);</span>
+        }
+<span class="fc" id="L306">    }</span>
+
+    private static void processCharElement(XmlElement charElement, FontInfo info)
+    throws ResourceParseException {
+        // retrieve required integer attribute
+<span class="fc" id="L311">        char ch = (char) getIntAndCheck(&quot;code&quot;, charElement);</span>
+        // retrieve optional float attributes
+<span class="fc" id="L313">        float[] metrics = new float[4];</span>
+<span class="fc" id="L314">        metrics[DefaultTeXFont.WIDTH] = getOptionalFloat(&quot;width&quot;, charElement, 0);</span>
+<span class="fc" id="L315">        metrics[DefaultTeXFont.HEIGHT] = getOptionalFloat(&quot;height&quot;, charElement, 0);</span>
+<span class="fc" id="L316">        metrics[DefaultTeXFont.DEPTH] = getOptionalFloat(&quot;depth&quot;, charElement, 0);</span>
+<span class="fc" id="L317">        metrics[DefaultTeXFont.IT] = getOptionalFloat(&quot;italic&quot;, charElement, 0);</span>
+        // set metrics
+<span class="fc" id="L319">        info.setMetrics(ch, metrics);</span>
+
+        // process children
+<span class="fc bfc" id="L322" title="All 2 branches covered.">        for (XmlElement el : charElement.getChildren()) {</span>
+<span class="fc" id="L323">            Object parser = charChildParsers.get(el.getTagName());</span>
+<span class="pc bpc" id="L324" title="1 of 2 branches missed.">            if (parser == null) // unknown element</span>
+<span class="nc" id="L325">                throw new XMLResourceParseException(RESOURCE_NAME</span>
+                                                    + &quot;: a &lt;Char&gt;-element has an unknown child element '&quot;
+<span class="nc" id="L327">                                                    + el.getTagName() + &quot;'!&quot;);</span>
+            else
+                // process the child element
+<span class="fc" id="L330">                ((CharChildParser) parser).parse(el, ch, info);</span>
+<span class="fc" id="L331">        }</span>
+<span class="fc" id="L332">    }</span>
+
+    public Map&lt;String,CharFont&gt; parseSymbolMappings() throws ResourceParseException {
+<span class="fc" id="L335">        Map&lt;String,CharFont&gt; res = new HashMap&lt;String,CharFont&gt;();</span>
+<span class="fc" id="L336">        XmlElement symbolMappings = (XmlElement)root.getElementsByTagName(&quot;SymbolMappings&quot;).item(0);</span>
+<span class="pc bpc" id="L337" title="1 of 2 branches missed.">        if (symbolMappings == null)</span>
+            // &quot;SymbolMappings&quot; is required!
+<span class="nc" id="L339">            throw new XMLResourceParseException(RESOURCE_NAME, &quot;SymbolMappings&quot;);</span>
+        else { // element present
+            // iterate all mappings
+<span class="fc" id="L342">            XmlNodeList list = symbolMappings.getElementsByTagName(&quot;Mapping&quot;);</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">            for (int i = 0; i &lt; list.getLength(); i++) {</span>
+<span class="fc" id="L344">                String include = getAttrValueAndCheckIfNotNull(&quot;include&quot;, (XmlElement)list.item(i));</span>
+                XmlElement map;
+                try {
+<span class="fc bfc" id="L347" title="All 2 branches covered.">                    if (base == null) {</span>
+<span class="fc" id="L348">                        map = XmlReader.parse(TeXResources.open(DefaultTeXFontParser.class, include));</span>
+                    } else {
+<span class="fc" id="L350">                        map = XmlReader.parse(TeXResources.open(base.getClass(), include));</span>
+                    }
+<span class="nc" id="L352">                } catch (Exception e) {</span>
+<span class="nc" id="L353">                    throw new XMLResourceParseException(&quot;Cannot find the file &quot; + include + &quot;!&quot;);</span>
+<span class="fc" id="L354">                }</span>
+<span class="fc" id="L355">                XmlNodeList listM = map.getElementsByTagName(SYMBOL_MAPPING_EL);</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">                for (int j = 0; j &lt; listM.getLength(); j++) {</span>
+<span class="fc" id="L357">                    XmlElement mapping = (XmlElement)listM.item(j);</span>
+                    // get string attribute
+<span class="fc" id="L359">                    String symbolName = getAttrValueAndCheckIfNotNull(&quot;name&quot;, mapping);</span>
+                    // get integer attributes
+<span class="fc" id="L361">                    int ch = getIntAndCheck(&quot;ch&quot;, mapping);</span>
+<span class="fc" id="L362">                    String fontId = getAttrValueAndCheckIfNotNull(&quot;fontId&quot;, mapping);</span>
+                    // put mapping in table
+<span class="fc" id="L364">                    String boldFontId = null;</span>
+                    try {
+<span class="nc" id="L366">                        boldFontId = getAttrValueAndCheckIfNotNull(&quot;boldId&quot;, mapping);</span>
+<span class="pc" id="L367">                    } catch (ResourceParseException e) {}</span>
+
+<span class="pc bpc" id="L369" title="1 of 2 branches missed.">                    if (boldFontId == null) {</span>
+<span class="fc" id="L370">                        res.put(symbolName, new CharFont((char) ch, Font_ID.indexOf(fontId)));</span>
+                    } else {
+<span class="nc" id="L372">                        res.put(symbolName, new CharFont((char) ch, Font_ID.indexOf(fontId), Font_ID.indexOf(boldFontId)));</span>
+                    }
+                }
+            }
+
+<span class="fc" id="L377">            return res;</span>
+        }
+    }
+
+    public String[] parseDefaultTextStyleMappings()
+    throws ResourceParseException {
+<span class="fc" id="L383">        String[] res = new String[4];</span>
+<span class="fc" id="L384">        XmlElement defaultTextStyleMappings = (XmlElement)root</span>
+<span class="fc" id="L385">                                           .getElementsByTagName(&quot;DefaultTextStyleMapping&quot;).item(0);</span>
+<span class="pc bpc" id="L386" title="1 of 2 branches missed.">        if (defaultTextStyleMappings == null)</span>
+<span class="nc" id="L387">            return res;</span>
+        else { // element present
+            // iterate all mappings
+<span class="fc" id="L390">            XmlNodeList list = defaultTextStyleMappings.getElementsByTagName(&quot;MapStyle&quot;);</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">            for (int i = 0; i &lt; list.getLength(); i++) {</span>
+<span class="fc" id="L392">                XmlElement mapping = (XmlElement)list.item(i);</span>
+                // get range name and check if it's valid
+<span class="fc" id="L394">                String code = getAttrValueAndCheckIfNotNull(&quot;code&quot;, mapping);</span>
+<span class="fc" id="L395">                Object codeMapping = rangeTypeMappings.get(code);</span>
+<span class="pc bpc" id="L396" title="1 of 2 branches missed.">                if (codeMapping == null) // unknown range name</span>
+<span class="nc" id="L397">                    throw new XMLResourceParseException(RESOURCE_NAME, &quot;MapStyle&quot;,</span>
+                                                        &quot;code&quot;, &quot;contains an unknown \&quot;range name\&quot; '&quot; + code
+                                                        + &quot;'!&quot;);
+                // get mapped style and check if it exists
+<span class="fc" id="L401">                String textStyleName = getAttrValueAndCheckIfNotNull(&quot;textStyle&quot;,</span>
+                                       mapping);
+<span class="fc" id="L403">                Object styleMapping = parsedTextStyles.get(textStyleName);</span>
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">                if (styleMapping == null) // unknown text style</span>
+<span class="nc" id="L405">                    throw new XMLResourceParseException(RESOURCE_NAME, &quot;MapStyle&quot;,</span>
+                                                        &quot;textStyle&quot;, &quot;contains an unknown text style '&quot;
+                                                        + textStyleName + &quot;'!&quot;);
+                // now check if the range is defined within the mapped text style
+<span class="fc" id="L409">                CharFont[] charFonts = parsedTextStyles.get(textStyleName);</span>
+<span class="fc" id="L410">                int index = ((Integer) codeMapping).intValue();</span>
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">                if (charFonts[index] == null) // range not defined</span>
+<span class="nc" id="L412">                    throw new XMLResourceParseException(RESOURCE_NAME</span>
+                                                        + &quot;: the default text style mapping '&quot; + textStyleName
+                                                        + &quot;' for the range '&quot; + code
+                                                        + &quot;' contains no mapping for that range!&quot;);
+                else
+                    // everything OK, put mapping in table
+<span class="fc" id="L418">                    res[index] = textStyleName;</span>
+            }
+        }
+<span class="fc" id="L421">        return res;</span>
+    }
+
+    public Map&lt;String,Float&gt; parseParameters() throws ResourceParseException {
+<span class="fc" id="L425">        Map&lt;String,Float&gt; res = new HashMap&lt;String,Float&gt;();</span>
+<span class="fc" id="L426">        XmlElement parameters = (XmlElement)root.getElementsByTagName(&quot;Parameters&quot;).item(0);</span>
+<span class="pc bpc" id="L427" title="1 of 2 branches missed.">        if (parameters == null)</span>
+            // &quot;Parameters&quot; is required!
+<span class="nc" id="L429">            throw new XMLResourceParseException(RESOURCE_NAME, &quot;Parameters&quot;);</span>
+        else { // element present
+            // iterate all attributes
+<span class="fc bfc" id="L432" title="All 2 branches covered.">            for (String name : parameters.getAttributeNames()) {</span>
+                // set float value (if valid)
+<span class="fc" id="L434">                res.put(name, new Float(getFloatAndCheck(name, parameters)));</span>
+<span class="fc" id="L435">            }</span>
+<span class="fc" id="L436">            return res;</span>
+        }
+    }
+
+    public Map&lt;String,Number&gt; parseGeneralSettings() throws ResourceParseException {
+<span class="fc" id="L441">        Map &lt;String,Number&gt;res = new HashMap&lt;String,Number&gt;();</span>
+        // TODO: must this be 'Number' ?
+<span class="fc" id="L443">        XmlElement generalSettings = (XmlElement)root.getElementsByTagName(&quot;GeneralSettings&quot;).item(0);</span>
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">        if (generalSettings == null)</span>
+            // &quot;GeneralSettings&quot; is required!
+<span class="nc" id="L446">            throw new XMLResourceParseException(RESOURCE_NAME, &quot;GeneralSettings&quot;);</span>
+        else { // element present
+            // set required int values (if valid)
+<span class="fc" id="L449">            res.put(MUFONTID_ATTR, Font_ID.indexOf(getAttrValueAndCheckIfNotNull(MUFONTID_ATTR, generalSettings))); // autoboxing</span>
+<span class="fc" id="L450">            res.put(SPACEFONTID_ATTR, Font_ID.indexOf(getAttrValueAndCheckIfNotNull(SPACEFONTID_ATTR, generalSettings))); // autoboxing</span>
+            // set required float values (if valid)
+<span class="fc" id="L452">            res.put(&quot;scriptfactor&quot;, getFloatAndCheck(&quot;scriptfactor&quot;,</span>
+                    generalSettings)); // autoboxing
+<span class="fc" id="L454">            res.put(&quot;scriptscriptfactor&quot;, getFloatAndCheck(</span>
+                        &quot;scriptscriptfactor&quot;, generalSettings)); // autoboxing
+
+        }
+<span class="fc" id="L458">        return res;</span>
+    }
+
+    public Map&lt;String,CharFont[]&gt; parseTextStyleMappings() {
+<span class="fc" id="L462">        return parsedTextStyles;</span>
+    }
+
+    private Map&lt;String,CharFont[]&gt; parseStyleMappings() throws ResourceParseException {
+<span class="fc" id="L466">        Map&lt;String,CharFont[]&gt; res = new HashMap&lt;String,CharFont[]&gt;();</span>
+<span class="fc" id="L467">        XmlElement textStyleMappings = (XmlElement)root.getElementsByTagName(&quot;TextStyleMappings&quot;).item(0);</span>
+<span class="fc bfc" id="L468" title="All 2 branches covered.">        if (textStyleMappings == null)</span>
+<span class="fc" id="L469">            return res;</span>
+        else { // element present
+            // iterate all mappings
+<span class="fc" id="L472">            XmlNodeList list = textStyleMappings.getElementsByTagName(STYLE_MAPPING_EL);</span>
+<span class="fc bfc" id="L473" title="All 2 branches covered.">            for (int i = 0; i &lt; list.getLength(); i++) {</span>
+<span class="fc" id="L474">                XmlElement mapping = (XmlElement)list.item(i);</span>
+                // get required string attribute
+<span class="fc" id="L476">                String textStyleName = getAttrValueAndCheckIfNotNull(&quot;name&quot;,</span>
+                                       mapping);
+<span class="fc" id="L478">                String boldFontId = null;</span>
+                try {
+<span class="nc" id="L480">                    boldFontId = getAttrValueAndCheckIfNotNull(&quot;bold&quot;, mapping);</span>
+<span class="pc" id="L481">                } catch (ResourceParseException e) {}</span>
+
+<span class="fc" id="L483">                XmlNodeList mapRangeList = mapping.getElementsByTagName(&quot;MapRange&quot;);</span>
+                // iterate all mapping ranges
+<span class="fc" id="L485">                CharFont[] charFonts = new CharFont[4];</span>
+<span class="fc bfc" id="L486" title="All 2 branches covered.">                for (int j = 0; j &lt; mapRangeList.getLength(); j++) {</span>
+<span class="fc" id="L487">                    XmlElement mapRange = (XmlElement)mapRangeList.item(j);</span>
+                    // get required integer attributes
+<span class="fc" id="L489">                    String fontId = getAttrValueAndCheckIfNotNull(&quot;fontId&quot;, mapRange);</span>
+<span class="fc" id="L490">                    int ch = getIntAndCheck(&quot;start&quot;, mapRange);</span>
+                    // get required string attribute and check if it's a known range
+<span class="fc" id="L492">                    String code = getAttrValueAndCheckIfNotNull(&quot;code&quot;, mapRange);</span>
+<span class="fc" id="L493">                    Object codeMapping = rangeTypeMappings.get(code);</span>
+<span class="pc bpc" id="L494" title="1 of 2 branches missed.">                    if (codeMapping == null)</span>
+<span class="nc" id="L495">                        throw new XMLResourceParseException(RESOURCE_NAME,</span>
+                                                            &quot;MapRange&quot;, &quot;code&quot;,
+                                                            &quot;contains an unknown \&quot;range name\&quot; '&quot; + code + &quot;'!&quot;);
+<span class="pc bpc" id="L498" title="1 of 2 branches missed.">                    else if (boldFontId == null)</span>
+<span class="fc" id="L499">                        charFonts[((Integer) codeMapping).intValue()] = new CharFont((char) ch, Font_ID.indexOf(fontId));</span>
+<span class="nc" id="L500">                    else charFonts[((Integer) codeMapping).intValue()] = new CharFont((char) ch, Font_ID.indexOf(fontId), Font_ID.indexOf(boldFontId));</span>
+                }
+<span class="fc" id="L502">                res.put(textStyleName, charFonts);</span>
+            }
+        }
+<span class="fc" id="L505">        return res;</span>
+    }
+
+    private static void setRangeTypeMappings() {
+<span class="fc" id="L509">        rangeTypeMappings.put(&quot;numbers&quot;, DefaultTeXFont.NUMBERS); // autoboxing</span>
+<span class="fc" id="L510">        rangeTypeMappings.put(&quot;capitals&quot;, DefaultTeXFont.CAPITALS); // autoboxing</span>
+<span class="fc" id="L511">        rangeTypeMappings.put(&quot;small&quot;, DefaultTeXFont.SMALL); // autoboxing</span>
+<span class="fc" id="L512">        rangeTypeMappings.put(&quot;unicode&quot;, DefaultTeXFont.UNICODE); // autoboxing</span>
+<span class="fc" id="L513">    }</span>
+
+    private static String getAttrValueAndCheckIfNotNull(String attrName,
+            XmlElement element) throws ResourceParseException {
+<span class="fc" id="L517">        String attrValue = element.getAttribute(attrName);</span>
+<span class="fc bfc" id="L518" title="All 2 branches covered.">        if (attrValue.equals(&quot;&quot;))</span>
+<span class="fc" id="L519">            throw new XMLResourceParseException(RESOURCE_NAME, element.getTagName(),</span>
+                                                attrName, null);
+<span class="fc" id="L521">        return attrValue;</span>
+    }
+
+    public static float getFloatAndCheck(String attrName, XmlElement element)
+    throws ResourceParseException {
+<span class="fc" id="L526">        String attrValue = getAttrValueAndCheckIfNotNull(attrName, element);</span>
+
+        // try parsing string to float value
+<span class="fc" id="L529">        float res = 0;</span>
+        try {
+<span class="fc" id="L531">            res = (float) Double.parseDouble(attrValue);</span>
+<span class="nc" id="L532">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L533">            throw new XMLResourceParseException(RESOURCE_NAME, element.getTagName(),</span>
+                                                attrName, &quot;has an invalid real value!&quot;);
+<span class="fc" id="L535">        }</span>
+        // parsing OK
+<span class="fc" id="L537">        return res;</span>
+    }
+
+    public static int getIntAndCheck(String attrName, XmlElement element)
+    throws ResourceParseException {
+<span class="fc" id="L542">        String attrValue = getAttrValueAndCheckIfNotNull(attrName, element);</span>
+
+        // try parsing string to integer value
+<span class="fc" id="L545">        int res = 0;</span>
+        try {
+<span class="fc" id="L547">            res = Integer.parseInt(attrValue);</span>
+<span class="nc" id="L548">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L549">            throw new XMLResourceParseException(RESOURCE_NAME, element.getTagName(),</span>
+                                                attrName, &quot;has an invalid integer value!&quot;);
+<span class="fc" id="L551">        }</span>
+        // parsing OK
+<span class="fc" id="L553">        return res;</span>
+    }
+
+    public static int getOptionalInt(String attrName, XmlElement element,
+                                     int defaultValue) throws ResourceParseException {
+<span class="fc" id="L558">        String attrValue = element.getAttribute(attrName);</span>
+<span class="fc bfc" id="L559" title="All 2 branches covered.">        if (attrValue.equals(&quot;&quot;)) // attribute not present</span>
+<span class="fc" id="L560">            return defaultValue;</span>
+        else {
+            // try parsing string to integer value
+<span class="fc" id="L563">            int res = 0;</span>
+            try {
+<span class="fc" id="L565">                res = Integer.parseInt(attrValue);</span>
+<span class="nc" id="L566">            } catch (NumberFormatException e) {</span>
+<span class="nc" id="L567">                throw new XMLResourceParseException(RESOURCE_NAME, element</span>
+<span class="nc" id="L568">                                                    .getTagName(), attrName, &quot;has an invalid integer value!&quot;);</span>
+<span class="fc" id="L569">            }</span>
+            // parsing OK
+<span class="fc" id="L571">            return res;</span>
+        }
+    }
+
+    public static float getOptionalFloat(String attrName, XmlElement element,
+                                         float defaultValue) throws ResourceParseException {
+<span class="fc" id="L577">        String attrValue = element.getAttribute(attrName);</span>
+<span class="fc bfc" id="L578" title="All 2 branches covered.">        if (attrValue.equals(&quot;&quot;)) // attribute not present</span>
+<span class="fc" id="L579">            return defaultValue;</span>
+        else {
+            // try parsing string to float value
+<span class="fc" id="L582">            float res = 0;</span>
+            try {
+<span class="fc" id="L584">                res = (float) Double.parseDouble(attrValue);</span>
+<span class="nc" id="L585">            } catch (NumberFormatException e) {</span>
+<span class="nc" id="L586">                throw new XMLResourceParseException(RESOURCE_NAME, element</span>
+<span class="nc" id="L587">                                                    .getTagName(), attrName, &quot;has an invalid float value!&quot;);</span>
+<span class="fc" id="L588">            }</span>
+            // parsing OK
+<span class="fc" id="L590">            return res;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 <span class="fc bfc" id="L56" title="All 2 branches covered.">		if (i &gt;= n)</span>
 <span class="fc" id="L57">			return false;</span>
 <span class="fc" id="L58">		final char c = s.charAt(i);</span>
-<span class="pc bpc" id="L59" title="1 of 4 branches missed.">		if (c != '@' &amp;&amp; c != '\\')</span>
+<span class="fc bfc" id="L59" title="All 4 branches covered.">		if (c != '@' &amp;&amp; c != '\\')</span>
 <span class="fc" id="L60">			return false;</span>
 		// need '@' + &quot;start&quot; + at least one char after
 <span class="fc bfc" id="L62" title="All 4 branches covered.">		return i + 6 &lt; n &amp;&amp; s.regionMatches(i + 1, &quot;start&quot;, 0, 5);</span>

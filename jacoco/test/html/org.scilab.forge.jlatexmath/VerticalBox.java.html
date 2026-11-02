@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VerticalBox.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">VerticalBox.java</span></div><h1>VerticalBox.java</h1><pre class="source lang-java linenums">/* VerticalBox.java
+ * =========================================================================
+ * This file is originally part of the JMathTeX Library - http://jmathtex.sourceforge.net
+ *
+ * Copyright (C) 2004-2007 Universiteit Gent
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.ListIterator;
+
+/**
+ * A box composed of other boxes, put one above the other.
+ */
+class VerticalBox extends Box {
+
+<span class="fc" id="L56">    private float leftMostPos = Float.MAX_VALUE;</span>
+<span class="fc" id="L57">    private float rightMostPos = -Float.MAX_VALUE;</span>
+
+<span class="fc" id="L59">    public VerticalBox() { }</span>
+
+    public VerticalBox(Box b, float rest, int alignment) {
+<span class="fc" id="L62">        this();</span>
+<span class="fc" id="L63">        add(b);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (alignment == TeXConstants.ALIGN_CENTER) {</span>
+<span class="fc" id="L65">            StrutBox s = new StrutBox(0, rest / 2, 0, 0);</span>
+<span class="fc" id="L66">            super.add(0, s);</span>
+<span class="fc" id="L67">            height += rest / 2;</span>
+<span class="fc" id="L68">            depth += rest / 2;</span>
+<span class="fc" id="L69">            super.add(s);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        } else if (alignment == TeXConstants.ALIGN_TOP) {</span>
+<span class="nc" id="L71">            depth += rest;</span>
+<span class="nc" id="L72">            super.add(new StrutBox(0, rest, 0, 0));</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        } else if (alignment == TeXConstants.ALIGN_BOTTOM) {</span>
+<span class="fc" id="L74">            height += rest;</span>
+<span class="fc" id="L75">            super.add(0, new StrutBox(0, rest, 0, 0));</span>
+        }
+<span class="fc" id="L77">    }</span>
+
+    public final void add(Box b) {
+<span class="fc" id="L80">        super.add(b);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (children.size() == 1) {</span>
+<span class="fc" id="L82">            height = b.height;</span>
+<span class="fc" id="L83">            depth = b.depth;</span>
+        } else
+<span class="fc" id="L85">            depth += b.height + b.depth;</span>
+<span class="fc" id="L86">        recalculateWidth(b);</span>
+<span class="fc" id="L87">    }</span>
+
+    public final void add(Box b, float interline) {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (children.size() &gt;= 1) {</span>
+<span class="nc" id="L91">            add(new StrutBox(0, interline, 0, 0));</span>
+        }
+<span class="nc" id="L93">        add(b);</span>
+<span class="nc" id="L94">    }</span>
+
+    private void recalculateWidth(Box b) {
+<span class="fc" id="L97">        leftMostPos = Math.min(leftMostPos, b.shift);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        rightMostPos = Math.max(rightMostPos, b.shift + (b.width &gt; 0 ? b.width : 0));</span>
+<span class="fc" id="L99">        width = rightMostPos - leftMostPos;</span>
+<span class="fc" id="L100">    }</span>
+
+    public void add(int pos, Box b) {
+<span class="fc" id="L103">        super.add(pos, b);</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        if (pos == 0) {</span>
+<span class="nc" id="L105">            depth += b.depth + height;</span>
+<span class="nc" id="L106">            height = b.height;</span>
+        } else
+<span class="fc" id="L108">            depth += b.height + b.depth;</span>
+<span class="fc" id="L109">        recalculateWidth(b);</span>
+<span class="fc" id="L110">    }</span>
+
+    public void draw(TeXGraphics g2, float x, float y) {
+<span class="fc" id="L113">        float yPos = y - height;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        for (Box b : children) {</span>
+<span class="fc" id="L115">            yPos += b.getHeight();</span>
+<span class="fc" id="L116">            b.draw(g2, x + b.getShift() - leftMostPos, yPos);</span>
+<span class="fc" id="L117">            yPos += b.getDepth();</span>
+<span class="fc" id="L118">        }</span>
+<span class="fc" id="L119">    }</span>
+
+    public int getSize() {
+<span class="fc" id="L122">        return children.size();</span>
+    }
+
+    public int getLastFontId() {
+        // iterate from the last child box (the lowest) to the first (the highest)
+        // untill a font id is found that's not equal to NO_FONT
+<span class="fc" id="L128">        int fontId = TeXFont.NO_FONT;</span>
+<span class="fc" id="L129">        for (ListIterator&lt;Box&gt; it = children.listIterator(children.size()); fontId == TeXFont.NO_FONT</span>
+<span class="fc bfc" id="L130" title="All 4 branches covered.">                &amp;&amp; it.hasPrevious();)</span>
+<span class="fc" id="L131">            fontId = it.previous().getLastFontId();</span>
+
+<span class="fc" id="L133">        return fontId;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

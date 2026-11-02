@@ -1,0 +1,1450 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TeXParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">TeXParser.java</span></div><h1>TeXParser.java</h1><pre class="source lang-java linenums">/* TeXParser.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/p/jlatexmath
+ *
+ * Copyright (C) 2009 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * This class implements a parser for LaTeX' formulas.
+ */
+public class TeXParser {
+
+    TeXFormula formula;
+
+    private StringBuffer parseString;
+    private int pos;
+    private int spos;
+    private int line;
+    private int col;
+    private int len;
+    private int group;
+    private boolean insertion;
+    private int atIsLetter;
+    private boolean arrayMode;
+<span class="fc" id="L68">    private boolean ignoreWhiteSpace = true;</span>
+    private boolean isPartial;
+
+    // the escape character
+    private static final char ESCAPE = '\\';
+
+    // grouping characters (for parsing)
+    private static final char L_GROUP = '{';
+    private static final char R_GROUP = '}';
+    private static final char L_BRACK = '[';
+    private static final char R_BRACK = ']';
+    private static final char DOLLAR = '$';
+    private static final char DQUOTE = '\&quot;';
+
+    // Percent char for comments
+    private static final char PERCENT = '%';
+
+    // script characters (for parsing)
+    private static final char SUB_SCRIPT = '_';
+    private static final char SUPER_SCRIPT = '^';
+    private static final char PRIME = '\'';
+    private static final char BACKPRIME = '\u2035';
+    private static final char DEGRE = '\u00B0';
+    private static final char SUPZERO = '\u2070';
+    private static final char SUPONE = '\u00B9';
+    private static final char SUPTWO = '\u00B2';
+    private static final char SUPTHREE = '\u00B3';
+    private static final char SUPFOUR = '\u2074';
+    private static final char SUPFIVE = '\u2075';
+    private static final char SUPSIX = '\u2076';
+    private static final char SUPSEVEN = '\u2077';
+    private static final char SUPEIGHT = '\u2078';
+    private static final char SUPNINE = '\u2079';
+    private static final char SUPPLUS = '\u207A';
+    private static final char SUPMINUS = '\u207B';
+    private static final char SUPEQUAL = '\u207C';
+    private static final char SUPLPAR = '\u207D';
+    private static final char SUPRPAR = '\u207E';
+    private static final char SUPN = '\u207F';
+    private static final char SUBZERO = '\u2080';
+    private static final char SUBONE = '\u2081';
+    private static final char SUBTWO = '\u2082';
+    private static final char SUBTHREE = '\u2083';
+    private static final char SUBFOUR = '\u2084';
+    private static final char SUBFIVE = '\u2085';
+    private static final char SUBSIX = '\u2086';
+    private static final char SUBSEVEN = '\u2087';
+    private static final char SUBEIGHT = '\u2088';
+    private static final char SUBNINE = '\u2089';
+    private static final char SUBPLUS = '\u208A';
+    private static final char SUBMINUS = '\u208B';
+    private static final char SUBEQUAL = '\u208C';
+    private static final char SUBLPAR = '\u208D';
+    private static final char SUBRPAR = '\u208E';
+
+<span class="fc" id="L123">    protected static boolean isLoading = false;</span>
+
+<span class="fc" id="L125">    private static final Set&lt;String&gt; unparsedContents = new HashSet&lt;String&gt;(6);</span>
+    static {
+<span class="fc" id="L127">        unparsedContents.add(&quot;jlmDynamic&quot;);</span>
+<span class="fc" id="L128">    }</span>
+
+    /**
+     * Create a new TeXParser
+     *
+     * @param parseString the string to be parsed
+     * @param formula the formula where to put the atoms
+     * @throws ParseException if the string could not be parsed correctly
+     */
+    public TeXParser(String parseString, TeXFormula formula) {
+<span class="fc" id="L138">        this(parseString, formula, true);</span>
+<span class="fc" id="L139">    }</span>
+
+    /**
+     * Create a new TeXParser
+     *
+     * @param isPartial if true certains exceptions are not thrown
+     * @param parseString the string to be parsed
+     * @param formula the formula where to put the atoms
+     * @throws ParseException if the string could not be parsed correctly
+     */
+    public TeXParser(boolean isPartial, String parseString, TeXFormula formula) {
+<span class="fc" id="L150">        this(parseString, formula, false);</span>
+<span class="fc" id="L151">        this.isPartial = isPartial;</span>
+<span class="fc" id="L152">        firstpass();</span>
+<span class="fc" id="L153">    }</span>
+
+    /**
+     * Create a new TeXParser with or without a first pass
+     *
+     * @param isPartial if true certains exceptions are not thrown
+     * @param parseString the string to be parsed
+     * @param firstpass a boolean to indicate if the parser must replace the user-defined macros by their content
+     * @throws ParseException if the string could not be parsed correctly
+     */
+<span class="fc" id="L163">    public TeXParser(boolean isPartial, String parseString, TeXFormula formula, boolean firstpass) {</span>
+<span class="fc" id="L164">        this.formula = formula;</span>
+<span class="fc" id="L165">        this.isPartial = isPartial;</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (parseString != null) {</span>
+<span class="fc" id="L167">            this.parseString = new StringBuffer(parseString);</span>
+<span class="fc" id="L168">            this.len = parseString.length();</span>
+<span class="fc" id="L169">            this.pos = 0;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">            if (firstpass) {</span>
+<span class="fc" id="L171">                firstpass();</span>
+            }
+        } else {
+<span class="fc" id="L174">            this.parseString = null;</span>
+<span class="fc" id="L175">            this.pos = 0;</span>
+<span class="fc" id="L176">            this.len = 0;</span>
+        }
+<span class="fc" id="L178">    }</span>
+
+    /**
+     * Create a new TeXParser with or without a first pass
+     *
+     * @param parseString the string to be parsed
+     * @param firstpass a boolean to indicate if the parser must replace the user-defined macros by their content
+     * @throws ParseException if the string could not be parsed correctly
+     */
+    public TeXParser(String parseString, TeXFormula formula, boolean firstpass) {
+<span class="fc" id="L188">        this(false, parseString, formula, firstpass);</span>
+<span class="fc" id="L189">    }</span>
+
+    /**
+     * Create a new TeXParser in the context of an array. When the parser meets a &amp;amp; a new atom is added in the current line and when a \\ is met, a new line is created.
+     *
+     * @param isPartial if true certains exceptions are not thrown
+     * @param parseString the string to be parsed
+     * @param aoa an ArrayOfAtoms where to put the elements
+     * @param firstpass a boolean to indicate if the parser must replace the user-defined macros by their content
+     * @throws ParseException if the string could not be parsed correctly
+     */
+    public TeXParser(boolean isPartial, String parseString, ArrayOfAtoms aoa, boolean firstpass) {
+<span class="fc" id="L201">        this(isPartial, parseString, (TeXFormula) aoa, firstpass);</span>
+<span class="fc" id="L202">        arrayMode = true;</span>
+<span class="fc" id="L203">    }</span>
+
+    /**
+     * Create a new TeXParser in the context of an array. When the parser meets a &amp;amp; a new atom is added in the current line and when a \\ is met, a new line is created.
+     *
+     * @param isPartial if true certains exceptions are not thrown
+     * @param parseString the string to be parsed
+     * @param aoa an ArrayOfAtoms where to put the elements
+     * @param firstpass a boolean to indicate if the parser must replace the user-defined macros by their content
+     * @throws ParseException if the string could not be parsed correctly
+     */
+    public TeXParser(boolean isPartial, String parseString, ArrayOfAtoms aoa, boolean firstpass, boolean space) {
+<span class="fc" id="L215">        this(isPartial, parseString, (TeXFormula) aoa, firstpass, space);</span>
+<span class="fc" id="L216">        arrayMode = true;</span>
+<span class="fc" id="L217">    }</span>
+
+    /**
+     * Create a new TeXParser in the context of an array. When the parser meets a &amp;amp; a new atom is added in the current line and when a \\ is met, a new line is created.
+     *
+     * @param parseString the string to be parsed
+     * @param aoa an ArrayOfAtoms where to put the elements
+     * @param firstpass a boolean to indicate if the parser must replace the user-defined macros by their content
+     * @throws ParseException if the string could not be parsed correctly
+     */
+    public TeXParser(String parseString, ArrayOfAtoms aoa, boolean firstpass) {
+<span class="nc" id="L228">        this(false, parseString, (TeXFormula) aoa, firstpass);</span>
+<span class="nc" id="L229">    }</span>
+
+    /**
+     * Create a new TeXParser which ignores or not the white spaces, it's useful for mbox command
+     *
+     * @param isPartial if true certains exceptions are not thrown
+     * @param parseString the string to be parsed
+     * @param firstpass a boolean to indicate if the parser must replace the user-defined macros by their content
+     * @param space a boolean to indicate if the parser must ignore or not the white space
+     * @throws ParseException if the string could not be parsed correctly
+     */
+    public TeXParser(boolean isPartial, String parseString, TeXFormula formula, boolean firstpass, boolean space) {
+<span class="fc" id="L241">        this(isPartial, parseString, formula, firstpass);</span>
+<span class="fc" id="L242">        this.ignoreWhiteSpace = space;</span>
+<span class="fc" id="L243">    }</span>
+
+    /**
+     * Create a new TeXParser which ignores or not the white spaces, it's useful for mbox command
+     *
+     * @param parseString the string to be parsed
+     * @param firstpass a boolean to indicate if the parser must replace the user-defined macros by their content
+     * @param space a boolean to indicate if the parser must ignore or not the white space
+     * @throws ParseException if the string could not be parsed correctly
+     */
+    public TeXParser(String parseString, TeXFormula formula, boolean firstpass, boolean space) {
+<span class="nc" id="L254">        this(false, parseString, formula, firstpass);</span>
+<span class="nc" id="L255">        this.ignoreWhiteSpace = space;</span>
+<span class="nc" id="L256">    }</span>
+
+    /**
+     * Reset the parser with a new latex expression
+     */
+    public void reset(String latex) {
+<span class="nc" id="L262">        parseString = new StringBuffer(latex);</span>
+<span class="nc" id="L263">        len = parseString.length();</span>
+<span class="nc" id="L264">        formula.root = null;</span>
+<span class="nc" id="L265">        pos = 0;</span>
+<span class="nc" id="L266">        spos = 0;</span>
+<span class="nc" id="L267">        line = 0;</span>
+<span class="nc" id="L268">        col = 0;</span>
+<span class="nc" id="L269">        group = 0;</span>
+<span class="nc" id="L270">        insertion = false;</span>
+<span class="nc" id="L271">        atIsLetter = 0;</span>
+<span class="nc" id="L272">        arrayMode = false;</span>
+<span class="nc" id="L273">        ignoreWhiteSpace = true;</span>
+<span class="nc" id="L274">        firstpass();</span>
+<span class="nc" id="L275">    }</span>
+
+    /** Return true if we get a partial formula
+     */
+    public boolean getIsPartial() {
+<span class="fc" id="L280">        return isPartial;</span>
+    }
+
+    /** Get the number of the current line
+     */
+    public int getLine() {
+<span class="fc" id="L286">        return line;</span>
+    }
+
+    /** Get the number of the current column
+     */
+    public int getCol() {
+<span class="fc" id="L292">        return pos - col - 1;</span>
+    }
+
+    /** Get the last atom of the current formula
+     */
+    public Atom getLastAtom() {
+<span class="fc" id="L298">        Atom at = formula.root;</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">        if (at instanceof RowAtom)</span>
+<span class="fc" id="L300">            return ((RowAtom)at).getLastAtom();</span>
+<span class="fc" id="L301">        formula.root = null;</span>
+<span class="fc" id="L302">        return at;</span>
+    }
+
+    /** Get the atom represented by the current formula
+     */
+    public Atom getFormulaAtom() {
+<span class="fc" id="L308">        Atom at = formula.root;</span>
+<span class="fc" id="L309">        formula.root = null;</span>
+<span class="fc" id="L310">        return at;</span>
+    }
+
+    /** Put an atom in the current formula
+     */
+    public void addAtom(Atom at) {
+<span class="nc" id="L316">        formula.add(at);</span>
+<span class="nc" id="L317">    }</span>
+
+    /** Indicate if the character @ can be used in the command's name
+     */
+    public void makeAtLetter() {
+<span class="fc" id="L322">        atIsLetter++;</span>
+<span class="fc" id="L323">    }</span>
+
+    /** Indicate if the character @ can be used in the command's name
+     */
+    public void makeAtOther() {
+<span class="fc" id="L328">        atIsLetter--;</span>
+<span class="fc" id="L329">    }</span>
+
+    /** Return a boolean indicating if the parser is used to parse an array or not
+     */
+    public boolean isArrayMode() {
+<span class="fc" id="L334">        return arrayMode;</span>
+    }
+
+    /** Return a boolean indicating if the parser must ignore white spaces
+     */
+    public boolean isIgnoreWhiteSpace() {
+<span class="fc" id="L340">        return ignoreWhiteSpace;</span>
+    }
+
+    /** Return a boolean indicating if the parser is in math mode
+     */
+    public boolean isMathMode() {
+<span class="nc" id="L346">        return ignoreWhiteSpace;</span>
+    }
+
+    /** Return the current position in the parsed string
+     */
+    public int getPos() {
+<span class="fc" id="L352">        return pos;</span>
+    }
+
+    public String getStringFromCurrentPos() {
+<span class="fc" id="L356">        return parseString.substring(pos);</span>
+    }
+
+    public void finish() {
+<span class="fc" id="L360">        pos = parseString.length();</span>
+<span class="fc" id="L361">    }</span>
+
+    /** Add a new row when the parser is in array mode
+     * @throws ParseException if the parser is not in array mode
+     */
+    public void addRow() throws ParseException {
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">        if (!arrayMode)</span>
+<span class="nc" id="L368">            throw new ParseException(&quot;You can add a row only in array mode !&quot;);</span>
+<span class="fc" id="L369">        ((ArrayOfAtoms)formula).addRow();</span>
+<span class="fc" id="L370">    }</span>
+
+    private void firstpass() throws ParseException {
+<span class="fc bfc" id="L373" title="All 2 branches covered.">        if (len != 0) {</span>
+            char ch;
+            String com;
+            int spos;
+            String[] args;
+            MacroInfo mac;
+<span class="fc bfc" id="L379" title="All 2 branches covered.">            while (pos &lt; len) {</span>
+<span class="fc" id="L380">                ch = parseString.charAt(pos);</span>
+<span class="pc bpc" id="L381" title="32 of 35 branches missed.">                switch (ch) {</span>
+                case ESCAPE :
+<span class="fc" id="L383">                    spos = pos;</span>
+<span class="fc" id="L384">                    com = getCommand();</span>
+<span class="fc bfc" id="L385" title="All 4 branches covered.">                    if (&quot;newcommand&quot;.equals(com) || &quot;renewcommand&quot;.equals(com)) {</span>
+<span class="fc" id="L386">                        args = getOptsArgs(2, 2);</span>
+<span class="fc" id="L387">                        mac = MacroInfo.Commands.get(com);</span>
+                        try {
+<span class="fc" id="L389">                            mac.invoke(this, args);</span>
+<span class="nc" id="L390">                        } catch (ParseException e) {</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">                            if (!isPartial) {</span>
+<span class="nc" id="L392">                                throw e;</span>
+                            }
+<span class="fc" id="L394">                        }</span>
+<span class="fc" id="L395">                        parseString.delete(spos, pos);</span>
+<span class="fc" id="L396">                        len = parseString.length();</span>
+<span class="fc" id="L397">                        pos = spos;</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">                    } else if (NewCommandMacro.isMacro(com)) {</span>
+<span class="fc" id="L399">                        mac = MacroInfo.Commands.get(com);</span>
+<span class="pc bpc" id="L400" title="1 of 2 branches missed.">                        args = getOptsArgs(mac.nbArgs, mac.hasOptions ? 1 : 0);</span>
+<span class="fc" id="L401">                        args[0] = com;</span>
+                        try {
+<span class="fc" id="L403">                            parseString.replace(spos, pos, (String) mac.invoke(this, args));</span>
+<span class="nc" id="L404">                        } catch (ParseException e) {</span>
+<span class="nc bnc" id="L405" title="All 2 branches missed.">                            if (!isPartial) {</span>
+<span class="nc" id="L406">                                throw e;</span>
+                            } else {
+<span class="nc" id="L408">                                spos += com.length() + 1;</span>
+                            }
+<span class="fc" id="L410">                        }</span>
+<span class="fc" id="L411">                        len = parseString.length();</span>
+<span class="fc" id="L412">                        pos = spos;</span>
+<span class="fc bfc" id="L413" title="All 2 branches covered.">                    } else if (&quot;begin&quot;.equals(com)) {</span>
+<span class="fc" id="L414">                        args = getOptsArgs(1, 0);</span>
+<span class="fc" id="L415">                        mac = MacroInfo.Commands.get(args[1] + &quot;@env&quot;);</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">                        if (mac == null) {</span>
+<span class="pc bpc" id="L417" title="1 of 2 branches missed.">                            if (!isPartial) {</span>
+<span class="fc" id="L418">                                throw new ParseException(&quot;Unknown environment: &quot; + args[1] + &quot; at position &quot; + getLine() + &quot;:&quot; + getCol());</span>
+                            }
+                        } else {
+                            try {
+<span class="fc" id="L422">                                String[] optarg = getOptsArgs(mac.nbArgs - 1, 0);</span>
+<span class="fc" id="L423">                                String grp = getGroup(&quot;\\begin{&quot; + args[1] + &quot;}&quot;, &quot;\\end{&quot; + args[1] + &quot;}&quot;);</span>
+<span class="fc" id="L424">                                String expr = &quot;{\\makeatletter \\&quot; + args[1] + &quot;@env&quot;;</span>
+<span class="fc bfc" id="L425" title="All 2 branches covered.">                                for (int i = 1; i &lt;= mac.nbArgs - 1; i++)</span>
+<span class="fc" id="L426">                                    expr += &quot;{&quot; + optarg[i] + &quot;}&quot;;</span>
+<span class="fc" id="L427">                                expr += &quot;{&quot; + grp  + &quot;}\\makeatother}&quot;;</span>
+<span class="fc" id="L428">                                parseString.replace(spos, pos, expr);</span>
+<span class="fc" id="L429">                                len = parseString.length();</span>
+<span class="fc" id="L430">                                pos = spos;</span>
+<span class="fc" id="L431">                            } catch (ParseException e) {</span>
+<span class="pc bpc" id="L432" title="1 of 2 branches missed.">                                if (!isPartial) {</span>
+<span class="fc" id="L433">                                    throw e;</span>
+                                }
+<span class="pc" id="L435">                            }</span>
+                        }
+<span class="fc bfc" id="L437" title="All 2 branches covered.">                    } else if (&quot;makeatletter&quot;.equals(com))</span>
+<span class="fc" id="L438">                        atIsLetter++;</span>
+<span class="fc bfc" id="L439" title="All 2 branches covered.">                    else if (&quot;makeatother&quot;.equals(com))</span>
+<span class="fc" id="L440">                        atIsLetter--;</span>
+<span class="pc bpc" id="L441" title="1 of 2 branches missed.">                    else if (unparsedContents.contains(com)) {</span>
+<span class="nc" id="L442">                        getOptsArgs(1, 0);</span>
+                    }
+                    break;
+                case PERCENT :
+<span class="nc" id="L446">                    spos = pos++;</span>
+                    char chr;
+<span class="nc bnc" id="L448" title="All 2 branches missed.">                    while (pos &lt; len) {</span>
+<span class="nc" id="L449">                        chr = parseString.charAt(pos++);</span>
+<span class="nc bnc" id="L450" title="All 4 branches missed.">                        if (chr == '\r' || chr == '\n') {</span>
+<span class="nc" id="L451">                            break;</span>
+                        }
+                    }
+<span class="nc bnc" id="L454" title="All 2 branches missed.">                    if (pos &lt; len) {</span>
+<span class="nc" id="L455">                        pos--;</span>
+                    }
+<span class="nc" id="L457">                    parseString.replace(spos, pos, &quot;&quot;);</span>
+<span class="nc" id="L458">                    len = parseString.length();</span>
+<span class="nc" id="L459">                    pos = spos;</span>
+<span class="nc" id="L460">                    break;</span>
+                case DEGRE :
+<span class="nc" id="L462">                    parseString.replace(pos, pos + 1, &quot;^{\\circ}&quot;);</span>
+<span class="nc" id="L463">                    len = parseString.length();</span>
+<span class="nc" id="L464">                    pos++;</span>
+<span class="nc" id="L465">                    break;</span>
+                case SUPTWO :
+<span class="fc" id="L467">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{2}&quot;);</span>
+<span class="fc" id="L468">                    len = parseString.length();</span>
+<span class="fc" id="L469">                    pos++;</span>
+<span class="fc" id="L470">                    break;</span>
+                case SUPTHREE :
+<span class="nc" id="L472">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{3}&quot;);</span>
+<span class="nc" id="L473">                    len = parseString.length();</span>
+<span class="nc" id="L474">                    pos++;</span>
+<span class="nc" id="L475">                    break;</span>
+                case SUPONE :
+<span class="nc" id="L477">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{1}&quot;);</span>
+<span class="nc" id="L478">                    len = parseString.length();</span>
+<span class="nc" id="L479">                    pos++;</span>
+<span class="nc" id="L480">                    break;</span>
+                case SUPZERO :
+<span class="nc" id="L482">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{0}&quot;);</span>
+<span class="nc" id="L483">                    len = parseString.length();</span>
+<span class="nc" id="L484">                    pos++;</span>
+<span class="nc" id="L485">                    break;</span>
+                case SUPFOUR :
+<span class="nc" id="L487">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{4}&quot;);</span>
+<span class="nc" id="L488">                    len = parseString.length();</span>
+<span class="nc" id="L489">                    pos++;</span>
+<span class="nc" id="L490">                    break;</span>
+                case SUPFIVE :
+<span class="nc" id="L492">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{5}&quot;);</span>
+<span class="nc" id="L493">                    len = parseString.length();</span>
+<span class="nc" id="L494">                    pos++;</span>
+<span class="nc" id="L495">                    break;</span>
+                case SUPSIX :
+<span class="nc" id="L497">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{6}&quot;);</span>
+<span class="nc" id="L498">                    len = parseString.length();</span>
+<span class="nc" id="L499">                    pos++;</span>
+<span class="nc" id="L500">                    break;</span>
+                case SUPSEVEN :
+<span class="nc" id="L502">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{7}&quot;);</span>
+<span class="nc" id="L503">                    len = parseString.length();</span>
+<span class="nc" id="L504">                    pos++;</span>
+<span class="nc" id="L505">                    break;</span>
+                case SUPEIGHT :
+<span class="nc" id="L507">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{8}&quot;);</span>
+<span class="nc" id="L508">                    len = parseString.length();</span>
+<span class="nc" id="L509">                    pos++;</span>
+<span class="nc" id="L510">                    break;</span>
+                case SUPNINE :
+<span class="nc" id="L512">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{9}&quot;);</span>
+<span class="nc" id="L513">                    len = parseString.length();</span>
+<span class="nc" id="L514">                    pos++;</span>
+<span class="nc" id="L515">                    break;</span>
+                case SUPPLUS :
+<span class="nc" id="L517">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{+}&quot;);</span>
+<span class="nc" id="L518">                    len = parseString.length();</span>
+<span class="nc" id="L519">                    pos++;</span>
+<span class="nc" id="L520">                    break;</span>
+                case SUPMINUS :
+<span class="nc" id="L522">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{-}&quot;);</span>
+<span class="nc" id="L523">                    len = parseString.length();</span>
+<span class="nc" id="L524">                    pos++;</span>
+<span class="nc" id="L525">                    break;</span>
+                case SUPEQUAL :
+<span class="nc" id="L527">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{=}&quot;);</span>
+<span class="nc" id="L528">                    len = parseString.length();</span>
+<span class="nc" id="L529">                    pos++;</span>
+<span class="nc" id="L530">                    break;</span>
+                case SUPLPAR :
+<span class="nc" id="L532">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{(}&quot;);</span>
+<span class="nc" id="L533">                    len = parseString.length();</span>
+<span class="nc" id="L534">                    pos++;</span>
+<span class="nc" id="L535">                    break;</span>
+                case SUPRPAR :
+<span class="nc" id="L537">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{)}&quot;);</span>
+<span class="nc" id="L538">                    len = parseString.length();</span>
+<span class="nc" id="L539">                    pos++;</span>
+<span class="nc" id="L540">                    break;</span>
+                case SUPN :
+<span class="nc" id="L542">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsup{n}&quot;);</span>
+<span class="nc" id="L543">                    len = parseString.length();</span>
+<span class="nc" id="L544">                    pos++;</span>
+<span class="nc" id="L545">                    break;</span>
+                case SUBTWO :
+<span class="nc" id="L547">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{2}&quot;);</span>
+<span class="nc" id="L548">                    len = parseString.length();</span>
+<span class="nc" id="L549">                    pos++;</span>
+<span class="nc" id="L550">                    break;</span>
+                case SUBTHREE :
+<span class="nc" id="L552">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{3}&quot;);</span>
+<span class="nc" id="L553">                    len = parseString.length();</span>
+<span class="nc" id="L554">                    pos++;</span>
+<span class="nc" id="L555">                    break;</span>
+                case SUBONE :
+<span class="nc" id="L557">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{1}&quot;);</span>
+<span class="nc" id="L558">                    len = parseString.length();</span>
+<span class="nc" id="L559">                    pos++;</span>
+<span class="nc" id="L560">                    break;</span>
+                case SUBZERO :
+<span class="nc" id="L562">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{0}&quot;);</span>
+<span class="nc" id="L563">                    len = parseString.length();</span>
+<span class="nc" id="L564">                    pos++;</span>
+<span class="nc" id="L565">                    break;</span>
+                case SUBFOUR :
+<span class="nc" id="L567">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{4}&quot;);</span>
+<span class="nc" id="L568">                    len = parseString.length();</span>
+<span class="nc" id="L569">                    pos++;</span>
+<span class="nc" id="L570">                    break;</span>
+                case SUBFIVE :
+<span class="nc" id="L572">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{5}&quot;);</span>
+<span class="nc" id="L573">                    len = parseString.length();</span>
+<span class="nc" id="L574">                    pos++;</span>
+<span class="nc" id="L575">                    break;</span>
+                case SUBSIX :
+<span class="nc" id="L577">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{6}&quot;);</span>
+<span class="nc" id="L578">                    len = parseString.length();</span>
+<span class="nc" id="L579">                    pos++;</span>
+<span class="nc" id="L580">                    break;</span>
+                case SUBSEVEN :
+<span class="nc" id="L582">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{7}&quot;);</span>
+<span class="nc" id="L583">                    len = parseString.length();</span>
+<span class="nc" id="L584">                    pos++;</span>
+<span class="nc" id="L585">                    break;</span>
+                case SUBEIGHT :
+<span class="nc" id="L587">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{8}&quot;);</span>
+<span class="nc" id="L588">                    len = parseString.length();</span>
+<span class="nc" id="L589">                    pos++;</span>
+<span class="nc" id="L590">                    break;</span>
+                case SUBNINE :
+<span class="nc" id="L592">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{9}&quot;);</span>
+<span class="nc" id="L593">                    len = parseString.length();</span>
+<span class="nc" id="L594">                    pos++;</span>
+<span class="nc" id="L595">                    break;</span>
+                case SUBPLUS :
+<span class="nc" id="L597">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{+}&quot;);</span>
+<span class="nc" id="L598">                    len = parseString.length();</span>
+<span class="nc" id="L599">                    pos++;</span>
+<span class="nc" id="L600">                    break;</span>
+                case SUBMINUS :
+<span class="nc" id="L602">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{-}&quot;);</span>
+<span class="nc" id="L603">                    len = parseString.length();</span>
+<span class="nc" id="L604">                    pos++;</span>
+<span class="nc" id="L605">                    break;</span>
+                case SUBEQUAL :
+<span class="nc" id="L607">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{=}&quot;);</span>
+<span class="nc" id="L608">                    len = parseString.length();</span>
+<span class="nc" id="L609">                    pos++;</span>
+<span class="nc" id="L610">                    break;</span>
+                case SUBLPAR :
+<span class="nc" id="L612">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{(}&quot;);</span>
+<span class="nc" id="L613">                    len = parseString.length();</span>
+<span class="nc" id="L614">                    pos++;</span>
+<span class="nc" id="L615">                    break;</span>
+                case SUBRPAR :
+<span class="nc" id="L617">                    parseString.replace(pos, pos + 1, &quot;\\jlatexmathcumsub{)}&quot;);</span>
+<span class="nc" id="L618">                    len = parseString.length();</span>
+<span class="nc" id="L619">                    pos++;</span>
+<span class="nc" id="L620">                    break;</span>
+                default :
+<span class="fc" id="L622">                    pos++;</span>
+                }
+            }
+<span class="fc" id="L625">            pos = 0;</span>
+<span class="fc" id="L626">            len = parseString.length();</span>
+        }
+<span class="fc" id="L628">    }</span>
+
+    /** Parse the input string
+     * @throws ParseException if an error is encountered during parsing
+     */
+    public void parse() throws ParseException {
+<span class="fc bfc" id="L634" title="All 2 branches covered.">        if (len != 0) {</span>
+            char ch;
+<span class="fc bfc" id="L636" title="All 2 branches covered.">            while (pos &lt; len) {</span>
+<span class="fc" id="L637">                ch = parseString.charAt(pos);</span>
+
+<span class="pc bpc" id="L639" title="5 of 15 branches missed.">                switch (ch) {</span>
+                case '\n' :
+<span class="nc" id="L641">                    line++;</span>
+<span class="nc" id="L642">                    col = pos;</span>
+                case '\t' :
+                case '\r' :
+<span class="nc" id="L645">                    pos++;</span>
+<span class="nc" id="L646">                    break;</span>
+                case ' ' :
+<span class="fc" id="L648">                    pos++;</span>
+<span class="fc bfc" id="L649" title="All 2 branches covered.">                    if (!ignoreWhiteSpace) {// We are in a mbox</span>
+<span class="fc" id="L650">                        formula.add(new SpaceAtom());</span>
+<span class="fc" id="L651">                        formula.add(new BreakMarkAtom());</span>
+<span class="fc bfc" id="L652" title="All 2 branches covered.">                        while (pos &lt; len) {</span>
+<span class="fc" id="L653">                            ch = parseString.charAt(pos);</span>
+<span class="pc bpc" id="L654" title="5 of 6 branches missed.">                            if (ch != ' ' || ch != '\t' || ch != '\r')</span>
+<span class="nc" id="L655">                                break;</span>
+<span class="nc" id="L656">                            pos++;</span>
+                        }
+                    }
+                    break;
+                case DOLLAR :
+<span class="fc" id="L661">                    pos++;</span>
+<span class="pc bpc" id="L662" title="1 of 2 branches missed.">                    if (!ignoreWhiteSpace) {// We are in a mbox</span>
+<span class="nc" id="L663">                        int style = TeXConstants.STYLE_TEXT;</span>
+<span class="nc" id="L664">                        boolean doubleDollar = false;</span>
+<span class="nc bnc" id="L665" title="All 2 branches missed.">                        if (parseString.charAt(pos) == DOLLAR) {</span>
+<span class="nc" id="L666">                            style = TeXConstants.STYLE_DISPLAY;</span>
+<span class="nc" id="L667">                            doubleDollar = true;</span>
+<span class="nc" id="L668">                            pos++;</span>
+                        }
+
+<span class="nc" id="L671">                        formula.add(new MathAtom(new TeXFormula(this, getDollarGroup(DOLLAR), false).root, style));</span>
+<span class="nc bnc" id="L672" title="All 2 branches missed.">                        if (doubleDollar) {</span>
+<span class="nc bnc" id="L673" title="All 2 branches missed.">                            if (parseString.charAt(pos) == DOLLAR) {</span>
+<span class="nc" id="L674">                                pos++;</span>
+                            }
+                        }
+<span class="nc" id="L677">                    }</span>
+                    break;
+                case ESCAPE :
+<span class="fc" id="L680">                    Atom at = processEscape();</span>
+<span class="fc" id="L681">                    formula.add(at);</span>
+<span class="fc bfc" id="L682" title="All 4 branches covered.">                    if (arrayMode &amp;&amp; at instanceof HlineAtom) {</span>
+<span class="fc" id="L683">                        ((ArrayOfAtoms) formula).addRow();</span>
+                    }
+<span class="pc bpc" id="L685" title="1 of 2 branches missed.">                    if (insertion) {</span>
+<span class="nc" id="L686">                        insertion = false;</span>
+                    }
+                    break;
+                case L_GROUP :
+<span class="fc" id="L690">                    Atom atom = getArgument();</span>
+<span class="pc bpc" id="L691" title="1 of 2 branches missed.">                    if (atom != null) {</span>
+<span class="fc" id="L692">                        atom.type = TeXConstants.TYPE_ORDINARY;</span>
+                    }
+<span class="fc" id="L694">                    formula.add(atom);</span>
+<span class="fc" id="L695">                    break;</span>
+                case R_GROUP :
+<span class="fc" id="L697">                    group--;</span>
+<span class="fc" id="L698">                    pos++;</span>
+<span class="pc bpc" id="L699" title="1 of 2 branches missed.">                    if (group == -1)</span>
+<span class="nc" id="L700">                        throw new ParseException(&quot;Found a closing '&quot; + R_GROUP + &quot;' without an opening '&quot; + L_GROUP + &quot;'!&quot;);</span>
+<span class="fc" id="L701">                    return;</span>
+                case SUPER_SCRIPT :
+<span class="fc" id="L703">                    formula.add(getScripts(ch));</span>
+<span class="fc" id="L704">                    break;</span>
+                case SUB_SCRIPT :
+<span class="pc bpc" id="L706" title="1 of 2 branches missed.">                    if (ignoreWhiteSpace) {</span>
+<span class="fc" id="L707">                        formula.add(getScripts(ch));</span>
+                    } else {
+<span class="nc" id="L709">                        formula.add(new UnderscoreAtom());</span>
+<span class="nc" id="L710">                        pos++;</span>
+                    }
+<span class="nc" id="L712">                    break;</span>
+                case '&amp;' :
+<span class="fc bfc" id="L714" title="All 2 branches covered.">                    if (!arrayMode)</span>
+<span class="fc" id="L715">                        throw new ParseException(&quot;Character '&amp;' is only available in array mode !&quot;);</span>
+<span class="fc" id="L716">                    ((ArrayOfAtoms) formula).addCol();</span>
+<span class="fc" id="L717">                    pos++;</span>
+<span class="fc" id="L718">                    break;</span>
+                case '~' :
+<span class="nc" id="L720">                    formula.add(new SpaceAtom());</span>
+<span class="nc" id="L721">                    pos++;</span>
+<span class="nc" id="L722">                    break;</span>
+                case PRIME :
+<span class="pc bpc" id="L724" title="1 of 2 branches missed.">                    if (ignoreWhiteSpace) {</span>
+<span class="fc" id="L725">                        formula.add(new CumulativeScriptsAtom(getLastAtom(), null, SymbolAtom.get(&quot;prime&quot;)));</span>
+                    } else {
+<span class="nc" id="L727">                        formula.add(convertCharacter(PRIME, true));</span>
+                    }
+<span class="fc" id="L729">                    pos++;</span>
+<span class="fc" id="L730">                    break;</span>
+                case BACKPRIME :
+<span class="nc bnc" id="L732" title="All 2 branches missed.">                    if (ignoreWhiteSpace) {</span>
+<span class="nc" id="L733">                        formula.add(new CumulativeScriptsAtom(getLastAtom(), null, SymbolAtom.get(&quot;backprime&quot;)));</span>
+                    } else {
+<span class="nc" id="L735">                        formula.add(convertCharacter(BACKPRIME, true));</span>
+                    }
+<span class="nc" id="L737">                    pos++;</span>
+<span class="nc" id="L738">                    break;</span>
+                case DQUOTE :
+<span class="nc bnc" id="L740" title="All 2 branches missed.">                    if (ignoreWhiteSpace) {</span>
+<span class="nc" id="L741">                        formula.add(new CumulativeScriptsAtom(getLastAtom(), null, SymbolAtom.get(&quot;prime&quot;)));</span>
+<span class="nc" id="L742">                        formula.add(new CumulativeScriptsAtom(getLastAtom(), null, SymbolAtom.get(&quot;prime&quot;)));</span>
+                    } else {
+<span class="nc" id="L744">                        formula.add(convertCharacter(PRIME, true));</span>
+<span class="nc" id="L745">                        formula.add(convertCharacter(PRIME, true));</span>
+                    }
+<span class="nc" id="L747">                    pos++;</span>
+<span class="nc" id="L748">                    break;</span>
+                default :
+<span class="fc" id="L750">                    formula.add(convertCharacter(ch, false));</span>
+<span class="fc" id="L751">                    pos++;</span>
+                }
+            }
+        }
+
+<span class="fc bfc" id="L756" title="All 4 branches covered.">        if (formula.root == null &amp;&amp; !arrayMode) {</span>
+<span class="fc" id="L757">            formula.add(new EmptyAtom());</span>
+        }
+<span class="fc" id="L759">    }</span>
+
+    private Atom getScripts(char f) throws ParseException {
+<span class="fc" id="L762">        pos++;</span>
+<span class="fc" id="L763">        Atom first = getArgument();</span>
+<span class="fc" id="L764">        Atom second = null;</span>
+<span class="fc" id="L765">        char s = '\0';</span>
+
+<span class="fc bfc" id="L767" title="All 2 branches covered.">        if (pos &lt; len)</span>
+<span class="fc" id="L768">            s = parseString.charAt(pos);</span>
+
+<span class="pc bpc" id="L770" title="1 of 4 branches missed.">        if (f == SUPER_SCRIPT &amp;&amp; s == SUPER_SCRIPT) {</span>
+<span class="nc" id="L771">            second = first;</span>
+<span class="nc" id="L772">            first = null;</span>
+<span class="fc bfc" id="L773" title="All 4 branches covered.">        } else if (f == SUB_SCRIPT &amp;&amp; s == SUPER_SCRIPT) {</span>
+<span class="fc" id="L774">            pos++;</span>
+<span class="fc" id="L775">            second = getArgument();</span>
+<span class="pc bpc" id="L776" title="1 of 4 branches missed.">        } else if (f == SUPER_SCRIPT &amp;&amp; s == SUB_SCRIPT) {</span>
+<span class="nc" id="L777">            pos++;</span>
+<span class="nc" id="L778">            second = first;</span>
+<span class="nc" id="L779">            first = getArgument();</span>
+<span class="pc bpc" id="L780" title="1 of 4 branches missed.">        } else if (f == SUPER_SCRIPT &amp;&amp; s != SUB_SCRIPT) {</span>
+<span class="fc" id="L781">            second = first;</span>
+<span class="fc" id="L782">            first = null;</span>
+        }
+
+        Atom at;
+<span class="fc bfc" id="L786" title="All 2 branches covered.">        if (formula.root instanceof RowAtom) {</span>
+<span class="fc" id="L787">            at = ((RowAtom)formula.root).getLastAtom();</span>
+<span class="pc bpc" id="L788" title="1 of 2 branches missed.">        } else if (formula.root == null) {</span>
+<span class="nc" id="L789">            at = new PhantomAtom(new CharAtom('M', &quot;mathnormal&quot;), false, true, true);</span>
+        } else {
+<span class="fc" id="L791">            at = formula.root;</span>
+<span class="fc" id="L792">            formula.root = null;</span>
+        }
+
+<span class="fc bfc" id="L795" title="All 2 branches covered.">        if (at.getRightType() == TeXConstants.TYPE_BIG_OPERATOR)</span>
+<span class="fc" id="L796">            return new BigOperatorAtom(at, first, second);</span>
+<span class="fc bfc" id="L797" title="All 2 branches covered.">        else if (at instanceof OverUnderDelimiter) {</span>
+<span class="fc bfc" id="L798" title="All 2 branches covered.">            if (((OverUnderDelimiter)at).isOver()) {</span>
+<span class="pc bpc" id="L799" title="1 of 2 branches missed.">                if (second != null) {</span>
+<span class="fc" id="L800">                    ((OverUnderDelimiter)at).addScript(second);</span>
+<span class="fc" id="L801">                    return new ScriptsAtom(at, first, null);</span>
+                }
+<span class="pc bpc" id="L803" title="1 of 2 branches missed.">            } else if (first != null) {</span>
+<span class="fc" id="L804">                ((OverUnderDelimiter)at).addScript(first);</span>
+<span class="fc" id="L805">                return new ScriptsAtom(at, null, second);</span>
+            }
+        }
+
+<span class="fc" id="L809">        return new ScriptsAtom(at, first, second);</span>
+    }
+
+    /** Get the contents between two delimiters
+     * @param openclose the opening and closing character (such $)
+     * @return the enclosed contents
+     * @throws ParseException if the contents are badly enclosed
+     */
+    public String getDollarGroup(char openclose) throws ParseException {
+<span class="nc" id="L818">        int spos = pos;</span>
+        char ch;
+
+        do {
+<span class="nc" id="L822">            ch = parseString.charAt(pos++);</span>
+<span class="nc bnc" id="L823" title="All 2 branches missed.">            if (ch == ESCAPE) {</span>
+<span class="nc" id="L824">                pos++;</span>
+            }
+<span class="nc bnc" id="L826" title="All 4 branches missed.">        } while (pos &lt; len &amp;&amp; ch != openclose);</span>
+
+<span class="nc bnc" id="L828" title="All 2 branches missed.">        if (ch == openclose) {</span>
+<span class="nc" id="L829">            return parseString.substring(spos, pos - 1);</span>
+        } else {
+<span class="nc" id="L831">            return parseString.substring(spos, pos);</span>
+        }
+    }
+
+    /** Get the contents between two delimiters
+     * @param open the opening character
+     * @param close the closing character
+     * @return the enclosed contents
+     * @throws ParseException if the contents are badly enclosed
+     */
+    public String getGroup(char open, char close) throws ParseException {
+<span class="fc bfc" id="L842" title="All 2 branches covered.">        if (pos == len)</span>
+<span class="fc" id="L843">            return null;</span>
+
+        int group, spos;
+<span class="fc" id="L846">        char ch = parseString.charAt(pos);</span>
+
+<span class="pc bpc" id="L848" title="1 of 4 branches missed.">        if (pos &lt; len &amp;&amp; ch == open) {</span>
+<span class="fc" id="L849">            group = 1;</span>
+<span class="fc" id="L850">            spos = pos;</span>
+<span class="fc bfc" id="L851" title="All 4 branches covered.">            while (pos &lt; len - 1 &amp;&amp; group != 0) {</span>
+<span class="fc" id="L852">                pos++;</span>
+<span class="fc" id="L853">                ch = parseString.charAt(pos);</span>
+<span class="fc bfc" id="L854" title="All 2 branches covered.">                if (ch == open)</span>
+<span class="fc" id="L855">                    group++;</span>
+<span class="fc bfc" id="L856" title="All 2 branches covered.">                else if (ch == close)</span>
+<span class="fc" id="L857">                    group--;</span>
+<span class="pc bpc" id="L858" title="1 of 4 branches missed.">                else if (ch == ESCAPE &amp;&amp; pos != len - 1)</span>
+<span class="fc" id="L859">                    pos++;</span>
+            }
+
+<span class="fc" id="L862">            pos++;</span>
+
+<span class="fc bfc" id="L864" title="All 2 branches covered.">            if (group != 0) {</span>
+<span class="fc" id="L865">                return parseString.substring(spos + 1, pos);</span>
+            }
+
+<span class="fc" id="L868">            return parseString.substring(spos + 1, pos - 1);</span>
+        } else {
+<span class="fc" id="L870">            throw new ParseException(&quot;missing '&quot; + open + &quot;'!&quot;);</span>
+        }
+    }
+
+    /** Get the contents between two strings as in \begin{foo}...\end{foo}
+     * @param open the opening string
+     * @param close the closing string
+     * @return the enclosed contents
+     * @throws ParseException if the contents are badly enclosed
+     */
+    public String getGroup(String open, String close) throws ParseException {
+<span class="fc" id="L881">        int group = 1;</span>
+<span class="fc" id="L882">        int ol = open.length(), cl = close.length();</span>
+<span class="fc" id="L883">        boolean lastO = isValidCharacterInCommand(open.charAt(ol - 1));</span>
+<span class="fc" id="L884">        boolean lastC = isValidCharacterInCommand(close.charAt(cl - 1));</span>
+<span class="fc" id="L885">        int oc = 0, cc = 0;</span>
+<span class="fc" id="L886">        int startC = 0;</span>
+<span class="fc" id="L887">        char prev = '\0';</span>
+<span class="fc" id="L888">        StringBuffer buf = new StringBuffer();</span>
+
+<span class="fc bfc" id="L890" title="All 4 branches covered.">        while (pos &lt; len &amp;&amp; group != 0) {</span>
+<span class="fc" id="L891">            char c = parseString.charAt(pos);</span>
+            char c1;
+
+<span class="fc bfc" id="L894" title="All 4 branches covered.">            if (prev != ESCAPE &amp;&amp; c == ' ') {//Trick to handle case where close == &quot;\end   {foo}&quot;</span>
+<span class="pc bpc" id="L895" title="1 of 4 branches missed.">                while (pos &lt; len &amp;&amp; parseString.charAt(pos++) == ' ') {</span>
+<span class="fc" id="L896">                    buf.append(' ');</span>
+                }
+<span class="fc" id="L898">                c = parseString.charAt(--pos);</span>
+<span class="fc bfc" id="L899" title="All 4 branches covered.">                if (isValidCharacterInCommand(prev) &amp;&amp; isValidCharacterInCommand(c)) {</span>
+<span class="fc" id="L900">                    oc = cc = 0;</span>
+                }
+            }
+
+<span class="fc bfc" id="L904" title="All 2 branches covered.">            if (c == open.charAt(oc))</span>
+<span class="fc" id="L905">                oc++;</span>
+            else
+<span class="fc" id="L907">                oc = 0;</span>
+
+<span class="fc bfc" id="L909" title="All 2 branches covered.">            if (c == close.charAt(cc)) {</span>
+<span class="fc bfc" id="L910" title="All 2 branches covered.">                if (cc == 0) {</span>
+<span class="fc" id="L911">                    startC = pos;</span>
+                }
+<span class="fc" id="L913">                cc++;</span>
+            } else
+<span class="fc" id="L915">                cc = 0;</span>
+
+<span class="fc bfc" id="L917" title="All 2 branches covered.">            if (pos + 1 &lt; len) {</span>
+<span class="fc" id="L918">                c1 = parseString.charAt(pos + 1);</span>
+
+<span class="fc bfc" id="L920" title="All 2 branches covered.">                if (oc == ol) {</span>
+<span class="pc bpc" id="L921" title="2 of 4 branches missed.">                    if (!lastO || !isValidCharacterInCommand(c1)) {</span>
+<span class="fc" id="L922">                        group++;</span>
+                    }
+<span class="fc" id="L924">                    oc = 0;</span>
+                }
+
+<span class="fc bfc" id="L927" title="All 2 branches covered.">                if (cc == cl) {</span>
+<span class="pc bpc" id="L928" title="1 of 4 branches missed.">                    if (!lastC || !isValidCharacterInCommand(c1)) {</span>
+<span class="fc" id="L929">                        group--;</span>
+                    }
+<span class="fc" id="L931">                    cc = 0;</span>
+                }
+            } else {
+<span class="pc bpc" id="L934" title="1 of 2 branches missed.">                if (oc == ol) {</span>
+<span class="nc" id="L935">                    group++;</span>
+<span class="nc" id="L936">                    oc = 0;</span>
+                }
+<span class="fc bfc" id="L938" title="All 2 branches covered.">                if (cc == cl) {</span>
+<span class="fc" id="L939">                    group--;</span>
+<span class="fc" id="L940">                    cc = 0;</span>
+                }
+            }
+
+<span class="fc" id="L944">            prev = c;</span>
+<span class="fc" id="L945">            buf.append(c);</span>
+<span class="fc" id="L946">            pos++;</span>
+<span class="fc" id="L947">        }</span>
+
+<span class="fc bfc" id="L949" title="All 2 branches covered.">        if (group != 0) {</span>
+<span class="pc bpc" id="L950" title="1 of 2 branches missed.">            if (isPartial) {</span>
+<span class="nc" id="L951">                return buf.toString();</span>
+            }
+<span class="fc" id="L953">            throw new ParseException(&quot;The token &quot; + open + &quot; must be closed by &quot; + close);</span>
+        }
+
+<span class="fc" id="L956">        return buf.substring(0, buf.length() - pos + startC);</span>
+    }
+
+    /** Get the argument of a command in his atomic format
+     * @return the corresponding atom
+     * @throws ParseException if the argument is incorrect
+     */
+    public Atom getArgument() throws ParseException {
+<span class="fc" id="L964">        skipWhiteSpace();</span>
+        char ch;
+<span class="pc bpc" id="L966" title="1 of 2 branches missed.">        if (pos &lt; len) {</span>
+<span class="fc" id="L967">            ch = parseString.charAt(pos);</span>
+        } else {
+<span class="nc" id="L969">            return new EmptyAtom();</span>
+        }
+<span class="fc bfc" id="L971" title="All 2 branches covered.">        if (ch == L_GROUP) {</span>
+<span class="fc" id="L972">            TeXFormula tf = new TeXFormula();</span>
+<span class="fc" id="L973">            TeXFormula sformula = this.formula;</span>
+<span class="fc" id="L974">            this.formula = tf;</span>
+<span class="fc" id="L975">            pos++;</span>
+<span class="fc" id="L976">            group++;</span>
+<span class="fc" id="L977">            parse();</span>
+<span class="fc" id="L978">            this.formula = sformula;</span>
+<span class="fc bfc" id="L979" title="All 2 branches covered.">            if (this.formula.root == null) {</span>
+<span class="fc" id="L980">                RowAtom at = new RowAtom();</span>
+<span class="fc" id="L981">                at.add(tf.root);</span>
+<span class="fc" id="L982">                return at;</span>
+            }
+<span class="fc" id="L984">            return tf.root;</span>
+        }
+
+<span class="fc bfc" id="L987" title="All 2 branches covered.">        if (ch == ESCAPE) {</span>
+<span class="fc" id="L988">            Atom at = processEscape();</span>
+<span class="pc bpc" id="L989" title="1 of 2 branches missed.">            if (insertion) {</span>
+<span class="nc" id="L990">                insertion = false;</span>
+<span class="nc" id="L991">                return getArgument();</span>
+            }
+<span class="fc" id="L993">            return at;</span>
+        }
+
+<span class="fc" id="L996">        Atom at = convertCharacter(ch, true);</span>
+<span class="fc" id="L997">        pos++;</span>
+<span class="fc" id="L998">        return at;</span>
+    }
+
+    public String getOverArgument() throws ParseException {
+<span class="pc bpc" id="L1002" title="1 of 2 branches missed.">        if (pos == len)</span>
+<span class="nc" id="L1003">            return null;</span>
+
+<span class="fc" id="L1005">        int ogroup = 1, spos;</span>
+<span class="fc" id="L1006">        char ch = '\0';</span>
+
+<span class="fc" id="L1008">        spos = pos;</span>
+<span class="fc bfc" id="L1009" title="All 4 branches covered.">        while (pos &lt; len &amp;&amp; ogroup != 0) {</span>
+<span class="fc" id="L1010">            ch = parseString.charAt(pos);</span>
+<span class="pc bpc" id="L1011" title="2 of 5 branches missed.">            switch (ch) {</span>
+            case L_GROUP :
+<span class="nc" id="L1013">                ogroup++;</span>
+<span class="nc" id="L1014">                break;</span>
+            case '&amp;' :
+                /* if a &amp; is encountered at the same level as \over
+                   we must break the argument */
+<span class="nc bnc" id="L1018" title="All 2 branches missed.">                if (ogroup == 1) {</span>
+<span class="nc" id="L1019">                    ogroup--;</span>
+                }
+                break;
+            case R_GROUP :
+<span class="fc" id="L1023">                ogroup--;</span>
+<span class="fc" id="L1024">                break;</span>
+            case ESCAPE :
+<span class="fc" id="L1026">                pos++;</span>
+                /* if a \\ or a \cr is encountered at the same level as \over
+                   we must break the argument */
+<span class="pc bpc" id="L1029" title="4 of 6 branches missed.">                if (pos &lt; len &amp;&amp; parseString.charAt(pos) == '\\' &amp;&amp; ogroup == 1) {</span>
+<span class="nc" id="L1030">                    ogroup--;</span>
+<span class="nc" id="L1031">                    pos--;</span>
+<span class="pc bpc" id="L1032" title="6 of 8 branches missed.">                } else if (pos &lt; len - 1 &amp;&amp; parseString.charAt(pos) == 'c' &amp;&amp; parseString.charAt(pos + 1) == 'r' &amp;&amp; ogroup == 1) {</span>
+<span class="nc" id="L1033">                    ogroup--;</span>
+<span class="nc" id="L1034">                    pos--;</span>
+                }
+                break;
+            }
+<span class="fc" id="L1038">            pos++;</span>
+        }
+
+<span class="pc bpc" id="L1041" title="1 of 2 branches missed.">        if (ogroup &gt;= 2)</span>
+            // end of string reached, but not processed properly
+<span class="nc" id="L1043">            throw new ParseException(&quot;Illegal end,  missing '}' !&quot;);</span>
+
+        String str;
+<span class="fc bfc" id="L1046" title="All 2 branches covered.">        if (ogroup == 0) {</span>
+<span class="fc" id="L1047">            str = parseString.substring(spos, pos - 1);</span>
+        } else {
+<span class="fc" id="L1049">            str = parseString.substring(spos, pos);</span>
+<span class="fc" id="L1050">            ch = '\0';</span>
+        }
+
+<span class="pc bpc" id="L1053" title="2 of 6 branches missed.">        if (ch == '&amp;' || ch == '\\' || ch == R_GROUP)</span>
+<span class="fc" id="L1054">            pos--;</span>
+
+<span class="fc" id="L1056">        return str;</span>
+    }
+
+    public float[] getLength() throws ParseException {
+<span class="nc bnc" id="L1060" title="All 2 branches missed.">        if (pos == len)</span>
+<span class="nc" id="L1061">            return null;</span>
+
+        int spos;
+<span class="nc" id="L1064">        char ch = '\0';</span>
+
+<span class="nc" id="L1066">        skipWhiteSpace();</span>
+<span class="nc" id="L1067">        spos = pos;</span>
+<span class="nc bnc" id="L1068" title="All 4 branches missed.">        while (pos &lt; len &amp;&amp; ch != ' ') {</span>
+<span class="nc" id="L1069">            ch = parseString.charAt(pos++);</span>
+        }
+<span class="nc" id="L1071">        skipWhiteSpace();</span>
+
+<span class="nc" id="L1073">        return SpaceAtom.getLength(parseString.substring(spos, pos - 1));</span>
+    }
+
+    /** Convert a character in the corresponding atom in using the file TeXFormulaSettings.xml for non-alphanumeric characters
+     * @param c the character to be converted
+     * @return the corresponding atom
+     * @throws ParseException if the character is unknown
+     */
+    public Atom convertCharacter(char c, boolean oneChar) throws ParseException {
+<span class="fc bfc" id="L1082" title="All 2 branches covered.">        if (ignoreWhiteSpace) {// The Unicode Greek letters in math mode are not drawn with the Greek font</span>
+<span class="fc bfc" id="L1083" title="All 4 branches covered.">            if (c &gt;= 945 &amp;&amp; c &lt;= 969) {</span>
+<span class="fc" id="L1084">                return SymbolAtom.get(TeXFormula.symbolMappings[c]);</span>
+<span class="fc bfc" id="L1085" title="All 4 branches covered.">            } else if (c &gt;= 913 &amp;&amp; c &lt;= 937) {</span>
+<span class="fc" id="L1086">                return new TeXFormula(TeXFormula.symbolFormulaMappings[c]).root;</span>
+            }
+        }
+
+<span class="fc" id="L1090">        c = convertToRomanNumber(c);</span>
+<span class="fc bfc" id="L1091" title="All 12 branches covered.">        if (((c &lt; '0' || c &gt; '9') &amp;&amp; (c &lt; 'a' || c &gt; 'z') &amp;&amp; (c &lt; 'A' || c &gt; 'Z'))) {</span>
+<span class="fc" id="L1092">            TeXUnicodeBlock block = TeXUnicodeBlock.of(c);</span>
+<span class="pc bpc" id="L1093" title="1 of 4 branches missed.">            if (!isLoading &amp;&amp; !DefaultTeXFont.loadedAlphabets.contains(block)) {</span>
+<span class="fc" id="L1094">                DefaultTeXFont.addAlphabet(DefaultTeXFont.registeredAlphabets.get(block));</span>
+            }
+
+<span class="fc" id="L1097">            String symbolName = TeXFormula.symbolMappings[c];</span>
+<span class="pc bpc" id="L1098" title="1 of 6 branches missed.">            if (symbolName == null &amp;&amp; (TeXFormula.symbolFormulaMappings == null || TeXFormula.symbolFormulaMappings[c] == null)) {</span>
+<span class="fc bfc" id="L1099" title="All 2 branches covered.">                if (Character.isISOControl(c)) {</span>
+<span class="pc bpc" id="L1100" title="1 of 2 branches missed.">                    if (!isPartial) {</span>
+<span class="fc" id="L1101">                        throw new ParseException(&quot;Unknown character : '&quot;</span>
+<span class="fc" id="L1102">                                                 + Character.toString(c) + &quot;' (or &quot; + ((int) c) + &quot;)&quot;);</span>
+                    } else {
+<span class="nc" id="L1104">                        return new ColorAtom(new RomanAtom(new TeXFormula(&quot;\\text{(Unknown char &quot; + ((int) c) + &quot;)}&quot;).root), null, TeXColor.RED);</span>
+                    }
+                }
+                // No TeX glyph (CJK, ...): the text is measured and drawn by the host, see TeXTextMeasurer
+<span class="pc bpc" id="L1108" title="1 of 2 branches missed.">                if (oneChar) {</span>
+<span class="nc" id="L1109">                    return new ForeignTextAtom(Character.toString(c));</span>
+                }
+<span class="fc" id="L1111">                final int start = pos;</span>
+<span class="fc" id="L1112">                int end = pos;</span>
+<span class="fc bfc" id="L1113" title="All 4 branches covered.">                while (end + 1 &lt; len &amp;&amp; isForeign(parseString.charAt(end + 1))) {</span>
+<span class="fc" id="L1114">                    end++;</span>
+                }
+<span class="fc" id="L1116">                pos = end;</span>
+<span class="fc" id="L1117">                return new ForeignTextAtom(parseString.substring(start, end + 1));</span>
+            } else {
+<span class="fc bfc" id="L1119" title="All 2 branches covered.">                if (!ignoreWhiteSpace) {// we are in text mode</span>
+<span class="fc bfc" id="L1120" title="All 2 branches covered.">                    if (TeXFormula.symbolTextMappings[c] != null) {</span>
+<span class="fc" id="L1121">                        return SymbolAtom.get(TeXFormula.symbolTextMappings[c]).setUnicode(c);</span>
+                    }
+                }
+<span class="pc bpc" id="L1124" title="1 of 4 branches missed.">                if (TeXFormula.symbolFormulaMappings != null &amp;&amp; TeXFormula.symbolFormulaMappings[c] != null) {</span>
+<span class="fc" id="L1125">                    return new TeXFormula(TeXFormula.symbolFormulaMappings[c]).root;</span>
+                }
+
+                try {
+<span class="fc" id="L1129">                    return SymbolAtom.get(symbolName);</span>
+<span class="nc" id="L1130">                } catch (SymbolNotFoundException e) {</span>
+<span class="nc" id="L1131">                    throw new ParseException(&quot;The character '&quot;</span>
+<span class="nc" id="L1132">                                             + Character.toString(c)</span>
+                                             + &quot;' was mapped to an unknown symbol with the name '&quot;
+                                             + symbolName + &quot;'!&quot;, e);
+                }
+            }
+        } else {
+            // alphanumeric character
+<span class="fc" id="L1139">            return new CharAtom(c, formula.textStyle, ignoreWhiteSpace);</span>
+        }
+    }
+
+    /**
+     * A character that goes on a run of text without TeX glyph: not ASCII, no
+     * symbol, no control, and not a letter of an alphabet that has fonts (the
+     * Greek and Cyrillic ones are loaded when their first character is parsed).
+     */
+    private boolean isForeign(char c) {
+<span class="pc bpc" id="L1149" title="1 of 4 branches missed.">        if (c &lt; 0x80 || Character.isISOControl(c))</span>
+<span class="fc" id="L1150">            return false;</span>
+<span class="pc bpc" id="L1151" title="2 of 4 branches missed.">        if (TeXFormula.symbolMappings[c] != null || TeXFormula.symbolFormulaMappings[c] != null)</span>
+<span class="nc" id="L1152">            return false;</span>
+<span class="pc bpc" id="L1153" title="1 of 2 branches missed.">        return DefaultTeXFont.registeredAlphabets.get(TeXUnicodeBlock.of(c)) == null;</span>
+    }
+
+    private String getCommand() {
+<span class="fc" id="L1157">        int spos = ++pos;</span>
+<span class="fc" id="L1158">        char ch = '\0';</span>
+
+<span class="fc bfc" id="L1160" title="All 2 branches covered.">        while (pos &lt; len) {</span>
+<span class="fc" id="L1161">            ch = parseString.charAt(pos);</span>
+<span class="fc bfc" id="L1162" title="All 12 branches covered.">            if ((ch &lt; 'a' || ch &gt; 'z') &amp;&amp; (ch &lt; 'A' || ch &gt; 'Z') &amp;&amp; (atIsLetter == 0 || ch != '@'))</span>
+<span class="fc" id="L1163">                break;</span>
+
+<span class="fc" id="L1165">            pos++;</span>
+        }
+
+<span class="pc bpc" id="L1168" title="1 of 2 branches missed.">        if (ch == '\0')</span>
+<span class="nc" id="L1169">            return &quot;&quot;;</span>
+
+<span class="fc bfc" id="L1171" title="All 2 branches covered.">        if (pos == spos) {</span>
+<span class="fc" id="L1172">            pos++;</span>
+        }
+
+<span class="fc" id="L1175">        String com = parseString.substring(spos, pos);</span>
+<span class="pc bpc" id="L1176" title="5 of 6 branches missed.">        if (&quot;cr&quot;.equals(com) &amp;&amp; pos &lt; len &amp;&amp; parseString.charAt(pos) == ' ') {</span>
+<span class="nc" id="L1177">            pos++;</span>
+        }
+
+<span class="fc" id="L1180">        return com;</span>
+    }
+
+    private Atom processEscape() throws ParseException {
+<span class="fc" id="L1184">        spos = pos;</span>
+<span class="fc" id="L1185">        String command = getCommand();</span>
+
+<span class="pc bpc" id="L1187" title="1 of 2 branches missed.">        if (command.length() == 0) {</span>
+<span class="nc" id="L1188">            return new EmptyAtom();</span>
+        }
+
+<span class="fc bfc" id="L1191" title="All 2 branches covered.">        if (MacroInfo.Commands.get(command) != null)</span>
+<span class="fc" id="L1192">            return processCommands(command);</span>
+
+        try {
+<span class="fc" id="L1195">            return TeXFormula.get(command).root;</span>
+<span class="fc" id="L1196">        } catch (FormulaNotFoundException e) {</span>
+            try {
+<span class="fc" id="L1198">                return SymbolAtom.get(command);</span>
+<span class="fc" id="L1199">            } catch (SymbolNotFoundException e1) { }</span>
+        }
+
+        // not a valid command or symbol or predefined TeXFormula found
+<span class="pc bpc" id="L1203" title="1 of 2 branches missed.">        if (!isPartial) {</span>
+<span class="fc" id="L1204">            throw new ParseException(&quot;Unknown symbol or command or predefined TeXFormula: '&quot; + command + &quot;'&quot;);</span>
+        } else {
+<span class="nc" id="L1206">            return new ColorAtom(new RomanAtom(new TeXFormula(&quot;\\backslash &quot; + command).root), null, TeXColor.RED);</span>
+        }
+    }
+
+    private void insert(int beg, int end, String formula) {
+<span class="nc" id="L1211">        parseString.replace(beg, end, formula);</span>
+<span class="nc" id="L1212">        len = parseString.length();</span>
+<span class="nc" id="L1213">        pos = beg;</span>
+<span class="nc" id="L1214">        insertion = true;</span>
+<span class="nc" id="L1215">    }</span>
+
+    /** Get the arguments ant the options of a command
+     * @param nbArgs the number of arguments of the command
+     * @param opts must be 1 if the options are found before the first argument and must be 2 if they must be found before the second argument
+     * @return an array containing arguments and at the end the options are put
+     */
+    /* Should be improved */
+    public String[] getOptsArgs(int nbArgs, int opts) {
+        //A maximum of 10 options can be passed to a command
+<span class="fc" id="L1225">        String[] args = new String[nbArgs + 10 + 1];</span>
+<span class="fc bfc" id="L1226" title="All 2 branches covered.">        if (nbArgs != 0) {</span>
+
+            //We get the options just after the command name
+<span class="fc bfc" id="L1229" title="All 2 branches covered.">            if (opts == 1) {</span>
+<span class="fc" id="L1230">                int j = nbArgs + 1;</span>
+                try {
+<span class="pc bpc" id="L1232" title="1 of 2 branches missed.">                    for (; j &lt; nbArgs + 11; j++) {</span>
+<span class="fc" id="L1233">                        skipWhiteSpace();</span>
+<span class="fc" id="L1234">                        args[j] = getGroup(L_BRACK, R_BRACK);</span>
+                    }
+<span class="fc" id="L1236">                } catch (ParseException e) {</span>
+<span class="fc" id="L1237">                    args[j] = null;</span>
+<span class="nc" id="L1238">                }</span>
+            }
+
+            //We get the first argument
+<span class="fc" id="L1242">            skipWhiteSpace();</span>
+            try {
+<span class="fc" id="L1244">                args[1] = getGroup(L_GROUP, R_GROUP);</span>
+<span class="fc" id="L1245">            } catch (ParseException e) {</span>
+<span class="fc bfc" id="L1246" title="All 2 branches covered.">                if (parseString.charAt(pos) != '\\') {</span>
+<span class="fc" id="L1247">                    args[1] = &quot;&quot; + parseString.charAt(pos);</span>
+<span class="fc" id="L1248">                    pos++;</span>
+                } else
+<span class="fc" id="L1250">                    args[1] = getCommandWithArgs(getCommand());</span>
+<span class="fc" id="L1251">            }</span>
+
+            //We get the options after the first argument
+<span class="fc bfc" id="L1254" title="All 2 branches covered.">            if (opts == 2) {</span>
+<span class="fc" id="L1255">                int j = nbArgs + 1;</span>
+                try {
+<span class="pc bpc" id="L1257" title="1 of 2 branches missed.">                    for (; j &lt; nbArgs + 11; j++) {</span>
+<span class="fc" id="L1258">                        skipWhiteSpace();</span>
+<span class="fc" id="L1259">                        args[j] = getGroup(L_BRACK, R_BRACK);</span>
+                    }
+<span class="fc" id="L1261">                } catch (ParseException e) {</span>
+<span class="fc" id="L1262">                    args[j] = null;</span>
+<span class="nc" id="L1263">                }</span>
+            }
+
+            //We get the next arguments
+<span class="fc bfc" id="L1267" title="All 2 branches covered.">            for (int i = 2; i &lt;= nbArgs; i++) {</span>
+<span class="fc" id="L1268">                skipWhiteSpace();</span>
+                try {
+<span class="fc" id="L1270">                    args[i] = getGroup(L_GROUP, R_GROUP);</span>
+<span class="fc" id="L1271">                } catch (ParseException e) {</span>
+<span class="pc bpc" id="L1272" title="1 of 2 branches missed.">                    if (parseString.charAt(pos) != '\\') {</span>
+<span class="nc" id="L1273">                        args[i] = &quot;&quot; + parseString.charAt(pos);</span>
+<span class="nc" id="L1274">                        pos++;</span>
+                    } else {
+<span class="fc" id="L1276">                        args[i] = getCommandWithArgs(getCommand());</span>
+                    }
+<span class="fc" id="L1278">                }</span>
+            }
+
+<span class="fc bfc" id="L1281" title="All 2 branches covered.">            if (ignoreWhiteSpace) {</span>
+<span class="fc" id="L1282">                skipWhiteSpace();</span>
+            }
+        }
+<span class="fc" id="L1285">        return args;</span>
+    }
+
+    /**
+     * return a string with command and options and args
+     * @param command name of command
+     * @return
+     * @author Juan Enrique Escobar Robles
+     */
+    private String getCommandWithArgs(String command) {
+<span class="pc bpc" id="L1295" title="1 of 2 branches missed.">        if (command.equals(&quot;left&quot;)) {</span>
+<span class="nc" id="L1296">            return getGroup(&quot;\\left&quot;, &quot;\\right&quot;);</span>
+        }
+
+<span class="fc" id="L1299">        MacroInfo mac = MacroInfo.Commands.get(command);</span>
+<span class="fc bfc" id="L1300" title="All 2 branches covered.">        if (mac != null) {</span>
+<span class="fc" id="L1301">            int mac_opts = 0;</span>
+<span class="pc bpc" id="L1302" title="1 of 2 branches missed.">            if (mac.hasOptions) {</span>
+<span class="nc" id="L1303">                mac_opts = mac.posOpts;</span>
+            }
+
+<span class="fc" id="L1306">            String[] mac_args = getOptsArgs(mac.nbArgs, mac_opts);</span>
+<span class="fc" id="L1307">            StringBuffer mac_arg = new StringBuffer(&quot;\\&quot;);</span>
+<span class="fc" id="L1308">            mac_arg.append(command);</span>
+<span class="pc bpc" id="L1309" title="1 of 2 branches missed.">            for (int j = 0; j &lt; mac.posOpts; j++) {</span>
+<span class="nc" id="L1310">                String arg_t = mac_args[mac.nbArgs + j + 1];</span>
+<span class="nc bnc" id="L1311" title="All 2 branches missed.">                if (arg_t != null) {</span>
+<span class="nc" id="L1312">                    mac_arg.append(&quot;[&quot;).append(arg_t).append(&quot;]&quot;);</span>
+                }
+            }
+
+<span class="pc bpc" id="L1316" title="1 of 2 branches missed.">            for (int j = 0; j &lt; mac.nbArgs; j++) {</span>
+<span class="nc" id="L1317">                String arg_t = mac_args[j + 1];</span>
+<span class="nc bnc" id="L1318" title="All 2 branches missed.">                if (arg_t != null) {</span>
+<span class="nc" id="L1319">                    mac_arg.append(&quot;{&quot;).append(arg_t).append(&quot;}&quot;);</span>
+                }
+            }
+
+<span class="fc" id="L1323">            return mac_arg.toString();</span>
+        }
+
+<span class="fc" id="L1326">        return &quot;\\&quot; + command;</span>
+    }
+
+    /**
+     * Processes the given TeX command (by parsing following command arguments
+     * in the parse string).
+     */
+    private Atom processCommands(String command) throws ParseException {
+<span class="fc" id="L1334">        MacroInfo mac = MacroInfo.Commands.get(command);</span>
+<span class="fc" id="L1335">        int opts = 0;</span>
+<span class="fc bfc" id="L1336" title="All 2 branches covered.">        if (mac.hasOptions)</span>
+<span class="fc" id="L1337">            opts = mac.posOpts;</span>
+
+<span class="fc" id="L1339">        String[] args = getOptsArgs(mac.nbArgs, opts);</span>
+<span class="fc" id="L1340">        args[0] = command;</span>
+
+<span class="pc bpc" id="L1342" title="1 of 2 branches missed.">        if (NewCommandMacro.isMacro(command)) {</span>
+<span class="nc" id="L1343">            String ret = (String) mac.invoke(this, args);</span>
+<span class="nc" id="L1344">            insert(spos, pos, ret);</span>
+<span class="nc" id="L1345">            return null;</span>
+        }
+
+<span class="fc" id="L1348">        return (Atom) mac.invoke(this, args);</span>
+    }
+
+    /** Test the validity of the name of a command. It must contains only alpha characters and eventually a @ if makeAtletter activated
+     * @param com the command's name
+     * @return the validity of the name
+     */
+    public final boolean isValidName(String com) {
+<span class="pc bpc" id="L1356" title="2 of 4 branches missed.">        if (com == null || &quot;&quot;.equals(com)) {</span>
+<span class="nc" id="L1357">            return false;</span>
+        }
+
+<span class="fc" id="L1360">        char c = '\0';</span>
+<span class="pc bpc" id="L1361" title="1 of 2 branches missed.">        if (com.charAt(0) == '\\') {</span>
+<span class="fc" id="L1362">            int pos = 1;</span>
+<span class="fc" id="L1363">            int len = com.length();</span>
+<span class="fc bfc" id="L1364" title="All 2 branches covered.">            while (pos &lt; len) {</span>
+<span class="fc" id="L1365">                c = com.charAt(pos);</span>
+<span class="pc bpc" id="L1366" title="5 of 6 branches missed.">                if (!Character.isLetter(c) &amp;&amp; (atIsLetter == 0 || c != '@'))</span>
+<span class="nc" id="L1367">                    break;</span>
+<span class="fc" id="L1368">                pos++;</span>
+            }
+<span class="fc" id="L1370">        } else {</span>
+<span class="nc" id="L1371">            return false;</span>
+        }
+
+<span class="fc" id="L1374">        return Character.isLetter(c);</span>
+    }
+
+    /** Test the validity of a character in a command. It must contains only alpha characters and eventually a @ if makeAtletter activated
+     * @param ch the character
+     * @return the validity of the character
+     */
+    public final boolean isValidCharacterInCommand(char ch) {
+<span class="pc bpc" id="L1382" title="1 of 6 branches missed.">        return Character.isLetter(ch) || (atIsLetter != 0 &amp;&amp; ch == '@');</span>
+    }
+
+    private final void skipWhiteSpace() {
+        char c;
+<span class="fc bfc" id="L1387" title="All 2 branches covered.">        while (pos &lt; len) {</span>
+<span class="fc" id="L1388">            c = parseString.charAt(pos);</span>
+<span class="pc bpc" id="L1389" title="3 of 8 branches missed.">            if (c != ' ' &amp;&amp; c != '\t' &amp;&amp; c != '\n' &amp;&amp; c != '\r')</span>
+<span class="fc" id="L1390">                break;</span>
+<span class="pc bpc" id="L1391" title="1 of 2 branches missed.">            if (c == '\n') {</span>
+<span class="nc" id="L1392">                line++;</span>
+<span class="nc" id="L1393">                col = pos;</span>
+            }
+<span class="fc" id="L1395">            pos++;</span>
+        }
+<span class="fc" id="L1397">    }</span>
+
+    /**
+     * The aim of this method is to convert foreign number into roman ones !
+     */
+    private static char convertToRomanNumber(char c) {
+<span class="pc bpc" id="L1403" title="1 of 2 branches missed.">        if (c == 0x66b) {//Arabic dot</span>
+<span class="nc" id="L1404">            return '.';</span>
+<span class="pc bpc" id="L1405" title="1 of 4 branches missed.">        } else if (0x660 &lt;= c &amp;&amp; c &lt;= 0x669) {//Arabic</span>
+<span class="nc" id="L1406">            return (char) (c - (char) 0x630);</span>
+<span class="pc bpc" id="L1407" title="1 of 4 branches missed.">        } else if (0x6f0 &lt;= c &amp;&amp; c &lt;= 0x6f9) {//Arabic</span>
+<span class="nc" id="L1408">            return (char) (c - (char) 0x6c0);</span>
+<span class="pc bpc" id="L1409" title="1 of 4 branches missed.">        } else if (0x966 &lt;= c &amp;&amp; c &lt;= 0x96f) {//Devanagari</span>
+<span class="nc" id="L1410">            return (char) (c - (char) 0x936);</span>
+<span class="pc bpc" id="L1411" title="1 of 4 branches missed.">        } else if (0x9e6 &lt;= c &amp;&amp; c &lt;= 0x9ef) {//Bengali</span>
+<span class="nc" id="L1412">            return (char) (c - (char) 0x9b6);</span>
+<span class="pc bpc" id="L1413" title="1 of 4 branches missed.">        } else if (0xa66 &lt;= c &amp;&amp; c &lt;= 0xa6f) {//Gurmukhi</span>
+<span class="nc" id="L1414">            return (char) (c - (char) 0xa36);</span>
+<span class="pc bpc" id="L1415" title="1 of 4 branches missed.">        } else if (0xae6 &lt;= c &amp;&amp; c &lt;= 0xaef) {//Gujarati</span>
+<span class="nc" id="L1416">            return (char) (c - (char) 0xab6);</span>
+<span class="pc bpc" id="L1417" title="1 of 4 branches missed.">        } else if (0xb66 &lt;= c &amp;&amp; c &lt;= 0xb6f) {//Oriya</span>
+<span class="nc" id="L1418">            return (char) (c - (char) 0xb36);</span>
+<span class="pc bpc" id="L1419" title="1 of 4 branches missed.">        } else if (0xc66 &lt;= c &amp;&amp; c &lt;= 0xc6f) {//Telugu</span>
+<span class="nc" id="L1420">            return (char) (c - (char) 0xc36);</span>
+<span class="pc bpc" id="L1421" title="1 of 4 branches missed.">        } else if (0xd66 &lt;= c &amp;&amp; c &lt;= 0xd6f) {//Malayalam</span>
+<span class="nc" id="L1422">            return (char) (c - (char) 0xd36);</span>
+<span class="pc bpc" id="L1423" title="1 of 4 branches missed.">        } else if (0xe50 &lt;= c &amp;&amp; c &lt;= 0xe59) {//Thai</span>
+<span class="nc" id="L1424">            return (char) (c - (char) 0xe20);</span>
+<span class="pc bpc" id="L1425" title="1 of 4 branches missed.">        } else if (0xed0 &lt;= c &amp;&amp; c &lt;= 0xed9) {//Lao</span>
+<span class="nc" id="L1426">            return (char) (c - (char) 0xea0);</span>
+<span class="pc bpc" id="L1427" title="1 of 4 branches missed.">        } else if (0xf20 &lt;= c &amp;&amp; c &lt;= 0xf29) {//Tibetan</span>
+<span class="nc" id="L1428">            return (char) (c - (char) 0xe90);</span>
+<span class="pc bpc" id="L1429" title="1 of 4 branches missed.">        } else if (0x1040 &lt;= c &amp;&amp; c &lt;= 0x1049) {//Myanmar</span>
+<span class="nc" id="L1430">            return (char) (c - (char) 0x1010);</span>
+<span class="pc bpc" id="L1431" title="1 of 4 branches missed.">        } else if (0x17e0 &lt;= c &amp;&amp; c &lt;= 0x17e9) {//Khmer</span>
+<span class="nc" id="L1432">            return (char) (c - (char) 0x17b0);</span>
+<span class="pc bpc" id="L1433" title="1 of 4 branches missed.">        } else if (0x1810 &lt;= c &amp;&amp; c &lt;= 0x1819) {//Mongolian</span>
+<span class="nc" id="L1434">            return (char) (c - (char) 0x17e0);</span>
+<span class="pc bpc" id="L1435" title="1 of 4 branches missed.">        } else if (0x1b50 &lt;= c &amp;&amp; c &lt;= 0x1b59) {//Balinese</span>
+<span class="nc" id="L1436">            return (char) (c - (char) 0x1b20);</span>
+<span class="pc bpc" id="L1437" title="1 of 4 branches missed.">        } else if (0x1bb0 &lt;= c &amp;&amp; c &lt;= 0x1bb9) {//Sundanese</span>
+<span class="nc" id="L1438">            return (char) (c - (char) 0x1b80);</span>
+<span class="pc bpc" id="L1439" title="1 of 4 branches missed.">        } else if (0x1c40 &lt;= c &amp;&amp; c &lt;= 0x1c49) {//Lepcha</span>
+<span class="nc" id="L1440">            return (char) (c - (char) 0x1c10);</span>
+<span class="pc bpc" id="L1441" title="1 of 4 branches missed.">        } else if (0x1c50 &lt;= c &amp;&amp; c &lt;= 0x1c59) {//Ol Chiki</span>
+<span class="nc" id="L1442">            return (char) (c - (char) 0x1c20);</span>
+<span class="pc bpc" id="L1443" title="1 of 4 branches missed.">        } else if (0xa8d0 &lt;= c &amp;&amp; c &lt;= 0xa8d9) {//Saurashtra</span>
+<span class="nc" id="L1444">            return (char) (c - (char) 0xa8a0);</span>
+        }
+
+<span class="fc" id="L1447">        return c;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

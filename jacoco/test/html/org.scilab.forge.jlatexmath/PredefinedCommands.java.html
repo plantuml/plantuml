@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PredefinedCommands.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">org.scilab.forge.jlatexmath</a> &gt; <span class="el_source">PredefinedCommands.java</span></div><h1>PredefinedCommands.java</h1><pre class="source lang-java linenums">/* PredefinedCommands.java
+ * =========================================================================
+ * This file is part of the JLaTeXMath Library - http://forge.scilab.org/jlatexmath
+ *
+ * Copyright (C) 2011 DENIZET Calixte
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * A copy of the GNU General Public License can be found in the file
+ * LICENSE.txt provided with the source distribution of this program (see
+ * the META-INF directory in the source jar). This license can also be
+ * found on the GNU website at http://www.gnu.org/licenses/gpl.html.
+ *
+ * If you did not receive a copy of the GNU General Public License along
+ * with this program, contact the lead developer, or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
+ * Linking this library statically or dynamically with other modules
+ * is making a combined work based on this library. Thus, the terms
+ * and conditions of the GNU General Public License cover the whole
+ * combination.
+ *
+ * As a special exception, the copyright holders of this library give you
+ * permission to link this library with independent modules to produce
+ * an executable, regardless of the license terms of these independent
+ * modules, and to copy and distribute the resulting executable under terms
+ * of your choice, provided that you also meet, for each linked independent
+ * module, the terms and conditions of the license of that module.
+ * An independent module is a module which is not derived from or based
+ * on this library. If you modify this library, you may extend this exception
+ * to your version of the library, but you are not obliged to do so.
+ * If you do not wish to do so, delete this exception statement from your
+ * version.
+ *
+ */
+
+package org.scilab.forge.jlatexmath;
+
+final class PredefinedCommands {
+
+<span class="fc" id="L50">    PredefinedCommands() { }</span>
+
+    static {
+<span class="fc" id="L53">        MacroInfo.Commands.put(&quot;newcommand&quot;, new PredefMacroInfo(0, 2, 2));</span>
+<span class="fc" id="L54">        MacroInfo.Commands.put(&quot;renewcommand&quot;, new PredefMacroInfo(1, 2, 2));</span>
+<span class="fc" id="L55">        MacroInfo.Commands.put(&quot;rule&quot;, new PredefMacroInfo(2, 2, 1));</span>
+<span class="fc" id="L56">        MacroInfo.Commands.put(&quot;hspace&quot;, new PredefMacroInfo(3, 1));</span>
+<span class="fc" id="L57">        MacroInfo.Commands.put(&quot;vspace&quot;, new PredefMacroInfo(4, 1));</span>
+<span class="fc" id="L58">        MacroInfo.Commands.put(&quot;llap&quot;, new PredefMacroInfo(5, 1));</span>
+<span class="fc" id="L59">        MacroInfo.Commands.put(&quot;rlap&quot;, new PredefMacroInfo(6, 1));</span>
+<span class="fc" id="L60">        MacroInfo.Commands.put(&quot;clap&quot;, new PredefMacroInfo(7, 1));</span>
+<span class="fc" id="L61">        MacroInfo.Commands.put(&quot;mathllap&quot;, new PredefMacroInfo(8, 1));</span>
+<span class="fc" id="L62">        MacroInfo.Commands.put(&quot;mathrlap&quot;, new PredefMacroInfo(9, 1));</span>
+<span class="fc" id="L63">        MacroInfo.Commands.put(&quot;mathclap&quot;, new PredefMacroInfo(10, 1));</span>
+<span class="fc" id="L64">        MacroInfo.Commands.put(&quot;cfrac&quot;, new PredefMacroInfo(12, 2, 1));</span>
+<span class="fc" id="L65">        MacroInfo.Commands.put(&quot;frac&quot;, new PredefMacroInfo(13, 2));</span>
+<span class="fc" id="L66">        MacroInfo.Commands.put(&quot;sfrac&quot;, new PredefMacroInfo(14, 2));</span>
+<span class="fc" id="L67">        MacroInfo.Commands.put(&quot;genfrac&quot;, new PredefMacroInfo(15, 6));</span>
+<span class="fc" id="L68">        MacroInfo.Commands.put(&quot;over&quot;, new PredefMacroInfo(16, 0));</span>
+<span class="fc" id="L69">        MacroInfo.Commands.put(&quot;overwithdelims&quot;, new PredefMacroInfo(17, 2));</span>
+<span class="fc" id="L70">        MacroInfo.Commands.put(&quot;atop&quot;, new PredefMacroInfo(18, 0));</span>
+<span class="fc" id="L71">        MacroInfo.Commands.put(&quot;atopwithdelims&quot;, new PredefMacroInfo(19, 2));</span>
+<span class="fc" id="L72">        MacroInfo.Commands.put(&quot;choose&quot;, new PredefMacroInfo(20, 0));</span>
+<span class="fc" id="L73">        MacroInfo.Commands.put(&quot;underscore&quot;, new PredefMacroInfo(21, 0));</span>
+<span class="fc" id="L74">        MacroInfo.Commands.put(&quot;mbox&quot;, new PredefMacroInfo(22, 1));</span>
+<span class="fc" id="L75">        MacroInfo.Commands.put(&quot;text&quot;, new PredefMacroInfo(23, 1));</span>
+<span class="fc" id="L76">        MacroInfo.Commands.put(&quot;intertext&quot;, new PredefMacroInfo(24, 1));</span>
+<span class="fc" id="L77">        MacroInfo.Commands.put(&quot;binom&quot;, new PredefMacroInfo(25, 2));</span>
+<span class="fc" id="L78">        MacroInfo.Commands.put(&quot;mathbf&quot;, new PredefMacroInfo(26, 1));</span>
+<span class="fc" id="L79">        MacroInfo.Commands.put(&quot;bf&quot;, new PredefMacroInfo(27, 0));</span>
+<span class="fc" id="L80">        MacroInfo.Commands.put(&quot;mathbb&quot;, new PredefMacroInfo(28, 1));</span>
+<span class="fc" id="L81">        MacroInfo.Commands.put(&quot;mathcal&quot;, new PredefMacroInfo(29, 1));</span>
+<span class="fc" id="L82">        MacroInfo.Commands.put(&quot;cal&quot;, new PredefMacroInfo(30, 1));</span>
+<span class="fc" id="L83">        MacroInfo.Commands.put(&quot;mathit&quot;, new PredefMacroInfo(31, 1));</span>
+<span class="fc" id="L84">        MacroInfo.Commands.put(&quot;it&quot;, new PredefMacroInfo(32, 0));</span>
+<span class="fc" id="L85">        MacroInfo.Commands.put(&quot;mathrm&quot;, new PredefMacroInfo(33, 1));</span>
+<span class="fc" id="L86">        MacroInfo.Commands.put(&quot;rm&quot;, new PredefMacroInfo(34, 0));</span>
+<span class="fc" id="L87">        MacroInfo.Commands.put(&quot;mathscr&quot;, new PredefMacroInfo(35, 1));</span>
+<span class="fc" id="L88">        MacroInfo.Commands.put(&quot;mathsf&quot;, new PredefMacroInfo(36, 1));</span>
+<span class="fc" id="L89">        MacroInfo.Commands.put(&quot;sf&quot;, new PredefMacroInfo(37, 0));</span>
+<span class="fc" id="L90">        MacroInfo.Commands.put(&quot;mathtt&quot;, new PredefMacroInfo(38, 1));</span>
+<span class="fc" id="L91">        MacroInfo.Commands.put(&quot;tt&quot;, new PredefMacroInfo(39, 0));</span>
+<span class="fc" id="L92">        MacroInfo.Commands.put(&quot;mathfrak&quot;, new PredefMacroInfo(40, 1));</span>
+<span class="fc" id="L93">        MacroInfo.Commands.put(&quot;mathds&quot;, new PredefMacroInfo(41, 1));</span>
+<span class="fc" id="L94">        MacroInfo.Commands.put(&quot;frak&quot;, new PredefMacroInfo(42, 1));</span>
+<span class="fc" id="L95">        MacroInfo.Commands.put(&quot;Bbb&quot;, new PredefMacroInfo(43, 1));</span>
+<span class="fc" id="L96">        MacroInfo.Commands.put(&quot;oldstylenums&quot;, new PredefMacroInfo(44, 1));</span>
+<span class="fc" id="L97">        MacroInfo.Commands.put(&quot;bold&quot;, new PredefMacroInfo(45, 1));</span>
+<span class="fc" id="L98">        MacroInfo.Commands.put(&quot;^&quot;, new PredefMacroInfo(46, 1));</span>
+<span class="fc" id="L99">        MacroInfo.Commands.put(&quot;\'&quot;, new PredefMacroInfo(47, 1));</span>
+<span class="fc" id="L100">        MacroInfo.Commands.put(&quot;\&quot;&quot;, new PredefMacroInfo(48, 1));</span>
+<span class="fc" id="L101">        MacroInfo.Commands.put(&quot;`&quot;, new PredefMacroInfo(49, 1));</span>
+<span class="fc" id="L102">        MacroInfo.Commands.put(&quot;=&quot;, new PredefMacroInfo(50, 1));</span>
+<span class="fc" id="L103">        MacroInfo.Commands.put(&quot;.&quot;, new PredefMacroInfo(51, 1));</span>
+<span class="fc" id="L104">        MacroInfo.Commands.put(&quot;~&quot;, new PredefMacroInfo(52, 1));</span>
+<span class="fc" id="L105">        MacroInfo.Commands.put(&quot;u&quot;, new PredefMacroInfo(53, 1));</span>
+<span class="fc" id="L106">        MacroInfo.Commands.put(&quot;v&quot;, new PredefMacroInfo(54, 1));</span>
+<span class="fc" id="L107">        MacroInfo.Commands.put(&quot;H&quot;, new PredefMacroInfo(55, 1));</span>
+<span class="fc" id="L108">        MacroInfo.Commands.put(&quot;r&quot;, new PredefMacroInfo(56, 1));</span>
+<span class="fc" id="L109">        MacroInfo.Commands.put(&quot;U&quot;, new PredefMacroInfo(57, 1));</span>
+<span class="fc" id="L110">        MacroInfo.Commands.put(&quot;T&quot;, new PredefMacroInfo(58, 1));</span>
+<span class="fc" id="L111">        MacroInfo.Commands.put(&quot;t&quot;, new PredefMacroInfo(59, 1));</span>
+<span class="fc" id="L112">        MacroInfo.Commands.put(&quot;accent&quot;, new PredefMacroInfo(60, 2));</span>
+<span class="fc" id="L113">        MacroInfo.Commands.put(&quot;grkaccent&quot;, new PredefMacroInfo(61, 2));</span>
+<span class="fc" id="L114">        MacroInfo.Commands.put(&quot;hat&quot;, new PredefMacroInfo(62, 1));</span>
+<span class="fc" id="L115">        MacroInfo.Commands.put(&quot;widehat&quot;, new PredefMacroInfo(63, 1));</span>
+<span class="fc" id="L116">        MacroInfo.Commands.put(&quot;tilde&quot;, new PredefMacroInfo(64, 1));</span>
+<span class="fc" id="L117">        MacroInfo.Commands.put(&quot;acute&quot;, new PredefMacroInfo(65, 1));</span>
+<span class="fc" id="L118">        MacroInfo.Commands.put(&quot;grave&quot;, new PredefMacroInfo(66, 1));</span>
+<span class="fc" id="L119">        MacroInfo.Commands.put(&quot;ddot&quot;, new PredefMacroInfo(67, 1));</span>
+<span class="fc" id="L120">        MacroInfo.Commands.put(&quot;cyrddot&quot;, new PredefMacroInfo(68, 1));</span>
+<span class="fc" id="L121">        MacroInfo.Commands.put(&quot;mathring&quot;, new PredefMacroInfo(69, 1));</span>
+<span class="fc" id="L122">        MacroInfo.Commands.put(&quot;bar&quot;, new PredefMacroInfo(70, 1));</span>
+<span class="fc" id="L123">        MacroInfo.Commands.put(&quot;breve&quot;, new PredefMacroInfo(71, 1));</span>
+<span class="fc" id="L124">        MacroInfo.Commands.put(&quot;check&quot;, new PredefMacroInfo(72, 1));</span>
+<span class="fc" id="L125">        MacroInfo.Commands.put(&quot;vec&quot;, new PredefMacroInfo(73, 1));</span>
+<span class="fc" id="L126">        MacroInfo.Commands.put(&quot;dot&quot;, new PredefMacroInfo(74, 1));</span>
+<span class="fc" id="L127">        MacroInfo.Commands.put(&quot;widetilde&quot;, new PredefMacroInfo(75, 1));</span>
+<span class="fc" id="L128">        MacroInfo.Commands.put(&quot;nbsp&quot;, new PredefMacroInfo(76, 0));</span>
+<span class="fc" id="L129">        MacroInfo.Commands.put(&quot;smallmatrix@@env&quot;, new PredefMacroInfo(77, 1));</span>
+<span class="fc" id="L130">        MacroInfo.Commands.put(&quot;matrix@@env&quot;, new PredefMacroInfo(78, 1));</span>
+<span class="fc" id="L131">        MacroInfo.Commands.put(&quot;overrightarrow&quot;, new PredefMacroInfo(79, 1));</span>
+<span class="fc" id="L132">        MacroInfo.Commands.put(&quot;overleftarrow&quot;, new PredefMacroInfo(80, 1));</span>
+<span class="fc" id="L133">        MacroInfo.Commands.put(&quot;overleftrightarrow&quot;, new PredefMacroInfo(81, 1));</span>
+<span class="fc" id="L134">        MacroInfo.Commands.put(&quot;underrightarrow&quot;, new PredefMacroInfo(82, 1));</span>
+<span class="fc" id="L135">        MacroInfo.Commands.put(&quot;underleftarrow&quot;, new PredefMacroInfo(83, 1));</span>
+<span class="fc" id="L136">        MacroInfo.Commands.put(&quot;underleftrightarrow&quot;, new PredefMacroInfo(84, 1));</span>
+<span class="fc" id="L137">        MacroInfo.Commands.put(&quot;xleftarrow&quot;, new PredefMacroInfo(85, 1, 1));</span>
+<span class="fc" id="L138">        MacroInfo.Commands.put(&quot;xrightarrow&quot;, new PredefMacroInfo(86, 1, 1));</span>
+<span class="fc" id="L139">        MacroInfo.Commands.put(&quot;underbrace&quot;, new PredefMacroInfo(87, 1));</span>
+<span class="fc" id="L140">        MacroInfo.Commands.put(&quot;overbrace&quot;, new PredefMacroInfo(88, 1));</span>
+<span class="fc" id="L141">        MacroInfo.Commands.put(&quot;underbrack&quot;, new PredefMacroInfo(89, 1));</span>
+<span class="fc" id="L142">        MacroInfo.Commands.put(&quot;overbrack&quot;, new PredefMacroInfo(90, 1));</span>
+<span class="fc" id="L143">        MacroInfo.Commands.put(&quot;underparen&quot;, new PredefMacroInfo(91, 1));</span>
+<span class="fc" id="L144">        MacroInfo.Commands.put(&quot;overparen&quot;, new PredefMacroInfo(92, 1));</span>
+<span class="fc" id="L145">        MacroInfo.Commands.put(&quot;sqrt&quot;, new PredefMacroInfo(93, 1, 1));</span>
+<span class="fc" id="L146">        MacroInfo.Commands.put(&quot;sqrtsign&quot;, new PredefMacroInfo(94, 1));</span>
+<span class="fc" id="L147">        MacroInfo.Commands.put(&quot;overline&quot;, new PredefMacroInfo(95, 1));</span>
+<span class="fc" id="L148">        MacroInfo.Commands.put(&quot;underline&quot;, new PredefMacroInfo(96, 1));</span>
+<span class="fc" id="L149">        MacroInfo.Commands.put(&quot;mathop&quot;, new PredefMacroInfo(97, 1));</span>
+<span class="fc" id="L150">        MacroInfo.Commands.put(&quot;mathpunct&quot;, new PredefMacroInfo(98, 1));</span>
+<span class="fc" id="L151">        MacroInfo.Commands.put(&quot;mathord&quot;, new PredefMacroInfo(99, 1));</span>
+<span class="fc" id="L152">        MacroInfo.Commands.put(&quot;mathrel&quot;, new PredefMacroInfo(100, 1));</span>
+<span class="fc" id="L153">        MacroInfo.Commands.put(&quot;mathinner&quot;, new PredefMacroInfo(101, 1));</span>
+<span class="fc" id="L154">        MacroInfo.Commands.put(&quot;mathbin&quot;, new PredefMacroInfo(102, 1));</span>
+<span class="fc" id="L155">        MacroInfo.Commands.put(&quot;mathopen&quot;, new PredefMacroInfo(103, 1));</span>
+<span class="fc" id="L156">        MacroInfo.Commands.put(&quot;mathclose&quot;, new PredefMacroInfo(104, 1));</span>
+<span class="fc" id="L157">        MacroInfo.Commands.put(&quot;joinrel&quot;, new PredefMacroInfo(105, 0));</span>
+<span class="fc" id="L158">        MacroInfo.Commands.put(&quot;smash&quot;, new PredefMacroInfo(106, 1, 1));</span>
+<span class="fc" id="L159">        MacroInfo.Commands.put(&quot;vdots&quot;, new PredefMacroInfo(107, 0));</span>
+<span class="fc" id="L160">        MacroInfo.Commands.put(&quot;ddots&quot;, new PredefMacroInfo(108, 0));</span>
+<span class="fc" id="L161">        MacroInfo.Commands.put(&quot;iddots&quot;, new PredefMacroInfo(109, 0));</span>
+<span class="fc" id="L162">        MacroInfo.Commands.put(&quot;nolimits&quot;, new PredefMacroInfo(110, 0));</span>
+<span class="fc" id="L163">        MacroInfo.Commands.put(&quot;limits&quot;, new PredefMacroInfo(111, 0));</span>
+<span class="fc" id="L164">        MacroInfo.Commands.put(&quot;normal&quot;, new PredefMacroInfo(112, 0));</span>
+<span class="fc" id="L165">        MacroInfo.Commands.put(&quot;(&quot;, new PredefMacroInfo(113, 0));</span>
+<span class="fc" id="L166">        MacroInfo.Commands.put(&quot;[&quot;, new PredefMacroInfo(114, 0));</span>
+<span class="fc" id="L167">        MacroInfo.Commands.put(&quot;left&quot;, new PredefMacroInfo(115, 1));</span>
+<span class="fc" id="L168">        MacroInfo.Commands.put(&quot;middle&quot;, new PredefMacroInfo(116, 1));</span>
+<span class="fc" id="L169">        MacroInfo.Commands.put(&quot;cr&quot;, new PredefMacroInfo(117, 0));</span>
+<span class="fc" id="L170">        MacroInfo.Commands.put(&quot;multicolumn&quot;, new PredefMacroInfo(118, 3));</span>
+<span class="fc" id="L171">        MacroInfo.Commands.put(&quot;hdotsfor&quot;, new PredefMacroInfo(119, 1, 1));</span>
+<span class="fc" id="L172">        MacroInfo.Commands.put(&quot;array@@env&quot;, new PredefMacroInfo(120, 2));</span>
+<span class="fc" id="L173">        MacroInfo.Commands.put(&quot;align@@env&quot;, new PredefMacroInfo(121, 2));</span>
+<span class="fc" id="L174">        MacroInfo.Commands.put(&quot;aligned@@env&quot;, new PredefMacroInfo(122, 2));</span>
+<span class="fc" id="L175">        MacroInfo.Commands.put(&quot;flalign@@env&quot;, new PredefMacroInfo(123, 2));</span>
+<span class="fc" id="L176">        MacroInfo.Commands.put(&quot;alignat@@env&quot;, new PredefMacroInfo(124, 2));</span>
+<span class="fc" id="L177">        MacroInfo.Commands.put(&quot;alignedat@@env&quot;, new PredefMacroInfo(125, 2));</span>
+<span class="fc" id="L178">        MacroInfo.Commands.put(&quot;multline@@env&quot;, new PredefMacroInfo(126, 2));</span>
+<span class="fc" id="L179">        MacroInfo.Commands.put(&quot;gather@@env&quot;, new PredefMacroInfo(127, 2));</span>
+<span class="fc" id="L180">        MacroInfo.Commands.put(&quot;gathered@@env&quot;, new PredefMacroInfo(128, 2));</span>
+<span class="fc" id="L181">        MacroInfo.Commands.put(&quot;shoveright&quot;, new PredefMacroInfo(129, 1));</span>
+<span class="fc" id="L182">        MacroInfo.Commands.put(&quot;shoveleft&quot;, new PredefMacroInfo(130, 1));</span>
+<span class="fc" id="L183">        MacroInfo.Commands.put(&quot;\\&quot;, new PredefMacroInfo(131, 0));</span>
+<span class="fc" id="L184">        MacroInfo.Commands.put(&quot;newenvironment&quot;, new PredefMacroInfo(132, 3));</span>
+<span class="fc" id="L185">        MacroInfo.Commands.put(&quot;renewenvironment&quot;, new PredefMacroInfo(133, 3));</span>
+<span class="fc" id="L186">        MacroInfo.Commands.put(&quot;makeatletter&quot;, new PredefMacroInfo(134, 0));</span>
+<span class="fc" id="L187">        MacroInfo.Commands.put(&quot;makeatother&quot;, new PredefMacroInfo(135, 0));</span>
+<span class="fc" id="L188">        MacroInfo.Commands.put(&quot;fbox&quot;, new PredefMacroInfo(136, 1));</span>
+<span class="fc" id="L189">        MacroInfo.Commands.put(&quot;boxed&quot;, new PredefMacroInfo(137, 1));</span>
+<span class="fc" id="L190">        MacroInfo.Commands.put(&quot;stackrel&quot;, new PredefMacroInfo(138, 2, 1));</span>
+<span class="fc" id="L191">        MacroInfo.Commands.put(&quot;stackbin&quot;, new PredefMacroInfo(139, 2, 1));</span>
+<span class="fc" id="L192">        MacroInfo.Commands.put(&quot;accentset&quot;, new PredefMacroInfo(140, 2));</span>
+<span class="fc" id="L193">        MacroInfo.Commands.put(&quot;underaccent&quot;, new PredefMacroInfo(141, 2));</span>
+<span class="fc" id="L194">        MacroInfo.Commands.put(&quot;undertilde&quot;, new PredefMacroInfo(142, 1));</span>
+<span class="fc" id="L195">        MacroInfo.Commands.put(&quot;overset&quot;, new PredefMacroInfo(143, 2));</span>
+<span class="fc" id="L196">        MacroInfo.Commands.put(&quot;Braket&quot;, new PredefMacroInfo(144, 1));</span>
+<span class="fc" id="L197">        MacroInfo.Commands.put(&quot;Set&quot;, new PredefMacroInfo(145, 1));</span>
+<span class="fc" id="L198">        MacroInfo.Commands.put(&quot;underset&quot;, new PredefMacroInfo(146, 2));</span>
+<span class="fc" id="L199">        MacroInfo.Commands.put(&quot;boldsymbol&quot;, new PredefMacroInfo(147, 1));</span>
+<span class="fc" id="L200">        MacroInfo.Commands.put(&quot;LaTeX&quot;, new PredefMacroInfo(148, 0));</span>
+<span class="fc" id="L201">        MacroInfo.Commands.put(&quot;big&quot;, new PredefMacroInfo(150, 1));</span>
+<span class="fc" id="L202">        MacroInfo.Commands.put(&quot;Big&quot;, new PredefMacroInfo(151, 1));</span>
+<span class="fc" id="L203">        MacroInfo.Commands.put(&quot;bigg&quot;, new PredefMacroInfo(152, 1));</span>
+<span class="fc" id="L204">        MacroInfo.Commands.put(&quot;Bigg&quot;, new PredefMacroInfo(153, 1));</span>
+<span class="fc" id="L205">        MacroInfo.Commands.put(&quot;bigl&quot;, new PredefMacroInfo(154, 1));</span>
+<span class="fc" id="L206">        MacroInfo.Commands.put(&quot;Bigl&quot;, new PredefMacroInfo(155, 1));</span>
+<span class="fc" id="L207">        MacroInfo.Commands.put(&quot;biggl&quot;, new PredefMacroInfo(156, 1));</span>
+<span class="fc" id="L208">        MacroInfo.Commands.put(&quot;Biggl&quot;, new PredefMacroInfo(157, 1));</span>
+<span class="fc" id="L209">        MacroInfo.Commands.put(&quot;bigr&quot;, new PredefMacroInfo(158, 1));</span>
+<span class="fc" id="L210">        MacroInfo.Commands.put(&quot;Bigr&quot;, new PredefMacroInfo(159, 1));</span>
+<span class="fc" id="L211">        MacroInfo.Commands.put(&quot;biggr&quot;, new PredefMacroInfo(160, 1));</span>
+<span class="fc" id="L212">        MacroInfo.Commands.put(&quot;Biggr&quot;, new PredefMacroInfo(161, 1));</span>
+<span class="fc" id="L213">        MacroInfo.Commands.put(&quot;displaystyle&quot;, new PredefMacroInfo(162, 0));</span>
+<span class="fc" id="L214">        MacroInfo.Commands.put(&quot;textstyle&quot;, new PredefMacroInfo(163, 0));</span>
+<span class="fc" id="L215">        MacroInfo.Commands.put(&quot;scriptstyle&quot;, new PredefMacroInfo(164, 0));</span>
+<span class="fc" id="L216">        MacroInfo.Commands.put(&quot;scriptscriptstyle&quot;, new PredefMacroInfo(165, 0));</span>
+<span class="fc" id="L217">        MacroInfo.Commands.put(&quot;sideset&quot;, new PredefMacroInfo(166, 3));</span>
+<span class="fc" id="L218">        MacroInfo.Commands.put(&quot;prescript&quot;, new PredefMacroInfo(167, 3));</span>
+<span class="fc" id="L219">        MacroInfo.Commands.put(&quot;rotatebox&quot;, new PredefMacroInfo(168, 2, 1));</span>
+<span class="fc" id="L220">        MacroInfo.Commands.put(&quot;reflectbox&quot;, new PredefMacroInfo(169, 1));</span>
+<span class="fc" id="L221">        MacroInfo.Commands.put(&quot;scalebox&quot;, new PredefMacroInfo(170, 2, 2));</span>
+<span class="fc" id="L222">        MacroInfo.Commands.put(&quot;resizebox&quot;, new PredefMacroInfo(171, 3));</span>
+<span class="fc" id="L223">        MacroInfo.Commands.put(&quot;raisebox&quot;, new PredefMacroInfo(172, 2, 2));</span>
+<span class="fc" id="L224">        MacroInfo.Commands.put(&quot;shadowbox&quot;, new PredefMacroInfo(173, 1));</span>
+<span class="fc" id="L225">        MacroInfo.Commands.put(&quot;ovalbox&quot;, new PredefMacroInfo(174, 1));</span>
+<span class="fc" id="L226">        MacroInfo.Commands.put(&quot;doublebox&quot;, new PredefMacroInfo(175, 1));</span>
+<span class="fc" id="L227">        MacroInfo.Commands.put(&quot;phantom&quot;, new PredefMacroInfo(176, 1));</span>
+<span class="fc" id="L228">        MacroInfo.Commands.put(&quot;hphantom&quot;, new PredefMacroInfo(177, 1));</span>
+<span class="fc" id="L229">        MacroInfo.Commands.put(&quot;vphantom&quot;, new PredefMacroInfo(178, 1));</span>
+<span class="fc" id="L230">        MacroInfo.Commands.put(&quot;sp@breve&quot;, new PredefMacroInfo(179, 0));</span>
+<span class="fc" id="L231">        MacroInfo.Commands.put(&quot;sp@hat&quot;, new PredefMacroInfo(180, 0));</span>
+<span class="fc" id="L232">        MacroInfo.Commands.put(&quot;definecolor&quot;, new PredefMacroInfo(181, 3));</span>
+<span class="fc" id="L233">        MacroInfo.Commands.put(&quot;textcolor&quot;, new PredefMacroInfo(182, 2));</span>
+<span class="fc" id="L234">        MacroInfo.Commands.put(&quot;fgcolor&quot;, new PredefMacroInfo(183, 2));</span>
+<span class="fc" id="L235">        MacroInfo.Commands.put(&quot;bgcolor&quot;, new PredefMacroInfo(184, 2));</span>
+<span class="fc" id="L236">        MacroInfo.Commands.put(&quot;colorbox&quot;, new PredefMacroInfo(185, 2));</span>
+<span class="fc" id="L237">        MacroInfo.Commands.put(&quot;fcolorbox&quot;, new PredefMacroInfo(186, 3));</span>
+<span class="fc" id="L238">        MacroInfo.Commands.put(&quot;c&quot;, new PredefMacroInfo(187, 1));</span>
+<span class="fc" id="L239">        MacroInfo.Commands.put(&quot;IJ&quot;, new PredefMacroInfo(188, 0));</span>
+<span class="fc" id="L240">        MacroInfo.Commands.put(&quot;ij&quot;, new PredefMacroInfo(189, 0));</span>
+<span class="fc" id="L241">        MacroInfo.Commands.put(&quot;TStroke&quot;, new PredefMacroInfo(190, 0));</span>
+<span class="fc" id="L242">        MacroInfo.Commands.put(&quot;tStroke&quot;, new PredefMacroInfo(191, 0));</span>
+<span class="fc" id="L243">        MacroInfo.Commands.put(&quot;Lcaron&quot;, new PredefMacroInfo(192, 0));</span>
+<span class="fc" id="L244">        MacroInfo.Commands.put(&quot;tcaron&quot;, new PredefMacroInfo(193, 0));</span>
+<span class="fc" id="L245">        MacroInfo.Commands.put(&quot;lcaron&quot;, new PredefMacroInfo(194, 0));</span>
+<span class="fc" id="L246">        MacroInfo.Commands.put(&quot;k&quot;, new PredefMacroInfo(195, 1));</span>
+<span class="fc" id="L247">        MacroInfo.Commands.put(&quot;cong&quot;, new PredefMacroInfo(196, 0));</span>
+<span class="fc" id="L248">        MacroInfo.Commands.put(&quot;doteq&quot;, new PredefMacroInfo(197, 0));</span>
+<span class="fc" id="L249">        MacroInfo.Commands.put(&quot;jlmDynamic&quot;, new PredefMacroInfo(198, 1, 1));</span>
+<span class="fc" id="L250">        MacroInfo.Commands.put(&quot;DeclareMathSizes&quot;, new PredefMacroInfo(204, 4));</span>
+<span class="fc" id="L251">        MacroInfo.Commands.put(&quot;magnification&quot;, new PredefMacroInfo(205, 1));</span>
+<span class="fc" id="L252">        MacroInfo.Commands.put(&quot;hline&quot;, new PredefMacroInfo(206, 0));</span>
+<span class="fc" id="L253">        MacroInfo.Commands.put(&quot;tiny&quot;, new PredefMacroInfo(207, 0));</span>
+<span class="fc" id="L254">        MacroInfo.Commands.put(&quot;scriptsize&quot;, new PredefMacroInfo(208, 0));</span>
+<span class="fc" id="L255">        MacroInfo.Commands.put(&quot;footnotesize&quot;, new PredefMacroInfo(209, 0));</span>
+<span class="fc" id="L256">        MacroInfo.Commands.put(&quot;small&quot;, new PredefMacroInfo(210, 0));</span>
+<span class="fc" id="L257">        MacroInfo.Commands.put(&quot;normalsize&quot;, new PredefMacroInfo(211, 0));</span>
+<span class="fc" id="L258">        MacroInfo.Commands.put(&quot;large&quot;, new PredefMacroInfo(212, 0));</span>
+<span class="fc" id="L259">        MacroInfo.Commands.put(&quot;Large&quot;, new PredefMacroInfo(213, 0));</span>
+<span class="fc" id="L260">        MacroInfo.Commands.put(&quot;LARGE&quot;, new PredefMacroInfo(214, 0));</span>
+<span class="fc" id="L261">        MacroInfo.Commands.put(&quot;huge&quot;, new PredefMacroInfo(215, 0));</span>
+<span class="fc" id="L262">        MacroInfo.Commands.put(&quot;Huge&quot;, new PredefMacroInfo(216, 0));</span>
+<span class="fc" id="L263">        MacroInfo.Commands.put(&quot;jlatexmathcumsup&quot;, new PredefMacroInfo(217, 1));</span>
+<span class="fc" id="L264">        MacroInfo.Commands.put(&quot;jlatexmathcumsub&quot;, new PredefMacroInfo(218, 1));</span>
+<span class="fc" id="L265">        MacroInfo.Commands.put(&quot;hstrok&quot;, new PredefMacroInfo(219, 0));</span>
+<span class="fc" id="L266">        MacroInfo.Commands.put(&quot;Hstrok&quot;, new PredefMacroInfo(220, 0));</span>
+<span class="fc" id="L267">        MacroInfo.Commands.put(&quot;dstrok&quot;, new PredefMacroInfo(221, 0));</span>
+<span class="fc" id="L268">        MacroInfo.Commands.put(&quot;Dstrok&quot;, new PredefMacroInfo(222, 0));</span>
+<span class="fc" id="L269">        MacroInfo.Commands.put(&quot;dotminus&quot;, new PredefMacroInfo(223, 0));</span>
+<span class="fc" id="L270">        MacroInfo.Commands.put(&quot;ratio&quot;, new PredefMacroInfo(224, 0));</span>
+<span class="fc" id="L271">        MacroInfo.Commands.put(&quot;smallfrowneq&quot;, new PredefMacroInfo(225, 0));</span>
+<span class="fc" id="L272">        MacroInfo.Commands.put(&quot;geoprop&quot;, new PredefMacroInfo(226, 0));</span>
+<span class="fc" id="L273">        MacroInfo.Commands.put(&quot;minuscolon&quot;, new PredefMacroInfo(227, 0));</span>
+<span class="fc" id="L274">        MacroInfo.Commands.put(&quot;minuscoloncolon&quot;, new PredefMacroInfo(228, 0));</span>
+<span class="fc" id="L275">        MacroInfo.Commands.put(&quot;simcolon&quot;, new PredefMacroInfo(229, 0));</span>
+<span class="fc" id="L276">        MacroInfo.Commands.put(&quot;simcoloncolon&quot;, new PredefMacroInfo(230, 0));</span>
+<span class="fc" id="L277">        MacroInfo.Commands.put(&quot;approxcolon&quot;, new PredefMacroInfo(231, 0));</span>
+<span class="fc" id="L278">        MacroInfo.Commands.put(&quot;approxcoloncolon&quot;, new PredefMacroInfo(232, 0));</span>
+<span class="fc" id="L279">        MacroInfo.Commands.put(&quot;coloncolon&quot;, new PredefMacroInfo(233, 0));</span>
+<span class="fc" id="L280">        MacroInfo.Commands.put(&quot;equalscolon&quot;, new PredefMacroInfo(234, 0));</span>
+<span class="fc" id="L281">        MacroInfo.Commands.put(&quot;equalscoloncolon&quot;, new PredefMacroInfo(235, 0));</span>
+<span class="fc" id="L282">        MacroInfo.Commands.put(&quot;colonminus&quot;, new PredefMacroInfo(236, 0));</span>
+<span class="fc" id="L283">        MacroInfo.Commands.put(&quot;coloncolonminus&quot;, new PredefMacroInfo(237, 0));</span>
+<span class="fc" id="L284">        MacroInfo.Commands.put(&quot;colonequals&quot;, new PredefMacroInfo(238, 0));</span>
+<span class="fc" id="L285">        MacroInfo.Commands.put(&quot;coloncolonequals&quot;, new PredefMacroInfo(239, 0));</span>
+<span class="fc" id="L286">        MacroInfo.Commands.put(&quot;colonsim&quot;, new PredefMacroInfo(240, 0));</span>
+<span class="fc" id="L287">        MacroInfo.Commands.put(&quot;coloncolonsim&quot;, new PredefMacroInfo(241, 0));</span>
+<span class="fc" id="L288">        MacroInfo.Commands.put(&quot;colonapprox&quot;, new PredefMacroInfo(242, 0));</span>
+<span class="fc" id="L289">        MacroInfo.Commands.put(&quot;coloncolonapprox&quot;, new PredefMacroInfo(243, 0));</span>
+<span class="fc" id="L290">        MacroInfo.Commands.put(&quot;kern&quot;, new PredefMacroInfo(244, 1));</span>
+<span class="fc" id="L291">        MacroInfo.Commands.put(&quot;char&quot;, new PredefMacroInfo(245, 1));</span>
+<span class="fc" id="L292">        MacroInfo.Commands.put(&quot;roman&quot;, new PredefMacroInfo(246, 1));</span>
+<span class="fc" id="L293">        MacroInfo.Commands.put(&quot;Roman&quot;, new PredefMacroInfo(247, 1));</span>
+<span class="fc" id="L294">        MacroInfo.Commands.put(&quot;textcircled&quot;, new PredefMacroInfo(248, 1));</span>
+<span class="fc" id="L295">        MacroInfo.Commands.put(&quot;textsc&quot;, new PredefMacroInfo(249, 1));</span>
+<span class="fc" id="L296">        MacroInfo.Commands.put(&quot;sc&quot;, new PredefMacroInfo(250, 0));</span>
+<span class="fc" id="L297">        MacroInfo.Commands.put(&quot;,&quot;, new PredefMacroInfo(251, 0));</span>
+<span class="fc" id="L298">        MacroInfo.Commands.put(&quot;:&quot;, new PredefMacroInfo(252, 0));</span>
+<span class="fc" id="L299">        MacroInfo.Commands.put(&quot;;&quot;, new PredefMacroInfo(253, 0));</span>
+<span class="fc" id="L300">        MacroInfo.Commands.put(&quot;thinspace&quot;, new PredefMacroInfo(254, 0));</span>
+<span class="fc" id="L301">        MacroInfo.Commands.put(&quot;medspace&quot;, new PredefMacroInfo(255, 0));</span>
+<span class="fc" id="L302">        MacroInfo.Commands.put(&quot;thickspace&quot;, new PredefMacroInfo(256, 0));</span>
+<span class="fc" id="L303">        MacroInfo.Commands.put(&quot;!&quot;, new PredefMacroInfo(257, 0));</span>
+<span class="fc" id="L304">        MacroInfo.Commands.put(&quot;negthinspace&quot;, new PredefMacroInfo(258, 0));</span>
+<span class="fc" id="L305">        MacroInfo.Commands.put(&quot;negmedspace&quot;, new PredefMacroInfo(259, 0));</span>
+<span class="fc" id="L306">        MacroInfo.Commands.put(&quot;negthickspace&quot;, new PredefMacroInfo(260, 0));</span>
+<span class="fc" id="L307">        MacroInfo.Commands.put(&quot;quad&quot;, new PredefMacroInfo(261, 0));</span>
+<span class="fc" id="L308">        MacroInfo.Commands.put(&quot;surd&quot;, new PredefMacroInfo(262, 0));</span>
+<span class="fc" id="L309">        MacroInfo.Commands.put(&quot;iint&quot;, new PredefMacroInfo(263, 0));</span>
+<span class="fc" id="L310">        MacroInfo.Commands.put(&quot;iiint&quot;, new PredefMacroInfo(264, 0));</span>
+<span class="fc" id="L311">        MacroInfo.Commands.put(&quot;iiiint&quot;, new PredefMacroInfo(265, 0));</span>
+<span class="fc" id="L312">        MacroInfo.Commands.put(&quot;idotsint&quot;, new PredefMacroInfo(266, 0));</span>
+<span class="fc" id="L313">        MacroInfo.Commands.put(&quot;int&quot;, new PredefMacroInfo(267, 0));</span>
+<span class="fc" id="L314">        MacroInfo.Commands.put(&quot;oint&quot;, new PredefMacroInfo(268, 0));</span>
+<span class="fc" id="L315">        MacroInfo.Commands.put(&quot;lmoustache&quot;, new PredefMacroInfo(269, 0));</span>
+<span class="fc" id="L316">        MacroInfo.Commands.put(&quot;rmoustache&quot;, new PredefMacroInfo(270, 0));</span>
+<span class="fc" id="L317">        MacroInfo.Commands.put(&quot;-&quot;, new PredefMacroInfo(271, 0));</span>
+<span class="fc" id="L318">        MacroInfo.Commands.put(&quot;jlmXML&quot;, new PredefMacroInfo(272, 1));</span>
+<span class="fc" id="L319">        MacroInfo.Commands.put(&quot;above&quot;, new PredefMacroInfo(273, 0));</span>
+<span class="fc" id="L320">        MacroInfo.Commands.put(&quot;abovewithdelims&quot;, new PredefMacroInfo(274, 2));</span>
+<span class="fc" id="L321">        MacroInfo.Commands.put(&quot;st&quot;, new PredefMacroInfo(275, 1));</span>
+<span class="fc" id="L322">        MacroInfo.Commands.put(&quot;mathnormal&quot;, new PredefMacroInfo(277, 1));</span>
+<span class="fc" id="L323">        MacroInfo.Commands.put(&quot;qquad&quot;, new PredefMacroInfo(278, 0));</span>
+<span class="fc" id="L324">        MacroInfo.Commands.put(&quot;longdiv&quot;, new PredefMacroInfo(279, 2));</span>
+<span class="fc" id="L325">        MacroInfo.Commands.put(&quot;questeq&quot;, new PredefMacroInfo(280, 0));</span>
+<span class="fc" id="L326">        MacroInfo.Commands.put(&quot;bangle&quot;, new PredefMacroInfo(281, 0));</span>
+<span class="fc" id="L327">        MacroInfo.Commands.put(&quot;brace&quot;, new PredefMacroInfo(282, 0));</span>
+<span class="fc" id="L328">        MacroInfo.Commands.put(&quot;brack&quot;, new PredefMacroInfo(283, 0));</span>
+<span class="fc" id="L329">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

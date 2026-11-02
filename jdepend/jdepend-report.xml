@@ -1357,10 +1357,6 @@
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
-        <Package name="javax.script">
-            <error>No stats available: package referenced, but not analyzed.</error>
-        </Package>
-
         <Package name="javax.swing">
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
@@ -9667,11 +9663,11 @@
                 <TotalClasses>4</TotalClasses>
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>29</Ca>
+                <Ca>28</Ca>
                 <Ce>4</Ce>
                 <A>0.25</A>
                 <I>0.12</I>
-                <D>0.63</D>
+                <D>0.62</D>
                 <V>1</V>
             </Stats>
 
@@ -9712,7 +9708,6 @@
                 <Package>net.sourceforge.plantuml.jcckit</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.eps</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.raster</Package>
@@ -10193,10 +10188,10 @@
                 <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>17</Ce>
+                <Ce>16</Ce>
                 <A>0.14</A>
-                <I>0.85</I>
-                <D>0.01</D>
+                <I>0.84</I>
+                <D>0.02</D>
                 <V>1</V>
             </Stats>
 
@@ -10253,7 +10248,6 @@
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml.emoji</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
-                <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
@@ -10379,10 +10373,10 @@
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>9</Ca>
-                <Ce>25</Ce>
+                <Ce>24</Ce>
                 <A>0.13</A>
-                <I>0.74</I>
-                <D>0.13</D>
+                <I>0.73</I>
+                <D>0.14</D>
                 <V>1</V>
             </Stats>
 
@@ -10460,7 +10454,6 @@
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
@@ -10483,11 +10476,11 @@
                 <TotalClasses>14</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>80</Ca>
+                <Ca>81</Ca>
                 <Ce>14</Ce>
                 <A>0.36</A>
                 <I>0.15</I>
-                <D>0.49</D>
+                <D>0.5</D>
                 <V>1</V>
             </Stats>
 
@@ -10612,6 +10605,7 @@
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
+                <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.next</Package>
@@ -11390,7 +11384,7 @@
                 <TotalClasses>11</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>90</Ca>
+                <Ca>91</Ca>
                 <Ce>6</Ce>
                 <A>0.18</A>
                 <I>0.06</I>
@@ -11507,6 +11501,7 @@
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
+                <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
@@ -12261,18 +12256,24 @@
 
         <Package name="net.sourceforge.plantuml.math">
             <Stats>
-                <TotalClasses>13</TotalClasses>
-                <ConcreteClasses>12</ConcreteClasses>
-                <AbstractClasses>1</AbstractClasses>
-                <Ca>3</Ca>
-                <Ce>18</Ce>
-                <A>0.08</A>
-                <I>0.86</I>
-                <D>0.07</D>
+                <TotalClasses>20</TotalClasses>
+                <ConcreteClasses>17</ConcreteClasses>
+                <AbstractClasses>3</AbstractClasses>
+                <Ca>4</Ca>
+                <Ce>20</Ce>
+                <A>0.15</A>
+                <I>0.83</I>
+                <D>0.02</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
+                <Class sourceFile="FormulaDiagram.java">
+                    net.sourceforge.plantuml.math.FormulaDiagram
+                </Class>
+                <Class sourceFile="MathDrawing.java">
+                    net.sourceforge.plantuml.math.MathDrawing
+                </Class>
                 <Class sourceFile="ScientificEquation.java">
                     net.sourceforge.plantuml.math.ScientificEquation
                 </Class>
@@ -12291,14 +12292,14 @@
                 <Class sourceFile="AsciiMath.java">
                     net.sourceforge.plantuml.math.AsciiMath
                 </Class>
-                <Class sourceFile="ConverterSvg.java">
-                    net.sourceforge.plantuml.math.ConverterSvg
-                </Class>
                 <Class sourceFile="LatexBuilder.java">
                     net.sourceforge.plantuml.math.LatexBuilder
                 </Class>
-                <Class sourceFile="LatexBuilder.java">
-                    net.sourceforge.plantuml.math.LatexBuilder$LatexImage
+                <Class sourceFile="MathBlankImage.java">
+                    net.sourceforge.plantuml.math.MathBlankImage
+                </Class>
+                <Class sourceFile="MathResources.java">
+                    net.sourceforge.plantuml.math.MathResources
                 </Class>
                 <Class sourceFile="PSystemLatex.java">
                     net.sourceforge.plantuml.math.PSystemLatex
@@ -12312,36 +12313,54 @@
                 <Class sourceFile="PSystemMathFactory.java">
                     net.sourceforge.plantuml.math.PSystemMathFactory
                 </Class>
+                <Class sourceFile="ScientificEquationSafe.java">
+                    net.sourceforge.plantuml.math.ScientificEquationSafe$1
+                </Class>
+                <Class sourceFile="StringBounderTextMeasurer.java">
+                    net.sourceforge.plantuml.math.StringBounderTextMeasurer
+                </Class>
                 <Class sourceFile="TeXIconBuilder.java">
                     net.sourceforge.plantuml.math.TeXIconBuilder
+                </Class>
+                <Class sourceFile="TeXIconBuilder.java">
+                    net.sourceforge.plantuml.math.TeXIconBuilder$1
+                </Class>
+                <Class sourceFile="UGraphicTeXGraphics.java">
+                    net.sourceforge.plantuml.math.UGraphicTeXGraphics
+                </Class>
+                <Class sourceFile="UGraphicTeXGraphics.java">
+                    net.sourceforge.plantuml.math.UGraphicTeXGraphics$1
                 </Class>
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.awt</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
-                <Package>java.lang.reflect</Package>
                 <Package>java.util</Package>
-                <Package>javax.script</Package>
-                <Package>javax.swing</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.log</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
-                <Package>org.w3c.dom</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.teavm.c</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
+                <Package>net.sourceforge.plantuml.teavm.js.browser</Package>
+                <Package>org.scilab.forge.jlatexmath</Package>
             </DependsUpon>
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.command</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
+                <Package>net.sourceforge.plantuml.teavm.c</Package>
             </UsedBy>
         </Package>
 
@@ -17016,12 +17035,12 @@
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.command</Package>
-                <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.hand</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.svg</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.log</Package>
+                <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
@@ -17049,11 +17068,11 @@
                 <TotalClasses>13</TotalClasses>
                 <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>2</Ca>
-                <Ce>40</Ce>
+                <Ca>3</Ca>
+                <Ce>41</Ce>
                 <A>0</A>
-                <I>0.95</I>
-                <D>0.05</D>
+                <I>0.93</I>
+                <D>0.07</D>
                 <V>1</V>
             </Stats>
 
@@ -17125,6 +17144,7 @@
                 <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.raster</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
+                <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
@@ -17147,20 +17167,21 @@
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.cli</Package>
+                <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.openpdf</Package>
             </UsedBy>
         </Package>
 
         <Package name="net.sourceforge.plantuml.teavm.js">
             <Stats>
-                <TotalClasses>18</TotalClasses>
-                <ConcreteClasses>18</ConcreteClasses>
+                <TotalClasses>19</TotalClasses>
+                <ConcreteClasses>19</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>2</Ca>
-                <Ce>16</Ce>
+                <Ca>3</Ca>
+                <Ce>17</Ce>
                 <A>0</A>
-                <I>0.89</I>
-                <D>0.11</D>
+                <I>0.85</I>
+                <D>0.15</D>
                 <V>1</V>
             </Stats>
 
@@ -17207,6 +17228,9 @@
                 <Class sourceFile="GraphVizEngineJs.java">
                     net.sourceforge.plantuml.teavm.js.GraphVizEngineJs
                 </Class>
+                <Class sourceFile="JlatexmathResourcesJs.java">
+                    net.sourceforge.plantuml.teavm.js.JlatexmathResourcesJs
+                </Class>
                 <Class sourceFile="StringBounderTeaVM.java">
                     net.sourceforge.plantuml.teavm.js.StringBounderTeaVM$1
                 </Class>
@@ -17239,11 +17263,13 @@
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.teavm.js.browser</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
+                <Package>org.scilab.forge.jlatexmath</Package>
                 <Package>org.teavm.jso</Package>
                 <Package>org.teavm.jso.dom.xml</Package>
             </DependsUpon>
 
             <UsedBy>
+                <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.teavm.js.browser</Package>
             </UsedBy>
@@ -17254,11 +17280,11 @@
                 <TotalClasses>12</TotalClasses>
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>3</Ca>
+                <Ca>4</Ca>
                 <Ce>9</Ce>
                 <A>0.42</A>
-                <I>0.75</I>
-                <D>0.17</D>
+                <I>0.69</I>
+                <D>0.11</D>
                 <V>1</V>
             </Stats>
 
@@ -17317,6 +17343,7 @@
             </DependsUpon>
 
             <UsedBy>
+                <Package>net.sourceforge.plantuml.math</Package>
                 <Package>net.sourceforge.plantuml.teavm.js</Package>
                 <Package>net.sourceforge.plantuml.teavm.js.headless</Package>
                 <Package>net.sourceforge.plantuml.tim</Package>
@@ -19897,6 +19924,583 @@
             </UsedBy>
         </Package>
 
+        <Package name="org.scilab.forge.jlatexmath">
+            <Stats>
+                <TotalClasses>146</TotalClasses>
+                <ConcreteClasses>133</ConcreteClasses>
+                <AbstractClasses>13</AbstractClasses>
+                <Ca>5</Ca>
+                <Ce>6</Ce>
+                <A>0.09</A>
+                <I>0.55</I>
+                <D>0.37</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="AlphabetRegistration.java">
+                    org.scilab.forge.jlatexmath.AlphabetRegistration
+                </Class>
+                <Class sourceFile="Atom.java">
+                    org.scilab.forge.jlatexmath.Atom
+                </Class>
+                <Class sourceFile="Box.java">
+                    org.scilab.forge.jlatexmath.Box
+                </Class>
+                <Class sourceFile="CharSymbol.java">
+                    org.scilab.forge.jlatexmath.CharSymbol
+                </Class>
+                <Class sourceFile="DefaultTeXFontParser.java">
+                    org.scilab.forge.jlatexmath.DefaultTeXFontParser$CharChildParser
+                </Class>
+                <Class sourceFile="GlyphOutlines.java">
+                    org.scilab.forge.jlatexmath.GlyphOutlines$Sink
+                </Class>
+                <Class sourceFile="MacroInfo.java">
+                    org.scilab.forge.jlatexmath.MacroInfo$MacroHandler
+                </Class>
+                <Class sourceFile="Row.java">
+                    org.scilab.forge.jlatexmath.Row
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$UnitConversion
+                </Class>
+                <Class sourceFile="TeXFont.java">
+                    org.scilab.forge.jlatexmath.TeXFont
+                </Class>
+                <Class sourceFile="TeXGraphics.java">
+                    org.scilab.forge.jlatexmath.TeXGraphics
+                </Class>
+                <Class sourceFile="TeXResourceProvider.java">
+                    org.scilab.forge.jlatexmath.TeXResourceProvider
+                </Class>
+                <Class sourceFile="TeXTextMeasurer.java">
+                    org.scilab.forge.jlatexmath.TeXTextMeasurer
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="AlphabetRegistrationException.java">
+                    org.scilab.forge.jlatexmath.AlphabetRegistrationException
+                </Class>
+                <Class sourceFile="ArrayOfAtoms.java">
+                    org.scilab.forge.jlatexmath.ArrayOfAtoms
+                </Class>
+                <Class sourceFile="BigDelimiterAtom.java">
+                    org.scilab.forge.jlatexmath.BigDelimiterAtom
+                </Class>
+                <Class sourceFile="BigOperatorAtom.java">
+                    org.scilab.forge.jlatexmath.BigOperatorAtom
+                </Class>
+                <Class sourceFile="BoldAtom.java">
+                    org.scilab.forge.jlatexmath.BoldAtom
+                </Class>
+                <Class sourceFile="BreakFormula.java">
+                    org.scilab.forge.jlatexmath.BreakFormula
+                </Class>
+                <Class sourceFile="BreakFormula.java">
+                    org.scilab.forge.jlatexmath.BreakFormula$Position
+                </Class>
+                <Class sourceFile="BreakMarkAtom.java">
+                    org.scilab.forge.jlatexmath.BreakMarkAtom
+                </Class>
+                <Class sourceFile="CedillaAtom.java">
+                    org.scilab.forge.jlatexmath.CedillaAtom
+                </Class>
+                <Class sourceFile="Char.java">
+                    org.scilab.forge.jlatexmath.Char
+                </Class>
+                <Class sourceFile="CharFont.java">
+                    org.scilab.forge.jlatexmath.CharFont
+                </Class>
+                <Class sourceFile="CumulativeScriptsAtom.java">
+                    org.scilab.forge.jlatexmath.CumulativeScriptsAtom
+                </Class>
+                <Class sourceFile="DdotsAtom.java">
+                    org.scilab.forge.jlatexmath.DdotsAtom
+                </Class>
+                <Class sourceFile="DefaultTeXFont.java">
+                    org.scilab.forge.jlatexmath.DefaultTeXFont
+                </Class>
+                <Class sourceFile="DefaultTeXFontParser.java">
+                    org.scilab.forge.jlatexmath.DefaultTeXFontParser$ExtensionParser
+                </Class>
+                <Class sourceFile="DefaultTeXFontParser.java">
+                    org.scilab.forge.jlatexmath.DefaultTeXFontParser$KernParser
+                </Class>
+                <Class sourceFile="DefaultTeXFontParser.java">
+                    org.scilab.forge.jlatexmath.DefaultTeXFontParser$LigParser
+                </Class>
+                <Class sourceFile="DefaultTeXFontParser.java">
+                    org.scilab.forge.jlatexmath.DefaultTeXFontParser$NextLargerParser
+                </Class>
+                <Class sourceFile="DelimiterFactory.java">
+                    org.scilab.forge.jlatexmath.DelimiterFactory
+                </Class>
+                <Class sourceFile="DoubleFramedAtom.java">
+                    org.scilab.forge.jlatexmath.DoubleFramedAtom
+                </Class>
+                <Class sourceFile="Dummy.java">
+                    org.scilab.forge.jlatexmath.Dummy
+                </Class>
+                <Class sourceFile="EmptyAtom.java">
+                    org.scilab.forge.jlatexmath.EmptyAtom
+                </Class>
+                <Class sourceFile="Extension.java">
+                    org.scilab.forge.jlatexmath.Extension
+                </Class>
+                <Class sourceFile="FBoxAtom.java">
+                    org.scilab.forge.jlatexmath.FBoxAtom
+                </Class>
+                <Class sourceFile="FencedAtom.java">
+                    org.scilab.forge.jlatexmath.FencedAtom
+                </Class>
+                <Class sourceFile="FixedCharAtom.java">
+                    org.scilab.forge.jlatexmath.FixedCharAtom
+                </Class>
+                <Class sourceFile="FontAlreadyLoadedException.java">
+                    org.scilab.forge.jlatexmath.FontAlreadyLoadedException
+                </Class>
+                <Class sourceFile="FontInfo.java">
+                    org.scilab.forge.jlatexmath.FontInfo
+                </Class>
+                <Class sourceFile="FontInfo.java">
+                    org.scilab.forge.jlatexmath.FontInfo$CharCouple
+                </Class>
+                <Class sourceFile="ForeignTextAtom.java">
+                    org.scilab.forge.jlatexmath.ForeignTextAtom
+                </Class>
+                <Class sourceFile="ForeignTextBox.java">
+                    org.scilab.forge.jlatexmath.ForeignTextBox
+                </Class>
+                <Class sourceFile="FractionAtom.java">
+                    org.scilab.forge.jlatexmath.FractionAtom
+                </Class>
+                <Class sourceFile="FramedBox.java">
+                    org.scilab.forge.jlatexmath.FramedBox
+                </Class>
+                <Class sourceFile="Glue.java">
+                    org.scilab.forge.jlatexmath.Glue
+                </Class>
+                <Class sourceFile="GlueBox.java">
+                    org.scilab.forge.jlatexmath.GlueBox
+                </Class>
+                <Class sourceFile="HdotsforAtom.java">
+                    org.scilab.forge.jlatexmath.HdotsforAtom
+                </Class>
+                <Class sourceFile="HlineAtom.java">
+                    org.scilab.forge.jlatexmath.HlineAtom
+                </Class>
+                <Class sourceFile="HorizontalBox.java">
+                    org.scilab.forge.jlatexmath.HorizontalBox
+                </Class>
+                <Class sourceFile="HorizontalRule.java">
+                    org.scilab.forge.jlatexmath.HorizontalRule
+                </Class>
+                <Class sourceFile="IJAtom.java">
+                    org.scilab.forge.jlatexmath.IJAtom
+                </Class>
+                <Class sourceFile="IddotsAtom.java">
+                    org.scilab.forge.jlatexmath.IddotsAtom
+                </Class>
+                <Class sourceFile="InvalidSymbolTypeException.java">
+                    org.scilab.forge.jlatexmath.InvalidSymbolTypeException
+                </Class>
+                <Class sourceFile="InvalidTeXFormulaException.java">
+                    org.scilab.forge.jlatexmath.InvalidTeXFormulaException
+                </Class>
+                <Class sourceFile="InvalidUnitException.java">
+                    org.scilab.forge.jlatexmath.InvalidUnitException
+                </Class>
+                <Class sourceFile="ItAtom.java">
+                    org.scilab.forge.jlatexmath.ItAtom
+                </Class>
+                <Class sourceFile="JMathTeXException.java">
+                    org.scilab.forge.jlatexmath.JMathTeXException
+                </Class>
+                <Class sourceFile="LCaronAtom.java">
+                    org.scilab.forge.jlatexmath.LCaronAtom
+                </Class>
+                <Class sourceFile="LaTeXAtom.java">
+                    org.scilab.forge.jlatexmath.LaTeXAtom
+                </Class>
+                <Class sourceFile="LapedAtom.java">
+                    org.scilab.forge.jlatexmath.LapedAtom
+                </Class>
+                <Class sourceFile="LongdivAtom.java">
+                    org.scilab.forge.jlatexmath.LongdivAtom
+                </Class>
+                <Class sourceFile="MathAtom.java">
+                    org.scilab.forge.jlatexmath.MathAtom
+                </Class>
+                <Class sourceFile="Metrics.java">
+                    org.scilab.forge.jlatexmath.Metrics
+                </Class>
+                <Class sourceFile="MiddleAtom.java">
+                    org.scilab.forge.jlatexmath.MiddleAtom
+                </Class>
+                <Class sourceFile="MonoScaleAtom.java">
+                    org.scilab.forge.jlatexmath.MonoScaleAtom
+                </Class>
+                <Class sourceFile="MulticolumnAtom.java">
+                    org.scilab.forge.jlatexmath.MulticolumnAtom
+                </Class>
+                <Class sourceFile="MultlineAtom.java">
+                    org.scilab.forge.jlatexmath.MultlineAtom
+                </Class>
+                <Class sourceFile="NthRoot.java">
+                    org.scilab.forge.jlatexmath.NthRoot
+                </Class>
+                <Class sourceFile="OgonekAtom.java">
+                    org.scilab.forge.jlatexmath.OgonekAtom
+                </Class>
+                <Class sourceFile="OvalAtom.java">
+                    org.scilab.forge.jlatexmath.OvalAtom
+                </Class>
+                <Class sourceFile="OvalBox.java">
+                    org.scilab.forge.jlatexmath.OvalBox
+                </Class>
+                <Class sourceFile="OverBar.java">
+                    org.scilab.forge.jlatexmath.OverBar
+                </Class>
+                <Class sourceFile="OverUnderBox.java">
+                    org.scilab.forge.jlatexmath.OverUnderBox
+                </Class>
+                <Class sourceFile="OverUnderDelimiter.java">
+                    org.scilab.forge.jlatexmath.OverUnderDelimiter
+                </Class>
+                <Class sourceFile="OverlinedAtom.java">
+                    org.scilab.forge.jlatexmath.OverlinedAtom
+                </Class>
+                <Class sourceFile="ParseException.java">
+                    org.scilab.forge.jlatexmath.ParseException
+                </Class>
+                <Class sourceFile="ParseOption.java">
+                    org.scilab.forge.jlatexmath.ParseOption
+                </Class>
+                <Class sourceFile="PhantomAtom.java">
+                    org.scilab.forge.jlatexmath.PhantomAtom
+                </Class>
+                <Class sourceFile="PredefinedCommands.java">
+                    org.scilab.forge.jlatexmath.PredefinedCommands
+                </Class>
+                <Class sourceFile="PredefinedTeXFormulas.java">
+                    org.scilab.forge.jlatexmath.PredefinedTeXFormulas
+                </Class>
+                <Class sourceFile="RaiseAtom.java">
+                    org.scilab.forge.jlatexmath.RaiseAtom
+                </Class>
+                <Class sourceFile="ReflectAtom.java">
+                    org.scilab.forge.jlatexmath.ReflectAtom
+                </Class>
+                <Class sourceFile="ReflectBox.java">
+                    org.scilab.forge.jlatexmath.ReflectBox
+                </Class>
+                <Class sourceFile="ResizeAtom.java">
+                    org.scilab.forge.jlatexmath.ResizeAtom
+                </Class>
+                <Class sourceFile="ResourceParseException.java">
+                    org.scilab.forge.jlatexmath.ResourceParseException
+                </Class>
+                <Class sourceFile="RomanAtom.java">
+                    org.scilab.forge.jlatexmath.RomanAtom
+                </Class>
+                <Class sourceFile="RotateAtom.java">
+                    org.scilab.forge.jlatexmath.RotateAtom
+                </Class>
+                <Class sourceFile="RotateBox.java">
+                    org.scilab.forge.jlatexmath.RotateBox$Point
+                </Class>
+                <Class sourceFile="RowAtom.java">
+                    org.scilab.forge.jlatexmath.RowAtom
+                </Class>
+                <Class sourceFile="RuleAtom.java">
+                    org.scilab.forge.jlatexmath.RuleAtom
+                </Class>
+                <Class sourceFile="ScaleAtom.java">
+                    org.scilab.forge.jlatexmath.ScaleAtom
+                </Class>
+                <Class sourceFile="ScaleBox.java">
+                    org.scilab.forge.jlatexmath.ScaleBox
+                </Class>
+                <Class sourceFile="ScriptsAtom.java">
+                    org.scilab.forge.jlatexmath.ScriptsAtom
+                </Class>
+                <Class sourceFile="ShadowAtom.java">
+                    org.scilab.forge.jlatexmath.ShadowAtom
+                </Class>
+                <Class sourceFile="ShadowBox.java">
+                    org.scilab.forge.jlatexmath.ShadowBox
+                </Class>
+                <Class sourceFile="SmallCapAtom.java">
+                    org.scilab.forge.jlatexmath.SmallCapAtom
+                </Class>
+                <Class sourceFile="SmashedAtom.java">
+                    org.scilab.forge.jlatexmath.SmashedAtom
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$1
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$10
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$11
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$12
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$13
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$14
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$2
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$3
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$4
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$5
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$6
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$7
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$8
+                </Class>
+                <Class sourceFile="SpaceAtom.java">
+                    org.scilab.forge.jlatexmath.SpaceAtom$9
+                </Class>
+                <Class sourceFile="SsAtom.java">
+                    org.scilab.forge.jlatexmath.SsAtom
+                </Class>
+                <Class sourceFile="StrikeThroughAtom.java">
+                    org.scilab.forge.jlatexmath.StrikeThroughAtom
+                </Class>
+                <Class sourceFile="StrutBox.java">
+                    org.scilab.forge.jlatexmath.StrutBox
+                </Class>
+                <Class sourceFile="StyleAtom.java">
+                    org.scilab.forge.jlatexmath.StyleAtom
+                </Class>
+                <Class sourceFile="SymbolAtom.java">
+                    org.scilab.forge.jlatexmath.SymbolAtom
+                </Class>
+                <Class sourceFile="TStrokeAtom.java">
+                    org.scilab.forge.jlatexmath.TStrokeAtom
+                </Class>
+                <Class sourceFile="TeXConstants.java">
+                    org.scilab.forge.jlatexmath.TeXConstants
+                </Class>
+                <Class sourceFile="TeXEnvironment.java">
+                    org.scilab.forge.jlatexmath.TeXEnvironment
+                </Class>
+                <Class sourceFile="TeXFormula.java">
+                    org.scilab.forge.jlatexmath.TeXFormula
+                </Class>
+                <Class sourceFile="TeXFormula.java">
+                    org.scilab.forge.jlatexmath.TeXFormula$TeXIconBuilder
+                </Class>
+                <Class sourceFile="TeXFormulaSettingsParser.java">
+                    org.scilab.forge.jlatexmath.TeXFormulaSettingsParser
+                </Class>
+                <Class sourceFile="TeXIcon.java">
+                    org.scilab.forge.jlatexmath.TeXIcon
+                </Class>
+                <Class sourceFile="TeXInsets.java">
+                    org.scilab.forge.jlatexmath.TeXInsets
+                </Class>
+                <Class sourceFile="TeXUnicodeBlock.java">
+                    org.scilab.forge.jlatexmath.TeXUnicodeBlock
+                </Class>
+                <Class sourceFile="TextCircledAtom.java">
+                    org.scilab.forge.jlatexmath.TextCircledAtom
+                </Class>
+                <Class sourceFile="TextStyleAtom.java">
+                    org.scilab.forge.jlatexmath.TextStyleAtom
+                </Class>
+                <Class sourceFile="TtAtom.java">
+                    org.scilab.forge.jlatexmath.TtAtom
+                </Class>
+                <Class sourceFile="TypedAtom.java">
+                    org.scilab.forge.jlatexmath.TypedAtom
+                </Class>
+                <Class sourceFile="UnderOverArrowAtom.java">
+                    org.scilab.forge.jlatexmath.UnderOverArrowAtom
+                </Class>
+                <Class sourceFile="UnderOverAtom.java">
+                    org.scilab.forge.jlatexmath.UnderOverAtom
+                </Class>
+                <Class sourceFile="UnderlinedAtom.java">
+                    org.scilab.forge.jlatexmath.UnderlinedAtom
+                </Class>
+                <Class sourceFile="UnderscoreAtom.java">
+                    org.scilab.forge.jlatexmath.UnderscoreAtom
+                </Class>
+                <Class sourceFile="VCenteredAtom.java">
+                    org.scilab.forge.jlatexmath.VCenteredAtom
+                </Class>
+                <Class sourceFile="VRowAtom.java">
+                    org.scilab.forge.jlatexmath.VRowAtom
+                </Class>
+                <Class sourceFile="VdotsAtom.java">
+                    org.scilab.forge.jlatexmath.VdotsAtom
+                </Class>
+                <Class sourceFile="VerticalBox.java">
+                    org.scilab.forge.jlatexmath.VerticalBox
+                </Class>
+                <Class sourceFile="VlineAtom.java">
+                    org.scilab.forge.jlatexmath.VlineAtom
+                </Class>
+                <Class sourceFile="XArrowAtom.java">
+                    org.scilab.forge.jlatexmath.XArrowAtom
+                </Class>
+                <Class sourceFile="XLeftRightArrowFactory.java">
+                    org.scilab.forge.jlatexmath.XLeftRightArrowFactory
+                </Class>
+                <Class sourceFile="XmlElement.java">
+                    org.scilab.forge.jlatexmath.XmlElement
+                </Class>
+                <Class sourceFile="XmlNodeList.java">
+                    org.scilab.forge.jlatexmath.XmlNodeList
+                </Class>
+                <Class sourceFile="tcaronAtom.java">
+                    org.scilab.forge.jlatexmath.tcaronAtom
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>org.scilab.forge.jlatexmath.cyrillic</Package>
+                <Package>org.scilab.forge.jlatexmath.dynamic</Package>
+                <Package>org.scilab.forge.jlatexmath.greek</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.math</Package>
+                <Package>net.sourceforge.plantuml.teavm.js</Package>
+                <Package>org.scilab.forge.jlatexmath.cyrillic</Package>
+                <Package>org.scilab.forge.jlatexmath.dynamic</Package>
+                <Package>org.scilab.forge.jlatexmath.greek</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.scilab.forge.jlatexmath.cyrillic">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>2</Ce>
+                <A>0</A>
+                <I>0.67</I>
+                <D>0.33</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="CyrillicRegistration.java">
+                    org.scilab.forge.jlatexmath.cyrillic.CyrillicRegistration
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>org.scilab.forge.jlatexmath</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.scilab.forge.jlatexmath</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.scilab.forge.jlatexmath.dynamic">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>2</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>2</Ce>
+                <A>0.67</A>
+                <I>0.67</I>
+                <D>0.33</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="ExternalConverter.java">
+                    org.scilab.forge.jlatexmath.dynamic.ExternalConverter
+                </Class>
+                <Class sourceFile="ExternalConverterFactory.java">
+                    org.scilab.forge.jlatexmath.dynamic.ExternalConverterFactory
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="DynamicAtom.java">
+                    org.scilab.forge.jlatexmath.dynamic.DynamicAtom
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>org.scilab.forge.jlatexmath</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.scilab.forge.jlatexmath</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="org.scilab.forge.jlatexmath.greek">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>2</Ce>
+                <A>0</A>
+                <I>0.67</I>
+                <D>0.33</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="GreekRegistration.java">
+                    org.scilab.forge.jlatexmath.greek.GreekRegistration
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>org.scilab.forge.jlatexmath</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>org.scilab.forge.jlatexmath</Package>
+            </UsedBy>
+        </Package>
+
         <Package name="org.stathissideris.ascii2image.core">
             <Stats>
                 <TotalClasses>10</TotalClasses>
@@ -21842,6 +22446,28 @@
             <Package>org.openpdf.text.pdf</Package>
             <Package>org.openpdf.text</Package>
             <Package>org.openpdf.text.pdf</Package>
+        </Package>
+
+        <Package Name="org.scilab.forge.jlatexmath">
+            <Package>org.scilab.forge.jlatexmath.greek</Package>
+            <Package>org.scilab.forge.jlatexmath</Package>
+        </Package>
+
+        <Package Name="org.scilab.forge.jlatexmath.cyrillic">
+            <Package>org.scilab.forge.jlatexmath</Package>
+            <Package>org.scilab.forge.jlatexmath.greek</Package>
+            <Package>org.scilab.forge.jlatexmath</Package>
+        </Package>
+
+        <Package Name="org.scilab.forge.jlatexmath.dynamic">
+            <Package>org.scilab.forge.jlatexmath</Package>
+            <Package>org.scilab.forge.jlatexmath.greek</Package>
+            <Package>org.scilab.forge.jlatexmath</Package>
+        </Package>
+
+        <Package Name="org.scilab.forge.jlatexmath.greek">
+            <Package>org.scilab.forge.jlatexmath</Package>
+            <Package>org.scilab.forge.jlatexmath.greek</Package>
         </Package>
 
         <Package Name="org.stathissideris.ascii2image.core">
