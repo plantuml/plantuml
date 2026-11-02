@@ -159,7 +159,7 @@ public class TContext {
 
 			public TValue getVariable(String name) throws EaterException {
 				if (name.contains(".") || name.contains("[")) {
-					final TValue result = fromJson(memory, name, location);
+					final TValue result = fromJson(memory, withStoredSpelling(memory, name), location);
 					return result;
 				}
 				return memory.getVariable(name);
@@ -169,6 +169,25 @@ public class TContext {
 				return functionsSet.getFunctionSmart(name);
 			}
 		};
+	}
+
+	/**
+	 * "foo.field" or "foo[1]" may refer to the variable "$foo" (or the opposite):
+	 * the text replacement only knows the spelling used to create the variable.
+	 */
+	private static String withStoredSpelling(TMemory memory, String name) {
+		int end = 0;
+		while (end < name.length() && name.charAt(end) != '.' && name.charAt(end) != '[')
+			end++;
+		final String root = name.substring(0, end);
+		if (memory.getVariable(root) == null || memory.variablesNames3().getLonguestMatchStartingIn(root, 0).equals(root))
+			return name;
+
+		final String alias = VariableAlias.alias(root);
+		if (alias != null && memory.variablesNames3().getLonguestMatchStartingIn(alias, 0).equals(alias))
+			return alias + name.substring(end);
+
+		return name;
 	}
 
 	private TValue fromJson(TMemory memory, String name, LineLocation location) throws EaterException {

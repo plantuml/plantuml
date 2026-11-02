@@ -1,0 +1,12 @@
+@startuml
+A -> B : 1 1
+A -> B : 2 2
+A -> B : 1 1 0
+A -> B : 10 10 20 20
+A -> B : 3 3
+A -> B : both spellings give the same variable
+A -> B : 6
+A -> B : 7
+A -> B : 0 0
+A -> B : <$1> 1
+@enduml

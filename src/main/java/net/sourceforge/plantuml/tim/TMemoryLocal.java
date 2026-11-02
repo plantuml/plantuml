@@ -84,39 +84,43 @@ public class TMemoryLocal extends ExecutionContexts implements TMemory {
 			memoryGlobal.putVariable(varname, value, scope, location);
 			return;
 		}
-		if (scope == TVariableScope.LOCAL || overridenVariables01.containsKey(varname)) {
-			this.overridenVariables01.put(varname, value);
+		final String overridenKey = VariableAlias.resolveKey(overridenVariables01, varname);
+		if (scope == TVariableScope.LOCAL || overridenVariables01.containsKey(overridenKey)) {
+			this.overridenVariables01.put(overridenKey, value);
 			if (this.overridenVariables00 != null)
-				this.overridenVariables00.add(varname);
+				this.overridenVariables00.add(overridenKey);
 
 			Log.info(() -> "[MemLocal/overridden] Setting " + varname);
 		} else if (memoryGlobal.getVariable(varname) != null) {
 			memoryGlobal.putVariable(varname, value, scope, location);
 		} else {
-			this.localVariables01.put(varname, value);
-			this.localVariables00.add(varname);
+			final String localKey = VariableAlias.resolveKey(localVariables01, varname);
+			this.localVariables01.put(localKey, value);
+			this.localVariables00.add(localKey);
 			Log.info(() -> "[MemLocal/local] Setting " + varname);
 		}
 	}
 
 	@Override
 	public void removeVariable(String varname) {
-		if (overridenVariables01.containsKey(varname)) {
-			this.overridenVariables01.remove(varname);
+		final String overridenKey = VariableAlias.resolveKey(overridenVariables01, varname);
+		if (overridenVariables01.containsKey(overridenKey)) {
+			this.overridenVariables01.remove(overridenKey);
 			if (this.overridenVariables00 != null)
-				this.overridenVariables00.remove(varname);
+				this.overridenVariables00.remove(overridenKey);
 
 		} else if (memoryGlobal.getVariable(varname) != null) {
 			memoryGlobal.removeVariable(varname);
 		} else {
-			this.localVariables01.remove(varname);
-			this.localVariables00.remove(varname);
+			final String localKey = VariableAlias.resolveKey(localVariables01, varname);
+			this.localVariables01.remove(localKey);
+			this.localVariables00.remove(localKey);
 		}
 	}
 
 	@Override
 	public TValue getVariable(String varname) {
-		TValue result = overridenVariables01.get(varname);
+		TValue result = VariableAlias.get(overridenVariables01, varname);
 		if (result != null)
 			return result;
 
@@ -124,7 +128,7 @@ public class TMemoryLocal extends ExecutionContexts implements TMemory {
 		if (result != null)
 			return result;
 
-		result = localVariables01.get(varname);
+		result = VariableAlias.get(localVariables01, varname);
 		return result;
 	}
 

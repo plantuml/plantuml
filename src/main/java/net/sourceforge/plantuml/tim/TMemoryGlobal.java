@@ -52,7 +52,7 @@ public class TMemoryGlobal extends ExecutionContexts implements TMemory {
 
 	@Override
 	public TValue getVariable(String varname) {
-		return this.globalVariables.get(varname);
+		return VariableAlias.get(globalVariables, varname);
 	}
 
 	@Override
@@ -78,14 +78,16 @@ public class TMemoryGlobal extends ExecutionContexts implements TMemory {
 		if (scope == TVariableScope.LOCAL)
 			throw new EaterException("Cannot use local variable here", location);
 
-		this.globalVariables.put(varname, value);
-		this.variables.add(varname);
+		final String key = VariableAlias.resolveKey(globalVariables, varname);
+		this.globalVariables.put(key, value);
+		variables.add(key);
 	}
 
 	@Override
 	public void removeVariable(String varname) {
-		this.globalVariables.remove(varname);
-		this.variables.remove(varname);
+		final String key = VariableAlias.resolveKey(globalVariables, varname);
+		this.globalVariables.remove(key);
+		variables.remove(key);
 	}
 
 	@Override

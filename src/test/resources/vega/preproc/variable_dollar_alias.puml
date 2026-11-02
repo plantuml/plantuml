@@ -1,0 +1,29 @@
+---
+output: preproc
+---
+@startuml
+!a = 1
+!$b = 2
+A -> B : %get_variable_value("a") %get_variable_value("$a")
+A -> B : %get_variable_value("b") %get_variable_value("$b")
+A -> B : %variable_exists("a") %variable_exists("$a") %variable_exists("c")
+!$a = 10
+!b = 20
+A -> B : %get_variable_value("a") %get_variable_value("$a") %get_variable_value("b") %get_variable_value("$b")
+!c ?= 3
+!$c ?= 4
+A -> B : %get_variable_value("c") %get_variable_value("$c")
+!if (a == 10 && $b == 20)
+A -> B : both spellings give the same variable
+!endif
+!function $f($p)
+  !return p + 1
+!endfunction
+A -> B : $f(5)
+!$data = {"x": 7}
+A -> B : $data.x
+!undef $a
+A -> B : %variable_exists("a") %variable_exists("$a")
+!define sprite 1
+A -> B : <$sprite> sprite
+@enduml
