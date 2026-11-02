@@ -18,6 +18,7 @@ final class Builtins {
 			in.builtins.put(t.name, t);
 		for (Builtin b : FUNCTIONS)
 			in.builtins.put(b.name, b);
+		in.builtins.put("type", Types.TYPE);
 		in.modules.put("math", MathLib.create());
 	}
 
@@ -500,7 +501,7 @@ final class Builtins {
 			count("isinstance", a, 2, 2);
 			return Boolean.valueOf(isInstance(a[0], a[1]));
 		});
-		fn("type", (in, a) -> {
+		Types.TYPE.ctor = new Builtin("type", (in, a) -> {
 			count("type", a, 1, 1);
 			return PyOps.typeOf(a[0]);
 		});

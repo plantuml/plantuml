@@ -1145,8 +1145,16 @@ final class PyOps {
 		}
 		if (o instanceof PyException && name.equals("args"))
 			return new PyTuple(((PyException) o).args);
-		if (o instanceof PyType && name.equals("__name__"))
-			return ((PyType) o).name;
+		if (name.equals("__name__")) {
+			if (o instanceof PyType)
+				return ((PyType) o).name;
+			if (o instanceof PyFunction)
+				return ((PyFunction) o).code.name;
+			if (o instanceof Builtin)
+				return ((Builtin) o).name;
+			if (o instanceof BoundMethod)
+				return ((BoundMethod) o).method.name;
+		}
 		Builtin m = Methods.lookup(o, name);
 		if (m != null)
 			return new BoundMethod(o, m);
