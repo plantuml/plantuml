@@ -55,6 +55,7 @@ public class EaterForeach extends Eater {
 		checkAndEatChar("!foreach");
 		skipSpaces();
 		this.varname = eatAndGetVarname();
+		checkVariableStartsWithDollar(context, varname);
 		skipSpaces();
 		checkAndEatChar("in");
 		skipSpaces();

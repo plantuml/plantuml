@@ -59,6 +59,7 @@ public class EaterAffectation extends Eater {
 			} else
 				varname = eatAndGetVarname();
 		}
+		checkVariableStartsWithDollar(context, varname);
 		skipSpaces();
 		boolean conditional = false;
 		if (peekChar() == '?') {

@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.tim.expression.Token;
 import net.sourceforge.plantuml.tim.expression.TokenStack;
 import net.sourceforge.plantuml.tim.expression.TokenType;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public abstract class Eater {
 
@@ -195,6 +196,22 @@ public abstract class Eater {
 
 		addUpToLastLetterOrEmojiOrUnderscoreOrDigit(varname);
 		return varname.toString();
+	}
+
+	/**
+	 * A variable name should start with '$'. Declaring one without it still works,
+	 * but this syntax is deprecated: a warning is added to the diagram, wherever
+	 * the line comes from (the diagram, an included file, the standard library or a
+	 * theme).
+	 */
+	final protected void checkVariableStartsWithDollar(TContext context, String varname) {
+		if (varname.startsWith("$"))
+			return;
+
+		context.getPreprocessingArtifact()
+				.addWarning(new Warning("This diagram is using the variable '" + varname
+						+ "' declared without '$', which is deprecated and will be removed in the future.",
+						"You should use '$" + varname + "' instead in your diagram."));
 	}
 
 	final protected String eatAndGetFunctionName() throws EaterException {
