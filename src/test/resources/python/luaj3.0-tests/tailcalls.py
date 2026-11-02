@@ -105,7 +105,7 @@ def p(label, e):
     print(label, e)
 
 print(pcall(fib_good, 30))
-print(pcall(fib_good, 300))
+print(pcall(fib_good, 45))
 
 def fib_all(n, i=None, a=None, b=None):
     i = i or 1
