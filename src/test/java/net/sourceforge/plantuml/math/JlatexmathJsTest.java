@@ -21,7 +21,9 @@ class JlatexmathJsTest {
 	@Test
 	void jlatexmath_js_matches_the_resources_of_the_library() throws IOException {
 		final String expected = JlatexmathJsGenerator.generate(new File(JlatexmathJsGenerator.RESOURCES_DIR));
-		final String actual = new String(Files.readAllBytes(Paths.get(JlatexmathJsGenerator.OUTPUT)), UTF_8);
+		// The generator writes LF; a CRLF checkout (git autocrlf on Windows) gives the file CRLF
+		final String actual = new String(Files.readAllBytes(Paths.get(JlatexmathJsGenerator.OUTPUT)), UTF_8)
+				.replace("\r\n", "\n");
 		assertEquals(expected, actual, "jlatexmath.js is stale: re-run JlatexmathJsGenerator");
 	}
 

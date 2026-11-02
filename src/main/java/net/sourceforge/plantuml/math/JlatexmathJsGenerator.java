@@ -65,12 +65,39 @@ public final class JlatexmathJsGenerator {
 		out.append("g.PLANTUML_JLATEXMATH = g.PLANTUML_JLATEXMATH || {};\n");
 		out.append("\n");
 		for (String name : names) {
-			final byte[] data = Files.readAllBytes(new File(dir, name).toPath());
+			byte[] data = Files.readAllBytes(new File(dir, name).toPath());
+			if (name.endsWith(".xml"))
+				data = removeCarriageReturns(data);
 			out.append("g.PLANTUML_JLATEXMATH[\"").append(name).append("\"]=\"")
 					.append(Base64.getEncoder().encodeToString(data)).append("\";\n");
 		}
 		out.append("})();\n");
 		return out.toString();
+	}
+
+	/**
+	 * jlatexmath.js must be the same on every platform: with a CRLF checkout (git
+	 * autocrlf on Windows) the XML files have CRLF, and the generated file would
+	 * not be the committed one. A CR is only a whitespace in these XML files and
+	 * is never part of a UTF-8 multi-byte character, so removing it is harmless.
+	 * Not applied to the binary glyphs.
+	 */
+	static byte[] removeCarriageReturns(byte[] data) {
+		int count = 0;
+		for (byte b : data)
+			if (b == '\r')
+				count++;
+
+		if (count == 0)
+			return data;
+
+		final byte[] result = new byte[data.length - count];
+		int i = 0;
+		for (byte b : data)
+			if (b != '\r')
+				result[i++] = b;
+
+		return result;
 	}
 
 	private static void collect(File dir, String prefix, List<String> names) throws IOException {
