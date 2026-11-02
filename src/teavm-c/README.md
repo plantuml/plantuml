@@ -166,7 +166,7 @@ on the JVM: an opaque image that fits in 256 colors gets a palette (a port of
 of `QuantifyPacked28`); the pixels are the ones PngIO writes for the same image
 (only the deflate implementation differs: miniz instead of zlib). Encoding works
 on the pixels of the surface, row by row: no copy of the image, and nothing in
-the Java heap (64 MB at most in the C build). Keep the C port in step with
+the Java heap (128 MB at most in the C build). Keep the C port in step with
 `net.sourceforge.plantuml.png.quant`.
 
 `UGraphicRasterTest` checks the drivers on the JVM, with a canvas drawing with
