@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+' Decorations stay on the outer ends and direction is kept through the label node
+component A
+component B
+component C
+component D
+
+A *-[node]-o B : aggregates
+C <-[node]- D : reverse
+A -left[node]-> C : left
+@enduml

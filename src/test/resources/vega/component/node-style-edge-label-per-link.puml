@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+' The 'node' arrow style draws that link's label as its own intermediate node
+component Client
+component Server
+database DB
+
+Client -[node]-> Server : request / auth
+Server --> DB : query
+@enduml
