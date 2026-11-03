@@ -40,8 +40,6 @@ import net.sourceforge.plantuml.klimt.drawing.raster.RasterPath;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFace;
 
-import net.sourceforge.plantuml.teavm.Trace;
-
 /**
  * The {@link RasterCanvas} of the TeaVM C build: drawn by plutovg (see
  * {@link NativeCanvas}), text with the fonts embedded in the executable
@@ -56,7 +54,7 @@ public final class PngCanvas implements RasterCanvas {
 
 	private long handle;
 	private final boolean opaque;
-<span class="nc" id="L59">	private double scale = 1;</span>
+<span class="nc" id="L57">	private double scale = 1;</span>
 
 	// The clip set on the native canvas, which only changes it when it differs
 	// (setting a clip saves and restores the native state)
@@ -66,193 +64,186 @@ public final class PngCanvas implements RasterCanvas {
 	private double clipWidth;
 	private double clipHeight;
 
-<span class="nc" id="L69">	private final ArcsToCubics replay = new ArcsToCubics() {</span>
+<span class="nc" id="L67">	private final ArcsToCubics replay = new ArcsToCubics() {</span>
 		@Override
 		protected void doMoveTo(double x, double y) {
-<span class="nc" id="L72">			NativeCanvas.moveTo(handle, x, y);</span>
-<span class="nc" id="L73">		}</span>
+<span class="nc" id="L70">			NativeCanvas.moveTo(handle, x, y);</span>
+<span class="nc" id="L71">		}</span>
 
 		@Override
 		protected void doLineTo(double x, double y) {
-<span class="nc" id="L77">			NativeCanvas.lineTo(handle, x, y);</span>
-<span class="nc" id="L78">		}</span>
+<span class="nc" id="L75">			NativeCanvas.lineTo(handle, x, y);</span>
+<span class="nc" id="L76">		}</span>
 
 		@Override
 		protected void doCubicTo(double x1, double y1, double x2, double y2, double x3, double y3) {
-<span class="nc" id="L82">			NativeCanvas.cubicTo(handle, x1, y1, x2, y2, x3, y3);</span>
-<span class="nc" id="L83">		}</span>
+<span class="nc" id="L80">			NativeCanvas.cubicTo(handle, x1, y1, x2, y2, x3, y3);</span>
+<span class="nc" id="L81">		}</span>
 
 		@Override
 		protected void doClosePath() {
-<span class="nc" id="L87">			NativeCanvas.closePath(handle);</span>
-<span class="nc" id="L88">		}</span>
+<span class="nc" id="L85">			NativeCanvas.closePath(handle);</span>
+<span class="nc" id="L86">		}</span>
 
 		@Override
 		public void rectangle(double x, double y, double width, double height, double arcWidth, double arcHeight) {
 			// Arcs are diameters, the native rectangle takes radii
-<span class="nc" id="L93">			NativeCanvas.rect(handle, x, y, width, height, arcWidth / 2, arcHeight / 2);</span>
-<span class="nc" id="L94">		}</span>
+<span class="nc" id="L91">			NativeCanvas.rect(handle, x, y, width, height, arcWidth / 2, arcHeight / 2);</span>
+<span class="nc" id="L92">		}</span>
 
 		@Override
 		public void ellipse(double x, double y, double width, double height) {
-<span class="nc" id="L98">			NativeCanvas.ellipse(handle, x + width / 2, y + height / 2, width / 2, height / 2);</span>
-<span class="nc" id="L99">		}</span>
+<span class="nc" id="L96">			NativeCanvas.ellipse(handle, x + width / 2, y + height / 2, width / 2, height / 2);</span>
+<span class="nc" id="L97">		}</span>
 	};
 
 	/**
 	 * @param opaque the image will get an opaque background, see
 	 *               {@link RasterCanvas.Factory}
 	 */
-<span class="nc" id="L106">	public PngCanvas(int width, int height, boolean opaque) {</span>
-<span class="nc" id="L107">		this.opaque = opaque;</span>
-<span class="nc bnc" id="L108" title="All 4 branches missed.">		if (width &lt;= 0 || height &lt;= 0)</span>
-<span class="nc" id="L109">			throw new IllegalArgumentException(&quot;Bad size &quot; + width + &quot;x&quot; + height);</span>
-<span class="nc" id="L110">		this.handle = NativeCanvas.create(width, height);</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (handle == 0)</span>
-<span class="nc" id="L112">			throw new IllegalStateException(&quot;Cannot create a &quot; + width + &quot;x&quot; + height + &quot; canvas&quot;);</span>
-<span class="nc" id="L113">	}</span>
+<span class="nc" id="L104">	public PngCanvas(int width, int height, boolean opaque) {</span>
+<span class="nc" id="L105">		this.opaque = opaque;</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">		if (width &lt;= 0 || height &lt;= 0)</span>
+<span class="nc" id="L107">			throw new IllegalArgumentException(&quot;Bad size &quot; + width + &quot;x&quot; + height);</span>
+<span class="nc" id="L108">		this.handle = NativeCanvas.create(width, height);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (handle == 0)</span>
+<span class="nc" id="L110">			throw new IllegalStateException(&quot;Cannot create a &quot; + width + &quot;x&quot; + height + &quot; canvas&quot;);</span>
+<span class="nc" id="L111">	}</span>
 
 	private long handle() {
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (handle == 0)</span>
-<span class="nc" id="L117">			throw new IllegalStateException(&quot;Canvas disposed&quot;);</span>
-<span class="nc" id="L118">		return handle;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (handle == 0)</span>
+<span class="nc" id="L115">			throw new IllegalStateException(&quot;Canvas disposed&quot;);</span>
+<span class="nc" id="L116">		return handle;</span>
 	}
 
 	@Override
 	public void scale(double factor) {
-<span class="nc" id="L123">		NativeCanvas.scale(handle(), factor);</span>
-<span class="nc" id="L124">		scale *= factor;</span>
-<span class="nc" id="L125">	}</span>
+<span class="nc" id="L121">		NativeCanvas.scale(handle(), factor);</span>
+<span class="nc" id="L122">		scale *= factor;</span>
+<span class="nc" id="L123">	}</span>
 
 	@Override
 	public void setColor(int argb) {
-<span class="nc" id="L129">		NativeCanvas.setColor(handle(), argb);</span>
-<span class="nc" id="L130">	}</span>
+<span class="nc" id="L127">		NativeCanvas.setColor(handle(), argb);</span>
+<span class="nc" id="L128">	}</span>
 
 	@Override
 	public void setLinearGradient(double x1, double y1, double x2, double y2, double[] offsets, int[] colors,
 			int spread) {
-<span class="nc" id="L135">		NativeCanvas.setLinearGradient(handle(), x1, y1, x2, y2, offsets, colors, Math.min(offsets.length, 16),</span>
+<span class="nc" id="L133">		NativeCanvas.setLinearGradient(handle(), x1, y1, x2, y2, offsets, colors, Math.min(offsets.length, 16),</span>
 				spread);
-<span class="nc" id="L137">	}</span>
+<span class="nc" id="L135">	}</span>
 
 	@Override
 	public void setStroke(double thickness, double dashVisible, double dashSpace) {
 		// Java2D draws a zero width as the thinnest line: one device pixel
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (thickness &lt;= 0)</span>
-<span class="nc" id="L143">			thickness = 1 / scale;</span>
-<span class="nc" id="L144">		NativeCanvas.setStroke(handle(), thickness, dashVisible, dashSpace);</span>
-<span class="nc" id="L145">	}</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (thickness &lt;= 0)</span>
+<span class="nc" id="L141">			thickness = 1 / scale;</span>
+<span class="nc" id="L142">		NativeCanvas.setStroke(handle(), thickness, dashVisible, dashSpace);</span>
+<span class="nc" id="L143">	}</span>
 
 	@Override
 	public void setClip(double x, double y, double width, double height) {
-<span class="nc bnc" id="L149" title="All 10 branches missed.">		if (clipped &amp;&amp; x == clipX &amp;&amp; y == clipY &amp;&amp; width == clipWidth &amp;&amp; height == clipHeight)</span>
-<span class="nc" id="L150">			return;</span>
-<span class="nc" id="L151">		NativeCanvas.setClip(handle(), x, y, width, height);</span>
-<span class="nc" id="L152">		clipped = true;</span>
-<span class="nc" id="L153">		clipX = x;</span>
-<span class="nc" id="L154">		clipY = y;</span>
-<span class="nc" id="L155">		clipWidth = width;</span>
-<span class="nc" id="L156">		clipHeight = height;</span>
-<span class="nc" id="L157">	}</span>
+<span class="nc bnc" id="L147" title="All 10 branches missed.">		if (clipped &amp;&amp; x == clipX &amp;&amp; y == clipY &amp;&amp; width == clipWidth &amp;&amp; height == clipHeight)</span>
+<span class="nc" id="L148">			return;</span>
+<span class="nc" id="L149">		NativeCanvas.setClip(handle(), x, y, width, height);</span>
+<span class="nc" id="L150">		clipped = true;</span>
+<span class="nc" id="L151">		clipX = x;</span>
+<span class="nc" id="L152">		clipY = y;</span>
+<span class="nc" id="L153">		clipWidth = width;</span>
+<span class="nc" id="L154">		clipHeight = height;</span>
+<span class="nc" id="L155">	}</span>
 
 	@Override
 	public void resetClip() {
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (clipped == false)</span>
-<span class="nc" id="L162">			return;</span>
-<span class="nc" id="L163">		NativeCanvas.resetClip(handle());</span>
-<span class="nc" id="L164">		clipped = false;</span>
-<span class="nc" id="L165">	}</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (clipped == false)</span>
+<span class="nc" id="L160">			return;</span>
+<span class="nc" id="L161">		NativeCanvas.resetClip(handle());</span>
+<span class="nc" id="L162">		clipped = false;</span>
+<span class="nc" id="L163">	}</span>
 
 	@Override
 	public void fill(RasterPath path) {
-<span class="nc" id="L169">		handle();</span>
-<span class="nc" id="L170">		path.visit(replay);</span>
-<span class="nc" id="L171">		NativeCanvas.fill(handle);</span>
-<span class="nc" id="L172">	}</span>
+<span class="nc" id="L167">		handle();</span>
+<span class="nc" id="L168">		path.visit(replay);</span>
+<span class="nc" id="L169">		NativeCanvas.fill(handle);</span>
+<span class="nc" id="L170">	}</span>
 
 	@Override
 	public void stroke(RasterPath path) {
-<span class="nc" id="L176">		handle();</span>
-<span class="nc" id="L177">		path.visit(replay);</span>
-<span class="nc" id="L178">		NativeCanvas.stroke(handle);</span>
-<span class="nc" id="L179">	}</span>
+<span class="nc" id="L174">		handle();</span>
+<span class="nc" id="L175">		path.visit(replay);</span>
+<span class="nc" id="L176">		NativeCanvas.stroke(handle);</span>
+<span class="nc" id="L177">	}</span>
 
 	@Override
 	public void drawImage(int[] argb, int width, int height, double x, double y, double scale) {
-<span class="nc" id="L183">		NativeCanvas.drawImage(handle(), argb, width, height, x, y, scale);</span>
-<span class="nc" id="L184">	}</span>
+<span class="nc" id="L181">		NativeCanvas.drawImage(handle(), argb, width, height, x, y, scale);</span>
+<span class="nc" id="L182">	}</span>
 
 	@Override
 	public void drawString(String text, UFont font, double x, double y, double angle) {
-<span class="nc" id="L188">		setFont(font);</span>
-<span class="nc" id="L189">		final char[] chars = text.toCharArray();</span>
-<span class="nc" id="L190">		NativeCanvas.fillText(handle, chars, chars.length, x, y, angle);</span>
-<span class="nc" id="L191">	}</span>
+<span class="nc" id="L186">		setFont(font);</span>
+<span class="nc" id="L187">		final char[] chars = text.toCharArray();</span>
+<span class="nc" id="L188">		NativeCanvas.fillText(handle, chars, chars.length, x, y, angle);</span>
+<span class="nc" id="L189">	}</span>
 
 	/**
 	 * Advance width of the text, as the native canvas draws it.
 	 */
 	public double getTextWidth(String text, UFont font) {
-<span class="nc" id="L197">		setFont(font);</span>
-<span class="nc" id="L198">		final char[] chars = text.toCharArray();</span>
-<span class="nc" id="L199">		return NativeCanvas.textWidth(handle, chars, chars.length);</span>
+<span class="nc" id="L195">		setFont(font);</span>
+<span class="nc" id="L196">		final char[] chars = text.toCharArray();</span>
+<span class="nc" id="L197">		return NativeCanvas.textWidth(handle, chars, chars.length);</span>
 	}
 
 	/**
 	 * @return ascent, descent (both positive) and line gap of the font
 	 */
 	public double[] getFontMetrics(UFont font) {
-<span class="nc" id="L206">		setFont(font);</span>
-<span class="nc" id="L207">		final double[] metrics = new double[3];</span>
-<span class="nc" id="L208">		NativeCanvas.fontMetrics(handle, metrics);</span>
-<span class="nc" id="L209">		return metrics;</span>
+<span class="nc" id="L204">		setFont(font);</span>
+<span class="nc" id="L205">		final double[] metrics = new double[3];</span>
+<span class="nc" id="L206">		NativeCanvas.fontMetrics(handle, metrics);</span>
+<span class="nc" id="L207">		return metrics;</span>
 	}
 
 	@Override
 	public double[] getInkBounds(String text, UFont font) {
-<span class="nc" id="L214">		setFont(font);</span>
-<span class="nc" id="L215">		final char[] chars = text.toCharArray();</span>
-<span class="nc" id="L216">		final double[] bounds = new double[4];</span>
-<span class="nc" id="L217">		NativeCanvas.textBounds(handle, chars, chars.length, bounds);</span>
-<span class="nc" id="L218">		return bounds;</span>
+<span class="nc" id="L212">		setFont(font);</span>
+<span class="nc" id="L213">		final char[] chars = text.toCharArray();</span>
+<span class="nc" id="L214">		final double[] bounds = new double[4];</span>
+<span class="nc" id="L215">		NativeCanvas.textBounds(handle, chars, chars.length, bounds);</span>
+<span class="nc" id="L216">		return bounds;</span>
 	}
 
 	private void setFont(UFont font) {
-<span class="nc" id="L222">		final UFontFace face = font.getFontFace();</span>
+<span class="nc" id="L220">		final UFontFace face = font.getFontFace();</span>
 		final int id;
-<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (face.isBold())</span>
-<span class="nc bnc" id="L225" title="All 2 branches missed.">			id = face.isItalic() ? NativeCanvas.FONT_SANS_BOLD_ITALIC : NativeCanvas.FONT_SANS_BOLD;</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (face.isBold())</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">			id = face.isItalic() ? NativeCanvas.FONT_SANS_BOLD_ITALIC : NativeCanvas.FONT_SANS_BOLD;</span>
 		else
-<span class="nc bnc" id="L227" title="All 2 branches missed.">			id = face.isItalic() ? NativeCanvas.FONT_SANS_ITALIC : NativeCanvas.FONT_SANS;</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (NativeCanvas.setFont(handle(), id, font.getSize2D()) != 0)</span>
-<span class="nc" id="L229">			throw new IllegalStateException(&quot;No embedded font&quot;);</span>
-<span class="nc" id="L230">	}</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">			id = face.isItalic() ? NativeCanvas.FONT_SANS_ITALIC : NativeCanvas.FONT_SANS;</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (NativeCanvas.setFont(handle(), id, font.getSize2D()) != 0)</span>
+<span class="nc" id="L227">			throw new IllegalStateException(&quot;No embedded font&quot;);</span>
+<span class="nc" id="L228">	}</span>
 
 	@Override
 	public byte[] toPng() {
-		// TEMPORARY traces (see Trace)
-<span class="nc" id="L235">		Trace.log(&quot;toPng: encoding, handle &quot; + handle + &quot;, opaque &quot; + opaque);</span>
-<span class="nc bnc" id="L236" title="All 2 branches missed.">		final int size = NativeCanvas.encodePng(handle(), opaque ? 1 : 0);</span>
-<span class="nc" id="L237">		Trace.log(&quot;toPng: encoded, &quot; + size + &quot; bytes&quot;);</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (size &lt; 0)</span>
-<span class="nc" id="L239">			throw new IllegalStateException(&quot;PNG encoding failed&quot;);</span>
-<span class="nc" id="L240">		final byte[] result = new byte[size];</span>
-<span class="nc" id="L241">		Trace.heap(&quot;toPng: array allocated&quot;);</span>
-<span class="nc" id="L242">		NativeCanvas.copyPng(handle, result);</span>
-<span class="nc" id="L243">		Trace.log(&quot;toPng: copied, start &quot; + Trace.head(result, 16) + &quot;, end &quot; + Trace.tail(result, 16));</span>
-<span class="nc" id="L244">		return result;</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		final int size = NativeCanvas.encodePng(handle(), opaque ? 1 : 0);</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		if (size &lt; 0)</span>
+<span class="nc" id="L234">			throw new IllegalStateException(&quot;PNG encoding failed&quot;);</span>
+<span class="nc" id="L235">		final byte[] result = new byte[size];</span>
+<span class="nc" id="L236">		NativeCanvas.copyPng(handle, result);</span>
+<span class="nc" id="L237">		return result;</span>
 	}
 
 	@Override
 	public void dispose() {
-<span class="nc bnc" id="L249" title="All 2 branches missed.">		if (handle != 0) {</span>
-<span class="nc" id="L250">			Trace.log(&quot;dispose: destroying the canvas &quot; + handle);</span>
-<span class="nc" id="L251">			NativeCanvas.destroy(handle);</span>
-<span class="nc" id="L252">			Trace.log(&quot;dispose: canvas destroyed&quot;);</span>
-<span class="nc" id="L253">			handle = 0;</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">		if (handle != 0) {</span>
+<span class="nc" id="L243">			NativeCanvas.destroy(handle);</span>
+<span class="nc" id="L244">			handle = 0;</span>
 		}
-<span class="nc" id="L255">	}</span>
+<span class="nc" id="L246">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
