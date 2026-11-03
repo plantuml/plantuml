@@ -116,8 +116,8 @@ import net.sourceforge.plantuml.utils.MyCollections;
 	}
 
 	public final void goNodeStyle() {
-<span class="nc" id="L119">		this.useNodeStyle = true;</span>
-<span class="nc" id="L120">	}</span>
+<span class="fc" id="L119">		this.useNodeStyle = true;</span>
+<span class="fc" id="L120">	}</span>
 
 	public boolean useNodeStyle() {
 <span class="nc" id="L123">		return useNodeStyle;</span>
@@ -152,25 +152,30 @@ import net.sourceforge.plantuml.utils.MyCollections;
 <span class="nc" id="L152">				this.goSingle();</span>
 <span class="pc bpc" id="L153" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;plain&quot;)) {</span>
 				// Do nothing
-<span class="pc bpc" id="L155" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;node&quot;)) {</span>
-<span class="nc" id="L156">				this.goNodeStyle();</span>
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;norank&quot;)) {</span>
-<span class="nc" id="L158">				this.goNorank();</span>
-<span class="fc bfc" id="L159" title="All 2 branches covered.">			} else if (s.startsWith(&quot;thickness=&quot;)) {</span>
-<span class="fc" id="L160">				this.goThickness(Double.parseDouble(s.substring(&quot;thickness=&quot;.length())));</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">			} else if (s.equalsIgnoreCase(&quot;node&quot;)) {</span>
+<span class="fc" id="L156">				this.goNodeStyle();</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">			} else if (s.equalsIgnoreCase(&quot;nonode&quot;)) {</span>
+				// Explicit opt-out of node style, already resolved by the caller
+				// (see CommandLinkStateCommon/CommandLinkElement.shouldUseNodeStyle);
+				// nothing to apply here, but it must not fall through to the
+				// color lookup below.
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">			} else if (s.equalsIgnoreCase(&quot;norank&quot;)) {</span>
+<span class="nc" id="L163">				this.goNorank();</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">			} else if (s.startsWith(&quot;thickness=&quot;)) {</span>
+<span class="fc" id="L165">				this.goThickness(Double.parseDouble(s.substring(&quot;thickness=&quot;.length())));</span>
 			} else {
-<span class="fc" id="L162">				final HColor tmp = HColorSet.instance().getColorOrWhite(s);</span>
-<span class="fc" id="L163">				setSpecificColor(tmp, i);</span>
+<span class="fc" id="L167">				final HColor tmp = HColorSet.instance().getColorOrWhite(s);</span>
+<span class="fc" id="L168">				setSpecificColor(tmp, i);</span>
 			}
-<span class="fc" id="L165">		}</span>
-<span class="fc" id="L166">	}</span>
+<span class="fc" id="L170">		}</span>
+<span class="fc" id="L171">	}</span>
 
 	public LinkType getType() {
-<span class="fc" id="L169">		return type;</span>
+<span class="fc" id="L174">		return type;</span>
 	}
 
 	public UStroke getUStroke() {
-<span class="nc" id="L173">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L178">		throw new UnsupportedOperationException();</span>
 	}
 
 }
