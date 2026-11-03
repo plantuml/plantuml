@@ -127,6 +127,7 @@ public class UGraphicRaster extends AbstractUGraphic<RasterCanvas> {
 					+ Trace.tail(png, 16));
 			Trace.heap("writeToStream: after toPng");
 			Trace.crc("writeToStream: after toPng");
+			Trace.zlib("writeToStream: after toPng");
 			final byte[] withChunks = PngChunks.addPlantUmlChunks(png, metadata, dpi);
 			Trace.log("writeToStream: chunks added, " + withChunks.length + " bytes");
 			os.write(withChunks);

@@ -288,10 +288,56 @@ jobs:
           setarch "$(uname -m)" -R "$exe" -tpng mindmap.puml > /dev/null 2> aslr.txt; echo "exit code $?, last: $(tail -1 aslr.txt)"
           echo "-- glibc heap checks"
           MALLOC_CHECK_=3 MALLOC_PERTURB_=165 "$exe" -tpng mindmap.puml > /dev/null 2> malloc.txt; echo "exit code $?, last: $(tail -3 malloc.txt)"
+          echo "-- empty environment"
+          env -i "$PWD/$exe" -tpng mindmap.puml > /dev/null 2> envi.txt; echo "exit code $?, last: $(tail -1 envi.txt)"
           echo "-- other outputs"
           for t in svg txt utxt; do "$exe" -t$t mindmap.puml > /dev/null 2>&1; echo "-t$t: exit code $?"; done
           printf '@startuml\nclass A\nclass B\nA --> B\n@enduml\n' > class.puml
           "$exe" -tpng class.puml > /dev/null 2>&1; echo "class diagram -tpng: exit code $?"
+
+      # Is the generated C the same as the one of the local generation? Digests to compare
+      # with the ones of the person who investigates, and the exact command of the compiler.
+      - name: "Diagnose 1b: the generated C and the compiler command"
+        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        continue-on-error: true
+        run: |
+          set +e
+          for f in classes/com/jcraft/jzlib/CRC32.c classes/java/util/zip/CRC32.c core.h memory.c definitions.h CMakeLists.txt; do
+            echo "$(sha1sum c-sources/$f | cut -c1-12) $f"
+          done
+          echo "files: $(wc -l < c-sources/all.txt)"
+          grep -n "teavm_initHeap" c-sources/main.c
+          touch c-sources/classes/com/jcraft/jzlib/CRC32.c
+          cmake --build c-build -- VERBOSE=1 2>&1 | grep -m2 "CRC32.c" | cut -c1-700
+          readelf -p .comment c-sources/bin/plantuml | head -5
+
+      # Where does the table of CRC32 (or the flag "initialized" of the class) change? The
+      # watchpoints stop the program at each change and print where it comes from.
+      - name: "Diagnose 1c: gdb watchpoints on the table and on the flags of CRC32"
+        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        continue-on-error: true
+        run: |
+          set +e
+          sudo apt-get install -y gdb > /dev/null
+          cat > watch.gdb <<'EOF'
+          set pagination off
+          set breakpoint pending on
+          tbreak main
+          run
+          info variables CRC32
+          watch -l sfld_cjj_CRC32_crc_table
+          watch -l cjj_CRC32_Cls.parent.flags
+          commands 2
+          bt 12
+          continue
+          end
+          commands 3
+          bt 12
+          continue
+          end
+          continue
+          EOF
+          gdb -batch -x watch.gdb --args c-sources/bin/plantuml -tpng mindmap.puml 2>&1 | head -200
 
       - name: "Diagnose 2: gdb backtrace of the segmentation fault"
         if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
@@ -346,6 +392,19 @@ jobs:
               -DCMAKE_C_FLAGS="-g -DTEAVM_MEMORY_TRACE=1 -DTEAVM_GC_STATS=1"
           cmake --build c-trace-build --parallel "$(getconf _NPROCESSORS_ONLN)" 2>&1 | tail -5
           c-trace/bin/plantuml -tpng mindmap.puml 2>&1 | tail -150
+          echo "exit code: ${PIPESTATUS[0]}"
+
+      # The same code without optimization: if it works, the failure comes from an optimization
+      - name: "Diagnose 5b: no optimization (-O0)"
+        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        continue-on-error: true
+        run: |
+          set +e
+          rm -rf c-o0 c-o0-build
+          cp -r c-sources c-o0
+          cmake -S c-o0 -B c-o0-build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-g -O0"
+          cmake --build c-o0-build --parallel "$(getconf _NPROCESSORS_ONLN)" 2>&1 | tail -3
+          c-o0/bin/plantuml -tpng mindmap.puml 2>&1 | grep -E "CRC32|zlib|exit|Exception" | head -8
           echo "exit code: ${PIPESTATUS[0]}"
 
       - name: "Diagnose 6: AddressSanitizer"

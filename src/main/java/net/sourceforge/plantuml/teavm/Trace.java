@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.teavm;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.CRC32;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
 /**
  * TEMPORARY, to be removed: traces to find why the C executable fails in the
@@ -96,6 +98,36 @@ public final class Trace {
 			log(where + ": CRC32 " + Long.toHexString(value) + (value == 0xCBF43926L ? " OK" : " WRONG"));
 		} catch (Throwable t) {
 			log(where + ": CRC32 FAILED with " + t);
+		}
+	}
+
+	/**
+	 * Another class of jzlib that has static tables (the Deflater and the Inflater): is the
+	 * problem only the one of CRC32, or of the classes with a static initializer?
+	 */
+	public static void zlib(String where) {
+		if (sink == null)
+			return;
+
+		try {
+			final byte[] input = new byte[200];
+			for (int i = 0; i < input.length; i++)
+				input[i] = (byte) (i % 7);
+			final Deflater deflater = new Deflater();
+			deflater.setInput(input);
+			deflater.finish();
+			final byte[] compressed = new byte[300];
+			final int compressedSize = deflater.deflate(compressed);
+			deflater.end();
+			final Inflater inflater = new Inflater();
+			inflater.setInput(compressed, 0, compressedSize);
+			final byte[] back = new byte[300];
+			final int backSize = inflater.inflate(back);
+			inflater.end();
+			log(where + ": zlib deflate " + compressedSize + " bytes, inflate " + backSize
+					+ (backSize == input.length ? " OK" : " WRONG"));
+		} catch (Throwable t) {
+			log(where + ": zlib FAILED with " + t);
 		}
 	}
 

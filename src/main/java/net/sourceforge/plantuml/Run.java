@@ -113,6 +113,7 @@ public class Run {
 			Trace.log("start, arguments:" + arguments);
 			Trace.heap("start");
 			Trace.crc("start");
+			Trace.zlib("start");
 			Trace.gc("start");
 		}
 		// ::done
