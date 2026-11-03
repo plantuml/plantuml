@@ -77,17 +77,25 @@ jobs:
           retention-days: 7
 
   build_unix:
-    name: Build ${{ matrix.os }}-${{ matrix.arch }}
+    name: Build ${{ matrix.os }}-${{ matrix.arch }} (${{ matrix.variant }})
     needs: generate_c
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
+        # TEMPORARY: the image "ubuntu-latest" became Ubuntu 26.04 (gcc 15.2) and the executable
+        # built there fails (segmentation fault or NullPointerException at the first use of
+        # CRC32, whatever the heap), while ubuntu-24.04 (gcc 13) and the arm64 runner (24.04)
+        # are fine. Same C sources, different compilers and flags:
         include:
-          - os: linux
-            arch: x64
-            runner: ubuntu-latest
+          - { os: linux, arch: x64, runner: ubuntu-24.04, variant: u2404-gcc13, cc: gcc, cflags: "", diag: false }
+          - { os: linux, arch: x64, runner: ubuntu-latest, variant: latest-gcc15, cc: gcc, cflags: "", diag: true }
+          - { os: linux, arch: x64, runner: ubuntu-latest, variant: latest-gcc15-noalias, cc: gcc, cflags: "-fno-strict-aliasing", diag: false }
+          - { os: linux, arch: x64, runner: ubuntu-latest, variant: latest-gcc15-fwrapv, cc: gcc, cflags: "-fwrapv -fno-delete-null-pointer-checks", diag: false }
+          - { os: linux, arch: x64, runner: ubuntu-latest, variant: latest-gcc14, cc: gcc-14, cflags: "", diag: false }
+          - { os: linux, arch: x64, runner: ubuntu-latest, variant: latest-gcc13, cc: gcc-13, cflags: "", diag: false }
+          - { os: linux, arch: x64, runner: ubuntu-latest, variant: latest-clang, cc: clang, cflags: "", diag: false }
 
     steps:
       - name: Checkout the repository
@@ -105,11 +113,19 @@ jobs:
         if: matrix.os == 'linux'
         run: sudo apt-get install -y libcurl4-openssl-dev
 
+      # TEMPORARY: the compiler of the variant, when it is not the default one
+      - name: Install the compiler
+        if: matrix.os == 'linux' && matrix.cc != 'gcc'
+        run: |
+          sudo apt-get install -y ${{ matrix.cc }}
+
       # Single-configuration generator (Unix Makefiles): the executable is
       # c-sources/bin/plantuml (CMakeLists.txt builds in Release by default)
       # TEMPORARY: -g on Linux, for the backtraces of the diagnostics below (no effect on the code)
       - name: Configure
-        run: cmake -S c-sources -B c-build -DCMAKE_BUILD_TYPE=Release ${{ matrix.os == 'linux' && '-DCMAKE_C_FLAGS=-g' || '' }}
+        run: |
+          ${{ matrix.cc }} --version | head -1
+          CC=${{ matrix.cc }} cmake -S c-sources -B c-build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-g ${{ matrix.cflags }}"
 
       # An explicit number of jobs: a bare --parallel gives make an unlimited -j, which
       # spawns one cc process per generated file at once and exhausts the process
@@ -151,7 +167,7 @@ jobs:
       # log of the step above, see net.sourceforge.plantuml.teavm.Trace.
       # ===================================================================================
       - name: "Diagnose 1: machine, and is the failure stable?"
-        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        if: failure() && matrix.diag == true
         continue-on-error: true
         run: |
           set +e
@@ -180,7 +196,7 @@ jobs:
       # Is the generated C the same as the one of the local generation? Digests to compare
       # with the ones of the person who investigates, and the exact command of the compiler.
       - name: "Diagnose 1b: the generated C and the compiler command"
-        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        if: failure() && matrix.diag == true
         continue-on-error: true
         run: |
           set +e
@@ -196,7 +212,7 @@ jobs:
       # Where does the table of CRC32 (or the flag "initialized" of the class) change? The
       # watchpoints stop the program at each change and print where it comes from.
       - name: "Diagnose 1c: gdb watchpoints on the table and on the flags of CRC32"
-        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        if: failure() && matrix.diag == true
         continue-on-error: true
         run: |
           set +e
@@ -222,7 +238,7 @@ jobs:
           gdb -batch -x watch.gdb --args c-sources/bin/plantuml -tpng mindmap.puml 2>&1 | head -200
 
       - name: "Diagnose 2: gdb backtrace of the segmentation fault"
-        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        if: failure() && matrix.diag == true
         continue-on-error: true
         run: |
           set +e
@@ -232,7 +248,7 @@ jobs:
               --args c-sources/bin/plantuml -tpng mindmap.puml 2>&1 | tail -200
 
       - name: "Diagnose 3: valgrind"
-        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        if: failure() && matrix.diag == true
         continue-on-error: true
         run: |
           set +e
@@ -242,7 +258,7 @@ jobs:
 
       # The heap is a constant of main.c: only this file is compiled again for each size
       - name: "Diagnose 4: heap size sweep"
-        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        if: failure() && matrix.diag == true
         continue-on-error: true
         run: |
           set +e
@@ -264,7 +280,7 @@ jobs:
       # The checks of the runtime of TeaVM itself: the consistency of the heap is verified at
       # each garbage collection (abort on the first problem), and each collection is printed
       - name: "Diagnose 5: runtime of TeaVM with the memory trace and the GC statistics"
-        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        if: failure() && matrix.diag == true
         continue-on-error: true
         run: |
           set +e
@@ -278,7 +294,7 @@ jobs:
 
       # The same code without optimization: if it works, the failure comes from an optimization
       - name: "Diagnose 5b: no optimization (-O0)"
-        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        if: failure() && matrix.diag == true
         continue-on-error: true
         run: |
           set +e
@@ -296,7 +312,7 @@ jobs:
       # in the local runs. Here each call outside of the heap is reported with the C function
       # that makes it ("[barrier] OUTSIDE OF THE HEAP"), and its barrier is skipped.
       - name: "Diagnose 5c: bounds check in the write barrier"
-        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        if: failure() && matrix.diag == true
         continue-on-error: true
         run: |
           set +e
@@ -346,7 +362,7 @@ jobs:
           done
 
       - name: "Diagnose 6: AddressSanitizer"
-        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        if: failure() && matrix.diag == true
         continue-on-error: true
         run: |
           set +e
@@ -421,7 +437,7 @@ jobs:
       - name: Upload the SVG and the PNG
         uses: actions/upload-artifact@v7
         with:
-          name: mindmap-${{ matrix.os }}-${{ matrix.arch }}
+          name: mindmap-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.variant }}
           path: |
             mindmap.svg
             mindmap.png
@@ -431,6 +447,6 @@ jobs:
       - name: Upload executable
         uses: actions/upload-artifact@v7
         with:
-          name: plantuml-${{ matrix.os }}-${{ matrix.arch }}
+          name: plantuml-${{ matrix.os }}-${{ matrix.arch }}-${{ matrix.variant }}
           path: c-sources/bin/plantuml
           retention-days: 30
