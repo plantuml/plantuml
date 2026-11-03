@@ -194,12 +194,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Not ubuntu-latest: it became Ubuntu 26.04 (gcc 15.2), and the executable built by
-          # gcc 15 crashes at the first use of CRC32 (gcc 13, gcc 14 and clang are fine on the
-          # same image). ubuntu-24.04 has gcc 13, as the arm64 runner. See src/teavm-c/README.md
           - os: linux
             arch: x64
-            runner: ubuntu-24.04
+            runner: ubuntu-latest
           - os: linux
             arch: arm64
             runner: ubuntu-24.04-arm
