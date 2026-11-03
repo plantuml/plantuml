@@ -12,6 +12,15 @@ endif()
 
 project(plantuml_c C)
 
+# The executable built by gcc 15 crashes (segmentation fault, or NullPointerException) at the
+# first use of java.util.zip.CRC32, whatever the options tried (-fno-strict-aliasing, -fwrapv,
+# -fno-delete-null-pointer-checks): the same C built by gcc 13, gcc 14 or clang works. Seen in the
+# CI when ubuntu-latest became Ubuntu 26.04 (gcc 15.2); the cause is not understood yet.
+if (CMAKE_C_COMPILER_ID STREQUAL "GNU" AND CMAKE_C_COMPILER_VERSION VERSION_GREATER_EQUAL 15)
+	message(WARNING "gcc ${CMAKE_C_COMPILER_VERSION}: the executable is known to crash with gcc 15 "
+			"(see src/teavm-c/README.md). Use gcc 14 or older, or clang (CC=clang).")
+endif()
+
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
