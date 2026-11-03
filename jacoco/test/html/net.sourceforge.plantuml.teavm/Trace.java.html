@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.teavm;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.CRC32;
+import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
 /**
  * TEMPORARY, to be removed: traces to find why the C executable fails in the
@@ -56,85 +58,115 @@ public final class Trace {
 	}
 
 	public static void install(PrintStream out) {
-<span class="nc" id="L59">		sink = out;</span>
-<span class="nc" id="L60">	}</span>
+<span class="nc" id="L61">		sink = out;</span>
+<span class="nc" id="L62">	}</span>
 
 	public static boolean enabled() {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		return sink != null;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		return sink != null;</span>
 	}
 
 	public static void log(String message) {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (sink == null)</span>
-<span class="fc" id="L68">			return;</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (sink == null)</span>
+<span class="fc" id="L70">			return;</span>
 
-<span class="nc" id="L70">		counter++;</span>
-<span class="nc" id="L71">		sink.println(&quot;[trace &quot; + counter + &quot;] &quot; + message);</span>
-<span class="nc" id="L72">		sink.flush();</span>
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L72">		counter++;</span>
+<span class="nc" id="L73">		sink.println(&quot;[trace &quot; + counter + &quot;] &quot; + message);</span>
+<span class="nc" id="L74">		sink.flush();</span>
+<span class="nc" id="L75">	}</span>
 
 	/** The free and total memory of the heap of the C runtime. */
 	public static void heap(String where) {
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (sink == null)</span>
-<span class="fc" id="L78">			return;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (sink == null)</span>
+<span class="fc" id="L80">			return;</span>
 
-<span class="nc" id="L80">		final Runtime runtime = Runtime.getRuntime();</span>
-<span class="nc" id="L81">		log(where + &quot;: heap free=&quot; + runtime.freeMemory() + &quot; total=&quot; + runtime.totalMemory());</span>
-<span class="nc" id="L82">	}</span>
+<span class="nc" id="L82">		final Runtime runtime = Runtime.getRuntime();</span>
+<span class="nc" id="L83">		log(where + &quot;: heap free=&quot; + runtime.freeMemory() + &quot; total=&quot; + runtime.totalMemory());</span>
+<span class="nc" id="L84">	}</span>
 
 	/**
 	 * Uses a CRC32 on a known value (&quot;123456789&quot; has the CRC 0xCBF43926): tells whether
 	 * the class (and its table) still works here. The exception, if any, is printed.
 	 */
 	public static void crc(String where) {
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (sink == null)</span>
-<span class="fc" id="L90">			return;</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (sink == null)</span>
+<span class="fc" id="L92">			return;</span>
 
 		try {
-<span class="nc" id="L93">			final CRC32 crc = new CRC32();</span>
-<span class="nc" id="L94">			crc.update(&quot;123456789&quot;.getBytes(StandardCharsets.ISO_8859_1));</span>
-<span class="nc" id="L95">			final long value = crc.getValue();</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">			log(where + &quot;: CRC32 &quot; + Long.toHexString(value) + (value == 0xCBF43926L ? &quot; OK&quot; : &quot; WRONG&quot;));</span>
-<span class="nc" id="L97">		} catch (Throwable t) {</span>
-<span class="nc" id="L98">			log(where + &quot;: CRC32 FAILED with &quot; + t);</span>
-<span class="nc" id="L99">		}</span>
-<span class="nc" id="L100">	}</span>
+<span class="nc" id="L95">			final CRC32 crc = new CRC32();</span>
+<span class="nc" id="L96">			crc.update(&quot;123456789&quot;.getBytes(StandardCharsets.ISO_8859_1));</span>
+<span class="nc" id="L97">			final long value = crc.getValue();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			log(where + &quot;: CRC32 &quot; + Long.toHexString(value) + (value == 0xCBF43926L ? &quot; OK&quot; : &quot; WRONG&quot;));</span>
+<span class="nc" id="L99">		} catch (Throwable t) {</span>
+<span class="nc" id="L100">			log(where + &quot;: CRC32 FAILED with &quot; + t);</span>
+<span class="nc" id="L101">		}</span>
+<span class="nc" id="L102">	}</span>
+
+	/**
+	 * Another class of jzlib that has static tables (the Deflater and the Inflater): is the
+	 * problem only the one of CRC32, or of the classes with a static initializer?
+	 */
+	public static void zlib(String where) {
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (sink == null)</span>
+<span class="fc" id="L110">			return;</span>
+
+		try {
+<span class="nc" id="L113">			final byte[] input = new byte[200];</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			for (int i = 0; i &lt; input.length; i++)</span>
+<span class="nc" id="L115">				input[i] = (byte) (i % 7);</span>
+<span class="nc" id="L116">			final Deflater deflater = new Deflater();</span>
+<span class="nc" id="L117">			deflater.setInput(input);</span>
+<span class="nc" id="L118">			deflater.finish();</span>
+<span class="nc" id="L119">			final byte[] compressed = new byte[300];</span>
+<span class="nc" id="L120">			final int compressedSize = deflater.deflate(compressed);</span>
+<span class="nc" id="L121">			deflater.end();</span>
+<span class="nc" id="L122">			final Inflater inflater = new Inflater();</span>
+<span class="nc" id="L123">			inflater.setInput(compressed, 0, compressedSize);</span>
+<span class="nc" id="L124">			final byte[] back = new byte[300];</span>
+<span class="nc" id="L125">			final int backSize = inflater.inflate(back);</span>
+<span class="nc" id="L126">			inflater.end();</span>
+<span class="nc" id="L127">			log(where + &quot;: zlib deflate &quot; + compressedSize + &quot; bytes, inflate &quot; + backSize</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">					+ (backSize == input.length ? &quot; OK&quot; : &quot; WRONG&quot;));</span>
+<span class="nc" id="L129">		} catch (Throwable t) {</span>
+<span class="nc" id="L130">			log(where + &quot;: zlib FAILED with &quot; + t);</span>
+<span class="nc" id="L131">		}</span>
+<span class="nc" id="L132">	}</span>
 
 	/** A garbage collection, then the same checks: does the GC lose something? */
 	public static void gc(String where) {
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (sink == null)</span>
-<span class="fc" id="L105">			return;</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (sink == null)</span>
+<span class="fc" id="L137">			return;</span>
 
-<span class="nc" id="L107">		heap(where + &quot; before gc&quot;);</span>
-<span class="nc" id="L108">		System.gc();</span>
-<span class="nc" id="L109">		heap(where + &quot; after gc&quot;);</span>
-<span class="nc" id="L110">		crc(where + &quot; after gc&quot;);</span>
-<span class="nc" id="L111">	}</span>
+<span class="nc" id="L139">		heap(where + &quot; before gc&quot;);</span>
+<span class="nc" id="L140">		System.gc();</span>
+<span class="nc" id="L141">		heap(where + &quot; after gc&quot;);</span>
+<span class="nc" id="L142">		crc(where + &quot; after gc&quot;);</span>
+<span class="nc" id="L143">	}</span>
 
 	/** The first bytes of an array, in hexadecimal. */
 	public static String head(byte[] data, int count) {
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (data == null)</span>
-<span class="nc" id="L116">			return &quot;null&quot;;</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (data == null)</span>
+<span class="nc" id="L148">			return &quot;null&quot;;</span>
 
-<span class="fc" id="L118">		final StringBuilder sb = new StringBuilder();</span>
-<span class="pc bpc" id="L119" title="1 of 4 branches missed.">		for (int i = 0; i &lt; data.length &amp;&amp; i &lt; count; i++)</span>
-<span class="fc" id="L120">			sb.append(hex(data[i]));</span>
-<span class="fc" id="L121">		return sb.toString();</span>
+<span class="fc" id="L150">		final StringBuilder sb = new StringBuilder();</span>
+<span class="pc bpc" id="L151" title="1 of 4 branches missed.">		for (int i = 0; i &lt; data.length &amp;&amp; i &lt; count; i++)</span>
+<span class="fc" id="L152">			sb.append(hex(data[i]));</span>
+<span class="fc" id="L153">		return sb.toString();</span>
 	}
 
 	/** The last bytes of an array, in hexadecimal. */
 	public static String tail(byte[] data, int count) {
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (data == null)</span>
-<span class="nc" id="L127">			return &quot;null&quot;;</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (data == null)</span>
+<span class="nc" id="L159">			return &quot;null&quot;;</span>
 
-<span class="fc" id="L129">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">		for (int i = Math.max(0, data.length - count); i &lt; data.length; i++)</span>
-<span class="fc" id="L131">			sb.append(hex(data[i]));</span>
-<span class="fc" id="L132">		return sb.toString();</span>
+<span class="fc" id="L161">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		for (int i = Math.max(0, data.length - count); i &lt; data.length; i++)</span>
+<span class="fc" id="L163">			sb.append(hex(data[i]));</span>
+<span class="fc" id="L164">		return sb.toString();</span>
 	}
 
 	private static String hex(byte b) {
-<span class="fc" id="L136">		final String digits = &quot;0123456789abcdef&quot;;</span>
-<span class="fc" id="L137">		return &quot;&quot; + digits.charAt((b &gt;&gt; 4) &amp; 0xF) + digits.charAt(b &amp; 0xF);</span>
+<span class="fc" id="L168">		final String digits = &quot;0123456789abcdef&quot;;</span>
+<span class="fc" id="L169">		return &quot;&quot; + digits.charAt((b &gt;&gt; 4) &amp; 0xF) + digits.charAt(b &amp; 0xF);</span>
 	}
 
 }
