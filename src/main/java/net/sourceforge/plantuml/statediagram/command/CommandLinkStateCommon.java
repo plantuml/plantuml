@@ -110,7 +110,7 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		final String style = arg.getLazzy("ARROW_STYLE", 0);
 		if (style != null) {
 			sb.append(", with style '").append(style).append("'");
-			if (StringUtils.goLowerCase(style).contains("node"))
+			if (containsStyleKeyword(style, "node"))
 				sb.append(" (the label is drawn as an intermediate transition node)");
 		}
 
@@ -290,9 +290,17 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 	}
 
 	private boolean shouldUseNodeStyle(StateDiagram diagram, RegexResult arg) {
-		// First check if "node" keyword is in the arrow style (per-transition override)
+		// 'nonode' is a per-transition override that forces node style off, even
+		// when the global skinparam setting below would otherwise turn it on.
+		// This must be checked with an exact token match: a naive
+		// arrowStyle.contains("node") would (wrongly) also match inside
+		// "nonode" itself and turn node style back on.
 		final String arrowStyle = arg.getLazzy("ARROW_STYLE", 0);
-		if (arrowStyle != null && arrowStyle.toLowerCase().contains("node"))
+		if (containsStyleKeyword(arrowStyle, "nonode"))
+			return false;
+
+		// The "node" keyword in the arrow style is a per-transition override
+		if (containsStyleKeyword(arrowStyle, "node"))
 			return true;
 
 		// Fall back to global skinparam setting
@@ -301,6 +309,17 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 			return true;
 
 		// Default to normal (original behavior)
+		return false;
+	}
+
+	private static boolean containsStyleKeyword(String arrowStyle, String keyword) {
+		if (arrowStyle == null)
+			return false;
+
+		for (String part : arrowStyle.split("[,;]"))
+			if (part.trim().equalsIgnoreCase(keyword))
+				return true;
+
 		return false;
 	}
 

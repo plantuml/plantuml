@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+' componentDiagramEdgeLabelStyle node applies to every labelled link;
+' -[nonode]-> opts one link out, and a hidden link leaves no label behind
+skinparam componentDiagramEdgeLabelStyle node
+component Client
+component Server
+database DB
+
+Client --> Server : request / auth
+Server -[nonode]-> DB : query
+Client -[hidden]-> DB : invisible
+@enduml

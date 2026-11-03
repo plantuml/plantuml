@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="226px" preserveAspectRatio="none" style="width:325px;height:226px;background:#FFFFFF;" version="1.1" viewBox="0 0 325 226" width="325px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="PoweringUp" data-source-line="10" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="96.388" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="102.388" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="76.388" x="16" y="27.889">PoweringUp</text>
+    </g>
+    <g class="entity" data-qualified-name="Charging" data-source-line="11" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76.875" x="15.5" y="160"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15.5" x2="92.375" y1="184" y2="184"/>
+      <text fill="#000" font-size="14" textLength="56.875" x="25.5" y="175.889">Charging</text>
+    </g>
+    <rect fill="none" height="21" rx="2.5" ry="2.5" style="stroke:none;" width="40.5" x="33.5" y="99"/>
+    <text fill="#000" font-size="13" textLength="32.5" x="37.5" y="113.111">ready</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="102.054,44.642,111.318,47.987,107.041,44.284,110.744,40.008,102.054,44.642" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M102.054,29.358 C112.456,30.105 120,32.652 120,37 C120,41.348 117.443,43.537 107.041,44.284" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="195.975" x="122" y="40.611">selfCheckFailed [attempt &lt; 3] / retry()</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="association" id="lnk5">
+      <path d="M54,62.376 C54,74.778 54,89.242 54,98.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="54,159.724,58,150.724,54,154.724,50,150.724,54,159.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M54,123.25 C54,132.979 54,142.384 54,154.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

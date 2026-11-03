@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="310px" preserveAspectRatio="none" style="width:103px;height:310px;background:#FFFFFF;" version="1.1" viewBox="0 0 103 310" width="103px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Client-->
+    <g class="entity" data-qualified-name="Client" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75.875" x="8.5" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="64.375" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="62.375" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="62.375" y="23"/>
+      <text fill="#000" font-size="14" textLength="35.875" x="23.5" y="42.889">Client</text>
+    </g>
+    <!--entity Server-->
+    <g class="entity" data-qualified-name="Server" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.213" x="6" y="154"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="67.213" y="159"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="65.213" y="161"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="65.213" y="165"/>
+      <text fill="#000" font-size="14" textLength="41.213" x="21" y="184.889">Server</text>
+    </g>
+    <!--entity DB-->
+    <g class="entity" data-qualified-name="DB" data-source-line="4" id="ent0003">
+      <path d="M26.5,261 C26.5,251 46.256,251 46.256,251 C46.256,251 66.012,251 66.012,261 L66.012,284 C66.012,294 46.256,294 46.256,294 C46.256,294 26.5,294 26.5,284 L26.5,261" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M26.5,261 C26.5,271 46.256,271 46.256,271 C46.256,271 66.012,271 66.012,261" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.512" x="36.5" y="285.889">DB</text>
+    </g>
+    <rect fill="none" height="21" rx="2.5" ry="2.5" style="stroke:none;" width="80.15" x="6.5" y="93"/>
+    <text fill="#000" font-size="13" textLength="72.15" x="10.5" y="107.111">request / auth</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="association" id="lnk6">
+      <path d="M46.5,56.077 C46.5,68.125 46.5,82.761 46.5,92.664" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="46.5,153.92,50.5,144.92,46.5,148.92,42.5,144.92,46.5,153.92" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M46.5,117.086 C46.5,126.991 46.5,136.77 46.5,148.92" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="46.5,250.791,50.5,241.791,46.5,245.791,42.5,241.791,46.5,250.791" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M46.5,198.444 C46.5,214.127 46.5,230.282 46.5,245.791" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="32.5" x="48.5" y="228.111">query</text>
+    </g>
+  </g>
+</svg>
