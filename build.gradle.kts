@@ -109,8 +109,8 @@ teavm {
 		// Heap size in MB (TeaVM default: 1 to 16). The heap starts at its maximum size, so that
 		// it is never resized: with a smaller start (1 MB), plantuml.exe crashed with an access
 		// violation (0xC0000005) on Windows ARM64, for instance on a diagram made of a single class.
-		minHeapSize.set(128)
-		maxHeapSize.set(128)
+		minHeapSize.set(64)
+		maxHeapSize.set(64)
 		// outputDir defaults to build/generated/teavm/c
 	}
 

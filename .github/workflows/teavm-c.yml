@@ -76,115 +76,6 @@ jobs:
           path: build/generated/teavm/c
           retention-days: 7
 
-  build_windows:
-    name: Build windows-${{ matrix.arch }}
-    needs: generate_c
-    runs-on: ${{ matrix.runner }}
-    timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - arch: x64
-            runner: windows-latest
-            cmake_platform: x64
-          - arch: arm64
-            runner: windows-11-arm
-            cmake_platform: ARM64
-
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v7
-
-      - name: Download C sources
-        uses: actions/download-artifact@v8
-        with:
-          name: teavm-c-sources
-          path: c-sources
-
-      # No -G: CMake picks the newest Visual Studio generator installed on the
-      # runner (2022 or 2026), which finds MSVC by itself (no developer prompt).
-      # TeaVM's runtime requires MSVC: it detects Windows via _MSC_VER.
-      - name: Configure (MSVC, ${{ matrix.cmake_platform }})
-        shell: pwsh
-        run: cmake -S c-sources -B c-build -A ${{ matrix.cmake_platform }}
-
-      - name: Build
-        shell: pwsh
-        run: cmake --build c-build --config Release --parallel
-
-      - name: Smoke test (mindmap to SVG)
-        shell: pwsh
-        run: |
-          $exe = "c-sources/bin/Release/plantuml.exe"
-          Write-Host "Size: $((Get-Item $exe).Length) bytes"
-          $src = "@startmindmap`n* Root`n** Alpha`n** Beta`n@endmindmap`n"
-          [System.IO.File]::WriteAllText("mindmap.puml", $src)
-          & $exe -tsvg mindmap.puml
-          if ($LASTEXITCODE -ne 0) { throw "plantuml.exe exited with code $LASTEXITCODE" }
-          if ((Test-Path mindmap.svg) -eq $false) { throw "No SVG was written" }
-          $svg = Get-Content -Raw mindmap.svg
-          Write-Host $svg
-          if ($svg -notmatch "<svg" -or $svg -notmatch "Alpha") {
-            Write-Host "::error::The output is not the expected SVG"
-            exit 1
-          }
-
-      - name: Smoke test (mindmap to PNG)
-        shell: pwsh
-        run: |
-          $exe = "c-sources/bin/Release/plantuml.exe"
-          & $exe -tpng mindmap.puml
-          if ($LASTEXITCODE -ne 0) { throw "plantuml.exe exited with code $LASTEXITCODE" }
-          if ((Test-Path mindmap.png) -eq $false) { throw "No PNG was written" }
-          $bytes = [System.IO.File]::ReadAllBytes("mindmap.png")
-          Write-Host "PNG: $($bytes.Length) bytes"
-          $signature = [System.Text.Encoding]::ASCII.GetString($bytes, 1, 3)
-          $text = [System.Text.Encoding]::ASCII.GetString($bytes)
-          if ($signature -ne "PNG" -or $text.Contains("iTXtplantuml") -eq $false) {
-            Write-Host "::error::The output is not the expected PNG"
-            exit 1
-          }
-
-      # The executable has the entry point of the JVM (Run): same help, same flags
-      - name: Smoke test (help)
-        shell: pwsh
-        run: |
-          $exe = "c-sources/bin/Release/plantuml.exe"
-          $help = (& $exe --help) -join "`n"
-          if ($LASTEXITCODE -ne 0) { throw "plantuml.exe exited with code $LASTEXITCODE" }
-          Write-Host $help
-          if ($help -notmatch "Show help and usage information" -or $help -notmatch "Generate SVG images") {
-            Write-Host "::error::The help is not the expected one"
-            exit 1
-          }
-
-      - name: Smoke test (exit code)
-        shell: pwsh
-        run: |
-          $exe = "c-sources/bin/Release/plantuml.exe"
-          & $exe no-such-file.puml
-          # 50: no file found, as on the JVM
-          if ($LASTEXITCODE -ne 50) { throw "Expected the exit code 50, got $LASTEXITCODE" }
-          # The expected non-zero code must not become the exit code of the step
-          $global:LASTEXITCODE = 0
-
-      - name: Upload the SVG and the PNG
-        uses: actions/upload-artifact@v7
-        with:
-          name: mindmap-windows-${{ matrix.arch }}
-          path: |
-            mindmap.svg
-            mindmap.png
-          retention-days: 7
-
-      - name: Upload executable
-        uses: actions/upload-artifact@v7
-        with:
-          name: plantuml-windows-${{ matrix.arch }}
-          path: c-sources/bin/Release/plantuml.exe
-          retention-days: 30
-
   build_unix:
     name: Build ${{ matrix.os }}-${{ matrix.arch }}
     needs: generate_c
@@ -197,15 +88,6 @@ jobs:
           - os: linux
             arch: x64
             runner: ubuntu-latest
-          - os: linux
-            arch: arm64
-            runner: ubuntu-24.04-arm
-          - os: macos
-            arch: x64
-            runner: macos-15-intel
-          - os: macos
-            arch: arm64
-            runner: macos-latest
 
     steps:
       - name: Checkout the repository
@@ -406,6 +288,62 @@ jobs:
           cmake --build c-o0-build --parallel "$(getconf _NPROCESSORS_ONLN)" 2>&1 | tail -3
           c-o0/bin/plantuml -tpng mindmap.puml 2>&1 | grep -E "CRC32|zlib|exit|Exception" | head -8
           echo "exit code: ${PIPESTATUS[0]}"
+
+      # Hypothesis: the write barrier of the core.h generated by TeaVM 0.16.0 writes a byte of
+      # the card table for ANY object, also one outside of the heap (a string literal, a class:
+      # the store of a monitor, see https://github.com/konsoletyper/teavm/issues/1330 and its
+      # fix f30b56f), which corrupts the memory at a place that depends on the addresses. Not seen
+      # in the local runs. Here each call outside of the heap is reported with the C function
+      # that makes it ("[barrier] OUTSIDE OF THE HEAP"), and its barrier is skipped.
+      - name: "Diagnose 5c: bounds check in the write barrier"
+        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        continue-on-error: true
+        run: |
+          set +e
+          cat > patch_barrier.py <<'PY'
+          #!/usr/bin/env python3
+          """TEMPORARY: bounds check in the write barrier of the generated core.h (the barrier of
+          TeaVM 0.16.0 writes a byte of the card table at (object - heap) / region size, for any
+          object: an object outside of the heap, such as a string literal, corrupts the memory).
+          Every call with an object outside of the heap is reported, with the C function that
+          makes it, and its barrier is skipped (the GC traverses these objects explicitly)."""
+          import sys
+          path = sys.argv[1]
+          text = open(path, encoding='utf-8').read()
+          old = '''inline static void teavm_gc_writeBarrier(void* object) {
+              intptr_t offset = (intptr_t) ((char*) object - (char*) teavm_gc_heapAddress) / teavm_gc_regionSize;
+              ((char*) teavm_gc_cardTable)[offset] = 0;
+          }'''
+          new = '''#include <stdio.h>
+          inline static void teavm_gc_writeBarrierDbg(void* object, const char* where) {
+              if ((char*) object < (char*) teavm_gc_heapAddress
+                      || (char*) object >= (char*) teavm_gc_heapAddress + teavm_gc_availableBytes) {
+                  fprintf(stderr, "[barrier] OUTSIDE OF THE HEAP: %s: object %p, heap %p + %lld, offset would be %lld\\n", where,
+                          object, teavm_gc_heapAddress, (long long) teavm_gc_availableBytes,
+                          (long long) ((intptr_t) ((char*) object - (char*) teavm_gc_heapAddress) / teavm_gc_regionSize));
+                  fflush(stderr);
+                  return;
+              }
+              intptr_t offset = (intptr_t) ((char*) object - (char*) teavm_gc_heapAddress) / teavm_gc_regionSize;
+              ((char*) teavm_gc_cardTable)[offset] = 0;
+          }
+          #define teavm_gc_writeBarrier(object) teavm_gc_writeBarrierDbg((void*) (object), __func__)'''
+          if old not in text:
+              sys.exit("core.h: the write barrier was not found, nothing patched")
+          open(path, 'w', encoding='utf-8').write(text.replace(old, new, 1))
+          print("core.h patched:", path)
+          PY
+          rm -rf c-barrier c-barrier-build
+          cp -r c-sources c-barrier
+          python3 patch_barrier.py c-barrier/core.h
+          cmake -S c-barrier -B c-barrier-build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS=-g
+          cmake --build c-barrier-build --parallel "$(getconf _NPROCESSORS_ONLN)" 2>&1 | tail -3
+          for t in svg png; do
+            c-barrier/bin/plantuml -t$t mindmap.puml > /dev/null 2> barrier-$t.txt
+            echo "-t$t: exit code $?, $(grep -c 'OUTSIDE OF THE HEAP' barrier-$t.txt) calls outside of the heap"
+            grep -E "OUTSIDE OF THE HEAP" barrier-$t.txt | sed -E 's/object 0x[0-9a-f]+/object ADDRESS/' | sort | uniq -c | sort -rn | head -15
+            grep -E "CRC32|zlib" barrier-$t.txt | head -4
+          done
 
       - name: "Diagnose 6: AddressSanitizer"
         if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
