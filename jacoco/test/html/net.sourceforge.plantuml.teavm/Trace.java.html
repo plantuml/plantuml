@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Trace.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm</a> &gt; <span class="el_source">Trace.java</span></div><h1>Trace.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.teavm;
+
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.util.zip.CRC32;
+
+/**
+ * TEMPORARY, to be removed: traces to find why the C executable fails in the
+ * job &quot;Build linux-x64&quot; of the CI (NullPointerException in the CRC32 of the PNG
+ * chunks with a heap of 64 MB, segmentation fault with 128 MB).
+ * &lt;p&gt;
+ * The traces go to the standard error and only exist in the C build, where
+ * {@code Run} installs the stream with {@link #install(PrintStream)}. Elsewhere
+ * (JVM, tests, JavaScript) nothing is written.
+ */
+public final class Trace {
+
+	private static PrintStream sink;
+	private static int counter;
+
+	private Trace() {
+	}
+
+	public static void install(PrintStream out) {
+<span class="nc" id="L59">		sink = out;</span>
+<span class="nc" id="L60">	}</span>
+
+	public static boolean enabled() {
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		return sink != null;</span>
+	}
+
+	public static void log(String message) {
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (sink == null)</span>
+<span class="fc" id="L68">			return;</span>
+
+<span class="nc" id="L70">		counter++;</span>
+<span class="nc" id="L71">		sink.println(&quot;[trace &quot; + counter + &quot;] &quot; + message);</span>
+<span class="nc" id="L72">		sink.flush();</span>
+<span class="nc" id="L73">	}</span>
+
+	/** The free and total memory of the heap of the C runtime. */
+	public static void heap(String where) {
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (sink == null)</span>
+<span class="fc" id="L78">			return;</span>
+
+<span class="nc" id="L80">		final Runtime runtime = Runtime.getRuntime();</span>
+<span class="nc" id="L81">		log(where + &quot;: heap free=&quot; + runtime.freeMemory() + &quot; total=&quot; + runtime.totalMemory());</span>
+<span class="nc" id="L82">	}</span>
+
+	/**
+	 * Uses a CRC32 on a known value (&quot;123456789&quot; has the CRC 0xCBF43926): tells whether
+	 * the class (and its table) still works here. The exception, if any, is printed.
+	 */
+	public static void crc(String where) {
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (sink == null)</span>
+<span class="fc" id="L90">			return;</span>
+
+		try {
+<span class="nc" id="L93">			final CRC32 crc = new CRC32();</span>
+<span class="nc" id="L94">			crc.update(&quot;123456789&quot;.getBytes(StandardCharsets.ISO_8859_1));</span>
+<span class="nc" id="L95">			final long value = crc.getValue();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			log(where + &quot;: CRC32 &quot; + Long.toHexString(value) + (value == 0xCBF43926L ? &quot; OK&quot; : &quot; WRONG&quot;));</span>
+<span class="nc" id="L97">		} catch (Throwable t) {</span>
+<span class="nc" id="L98">			log(where + &quot;: CRC32 FAILED with &quot; + t);</span>
+<span class="nc" id="L99">		}</span>
+<span class="nc" id="L100">	}</span>
+
+	/** A garbage collection, then the same checks: does the GC lose something? */
+	public static void gc(String where) {
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (sink == null)</span>
+<span class="fc" id="L105">			return;</span>
+
+<span class="nc" id="L107">		heap(where + &quot; before gc&quot;);</span>
+<span class="nc" id="L108">		System.gc();</span>
+<span class="nc" id="L109">		heap(where + &quot; after gc&quot;);</span>
+<span class="nc" id="L110">		crc(where + &quot; after gc&quot;);</span>
+<span class="nc" id="L111">	}</span>
+
+	/** The first bytes of an array, in hexadecimal. */
+	public static String head(byte[] data, int count) {
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (data == null)</span>
+<span class="nc" id="L116">			return &quot;null&quot;;</span>
+
+<span class="fc" id="L118">		final StringBuilder sb = new StringBuilder();</span>
+<span class="pc bpc" id="L119" title="1 of 4 branches missed.">		for (int i = 0; i &lt; data.length &amp;&amp; i &lt; count; i++)</span>
+<span class="fc" id="L120">			sb.append(hex(data[i]));</span>
+<span class="fc" id="L121">		return sb.toString();</span>
+	}
+
+	/** The last bytes of an array, in hexadecimal. */
+	public static String tail(byte[] data, int count) {
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (data == null)</span>
+<span class="nc" id="L127">			return &quot;null&quot;;</span>
+
+<span class="fc" id="L129">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		for (int i = Math.max(0, data.length - count); i &lt; data.length; i++)</span>
+<span class="fc" id="L131">			sb.append(hex(data[i]));</span>
+<span class="fc" id="L132">		return sb.toString();</span>
+	}
+
+	private static String hex(byte b) {
+<span class="fc" id="L136">		final String digits = &quot;0123456789abcdef&quot;;</span>
+<span class="fc" id="L137">		return &quot;&quot; + digits.charAt((b &gt;&gt; 4) &amp; 0xF) + digits.charAt(b &amp; 0xF);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -11003,14 +11003,14 @@
 
         <Package name="net.sourceforge.plantuml.klimt.drawing.raster">
             <Stats>
-                <TotalClasses>18</TotalClasses>
-                <ConcreteClasses>14</ConcreteClasses>
+                <TotalClasses>16</TotalClasses>
+                <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>2</Ca>
-                <Ce>13</Ce>
-                <A>0.22</A>
-                <I>0.87</I>
-                <D>0.09</D>
+                <Ce>10</Ce>
+                <A>0.25</A>
+                <I>0.83</I>
+                <D>0.08</D>
                 <V>1</V>
             </Stats>
 
@@ -11057,9 +11057,6 @@
                 <Class sourceFile="DriverTextRaster.java">
                     net.sourceforge.plantuml.klimt.drawing.raster.DriverTextRaster
                 </Class>
-                <Class sourceFile="PngChunks.java">
-                    net.sourceforge.plantuml.klimt.drawing.raster.PngChunks
-                </Class>
                 <Class sourceFile="RasterPaints.java">
                     net.sourceforge.plantuml.klimt.drawing.raster.RasterPaints
                 </Class>
@@ -11069,17 +11066,11 @@
                 <Class sourceFile="RasterPath.java">
                     net.sourceforge.plantuml.klimt.drawing.raster.RasterPath
                 </Class>
-                <Class sourceFile="UGraphicRaster.java">
-                    net.sourceforge.plantuml.klimt.drawing.raster.UGraphicRaster
-                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.io</Package>
                 <Package>java.lang</Package>
-                <Package>java.nio.charset</Package>
                 <Package>java.util</Package>
-                <Package>java.util.zip</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>

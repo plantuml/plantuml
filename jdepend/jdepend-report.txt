@@ -7518,16 +7518,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 18
-    Concrete Classes: 14
+    Total Classes: 16
+    Concrete Classes: 12
     Abstract Classes: 4
 
     Ca: 2
-    Ce: 13
+    Ce: 10
 
-    A: 0.22
-    I: 0.87
-    D: 0.09
+    A: 0.25
+    I: 0.83
+    D: 0.08
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.drawing.raster.ArcsToCubics
@@ -7545,18 +7545,13 @@ Concrete Classes:
     net.sourceforge.plantuml.klimt.drawing.raster.DriverPolygonRaster
     net.sourceforge.plantuml.klimt.drawing.raster.DriverRectangleRaster
     net.sourceforge.plantuml.klimt.drawing.raster.DriverTextRaster
-    net.sourceforge.plantuml.klimt.drawing.raster.PngChunks
     net.sourceforge.plantuml.klimt.drawing.raster.RasterPaints
     net.sourceforge.plantuml.klimt.drawing.raster.RasterPaints$1
     net.sourceforge.plantuml.klimt.drawing.raster.RasterPath
-    net.sourceforge.plantuml.klimt.drawing.raster.UGraphicRaster
 
 Depends Upon:
-    java.io
     java.lang
-    java.nio.charset
     java.util
-    java.util.zip
     net.sourceforge.plantuml.klimt
     net.sourceforge.plantuml.klimt.awt
     net.sourceforge.plantuml.klimt.color
@@ -15970,14 +15965,14 @@ java.awt.event,0,0,1,0,0,0,1,1
 java.awt.font,0,0,3,0,0,0,1,1
 java.awt.geom,0,0,6,0,0,0,1,1
 java.awt.image,0,0,13,0,0,0,1,1
-java.io,0,0,84,0,0,0,1,1
+java.io,0,0,83,0,0,0,1,1
 java.lang,0,0,246,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,3,0,0,0,1,1
 java.math,0,0,5,0,0,0,1,1
 java.net,0,0,6,0,0,0,1,1
 java.nio,0,0,1,0,0,0,1,1
-java.nio.charset,0,0,21,0,0,0,1,1
+java.nio.charset,0,0,20,0,0,0,1,1
 java.nio.file,0,0,4,0,0,0,1,1
 java.security,0,0,3,0,0,0,1,1
 java.security.spec,0,0,2,0,0,0,1,1
@@ -15990,7 +15985,7 @@ java.util.concurrent.atomic,0,0,5,0,0,0,1,1
 java.util.function,0,0,3,0,0,0,1,1
 java.util.logging,0,0,2,0,0,0,1,1
 java.util.regex,0,0,15,0,0,0,1,1
-java.util.zip,0,0,4,0,0,0,1,1
+java.util.zip,0,0,3,0,0,0,1,1
 javax.crypto,0,0,1,0,0,0,1,1
 javax.crypto.spec,0,0,1,0,0,0,1,1
 javax.imageio,0,0,3,0,0,0,1,1
@@ -16121,7 +16116,7 @@ net.sourceforge.plantuml.klimt.drawing.font,7,0,1,7,0,0.88,0.12,1
 net.sourceforge.plantuml.klimt.drawing.g2d,14,1,3,20,0.07,0.87,0.06,1
 net.sourceforge.plantuml.klimt.drawing.hand,8,0,0,8,0,1,0,1
 net.sourceforge.plantuml.klimt.drawing.html5,3,0,0,8,0,1,0,1
-net.sourceforge.plantuml.klimt.drawing.raster,18,4,2,13,0.22,0.87,0.09,1
+net.sourceforge.plantuml.klimt.drawing.raster,16,4,2,10,0.25,0.83,0.08,1
 net.sourceforge.plantuml.klimt.drawing.svg,21,3,2,16,0.14,0.89,0.03,1
 net.sourceforge.plantuml.klimt.drawing.tikz,11,0,0,13,0,1,0,1
 net.sourceforge.plantuml.klimt.drawing.txt,1,0,2,13,0,0.87,0.13,1
