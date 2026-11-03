@@ -201,7 +201,7 @@ public class TContext {
 	}
 
 	private CodeIterator buildCodeIterator(TMemory memory, List<StringLocated> body) {
-		final CodeIterator it10 = new CodeIteratorImpl(body);
+		final CodeIterator it10 = new CodeIteratorImpl(PythonChunks.collapse(body));
 		final CodeIterator it20 = new CodeIteratorLongComment(it10, debug);
 		final CodeIterator it30 = new CodeIteratorShortComment(it20, debug);
 		final CodeIterator it40 = new CodeIteratorInnerComment(it30);
@@ -312,6 +312,9 @@ public class TContext {
 		} else if (ftype == TFunctionType.RETURN_FUNCTION && type == TLineType.PLAIN) {
 			this.simulatePlain(memory, s);
 			return null;
+		} else if (type == TLineType.PYTHON) {
+			this.executePython(s);
+			return null;
 		} else if (type == TLineType.AFFECTATION_DEFINE) {
 			this.executeAffectationDefine(memory, s);
 			return null;
@@ -329,6 +332,21 @@ public class TContext {
 	}
 
 	private static final Pattern ONLY_WHITESPACE_NON_EMPTY = Pattern.compile("^\\s+$");
+
+	/** Created at the first Python chunk of the diagram. */
+	private PythonRunner python;
+
+	private void executePython(StringLocated s) throws EaterException {
+		if (python == null)
+			python = new PythonRunner();
+		try {
+			// Output of Python is not sent back to the legacy preprocessor.
+			for (String line : python.run(PythonChunks.code(s), "<diagram>"))
+				addToResultList(new StringLocated(line, s.getLocation()));
+		} catch (PythonRunner.EaterExceptionMessage e) {
+			throw new EaterException(e.getMessage(), s);
+		}
+	}
 
 	private void addPlain(TMemory memory, StringLocated s) throws EaterException {
 		final StringLocated tmp[] = applyFunctionsAndVariablesInternal(memory, s);

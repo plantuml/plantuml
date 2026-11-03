@@ -45,7 +45,7 @@ public enum TLineType {
 	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, WHILE, ENDWHILE,
 	FOREACH, ENDFOREACH, DECLARE_RETURN_FUNCTION, DECLARE_PROCEDURE, END_FUNCTION, RETURN, LEGACY_DEFINE,
 	LEGACY_DEFINELONG, THEME, INCLUDE, /*INCLUDE_SPRITES,*/ INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG,
-	DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START, OPTION;
+	DUMP_MEMORY, COMMENT_SIMPLE, COMMENT_LONG_START, OPTION, PYTHON;
 
 	private static final RegexLeaf IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT = new RegexLeaf(
 			"[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*");
@@ -67,10 +67,39 @@ public enum TLineType {
 			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!define"), RegexLeaf.spaceOneOrMore(),
 			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, new RegexLeaf("\\b"));
 
+	// "!$x = 1", "!local $x = 1", "!x ?= 1": legacy. "!x = 1" (no dollar, no "?") is Python.
 	private static final IRegex PATTERN_AFFECTATION = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
 			new RegexLeaf("!"), RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "(local|global)?"),
-			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\$?"), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\$"), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,
 			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\??="));
+
+	private static final IRegex PATTERN_AFFECTATION_NO_DOLLAR = new RegexConcat(RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"), RegexLeaf.spaceZeroOrMore(),
+			new RegexLeaf(1, "(local|global)?"), RegexLeaf.spaceZeroOrMore(),
+			IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT, RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\?="));
+
+	// Keywords that only exist in Python.
+	private static final IRegex PATTERN_PYTHON_KEYWORD = new RegexConcat(RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"),
+			new RegexOr(new RegexLeaf("def"), new RegexLeaf("for"), new RegexLeaf("try"), new RegexLeaf("pass"),
+					new RegexLeaf("lambda"), new RegexLeaf("del"), new RegexLeaf("raise"), new RegexLeaf("global"),
+					new RegexLeaf("nonlocal"), new RegexLeaf("elif"), new RegexLeaf("except"),
+					new RegexLeaf("break"), new RegexLeaf("continue")),
+			new RegexLeaf("\\b"));
+
+	// "if", "while", "else" are in both languages: Python when the line ends with a colon.
+	private static final IRegex PATTERN_PYTHON_BLOCK = new RegexConcat(RegexLeaf.start(), RegexLeaf.spaceZeroOrMore(),
+			new RegexLeaf("!"), new RegexOr(new RegexLeaf("if"), new RegexLeaf("while"), new RegexLeaf("else")),
+			new RegexLeaf("\\b"), new RegexLeaf(".*:"), RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+
+	// "!x = 1", "!x += 1", "!f(1)", "!a.b(1)", "!a[0] = 1"
+	private static final IRegex PATTERN_PYTHON_STATEMENT = new RegexConcat(RegexLeaf.start(),
+			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("!"), IDENTIFIER_WITH_UNICODE_SURROGATES_SUPPORT,
+			new RegexOr(new RegexLeaf("\\("), new RegexLeaf("\\."), new RegexLeaf("\\["),
+					new RegexLeaf("\\s*(\\*\\*|//|<<|>>|[-+*/%&|^])?=[^=]")));
+
+	/** Marker put at the start of a collapsed Python chunk, see PythonChunks. */
+	public static final String PYTHON_MARKER = "!python\n";
 
 	private static final IRegex PATTERN_COMMENT_SIMPLE1 = new RegexConcat(RegexLeaf.start(),
 			RegexLeaf.spaceZeroOrMore(), new RegexLeaf("'"));
@@ -163,6 +192,9 @@ public enum TLineType {
 		if (sl.containsExclamationMark() == false)
 			return PLAIN;
 
+		if (s.startsWith(PYTHON_MARKER))
+			return PYTHON;
+
 		if (PATTERN_LEGACY_DEFINE.match(sl))
 			return LEGACY_DEFINE;
 
@@ -172,8 +204,11 @@ public enum TLineType {
 		if (PATTERN_AFFECTATION_DEFINE.match(sl))
 			return AFFECTATION_DEFINE;
 
-		if (PATTERN_AFFECTATION.match(sl))
+		if (PATTERN_AFFECTATION.match(sl) || PATTERN_AFFECTATION_NO_DOLLAR.match(sl))
 			return AFFECTATION;
+
+		if (PATTERN_PYTHON_KEYWORD.match(sl) || PATTERN_PYTHON_BLOCK.match(sl))
+			return PYTHON;
 
 		if (PATTERN_IFDEF.match(sl))
 			return IFDEF;
@@ -255,6 +290,9 @@ public enum TLineType {
 
 		if (PATTERN_OPTION.match(sl))
 			return OPTION;
+
+		if (PATTERN_PYTHON_STATEMENT.match(sl))
+			return PYTHON;
 
 		return PLAIN;
 	}
