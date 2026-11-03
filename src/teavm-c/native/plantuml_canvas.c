@@ -4,6 +4,7 @@
 #include "plantuml_canvas.h"
 
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -36,6 +37,14 @@ typedef struct {
 } plantuml_canvas_t;
 
 #define CANVAS(handle) ((plantuml_canvas_t*) (intptr_t) (handle))
+
+/* TEMPORARY trace (to be removed), see net.sourceforge.plantuml.teavm.Trace */
+#define NTRACE(...) \
+	do { \
+		fprintf(stderr, "[native] " __VA_ARGS__); \
+		fputc('\n', stderr); \
+		fflush(stderr); \
+	} while (0)
 
 /* Font faces are loaded once, from static data, and never released */
 static plutovg_font_face_t* font_faces[FONT_COUNT];
@@ -80,6 +89,9 @@ int64_t plantuml_canvas_create(int32_t width, int32_t height) {
 	result->canvas = plutovg_canvas_create(result->surface);
 	plutovg_canvas_set_miter_limit(result->canvas, 10);
 	plantuml_canvas_set_stroke((int64_t) (intptr_t) result, 1, 0, 0);
+	NTRACE("canvas_create %dx%d: canvas=%p surface=%p data=%p stride=%d", width, height, (void*) result,
+			(void*) result->surface, (void*) plutovg_surface_get_data(result->surface),
+			plutovg_surface_get_stride(result->surface));
 	return (int64_t) (intptr_t) result;
 }
 
@@ -87,10 +99,14 @@ void plantuml_canvas_destroy(int64_t handle) {
 	plantuml_canvas_t* c = CANVAS(handle);
 	if (c == NULL)
 		return;
+	NTRACE("canvas_destroy: canvas=%p png=%p png_size=%d", (void*) c, (void*) c->png, c->png_size);
 	plutovg_canvas_destroy(c->canvas);
+	NTRACE("canvas_destroy: plutovg canvas destroyed");
 	plutovg_surface_destroy(c->surface);
+	NTRACE("canvas_destroy: surface destroyed");
 	free(c->png);
 	free(c);
+	NTRACE("canvas_destroy: done");
 }
 
 void plantuml_canvas_scale(int64_t handle, double factor) {
@@ -442,20 +458,27 @@ int32_t plantuml_canvas_encode_png(int64_t handle, int32_t opaque) {
 	/* Encoded from the pixels of the surface, which it changes: once only */
 	unsigned char* png;
 	size_t size;
+	NTRACE("encode_png: canvas=%p surface %dx%d stride=%d opaque=%d", (void*) c, plutovg_surface_get_width(c->surface),
+			plutovg_surface_get_height(c->surface), plutovg_surface_get_stride(c->surface), opaque);
 	if (plantuml_png_encode((uint32_t*) plutovg_surface_get_data(c->surface), plutovg_surface_get_width(c->surface),
 			plutovg_surface_get_height(c->surface), plutovg_surface_get_stride(c->surface), opaque, &png, &size) != 0
 			|| size > 0x7FFFFFFF) {
+		NTRACE("encode_png: FAILED");
 		return -1;
 	}
 	c->png = png;
 	c->png_size = (int) size;
+	NTRACE("encode_png: done, png=%p size=%d", (void*) png, c->png_size);
 	return c->png_size;
 }
 
 void plantuml_canvas_copy_png(int64_t handle, int8_t* dest) {
 	plantuml_canvas_t* c = CANVAS(handle);
+	NTRACE("copy_png: dest=%p (alignment %d) png=%p size=%d", (void*) dest, (int) ((uintptr_t) dest % 8), (void*) c->png,
+			c->png_size);
 	if (c->png_size > 0)
 		memcpy(dest, c->png, c->png_size);
+	NTRACE("copy_png: done");
 }
 
 static unsigned char* image_png = NULL;

@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.klimt.shape.UPixel;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.teavm.Trace;
 
 /**
  * PNG output without AWT: the drivers of {@code UGraphicG2d}, drawing on a
@@ -118,9 +119,21 @@ public class UGraphicRaster extends AbstractUGraphic<RasterCanvas> {
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		final RasterCanvas canvas = getGraphicObject();
 		try {
-			os.write(PngChunks.addPlantUmlChunks(canvas.toPng(), metadata, dpi));
+			// TEMPORARY traces (see Trace)
+			Trace.heap("writeToStream: before toPng");
+			Trace.crc("writeToStream: before toPng");
+			final byte[] png = canvas.toPng();
+			Trace.log("writeToStream: toPng gave " + png.length + " bytes, start " + Trace.head(png, 16) + ", end "
+					+ Trace.tail(png, 16));
+			Trace.heap("writeToStream: after toPng");
+			Trace.crc("writeToStream: after toPng");
+			final byte[] withChunks = PngChunks.addPlantUmlChunks(png, metadata, dpi);
+			Trace.log("writeToStream: chunks added, " + withChunks.length + " bytes");
+			os.write(withChunks);
+			Trace.log("writeToStream: written, disposing the canvas");
 		} finally {
 			canvas.dispose();
+			Trace.log("writeToStream: canvas disposed");
 		}
 	}
 

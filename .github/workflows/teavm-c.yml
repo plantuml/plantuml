@@ -189,7 +189,7 @@ jobs:
     name: Build ${{ matrix.os }}-${{ matrix.arch }}
     needs: generate_c
     runs-on: ${{ matrix.runner }}
-    timeout-minutes: 30
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -225,8 +225,9 @@ jobs:
 
       # Single-configuration generator (Unix Makefiles): the executable is
       # c-sources/bin/plantuml (CMakeLists.txt builds in Release by default)
+      # TEMPORARY: -g on Linux, for the backtraces of the diagnostics below (no effect on the code)
       - name: Configure
-        run: cmake -S c-sources -B c-build -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S c-sources -B c-build -DCMAKE_BUILD_TYPE=Release ${{ matrix.os == 'linux' && '-DCMAKE_C_FLAGS=-g' || '' }}
 
       # An explicit number of jobs: a bare --parallel gives make an unlimited -j, which
       # spawns one cc process per generated file at once and exhausts the process
@@ -259,6 +260,106 @@ jobs:
             echo "::error::The output is not the expected PNG"
             exit 1
           fi
+
+      # ===================================================================================
+      # TEMPORARY, to be removed: diagnostics of the failure of the PNG smoke test on
+      # linux-x64 (NullPointerException in CRC32 with a heap of 64 MB, segmentation fault
+      # with 128 MB). They only run when a step failed, and none of them fails the job.
+      # The traces of the program itself ([trace n] from Java, [native] from C) are in the
+      # log of the step above, see net.sourceforge.plantuml.teavm.Trace.
+      # ===================================================================================
+      - name: "Diagnose 1: machine, and is the failure stable?"
+        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        continue-on-error: true
+        run: |
+          set +e
+          exe="c-sources/bin/plantuml"
+          uname -a; cat /etc/os-release | head -2; gcc --version | head -1; ldd "$exe"
+          lscpu | grep -E "Model name|^CPU\(s\)|Flags" | cut -c1-200; free -m; ulimit -a
+          for i in 1 2 3; do
+            rm -f mindmap.png
+            "$exe" -tpng mindmap.puml > /dev/null 2> run-$i.txt
+            echo "run $i: exit code $?, $(wc -l < run-$i.txt) lines of trace, last: $(tail -1 run-$i.txt)"
+          done
+          echo "::group::[trace] of the last run"
+          cat run-3.txt
+          echo "::endgroup::"
+          echo "-- without address randomization"
+          setarch "$(uname -m)" -R "$exe" -tpng mindmap.puml > /dev/null 2> aslr.txt; echo "exit code $?, last: $(tail -1 aslr.txt)"
+          echo "-- glibc heap checks"
+          MALLOC_CHECK_=3 MALLOC_PERTURB_=165 "$exe" -tpng mindmap.puml > /dev/null 2> malloc.txt; echo "exit code $?, last: $(tail -3 malloc.txt)"
+          echo "-- other outputs"
+          for t in svg txt utxt; do "$exe" -t$t mindmap.puml > /dev/null 2>&1; echo "-t$t: exit code $?"; done
+          printf '@startuml\nclass A\nclass B\nA --> B\n@enduml\n' > class.puml
+          "$exe" -tpng class.puml > /dev/null 2>&1; echo "class diagram -tpng: exit code $?"
+
+      - name: "Diagnose 2: gdb backtrace of the segmentation fault"
+        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        continue-on-error: true
+        run: |
+          set +e
+          sudo apt-get install -y gdb > /dev/null
+          gdb -batch -ex "set pagination off" -ex run -ex "bt 40" -ex "p \$_siginfo._sifields._sigfault.si_addr" \
+              -ex "info registers" -ex "x/12i \$pc" -ex "info proc mappings" \
+              --args c-sources/bin/plantuml -tpng mindmap.puml 2>&1 | tail -200
+
+      - name: "Diagnose 3: valgrind"
+        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        continue-on-error: true
+        run: |
+          set +e
+          sudo apt-get install -y valgrind > /dev/null
+          valgrind --error-limit=no --track-origins=yes --num-callers=30 \
+              c-sources/bin/plantuml -tpng mindmap.puml 2>&1 | tail -250
+
+      # The heap is a constant of main.c: only this file is compiled again for each size
+      - name: "Diagnose 4: heap size sweep"
+        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        continue-on-error: true
+        run: |
+          set +e
+          exe="c-sources/bin/plantuml"
+          grep -n "teavm_initHeap" c-sources/main.c
+          cp c-sources/main.c main.c.orig
+          for mb in 16 32 48 64 96 128 192 256 512 1024; do
+            bytes=$((mb * 1024 * 1024))
+            sed -E "s/teavm_initHeap\([0-9]+, [0-9]+\)/teavm_initHeap($bytes, $bytes)/" main.c.orig > c-sources/main.c
+            if ! cmake --build c-build --parallel "$(getconf _NPROCESSORS_ONLN)" > build-$mb.log 2>&1; then
+              echo "heap $mb MB: the build failed"; tail -3 build-$mb.log; continue
+            fi
+            "$exe" -tpng mindmap.puml > /dev/null 2> sweep-$mb.txt; png=$?
+            "$exe" -tsvg mindmap.puml > /dev/null 2>&1; svg=$?
+            echo "heap $mb MB: -tpng exit code $png, -tsvg exit code $svg, last line: $(tail -1 sweep-$mb.txt)"
+          done
+          cp main.c.orig c-sources/main.c
+
+      # The checks of the runtime of TeaVM itself: the consistency of the heap is verified at
+      # each garbage collection (abort on the first problem), and each collection is printed
+      - name: "Diagnose 5: runtime of TeaVM with the memory trace and the GC statistics"
+        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        continue-on-error: true
+        run: |
+          set +e
+          rm -rf c-trace c-trace-build
+          cp -r c-sources c-trace
+          cmake -S c-trace -B c-trace-build -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_C_FLAGS="-g -DTEAVM_MEMORY_TRACE=1 -DTEAVM_GC_STATS=1"
+          cmake --build c-trace-build --parallel "$(getconf _NPROCESSORS_ONLN)" 2>&1 | tail -5
+          c-trace/bin/plantuml -tpng mindmap.puml 2>&1 | tail -150
+          echo "exit code: ${PIPESTATUS[0]}"
+
+      - name: "Diagnose 6: AddressSanitizer"
+        if: failure() && matrix.os == 'linux' && matrix.arch == 'x64'
+        continue-on-error: true
+        run: |
+          set +e
+          rm -rf c-asan c-asan-build
+          cp -r c-sources c-asan
+          cmake -S c-asan -B c-asan-build -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_C_FLAGS="-g -fsanitize=address -fno-omit-frame-pointer"
+          cmake --build c-asan-build --parallel "$(getconf _NPROCESSORS_ONLN)" 2>&1 | tail -5
+          ASAN_OPTIONS=detect_leaks=0 c-asan/bin/plantuml -tpng mindmap.puml 2>&1 | head -200
+          echo "exit code: ${PIPESTATUS[0]}"
 
       # -pipe: the source on the standard input, the image on the standard output (what
       # Kroki does). TeaVM's System.in cannot read in the C build (StdinStream replaces it).

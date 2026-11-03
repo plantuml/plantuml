@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.CRC32;
 import java.util.zip.Deflater;
+import net.sourceforge.plantuml.teavm.Trace;
 
 /**
  * Adds to a PNG the chunks PlantUML writes in its PNG images (see
@@ -69,6 +70,10 @@ public final class PngChunks {
 		if (png.length < afterHeader || "IHDR".equals(new String(png, 12, 4, StandardCharsets.ISO_8859_1)) == false)
 			throw new IOException("No IHDR chunk");
 
+		// TEMPORARY traces (see Trace)
+		Trace.log("addPlantUmlChunks: png " + png.length + " bytes, dpi " + dpi + ", metadata "
+				+ (metadata == null ? -1 : metadata.length()) + " chars");
+		Trace.gc("addPlantUmlChunks");
 		final ByteArrayOutputStream result = new ByteArrayOutputStream(png.length + 1024);
 		result.write(png, 0, afterHeader);
 		// Same order as ImageIO: pHYs, tEXt, iTXt, before the image data
@@ -132,13 +137,18 @@ public final class PngChunks {
 	}
 
 	private static void writeChunk(ByteArrayOutputStream os, String type, byte[] data) {
+		Trace.log("writeChunk " + type + ": " + data.length + " bytes, start " + Trace.head(data, 8));
 		final byte[] typeBytes = type.getBytes(StandardCharsets.ISO_8859_1);
 		writeInt(os, data.length);
 		os.write(typeBytes, 0, typeBytes.length);
 		os.write(data, 0, data.length);
+		Trace.log("writeChunk " + type + ": before new CRC32()");
 		final CRC32 crc = new CRC32();
+		Trace.log("writeChunk " + type + ": CRC32 created");
 		crc.update(typeBytes);
+		Trace.log("writeChunk " + type + ": type updated");
 		crc.update(data);
+		Trace.log("writeChunk " + type + ": data updated, crc " + Long.toHexString(crc.getValue()));
 		writeInt(os, (int) crc.getValue());
 	}
 

@@ -86,6 +86,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.swing.MainWindow;
 import net.sourceforge.plantuml.syntax.LanguageDescriptor;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.Trace;
 // ::comment when JAVA8
 import net.sourceforge.plantuml.teavm.c.StderrStream;
 import net.sourceforge.plantuml.teavm.c.StdinStream;
@@ -101,6 +102,20 @@ public class Run {
 			throws NoPlantumlCompressionException, IOException, InterruptedException {
 		if (!TeaVM.isC())
 			System.setProperty("log4j.debug", "false");
+
+		// ::comment when JAVA8
+		// TEMPORARY (see Trace): the state of the C runtime at the start
+		if (TeaVM.isC()) {
+			Trace.install(new PrintStream(new StderrStream(), true));
+			final StringBuilder arguments = new StringBuilder();
+			for (String arg : argsArray)
+				arguments.append(' ').append(arg);
+			Trace.log("start, arguments:" + arguments);
+			Trace.heap("start");
+			Trace.crc("start");
+			Trace.gc("start");
+		}
+		// ::done
 
 		final long start = System.currentTimeMillis();
 

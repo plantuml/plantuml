@@ -5,6 +5,7 @@
  */
 #include "plantuml_png.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -282,6 +283,10 @@ int plantuml_png_encode_lossless(uint32_t* pixels, int width, int height, int st
 static int png_encode(uint32_t* pixels, int width, int height, int stride, int opaque, int premultiplied,
 		int lossless, unsigned char** png, size_t* png_size) {
 	const int stride_pixels = stride / 4;
+	/* TEMPORARY trace (to be removed) */
+	fprintf(stderr, "[native] png_encode: %dx%d stride=%d opaque=%d premultiplied=%d lossless=%d pixels=%p\n", width, height,
+			stride, opaque, premultiplied, lossless, (void*) pixels);
+	fflush(stderr);
 	if (premultiplied)
 		unpremultiply(pixels, width, height, stride_pixels, opaque);
 	else if (opaque)
@@ -295,6 +300,9 @@ static int png_encode(uint32_t* pixels, int width, int height, int stride, int o
 
 	const int bpp = indexed ? 1 : opaque ? 3 : 4;
 	const int length = width * bpp;
+	fprintf(stderr, "[native] png_encode: indexed=%d palette=%d bpp=%d length=%d\n", indexed, indexed ? palette.size : -1, bpp,
+			length);
+	fflush(stderr);
 	unsigned char* rows = calloc(7, (size_t) length + 1);
 	tdefl_compressor* compressor = tdefl_compressor_alloc();
 	buffer_t out = { NULL, 0, 0, 0 };
@@ -397,6 +405,8 @@ static int png_encode(uint32_t* pixels, int width, int height, int stride, int o
 		append_chunk(&out, "IEND", NULL, 0);
 	}
 
+	fprintf(stderr, "[native] png_encode: encoded, status=%d failed=%d out.size=%zu\n", status, out.failed, out.size);
+	fflush(stderr);
 	free(rows);
 	tdefl_compressor_free(compressor);
 	plantuml_palette_free(&palette);

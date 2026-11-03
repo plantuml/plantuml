@@ -40,6 +40,8 @@ import net.sourceforge.plantuml.klimt.drawing.raster.RasterPath;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontFace;
 
+import net.sourceforge.plantuml.teavm.Trace;
+
 /**
  * The {@link RasterCanvas} of the TeaVM C build: drawn by plutovg (see
  * {@link NativeCanvas}), text with the fonts embedded in the executable
@@ -229,18 +231,25 @@ public final class PngCanvas implements RasterCanvas {
 
 	@Override
 	public byte[] toPng() {
+		// TEMPORARY traces (see Trace)
+		Trace.log("toPng: encoding, handle " + handle + ", opaque " + opaque);
 		final int size = NativeCanvas.encodePng(handle(), opaque ? 1 : 0);
+		Trace.log("toPng: encoded, " + size + " bytes");
 		if (size < 0)
 			throw new IllegalStateException("PNG encoding failed");
 		final byte[] result = new byte[size];
+		Trace.heap("toPng: array allocated");
 		NativeCanvas.copyPng(handle, result);
+		Trace.log("toPng: copied, start " + Trace.head(result, 16) + ", end " + Trace.tail(result, 16));
 		return result;
 	}
 
 	@Override
 	public void dispose() {
 		if (handle != 0) {
+			Trace.log("dispose: destroying the canvas " + handle);
 			NativeCanvas.destroy(handle);
+			Trace.log("dispose: canvas destroyed");
 			handle = 0;
 		}
 	}
