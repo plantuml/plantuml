@@ -804,18 +804,24 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	 * {@link BorderPointPath}), keeping any jog added clear of the other
 	 * {@code nodes} and of {@code labels}. Must run once every edge is solved.
 	 */
-	public void alignOnBorderPoints(Collection<SvekNode> nodes, Collection<RectangleArea> labels) {
+	public void alignOnBorderPoints(Collection<SvekNode> nodes, Collection<RectangleArea> labels,
+			Collection<SvekEdge> lines) {
 		if (dotPath == null || isAutolink() || getLinkStrategy() != LinkStrategy.SIMPLEST)
 			return;
 
 		final SvekNode svekNode1 = getSvekNode1();
 		final SvekNode svekNode2 = getSvekNode2();
 		final List<RectangleArea> obstacles = getObstacles(nodes, labels);
+		final List<DotPath> others = new ArrayList<>();
+		for (SvekEdge line : lines)
+			if (line != this && line.dotPath != null)
+				others.add(line.dotPath);
 
 		if (ltail == null)
-			setStartPath(BorderPointPath.alignStart(dotPath, svekNode1, svekNode2, stringBounder, obstacles));
+			setStartPath(
+					BorderPointPath.alignStart(dotPath, svekNode1, svekNode2, stringBounder, obstacles, others));
 		if (lhead == null)
-			setEndPath(BorderPointPath.alignEnd(dotPath, svekNode2, svekNode1, stringBounder, obstacles));
+			setEndPath(BorderPointPath.alignEnd(dotPath, svekNode2, svekNode1, stringBounder, obstacles, others));
 	}
 
 	/**

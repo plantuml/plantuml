@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
+import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
 
 /**
  * Straightens the end of an orthogonal edge that touches an entry or exit
@@ -56,6 +57,10 @@ import net.sourceforge.plantuml.klimt.shape.DotPath;
  * anywhere on that wider box: off-centre, or running along the frame. This
  * rewrites the segment next to the point so that it leaves (or reaches) the
  * circle's centre perpendicular to the frame edge the point sits on.
+ * <p>
+ * An edge running inside the frame leaves the point inwards; one running
+ * outside leaves it outwards, past the point's label, turning back if the rest
+ * of the edge lies the other way.
  */
 final class BorderPointPath {
 
@@ -72,10 +77,11 @@ final class BorderPointPath {
 	 * entry/exit point sitting on its cluster's frame, and the path is
 	 * orthogonal. Otherwise returns {@code path} unchanged. {@code far} is the
 	 * node at the other end of the path, or null; a jog added next to the point
-	 * is kept clear of {@code obstacles}.
+	 * is kept clear of {@code obstacles}, and a turn outside the frame clear of
+	 * the runs of {@code others}.
 	 */
 	static DotPath alignStart(DotPath path, SvekNode node, SvekNode far, StringBounder stringBounder,
-			List<RectangleArea> obstacles) {
+			List<RectangleArea> obstacles, List<DotPath> others) {
 		if (node == null || isBorderPoint(node.getEntityPosition()) == false)
 			return path;
 
@@ -96,11 +102,7 @@ final class BorderPointPath {
 		final boolean onLeft = Math.abs(center.getX() - frame.getMinX()) < EPSILON;
 		final boolean onRight = Math.abs(center.getX() - frame.getMaxX()) < EPSILON;
 
-		// Only an edge running inside the frame is rewritten. One reaching the
-		// point from outside would have to cross the point's own label, which
-		// is drawn outside the frame, to leave it perpendicularly.
-		if (frame.contains(points.get(points.size() - 1)) == false)
-			return path;
+		final boolean inside = frame.contains(points.get(points.size() - 1));
 
 		final boolean vertical;
 		final double inward;
@@ -108,15 +110,20 @@ final class BorderPointPath {
 		if (onTop || onBottom) {
 			vertical = true;
 			inward = onTop ? 1 : -1;
-			// The frame's title bar hangs below its top edge: a jog must clear it.
-			if (onTop)
+			if (inside && onTop)
+				// The frame's title bar hangs below its top edge: a jog must clear it.
 				clearance += cluster.getTitleAndAttributeHeight();
+			else if (inside == false)
+				// The label is drawn outside, one radius clear of the circle: an
+				// edge leaving outwards runs through it, and must turn past it.
+				clearance += EntityPosition.RADIUS + labelHeight(node, stringBounder);
 		} else if (onLeft || onRight) {
 			vertical = false;
 			inward = onLeft ? 1 : -1;
 		} else {
 			return path;
 		}
+		final double dir = inside ? inward : -inward;
 
 		// The rewrite is written for a vertical stem; a horizontal stem is the
 		// same problem with x and y swapped.
@@ -129,22 +136,227 @@ final class BorderPointPath {
 		}
 
 		final XPoint2D c = vertical ? center : swap(center);
-		final List<XPoint2D> result = alignVertical(points, c, inward, clearance, target, obstacles);
+		List<XPoint2D> result = alignVertical(points, c, dir, clearance, target, obstacles);
+		// Turning round is only worth it when the far end lies well back past the
+		// point: one beside it, about level, is best reached from the side.
+		final XPoint2D farEnd = points.get(points.size() - 1);
+		final boolean farBack = (c.getY() - farEnd.getY()) * dir > clearance;
+		if (result == null && inside == false && farBack)
+			result = turnBack(points, c, dir, clearance, vertical ? frame : transpose(frame),
+					withRuns(obstacles, others, vertical));
+		if (result == null && inside == false && farBack)
+			result = goRound(points, c, dir, clearance, vertical ? frame : transpose(frame),
+					withRuns(obstacles, others, vertical));
 		if (result == null)
 			return path;
+
+		// An edge leaving a point on the top or bottom of the frame outwards runs
+		// through the label: move the label beside it, away from where it turns,
+		// or away from the middle of the frame if it goes straight on.
+		// Of the two sides, the one crossing fewer other edges wins.
+		if (inside == false && vertical && node.getImage() instanceof EntityImageStateBorder) {
+			final EntityImageStateBorder image = (EntityImageStateBorder) node.getImage();
+			final double away = result.size() > 2 ? c.getX() - result.get(2).getX()
+					: c.getX() - frame.getPointCenter().getX();
+			final int preferred = away < 0 ? -1 : 1;
+			final double width = image.getMaxWidthFromLabelForEntryExit(stringBounder);
+			final double height = labelHeight(node, stringBounder);
+			final int crossedPreferred = crossings(labelBox(c, dir, preferred, width, height), others);
+			final int crossedOther = crossings(labelBox(c, dir, -preferred, width, height), others);
+			image.setLabelSide(crossedOther < crossedPreferred ? -preferred : preferred);
+		}
 
 		return toDotPath(vertical ? result : transpose(result));
 	}
 
 	/** Same as {@link #alignStart}, applied to the end of the path. */
 	static DotPath alignEnd(DotPath path, SvekNode node, SvekNode far, StringBounder stringBounder,
-			List<RectangleArea> obstacles) {
+			List<RectangleArea> obstacles, List<DotPath> others) {
 		final DotPath reversed = path.reverse();
-		final DotPath aligned = alignStart(reversed, node, far, stringBounder, obstacles);
+		final DotPath aligned = alignStart(reversed, node, far, stringBounder, obstacles, others);
 		if (aligned == reversed)
 			return path;
 
 		return aligned.reverse();
+	}
+
+	/**
+	 * {@code obstacles} (already transposed when not {@code vertical}), plus a
+	 * band one radius either side of each horizontal run of {@code others} (each
+	 * vertical one when not {@code vertical}), so a new run does not lie on top of
+	 * one already there.
+	 */
+	private static List<RectangleArea> withRuns(List<RectangleArea> obstacles, List<DotPath> others,
+			boolean vertical) {
+		final List<RectangleArea> result = new ArrayList<>(obstacles);
+		for (DotPath other : others) {
+			List<XPoint2D> points = toOrthogonalPolyline(other);
+			if (points == null)
+				continue;
+			if (vertical == false)
+				points = transpose(points);
+			for (int i = 0; i + 1 < points.size(); i++) {
+				final XPoint2D a = points.get(i);
+				final XPoint2D b = points.get(i + 1);
+				if (same(a.getY(), b.getY()))
+					result.add(new RectangleArea(Math.min(a.getX(), b.getX()), a.getY() - EntityPosition.RADIUS,
+							Math.max(a.getX(), b.getX()), a.getY() + EntityPosition.RADIUS));
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Where {@link EntityImageStateBorder} draws the label of the point centred
+	 * on {@code c} when it moves it to {@code side} (-1 left, +1 right), outside
+	 * the frame in the {@code dir} direction.
+	 */
+	private static RectangleArea labelBox(XPoint2D c, double dir, int side, double width, double height) {
+		// Drawn from three radii above the centre upwards, or one below downwards.
+		final double near = c.getY() + (dir < 0 ? -3 : 1) * EntityPosition.RADIUS;
+		final double far = near + dir * height;
+		final double x1 = side < 0 ? c.getX() - EntityImageStateBorder.LABEL_GAP - width
+				: c.getX() + EntityImageStateBorder.LABEL_GAP;
+		return new RectangleArea(x1, Math.min(near, far), x1 + width, Math.max(near, far));
+	}
+
+	/** How many segments of {@code others} run through {@code box}. */
+	private static int crossings(RectangleArea box, List<DotPath> others) {
+		int result = 0;
+		for (DotPath other : others) {
+			final List<XPoint2D> points = toOrthogonalPolyline(other);
+			if (points == null)
+				continue;
+			for (int i = 0; i + 1 < points.size(); i++) {
+				final XPoint2D a = points.get(i);
+				final XPoint2D b = points.get(i + 1);
+				if (Math.max(a.getX(), b.getX()) >= box.getMinX() && Math.min(a.getX(), b.getX()) <= box.getMaxX()
+						&& Math.max(a.getY(), b.getY()) >= box.getMinY()
+						&& Math.min(a.getY(), b.getY()) <= box.getMaxY())
+					result++;
+			}
+		}
+		return result;
+	}
+
+	private static double labelHeight(SvekNode node, StringBounder stringBounder) {
+		if (node.getImage() instanceof EntityImageStateBorder)
+			return ((EntityImageStateBorder) node.getImage()).getLabelHeightForEntryExit(stringBounder);
+		return 0;
+	}
+
+	/**
+	 * Rewrites the start of {@code points} so it leaves the circle centred on
+	 * {@code c} in the {@code dir} direction, runs across {@code clearance} past
+	 * the circle, and joins the first vertical segment of the path that lies
+	 * outside {@code frame}, beside it. Whatever ran before, along the frame or
+	 * inside it, is dropped. Returns null when there is no such segment.
+	 */
+	private static List<XPoint2D> turnBack(List<XPoint2D> points, XPoint2D c, double dir, double clearance,
+			RectangleArea frame, List<RectangleArea> obstacles) {
+		int k = -1;
+		for (int i = 0; i + 1 < points.size(); i++) {
+			final XPoint2D a = points.get(i);
+			final XPoint2D b = points.get(i + 1);
+			if (same(a.getX(), b.getX())
+					&& (a.getX() < frame.getMinX() - EPSILON || a.getX() > frame.getMaxX() + EPSILON)) {
+				k = i;
+				break;
+			}
+		}
+		if (k == -1)
+			return null;
+
+		final double x = points.get(k).getX();
+		final XPoint2D start = new XPoint2D(c.getX(), c.getY() + dir * EntityPosition.RADIUS);
+		double y = start.getY() + dir * clearance;
+		// Stepping past one obstacle can land on another: repeat until clear.
+		// y only ever moves away from the point, so this terminates.
+		boolean moved = true;
+		while (moved) {
+			moved = false;
+			for (RectangleArea obstacle : obstacles)
+				if (crosses(obstacle, y, c.getX(), x)) {
+					y = (dir > 0 ? obstacle.getMaxY() : obstacle.getMinY()) + dir * EntityPosition.RADIUS;
+					moved = true;
+				}
+		}
+
+		final List<XPoint2D> result = new ArrayList<>();
+		result.add(start);
+		result.add(new XPoint2D(c.getX(), y));
+		result.add(new XPoint2D(x, y));
+		result.addAll(points.subList(k + 1, points.size()));
+		return simplify(result);
+	}
+
+	/**
+	 * Rewrites the start of {@code points}, which runs inside {@code frame}
+	 * before leaving it, so it leaves the circle centred on {@code c} in the
+	 * {@code dir} direction, runs across {@code clearance} past the circle to
+	 * just outside the nearer side of the frame, along that side, and joins the
+	 * path where it leaves the frame for good. Returns null when the path does
+	 * not run through the frame: one only running along it is left alone.
+	 */
+	private static List<XPoint2D> goRound(List<XPoint2D> points, XPoint2D c, double dir, double clearance,
+			RectangleArea frame, List<RectangleArea> obstacles) {
+		int m = points.size() - 1;
+		if (isOutside(points.get(m), frame) == false)
+			return null;
+		while (m > 0 && isOutside(points.get(m - 1), frame))
+			m--;
+		if (m == 0)
+			return null;
+
+		boolean through = false;
+		for (int i = 0; i < m; i++)
+			through = through || runsThrough(points.get(i), points.get(i + 1), frame);
+		if (through == false)
+			return null;
+
+		final XPoint2D q = points.get(m);
+		final XPoint2D start = new XPoint2D(c.getX(), c.getY() + dir * EntityPosition.RADIUS);
+		final boolean left = q.getX() < frame.getPointCenter().getX();
+		double x = left ? frame.getMinX() - JOG : frame.getMaxX() + JOG;
+		double y = start.getY() + dir * clearance;
+		// Stepping past one obstacle can land on another: repeat until clear. x
+		// and y only ever move away from the frame, so this terminates.
+		boolean moved = true;
+		while (moved) {
+			moved = false;
+			for (RectangleArea obstacle : obstacles) {
+				if (crosses(obstacle, y, c.getX(), x)) {
+					y = (dir > 0 ? obstacle.getMaxY() : obstacle.getMinY()) + dir * EntityPosition.RADIUS;
+					moved = true;
+				}
+				if (x >= obstacle.getMinX() && x <= obstacle.getMaxX()
+						&& Math.max(y, q.getY()) >= obstacle.getMinY() && Math.min(y, q.getY()) <= obstacle.getMaxY()) {
+					x = left ? obstacle.getMinX() - EntityPosition.RADIUS : obstacle.getMaxX() + EntityPosition.RADIUS;
+					moved = true;
+				}
+			}
+		}
+
+		final List<XPoint2D> result = new ArrayList<>();
+		result.add(start);
+		result.add(new XPoint2D(c.getX(), y));
+		result.add(new XPoint2D(x, y));
+		result.add(new XPoint2D(x, q.getY()));
+		result.addAll(points.subList(m, points.size()));
+		return simplify(result);
+	}
+
+	/** Whether the segment from {@code a} to {@code b} enters the inside of {@code frame}. */
+	private static boolean runsThrough(XPoint2D a, XPoint2D b, RectangleArea frame) {
+		return Math.max(a.getX(), b.getX()) > frame.getMinX() + EPSILON
+				&& Math.min(a.getX(), b.getX()) < frame.getMaxX() - EPSILON
+				&& Math.max(a.getY(), b.getY()) > frame.getMinY() + EPSILON
+				&& Math.min(a.getY(), b.getY()) < frame.getMaxY() - EPSILON;
+	}
+
+	private static boolean isOutside(XPoint2D pt, RectangleArea frame) {
+		return pt.getX() < frame.getMinX() - EPSILON || pt.getX() > frame.getMaxX() + EPSILON
+				|| pt.getY() < frame.getMinY() - EPSILON || pt.getY() > frame.getMaxY() + EPSILON;
 	}
 
 	private static boolean isBorderPoint(EntityPosition position) {

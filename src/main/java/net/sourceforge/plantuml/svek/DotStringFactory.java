@@ -461,7 +461,7 @@ public final class DotStringFactory implements Moveable {
 			for (SvekEdge line : getBibliotekon().allLines())
 				labels.addAll(line.getLabelAreas());
 			for (SvekEdge line : getBibliotekon().allLines())
-				line.alignOnBorderPoints(getBibliotekon().allNodes(), labels);
+				line.alignOnBorderPoints(getBibliotekon().allNodes(), labels, getBibliotekon().allLines());
 
 			// Then every other end touching a state, so it leaves the state at
 			// right angles rather than along its side.
