@@ -96,19 +96,13 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
-      - name: Save 'build.gradle.kts' file
-        run: mv build.gradle.kts build.gradle.old.kts
-
-      - name: Rename 'build.gradle.kts.sonar' file
-        run: mv build.gradle.kts.sonar build.gradle.kts
-
       - name: Build
-        run: gradle build --info
+        run: gradle build --info -PjavacRelease=21
 
       - name: Analyze by Sonar
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: gradle sonar --info
+        run: gradle sonar --info -PjavacRelease=21
 
       - name: Add Sonar and Gradle title to Summary
         run: |

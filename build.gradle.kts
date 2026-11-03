@@ -23,6 +23,7 @@ plugins {
 	alias(libs.plugins.gorylenko.gradle.git.properties)
 //	alias(libs.plugins.adarshr.test.logger)
 	alias(libs.plugins.teavm)
+	alias(libs.plugins.sonarqube)
 }
 
 group = "net.sourceforge.plantuml"
@@ -262,7 +263,7 @@ tasks.withType<Jar>().configureEach {
 
 
 
-val checkJarEntries by tasks.registering {
+val checkJarEntries = tasks.register("checkJarEntries") {
     dependsOn(tasks.named("jar"))
     doLast {
         val jarFile = tasks.named<Jar>("jar").get().archiveFile.get().asFile
@@ -843,7 +844,7 @@ tasks.named("generateGitProperties") {
 // tree contains uncommitted changes -- this is expected in CI (ephemeral runner),
 // but if you ever need to run it locally, remember to `git restore` the file
 // afterwards, or use `-PpatchCompilationInfo` workflows carefully.
-val patchCompilationInfo by tasks.registering {
+val patchCompilationInfo = tasks.register("patchCompilationInfo") {
 	group = "build"
 	description = "Patches src/main/java/.../CompilationInfo.java in place with version, git commit id and compile timestamp. NOT wired automatically -- call explicitly (typically from CI)."
 
@@ -1344,4 +1345,14 @@ if (fastBuild) {
     tasks.named("check") {
         enabled = false
     }
+}
+
+// ===============
+// Sonar analysis (CI: .github/workflows/build-for-sonar.yml runs `gradle build sonar -PjavacRelease=21`)
+// ===============
+sonar {
+	properties {
+		property("sonar.projectKey", "plantuml_plantuml")
+		property("sonar.organization", "plantuml")
+	}
 }
