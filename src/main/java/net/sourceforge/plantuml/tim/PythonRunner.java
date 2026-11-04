@@ -57,6 +57,7 @@ final class PythonRunner {
 
 	private final List<String> emitted = new ArrayList<>();
 	private final Interp interp;
+	private String pumlError;
 
 	PythonRunner() {
 		// What print() writes is dropped: whether print is an alias of emit is
@@ -67,30 +68,51 @@ final class PythonRunner {
 
 		final PyModule puml = new PyModule("puml");
 		puml.put("emit", (in, args) -> emit(args));
+		puml.put("quote", (in, args) -> PumlText.quote(string("quote", args)));
+		puml.put("id", (in, args) -> PumlText.id(string("id", args)));
+		puml.put("error", (in, args) -> error(string("error", args)));
 		this.interp.addModule(puml);
 		this.interp.setGlobal("puml", puml);
 		this.interp.setGlobal("emit", puml.get("emit"));
 	}
 
-	private Object emit(Object[] args) {
+	/** The only argument of a puml function, which must be a str. */
+	private static String string(String function, Object[] args) {
 		if (args.length != 1)
-			throw Builtin.typeError("emit() takes exactly 1 argument (" + args.length + " given)");
+			throw Builtin.typeError(function + "() takes exactly 1 argument (" + args.length + " given)");
 		if (args[0] instanceof String == false)
-			throw Builtin.typeError("emit() argument must be str");
+			throw Builtin.typeError(function + "() argument must be str");
+		return (String) args[0];
+	}
+
+	private Object emit(Object[] args) {
 		// A string with several lines is several lines of PlantUML text.
-		for (String line : ((String) args[0]).split("\\r?\\n", -1))
+		for (String line : string("emit", args).split("\\r?\\n", -1))
 			emitted.add(line);
 		return Builtin.none();
+	}
+
+	/**
+	 * puml.error(msg): stops the diagram with msg, reported on the diagram
+	 * line. It is a RuntimeError, so a script may catch it like any exception.
+	 */
+	private Object error(String message) {
+		pumlError = message;
+		throw Builtin.runtimeError(message);
 	}
 
 	/** Runs a chunk and returns the lines it emitted. */
 	List<String> run(String code, String name) throws EaterExceptionMessage {
 		emitted.clear();
+		pumlError = null;
 		try {
 			interp.run(code, name);
 		} catch (PySyntaxError e) {
 			throw new EaterExceptionMessage("Python syntax error: " + e.getMessage());
 		} catch (PyError e) {
+			// a puml.error is reported as the plain message, without traceback
+			if (pumlError != null && e.typeName().equals("RuntimeError") && e.text().equals(pumlError))
+				throw new EaterExceptionMessage(pumlError);
 			throw new EaterExceptionMessage("Python error: " + e.getMessage());
 		} catch (ExecutionLimitError e) {
 			throw new EaterExceptionMessage("Python error: " + e.getMessage());
