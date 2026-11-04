@@ -47,6 +47,11 @@ public final class Builtin {
 		return PyOps.err(Types.TYPE_ERROR, message);
 	}
 
+	/** A Python {@code RuntimeError}, to be thrown from a {@link Fn}. */
+	public static PyError runtimeError(String message) {
+		return PyOps.err(Types.RUNTIME_ERROR, message);
+	}
+
 	/** A Python {@code ValueError}, to be thrown from a {@link Fn}. */
 	public static PyError valueError(String message) {
 		return PyOps.err(Types.VALUE_ERROR, message);

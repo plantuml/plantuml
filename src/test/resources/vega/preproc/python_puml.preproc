@@ -1,0 +1,5 @@
+@startuml
+title "say \"hi\"\\"
+participant Élodie_Bar_baz_2 as _3_d
+note over _3_d : caught oops
+@enduml

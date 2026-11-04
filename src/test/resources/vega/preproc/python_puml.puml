@@ -1,0 +1,11 @@
+---
+output: preproc
+---
+@startuml
+!puml.emit("title " + puml.quote('say "hi"\\'))
+!puml.emit("participant " + puml.id("Élodie Bar-baz 2") + " as " + puml.id("3 d"))
+!try:
+!    puml.error("oops")
+!except RuntimeError as e:
+!    emit("note over " + puml.id("3 d") + " : caught " + str(e))
+@enduml
