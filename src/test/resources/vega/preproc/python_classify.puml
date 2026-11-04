@@ -1,0 +1,21 @@
+---
+output: preproc
+---
+@startuml
+!x = 1
+!x += 2
+!l = [1, 2]
+!l[0] = 5
+!if x == 3:
+!    emit("title python if " + str(l[0]))
+!else:
+!    emit("title never")
+!$y = 7
+!if $y == 7
+title legacy if $y
+!endif
+!z ?= 4
+title %get_variable_value("z")
+!x = 1
+!emit("title x=" + str(x == 1))
+@enduml
