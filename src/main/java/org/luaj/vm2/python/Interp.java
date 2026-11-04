@@ -32,6 +32,16 @@ public final class Interp {
 		globals.put("__name__", "__main__");
 	}
 
+	/** Makes a module importable ({@code import name}). Done by the host, before running anything. */
+	public void addModule(PyModule m) {
+		modules.put(m.name, m);
+	}
+
+	/** Defines a global variable: a module, or a member of a module such as {@link PyModule#get}. */
+	public void setGlobal(String name, Object value) {
+		globals.put(name, value);
+	}
+
 	public void setMaxSteps(long n) {
 		maxSteps = n;
 	}
