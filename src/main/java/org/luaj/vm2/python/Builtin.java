@@ -3,8 +3,9 @@ package org.luaj.vm2.python;
 import java.util.Map;
 
 /** A function implemented in Java. */
-final class Builtin {
-	interface Fn {
+public final class Builtin {
+	/** The body of a function written in Java: the interpreter and the positional arguments (Python values). */
+	public interface Fn {
 		Object call(Interp in, Object[] args);
 	}
 
@@ -34,5 +35,20 @@ final class Builtin {
 		if (kwFn == null)
 			throw PyOps.err(Types.TYPE_ERROR, name + "() takes no keyword arguments");
 		return kwFn.call(in, args, kw);
+	}
+
+	/** The Python value {@code None}, for a function that returns nothing. */
+	public static Object none() {
+		return PyNone.NONE;
+	}
+
+	/** A Python {@code TypeError}, to be thrown from a {@link Fn}. */
+	public static PyError typeError(String message) {
+		return PyOps.err(Types.TYPE_ERROR, message);
+	}
+
+	/** A Python {@code ValueError}, to be thrown from a {@link Fn}. */
+	public static PyError valueError(String message) {
+		return PyOps.err(Types.VALUE_ERROR, message);
 	}
 }

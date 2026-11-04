@@ -37,32 +37,55 @@ package net.sourceforge.plantuml.tim;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.luaj.vm2.python.Builtin;
 import org.luaj.vm2.python.ExecutionLimitError;
 import org.luaj.vm2.python.Interp;
 import org.luaj.vm2.python.PyError;
+import org.luaj.vm2.python.PyModule;
 import org.luaj.vm2.python.PySyntaxError;
 
 /**
  * The Python state of one diagram. Created at the first Python chunk only
  * (TContext keeps it null otherwise), so a diagram without Python pays
  * nothing.
+ * <p>
+ * The text API lives in the builtin module <code>puml</code>, available
+ * without <code>import</code>: <code>puml.emit(line)</code> appends a line to
+ * the generated text. <code>emit</code> is also a global alias.
  */
 final class PythonRunner {
 
-	private static final String PRELUDE = "def emit(line):\n    print(line)\n";
-
-	private final StringBuilder output = new StringBuilder();
+	private final List<String> emitted = new ArrayList<>();
 	private final Interp interp;
 
 	PythonRunner() {
-		this.interp = new Interp(text -> output.append(text));
+		// What print() writes is dropped: whether print is an alias of emit is
+		// still open (see PYTHON_PREPROCESSOR.md), it is not for now.
+		this.interp = new Interp(text -> {
+		});
 		this.interp.setMaxSteps(10000000L);
-		this.interp.run(PRELUDE, "<prelude>");
+
+		final PyModule puml = new PyModule("puml");
+		puml.put("emit", (in, args) -> emit(args));
+		this.interp.addModule(puml);
+		this.interp.setGlobal("puml", puml);
+		this.interp.setGlobal("emit", puml.get("emit"));
+	}
+
+	private Object emit(Object[] args) {
+		if (args.length != 1)
+			throw Builtin.typeError("emit() takes exactly 1 argument (" + args.length + " given)");
+		if (args[0] instanceof String == false)
+			throw Builtin.typeError("emit() argument must be str");
+		// A string with several lines is several lines of PlantUML text.
+		for (String line : ((String) args[0]).split("\\r?\\n", -1))
+			emitted.add(line);
+		return Builtin.none();
 	}
 
 	/** Runs a chunk and returns the lines it emitted. */
 	List<String> run(String code, String name) throws EaterExceptionMessage {
-		output.setLength(0);
+		emitted.clear();
 		try {
 			interp.run(code, name);
 		} catch (PySyntaxError e) {
@@ -72,18 +95,12 @@ final class PythonRunner {
 		} catch (ExecutionLimitError e) {
 			throw new EaterExceptionMessage("Python error: " + e.getMessage());
 		}
-		final List<String> lines = new ArrayList<>();
-		if (output.length() > 0) {
-			final String text = output.toString();
-			final String[] split = text.split("\\n", -1);
-			// the text ends with a newline: the last item is empty
-			for (int i = 0; i < split.length - 1; i++)
-				lines.add(split[i]);
-		}
-		return lines;
+		return new ArrayList<>(emitted);
 	}
 
 	static class EaterExceptionMessage extends Exception {
+		private static final long serialVersionUID = 1L;
+
 		EaterExceptionMessage(String message) {
 			super(message);
 		}
