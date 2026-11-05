@@ -1,5 +1,5 @@
 ---
-output: preproc
+output: preproc, svg
 ---
 @startuml
 !puml.emit("participant A\nparticipant B")
