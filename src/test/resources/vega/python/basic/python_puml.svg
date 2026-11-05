@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="165px" preserveAspectRatio="none" style="width:149px;height:165px;background:#FFFFFF;" version="1.1" viewBox="0 0 149 165" width="149px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="54.25" x="46.644" y="25.889">say \"hi\"\</text>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="_3_d" data-source-line="1" id="part1-lifeline">
+      <g>
+        <title>.lodie_Bar_baz_2</title>
+        <rect fill="#000" fill-opacity="0" height="51" width="8" x="70.769" y="74"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="74.269" x2="74.269" y1="74" y2="125"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="_3_d" data-source-line="1" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="128.538" x="10" y="45"/>
+      <text fill="#000" font-size="14" textLength="114.538" x="17" y="62.889">Élodie_Bar_baz_2</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="_3_d" data-source-line="1" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="128.538" x="10" y="125"/>
+      <text fill="#000" font-size="14" textLength="114.538" x="17" y="142.889">Élodie_Bar_baz_2</text>
+    </g>
+    <path d="M30.172,87 L30.172,110 L118.172,110 L118.172,97 L108.172,87 L30.172,87" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M108.172,87 L108.172,97 L118.172,97 L108.172,87" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="67.194" x="36.172" y="102.111">caught oops</text>
+  </g>
+</svg>
