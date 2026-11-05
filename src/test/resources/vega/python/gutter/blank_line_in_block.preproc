@@ -1,0 +1,4 @@
+@startuml
+participant P0
+participant P1
+@enduml
