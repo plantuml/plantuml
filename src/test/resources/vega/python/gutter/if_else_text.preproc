@@ -1,0 +1,5 @@
+@startuml
+participant A
+note over A : small
+note over A : big
+@enduml
