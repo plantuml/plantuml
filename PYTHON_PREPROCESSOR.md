@@ -671,11 +671,12 @@ Level 0, generate text (essential):
 
 - `puml.emit(line)` appends a line to the generated source; `emit` may also
   exist as a global alias.
-- `puml.quote(s)` quotes and escapes a string.
-- `puml.id(s)` builds a valid PlantUML identifier from any string (accents,
-  spaces, dashes).
 - `puml.error(msg)` raises an error attached to the current diagram line. Plain
   Python exceptions also carry the right line number.
+
+`puml.quote` and `puml.id` were tried and removed: PlantUML has no general way
+to escape a double quote (`\"` is a syntax error in a quoted name), and plain
+Python string methods cover the identifier case.
 
 Level 1, read the environment:
 
