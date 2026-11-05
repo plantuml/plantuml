@@ -128,8 +128,11 @@ public final class PythonChunks {
 						headers.remove(headers.size() - 1);
 					if (headers.isEmpty() || text.trim().startsWith("!"))
 						break;
-					if (body.get(j).getType() != TLineType.COMMENT_SIMPLE)
-						code.append(spaces(indent)).append(textToPython(text.trim())).append('\n');
+					if (body.get(j).getType() != TLineType.COMMENT_SIMPLE) {
+						for (int k = 0; k < indent; k++)
+							code.append(' ');
+						code.append(textToPython(text.trim())).append('\n');
+					}
 					i = j + 1;
 				}
 				result.add(chunk(first, code));
@@ -157,13 +160,6 @@ public final class PythonChunks {
 		while (n < s.length() && (s.charAt(n) == ' ' || s.charAt(n) == '\t'))
 			n++;
 		return n;
-	}
-
-	private static String spaces(int n) {
-		final StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < n; i++)
-			sb.append(' ');
-		return sb.toString();
 	}
 
 	/**
