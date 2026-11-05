@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="163px" preserveAspectRatio="none" style="width:189px;height:163px;background:#FFFFFF;" version="1.1" viewBox="0 0 189 163" width="189px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Auth" data-source-line="10" id="part1-lifeline">
+      <g>
+        <title>Auth</title>
+        <rect fill="#000" fill-opacity="0" height="84" width="8" x="27.894" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="31.394" x2="31.394" y1="39" y2="123"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Billing" data-source-line="10" id="part2-lifeline">
+      <g>
+        <title>Billing</title>
+        <rect fill="#000" fill-opacity="0" height="84" width="8" x="85.056" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="88.556" x2="88.556" y1="39" y2="123"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Auth" data-source-line="10" id="part1-head">
+      <rect fill="#FCC" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.787" x="10" y="10"/>
+      <text fill="#000" font-size="14" textLength="28.787" x="17" y="27.889">Auth</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Billing" data-source-line="10" id="part2-head">
+      <rect fill="#CCE5FF" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.538" x="62.787" y="10"/>
+      <text fill="#000" font-size="14" textLength="37.538" x="69.788" y="27.889">Billing</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Auth" data-source-line="10" id="part1-tail">
+      <rect fill="#FCC" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.787" x="10" y="123"/>
+      <text fill="#000" font-size="14" textLength="28.787" x="17" y="140.889">Auth</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Billing" data-source-line="10" id="part2-tail">
+      <rect fill="#CCE5FF" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.538" x="62.787" y="123"/>
+      <text fill="#000" font-size="14" textLength="37.538" x="69.788" y="140.889">Billing</text>
+    </g>
+    <path d="M36.394,52 L36.394,75 L107.394,75 L107.394,62 L97.394,52 L36.394,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M97.394,52 L97.394,62 L107.394,62 L97.394,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="50.619" x="42.394" y="67.111">Auth is up</text>
+    <path d="M93.556,85 L93.556,108 L172.556,108 L172.556,95 L162.556,85 L93.556,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M162.556,85 L162.556,95 L172.556,95 L162.556,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="58.744" x="99.556" y="100.111">Billing is up</text>
+  </g>
+</svg>
