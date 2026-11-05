@@ -1,3 +1,6 @@
+---
+output: preproc, svg
+---
 @startuml
 ' EXPECT (preproc):
 ' A -> B : 0 0
