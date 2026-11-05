@@ -68,8 +68,6 @@ final class PythonRunner {
 
 		final PyModule puml = new PyModule("puml");
 		puml.put("emit", (in, args) -> emit(args));
-		puml.put("quote", (in, args) -> PumlText.quote(string("quote", args)));
-		puml.put("id", (in, args) -> PumlText.id(string("id", args)));
 		puml.put("error", (in, args) -> error(string("error", args)));
 		this.interp.addModule(puml);
 		this.interp.setGlobal("puml", puml);
