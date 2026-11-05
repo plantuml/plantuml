@@ -63,6 +63,12 @@ public final class PythonChunks {
 	private PythonChunks() {
 	}
 
+	/**
+	 * Replaces the Python lines of a body by chunks. It is idempotent: it runs
+	 * again on the body of a legacy function or procedure when this one is
+	 * executed, and a chunk it already built is kept as it is, never merged
+	 * with its neighbours.
+	 */
 	public static List<StringLocated> collapse(List<StringLocated> body) {
 		// Fast path: a diagram without Python pays nothing.
 		boolean found = false;
@@ -222,14 +228,20 @@ public final class PythonChunks {
 		return -1;
 	}
 
+	/** A chunk built by {@link #collapse}: its text starts with {@link TLineType#PYTHON_MARKER}. */
+	private static boolean isChunk(StringLocated sl) {
+		return sl.getString().startsWith(TLineType.PYTHON_MARKER);
+	}
+
+	/** A raw "!" line of type Python (a chunk is not one). */
 	private static boolean isGutterLine(StringLocated sl) {
-		return sl.getString().indexOf('\n') == -1 && sl.getType() == TLineType.PYTHON;
+		return isChunk(sl) == false && sl.getType() == TLineType.PYTHON;
 	}
 
 	/** "!    return x": inside a run, an indented line after the gutter continues the block. */
 	private static boolean isIndentedGutterLine(StringLocated sl) {
 		final String s = sl.getString();
-		if (s.indexOf('\n') != -1 || s.length() < 2 || s.charAt(0) != '!' || s.charAt(1) != ' ')
+		if (isChunk(sl) || s.length() < 2 || s.charAt(0) != '!' || s.charAt(1) != ' ')
 			return false;
 		return sl.getType() == TLineType.PLAIN;
 	}
