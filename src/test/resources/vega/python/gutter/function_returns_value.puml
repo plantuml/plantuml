@@ -1,0 +1,12 @@
+@startuml
+' EXPECT (preproc):
+' participant X #FFCCCC
+' participant Y #CCE5FF
+!def color(name):
+!    if name == "X":
+!        return "#FFCCCC"
+!    return "#CCE5FF"
+
+!for n in ["X", "Y"]:
+    participant ${n} ${color(n)}
+@enduml

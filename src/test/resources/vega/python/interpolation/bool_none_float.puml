@@ -1,0 +1,8 @@
+@startuml
+' EXPECT (preproc):
+' title True None 1.5
+!a = True
+!b = None
+!c = 1.5
+title ${a} ${b} ${c}
+@enduml

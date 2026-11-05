@@ -1,0 +1,8 @@
+@startuml
+' EXPECT (preproc):
+' title 3
+!n = 0
+!while n < 3:
+!    n += 1
+!emit("title " + str(n))
+@enduml

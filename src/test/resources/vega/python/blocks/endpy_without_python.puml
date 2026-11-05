@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: !endpy without !python
+!endpy
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: PySyntaxError with
+!python
+with open("x") as f:
+    pass
+!endpy
+@enduml

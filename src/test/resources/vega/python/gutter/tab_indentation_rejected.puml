@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: tabs are not allowed in the indentation
+!for i in range(2):
+	participant P${i}
+@enduml

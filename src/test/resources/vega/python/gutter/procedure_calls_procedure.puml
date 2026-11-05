@@ -1,0 +1,15 @@
+@startuml
+' EXPECT (preproc):
+' participant A
+' participant B
+' A -> B : ping
+!def decl(n):
+    participant ${n}
+
+!def pair(a, b):
+!    decl(a)
+!    decl(b)
+     ${a} -> ${b} : ping
+
+!pair("A", "B")
+@enduml

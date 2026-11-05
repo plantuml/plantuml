@@ -1,0 +1,8 @@
+@startuml
+' EXPECT (preproc):
+' participant P0
+' participant P1
+!for i in range(2):
+
+    participant P${i}
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title 3
+!include python_helper.inc
+!emit("title " + str(helper(1)))
+@enduml

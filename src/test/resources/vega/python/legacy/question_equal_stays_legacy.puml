@@ -1,0 +1,7 @@
+@startuml
+' EXPECT (preproc):
+' title 4
+!$z ?= 4
+!$z ?= 5
+title $z
+@enduml

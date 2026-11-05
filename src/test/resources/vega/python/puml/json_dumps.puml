@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title {"a": 1}
+!import json
+!emit("title " + json.dumps({"a": 1}))
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: PySyntaxError class
+!class A:
+!    pass
+@enduml

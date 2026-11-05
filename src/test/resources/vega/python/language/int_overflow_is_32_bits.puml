@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: OverflowError
+!x = 2 ** 31
+@enduml

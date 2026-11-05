@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title V
+!define V v
+!emit("title V")
+@enduml

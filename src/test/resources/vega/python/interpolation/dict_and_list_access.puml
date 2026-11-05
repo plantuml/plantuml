@@ -1,0 +1,7 @@
+@startuml
+' EXPECT (preproc):
+' title 2 yes
+!d = {"k": "yes"}
+!l = [1, 2]
+title ${l[1]} ${d["k"]}
+@enduml

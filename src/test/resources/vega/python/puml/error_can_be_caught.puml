@@ -1,0 +1,8 @@
+@startuml
+' EXPECT (preproc):
+' title caught boom
+!try:
+!    puml.error("boom")
+!except RuntimeError as e:
+!    emit("title caught " + str(e))
+@enduml

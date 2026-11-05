@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' title "say \"hi\""
+!emit("title " + puml.quote('say "hi"'))
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: instruction limit exceeded
+!while True:
+!    pass
+@enduml

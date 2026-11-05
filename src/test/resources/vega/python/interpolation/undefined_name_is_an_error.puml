@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: NameError: undefined
+title ${undefined}
+!x = 1
+@enduml

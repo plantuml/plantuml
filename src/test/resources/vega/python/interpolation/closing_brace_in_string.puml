@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' title a}b
+title ${"a}b"}
+@enduml

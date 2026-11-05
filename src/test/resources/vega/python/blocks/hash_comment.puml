@@ -1,0 +1,8 @@
+@startuml
+' EXPECT (preproc):
+' title ok
+!python
+# a python comment
+emit("title ok")  # another one
+!endpy
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' participant Elodie_Bar as _3_d
+!emit("participant " + puml.id("Elodie Bar") + " as " + puml.id("3 d"))
+@enduml

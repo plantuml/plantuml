@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title 1
+! x = 1
+!emit("title " + str(x))
+@enduml

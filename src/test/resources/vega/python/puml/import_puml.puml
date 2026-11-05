@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title a
+!import puml
+!puml.emit("title a")
+@enduml

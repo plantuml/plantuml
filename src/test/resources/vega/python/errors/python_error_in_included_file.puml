@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: reported in the included file
+!include python_error_in_included_file.inc
+@enduml

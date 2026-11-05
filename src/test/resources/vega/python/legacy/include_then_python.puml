@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' participant A
+!include <C4/C4_Context>
+!emit("participant A")
+@enduml

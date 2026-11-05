@@ -1,0 +1,7 @@
+@startuml
+' EXPECT (preproc):
+' title 9
+!def f(n):
+!    return n * 3
+title ${f(3)}
+@enduml

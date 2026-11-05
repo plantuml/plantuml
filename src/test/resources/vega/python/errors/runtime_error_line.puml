@@ -1,0 +1,7 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: ZeroDivisionError (line 3)
+title ok
+!x = 1
+!y = x / 0
+@enduml

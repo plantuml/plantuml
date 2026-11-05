@@ -1,0 +1,10 @@
+@startuml
+' EXPECT (preproc):
+' title 6 12
+!function $double($p)
+!return $p * 2
+!endfunction
+!def triple(n):
+!    return n * 3
+title $double(3) ${triple(4)}
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+' EXPECT (preproc):
+' title 2
+!count = 0
+!def inc():
+!    global count
+!    count += 1
+!inc()
+!inc()
+!emit("title " + str(count))
+@enduml

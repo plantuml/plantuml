@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title ${x}
+' no Python line: ${x} stays literal text
+title ${x}
+@enduml
