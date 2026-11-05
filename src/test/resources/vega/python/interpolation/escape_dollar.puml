@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title ${x}
+!x = 1
+title $${x}
+@enduml

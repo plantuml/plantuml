@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' participant A
+' participant B
+!emit("participant A\nparticipant B")
+@enduml

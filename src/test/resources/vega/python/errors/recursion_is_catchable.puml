@@ -1,0 +1,10 @@
+@startuml
+' EXPECT (preproc):
+' title recursion
+!def f():
+!    f()
+!try:
+!    f()
+!except RecursionError:
+!    emit("title recursion")
+@enduml

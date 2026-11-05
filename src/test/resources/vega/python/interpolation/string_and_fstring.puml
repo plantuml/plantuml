@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title hello world
+!name = "world"
+title ${"hello " + name}
+@enduml

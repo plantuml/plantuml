@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title only
+!print("lost")
+!emit("title only")
+@enduml

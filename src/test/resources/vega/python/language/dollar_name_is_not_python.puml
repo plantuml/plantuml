@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: a $ name is legacy, not Python
+!$x = 1
+!emit("title " + str($x))
+@enduml

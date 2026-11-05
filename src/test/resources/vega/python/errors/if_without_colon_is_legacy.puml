@@ -1,0 +1,7 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: !if without !endif
+!x = 1
+!if x == 1
+title never
+@enduml

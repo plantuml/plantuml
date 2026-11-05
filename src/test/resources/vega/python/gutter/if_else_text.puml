@@ -1,0 +1,11 @@
+@startuml
+' EXPECT (preproc):
+' note over A : small
+' note over A : big
+participant A
+!for n in [1, 100]:
+!    if n < 10:
+         note over A : small
+!    else:
+         note over A : big
+@enduml

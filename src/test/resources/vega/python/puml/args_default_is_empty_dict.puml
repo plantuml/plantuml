@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' title 0
+!emit("title " + str(len(puml.args)))
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' participant A
+!pragma teoz true
+!emit("participant A")
+@enduml

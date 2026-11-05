@@ -1,0 +1,7 @@
+@startuml
+' EXPECT (preproc):
+' title ok
+  !python
+  emit("title ok")
+  !endpy
+@enduml

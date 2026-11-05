@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' title str str
+!emit("title " + type(puml.version).__name__ + " " + type(puml.edition).__name__)
+@enduml

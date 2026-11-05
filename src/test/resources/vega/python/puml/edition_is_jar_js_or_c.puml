@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' title True
+!emit("title " + str(puml.edition in ["jar", "js", "c"]))
+@enduml

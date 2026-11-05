@@ -1,0 +1,8 @@
+@startuml
+' EXPECT (preproc):
+' participant Auth
+' participant Billing
+!services = ["Auth", "Billing"]
+!for s in services:
+    participant ${s}
+@enduml

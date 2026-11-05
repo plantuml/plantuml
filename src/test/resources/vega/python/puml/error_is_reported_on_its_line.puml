@@ -1,0 +1,7 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: boom (line 3)
+title ok
+!x = 1
+!puml.error("boom")
+@enduml

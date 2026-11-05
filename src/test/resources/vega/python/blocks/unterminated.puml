@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: !python without !endpy
+!python
+emit("title never")
+@enduml

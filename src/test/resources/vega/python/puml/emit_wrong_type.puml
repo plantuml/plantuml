@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: TypeError
+!emit(1)
+@enduml

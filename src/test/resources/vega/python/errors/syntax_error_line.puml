@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: SyntaxError (line 2)
+title ok
+!x = = 1
+@enduml

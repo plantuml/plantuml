@@ -1,0 +1,8 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: NameError (line 3)
+!python
+x = 1
+y = undefined_name
+!endpy
+@enduml

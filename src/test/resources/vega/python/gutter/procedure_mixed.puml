@@ -1,0 +1,15 @@
+@startuml
+' EXPECT (preproc):
+' participant Web
+' participant API
+' Web -> API
+' participant DB
+' API -> DB
+!def stack(names):
+!    for i, n in enumerate(names):
+         participant ${n}
+!        if i > 0:
+             ${names[i - 1]} -> ${n}
+
+!stack(["Web", "API", "DB"])
+@enduml

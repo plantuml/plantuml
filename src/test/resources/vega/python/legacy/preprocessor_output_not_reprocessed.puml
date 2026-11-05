@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title $notAVariable
+!$notAVariable = 1
+!emit("title " + "$" + "notAVariable")
+@enduml

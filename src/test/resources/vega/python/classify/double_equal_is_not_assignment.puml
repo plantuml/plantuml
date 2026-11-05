@@ -1,0 +1,7 @@
+@startuml
+' EXPECT (preproc):
+' participant A
+!x = 1
+!x == 1
+participant A
+@enduml

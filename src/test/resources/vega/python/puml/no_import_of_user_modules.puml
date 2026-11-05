@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: ModuleNotFoundError
+!import mymodule
+@enduml

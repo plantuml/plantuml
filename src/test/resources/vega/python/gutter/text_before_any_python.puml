@@ -1,0 +1,5 @@
+@startuml
+' EXPECT (preproc):
+' participant plain
+participant plain
+@enduml

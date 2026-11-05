@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title a=1 b=2 c=3
+!d = {"a": 1, "b": 2, "c": 3}
+!emit("title " + " ".join([k + "=" + str(v) for k, v in d.items()]))
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title 3
+!import math
+!emit("title " + str(int(math.sqrt(9))))
+@enduml

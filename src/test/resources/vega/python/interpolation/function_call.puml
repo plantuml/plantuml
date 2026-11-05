@@ -1,0 +1,7 @@
+@startuml
+' EXPECT (preproc):
+' title 25
+!def sq(x):
+!    return x * x
+title ${sq(5)}
+@enduml
