@@ -90,9 +90,41 @@ public final class PythonChunks {
 				result.add(chunk(first, code));
 			} else if (isGutterLine(first)) {
 				final StringBuilder code = new StringBuilder();
-				while (i < body.size() && (isGutterLine(body.get(i)) || isIndentedGutterLine(body.get(i)))) {
-					code.append(gutter(body.get(i).getString())).append('\n');
-					i++;
+				// indentation of the lines that opened a block (they end with a colon)
+				final List<Integer> headers = new ArrayList<>();
+				while (i < body.size()) {
+					final StringLocated sl = body.get(i);
+					if (isGutterLine(sl) || isIndentedGutterLine(sl)) {
+						final String python = gutter(sl.getString());
+						code.append(python).append('\n');
+						trackHeaders(headers, python);
+						i++;
+						continue;
+					}
+					if (headers.isEmpty())
+						break;
+					// A text line deeper than the open block belongs to it (blank lines are ignored).
+					int j = i;
+					while (j < body.size() && body.get(j).getString().trim().length() == 0)
+						j++;
+					if (j >= body.size())
+						break;
+					final String text = body.get(j).getString();
+					// The gutter takes one column: a text line is Python code indented by one column less.
+					final int indent = leadingSpaces(text) - 1;
+					if (text.charAt(0) == '\t' && text.trim().startsWith("!") == false) {
+						// tabs are not allowed in the indentation: the Python lexer reports it
+						code.append('\t').append(textToPython(text.trim())).append('\n');
+						i = j + 1;
+						continue;
+					}
+					while (headers.isEmpty() == false && headers.get(headers.size() - 1) >= indent)
+						headers.remove(headers.size() - 1);
+					if (headers.isEmpty() || text.trim().startsWith("!"))
+						break;
+					if (body.get(j).getType() != TLineType.COMMENT_SIMPLE)
+						code.append(spaces(indent)).append(textToPython(text.trim())).append('\n');
+					i = j + 1;
 				}
 				result.add(chunk(first, code));
 			} else {
@@ -101,6 +133,93 @@ public final class PythonChunks {
 			}
 		}
 		return result;
+	}
+
+	/** Remembers the blocks opened so far: a line that ends with a colon opens one. */
+	private static void trackHeaders(List<Integer> headers, String python) {
+		if (python.trim().length() == 0)
+			return;
+		final int indent = leadingSpaces(python);
+		while (headers.isEmpty() == false && headers.get(headers.size() - 1) >= indent)
+			headers.remove(headers.size() - 1);
+		if (python.trim().endsWith(":"))
+			headers.add(indent);
+	}
+
+	private static int leadingSpaces(String s) {
+		int n = 0;
+		while (n < s.length() && (s.charAt(n) == ' ' || s.charAt(n) == '\t'))
+			n++;
+		return n;
+	}
+
+	private static String spaces(int n) {
+		final StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < n; i++)
+			sb.append(' ');
+		return sb.toString();
+	}
+
+	/**
+	 * A PlantUML text line inside a Python block, as the Python statement that
+	 * emits it: <code>A -&gt; ${b}</code> becomes
+	 * <code>puml.emit("A -&gt; " + str(b))</code>.
+	 */
+	static String textToPython(String text) {
+		final StringBuilder sb = new StringBuilder("puml.emit(\"\"");
+		final StringBuilder literal = new StringBuilder();
+		int i = 0;
+		while (i < text.length()) {
+			final int close = text.startsWith("${", i) ? closingBrace(text, i + 2) : -1;
+			if (close == -1) {
+				literal.append(text.charAt(i));
+				i++;
+				continue;
+			}
+			appendLiteral(sb, literal);
+			sb.append(" + str(").append(text, i + 2, close).append(')');
+			i = close + 1;
+		}
+		appendLiteral(sb, literal);
+		return sb.append(')').toString();
+	}
+
+	private static void appendLiteral(StringBuilder sb, StringBuilder literal) {
+		if (literal.length() == 0)
+			return;
+		sb.append(" + \"");
+		for (int i = 0; i < literal.length(); i++) {
+			final char ch = literal.charAt(i);
+			if (ch == '\\' || ch == '"')
+				sb.append('\\');
+			sb.append(ch);
+		}
+		sb.append('"');
+		literal.setLength(0);
+	}
+
+	/** Index of the "}" that closes a "${", ignoring braces inside Python strings, or -1. */
+	private static int closingBrace(String s, int start) {
+		int depth = 0;
+		char quote = 0;
+		for (int i = start; i < s.length(); i++) {
+			final char ch = s.charAt(i);
+			if (quote != 0) {
+				if (ch == '\\')
+					i++;
+				else if (ch == quote)
+					quote = 0;
+			} else if (ch == '"' || ch == '\'') {
+				quote = ch;
+			} else if (ch == '{') {
+				depth++;
+			} else if (ch == '}') {
+				if (depth == 0)
+					return i;
+				depth--;
+			}
+		}
+		return -1;
 	}
 
 	private static boolean isGutterLine(StringLocated sl) {

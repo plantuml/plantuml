@@ -1,5 +1,6 @@
 @startuml
 ' EXPECT (preproc):
+' participant A
 ' A -> Auth : request 0
 ' A -> Billing : request 1
 !services = ["Auth", "Billing"]

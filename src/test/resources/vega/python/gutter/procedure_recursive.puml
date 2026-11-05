@@ -1,5 +1,7 @@
 @startuml
 ' EXPECT (preproc):
+' participant A
+' participant B
 ' A -> B : 3
 ' A -> B : 2
 ' A -> B : 1
