@@ -638,9 +638,13 @@ The **reduced preprocessor runs first, then text Python**.
 - `${expr}` is interpolated in every text line, with or without Python lines:
   the first `${` of a diagram creates the interpreter (**[implemented]**; this
   replaces the earlier rule "only in a diagram that has Python lines", chosen
-  on the `master-p6` branch for the ergonomics, at the price that a legacy
-  diagram containing a literal `${` now fails with a `NameError`; `$${` gives a
-  literal `${`).
+  on the `master-p6` branch for the ergonomics). `$${` gives a literal `${`.
+  In a diagram that contains no Python code (no `!python` block and no Python
+  line), an expression that fails (`NameError`, syntax error...) is not an error:
+  it stays as written, `${toto}`, while the other expressions of the line are
+  replaced, so a legacy text with a literal `${` is unchanged. As soon as the
+  diagram has Python code, the same failure is an error, even on a line before
+  the first Python line.
 
 Legacy diagrams keep the old preprocessor unchanged, frozen. The two worlds can
 be mixed in one diagram, and even in one file: the standard library (C4 and

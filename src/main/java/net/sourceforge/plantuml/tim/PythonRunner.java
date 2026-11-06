@@ -152,9 +152,11 @@ final class PythonRunner {
 	/**
 	 * Replaces each <code>${expr}</code> of a text line by <code>str(expr)</code>
 	 * (Python is evaluated in the state of the diagram). A doubled dollar before
-	 * the brace is the escape: it gives a literal <code>${</code>.
+	 * the brace is the escape: it gives a literal <code>${</code>. With
+	 * <code>keepOnError</code>, an expression that fails stays as written in the
+	 * text instead of being an error.
 	 */
-	String interpolate(String text) throws EaterExceptionMessage {
+	String interpolate(String text, boolean keepOnError) throws EaterExceptionMessage {
 		final StringBuilder sb = new StringBuilder();
 		int i = 0;
 		while (i < text.length()) {
@@ -169,7 +171,14 @@ final class PythonRunner {
 				i++;
 				continue;
 			}
-			sb.append(evaluate(text.substring(i + 2, close)));
+			final String expression = text.substring(i + 2, close);
+			try {
+				sb.append(evaluate(expression));
+			} catch (EaterExceptionMessage e) {
+				if (keepOnError == false)
+					throw e;
+				sb.append(text, i, close + 1);
+			}
 			i = close + 1;
 		}
 		return sb.toString();

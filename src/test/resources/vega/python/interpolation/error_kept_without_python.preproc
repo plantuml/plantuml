@@ -1,0 +1,3 @@
+@startuml
+title ${toto} 2 ${a.b(} x}
+@enduml
