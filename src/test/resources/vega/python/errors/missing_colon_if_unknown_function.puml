@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: 'Unknown built-in function len (looks like Python, is the ':' missing?)'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR line 4: Unknown built-in function len (looks like Python, is the ':' missing?)
+!l = [1]
+!if len(l) > 0
+    participant A
+@enduml

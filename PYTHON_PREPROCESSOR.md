@@ -599,9 +599,13 @@ follows, in this order:
 5. Anything else (`!x = 1`, `!service("Auth")`, `!names.append(n)`) is Python.
 
 The main risk is a typo: `!if x == 1` without the colon is read as legacy, and
-the resulting error would be confusing. The error message should hint at Python
-("looks like Python, is the `:` missing?") when the legacy parse fails on a line
-that parses as a Python block opener.
+the resulting error would be confusing. **[implemented]** When the legacy
+preprocessor fails on a `!if`, `!while` or `!else` line, in a diagram that has
+Python, and the line parses as a Python block opener once a colon is added, the
+message ends with ` (looks like Python, is the ':' missing?)` (`PythonHint`).
+A legacy-only diagram never gets it. A `!if x == 1` without colon whose legacy
+evaluation does not fail is not an error at all: the condition is false and the
+block is skipped.
 
 ## 12. Order with the legacy preprocessor **[decided]**
 
