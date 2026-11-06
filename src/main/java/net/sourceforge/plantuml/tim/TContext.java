@@ -356,8 +356,20 @@ public class TContext {
 				pendingAdd = null;
 			}
 			for (StringLocated line : tmp)
-				addToResultList(line);
+				addToResultList(interpolatePython(line));
 
+		}
+	}
+
+	/** Replaces the ${expr} of a text line by the Python value, in a diagram that has Python. */
+	private StringLocated interpolatePython(StringLocated line) throws EaterException {
+		if (python == null || line.getString().contains("${") == false)
+			return line;
+		try {
+			return new StringLocated(python.interpolate(line.getString()), line.getLocation(),
+					line.getPreprocessorError());
+		} catch (PythonRunner.EaterExceptionMessage e) {
+			throw new EaterException(e.getMessage(), line);
 		}
 	}
 

@@ -118,6 +118,37 @@ final class PythonRunner {
 		return new ArrayList<>(emitted);
 	}
 
+	/**
+	 * Replaces each <code>${expr}</code> of a text line by <code>str(expr)</code>
+	 * (Python is evaluated in the state of the diagram). A doubled dollar before
+	 * the brace is the escape: it gives a literal <code>${</code>.
+	 */
+	String interpolate(String text) throws EaterExceptionMessage {
+		final StringBuilder sb = new StringBuilder();
+		int i = 0;
+		while (i < text.length()) {
+			if (text.startsWith("$" + "${", i)) {
+				sb.append("${");
+				i += 3;
+				continue;
+			}
+			final int close = text.startsWith("${", i) ? PythonChunks.closingBrace(text, i + 2) : -1;
+			if (close == -1) {
+				sb.append(text.charAt(i));
+				i++;
+				continue;
+			}
+			sb.append(evaluate(text.substring(i + 2, close)));
+			i = close + 1;
+		}
+		return sb.toString();
+	}
+
+	private String evaluate(String expression) throws EaterExceptionMessage {
+		run("__interpolated = (" + expression + ")\n", "<diagram>");
+		return interp.getGlobalAsString("__interpolated");
+	}
+
 	static class EaterExceptionMessage extends Exception {
 		private static final long serialVersionUID = 1L;
 

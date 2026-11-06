@@ -201,7 +201,7 @@ public final class PythonChunks {
 	}
 
 	/** Index of the "}" that closes a "${", ignoring braces inside Python strings, or -1. */
-	private static int closingBrace(String s, int start) {
+	static int closingBrace(String s, int start) {
 		int depth = 0;
 		char quote = 0;
 		for (int i = start; i < s.length(); i++) {
