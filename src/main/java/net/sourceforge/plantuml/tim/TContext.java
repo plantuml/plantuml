@@ -364,12 +364,17 @@ public class TContext {
 	/** For each Python chunk, the diagram line of each of its code lines. */
 	private final Map<StringLocated, List<StringLocated>> pythonSources = new IdentityHashMap<>();
 
-	private void executePython(StringLocated s) throws EaterException {
+	/** The Python state of the diagram, created when first needed (a Python chunk or a ${expr}). */
+	private PythonRunner python() {
 		if (python == null)
 			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments);
+		return python;
+	}
+
+	private void executePython(StringLocated s) throws EaterException {
 		try {
 			// Output of Python is not sent back to the legacy preprocessor.
-			for (String line : python.run(PythonChunks.code(s), pythonSources.get(s)))
+			for (String line : python().run(PythonChunks.code(s), pythonSources.get(s)))
 				addToResultList(new StringLocated(line, s.getLocation()));
 		} catch (PythonRunner.EaterExceptionMessage e) {
 			if (e.at == null)
@@ -393,13 +398,16 @@ public class TContext {
 		}
 	}
 
-	/** Replaces the ${expr} of a text line by the Python value, in a diagram that has Python. */
+	/**
+	 * Replaces the ${expr} of a text line by the Python value. The interpreter is
+	 * created by the first ${ of the diagram, with or without Python lines.
+	 */
 	private StringLocated interpolatePython(StringLocated line) throws EaterException {
 		// The signature only tells that $, { and } are somewhere in the line: the exact test follows.
-		if (python == null || line.mayContainInterpolation() == false || line.getString().contains("$" + "{") == false)
+		if (line.mayContainInterpolation() == false || line.getString().contains("$" + "{") == false)
 			return line;
 		try {
-			final String result = python.interpolate(line.getString());
+			final String result = python().interpolate(line.getString());
 			if (result.equals(line.getString()))
 				return line;
 			return new StringLocated(result, line.getLocation(), line.getPreprocessorError());
