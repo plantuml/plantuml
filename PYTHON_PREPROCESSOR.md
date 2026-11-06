@@ -710,7 +710,15 @@ Level 1, read the environment:
 Level 2, data:
 
 - `json.loads` / `json.dumps` from a builtin `json` module (`%load_json` is a
-  common use of the current preprocessor).
+  common use of the current preprocessor). **[implemented]** in the interpreter
+  package (`JsonLib`, it needs the value types), not in the PlantUML code base as
+  first planned. `dumps` gives CPython's default text (`", "` and `": "`,
+  non-ASCII escaped, insertion order); `loads` raises a `ValueError`; integers are
+  32-bit. No keyword arguments yet (`indent`, `sort_keys`).
+- `puml`, `json` and `math` are bound as globals in a diagram: no import is
+  needed, and none is possible with a `!` line, since `!import` is the legacy
+  directive. The `import` statement stays accepted in a `!python` block.
+  **[implemented]**
 - `puml.read(name)` loads a text or JSON resource through the finder, with the
   same rules and security profile as `!include`. There is no direct disk access
   from text Python.
