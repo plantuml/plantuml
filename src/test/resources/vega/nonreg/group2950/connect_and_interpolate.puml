@@ -1,0 +1,23 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+
+<style>
+chartDiagram {
+  line {
+    LineThickness 5
+  }
+  .thin {
+    LineThickness 0.5
+  }
+}
+</style>
+
+h-axis [1, 2, 3, 4]
+v-axis 0 --> 10
+line "connect" [1, , 5, 7] connect
+line <<thin>> "interpolate" [2, 4, 3, 8] interpolate
+
+@endchart

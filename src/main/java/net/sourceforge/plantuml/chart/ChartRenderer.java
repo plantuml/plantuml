@@ -882,7 +882,7 @@ public class ChartRenderer {
 				if (s.getType() == ChartSeries.SeriesType.LINE) {
 					final LineRenderer lineRenderer = new LineRenderer(skinParam, plotWidth, plotHeight,
 							xAxisLabels.size(), axis, xAxis);
-					lineRenderer.draw(ug, s, color);
+					lineRenderer.draw(ug, s, color, seriesStyle.value(PName.LineThickness).asDouble());
 				} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {
 					final ScatterRenderer scatterRenderer = new ScatterRenderer(skinParam, plotWidth, plotHeight,
 							xAxisLabels.size(), axis, xAxis);

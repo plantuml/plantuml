@@ -560,6 +560,12 @@ nwdiagDiagram {
 	}
 }
 
+chartDiagram {
+	line {
+		LineThickness 2
+	}
+}
+
 /*
  ____             _                            _
 |  _ \  __ _ _ __| | __    _ __ ___   ___   __| | ___

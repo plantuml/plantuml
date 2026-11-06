@@ -1,0 +1,21 @@
+---
+output: svg
+expected-description: Chart Diagram
+---
+@startchart
+
+<style>
+chartDiagram {
+  .target {
+    LineColor red
+    LineThickness 1
+  }
+}
+</style>
+
+h-axis 0 --> 10
+v-axis 0 --> 10
+
+line <<target>> "xy" [(2,2),(8,8)]
+
+@endchart
