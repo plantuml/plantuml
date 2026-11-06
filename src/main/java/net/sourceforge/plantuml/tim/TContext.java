@@ -201,8 +201,17 @@ public class TContext {
 		}
 	}
 
+	/** Groups the Python lines of a body in chunks, and notes that the diagram has Python. */
+	private List<StringLocated> collapsePython(List<StringLocated> body) {
+		final int before = pythonSources.size();
+		final List<StringLocated> result = PythonChunks.collapse(body, pythonSources);
+		if (pythonSources.size() > before)
+			hasPython = true;
+		return result;
+	}
+
 	private CodeIterator buildCodeIterator(TMemory memory, List<StringLocated> body) {
-		final CodeIterator it10 = new CodeIteratorImpl(PythonChunks.collapse(body, pythonSources));
+		final CodeIterator it10 = new CodeIteratorImpl(collapsePython(body));
 		final CodeIterator it20 = new CodeIteratorLongComment(it10, debug);
 		final CodeIterator it30 = new CodeIteratorShortComment(it20, debug);
 		final CodeIterator it40 = new CodeIteratorInnerComment(it30);
@@ -361,6 +370,9 @@ public class TContext {
 		this.arguments = arguments;
 	}
 
+	/** True once the diagram is known to contain Python code (a chunk was found). */
+	private boolean hasPython;
+
 	/** For each Python chunk, the diagram line of each of its code lines. */
 	private final Map<StringLocated, List<StringLocated>> pythonSources = new IdentityHashMap<>();
 
@@ -400,14 +412,16 @@ public class TContext {
 
 	/**
 	 * Replaces the ${expr} of a text line by the Python value. The interpreter is
-	 * created by the first ${ of the diagram, with or without Python lines.
+	 * created by the first ${ of the diagram, with or without Python lines. In a
+	 * diagram without Python code, an expression that fails is not an error: it is
+	 * kept as it is, ${expr}, so that a legacy text which contains one is unchanged.
 	 */
 	private StringLocated interpolatePython(StringLocated line) throws EaterException {
 		// The signature only tells that $, { and } are somewhere in the line: the exact test follows.
 		if (line.mayContainInterpolation() == false || line.getString().contains("$" + "{") == false)
 			return line;
 		try {
-			final String result = python().interpolate(line.getString());
+			final String result = python().interpolate(line.getString(), hasPython == false);
 			if (result.equals(line.getString()))
 				return line;
 			return new StringLocated(result, line.getLocation(), line.getPreprocessorError());
