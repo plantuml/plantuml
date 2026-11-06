@@ -1,0 +1,18 @@
+@startuml
+!pragma edge_corner_radius 5
+skinparam linetype ortho
+skinparam stateDiagramEdgeLabelStyle node
+state WaitingForDriver
+WaitingForDriver : entry / showWelcome()
+WaitingForDriver : do / pollReader()
+state Charging
+Charging : do / deliverEnergy()
+state Suspended
+Suspended : entry / openContactors()
+WaitingForDriver --> Charging : plugged [authorised]\n/ closeContactors()
+Charging --> Suspended : gridBrownout\n/ openContactors()
+Suspended --> Charging : gridRestored [insulationOk]\n/ closeContactors()
+Suspended --> WaitingForDriver : holdTimeout(15 min)\n/ endSession()
+Charging --> WaitingForDriver : unplugged\n/ printReceipt()
+WaitingForDriver --> WaitingForDriver : cardPresented [!readable]\n/ beep(2)
+@enduml
