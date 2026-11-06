@@ -221,32 +221,49 @@ public class TContext {
 	public TValue executeLines(TMemory memory, List<StringLocated> body, TFunctionType ftype, boolean modeSpecial)
 			throws EaterException {
 		BrowserLog.consoleLog(TContext.class, "executeLines start (" + body.size() + " lines)");
-		final CodeIterator it = buildCodeIterator(memory, body);
+		try {
+			final CodeIterator it = buildCodeIterator(memory, body);
 
-		StringLocated s = null;
-		while ((s = it.peek()) != null) {
-			final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);
-			if (result != null) {
-				BrowserLog.consoleLog(TContext.class, "executeLines ok -> " + result);
-				return result;
+			StringLocated s = null;
+			while ((s = it.peek()) != null) {
+				final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);
+				if (result != null) {
+					BrowserLog.consoleLog(TContext.class, "executeLines ok -> " + result);
+					return result;
+				}
+				it.next();
 			}
-			it.next();
+			BrowserLog.consoleLog(TContext.class, "executeLines return null");
+			return null;
+		} catch (EaterException e) {
+			throw withPythonHint(e);
 		}
-		BrowserLog.consoleLog(TContext.class, "executeLines return null");
-		return null;
+	}
 
+	/**
+	 * In a diagram that has Python, an error on a line that would be Python with a
+	 * colon gets a hint about the colon. A legacy diagram is left alone.
+	 */
+	private EaterException withPythonHint(EaterException e) {
+		final String hint = python == null ? null : PythonHint.hint(e.getLocation());
+		if (hint == null || e.getMessage().endsWith(hint))
+			return e;
+		return new EaterException(e.getMessage() + hint, e.getLocation());
 	}
 
 	private void executeLinesInternal(TMemory memory, List<StringLocated> body, TFunctionType ftype)
 			throws EaterException {
-		final CodeIterator it = buildCodeIterator(memory, body);
+		try {
+			final CodeIterator it = buildCodeIterator(memory, body);
 
-		StringLocated s = null;
-		while ((s = it.peek()) != null) {
-			executeOneLineSafe(memory, s, ftype, false);
-			it.next();
+			StringLocated s = null;
+			while ((s = it.peek()) != null) {
+				executeOneLineSafe(memory, s, ftype, false);
+				it.next();
+			}
+		} catch (EaterException e) {
+			throw withPythonHint(e);
 		}
-
 	}
 
 	private TValue executeOneLineSafe(TMemory memory, StringLocated s, TFunctionType ftype, boolean modeSpecial)

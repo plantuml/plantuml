@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 3
+expected-error-message: 'No if related to this else'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR line 3: No if related to this else
+!else
+participant A
+@enduml

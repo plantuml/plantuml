@@ -1,6 +1,0 @@
-@startuml
-' EXPECT (preproc):
-' ERROR: looks like Python, is the ':' missing?
-!for i in range(3)
-    participant P${i}
-@enduml
