@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 3
+expected-error-message: 'Python error: NameError: name 'x' is not defined'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR line 3: the first ${ starts Python, even without a Python line
+title ${x}
+@enduml

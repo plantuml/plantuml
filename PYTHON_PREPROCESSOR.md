@@ -635,7 +635,12 @@ The **reduced preprocessor runs first, then text Python**.
   behind a holder class). The only cost is the classification of the lines
   starting with `!`, which the preprocessor already looks at. The interpreter is
   created at the first Python line, not before.
-- `${expr}` is interpolated only in a diagram that has Python lines.
+- `${expr}` is interpolated in every text line, with or without Python lines:
+  the first `${` of a diagram creates the interpreter (**[implemented]**; this
+  replaces the earlier rule "only in a diagram that has Python lines", chosen
+  on the `master-p6` branch for the ergonomics, at the price that a legacy
+  diagram containing a literal `${` now fails with a `NameError`; `$${` gives a
+  literal `${`).
 
 Legacy diagrams keep the old preprocessor unchanged, frozen. The two worlds can
 be mixed in one diagram, and even in one file: the standard library (C4 and
