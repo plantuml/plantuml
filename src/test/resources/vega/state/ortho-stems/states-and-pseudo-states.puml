@@ -1,0 +1,42 @@
+---
+output: svg
+---
+@startuml
+' https://github.com/plantuml/plantuml/pull/2989
+' Same diagram as nonreg.svg.StateEdgeStemTest (edges_leave_states_at_right_angles).
+' Vega forces Smetana, which has no orthogonal routing: this file does not run
+' the ortho stem rewrite, it guards that Smetana output is left unchanged.
+skinparam linetype ortho
+skinparam stateDiagramEdgeLabelStyle node
+state Machine {
+  state "full" as epFull <<entryPoint>>
+  state "cachedToken" as epCached <<entryPoint>>
+  state "authorised" as xpOk <<exitPoint>>
+  state "refused" as xpNo <<exitPoint>>
+  [*] --> InitialisingReader
+  epFull --> InitialisingReader
+  InitialisingReader : entry / powerReader()
+  InitialisingReader : do / handshakeReader()
+  InitialisingReader : exit / clearReaderBuffer()
+  InitialisingReader --> AwaitingCredential : readerReady
+  InitialisingReader --> xpNo : readerFault(3 tries) / postFault(F12)
+  epCached --> ValidatingToken
+  AwaitingCredential : do / awaitTapOrApp()
+  AwaitingCredential --> AwaitingCredential : credentialSeen [!wellFormed] / beep(2)
+  AwaitingCredential --> ValidatingToken : credentialCaptured / hash(credential)
+  AwaitingCredential --> xpNo : idleTimeout(60 s) / showTimeout()
+  ValidatingToken : entry / queryBackOffice()
+  ValidatingToken : do / spinner()
+  ValidatingToken --> xpOk : tokenAccepted / issueSessionId()
+  ValidatingToken --> OfflineWhitelist : backOfficeUnreachable(5 s)
+  state OfflineWhitelist <<junction>>
+  OfflineWhitelist --> xpOk : [tokenOnWhitelist] / flagDeferredBilling()
+  OfflineWhitelist --> xpNo : [else] / showTryLater()
+}
+state PickProfile <<choice>>
+xpOk --> PickProfile
+PickProfile --> Fast : [kW > 150 && degC < 35] / setLimit(500 A)
+PickProfile --> Derated : [kW > 150 && degC >= 35] / setLimit(125 A)
+PickProfile --> Normal : [else] / setLimit(kW)
+xpNo --> Idle
+@enduml

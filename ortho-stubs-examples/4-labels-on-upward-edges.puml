@@ -1,0 +1,24 @@
+@startuml
+!pragma edge_corner_radius 5
+skinparam linetype ortho
+skinparam stateDiagramEdgeLabelStyle node
+hide empty description
+state Idle
+state Session {
+  state "card" as epCard <<entryPoint>>
+  state "app" as epApp <<entryPoint>>
+  state "done" as xpDone <<exitPoint>>
+  state "aborted" as xpAbort <<exitPoint>>
+  epCard --> Reading
+  epApp --> Validating
+  Reading --> Validating : cardRead
+  Validating --> Charging : accepted
+  Validating --> xpAbort : refused
+  Charging --> xpDone : full
+  Charging --> xpAbort : unplugged
+}
+Idle --> epCard : cardTapped
+Idle --> epApp : appStart
+xpDone --> Idle
+xpAbort --> Idle : / showError()
+@enduml

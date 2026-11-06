@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+' https://github.com/plantuml/plantuml/pull/2989
+' Same diagram as nonreg.svg.StateEdgeLabelClearTest (edges_keep_out_of_multi_line_labels).
+' Vega forces Smetana, which has no orthogonal routing: this file does not run
+' the ortho stem rewrite, it guards that Smetana output is left unchanged.
+skinparam linetype ortho
+skinparam stateDiagramEdgeLabelStyle node
+hide empty description
+state Active {
+  [*] --> Idle
+  Idle : SEQEN may be set
+  Idle --> Running : TRIGSEQ (host or GPIO)\nwith SEQEN = 1
+  Running : start address and length latched
+  Idle <-- Running : sequence clears SEQEN\n(ENDSEQ) or runs off its length
+  Idle <-- Running : host writes SEQEN = 0\n(no ENDSEQ)
+  Running --> Running : trigger ignored,\nFLAG31 raised
+  Idle --> Idle : trigger with SEQEN = 0\nignored
+}
+Active --> Reset : RESET low
+@enduml
