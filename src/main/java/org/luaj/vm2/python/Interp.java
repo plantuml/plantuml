@@ -37,6 +37,11 @@ public final class Interp {
 		modules.put(m.name, m);
 	}
 
+	/** A builtin module (math, json, or one added by {@link #addModule}), or null. */
+	public PyModule getModule(String name) {
+		return modules.get(name);
+	}
+
 	/** Defines a global variable: a module, or a member of a module such as {@link PyModule#get}. */
 	public void setGlobal(String name, Object value) {
 		globals.put(name, value);
