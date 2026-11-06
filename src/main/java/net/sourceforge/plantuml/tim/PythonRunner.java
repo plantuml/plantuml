@@ -46,6 +46,7 @@ import org.luaj.vm2.python.PyError;
 import org.luaj.vm2.python.PyModule;
 import org.luaj.vm2.python.PySyntaxError;
 
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 
 /**
@@ -56,6 +57,8 @@ import net.sourceforge.plantuml.text.StringLocated;
  * The text API lives in the builtin module <code>puml</code>, available
  * without <code>import</code>: <code>puml.emit(line)</code> appends a line to
  * the generated text. <code>emit</code> is also a global alias.
+ * <code>puml.version</code> and <code>puml.edition</code> ("jar", "js" or "c") are
+ * strings, <code>puml.args</code> is a dict of the variables defined from outside.
  */
 final class PythonRunner {
 
@@ -66,7 +69,7 @@ final class PythonRunner {
 	private final Map<String, List<StringLocated>> sources = new HashMap<>();
 	private int chunkCount;
 
-	PythonRunner() {
+	PythonRunner(String version, Map<String, String> arguments) {
 		// What print() writes is dropped: whether print is an alias of emit is
 		// still open (see PYTHON_PREPROCESSOR.md), it is not for now.
 		this.interp = new Interp(text -> {
@@ -74,6 +77,9 @@ final class PythonRunner {
 		this.interp.setMaxSteps(10000000L);
 
 		final PyModule puml = new PyModule("puml");
+		puml.putString("version", version == null ? "" : version);
+		puml.putString("edition", TeaVM.isC() ? "c" : TeaVM.isJavaScript() ? "js" : "jar");
+		puml.putStringMap("args", arguments);
 		puml.put("emit", (in, args) -> emit(args));
 		puml.put("error", (in, args) -> error(string("error", args)));
 		this.interp.addModule(puml);

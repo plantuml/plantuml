@@ -1,0 +1,9 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title True
+!x = 1
+title ${puml.version == "%version()"}
+@enduml

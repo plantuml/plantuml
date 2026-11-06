@@ -354,12 +354,19 @@ public class TContext {
 	/** Created at the first Python chunk of the diagram. */
 	private PythonRunner python;
 
+	/** The variables defined from outside (the command line): puml.args of Python. */
+	private Map<String, String> arguments = new HashMap<String, String>();
+
+	public void setArguments(Map<String, String> arguments) {
+		this.arguments = arguments;
+	}
+
 	/** For each Python chunk, the diagram line of each of its code lines. */
 	private final Map<StringLocated, List<StringLocated>> pythonSources = new IdentityHashMap<>();
 
 	private void executePython(StringLocated s) throws EaterException {
 		if (python == null)
-			python = new PythonRunner();
+			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments);
 		try {
 			// Output of Python is not sent back to the legacy preprocessor.
 			for (String line : python.run(PythonChunks.code(s), pythonSources.get(s)))
