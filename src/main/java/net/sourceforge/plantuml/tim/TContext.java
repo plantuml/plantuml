@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -201,7 +202,7 @@ public class TContext {
 	}
 
 	private CodeIterator buildCodeIterator(TMemory memory, List<StringLocated> body) {
-		final CodeIterator it10 = new CodeIteratorImpl(PythonChunks.collapse(body));
+		final CodeIterator it10 = new CodeIteratorImpl(PythonChunks.collapse(body, pythonSources));
 		final CodeIterator it20 = new CodeIteratorLongComment(it10, debug);
 		final CodeIterator it30 = new CodeIteratorShortComment(it20, debug);
 		final CodeIterator it40 = new CodeIteratorInnerComment(it30);
@@ -353,15 +354,22 @@ public class TContext {
 	/** Created at the first Python chunk of the diagram. */
 	private PythonRunner python;
 
+	/** For each Python chunk, the diagram line of each of its code lines. */
+	private final Map<StringLocated, List<StringLocated>> pythonSources = new IdentityHashMap<>();
+
 	private void executePython(StringLocated s) throws EaterException {
 		if (python == null)
 			python = new PythonRunner();
 		try {
 			// Output of Python is not sent back to the legacy preprocessor.
-			for (String line : python.run(PythonChunks.code(s), "<diagram>"))
+			for (String line : python.run(PythonChunks.code(s), pythonSources.get(s)))
 				addToResultList(new StringLocated(line, s.getLocation()));
 		} catch (PythonRunner.EaterExceptionMessage e) {
-			throw new EaterException(e.getMessage(), s);
+			if (e.at == null)
+				throw new EaterException(e.getMessage(), s);
+			// the debug list ends with the chunk: the error belongs to the line that caused it
+			debug.set(debug.size() - 1, e.at);
+			throw new EaterException(e.getMessage(), e.at);
 		}
 	}
 

@@ -1,6 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 5
+expected-error-message: Python error: ZeroDivisionError: division by zero
+---
 @startuml
 ' EXPECT (preproc):
-' ERROR: ZeroDivisionError (line 3)
+' ERROR line 5: Python error: ZeroDivisionError
 title ok
 !x = 1
 !y = x / 0
