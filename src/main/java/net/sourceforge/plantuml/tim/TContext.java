@@ -363,11 +363,14 @@ public class TContext {
 
 	/** Replaces the ${expr} of a text line by the Python value, in a diagram that has Python. */
 	private StringLocated interpolatePython(StringLocated line) throws EaterException {
-		if (python == null || line.getString().contains("${") == false)
+		// The signature only tells that $, { and } are somewhere in the line: the exact test follows.
+		if (python == null || line.mayContainInterpolation() == false || line.getString().contains("$" + "{") == false)
 			return line;
 		try {
-			return new StringLocated(python.interpolate(line.getString()), line.getLocation(),
-					line.getPreprocessorError());
+			final String result = python.interpolate(line.getString());
+			if (result.equals(line.getString()))
+				return line;
+			return new StringLocated(result, line.getLocation(), line.getPreprocessorError());
 		} catch (PythonRunner.EaterExceptionMessage e) {
 			throw new EaterException(e.getMessage(), line);
 		}
