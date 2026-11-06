@@ -18,6 +18,21 @@ public final class PyModule {
 		return this;
 	}
 
+	/** Adds a constant string, readable as {@code name.constant}. */
+	public PyModule putString(String constant, String value) {
+		members.put(constant, value);
+		return this;
+	}
+
+	/** Adds a constant {@code dict} of strings, in the order of the map. */
+	public PyModule putStringMap(String constant, Map<String, String> values) {
+		final PyDict dict = new PyDict();
+		for (Map.Entry<String, String> entry : values.entrySet())
+			dict.put(entry.getKey(), entry.getValue());
+		members.put(constant, dict);
+		return this;
+	}
+
 	/** The member called {@code fn} (a function, for instance), or null. */
 	public Object get(String fn) {
 		return members.get(fn);

@@ -690,9 +690,13 @@ Python string methods cover the identifier case.
 
 Level 1, read the environment:
 
-- `puml.version`, `puml.edition` (`"jar"`, `"js"` or `"c"`).
+- `puml.version`, `puml.edition` (`"jar"`, `"js"` or `"c"`). **[implemented]**
+  Both are strings; `puml.version` is the one of `%version()`.
 - `puml.args`: the variables given on the command line, as a dict (and, for the
-  engine, the `args` passed to `plantuml.render`).
+  engine, the `args` passed to `plantuml.render`). **[implemented]** for the
+  command line (`-Dname=value`): the dict maps each name to its value, always a
+  string, in the order of the definitions; it is empty without `-D`. The engine
+  `args` are not there yet.
 
 Level 2, data:
 
