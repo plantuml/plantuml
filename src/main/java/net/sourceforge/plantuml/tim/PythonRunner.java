@@ -35,7 +35,9 @@
 package net.sourceforge.plantuml.tim;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.luaj.vm2.python.Builtin;
 import org.luaj.vm2.python.ExecutionLimitError;
@@ -43,6 +45,8 @@ import org.luaj.vm2.python.Interp;
 import org.luaj.vm2.python.PyError;
 import org.luaj.vm2.python.PyModule;
 import org.luaj.vm2.python.PySyntaxError;
+
+import net.sourceforge.plantuml.text.StringLocated;
 
 /**
  * The Python state of one diagram. Created at the first Python chunk only
@@ -58,6 +62,9 @@ final class PythonRunner {
 	private final List<String> emitted = new ArrayList<>();
 	private final Interp interp;
 	private String pumlError;
+	/** The diagram lines of every chunk run so far, by chunk name. */
+	private final Map<String, List<StringLocated>> sources = new HashMap<>();
+	private int chunkCount;
 
 	PythonRunner() {
 		// What print() writes is dropped: whether print is an alias of emit is
@@ -99,23 +106,41 @@ final class PythonRunner {
 		throw Builtin.runtimeError(message);
 	}
 
-	/** Runs a chunk and returns the lines it emitted. */
-	List<String> run(String code, String name) throws EaterExceptionMessage {
+	/**
+	 * Runs a chunk and returns the lines it emitted. <code>lines</code> gives, for
+	 * each line of the code, the diagram line it comes from (null: unknown), so
+	 * that an error is reported on the line that caused it, even when it happens
+	 * in a function defined by an earlier chunk.
+	 */
+	List<String> run(String code, List<StringLocated> lines) throws EaterExceptionMessage {
 		emitted.clear();
 		pumlError = null;
+		final String name = lines == null ? "<diagram>" : "<python " + (++chunkCount) + ">";
+		if (lines != null)
+			sources.put(name, lines);
 		try {
 			interp.run(code, name);
 		} catch (PySyntaxError e) {
-			throw new EaterExceptionMessage("Python syntax error: " + e.getMessage());
+			throw new EaterExceptionMessage(
+					"Python syntax error: " + e.detail + " (column " + (e.col + 1) + ")", locate(lines, e.line));
 		} catch (PyError e) {
-			// a puml.error is reported as the plain message, without traceback
+			final StringLocated at = locate(sources.get(e.getFile()), e.getLine());
+			// a puml.error is reported as the plain message
 			if (pumlError != null && e.typeName().equals("RuntimeError") && e.text().equals(pumlError))
-				throw new EaterExceptionMessage(pumlError);
-			throw new EaterExceptionMessage("Python error: " + e.getMessage());
+				throw new EaterExceptionMessage(pumlError, at);
+			final String text = e.text();
+			throw new EaterExceptionMessage("Python error: " + e.typeName() + (text.isEmpty() ? "" : ": " + text), at);
 		} catch (ExecutionLimitError e) {
-			throw new EaterExceptionMessage("Python error: " + e.getMessage());
+			throw new EaterExceptionMessage("Python error: " + e.getMessage(), null);
 		}
 		return new ArrayList<>(emitted);
+	}
+
+	/** The diagram line of the line number (1-based) of a chunk, or null. */
+	private static StringLocated locate(List<StringLocated> lines, int line) {
+		if (lines == null || line < 1 || line > lines.size())
+			return null;
+		return lines.get(line - 1);
 	}
 
 	/**
@@ -145,15 +170,19 @@ final class PythonRunner {
 	}
 
 	private String evaluate(String expression) throws EaterExceptionMessage {
-		run("__interpolated = (" + expression + ")\n", "<diagram>");
+		run("__interpolated = (" + expression + ")\n", null);
 		return interp.getGlobalAsString("__interpolated");
 	}
 
 	static class EaterExceptionMessage extends Exception {
 		private static final long serialVersionUID = 1L;
 
-		EaterExceptionMessage(String message) {
+		/** The diagram line the error comes from, or null when unknown. */
+		final StringLocated at;
+
+		EaterExceptionMessage(String message, StringLocated at) {
 			super(message);
+			this.at = at;
 		}
 	}
 }

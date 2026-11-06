@@ -15,7 +15,25 @@ public final class PyError extends RuntimeException {
 		this.exc = exc;
 	}
 
+	private String file;
+	private int line;
+
+	/** The file name of the innermost Python frame (where the exception was raised), or null. */
+	public String getFile() {
+		return file;
+	}
+
+	/** The line, in {@link #getFile()}, of the innermost Python frame; 0 if there is none. */
+	public int getLine() {
+		return line;
+	}
+
 	void addFrame(String file, int line, String function) {
+		if (frames.isEmpty()) {
+			// frames are added from the innermost one outwards
+			this.file = file;
+			this.line = line;
+		}
 		if (frames.size() < 50)
 			frames.add("  File \"" + file + "\", line " + line + ", in " + function);
 	}

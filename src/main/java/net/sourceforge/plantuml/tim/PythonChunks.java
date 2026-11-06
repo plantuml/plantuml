@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.text.StringLocated;
@@ -68,8 +69,12 @@ public final class PythonChunks {
 	 * again on the body of a legacy function or procedure when this one is
 	 * executed, and a chunk it already built is kept as it is, never merged
 	 * with its neighbours.
+	 * <p>
+	 * <code>sources</code> receives, for each chunk, the line of the diagram
+	 * that every line of its code comes from, to report an error on the right
+	 * line.
 	 */
-	public static List<StringLocated> collapse(List<StringLocated> body) {
+	public static List<StringLocated> collapse(List<StringLocated> body, Map<StringLocated, List<StringLocated>> sources) {
 		// Fast path: a diagram without Python pays nothing.
 		boolean found = false;
 		for (StringLocated sl : body)
@@ -87,15 +92,18 @@ public final class PythonChunks {
 			final String s = first.getString();
 			if (START.matcher(s).matches()) {
 				final StringBuilder code = new StringBuilder();
+				final List<StringLocated> lines = new ArrayList<>();
 				i++;
 				while (i < body.size() && END.matcher(body.get(i).getString()).matches() == false) {
 					code.append(body.get(i).getString()).append('\n');
+					lines.add(body.get(i));
 					i++;
 				}
 				i++; // skips !endpy (a missing one ends the block at the end of the text)
-				result.add(chunk(first, code));
+				result.add(chunk(first, code, lines, sources));
 			} else if (isGutterLine(first)) {
 				final StringBuilder code = new StringBuilder();
+				final List<StringLocated> lines = new ArrayList<>();
 				// indentation of the lines that opened a block (they end with a colon)
 				final List<Integer> headers = new ArrayList<>();
 				while (i < body.size()) {
@@ -103,6 +111,7 @@ public final class PythonChunks {
 					if (isGutterLine(sl) || isIndentedGutterLine(sl)) {
 						final String python = gutter(sl.getString());
 						code.append(python).append('\n');
+						lines.add(sl);
 						trackHeaders(headers, python);
 						i++;
 						continue;
@@ -121,6 +130,7 @@ public final class PythonChunks {
 					if (text.charAt(0) == '\t' && text.trim().startsWith("!") == false) {
 						// tabs are not allowed in the indentation: the Python lexer reports it
 						code.append('\t').append(textToPython(text.trim())).append('\n');
+						lines.add(body.get(j));
 						i = j + 1;
 						continue;
 					}
@@ -132,10 +142,11 @@ public final class PythonChunks {
 						for (int k = 0; k < indent; k++)
 							code.append(' ');
 						code.append(textToPython(text.trim())).append('\n');
+						lines.add(body.get(j));
 					}
 					i = j + 1;
 				}
-				result.add(chunk(first, code));
+				result.add(chunk(first, code, lines, sources));
 			} else {
 				result.add(first);
 				i++;
@@ -247,8 +258,12 @@ public final class PythonChunks {
 		return s.substring(s.indexOf('!') + 1);
 	}
 
-	private static StringLocated chunk(StringLocated first, StringBuilder code) {
-		return new StringLocated(TLineType.PYTHON_MARKER + code, first.getLocation(), first.getPreprocessorError());
+	private static StringLocated chunk(StringLocated first, StringBuilder code, List<StringLocated> lines,
+			Map<StringLocated, List<StringLocated>> sources) {
+		final StringLocated chunk = new StringLocated(TLineType.PYTHON_MARKER + code, first.getLocation(),
+				first.getPreprocessorError());
+		sources.put(chunk, lines);
+		return chunk;
 	}
 
 	/** The Python code of a chunk. */

@@ -353,9 +353,15 @@ Errors reach the host as unchecked exceptions:
 | `PyError` | an uncaught Python exception | `typeName()`, `text()`, `getMessage()` (a CPython-like traceback: `File "name", line N, in function`, at most 50 frames) |
 | `ExecutionLimitError` | instruction limit reached | not a `PyError`: cannot be caught by the script |
 
-**[open]** This is what the code does today. How these errors are surfaced to
-PlantUML (line mapping to the diagram, the message format, which errors the host
-may recover from) will be decided with the integration, section 10 and later.
+**[implemented]** In a diagram, an error is reported on the diagram line that
+caused it, the innermost Python frame, even when it happens in a function
+defined by an earlier chunk (`PyError.getFile()` / `getLine()`; every chunk is
+compiled under its own name and `PythonRunner` keeps the diagram line of each of
+its code lines). The message is `Python error: <Type>: <text>`, or the plain text
+for `puml.error`; a syntax error is `Python syntax error: <detail> (column C)`.
+An instruction limit has no line and is reported on the first line of its chunk.
+
+**[open]** Which errors the host may recover from.
 
 ## 10. Tests **[implemented]** and tooling **[missing]**
 
