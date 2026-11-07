@@ -28,8 +28,8 @@ Each statement carries a status, either explicitly or by the section it is in.
 | **[missing]** | Referred to by code or tests but not present in the repository. |
 
 Sections 1 to 9 describe the interpreter (mostly **[implemented]**). Sections
-10 to 14 describe the PlantUML integration (**[decided]**, not implemented).
-Section 15 lists the open points.
+10 to 15 describe the PlantUML integration (**[decided]**, not implemented);
+section 15 specifies Python modules. Section 16 lists the open points.
 
 ## 1. Goals and constraints
 
@@ -95,7 +95,8 @@ Accepted:
 - `try` / `except` / `else`, and `raise` (including a bare `raise` inside an
   `except`);
 - `import module` for builtin modules only (today: `math`). An unknown module
-  raises `ModuleNotFoundError`.
+  raises `ModuleNotFoundError`. Shipped modules written in Python are specified
+  in section 15 and are not implemented.
 
 ### 3.2 Expressions
 
@@ -601,7 +602,8 @@ follows, in this order:
    - `!return`: Python inside a Python `def`, legacy inside a legacy
      `!function`, which the preprocessor always knows from the enclosing block;
    - `!import` and `!assert`: to be checked against real code, since they are
-     rare.
+     rare. For `!import`, section 15.9 gives the rule: a bare identifier is
+     Python, anything else is the legacy directive.
 5. Anything else (`!x = 1`, `!service("Auth")`, `!names.append(n)`) is Python.
 
 The main risk is a typo: `!if x == 1` without the colon is read as legacy, and
@@ -723,7 +725,8 @@ Level 2, data:
   same rules and security profile as `!include`. There is no direct disk access
   from text Python.
 - Reuse of Python code across files goes through `!include` of a file that
-  contains `!` lines: user modules cannot be imported, only builtin modules can.
+  contains `!` lines: user modules cannot be imported. Only builtin modules and
+  the modules shipped with PlantUML (section 15) can.
 
 Other rules: one interpreter state per diagram, shared with its `!include`d
 files; no clock and no `random` module, so a diagram renders the same on every
@@ -883,7 +886,227 @@ Linux.
   arguments (`render(src, format="svg")`); there is no `io` library, a
   host-provided `open` instead.
 
-## 15. Open points **[open]**
+## 15. Python modules **[decided, not implemented]**
+
+Modules let a diagram, and PlantUML's own libraries, share Python code through
+`import`, without `!include` and without pouring every name into one global
+namespace. This chapter specifies what a diagram author and a library author can
+rely on. It says nothing about how it is built.
+
+Items tagged **[open]** are not decided; the others are.
+
+### 15.1 Goals
+
+- reuse Python code across diagrams by a **name**, not a file path;
+- keep the names of a library out of the globals of the diagram that uses it;
+- behave identically on the JAR, JavaScript and C editions;
+- allow libraries of the standard library (C4 and others) and themes to be
+  written in Python.
+
+What is out of scope is listed in section 15.10.
+
+### 15.2 What a module is
+
+A module is a Python source file written in the subset (sections 3 to 6),
+published under a name. There are two kinds, and a diagram cannot tell them apart:
+
+- **builtin modules**, provided by the host: `math` (section 4.4), `json` and
+  `puml` (section 13.1);
+- **shipped modules**, written in Python and distributed with PlantUML, in the
+  same release as the interpreter.
+
+Users cannot add modules. Code of their own is shared by `!include` of a file
+that contains Python lines (sections 11 and 12), exactly as before.
+
+A module name is a lowercase identifier: the letters `a` to `z`, digits and `_`,
+not starting with a digit. A name is unique across both kinds: a shipped module
+cannot take the name of a builtin module. The list of shipped modules belongs to
+the release and to its documentation.
+
+### 15.3 Syntax
+
+Accepted:
+
+- `import name`, as a statement, wherever a statement is allowed: at the top
+  level, in a function body, on a `!` line, in a `!python` block. It binds `name`
+  in the current scope to the module, and `name.attr` reads an attribute of it.
+
+Rejected, as a `PySyntaxError`:
+
+- `from name import x`;
+- `import name as alias` and `import a, b` (one name per statement) **[open]**:
+  both are valid Python and may be accepted later;
+- dotted names (`import a.b`): module names are flat in this version;
+- relative imports.
+
+On a `!` line, the line `!import name` is Python; section 15.9 explains how it
+is told from the legacy `!import` directive.
+
+### 15.4 Loading and identity
+
+- **One execution.** The first `import name` in a diagram runs the body of the
+  module once, from top to bottom. Any later `import name` (in the diagram, in a
+  function, or in another module) binds the same module: the body does not run
+  again.
+- **One state per diagram.** Loaded modules belong to the interpreter state of
+  the diagram and disappear with it (section 13). Two diagrams, or two renders by
+  an engine script, never share the state of a module.
+- **Own namespace.** The top-level names of a module are its globals. They are
+  visible neither to the diagram nor to other modules, except as attributes of
+  the module object. A module cannot read or write the globals of the diagram
+  that imports it.
+- **Attributes.** Every top-level name of a module can be read as `name.attr`,
+  as in CPython. A leading underscore means "private" by convention only; it is
+  not enforced, and there is no `__all__`.
+- **Functions keep their module.** A function defined in a module reads the
+  globals of that module wherever it is called from.
+- **Read-only from outside.** A diagram cannot assign to an attribute of a module
+  (`name.attr = v` is an error). The state of a module changes only through its
+  own functions.
+- **Text at import time.** Statements at the top level of a module run like any
+  other code. If one of them calls `puml.emit`, the text is appended to the
+  generated source at the place of the `import` statement. A library module is
+  expected not to emit at import time.
+- **Configuring a module before it loads** **[open]**. Legacy libraries read
+  variables that the diagram sets before the first include (for example
+  `$NEW_C4_STYLE` in C4). Two candidates: the module reads `puml.args`, or the
+  diagram calls a configuration function before the `import`. Nothing is decided.
+
+### 15.5 Dependencies between modules
+
+A module may import any builtin or shipped module, with the same syntax. Each
+module is loaded at most once per diagram, whoever imports it first: two modules
+that import a third one share it.
+
+An import is resolved when the statement runs, not before. An `import` inside a
+function that is never called loads nothing.
+
+If a module imports, directly or not, a module whose body is still running (`a`
+imports `b` which imports `a`), the import fails with an `ImportError` whose
+message gives the chain (`a -> b -> a`). No half-initialised module is ever
+visible.
+
+### 15.6 Errors
+
+| Situation | Result |
+|---|---|
+| Unknown module name | `ModuleNotFoundError`, the message contains the name. |
+| Cycle (section 15.5) | `ImportError`, the message contains the chain. |
+| Exception raised by the body of a module | The same exception reaches the importer, with the frames of the module in the traceback. The import counts as failed: the module is not kept, and a later `import` runs the body again. |
+| Unsupported form of `import` (section 15.3) | `PySyntaxError`, when the diagram is compiled. |
+| Syntax error inside a shipped module | An internal error that names the module. It is a defect of the release, not an error of the diagram. |
+
+An error caused by an `import` statement is reported on the line of that
+statement. A line inside a module is reported with the module name and the line
+number in the module source (`File "palette", line 12, in color`). How these
+reports are mapped to the diagram is the open point of section 9.
+
+### 15.7 Limits, determinism, editions
+
+- **Shared budget.** A diagram has one call depth counter and one instruction
+  counter. The body and the functions of every module count against them.
+  `ExecutionLimitError` stays uncatchable, inside a module as well.
+- **Same restrictions as the diagram** (section 13.1): no input or output, no
+  clock, no `random`, 32-bit integers. A shipped module cannot lift them.
+- **Available names.** `puml` and `json` are usable in a module as in a diagram.
+  `plantuml`, `open` and `os` (engine flavor, section 13.2) are never available
+  in a module.
+- **Same set of modules on every edition.** A module is shipped only if it works
+  identically on the JAR, JavaScript and C editions. There is no module specific
+  to an edition.
+- **No external access.** Importing a shipped module reads nothing but that
+  module. It involves neither the file system, nor the network, nor the security
+  profile.
+- **Engine flavor** **[open]**. Whether engine Python scripts (section 13.2) can
+  import shipped modules, given that those modules are written for text Python
+  and may call `puml.emit`.
+
+### 15.8 Versioning and discovery
+
+- A shipped module is versioned with PlantUML: `import name` always gives the
+  module of the running release (`puml.version`). There is no way to select or
+  pin a version in the `import` statement.
+- **Stability policy** **[open]**. Proposal: the public functions of a shipped
+  module are stable across releases, like the documented standard library; an
+  incompatible change gets a new module name.
+- **Listing** **[open]**. A function `puml.modules()` returning the sorted names
+  of the shipped modules, for documentation and tools.
+
+### 15.9 Interaction with the legacy preprocessor
+
+- **Order** (section 12). The reduced preprocessor runs first; an `import` line
+  passes through it untouched, like any other Python line. The source of a module
+  is Python only: no `$variable`, no `%function()`, no `!directive` is processed
+  in it, and the text it produces is not sent back to the preprocessor.
+- **`!import`.** A legacy `!import` directive exists. On a line starting with
+  `!import`, a remainder made of **a single bare identifier** (`!import palette`)
+  is Python. Anything else (a path, a quote, a dot, several words) is the legacy
+  directive. A module name is always an identifier, so a module is never taken
+  for the legacy directive. A legacy `!import` of a bare name without extension
+  would be read as Python **[open]**: to check against real diagrams.
+- **Variables.** The code of a module does not see legacy variables. Values reach
+  a module through the arguments of its functions, or `puml.args`. A way to read
+  a legacy variable from Python is **[open]**.
+- **Legacy libraries.** `!include <C4/C4_Context>` and the like are unaffected,
+  and may coexist with Python modules in one diagram. Which libraries are
+  replaced by a module, under which names, is not decided here.
+- **Calling a module function from a plain text line** (the way the legacy
+  `!define`, `!function` and `!unquoted` are called from the text of a diagram)
+  is deferred. This chapter does not specify it.
+
+### 15.10 Out of scope
+
+- modules written by users, or read from files;
+- `from ... import`, `as`, several names per statement, dotted names, packages,
+  relative imports;
+- reloading, removing a module, `__name__ == "__main__"`, `__all__`;
+- anything that needs `class` or decorators;
+- the replacement of the legacy `!define` and `!unquoted`;
+- the conversion of the standard library and of the themes.
+
+### 15.11 Testing requirements
+
+- A shipped module that does not use `puml` has scripts whose reference output is
+  produced by CPython, as in section 10 (CPython is the oracle).
+- A module that uses `puml` is covered by diagram tests (Vega), since the text it
+  produces is what matters.
+- Each rule of sections 15.4 to 15.7 has a test: single execution, identity of
+  the module across imports, separate namespaces, read-only attributes, cycle,
+  unknown name, failed import not kept, shared budget.
+- Every module gives the same result on the three editions before it is shipped.
+
+### 15.12 Example **[illustrative]**
+
+A hypothetical shipped module `palette`:
+
+```python
+_COLORS = {"ok": "#CCFFCC", "warn": "#FFEEAA", "error": "#FFCCCC"}
+
+def color(state, default="#EEEEEE"):
+    return _COLORS.get(state, default)
+
+def service(alias, state):
+    puml.emit(f"participant {alias} {color(state)}")
+```
+
+used from a diagram:
+
+```plantuml
+@startuml
+!import palette
+
+!for name, state in [("Auth", "ok"), ("Billing", "warn")]:
+!    palette.service(name, state)
+
+Auth -> Billing : request
+@enduml
+```
+
+`palette.color("ok")` is also available to the diagram. `_COLORS` is an
+implementation detail of the module by convention, and the names `color` and
+`service` do not collide with any name the diagram defines itself.
+
+## 16. Open points **[open]**
 
 Interpreter:
 
@@ -903,8 +1126,11 @@ Integration:
 - Whether `${expr}` accepts a format spec (`${x:.2f}`) like an f-string.
 - Whether `print` in text Python is an error, a log message, or an alias of
   `emit`. Current leaning: not an alias.
-- Whether a mechanism for shipped Python modules is added (a resource-based
-  `import`) or whether `!include` stays the only way to share code.
+- Shipped Python modules are specified in section 15. Its open points: the
+  configuration of a module before it loads, `as` and several names in one
+  `import`, the engine flavor, the stability policy and the listing of modules,
+  the `!import` rule for a bare name without extension, a way to read legacy
+  variables, and calling a module function from a plain text line.
 - Names of the engine entry points (`plantuml.render`, `plantuml.glob`, ...)
   and the exact set of `open` / `os` features. The modules `json`, `puml` and
   `plantuml` themselves are planned; the rest of the surface is not final.
