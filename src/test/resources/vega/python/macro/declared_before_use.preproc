@@ -1,0 +1,4 @@
+@startuml
+title A color(A)
+participant B #FFCCCC
+@enduml

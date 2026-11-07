@@ -1,6 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 8
+expected-error-message: 'Python error: ValueError: macro 'color' is already declared'
+---
 @startuml
 ' EXPECT (preproc):
-' ERROR: macro 'color' is already declared
+' ERROR: Python error: ValueError: macro 'color' is already declared
 !python
 @macro
 def color(n):

@@ -725,9 +725,10 @@ follows, in this order:
    `!define`, `!function`, `!procedure`, `!endfunction`, ...) is a directive.
    Legacy variables are written `!$x = 1`, with the `$`, which Python never
    does.
-4. A line starting with `def`, `for`, `try`, `pass`, `lambda`, `del`, `raise`,
-   `global`, `nonlocal`, `elif`, `except` or any other Python-only word is
-   Python.
+4. A line starting with `def`, `class`, `for`, `try`, `pass`, `lambda`, `del`,
+   `raise`, `global`, `nonlocal`, `elif`, `except` or any other Python-only
+   word is Python, and so is a decorator line, `!@macro` (**[implemented]**
+   for `class` and the decorators).
 5. A few words exist in both languages, and the line is told by its shape:
    - `!if`, `!while`, `!else`: a Python block opener ends with a colon
      (`!if x == 1:`, `!else:`), a legacy one does not (`!if %x() == 1`,
@@ -748,7 +749,7 @@ A legacy-only diagram never gets it. A `!if x == 1` without colon whose legacy
 evaluation does not fail is not an error at all: the condition is false and the
 block is skipped.
 
-### 11.5 Macros **[decided, not implemented]**
+### 11.5 Macros **[implemented]**
 
 A macro is a Python function that the text lines of a diagram call by name,
 without `!{...}`, the way the legacy `!define`, `!function` and
@@ -788,18 +789,24 @@ $box(db, "Database", $tags="v1")
 - Macros belong to the Python state of the diagram. A macro must be declared
   before the text lines that use it, as in the legacy preprocessor. A shipped
   module (section 15) declares macros in the diagram that imports it.
-- Declaring a name twice is an error that names both declarations (two
-  modules, or a module and the diagram). Declaring a name that is also a legacy
-  `!define`, `!function` or `!procedure` of the diagram is an error too: the
-  legacy preprocessor runs first and would silently win.
+- Declaring a name twice is an error (`ValueError: macro 'color' is already
+  declared`). A macro and a legacy `!define`, `!function` or `!procedure` of
+  the diagram may not share a name, whichever comes first: the legacy
+  preprocessor runs first and would silently win. A macro declared after the
+  legacy function is a `ValueError`; a legacy function declared after the
+  macro is a preprocessor error (`'color' is already a Python macro of the
+  diagram`).
 
 **Call.**
 
 - In a text line, a declared name followed directly by `(` is a call, up to the
-  matching `)`. The arguments are text, as with `!unquoted`: they are split on
-  the commas that are outside quotes and parentheses; a quoted argument is
-  passed without its quotes, a bare one as written, trimmed. Every argument is
-  a `str`.
+  matching `)`, as with `!define`: `color (P)` and `mycolor(P)` are not calls
+  of `color`, and a call inside a double-quoted string of the text line is
+  replaced (`participant "color(P)" as P`), which is the legacy rule. The
+  arguments are text, as with `!unquoted`: they are split on the commas that
+  are outside double quotes and parentheses; a double-quoted argument is
+  passed without its quotes, a bare one as written, trimmed (`f()` has no
+  argument). Every argument is a `str`.
 - `name=value` and `$name=value` are keyword arguments: `$tags="v1"` (the
   form of C4) is passed as `tags="v1"`. Missing arguments take the default
   values of the `def`; too many or unknown ones are a `TypeError` reported on
@@ -823,14 +830,18 @@ $box(db, "Database", $tags="v1")
 - As with `!define`, a macro name is replaced wherever it is followed by `(` in
   a text line: with a macro `Contact`, the text `Contact(s)` of a note is a
   call. Library authors choose names accordingly; a `$` name lowers the risk.
-- Macros are called from text lines only: not from directives, not from Python
-  code (which calls the function directly).
+- Macros are called from text lines: the text lines of the diagram, of a
+  Python block (a `def`, a `!for`, ...) and of a legacy `!procedure`. Not from
+  directives, not from Python code (which calls the function directly).
+- There is no escape for a double quote inside a quoted argument, as in the
+  legacy preprocessor.
 
-**Open points** **[open]**: whether a call inside a quoted string of the text
-line is replaced (the legacy rule is to be checked and followed); the exact
-splitting rules compared with the legacy `!unquoted` (escaped quotes, nested
-parentheses, empty arguments); whether a macro may be called from the text
-lines of a legacy `!procedure`.
+**Implementation.** `PythonMacros` (`net.sourceforge.plantuml.tim`) holds the
+table, finds the calls and splits the arguments. The interpreter gives the
+host `Interp.callFunction`, `Interp.isCallable`, `Interp.functionName` and
+`Builtin.of`. A text line of a Python block is compiled to
+`puml._text(...)`, which expands its macros then emits it. The tests are in
+`vega/python/macro`.
 
 ## 12. Order with the legacy preprocessor **[decided]**
 
@@ -928,6 +939,8 @@ Level 0, generate text (essential):
   exist as a global alias.
 - `puml.error(msg)` raises an error attached to the current diagram line. Plain
   Python exceptions also carry the right line number.
+- `puml.macro`, also the global `macro`: the decorator that declares a macro
+  (section 11.5). **[implemented]**
 
 `puml.quote` and `puml.id` were tried and removed: PlantUML has no general way
 to escape a double quote (`\"` is a syntax error in a quoted name), and plain
@@ -1425,10 +1438,10 @@ Integration:
   several names in one `import`, the engine flavor, the stability policy and
   the listing of modules, the `!import` rule for a bare name without
   extension, and a way to read legacy variables.
-- Macros (section 11.5): the open points listed there. Implementation plan:
-  decorators first (done, section 3.5), then `@macro`, validated on a real part
-  of the standard library (a Python version of a few C4 procedures, whose
-  diagrams must stay identical).
+- Macros (section 11.5) are implemented. Next: validate them on a real part of
+  the standard library (a Python version of a few C4 procedures, whose
+  diagrams must stay identical), then declare macros from shipped modules
+  (section 15).
 - Names of the engine entry points (`plantuml.render`, `plantuml.glob`, ...)
   and the exact set of `open` / `os` features. The modules `json`, `puml` and
   `plantuml` themselves are planned; the rest of the surface is not final.

@@ -1,8 +1,11 @@
+---
+output: preproc, svg
+---
 @startuml
 ' EXPECT (preproc):
-' participant A color(A)
+' title A color(A)
 ' participant B #FFCCCC
-participant A color(A)
+title A color(A)
 !python
 @macro
 def color(n):

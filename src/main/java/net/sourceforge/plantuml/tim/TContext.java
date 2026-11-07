@@ -378,8 +378,12 @@ public class TContext {
 
 	/** The Python state of the diagram, created when first needed (a Python chunk or a !{expr}). */
 	private PythonRunner python() {
-		if (python == null)
-			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments);
+		if (python == null) {
+			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments,
+					name -> functionsSet.doesFunctionExist(name));
+			// and the other way round: a legacy function may not take the name of a macro
+			functionsSet.setReservedNames(name -> python.isMacro(name));
+		}
 		return python;
 	}
 
@@ -405,7 +409,7 @@ public class TContext {
 				pendingAdd = null;
 			}
 			for (StringLocated line : tmp)
-				addToResultList(interpolatePython(line));
+				addExpandingMacros(interpolatePython(line));
 
 		}
 	}
@@ -429,6 +433,30 @@ public class TContext {
 		} catch (PythonRunner.EaterExceptionMessage e) {
 			throw new EaterException(e.getMessage(), line);
 		}
+	}
+
+	/**
+	 * Adds a text line, its Python macros replaced by their result (section
+	 * 11.5 of PYTHON_PREPROCESSOR.md): a result with several lines gives several
+	 * lines. Nothing happens until a macro is declared.
+	 */
+	private void addExpandingMacros(StringLocated line) throws EaterException {
+		if (python == null || python.hasMacros() == false || line.getString().indexOf('(') == -1) {
+			addToResultList(line);
+			return;
+		}
+		final String result;
+		try {
+			result = python.expandMacros(line.getString(), line);
+		} catch (PythonRunner.EaterExceptionMessage e) {
+			throw new EaterException(e.getMessage(), e.at == null ? line : e.at);
+		}
+		if (result.equals(line.getString())) {
+			addToResultList(line);
+			return;
+		}
+		for (String part : result.split("\n", -1))
+			addToResultList(new StringLocated(part, line.getLocation(), line.getPreprocessorError()));
 	}
 
 	private boolean addToResultList(StringLocated line) {

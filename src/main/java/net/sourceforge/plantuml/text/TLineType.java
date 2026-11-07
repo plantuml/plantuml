@@ -179,7 +179,7 @@ public enum TLineType {
 		if (PythonLine.isLegacyAffectation(s))
 			return AFFECTATION;
 
-		if (PythonLine.isKeywordLine(s))
+		if (PythonLine.isKeywordLine(s) || PythonLine.isDecoratorLine(s))
 			return PYTHON;
 
 		if (PATTERN_IFDEF.match(sl))

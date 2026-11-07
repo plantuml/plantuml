@@ -1,3 +1,6 @@
+---
+output: preproc, svg
+---
 @startuml
 ' EXPECT (preproc):
 ' rectangle "DB" as db <<v1>>

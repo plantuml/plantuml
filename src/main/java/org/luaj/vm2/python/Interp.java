@@ -95,6 +95,56 @@ public final class Interp {
 		return v == null ? null : PyOps.str(v);
 	}
 
+	// ------------------------------------------------------------ host API
+
+	/**
+	 * Calls a Python callable from the host, with positional arguments and
+	 * keyword arguments (Python values; kwargs may be null). A Python exception
+	 * is thrown as a {@link PyError}; the call counts against the limits.
+	 */
+	public Object callFunction(Object fn, Object[] args, Map<String, Object> kwargs) {
+		String[] kwn = null;
+		Object[] kwv = null;
+		if (kwargs != null && kwargs.isEmpty() == false) {
+			kwn = new String[kwargs.size()];
+			kwv = new Object[kwargs.size()];
+			int i = 0;
+			for (Map.Entry<String, Object> e : kwargs.entrySet()) {
+				kwn[i] = e.getKey();
+				kwv[i] = e.getValue();
+				i++;
+			}
+		}
+		return callGeneric(fn, args, 0, args.length, kwn, kwv);
+	}
+
+	/** True for what Python's callable() accepts. */
+	public static boolean isCallable(Object v) {
+		return v instanceof PyFunction || v instanceof Builtin || v instanceof BoundMethod
+				|| (v instanceof PyType && (((PyType) v).ctor != null || ((PyType) v).isClass()));
+	}
+
+	/** The __name__ of a function, a builtin function or a method; null for anything else. */
+	public static String functionName(Object v) {
+		if (v instanceof PyFunction)
+			return ((PyFunction) v).code.name;
+		if (v instanceof Builtin)
+			return ((Builtin) v).name;
+		if (v instanceof BoundMethod)
+			return ((BoundMethod) v).name();
+		return null;
+	}
+
+	/** True for the Python value None. */
+	public static boolean isNone(Object v) {
+		return v == PyNone.NONE;
+	}
+
+	/** str(v), for the host. */
+	public static String str(Object v) {
+		return PyOps.str(v);
+	}
+
 	// ------------------------------------------------------------ calls
 
 	Object call(Object f, Object... args) {

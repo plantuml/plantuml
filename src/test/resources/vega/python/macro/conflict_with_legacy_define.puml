@@ -1,6 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 5
+expected-error-message: 'Python error: ValueError: macro 'color' is also a legacy !define, !function or !procedure of the diagram'
+---
 @startuml
 ' EXPECT (preproc):
-' ERROR: macro 'color' is also a legacy !define
+' ERROR: Python error: ValueError: macro 'color' is also a legacy !define, !function or !procedure of the diagram
 !define color(n) #CCE5FF
 !python
 @macro

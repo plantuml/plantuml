@@ -37,6 +37,11 @@ public final class Builtin {
 		return kwFn.call(in, args, kw);
 	}
 
+	/** A function written in Java, to be given to Python by the host (a decorator, for instance). */
+	public static Builtin of(String name, Fn fn) {
+		return new Builtin(name, fn);
+	}
+
 	/** The Python value {@code None}, for a function that returns nothing. */
 	public static Object none() {
 		return PyNone.NONE;

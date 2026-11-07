@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 8
+expected-error-message: ''color' is already a Python macro of the diagram'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: 'color' is already a Python macro of the diagram
+!python
+@macro
+def color(n):
+    return "#FFCCCC"
+!endpy
+!define color(n) #CCE5FF
+participant P color(P)
+@enduml

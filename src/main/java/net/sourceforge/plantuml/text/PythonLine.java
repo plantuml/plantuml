@@ -54,8 +54,14 @@ public final class PythonLine {
 		return s.startsWith("!{", i);
 	}
 
+	/** "!@macro", "!@macro(\"$color\")": a decorator, on the line before a "!def" or a "!class". */
+	public static boolean isDecoratorLine(String s) {
+		final int i = afterBang(s);
+		return i >= 0 && i < s.length() && s.charAt(i) == '@';
+	}
+
 	private static final String[] PYTHON_KEYWORDS = { "def", "for", "try", "pass", "lambda", "del", "raise", "global",
-			"nonlocal", "elif", "except", "break", "continue" };
+			"nonlocal", "elif", "except", "break", "continue", "class" };
 
 	/** "!$x = 1", "!local $x = 1" and "!x ?= 1" are legacy. "!x = 1" is not. */
 	public static boolean isLegacyAffectation(String s) {

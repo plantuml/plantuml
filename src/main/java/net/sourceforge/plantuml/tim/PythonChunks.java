@@ -183,11 +183,12 @@ public final class PythonChunks {
 	/**
 	 * A PlantUML text line inside a Python block, as the Python statement that
 	 * emits it: <code>A -&gt; !{b}</code> becomes
-	 * <code>puml.emit("A -&gt; " + str(b))</code>. <code>!!{</code> gives a literal
-	 * <code>!{</code>, as in a text line outside a block.
+	 * <code>puml._text("A -&gt; " + str(b))</code>. <code>!!{</code> gives a literal
+	 * <code>!{</code>, as in a text line outside a block. <code>puml._text</code>
+	 * expands the macros of the line, then emits it.
 	 */
 	static String textToPython(String text) {
-		final StringBuilder sb = new StringBuilder("puml.emit(\"\"");
+		final StringBuilder sb = new StringBuilder("puml._text(\"\"");
 		final StringBuilder literal = new StringBuilder();
 		int i = 0;
 		while (i < text.length()) {

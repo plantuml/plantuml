@@ -593,9 +593,7 @@ final class Builtins {
 		});
 		fn("callable", (in, a) -> {
 			count("callable", a, 1, 1);
-			Object x = a[0];
-			return Boolean.valueOf(x instanceof PyFunction || x instanceof Builtin || x instanceof BoundMethod
-					|| (x instanceof PyType && (((PyType) x).ctor != null || ((PyType) x).isClass())));
+			return Boolean.valueOf(Interp.isCallable(a[0]));
 		});
 	}
 

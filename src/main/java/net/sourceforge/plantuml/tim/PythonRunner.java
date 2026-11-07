@@ -70,13 +70,15 @@ final class PythonRunner {
 	/** The diagram lines of every chunk run so far, by chunk name. */
 	private final Map<String, List<StringLocated>> sources = new HashMap<>();
 	private int chunkCount;
+	private final PythonMacros macros;
 
-	PythonRunner(String version, Map<String, String> arguments) {
+	PythonRunner(String version, Map<String, String> arguments, PythonMacros.LegacyNames legacyNames) {
 		// What print() writes is dropped: whether print is an alias of emit is
 		// still open (see PYTHON_PREPROCESSOR.md), it is not for now.
 		this.interp = new Interp(text -> {
 		});
 		this.interp.setMaxSteps(10000000L);
+		this.macros = new PythonMacros(interp, emitted, legacyNames);
 
 		final PyModule puml = new PyModule("puml");
 		puml.putString("version", version == null ? "" : version);
@@ -84,12 +86,16 @@ final class PythonRunner {
 		puml.putStringMap("args", arguments);
 		puml.put("emit", (in, args) -> emit(args));
 		puml.put("error", (in, args) -> error(string("error", args)));
+		puml.put("macro", (in, args) -> macros.macro(args));
+		// a text line of a Python block (PythonChunks): its macros are expanded, then it is emitted
+		puml.put("_text", (in, args) -> emitLines(macros.expand(string("_text", args))));
 		this.interp.addModule(puml);
 		this.interp.setGlobal("puml", puml);
 		// The builtin modules need no import in a diagram ("!import" is the legacy directive).
 		this.interp.setGlobal("math", this.interp.getModule("math"));
 		this.interp.setGlobal("json", this.interp.getModule("json"));
 		this.interp.setGlobal("emit", puml.get("emit"));
+		this.interp.setGlobal("macro", puml.get("macro"));
 	}
 
 	/** The only argument of a puml function, which must be a str. */
@@ -102,10 +108,40 @@ final class PythonRunner {
 	}
 
 	private Object emit(Object[] args) {
+		return emitLines(string("emit", args));
+	}
+
+	private Object emitLines(String text) {
 		// A string with several lines is several lines of PlantUML text.
-		for (String line : string("emit", args).split("\\r?\\n", -1))
+		for (String line : text.split("\\r?\\n", -1))
 			emitted.add(line);
 		return Builtin.none();
+	}
+
+	/** True if a macro of this name is declared. */
+	boolean isMacro(String name) {
+		return macros.contains(name);
+	}
+
+	/** True once a macro is declared: until then, text lines are not scanned for macros. */
+	boolean hasMacros() {
+		return macros.isEmpty() == false;
+	}
+
+	/**
+	 * Replaces the macro calls of a text line outside Python by their result
+	 * (several lines are separated by a newline). An error is reported on the
+	 * line of the macro that caused it, or on <code>at</code>.
+	 */
+	String expandMacros(String text, StringLocated at) throws EaterExceptionMessage {
+		pumlError = null;
+		try {
+			return macros.expand(text);
+		} catch (PyError e) {
+			throw translate(e, at);
+		} catch (ExecutionLimitError e) {
+			throw new EaterExceptionMessage("Python error: " + e.getMessage(), at);
+		}
 	}
 
 	/**
@@ -135,16 +171,27 @@ final class PythonRunner {
 			throw new EaterExceptionMessage(
 					"Python syntax error: " + e.detail + " (column " + (e.col + 1) + ")", locate(lines, e.line));
 		} catch (PyError e) {
-			final StringLocated at = locate(sources.get(e.getFile()), e.getLine());
-			// a puml.error is reported as the plain message
-			if (pumlError != null && e.typeName().equals("RuntimeError") && e.text().equals(pumlError))
-				throw new EaterExceptionMessage(pumlError, at);
-			final String text = e.text();
-			throw new EaterExceptionMessage("Python error: " + e.typeName() + (text.isEmpty() ? "" : ": " + text), at);
+			throw translate(e, null);
 		} catch (ExecutionLimitError e) {
 			throw new EaterExceptionMessage("Python error: " + e.getMessage(), null);
 		}
 		return new ArrayList<>(emitted);
+	}
+
+	/**
+	 * A Python exception as a message on the diagram line that caused it (found
+	 * through the chunk and line of the innermost frame), or on
+	 * <code>fallback</code> when it is not known.
+	 */
+	private EaterExceptionMessage translate(PyError e, StringLocated fallback) {
+		StringLocated at = locate(sources.get(e.getFile()), e.getLine());
+		if (at == null)
+			at = fallback;
+		// a puml.error is reported as the plain message
+		if (pumlError != null && e.typeName().equals("RuntimeError") && e.text().equals(pumlError))
+			return new EaterExceptionMessage(pumlError, at);
+		final String text = e.text();
+		return new EaterExceptionMessage("Python error: " + e.typeName() + (text.isEmpty() ? "" : ": " + text), at);
 	}
 
 	/** The diagram line of the line number (1-based) of a chunk, or null. */
