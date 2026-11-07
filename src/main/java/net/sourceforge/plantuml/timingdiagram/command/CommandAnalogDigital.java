@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.timingdiagram.command;
 import java.util.Arrays;
 import java.util.Collection;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -115,6 +116,33 @@ public class CommandAnalogDigital extends SingleLineCommand2<TimingDiagram> {
 				new RegexOr(new RegexLeaf("and"), new RegexLeaf("to")), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "END" + group, "(-?[0-9]*\\.?[0-9]+)"));
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String compact = arg.get("COMPACT", 0);
+		final String type = arg.get("TYPE", 0);
+		final String code = arg.getLazzy("CODE", 0);
+		final String full = arg.get("FULL", 0);
+		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
+		final String start = arg.getLazzy("START", 0);
+		final String end = arg.getLazzy("END", 0);
+
+		final StringBuilder sb = new StringBuilder();
+		if (compact != null)
+			sb.append("Creating a compact ").append(type).append(" timing player '");
+		else
+			sb.append("Creating an ").append(type).append(" timing player '");
+		sb.append(code).append("'");
+		if (full != null)
+			sb.append(" displayed as \"").append(full).append("\"");
+		if (stereotype != null)
+			sb.append(" stereotyped ").append(stereotype);
+		// Bounds are only applied when both START and END are present
+		if (start != null && end != null)
+			sb.append(" with bounds from ").append(start).append(" to ").append(end);
+		return sb.toString();
 	}
 
 	@Override
