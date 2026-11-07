@@ -68,9 +68,11 @@ public class LineRenderer {
 		this.xAxis = xAxis;
 	}
 
-	public void draw(UGraphic ug, ChartSeries series, HColor color) {
+	public void draw(UGraphic ug, ChartSeries series, HColor color, double lineThickness) {
 		if (categoryCount == 0 && !series.hasExplicitXValues())
 			return;
+
+		final UStroke stroke = UStroke.withThickness(lineThickness);
 
 		if (series.isInterpolate()) {
 			final List<XCubicCurve2D> curves = NaturalSpline.through(points(series));
@@ -79,7 +81,7 @@ public class LineRenderer {
 				curve.moveTo(curves.get(0).getP1());
 				for (XCubicCurve2D bezier : curves)
 					curve.cubicTo(bezier.ctrlx1, bezier.ctrly1, bezier.ctrlx2, bezier.ctrly2, bezier.x2, bezier.y2);
-				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(HColors.none().bg()).draw(curve);
+				ug.apply(color).apply(stroke).apply(HColors.none().bg()).draw(curve);
 				return;
 			}
 		}
@@ -91,7 +93,7 @@ public class LineRenderer {
 				final XPoint2D p1 = points.get(i);
 				final XPoint2D p2 = points.get(i + 1);
 				final ULine line = new ULine(p2.x - p1.x, p2.y - p1.y);
-				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(p1.x).compose(UTranslate.dy(p1.y))).draw(line);
+				ug.apply(color).apply(stroke).apply(UTranslate.dx(p1.x).compose(UTranslate.dy(p1.y))).draw(line);
 			}
 			return;
 		}
@@ -124,7 +126,7 @@ public class LineRenderer {
 				final double y2 = plotHeight - (yVal2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 
 				final ULine line = new ULine(x2 - x1, y2 - y1);
-				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);
+				ug.apply(color).apply(stroke).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);
 			}
 		} else {
 			// Index-based mode: use category positioning
@@ -145,7 +147,7 @@ public class LineRenderer {
 				final double y2 = plotHeight - (value2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 
 				final ULine line = new ULine(x2 - x1, y2 - y1);
-				ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);
+				ug.apply(color).apply(stroke).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);
 			}
 		}
 	}
