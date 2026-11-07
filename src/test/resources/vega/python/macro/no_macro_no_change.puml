@@ -1,0 +1,6 @@
+@startuml
+' EXPECT (preproc):
+' title color(P)
+!x = 1
+title color(P)
+@enduml

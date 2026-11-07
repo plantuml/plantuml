@@ -1,0 +1,14 @@
+@startuml
+' EXPECT (preproc):
+' rectangle "DB" as db <<v1>>
+' rectangle "Web" as web <<none>>
+' rectangle "API" as api <<v2>>
+!python
+@macro
+def box(alias, label, tags="none"):
+    return f'rectangle "{label}" as {alias} <<{tags}>>'
+!endpy
+box(db, "DB", $tags="v1")
+box(web, "Web")
+box(api, "API", tags="v2")
+@enduml

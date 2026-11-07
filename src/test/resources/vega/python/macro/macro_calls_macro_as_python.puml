@@ -1,0 +1,14 @@
+@startuml
+' EXPECT (preproc):
+' participant Auth #FFCCCC
+!python
+@macro
+def color(n):
+    return "#FFCCCC"
+
+@macro
+def decl(n):
+    return "participant " + n + " " + color(n)
+!endpy
+decl(Auth)
+@enduml

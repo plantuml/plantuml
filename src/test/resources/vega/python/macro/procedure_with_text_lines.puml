@@ -1,0 +1,11 @@
+@startuml
+' EXPECT (preproc):
+' participant Auth #FFCCCC
+' note right of Auth : Auth is up
+!@macro
+!def service(name, color):
+    participant !{name} !{color}
+    note right of !{name} : !{name} is up
+
+service(Auth, "#FFCCCC")
+@enduml

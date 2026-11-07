@@ -1,0 +1,12 @@
+@startuml
+' EXPECT (preproc):
+' participant A
+' participant B
+!python
+@macro
+def two():
+    emit("participant A")
+    return "participant B"
+!endpy
+two()
+@enduml

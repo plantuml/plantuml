@@ -1,0 +1,13 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: macro 'color' is already declared
+!python
+@macro
+def color(n):
+    return "#FFCCCC"
+
+@macro("color")
+def other(n):
+    return "#CCE5FF"
+!endpy
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: macro 'color' is also a legacy !define
+!define color(n) #CCE5FF
+!python
+@macro
+def color(n):
+    return "#FFCCCC"
+!endpy
+participant P color(P)
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: ZeroDivisionError
+!python
+@macro
+def broken(n):
+    return str(1 / 0)
+!endpy
+title broken(x)
+@enduml

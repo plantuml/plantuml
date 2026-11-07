@@ -1,0 +1,9 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: a macro name is an identifier, optionally preceded by $
+!python
+@macro("%color")
+def color(n):
+    return "#FFCCCC"
+!endpy
+@enduml

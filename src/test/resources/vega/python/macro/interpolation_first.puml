@@ -1,0 +1,11 @@
+@startuml
+' EXPECT (preproc):
+' participant Auth #FFCCCC
+!name = "Auth"
+!python
+@macro
+def decl(n):
+    return "participant " + n + " #FFCCCC"
+!endpy
+decl(!{name})
+@enduml

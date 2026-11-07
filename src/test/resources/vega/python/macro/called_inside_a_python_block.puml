@@ -1,0 +1,12 @@
+@startuml
+' EXPECT (preproc):
+' participant P0 #FFCCCC
+' participant P1 #FFCCCC
+!python
+@macro
+def color(n):
+    return "#FFCCCC"
+!endpy
+!for i in range(2):
+    participant P!{i} color(P)
+@enduml

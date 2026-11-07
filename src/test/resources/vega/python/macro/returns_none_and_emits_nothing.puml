@@ -1,0 +1,10 @@
+@startuml
+' EXPECT (preproc):
+' title [] end
+!python
+@macro
+def nothing():
+    pass
+!endpy
+title [nothing()] end
+@enduml

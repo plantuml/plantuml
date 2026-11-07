@@ -1,0 +1,10 @@
+@startuml
+' EXPECT (preproc):
+' ERROR: TypeError
+!python
+@macro
+def color(n):
+    return "#FFCCCC"
+!endpy
+participant P color(P, Q)
+@enduml
