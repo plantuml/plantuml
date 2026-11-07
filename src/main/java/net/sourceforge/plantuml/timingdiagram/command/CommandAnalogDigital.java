@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -56,6 +59,8 @@ public class CommandAnalogDigital extends SingleLineCommand2<TimingDiagram> {
 	public CommandAnalogDigital() {
 		super(getRegexConcat());
 	}
+
+	private static final Collection<String> FIRST_TOKENS = Arrays.asList("analog", "compact", "digital");
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandAnalogDigital.class.getName(), RegexLeaf.start(), //
@@ -111,6 +116,11 @@ public class CommandAnalogDigital extends SingleLineCommand2<TimingDiagram> {
 			player.setBounds(start, end);
 
 		return CommandExecutionResult.ok();
+	}
+
+	@Override
+	public Collection<String> mandatoryFirstTokensFast() {
+		return FIRST_TOKENS;
 	}
 
 }
