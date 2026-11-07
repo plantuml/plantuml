@@ -13,17 +13,40 @@ final class PyType {
 	final Map<String, Object> dict;
 	/** CPython's __qualname__ of a class defined by the program; null for a builtin type. */
 	final String qualname;
+	/**
+	 * CPython's __module__ of a class defined by the program: the __name__ of
+	 * the globals it was defined in ("__main__" for a diagram); null for a
+	 * builtin type.
+	 */
+	final String module;
 
 	PyType(String name, PyType parent, boolean exception) {
-		this(name, parent, exception, null, null);
+		this(name, parent, exception, null, null, null);
 	}
 
-	PyType(String name, PyType parent, boolean exception, Map<String, Object> dict, String qualname) {
+	PyType(String name, PyType parent, boolean exception, Map<String, Object> dict, String qualname,
+			String module) {
 		this.name = name;
 		this.parent = parent;
 		this.exception = exception;
 		this.dict = dict;
 		this.qualname = qualname;
+		this.module = module;
+	}
+
+	/** The name used by repr: "int", or "palette.Box" for a class of the program. */
+	String fullName() {
+		return dict == null ? name : module + "." + qualname;
+	}
+
+	/**
+	 * The name used in error reports, as CPython's traceback prints it: the
+	 * module is left out for a builtin type and for a class of "__main__".
+	 */
+	String reportName() {
+		if (dict == null)
+			return name;
+		return module.equals("__main__") ? qualname : module + "." + qualname;
 	}
 
 	boolean isSubtypeOf(PyType t) {

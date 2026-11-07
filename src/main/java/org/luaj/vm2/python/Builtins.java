@@ -42,11 +42,16 @@ final class Builtins {
 			if (parent.isClass() == false && parent.exception == false && parent != Types.OBJECT)
 				throw PyOps.err(Types.TYPE_ERROR, "subclassing the builtin type '" + parent.name + "' is not supported");
 		}
+		// as in CPython, __module__ is the __name__ of the globals the class is defined in
+		Object module = ((PyFunction) a[0]).globals.get("__name__");
+		if (module instanceof String == false)
+			module = "__main__";
 		PyDict body = (PyDict) in.call(a[0]);
 		Map<String, Object> dict = new LinkedHashMap<String, Object>();
+		dict.put("__module__", module);
 		for (PyDict.Entry e : body.map.values())
 			dict.put((String) e.key, e.value);
-		return new PyType((String) a[1], parent, parent.exception, dict, (String) a[2]);
+		return new PyType((String) a[1], parent, parent.exception, dict, (String) a[2], (String) module);
 	});
 
 	/** BaseException.__init__(self, *args), for a class that calls it explicitly. */

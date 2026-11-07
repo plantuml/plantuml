@@ -4,6 +4,7 @@
 52
 True True True Point
 <class '__main__.Point'> function
+__main__ __main__ Point
 14 3 True
 ['Point', 'Point3']
 1 True False

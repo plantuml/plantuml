@@ -38,9 +38,13 @@ public final class PyError extends RuntimeException {
 			frames.add("  File \"" + file + "\", line " + line + ", in " + function);
 	}
 
-	/** The name of the exception class, e.g. "ValueError". */
+	/**
+	 * The name of the exception class, as CPython's traceback prints it:
+	 * "ValueError", "MyError" for a class of the diagram, "palette.MyError" for
+	 * a class of a module.
+	 */
 	public String typeName() {
-		return exc.type.name;
+		return exc.type.reportName();
 	}
 
 	/** The text of the exception, as str(e) gives it. */
@@ -56,7 +60,7 @@ public final class PyError extends RuntimeException {
 			for (int i = frames.size() - 1; i >= 0; i--)
 				sb.append(frames.get(i)).append('\n');
 		}
-		sb.append(exc.type.name);
+		sb.append(typeName());
 		String t = text();
 		if (!t.isEmpty())
 			sb.append(": ").append(t);

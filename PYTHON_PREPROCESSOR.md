@@ -154,8 +154,10 @@ Accepted:
   `Exception.__init__(self, msg)` and `object.__init__(self)`;
 - private name mangling (`self.__x` is `self._A__x` inside class `A`);
 - classes nested in a class or defined in a function (with closures);
-- `type(x)`, `isinstance`, `callable`, `__name__`, `__qualname__`, raising and
-  catching instances or classes of user-defined exceptions.
+- `type(x)`, `isinstance`, `callable`, `__name__`, `__qualname__`,
+  `__module__` (the `__name__` of the globals the class is defined in:
+  `"__main__"` in a diagram, the module name in a module), raising and catching
+  instances or classes of user-defined exceptions.
 
 The body of a class only accepts straight-line statements: `def`, nested
 `class`, assignments (including augmented ones), expression statements
@@ -315,6 +317,9 @@ are not run under CPython.
   holds for bound methods.
 - Subclassing a builtin type other than `object` and the exception classes
   raises `TypeError`.
+- Assigning or deleting an attribute of a module (`math.pi = 3`,
+  `del palette.color`) raises `AttributeError`; CPython allows it. This is the
+  "read-only from outside" rule of section 15.4.
 
 ## 7. Pipeline **[implemented]**
 
@@ -413,7 +418,7 @@ Errors reach the host as unchecked exceptions:
 | Exception | When | Useful members |
 |---|---|---|
 | `PySyntaxError` | compile time | `line`, `col`; the message ends with `(line L, column C)` |
-| `PyError` | an uncaught Python exception | `typeName()`, `text()`, `getMessage()` (a CPython-like traceback: `File "name", line N, in function`, at most 50 frames) |
+| `PyError` | an uncaught Python exception | `typeName()` (qualified as in CPython's traceback: `ValueError`, `MyError` for a class of the diagram, `palette.MyError` for a class of a module), `text()`, `getMessage()` (a CPython-like traceback: `File "name", line N, in function`, at most 50 frames) |
 | `ExecutionLimitError` | instruction limit reached | not a `PyError`: cannot be caught by the script |
 
 **[implemented]** In a diagram, an error is reported on the diagram line that
@@ -650,6 +655,11 @@ dicts, booleans) rather than text, so there are no `$name` substitution rules
 and no quoting problems; recursion is allowed, up to the call depth limit
 (`Interp.setMaxDepth`), beyond which a catchable `RecursionError` is raised.
 
+The same holds for the methods of a class: a text line in a method emits when
+the method is called. A text line directly in the body of a class is rejected
+(a `PySyntaxError`): it would emit when the class is defined, which is never
+what is meant. A class body only accepts the statements of section 3.4.
+
 ### 11.4 Python or directive?
 
 Since `!` has no marker after it, a line starting with `!` is classified by what
@@ -757,6 +767,21 @@ PlantUML code base, which hands a configured `Interp` to the library.
 Values exchanged are plain Python values (strings, numbers, booleans, lists,
 dicts). No Java objects are exposed. `puml` is available without an `import`
 (`import puml` is accepted too, as for any builtin module).
+
+**Plain values only at the boundaries.** Every value that leaves one
+interpreter state for another, or for the host, is checked deeply: `None`,
+`bool`, `int`, `float`, `str`, and lists, tuples and dicts of those. An
+instance, a class, a function, a bound method or a module is rejected with a
+`TypeError`. This applies to the `args` given by the engine to
+`plantuml.render` (and so to `puml.args`), and to anything else the host
+copies from one state to the other: a class belongs to the state that ran its
+`class` statement and must never appear in another one. `json.dumps` already
+refuses an instance, with CPython's message.
+
+`puml.emit` takes a string only (anything else is a `TypeError`). Until the
+special methods exist (section 16), `str()` of an instance gives no useful text
+(`<palette.Box object>`): a library gives its objects an explicit method that
+returns or emits their text.
 
 Level 0, generate text (essential):
 
@@ -1030,18 +1055,36 @@ is told from the legacy `!import` directive.
   as in CPython. A leading underscore means "private" by convention only; it is
   not enforced, and there is no `__all__`.
 - **Functions keep their module.** A function defined in a module reads the
-  globals of that module wherever it is called from.
-- **Read-only from outside.** A diagram cannot assign to an attribute of a module
-  (`name.attr = v` is an error). The state of a module changes only through its
-  own functions.
+  globals of that module wherever it is called from. So does a method of a class
+  defined in a module.
+- **Module name.** The globals of a module hold `__name__`, the name of the
+  module (`"__main__"` for the diagram). A class defined in the module takes it
+  as its `__module__`: `<class 'palette.Box'>`, and `palette.Err` in an error
+  report.
+- **Classes are per diagram too.** A class is created when the body of its
+  module runs. Two modules that import a third one see the same class, so
+  `isinstance` is consistent between them. A failed import that is run again
+  creates new classes, unrelated to the ones of the failed attempt.
+- **Read-only from outside.** A diagram cannot assign to or delete an attribute
+  of a module (`name.attr = v` and `del name.attr` raise `AttributeError`, a
+  deviation from CPython listed in section 6). The rule is shallow: it protects
+  the names of the module, not the values they refer to. The diagram can still
+  change a list or a dict of the module, or an attribute of a class of the
+  module (`palette.Box.count = 3`), as in CPython. This is acceptable because
+  the state of a module belongs to one diagram (see "One state per diagram").
 - **Text at import time.** Statements at the top level of a module run like any
   other code. If one of them calls `puml.emit`, the text is appended to the
   generated source at the place of the `import` statement. A library module is
   expected not to emit at import time.
 - **Configuring a module before it loads** **[open]**. Legacy libraries read
   variables that the diagram sets before the first include (for example
-  `$NEW_C4_STYLE` in C4). Two candidates: the module reads `puml.args`, or the
-  diagram calls a configuration function before the `import`. Nothing is decided.
+  `$NEW_C4_STYLE` in C4). Three candidates: the module reads `puml.args`; the
+  diagram calls a configuration function before the `import`; or the module
+  exposes a class and the diagram configures it by creating an instance
+  (`c4 = c4lib.C4(style="new")`, then `c4.person(...)`). Current leaning: the
+  class. The configuration is then an ordinary argument: there is no order to
+  respect between configuring and importing, no module-level state to reset,
+  and two configurations can coexist in one diagram.
 
 ### 15.5 Dependencies between modules
 
@@ -1066,6 +1109,11 @@ visible.
 | Exception raised by the body of a module | The same exception reaches the importer, with the frames of the module in the traceback. The import counts as failed: the module is not kept, and a later `import` runs the body again. |
 | Unsupported form of `import` (section 15.3) | `PySyntaxError`, when the diagram is compiled. |
 | Syntax error inside a shipped module | An internal error that names the module. It is a defect of the release, not an error of the diagram. |
+
+A module may define its own exception classes (`class PaletteError(ValueError)`).
+A diagram catches them through the module (`except palette.PaletteError:`), and
+an uncaught one is reported with its module, as CPython does
+(`palette.PaletteError: unknown state`).
 
 An error caused by an `import` statement is reported on the line of that
 statement. A line inside a module is reported with the module name and the line
@@ -1131,7 +1179,8 @@ reports are mapped to the diagram is the open point of section 9.
 - `from ... import`, `as`, several names per statement, dotted names, packages,
   relative imports;
 - reloading, removing a module, `__name__ == "__main__"`, `__all__`;
-- anything that needs `class` or decorators;
+- decorators, and the parts of classes not in section 3.4 (special methods,
+  `super()`, multiple inheritance);
 - the replacement of the legacy `!define` and `!unquoted`;
 - the conversion of the standard library and of the themes.
 
@@ -1144,6 +1193,11 @@ reports are mapped to the diagram is the open point of section 9.
 - Each rule of sections 15.4 to 15.7 has a test: single execution, identity of
   the module across imports, separate namespaces, read-only attributes, cycle,
   unknown name, failed import not kept, shared budget.
+- For classes defined in a module: the same class seen from two importing
+  modules (`isinstance` consistent), a method reading the globals of its module
+  and not those of the diagram, `__module__` and the repr naming the module, an
+  exception of the module caught as `except mod.Err` and reported as
+  `mod.Err`, and the classes of a failed import not reused when it runs again.
 - Every module gives the same result on the three editions before it is shipped.
 
 ### 15.12 Example **[illustrative]**
@@ -1177,6 +1231,28 @@ Auth -> Billing : request
 implementation detail of the module by convention, and the names `color` and
 `service` do not collide with any name the diagram defines itself.
 
+The same module could expose a class, configured by the diagram (the leaning of
+section 15.4):
+
+```python
+class Palette:
+    def __init__(self, colors=None):
+        self.colors = dict(_COLORS)
+        if colors is not None:
+            self.colors.update(colors)
+
+    def service(self, alias, state):
+        puml.emit(f"participant {alias} {self.colors.get(state, '#EEEEEE')}")
+```
+
+```plantuml
+@startuml
+!import palette
+!p = palette.Palette({"warn": "#FFD966"})
+!p.service("Billing", "warn")
+@enduml
+```
+
 ## 16. Open points **[open]**
 
 Interpreter:
@@ -1192,9 +1268,10 @@ Interpreter:
 - Classes, next steps: the special methods (`__str__`, `__repr__`, `__eq__`,
   `__lt__`, operators, ...). They need the `Interp` in `PyOps.repr`, `eq`,
   `binary` and the comparisons, which are static today and cannot call Python
-  code. Then possibly `super()` (it needs the `__class__` cell),
-  `@staticmethod` / `@classmethod` / `@property`, and `getattr` / `setattr` /
-  `hasattr`.
+  code. `__str__` and `__repr__` come first: without them a library object has
+  no text form for `puml.emit` (section 13.1). Then possibly `super()` (it
+  needs the `__class__` cell), `@staticmethod` / `@classmethod` / `@property`,
+  and `getattr` / `setattr` / `hasattr`.
 - Whether the `README.md` of the test resources and the leftovers of the Lua
   tests (naming of `errors/*libargs.py`) should be cleaned up.
 
@@ -1204,7 +1281,7 @@ Integration:
 - Whether `print` in text Python is an error, a log message, or an alias of
   `emit`. Current leaning: not an alias.
 - Shipped Python modules are specified in section 15. Its open points: the
-  configuration of a module before it loads, `as` and several names in one
+  configuration of a module before it loads (leaning: a class), `as` and several names in one
   `import`, the engine flavor, the stability policy and the listing of modules,
   the `!import` rule for a bare name without extension, a way to read legacy
   variables, and calling a module function from a plain text line.

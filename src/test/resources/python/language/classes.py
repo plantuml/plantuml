@@ -26,6 +26,7 @@ print(m())
 print(Point.norm2(p))
 print(type(p) is Point, isinstance(p, Point), isinstance(p, object), type(p).__name__)
 print(Point, type(Point.norm2).__name__)
+print(Point.__module__, p.__module__, Point.__qualname__)
 
 class Point3(Point):
     dims = 3

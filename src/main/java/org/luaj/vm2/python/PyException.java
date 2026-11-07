@@ -1,6 +1,6 @@
 package org.luaj.vm2.python;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /** An exception instance, as seen by the program. */
@@ -18,7 +18,7 @@ final class PyException {
 
 	Map<String, Object> attrs() {
 		if (attrs == null)
-			attrs = new HashMap<String, Object>();
+			attrs = new LinkedHashMap<String, Object>();
 		return attrs;
 	}
 }

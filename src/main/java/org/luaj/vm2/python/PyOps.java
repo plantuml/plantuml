@@ -1096,11 +1096,11 @@ final class PyOps {
 			sb.append(')');
 		} else if (o instanceof PyType) {
 			PyType t = (PyType) o;
-			sb.append("<class '").append(t.isClass() ? "__main__." + t.qualname : t.name).append("'>");
+			sb.append("<class '").append(t.fullName()).append("'>");
 		} else if (o instanceof PyInstance) {
 			PyType t = ((PyInstance) o).type;
 			// CPython adds the address, which is not deterministic
-			sb.append('<').append(t.isClass() ? "__main__." + t.qualname : t.name).append(" object>");
+			sb.append('<').append(t.fullName()).append(" object>");
 		} else if (o instanceof PyFunction) {
 			sb.append("<function ").append(((PyFunction) o).code.name).append('>');
 		} else if (o instanceof Builtin) {

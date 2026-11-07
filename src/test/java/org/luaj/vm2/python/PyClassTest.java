@@ -73,6 +73,35 @@ class PyClassTest {
 	}
 
 	@Test
+	void classesKnowTheModuleTheyAreDefinedIn() {
+		// a module has its own globals, whose __name__ is the name of the module
+		StringBuilder out = new StringBuilder();
+		Interp in = new Interp(out::append);
+		in.globals.put("__name__", "palette");
+		in.run("class Box:\n    class Inner:\n        pass\nprint(Box, Box.__module__, Box().__module__)\n"
+				+ "print(Box(), Box.Inner)\n", "palette");
+		assertEquals("<class 'palette.Box'> palette palette\n<palette.Box object> <class 'palette.Box.Inner'>\n",
+				out.toString());
+	}
+
+	@Test
+	void errorReportsQualifyTheClassOfAModuleOnly() {
+		// as CPython's traceback: "palette.Err: m", but "Err: m" in the main script
+		Interp in = new Interp(s -> {
+		});
+		in.globals.put("__name__", "palette");
+		PyError e = assertThrows(PyError.class,
+				() -> in.run("class Err(ValueError):\n    pass\nraise Err('m')\n", "palette"));
+		assertEquals("palette.Err", e.typeName());
+		assertTrue(e.getMessage().endsWith("\npalette.Err: m"), e.getMessage());
+		e = assertThrows(PyError.class,
+				() -> run("class A:\n    class Err(Exception):\n        pass\nraise A.Err('m')\n"));
+		assertEquals("A.Err", e.typeName());
+		e = assertThrows(PyError.class, () -> run("raise KeyError('k')\n"));
+		assertEquals("KeyError", e.typeName());
+	}
+
+	@Test
 	void errorInAMethodReportsItsLine() {
 		PyError e = assertThrows(PyError.class,
 				() -> run("class A:\n    def f(self):\n        return 1 / 0\nA().f()\n"));
