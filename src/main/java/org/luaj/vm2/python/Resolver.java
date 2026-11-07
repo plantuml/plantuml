@@ -48,6 +48,7 @@ final class Resolver {
 	private void statement(Scope s, Node n) {
 		switch (n.type) {
 		case "FunctionDef": {
+			decorators(s, n);
 			bind(s, n.str("name"), n);
 			Node args = n.node("args");
 			defaults(s, args);
@@ -56,6 +57,7 @@ final class Resolver {
 			break;
 		}
 		case "ClassDef": {
+			decorators(s, n);
 			bind(s, n.str("name"), n);
 			for (Node b : n.nodes("bases"))
 				expression(s, b);
@@ -161,6 +163,30 @@ final class Resolver {
 			break;
 		default:
 			throw error("unsupported statement " + n.type, n);
+		}
+	}
+
+	/**
+	 * The decorators of a def or a class, evaluated in the enclosing scope. A
+	 * decorator is a name, an attribute or a call of one of those
+	 * ({@code @macro}, {@code @puml.macro}, {@code @macro("$color")}). The
+	 * decorators of the builtin descriptors are rejected: they would need
+	 * descriptors, which the interpreter does not have.
+	 */
+	private void decorators(Scope s, Node n) {
+		for (Node d : n.nodes("decorator_list")) {
+			Node callee = d.is("Call") ? d.node("func") : d;
+			Node root = callee;
+			while (root.is("Attribute"))
+				root = root.node("value");
+			if (root.is("Name") == false)
+				throw error("this form of decorator is not supported: use a name, an attribute or a call", d);
+			if (callee.is("Name")) {
+				String name = callee.str("id");
+				if (name.equals("staticmethod") || name.equals("classmethod") || name.equals("property"))
+					throw error("@" + name + " is not supported", d);
+			}
+			expression(s, d);
 		}
 	}
 

@@ -1,0 +1,115 @@
+Module(
+  body=[
+    FunctionDef(
+      name="color",
+      args=arguments(
+        posonlyargs=[],
+        args=[
+          arg(arg="n", annotation=None)
+        ],
+        vararg=None,
+        kwonlyargs=[],
+        kw_defaults=[],
+        kwarg=None,
+        defaults=[]
+      ),
+      body=[
+        Return(
+          value=Constant(value="#FFCCCC")
+        )
+      ],
+      decorator_list=[
+        Name(id="macro", ctx=Load)
+      ],
+      returns=None
+    ),
+    FunctionDef(
+      name="size",
+      args=arguments(
+        posonlyargs=[],
+        args=[
+          arg(arg="n", annotation=None),
+          arg(arg="unit", annotation=None)
+        ],
+        vararg=None,
+        kwonlyargs=[],
+        kw_defaults=[],
+        kwarg=None,
+        defaults=[
+          Constant(value="px")
+        ]
+      ),
+      body=[
+        Pass
+      ],
+      decorator_list=[
+        Call(
+          func=Name(id="macro", ctx=Load),
+          args=[
+            Constant(value="$color")
+          ],
+          keywords=[]
+        ),
+        Attribute(
+          value=Name(id="puml", ctx=Load),
+          attr="macro",
+          ctx=Load
+        )
+      ],
+      returns=None
+    ),
+    FunctionDef(
+      name="box",
+      args=arguments(posonlyargs=[], args=[], vararg=None, kwonlyargs=[], kw_defaults=[], kwarg=None, defaults=[]),
+      body=[
+        Pass
+      ],
+      decorator_list=[
+        Call(
+          func=Name(id="register", ctx=Load),
+          args=[],
+          keywords=[
+            keyword(
+              arg="name",
+              value=Constant(value="box")
+            )
+          ]
+        )
+      ],
+      returns=None
+    ),
+    ClassDef(
+      name="Box",
+      bases=[
+        Name(id="Base", ctx=Load)
+      ],
+      keywords=[],
+      body=[
+        FunctionDef(
+          name="describe",
+          args=arguments(
+            posonlyargs=[],
+            args=[
+              arg(arg="self", annotation=None)
+            ],
+            vararg=None,
+            kwonlyargs=[],
+            kw_defaults=[],
+            kwarg=None,
+            defaults=[]
+          ),
+          body=[
+            Pass
+          ],
+          decorator_list=[
+            Name(id="upper", ctx=Load)
+          ],
+          returns=None
+        )
+      ],
+      decorator_list=[
+        Name(id="tagged", ctx=Load)
+      ]
+    )
+  ]
+)

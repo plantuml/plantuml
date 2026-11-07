@@ -51,10 +51,21 @@ class PyClassTest {
 		assertRejected("class A(B, C):\n    pass\n");
 		assertRejected("class A(B):\n    def f(self):\n        return super().f()\n");
 		assertRejected("class A(metaclass=M):\n    pass\n");
-		assertRejected("@dec\nclass A:\n    pass\n");
 		// a class attribute that hides, for the methods, a variable of the enclosing function
 		assertRejected("def f():\n    x = 1\n    class A:\n        x = 2\n        def g(self):\n            return x\n"
 				+ "    return A\n");
+	}
+
+	@Test
+	void decoratorsOfBuiltinDescriptorsAndOtherFormsAreRejected() {
+		String[] sources = { "class A:\n    @staticmethod\n    def f():\n        pass\n",
+				"class A:\n    @classmethod\n    def f(cls):\n        pass\n",
+				"class A:\n    @property\n    def f(self):\n        pass\n", "@(lambda f: f)\ndef f():\n    pass\n",
+				"@decorators[0]\ndef f():\n    pass\n", "@make()()\ndef f():\n    pass\n" };
+		for (String s : sources)
+			assertRejected(s);
+		// names, attributes and calls of those are accepted
+		Interp.compile("@a\n@a.b.c\n@a(1)\n@a.b(x=1)\ndef f():\n    pass\n@a\nclass C:\n    pass\n", "d");
 	}
 
 	@Test

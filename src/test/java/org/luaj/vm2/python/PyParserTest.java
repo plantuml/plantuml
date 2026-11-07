@@ -32,7 +32,7 @@ import org.junit.jupiter.api.TestFactory;
 class PyParserTest {
 
 	private static final String[] SYNTAX_FILES = { "statements", "expressions", "strings", "numbers", "layout",
-			"classes" };
+			"classes", "decorators" };
 
 	// Line endings depend on core.autocrlf, so CRLF is normalized to LF: AstDump
 	// and the reference dumps always use LF.
@@ -111,9 +111,10 @@ class PyParserTest {
 
 	@Test
 	void unsupportedConstructsAreRejected() {
-		String[] sources = { "class A(metaclass=M): pass", "class A(*b): pass", "@dec\nclass A: pass", "with a: pass", "try:\n pass\nfinally:\n pass",
-				"try:\n pass\nexcept E:\n pass\nfinally:\n pass", "def f(): yield 1", "x = (i for i in y)",
-				"f(i for i in y)", "{1, 2}", "{x for x in y}", "(x := 1)", "async def f(): pass", "@dec\ndef f(): pass",
+		String[] sources = { "class A(metaclass=M): pass", "class A(*b): pass", "with a: pass",
+				"try:\n pass\nfinally:\n pass", "try:\n pass\nexcept E:\n pass\nfinally:\n pass", "def f(): yield 1",
+				"x = (i for i in y)", "f(i for i in y)", "{1, 2}", "{x for x in y}", "(x := 1)", "async def f(): pass",
+				"@dec\nasync def f(): pass",
 				"from a import b", "a @ b", "x: int = 1", "def f(a: int): pass", "def f() -> int: pass", "a, *b = c",
 				"[*a]", "(*a, b)", "b'bytes'", "1j", "...", "x = {**a}", "def f(a, /): pass", "x = yield",
 				"await x", "'\\N{DIGIT ONE}'", "f'{x=}'", "try:\n pass\nexcept* E:\n pass" };
@@ -131,7 +132,8 @@ class PyParserTest {
 				"if x:\n", "while", "a.", "a[", "f(", "'\\x4'", "'\\u12'", "f'{a:{'", "1 if 2", "lambda *: 1",
 				"def f(**k, a): pass", "del f()", "x = 99999999999999999999", "global", "import", "import a.",
 				"not", "a not b", "a is", "x = [i for i in]", "x = [for i in y]", "f(a b)", "(", ")", "}",
-				"if a:\n  b\n c" };
+				"if a:\n  b\n c", "@dec\nx = 1", "@dec", "@dec x\ndef f(): pass", "@\ndef f(): pass",
+				"@dec\n@\ndef f(): pass" };
 		for (String s : sources)
 			assertSyntaxError(s);
 	}

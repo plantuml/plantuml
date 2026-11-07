@@ -92,6 +92,7 @@ Accepted:
   `*args`, `**kwargs`;
 - `return`;
 - `class`, with the restrictions of section 3.4;
+- decorators on `def` and `class`, with the restrictions of section 3.5;
 - `global`, `nonlocal`;
 - `assert`;
 - `del name`, `del a[i]`, `del a.x` (and a comma-separated list of those);
@@ -114,14 +115,14 @@ attributes of instances and classes).
 
 ### 3.3 Rejected (syntax error)
 
-`finally`, `with`, `yield` and generators, `async` / `await`,
-decorators, `from ... import`, `import` of user modules, `set` displays and set
-comprehensions (`{a, b}`), generator expressions (`f(x for x in y)`), `bytes`,
-complex numbers (`1j`), `...`, the walrus operator `:=`, `match`, `@` operator,
-type annotations (variables, parameters, return), positional-only parameters
-(`/`), dictionary unpacking in displays (`{**a}`), starred expressions outside
-calls and parameters (`[*a]`, `a, *b = c`), `except*`, `\N{...}` escapes, the
-`=` specifier of f-strings (`f'{x=}'`).
+`finally`, `with`, `yield` and generators, `async` / `await`, the forms of
+decorators listed in section 3.5, `from ... import`, `import` of user modules,
+`set` displays and set comprehensions (`{a, b}`), generator expressions (`f(x
+for x in y)`), `bytes`, complex numbers (`1j`), `...`, the walrus operator `:=`,
+`match`, `@` operator, type annotations (variables, parameters, return),
+positional-only parameters (`/`), dictionary unpacking in displays (`{**a}`),
+starred expressions outside calls and parameters (`[*a]`, `a, *b = c`),
+`except*`, `\N{...}` escapes, the `=` specifier of f-strings (`f'{x=}'`).
 
 `print(..., file=...)` is also rejected, at run time: `print` accepts only the
 keywords `sep`, `end` and `flush`. `exec` and `eval` do not exist.
@@ -172,14 +173,40 @@ Rejected (syntax error):
   `__eq__`, `__lt__`, `__add__`, `__len__`, `__slots__`, ...): they are
   rejected rather than silently ignored;
 - `super()`: call the base class explicitly instead, `Base.f(self, ...)`;
-- multiple inheritance, keyword arguments in the bases (`metaclass=`),
-  decorators (so no `@staticmethod`, `@classmethod`, `@property`);
+- multiple inheritance, keyword arguments in the bases (`metaclass=`);
+- `@staticmethod`, `@classmethod`, `@property` (section 3.5);
 - a class attribute with the name of a variable of an enclosing function that
   a method of the class uses (CPython resolves it with a special instruction;
   rename one of them).
 
 At run time, subclassing a builtin type other than `object` and the exception
 classes (`class L(list):`) raises `TypeError`.
+
+### 3.5 Decorators **[implemented]**
+
+A decorator is written on the lines before a `def` or a `class`, as in CPython:
+
+```python
+@log("outer")
+@log("inner")
+def target():
+    ...
+```
+
+- The decorator expressions are evaluated from top to bottom, in the enclosing
+  scope, before the default values of the parameters; the function (or the
+  class) is then created, and the decorators are applied from bottom to top:
+  `target = log("outer")(log("inner")(target))`. What the last one returns is
+  bound to the name, function or not.
+- A decorator is a **name**, an **attribute** or a **call** of one of those:
+  `@macro`, `@puml.macro`, `@macro("$color")`, `@tools.mark`. Other
+  expressions (`@(lambda f: f)`, `@decorators[0]`, `@make()()`), valid since
+  Python 3.9, are syntax errors.
+- `@staticmethod`, `@classmethod` and `@property` are syntax errors: they need
+  descriptors, which the interpreter does not have.
+- Decorators may be used on methods and on classes nested anywhere.
+
+The main use planned is `@macro` (section 11.5).
 
 ## 4. Values and builtins **[implemented]**
 
@@ -721,6 +748,90 @@ A legacy-only diagram never gets it. A `!if x == 1` without colon whose legacy
 evaluation does not fail is not an error at all: the condition is false and the
 block is skipped.
 
+### 11.5 Macros **[decided, not implemented]**
+
+A macro is a Python function that the text lines of a diagram call by name,
+without `!{...}`, the way the legacy `!define`, `!function` and
+`!unquoted procedure` are called. Its purpose is the transition of the standard
+library: once a library such as C4 is written in Python, the diagrams that use
+it must keep working without a change, `Person(user, "Customer")` included.
+
+```plantuml
+@startuml
+!python
+@macro
+def color(n):
+    return "#FFCCCC"
+
+@macro("$box")
+def box(alias, label, tags=""):
+    emit(f'rectangle "{label}" as {alias}')
+!endpy
+
+participant P color(P)
+$box(db, "Database", $tags="v1")
+@enduml
+```
+
+**Declaration.**
+
+- `macro` is a builtin of text Python, available as `macro` and as
+  `puml.macro` (like `emit` and `puml.emit`). It registers the function as a
+  macro and returns it unchanged: the function stays an ordinary Python
+  function, callable from Python and from `!{...}`, and a script using it runs
+  under CPython with a stub `macro`.
+- `@macro` names the macro after the function. `@macro("name")` gives it an
+  explicit name: an identifier, optionally preceded by `$` (`"$color"`,
+  `"Person"`). This is how a library keeps the exact name of the legacy
+  function or procedure it replaces, including a `$` name that is not a valid
+  Python name. `%` stays reserved for the legacy builtins.
+- Macros belong to the Python state of the diagram. A macro must be declared
+  before the text lines that use it, as in the legacy preprocessor. A shipped
+  module (section 15) declares macros in the diagram that imports it.
+- Declaring a name twice is an error that names both declarations (two
+  modules, or a module and the diagram). Declaring a name that is also a legacy
+  `!define`, `!function` or `!procedure` of the diagram is an error too: the
+  legacy preprocessor runs first and would silently win.
+
+**Call.**
+
+- In a text line, a declared name followed directly by `(` is a call, up to the
+  matching `)`. The arguments are text, as with `!unquoted`: they are split on
+  the commas that are outside quotes and parentheses; a quoted argument is
+  passed without its quotes, a bare one as written, trimmed. Every argument is
+  a `str`.
+- `name=value` and `$name=value` are keyword arguments: `$tags="v1"` (the
+  form of C4) is passed as `tags="v1"`. Missing arguments take the default
+  values of the `def`; too many or unknown ones are a `TypeError` reported on
+  the line.
+- `!{...}` is interpolated first, so a Python value can be passed:
+  `color(!{name})`.
+- The call is replaced by what the function emits (`emit`, or the text lines of
+  its body), followed by `str()` of its return value when that is not `None`.
+  A function that returns a value behaves like `!define` (inline), one that
+  emits behaves like `!procedure` (lines). A text with several lines replaces
+  the call line by several lines.
+- The result is not scanned again for macros: the output of Python is never
+  sent back to a preprocessor (section 12). A macro that needs another one
+  calls it as a Python function.
+- A diagram that declares no macro pays nothing; otherwise each text line is
+  scanned for an identifier (or a `$` name) followed by `(`, looked up in a
+  table.
+
+**Known limits.**
+
+- As with `!define`, a macro name is replaced wherever it is followed by `(` in
+  a text line: with a macro `Contact`, the text `Contact(s)` of a note is a
+  call. Library authors choose names accordingly; a `$` name lowers the risk.
+- Macros are called from text lines only: not from directives, not from Python
+  code (which calls the function directly).
+
+**Open points** **[open]**: whether a call inside a quoted string of the text
+line is replaced (the legacy rule is to be checked and followed); the exact
+splitting rules compared with the legacy `!unquoted` (escaped quotes, nested
+parentheses, empty arguments); whether a macro may be called from the text
+lines of a legacy `!procedure`.
+
 ## 12. Order with the legacy preprocessor **[decided]**
 
 The **reduced preprocessor runs first, then text Python**.
@@ -996,8 +1107,8 @@ Linux.
 ## 14. Consequences of the interpreter on the integration
 
 - Only the subset of sections 3 to 6 is accepted. A diagram using a rejected
-  feature (`with`, `finally`, decorators, generators, `set`, special methods of
-  classes, ...) gets
+  feature (`with`, `finally`, `@property`, generators, `set`, special methods
+  of classes, ...) gets
   a `PySyntaxError` reported on its line.
 - 32-bit integers and the instruction counter are intentional deviations from
   CPython; the execution limit cannot be caught by the script.
@@ -1199,7 +1310,9 @@ reports are mapped to the diagram is the open point of section 9.
   replaced by a module, under which names, is not decided here.
 - **Calling a module function from a plain text line** (the way the legacy
   `!define`, `!function` and `!unquoted` are called from the text of a diagram)
-  is deferred. This chapter does not specify it.
+  goes through macros (section 11.5): a module declares its macros with
+  `@macro`, under the names of the legacy functions it replaces, and they are
+  declared in the diagram that imports it.
 
 ### 15.10 Out of scope
 
@@ -1207,9 +1320,8 @@ reports are mapped to the diagram is the open point of section 9.
 - `from ... import`, `as`, several names per statement, dotted names, packages,
   relative imports;
 - reloading, removing a module, `__name__ == "__main__"`, `__all__`;
-- decorators, and the parts of classes not in section 3.4 (special methods,
-  `super()`, multiple inheritance);
-- the replacement of the legacy `!define` and `!unquoted`;
+- the parts of classes not in section 3.4 (special methods, `super()`,
+  multiple inheritance) and the decorators rejected by section 3.5;
 - the conversion of the standard library and of the themes.
 
 ### 15.11 Testing requirements
@@ -1309,10 +1421,14 @@ Integration:
 - Whether `print` in text Python is an error, a log message, or an alias of
   `emit`. Current leaning: not an alias.
 - Shipped Python modules are specified in section 15. Its open points: the
-  configuration of a module before it loads (leaning: a class), `as` and several names in one
-  `import`, the engine flavor, the stability policy and the listing of modules,
-  the `!import` rule for a bare name without extension, a way to read legacy
-  variables, and calling a module function from a plain text line.
+  configuration of a module before it loads (leaning: a class), `as` and
+  several names in one `import`, the engine flavor, the stability policy and
+  the listing of modules, the `!import` rule for a bare name without
+  extension, and a way to read legacy variables.
+- Macros (section 11.5): the open points listed there. Implementation plan:
+  decorators first (done, section 3.5), then `@macro`, validated on a real part
+  of the standard library (a Python version of a few C4 procedures, whose
+  diagrams must stay identical).
 - Names of the engine entry points (`plantuml.render`, `plantuml.glob`, ...)
   and the exact set of `open` / `os` features. The modules `json`, `puml` and
   `plantuml` themselves are planned; the rest of the surface is not final.

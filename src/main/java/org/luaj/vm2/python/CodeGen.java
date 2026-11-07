@@ -341,6 +341,22 @@ final class CodeGen {
 		emit(Op.MAKE_FUNCTION, flags);
 	}
 
+	/** As CPython: the decorators are evaluated from top to bottom, before the def or the class. */
+	private void loadDecorators(Node n) {
+		for (Node d : n.nodes("decorator_list"))
+			expression(d);
+	}
+
+	/** ... and applied from bottom to top, once the function or the class exists. */
+	private void applyDecorators(Node n) {
+		List<Node> decorators = n.nodes("decorator_list");
+		for (int i = decorators.size() - 1; i >= 0; i--) {
+			at(decorators.get(i));
+			emit(Op.CALL, 1);
+		}
+		at(n);
+	}
+
 	/**
 	 * A class statement: the body is compiled as a function without parameters
 	 * that returns a dict of its locals; Builtins.BUILD_CLASS turns it into a
@@ -510,11 +526,15 @@ final class CodeGen {
 			emit(Op.RETURN);
 			break;
 		case "FunctionDef":
+			loadDecorators(n);
 			makeFunction(n, n.str("name"), n.node("args"));
+			applyDecorators(n);
 			storeName(n.str("name"));
 			break;
 		case "ClassDef":
+			loadDecorators(n);
 			classDef(n);
+			applyDecorators(n);
 			storeName(n.str("name"));
 			break;
 		case "Delete":
