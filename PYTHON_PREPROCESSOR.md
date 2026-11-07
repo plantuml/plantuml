@@ -61,8 +61,8 @@ difficult for TeaVM.
 
 - **A subset, not a dialect.** Every accepted program is valid Python 3 and
   gives the same result in CPython, except for the documented deviations
-  (section 6). What is hard or useless here is removed (classes, generators,
-  `finally`, ...), never changed.
+  (section 6). What is hard or useless here is removed (generators,
+  `finally`, the special methods of classes, ...), never changed.
 - **CPython is the oracle.** The reference output of a test script is the one
   CPython prints (section 9).
 - **Deterministic and bounded.** An instruction counter and a call depth limit
@@ -73,7 +73,8 @@ difficult for TeaVM.
 ## 3. The Python subset **[implemented]**
 
 All the rejections below are `PySyntaxError`s with an explicit message, raised
-by the parser (`PyParser`).
+by the parser (`PyParser`), or by the resolver for the restrictions on class
+bodies (section 3.4).
 
 ### 3.1 Statements
 
@@ -81,7 +82,8 @@ Accepted:
 
 - expression statements;
 - assignment: chained (`a = b = 1`), tuple/list unpacking, augmented
-  (`+=`, ...); targets are a name, `a[i]`, `a[i:j]` or a tuple/list of those;
+  (`+=`, ...); targets are a name, `a[i]`, `a[i:j]`, an attribute `a.x` or a
+  tuple/list of those;
 - `if` / `elif` / `else`;
 - `while` and `for ... in`, with `break`, `continue` and an `else` clause on
   loops;
@@ -89,9 +91,10 @@ Accepted:
 - `def`: positional and keyword parameters, defaults, keyword-only parameters,
   `*args`, `**kwargs`;
 - `return`;
+- `class`, with the restrictions of section 3.4;
 - `global`, `nonlocal`;
 - `assert`;
-- `del name`, `del a[i]` (and a comma-separated list of those);
+- `del name`, `del a[i]`, `del a.x` (and a comma-separated list of those);
 - `try` / `except` / `else`, and `raise` (including a bare `raise` inside an
   `except`);
 - `import module` for builtin modules only (today: `math`). An unknown module
@@ -106,12 +109,12 @@ hexadecimal, octal, binary, with underscores); list, tuple and dict displays;
 list and dict comprehensions; conditional expressions (`a if c else b`);
 `lambda`; `and`, `or`, `not`; chained comparisons; `in` / `not in`;
 `is` / `is not`; arithmetic and bitwise operators; slicing; calls with `*` and
-`**` unpacking and keyword arguments; attribute access on builtin values
-(method calls, `e.args`).
+`**` unpacking and keyword arguments; attribute access (method calls, `e.args`,
+attributes of instances and classes).
 
 ### 3.3 Rejected (syntax error)
 
-`class`, `finally`, `with`, `yield` and generators, `async` / `await`,
+`finally`, `with`, `yield` and generators, `async` / `await`,
 decorators, `from ... import`, `import` of user modules, `set` displays and set
 comprehensions (`{a, b}`), generator expressions (`f(x for x in y)`), `bytes`,
 complex numbers (`1j`), `...`, the walrus operator `:=`, `match`, `@` operator,
@@ -133,22 +136,69 @@ Other limits of the parser:
   `return` outside a function, `global` / `nonlocal` misuse, integer literals
   outside 32 bits. They are reported as `PySyntaxError` too.
 
+### 3.4 Classes
+
+A first level of class support, written so that every accepted program still
+behaves as in CPython.
+
+Accepted:
+
+- `class A:`, `class A():`, `class A(object):` and `class B(A):`, with **single
+  inheritance**. The base is `object`, a class of the program or an exception
+  class (`class MyError(ValueError):`), which gives user-defined exceptions;
+- `__init__`, methods, bound methods (`m = obj.f; m()`), `A.f(obj)`;
+- instance attributes (`self.x = 1`, `self.x += 1`, `del self.x`) and class
+  attributes, read through the instance or the class, and set on the class
+  (`A.count += 1`);
+- an explicit call to the base class: `Base.__init__(self, ...)`, including
+  `Exception.__init__(self, msg)` and `object.__init__(self)`;
+- private name mangling (`self.__x` is `self._A__x` inside class `A`);
+- classes nested in a class or defined in a function (with closures);
+- `type(x)`, `isinstance`, `callable`, `__name__`, `__qualname__`, raising and
+  catching instances or classes of user-defined exceptions.
+
+The body of a class only accepts straight-line statements: `def`, nested
+`class`, assignments (including augmented ones), expression statements
+(docstrings) and `pass`. `if`, loops, `try`, `del`, `global`, `import`,
+`return`, ... in a class body are syntax errors: every name the body binds is
+then bound when the body ends, which keeps the compilation simple (the body is
+compiled as a function that returns its locals as a dict).
+
+Rejected (syntax error):
+
+- special methods and attributes other than `__init__` (`__str__`, `__repr__`,
+  `__eq__`, `__lt__`, `__add__`, `__len__`, `__slots__`, ...): they are
+  rejected rather than silently ignored;
+- `super()`: call the base class explicitly instead, `Base.f(self, ...)`;
+- multiple inheritance, keyword arguments in the bases (`metaclass=`),
+  decorators (so no `@staticmethod`, `@classmethod`, `@property`);
+- a class attribute with the name of a variable of an enclosing function that
+  a method of the class uses (CPython resolves it with a special instruction;
+  rename one of them).
+
+At run time, subclassing a builtin type other than `object` and the exception
+classes (`class L(list):`) raises `TypeError`.
+
 ## 4. Values and builtins **[implemented]**
 
 ### 4.1 Types
 
-`NoneType`, `bool`, `int`, `float`, `str`, `list`, `tuple`, `dict`, `range`,
-`slice`, functions, builtin functions, bound methods, modules, and the dict
-views (`dict_keys`, `dict_values`, `dict_items`).
+`object`, `NoneType`, `bool`, `int`, `float`, `str`, `list`, `tuple`, `dict`,
+`range`, `slice`, functions, builtin functions, bound methods, modules, the dict
+views (`dict_keys`, `dict_values`, `dict_items`), and the classes of the program
+and their instances.
 
-The types `int`, `float`, `str`, `bool`, `list`, `tuple`, `dict`, `range` and
-the exception classes are values: they can be called, compared with `type(x)`
-and given to `isinstance`.
+The types `object`, `int`, `float`, `str`, `bool`, `list`, `tuple`, `dict`,
+`range`, the exception classes and the classes of the program are values: they
+can be called, compared with `type(x)` and given to `isinstance`. Every type
+derives from `object`.
 
 At run time the values are plain Java objects: `Integer`, `Double`, `Boolean`,
 `String`, a singleton for `None`, and small classes for list, tuple, dict, range,
-slice, views, functions and types. An iterator signals its end with a Java
-`null`.
+slice, views, functions and types. A class of the program is a `PyType` that
+carries a dict of attributes; its instances are `PyInstance` objects (or
+`PyException` objects for an exception class). An iterator signals its end
+with a Java `null`.
 
 - **Truthiness** is Python's: `0`, `0.0`, `""`, `[]`, `()`, `{}`, `None` and
   `False` are false.
@@ -169,7 +219,7 @@ slice, views, functions and types. An iterator signals its end with a Java
 
 `print len repr format abs min max sum sorted reversed enumerate zip map filter
 any all isinstance type round divmod pow ord chr hex oct bin callable`, plus the
-types used as constructors (`int float str bool list tuple dict range`).
+types used as constructors (`object int float str bool list tuple dict range`).
 
 `print` accepts `sep`, `end`, `flush`. `min` / `max` accept `key` and `default`.
 `sorted` accepts `key` and `reverse`.
@@ -215,8 +265,9 @@ BaseException
     └ ImportError ─ ModuleNotFoundError
 ```
 
-`str(e)` and `e.args` work. There are no user-defined exception classes (no
-`class`). Exceeding the call depth raises `RecursionError`, which can be caught.
+`str(e)` and `e.args` work. User-defined exception classes derive from one of
+these (section 3.4); as in CPython, the arguments of the call become `args`
+unless `__init__` calls `Exception.__init__(self, ...)` with others. Exceeding the call depth raises `RecursionError`, which can be caught.
 Running out of instructions raises `ExecutionLimitError`, which is *not* a
 Python exception: `except` (even a bare one) cannot catch it, so a `try` around
 an endless loop does not defeat the limit.
@@ -259,6 +310,11 @@ are not run under CPython.
 - `sum` of floats is a plain left-to-right sum (CPython 3.12+ compensates); the
   tests avoid cases where this shows.
 - `map`, `filter`, `zip`, `enumerate`, `reversed` may be eager.
+- The `repr` of an instance has no address: `<__main__.A object>` (CPython
+  prints `<__main__.A object at 0x...>`, which is not deterministic). The same
+  holds for bound methods.
+- Subclassing a builtin type other than `object` and the exception classes
+  raises `TypeError`.
 
 ## 7. Pipeline **[implemented]**
 
@@ -281,11 +337,17 @@ source -> PyLexer -> PyParser -> AST (Node) -> Resolver -> CodeGen -> Code -> In
   function is local (unless declared `global` / `nonlocal`); names bound at the
   top level are globals. A local used by an inner function becomes a *cell*;
   the inner function receives it as a *free* variable. Comprehensions and
-  lambdas are scopes of their own. It reports scope errors.
+  lambdas are scopes of their own. A class body is a scope too, but its names
+  are invisible to the functions nested in it (Python's rule). It reports scope
+  errors and enforces the restrictions on class bodies.
 - **`CodeGen`**: one `Code` per function. It tracks the stack depth of every
   instruction (so `maxStack` is exact and a mismatch is an internal error), and
   builds labels, a line table, a constant table and the exception table.
-  Unreachable statements emit nothing. `Code.disassemble()` lists the result.
+  Unreachable statements emit nothing. A class body is compiled as a function
+  without parameters that returns its locals as a dict; the class statement
+  calls a builtin that is not reachable by name, `__build_class__(body, name,
+  qualname[, base])`, with it. Private names are mangled here.
+  `Code.disassemble()` lists the result.
 - **`Interp`**: the loop; holds the globals, the builtins, the modules, the
   output sink and the limits. One `Interp` is one program state.
 
@@ -303,7 +365,7 @@ above it. Operands live on a stack; locals are slots of the frame; a Java
 | Group | Instructions |
 |---|---|
 | stack | `NOP POP DUP DUP2 ROT2 ROT3` |
-| variables | `LOAD_CONST LOAD_FAST STORE_FAST DELETE_FAST LOAD_CELL STORE_CELL DELETE_CELL LOAD_CLOSURE MAKE_CELL LOAD_GLOBAL STORE_GLOBAL DELETE_GLOBAL LOAD_ATTR` |
+| variables | `LOAD_CONST LOAD_FAST STORE_FAST DELETE_FAST LOAD_CELL STORE_CELL DELETE_CELL LOAD_CLOSURE MAKE_CELL LOAD_GLOBAL STORE_GLOBAL DELETE_GLOBAL LOAD_ATTR STORE_ATTR DELETE_ATTR` |
 | operators | `BINARY_OP` (operator `BIN_*` in the argument, `INPLACE` bit for `+=`), `UNARY_NEG UNARY_POS UNARY_INVERT UNARY_NOT`, `COMPARE_OP` (`CMP_*`), `IS_OP`, `CONTAINS_OP` |
 | containers | `GETITEM SETITEM DELITEM BUILD_SLICE BUILD_LIST BUILD_TUPLE BUILD_DICT BUILD_STRING LIST_APPEND LIST_EXTEND MAP_ADD DICT_ADD_KW DICT_MERGE_KW UNPACK` |
 | control | `JUMP JUMP_IF_FALSE JUMP_IF_TRUE JUMP_IF_FALSE_KEEP JUMP_IF_TRUE_KEEP GET_ITER FOR_ITER` |
@@ -382,7 +444,7 @@ An instruction limit has no line and is reported on the first line of its chunk.
   `expressions`, `strings`, `numbers`, `layout`) and the reference tree dumps
   (`*.ast`) made by CPython.
 - `src/test/java/org/luaj/vm2/python/`: `PyParserTest`, `PyScriptsTest`,
-  `PyUnitTest`.
+  `PyUnitTest`, `PyClassTest`.
 
 ### 10.2 What the tests do
 
@@ -400,6 +462,10 @@ An instruction limit has no line and is reported on the first line of its chunk.
 - **`PyUnitTest`** runs small programs on the runtime (lists, dicts, tuples,
   strings, numbers, builtins, comprehensions, closures) and compares with the
   output CPython gave.
+- **`PyClassTest`** checks what CPython cannot: the class constructs rejected
+  at compile time and the deviations of section 6. The behaviour shared with
+  CPython is in the scripts `language/classes.py`, `language/inheritance.py`
+  and `errors/classes.py`.
 
 Line endings are normalised to LF (`core.autocrlf`).
 
@@ -873,7 +939,8 @@ Linux.
 ## 14. Consequences of the interpreter on the integration
 
 - Only the subset of sections 3 to 6 is accepted. A diagram using a rejected
-  feature (`class`, `with`, `finally`, decorators, generators, `set`, ...) gets
+  feature (`with`, `finally`, decorators, generators, `set`, special methods of
+  classes, ...) gets
   a `PySyntaxError` reported on its line.
 - 32-bit integers and the instruction counter are intentional deviations from
   CPython; the execution limit cannot be caught by the script.
@@ -1118,6 +1185,12 @@ Interpreter:
   scripts (section 10).
 - Additional builtins and methods as needs appear; speed (caching of globals, a
   `LOAD_METHOD` instruction, less boxing).
+- Classes, next steps: the special methods (`__str__`, `__repr__`, `__eq__`,
+  `__lt__`, operators, ...). They need the `Interp` in `PyOps.repr`, `eq`,
+  `binary` and the comparisons, which are static today and cannot call Python
+  code. Then possibly `super()` (it needs the `__class__` cell),
+  `@staticmethod` / `@classmethod` / `@property`, and `getattr` / `setattr` /
+  `hasattr`.
 - Whether the `README.md` of the test resources and the leftovers of the Lua
   tests (naming of `errors/*libargs.py`) should be cleaned up.
 

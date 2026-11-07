@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-/** The names of one module, function, lambda or comprehension, and how each is stored. */
+/** The names of one module, function, lambda, comprehension or class body, and how each is stored. */
 final class Scope {
 	static final int MODULE = 0;
 	static final int FUNCTION = 1;
 	static final int COMPREHENSION = 2;
+	/** A class body: compiled like a function that returns its locals; invisible to the functions nested in it. */
+	static final int CLASS = 3;
 
 	// symbol flags
 	static final int BOUND = 1;

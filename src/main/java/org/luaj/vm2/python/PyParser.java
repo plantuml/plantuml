@@ -156,6 +156,8 @@ public final class PyParser {
 				out.add(defStatement());
 				return;
 			case "class":
+				out.add(classStatement());
+				return;
 			case "with":
 			case "async":
 				throw error("'" + t.text + "' is not supported");
@@ -289,6 +291,27 @@ public final class PyParser {
 		List<Node> body = block();
 		return n("FunctionDef", t, "name", name, "args", args, "body", body, "decorator_list",
 				new ArrayList<Node>(), "returns", null);
+	}
+
+	private Node classStatement() {
+		Token t = next();
+		String name = expectName();
+		List<Node> bases = new ArrayList<Node>();
+		if (acceptOp("(")) {
+			while (isOp(")") == false) {
+				if (isOp("*") || isOp("**"))
+					throw error("starred class bases are not supported");
+				bases.add(test());
+				if (isOp("="))
+					throw error("class keyword arguments are not supported");
+				if (acceptOp(",") == false)
+					break;
+			}
+			expectOp(")");
+		}
+		List<Node> body = block();
+		return n("ClassDef", t, "name", name, "bases", bases, "keywords", new ArrayList<Node>(), "body", body,
+				"decorator_list", new ArrayList<Node>());
 	}
 
 	/** Parameters of a def or lambda, up to (not including) the closing token. */
@@ -968,7 +991,6 @@ public final class PyParser {
 		switch (t.text) {
 		case "yield":
 		case "await":
-		case "class":
 		case "with":
 		case "async":
 			return error("'" + t.text + "' is not supported");

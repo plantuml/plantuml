@@ -59,6 +59,8 @@ final class CodeGen {
 	private final List<Loop> loops = new ArrayList<Loop>();
 	private final List<Integer> handlerTemps = new ArrayList<Integer>();
 	private Code result;
+	/** The innermost class around this code, for the mangling of private names; null outside classes. */
+	private String className;
 
 	private CodeGen(Scope scope, String name, String filename) {
 		this.scope = scope;
@@ -329,6 +331,7 @@ final class CodeGen {
 			flags |= 4;
 		}
 		CodeGen g = new CodeGen(child, fname, filename);
+		g.className = className;
 		g.line = n.line;
 		if (n.is("ListComp") || n.is("DictComp"))
 			g.genComprehension(n);
@@ -336,6 +339,81 @@ final class CodeGen {
 			g.genFunctionBody(n);
 		loadConst(g.finish());
 		emit(Op.MAKE_FUNCTION, flags);
+	}
+
+	/**
+	 * A class statement: the body is compiled as a function without parameters
+	 * that returns a dict of its locals; Builtins.BUILD_CLASS turns it into a
+	 * class: BUILD_CLASS(body, name, qualname, *bases).
+	 */
+	private void classDef(Node n) {
+		List<Node> bases = n.nodes("bases");
+		if (bases.size() > 1)
+			throw error("multiple inheritance is not supported", n);
+		Scope child = (Scope) n.info;
+		loadConst(Builtins.BUILD_CLASS);
+		int flags = 0;
+		if (child.freeNames.isEmpty() == false) {
+			for (String f : child.freeNames)
+				emit(Op.LOAD_CLOSURE, scope.slotOf(f));
+			emit(Op.BUILD_TUPLE, child.freeNames.size());
+			flags |= 4;
+		}
+		CodeGen g = new CodeGen(child, n.str("name"), filename);
+		g.className = n.str("name");
+		g.line = n.line;
+		g.genClassBody(n);
+		loadConst(g.finish());
+		emit(Op.MAKE_FUNCTION, flags);
+		loadConst(n.str("name"));
+		loadConst(qualname(child));
+		for (Node b : bases)
+			expression(b);
+		at(n);
+		emit(Op.CALL, 3 + bases.size());
+	}
+
+	private void genClassBody(Node n) {
+		statements(n.nodes("body"));
+		// the resolver only accepts straight-line statements: every local is bound here
+		int count = 0;
+		for (int i = 0; i < scope.firstFree; i++) {
+			String local = scope.slotNames.get(i);
+			loadConst(mangle(local));
+			emit(Op.LOAD_FAST, i);
+			count++;
+		}
+		emit(Op.BUILD_DICT, count);
+		emit(Op.RETURN);
+	}
+
+	/**
+	 * CPython's private name mangling: inside a class A, the attribute
+	 * {@code __x} (two leading underscores, not two trailing ones) is
+	 * {@code _A__x}. Applied to attribute names and to the names bound by a
+	 * class body; local variables need no mangling, they are not observable.
+	 */
+	private String mangle(String n) {
+		if (className == null || n.startsWith("__") == false || n.endsWith("__"))
+			return n;
+		int i = 0;
+		while (i < className.length() && className.charAt(i) == '_')
+			i++;
+		if (i == className.length())
+			return n;
+		return "_" + className.substring(i) + n;
+	}
+
+	/** CPython's __qualname__: the enclosing classes and functions, "f.<locals>.A". */
+	private static String qualname(Scope s) {
+		StringBuilder sb = new StringBuilder(s.name);
+		for (Scope p = s.parent; p != null && p.kind != Scope.MODULE; p = p.parent) {
+			if (p.kind == Scope.CLASS)
+				sb.insert(0, p.name + ".");
+			else
+				sb.insert(0, p.name + ".<locals>.");
+		}
+		return sb.toString();
 	}
 
 	private Code finish() {
@@ -435,6 +513,10 @@ final class CodeGen {
 			makeFunction(n, n.str("name"), n.node("args"));
 			storeName(n.str("name"));
 			break;
+		case "ClassDef":
+			classDef(n);
+			storeName(n.str("name"));
+			break;
 		case "Delete":
 			for (Node t : n.nodes("targets"))
 				delete(t);
@@ -503,7 +585,10 @@ final class CodeGen {
 			break;
 		}
 		case "Attribute":
-			throw error("attribute assignment is not supported", t);
+			expression(t.node("value"));
+			at(t);
+			emit(Op.STORE_ATTR, name(mangle(t.str("attr"))));
+			break;
 		default:
 			throw error("cannot assign to " + t.type, t);
 		}
@@ -524,6 +609,11 @@ final class CodeGen {
 		case "List":
 			for (Node e : t.nodes("elts"))
 				delete(e);
+			break;
+		case "Attribute":
+			expression(t.node("value"));
+			at(t);
+			emit(Op.DELETE_ATTR, name(mangle(t.str("attr"))));
 			break;
 		default:
 			throw error("cannot delete " + t.type, t);
@@ -585,7 +675,17 @@ final class CodeGen {
 			emit(Op.SETITEM);
 			break;
 		case "Attribute":
-			throw error("attribute assignment is not supported", t);
+			expression(t.node("value"));
+			emit(Op.DUP);
+			at(t);
+			emit(Op.LOAD_ATTR, name(mangle(t.str("attr"))));
+			expression(n.node("value"));
+			at(n);
+			emit(Op.BINARY_OP, op);
+			emit(Op.ROT2);
+			at(t);
+			emit(Op.STORE_ATTR, name(mangle(t.str("attr"))));
+			break;
 		default:
 			throw error("illegal target for augmented assignment", t);
 		}
@@ -806,7 +906,7 @@ final class CodeGen {
 		case "Attribute":
 			expression(e.node("value"));
 			at(e);
-			emit(Op.LOAD_ATTR, name(e.str("attr")));
+			emit(Op.LOAD_ATTR, name(mangle(e.str("attr"))));
 			break;
 		case "Subscript":
 			expression(e.node("value"));

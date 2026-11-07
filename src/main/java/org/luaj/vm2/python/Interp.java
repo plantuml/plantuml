@@ -104,6 +104,12 @@ public final class Interp {
 	Object callGeneric(Object fn, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
 		if (fn instanceof PyFunction)
 			return invoke((PyFunction) fn, src, off, n, kwn, kwv);
+		if (fn instanceof BoundMethod && ((BoundMethod) fn).function != null) {
+			BoundMethod m = (BoundMethod) fn;
+			return invoke(m.function, withSelf(m.self, src, off, n), 0, n + 1, kwn, kwv);
+		}
+		if (fn instanceof PyType && ((PyType) fn).isClass())
+			return instantiate((PyType) fn, src, off, n, kwn, kwv);
 		Builtin b;
 		Object[] args;
 		if (fn instanceof Builtin) {
@@ -136,6 +142,42 @@ public final class Interp {
 			r = b.callKw(this, args, kw);
 		}
 		return r == null ? PyNone.NONE : r;
+	}
+
+	private static Object[] withSelf(Object self, Object[] src, int off, int n) {
+		Object[] args = new Object[n + 1];
+		args[0] = self;
+		System.arraycopy(src, off, args, 1, n);
+		return args;
+	}
+
+	/** Calls a class of the program: creates the instance, then runs __init__ on it. */
+	private Object instantiate(PyType t, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
+		Object self;
+		if (t.exception) {
+			// as BaseException.__new__ does, the arguments of the call are the args of the exception
+			Object[] args = new Object[n];
+			System.arraycopy(src, off, args, 0, n);
+			self = new PyException(t, args);
+		} else {
+			self = new PyInstance(t);
+		}
+		Object init = t.lookup("__init__");
+		if (init instanceof PyFunction) {
+			Object r = invoke((PyFunction) init, withSelf(self, src, off, n), 0, n + 1, kwn, kwv);
+			if (r != PyNone.NONE)
+				throw PyOps.err(Types.TYPE_ERROR, "__init__() should return None, not '" + PyOps.typeName(r) + "'");
+		} else if (init == null || init == Builtins.OBJECT_INIT) {
+			if (n > 0 || (kwn != null && kwn.length > 0))
+				throw PyOps.err(Types.TYPE_ERROR, t.name + "() takes no arguments");
+		} else {
+			// BaseException.__init__: the args are already set
+			if (kwn != null && kwn.length > 0)
+				throw PyOps.err(Types.TYPE_ERROR, t.name + "() takes no keyword arguments");
+			if (init != Builtins.EXCEPTION_INIT)
+				throw PyOps.err(Types.TYPE_ERROR, "__init__ of class '" + t.name + "' must be a function");
+		}
+		return self;
 	}
 
 	private Object invoke(PyFunction fn, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
@@ -305,8 +347,12 @@ public final class Interp {
 	private PyError toRaise(Object v) {
 		if (v instanceof PyException)
 			return new PyError((PyException) v);
-		if (v instanceof PyType && ((PyType) v).exception)
-			return new PyError(new PyException((PyType) v, new Object[0]));
+		if (v instanceof PyType && ((PyType) v).exception) {
+			PyType t = (PyType) v;
+			if (t.isClass())
+				return toRaise(instantiate(t, new Object[0], 0, 0, null, null));
+			return new PyError(new PyException(t, new Object[0]));
+		}
 		return PyOps.err(Types.TYPE_ERROR, "exceptions must derive from BaseException");
 	}
 
@@ -416,6 +462,15 @@ public final class Interp {
 						break;
 					case Op.LOAD_ATTR:
 						f[sp - 1] = PyOps.getattr(f[sp - 1], names[arg]);
+						break;
+					case Op.STORE_ATTR:
+						PyOps.setattr(f[sp - 1], names[arg], f[sp - 2]);
+						f[--sp] = null;
+						f[--sp] = null;
+						break;
+					case Op.DELETE_ATTR:
+						PyOps.delattr(f[sp - 1], names[arg]);
+						f[--sp] = null;
 						break;
 					case Op.BINARY_OP: {
 						Object b = f[--sp];
@@ -656,6 +711,10 @@ public final class Interp {
 						Object r;
 						if (fn instanceof PyFunction) {
 							r = invoke((PyFunction) fn, f, base, arg, null, null);
+						} else if (fn instanceof BoundMethod && ((BoundMethod) fn).function != null) {
+							// the slot of the callee receives self: no copy of the arguments
+							f[base - 1] = ((BoundMethod) fn).self;
+							r = invoke(((BoundMethod) fn).function, f, base - 1, arg + 1, null, null);
 						} else {
 							r = callGeneric(fn, f, base, arg, null, null);
 						}

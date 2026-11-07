@@ -3,6 +3,7 @@ package org.luaj.vm2.python;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /** The builtin functions, types and exception classes. */
@@ -24,6 +25,46 @@ final class Builtins {
 	}
 
 	private static final ArrayList<Builtin> FUNCTIONS = new ArrayList<Builtin>();
+
+	// ------------------------------------------------------------ classes
+
+	/**
+	 * Called by the code of a class statement (never through a name):
+	 * BUILD_CLASS(body, name, qualname[, base]). The body is a function that
+	 * returns the dict of the attributes.
+	 */
+	static final Builtin BUILD_CLASS = new Builtin("__build_class__", (in, a) -> {
+		PyType parent = Types.OBJECT;
+		if (a.length > 3) {
+			if (a[3] instanceof PyType == false)
+				throw PyOps.err(Types.TYPE_ERROR, "a class base must be a class, not '" + PyOps.typeName(a[3]) + "'");
+			parent = (PyType) a[3];
+			if (parent.isClass() == false && parent.exception == false && parent != Types.OBJECT)
+				throw PyOps.err(Types.TYPE_ERROR, "subclassing the builtin type '" + parent.name + "' is not supported");
+		}
+		PyDict body = (PyDict) in.call(a[0]);
+		Map<String, Object> dict = new LinkedHashMap<String, Object>();
+		for (PyDict.Entry e : body.map.values())
+			dict.put((String) e.key, e.value);
+		return new PyType((String) a[1], parent, parent.exception, dict, (String) a[2]);
+	});
+
+	/** BaseException.__init__(self, *args), for a class that calls it explicitly. */
+	static final Builtin EXCEPTION_INIT = new Builtin("__init__", (in, a) -> {
+		if (a.length == 0 || a[0] instanceof PyException == false)
+			throw PyOps.err(Types.TYPE_ERROR, "descriptor '__init__' requires an exception object");
+		Object[] args = new Object[a.length - 1];
+		System.arraycopy(a, 1, args, 0, args.length);
+		((PyException) a[0]).args = args;
+		return PyNone.NONE;
+	});
+
+	/** object.__init__(self). */
+	static final Builtin OBJECT_INIT = new Builtin("__init__", (in, a) -> {
+		if (a.length != 1)
+			throw PyOps.err(Types.TYPE_ERROR, "object.__init__() takes exactly one argument (the instance to initialize)");
+		return PyNone.NONE;
+	});
 
 	private static void fn(String name, Builtin.Fn f) {
 		FUNCTIONS.add(new Builtin(name, f));
@@ -348,6 +389,10 @@ final class Builtins {
 		});
 		Types.DICT.ctor = new Builtin("dict", (in, a) -> makeDict(in, a, null), (in, a, kw) -> makeDict(in, a, kw));
 		Types.RANGE.ctor = new Builtin("range", (in, a) -> makeRange(a));
+		Types.OBJECT.ctor = new Builtin("object", (in, a) -> {
+			count("object", a, 0, 0);
+			return new PyInstance(Types.OBJECT);
+		});
 		for (final PyType t : Types.ALL) {
 			if (t.exception)
 				t.ctor = new Builtin(t.name, (in, a) -> new PyException(t, a));
@@ -545,7 +590,7 @@ final class Builtins {
 			count("callable", a, 1, 1);
 			Object x = a[0];
 			return Boolean.valueOf(x instanceof PyFunction || x instanceof Builtin || x instanceof BoundMethod
-					|| (x instanceof PyType && ((PyType) x).ctor != null));
+					|| (x instanceof PyType && (((PyType) x).ctor != null || ((PyType) x).isClass())));
 		});
 	}
 
