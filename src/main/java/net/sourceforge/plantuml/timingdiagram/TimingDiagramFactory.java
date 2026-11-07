@@ -89,7 +89,7 @@ public class TimingDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandFootboxIgnored());
 		cmds.add(new CommandRobustConcise());
 		cmds.add(new CommandClock());
-		cmds.add(new CommandAnalog());
+		//cmds.add(new CommandAnalog());
 		cmds.add(new CommandAnalogDigital());
 		cmds.add(new CommandBinary());
 		cmds.add(new CommandDefineStateShort());

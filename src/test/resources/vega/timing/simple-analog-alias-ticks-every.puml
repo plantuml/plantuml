@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (Timing Diagram)
+---
+@startuml
+analog  "Analog"  as A
+A ticks every 1
+
+@0
+A is 0
+
+@100
+A is 3
+
+@300
+A is 1
+@enduml

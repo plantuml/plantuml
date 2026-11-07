@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (Timing Diagram)
+---
+@startuml
+digital "Digital" as D
+D ticks every 1
+
+@0
+D is 0
+
+@100
+D is 3
+
+@300
+D is 1
+@enduml
