@@ -126,8 +126,8 @@ public class SequenceDiagram extends TitledDiagram {
 	public Participant getOrCreateParticipant(LineLocation location, String code, Display display) {
 		Participant result = participantsget(code);
 		if (result == null) {
-			result = new Participant(location, ParticipantType.PARTICIPANT, code, display, hiddenPortions, 0,
-					getSkinParam().getCurrentStyleBuilder(), createUid());
+			result = new Participant(location, ParticipantType.PARTICIPANT, code, display, hiddenPortions,
+					stereotypeVisibility, 0, getSkinParam().getCurrentStyleBuilder(), createUid());
 			addWithOrder(result);
 			participantEnglobers2.put(result, participantEnglober);
 		}
@@ -168,8 +168,8 @@ public class SequenceDiagram extends TitledDiagram {
 			display = Display.getWithNewlines(getPragma(), code);
 		}
 
-		final Participant result = new Participant(location, type, code, display, hiddenPortions, order,
-				getSkinParam().getCurrentStyleBuilder(), createUid());
+		final Participant result = new Participant(location, type, code, display, hiddenPortions,
+				stereotypeVisibility, order, getSkinParam().getCurrentStyleBuilder(), createUid());
 		addWithOrder(result);
 		participantEnglobers2.put(result, participantEnglober);
 		return result;
@@ -604,6 +604,7 @@ public class SequenceDiagram extends TitledDiagram {
 	}
 
 	private final Set<EntityPortion> hiddenPortions = EnumSet.<EntityPortion>noneOf(EntityPortion.class);
+	private final StereotypeVisibility stereotypeVisibility = new StereotypeVisibility();
 
 	public void hideOrShow(Set<EntityPortion> portions, boolean show) {
 		if (show)
@@ -611,6 +612,10 @@ public class SequenceDiagram extends TitledDiagram {
 		else
 			hiddenPortions.addAll(portions);
 
+	}
+
+	public void hideOrShowStereotype(String gender, boolean show) {
+		stereotypeVisibility.add(gender, show);
 	}
 
 	public Display manageVariable(Display labels) {
