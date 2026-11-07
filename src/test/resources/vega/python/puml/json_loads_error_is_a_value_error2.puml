@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title caught Expecting property name enclosed in double quotes: char 1
+!try:
+!    json.loads("{bad")
+!except ValueError as e:
+    title caught ${e}
+@enduml

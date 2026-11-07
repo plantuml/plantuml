@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title it's
+!python
+t = 'it' "'s"
+!endpy
+title ${t}
+@enduml

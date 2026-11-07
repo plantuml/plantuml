@@ -1,0 +1,21 @@
+---
+output: preproc, svg
+---
+@startuml
+!x = 1
+!x += 2
+!l = [1, 2]
+!l[0] = 5
+!if x == 3:
+    title python if ${l[0]}
+!else:
+    title never
+!$y = 7
+!if $y == 7
+title legacy if $y
+!endif
+!$z ?= 4
+title %get_variable_value("$z")
+!x = 1
+title x=${x == 1}
+@enduml

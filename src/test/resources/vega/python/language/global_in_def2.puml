@@ -1,0 +1,14 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title 2
+!count = 0
+!def inc():
+!    global count
+!    count += 1
+!inc()
+!inc()
+title ${count}
+@enduml

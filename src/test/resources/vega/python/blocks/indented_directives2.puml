@@ -1,0 +1,8 @@
+@startuml
+' EXPECT (preproc):
+' title ok
+  !python
+  t = "ok"
+  !endpy
+title ${t}
+@enduml

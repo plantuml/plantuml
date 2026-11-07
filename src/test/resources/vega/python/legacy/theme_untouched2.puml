@@ -1,0 +1,7 @@
+@startuml
+' EXPECT (preproc):
+' participant A
+!theme plain
+!name = "A"
+participant ${name}
+@enduml

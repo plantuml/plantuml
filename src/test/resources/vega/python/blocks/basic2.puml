@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant A
+' participant B
+!python
+names = ["A", "B"]
+!endpy
+!for n in names:
+    participant ${n}
+@enduml
