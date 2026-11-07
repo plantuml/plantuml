@@ -882,7 +882,7 @@ public class ChartRenderer {
 <span class="fc bfc" id="L882" title="All 2 branches covered.">				if (s.getType() == ChartSeries.SeriesType.LINE) {</span>
 <span class="fc" id="L883">					final LineRenderer lineRenderer = new LineRenderer(skinParam, plotWidth, plotHeight,</span>
 <span class="fc" id="L884">							xAxisLabels.size(), axis, xAxis);</span>
-<span class="fc" id="L885">					lineRenderer.draw(ug, s, color);</span>
+<span class="fc" id="L885">					lineRenderer.draw(ug, s, color, seriesStyle.value(PName.LineThickness).asDouble());</span>
 <span class="pc bpc" id="L886" title="1 of 2 branches missed.">				} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {</span>
 <span class="fc" id="L887">					final ScatterRenderer scatterRenderer = new ScatterRenderer(skinParam, plotWidth, plotHeight,</span>
 <span class="fc" id="L888">							xAxisLabels.size(), axis, xAxis);</span>
@@ -985,20 +985,20 @@ public class ChartRenderer {
 
 	private Style getLineStyle(ChartSeries series) {
 <span class="fc" id="L987">		StyleQuery query = getLineStyleQuery();</span>
-<span class="pc bpc" id="L988" title="1 of 2 branches missed.">		if (series.getStereotype() != null) {</span>
+<span class="fc bfc" id="L988" title="All 2 branches covered.">		if (series.getStereotype() != null) {</span>
 			// Use withTOBECHANGED for element-level stereotype styling
-<span class="nc" id="L990">			Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L991">					.getMergedStyle(query.withStereotype(series.getStereotype()));</span>
+<span class="fc" id="L990">			Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L991">					.getMergedStyle(query.withStereotype(series.getStereotype()));</span>
 
 			// Use forStereotypeItself for CSS class selector styling (e.g., line.target)
-<span class="nc" id="L994">			Style stereoStyle = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L995">					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));</span>
+<span class="fc" id="L994">			Style stereoStyle = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L995">					.getMergedStyle(query.forStereotypeItself(series.getStereotype()));</span>
 
 			// Merge with stereo style overwriting existing values
-<span class="nc bnc" id="L998" title="All 2 branches missed.">			if (style != null)</span>
-<span class="nc" id="L999">				stereoStyle = style.mergeWith(stereoStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="pc bpc" id="L998" title="1 of 2 branches missed.">			if (style != null)</span>
+<span class="fc" id="L999">				stereoStyle = style.mergeWith(stereoStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
 
-<span class="nc" id="L1001">			return stereoStyle;</span>
+<span class="fc" id="L1001">			return stereoStyle;</span>
 		}
 <span class="fc" id="L1003">		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);</span>
 	}
