@@ -45,8 +45,6 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.klimt.awt.XColor;
-import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -56,10 +54,12 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLatex extends DirectOsDiagram implements FormulaDiagram {
 
-<span class="fc" id="L59">	private String latex = &quot;&quot;;</span>
-<span class="fc" id="L60">	private float scale = 1;</span>
-<span class="fc" id="L61">	private XColor color = XColor.BLACK;</span>
-<span class="fc" id="L62">	private XColor backColor = XColor.WHITE;</span>
+<span class="fc" id="L57">	private String latex = &quot;&quot;;</span>
+<span class="fc" id="L58">	private float scale = 1;</span>
+	// The defaults have a dark variant (dark mode: white formula on a black box). A color given with
+	// &quot;color&quot; or &quot;backgroundcolor&quot; is used as is, in both modes.
+<span class="fc" id="L61">	private HColor color = HColors.BLACK.withDark(HColors.WHITE);</span>
+<span class="fc" id="L62">	private HColor backColor = HColors.WHITE.withDark(HColors.BLACK);</span>
 
 	public PSystemLatex(UmlSource source, PreprocessingArtifact preprocessing) {
 <span class="fc" id="L65">		super(source, preprocessing);</span>
@@ -77,11 +77,11 @@ public class PSystemLatex extends DirectOsDiagram implements FormulaDiagram {
 	}
 
 	public TextBlock getFormulaBlock() {
-<span class="nc" id="L80">		return ScientificEquationSafe.fromLatex(latex).getTextBlock(HColors.simple(color), getFormulaBackground());</span>
+<span class="nc" id="L80">		return ScientificEquationSafe.fromLatex(latex).getTextBlock(color, getFormulaBackground());</span>
 	}
 
 	public HColor getFormulaBackground() {
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		return backColor == null ? null : HColors.simple(backColor);</span>
+<span class="nc" id="L84">		return backColor;</span>
 	}
 
 	public double getFormulaScale() {
@@ -93,12 +93,12 @@ public class PSystemLatex extends DirectOsDiagram implements FormulaDiagram {
 <span class="fc" id="L93">		final String colorParam = &quot;color &quot;;</span>
 <span class="fc" id="L94">		final String backParam = &quot;backgroundcolor &quot;;</span>
 <span class="fc bfc" id="L95" title="All 2 branches covered.">		if (lineLower.startsWith(colorParam)) {</span>
-<span class="fc" id="L96">			final XColor col3 = getColor(line.substring(colorParam.length()));</span>
+<span class="fc" id="L96">			final HColor col3 = getColor(line.substring(colorParam.length()));</span>
 <span class="pc bpc" id="L97" title="1 of 2 branches missed.">			if (col3 != null) {</span>
 <span class="fc" id="L98">				color = col3;</span>
 			}
 <span class="fc bfc" id="L100" title="All 2 branches covered.">		} else if (lineLower.startsWith(backParam)) {</span>
-<span class="fc" id="L101">			final XColor col3 = getColor(line.substring(backParam.length()));</span>
+<span class="fc" id="L101">			final HColor col3 = getColor(line.substring(backParam.length()));</span>
 <span class="pc bpc" id="L102" title="1 of 2 branches missed.">			if (col3 != null) {</span>
 <span class="fc" id="L103">				backColor = col3;</span>
 			}
@@ -127,10 +127,8 @@ public class PSystemLatex extends DirectOsDiagram implements FormulaDiagram {
 		}
 <span class="fc" id="L128">	}</span>
 
-	private XColor getColor(final String col) {
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		final HColor col2 = col == null ? null : HColorSet.instance().getColorOrWhite(col);</span>
-<span class="fc" id="L132">		final XColor col3 = col2.toColor(ColorMapper.IDENTITY);</span>
-<span class="fc" id="L133">		return col3;</span>
+	private HColor getColor(final String col) {
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		return col == null ? null : HColorSet.instance().getColorOrWhite(col);</span>
 	}
 
 }

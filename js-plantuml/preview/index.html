@@ -38,6 +38,12 @@
 
 	<script src="../vendor/fflate-0.8.2.min.js"></script>
 	<script>window.PLANTUML_DEBUG = true; // demo: show timings in #status and in the console</script>
+	<script>
+		// Lazy support scripts (jlatexmath.js for @startmath/@startlatex, themes.js, emoji.js, openiconic.js,
+		// stdlib bundles) are requested by a URL relative to this document, i.e. under preview/, where they do
+		// not exist: formulas stayed as text and !theme failed. They sit next to plantuml.js, one level up.
+		window.PLANTUML_STDLIB_BASE = "../";
+	</script>
 	<script src="../viz-global.js"></script>
 	<script type="module" src="main.js"></script>
 </body>
