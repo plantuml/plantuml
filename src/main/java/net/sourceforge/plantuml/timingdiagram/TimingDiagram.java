@@ -338,12 +338,6 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 		return player;
 	}
 
-	public PlayerAnalog createPlayerAnalog(String code, String full, boolean compact, Stereotype stereotype) {
-		final PlayerAnalog player = new PlayerAnalog(full, getSkinParam(), ruler, compactByDefault, stereotype);
-		players.put(code, player);
-		return player;
-	}
-
 	public Player createPlayerBinary(String code, String full, boolean compact, Stereotype stereotype) {
 		final Player player = new PlayerBinary(full, getSkinParam(), ruler, compactByDefault, stereotype);
 		players.put(code, player);
