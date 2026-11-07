@@ -84,6 +84,8 @@ public final class Code {
 			case Op.STORE_GLOBAL:
 			case Op.DELETE_GLOBAL:
 			case Op.LOAD_ATTR:
+			case Op.STORE_ATTR:
+			case Op.DELETE_ATTR:
 			case Op.IMPORT:
 				sb.append("  (").append(names[arg]).append(')');
 				break;
@@ -115,6 +117,8 @@ public final class Code {
 			return "<code " + ((Code) c).name + ">";
 		if (c instanceof String)
 			return "'" + c + "'";
+		if (c instanceof Builtin)
+			return "<built-in function " + ((Builtin) c).name + ">";
 		return String.valueOf(c);
 	}
 }

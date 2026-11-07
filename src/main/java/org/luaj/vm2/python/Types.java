@@ -5,27 +5,29 @@ final class Types {
 	private Types() {
 	}
 
-	static final PyType NONE_TYPE = new PyType("NoneType", null, false);
-	static final PyType INT = new PyType("int", null, false);
+	/** The root of every type, so that isinstance(x, object) is true and a class may name it as its base. */
+	static final PyType OBJECT = new PyType("object", null, false);
+	static final PyType NONE_TYPE = new PyType("NoneType", OBJECT, false);
+	static final PyType INT = new PyType("int", OBJECT, false);
 	static final PyType BOOL = new PyType("bool", INT, false);
-	static final PyType FLOAT = new PyType("float", null, false);
-	static final PyType STR = new PyType("str", null, false);
-	static final PyType LIST = new PyType("list", null, false);
-	static final PyType TUPLE = new PyType("tuple", null, false);
-	static final PyType DICT = new PyType("dict", null, false);
-	static final PyType RANGE = new PyType("range", null, false);
-	static final PyType SLICE = new PyType("slice", null, false);
-	static final PyType FUNCTION = new PyType("function", null, false);
-	static final PyType BUILTIN = new PyType("builtin_function_or_method", null, false);
-	static final PyType METHOD = new PyType("method", null, false);
-	static final PyType MODULE = new PyType("module", null, false);
-	static final PyType TYPE = new PyType("type", null, false);
-	static final PyType DICT_KEYS = new PyType("dict_keys", null, false);
-	static final PyType DICT_VALUES = new PyType("dict_values", null, false);
-	static final PyType DICT_ITEMS = new PyType("dict_items", null, false);
-	static final PyType ITERATOR = new PyType("iterator", null, false);
+	static final PyType FLOAT = new PyType("float", OBJECT, false);
+	static final PyType STR = new PyType("str", OBJECT, false);
+	static final PyType LIST = new PyType("list", OBJECT, false);
+	static final PyType TUPLE = new PyType("tuple", OBJECT, false);
+	static final PyType DICT = new PyType("dict", OBJECT, false);
+	static final PyType RANGE = new PyType("range", OBJECT, false);
+	static final PyType SLICE = new PyType("slice", OBJECT, false);
+	static final PyType FUNCTION = new PyType("function", OBJECT, false);
+	static final PyType BUILTIN = new PyType("builtin_function_or_method", OBJECT, false);
+	static final PyType METHOD = new PyType("method", OBJECT, false);
+	static final PyType MODULE = new PyType("module", OBJECT, false);
+	static final PyType TYPE = new PyType("type", OBJECT, false);
+	static final PyType DICT_KEYS = new PyType("dict_keys", OBJECT, false);
+	static final PyType DICT_VALUES = new PyType("dict_values", OBJECT, false);
+	static final PyType DICT_ITEMS = new PyType("dict_items", OBJECT, false);
+	static final PyType ITERATOR = new PyType("iterator", OBJECT, false);
 
-	static final PyType BASE_EXCEPTION = new PyType("BaseException", null, true);
+	static final PyType BASE_EXCEPTION = new PyType("BaseException", OBJECT, true);
 	static final PyType EXCEPTION = new PyType("Exception", BASE_EXCEPTION, true);
 	static final PyType ARITHMETIC_ERROR = new PyType("ArithmeticError", EXCEPTION, true);
 	static final PyType ZERO_DIVISION = new PyType("ZeroDivisionError", ARITHMETIC_ERROR, true);
@@ -46,8 +48,8 @@ final class Types {
 	static final PyType IMPORT_ERROR = new PyType("ImportError", EXCEPTION, true);
 	static final PyType MODULE_NOT_FOUND = new PyType("ModuleNotFoundError", IMPORT_ERROR, true);
 
-	static final PyType[] ALL = { NONE_TYPE, INT, BOOL, FLOAT, STR, LIST, TUPLE, DICT, RANGE, BASE_EXCEPTION, EXCEPTION,
-			ARITHMETIC_ERROR, ZERO_DIVISION, OVERFLOW, LOOKUP_ERROR, KEY_ERROR, INDEX_ERROR, VALUE_ERROR, TYPE_ERROR,
-			ASSERTION_ERROR, ATTRIBUTE_ERROR, NAME_ERROR, UNBOUND_LOCAL, RUNTIME_ERROR, RECURSION_ERROR,
+	static final PyType[] ALL = { OBJECT, NONE_TYPE, INT, BOOL, FLOAT, STR, LIST, TUPLE, DICT, RANGE, BASE_EXCEPTION,
+			EXCEPTION, ARITHMETIC_ERROR, ZERO_DIVISION, OVERFLOW, LOOKUP_ERROR, KEY_ERROR, INDEX_ERROR, VALUE_ERROR,
+			TYPE_ERROR, ASSERTION_ERROR, ATTRIBUTE_ERROR, NAME_ERROR, UNBOUND_LOCAL, RUNTIME_ERROR, RECURSION_ERROR,
 			NOT_IMPLEMENTED, MEMORY_ERROR, IMPORT_ERROR, MODULE_NOT_FOUND };
 }

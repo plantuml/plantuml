@@ -31,7 +31,8 @@ import org.junit.jupiter.api.TestFactory;
  */
 class PyParserTest {
 
-	private static final String[] SYNTAX_FILES = { "statements", "expressions", "strings", "numbers", "layout" };
+	private static final String[] SYNTAX_FILES = { "statements", "expressions", "strings", "numbers", "layout",
+			"classes" };
 
 	// Line endings depend on core.autocrlf, so CRLF is normalized to LF: AstDump
 	// and the reference dumps always use LF.
@@ -110,7 +111,7 @@ class PyParserTest {
 
 	@Test
 	void unsupportedConstructsAreRejected() {
-		String[] sources = { "class A: pass", "with a: pass", "try:\n pass\nfinally:\n pass",
+		String[] sources = { "class A(metaclass=M): pass", "class A(*b): pass", "@dec\nclass A: pass", "with a: pass", "try:\n pass\nfinally:\n pass",
 				"try:\n pass\nexcept E:\n pass\nfinally:\n pass", "def f(): yield 1", "x = (i for i in y)",
 				"f(i for i in y)", "{1, 2}", "{x for x in y}", "(x := 1)", "async def f(): pass", "@dec\ndef f(): pass",
 				"from a import b", "a @ b", "x: int = 1", "def f(a: int): pass", "def f() -> int: pass", "a, *b = c",
@@ -189,7 +190,7 @@ class PyParserTest {
 		assertTrue(e.getMessage().contains("line"), e.getMessage());
 		e = assertThrows(PySyntaxError.class, () -> PyParser.parse("x = 1\ny = 2\nz = 3 ?\n"));
 		assertEquals(3, e.line);
-		e = assertThrows(PySyntaxError.class, () -> PyParser.parse("def f():\n    x = 1\n    class A: pass\n"));
+		e = assertThrows(PySyntaxError.class, () -> PyParser.parse("def f():\n    x = 1\n    with a: pass\n"));
 		assertEquals(3, e.line);
 	}
 
