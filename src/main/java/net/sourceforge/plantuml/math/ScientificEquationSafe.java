@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.TextBlockExporter;
-import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -155,13 +154,12 @@ public class ScientificEquationSafe {
 		return GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));
 	}
 
-	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, XColor foregroundColor,
-			XColor backgroundColor) throws IOException {
+	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, HColor foregroundColor,
+			HColor backgroundColor) throws IOException {
 		final FileFormat format = fileFormat.getFileFormat();
 		if (format == FileFormat.PNG || format == FileFormat.SVG || format == FileFormat.SVG_DETERMINISTIC
 				|| format == FileFormat.EPS || format == FileFormat.PDF || format == FileFormat.PDF_DETERMINISTIC) {
-			final TextBlock block = getTextBlock(HColors.simple(foregroundColor),
-					backgroundColor == null ? null : HColors.simple(backgroundColor));
+			final TextBlock block = getTextBlock(foregroundColor, backgroundColor);
 			return TextBlockExporter.builder(block, fileFormat, false).scale(new ScaleSimple(scale)).build()
 					.exportTo(os);
 		}
