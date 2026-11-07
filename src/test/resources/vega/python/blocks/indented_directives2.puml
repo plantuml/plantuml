@@ -4,5 +4,5 @@
   !python
   t = "ok"
   !endpy
-title ${t}
+title !{t}
 @enduml

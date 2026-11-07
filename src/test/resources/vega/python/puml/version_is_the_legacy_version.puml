@@ -5,5 +5,5 @@ output: preproc, svg
 ' EXPECT (preproc):
 ' title True
 !x = 1
-title ${puml.version == "%version()"}
+title !{puml.version == "%version()"}
 @enduml

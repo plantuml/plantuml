@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' node app
+' note right of app : run ${JAVA_HOME}/bin/java on port 8080
+!port = 8080
+node app
+note right of app : run ${JAVA_HOME}/bin/java on port !{port}
+@enduml

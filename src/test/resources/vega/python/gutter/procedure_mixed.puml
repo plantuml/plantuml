@@ -10,9 +10,9 @@ output: preproc, svg
 ' API -> DB
 !def stack(names):
 !    for i, n in enumerate(names):
-         participant ${n}
+         participant !{n}
 !        if i > 0:
-             ${names[i - 1]} -> ${n}
+             !{names[i - 1]} -> !{n}
 
 !stack(["Web", "API", "DB"])
 @enduml

@@ -44,6 +44,16 @@ public final class PythonLine {
 	private PythonLine() {
 	}
 
+	/**
+	 * "!{a} -> !{b}": a line that starts with an interpolation is PlantUML text,
+	 * never a directive nor a Python line (a Python statement starting with "{"
+	 * would be a dict display thrown away, which has no use).
+	 */
+	public static boolean startsWithInterpolation(String s) {
+		final int i = skipSpaces(s, 0);
+		return s.startsWith("!{", i);
+	}
+
 	private static final String[] PYTHON_KEYWORDS = { "def", "for", "try", "pass", "lambda", "del", "raise", "global",
 			"nonlocal", "elif", "except", "break", "continue" };
 

@@ -9,5 +9,5 @@ expected-error-message: 'Python syntax error: expected ':' but found 'NEWLINE' (
 title demo
 !x = 1
 !for i in range(3)
-    participant P${i}
+    participant P!{i}
 @enduml

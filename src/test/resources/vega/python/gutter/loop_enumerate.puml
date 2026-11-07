@@ -9,5 +9,5 @@ output: preproc, svg
 !services = ["Auth", "Billing"]
 participant A
 !for i, s in enumerate(services):
-    A -> ${s} : request ${i}
+    A -> !{s} : request !{i}
 @enduml

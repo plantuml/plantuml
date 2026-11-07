@@ -4,5 +4,5 @@ output: preproc, svg
 @startuml
 ' EXPECT (preproc):
 ' title {"a": 1}
-title ${json.dumps({"a": 1})}
+title !{json.dumps({"a": 1})}
 @enduml

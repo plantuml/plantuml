@@ -12,5 +12,5 @@ root = int(math.sqrt(9))
 k = json.loads('{"k": "a"}')["k"]
 second = json.loads("[1, 2]")[1]
 !endpy
-title ${root} ${k} ${second}
+title !{root} !{k} !{second}
 @enduml

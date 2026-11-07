@@ -7,5 +7,5 @@ output: preproc, svg
 !x = 1
 !x += 2
 !x *= 2
-title ${x}
+title !{x}
 @enduml

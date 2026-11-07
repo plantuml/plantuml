@@ -7,12 +7,12 @@ output: preproc, svg
 ' participant B
 ' A -> B : ping
 !def decl(n):
-    participant ${n}
+    participant !{n}
 
 !def pair(a, b):
 !    decl(a)
 !    decl(b)
-     ${a} -> ${b} : ping
+     !{a} -> !{b} : ping
 
 !pair("A", "B")
 @enduml

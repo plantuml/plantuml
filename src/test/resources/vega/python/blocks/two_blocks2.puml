@@ -8,9 +8,9 @@ output: preproc, svg
 !python
 a = "a"
 !endpy
-title ${a}
+title !{a}
 !python
 b = "b"
 !endpy
-title ${b}
+title !{b}
 @enduml

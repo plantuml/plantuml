@@ -7,5 +7,5 @@ output: preproc, svg
 !python
 t = 'it' "'s"
 !endpy
-title ${t}
+title !{t}
 @enduml

@@ -4,5 +4,5 @@ output: preproc, svg
 @startuml
 ' EXPECT (preproc):
 ' title 3.14 007 x
-title ${f"{3.14159:.2f} {7:03d} {'x'}"}
+title !{f"{3.14159:.2f} {7:03d} {'x'}"}
 @enduml

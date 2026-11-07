@@ -9,5 +9,5 @@ output: preproc, svg
 n = n + 1
 !endpy
 !n += 1
-title ${n}
+title !{n}
 @enduml

@@ -4,5 +4,5 @@ output: preproc, svg
 @startuml
 ' EXPECT (preproc):
 ' title 3
-title ${int(math.sqrt(9))}
+title !{int(math.sqrt(9))}
 @enduml

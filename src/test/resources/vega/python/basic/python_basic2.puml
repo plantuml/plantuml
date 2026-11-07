@@ -4,11 +4,11 @@ output: preproc, svg
 @startuml
 !n = 2
 !for i in range(n):
-    participant P${i}
+    participant P!{i}
 !python
 s = 'it''s'
 !endpy
-Alice -> P0 : ${s}
+Alice -> P0 : !{s}
 !$v = 1
 Bob -> P1 : $v
 @enduml

@@ -7,6 +7,6 @@ def color(n):
     return "#FFCCCC"
 !endpy
 
-participant P ${color("P")}
+participant P !{color("P")}
 
 @enduml

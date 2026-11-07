@@ -12,7 +12,7 @@ participant A
 participant B
 !def countdown(n):
 !    if n > 0:
-         A -> B : ${n}
+         A -> B : !{n}
 !        countdown(n - 1)
 
 !countdown(3)

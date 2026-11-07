@@ -3,7 +3,7 @@ output: preproc, svg
 ---
 @startuml
 ' EXPECT (preproc):
-' title ${x}
+' title !{x}
 !x = 1
-title $${x}
+title !!{x}
 @enduml

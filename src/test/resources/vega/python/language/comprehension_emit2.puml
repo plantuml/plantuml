@@ -7,5 +7,5 @@ output: preproc, svg
 ' participant P1
 ' participant P2
 !for name in ["P" + str(i) for i in range(3)]:
-    participant ${name}
+    participant !{name}
 @enduml

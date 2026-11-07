@@ -10,5 +10,5 @@ output: preproc, svg
 !    count += 1
 !inc()
 !inc()
-title ${count}
+title !{count}
 @enduml

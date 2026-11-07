@@ -5,5 +5,5 @@ output: preproc, svg
 ' EXPECT (preproc):
 ' title 3
 !include python_helper.inc
-title ${helper(1)}
+title !{helper(1)}
 @enduml

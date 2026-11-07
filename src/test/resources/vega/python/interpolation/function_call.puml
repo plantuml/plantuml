@@ -6,5 +6,5 @@ output: preproc, svg
 ' title 25
 !def sq(x):
 !    return x * x
-title ${sq(5)}
+title !{sq(5)}
 @enduml

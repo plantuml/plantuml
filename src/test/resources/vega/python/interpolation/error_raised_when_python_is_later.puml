@@ -6,6 +6,6 @@ expected-error-line: 1
 expected-error-message: 'Python error: NameError: name 'toto' is not defined'
 ---
 @startuml
-title ${toto}
+title !{toto}
 !x = 1
 @enduml

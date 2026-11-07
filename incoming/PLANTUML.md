@@ -1,6 +1,8 @@
 # PicoPy inside PlantUML: design sketch
 
-Working document. Nothing described here is implemented yet: it is a set of
+Working document, superseded by `PYTHON_PREPROCESSOR.md` at the root of the
+repository. Its examples use the current interpolation syntax, `!{expr}` (it
+was first `${expr}`). Nothing described here is implemented yet: it is a set of
 hypotheses about how PicoPy, the Python subset interpreter of this repository
 (see `README.md` and `PYTHON.md`), will be used from PlantUML. Points that are
 guesses rather than decisions are collected in section 5.
@@ -33,7 +35,7 @@ no `with`, no `finally`, no `from ... import`, no decorators.
 ### Sketch of the future syntax (not implemented yet)
 
 Lines starting with `!` followed directly by Python code (`!def`, `!for`,
-`!x = 1`, ...) are Python. `${expr}` interpolates a Python value into a
+`!x = 1`, ...) are Python. `!{expr}` interpolates a Python value into a
 PlantUML line. The `!` is the same character that introduces the preprocessor
 directives (`!include`, `!theme`, ...); the preprocessor tells the two apart by
 the rules listed in "Python or directive?" below, not by a marker.
@@ -46,7 +48,7 @@ Python file in which the `!` prefix is a **one-column gutter**:
   counted from there;
 - a line **without** `!` is PlantUML text. It belongs to the innermost open
   Python block if it is indented deeper than the line that opened the block,
-  and it is emitted (with `${}` interpolation) each time the block runs;
+  and it is emitted (with `!{}` interpolation) each time the block runs;
 - a line indented less than the block closes it, as in Python; a text line at
   column 0 is always at top level;
 - blank lines are ignored; tabs are not allowed in the indentation.
@@ -63,10 +65,10 @@ Python file in which the `!` prefix is a **one-column gutter**:
 actor User
 
 !for s in services:
-    participant "${s}" as ${s} ${color(s)}
+    participant "!{s}" as !{s} !{color(s)}
 
 !for i, s in enumerate(services):
-    User -> ${s} : request ${i}
+    User -> !{s} : request !{i}
 @enduml
 ```
 
@@ -96,7 +98,7 @@ def color(name):
 actor User
 
 !for s in services:
-    participant "${s}" as ${s} ${color(s)}
+    participant "!{s}" as !{s} !{color(s)}
 @enduml
 ```
 
@@ -159,8 +161,8 @@ function.
 ```plantuml
 @startuml
 !def service(name, color):
-    participant ${name} ${color}
-    note right of ${name} : ${name} is up
+    participant !{name} !{color}
+    note right of !{name} : !{name} is up
 
 !service("Auth", "#FFCCCC")
 !service("Billing", "#CCE5FF")
@@ -173,9 +175,9 @@ A procedure may mix both kinds of lines, call other procedures and loop:
 @startuml
 !def stack(names):
 !    for i, n in enumerate(names):
-         participant ${n}
+         participant !{n}
 !        if i > 0:
-             ${names[i - 1]} -> ${n}
+             !{names[i - 1]} -> !{n}
 
 !stack(["Web", "API", "DB"])
 @enduml
@@ -214,7 +216,7 @@ runs first, then text Python**.
   holder class). The only cost is the classification of the lines starting
   with `!`, which the preprocessor already looks at. The interpreter is created
   at the first Python line, not before.
-- `${expr}` is interpolated only in a diagram that has Python lines.
+- `!{expr}` is interpolated only in a diagram that has Python lines.
 
 Legacy diagrams keep the old preprocessor unchanged, frozen. The two worlds can
 be mixed in one diagram, and even in one file: the standard library (C4 and
@@ -403,7 +405,7 @@ and in `deploy.puml`:
 ```plantuml
 @startuml
 !for s in puml.args["services"]:
-    node "${s}"
+    node "!{s}"
 @enduml
 ```
 
@@ -488,7 +490,7 @@ This design first existed for Lua. What changes with Python:
   `def` containing text lines acting as a procedure) is a first proposal. A
   stricter alternative would require an explicit marker on text lines inside a
   block.
-- Whether `${expr}` accepts a format spec (`${x:.2f}`) like an f-string.
+- Whether `!{expr}` accepts a format spec (`!{x:.2f}`) like an f-string.
 - Whether `print` in text Python is an error, a log message, or an alias of
   `emit`. Leaning towards not an alias.
 - Whether a mechanism for shipped Python modules is added (a resource-based

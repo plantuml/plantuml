@@ -2,5 +2,5 @@
 ' EXPECT (preproc):
 ' ERROR: NameError: undefined
 !x = 1
-title ${undefined}
+title !{undefined}
 @enduml

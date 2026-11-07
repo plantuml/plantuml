@@ -155,9 +155,9 @@ final class PythonRunner {
 	}
 
 	/**
-	 * Replaces each <code>${expr}</code> of a text line by <code>str(expr)</code>
-	 * (Python is evaluated in the state of the diagram). A doubled dollar before
-	 * the brace is the escape: it gives a literal <code>${</code>. With
+	 * Replaces each <code>!{expr}</code> of a text line by <code>str(expr)</code>
+	 * (Python is evaluated in the state of the diagram). A doubled bang before
+	 * the brace is the escape: it gives a literal <code>!{</code>. With
 	 * <code>keepOnError</code>, an expression that fails stays as written in the
 	 * text instead of being an error.
 	 */
@@ -165,12 +165,12 @@ final class PythonRunner {
 		final StringBuilder sb = new StringBuilder();
 		int i = 0;
 		while (i < text.length()) {
-			if (text.startsWith("$" + "${", i)) {
-				sb.append("${");
-				i += 3;
+			if (text.startsWith(PythonChunks.ESCAPE, i)) {
+				sb.append(PythonChunks.OPEN);
+				i += PythonChunks.ESCAPE.length();
 				continue;
 			}
-			final int close = text.startsWith("${", i) ? PythonChunks.closingBrace(text, i + 2) : -1;
+			final int close = text.startsWith(PythonChunks.OPEN, i) ? PythonChunks.closingBrace(text, i + 2) : -1;
 			if (close == -1) {
 				sb.append(text.charAt(i));
 				i++;

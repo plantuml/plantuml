@@ -3,5 +3,5 @@
 ' participant A
 !pragma teoz true
 !name = "A"
-participant ${name}
+participant !{name}
 @enduml

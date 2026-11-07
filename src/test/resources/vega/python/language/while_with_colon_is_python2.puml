@@ -7,5 +7,5 @@ output: preproc, svg
 !n = 0
 !while n < 3:
 !    n += 1
-title ${n}
+title !{n}
 @enduml

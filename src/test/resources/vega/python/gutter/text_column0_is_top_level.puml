@@ -7,6 +7,6 @@ output: preproc, svg
 ' participant P1
 ' participant top
 !for i in range(2):
-    participant P${i}
+    participant P!{i}
 participant top
 @enduml

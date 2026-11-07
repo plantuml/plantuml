@@ -11,5 +11,5 @@ output: preproc, svg
 !    return "#CCE5FF"
 
 !for n in ["X", "Y"]:
-    participant ${n} ${color(n)}
+    participant !{n} !{color(n)}
 @enduml

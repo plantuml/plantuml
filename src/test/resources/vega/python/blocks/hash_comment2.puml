@@ -8,5 +8,5 @@ output: preproc, svg
 # a python comment
 t = "ok"  # another one
 !endpy
-title ${t}
+title !{t}
 @enduml

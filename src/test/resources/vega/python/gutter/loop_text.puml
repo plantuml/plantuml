@@ -7,5 +7,5 @@ output: preproc, svg
 ' participant Billing
 !services = ["Auth", "Billing"]
 !for s in services:
-    participant ${s}
+    participant !{s}
 @enduml

@@ -6,5 +6,5 @@ output: preproc, svg
 ' title 9
 !l = [1, 2]
 !l[1] = 9
-title ${l[1]}
+title !{l[1]}
 @enduml

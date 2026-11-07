@@ -164,6 +164,9 @@ public enum TLineType {
 		if (s.startsWith(PYTHON_MARKER))
 			return PYTHON;
 
+		if (PythonLine.startsWithInterpolation(s))
+			return PLAIN;
+
 		if (PATTERN_LEGACY_DEFINE.match(sl))
 			return LEGACY_DEFINE;
 

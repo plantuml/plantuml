@@ -6,5 +6,5 @@
 !def triple(n):
 !    return n * 3
 
-title $double(3) ${triple(4)}
+title $double(3) !{triple(4)}
 @enduml

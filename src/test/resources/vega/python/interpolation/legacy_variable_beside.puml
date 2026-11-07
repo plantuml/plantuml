@@ -6,5 +6,5 @@ output: preproc, svg
 ' title 1 2
 !$v = 1
 !w = 2
-title $v ${w}
+title $v !{w}
 @enduml

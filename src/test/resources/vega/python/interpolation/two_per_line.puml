@@ -6,5 +6,5 @@ output: preproc, svg
 ' A -> B : 1 and 2
 !x = 1
 !y = 2
-A -> B : ${x} and ${y}
+A -> B : !{x} and !{y}
 @enduml

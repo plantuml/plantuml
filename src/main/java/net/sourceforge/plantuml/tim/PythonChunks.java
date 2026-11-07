@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.text.PythonLine;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 
@@ -127,7 +128,7 @@ public final class PythonChunks {
 					final String text = body.get(j).getString();
 					// The gutter takes one column: a text line is Python code indented by one column less.
 					final int indent = leadingSpaces(text) - 1;
-					if (text.charAt(0) == '\t' && text.trim().startsWith("!") == false) {
+					if (text.charAt(0) == '\t' && isBangLine(text) == false) {
 						// tabs are not allowed in the indentation: the Python lexer reports it
 						code.append('\t').append(textToPython(text.trim())).append('\n');
 						lines.add(body.get(j));
@@ -136,7 +137,7 @@ public final class PythonChunks {
 					}
 					while (headers.isEmpty() == false && headers.get(headers.size() - 1) >= indent)
 						headers.remove(headers.size() - 1);
-					if (headers.isEmpty() || text.trim().startsWith("!"))
+					if (headers.isEmpty() || isBangLine(text))
 						break;
 					if (body.get(j).getType() != TLineType.COMMENT_SIMPLE) {
 						for (int k = 0; k < indent; k++)
@@ -173,17 +174,29 @@ public final class PythonChunks {
 		return n;
 	}
 
+	/** Opens an interpolation in a text line: <code>!{expr}</code>. */
+	static final String OPEN = "!{";
+
+	/** Gives a literal <code>!{</code> in a text line. */
+	static final String ESCAPE = "!!{";
+
 	/**
 	 * A PlantUML text line inside a Python block, as the Python statement that
-	 * emits it: <code>A -&gt; ${b}</code> becomes
-	 * <code>puml.emit("A -&gt; " + str(b))</code>.
+	 * emits it: <code>A -&gt; !{b}</code> becomes
+	 * <code>puml.emit("A -&gt; " + str(b))</code>. <code>!!{</code> gives a literal
+	 * <code>!{</code>, as in a text line outside a block.
 	 */
 	static String textToPython(String text) {
 		final StringBuilder sb = new StringBuilder("puml.emit(\"\"");
 		final StringBuilder literal = new StringBuilder();
 		int i = 0;
 		while (i < text.length()) {
-			final int close = text.startsWith("${", i) ? closingBrace(text, i + 2) : -1;
+			if (text.startsWith(ESCAPE, i)) {
+				literal.append(OPEN);
+				i += ESCAPE.length();
+				continue;
+			}
+			final int close = text.startsWith(OPEN, i) ? closingBrace(text, i + 2) : -1;
 			if (close == -1) {
 				literal.append(text.charAt(i));
 				i++;
@@ -211,7 +224,7 @@ public final class PythonChunks {
 		literal.setLength(0);
 	}
 
-	/** Index of the "}" that closes a "${", ignoring braces inside Python strings, or -1. */
+	/** Index of the "}" that closes a "!{", ignoring braces inside Python strings, or -1. */
 	static int closingBrace(String s, int start) {
 		int depth = 0;
 		char quote = 0;
@@ -251,6 +264,15 @@ public final class PythonChunks {
 		if (isChunk(sl) || s.length() < 2 || s.charAt(0) != '!' || s.charAt(1) != ' ')
 			return false;
 		return sl.getType() == TLineType.PLAIN;
+	}
+
+	/**
+	 * A line whose first non-blank character is a <code>!</code>: a Python line or
+	 * a directive, which ends the text lines of a block. A line that starts with
+	 * an interpolation, <code>!{expr}</code>, is a text line.
+	 */
+	private static boolean isBangLine(String text) {
+		return text.trim().startsWith("!") && PythonLine.startsWithInterpolation(text) == false;
 	}
 
 	/** Removes the one-column gutter: the text after the first <code>!</code>. */

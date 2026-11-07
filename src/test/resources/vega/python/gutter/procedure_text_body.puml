@@ -8,8 +8,8 @@ output: preproc, svg
 ' participant Billing #CCE5FF
 ' note right of Billing : Billing is up
 !def service(name, color):
-    participant ${name} ${color}
-    note right of ${name} : ${name} is up
+    participant !{name} !{color}
+    note right of !{name} : !{name} is up
 
 !service("Auth", "#FFCCCC")
 !service("Billing", "#CCE5FF")

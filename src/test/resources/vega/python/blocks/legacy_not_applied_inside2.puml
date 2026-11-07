@@ -4,5 +4,5 @@
 !python
 s = "!include foo"
 !endpy
-title ${s[1:8]} stays Python text
+title !{s[1:8]} stays Python text
 @enduml

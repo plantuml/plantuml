@@ -7,7 +7,7 @@ output: preproc, svg
 !l = [1, 2]
 !l[0] = 5
 !if x == 3:
-    title python if ${l[0]}
+    title python if !{l[0]}
 !else:
     title never
 !$y = 7
@@ -17,5 +17,5 @@ title legacy if $y
 !$z ?= 4
 title %get_variable_value("$z")
 !x = 1
-title x=${x == 1}
+title x=!{x == 1}
 @enduml

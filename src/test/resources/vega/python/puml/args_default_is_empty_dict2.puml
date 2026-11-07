@@ -4,5 +4,5 @@ output: preproc, svg
 @startuml
 ' EXPECT (preproc):
 ' title 0
-title ${len(puml.args)}
+title !{len(puml.args)}
 @enduml

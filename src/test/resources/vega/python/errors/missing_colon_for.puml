@@ -11,5 +11,5 @@ title demo
 participant dummy
 
 !for i in range(3)
-    participant P${i}
+    participant P!{i}
 @enduml

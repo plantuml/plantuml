@@ -7,5 +7,5 @@ output: preproc, svg
 !l = [1]
 !l.append(2)
 !l.append(3)
-title ${len(l)}
+title !{len(l)}
 @enduml

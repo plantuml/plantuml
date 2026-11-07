@@ -4,5 +4,5 @@ output: preproc, svg
 @startuml
 ' EXPECT (preproc):
 ' title True
-title ${puml.edition in ["jar", "js", "c"]}
+title !{puml.edition in ["jar", "js", "c"]}
 @enduml

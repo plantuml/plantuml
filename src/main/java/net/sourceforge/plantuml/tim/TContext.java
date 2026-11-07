@@ -376,7 +376,7 @@ public class TContext {
 	/** For each Python chunk, the diagram line of each of its code lines. */
 	private final Map<StringLocated, List<StringLocated>> pythonSources = new IdentityHashMap<>();
 
-	/** The Python state of the diagram, created when first needed (a Python chunk or a ${expr}). */
+	/** The Python state of the diagram, created when first needed (a Python chunk or a !{expr}). */
 	private PythonRunner python() {
 		if (python == null)
 			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments);
@@ -411,14 +411,15 @@ public class TContext {
 	}
 
 	/**
-	 * Replaces the ${expr} of a text line by the Python value. The interpreter is
-	 * created by the first ${ of the diagram, with or without Python lines. In a
+	 * Replaces the !{expr} of a text line by the Python value. The interpreter is
+	 * created by the first !{ of the diagram, with or without Python lines. In a
 	 * diagram without Python code, an expression that fails is not an error: it is
-	 * kept as it is, ${expr}, so that a legacy text which contains one is unchanged.
+	 * kept as it is, !{expr}, so that a legacy text which contains one is unchanged.
+	 * A ${ is plain text.
 	 */
 	private StringLocated interpolatePython(StringLocated line) throws EaterException {
-		// The signature only tells that $, { and } are somewhere in the line: the exact test follows.
-		if (line.mayContainInterpolation() == false || line.getString().contains("$" + "{") == false)
+		// The signature only tells that !, { and } are somewhere in the line: the exact test follows.
+		if (line.mayContainInterpolation() == false || line.getString().contains("!{") == false)
 			return line;
 		try {
 			final String result = python().interpolate(line.getString(), hasPython == false);
