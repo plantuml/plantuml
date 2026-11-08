@@ -15,7 +15,8 @@ What is checked, per test file:
   * output: svg      -> `plantuml.exe --svg-vega`, compared (XML-normalised, as SvgCleaner
                         does in the Java tests) with <name>.svg / <name>-N.svg
                         (with a `decimal: N` key, `--decimal N` is added: the number of
-                        decimals of the numbers of the SVG, as on the JVM)
+                        decimals of the numbers of the SVG, as on the JVM; with a
+                        `dark: true` key, `--dark-mode` is added)
   * output: preproc  -> `plantuml.exe --preproc`, compared with <name>.preproc
   * output: pdf      -> `plantuml.exe --pdf-vega` (deterministic PDF: fixed dates and /ID, no
                         compression), compared byte for byte with <name>.pdf / <name>-N.pdf
@@ -408,6 +409,9 @@ def run_checks(puml, exe, timeout, workdir):
             result["message"] = "bad decimal option: %r" % header["decimal"]
             return result
         svg_flags = ["--decimal", str(decimal)]
+    if header.get("dark", "").strip() == "true":
+        # the "dark: true" key of the JVM tests: --dark-mode (ColorMapper.DARK_MODE)
+        svg_flags = list(svg_flags) + ["--dark-mode"]
 
     source = write_source_copy(puml)
     try:
