@@ -172,7 +172,7 @@ public class Display implements Iterable&lt;CharSequence&gt;, AsciiBlock {
 
 	public boolean isWhite() {
 <span class="pc bpc" id="L174" title="2 of 4 branches missed.">		return displayData == null || displayData.isEmpty()</span>
-<span class="pc bpc" id="L175" title="1 of 4 branches missed.">				|| (displayData.size() == 1 &amp;&amp; ONLY_WHITESPACE.matcher(displayData.get(0)).matches());</span>
+<span class="fc bfc" id="L175" title="All 4 branches covered.">				|| (displayData.size() == 1 &amp;&amp; ONLY_WHITESPACE.matcher(displayData.get(0)).matches());</span>
 	}
 
 	public static Display empty() {

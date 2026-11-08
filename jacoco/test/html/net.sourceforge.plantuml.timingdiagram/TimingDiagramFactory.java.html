@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.timingdiagram.command.CommandAnalog;
+import net.sourceforge.plantuml.timingdiagram.command.CommandAnalogDigital;
 import net.sourceforge.plantuml.timingdiagram.command.CommandAtPlayer;
 import net.sourceforge.plantuml.timingdiagram.command.CommandAtTime;
 import net.sourceforge.plantuml.timingdiagram.command.CommandBinary;
@@ -88,7 +88,7 @@ public class TimingDiagramFactory extends PSystemCommandFactory {
 <span class="fc" id="L88">		cmds.add(new CommandFootboxIgnored());</span>
 <span class="fc" id="L89">		cmds.add(new CommandRobustConcise());</span>
 <span class="fc" id="L90">		cmds.add(new CommandClock());</span>
-<span class="fc" id="L91">		cmds.add(new CommandAnalog());</span>
+<span class="fc" id="L91">		cmds.add(new CommandAnalogDigital());</span>
 <span class="fc" id="L92">		cmds.add(new CommandBinary());</span>
 <span class="fc" id="L93">		cmds.add(new CommandDefineStateShort());</span>
 <span class="fc" id="L94">		cmds.add(new CommandDefineStateLong());</span>

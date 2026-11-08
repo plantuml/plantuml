@@ -18195,8 +18195,8 @@
                 <Class sourceFile="Highlight.java">
                     net.sourceforge.plantuml.timingdiagram.Highlight
                 </Class>
-                <Class sourceFile="PlayerAnalog.java">
-                    net.sourceforge.plantuml.timingdiagram.PlayerAnalog
+                <Class sourceFile="PlayerAnalogDigital.java">
+                    net.sourceforge.plantuml.timingdiagram.PlayerAnalogDigital
                 </Class>
                 <Class sourceFile="PlayerBinary.java">
                     net.sourceforge.plantuml.timingdiagram.PlayerBinary
@@ -18255,8 +18255,8 @@
                 <Class sourceFile="TimingRuler.java">
                     net.sourceforge.plantuml.timingdiagram.TimingRuler$TimeLabel
                 </Class>
-                <Class sourceFile="TimingStyle.java">
-                    net.sourceforge.plantuml.timingdiagram.TimingStyle
+                <Class sourceFile="TimingType.java">
+                    net.sourceforge.plantuml.timingdiagram.TimingType
                 </Class>
             </ConcreteClasses>
 
@@ -18298,8 +18298,8 @@
 
         <Package name="net.sourceforge.plantuml.timingdiagram.command">
             <Stats>
-                <TotalClasses>10</TotalClasses>
-                <ConcreteClasses>10</ConcreteClasses>
+                <TotalClasses>9</TotalClasses>
+                <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>12</Ce>
@@ -18313,9 +18313,6 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="CommandAnalog.java">
-                    net.sourceforge.plantuml.timingdiagram.command.CommandAnalog
-                </Class>
                 <Class sourceFile="CommandAtTime.java">
                     net.sourceforge.plantuml.timingdiagram.command.CommandAtTime
                 </Class>
@@ -18367,14 +18364,14 @@
 
         <Package name="net.sourceforge.plantuml.timingdiagram.graphic">
             <Stats>
-                <TotalClasses>17</TotalClasses>
-                <ConcreteClasses>14</ConcreteClasses>
+                <TotalClasses>18</TotalClasses>
+                <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>16</Ce>
-                <A>0.18</A>
+                <A>0.17</A>
                 <I>0.94</I>
-                <D>0.12</D>
+                <D>0.11</D>
                 <V>1</V>
             </Stats>
 
@@ -18397,8 +18394,11 @@
                 <Class sourceFile="IntricatedPoint.java">
                     net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint
                 </Class>
-                <Class sourceFile="PanelsAnalog.java">
-                    net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalog
+                <Class sourceFile="PanelsAnalogDigital.java">
+                    net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalogDigital
+                </Class>
+                <Class sourceFile="PanelsAnalogDigital.java">
+                    net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalogDigital$1
                 </Class>
                 <Class sourceFile="PanelsBinary.java">
                     net.sourceforge.plantuml.timingdiagram.graphic.PanelsBinary

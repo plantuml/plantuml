@@ -158,8 +158,9 @@ implements <a href="Clocks.html" title="interface in net.sourceforge.plantuml.ti
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addTime(net.sourceforge.plantuml.timingdiagram.TimeTick,java.lang.String)" class="member-name-link">addTime</a><wbr>(<a href="TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;time,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PlayerAnalog.html" title="class in net.sourceforge.plantuml.timingdiagram">PlayerAnalog</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createPlayerAnalog(java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">createPlayerAnalog</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PlayerAnalogDigital.html" title="class in net.sourceforge.plantuml.timingdiagram">PlayerAnalogDigital</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createPlayerAnalogDigital(net.sourceforge.plantuml.timingdiagram.TimingType,java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">createPlayerAnalogDigital</a><wbr>(<a href="TimingType.html" title="enum class in net.sourceforge.plantuml.timingdiagram">TimingType</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
  boolean&nbsp;compact,
  <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
@@ -391,18 +392,19 @@ implements <a href="Clocks.html" title="interface in net.sourceforge.plantuml.ti
 </section>
 </li>
 <li>
-<section class="detail" id="createPlayerAnalog(java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)">
-<h3>createPlayerAnalog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PlayerAnalog.html" title="class in net.sourceforge.plantuml.timingdiagram">PlayerAnalog</a></span>&nbsp;<span class="element-name">createPlayerAnalog</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+<section class="detail" id="createPlayerBinary(java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)">
+<h3>createPlayerBinary</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Player.html" title="class in net.sourceforge.plantuml.timingdiagram">Player</a></span>&nbsp;<span class="element-name">createPlayerBinary</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
  boolean&nbsp;compact,
  <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="createPlayerBinary(java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)">
-<h3>createPlayerBinary</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Player.html" title="class in net.sourceforge.plantuml.timingdiagram">Player</a></span>&nbsp;<span class="element-name">createPlayerBinary</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+<section class="detail" id="createPlayerAnalogDigital(net.sourceforge.plantuml.timingdiagram.TimingType,java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)">
+<h3>createPlayerAnalogDigital</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PlayerAnalogDigital.html" title="class in net.sourceforge.plantuml.timingdiagram">PlayerAnalogDigital</a></span>&nbsp;<span class="element-name">createPlayerAnalogDigital</span><wbr><span class="parameters">(<a href="TimingType.html" title="enum class in net.sourceforge.plantuml.timingdiagram">TimingType</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
  boolean&nbsp;compact,
  <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</span></div>

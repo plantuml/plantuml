@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
-import net.sourceforge.plantuml.timingdiagram.TimingStyle;
+import net.sourceforge.plantuml.timingdiagram.TimingType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandRobustConcise extends SingleLineCommand2&lt;TimingDiagram&gt; {
@@ -134,7 +134,7 @@ public class CommandRobustConcise extends SingleLineCommand2&lt;TimingDiagram&gt
 <span class="pc bpc" id="L134" title="1 of 2 branches missed.">		else if (arg.get(&quot;STEREOTYPE2&quot;, 0) != null)</span>
 <span class="nc" id="L135">			stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE2&quot;, 0));</span>
 
-<span class="fc" id="L137">		final TimingStyle type = TimingStyle.valueOf(arg.get(&quot;TYPE&quot;, 0).toUpperCase());</span>
+<span class="fc" id="L137">		final TimingType type = TimingType.valueOf(arg.get(&quot;TYPE&quot;, 0).toUpperCase());</span>
 <span class="fc" id="L138">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
 
 <span class="pc bpc" id="L140" title="2 of 4 branches missed.">		switch (type) {</span>

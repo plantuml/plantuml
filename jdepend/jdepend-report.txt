@@ -12360,7 +12360,7 @@ Concrete Classes:
     net.sourceforge.plantuml.timingdiagram.ChangeState
     net.sourceforge.plantuml.timingdiagram.DeduceFormat$CharCount
     net.sourceforge.plantuml.timingdiagram.Highlight
-    net.sourceforge.plantuml.timingdiagram.PlayerAnalog
+    net.sourceforge.plantuml.timingdiagram.PlayerAnalogDigital
     net.sourceforge.plantuml.timingdiagram.PlayerBinary
     net.sourceforge.plantuml.timingdiagram.PlayerClock
     net.sourceforge.plantuml.timingdiagram.PlayerConcise
@@ -12380,7 +12380,7 @@ Concrete Classes:
     net.sourceforge.plantuml.timingdiagram.TimingRuler$2
     net.sourceforge.plantuml.timingdiagram.TimingRuler$Break
     net.sourceforge.plantuml.timingdiagram.TimingRuler$TimeLabel
-    net.sourceforge.plantuml.timingdiagram.TimingStyle
+    net.sourceforge.plantuml.timingdiagram.TimingType
 
 Depends Upon:
     java.lang
@@ -12420,8 +12420,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 10
-    Concrete Classes: 10
+    Total Classes: 9
+    Concrete Classes: 9
     Abstract Classes: 0
 
     Ca: 1
@@ -12434,7 +12434,6 @@ Stats:
 Abstract Classes:
 
 Concrete Classes:
-    net.sourceforge.plantuml.timingdiagram.command.CommandAnalog
     net.sourceforge.plantuml.timingdiagram.command.CommandAtTime
     net.sourceforge.plantuml.timingdiagram.command.CommandBinary
     net.sourceforge.plantuml.timingdiagram.command.CommandChangeStateByTime
@@ -12467,16 +12466,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 17
-    Concrete Classes: 14
+    Total Classes: 18
+    Concrete Classes: 15
     Abstract Classes: 3
 
     Ca: 1
     Ce: 16
 
-    A: 0.18
+    A: 0.17
     I: 0.94
-    D: 0.12
+    D: 0.11
 
 Abstract Classes:
     net.sourceforge.plantuml.timingdiagram.graphic.Panels
@@ -12486,7 +12485,8 @@ Abstract Classes:
 Concrete Classes:
     net.sourceforge.plantuml.timingdiagram.graphic.HexaShape
     net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint
-    net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalog
+    net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalogDigital
+    net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalogDigital$1
     net.sourceforge.plantuml.timingdiagram.graphic.PanelsBinary
     net.sourceforge.plantuml.timingdiagram.graphic.PanelsClock
     net.sourceforge.plantuml.timingdiagram.graphic.PanelsConcise
@@ -16051,8 +16051,8 @@ net.sourceforge.plantuml.tim.builtin,68,1,1,14,0.01,0.93,0.05,1
 net.sourceforge.plantuml.tim.expression,17,3,3,3,0.18,0.5,0.32,1
 net.sourceforge.plantuml.tim.iterator,16,3,1,9,0.19,0.9,0.09,1
 net.sourceforge.plantuml.timingdiagram,28,4,3,26,0.14,0.9,0.04,1
-net.sourceforge.plantuml.timingdiagram.command,10,0,1,12,0,0.92,0.08,1
-net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,16,0.18,0.94,0.12,1
+net.sourceforge.plantuml.timingdiagram.command,9,0,1,12,0,0.92,0.08,1
+net.sourceforge.plantuml.timingdiagram.graphic,18,3,1,16,0.17,0.94,0.11,1
 net.sourceforge.plantuml.url,4,0,28,4,0,0.12,0.88,1
 net.sourceforge.plantuml.utils,21,5,90,21,0.24,0.19,0.57,1
 net.sourceforge.plantuml.version,7,1,6,15,0.14,0.71,0.14,1
