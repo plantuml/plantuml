@@ -57,17 +57,17 @@ user documentation ("legacy → Python" table).
 | `%size(x)` | `len(x)` for str/list/dict | legacy gives `0` for a number: `0 if isinstance(x, int) else len(x)`. |
 | `%string(x)` | `str(x)` | |
 | `%intval(s)` | `int(s)` | legacy error "Cannot convert ..." becomes `ValueError`. Same 32-bit limit. |
-| `%boolval(s)` | none | accepts `true/false/1/0`, case-insensitive, else error. One-liner, see 3.3. |
+| `%boolval(s)` | none | accepts `true/false/1/0`, case-insensitive, else error. One-liner, see 3.5. |
 | `%chr(n)`, `%ord(c)` | `chr(n)`, `ord(c)` | legacy returns `"\0"` / `0` on error; Python raises. Deliberate difference. |
 | `%dec2hex(n)`, `%hex2dec(s)` | `format(n, "x")`, `int(s, 16)` | legacy `dec2hex` of a negative number gives two's complement (`ffffffff`), Python gives `-1`. Legacy swallows errors, Python raises. |
 | `%mod(a, b)` | `a % b` | **not identical**: Java `%` truncates (`-7 % 3 == -1`), Python floors (`2`). Legacy "Divide by zero" becomes `ZeroDivisionError`. Document it. |
 | `%true()`, `%false()`, `%not`, `%and`, `%or`, `%xor`, `%nand`, `%nor`, `%nxor` | `True`, `False`, `not`, `and`, `or`, `!=` on bools ... | `xor` is `a != b`, `nxor` is `a == b`. No module needed. Note that legacy `%true()` is `1` and not a Python `bool` in some contexts: only matters when printing (`True` vs `true`): see 4.3. |
-| `%splitstr(s, seps)` | `s.split(sep)` | **not identical**: legacy uses `StringTokenizer`: every character of `seps` is a separator and empty tokens are dropped. Needs a helper (3.3). |
+| `%splitstr(s, seps)` | `s.split(sep)` | **not identical**: legacy uses `StringTokenizer`: every character of `seps` is a separator and empty tokens are dropped. See the recipe in 3.5. |
 | `%dollar()`, `%percent()` | `"$"`, `"%"` | exist only to dodge the legacy preprocessor. Dropped. |
 | `%eval(expr)` | the expression itself | `eval` does not exist (section 4.2) and is not needed: `!{1+2}` or `1+2`. Dropped. |
 | `%random(...)` | see 4.1 | |
 | `%str2json(s)`, `%load_json` (from text) | `json.loads(s)` | `loads` raises `ValueError`; legacy returns `""` on error. |
-| `%get_json_type(x)` | `type(x)` / `isinstance` | legacy names (`string`, `number`, `array`, `object`, `boolean`) can be mapped by a helper if wanted; probably not worth it. |
+| `%get_json_type(x)` | `type(x)` / `isinstance` | legacy names (`string`, `number`, `array`, `object`, `boolean`) no helper: `isinstance` is enough. |
 | `%get_json_keys(x)` | `list(x.keys())` | for a list of objects, legacy concatenates the keys of every element. |
 | `%json_key_exists(x, k)` | `k in x` | |
 
@@ -89,35 +89,14 @@ rule "plain values only at the boundaries" (section 13.1).
 | `%xargs()` | `puml.xargs` | only for the `-x` command line option; probably dropped. |
 | `%newline()` / `%n()`, `%breakline()`, `%tab()`, `%left_align()`, `%right_align()` | see 4.2 | return **private marker characters** (`Jaws.BLOCK_E1_*`), not `"\n"`. They cannot be written by the user as plain Python strings. |
 
-### 3.3 Pure computation, shipped modules in Python
+### 3.3 Pure computation: colours, and no module for the rest
 
-Candidates for a first module, because they do not exist in the subset and are
-easy to get exactly right with CPython as oracle. Names are provisional.
-
-**Module `strutil`** (or fold into one module `std`, see section 5):
-
-- `splitstr(s, seps)`: `StringTokenizer` semantics (any character of `seps`,
-  no empty token). Otherwise people write `s.split()` and get a different
-  result.
-- `boolval(x)`.
-- `hex`/`dec` helpers are not needed (3.1).
-
-**Module `jsonx`** (the `%json_*` functions). The legacy ones are *pure*: they
-return a modified **copy** and never touch their argument, which is not what a
-Python `list.append` does. Worth providing so that translated code keeps its
-meaning:
-
-- `add(data, value)` for a list, `add(data, name, value)` for a dict;
-- `set(data, index_or_name, value)`, and `set(dict, dict)` which **deep merges**;
-- `remove(data, index_or_name)`;
-- `merge(a, b)`: lists concatenate; dicts merge (shallow `merge`, not deep: the
-  legacy `JsonObject.merge` behaviour must be re-read before specifying);
-- all return a new value, leave their argument unchanged, and return the
-  argument as is when it is not a list or a dict (legacy: `return data`).
-
-The subset has no `copy` module and no `deepcopy`, so `jsonx` needs its own
-recursive copy. A plain `dict(d)` / `list(l)` is enough for most diagrams and
-should be shown first in the documentation; `jsonx` is for fidelity.
+**Decision: no `jsonx`, no `strutil`.** People are expected to write ordinary
+Python, so the `%json_*`, `%splitstr` and `%boolval` functions get a **recipe**
+(section 3.5), not a module. A module that PlantUML maintains for ten lines of
+Python would be one more API to keep stable (section 15.8) and one more thing
+to learn. The first shipped Python modules (section 15) are better chosen for a
+real use (a library such as C4), not for utility functions.
 
 **Colours: the real question.** `%darken`, `%lighten`, `%is_dark`,
 `%is_light`, `%reverse_color`, `%reverse_hsluv_color`, `%hsl_color` are the
@@ -162,6 +141,58 @@ Whether to provide the bridge is a **migration** question (section 6), not an
 API one: library code translated from legacy to Python never needs it, since
 the whole library moves at once. It is only useful for a *diagram* that mixes
 `$variable` set by the legacy part and Python code.
+
+### 3.5 Recipes: ordinary Python instead of a function
+
+The legacy `%json_*` functions are *pure*: they return a modified **copy** and
+leave their argument alone. In Python, `list.append` and `dict.update` change
+their object, so the recipes copy first. The subset rejects `{**a, **b}` and
+`[*a, *b]` (section 3.3 of `PYTHON_PREPROCESSOR.md`) and has no `copy` module.
+
+| Legacy | Python |
+|---|---|
+| `%json_add(list, x)` | `l + [x]` |
+| `%json_add(obj, name, x)`, `%json_set(obj, name, x)` | `d2 = dict(d)`, then `d2[name] = x` |
+| `%json_set(list, i, x)` | `l2 = list(l)`, then `l2[i] = x` |
+| `%json_remove(obj, name)` | `d2 = dict(d)`, then `d2.pop(name, None)` |
+| `%json_remove(list, i)` | `l2 = list(l)`, then `del l2[i]` |
+| `%json_merge(list, list)` | `a + b` |
+| `%json_merge(obj, obj)` (shallow) | `d2 = dict(a)`, then `d2.update(b)` |
+| `%json_set(obj, obj)` (**deep** merge) | `deep_merge(a, b)`, below |
+| deep copy | `json.loads(json.dumps(x))` (plain values only) |
+| `%boolval(s)` | `s.lower() in ("true", "1")` |
+| `%splitstr(s, seps)` | `splitstr(s, seps)`, below |
+
+```python
+def splitstr(s, seps):
+    # StringTokenizer: every character of seps separates, no empty token
+    for c in seps[1:]:
+        s = s.replace(c, seps[0])
+    return [t for t in s.split(seps[0]) if t]
+
+def deep_merge(a, b):
+    result = dict(a)
+    for k in b:
+        if k in result and isinstance(result[k], dict) and isinstance(b[k], dict):
+            result[k] = deep_merge(result[k], b[k])
+        else:
+            result[k] = b[k]
+    return result
+```
+
+Differences that remain, to state in the user documentation:
+
+- `%json_add(obj, name, x)` with an existing `name` **appends a second member**
+  with the same name; a Python dict cannot, the value is replaced.
+- The legacy functions return their argument unchanged when it is not a list or
+  an object; the recipes raise (`TypeError`), as everywhere in Python.
+- `json.dumps` writes `", "` and `": "`; the legacy text of a JSON value has
+  no spaces (`["a","b"]`). `separators` is not supported yet (section 13.1).
+- `splitstr` needs a non-empty `seps`.
+
+The recipes are tested: `vega/python/recipes/splitstr_and_json_set.puml` runs
+them next to `%splitstr` and `%json_set` and the reference shows the same
+values; the same script gives the same output under CPython.
 
 ## 4. Points that need a decision
 
@@ -241,16 +272,14 @@ only in a function whose purpose is leniency.
 
 ## 5. How many modules?
 
-Proposals, from fewest to most:
+**Decided: `color` (Java builtin module, section 3.3) and the additions to
+`puml` (section 3.2). Nothing else.** The alternatives considered:
 
-| Layout | Content | Comment |
-|---|---|---|
-| **A. Everything in `puml`** | `puml.upper`... | No: pollutes the module that every diagram has without `import`, and duplicates Python builtins. |
-| **B. One shipped module `std`** | `splitstr`, `boolval`, json helpers, plus colours re-exported from `color` | One import, easy to document as "the `%` functions". Mixed concerns. |
-| **C. Small modules by theme** (leaning) | `color` (Java builtin, 3.3), `jsonx` (Python), `strutil` (Python, tiny); the rest in `puml` (3.2) | Matches section 15.2 (flat names, one concern each), loads only what is used. |
-
-Leaning: **C**, with `strutil` possibly folded into `jsonx` under a neutral name
-if it stays at two functions (`splitstr`, `boolval`).
+| Layout | Verdict |
+|---|---|
+| everything in `puml` (`puml.upper`...) | No: pollutes the module that every diagram has without `import`, and duplicates Python builtins. |
+| one shipped module `std` | No: mixed concerns, and it would hold what is now a recipe. |
+| small modules by theme in Python (`jsonx`, `strutil`) | No: people should write ordinary Python (section 3.3). |
 
 A flat list of names is imposed by section 15.3 (no dotted names), so there is
 no `plantuml.color`; `color` is the module name, and must not clash with
@@ -261,17 +290,17 @@ imported, section 15.4).
 
 Whatever is decided, the deliverable is a table in the user documentation, one
 row per `%` function, with four columns: *legacy*, *Python*, *differences*,
-*status* (covered, `puml`, module, dropped). Section 3 is its draft. A
+*status* (covered, recipe, `puml`, module, dropped). Section 3 is its draft. A
 function with a non-trivial difference (`%mod`, `%splitstr`, `%dec2hex`,
-`%size`, `%strlen` outside the BMP, `%date` patterns) deserves a test that
+`%size`, `%strlen` outside the BMP, `%date` patterns, the `%json_*` family) deserves a test that
 shows both results side by side.
 
 ## 7. Tests
 
-- Pure functions of a **shipped Python module**: scripts under
+- Pure functions of a **shipped Python module** (none yet): scripts under
   `src/test/resources/python/` with CPython as oracle (section 15.11).
 - Functions that must give **the same result as the legacy function**
-  (`darken`, `lighten`, `hsl_color`, `reverse_*`, `json*`): a **Vega** diagram
+  (`darken`, `lighten`, `hsl_color`, `reverse_*`, and the recipes of 3.5): a **Vega** diagram
   using both side by side, e.g. `!{color.darken("red", 20)}` and
   `%darken("red", 20)`, in a note or a label, with the same expected SVG. This
   is the cheapest way to guarantee non-regression for the colour functions.
@@ -284,14 +313,14 @@ shows both results side by side.
 ## 8. Order of work (proposal)
 
 1. Settle the open points of section 4 (time and random, markers, bool
-   formatting) and the module layout of section 5.
+   formatting).
 2. The legacy → Python table (documentation only; no code), including the
    differences of section 3.1.
 3. `puml` additions that are plain values: `filename`, `dirpath`, `filedate`,
    `theme`, the marker constants.
 4. `color` (the most used by libraries), with the side-by-side Vega tests.
-5. `jsonx` and `strutil` as the first **shipped Python modules**, which also
-   exercises the loading mechanism of section 15 on something small.
+5. The recipes of 3.5 in the user documentation (with the Vega test that
+   exists).
 6. `puml.getenv`, `puml.file_exists`, `puml.read` behind the security profile.
 7. The date/random decision implemented.
 
@@ -299,10 +328,7 @@ shows both results side by side.
 
 1. Time and randomness (4.1): keep the ban, or `puml.now/date/random` (with a
    seeded `random`)?
-2. Colours (3.3): a Java builtin module `color` that reuses `HColorSet`, or a
-   port to Python?
-3. Layout (section 5): one module `std`, or small modules by theme?
-4. Do we want the bridge to legacy variables (3.4), or is "the whole library
+2. Do we want the bridge to legacy variables (3.4), or is "the whole library
    moves at once" enough?
-5. `bool` printed in text (4.3): lower case in `!{...}`?
-6. Errors (4.4): always raise, including where the legacy function was lenient?
+3. `bool` printed in text (4.3): lower case in `!{...}`?
+4. Errors (4.4): always raise, including where the legacy function was lenient?
