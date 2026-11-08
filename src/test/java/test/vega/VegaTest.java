@@ -53,6 +53,10 @@ class VegaTest {
 	//   VEGA_FORCE_WRITE=true ./gradlew test --tests test.vega.VegaTest
 	//
 	// Always review the changes with "git diff" before committing.
+	//
+	// Each file has 60 seconds: a file that takes longer fails with
+	// "Vega timeout: <file> took more than 60 s", and the next ones run.
+	// VEGA_TIMEOUT_SECONDS changes the limit, 0 disables it (to debug a test).
 
 	public static final Path VEGA_RESOURCES = Paths.get("src", "test", "resources", "vega");
 
