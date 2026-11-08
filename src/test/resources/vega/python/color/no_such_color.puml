@@ -2,11 +2,12 @@
 output: svg
 expected-description: (Error)
 expected-status: 400
-expected-error-line: 3
+expected-error-line: 4
 expected-error-message: 'Python error: ValueError: No such color'
 ---
 @startuml
 ' EXPECT (preproc):
-' ERROR line 4: Python error: ValueError: No such color
-!emit("title " + color.darken("nocolor", 20))
+' ERROR line 5: Python error: ValueError: No such color
+!ratio = 20
+title !{color.darken("nocolor", ratio)}
 @enduml

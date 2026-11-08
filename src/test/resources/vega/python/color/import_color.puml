@@ -6,6 +6,6 @@ output: preproc, svg
 ' title #CC0000
 !python
 import color
-emit("title " + color.darken("red", 20))
 !endpy
+title !{color.darken("red", 20)}
 @enduml
