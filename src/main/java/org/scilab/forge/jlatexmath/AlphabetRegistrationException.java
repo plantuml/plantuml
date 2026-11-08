@@ -46,7 +46,7 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * Signals that an error occured while registering an alphabet
+ * Signals that an error occurred while registering an alphabet
  */
 public class AlphabetRegistrationException extends Exception {
 
