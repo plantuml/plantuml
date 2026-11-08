@@ -1,5 +1,12 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 3
+expected-error-message: 'Python error: OverflowError: integer overflow (this interpreter has 32-bit integers)'
+---
 @startuml
 ' EXPECT (preproc):
-' ERROR: OverflowError
+' ERROR: Python error: OverflowError: integer overflow (this interpreter has 32-bit integers)
 !x = 2 ** 31
 @enduml

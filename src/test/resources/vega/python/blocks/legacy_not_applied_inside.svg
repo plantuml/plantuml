@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="41px" preserveAspectRatio="none" style="width:170px;height:41px;background:#FFFFFF;" version="1.1" viewBox="0 0 170 41" width="170px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="41px" preserveAspectRatio="none" style="width:174px;height:41px;background:#FFFFFF;" version="1.1" viewBox="0 0 174 41" width="174px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <g class="title" data-source-line="3">
-      <text fill="#000" font-size="14" font-weight="700" textLength="143.15" x="10" y="20.889">include stays Python text</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="147" x="10" y="20.889">!include stays Python text</text>
     </g>
   </g>
 </svg>

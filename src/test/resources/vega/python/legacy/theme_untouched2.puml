@@ -1,3 +1,6 @@
+---
+output: svg
+---
 @startuml
 ' EXPECT (preproc):
 ' participant A

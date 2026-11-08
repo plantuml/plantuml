@@ -1,8 +1,11 @@
+---
+output: preproc, svg
+---
 @startuml
 ' EXPECT (preproc):
 ' title !include stays Python text
 !python
 s = "!include foo"
-emit("title " + s[1:8] + " stays Python text")
+emit("title " + s[0:8] + " stays Python text")
 !endpy
 @enduml
