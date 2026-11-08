@@ -46,6 +46,8 @@ final class PyDict {
 		}
 		if (k instanceof PyList || k instanceof PyDict)
 			throw PyOps.err(Types.TYPE_ERROR, "unhashable type: '" + PyOps.typeName(k) + "'");
+		if (PyOps.isNative(k) && ((PyInstance) k).type.lookup("__hash__") != null)
+			return new PyHashKey((PyInstance) k);
 		return k;
 	}
 

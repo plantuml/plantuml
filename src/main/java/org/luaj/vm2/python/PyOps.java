@@ -62,6 +62,8 @@ final class PyOps {
 			return Types.SLICE;
 		if (o instanceof PyView)
 			return ((PyView) o).type();
+		if (o instanceof PyNotImplemented)
+			return Types.NOT_IMPLEMENTED_TYPE;
 		return Types.ITERATOR;
 	}
 
@@ -527,7 +529,35 @@ final class PyOps {
 				return false;
 			return n == 0 || (x.start == y.start && (n == 1 || x.step == y.step));
 		}
+		if (isNative(a) || isNative(b)) {
+			// a == b runs a.__eq__(b), then b.__eq__(a) if it is missing or returns NotImplemented;
+			// only the classes written in Java have __eq__, the others compare by identity
+			Object r = callNative(a, "__eq__", b);
+			if (r == PyNotImplemented.INSTANCE)
+				r = callNative(b, "__eq__", a);
+			if (r != PyNotImplemented.INSTANCE)
+				return isTrue(r);
+		}
 		return false;
+	}
+
+	static boolean isNative(Object o) {
+		return o instanceof PyInstance && ((PyInstance) o).type.nativeClass;
+	}
+
+	/** Runs a special method of an instance of a native class: NotImplemented if there is none. */
+	static Object callNative(Object self, String method, Object... args) {
+		if (isNative(self)) {
+			final PyInstance instance = (PyInstance) self;
+			final Object fn = instance.type.lookup(method);
+			if (fn != null) {
+				final Object[] all = new Object[args.length + 1];
+				all[0] = instance;
+				System.arraycopy(args, 0, all, 1, args.length);
+				return instance.type.interp.call(fn, all);
+			}
+		}
+		return PyNotImplemented.INSTANCE;
 	}
 
 	private static boolean seqEq(Object[] x, Object[] y, int depth) {
@@ -615,8 +645,42 @@ final class PyOps {
 			return seqCompare(op, ((PyList) a).items.toArray(), ((PyList) b).items.toArray(), depth);
 		if (a instanceof PyTuple && b instanceof PyTuple)
 			return seqCompare(op, ((PyTuple) a).items, ((PyTuple) b).items, depth);
+		if (a instanceof PyInstance || b instanceof PyInstance) {
+			final Object r = orderUser(op, a, b);
+			if (r != PyNotImplemented.INSTANCE)
+				return isTrue(r);
+		}
 		throw err(Types.TYPE_ERROR, "'" + CMP_SYMBOLS[op] + "' not supported between instances of '" + typeName(a)
 				+ "' and '" + typeName(b) + "'");
+	}
+
+	private static final String[] ORDER_METHODS = { null, null, "__lt__", "__le__", "__gt__", "__ge__" };
+
+	/**
+	 * &lt;, &lt;=, &gt; and &gt;= between objects of classes of the program, as
+	 * CPython does: the method of the left operand (a.__lt__(b)), then, if it is
+	 * missing or returns NotImplemented, the reflected method of the right one
+	 * (b.__gt__(a)). Returns NotImplemented when neither answers, and the caller
+	 * raises the TypeError. There is no __eq__, so == and != stay identity.
+	 */
+	private static Object orderUser(int op, Object a, Object b) {
+		Object r = callOrder(a, ORDER_METHODS[op], b);
+		if (r != PyNotImplemented.INSTANCE)
+			return r;
+		// the reflected operator: a < b is b > a, a <= b is b >= a
+		final int reflected = op == Op.CMP_LT ? Op.CMP_GT : op == Op.CMP_GT ? Op.CMP_LT : op == Op.CMP_LE ? Op.CMP_GE
+				: Op.CMP_LE;
+		return callOrder(b, ORDER_METHODS[reflected], a);
+	}
+
+	private static Object callOrder(Object self, String method, Object other) {
+		if (self instanceof PyInstance) {
+			final PyInstance instance = (PyInstance) self;
+			final Object fn = instance.type.lookup(method);
+			if (fn != null)
+				return instance.type.interp.call(fn, instance, other);
+		}
+		return PyNotImplemented.INSTANCE;
 	}
 
 	private static boolean seqCompare(int op, Object[] x, Object[] y, int depth) {
@@ -1099,8 +1163,12 @@ final class PyOps {
 			sb.append("<class '").append(t.fullName()).append("'>");
 		} else if (o instanceof PyInstance) {
 			PyType t = ((PyInstance) o).type;
-			// CPython adds the address, which is not deterministic
-			sb.append('<').append(t.fullName()).append(" object>");
+			final String text = userText((PyInstance) o, "__repr__");
+			if (text != null)
+				sb.append(text);
+			else
+				// CPython adds the address, which is not deterministic
+				sb.append('<').append(t.fullName()).append(" object>");
 		} else if (o instanceof PyFunction) {
 			sb.append("<function ").append(((PyFunction) o).code.name).append('>');
 		} else if (o instanceof Builtin) {
@@ -1117,6 +1185,8 @@ final class PyOps {
 			}
 		} else if (o instanceof PyModule) {
 			sb.append("<module '").append(((PyModule) o).name).append("'>");
+		} else if (o instanceof PyNotImplemented) {
+			sb.append("NotImplemented");
 		} else if (o instanceof PySlice) {
 			PySlice s = (PySlice) o;
 			sb.append("slice(");
@@ -1136,7 +1206,28 @@ final class PyOps {
 			return (String) o;
 		if (o instanceof PyException)
 			return excText((PyException) o);
+		if (o instanceof PyInstance) {
+			// as object.__str__, which is repr(self) when the class has no __str__
+			final String text = userText((PyInstance) o, "__str__");
+			if (text != null)
+				return text;
+		}
 		return repr(o);
+	}
+
+	/**
+	 * The text a special method of the class of the program gives (__str__ or
+	 * __repr__), or null if the class has none. The method is run by the
+	 * interpreter of the class; what it returns must be a str.
+	 */
+	private static String userText(PyInstance o, String method) {
+		final Object fn = o.type.lookup(method);
+		if (fn == null)
+			return null;
+		final Object result = o.type.interp.call(fn, o);
+		if (result instanceof String == false)
+			throw err(Types.TYPE_ERROR, method + " returned non-string (type " + typeName(result) + ")");
+		return (String) result;
 	}
 
 	static String excText(PyException e) {
@@ -1217,11 +1308,24 @@ final class PyOps {
 			return new BoundMethod(self, (PyFunction) v);
 		if (v == Builtins.EXCEPTION_INIT || v == Builtins.OBJECT_INIT)
 			return new BoundMethod(self, (Builtin) v);
+		if (v instanceof Builtin && ((Builtin) v).isMethod)
+			return new BoundMethod(self, (Builtin) v); // a method of a native class
 		return v; // as in CPython, a builtin function stored in a class is not bound
+	}
+
+	/** The instances and the classes written in Java cannot be changed, as in CPython. */
+	private static void refuseNative(Object o, String name) {
+		if (o instanceof PyInstance && ((PyInstance) o).type.nativeClass)
+			throw err(Types.ATTRIBUTE_ERROR,
+					"attribute '" + name + "' of '" + ((PyInstance) o).type.fullName() + "' objects is not writable");
+		if (o instanceof PyType && ((PyType) o).nativeClass)
+			throw err(Types.TYPE_ERROR,
+					"cannot set '" + name + "' attribute of immutable type '" + ((PyType) o).fullName() + "'");
 	}
 
 	/** Attributes can be set on instances and classes of the program, and on exceptions. */
 	static void setattr(Object o, String name, Object v) {
+		refuseNative(o, name);
 		if (o instanceof PyInstance && ((PyInstance) o).type.isClass()) {
 			((PyInstance) o).attrs.put(name, v);
 		} else if (o instanceof PyException) {
@@ -1235,6 +1339,7 @@ final class PyOps {
 	}
 
 	static void delattr(Object o, String name) {
+		refuseNative(o, name);
 		Map<String, Object> attrs = null;
 		if (o instanceof PyInstance && ((PyInstance) o).type.isClass())
 			attrs = ((PyInstance) o).attrs;

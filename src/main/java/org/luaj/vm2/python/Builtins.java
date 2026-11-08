@@ -20,8 +20,11 @@ final class Builtins {
 		for (Builtin b : FUNCTIONS)
 			in.builtins.put(b.name, b);
 		in.builtins.put("type", Types.TYPE);
+		in.builtins.put("NotImplemented", PyNotImplemented.INSTANCE);
 		in.modules.put("math", MathLib.create());
 		in.modules.put("json", JsonLib.create());
+		in.modules.put("time", TimeLib.create());
+		in.modules.put("datetime", DatetimeLib.create(in));
 	}
 
 	private static final ArrayList<Builtin> FUNCTIONS = new ArrayList<Builtin>();
@@ -39,6 +42,8 @@ final class Builtins {
 			if (a[3] instanceof PyType == false)
 				throw PyOps.err(Types.TYPE_ERROR, "a class base must be a class, not '" + PyOps.typeName(a[3]) + "'");
 			parent = (PyType) a[3];
+			if (parent.nativeClass)
+				throw PyOps.err(Types.TYPE_ERROR, "subclassing the native class '" + parent.fullName() + "' is not supported");
 			if (parent.isClass() == false && parent.exception == false && parent != Types.OBJECT)
 				throw PyOps.err(Types.TYPE_ERROR, "subclassing the builtin type '" + parent.name + "' is not supported");
 		}
@@ -51,7 +56,9 @@ final class Builtins {
 		dict.put("__module__", module);
 		for (PyDict.Entry e : body.map.values())
 			dict.put((String) e.key, e.value);
-		return new PyType((String) a[1], parent, parent.exception, dict, (String) a[2], (String) module);
+		PyType type = new PyType((String) a[1], parent, parent.exception, dict, (String) a[2], (String) module);
+		type.interp = in;
+		return type;
 	});
 
 	/** BaseException.__init__(self, *args), for a class that calls it explicitly. */

@@ -226,8 +226,14 @@ final class Resolver {
 	}
 
 	private static void checkClassMember(String name, Node at) {
-		if (name.startsWith("__") && name.endsWith("__") && name.length() > 4 && name.equals("__init__") == false)
+		if (name.startsWith("__") && name.endsWith("__") && name.length() > 4 && isSupportedSpecial(name) == false)
 			throw error("special method or attribute '" + name + "' is not supported", at);
+	}
+
+	/** The special names a class body may define: the others are rejected rather than ignored. */
+	private static boolean isSupportedSpecial(String name) {
+		return name.equals("__init__") || name.equals("__str__") || name.equals("__repr__") || name.equals("__lt__")
+				|| name.equals("__le__") || name.equals("__gt__") || name.equals("__ge__");
 	}
 
 	private void defaults(Scope s, Node args) {

@@ -19,6 +19,21 @@ final class PyType {
 	 * builtin type.
 	 */
 	final String module;
+	/**
+	 * The interpreter that ran the class statement: a class belongs to one
+	 * interpreter state and never appears in another one, so an instance can ask
+	 * its class to run a special method (__str__, __repr__, ...) from code that
+	 * has no interpreter at hand, such as the static methods of PyOps. Null for a
+	 * builtin type.
+	 */
+	Interp interp;
+	/**
+	 * True for a class written in Java (datetime.date and datetime.datetime): its
+	 * instances cannot be modified, it cannot be subclassed or changed, and it
+	 * is the only kind of class that may have __eq__ and __hash__ (a class of
+	 * the program may not: the Resolver rejects them).
+	 */
+	boolean nativeClass;
 
 	PyType(String name, PyType parent, boolean exception) {
 		this(name, parent, exception, null, null, null);

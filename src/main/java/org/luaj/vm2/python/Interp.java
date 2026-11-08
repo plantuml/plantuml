@@ -217,6 +217,21 @@ public final class Interp {
 			Object r = invoke((PyFunction) init, withSelf(self, src, off, n), 0, n + 1, kwn, kwv);
 			if (r != PyNone.NONE)
 				throw PyOps.err(Types.TYPE_ERROR, "__init__() should return None, not '" + PyOps.typeName(r) + "'");
+		} else if (init instanceof Builtin && ((Builtin) init).isMethod) {
+			// the constructor of a native class
+			final Builtin b = (Builtin) init;
+			final Object[] args = withSelf(self, src, off, n);
+			Object r;
+			if (kwn == null || kwn.length == 0) {
+				r = b.call(this, args);
+			} else {
+				Map<String, Object> kw = new LinkedHashMap<String, Object>();
+				for (int i = 0; i < kwn.length; i++)
+					kw.put(kwn[i], kwv[i]);
+				r = b.callKw(this, args, kw);
+			}
+			if (r != null && r != PyNone.NONE)
+				throw PyOps.err(Types.TYPE_ERROR, "__init__() should return None, not '" + PyOps.typeName(r) + "'");
 		} else if (init == null || init == Builtins.OBJECT_INIT) {
 			if (n > 0 || (kwn != null && kwn.length > 0))
 				throw PyOps.err(Types.TYPE_ERROR, t.name + "() takes no arguments");
