@@ -114,41 +114,41 @@ public final class PythonLine {
 	}
 
 	/**
-	 * "!x = 1", "!x += 1", "!f(1)", "!a.b(1)", "!a[0] = 1": an identifier
-	 * directly after the bang, followed by a call, an attribute, an index or an
-	 * assignment. To be tested after every legacy directive.
+	 * The words that are never Python after "!", for {@link #isStatementLine}:
+	 * the Python block markers, the legacy preprocessor directives and the
+	 * diagram commands that start with "!". A line that starts with one of them
+	 * is not taken for Python even when its legacy pattern did not match it (for
+	 * instance "!define 4K(...)", whose name starts with a digit, or
+	 * "!pragma teoz true", which the diagram reads).
+	 */
+	private static final String[] NOT_PYTHON_WORDS = { "python", "endpy", "define", "definelong", "enddefinelong", "undef", "ifdef",
+			"ifndef", "if", "elseif", "else", "endif", "while", "endwhile", "foreach", "endfor", "function",
+			"procedure", "unquoted", "final", "end", "endfunction", "endprocedure", "return", "include",
+			"includeurl", "include_many", "include_once", "include_sprites", "includedef", "includesub", "import",
+			"startsub", "endsub", "theme", "log", "dump_memory", "option", "assert", "local", "pragma", "assume",
+			"exit" };
+
+	/**
+	 * The last rule (section 11.4 of PYTHON_PREPROCESSOR.md): a "!" followed
+	 * directly (no blank) by an identifier, a digit, "(" or "[" is Python:
+	 * "!x = 1", "!x == 1", "!f(1)", "!1 + 1", "!(a, b) = c", "![1, 2]". The words
+	 * of {@link #NOT_PYTHON_WORDS} are excluded. To be tested after every legacy
+	 * directive.
 	 */
 	public static boolean isStatementLine(String s) {
 		final int i = afterBang(s);
-		if (i < 0 || i != s.indexOf('!') + 1)
-			return false;
-		final int end = identifierEnd(s, i);
-		if (end == i)
-			return false;
-		final char c = end < s.length() ? s.charAt(end) : '\0';
-		if (c == '(' || c == '.' || c == '[')
-			return true;
-		return isAssignmentAt(s, skipSpaces(s, end));
-	}
-
-	/** "=" (not "=="), or an augmented assignment: "+=", "//=", "<<=", ... */
-	private static boolean isAssignmentAt(String s, int i) {
-		if (i >= s.length())
+		if (i < 0 || i != s.indexOf('!') + 1 || i >= s.length())
 			return false;
 		final char c = s.charAt(i);
-		if (c == '=')
-			return i + 1 >= s.length() || s.charAt(i + 1) != '=';
-		int op = 0;
-		if (c == '*' || c == '/' || c == '<' || c == '>') {
-			// doubled operators: "**=", "//=", "<<=", ">>="
-			if (i + 1 < s.length() && s.charAt(i + 1) == c)
-				op = 2;
-			else if (c == '*' || c == '/')
-				op = 1;
-		} else if ("+-%&|^".indexOf(c) != -1) {
-			op = 1;
-		}
-		return op > 0 && i + op < s.length() && s.charAt(i + op) == '=';
+		if (c == '(' || c == '[' || (c >= '0' && c <= '9'))
+			return true;
+		if (isIdentifierStart(c) == false)
+			return false;
+		final String word = s.substring(i, identifierEnd(s, i));
+		for (String excluded : NOT_PYTHON_WORDS)
+			if (excluded.equals(word))
+				return false;
+		return true;
 	}
 
 	private static boolean endsWithColon(String s) {

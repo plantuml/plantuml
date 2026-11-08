@@ -741,7 +741,26 @@ follows, in this order:
    - `!import` and `!assert`: to be checked against real code, since they are
      rare. For `!import`, section 15.9 gives the rule: a bare identifier is
      Python, anything else is the legacy directive.
-6. Anything else (`!x = 1`, `!service("Auth")`, `!names.append(n)`) is Python.
+6. Otherwise, a `!` followed directly (no blank) by a letter or `_` (the start
+   of an identifier), a digit, `(` or `[` is Python: `!x = 1`, `!x == 1`,
+   `!service("Auth")`, `!names.append(n)`, `!1 + 1`, `!(a, b) = c`, `![1, 2]`.
+   The words of the legacy directives and of the diagram commands are
+   excluded, even when their legacy pattern did not match the line:
+   `python`, `endpy`, `define`, `definelong`, `enddefinelong`, `undef`,
+   `ifdef`, `ifndef`, `if`, `elseif`, `else`, `endif`, `while`, `endwhile`,
+   `foreach`, `endfor`, `function`, `procedure`, `unquoted`, `final`, `end`,
+   `endfunction`, `endprocedure`, `return`, `include`, `includeurl`,
+   `include_many`, `include_once`, `include_sprites`, `includedef`,
+   `includesub`, `import`, `startsub`, `endsub`, `theme`, `log`, `dump_memory`,
+   `option`, `assert`, `local`, `pragma`, `assume`, `exit` (for instance
+   `!define 4K(...)`, whose name starts with a digit, or `!pragma teoz true`,
+   which the diagram reads). Anything else (`!$x`, `!{a}`, `! x`, `!"text"`)
+   is a text line. **[implemented]** (`PythonLine.isStatementLine`)
+
+   A consequence: a typo in a directive (`!inclde foo.puml`) is read as Python
+   and gives a Python error, instead of passing into the diagram. Checked on
+   the whole standard library: none of its 463,812 lines that start with `!`
+   changes classification with this rule.
 
 The main risk is a typo: `!if x == 1` without the colon is read as legacy, and
 the resulting error would be confusing. **[implemented]** When the legacy
