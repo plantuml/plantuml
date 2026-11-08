@@ -1,0 +1,4 @@
+@startuml
+title foo / unknown
+Alice -> Bob : hello
+@enduml

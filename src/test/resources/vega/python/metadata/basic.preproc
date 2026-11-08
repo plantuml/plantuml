@@ -1,0 +1,4 @@
+@startuml
+title foo v3.5 by Shakespear
+Alice -> Bob : hello
+@enduml

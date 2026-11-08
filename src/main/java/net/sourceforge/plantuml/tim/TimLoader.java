@@ -66,6 +66,11 @@ public class TimLoader {
 		}
 	}
 
+	/** The YAML header of the diagram, which Python reads as puml.metadata. */
+	public void setYamlHeader(List<StringLocated> yamlHeader) {
+		this.context.setYamlHeader(yamlHeader);
+	}
+
 	public Set<File> load(List<StringLocated> list) {
 //		CodeIteratorImpl.indentNow(list);
 		try {

@@ -1,0 +1,17 @@
+---
+output: preproc, svg
+---
+@startuml
+---
+zebra: 1
+apple: 2
+mango: 3
+---
+' EXPECT (preproc):
+' note over Alice : zebra=1
+' note over Alice : apple=2
+' note over Alice : mango=3
+participant Alice
+!for k, v in puml.metadata.items():
+    note over Alice : !{k}=!{v}
+@enduml

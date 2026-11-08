@@ -75,6 +75,8 @@ import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
+import net.sourceforge.plantuml.yaml.parser.MonomorphToPlain;
+import net.sourceforge.plantuml.yaml.parser.YamlParser;
 import net.sourceforge.plantuml.preproc.Sub;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
@@ -382,6 +384,13 @@ public class TContext {
 		this.arguments = arguments;
 	}
 
+	/** The lines of the YAML header of the diagram: puml.metadata of Python. */
+	private List<StringLocated> yamlHeader = new ArrayList<StringLocated>();
+
+	public void setYamlHeader(List<StringLocated> yamlHeader) {
+		this.yamlHeader = yamlHeader;
+	}
+
 	/** True once the diagram is known to contain Python code (a chunk was found). */
 	private boolean hasPython;
 
@@ -389,7 +398,7 @@ public class TContext {
 	private final Map<StringLocated, List<StringLocated>> pythonSources = new IdentityHashMap<>();
 
 	/** The Python state of the diagram, created when first needed (a Python chunk or a !{expr}). */
-	private PythonRunner python() {
+	private PythonRunner python() throws EaterException {
 		if (python == null) {
 			final Map<String, String> diagram = new LinkedHashMap<>();
 			for (String key : new String[] { "filename", "dirpath", "filedate" }) {
@@ -397,13 +406,38 @@ public class TContext {
 				diagram.put(key, value == null ? "" : value);
 			}
 			diagram.put("xargs", getXargs().orElse(""));
-			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments, diagram,
+			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments, parseYamlHeader(), diagram,
 					() -> themeMetadataAsStrings(), name -> readResource(name),
 					warning -> preprocessingArtifact.addWarning(warning), name -> functionsSet.doesFunctionExist(name));
 			// and the other way round: a legacy function may not take the name of a macro
 			functionsSet.setReservedNames(name -> python.isMacro(name));
 		}
 		return python;
+	}
+
+	/**
+	 * The YAML header read as plain values (a map of strings, lists and maps), parsed
+	 * only when Python needs it. An invalid header is an error on its first line.
+	 */
+	private Map<String, Object> parseYamlHeader() throws EaterException {
+		final Map<String, Object> empty = new LinkedHashMap<String, Object>();
+		if (yamlHeader.isEmpty())
+			return empty;
+		final List<String> lines = new ArrayList<String>();
+		for (StringLocated line : yamlHeader)
+			lines.add(line.getString());
+		try {
+			final Object result = MonomorphToPlain.convert(new YamlParser().parse(lines));
+			if (result instanceof Map == false)
+				throw new EaterException("The YAML header must be a map of keys and values", yamlHeader.get(0));
+			@SuppressWarnings("unchecked")
+			final Map<String, Object> map = (Map<String, Object>) result;
+			return map;
+		} catch (EaterException e) {
+			throw e;
+		} catch (RuntimeException e) {
+			throw new EaterException("Invalid YAML header: " + e.getMessage(), yamlHeader.get(0));
+		}
 	}
 
 	/**

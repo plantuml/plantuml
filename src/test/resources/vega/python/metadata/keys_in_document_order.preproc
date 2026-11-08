@@ -1,0 +1,6 @@
+@startuml
+participant Alice
+note over Alice : zebra=1
+note over Alice : apple=2
+note over Alice : mango=3
+@enduml

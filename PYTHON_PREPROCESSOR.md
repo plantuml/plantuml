@@ -1250,6 +1250,36 @@ Level 1, read the environment:
   `str`: the first line of the diagram, `@startuml` included
   (`"@startuml foo bar"`). **[implemented]**
 
+- `puml.metadata`: the YAML header of the diagram, as a dict. **[implemented]**
+  The header is the block between two `---` lines placed right after the
+  `@startuml` line:
+
+  ```plantuml
+  @startuml
+  ---
+  name: foo
+  author: Shakespear
+  version: 3.5
+  ---
+  title !{puml.metadata["name"]} v!{puml.metadata["version"]}
+  @enduml
+  ```
+
+  Every scalar is a `str`, whatever it looks like (`version` is `"3.5"`, not a
+  float, and `true` is `"true"`): a script converts with `float(...)` if needed.
+  Maps become dicts and lists become lists, keys keep the order of the header.
+  Without a header the dict is empty, so `puml.metadata.get("name", "?")` is
+  always safe. The header is removed from the text before the diagram is read
+  (as it already was), and it is parsed only when the interpreter is created: a
+  diagram without Python pays nothing, and an invalid header is an error
+  (`Invalid YAML header: ...`, `The YAML header must be a map of keys and
+  values`) reported on the line that first needed Python. Only the diagram's own
+  header counts, not an `!include`d file. Parser: `YamlParser`, converted by
+  `MonomorphToPlain`; the limits of `YamlParser` apply (no list of lists, block
+  scalars are approximate). The `-D` arguments (`puml.args`) and the header are
+  independent. Tests: `vega/python/metadata`. Not done: the C edition
+  (`PSystemBuilderC`) does not strip the header.
+
 Level 2, data:
 
 - `json.loads` / `json.dumps` from a builtin `json` module (`%load_json` is a

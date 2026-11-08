@@ -71,7 +71,9 @@ import net.sourceforge.plantuml.text.StringLocated;
  * strings, so are <code>puml.filename</code>, <code>puml.dirpath</code> and
  * <code>puml.filedate</code> (the values of <code>%filename()</code>,
  * <code>%dirpath()</code> and <code>%filedate()</code>, empty when unknown),
- * <code>puml.theme()</code> is a dict (the metadata of the current theme), <code>puml.args</code> is a dict of the variables defined from outside.
+ * <code>puml.theme()</code> is a dict (the metadata of the current theme), <code>puml.args</code> is a dict of the variables defined from outside,
+ * <code>puml.metadata</code> a dict read from the YAML header of the diagram
+ * (<code>---</code> lines after <code>@startuml</code>; every scalar is a str).
  */
 final class PythonRunner {
 
@@ -83,7 +85,8 @@ final class PythonRunner {
 	private int chunkCount;
 	private final PythonMacros macros;
 
-	PythonRunner(String version, Map<String, String> arguments, Map<String, String> diagram,
+	PythonRunner(String version, Map<String, String> arguments, Map<String, Object> metadata,
+			Map<String, String> diagram,
 			Supplier<Map<String, String>> theme, Function<String, String> resources, Consumer<Warning> warnings,
 			PythonMacros.LegacyNames legacyNames) {
 		// What print() writes is dropped: whether print is an alias of emit is
@@ -97,6 +100,7 @@ final class PythonRunner {
 		puml.putString("version", version == null ? "" : version);
 		puml.putString("edition", TeaVM.isC() ? "c" : TeaVM.isJavaScript() ? "js" : "jar");
 		puml.putStringMap("args", arguments);
+		puml.putPlain("metadata", metadata);
 		// where the diagram comes from: "" when unknown (stdin), as %filename() and the others
 		puml.putString("filename", diagram.get("filename"));
 		puml.putString("dirpath", diagram.get("dirpath"));
