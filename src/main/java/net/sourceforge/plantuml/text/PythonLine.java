@@ -34,6 +34,11 @@
  */
 package net.sourceforge.plantuml.text;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Tells a legacy preprocessor line from a Python line, by hand (no regex).
  * Every line given here is already known to contain a <code>!</code>; the
@@ -60,8 +65,26 @@ public final class PythonLine {
 		return i >= 0 && i < s.length() && s.charAt(i) == '@';
 	}
 
-	private static final String[] PYTHON_KEYWORDS = { "def", "for", "try", "pass", "lambda", "del", "raise", "global",
-			"nonlocal", "elif", "except", "break", "continue", "class" };
+	private static final Set<String> PYTHON_KEYWORDS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+			"def", "for", "try", "pass", "lambda", "del", "raise", "global", "nonlocal", "elif", "except", "break",
+			"continue", "class")));
+
+	/**
+	 * A word that only exists in Python ("!def", "!for", ...), or a word that
+	 * exists in both languages ("!if", "!while", "!else") on a line that ends
+	 * with a colon.
+	 */
+	public static boolean isKeywordLine(String s) {
+		final int i = afterBang(s);
+		if (i < 0)
+			return false;
+		final String word = s.substring(i, identifierEnd(s, i));
+		if (PYTHON_KEYWORDS.contains(word))
+			return true;
+		if (word.equals("if") || word.equals("while") || word.equals("else"))
+			return endsWithColon(s);
+		return false;
+	}
 
 	/** "!$x = 1", "!local $x = 1" and "!x ?= 1" are legacy. "!x = 1" is not. */
 	public static boolean isLegacyAffectation(String s) {
@@ -95,23 +118,6 @@ public final class PythonLine {
 		return dollar || explicitScope;
 	}
 
-	/**
-	 * A word that only exists in Python ("!def", "!for", ...), or a word that
-	 * exists in both languages ("!if", "!while", "!else") on a line that ends
-	 * with a colon.
-	 */
-	public static boolean isKeywordLine(String s) {
-		final int i = afterBang(s);
-		if (i < 0)
-			return false;
-		final String word = s.substring(i, identifierEnd(s, i));
-		for (String k : PYTHON_KEYWORDS)
-			if (k.equals(word))
-				return true;
-		if (word.equals("if") || word.equals("while") || word.equals("else"))
-			return endsWithColon(s);
-		return false;
-	}
 
 	/**
 	 * The words that are never Python after "!", for {@link #isStatementLine}:
@@ -121,12 +127,12 @@ public final class PythonLine {
 	 * instance "!define 4K(...)", whose name starts with a digit, or
 	 * "!pragma teoz true", which the diagram reads).
 	 */
-	private static final String[] NOT_PYTHON_WORDS = { "python", "endpy", "define", "definelong", "enddefinelong", "undef", "ifdef",
-			"ifndef", "if", "elseif", "else", "endif", "while", "endwhile", "foreach", "endfor", "function",
-			"procedure", "unquoted", "final", "end", "endfunction", "endprocedure", "return", "include",
-			"includeurl", "include_many", "include_once", "include_sprites", "includedef", "includesub", "import",
-			"startsub", "endsub", "theme", "log", "dump_memory", "option", "assert", "local", "pragma", "assume",
-			"exit" };
+	private static final Set<String> NOT_PYTHON_WORDS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+			"python", "endpy", "define", "definelong", "enddefinelong", "undef", "ifdef", "ifndef", "if", "elseif",
+			"else", "endif", "while", "endwhile", "foreach", "endfor", "function", "procedure", "unquoted", "final",
+			"end", "endfunction", "endprocedure", "return", "include", "includeurl", "include_many", "include_once",
+			"include_sprites", "includedef", "includesub", "import", "startsub", "endsub", "theme", "log",
+			"dump_memory", "option", "assert", "local", "pragma", "assume", "exit")));
 
 	/**
 	 * The last rule (section 11.4 of PYTHON_PREPROCESSOR.md): a "!" followed
@@ -145,10 +151,7 @@ public final class PythonLine {
 		if (isIdentifierStart(c) == false)
 			return false;
 		final String word = s.substring(i, identifierEnd(s, i));
-		for (String excluded : NOT_PYTHON_WORDS)
-			if (excluded.equals(word))
-				return false;
-		return true;
+		return NOT_PYTHON_WORDS.contains(word) == false;
 	}
 
 	private static boolean endsWithColon(String s) {
