@@ -1,0 +1,7 @@
+!procedure $decl($n)
+participant $n
+!endprocedure
+!$greeting = "hello"
+!startsub EXTRA
+participant Extra
+!endsub

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="130px" preserveAspectRatio="none" style="width:91px;height:130px;background:#FFFFFF;" version="1.1" viewBox="0 0 91 130" width="91px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="P" data-source-line="5" id="part1-lifeline">
+      <g>
+        <title>f.2. . 3</title>
+        <rect fill="#000" fill-opacity="0" height="51" width="8" x="41.703" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="45.203" x2="45.203" y1="39" y2="90"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="P" data-source-line="5" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.925" x="19.741" y="10"/>
+      <text fill="#000" font-size="14" textLength="36.925" x="26.741" y="27.889">f(2) = 3</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="P" data-source-line="5" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.925" x="19.741" y="90"/>
+      <text fill="#000" font-size="14" textLength="36.925" x="26.741" y="107.889">f(2) = 3</text>
+    </g>
+    <path d="M15,52 L15,75 L75,75 L75,62 L65,52 L15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M65,52 L65,62 L75,62 L65,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="39.406" x="21" y="67.111">y = 4, 11</text>
+  </g>
+</svg>

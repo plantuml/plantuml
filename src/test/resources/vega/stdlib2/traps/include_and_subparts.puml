@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+!include include_and_subparts.iuml
+!includesub include_and_subparts.iuml!EXTRA
+$decl(Main)
+Main -> Extra : $greeting
+@enduml
