@@ -148,6 +148,16 @@ Accepted:
   inheritance**. The base is `object`, a class of the program or an exception
   class (`class MyError(ValueError):`), which gives user-defined exceptions;
 - `__init__`, methods, bound methods (`m = obj.f; m()`), `A.f(obj)`;
+- `__str__` and `__repr__` **[implemented]**: `str(x)`, `repr(x)`, f-strings
+  (`{x}`, `{x!r}`), `format(x)`, `"%s"` and `"%r"`, `"{}".format(x)`, `!{x}` and
+  the `repr` of a list, tuple or dict that holds `x` run them. A class without
+  `__str__` has the text of its `__repr__` (CPython's `object.__str__`), and
+  one with neither has `<module.Class object>` (CPython adds an address, which
+  is not deterministic). What they return must be a `str` (`TypeError`
+  otherwise). They are inherited and can be called (`x.__str__()`,
+  `Base.__str__(self)`). The instance asks its class to run the method: a class
+  holds the interpreter that ran its `class` statement (`PyType.interp`), so the
+  static methods of `PyOps` need no interpreter at hand;
 - instance attributes (`self.x = 1`, `self.x += 1`, `del self.x`) and class
   attributes, read through the instance or the class, and set on the class
   (`A.count += 1`);
@@ -169,9 +179,9 @@ compiled as a function that returns its locals as a dict).
 
 Rejected (syntax error):
 
-- special methods and attributes other than `__init__` (`__str__`, `__repr__`,
-  `__eq__`, `__lt__`, `__add__`, `__len__`, `__slots__`, ...): they are
-  rejected rather than silently ignored;
+- special methods and attributes other than `__init__`, `__str__` and
+  `__repr__` (`__eq__`, `__hash__`, `__lt__`, `__add__`, `__len__`,
+  `__slots__`, ...): they are rejected rather than silently ignored;
 - `super()`: call the base class explicitly instead, `Base.f(self, ...)`;
 - multiple inheritance, keyword arguments in the bases (`metaclass=`);
 - `@staticmethod`, `@classmethod`, `@property` (section 3.5);
@@ -1086,10 +1096,8 @@ copies from one state to the other: a class belongs to the state that ran its
 `class` statement and must never appear in another one. `json.dumps` already
 refuses an instance, with CPython's message.
 
-`puml.emit` takes a string only (anything else is a `TypeError`). Until the
-special methods exist (section 16), `str()` of an instance gives no useful text
-(`<palette.Box object>`): a library gives its objects an explicit method that
-returns or emits their text.
+`puml.emit` takes a string only (anything else is a `TypeError`): a library
+gives its objects a `__str__` (section 3.4) and writes `puml.emit(str(box))`.
 
 Level 0, generate text (essential):
 
@@ -1621,11 +1629,9 @@ Interpreter:
   scripts (section 10).
 - Additional builtins and methods as needs appear; speed (caching of globals, a
   `LOAD_METHOD` instruction, less boxing).
-- Classes, next steps: the special methods (`__str__`, `__repr__`, `__eq__`,
-  `__lt__`, operators, ...). They need the `Interp` in `PyOps.repr`, `eq`,
-  `binary` and the comparisons, which are static today and cannot call Python
-  code. `__str__` and `__repr__` come first: without them a library object has
-  no text form for `puml.emit` (section 13.1). Then possibly `super()` (it
+- Classes, next steps: the special methods other than `__str__` and
+  `__repr__` (`__eq__` and `__hash__`, the operators, `__len__`, ...); the
+  ordering ones are decided (section 3.4). Then possibly `super()` (it
   needs the `__class__` cell), `@staticmethod` / `@classmethod` / `@property`,
   and `getattr` / `setattr` / `hasattr`.
 - Whether the `README.md` of the test resources and the leftovers of the Lua

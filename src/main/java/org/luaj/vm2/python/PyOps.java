@@ -1099,8 +1099,12 @@ final class PyOps {
 			sb.append("<class '").append(t.fullName()).append("'>");
 		} else if (o instanceof PyInstance) {
 			PyType t = ((PyInstance) o).type;
-			// CPython adds the address, which is not deterministic
-			sb.append('<').append(t.fullName()).append(" object>");
+			final String text = userText((PyInstance) o, "__repr__");
+			if (text != null)
+				sb.append(text);
+			else
+				// CPython adds the address, which is not deterministic
+				sb.append('<').append(t.fullName()).append(" object>");
 		} else if (o instanceof PyFunction) {
 			sb.append("<function ").append(((PyFunction) o).code.name).append('>');
 		} else if (o instanceof Builtin) {
@@ -1136,7 +1140,28 @@ final class PyOps {
 			return (String) o;
 		if (o instanceof PyException)
 			return excText((PyException) o);
+		if (o instanceof PyInstance) {
+			// as object.__str__, which is repr(self) when the class has no __str__
+			final String text = userText((PyInstance) o, "__str__");
+			if (text != null)
+				return text;
+		}
 		return repr(o);
+	}
+
+	/**
+	 * The text a special method of the class of the program gives (__str__ or
+	 * __repr__), or null if the class has none. The method is run by the
+	 * interpreter of the class; what it returns must be a str.
+	 */
+	private static String userText(PyInstance o, String method) {
+		final Object fn = o.type.lookup(method);
+		if (fn == null)
+			return null;
+		final Object result = o.type.interp.call(fn, o);
+		if (result instanceof String == false)
+			throw err(Types.TYPE_ERROR, method + " returned non-string (type " + typeName(result) + ")");
+		return (String) result;
 	}
 
 	static String excText(PyException e) {

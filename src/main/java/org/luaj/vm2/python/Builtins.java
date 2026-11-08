@@ -52,7 +52,9 @@ final class Builtins {
 		dict.put("__module__", module);
 		for (PyDict.Entry e : body.map.values())
 			dict.put((String) e.key, e.value);
-		return new PyType((String) a[1], parent, parent.exception, dict, (String) a[2], (String) module);
+		PyType type = new PyType((String) a[1], parent, parent.exception, dict, (String) a[2], (String) module);
+		type.interp = in;
+		return type;
 	});
 
 	/** BaseException.__init__(self, *args), for a class that calls it explicitly. */

@@ -19,6 +19,14 @@ final class PyType {
 	 * builtin type.
 	 */
 	final String module;
+	/**
+	 * The interpreter that ran the class statement: a class belongs to one
+	 * interpreter state and never appears in another one, so an instance can ask
+	 * its class to run a special method (__str__, __repr__, ...) from code that
+	 * has no interpreter at hand, such as the static methods of PyOps. Null for a
+	 * builtin type.
+	 */
+	Interp interp;
 
 	PyType(String name, PyType parent, boolean exception) {
 		this(name, parent, exception, null, null, null);

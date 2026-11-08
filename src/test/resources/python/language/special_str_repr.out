@@ -1,0 +1,18 @@
+Point(1, 2) Point(1, 2) Point(1, 2)
+Named('bob') <bob> <bob>
+only str
+Point(1, 2) | Point(1, 2) | <bob> | Named('bob')
+<bob> | Named('bob') | <bob> | Point(1, 2)
+<bob> Named('bob') <bob> Point(1, 2) Point(1, 2)
+<bob> Point(1, 2) <bob>
+[Point(1, 2), Named('bob')] (Point(1, 2), Named('bob')) {'k': Point(1, 2), 'j': Named('bob')}
+[Point(1, 2), Named('bob')] (Point(1, 2), Named('bob'))
+Point(1, 2), <bob>, only str
+<kid> Named('kid') <SHOUT> Named('shout')
+<bob> Point(1, 2) <bob>
+[[Point(1, 2)], [Named('bob'), [Point(1, 2)]]]
+11 <bob>! True True
+TypeError
+TypeError
+TypeError
+Wrap(Wrap(Point(1, 2))) [Wrap(Named('bob'))]

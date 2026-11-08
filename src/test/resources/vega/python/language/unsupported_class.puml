@@ -3,12 +3,12 @@ output: svg
 expected-description: (Error)
 expected-status: 400
 expected-error-line: 4
-expected-error-message: 'Python syntax error: special method or attribute '__str__' is not supported (column 5)'
+expected-error-message: 'Python syntax error: special method or attribute '__eq__' is not supported (column 5)'
 ---
 @startuml
 ' EXPECT (preproc):
-' ERROR: Python syntax error: special method or attribute '__str__' is not supported (column 5)
+' ERROR: Python syntax error: special method or attribute '__eq__' is not supported (column 5)
 !class A:
-!    def __str__(self):
-!        return "a"
+!    def __eq__(self, other):
+!        return True
 @enduml

@@ -1,0 +1,29 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the text of an object is its __str__, and its __repr__ in a list
+' participant "Alice (admin)" as alice
+' title Alice (admin) | [User('Alice', True)] | <__main__.Plain object>
+!python
+class User:
+    def __init__(self, name, admin):
+        self.name = name
+        self.admin = admin
+
+    def __str__(self):
+        return self.name + (" (admin)" if self.admin else "")
+
+    def __repr__(self):
+        return "User(%r, %r)" % (self.name, self.admin)
+
+
+class Plain:
+    pass
+
+
+u = User("Alice", True)
+!endpy
+participant "!{u}" as alice
+title !{u} | !{[u]} | !{Plain()}
+@enduml
