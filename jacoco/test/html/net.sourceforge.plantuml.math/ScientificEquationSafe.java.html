@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -57,56 +58,67 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class ScientificEquationSafe {
 
+	/** Formula: black, white in dark mode. */
+<span class="fc" id="L62">	public static final HColor DEFAULT_FOREGROUND = HColors.BLACK.withDark(HColors.WHITE);</span>
+
+	/**
+	 * Box and page behind a formula: white, and in dark mode the same #1B1B1B as the
+	 * background of the other diagrams (document, in the dark part of plantuml.skin),
+	 * not pure black.
+	 */
+<span class="fc" id="L69">	public static final HColor DEFAULT_BACKGROUND = HColors.WHITE</span>
+<span class="fc" id="L70">			.withDark(HColorSet.instance().getColorOrWhite(&quot;#1B1B1B&quot;));</span>
+
 	private final ScientificEquation equation;
 	private final String formula;
 
 	private MathDrawing drawing;
 	private boolean drawingDone;
 
-<span class="fc" id="L66">	private ScientificEquationSafe(String formula, ScientificEquation equation) {</span>
-<span class="fc" id="L67">		this.formula = formula;</span>
-<span class="fc" id="L68">		this.equation = equation;</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L78">	private ScientificEquationSafe(String formula, ScientificEquation equation) {</span>
+<span class="fc" id="L79">		this.formula = formula;</span>
+<span class="fc" id="L80">		this.equation = equation;</span>
+<span class="fc" id="L81">	}</span>
 
 	public static ScientificEquationSafe fromAsciiMath(String formula) {
 		try {
-<span class="fc" id="L73">			return new ScientificEquationSafe(formula, new AsciiMath(formula));</span>
-<span class="nc" id="L74">		} catch (Exception e) {</span>
-<span class="nc" id="L75">			Logme.error(e);</span>
-<span class="nc" id="L76">			Log.info(() -&gt; &quot;Error parsing &quot; + formula);</span>
-<span class="nc" id="L77">			return new ScientificEquationSafe(formula, null);</span>
+<span class="fc" id="L85">			return new ScientificEquationSafe(formula, new AsciiMath(formula));</span>
+<span class="nc" id="L86">		} catch (Exception e) {</span>
+<span class="nc" id="L87">			Logme.error(e);</span>
+<span class="nc" id="L88">			Log.info(() -&gt; &quot;Error parsing &quot; + formula);</span>
+<span class="nc" id="L89">			return new ScientificEquationSafe(formula, null);</span>
 		}
 	}
 
 	public static ScientificEquationSafe fromLatex(String formula) {
 		try {
-<span class="fc" id="L83">			return new ScientificEquationSafe(formula, new LatexBuilder(formula));</span>
-<span class="nc" id="L84">		} catch (Exception e) {</span>
-<span class="nc" id="L85">			Logme.error(e);</span>
-<span class="nc" id="L86">			Log.info(() -&gt; &quot;Error parsing &quot; + formula);</span>
-<span class="nc" id="L87">			return new ScientificEquationSafe(formula, null);</span>
+<span class="fc" id="L95">			return new ScientificEquationSafe(formula, new LatexBuilder(formula));</span>
+<span class="nc" id="L96">		} catch (Exception e) {</span>
+<span class="nc" id="L97">			Logme.error(e);</span>
+<span class="nc" id="L98">			Log.info(() -&gt; &quot;Error parsing &quot; + formula);</span>
+<span class="nc" id="L99">			return new ScientificEquationSafe(formula, null);</span>
 		}
 	}
 
 	/** The formula, or null if it cannot be made (the source is then shown as text). */
 	private MathDrawing getDrawing(StringBounder stringBounder) {
-<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (drawingDone == false) {</span>
-<span class="fc" id="L94">			drawingDone = true;</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (equation != null)</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (drawingDone == false) {</span>
+<span class="fc" id="L106">			drawingDone = true;</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">			if (equation != null)</span>
 				try {
-<span class="fc" id="L97">					drawing = equation.getDrawing(stringBounder);</span>
-<span class="fc" id="L98">				} catch (Exception e) {</span>
-<span class="fc" id="L99">					printTrace(e);</span>
-<span class="fc" id="L100">				}</span>
+<span class="fc" id="L109">					drawing = equation.getDrawing(stringBounder);</span>
+<span class="fc" id="L110">				} catch (Exception e) {</span>
+<span class="fc" id="L111">					printTrace(e);</span>
+<span class="fc" id="L112">				}</span>
 		}
-<span class="fc" id="L102">		return drawing;</span>
+<span class="fc" id="L114">		return drawing;</span>
 	}
 
 	public XDimension2D getDimension(StringBounder stringBounder) {
-<span class="fc" id="L106">		final MathDrawing result = getDrawing(stringBounder);</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (result != null)</span>
-<span class="fc" id="L108">			return result.getDimension();</span>
-<span class="fc" id="L109">		return getRollback().calculateDimension(stringBounder);</span>
+<span class="fc" id="L118">		final MathDrawing result = getDrawing(stringBounder);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L120">			return result.getDimension();</span>
+<span class="fc" id="L121">		return getRollback().calculateDimension(stringBounder);</span>
 	}
 
 	/**
@@ -116,62 +128,62 @@ public class ScientificEquationSafe {
 	 * @param background the color behind the formula, null for none
 	 */
 	public void drawU(UGraphic ug, HColor foreground, HColor background) {
-<span class="fc" id="L119">		final MathDrawing result = getDrawing(ug.getStringBounder());</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L121">			getRollback().drawU(ug);</span>
-<span class="fc" id="L122">			return;</span>
+<span class="fc" id="L131">		final MathDrawing result = getDrawing(ug.getStringBounder());</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L133">			getRollback().drawU(ug);</span>
+<span class="fc" id="L134">			return;</span>
 		}
-<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (background != null) {</span>
-<span class="fc" id="L125">			final XDimension2D dim = result.getDimension();</span>
-<span class="fc" id="L126">			ug.apply(HColors.transparent()).apply(background.bg())</span>
-<span class="fc" id="L127">					.draw(URectangle.build(dim.getWidth(), dim.getHeight()));</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (background != null) {</span>
+<span class="fc" id="L137">			final XDimension2D dim = result.getDimension();</span>
+<span class="fc" id="L138">			ug.apply(HColors.transparent()).apply(background.bg())</span>
+<span class="fc" id="L139">					.draw(URectangle.build(dim.getWidth(), dim.getHeight()));</span>
 		}
-<span class="fc" id="L129">		result.draw(ug, foreground);</span>
-<span class="fc" id="L130">	}</span>
+<span class="fc" id="L141">		result.draw(ug, foreground);</span>
+<span class="fc" id="L142">	}</span>
 
 	public TextBlock getTextBlock(final HColor foreground, final HColor background) {
-<span class="fc" id="L133">		return new TextBlock() {</span>
+<span class="fc" id="L145">		return new TextBlock() {</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L136">				return getDimension(stringBounder);</span>
+<span class="fc" id="L148">				return getDimension(stringBounder);</span>
 			}
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L140">				ScientificEquationSafe.this.drawU(ug, foreground, background);</span>
-<span class="fc" id="L141">			}</span>
+<span class="fc" id="L152">				ScientificEquationSafe.this.drawU(ug, foreground, background);</span>
+<span class="fc" id="L153">			}</span>
 		};
 	}
 
 	private void printTrace(Exception e) {
-<span class="fc" id="L146">		System.err.println(&quot;formula=&quot; + formula);</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (equation != null) {</span>
-<span class="fc" id="L148">			System.err.println(&quot;Latex=&quot; + equation.getSource());</span>
+<span class="fc" id="L158">		System.err.println(&quot;formula=&quot; + formula);</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (equation != null) {</span>
+<span class="fc" id="L160">			System.err.println(&quot;Latex=&quot; + equation.getSource());</span>
 		}
-<span class="fc" id="L150">		Logme.error(e);</span>
-<span class="fc" id="L151">	}</span>
+<span class="fc" id="L162">		Logme.error(e);</span>
+<span class="fc" id="L163">	}</span>
 
 	private TextBlock getRollback() {
-<span class="fc" id="L154">		return GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));</span>
+<span class="fc" id="L166">		return GraphicStrings.createBlackOnWhiteMonospaced(Arrays.asList(formula));</span>
 	}
 
 	public ImageData export(OutputStream os, FileFormatOption fileFormat, float scale, HColor foregroundColor,
 			HColor backgroundColor) throws IOException {
-<span class="fc" id="L159">		final FileFormat format = fileFormat.getFileFormat();</span>
-<span class="pc bpc" id="L160" title="5 of 12 branches missed.">		if (format == FileFormat.PNG || format == FileFormat.SVG || format == FileFormat.SVG_DETERMINISTIC</span>
+<span class="fc" id="L171">		final FileFormat format = fileFormat.getFileFormat();</span>
+<span class="pc bpc" id="L172" title="5 of 12 branches missed.">		if (format == FileFormat.PNG || format == FileFormat.SVG || format == FileFormat.SVG_DETERMINISTIC</span>
 				|| format == FileFormat.EPS || format == FileFormat.PDF || format == FileFormat.PDF_DETERMINISTIC) {
-<span class="fc" id="L162">			final TextBlock block = getTextBlock(foregroundColor, backgroundColor);</span>
-<span class="fc" id="L163">			return TextBlockExporter.builder(block, fileFormat, false).scale(new ScaleSimple(scale)).build()</span>
-<span class="fc" id="L164">					.exportTo(os);</span>
+<span class="fc" id="L174">			final TextBlock block = getTextBlock(foregroundColor, backgroundColor);</span>
+<span class="fc" id="L175">			return TextBlockExporter.builder(block, fileFormat, false).backcolor(DEFAULT_BACKGROUND)</span>
+<span class="fc" id="L176">					.scale(new ScaleSimple(scale)).build().exportTo(os);</span>
 		}
-<span class="nc" id="L166">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L178">		throw new UnsupportedOperationException();</span>
 	}
 
 	public final String getFormula() {
-<span class="nc" id="L170">		return formula;</span>
+<span class="nc" id="L182">		return formula;</span>
 	}
 
 	public final String getSource() {
-<span class="fc" id="L174">		return equation.getSource();</span>
+<span class="fc" id="L186">		return equation.getSource();</span>
 	}
 
 }

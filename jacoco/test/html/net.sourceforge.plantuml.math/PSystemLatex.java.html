@@ -47,88 +47,87 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
-import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLatex extends DirectOsDiagram implements FormulaDiagram {
 
-<span class="fc" id="L57">	private String latex = &quot;&quot;;</span>
-<span class="fc" id="L58">	private float scale = 1;</span>
-	// The defaults have a dark variant (dark mode: white formula on a black box). A color given with
+<span class="fc" id="L56">	private String latex = &quot;&quot;;</span>
+<span class="fc" id="L57">	private float scale = 1;</span>
+	// The defaults have a dark variant (white formula on a dark box). A color given with
 	// &quot;color&quot; or &quot;backgroundcolor&quot; is used as is, in both modes.
-<span class="fc" id="L61">	private HColor color = HColors.BLACK.withDark(HColors.WHITE);</span>
-<span class="fc" id="L62">	private HColor backColor = HColors.WHITE.withDark(HColors.BLACK);</span>
+<span class="fc" id="L60">	private HColor color = ScientificEquationSafe.DEFAULT_FOREGROUND;</span>
+<span class="fc" id="L61">	private HColor backColor = ScientificEquationSafe.DEFAULT_BACKGROUND;</span>
 
 	public PSystemLatex(UmlSource source, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L65">		super(source, preprocessing);</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L64">		super(source, preprocessing);</span>
+<span class="fc" id="L65">	}</span>
 
 	public DiagramDescription getDescription() {
-<span class="fc" id="L69">		return new DiagramDescription(&quot;(Latex)&quot;);</span>
+<span class="fc" id="L68">		return new DiagramDescription(&quot;(Latex)&quot;);</span>
 	}
 
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-<span class="fc" id="L75">		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromLatex(latex);</span>
-<span class="fc" id="L76">		return asciiMath.export(os, fileFormat, scale, color, backColor);</span>
+<span class="fc" id="L74">		final ScientificEquationSafe asciiMath = ScientificEquationSafe.fromLatex(latex);</span>
+<span class="fc" id="L75">		return asciiMath.export(os, fileFormat, scale, color, backColor);</span>
 	}
 
 	public TextBlock getFormulaBlock() {
-<span class="nc" id="L80">		return ScientificEquationSafe.fromLatex(latex).getTextBlock(color, getFormulaBackground());</span>
+<span class="nc" id="L79">		return ScientificEquationSafe.fromLatex(latex).getTextBlock(color, getFormulaBackground());</span>
 	}
 
 	public HColor getFormulaBackground() {
-<span class="nc" id="L84">		return backColor;</span>
+<span class="nc" id="L83">		return backColor;</span>
 	}
 
 	public double getFormulaScale() {
-<span class="nc" id="L88">		return scale;</span>
+<span class="nc" id="L87">		return scale;</span>
 	}
 
 	public void doCommandLine(String line) {
-<span class="fc" id="L92">		final String lineLower = StringUtils.trin(StringUtils.goLowerCase(line));</span>
-<span class="fc" id="L93">		final String colorParam = &quot;color &quot;;</span>
-<span class="fc" id="L94">		final String backParam = &quot;backgroundcolor &quot;;</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (lineLower.startsWith(colorParam)) {</span>
-<span class="fc" id="L96">			final HColor col3 = getColor(line.substring(colorParam.length()));</span>
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">			if (col3 != null) {</span>
-<span class="fc" id="L98">				color = col3;</span>
+<span class="fc" id="L91">		final String lineLower = StringUtils.trin(StringUtils.goLowerCase(line));</span>
+<span class="fc" id="L92">		final String colorParam = &quot;color &quot;;</span>
+<span class="fc" id="L93">		final String backParam = &quot;backgroundcolor &quot;;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (lineLower.startsWith(colorParam)) {</span>
+<span class="fc" id="L95">			final HColor col3 = getColor(line.substring(colorParam.length()));</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">			if (col3 != null) {</span>
+<span class="fc" id="L97">				color = col3;</span>
 			}
-<span class="fc bfc" id="L100" title="All 2 branches covered.">		} else if (lineLower.startsWith(backParam)) {</span>
-<span class="fc" id="L101">			final HColor col3 = getColor(line.substring(backParam.length()));</span>
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">			if (col3 != null) {</span>
-<span class="fc" id="L103">				backColor = col3;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		} else if (lineLower.startsWith(backParam)) {</span>
+<span class="fc" id="L100">			final HColor col3 = getColor(line.substring(backParam.length()));</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			if (col3 != null) {</span>
+<span class="fc" id="L102">				backColor = col3;</span>
 			}
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		} else if (lineLower.startsWith(&quot;scale &quot;)) {</span>
-<span class="fc" id="L106">			final String value = line.substring(&quot;scale &quot;.length());</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		} else if (lineLower.startsWith(&quot;scale &quot;)) {</span>
+<span class="fc" id="L105">			final String value = line.substring(&quot;scale &quot;.length());</span>
 			try {
-<span class="fc" id="L108">				final float scale1 = Float.parseFloat(value);</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">				if (scale1 &gt; 0) {</span>
-<span class="fc" id="L110">					scale = scale1;</span>
+<span class="fc" id="L107">				final float scale1 = Float.parseFloat(value);</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">				if (scale1 &gt; 0) {</span>
+<span class="fc" id="L109">					scale = scale1;</span>
 				}
-<span class="fc" id="L112">			} catch (Exception e) {</span>
-<span class="fc" id="L113">				Logme.error(e);</span>
-<span class="fc" id="L114">			}</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">		} else if (lineLower.startsWith(&quot;dpi &quot;)) {</span>
-<span class="fc" id="L116">			final String value = line.substring(&quot;dpi &quot;.length());</span>
+<span class="fc" id="L111">			} catch (Exception e) {</span>
+<span class="fc" id="L112">				Logme.error(e);</span>
+<span class="fc" id="L113">			}</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		} else if (lineLower.startsWith(&quot;dpi &quot;)) {</span>
+<span class="fc" id="L115">			final String value = line.substring(&quot;dpi &quot;.length());</span>
 			try {
-<span class="fc" id="L118">				final float dpi1 = Float.parseFloat(value);</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">				if (dpi1 &gt; 0) {</span>
-<span class="fc" id="L120">					scale = dpi1 / 96;</span>
+<span class="fc" id="L117">				final float dpi1 = Float.parseFloat(value);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">				if (dpi1 &gt; 0) {</span>
+<span class="fc" id="L119">					scale = dpi1 / 96;</span>
 				}
-<span class="nc" id="L122">			} catch (Exception e) {</span>
-<span class="nc" id="L123">				Logme.error(e);</span>
-<span class="fc" id="L124">			}</span>
-<span class="fc" id="L125">		} else {</span>
-<span class="fc" id="L126">			this.latex = line;</span>
+<span class="nc" id="L121">			} catch (Exception e) {</span>
+<span class="nc" id="L122">				Logme.error(e);</span>
+<span class="fc" id="L123">			}</span>
+<span class="fc" id="L124">		} else {</span>
+<span class="fc" id="L125">			this.latex = line;</span>
 		}
-<span class="fc" id="L128">	}</span>
+<span class="fc" id="L127">	}</span>
 
 	private HColor getColor(final String col) {
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		return col == null ? null : HColorSet.instance().getColorOrWhite(col);</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		return col == null ? null : HColorSet.instance().getColorOrWhite(col);</span>
 	}
 
 }
