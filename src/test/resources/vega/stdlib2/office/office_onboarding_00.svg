@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="869px" preserveAspectRatio="none" style="width:1148px;height:869px;background:#FFFFFF;" version="1.1" viewBox="0 0 1148 869" width="1148px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="13">
+      <text fill="#888" font-size="10" textLength="96.125" x="5" y="12.778">proccess 'Onboarding'</text>
+    </g>
+    <rect fill="#DDD" height="783" style="stroke:#181818;stroke-width:0.5;" width="455.881" x="73" y="22"/>
+    <image height="48" width="48" x="273.112" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABgUlEQVR4Xu3Wwa2EMAwE0K2PDmjgiwrogA7ogArogAK+RAXUwmoOXmXHiBgwZCPl8C6GGE8AwWtZllfOVCE3quCpbdu1rut1mqZ/PuZFFTxgYAxeVdXHMAwrn+dBFTzw8HeGUIUrtnae7YWQR47tPYKqcEVseNH3/WYIPi92PqjCGZadZ1tD8Tl75wpVOGqe5z++oFXXdV+D8XFxW4BxHNXFjgpD8DFxS4ArO8/w8qIn14V7AI+dZwjBNeEaAC8sX+BubgHu2HkLlwApdl5cDoCvJzd90qUAqR6b0OkAqXdenArwK8ODfCe2qAIgMTdJDSHw8eRZsxheNE2j7kQ2wwuECO9EVsOL8E58Ahz9n09NBUj5pT0q/AX/egd+/XHiOUuAp/GcJcDTeE73AHs/XSFeZ8V9QBWgBIjgdVbcB1QBSoAIXmfFfUAVoASI4HVW3AdUAUqACF5nxX1AFaAEiOB1VtwHVAFKgAheZ8V9QBWgBIjgdVbcB1QBsg+QE1XIzRs2ZeUdUBeq7QAAAABJRU5ErkJggg==" y="22"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="55.656" x="273.112" y="80.111">Company</text>
+    <rect fill="none" height="479" style="stroke:#000;stroke-width:1.5;" width="1115.875" x="13" y="255"/>
+    <rect fill="none" height="382" style="stroke:#000;stroke-width:1.5;" width="1071.875" x="32" y="338"/>
+    <rect fill="none" height="217" style="stroke:#000;stroke-width:1.5;" width="1027.875" x="51" y="489"/>
+    <rect fill="none" height="79" style="stroke:#000;stroke-width:1.5;" width="951.256" x="102.619" y="613"/>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="dir" data-source-line="17" id="part1-lifeline">
+      <g>
+        <title>EMPLOYEER</title>
+        <rect fill="#000" fill-opacity="0" height="637" width="8" x="120.119" y="162"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="123.619" x2="123.619" y1="162" y2="799"/>
+      </g>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="118.619" y="216"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="56" style="stroke:#181818;stroke-width:1;" width="10" x="118.619" y="477"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="56" style="stroke:#181818;stroke-width:1;" width="10" x="118.619" y="601"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="115" style="stroke:#181818;stroke-width:1;" width="10" x="118.619" y="684"/>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="rec" data-source-line="18" id="part2-lifeline">
+      <g>
+        <title>RECRUITER</title>
+        <rect fill="#000" fill-opacity="0" height="637" width="8" x="477.431" y="162"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="480.931" x2="480.931" y1="162" y2="799"/>
+      </g>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="475.931" y="189"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="56" style="stroke:#181818;stroke-width:1;" width="10" x="475.931" y="243"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="97" style="stroke:#181818;stroke-width:1;" width="10" x="475.931" y="326"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="475.931" y="450"/>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="emp" data-source-line="20" id="part3-lifeline">
+      <g>
+        <title>JOB SEEKER</title>
+        <rect fill="#000" fill-opacity="0" height="637" width="8" x="1029.375" y="162"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="1032.875" x2="1032.875" y1="162" y2="799"/>
+      </g>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="1027.875" y="299"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="1027.875" y="423"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="68" style="stroke:#181818;stroke-width:1;" width="10" x="1027.875" y="533"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="1027.875" y="657"/>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="dir" data-source-line="17" id="part1-head">
+      <text fill="#000" font-size="14" textLength="87.238" x="77" y="158.889">EMPLOYEER</text>
+      <ellipse cx="123.619" cy="103.5" fill="#E2E2F0" rx="16" ry="16" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M123.619,123.5 C127.619,123.5 130.619,123.5 134.619,119.5 C142.619,119.5 150.619,127.5 150.619,135.5 L150.619,139.5 C150.619,143.5 146.619,147.5 142.619,147.5 L104.619,147.5 C100.619,147.5 96.619,143.5 96.619,139.5 L96.619,135.5 C96.619,127.5 104.619,119.5 112.619,119.5 C116.619,123.5 119.619,123.5 123.619,123.5" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="rec" data-source-line="18" id="part2-head">
+      <text fill="#000" font-size="14" textLength="81.9" x="436.981" y="158.889">RECRUITER</text>
+      <ellipse cx="480.931" cy="103.5" fill="#E2E2F0" rx="16" ry="16" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M480.931,123.5 C484.931,123.5 487.931,123.5 491.931,119.5 C499.931,119.5 507.931,127.5 507.931,135.5 L507.931,139.5 C507.931,143.5 503.931,147.5 499.931,147.5 L461.931,147.5 C457.931,147.5 453.931,143.5 453.931,139.5 L453.931,135.5 C453.931,127.5 461.931,119.5 469.931,119.5 C473.931,123.5 476.931,123.5 480.931,123.5" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part3" data-qualified-name="emp" data-source-line="20" id="part3-head">
+      <text fill="#000" font-size="14" textLength="84.175" x="987.787" y="158.889">JOB SEEKER</text>
+      <ellipse cx="1032.875" cy="103.5" fill="#E2E2F0" rx="16" ry="16" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M1032.875,123.5 C1036.875,123.5 1039.875,123.5 1043.875,119.5 C1051.875,119.5 1059.875,127.5 1059.875,135.5 L1059.875,139.5 C1059.875,143.5 1055.875,147.5 1051.875,147.5 L1013.875,147.5 C1009.875,147.5 1005.875,143.5 1005.875,139.5 L1005.875,135.5 C1005.875,127.5 1013.875,119.5 1021.875,119.5 C1025.875,123.5 1028.875,123.5 1032.875,123.5" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="4" id="msg1">
+      <ellipse cx="123.119" cy="188.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="463.931,185,473.931,189,463.931,193,467.931,189" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="127.619" x2="469.931" y1="189" y2="189"/>
+      <text fill="#000" font-size="13" font-weight="700" x="130.619" y="184.111">1</text>
+      <text fill="#000" font-size="13" textLength="270.806" x="141.85" y="184.111">заявка на поиск кандидата с критериями отбора</text>
+    </g>
+    <g class="message" data-entity-1="part2" data-entity-2="part1" data-source-line="8" id="msg2">
+      <polygon fill="#181818" points="139.619,212,129.619,216,139.619,220,135.619,216" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="475.431" cy="215.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="133.619" x2="470.931" y1="216" y2="216"/>
+      <text fill="#000" font-size="13" font-weight="700" x="145.619" y="211.111">2</text>
+      <text fill="#000" font-size="13" textLength="312.081" x="156.85" y="211.111">массив резюме подходящих по критериям кандидатов</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="4" id="msg3">
+      <ellipse cx="128.119" cy="242.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="463.931,239,473.931,243,463.931,247,467.931,243" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="132.619" x2="469.931" y1="243" y2="243"/>
+      <text fill="#000" font-size="13" font-weight="700" x="135.619" y="238.111">3</text>
+      <text fill="#000" font-size="13" textLength="233.431" x="146.85" y="238.111">массив одобренных резюме кандидатов</text>
+    </g>
+    <path d="M13,255 L82.619,255 L82.619,260 L72.619,270 L13,270 L13,255" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="479" style="stroke:#000;stroke-width:1.5;" width="1115.875" x="13" y="255"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="28" y="266.111">loop</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="117.081" x="97.619" y="265.556">[с каждым соискателем]</text>
+    <g class="message" data-entity-1="part2" data-entity-2="part3" data-source-line="4" id="msg4">
+      <ellipse cx="485.431" cy="298.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="1015.875,295,1025.875,299,1015.875,303,1019.875,299" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="489.931" x2="1021.875" y1="299" y2="299"/>
+      <text fill="#000" font-size="13" font-weight="700" x="492.931" y="294.111">4</text>
+      <text fill="#000" font-size="13" textLength="511.712" x="504.162" y="294.111">готовые исчерпывающие материалы о компании, команде и вакансии (selling point and etc)</text>
+    </g>
+    <g class="message" data-entity-1="part3" data-entity-2="part2" data-source-line="8" id="msg5">
+      <polygon fill="#181818" points="496.931,322,486.931,326,496.931,330,492.931,326" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="1027.375" cy="325.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="490.931" x2="1022.875" y1="326" y2="326"/>
+      <text fill="#000" font-size="13" font-weight="700" x="502.931" y="321.111">5</text>
+      <text fill="#000" font-size="13" textLength="207.756" x="514.162" y="321.111">пожелания (доход) и примеры работ</text>
+    </g>
+    <path d="M32,338 L90.731,338 L90.731,343 L80.731,353 L32,353 L32,338" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="382" style="stroke:#000;stroke-width:1.5;" width="1071.875" x="32" y="338"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="13.731" x="47" y="349.111">alt</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="211.131" x="105.731" y="348.556">[если соискатель подходит по пожеланиям]</text>
+    <rect fill="#EEE" height="3" style="stroke:#EEE;stroke-width:1;" width="1127.875" x="10" y="382.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="1137.875" y1="382.5" y2="382.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="1137.875" y1="385.5" y2="385.5"/>
+    <rect fill="#EEE" height="21" style="stroke:#000;stroke-width:2;" width="241.419" x="453.228" y="373"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="227.419" x="459.228" y="387.111">Warm stage, online format, duration 30 min</text>
+    <g class="message" data-entity-1="part2" data-entity-2="part3" data-source-line="4" id="msg6">
+      <ellipse cx="485.431" cy="422.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="1015.875,419,1025.875,423,1015.875,427,1019.875,423" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="489.931" x2="1021.875" y1="423" y2="423"/>
+      <text fill="#000" font-size="13" font-weight="700" x="492.931" y="418.111">6</text>
+      <text fill="#000" font-size="13" textLength="274.544" x="504.162" y="418.111">краткий рассказ о компании, команде и вакансии</text>
+    </g>
+    <g class="message" data-entity-1="part3" data-entity-2="part2" data-source-line="8" id="msg7">
+      <polygon fill="#181818" points="496.931,446,486.931,450,496.931,454,492.931,450" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="1027.375" cy="449.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="490.931" x2="1022.875" y1="450" y2="450"/>
+      <text fill="#000" font-size="13" font-weight="700" x="502.931" y="445.111">7</text>
+      <text fill="#000" font-size="13" textLength="273.406" x="514.162" y="445.111">рассказ о своём последнем релевантном опыте</text>
+    </g>
+    <g class="message" data-entity-1="part2" data-entity-2="part1" data-source-line="8" id="msg8">
+      <polygon fill="#181818" points="139.619,473,129.619,477,139.619,481,135.619,477" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="475.431" cy="476.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="133.619" x2="470.931" y1="477" y2="477"/>
+      <text fill="#000" font-size="13" font-weight="700" x="145.619" y="472.111">8</text>
+      <text fill="#000" font-size="13" textLength="172.25" x="156.85" y="472.111">запись встречи с соискателем</text>
+    </g>
+    <path d="M51,489 L109.731,489 L109.731,494 L99.731,504 L51,504 L51,489" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="217" style="stroke:#000;stroke-width:1.5;" width="1027.875" x="51" y="489"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="13.731" x="66" y="500.111">alt</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="272.112" x="124.731" y="499.556">[если соискатель подходит по первичным требованиям]</text>
+    <g class="message" data-entity-1="part1" data-entity-2="part3" data-source-line="4" id="msg9">
+      <ellipse cx="128.119" cy="532.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="1015.875,529,1025.875,533,1015.875,537,1019.875,533" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="132.619" x2="1021.875" y1="533" y2="533"/>
+      <text fill="#000" font-size="13" font-weight="700" x="135.619" y="528.111">9</text>
+      <text fill="#000" font-size="13" textLength="224.819" x="146.85" y="528.111">проведение интерью по компетенциям</text>
+    </g>
+    <rect fill="#EEE" height="3" style="stroke:#EEE;stroke-width:1;" width="1127.875" x="10" y="560.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="1137.875" y1="560.5" y2="560.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="1137.875" y1="563.5" y2="563.5"/>
+    <rect fill="#EEE" height="21" style="stroke:#000;stroke-width:2;" width="227.038" x="460.419" y="551"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="213.038" x="466.419" y="565.111">Hot stage, online format, duration 30 min</text>
+    <g class="message" data-entity-1="part3" data-entity-2="part1" data-source-line="8" id="msg10">
+      <polygon fill="#181818" points="139.619,597,129.619,601,139.619,605,135.619,601" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="1027.375" cy="600.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="133.619" x2="1022.875" y1="601" y2="601"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="145.619" y="596.111">10</text>
+      <text fill="#000" font-size="13" textLength="222.706" x="164.081" y="596.111">решение задач и уточняющие вопросы</text>
+    </g>
+    <path d="M102.619,613 L161.35,613 L161.35,618 L151.35,628 L102.619,628 L102.619,613" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="79" style="stroke:#000;stroke-width:1.5;" width="951.256" x="102.619" y="613"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="13.731" x="117.619" y="624.111">alt</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="256.369" x="176.35" y="623.556">[если соискатель прошёл интерью по компетенциям]</text>
+    <g class="message" data-entity-1="part1" data-entity-2="part3" data-source-line="4" id="msg11">
+      <ellipse cx="128.119" cy="656.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="1015.875,653,1025.875,657,1015.875,661,1019.875,657" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="132.619" x2="1021.875" y1="657" y2="657"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="135.619" y="652.111">11</text>
+      <text fill="#000" font-size="13" textLength="123.419" x="154.081" y="652.111">пригласить на работу</text>
+    </g>
+    <g class="message" data-entity-1="part3" data-entity-2="part1" data-source-line="8" id="msg12">
+      <polygon fill="#181818" points="139.619,680,129.619,684,139.619,688,135.619,684" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="1027.375" cy="683.25" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="133.619" x2="1022.875" y1="684" y2="684"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="145.619" y="679.111">12</text>
+      <text fill="#000" font-size="13" textLength="128.7" x="164.081" y="679.111">принять приглашение</text>
+    </g>
+    <rect fill="#EEE" height="3" style="stroke:#EEE;stroke-width:1;" width="1127.875" x="10" y="767.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="1137.875" y1="767.5" y2="767.5"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="1137.875" y1="770.5" y2="770.5"/>
+    <rect fill="#EEE" height="21" style="stroke:#000;stroke-width:2;" width="226.306" x="460.784" y="758"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="212.306" x="466.784" y="772.111">Cold stage, offline format, duration 5 min</text>
+    <g class="legend" data-source-line="45">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="65.913" x="17" y="826"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="22" y="841.889">1.</text>
+      <text fill="#000" font-size="14" textLength="40.425" x="37.488" y="841.889">TODO</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="185px" preserveAspectRatio="none" style="width:539px;height:185px;background:#FFFFFF;" version="1.1" viewBox="0 0 539 185" width="539px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Possible image samples\nwithout additional dependencies-->
+    <g class="cluster" data-qualified-name="Possible image samples.nwithout additional dependencies" data-source-line="7" id="ent0001">
+      <path d="M16.5,4 L209.125,4 A3.75,3.75 0 0 1 211.625,6.5 L218.625,38 L528.5,38 A2.5,2.5 0 0 1 531,40.5 L531,158.5 A2.5,2.5 0 0 1 528.5,161 L16.5,161 A2.5,2.5 0 0 1 14,158.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="218.625" y1="38" y2="38"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="143.325" x="42.15" y="16.889">Possible image samples</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="191.625" x="18" y="30.889">without additional dependencies</text>
+    </g>
+    <!--entity accountAlertSprite-->
+    <g class="entity" data-qualified-name="Possible image samples.nwithout additional dependencies.accountAlertSprite" data-source-line="8" id="ent0002">
+      <text fill="#000" font-size="14" textLength="152.6" x="351.5" y="79.889">explicit loaded sprite in text</text>
+      <path d="M373.038,91.615 A8.615,8.615 0 0 1 381.654,100.231 A8.615,8.615 0 0 1 373.038,108.846 A8.615,8.615 0 0 1 364.423,100.231 A8.615,8.615 0 0 1 373.038,91.615 M373.038,113.154 C382.558,113.154 390.269,117.009 390.269,121.769 L390.269,126.077 L355.808,126.077 L355.808,121.769 C355.808,117.009 363.518,113.154 373.038,113.154 M394.577,108.846 L394.577,98.077 L398.885,98.077 L398.885,111 L394.577,111 M394.577,119.615 L394.577,115.308 L398.885,115.308 L398.885,119.615 L394.577,119.615" fill="#000"/>
+    </g>
+    <!--entity emoticonLol-->
+    <g class="entity" data-qualified-name="Possible image samples.nwithout additional dependencies.emoticonLol" data-source-line="10" id="ent0003">
+      <text fill="#000" font-size="14" textLength="273.35" x="40.5" y="79.889">sprite loaded via collection Emoji/all.puml in text</text>
+      <path d="M72.958,102.234 L72.958,93.618 A8.745,8.745 0 0 1 74.38,88.858 A21.538,21.538 0 0 0 46.38,116.858 A8.745,8.745 0 0 1 51.14,115.437 L59.755,115.437 L59.755,124.052 A8.745,8.745 0 0 1 58.334,128.812 A21.538,21.538 0 0 0 86.334,100.812 A8.745,8.745 0 0 1 81.574,102.234 M64.192,95.923 L67.423,95.923 L67.423,99.154 L70.654,99.154 L70.654,102.385 L64.192,102.385 M56.654,113.154 L56.654,109.923 L53.423,109.923 L53.423,106.692 L59.885,106.692 L59.885,113.154 M74.725,117.246 A11.846,11.846 0 0 1 61.608,119.615 L77.115,104.108 A11.846,11.846 0 0 1 74.725,117.225 M51.032,128.403 A4.308,4.308 0 0 1 46.725,124.095 A4.308,4.308 0 0 1 51.032,119.788 L55.34,119.788 L55.34,124.095 A4.308,4.308 0 0 1 51.118,128.382 M81.574,89.311 A4.308,4.308 0 0 1 85.882,93.618 A4.308,4.308 0 0 1 81.574,97.926 L77.266,97.926 L77.266,93.618 A4.308,4.308 0 0 1 81.574,89.311" fill="#000"/>
+    </g>
+  </g>
+</svg>

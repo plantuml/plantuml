@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="646px" preserveAspectRatio="none" style="width:920px;height:646px;background:#FFFFFF;" version="1.1" viewBox="0 0 920 646" width="920px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="15">
+      <a href="https://c4model.com" target="_top" title="https://c4model.com" xlink:actuate="onRequest" xlink:href="https://c4model.com" xlink:show="new" xlink:title="https://c4model.com" xlink:type="simple">
+        <text fill="#00F" font-size="10" text-decoration="underline" textLength="115.063" x="0" y="7.778">C4M: Deployment Diagram</text>
+      </a>
+    </g>
+    <!--cluster cld0-->
+    <g class="cluster" data-qualified-name="cld0" data-source-line="115" id="ent0001">
+      <rect fill="#FFF" height="301" style="stroke:#A2A2A2;stroke-width:1;" width="138" x="14" y="101"/>
+      <image height="32" width="52" x="57.154" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAAgCAYAAABdP1tmAAAD6ElEQVR4Xt2YW0jTURzHJYqSCkHoSQqEoN4Kotcc5FPRi6Bu5g3F6dQJU4cuNUMqmg86H5yCl9SJKLkciCa4YU2UQbD5RzZM5oWJ92ubbs5NT78jLNw5y8tc9l+Dz8P/x/+c8/vunPO7/EMQQiH/E5Qh2KEMgcDpdN5bWFh4Nzw8zMjlcqa8vJwpLCxkKioqmK6uLmZqaqp7b2/vDjkuEFCG87K6uspXKpXfi4uLl/Ly8lBqairicrkoNjYW8Xg8xOfzkVgstjU3N+uWl5cfkuPPC2U4D3NzcwKFQvFDIBAcCjiOtLQ0VFlZqTUajXzYrQhyLn+hDP6ysrIiaG9vn8jKyqKc/xMJCQmoqqrKZDabX+A5QNjtnZ2dJxiHw/GAXOM0UAZ/0Wg0yvz8fMrpk8BHsrGx8UtfX58U7tfH1tbWAXgeaGlp6e7p6ZGq1er3GxsbgoODg8vkmr6gDP6wvr7Olclk44mJiZTDpyEjI+PwbiUnJx/uGrbFx8cfihUKhW4QN6vX61/BDt4k1yahDP4wODg4hAMA6WigiIuLQ2VlZUir1Yrtdns4uf5RKIM/SKXSIRzBSEcCTXZ2NhofHxdBWrhF+uCBMpwEnOWrVquVA3mGMz09zYGcwikqKjKQi/8t6urqEIR7DumXB8pwHHCGr83MzET39/ej6upqBMkSiUQi5O/d8Qd8rwwGQ5rL5Qoj/Tu1IBxhQEyYyWSKxvmDXOSigSiIFhcXY0g/jxUEIq643e5Q+CdCIS/c1+l0MjaIweAABHfpbILm5+ffQh6wQx1mh5DqgEvvwtGGnPxfcCZBOEt3dHR8zsnJseK8gKMXW4R4SE9PR5CXThYEYqKgFuvPzMzcZpuIo+CkCwXwLFQQlCivB5VKpcjNzbXhAeQkbAMXwFAqTUBw4PkUtLa2JoJ+xXIRCTJQYFG9vb1fbTbbM0rQN/hB3bRHDmI7kNS3R0dHX1OCamtrmZSUFGoA28EnCtqWNsiTkV6CSkpKmGC4O76or6/Xb21tvfQSJJFIglZQTU3NT6gtP3gJgnaYuciaLJBA17sL7X+Nl6DOzk4GN1rky8GAXC43Q5Mp9BIEFexgQUHBLpsTqi/wFyVo21XQ+D3yEgSx/DmcRRMud8hBbAbqOrtGo3nj0fFbEGZycnIAilF3sAQH7CdUC59gdx77FIS7USj6VKWlpdRgNtLQ0ICgK5CA35d8CsJAggpfWlqKaWpqGkpKSqImYQPQCSC1Wt22ubkZtb+/7/UliBKEgZeuw8uRZrM5FnasbWRkxMgWxsbGZBaL5Sl0BhH4RJG+U2IIYTecTuddHEHYAv7I70uIh1/iCMnONO/+sQAAAABJRU5ErkJggg==" y="103"/>
+      <text fill="#000" font-size="16" font-weight="700" textLength="41.7" x="62.15" y="147.752">Office</text>
+      <text fill="#000" font-size="12" textLength="50.625" x="57.688" y="160.641">[Network]</text>
+    </g>
+    <!--cluster emp-->
+    <g class="cluster" data-qualified-name="cld0.emp" data-source-line="115" id="ent0002">
+      <rect fill="#FFF" height="198" style="stroke:#A2A2A2;stroke-width:1;" width="106" x="30" y="188"/>
+      <image height="52" width="48" x="58.769" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAA0CAYAAADMk7uRAAAD6ElEQVR4Xu2Zy0sbURSHXRTa0j8h+66q0EVX3dpN3dmqUdAqRgUlaXygIiHZqKi4EAy+YhWDj1RiFRFpRYyWUGOhUhU1tlDr+KgmKhpDNPVxe05ghnCHNI8ZpqZM4IPDzZ17zu++z0wCISQhnuEVxBucsb+/39Tf3z+v0+mWysvLBaPX65eGh4ftLpdLTzsVE84YGBiYLykpuVIqlSQtLU0wmZmZRKPRXFqt1knaqZhwBva8WMGzoIiGhgYb7VRMOAOHnQ5ADAwGg412Kiac8d8JqKqq8hiNxl/RUlZW5r0VAmBRf4AdRBctXV1dH2+FgNbWVrPD4UiNlqamptFbIUAsZAFh4AxZQAhkAWHgDFlACGQBYeCMSAVkZWWR2tpaPKnJ4OBgWKanp220UzHhjEgEqFQq/8jIyIrT6VTBtUHldrvDcnJykkI7FRPOCCcgNzeXtLW1McfHx/kMwzRC7zZCBvdPsNlsjUdHR4+iElBRUcFsbGyUer1eBdyTSEZGBq+OVGi1WmK3280+ny8pYgHsYgTlCrZMrVYHGpMSXIPou6+vj0AerxIkYHR0dHJqampESoqKik7QN1zbyc7OjjABaLPPSwUbpyxAFhAjsgBZgEBkAXEjoLCwEO8/HO3t7TasFzcC4MI26XA4KlnW1tYysZ4sQCARC4j7KUQTd4uYJu4EFBQU7GEZC6STb7BesIDNzc1kj8eTdHZ2JhmlpaXfIhIAyYru+vr6QRD3aAGdnZ0EknwyNjYmGdCxAd9hBUDyPHZwcFDCAsn8CxBxFwXgx7vgulKTnp5Ouru7/bu7u3khBSiVyivIP3+zwP/+hYWFz+fn54qJiYnAF0i6Yamoqakh6+vrypubmzshBdDgJ1h4kDk9PX15cXGhwJGIlOXl5WS6vWAsFot1b2/vGf1cKCAGxeXl5X2MO2IBCI5EdXU1A8n1162trbfb29uWv3F4eFiGbUNwiRqNhtceC7T3GnozsMaiJSoBCL4PKi4uDnzFpOnp6fHY7XYPnNo/GYZ5Bz2VgW3DGkqEbZjXFpKTk0Pm5uZUdGCRwhlWq3UJV3asjI+Pv19dXVW7XK5UCDzF5/M9gamW6Ha7X83MzEzn5+fzgkdwahqNxi8rKytdsE0+pwMMB2dAL6XithQrcB48hWmjgelgMpvNJhgNE5wdlubm5uXKykpe4MHg1qjX670tLS2fOjo6TPgbGhoywWga6IBpeAVCmJ2dNcEaIdnZ2dwbtFjAUcnLyyN1dXXfYdd7TPsJhlcghMXFRS304A98/S6U+vp60tvbK60Av9//EKaTFhaxSShOp9MEu5eB9kHDK4g3/gDKjuwQ6SPA4AAAAABJRU5ErkJggg==" y="190"/>
+      <text fill="#000" font-size="16" font-weight="700" textLength="86.3" x="39.85" y="254.137">emp01.local</text>
+      <text fill="#000" font-size="12" textLength="56.025" x="54.988" y="267.026">[FreeBSD]</text>
+    </g>
+    <!--cluster cld1-->
+    <g class="cluster" data-qualified-name="cld1" data-source-line="115" id="ent0004">
+      <rect fill="#FFF" height="557" style="stroke:#A2A2A2;stroke-width:1;" width="275" x="246" y="48"/>
+      <image height="32" width="52" x="357.654" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAAgCAYAAABdP1tmAAAD6ElEQVR4Xt2YW0jTURzHJYqSCkHoSQqEoN4Kotcc5FPRi6Bu5g3F6dQJU4cuNUMqmg86H5yCl9SJKLkciCa4YU2UQbD5RzZM5oWJ92ubbs5NT78jLNw5y8tc9l+Dz8P/x/+c8/vunPO7/EMQQiH/E5Qh2KEMgcDpdN5bWFh4Nzw8zMjlcqa8vJwpLCxkKioqmK6uLmZqaqp7b2/vDjkuEFCG87K6uspXKpXfi4uLl/Ly8lBqairicrkoNjYW8Xg8xOfzkVgstjU3N+uWl5cfkuPPC2U4D3NzcwKFQvFDIBAcCjiOtLQ0VFlZqTUajXzYrQhyLn+hDP6ysrIiaG9vn8jKyqKc/xMJCQmoqqrKZDabX+A5QNjtnZ2dJxiHw/GAXOM0UAZ/0Wg0yvz8fMrpk8BHsrGx8UtfX58U7tfH1tbWAXgeaGlp6e7p6ZGq1er3GxsbgoODg8vkmr6gDP6wvr7Olclk44mJiZTDpyEjI+PwbiUnJx/uGrbFx8cfihUKhW4QN6vX61/BDt4k1yahDP4wODg4hAMA6WigiIuLQ2VlZUir1Yrtdns4uf5RKIM/SKXSIRzBSEcCTXZ2NhofHxdBWrhF+uCBMpwEnOWrVquVA3mGMz09zYGcwikqKjKQi/8t6urqEIR7DumXB8pwHHCGr83MzET39/ej6upqBMkSiUQi5O/d8Qd8rwwGQ5rL5Qoj/Tu1IBxhQEyYyWSKxvmDXOSigSiIFhcXY0g/jxUEIq643e5Q+CdCIS/c1+l0MjaIweAABHfpbILm5+ffQh6wQx1mh5DqgEvvwtGGnPxfcCZBOEt3dHR8zsnJseK8gKMXW4R4SE9PR5CXThYEYqKgFuvPzMzcZpuIo+CkCwXwLFQQlCivB5VKpcjNzbXhAeQkbAMXwFAqTUBw4PkUtLa2JoJ+xXIRCTJQYFG9vb1fbTbbM0rQN/hB3bRHDmI7kNS3R0dHX1OCamtrmZSUFGoA28EnCtqWNsiTkV6CSkpKmGC4O76or6/Xb21tvfQSJJFIglZQTU3NT6gtP3gJgnaYuciaLJBA17sL7X+Nl6DOzk4GN1rky8GAXC43Q5Mp9BIEFexgQUHBLpsTqi/wFyVo21XQ+D3yEgSx/DmcRRMud8hBbAbqOrtGo3nj0fFbEGZycnIAilF3sAQH7CdUC59gdx77FIS7USj6VKWlpdRgNtLQ0ICgK5CA35d8CsJAggpfWlqKaWpqGkpKSqImYQPQCSC1Wt22ubkZtb+/7/UliBKEgZeuw8uRZrM5FnasbWRkxMgWxsbGZBaL5Sl0BhH4RJG+U2IIYTecTuddHEHYAv7I70uIh1/iCMnONO/+sQAAAABJRU5ErkJggg==" y="50"/>
+      <text fill="#000" font-size="16" font-weight="700" textLength="78.4" x="344.3" y="94.752">Application</text>
+      <text fill="#000" font-size="12" textLength="50.625" x="358.188" y="107.641">[Network]</text>
+    </g>
+    <!--cluster app-->
+    <g class="cluster" data-qualified-name="cld1.app" data-source-line="115" id="ent0005">
+      <rect fill="#FFF" height="454" style="stroke:#A2A2A2;stroke-width:1;" width="243" x="262" y="135"/>
+      <text fill="#000" font-size="14" x="383.5" y="147.889"> </text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="81.9" x="342.55" y="163.444">app01.local</text>
+      <text fill="#000" font-size="12" textLength="44.7" x="361.15" y="176.333">[Debian]</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.85" x="339.138" y="191.889">Property</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.875" x="391.987" y="191.889">Value</text>
+      <text fill="#000" font-size="14" textLength="29.662" x="339.138" y="205.889">CPU</text>
+      <text fill="#000" font-size="14" x="391.987" y="205.889">2</text>
+      <text fill="#000" font-size="14" textLength="31.15" x="339.138" y="219.889">RAM</text>
+      <text fill="#000" font-size="14" x="391.987" y="219.889">2</text>
+      <text fill="#000" font-size="14" textLength="28.875" x="339.138" y="233.889">SSD</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="391.987" y="233.889">10</text>
+      <line style="stroke:#000;stroke-width:1;" x1="339.138" x2="427.862" y1="181" y2="181"/>
+      <line style="stroke:#000;stroke-width:1;" x1="339.138" x2="427.862" y1="195" y2="195"/>
+      <line style="stroke:#000;stroke-width:1;" x1="339.138" x2="427.862" y1="209" y2="209"/>
+      <line style="stroke:#000;stroke-width:1;" x1="339.138" x2="427.862" y1="223" y2="223"/>
+      <line style="stroke:#000;stroke-width:1;" x1="339.138" x2="427.862" y1="237" y2="237"/>
+      <line style="stroke:#000;stroke-width:1;" x1="339.138" x2="339.138" y1="181" y2="237"/>
+      <line style="stroke:#000;stroke-width:1;" x1="391.987" x2="391.987" y1="181" y2="237"/>
+      <line style="stroke:#000;stroke-width:1;" x1="427.862" x2="427.862" y1="181" y2="237"/>
+    </g>
+    <!--cluster cld2-->
+    <g class="cluster" data-qualified-name="cld2" data-source-line="115" id="ent0008">
+      <rect fill="#FFF" height="413" style="stroke:#A2A2A2;stroke-width:1;" width="251" x="661" y="15"/>
+      <image height="32" width="52" x="760.654" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAAgCAYAAABdP1tmAAAD6ElEQVR4Xt2YW0jTURzHJYqSCkHoSQqEoN4Kotcc5FPRi6Bu5g3F6dQJU4cuNUMqmg86H5yCl9SJKLkciCa4YU2UQbD5RzZM5oWJ92ubbs5NT78jLNw5y8tc9l+Dz8P/x/+c8/vunPO7/EMQQiH/E5Qh2KEMgcDpdN5bWFh4Nzw8zMjlcqa8vJwpLCxkKioqmK6uLmZqaqp7b2/vDjkuEFCG87K6uspXKpXfi4uLl/Ly8lBqairicrkoNjYW8Xg8xOfzkVgstjU3N+uWl5cfkuPPC2U4D3NzcwKFQvFDIBAcCjiOtLQ0VFlZqTUajXzYrQhyLn+hDP6ysrIiaG9vn8jKyqKc/xMJCQmoqqrKZDabX+A5QNjtnZ2dJxiHw/GAXOM0UAZ/0Wg0yvz8fMrpk8BHsrGx8UtfX58U7tfH1tbWAXgeaGlp6e7p6ZGq1er3GxsbgoODg8vkmr6gDP6wvr7Olclk44mJiZTDpyEjI+PwbiUnJx/uGrbFx8cfihUKhW4QN6vX61/BDt4k1yahDP4wODg4hAMA6WigiIuLQ2VlZUir1Yrtdns4uf5RKIM/SKXSIRzBSEcCTXZ2NhofHxdBWrhF+uCBMpwEnOWrVquVA3mGMz09zYGcwikqKjKQi/8t6urqEIR7DumXB8pwHHCGr83MzET39/ej6upqBMkSiUQi5O/d8Qd8rwwGQ5rL5Qoj/Tu1IBxhQEyYyWSKxvmDXOSigSiIFhcXY0g/jxUEIq643e5Q+CdCIS/c1+l0MjaIweAABHfpbILm5+ffQh6wQx1mh5DqgEvvwtGGnPxfcCZBOEt3dHR8zsnJseK8gKMXW4R4SE9PR5CXThYEYqKgFuvPzMzcZpuIo+CkCwXwLFQQlCivB5VKpcjNzbXhAeQkbAMXwFAqTUBw4PkUtLa2JoJ+xXIRCTJQYFG9vb1fbTbbM0rQN/hB3bRHDmI7kNS3R0dHX1OCamtrmZSUFGoA28EnCtqWNsiTkV6CSkpKmGC4O76or6/Xb21tvfQSJJFIglZQTU3NT6gtP3gJgnaYuciaLJBA17sL7X+Nl6DOzk4GN1rky8GAXC43Q5Mp9BIEFexgQUHBLpsTqi/wFyVo21XQ+D3yEgSx/DmcRRMud8hBbAbqOrtGo3nj0fFbEGZycnIAilF3sAQH7CdUC59gdx77FIS7USj6VKWlpdRgNtLQ0ICgK5CA35d8CsJAggpfWlqKaWpqGkpKSqImYQPQCSC1Wt22ubkZtb+/7/UliBKEgZeuw8uRZrM5FnasbWRkxMgWxsbGZBaL5Sl0BhH4RJG+U2IIYTecTuddHEHYAv7I70uIh1/iCMnONO/+sQAAAABJRU5ErkJggg==" y="17"/>
+      <text fill="#000" font-size="16" font-weight="700" textLength="56" x="758.5" y="61.752">Storage</text>
+      <text fill="#000" font-size="12" textLength="50.625" x="761.188" y="74.641">[Network]</text>
+    </g>
+    <!--cluster sql-->
+    <g class="cluster" data-qualified-name="cld2.sql" data-source-line="115" id="ent0009">
+      <rect fill="#FFF" height="310" style="stroke:#A2A2A2;stroke-width:1;" width="219" x="677" y="102"/>
+      <image height="52" width="40" x="766.577" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAA0CAYAAAD46nqNAAAECklEQVR4Xu2ZSUgbURiAPbT00FMLhYKFlhZKT156lkJ77EVS1KgYFdS4oLhG0dG4gorietCMlljjoSqaWogYo8GlKqJoXHCve9S4R60aE1//Jyg6YzXjDKktc/jgMTNv/m/em/fm/xk7hJDdXYZ24K5x3lhZWclSKBRdBEHoIiMjWRMbG6uTy+UdBoMhkRqUCecNmUzWFRAQYBYKhcjZ2Zk1rq6uSCwWH1dUVKioQZlw3oiJidG5uLjQArEBS6ampmqpQZlw3sDTQg3ABVKpVEsNyoR/VxCm3FhUVLTMlIiIiD2bCFZWVjbCCiSYAoutzSaChYWFX7q7uwVMycrKqrOJIFfwgmzhBdnCC7KFF2QLL8gWXpAtvOBt8PLyQuHh4dvx8fHjpaWlFdSgTOBU0NvbG4WEhOghl9T19/fLt7a2vDc3N/339/cddnd3Hba3ty9hNBod8LnDw8M3ZrP5EVWOU0EYNXNZWdnG/Px82NHR0eOdnR37hYUF556enimNRoNqa2tReXn5JWpqapBarUaQ6C7MzMyEgbQ9yD45OTl5wKkgLlfr6+vHQOoTjIpje3u7MiEhgXbdTURFRaGGhoYfIPoRJO9zJhgaGooGBwdd5+bmivPy8g7d3NzMt6mxcR+hUGhJS0tb1ev1RZwKDg0NCUZHR8n09HTaeaYQBGGZmJjQcC4I78+zjo6Oz8nJyUgkEtGuuwkPDw+UmJiI2traNHCvV5wLjo2NRcHqVUxOTgbClIuampq+FRcX4xob+fj40Prh7QjiooKCAqRSqVoHBgYCp6amRLC48tbX1yM5F4TRI/Pz85dgm9FWVVWpIejP5ubmX3C8va+vj1ai9vb2Cjo7O5UtLS07sDiWYFVr4YHUJEmODw8Pf79W0N/f/3RVWUNOTg6anp4WtLa2ktHR0adTJRaLT88lJSWZsrOzpyEweRW5ubm6lJSUA4lEgoKCgpCnpyfCbZDXXisIo6CCp5RYAzytBLaX12eC1BFmyv8hyGaKqQGZYpUgE84WCS948SI/Pz89PmYNGRkZOtj7PthUsK6ujrBYLA+tBT7u92wqqFAolKurq8HWYDAYguHT9NKmgpBVmN3d3U3WAH1NIyMjTjYVZMJfWSRM4AUxkEnoZDIZug3V1dUIMmCcoZBxcXG0gEzB94B3+rIgrEbB4uKi722Avr5QKL1YW1tzlMvlDbi6owa1Fpw3wkP34brkkiBXwDf5nVKp/Aqb99ZVSeqfwMkrZOJGqP4aId13OrsfLQAXHBwcvIX6JBZEM2FE5fgPFGRHBsgL0UUgk94oKSnpghKUBLFMyKiJvb299xfvRbs515hMpuf4DxS8BtLZ2VnyIsvLy2lQqgqOj4+fUvudQTtw1/gNk50H+jwY20kAAAAASUVORK5CYII=" y="104"/>
+      <text fill="#000" font-size="16" font-weight="700" textLength="75.7" x="748.65" y="168.137">sql01.local</text>
+      <text fill="#000" font-size="12" textLength="49.275" x="761.863" y="181.026">[CentOS]</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.85" x="742.138" y="196.581">Property</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.875" x="794.988" y="196.581">Value</text>
+      <text fill="#000" font-size="14" textLength="29.662" x="742.138" y="210.581">CPU</text>
+      <text fill="#000" font-size="14" x="794.988" y="210.581">2</text>
+      <text fill="#000" font-size="14" textLength="31.15" x="742.138" y="224.581">RAM</text>
+      <text fill="#000" font-size="14" x="794.988" y="224.581">2</text>
+      <text fill="#000" font-size="14" textLength="28.875" x="742.138" y="238.581">SSD</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="794.988" y="238.581">50</text>
+      <line style="stroke:#000;stroke-width:1;" x1="742.138" x2="830.863" y1="185.692" y2="185.692"/>
+      <line style="stroke:#000;stroke-width:1;" x1="742.138" x2="830.863" y1="199.692" y2="199.692"/>
+      <line style="stroke:#000;stroke-width:1;" x1="742.138" x2="830.863" y1="213.692" y2="213.692"/>
+      <line style="stroke:#000;stroke-width:1;" x1="742.138" x2="830.863" y1="227.692" y2="227.692"/>
+      <line style="stroke:#000;stroke-width:1;" x1="742.138" x2="830.863" y1="241.692" y2="241.692"/>
+      <line style="stroke:#000;stroke-width:1;" x1="742.138" x2="742.138" y1="185.692" y2="241.692"/>
+      <line style="stroke:#000;stroke-width:1;" x1="794.988" x2="794.988" y1="185.692" y2="241.692"/>
+      <line style="stroke:#000;stroke-width:1;" x1="830.863" x2="830.863" y1="185.692" y2="241.692"/>
+    </g>
+    <!--entity ff-->
+    <g class="entity" data-qualified-name="cld0.emp.ff" data-source-line="71" id="ent0003">
+      <rect fill="#438DD5" height="75.846" style="stroke:#3C7FC0;stroke-width:0.5;" width="74.3" x="46" y="294"/>
+      <image height="40" width="52" x="57.304" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAAoCAYAAACxbNkLAAAB+klEQVR4Xu3ZzUvbYBzAcf8ar7t72GUMpQy3WRAvUqkXQRjVwZApgggeitpW6stWajOl05ZaV+tL19j6QlsV3WrqlqR0rLNdY03apr3phjwmB2FZQfHkL/ocvofnIYTnkzzP6al5MvK95j5VNaH2FIMe77GdiPKUe7+gimZ3BKrfl6W0k0lDFajH+8suPSSGmDLaTFZUUZgtIz9VQv2+jKfBTD9SgIgYT0HBOHeFnU7nz6a33uMueSyt6/zVXLql25U2L1GlwtyegHoXM0ZjIEd+iheRmeTYF1amQwGSf+H/L76r3m/ntzQW+rFuOtUmj9fp8lmjlXnaPJV8t/C1KEofH+mJVN9rd9rv2hfQWIg7aZpg+8CCFuPF/PDnXGB84yQqj8Ns5WI0mCMtIS4T+Cb+lbfZ5GY+Ph05za4kSvBBt+1akCPKkyaSs6mhDzGeXTsSrwfJh/FqDnqG+bTtxjOEQXcYBkEPg6CHQdDDIOhhEPQwCHoYBD0Mgh4GQQ+DoIdB0HtYIOeuQIXZChpczs7oidSbNgf8hlaze77DIjKRXOK5ldEpQBJkazlR+uM5KCB75FS+0gCf50sBSWtGA/7Mx3oTXasAvRxnuoyBXMgR4X8TUV5US6NB7qCd+NF65VDsSY2FrtNOsAPyxZJaejbG1P9rqDpoau8SVoZPbb7rg0sAAAAASUVORK5CYII=" y="304"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="54.3" x="56" y="356.291">FireFox</text>
+    </g>
+    <!--entity web-->
+    <g class="entity" data-qualified-name="cld1.app.web" data-source-line="71" id="ent0006">
+      <rect fill="#438DD5" height="135.231" style="stroke:#3C7FC0;stroke-width:0.5;" width="211.363" x="278" y="264.5"/>
+      <image height="45" width="52" x="357.835" xlink:href="data:image/png;base64,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" y="274.5"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="32.9" x="328.031" y="332.175">Web</text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="360.931" y="332.175"> </text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="78.4" x="360.931" y="332.175">Application</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="37.35" x="349.706" y="345.064">[Nginx,</text>
+      <text fill="#FFF" font-size="12" font-style="italic" x="387.056" y="345.064"> </text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="30.6" x="387.056" y="345.064">GLPI]</text>
+      <text fill="#FFF" font-size="14" x="383.681" y="358.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="50.663" x="288" y="372.62">Delivers</text>
+      <text fill="#FFF" font-size="14" x="338.663" y="372.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="19.425" x="338.663" y="372.62">the</text>
+      <text fill="#FFF" font-size="14" x="358.088" y="372.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="32.638" x="358.088" y="372.62">static</text>
+      <text fill="#FFF" font-size="14" x="390.725" y="372.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="45.85" x="390.725" y="372.62">content</text>
+      <text fill="#FFF" font-size="14" x="436.575" y="372.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="23.363" x="436.575" y="372.62">and</text>
+      <text fill="#FFF" font-size="14" x="459.938" y="372.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="19.425" x="459.938" y="372.62">the</text>
+      <text fill="#FFF" font-size="14" textLength="47.338" x="321.425" y="386.62">Internet</text>
+      <text fill="#FFF" font-size="14" x="368.763" y="386.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="49.088" x="368.763" y="386.62">banking</text>
+      <text fill="#FFF" font-size="14" x="417.85" y="386.62"> </text>
+      <text fill="#FFF" font-size="14" textLength="28.087" x="417.85" y="386.62">SPA</text>
+    </g>
+    <!--entity pl-->
+    <g class="entity" data-qualified-name="cld1.app.pl" data-source-line="71" id="ent0007">
+      <rect fill="#438DD5" height="127.692" style="stroke:#3C7FC0;stroke-width:0.5;" width="177.85" x="294.5" y="445"/>
+      <image height="52" width="52" x="357.579" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAYAAADFeBvrAAAFeklEQVR4Xu2abUxbZRSA8SNDTYwmU5OZYBaNP11mTIwuUUw25tYt0+GMuk3FfYBzRAVj9gcywtQECGUFChmFCqxAy8eAAV0pUGCoAzbYCrS3lH4ApbTQTwIhEAfXc4idl3s7h+29WBZ+PD968572Pj3ve9733Nyw3ZmasIcJxoWNzqoPPIE28nupSZbZbFULVbaQht8yqU6QjaoPC3Vf+RXiCYhIvnJSXtvvmlUMekilxhvSKIY8ZO1tF5naYDFG5+liGUKYmSsg0zE8Q24kqvtcZKJsNI0hhNPsGmSGHhDqtBFe8kKjhSmE81Kp2XhCyC/yiU2hkGZTiE4rLESoiGTlLSfZNOAmVfCZPmY9CUoIq4qk27H0bYVp8ESxQQ0VRl19yzmL1+lj14ughJoGPEunig22PXzNk77YH6vMVbKbzvk2gjl+PQhYSKXzktJep+eDXAJ35sd9sUh8uamirMfxZ7ufOK4JWAiBDC0eE+k7IUPhVKE9fO2Ws2UmMUxHRgzXBCXUovUuC1qtcx/CoRCknqJKvZ+lfRakhKU31lcqKCGcUteGPMtZLVbrkfzhk1F8zTNUqf0CYltsqTGr4LqdEcsVQQn5wHMfxBg/LdDHRvG1W1dLaV+CCpiRo7Ix4riAFSGkGcbntNmIY4X6uL1ZmheoUvsuarfHiA3pgtbJlXH0WDZhTQjBviS/wz5wusSQA5l5nS71pXgk42LLJCOOTVgVQlq1XrKgc8oTd9lYBFJvUKWgUEQcLxxJSVNMyLnKFOtCCFQ/8tJ1u+drP1JYDaEq8qDnsiuGvMts71WcCCErUp129zcSY/nBbOIdqhRUw6eP5OvOpyusHfJBz2K7jhkfKJwJIShV9NsUCftRE6yh16hSwKMHsrW7MxTW9vo77nk8edDjA4FTIQSlRF1T3thSg5SXTeykSYUdEBBRkCmznKWWn3MhBAtFYdfU3c+L9M10ISRGPNILB9olelwgcC6E6wMq2mJ+h80I6+bej/nAIvGFeOQKCLHylIlTIZS5ese9dKHBosL14kcm/LBQFwPFw8rG7yGcCjWo3WTK1XElVDmUeWyVTKYm/GiBXlXe45iDKblMjw0UzoSqoCX/odL8M+xDz9HbCyjbW48X6hUVPY4F6G5Zk0E4EZJ0T5PQlqfwBNrnqSIIT0C8mlhp1kh6pue5aNVZF8rrsJHQMiTDjW+jyxzKJXYm1Y711va7Vp5H0GPZgDUhBYwXtttIaBWSYRN9kS4Dx523kuvGOutuuxixbMKKEJ6yYXMk4TSdAjKrMgOtRMRnBfqTqQ2Wlpp+JyOWbYIS+rtjvXu+frwOmrukvVnMNQP90ccZzRNDXGfGR1BCeKzJVFoXDuYQ70IZ3kIVgYKwCzbMs9gqNA6478Xg2qmBNSS76SAv33gwZd0OsrrPSa71aBSwEG6acKicg8wI/ci8CQfSClhTM43qf2TwKWtFr8N1rnpMlCA1i85ITA8kvswkOlc9WpvbNumh34M/AhbC0zHcnA2atu0Q84gvFjtVaBkqxb9PzaAANQYfFf/UaBmgyq8F+I2X40oNv+KZkH4fdIIQmiFr+lyzMK3SMCOwfiIO5erehn+0oeSP6Vm6DIJTL7XRMrJPoN1Bv+n7AZvyE1BoXoHqeQLWK+M76QQshOA/ltduW/5OaiJOlRjSk+rG7f+2+PHxsLTXuRBfbuz65NLwjrVwVKTff0ZiLIa1yvg+fwQlFCi4/jBba2UtmfHxvwhxyaZQqLMpFOr4FeIrrer/UllCCb9CiTKzGnsW+uBQ576vxuBbTfgiEB4KuWrE2KYKZJLrLfKP8ocjGUJIdJ4uDjKVhu/OYBpDnQTITHTe8HtUh1VCDwOMCxudvwD13ieWyr6UHwAAAABJRU5ErkJggg==" y="455"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="59.5" x="353.675" y="519.137">FastCGI</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="60.675" x="353.088" y="532.026">[PHP-FPM]</text>
+      <text fill="#FFF" font-size="14" x="383.425" y="545.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="52.063" x="304.5" y="559.581">FastCGI</text>
+      <text fill="#FFF" font-size="14" x="356.563" y="559.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="50.575" x="356.563" y="559.581">Process</text>
+      <text fill="#FFF" font-size="14" x="407.138" y="559.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="55.212" x="407.138" y="559.581">Manager</text>
+    </g>
+    <!--entity db-->
+    <g class="entity" data-qualified-name="cld2.sql.db" data-source-line="75" id="ent0010">
+      <path d="M693,278.5 C693,268.5 786.606,268.5 786.606,268.5 C786.606,268.5 880.213,268.5 880.213,278.5 L880.213,385.5 C880.213,395.5 786.606,395.5 786.606,395.5 C786.606,395.5 693,395.5 693,385.5 L693,278.5" fill="#438DD5" style="stroke:#3C7FC0;stroke-width:0.5;"/>
+      <path d="M693,278.5 C693,288.5 786.606,288.5 786.606,288.5 C786.606,288.5 880.213,288.5 880.213,278.5" fill="none" style="stroke:#3C7FC0;stroke-width:0.5;"/>
+      <text fill="#FFF" font-size="14" x="786.606" y="303.389"> </text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="68.5" x="752.356" y="318.944">Database</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="53.325" x="759.944" y="331.833">[MariaDB]</text>
+      <text fill="#FFF" font-size="14" x="786.606" y="345.389"> </text>
+      <text fill="#FFF" font-size="14" textLength="40.425" x="718.181" y="359.389">Stores</text>
+      <text fill="#FFF" font-size="14" x="758.606" y="359.389"> </text>
+      <text fill="#FFF" font-size="14" textLength="27.213" x="758.606" y="359.389">user</text>
+      <text fill="#FFF" font-size="14" x="785.819" y="359.389"> </text>
+      <text fill="#FFF" font-size="14" textLength="69.213" x="785.819" y="359.389">registration</text>
+      <text fill="#FFF" font-size="14" textLength="73.063" x="713.5" y="373.389">information,</text>
+      <text fill="#FFF" font-size="14" x="786.563" y="373.389"> </text>
+      <text fill="#FFF" font-size="14" textLength="45.938" x="786.563" y="373.389">hashed</text>
+      <text fill="#FFF" font-size="14" x="832.5" y="373.389"> </text>
+      <text fill="#FFF" font-size="14" textLength="27.213" x="832.5" y="373.389">auth</text>
+      <text fill="#FFF" font-size="14" textLength="71.575" x="703" y="387.389">credentials,</text>
+      <text fill="#FFF" font-size="14" x="774.575" y="387.389"> </text>
+      <text fill="#FFF" font-size="14" textLength="43.575" x="774.575" y="387.389">access</text>
+      <text fill="#FFF" font-size="14" x="818.15" y="387.389"> </text>
+      <text fill="#FFF" font-size="14" textLength="29.575" x="818.15" y="387.389">logs,</text>
+      <text fill="#FFF" font-size="14" x="847.725" y="387.389"> </text>
+      <text fill="#FFF" font-size="14" textLength="22.488" x="847.725" y="387.389">etc.</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="dependency" id="lnk11">
+      <polygon fill="#666" points="277.75,332,269.75,329,269.75,335,277.75,332" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M120.006,332 C158.927,332 214.772,332 269.75,332" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="20.775" x="188.625" y="315.333">Call</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="31.275" x="162" y="327.333">[sync,</text>
+      <text fill="#666" font-size="12" font-style="italic" x="193.275" y="327.333"> </text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="42.75" x="193.275" y="327.333">HTTPS]</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0010" data-link-type="dependency" id="lnk12">
+      <polygon fill="#666" points="692.771,332,684.771,329,684.771,335,692.771,332" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M489.073,332 C552.192,332 623.907,332 684.771,332" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="34.725" x="531" y="315.333">Reads</text>
+      <text fill="#666" font-size="12" font-weight="700" x="565.725" y="315.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="23.925" x="565.725" y="315.333">from</text>
+      <text fill="#666" font-size="12" font-weight="700" x="589.65" y="315.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="20.025" x="589.65" y="315.333">and</text>
+      <text fill="#666" font-size="12" font-weight="700" x="609.675" y="315.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="31.35" x="609.675" y="315.333">writes</text>
+      <text fill="#666" font-size="12" font-weight="700" x="641.025" y="315.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="9.975" x="641.025" y="315.333">to</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="31.275" x="558" y="327.333">[sync,</text>
+      <text fill="#666" font-size="12" font-style="italic" x="589.275" y="327.333"> </text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="34.725" x="589.275" y="327.333">JDBC]</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0006" data-link-type="dependency" id="lnk14">
+      <polygon fill="#666" points="383.5,444.849,386.5,436.849,380.5,436.849,383.5,444.849" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M383.5,436.849 C383.5,422.107 383.5,414.389 383.5,399.51" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="22.05" x="324" y="419.583">Run</text>
+      <text fill="#666" font-size="12" font-weight="700" x="346.05" y="419.583"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="63.45" x="346.05" y="419.583">applications</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="41.25" x="346.125" y="431.583">[socket]</text>
+    </g>
+    <g class="caption" data-source-line="17">
+      <text fill="#000" font-size="14" textLength="157.85" x="377.575" y="634.889">Deployment system 'ITSM'</text>
+    </g>
+  </g>
+</svg>

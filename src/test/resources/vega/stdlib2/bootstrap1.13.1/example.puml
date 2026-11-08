@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+!include <bootstrap1.13.1/bootstrap>
+
+usecase a as "<$bi-globe>"
+usecase b as "<$bi-globe,scale=2.5>"
+usecase c as "<$bi-globe{scale=2.5}>" #line:red
+
+usecase d as "<$bi-bootstrap-fill>"
+' TODO The following two lines will not work properly until this is fixed:
+' https://github.com/plantuml/plantuml/issues/2174#issuecomment-2848519961
+usecase e as "<$bi-bootstrap-fill{scale=2.5,color=blue}>"
+usecase f as "<$bi-bootstrap-fill,scale=2.5,color=#00f>"
+
+@enduml

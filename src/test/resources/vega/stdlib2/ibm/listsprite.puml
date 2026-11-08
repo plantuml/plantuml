@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 8
+expected-error-message: 'Syntax Error? (Assumed diagram type: sequence)'
+---
+@startuml
+!include <ibm/Carbon/all>
+listsprite
+@enduml

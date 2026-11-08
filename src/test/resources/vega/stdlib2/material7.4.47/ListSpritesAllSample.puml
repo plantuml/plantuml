@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+
+!include <material7.4.47/all>
+
+' displays "all" sprites, or more precisely all sprites that fit on the page.
+' You could include specific collections instead of "all", if the list is too long.
+' (e.g. !include <material7.4.47/AccountUser/all>)
+listsprites
+
+@enduml

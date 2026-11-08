@@ -1,0 +1,27 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 2
+expected-error-message: 'cannot include ./Common.puml'
+---
+@startuml 
+
+!include ./Common.puml
+
+!include ./Hardware/all.puml
+!include ./Server/all.puml
+!include ./Misc/all.puml
+!include ./Site/all.puml
+!include ./User/all.puml
+
+osa_camera_web(osa_camera_web, "label", "technology")
+osa_desktop_imac(osa_desktop_imac, "label", "technology")
+
+ '"<color:#232F3E><$osa_camera_web*2></color>" 
+
+'osa_camera_web: <$osa_camera_web>
+
+
+@enduml
+

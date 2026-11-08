@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+!include <bootstrap1.13.1/bootstrap>
+listsprite
+@enduml

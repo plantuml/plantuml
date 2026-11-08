@@ -1,0 +1,321 @@
+---
+output: svg
+---
+@startuml
+!include <office/all>
+
+!$networks = {
+    "Manager"       : {
+        "vlan"   : "100",
+        "color"  : "#859900",
+        "address": "172.16.100.0/24",
+        "hosts"  : {
+            "gw" : {
+                "address": ".1",
+                "sprite" : "<$ip_gateway>",
+                "components" : [
+                    "MikroTik"
+                ]
+            }
+        }
+    },
+    "Road_Warrior"  : {
+        "vlan"   : "08",
+        "color"  : "#cb4b16",
+        "address": "192.168.08.0/24",
+        "hosts"  : {
+            "emp_rw" : {
+                "address"     : "dhcp",
+                "sprite" : "<$workstation>",
+                "components" : [
+                    "WireGuard"
+                ]
+            }
+        }
+    },
+    "Remove_Office" : {
+        "vlan"   : "07",
+        "color"  : "#cb4b16",
+        "address": "172.16.07.0/24",
+        "hosts"  : {
+            "emp_ro" : {
+                "address": "dhcp",
+                "sprite" : "<$workstation>",
+                "components" : [
+                    "OpenVPN"
+                ]
+            }
+        }
+    },
+    "Transport"     : {
+        "vlan"   : "02",
+        "color"  : "#859900",
+        "address": "172.16.02.0/24",
+        "hosts"  : {
+            "fw": {
+                "address": ".12",
+                "sprite" : "<$firewall>",
+                "components" : [
+                    "VyOS"
+                ]
+            },
+            "vpn": {
+                "address": ".12",
+                "sprite" : "<$firewall>",
+                "components" : [
+                    "OPNsense"
+                ]
+            },
+            "nat": {
+                "address": ".13",
+                "sprite" : "<$reverse_proxy>",
+                "components" : [
+                    "HAproxy",
+                    "Squid",
+                    "ProxmoxGW"
+                ]
+            }
+        }
+    },
+    "Application"   : {
+        "vlan"   : "04",
+        "color"  : "#268bd2",
+        "address": "172.16.04.0/24",
+        "hosts"  : {
+            "itsm" : {
+                "address": ".11",
+                "sprite" : "<$web_server>",
+                "components" : [
+                    "GLPI"
+                ]
+            },
+            "miti" : {
+                "address": ".12",
+                "sprite" : "<$web_server>",
+                "components" : [
+                    "Grafana",
+                    "Zabbix",
+                    "GVM"
+                ]
+            },
+            "cloud" : {
+                "address": ".13",
+                "sprite" : "<$web_server>",
+                "components" : [
+                    "Nextcloud"
+                ]
+            },
+            "prts" : {
+                "address": ".14",
+                "sprite" : "<$device_printer>",
+                "components" : [
+                    "CUPS"
+                ]
+            },
+            "cams" : {
+                "address": ".15",
+                "sprite" : "<$device_webcam>",
+                "components" : [
+                    "Zoneminder"
+                ]
+            },
+            "pbx" : {
+                "address": ".16",
+                "sprite" : "<$device_phone_voip>",
+                "components" : [
+                    "FreePBX"
+                ]
+            },
+            "mail" : {
+                "address": ".18",
+                "sprite" : "<$email>",
+                "components" : [
+                    "Zimbra"
+                ]
+            }
+        }
+    },
+    "Storage"       : {
+        "vlan"   : "03",
+        "color"  : "#6c71c4",
+        "address": "172.16.03.0/24",
+        "hosts"  : {
+            "sql": {
+                "address": ".11",
+                "sprite" : "<$database_server>",
+                "components" : [
+                    "PostgreSQL",
+                    "MariaDB"
+                ]
+            },
+            "idm" : {
+                "address": ".13",
+                "sprite" : "<$domain_controller>",
+                "components" : [
+                    "FreeIPA"
+                ]
+            },
+            "tm"  : {
+                "address": ".14",
+                "sprite" : "<$database_server>",
+                "components" : [
+                    "Prometheus"
+                ]
+            }
+        }
+    },
+    "Equipment"     : {
+        "vlan"   : "06",
+        "color"  : "#d33682",
+        "address": "172.16.06.0/24",
+        "hosts" : {
+            "prtc" : {
+                "address": "static",
+                "sprite" : "<$device_printer>",
+                "components" : [
+                    "Xerox"
+                ]
+            },
+            "camc" : {
+                "address": "static",
+                "sprite" : "<$device_webcam>",
+                "components" : [
+                    "Xiomi"
+                ]
+            },
+            "tel" : {
+                "address": "dhcp",
+                "sprite" : "<$device_phone_voip>",
+                "components" : [
+                    "Gigaset"
+                ]
+            }
+        }
+    },
+    "Office"        : {
+        "vlan"   : "05",
+        "color"  : "#b58900",
+        "address": "172.16.05.0/24",
+        "hosts"  : {
+            "emp" : {
+                "address": "dhcp",
+                "sprite" : "<$workstation>",
+                "components" : [
+                    "Thunderbird",
+                    "FireFox"
+                ]
+            }
+        }
+    }
+}
+
+skinparam linetype polyline
+left to right direction
+left header UML: Deployment Diagram
+caption L2
+
+!procedure $host($name, $address, $containers='none', $sprite='server_generic')
+    !$alias = 'node_' + $name + '_' + $address
+    !if $containers == 'none'
+        node "<$server_generic>\n$name" <<host .$address>> as %lower($alias)
+    !else
+        node "<$$sprite>\n$name" <<host .$address>> as %lower($alias) {
+            !$pos = %strpos($address, '-')
+            !if $pos > 0
+                !$address = %substr($address, 1, $pos - 1)
+            !endif
+            !foreach $container in %splitstr($containers, "~")
+                !$alias = $container + '_' + $address
+                Rectangle "<$node_generic>\n$container" <<container>> as %lower($alias)
+            !endfor
+        }
+    !endif
+!endprocedure
+
+!procedure $cloud($name, $sprite='private_cloud')
+    !$alias = 'cloud_' + $name
+    cloud "<$$sprite>\n$name" <<$networks[$name].address>> as %lower($alias) #line.dashed
+!endprocedure
+
+!procedure $conn($left, $right, $cloud='none', $vec='d')
+    !foreach $l in %splitstr($left, "~")
+        !foreach $r in %splitstr($right, "~")
+            !if $cloud=='none'
+                $l #-[thickness=3]$vec-# $r
+            !else
+                $l #-[$networks[$cloud].color,thickness=3]$vec-# $r
+            !endif
+        !endfor
+    !endfor
+!endprocedure
+
+!procedure $L3S($name)
+    node "<$shadowed_router>" <<L3Switch>> as $name
+!endprocedure<style>
+
+!procedure $L2S($name)
+    node "<$switch>" <<L2Switch>> as $name
+!endprocedure
+
+$cloud(Manager) {
+    frame "Core" <<layer>> #line.dotted {
+        $L3S(gw01)
+        $L3S(gw02)
+    }
+    frame "Distribution" <<layer>> #line.dotted {
+        $L3S(ds01)
+        $L3S(ds02)
+        $conn(gw01, 'ds01~ds02')
+        $conn(gw02, 'ds01~ds02')
+    }
+    frame "Access" <<layer>> #line.dotted {
+        $L2S(as02)
+        $L2S(as04)
+        node "<$modem>"  <<Wireless>> as wp01
+        $conn(ds01, 'as02')
+        $conn(ds02, 'as04')
+    }
+}
+
+folder "Employee" <<segment>> #line.dotted {
+    $cloud(Equipment) {
+        node "<$device_phone_voip>" <<Phone>> as ph01
+        node "<$device_printer>" <<Printer>> as pr01
+        node "<$device_webcam>" <<Cam>> as wc01
+        $conn(as02, 'wc01~pr01~ph01', Equipment)
+        $conn(as02, 'wp01', 'none' , 'r')
+    }
+    $cloud(Office) {
+        node "<$workstation>" <<station>> as ws02
+        $conn('wp01', ws02, Office)
+    }
+}
+
+folder "Server Room" <<segment>> #line.dotted {
+    $cloud(Storage) {
+        node "<$server_farm>" <<servers>> as sf01
+        $conn(as04, sf01, Storage)
+    }
+    $cloud(Application) {
+        node "<$server_farm>" <<servers>> as sf02
+        $conn(as04, sf02, Application)
+    }
+    $cloud(Transport) {
+        node "<$server_farm>"  <<servers>> as sc01
+        $conn(as04, sc01, Transport)
+    }
+}
+
+folder "VPN" <<segment>> #line.dotted {
+    $cloud(Road_Warrior) {
+        node "<$workstation>" <<station>> as ws03
+        $conn(ws03, sc01, Road_Warrior)
+    }
+    $cloud(Remove_Office) {
+        node "<$workstation>" <<station>> as ws04
+        $conn(ws04, sc01, Remove_Office)
+        ws04 -[hidden]- sf01
+        ws04 -[hidden]- sf02
+    }
+}
+@enduml

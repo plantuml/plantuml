@@ -1,0 +1,41 @@
+---
+output: svg
+---
+@startuml
+!include <AdaML/AdaML>
+
+actor User
+agent String_Instrument
+agent Screen
+agent Touch_Screen
+agent Microphone
+
+begin_package_spec("Floyd_Tuner")
+
+  subprogram("Main")
+
+  package("View")
+  package("Controller")
+  package("Signal_Analyzer")
+  package("Sample_Collector")
+
+  depends("User", "Touch_Screen", "interacts >")
+  depends("Main", "Controller", "starts >")
+  depends("User", "Screen", "see")
+  depends("User", "String_Instrument", "plays\n&\ntunes")
+
+  depends("Touch_Screen", "Controller", "commands")
+
+  depends("Controller", "Sample_Collector", "manages")
+  depends("Controller", "Signal_Analyzer", "configures")
+  depends("Controller", "View", "commands")
+
+  depends("View", "Screen", "output >")
+  depends("View", "Signal_Analyzer", "read\nresults >")
+  depends("Signal_Analyzer", "Sample_Collector", "read\nsamples >")
+  depends("Sample_Collector", "Microphone", "ADC")
+
+  depends("String_Instrument", "Microphone", "captures <")
+
+end()
+@enduml

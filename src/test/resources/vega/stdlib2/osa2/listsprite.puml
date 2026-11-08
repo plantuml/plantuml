@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+!include <osa2/all>
+listsprite
+@enduml

@@ -1,0 +1,305 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="1019px" preserveAspectRatio="none" style="width:952px;height:1019px;background:#FFFFFF;" version="1.1" viewBox="0 0 952 1019" width="952px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="17">
+      <text fill="#888" font-size="10" textLength="106.75" x="5" y="12.778">UML: Sequence Diagram</text>
+    </g>
+    <g class="title" data-source-line="18">
+      <text fill="#000" font-size="14" font-weight="700" textLength="221.725" x="364.409" y="36.889">Starter web app for SaaS development</text>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="usr" data-source-line="20" id="part1-lifeline">
+      <g>
+        <title>SaaS customer admin</title>
+        <rect fill="#000" fill-opacity="0" height="595" width="8" x="74.469" y="154.692"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="77.969" x2="77.969" y1="154.692" y2="749.692"/>
+      </g>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="40" style="stroke:#181818;stroke-width:1;" width="10" x="72.969" y="329.692"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="59" style="stroke:#181818;stroke-width:1;" width="10" x="72.969" y="690.692"/>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="app" data-source-line="13" id="part2-lifeline">
+      <g>
+        <title>..Container..</title>
+        <rect fill="#000" fill-opacity="0" height="595" width="8" x="240.45" y="154.692"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="243.95" x2="243.95" y1="154.692" y2="749.692"/>
+      </g>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="238.95" y="181.692"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="238.95" y="302.692"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="238.95" y="369.692"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="238.95" y="663.692"/>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="tapi" data-source-line="13" id="part3-lifeline">
+      <g>
+        <title>..Container..</title>
+        <rect fill="#000" fill-opacity="0" height="595" width="8" x="506.069" y="154.692"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="509.569" x2="509.569" y1="154.692" y2="749.692"/>
+      </g>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="40" style="stroke:#181818;stroke-width:1;" width="10" x="504.569" y="208.692"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="504.569" y="275.692"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="53" style="stroke:#181818;stroke-width:1;" width="10" x="504.569" y="396.692"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="32" style="stroke:#181818;stroke-width:1;" width="10" x="504.569" y="457.692"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="504.569" y="636.692"/>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part4" data-qualified-name="papi" data-source-line="13" id="part4-lifeline">
+      <g>
+        <title>..Container..</title>
+        <rect fill="#000" fill-opacity="0" height="595" width="8" x="705.875" y="154.692"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="709.375" x2="709.375" y1="154.692" y2="749.692"/>
+      </g>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="704.375" y="248.692"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="40" style="stroke:#181818;stroke-width:1;" width="10" x="704.375" y="489.692"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="53" style="stroke:#181818;stroke-width:1;" width="10" x="704.375" y="556.692"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="19" style="stroke:#181818;stroke-width:1;" width="10" x="704.375" y="617.692"/>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part5" data-qualified-name="idm" data-source-line="13" id="part5-lifeline">
+      <g>
+        <title>..Container..</title>
+        <rect fill="#000" fill-opacity="0" height="595" width="8" x="881.225" y="154.692"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="884.725" x2="884.725" y1="154.692" y2="749.692"/>
+      </g>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFD700" height="27" style="stroke:#181818;stroke-width:1;" width="10" x="879.725" y="529.692"/>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="usr" data-source-line="20" id="part1-head">
+      <text fill="#000" font-size="14" textLength="129.938" x="10" y="151.581">SaaS customer admin</text>
+      <ellipse cx="77.969" cy="96.192" fill="#E2E2F0" rx="16" ry="16" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M77.969,116.192 C81.969,116.192 84.969,116.192 88.969,112.192 C96.969,112.192 104.969,120.192 104.969,128.192 L104.969,132.192 C104.969,136.192 100.969,140.192 96.969,140.192 L58.969,140.192 C54.969,140.192 50.969,136.192 50.969,132.192 L50.969,128.192 C50.969,120.192 58.969,112.192 66.969,112.192 C70.969,116.192 73.969,116.192 77.969,116.192" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="app" data-source-line="13" id="part2-head">
+      <rect fill="#E2E2F0" height="93.692" style="stroke:#181818;stroke-width:0.5;" width="172.025" x="159.938" y="56"/>
+      <rect fill="#E2E2F0" height="93.692" style="stroke:#181818;stroke-width:0.5;" width="172.025" x="155.938" y="60"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="76.3" x="203.8" y="77.889">«Container»</text>
+      <image height="52" width="44" x="219.873" xlink:href="data:image/png;base64,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" y="81"/>
+      <text fill="#000" font-size="14" textLength="158.025" x="162.938" y="143.581">Onboarding and admin app</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part3" data-qualified-name="tapi" data-source-line="13" id="part3-head">
+      <rect fill="#E2E2F0" height="93.692" style="stroke:#181818;stroke-width:0.5;" width="107.363" x="457.888" y="56"/>
+      <rect fill="#E2E2F0" height="93.692" style="stroke:#181818;stroke-width:0.5;" width="107.363" x="453.888" y="60"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="76.3" x="469.419" y="77.889">«Container»</text>
+      <image height="52" width="44" x="485.492" xlink:href="data:image/png;base64,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" y="81"/>
+      <text fill="#000" font-size="14" textLength="93.363" x="460.888" y="143.581">Tenant data API</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part4" data-qualified-name="papi" data-source-line="13" id="part4-head">
+      <rect fill="#E2E2F0" height="93.692" style="stroke:#181818;stroke-width:0.5;" width="133.088" x="644.831" y="56"/>
+      <rect fill="#E2E2F0" height="93.692" style="stroke:#181818;stroke-width:0.5;" width="133.088" x="640.831" y="60"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="76.3" x="669.225" y="77.889">«Container»</text>
+      <image height="52" width="44" x="685.298" xlink:href="data:image/png;base64,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" y="81"/>
+      <text fill="#000" font-size="14" textLength="119.088" x="647.831" y="143.581">Permission data API</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part5" data-qualified-name="idm" data-source-line="13" id="part5-head">
+      <rect fill="#E2E2F0" height="93.692" style="stroke:#181818;stroke-width:0.5;" width="109.638" x="831.906" y="56"/>
+      <rect fill="#E2E2F0" height="93.692" style="stroke:#181818;stroke-width:0.5;" width="109.638" x="827.906" y="60"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="76.3" x="844.575" y="77.889">«Container»</text>
+      <image height="52" width="44" x="860.648" xlink:href="data:image/png;base64,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" y="81"/>
+      <text fill="#000" font-size="14" textLength="95.638" x="834.906" y="143.581">Identity provider</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="5" id="msg1">
+      <ellipse cx="77.469" cy="180.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="226.95,177.692,236.95,181.692,226.95,185.692,230.95,181.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="81.969" x2="232.95" y1="181.692" y2="181.692"/>
+      <text fill="#000" font-size="13" font-weight="700" x="84.969" y="176.803">1</text>
+      <text fill="#000" font-size="13" textLength="90.188" x="96.2" y="176.803">Get list of tenants</text>
+    </g>
+    <g class="message" data-entity-1="part2" data-entity-2="part3" data-source-line="5" id="msg2">
+      <ellipse cx="248.45" cy="207.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="492.569,204.692,502.569,208.692,492.569,212.692,496.569,208.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="252.95" x2="498.569" y1="208.692" y2="208.692"/>
+      <text fill="#000" font-size="13" font-weight="700" x="255.95" y="203.803">2</text>
+      <text fill="#000" font-size="13" textLength="179.806" x="267.181" y="203.803">Get list of tenants for logged in user</text>
+    </g>
+    <g class="message" data-entity-1="part3" data-entity-2="part4" data-source-line="5" id="msg3">
+      <ellipse cx="514.069" cy="247.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="692.375,244.692,702.375,248.692,692.375,252.692,696.375,248.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="518.569" x2="698.375" y1="248.692" y2="248.692"/>
+      <text fill="#000" font-size="13" font-weight="700" x="521.569" y="237.303">3</text>
+      <text fill="#000" font-size="13" textLength="159.575" x="532.8" y="230.803">Get list of tenants permissions</text>
+      <text fill="#000" font-size="13" textLength="89.619" x="532.8" y="243.803">for logged in user</text>
+    </g>
+    <g class="message" data-entity-1="part4" data-entity-2="part3" data-source-line="9" id="msg4">
+      <polygon fill="#181818" points="525.569,271.692,515.569,275.692,525.569,279.692,521.569,275.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="703.875" cy="274.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="519.569" x2="699.375" y1="275.692" y2="275.692"/>
+      <text fill="#000" font-size="13" font-weight="700" x="531.569" y="270.803">4</text>
+      <text fill="#000" font-size="13" textLength="109.85" x="542.8" y="270.803">Tenant permissions</text>
+    </g>
+    <g class="message" data-entity-1="part3" data-entity-2="part2" data-source-line="9" id="msg5">
+      <polygon fill="#181818" points="259.95,298.692,249.95,302.692,259.95,306.692,255.95,302.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="504.069" cy="301.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="253.95" x2="499.569" y1="302.692" y2="302.692"/>
+      <text fill="#000" font-size="13" font-weight="700" x="265.95" y="297.803">5</text>
+      <text fill="#000" font-size="13" textLength="163.231" x="277.181" y="297.803">List of tenants for logged in user</text>
+    </g>
+    <g class="message" data-entity-1="part2" data-entity-2="part1" data-source-line="9" id="msg6">
+      <polygon fill="#181818" points="93.969,325.692,83.969,329.692,93.969,333.692,89.969,329.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="238.45" cy="328.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="87.969" x2="233.95" y1="329.692" y2="329.692"/>
+      <text fill="#000" font-size="13" font-weight="700" x="99.969" y="324.803">6</text>
+      <text fill="#000" font-size="13" textLength="73.613" x="111.2" y="324.803">List of tenants</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="5" id="msg7">
+      <ellipse cx="82.469" cy="368.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="226.95,365.692,236.95,369.692,226.95,373.692,230.95,369.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="86.969" x2="232.95" y1="369.692" y2="369.692"/>
+      <text fill="#000" font-size="13" font-weight="700" x="89.969" y="358.303">7</text>
+      <text fill="#000" font-size="13" textLength="108.388" x="101.2" y="351.803">Add SaaS customer</text>
+      <text fill="#000" font-size="13" textLength="117" x="101.2" y="364.803">user to tenant by email</text>
+    </g>
+    <g class="message" data-entity-1="part2" data-entity-2="part3" data-source-line="5" id="msg8">
+      <ellipse cx="248.45" cy="395.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="492.569,392.692,502.569,396.692,492.569,400.692,496.569,396.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="252.95" x2="498.569" y1="396.692" y2="396.692"/>
+      <text fill="#000" font-size="13" font-weight="700" x="255.95" y="391.803">8</text>
+      <text fill="#000" font-size="13" textLength="225.388" x="267.181" y="391.803">Add SaaS customer user to tenant by email</text>
+    </g>
+    <g class="message" data-entity-1="part3" data-entity-2="part3" data-source-line="5" id="msg9">
+      <ellipse cx="514.069" cy="435.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="518.569" x2="556.569" y1="436.692" y2="436.692"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="556.569" x2="556.569" y1="436.692" y2="449.692"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="509.569" x2="556.569" y1="449.692" y2="449.692"/>
+      <polygon fill="#181818" points="519.569,445.692,509.569,449.692,519.569,453.692,515.569,449.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="13" font-weight="700" x="521.569" y="425.303">9</text>
+      <text fill="#000" font-size="13" textLength="108.388" x="532.8" y="418.803">Verify ID token claim</text>
+      <text fill="#000" font-size="13" textLength="130.488" x="532.8" y="431.803">({tenantId}.users.write)</text>
+    </g>
+    <g class="message" data-entity-1="part3" data-entity-2="part4" data-source-line="5" id="msg10">
+      <ellipse cx="514.069" cy="488.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="692.375,485.692,702.375,489.692,692.375,493.692,696.375,489.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="518.569" x2="698.375" y1="489.692" y2="489.692"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="521.569" y="478.303">10</text>
+      <text fill="#000" font-size="13" textLength="108.388" x="540.031" y="471.803">Add SaaS customer</text>
+      <text fill="#000" font-size="13" textLength="117" x="540.031" y="484.803">user to tenant by email</text>
+    </g>
+    <g class="message" data-entity-1="part4" data-entity-2="part5" data-source-line="5" id="msg11">
+      <ellipse cx="713.875" cy="528.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <polygon fill="#181818" points="867.725,525.692,877.725,529.692,867.725,533.692,871.725,529.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="718.375" x2="873.725" y1="529.692" y2="529.692"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="721.375" y="518.303">11</text>
+      <text fill="#000" font-size="13" textLength="127.888" x="739.838" y="511.803">Lookup SaaS customer</text>
+      <text fill="#000" font-size="13" textLength="70.119" x="739.838" y="524.803">user by email</text>
+    </g>
+    <g class="message" data-entity-1="part5" data-entity-2="part4" data-source-line="9" id="msg12">
+      <polygon fill="#181818" points="725.375,552.692,715.375,556.692,725.375,560.692,721.375,556.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="879.225" cy="555.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="719.375" x2="874.725" y1="556.692" y2="556.692"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="731.375" y="551.803">12</text>
+      <text fill="#000" font-size="13" textLength="50.538" x="749.838" y="551.803">Object ID</text>
+    </g>
+    <g class="message" data-entity-1="part4" data-entity-2="part4" data-source-line="5" id="msg13">
+      <ellipse cx="713.875" cy="595.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="718.375" x2="756.375" y1="596.692" y2="596.692"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="756.375" x2="756.375" y1="596.692" y2="609.692"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="709.375" x2="756.375" y1="609.692" y2="609.692"/>
+      <polygon fill="#181818" points="719.375,605.692,709.375,609.692,719.375,613.692,715.375,609.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="721.375" y="585.303">13</text>
+      <text fill="#000" font-size="13" textLength="122.85" x="739.838" y="578.803">Add permission record</text>
+      <text fill="#000" font-size="13" textLength="64.35" x="739.838" y="591.803">via object ID</text>
+    </g>
+    <g class="message" data-entity-1="part4" data-entity-2="part3" data-source-line="9" id="msg14">
+      <polygon fill="#181818" points="525.569,632.692,515.569,636.692,525.569,640.692,521.569,636.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="703.875" cy="635.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="519.569" x2="699.375" y1="636.692" y2="636.692"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="531.569" y="631.803">14</text>
+      <text fill="#000" font-size="13" textLength="18.769" x="550.031" y="631.803">OK</text>
+    </g>
+    <g class="message" data-entity-1="part3" data-entity-2="part2" data-source-line="9" id="msg15">
+      <polygon fill="#181818" points="259.95,659.692,249.95,663.692,259.95,667.692,255.95,663.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="504.069" cy="662.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="253.95" x2="499.569" y1="663.692" y2="663.692"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="265.95" y="658.803">15</text>
+      <text fill="#000" font-size="13" textLength="18.769" x="284.413" y="658.803">OK</text>
+    </g>
+    <g class="message" data-entity-1="part2" data-entity-2="part1" data-source-line="9" id="msg16">
+      <polygon fill="#181818" points="93.969,686.692,83.969,690.692,93.969,694.692,89.969,690.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="238.45" cy="689.942" fill="#000" rx="4" ry="4" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="87.969" x2="233.95" y1="690.692" y2="690.692"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="99.969" y="685.803">16</text>
+      <text fill="#000" font-size="13" textLength="18.769" x="118.431" y="685.803">OK</text>
+    </g>
+    <rect fill="#EEE" height="3" style="stroke:#EEE;stroke-width:1;" width="931.544" x="10" y="718.192"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="941.544" y1="718.192" y2="718.192"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="941.544" y1="721.192" y2="721.192"/>
+    <rect fill="#EEE" height="21" style="stroke:#000;stroke-width:2;" width="391.162" x="280.191" y="708.692"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="377.162" x="286.191" y="722.803">The addition of a user to a tenant workflow consists of the following steps:</text>
+    <g class="legend" data-source-line="44">
+      <rect fill="#DDD" height="234" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="910.112" x="17" y="766.692"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="22" y="782.581">1.</text>
+      <text fill="#000" font-size="14" textLength="659.575" x="37.488" y="782.581">The SaaS customer admin requests to see a list of tenants from the tenant admin area on the Onboarding &amp; admin app.</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="22" y="796.581">2.</text>
+      <text fill="#000" font-size="14" textLength="698.512" x="37.488" y="796.581">The Onboarding &amp; admin app issues a GET request to the Tenant data API to get a list of tenants for the SaaS customer admin.</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="22" y="810.581">3.</text>
+      <text fill="#000" font-size="14" textLength="786.45" x="37.488" y="810.581">The Tenant data API issues a GET request to the Permission data API to get a list of tenants that the SaaS customer admin has access to view.</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="22" y="824.581">4.</text>
+      <text fill="#000" font-size="14" textLength="340.725" x="37.488" y="824.581">The Permission data API returns a list of tenant permissions.</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="22" y="838.581">5.</text>
+      <text fill="#000" font-size="14" textLength="882.875" x="37.488" y="838.581">The Tenant data API looks up the tenant information in the Tenant data storage and returns a list of tenant data based on the list of tenant permissions received.</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="22" y="852.581">6.</text>
+      <text fill="#000" font-size="14" textLength="471.362" x="37.488" y="852.581">The Onboarding &amp; admin app returns the list of tenant data to SaaS customer admin.</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="22" y="866.581">7.</text>
+      <text fill="#000" font-size="14" textLength="805.7" x="37.488" y="866.581">The SaaS customer admin selects a tenant from the list to add a SaaS customer user to and enters the email address for the SaaS customer user.</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="22" y="880.581">8.</text>
+      <text fill="#000" font-size="14" textLength="823.112" x="37.488" y="880.581">The Onboarding &amp; admin app issues a POST request to the Tenant data API to add a permission for the SaaS customer user on the specified tenant.</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="22" y="894.581">9.</text>
+      <text fill="#000" font-size="14" textLength="806.487" x="37.488" y="894.581">The Tenant data API verifies that the SaaS customer admin has a valid JWT claim to the specified tenant and has the user's write permission on it.</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="22" y="908.581">10.</text>
+      <text fill="#000" font-size="14" textLength="798.175" x="45.275" y="908.581">The Tenant data API issues a POST request to the Permission data API to add a permission for the SaaS customer user on the specified tenant.</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="22" y="922.581">11.</text>
+      <text fill="#000" font-size="14" textLength="759.325" x="45.275" y="922.581">The Permission data API issues a GET request to the Identity provider to look up the SaaS customer user by the provided email address.</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="22" y="936.581">12.</text>
+      <text fill="#000" font-size="14" textLength="366.625" x="45.275" y="936.581">The Identity provider returns the SaaS customer user's object ID.</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="22" y="950.581">13.</text>
+      <text fill="#000" font-size="14" textLength="876.837" x="45.275" y="950.581">The Permission data API adds a permission record in the Permission data storage for the SaaS customer user on the specified tenant by using their object ID.</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="22" y="964.581">14.</text>
+      <text fill="#000" font-size="14" textLength="266.088" x="45.275" y="964.581">The Permission data API returns successfully.</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="22" y="978.581">15.</text>
+      <text fill="#000" font-size="14" textLength="240.363" x="45.275" y="978.581">The Tenant data API returns successfully.</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="22" y="992.581">16.</text>
+      <text fill="#000" font-size="14" textLength="291.025" x="45.275" y="992.581">The Onboarding &amp; admin app returns successfully.</text>
+    </g>
+  </g>
+</svg>
