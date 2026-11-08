@@ -84,6 +84,7 @@ import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.js.browser.BrowserLog;
+import net.sourceforge.plantuml.text.PythonLine;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.theme.Theme;
@@ -442,6 +443,10 @@ public class TContext {
 	}
 
 	private void addPlain(TMemory memory, StringLocated s) throws EaterException {
+		// "!!text" is the text "!text" (section 12.1 of PYTHON_PREPROCESSOR.md)
+		final String unescaped = PythonLine.unescapeBang(s.getString());
+		if (unescaped.equals(s.getString()) == false)
+			s = new StringLocated(unescaped, s.getLocation(), s.getPreprocessorError());
 		final StringLocated tmp[] = applyFunctionsAndVariablesInternal(memory, s);
 		if (tmp != null) {
 			if (pendingAdd != null) {

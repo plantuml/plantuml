@@ -1,0 +1,18 @@
+---
+output: preproc, svg
+---
+@startuml
+' In a Python block, an escaped text line belongs to the block like any text
+' line: it is emitted at each turn of the loop.
+' EXPECT (preproc):
+' participant A
+' note over A
+' !item 0
+' !item 1
+' end note
+participant A
+note over A
+!for i in range(2):
+    !!item !{i}
+end note
+@enduml

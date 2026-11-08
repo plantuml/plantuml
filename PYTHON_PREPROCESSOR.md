@@ -767,8 +767,12 @@ follows, in this order:
    `includesub`, `import`, `startsub`, `endsub`, `theme`, `log`, `dump_memory`,
    `option`, `assert`, `local`, `pragma`, `assume`, `exit` (for instance
    `!define 4K(...)`, whose name starts with a digit, or `!pragma teoz true`,
-   which the diagram reads). Anything else (`!$x`, `!{a}`, `!"text"`) is a
-   text line. **[implemented]** (`PythonLine.isStatementLine`)
+   which the diagram reads). Anything else (`!$x`, `!{a}`, `!!text`,
+   `!"text"`) is a text line. **[implemented]** (`PythonLine.isStatementLine`)
+
+   A text line that starts with `!` and a word is therefore Python, even in a
+   note: this is a deliberate incompatibility with the legacy preprocessor,
+   and such a text is written with the escape `!!` (section 12.1).
 
    A consequence: a typo in a directive (`!inclde foo.puml`) is read as Python
    and gives a Python error, instead of passing into the diagram. Checked on
@@ -944,11 +948,53 @@ checked on its own: the main text, an included file (an `!if` of the diagram
 still open around an `!include` is fine), the body of a legacy function or
 procedure. No file of the standard library is affected.
 
-The two worlds can
-be mixed in one diagram, and even in one file: the standard library (C4 and
-others) is written with the legacy directives, so a Python diagram must be able
-to `!include` it. Legacy logic directives are therefore not an error in a
-diagram that contains Python lines; they just keep their legacy meaning.
+The two worlds can be mixed in one diagram, and even in one file: the standard
+library (C4 and others) is written with the legacy directives, so a Python
+diagram must be able to `!include` it. Legacy logic directives are therefore not
+an error in a diagram that contains Python lines; they just keep their legacy
+meaning.
+
+### 12.1 Compatibility with legacy diagrams **[decided, implemented]**
+
+The preprocessor of this branch reads a legacy diagram as the legacy
+preprocessor does, with a few **deliberate** exceptions, listed here. They
+apply to every diagram, whether it contains Python or not. Each one has a way
+to write the legacy text so that it gives the same result as before.
+
+| Legacy text | Before | Now | To keep the legacy result |
+|---|---|---|---|
+| A text line that starts with `!` and a letter, `_`, a digit, `(` or `[` (`!important`, `!Warning: read this`, `!123 items`), for instance in a note | text | Python (section 11.4, rule 6), so usually an error | write `!!important` |
+| A text line that starts with `!` then blanks then such a character (`! spaced`) | text | Python indented by the gutter, so an indentation error | write `!! spaced` |
+| A text line that starts with `!!` (`!!double`) | text, as written | the escape: one `!` is removed (`!double`) | write `!!!double` |
+| `!{expr}` in a text line, where `expr` is valid Python (`!{1+1}`) | text | the value of `expr` (`2`); an expression that fails stays as written in a diagram without Python code (section 12) | write `!!{1+1}` |
+| A line `!python` or `!endpy` | text | the Python block markers; a lone `!endpy` is an error | none needed in practice |
+| A `!if` (`!ifdef`, `!ifndef`) without `!endif`, a `!while` without `!endwhile`, a `!foreach` without `!endfor` | the rest of the text skipped silently | an error on the line left open (section 12) | close the block |
+
+**The escape `!!`.** A text line whose first non-blank characters are `!!` is a
+text line, and one `!` is removed: `!!important` gives `!important`, a line `!!`
+gives `!`. It applies to every text line: at the top level, in a note or any
+multi-line text of a diagram, in a text line of a Python block (where it belongs
+to the block like any text line), and in the body of a legacy `!procedure`. It
+does not apply in a `!python` block, where everything is Python code. `!!{`
+stays the escape of an interpolation, so a line that starts with `!!{x}` gives
+`!{x}`. **[implemented]** (`PythonLine.unescapeBang`; tests
+`vega/python/classify/bang_escape_in_note`, `bang_escape_in_block`,
+`bang_escape_in_procedure`, and `bang_word_in_note_is_python` for the error
+without the escape)
+
+**Why.** The alternative was to keep every `!word` line that is not certainly
+Python as text, which needs a narrower rule (only an assignment, a call, an
+attribute or an index after the word: `!x == 1` would not be Python) or a
+guess at run time. A line that starts with `!` and a word is rare in a text,
+and the escape gives a simple and explicit way out. The decision is to accept
+this incompatibility with the legacy preprocessor.
+
+**Checked.** None of the 463,812 lines that start with `!` in the standard
+library starts with `!!`, and none changes classification with rule 6 of
+section 11.4. The tests of `vega/stdlib2` are diagrams of the standard
+library; they give the same result with the legacy preprocessor and with this
+one, and are meant to be run on both branches. The exceptions of this section
+are never used in them.
 
 ## 13. Two flavors of Python **[decided]**
 

@@ -50,6 +50,26 @@ public final class PythonLine {
 	}
 
 	/**
+	 * The escape of a text line that starts with "!" (section 12.1 of
+	 * PYTHON_PREPROCESSOR.md): "!!important" is the text "!important". The first
+	 * "!" is removed when the line starts, after its blanks, with "!!" not
+	 * followed by "{" ("!!{" is the escape of an interpolation, which gives
+	 * "!{" by itself). Any other line is returned as it is.
+	 */
+	public static String unescapeBang(String s) {
+		final int i = skipSpaces(s, 0);
+		if (s.startsWith("!!", i) == false || s.startsWith("!!{", i))
+			return s;
+		return s.substring(0, i) + s.substring(i + 1);
+	}
+
+	/** True for a text line that starts with the escape "!!" (see {@link #unescapeBang}). */
+	public static boolean startsWithEscapedBang(String s) {
+		final int i = skipSpaces(s, 0);
+		return s.startsWith("!!", i);
+	}
+
+	/**
 	 * "!{a} -> !{b}": a line that starts with an interpolation is PlantUML text,
 	 * never a directive nor a Python line (a Python statement starting with "{"
 	 * would be a dict display thrown away, which has no use).
