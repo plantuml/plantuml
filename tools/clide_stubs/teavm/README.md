@@ -23,7 +23,7 @@ JavaScript interop - it exists purely to satisfy the Java compiler.
   downstream can ever obtain a real instance of any of these types either -
   every other method stays unreachable in practice.
 - Annotations (`@JSBody`, `@JSExport`, `@JSFunctor`, `@Async`,
-  `@PlatformMarker`) are pure markers with no logic - PlantUML's own methods
+  `@PlatformMarker`, `@Import`, `@Unmanaged`, `@Include`) are pure markers with no logic - PlantUML's own methods
   they annotate stay `native` (or otherwise unchanged), so no stub behavior
   is needed there at all.
 
@@ -46,7 +46,11 @@ Produces `teavm-stub.jar`. Copy it into a project's `.clide/` directory (see
 | `org.teavm.jso.JSFunctor` | annotation |
 | `org.teavm.interop.Async` | annotation |
 | `org.teavm.interop.AsyncCallback<T>` | interface |
-| `org.teavm.interop.PlatformMarker` | annotation |
+| `org.teavm.interop.PlatformMarker` | annotation (`String[] value()`) |
+| `org.teavm.interop.Platforms` | constants (`JAVASCRIPT`, `WEBASSEMBLY`, `C`) |
+| `org.teavm.interop.Import` | annotation |
+| `org.teavm.interop.Unmanaged` | annotation |
+| `org.teavm.interop.c.Include` | annotation |
 | `org.teavm.jso.dom.xml.Element` | interface |
 | `org.teavm.jso.dom.xml.Document` | interface |
 | `org.teavm.jso.dom.html.HTMLElement` | interface |
