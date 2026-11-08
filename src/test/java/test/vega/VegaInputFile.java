@@ -30,6 +30,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -443,6 +444,9 @@ public class VegaInputFile {
 				final String decimal = getYamlString("decimal");
 				if (decimal != null)
 					fileFormatOption = fileFormatOption.withDecimal(Integer.parseInt(decimal.trim()));
+				// dark: true renders as "--dark-mode" does (ColorMapper.DARK_MODE)
+				if ("true".equals(getYamlString("dark")))
+					fileFormatOption = fileFormatOption.withColorMapper(ColorMapper.DARK_MODE);
 				final DiagramDescription description = renderCapturingStderr(source, baos, imageIndex,
 						fileFormatOption, verbose);
 				checkStderrExpectations(nbImages, imageIndex);

@@ -62,6 +62,7 @@ file into a dynamic test. Adding a non-regression test means adding one file:
 ```
 ---
 output: svg              # also: utxt, atxt, debug, latex, scxml, graphml, xmi, preproc
+dark: true               # optional: render as --dark-mode does
 expected-description: (1 entities)
 ---
 @startuml

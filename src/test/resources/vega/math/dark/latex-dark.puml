@@ -1,0 +1,9 @@
+---
+output: svg
+dark: true
+decimal: 1
+expected-description: (Latex)
+---
+@startlatex
+\frac{a}{b} + \sqrt{x}
+@endlatex

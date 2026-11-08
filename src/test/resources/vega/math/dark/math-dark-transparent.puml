@@ -1,0 +1,10 @@
+---
+output: svg
+dark: true
+decimal: 1
+expected-description: (Math)
+---
+@startmath
+backgroundcolor transparent
+x^2 + y^2
+@endmath
