@@ -85,8 +85,8 @@ import net.sourceforge.plantuml.text.StringLocated;
 
 	public String decompress(String s) {
 <span class="fc" id="L87">		String result = clean(s);</span>
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (result.startsWith(&quot;@start&quot;)) {</span>
-<span class="nc" id="L89">			return result;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (result.startsWith(&quot;@start&quot;)) {</span>
+<span class="fc" id="L89">			return result;</span>
 		}
 <span class="fc" id="L91">		result = &quot;@startuml\n&quot; + result;</span>
 <span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (result.endsWith(&quot;\n&quot;) == false) {</span>

@@ -60,9 +60,9 @@ public class CrashReportHandler extends ReportLog {
 	public void exportDiagramError(FileFormatOption fileFormat, long seed, OutputStream os) throws IOException {
 
 <span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
-<span class="pc bpc" id="L63" title="2 of 4 branches missed.">			if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {</span>
-<span class="nc" id="L64">				exportDiagramErrorText(os, exception);</span>
-<span class="nc" id="L65">				return;</span>
+<span class="pc bpc" id="L63" title="1 of 4 branches missed.">			if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {</span>
+<span class="fc" id="L64">				exportDiagramErrorText(os, exception);</span>
+<span class="fc" id="L65">				return;</span>
 			}
 
 <span class="fc" id="L68">		final CrashImage image = new CrashImage(exception, flash, this);</span>
@@ -71,16 +71,16 @@ public class CrashReportHandler extends ReportLog {
 <span class="fc" id="L71">	}</span>
 
 	private void exportDiagramErrorText(OutputStream os, Throwable exception) {
-<span class="nc" id="L74">		final PrintWriter pw = SecurityUtils.createPrintWriter(os);</span>
-<span class="nc" id="L75">		exception.printStackTrace(pw);</span>
-<span class="nc" id="L76">		pw.println();</span>
-<span class="nc" id="L77">		pw.println();</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (String s : this) {</span>
-<span class="nc" id="L79">			s = s.replaceAll(&quot;\\&lt;/?\\w+?\\&gt;&quot;, &quot;&quot;);</span>
-<span class="nc" id="L80">			pw.println(s);</span>
-<span class="nc" id="L81">		}</span>
-<span class="nc" id="L82">		pw.flush();</span>
-<span class="nc" id="L83">	}</span>
+<span class="fc" id="L74">		final PrintWriter pw = SecurityUtils.createPrintWriter(os);</span>
+<span class="fc" id="L75">		exception.printStackTrace(pw);</span>
+<span class="fc" id="L76">		pw.println();</span>
+<span class="fc" id="L77">		pw.println();</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		for (String s : this) {</span>
+<span class="fc" id="L79">			s = s.replaceAll(&quot;\\&lt;/?\\w+?\\&gt;&quot;, &quot;&quot;);</span>
+<span class="fc" id="L80">			pw.println(s);</span>
+<span class="fc" id="L81">		}</span>
+<span class="fc" id="L82">		pw.flush();</span>
+<span class="fc" id="L83">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

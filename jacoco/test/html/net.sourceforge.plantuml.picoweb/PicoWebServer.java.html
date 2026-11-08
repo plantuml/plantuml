@@ -67,6 +67,7 @@ import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
@@ -84,190 +85,194 @@ public class PicoWebServer implements Runnable {
 
 	private final Socket connect;
 	static boolean enableStop;
+	// The format the client asked for, once known: an unexpected failure is then reported in
+	// that format (see sendError). Null as long as the request is not understood.
+	private FileFormat requestedFormat;
 
-<span class="fc" id="L88">	public PicoWebServer(Socket c) {</span>
-<span class="fc" id="L89">		this.connect = c;</span>
-<span class="fc" id="L90">	}</span>
+<span class="fc" id="L92">	public PicoWebServer(Socket c) {</span>
+<span class="fc" id="L93">		this.connect = c;</span>
+<span class="fc" id="L94">	}</span>
 
 	public static void main(String[] args) throws IOException {
-<span class="nc" id="L93">		startServer(8080, null, false);</span>
-<span class="nc" id="L94">	}</span>
+<span class="nc" id="L97">		startServer(8080, null, false);</span>
+<span class="nc" id="L98">	}</span>
 
 	public static void startServer(final int port, final String bindAddress, final boolean argEnableStop)
 			throws IOException {
-<span class="nc" id="L98">		PicoWebServer.enableStop = argEnableStop;</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		final InetAddress bindAddress1 = bindAddress == null ? null : InetAddress.getByName(bindAddress);</span>
-<span class="nc" id="L100">		final ServerSocket serverConnect = new ServerSocket(port, 50, bindAddress1);</span>
-<span class="nc" id="L101">		System.err.println(&quot;webPort=&quot; + serverConnect.getLocalPort());</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		System.err.println(&quot;webAddress=&quot; + (bindAddress == null ? &quot;0.0.0.0&quot; : bindAddress));</span>
-<span class="nc" id="L103">		serverLoop(serverConnect);</span>
-<span class="nc" id="L104">	}</span>
+<span class="nc" id="L102">		PicoWebServer.enableStop = argEnableStop;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		final InetAddress bindAddress1 = bindAddress == null ? null : InetAddress.getByName(bindAddress);</span>
+<span class="nc" id="L104">		final ServerSocket serverConnect = new ServerSocket(port, 50, bindAddress1);</span>
+<span class="nc" id="L105">		System.err.println(&quot;webPort=&quot; + serverConnect.getLocalPort());</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		System.err.println(&quot;webAddress=&quot; + (bindAddress == null ? &quot;0.0.0.0&quot; : bindAddress));</span>
+<span class="nc" id="L107">		serverLoop(serverConnect);</span>
+<span class="nc" id="L108">	}</span>
 
 	public static void serverLoop(final ServerSocket serverConnect) throws IOException {
 		try {
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">			while (serverConnect.isClosed() == false) {</span>
-<span class="fc" id="L109">				final PicoWebServer myServer = new PicoWebServer(serverConnect.accept());</span>
-<span class="fc" id="L110">				final Thread thread = new Thread(myServer);</span>
-<span class="fc" id="L111">				thread.start();</span>
-<span class="fc" id="L112">			}</span>
-<span class="fc" id="L113">		} catch (SocketException e) {</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (serverConnect.isClosed())</span>
-<span class="fc" id="L115">				return;</span>
-<span class="nc" id="L116">			throw e;</span>
-<span class="nc" id="L117">		}</span>
-<span class="nc" id="L118">	}</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			while (serverConnect.isClosed() == false) {</span>
+<span class="fc" id="L113">				final PicoWebServer myServer = new PicoWebServer(serverConnect.accept());</span>
+<span class="fc" id="L114">				final Thread thread = new Thread(myServer);</span>
+<span class="fc" id="L115">				thread.start();</span>
+<span class="fc" id="L116">			}</span>
+<span class="fc" id="L117">		} catch (SocketException e) {</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (serverConnect.isClosed())</span>
+<span class="fc" id="L119">				return;</span>
+<span class="nc" id="L120">			throw e;</span>
+<span class="nc" id="L121">		}</span>
+<span class="nc" id="L122">	}</span>
 
 	public void run() {
-<span class="fc" id="L121">		BufferedInputStream in = null;</span>
-<span class="fc" id="L122">		BufferedOutputStream out = null;</span>
+<span class="fc" id="L125">		BufferedInputStream in = null;</span>
+<span class="fc" id="L126">		BufferedOutputStream out = null;</span>
 
 		try {
-<span class="fc" id="L125">			in = new BufferedInputStream(connect.getInputStream());</span>
-<span class="fc" id="L126">			out = new BufferedOutputStream(connect.getOutputStream());</span>
+<span class="fc" id="L129">			in = new BufferedInputStream(connect.getInputStream());</span>
+<span class="fc" id="L130">			out = new BufferedOutputStream(connect.getOutputStream());</span>
 
-<span class="fc" id="L128">			final ReceivedHTTPRequest request = ReceivedHTTPRequest.fromStream(in);</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">			if (request.getMethod().equals(&quot;GET&quot;)) {</span>
-<span class="pc bpc" id="L130" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/png/&quot;) &amp;&amp; handleGET(request, out, FileFormat.PNG))</span>
-<span class="fc" id="L131">					return;</span>
-<span class="pc bpc" id="L132" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/plantuml/png/&quot;) &amp;&amp; handleGET(request, out, FileFormat.PNG))</span>
-<span class="fc" id="L133">					return;</span>
-<span class="pc bpc" id="L134" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/svg/&quot;) &amp;&amp; handleGET(request, out, FileFormat.SVG))</span>
+<span class="fc" id="L132">			final ReceivedHTTPRequest request = ReceivedHTTPRequest.fromStream(in);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">			if (request.getMethod().equals(&quot;GET&quot;)) {</span>
+<span class="pc bpc" id="L134" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/png/&quot;) &amp;&amp; handleGET(request, out, FileFormat.PNG))</span>
 <span class="fc" id="L135">					return;</span>
-<span class="pc bpc" id="L136" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/plantuml/svg/&quot;) &amp;&amp; handleGET(request, out, FileFormat.SVG))</span>
+<span class="pc bpc" id="L136" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/plantuml/png/&quot;) &amp;&amp; handleGET(request, out, FileFormat.PNG))</span>
 <span class="fc" id="L137">					return;</span>
-<span class="pc bpc" id="L138" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/txt/&quot;) &amp;&amp; handleGET(request, out, FileFormat.ATXT))</span>
+<span class="pc bpc" id="L138" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/svg/&quot;) &amp;&amp; handleGET(request, out, FileFormat.SVG))</span>
 <span class="fc" id="L139">					return;</span>
-<span class="pc bpc" id="L140" title="3 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/plantuml/txt/&quot;) &amp;&amp; handleGET(request, out, FileFormat.ATXT))</span>
-<span class="nc" id="L141">					return;</span>
-<span class="pc bpc" id="L142" title="3 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/utxt/&quot;) &amp;&amp; handleGET(request, out, FileFormat.UTXT))</span>
-<span class="nc" id="L143">					return;</span>
-<span class="pc bpc" id="L144" title="3 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/plantuml/utxt/&quot;) &amp;&amp; handleGET(request, out, FileFormat.UTXT))</span>
+<span class="pc bpc" id="L140" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/plantuml/svg/&quot;) &amp;&amp; handleGET(request, out, FileFormat.SVG))</span>
+<span class="fc" id="L141">					return;</span>
+<span class="pc bpc" id="L142" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/txt/&quot;) &amp;&amp; handleGET(request, out, FileFormat.ATXT))</span>
+<span class="fc" id="L143">					return;</span>
+<span class="pc bpc" id="L144" title="3 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/plantuml/txt/&quot;) &amp;&amp; handleGET(request, out, FileFormat.ATXT))</span>
 <span class="nc" id="L145">					return;</span>
-<span class="pc bpc" id="L146" title="3 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/serverinfo&quot;) &amp;&amp; handleInfo(out))</span>
+<span class="pc bpc" id="L146" title="3 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/utxt/&quot;) &amp;&amp; handleGET(request, out, FileFormat.UTXT))</span>
 <span class="nc" id="L147">					return;</span>
-<span class="pc bpc" id="L148" title="3 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/plantuml/serverinfo&quot;) &amp;&amp; handleInfo(out))</span>
+<span class="pc bpc" id="L148" title="3 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/plantuml/utxt/&quot;) &amp;&amp; handleGET(request, out, FileFormat.UTXT))</span>
 <span class="nc" id="L149">					return;</span>
-<span class="pc bpc" id="L150" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/language&quot;) &amp;&amp; handleLanguage(out))</span>
-<span class="fc" id="L151">					return;</span>
-<span class="pc bpc" id="L152" title="2 of 4 branches missed.">				if (enableStop &amp;&amp; (request.getPath().startsWith(&quot;/stopserver&quot;)</span>
-<span class="pc bpc" id="L153" title="3 of 4 branches missed.">						|| request.getPath().startsWith(&quot;/plantuml/stopserver&quot;)) &amp;&amp; handleStop(out))</span>
-<span class="nc" id="L154">					return;</span>
+<span class="pc bpc" id="L150" title="3 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/serverinfo&quot;) &amp;&amp; handleInfo(out))</span>
+<span class="nc" id="L151">					return;</span>
+<span class="pc bpc" id="L152" title="3 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/plantuml/serverinfo&quot;) &amp;&amp; handleInfo(out))</span>
+<span class="nc" id="L153">					return;</span>
+<span class="pc bpc" id="L154" title="1 of 4 branches missed.">				if (request.getPath().startsWith(&quot;/language&quot;) &amp;&amp; handleLanguage(out))</span>
+<span class="fc" id="L155">					return;</span>
+<span class="pc bpc" id="L156" title="2 of 4 branches missed.">				if (enableStop &amp;&amp; (request.getPath().startsWith(&quot;/stopserver&quot;)</span>
+<span class="pc bpc" id="L157" title="3 of 4 branches missed.">						|| request.getPath().startsWith(&quot;/plantuml/stopserver&quot;)) &amp;&amp; handleStop(out))</span>
+<span class="nc" id="L158">					return;</span>
 
-<span class="pc bpc" id="L156" title="2 of 4 branches missed.">			} else if (request.getMethod().equals(&quot;POST&quot;) &amp;&amp; request.getPath().equals(&quot;/render&quot;)) {</span>
-<span class="fc" id="L157">				handleRenderRequest(request, out);</span>
-<span class="fc" id="L158">				return;</span>
+<span class="pc bpc" id="L160" title="2 of 4 branches missed.">			} else if (request.getMethod().equals(&quot;POST&quot;) &amp;&amp; request.getPath().equals(&quot;/render&quot;)) {</span>
+<span class="fc" id="L161">				handleRenderRequest(request, out);</span>
+<span class="fc" id="L162">				return;</span>
 			}
-<span class="fc" id="L160">			write(out, &quot;HTTP/1.1 302 Found&quot;);</span>
-<span class="fc" id="L161">			write(out, &quot;Location: /plantuml/png/oqbDJyrBuGh8ISmh2VNrKGZ8JCuFJqqAJYqgIotY0aefG5G00000&quot;);</span>
-<span class="fc" id="L162">			write(out, &quot;&quot;);</span>
-<span class="fc" id="L163">			out.flush();</span>
+<span class="fc" id="L164">			write(out, &quot;HTTP/1.1 302 Found&quot;);</span>
+<span class="fc" id="L165">			write(out, &quot;Location: /plantuml/png/oqbDJyrBuGh8ISmh2VNrKGZ8JCuFJqqAJYqgIotY0aefG5G00000&quot;);</span>
+<span class="fc" id="L166">			write(out, &quot;&quot;);</span>
+<span class="fc" id="L167">			out.flush();</span>
 
-<span class="fc" id="L165">		} catch (Throwable e) {</span>
+<span class="fc" id="L169">		} catch (Throwable e) {</span>
 			try {
-<span class="fc" id="L167">				sendError(e, out);</span>
-<span class="nc" id="L168">			} catch (Throwable e1) {</span>
-<span class="nc" id="L169">				Logme.error(e);</span>
-<span class="fc" id="L170">			}</span>
+<span class="fc" id="L171">				sendError(e, out);</span>
+<span class="nc" id="L172">			} catch (Throwable e1) {</span>
+<span class="nc" id="L173">				Logme.error(e);</span>
+<span class="fc" id="L174">			}</span>
 		} finally {
 			try {
-<span class="fc" id="L173">				in.close();</span>
-<span class="fc" id="L174">				out.close();</span>
-<span class="fc" id="L175">				connect.close();</span>
-<span class="nc" id="L176">			} catch (Throwable e) {</span>
-<span class="nc" id="L177">				Logme.error(e);</span>
-<span class="fc" id="L178">			}</span>
+<span class="fc" id="L177">				in.close();</span>
+<span class="fc" id="L178">				out.close();</span>
+<span class="fc" id="L179">				connect.close();</span>
+<span class="nc" id="L180">			} catch (Throwable e) {</span>
+<span class="nc" id="L181">				Logme.error(e);</span>
+<span class="fc" id="L182">			}</span>
 		}
-<span class="fc" id="L180">	}</span>
+<span class="fc" id="L184">	}</span>
 
 	private boolean handleStop(BufferedOutputStream out) throws IOException {
-<span class="nc" id="L183">		write(out, &quot;HTTP/1.1 &quot; + &quot;200&quot;);</span>
-<span class="nc" id="L184">		write(out, &quot;Cache-Control: no-cache&quot;);</span>
-<span class="nc" id="L185">		write(out, &quot;Server: PlantUML PicoWebServer &quot; + Version.versionString());</span>
-<span class="nc" id="L186">		write(out, &quot;Date: &quot; + new Date());</span>
-<span class="nc" id="L187">		write(out, &quot;&quot;);</span>
+<span class="nc" id="L187">		write(out, &quot;HTTP/1.1 &quot; + &quot;200&quot;);</span>
+<span class="nc" id="L188">		write(out, &quot;Cache-Control: no-cache&quot;);</span>
+<span class="nc" id="L189">		write(out, &quot;Server: PlantUML PicoWebServer &quot; + Version.versionString());</span>
+<span class="nc" id="L190">		write(out, &quot;Date: &quot; + new Date());</span>
+<span class="nc" id="L191">		write(out, &quot;&quot;);</span>
 
-<span class="nc" id="L189">		write(out, &quot;&lt;html&gt;Stoping...&lt;/html&gt;&quot;);</span>
+<span class="nc" id="L193">		write(out, &quot;&lt;html&gt;Stoping...&lt;/html&gt;&quot;);</span>
 
-<span class="nc" id="L191">		out.flush();</span>
+<span class="nc" id="L195">		out.flush();</span>
 
-<span class="nc" id="L193">		return true;</span>
+<span class="nc" id="L197">		return true;</span>
 	}
 
 	private boolean handleInfo(BufferedOutputStream out) throws IOException {
-<span class="nc" id="L197">		write(out, &quot;HTTP/1.1 &quot; + &quot;200&quot;);</span>
-<span class="nc" id="L198">		write(out, &quot;Cache-Control: no-cache&quot;);</span>
-<span class="nc" id="L199">		write(out, &quot;Server: PlantUML PicoWebServer &quot; + Version.versionString());</span>
-<span class="nc" id="L200">		write(out, &quot;Date: &quot; + new Date());</span>
-<span class="nc" id="L201">		write(out, &quot;Content-Type: application/json&quot;);</span>
-<span class="nc" id="L202">		write(out, &quot;&quot;);</span>
+<span class="nc" id="L201">		write(out, &quot;HTTP/1.1 &quot; + &quot;200&quot;);</span>
+<span class="nc" id="L202">		write(out, &quot;Cache-Control: no-cache&quot;);</span>
+<span class="nc" id="L203">		write(out, &quot;Server: PlantUML PicoWebServer &quot; + Version.versionString());</span>
+<span class="nc" id="L204">		write(out, &quot;Date: &quot; + new Date());</span>
+<span class="nc" id="L205">		write(out, &quot;Content-Type: application/json&quot;);</span>
+<span class="nc" id="L206">		write(out, &quot;&quot;);</span>
 
-<span class="nc" id="L204">		final JsonArray formats = new JsonArray();</span>
-<span class="nc" id="L205">		formats.add(&quot;png&quot;);</span>
-<span class="nc" id="L206">		formats.add(&quot;svg&quot;);</span>
-<span class="nc" id="L207">		formats.add(&quot;txt&quot;);</span>
-<span class="nc" id="L208">		final JsonObject json = Json.object() //</span>
-<span class="nc" id="L209">				.add(&quot;version&quot;, Version.versionString()) //</span>
-<span class="nc" id="L210">				.add(&quot;PicoWebServer&quot;, true) //</span>
-<span class="nc" id="L211">				.add(&quot;formats&quot;, formats); //</span>
-<span class="nc" id="L212">		write(out, json.toString());</span>
+<span class="nc" id="L208">		final JsonArray formats = new JsonArray();</span>
+<span class="nc" id="L209">		formats.add(&quot;png&quot;);</span>
+<span class="nc" id="L210">		formats.add(&quot;svg&quot;);</span>
+<span class="nc" id="L211">		formats.add(&quot;txt&quot;);</span>
+<span class="nc" id="L212">		final JsonObject json = Json.object() //</span>
+<span class="nc" id="L213">				.add(&quot;version&quot;, Version.versionString()) //</span>
+<span class="nc" id="L214">				.add(&quot;PicoWebServer&quot;, true) //</span>
+<span class="nc" id="L215">				.add(&quot;formats&quot;, formats); //</span>
+<span class="nc" id="L216">		write(out, json.toString());</span>
 
-<span class="nc" id="L214">		out.flush();</span>
+<span class="nc" id="L218">		out.flush();</span>
 
-<span class="nc" id="L216">		return true;</span>
+<span class="nc" id="L220">		return true;</span>
 	}
 
 	private boolean handleLanguage(BufferedOutputStream out) throws IOException {
-<span class="fc" id="L220">		write(out, &quot;HTTP/1.1 &quot; + &quot;200&quot;);</span>
-<span class="fc" id="L221">		write(out, &quot;Cache-Control: no-cache&quot;);</span>
-<span class="fc" id="L222">		write(out, &quot;Server: PlantUML PicoWebServer &quot; + Version.versionString());</span>
-<span class="fc" id="L223">		write(out, &quot;Date: &quot; + new Date());</span>
-<span class="fc" id="L224">		write(out, &quot;Content-Type: text/text&quot;);</span>
-<span class="fc" id="L225">		write(out, &quot;&quot;);</span>
+<span class="fc" id="L224">		write(out, &quot;HTTP/1.1 &quot; + &quot;200&quot;);</span>
+<span class="fc" id="L225">		write(out, &quot;Cache-Control: no-cache&quot;);</span>
+<span class="fc" id="L226">		write(out, &quot;Server: PlantUML PicoWebServer &quot; + Version.versionString());</span>
+<span class="fc" id="L227">		write(out, &quot;Date: &quot; + new Date());</span>
+<span class="fc" id="L228">		write(out, &quot;Content-Type: text/text&quot;);</span>
+<span class="fc" id="L229">		write(out, &quot;&quot;);</span>
 
-<span class="fc" id="L227">		final PrintStream ps = new PrintStream(out);</span>
-<span class="fc" id="L228">		new LanguageDescriptor().print(ps);</span>
+<span class="fc" id="L231">		final PrintStream ps = new PrintStream(out);</span>
+<span class="fc" id="L232">		new LanguageDescriptor().print(ps);</span>
 
-<span class="fc" id="L230">		out.flush();</span>
+<span class="fc" id="L234">		out.flush();</span>
 
-<span class="fc" id="L232">		return true;</span>
+<span class="fc" id="L236">		return true;</span>
 	}
 
 	private boolean handleGET(ReceivedHTTPRequest request, BufferedOutputStream out, final FileFormat format)
 			throws IOException {
-<span class="fc" id="L237">		final int x = request.getPath().lastIndexOf('/');</span>
-<span class="fc" id="L238">		final String compressed = request.getPath().substring(x + 1);</span>
-<span class="fc" id="L239">		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoderProtected();</span>
-<span class="fc" id="L240">		final String source = transcoder.decode(compressed);</span>
-<span class="fc" id="L241">		final SourceStringReader ssr = new SourceStringReader(source);</span>
+<span class="fc" id="L241">		requestedFormat = format;</span>
+<span class="fc" id="L242">		final int x = request.getPath().lastIndexOf('/');</span>
+<span class="fc" id="L243">		final String compressed = request.getPath().substring(x + 1);</span>
+<span class="fc" id="L244">		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoderProtected();</span>
+<span class="fc" id="L245">		final String source = transcoder.decode(compressed);</span>
+<span class="fc" id="L246">		final SourceStringReader ssr = new SourceStringReader(source);</span>
 
-<span class="fc" id="L243">		final FileFormatOption fileFormatOption = new FileFormatOption(format);</span>
-<span class="fc" id="L244">		final List&lt;BlockUml&gt; blocks = ssr.getBlocks();</span>
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (blocks.size() &gt; 0) {</span>
-<span class="fc" id="L246">			final Diagram system = blocks.get(0).getDiagram();</span>
-<span class="fc" id="L247">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
-<span class="fc" id="L248">			final ImageData imageData = system.exportDiagram(os, 0, fileFormatOption);</span>
-<span class="fc" id="L249">			os.close();</span>
-<span class="fc" id="L250">			sendDiagram(out, system, fileFormatOption, httpReturnCode(imageData.getStatus()), imageData,</span>
-<span class="fc" id="L251">					os.toByteArray());</span>
-<span class="fc" id="L252">			return true;</span>
+<span class="fc" id="L248">		final FileFormatOption fileFormatOption = new FileFormatOption(format);</span>
+<span class="fc" id="L249">		final List&lt;BlockUml&gt; blocks = ssr.getBlocks();</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">		if (blocks.size() &gt; 0) {</span>
+<span class="fc" id="L251">			final Diagram system = blocks.get(0).getDiagram();</span>
+<span class="fc" id="L252">			final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc" id="L253">			final ImageData imageData = system.exportDiagram(os, 0, fileFormatOption);</span>
+<span class="fc" id="L254">			os.close();</span>
+<span class="fc" id="L255">			sendDiagram(out, system, fileFormatOption, httpReturnCode(imageData.getStatus()), imageData,</span>
+<span class="fc" id="L256">					os.toByteArray());</span>
+<span class="fc" id="L257">			return true;</span>
 		}
-<span class="nc" id="L254">		return false;</span>
+<span class="nc" id="L259">		return false;</span>
 	}
 
 	private void handleRenderRequest(ReceivedHTTPRequest request, BufferedOutputStream out) throws Exception {
-<span class="pc bpc" id="L258" title="1 of 2 branches missed.">		if (request.getBody().length == 0) {</span>
-<span class="nc" id="L259">			throw new BadRequest400(&quot;No request body&quot;);</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (request.getBody().length == 0) {</span>
+<span class="nc" id="L264">			throw new BadRequest400(&quot;No request body&quot;);</span>
 		}
 
 		final RenderRequest renderRequest;
 		try {
-<span class="fc" id="L264">			renderRequest = RenderRequest.fromJson(new String(request.getBody(), UTF_8));</span>
-<span class="fc" id="L265">		} catch (Exception e) {</span>
-<span class="fc" id="L266">			throw new BadRequest400(&quot;Error parsing request json: &quot; + e.getMessage(), e);</span>
-<span class="fc" id="L267">		}</span>
+<span class="fc" id="L269">			renderRequest = RenderRequest.fromJson(new String(request.getBody(), UTF_8));</span>
+<span class="fc" id="L270">		} catch (Exception e) {</span>
+<span class="fc" id="L271">			throw new BadRequest400(&quot;Error parsing request json: &quot; + e.getMessage(), e);</span>
+<span class="fc" id="L272">		}</span>
 
-<span class="fc" id="L269">		handleRenderRequest(renderRequest, out);</span>
-<span class="fc" id="L270">	}</span>
+<span class="fc" id="L274">		handleRenderRequest(renderRequest, out);</span>
+<span class="fc" id="L275">	}</span>
 
 	public void handleRenderRequest(RenderRequest renderRequest, BufferedOutputStream out) throws Exception {
 
@@ -280,99 +285,188 @@ public class PicoWebServer implements Runnable {
 		// empty array whenever the JSON body omits &quot;options&quot;, which is the
 		// common case. Padding with an inert, already-default flag keeps that
 		// unrelated branch from ever firing here.
-<span class="fc" id="L283">		final String[] requestOptions = renderRequest.getOptions();</span>
-<span class="fc bfc" id="L284" title="All 2 branches covered.">		final String[] options = requestOptions.length == 0 ? new String[] { &quot;--charset&quot;, &quot;UTF-8&quot; } : requestOptions;</span>
-<span class="fc" id="L285">		final CliOptions option = CliParser.parse(options);</span>
+<span class="fc" id="L288">		final String[] requestOptions = renderRequest.getOptions();</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">		final String[] options = requestOptions.length == 0 ? new String[] { &quot;--charset&quot;, &quot;UTF-8&quot; } : requestOptions;</span>
+		// Before parsing: the options themselves may be what fails
+<span class="fc" id="L291">		requestedFormat = guessFormat(requestOptions);</span>
+<span class="fc" id="L292">		final CliOptions option = CliParser.parse(options);</span>
 
-<span class="fc bfc" id="L287" title="All 2 branches covered.">		final String source = renderRequest.getSource().startsWith(&quot;@start&quot;) ? renderRequest.getSource()</span>
-<span class="fc" id="L288">				: &quot;@startuml\n&quot; + renderRequest.getSource() + &quot;\n@enduml&quot;;</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">		final String source = renderRequest.getSource().startsWith(&quot;@start&quot;) ? renderRequest.getSource()</span>
+<span class="fc" id="L295">				: &quot;@startuml\n&quot; + renderRequest.getSource() + &quot;\n@enduml&quot;;</span>
 
-<span class="fc bfc" id="L290" title="All 2 branches covered.">		final SFile newCurrentDir = option.getFileDir() == null ? null : new SFile(option.getFileDir());</span>
-<span class="fc" id="L291">		final SourceStringReader ssr = new SourceStringReader(option.getDefaultDefines(), source, UTF_8,</span>
-<span class="fc" id="L292">				option.getConfig(), newCurrentDir);</span>
-<span class="fc" id="L293">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">		final SFile newCurrentDir = option.getFileDir() == null ? null : new SFile(option.getFileDir());</span>
+<span class="fc" id="L298">		final SourceStringReader ssr = new SourceStringReader(option.getDefaultDefines(), source, UTF_8,</span>
+<span class="fc" id="L299">				option.getConfig(), newCurrentDir);</span>
+<span class="fc" id="L300">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
 		final Diagram system;
 		final ImageData imageData;
 
-<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		if (ssr.getBlocks().size() == 0) {</span>
-<span class="nc" id="L298">			system = PSystemErrorUtils.buildV2(null,</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		if (ssr.getBlocks().size() == 0) {</span>
+<span class="nc" id="L305">			system = PSystemErrorUtils.buildV2(null,</span>
 					new ErrorUml(SYNTAX_ERROR, &quot;No valid @start/@end found, please check the version&quot;), null,
-<span class="nc" id="L300">					Collections.&lt;StringLocated&gt;emptyList(), new PreprocessingArtifact());</span>
-<span class="nc" id="L301">			imageData = ssr.noValidStartFound(os, option.getFileFormatOption());</span>
+<span class="nc" id="L307">					Collections.&lt;StringLocated&gt;emptyList(), new PreprocessingArtifact());</span>
+<span class="nc" id="L308">			imageData = ssr.noValidStartFound(os, option.getFileFormatOption());</span>
 		} else {
-<span class="fc" id="L303">			system = ssr.getBlocks().get(0).getDiagram();</span>
-<span class="fc" id="L304">			imageData = system.exportDiagram(os, 0, option.getFileFormatOption());</span>
+<span class="fc" id="L310">			system = ssr.getBlocks().get(0).getDiagram();</span>
+<span class="fc" id="L311">			imageData = system.exportDiagram(os, 0, option.getFileFormatOption());</span>
 		}
 
-<span class="fc" id="L307">		sendDiagram(out, system, option.getFileFormatOption(), &quot;200&quot;, imageData, os.toByteArray());</span>
-<span class="fc" id="L308">	}</span>
+<span class="fc" id="L314">		sendDiagram(out, system, option.getFileFormatOption(), &quot;200&quot;, imageData, os.toByteArray());</span>
+<span class="fc" id="L315">	}</span>
 
 	private void sendDiagram(final BufferedOutputStream out, final Diagram system,
 			final FileFormatOption fileFormatOption, final String returnCode, final ImageData imageData,
 			final byte[] fileData) throws IOException {
 
-<span class="fc" id="L314">		write(out, &quot;HTTP/1.1 &quot; + returnCode);</span>
-<span class="fc" id="L315">		write(out, &quot;Cache-Control: no-cache&quot;);</span>
-<span class="fc" id="L316">		write(out, &quot;Server: PlantUML PicoWebServer &quot; + Version.versionString());</span>
-<span class="fc" id="L317">		write(out, &quot;Date: &quot; + new Date());</span>
-<span class="fc" id="L318">		write(out, &quot;Access-Control-Allow-Origin: *&quot;);</span>
-<span class="fc" id="L319">		write(out, &quot;Content-type: &quot; + fileFormatOption.getFileFormat().getMimeType());</span>
-<span class="fc" id="L320">		write(out, &quot;Content-length: &quot; + fileData.length);</span>
-<span class="fc" id="L321">		write(out, &quot;X-PlantUML-Diagram-Width: &quot; + imageData.getWidth());</span>
-<span class="fc" id="L322">		write(out, &quot;X-PlantUML-Diagram-Height: &quot; + imageData.getHeight());</span>
-<span class="fc" id="L323">		write(out, &quot;X-PlantUML-Diagram-Description: &quot; + system.getDescription().getDescription());</span>
-<span class="fc bfc" id="L324" title="All 2 branches covered.">		if (system instanceof PSystemError) {</span>
-<span class="fc" id="L325">			final PSystemError error = (PSystemError) system;</span>
-<span class="fc bfc" id="L326" title="All 2 branches covered.">			for (ErrorUml err : error.getErrorsUml()) {</span>
-<span class="fc" id="L327">				write(out, &quot;X-PlantUML-Diagram-Error: &quot; + err.getError());</span>
-<span class="fc" id="L328">				write(out, &quot;X-PlantUML-Diagram-Error-Line: &quot; + (1 + err.getLineLocation().getPosition()));</span>
-<span class="fc" id="L329">			}</span>
+<span class="fc" id="L321">		write(out, &quot;HTTP/1.1 &quot; + returnCode);</span>
+<span class="fc" id="L322">		write(out, &quot;Cache-Control: no-cache&quot;);</span>
+<span class="fc" id="L323">		write(out, &quot;Server: PlantUML PicoWebServer &quot; + Version.versionString());</span>
+<span class="fc" id="L324">		write(out, &quot;Date: &quot; + new Date());</span>
+<span class="fc" id="L325">		write(out, &quot;Access-Control-Allow-Origin: *&quot;);</span>
+<span class="fc" id="L326">		write(out, &quot;Content-type: &quot; + fileFormatOption.getFileFormat().getMimeType());</span>
+<span class="fc" id="L327">		write(out, &quot;Content-length: &quot; + fileData.length);</span>
+<span class="fc" id="L328">		write(out, &quot;X-PlantUML-Diagram-Width: &quot; + imageData.getWidth());</span>
+<span class="fc" id="L329">		write(out, &quot;X-PlantUML-Diagram-Height: &quot; + imageData.getHeight());</span>
+<span class="fc" id="L330">		write(out, &quot;X-PlantUML-Diagram-Description: &quot; + system.getDescription().getDescription());</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">		if (system instanceof PSystemError) {</span>
+<span class="fc" id="L332">			final PSystemError error = (PSystemError) system;</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">			for (ErrorUml err : error.getErrorsUml()) {</span>
+<span class="fc" id="L334">				write(out, &quot;X-PlantUML-Diagram-Error: &quot; + err.getError());</span>
+<span class="fc" id="L335">				write(out, &quot;X-PlantUML-Diagram-Error-Line: &quot; + (1 + err.getLineLocation().getPosition()));</span>
+<span class="fc" id="L336">			}</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">		} else if (imageData.getRootCause() != null) {</span>
+			// The diagram was understood but could not be drawn: all a client used to get was
+			// the status 503, the reason being only inside the image. There is no line of the
+			// source to give here.
+<span class="fc" id="L341">			write(out, &quot;X-PlantUML-Diagram-Error: &quot; + singleLine(imageData.getRootCause()));</span>
 		}
-<span class="pc bpc" id="L331" title="1 of 4 branches missed.">		if (system.getTitleDisplay() != null &amp;&amp; system.getTitleDisplay().size() == 1) {</span>
-<span class="fc" id="L332">			final String encode = URLEncoder.encode(system.getTitleDisplay().asList().get(0).toString(), &quot;UTF-8&quot;);</span>
-<span class="pc bpc" id="L333" title="1 of 2 branches missed.">			if (encode.length() &lt; 256)</span>
-<span class="fc" id="L334">				write(out, &quot;X-PlantUML-Diagram-Title: &quot; + encode);</span>
+<span class="pc bpc" id="L343" title="1 of 4 branches missed.">		if (system.getTitleDisplay() != null &amp;&amp; system.getTitleDisplay().size() == 1) {</span>
+<span class="fc" id="L344">			final String encode = URLEncoder.encode(system.getTitleDisplay().asList().get(0).toString(), &quot;UTF-8&quot;);</span>
+<span class="pc bpc" id="L345" title="1 of 2 branches missed.">			if (encode.length() &lt; 256)</span>
+<span class="fc" id="L346">				write(out, &quot;X-PlantUML-Diagram-Title: &quot; + encode);</span>
 		}
 
-<span class="fc" id="L337">		write(out, &quot;X-Patreon: Support us on https://plantuml.com/patreon&quot;);</span>
-<span class="fc" id="L338">		write(out, &quot;X-Donate: https://plantuml.com/paypal&quot;);</span>
-<span class="fc" id="L339">		write(out, &quot;X-Quote: &quot; + StringUtils.rot(QuoteUtils.getSomeQuote()));</span>
-<span class="fc" id="L340">		write(out, &quot;&quot;);</span>
-<span class="fc" id="L341">		out.flush();</span>
-<span class="fc" id="L342">		out.write(fileData);</span>
-<span class="fc" id="L343">		out.flush();</span>
-<span class="fc" id="L344">	}</span>
+<span class="fc" id="L349">		write(out, &quot;X-Patreon: Support us on https://plantuml.com/patreon&quot;);</span>
+<span class="fc" id="L350">		write(out, &quot;X-Donate: https://plantuml.com/paypal&quot;);</span>
+<span class="fc" id="L351">		write(out, &quot;X-Quote: &quot; + StringUtils.rot(QuoteUtils.getSomeQuote()));</span>
+<span class="fc" id="L352">		write(out, &quot;&quot;);</span>
+<span class="fc" id="L353">		out.flush();</span>
+<span class="fc" id="L354">		out.write(fileData);</span>
+<span class="fc" id="L355">		out.flush();</span>
+<span class="fc" id="L356">	}</span>
+
+	/**
+	 * The formats an error can be drawn in. Any other one (pdf, xmi...) falls back to png:
+	 * an image is more useful to the client than the text of a stack trace.
+	 */
+	static FileFormat guessFormat(String[] options) {
+<span class="fc" id="L363">		FileFormat result = FileFormat.PNG;</span>
+<span class="fc bfc" id="L364" title="All 2 branches covered.">		for (int i = 0; i &lt; options.length; i++) {</span>
+<span class="fc" id="L365">			final String o = options[i];</span>
+<span class="pc bpc" id="L366" title="2 of 6 branches missed.">			if (o.equals(&quot;-tsvg&quot;) || o.equals(&quot;-svg&quot;) || o.equals(&quot;--svg&quot;))</span>
+<span class="fc" id="L367">				result = FileFormat.SVG;</span>
+<span class="pc bpc" id="L368" title="2 of 6 branches missed.">			else if (o.equals(&quot;-ttxt&quot;) || o.equals(&quot;-txt&quot;) || o.equals(&quot;--txt&quot;))</span>
+<span class="fc" id="L369">				result = FileFormat.ATXT;</span>
+<span class="pc bpc" id="L370" title="2 of 6 branches missed.">			else if (o.equals(&quot;-tutxt&quot;) || o.equals(&quot;-utxt&quot;) || o.equals(&quot;--utxt&quot;))</span>
+<span class="fc" id="L371">				result = FileFormat.UTXT;</span>
+<span class="pc bpc" id="L372" title="2 of 6 branches missed.">			else if (o.equals(&quot;-tpng&quot;) || o.equals(&quot;-png&quot;) || o.equals(&quot;--png&quot;))</span>
+<span class="fc" id="L373">				result = FileFormat.PNG;</span>
+<span class="fc bfc" id="L374" title="All 6 branches covered.">			else if ((o.equals(&quot;-f&quot;) || o.equals(&quot;--format&quot;)) &amp;&amp; i + 1 &lt; options.length)</span>
+<span class="fc" id="L375">				result = fromCli(options[i + 1], result);</span>
+		}
+<span class="fc" id="L377">		return result;</span>
+	}
+
+	private static FileFormat fromCli(String name, FileFormat defaultFormat) {
+<span class="fc" id="L381">		final FileFormat format = FileFormat.fromCli(name);</span>
+<span class="pc bpc" id="L382" title="3 of 8 branches missed.">		if (format == FileFormat.PNG || format == FileFormat.SVG || format == FileFormat.ATXT</span>
+				|| format == FileFormat.UTXT)
+<span class="fc" id="L384">			return format;</span>
+
+<span class="nc" id="L386">		return defaultFormat;</span>
+	}
+
+	/**
+	 * An unexpected failure is sent as an image (or as text for the text formats) of the
+	 * crash report, with the stack trace in it, in the format the client asked for: a client
+	 * that expects an image has no use for a text/plain body. Nothing is written before the
+	 * whole image exists, so that a failure of the image itself leaves the text answer below.
+	 */
+	private void sendErrorImage(Throwable e, BufferedOutputStream out, FileFormat format) throws Exception {
+<span class="fc" id="L396">		final CrashReportHandler report = new CrashReportHandler(e, null, null);</span>
+<span class="fc" id="L397">		report.add(&quot;An error has occurred : &quot; + e);</span>
+<span class="fc" id="L398">		report.addEmptyLine();</span>
+<span class="fc" id="L399">		report.add(&quot;PlantUML (&quot; + Version.versionString() + &quot;) could not process this request.&quot;);</span>
+<span class="fc" id="L400">		report.addEmptyLine();</span>
+<span class="fc" id="L401">		report.addProperties();</span>
+<span class="fc" id="L402">		report.addEmptyLine();</span>
+<span class="fc" id="L403">		report.youShouldSendThisDiagram();</span>
+<span class="fc" id="L404">		report.addEmptyLine();</span>
+
+<span class="fc" id="L406">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="fc" id="L407">		report.exportDiagramError(new FileFormatOption(format), 0, os);</span>
+<span class="fc" id="L408">		os.close();</span>
+
+<span class="fc" id="L410">		write(out, &quot;HTTP/1.1 500 Internal Server Error&quot;);</span>
+<span class="fc" id="L411">		write(out, &quot;Cache-Control: no-cache&quot;);</span>
+<span class="fc" id="L412">		write(out, &quot;Server: PlantUML PicoWebServer &quot; + Version.versionString());</span>
+<span class="fc" id="L413">		write(out, &quot;Date: &quot; + new Date());</span>
+<span class="fc" id="L414">		write(out, &quot;Access-Control-Allow-Origin: *&quot;);</span>
+<span class="fc" id="L415">		write(out, &quot;Content-type: &quot; + format.getMimeType());</span>
+<span class="fc" id="L416">		write(out, &quot;Content-length: &quot; + os.size());</span>
+<span class="fc" id="L417">		write(out, &quot;X-PlantUML-Diagram-Error: &quot; + singleLine(e));</span>
+<span class="fc" id="L418">		write(out, &quot;&quot;);</span>
+<span class="fc" id="L419">		out.flush();</span>
+<span class="fc" id="L420">		out.write(os.toByteArray());</span>
+<span class="fc" id="L421">		out.flush();</span>
+<span class="fc" id="L422">	}</span>
 
 	private void sendError(Throwable e, BufferedOutputStream out) throws Exception {
-<span class="fc" id="L347">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="fc" id="L348">		final PrintWriter printWriter = new PrintWriter(baos);</span>
-
-<span class="pc bpc" id="L350" title="2 of 4 branches missed.">		if (e instanceof BadRequest400 &amp;&amp; e.getCause() == null) {</span>
-<span class="nc" id="L351">			printWriter.write(e.getMessage());</span>
-		} else {
-<span class="fc" id="L353">			e.printStackTrace(printWriter);</span>
+		// A bad request is the client's mistake, told in a few words: not a crash report
+<span class="pc bpc" id="L426" title="1 of 4 branches missed.">		if (requestedFormat != null &amp;&amp; e instanceof BadRequest400 == false) {</span>
+			try {
+<span class="fc" id="L428">				sendErrorImage(e, out, requestedFormat);</span>
+<span class="fc" id="L429">				return;</span>
+<span class="nc" id="L430">			} catch (Throwable e2) {</span>
+<span class="nc" id="L431">				Logme.error(e2);</span>
+			}
 		}
-<span class="fc" id="L355">		printWriter.close();</span>
+<span class="fc" id="L434">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L435">		final PrintWriter printWriter = new PrintWriter(baos);</span>
 
-<span class="pc bpc" id="L357" title="1 of 2 branches missed.">		write(out, &quot;HTTP/1.1 &quot; + (e instanceof BadRequest400 ? &quot;400 Bad Request&quot; : &quot;500 Internal Server Error&quot;));</span>
-<span class="fc" id="L358">		write(out, &quot;Content-type: text/plain&quot;);</span>
-<span class="fc" id="L359">		write(out, &quot;Content-length: &quot; + baos.size());</span>
-<span class="fc" id="L360">		write(out, &quot;&quot;);</span>
-<span class="fc" id="L361">		out.write(baos.toByteArray());</span>
-<span class="fc" id="L362">		out.flush();</span>
-<span class="fc" id="L363">	}</span>
+<span class="pc bpc" id="L437" title="2 of 4 branches missed.">		if (e instanceof BadRequest400 &amp;&amp; e.getCause() == null) {</span>
+<span class="nc" id="L438">			printWriter.write(e.getMessage());</span>
+		} else {
+<span class="fc" id="L440">			e.printStackTrace(printWriter);</span>
+		}
+<span class="fc" id="L442">		printWriter.close();</span>
+
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">		write(out, &quot;HTTP/1.1 &quot; + (e instanceof BadRequest400 ? &quot;400 Bad Request&quot; : &quot;500 Internal Server Error&quot;));</span>
+<span class="fc" id="L445">		write(out, &quot;Content-type: text/plain&quot;);</span>
+<span class="fc" id="L446">		write(out, &quot;Content-length: &quot; + baos.size());</span>
+<span class="fc" id="L447">		write(out, &quot;&quot;);</span>
+<span class="fc" id="L448">		out.write(baos.toByteArray());</span>
+<span class="fc" id="L449">		out.flush();</span>
+<span class="fc" id="L450">	}</span>
+
+	/** An exception on one line, so that it can be a header value. */
+	private static String singleLine(Throwable t) {
+<span class="fc" id="L454">		final String message = t.getMessage();</span>
+<span class="pc bpc" id="L455" title="1 of 2 branches missed.">		final String text = t.getClass().getName() + (message == null ? &quot;&quot; : &quot;: &quot; + message);</span>
+<span class="fc" id="L456">		return text.replaceAll(&quot;[\\r\\n]+&quot;, &quot; &quot;);</span>
+	}
 
 	private String httpReturnCode(int status) {
-<span class="pc bpc" id="L366" title="1 of 4 branches missed.">		if (status == 0 || status == 200) {</span>
-<span class="fc" id="L367">			return &quot;200 OK&quot;;</span>
+<span class="pc bpc" id="L460" title="1 of 4 branches missed.">		if (status == 0 || status == 200) {</span>
+<span class="fc" id="L461">			return &quot;200 OK&quot;;</span>
 		}
-<span class="fc" id="L369">		return &quot;&quot; + status + &quot; ERROR&quot;;</span>
+<span class="fc" id="L463">		return &quot;&quot; + status + &quot; ERROR&quot;;</span>
 	}
 
 	private void write(OutputStream os, String s) throws IOException {
-<span class="fc" id="L373">		s = s + &quot;\r\n&quot;;</span>
-<span class="fc" id="L374">		os.write(s.getBytes(UTF_8));</span>
-<span class="fc" id="L375">	}</span>
+<span class="fc" id="L467">		s = s + &quot;\r\n&quot;;</span>
+<span class="fc" id="L468">		os.write(s.getBytes(UTF_8));</span>
+<span class="fc" id="L469">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
