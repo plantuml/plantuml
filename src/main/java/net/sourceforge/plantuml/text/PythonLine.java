@@ -135,15 +135,16 @@ public final class PythonLine {
 			"dump_memory", "option", "assert", "local", "pragma", "assume", "exit")));
 
 	/**
-	 * The last rule (section 11.4 of PYTHON_PREPROCESSOR.md): a "!" followed
-	 * directly (no blank) by an identifier, a digit, "(" or "[" is Python:
-	 * "!x = 1", "!x == 1", "!f(1)", "!1 + 1", "!(a, b) = c", "![1, 2]". The words
-	 * of {@link #NOT_PYTHON_WORDS} are excluded. To be tested after every legacy
-	 * directive.
+	 * The last rule (section 11.4 of PYTHON_PREPROCESSOR.md): a "!" followed,
+	 * after optional blanks, by an identifier, a digit, "(" or "[" is Python:
+	 * "!x = 1", "!x == 1", "!f(1)", "!1 + 1", "!(a, b) = c", "![1, 2]". With
+	 * blanks ("! x = 1") it is Python code indented by the gutter rule, so an
+	 * indentation error at the top level. The words of {@link #NOT_PYTHON_WORDS}
+	 * are excluded. To be tested after every legacy directive.
 	 */
 	public static boolean isStatementLine(String s) {
 		final int i = afterBang(s);
-		if (i < 0 || i != s.indexOf('!') + 1 || i >= s.length())
+		if (i < 0 || i >= s.length())
 			return false;
 		final char c = s.charAt(i);
 		if (c == '(' || c == '[' || (c >= '0' && c <= '9'))
