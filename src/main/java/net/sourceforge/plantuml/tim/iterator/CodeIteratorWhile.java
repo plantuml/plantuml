@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.tim.iterator;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 import net.sourceforge.plantuml.text.StringLocated;
@@ -52,6 +54,9 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 	private final TMemory memory;
 	private final List<StringLocated> logs;
 
+	/** The !while lines opened in the body this iterator reads and not closed yet. */
+	private final Deque<StringLocated> opened = new ArrayDeque<>();
+
 	public CodeIteratorWhile(CodeIterator source, TContext context, TMemory memory, List<StringLocated> logs) {
 		super(source);
 		this.context = context;
@@ -63,8 +68,14 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 		int level = 0;
 		while (true) {
 			final StringLocated result = source.peek();
-			if (result == null)
+			if (result == null) {
+				if (opened.isEmpty() == false) {
+					// the error is reported on the last line of the debug list: the line left open
+					logs.add(opened.peekLast());
+					throw new EaterException("!while without !endwhile", opened.peekLast());
+				}
 				return null;
+			}
 
 			final ExecutionContextWhile currentWhile = memory.peekWhile();
 			if (currentWhile != null && currentWhile.isSkipMe()) {
@@ -74,6 +85,7 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 					level--;
 					if (level == -1) {
 						memory.pollWhile();
+						opened.pollLast();
 						level = 0;
 					}
 				}
@@ -83,6 +95,7 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 
 			if (result.getType() == TLineType.WHILE) {
 				logs.add(result);
+				opened.addLast(result);
 				executeWhile(memory, result.getTrimmed());
 				next();
 				continue;
@@ -92,10 +105,12 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 					throw new EaterException("No while related to this endwhile", result);
 
 				final TValue value = currentWhile.conditionValue(result, context, memory);
-				if (value.toBoolean())
+				if (value.toBoolean()) {
 					source.jumpToCodePosition(currentWhile.getStartWhile(), result);
-				else
+				} else {
 					memory.pollWhile();
+					opened.pollLast();
+				}
 
 				next();
 				continue;

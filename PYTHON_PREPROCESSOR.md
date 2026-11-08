@@ -790,8 +790,10 @@ preprocessor fails on a `!if`, `!while` or `!else` line, in a diagram that has
 Python, and the line parses as a Python block opener once a colon is added, the
 message ends with ` (looks like Python, is the ':' missing?)` (`PythonHint`).
 A legacy-only diagram never gets it. A `!if x == 1` without colon whose legacy
-evaluation does not fail is not an error at all: the condition is false and the
-block is skipped.
+evaluation does not fail opens a legacy `!if` whose condition is false: the
+lines after it are skipped, and since a Python block has no `!endif`, the
+diagram ends with the error `!if without !endif` on that line, with the same
+hint (see section 12).
 
 ### 11.5 Macros **[implemented]**
 
@@ -922,7 +924,17 @@ The **reduced preprocessor runs first, then text Python**.
   the first Python line.
 - `${` has no meaning: it is plain text, in every diagram.
 
-Legacy diagrams keep the old preprocessor unchanged, frozen. The two worlds can
+Legacy diagrams keep the old preprocessor unchanged, frozen, with one
+exception **[implemented]**: a `!if`, `!ifdef` or `!ifndef` without its
+`!endif`, a `!while` without its `!endwhile` and a `!foreach` without its
+`!endfor` are errors, reported on the line left open (`!if without !endif`,
+...), in every diagram, with or without Python. They used to skip the rest of
+the text silently, which gave an empty or truncated diagram. Each body is
+checked on its own: the main text, an included file (an `!if` of the diagram
+still open around an `!include` is fine), the body of a legacy function or
+procedure. No file of the standard library is affected.
+
+The two worlds can
 be mixed in one diagram, and even in one file: the standard library (C4 and
 others) is written with the legacy directives, so a Python diagram must be able
 to `!include` it. Legacy logic directives are therefore not an error in a
