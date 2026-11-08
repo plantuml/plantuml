@@ -47,7 +47,7 @@
 package org.scilab.forge.jlatexmath;
 
 /**
- * Signals that an error occured while parsing a string to a formula.
+ * Signals that an error occurred while parsing a string to a formula.
  */
 public class ParseException extends JMathTeXException {
 

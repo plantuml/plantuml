@@ -55,7 +55,7 @@ import java.util.ListIterator;
 import org.scilab.forge.jlatexmath.dynamic.DynamicAtom;
 
 /**
- * An atom representing a horizontal row of other atoms, to be seperated by glue.
+ * An atom representing a horizontal row of other atoms, to be separated by glue.
  * It's also responsible for inserting kerns and ligatures.
  */
 public class RowAtom extends Atom implements Row {

@@ -49,7 +49,7 @@ package org.scilab.forge.jlatexmath;
 
 /**
  * A box representing another box with a delimiter box and a script box above or under it,
- * with script and delimiter seperated by a kern.
+ * with script and delimiter separated by a kern.
  */
 public class OverUnderBox extends Box {
 
