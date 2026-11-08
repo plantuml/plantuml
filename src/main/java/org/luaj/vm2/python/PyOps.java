@@ -62,6 +62,8 @@ final class PyOps {
 			return Types.SLICE;
 		if (o instanceof PyView)
 			return ((PyView) o).type();
+		if (o instanceof PyNotImplemented)
+			return Types.NOT_IMPLEMENTED_TYPE;
 		return Types.ITERATOR;
 	}
 
@@ -615,8 +617,42 @@ final class PyOps {
 			return seqCompare(op, ((PyList) a).items.toArray(), ((PyList) b).items.toArray(), depth);
 		if (a instanceof PyTuple && b instanceof PyTuple)
 			return seqCompare(op, ((PyTuple) a).items, ((PyTuple) b).items, depth);
+		if (a instanceof PyInstance || b instanceof PyInstance) {
+			final Object r = orderUser(op, a, b);
+			if (r != PyNotImplemented.INSTANCE)
+				return isTrue(r);
+		}
 		throw err(Types.TYPE_ERROR, "'" + CMP_SYMBOLS[op] + "' not supported between instances of '" + typeName(a)
 				+ "' and '" + typeName(b) + "'");
+	}
+
+	private static final String[] ORDER_METHODS = { null, null, "__lt__", "__le__", "__gt__", "__ge__" };
+
+	/**
+	 * &lt;, &lt;=, &gt; and &gt;= between objects of classes of the program, as
+	 * CPython does: the method of the left operand (a.__lt__(b)), then, if it is
+	 * missing or returns NotImplemented, the reflected method of the right one
+	 * (b.__gt__(a)). Returns NotImplemented when neither answers, and the caller
+	 * raises the TypeError. There is no __eq__, so == and != stay identity.
+	 */
+	private static Object orderUser(int op, Object a, Object b) {
+		Object r = callOrder(a, ORDER_METHODS[op], b);
+		if (r != PyNotImplemented.INSTANCE)
+			return r;
+		// the reflected operator: a < b is b > a, a <= b is b >= a
+		final int reflected = op == Op.CMP_LT ? Op.CMP_GT : op == Op.CMP_GT ? Op.CMP_LT : op == Op.CMP_LE ? Op.CMP_GE
+				: Op.CMP_LE;
+		return callOrder(b, ORDER_METHODS[reflected], a);
+	}
+
+	private static Object callOrder(Object self, String method, Object other) {
+		if (self instanceof PyInstance) {
+			final PyInstance instance = (PyInstance) self;
+			final Object fn = instance.type.lookup(method);
+			if (fn != null)
+				return instance.type.interp.call(fn, instance, other);
+		}
+		return PyNotImplemented.INSTANCE;
 	}
 
 	private static boolean seqCompare(int op, Object[] x, Object[] y, int depth) {
@@ -1121,6 +1157,8 @@ final class PyOps {
 			}
 		} else if (o instanceof PyModule) {
 			sb.append("<module '").append(((PyModule) o).name).append("'>");
+		} else if (o instanceof PyNotImplemented) {
+			sb.append("NotImplemented");
 		} else if (o instanceof PySlice) {
 			PySlice s = (PySlice) o;
 			sb.append("slice(");

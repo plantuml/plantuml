@@ -26,6 +26,8 @@ final class Types {
 	static final PyType DICT_VALUES = new PyType("dict_values", OBJECT, false);
 	static final PyType DICT_ITEMS = new PyType("dict_items", OBJECT, false);
 	static final PyType ITERATOR = new PyType("iterator", OBJECT, false);
+	/** The type of NotImplemented: not in ALL, CPython has no builtin name for it. */
+	static final PyType NOT_IMPLEMENTED_TYPE = new PyType("NotImplementedType", OBJECT, false);
 
 	static final PyType BASE_EXCEPTION = new PyType("BaseException", OBJECT, true);
 	static final PyType EXCEPTION = new PyType("Exception", BASE_EXCEPTION, true);

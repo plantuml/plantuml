@@ -158,6 +158,18 @@ Accepted:
   `Base.__str__(self)`). The instance asks its class to run the method: a class
   holds the interpreter that ran its `class` statement (`PyType.interp`), so the
   static methods of `PyOps` need no interpreter at hand;
+- `__lt__`, `__le__`, `__gt__` and `__ge__` **[implemented]**: `a < b` runs
+  `a.__lt__(b)`; if `a` has no such method, or it returns `NotImplemented`
+  (the builtin constant, a method says "I do not know this operand"), the
+  reflected method of the right operand runs (`b.__gt__(a)`; `<=` and `>=` the
+  same way), and when neither answers it is the `TypeError` of CPython.
+  `sorted`, `list.sort`, `min` and `max` only use `<`, so `__lt__` is enough
+  for them, as in CPython (there is no `functools.total_ordering`: `<=` and
+  `>=` need their own method). **There is no `__eq__` and no `__hash__`**:
+  `==`, `!=`, `in`, `list.index`, `.count`, `.remove` and the keys of a dict
+  compare the instances by identity, as a class without `__eq__` does in
+  CPython; compare an attribute (`a.key == b.key`) to compare values. Two
+  objects that are neither smaller are not equal;
 - instance attributes (`self.x = 1`, `self.x += 1`, `del self.x`) and class
   attributes, read through the instance or the class, and set on the class
   (`A.count += 1`);
@@ -179,8 +191,8 @@ compiled as a function that returns its locals as a dict).
 
 Rejected (syntax error):
 
-- special methods and attributes other than `__init__`, `__str__` and
-  `__repr__` (`__eq__`, `__hash__`, `__lt__`, `__add__`, `__len__`,
+- special methods and attributes other than `__init__`, `__str__`, `__repr__`
+  and the four ordering ones (`__eq__`, `__hash__`, `__add__`, `__len__`,
   `__slots__`, ...): they are rejected rather than silently ignored;
 - `super()`: call the base class explicitly instead, `Base.f(self, ...)`;
 - multiple inheritance, keyword arguments in the bases (`metaclass=`);
@@ -378,6 +390,12 @@ addition a Java `StackOverflowError` is turned into the same `RecursionError`.
 Scripts that exercise these live in `src/test/resources/python/deviations/` and
 are not run under CPython.
 
+- Ordering methods (section 3.4): the result of `<`, `<=`, `>` and `>=` is the
+  truth value of what the method returns, not the object itself (a `__lt__`
+  that returns `1` gives `True` here, `1` in CPython); the rule of CPython that
+  tries first the right operand when its class is a subclass of the left one's
+  and redefines the method is not applied; `==` and `!=` between instances are
+  always identity.
 - The module `time` has its own list of differences (section 4.6): UTC only,
   English only, plain tuples, a strict list of `strftime` directives.
 - `int` is 32-bit. Any result outside `[-2147483648, 2147483647]` raises
@@ -1629,9 +1647,9 @@ Interpreter:
   scripts (section 10).
 - Additional builtins and methods as needs appear; speed (caching of globals, a
   `LOAD_METHOD` instruction, less boxing).
-- Classes, next steps: the special methods other than `__str__` and
-  `__repr__` (`__eq__` and `__hash__`, the operators, `__len__`, ...); the
-  ordering ones are decided (section 3.4). Then possibly `super()` (it
+- Classes, next steps: the special methods other than `__str__`, `__repr__`
+  and the ordering ones (`__eq__` and `__hash__`, which need a decision on
+  hashing, the arithmetic operators, `__len__`, ...). Then possibly `super()` (it
   needs the `__class__` cell), `@staticmethod` / `@classmethod` / `@property`,
   and `getattr` / `setattr` / `hasattr`.
 - Whether the `README.md` of the test resources and the leftovers of the Lua

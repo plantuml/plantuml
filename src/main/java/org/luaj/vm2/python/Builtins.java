@@ -20,6 +20,7 @@ final class Builtins {
 		for (Builtin b : FUNCTIONS)
 			in.builtins.put(b.name, b);
 		in.builtins.put("type", Types.TYPE);
+		in.builtins.put("NotImplemented", PyNotImplemented.INSTANCE);
 		in.modules.put("math", MathLib.create());
 		in.modules.put("json", JsonLib.create());
 		in.modules.put("time", TimeLib.create());

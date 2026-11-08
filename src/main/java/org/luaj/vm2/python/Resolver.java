@@ -232,7 +232,8 @@ final class Resolver {
 
 	/** The special names a class body may define: the others are rejected rather than ignored. */
 	private static boolean isSupportedSpecial(String name) {
-		return name.equals("__init__") || name.equals("__str__") || name.equals("__repr__");
+		return name.equals("__init__") || name.equals("__str__") || name.equals("__repr__") || name.equals("__lt__")
+				|| name.equals("__le__") || name.equals("__gt__") || name.equals("__ge__");
 	}
 
 	private void defaults(Scope s, Node args) {

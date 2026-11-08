@@ -35,7 +35,7 @@ class PyClassTest {
 	}
 
 	@Test
-	void specialMethodsOtherThanInitStrAndReprAreRejected() {
+	void specialMethodsOtherThanTheSupportedOnesAreRejected() {
 		String[] sources = { "class A:\n    def __eq__(self, o):\n        return True\n",
 				"class A:\n    def __hash__(self):\n        return 1\n",
 				"class A:\n    def __add__(self, o):\n        return self\n",
@@ -43,10 +43,12 @@ class PyClassTest {
 				"class A:\n    class __Meta__:\n        pass\n" };
 		for (String s : sources)
 			assertRejected(s);
-		// __init__, __str__, __repr__ and private names are accepted
+		// __init__, __str__, __repr__, the ordering methods and private names are accepted
 		Interp.compile("class A:\n    __n = 1\n    def __init__(self):\n        self.__x = 1\n    def __f(self):\n"
 				+ "        pass\n    def __str__(self):\n        return ''\n    def __repr__(self):\n"
-				+ "        return ''\n", "classes.py");
+				+ "        return ''\n    def __lt__(self, o):\n        return True\n    def __le__(self, o):\n"
+				+ "        return True\n    def __gt__(self, o):\n        return True\n    def __ge__(self, o):\n"
+				+ "        return True\n", "classes.py");
 	}
 
 	@Test
