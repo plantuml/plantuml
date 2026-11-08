@@ -37,6 +37,7 @@ import org.junit.jupiter.api.parallel.ResourceLock;
 import org.junitpioneer.jupiter.StdErr;
 import org.junitpioneer.jupiter.StdIo;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
@@ -183,6 +184,83 @@ class PicowebTest {
 		final BufferedImage image = asImage(resp);
 		assertTrue(image.getWidth() > 10);
 		assertTrue(image.getHeight() > 10);
+	}
+
+	@Test
+	void get_svg_with_error_in_style_block_gives_the_faulty_line() throws Exception {
+		// Line 5 is "LineThickness abc", not "<style>" (2) nor "</style>" (7)
+		final String source = String.join("\n", "@startmindmap", "<style>", "root {", "  LineColor red",
+				"  LineThickness abc", "}", "</style>", "* root", "@endmindmap");
+		final HttpResponse<byte[]> resp = http_get("/svg/" + getDefaultTranscoder().encode(source));
+		assertStatus(resp, 400);
+		assertEquals("5", resp.headers().firstValue("X-PlantUML-Diagram-Error-Line").get());
+		assertTrue(resp.headers().firstValue("X-PlantUML-Diagram-Error").get().contains("Invalid value 'abc'"));
+	}
+
+	@Test
+	void get_svg_with_crash_while_drawing_gives_the_error_in_a_header() throws Exception {
+		final String source = "@startcrash\ncrash when drawing\n@endcrash";
+		final HttpResponse<byte[]> resp = http_get("/svg/" + getDefaultTranscoder().encode(source));
+		assertStatus(resp, 503);
+		final String error = resp.headers().firstValue("X-PlantUML-Diagram-Error").get();
+		assertTrue(error.contains("This is a normal crash when DRAWING"), error);
+		assertFalse(error.contains("\n"));
+	}
+
+	// "-D" with no value is rejected by the option parser: an unexpected failure of the
+	// server (500), not a diagram error. It is reported in the format that was asked for.
+
+	@Test
+	void post_render_unexpected_failure_gives_an_svg_with_the_stack_trace() throws Exception {
+		final HttpResponse<byte[]> resp = http_post_json("/render", renderRequestJson("A -> B", "-tsvg", "-D"));
+		assertStatus(resp, 500);
+		assertContentType(resp.headers(), "image/svg+xml");
+		assertTrue(resp.headers().firstValue("X-PlantUML-Diagram-Error").get().contains("CliParsingException"));
+		assertTrue(body(resp).startsWith("<svg "), body(resp));
+		assertTrue(body(resp).contains("CliParsingException"));
+	}
+
+	@Test
+	void post_render_unexpected_failure_gives_a_png() throws Exception {
+		final HttpResponse<byte[]> resp = http_post_json("/render", renderRequestJson("A -> B", "-tpng", "-D"));
+		assertStatus(resp, 500);
+		assertContentType(resp.headers(), "image/png");
+		final BufferedImage image = asImage(resp);
+		assertTrue(image.getWidth() > 10);
+		assertTrue(image.getHeight() > 10);
+	}
+
+	@Test
+	void post_render_unexpected_failure_gives_text_for_a_text_format() throws Exception {
+		final HttpResponse<byte[]> resp = http_post_json("/render", renderRequestJson("A -> B", "-tutxt", "-D"));
+		assertStatus(resp, 500);
+		assertTrue(resp.headers().firstValue("Content-Type").get().startsWith("text/plain"));
+		assertTrue(body(resp).contains("CliParsingException"));
+	}
+
+	@Test
+	void post_render_unexpected_failure_in_an_unsupported_format_gives_a_png() throws Exception {
+		final HttpResponse<byte[]> resp = http_post_json("/render", renderRequestJson("A -> B", "-tpdf", "-D"));
+		assertStatus(resp, 500);
+		assertContentType(resp.headers(), "image/png");
+	}
+
+	@Test
+	void post_render_bad_json_stays_a_text_400() throws Exception {
+		final HttpResponse<byte[]> resp = http_post_json("/render", "not json");
+		assertStatus(resp, 400);
+		assertContentType(resp.headers(), "text/plain");
+	}
+
+	@Test
+	void guessFormat_reads_the_format_of_the_options() {
+		assertEquals(FileFormat.PNG, PicoWebServer.guessFormat(new String[] {}));
+		assertEquals(FileFormat.SVG, PicoWebServer.guessFormat(new String[] { "-D", "-tsvg" }));
+		assertEquals(FileFormat.SVG, PicoWebServer.guessFormat(new String[] { "--format", "svg" }));
+		assertEquals(FileFormat.UTXT, PicoWebServer.guessFormat(new String[] { "-f", "utxt" }));
+		assertEquals(FileFormat.ATXT, PicoWebServer.guessFormat(new String[] { "-ttxt" }));
+		assertEquals(FileFormat.PNG, PicoWebServer.guessFormat(new String[] { "-tpdf" }));
+		assertEquals(FileFormat.PNG, PicoWebServer.guessFormat(new String[] { "--format" }));
 	}
 
 	@Test

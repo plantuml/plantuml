@@ -67,6 +67,7 @@ import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
@@ -84,6 +85,9 @@ public class PicoWebServer implements Runnable {
 
 	private final Socket connect;
 	static boolean enableStop;
+	// The format the client asked for, once known: an unexpected failure is then reported in
+	// that format (see sendError). Null as long as the request is not understood.
+	private FileFormat requestedFormat;
 
 	public PicoWebServer(Socket c) {
 		this.connect = c;
@@ -234,6 +238,7 @@ public class PicoWebServer implements Runnable {
 
 	private boolean handleGET(ReceivedHTTPRequest request, BufferedOutputStream out, final FileFormat format)
 			throws IOException {
+		requestedFormat = format;
 		final int x = request.getPath().lastIndexOf('/');
 		final String compressed = request.getPath().substring(x + 1);
 		final Transcoder transcoder = TranscoderUtil.getDefaultTranscoderProtected();
@@ -282,6 +287,8 @@ public class PicoWebServer implements Runnable {
 		// unrelated branch from ever firing here.
 		final String[] requestOptions = renderRequest.getOptions();
 		final String[] options = requestOptions.length == 0 ? new String[] { "--charset", "UTF-8" } : requestOptions;
+		// Before parsing: the options themselves may be what fails
+		requestedFormat = guessFormat(requestOptions);
 		final CliOptions option = CliParser.parse(options);
 
 		final String source = renderRequest.getSource().startsWith("@start") ? renderRequest.getSource()
@@ -327,6 +334,11 @@ public class PicoWebServer implements Runnable {
 				write(out, "X-PlantUML-Diagram-Error: " + err.getError());
 				write(out, "X-PlantUML-Diagram-Error-Line: " + (1 + err.getLineLocation().getPosition()));
 			}
+		} else if (imageData.getRootCause() != null) {
+			// The diagram was understood but could not be drawn: all a client used to get was
+			// the status 503, the reason being only inside the image. There is no line of the
+			// source to give here.
+			write(out, "X-PlantUML-Diagram-Error: " + singleLine(imageData.getRootCause()));
 		}
 		if (system.getTitleDisplay() != null && system.getTitleDisplay().size() == 1) {
 			final String encode = URLEncoder.encode(system.getTitleDisplay().asList().get(0).toString(), "UTF-8");
@@ -343,7 +355,82 @@ public class PicoWebServer implements Runnable {
 		out.flush();
 	}
 
+	/**
+	 * The formats an error can be drawn in. Any other one (pdf, xmi...) falls back to png:
+	 * an image is more useful to the client than the text of a stack trace.
+	 */
+	static FileFormat guessFormat(String[] options) {
+		FileFormat result = FileFormat.PNG;
+		for (int i = 0; i < options.length; i++) {
+			final String o = options[i];
+			if (o.equals("-tsvg") || o.equals("-svg") || o.equals("--svg"))
+				result = FileFormat.SVG;
+			else if (o.equals("-ttxt") || o.equals("-txt") || o.equals("--txt"))
+				result = FileFormat.ATXT;
+			else if (o.equals("-tutxt") || o.equals("-utxt") || o.equals("--utxt"))
+				result = FileFormat.UTXT;
+			else if (o.equals("-tpng") || o.equals("-png") || o.equals("--png"))
+				result = FileFormat.PNG;
+			else if ((o.equals("-f") || o.equals("--format")) && i + 1 < options.length)
+				result = fromCli(options[i + 1], result);
+		}
+		return result;
+	}
+
+	private static FileFormat fromCli(String name, FileFormat defaultFormat) {
+		final FileFormat format = FileFormat.fromCli(name);
+		if (format == FileFormat.PNG || format == FileFormat.SVG || format == FileFormat.ATXT
+				|| format == FileFormat.UTXT)
+			return format;
+
+		return defaultFormat;
+	}
+
+	/**
+	 * An unexpected failure is sent as an image (or as text for the text formats) of the
+	 * crash report, with the stack trace in it, in the format the client asked for: a client
+	 * that expects an image has no use for a text/plain body. Nothing is written before the
+	 * whole image exists, so that a failure of the image itself leaves the text answer below.
+	 */
+	private void sendErrorImage(Throwable e, BufferedOutputStream out, FileFormat format) throws Exception {
+		final CrashReportHandler report = new CrashReportHandler(e, null, null);
+		report.add("An error has occurred : " + e);
+		report.addEmptyLine();
+		report.add("PlantUML (" + Version.versionString() + ") could not process this request.");
+		report.addEmptyLine();
+		report.addProperties();
+		report.addEmptyLine();
+		report.youShouldSendThisDiagram();
+		report.addEmptyLine();
+
+		final ByteArrayOutputStream os = new ByteArrayOutputStream();
+		report.exportDiagramError(new FileFormatOption(format), 0, os);
+		os.close();
+
+		write(out, "HTTP/1.1 500 Internal Server Error");
+		write(out, "Cache-Control: no-cache");
+		write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
+		write(out, "Date: " + new Date());
+		write(out, "Access-Control-Allow-Origin: *");
+		write(out, "Content-type: " + format.getMimeType());
+		write(out, "Content-length: " + os.size());
+		write(out, "X-PlantUML-Diagram-Error: " + singleLine(e));
+		write(out, "");
+		out.flush();
+		out.write(os.toByteArray());
+		out.flush();
+	}
+
 	private void sendError(Throwable e, BufferedOutputStream out) throws Exception {
+		// A bad request is the client's mistake, told in a few words: not a crash report
+		if (requestedFormat != null && e instanceof BadRequest400 == false) {
+			try {
+				sendErrorImage(e, out, requestedFormat);
+				return;
+			} catch (Throwable e2) {
+				Logme.error(e2);
+			}
+		}
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final PrintWriter printWriter = new PrintWriter(baos);
 
@@ -360,6 +447,13 @@ public class PicoWebServer implements Runnable {
 		write(out, "");
 		out.write(baos.toByteArray());
 		out.flush();
+	}
+
+	/** An exception on one line, so that it can be a header value. */
+	private static String singleLine(Throwable t) {
+		final String message = t.getMessage();
+		final String text = t.getClass().getName() + (message == null ? "" : ": " + message);
+		return text.replaceAll("[\\r\\n]+", " ");
 	}
 
 	private String httpReturnCode(int status) {
