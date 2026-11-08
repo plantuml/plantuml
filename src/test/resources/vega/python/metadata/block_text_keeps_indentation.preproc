@@ -1,0 +1,4 @@
+@startuml
+participant Alice
+note over Alice : first / indented / last
+@enduml

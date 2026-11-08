@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="130px" preserveAspectRatio="none" style="width:150px;height:130px;background:#FFFFFF;" version="1.1" viewBox="0 0 150 130" width="150px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="9" id="part1-lifeline">
+      <g>
+        <title>Alice</title>
+        <rect fill="#000" fill-opacity="0" height="51" width="8" x="71.075" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="74.575" x2="74.575" y1="39" y2="90"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="9" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="52.35" y="10"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="59.35" y="27.889">Alice</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="9" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="52.35" y="90"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="59.35" y="107.889">Alice</text>
+    </g>
+    <path d="M15,52 L15,75 L134,75 L134,62 L124,52 L15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M124,52 L124,62 L134,62 L124,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="98.15" x="21" y="67.111">first / indented / last</text>
+  </g>
+</svg>

@@ -1275,9 +1275,15 @@ Level 1, read the environment:
   (`Invalid YAML header: ...`, `The YAML header must be a map of keys and
   values`) reported on the line that first needed Python. Only the diagram's own
   header counts, not an `!include`d file. Parser: `YamlParser`, converted by
-  `MonomorphToPlain`; the limits of `YamlParser` apply (no list of lists, block
-  scalars are approximate). The `-D` arguments (`puml.args`) and the header are
-  independent. Tests: `vega/python/metadata`. Not done: the C edition
+  `MonomorphToPlain`. Supported: nested maps, lists of scalars and of maps,
+  inline lists `[a, b]`, quoted scalars (`''` and `\"` escapes), block scalars
+  `|` and `>`, plain scalars on several lines, comments. Errors, with the line
+  in the header (`duplicate key 'a' (line 3)`): duplicate key, unexpected
+  indentation, text without a key, a list inside a list, a flow mapping
+  `{a: 1}`. Anchors, tags and several documents are not supported and are left
+  as plain text. A deeper-indented line in a `>` block is folded like the others
+  (YAML keeps its line breaks). The `-D` arguments (`puml.args`) and the header
+  are independent. Tests: `vega/python/metadata`. Not done: the C edition
   (`PSystemBuilderC`) does not strip the header.
 
 Level 2, data:
