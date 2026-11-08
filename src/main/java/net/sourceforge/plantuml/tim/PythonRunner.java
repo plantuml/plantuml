@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.luaj.vm2.python.Builtin;
@@ -51,6 +52,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.tim.builtin.Feature;
 import net.sourceforge.plantuml.tim.builtin.Getenv;
+import net.sourceforge.plantuml.tim.builtin.RandomFunction;
 import net.sourceforge.plantuml.text.StringLocated;
 
 /**
@@ -80,7 +82,8 @@ final class PythonRunner {
 	private final PythonMacros macros;
 
 	PythonRunner(String version, Map<String, String> arguments, Map<String, String> diagram,
-			Supplier<Map<String, String>> theme, PythonMacros.LegacyNames legacyNames) {
+			Supplier<Map<String, String>> theme, Function<String, String> resources,
+			PythonMacros.LegacyNames legacyNames) {
 		// What print() writes is dropped: whether print is an alias of emit is
 		// still open (see PYTHON_PREPROCESSOR.md), it is not for now.
 		this.interp = new Interp(text -> {
@@ -113,6 +116,17 @@ final class PythonRunner {
 		});
 		// the same rules as %file_exists: SFile, so nothing in the SANDBOX profile
 		puml.put("file_exists", (in, args) -> Boolean.valueOf(new SFile(string("file_exists", args)).exists()));
+		// the same numbers as %random: puml.random() is 0 or 1, puml.random(n) is in [0, n),
+		// puml.random(a, b) is in [a, b); not the same from one run to the next
+		puml.put("random", (in, args) -> random(args));
+		// the text of a file found like an included one (same finder, same security profile)
+		puml.put("read", (in, args) -> {
+			final String name = string("read", args);
+			final String text = resources.apply(name);
+			if (text == null)
+				throw Builtin.runtimeError("cannot read '" + name + "'");
+			return text;
+		});
 		// a function, not a constant: a !theme line may come after the interpreter is created
 		puml.put("theme", (in, args) -> {
 			if (args.length != 0)
@@ -146,6 +160,31 @@ final class PythonRunner {
 		if (args[0] instanceof String == false)
 			throw Builtin.typeError(function + "() argument must be str");
 		return (String) args[0];
+	}
+
+	private static Object random(Object[] args) {
+		if (args.length > 2)
+			throw Builtin.typeError("random() takes at most 2 arguments (" + args.length + " given)");
+		final int[] n = new int[args.length];
+		for (int i = 0; i < args.length; i++) {
+			if (args[i] instanceof Integer == false)
+				throw Builtin.typeError("random() arguments must be int");
+			n[i] = ((Integer) args[i]).intValue();
+		}
+		if (args.length == 0)
+			return Integer.valueOf(RandomFunction.nextInt(2));
+		if (args.length == 1) {
+			if (n[0] <= 0)
+				throw Builtin.valueError("random(n) needs n > 0");
+			return Integer.valueOf(RandomFunction.nextInt(n[0]));
+		}
+		if (n[1] <= n[0])
+			throw Builtin.valueError("random(a, b) needs a < b");
+		// the range may not fit in an int: (b - a) would overflow
+		final long range = (long) n[1] - (long) n[0];
+		if (range > Integer.MAX_VALUE)
+			throw Builtin.valueError("random(a, b): the range is too large");
+		return Integer.valueOf(RandomFunction.nextInt((int) range) + n[0]);
 	}
 
 	private Object emit(Object[] args) {

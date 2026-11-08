@@ -398,7 +398,8 @@ public class TContext {
 			}
 			diagram.put("xargs", getXargs().orElse(""));
 			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments, diagram,
-					() -> themeMetadataAsStrings(), name -> functionsSet.doesFunctionExist(name));
+					() -> themeMetadataAsStrings(), name -> readResource(name),
+					name -> functionsSet.doesFunctionExist(name));
 			// and the other way round: a legacy function may not take the name of a macro
 			functionsSet.setReservedNames(name -> python.isMacro(name));
 		}
@@ -795,6 +796,34 @@ public class TContext {
 
 	public JsonObject getThemeMetadata() {
 		return themeMetadata;
+	}
+
+	/**
+	 * The text of a file found like an included one (puml.read): the same finder, so
+	 * the same places, URLs and security profile as !include. Null if it cannot be
+	 * read (not found, a folder, refused).
+	 */
+	private String readResource(String what) {
+		try {
+			final InputFile file = pathSystem.getInputFile(what);
+			if (file == null)
+				return null;
+			final Reader reader = file.getReader(charset);
+			if (reader == null)
+				return null;
+			try {
+				final StringBuilder sb = new StringBuilder();
+				final char[] buffer = new char[8192];
+				int n;
+				while ((n = reader.read(buffer)) != -1)
+					sb.append(buffer, 0, n);
+				return sb.toString();
+			} finally {
+				reader.close();
+			}
+		} catch (IOException e) {
+			return null;
+		}
 	}
 
 	/** The metadata of the current theme (a theme gives strings only), for Python. */

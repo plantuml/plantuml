@@ -65,7 +65,7 @@ user documentation ("legacy → Python" table).
 | `%splitstr(s, seps)` | `s.split(sep)` | **not identical**: legacy uses `StringTokenizer`: every character of `seps` is a separator and empty tokens are dropped. See the recipe in 3.5. |
 | `%dollar()`, `%percent()` | `"$"`, `"%"` | exist only to dodge the legacy preprocessor. Dropped. |
 | `%eval(expr)` | the expression itself | `eval` does not exist (section 4.2) and is not needed: `!{1+2}` or `1+2`. Dropped. |
-| `%random(...)` | see 4.1 | |
+| `%random(...)` | `puml.random(...)` **[implemented]**, see 4.1 | same arguments (none, `n`, `a, b`) and same generator, so not reproducible. `ValueError` for an empty range. |
 | `%str2json(s)`, `%load_json` (from text) | `json.loads(s)` | `loads` raises `ValueError`; legacy returns `""` on error. |
 | `%get_json_type(x)` | `type(x)` / `isinstance` | legacy names (`string`, `number`, `array`, `object`, `boolean`) no helper: `isinstance` is enough. |
 | `%get_json_keys(x)` | `list(x.keys())` | for a list of objects, legacy concatenates the keys of every element. |
@@ -85,7 +85,7 @@ rule "plain values only at the boundaries" (section 13.1).
 | `%filename()`, `%dirpath()`, `%filedate()` | `puml.filename`, `puml.dirpath`, `puml.filedate` **[implemented]** | values of the environment (`context.getEnvironmentValue`), constant for a diagram: attributes, like `puml.version`, not functions. `""` when unknown, as the legacy functions (kept: one type, no `None` to test). |
 | `%get_current_theme()` | `puml.theme()` **[implemented]** | a dict of strings, `{}` without theme. A **function**, unlike the three above: `!theme` can come after the interpreter is created, so a constant would be stale. |
 | `%get_all_theme()`, `%get_all_stdlib([detailed])`, `%get_stdlib(name)` | `puml.themes()`, `puml.stdlibs(detailed=False)`, ... | tools and documentation more than diagrams. Low priority; same family as `puml.modules()` (section 15.8). |
-| `%load_json(path[, charset])`, also URL | `json.loads(puml.read(path))` | `puml.read` is already planned (section 13.1) with the `!include` rules. No separate function. The legacy default value argument becomes a Python `try/except` or `puml.read(path, default=...)` **[open]**. |
+| `%load_json(path[, charset])`, also URL | `json.loads(puml.read(path))` | `puml.read` **[implemented]** with the `!include` rules (the finder: the folder of the current file, `<stdlib>`, URLs, security profile), whole text as a `str`, `RuntimeError` when it cannot be read; no `charset` argument (the charset of the diagram). One difference: `%load_json` looks a plain path up from the current directory of the process, `puml.read` from the folder of the diagram, as `!include` does. No separate function. The legacy default value argument becomes a Python `try/except` or `puml.read(path, default=...)` **[open]**. |
 | `%xargs()` | `puml.xargs` **[implemented]** | a string, the value `%xargs()` gives: the first line of the diagram, `@startuml` included (`"@startuml foo bar"`, or `"@startuml"` alone). This is the intended result. |
 | `%newline()` / `%n()`, `%breakline()`, `%tab()`, `%left_align()`, `%right_align()` | see 4.2 | return **private marker characters** (`Jaws.BLOCK_E1_*`), not `"\n"`. They cannot be written by the user as plain Python strings. |
 
@@ -214,7 +214,7 @@ Options:
 3. **Seed**: `puml.random` deterministic, from a seed taken from the diagram
    (a hash of the source, or `-Dseed`). Reproducible across runs and editions.
 
-Leaning: **2 for `now` and `date`**, **3 for `random`**. If chosen:
+**Decided for `random` only**: option 2, **implemented** as `puml.random(...)` with the arguments of `%random` and the same generator (so **not** seeded: option 3 was not taken). `puml.now` and `puml.date` stay **[open]**: leaning **2** for them. If chosen:
 
 - `%date` uses `java.text.SimpleDateFormat` patterns (`yyyy.MM.dd' at 'HH:mm`),
   which are **not** `strftime`. Offering `strftime` is the Pythonic choice but
@@ -326,8 +326,8 @@ shows both results side by side.
 
 ## 9. Questions for the owner
 
-1. Time and randomness (4.1): keep the ban, or `puml.now/date/random` (with a
-   seeded `random`)?
+1. Time (4.1): `puml.now` and `puml.date`, or keep the ban for them? (`puml.random` is
+   done, not seeded: do we want a seed, `-Dseed` for instance, for reproducible diagrams?)
 2. Do we want the bridge to legacy variables (3.4), or is "the whole library
    moves at once" enough?
 3. `bool` printed in text (4.3): lower case in `!{...}`?

@@ -1103,13 +1103,25 @@ Level 2, data:
   **[implemented]**
 - `puml.read(name)` loads a text or JSON resource through the finder, with the
   same rules and security profile as `!include`. There is no direct disk access
-  from text Python.
+  from text Python. **[implemented]**: it returns the whole text as a `str`
+  (`json.loads(puml.read("data.json"))` for JSON), decoded with the charset of
+  the diagram; the name is looked up exactly as an `!include` (the folder of
+  the current file, the standard library `<lib/file>`, URLs, archives given to
+  `!import`, the files of the host in the browser build). A file that cannot
+  be read (not found, a folder, refused by the security profile) is a
+  `RuntimeError` (`cannot read 'name'`): the subset has no `OSError`.
+- `puml.random()`, `puml.random(n)`, `puml.random(a, b)` **[implemented]**: the
+  numbers `%random` gives (`0` or `1`; in `[0, n)`; in `[a, b)`), from the same
+  generator. Integers only; an empty range (`n <= 0`, `b <= a`) is a
+  `ValueError`, where the legacy function fails with a Java exception. **The
+  result is not the same from one run to the next**: a diagram that uses it is
+  not reproducible (see "Other rules" below).
 - Reuse of Python code across files goes through `!include` of a file that
   contains `!` lines: user modules cannot be imported. Only builtin modules and
   the modules shipped with PlantUML (section 15) can.
 
 Other rules: one interpreter state per diagram, shared with its `!include`d
-files; no clock and no `random` module, so a diagram renders the same on every
+files; no clock and no `random` module (`puml.random` is the one exception, and makes a diagram that uses it irreproducible), so a diagram renders the same on every
 edition; integers are 32-bit, identical on all editions; a runaway diagram is
 stopped by the instruction counter.
 
