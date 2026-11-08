@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
-import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -56,10 +55,10 @@ public class PSystemMath extends DirectOsDiagram implements FormulaDiagram {
 
 	private String math = "";
 	private float scale = 1;
-	// The defaults have a dark variant (dark mode: white formula on a black box). A color given with
+	// The defaults have a dark variant (white formula on a dark box). A color given with
 	// "color" or "backgroundcolor" is used as is, in both modes.
-	private HColor color = HColors.BLACK.withDark(HColors.WHITE);
-	private HColor backColor = HColors.WHITE.withDark(HColors.BLACK);
+	private HColor color = ScientificEquationSafe.DEFAULT_FOREGROUND;
+	private HColor backColor = ScientificEquationSafe.DEFAULT_BACKGROUND;
 
 	public PSystemMath(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
