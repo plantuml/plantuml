@@ -248,7 +248,7 @@ public final class PythonChunks {
 				continue;
 			}
 			appendLiteral(sb, literal);
-			sb.append(" + str(").append(text, i + 2, close).append(')');
+			sb.append(" + ").append(interpolationCode(text.substring(i + 2, close)));
 			i = close + 1;
 		}
 		appendLiteral(sb, literal);
@@ -267,6 +267,88 @@ public final class PythonChunks {
 		}
 		sb.append('"');
 		literal.setLength(0);
+	}
+
+	/**
+	 * The Python expression that gives the text of an interpolation, read as a
+	 * field of an f-string: <code>expr</code>, <code>expr!r</code>,
+	 * <code>expr!s</code>, <code>expr:spec</code> or <code>expr!r:spec</code>.
+	 * The conversion and the colon are found at the top level only, outside
+	 * brackets and strings (<code>l[1:2]</code>, <code>d["a:b"]</code> and
+	 * <code>a != b</code> are expressions), as in CPython, where a lambda must
+	 * be parenthesized for the same reason. Nested format specs
+	 * (<code>x:{width}</code>) are not supported. A mistake gives a call of
+	 * <code>puml.error</code>, reported on the line when it runs.
+	 */
+	static String interpolationCode(String inside) {
+		int depth = 0;
+		char quote = 0;
+		int end = inside.length();
+		for (int i = 0; i < inside.length(); i++) {
+			final char ch = inside.charAt(i);
+			if (quote != 0) {
+				if (ch == '\\')
+					i++;
+				else if (ch == quote)
+					quote = 0;
+			} else if (ch == '"' || ch == '\'') {
+				quote = ch;
+			} else if (ch == '(' || ch == '[' || ch == '{') {
+				depth++;
+			} else if (ch == ')' || ch == ']' || ch == '}') {
+				depth--;
+			} else if (depth == 0 && (ch == ':' || (ch == '!' && isNotEqualOperator(inside, i) == false))) {
+				end = i;
+				break;
+			}
+		}
+		final String expression = inside.substring(0, end);
+		if (expression.trim().isEmpty())
+			return interpolationError("empty expression in !{}");
+		char conversion = 0;
+		String spec = null;
+		String rest = inside.substring(end);
+		if (rest.startsWith("!")) {
+			if (rest.length() < 2 || (rest.charAt(1) != 'r' && rest.charAt(1) != 's'))
+				return interpolationError("invalid conversion in !{" + inside + "}: use !r or !s");
+			conversion = rest.charAt(1);
+			rest = rest.substring(2);
+			if (rest.isEmpty() == false && rest.startsWith(":") == false)
+				return interpolationError("invalid conversion in !{" + inside + "}: use !r or !s");
+		}
+		if (rest.startsWith(":")) {
+			spec = rest.substring(1);
+			if (spec.indexOf('{') != -1 || spec.indexOf('}') != -1)
+				return interpolationError("nested format specs are not supported in !{" + inside + "}");
+		}
+		String value = "(" + expression + ")";
+		if (conversion == 'r')
+			value = "repr(" + value + ")";
+		else if (conversion == 's')
+			value = "str(" + value + ")";
+		if (spec != null)
+			return "format(" + value + ", " + pythonString(spec) + ")";
+		return conversion == 0 ? "str(" + value + ")" : value;
+	}
+
+	private static boolean isNotEqualOperator(String s, int bang) {
+		return bang + 1 < s.length() && s.charAt(bang + 1) == '=';
+	}
+
+	private static String interpolationError(String message) {
+		return "puml.error(" + pythonString(message) + ")";
+	}
+
+	/** A Python string literal for a text. */
+	private static String pythonString(String text) {
+		final StringBuilder sb = new StringBuilder("\"");
+		for (int i = 0; i < text.length(); i++) {
+			final char ch = text.charAt(i);
+			if (ch == '\\' || ch == '"')
+				sb.append('\\');
+			sb.append(ch);
+		}
+		return sb.append('"').toString();
 	}
 
 	/** Index of the "}" that closes a "!{", ignoring braces inside Python strings, or -1. */

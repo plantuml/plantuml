@@ -923,6 +923,16 @@ The **reduced preprocessor runs first, then text Python**.
   diagram has Python code, the same failure is an error, even on a line before
   the first Python line.
 - `${` has no meaning: it is plain text, in every diagram.
+- As a field of an f-string, an interpolation may have a conversion and a
+  format spec **[implemented]**: `!{x!r}` (`repr`), `!{x!s}` (`str`),
+  `!{pi:.2f}`, `!{n:05d}`, `!{name:>8}`, `!{name!r:>8}`; the spec is the one of
+  `format()`. As in CPython, the `!` and the `:` count at the top level only:
+  `!{l[1:3]}`, `!{d["a:b"]}`, `!{ {"k": 2}["k"] }` and `!{a != b}` are plain
+  expressions, and a lambda must be parenthesized,
+  `!{(lambda x: x * 2)(3)}`. Not supported: nested specs (`!{x:{width}}`) and
+  the conversion `!a`; both are errors reported on the line. The same holds in
+  the text lines of a Python block. Tests: `vega/python/interpolation`
+  (`format_spec*`, `conversion_r_s`, `colon_and_bang_inside_expressions`).
 
 Legacy diagrams keep the old preprocessor unchanged, frozen, with one
 exception **[implemented]**: a `!if`, `!ifdef` or `!ifndef` without its
@@ -1486,7 +1496,6 @@ Interpreter:
 
 Integration:
 
-- Whether `!{expr}` accepts a format spec (`!{x:.2f}`) like an f-string.
 - Whether `print` in text Python is an error, a log message, or an alias of
   `emit`. Current leaning: not an alias.
 - Shipped Python modules are specified in section 15. Its open points: the

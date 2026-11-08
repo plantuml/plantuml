@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="41px" preserveAspectRatio="none" style="width:109px;height:41px;background:#FFFFFF;" version="1.1" viewBox="0 0 109 41" width="109px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="3">
+      <text fill="#000" font-size="14" font-weight="700" textLength="82.95" x="10" y="20.889">3.14 !{toto:.2f}</text>
+    </g>
+  </g>
+</svg>

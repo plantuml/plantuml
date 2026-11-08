@@ -207,7 +207,9 @@ final class PythonRunner {
 
 	/**
 	 * Replaces each <code>!{expr}</code> of a text line by <code>str(expr)</code>
-	 * (Python is evaluated in the state of the diagram). A doubled bang before
+	 * (Python is evaluated in the state of the diagram); as in an f-string, a
+	 * field may also be <code>!{expr!r}</code>, <code>!{expr!s}</code> or
+	 * <code>!{expr:spec}</code> (see {@link PythonChunks#interpolationCode}). A doubled bang before
 	 * the brace is the escape: it gives a literal <code>!{</code>. With
 	 * <code>keepOnError</code>, an expression that fails stays as written in the
 	 * text instead of being an error.
@@ -240,8 +242,9 @@ final class PythonRunner {
 		return sb.toString();
 	}
 
+	/** The text of an interpolation: an expression, with an optional conversion and format spec. */
 	private String evaluate(String expression) throws EaterExceptionMessage {
-		run("__interpolated = (" + expression + ")\n", null);
+		run("__interpolated = " + PythonChunks.interpolationCode(expression) + "\n", null);
 		return interp.getGlobalAsString("__interpolated");
 	}
 
