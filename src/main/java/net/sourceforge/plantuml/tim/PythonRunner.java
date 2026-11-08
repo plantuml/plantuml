@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -53,6 +54,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.tim.builtin.Feature;
 import net.sourceforge.plantuml.tim.builtin.Getenv;
 import net.sourceforge.plantuml.tim.builtin.RandomFunction;
+import net.sourceforge.plantuml.warning.Warning;
 import net.sourceforge.plantuml.text.StringLocated;
 
 /**
@@ -82,7 +84,7 @@ final class PythonRunner {
 	private final PythonMacros macros;
 
 	PythonRunner(String version, Map<String, String> arguments, Map<String, String> diagram,
-			Supplier<Map<String, String>> theme, Function<String, String> resources,
+			Supplier<Map<String, String>> theme, Function<String, String> resources, Consumer<Warning> warnings,
 			PythonMacros.LegacyNames legacyNames) {
 		// What print() writes is dropped: whether print is an alias of emit is
 		// still open (see PYTHON_PREPROCESSOR.md), it is not for now.
@@ -116,6 +118,25 @@ final class PythonRunner {
 		});
 		// the same rules as %file_exists: SFile, so nothing in the SANDBOX profile
 		puml.put("file_exists", (in, args) -> Boolean.valueOf(new SFile(string("file_exists", args)).exists()));
+		// what !log does: a line on the standard error, "[Log] " in front of it
+		puml.put("log", (in, args) -> {
+			EaterLog.write(string("log", args));
+			return Builtin.none();
+		});
+		// a warning of the diagram, like the ones of the deprecated syntaxes: puml.warning(line, ...)
+		// has one line per argument
+		puml.put("warning", (in, args) -> {
+			if (args.length == 0)
+				throw Builtin.typeError("warning() takes at least 1 argument (0 given)");
+			final String[] lines = new String[args.length];
+			for (int i = 0; i < args.length; i++) {
+				if (args[i] instanceof String == false)
+					throw Builtin.typeError("warning() arguments must be str");
+				lines[i] = (String) args[i];
+			}
+			warnings.accept(new Warning(lines));
+			return Builtin.none();
+		});
 		// the same numbers as %random: puml.random() is 0 or 1, puml.random(n) is in [0, n),
 		// puml.random(a, b) is in [a, b); not the same from one run to the next
 		puml.put("random", (in, args) -> random(args));

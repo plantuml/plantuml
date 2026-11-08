@@ -1,0 +1,21 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): no argument, or an argument that is not a str, is a TypeError
+' title TypeError TypeError TypeError
+!r = []
+!try:
+!    puml.warning()
+!except TypeError:
+!    r.append("TypeError")
+!try:
+!    puml.warning("a", 1)
+!except TypeError:
+!    r.append("TypeError")
+!try:
+!    puml.log(1)
+!except TypeError:
+!    r.append("TypeError")
+title !{" ".join(r)}
+@enduml

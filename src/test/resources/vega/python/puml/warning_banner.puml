@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+' EXPECT: a banner with the two lines "be careful" and "second line" above the diagram
+!puml.warning("be careful", "second line")
+Alice -> Bob : hello
+@enduml

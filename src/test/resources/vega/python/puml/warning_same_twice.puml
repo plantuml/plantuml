@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+' EXPECT: the same warning twice is shown once (the warnings of a diagram are a set)
+!for i in range(2):
+!    puml.warning("only once")
+Alice -> Bob : hello
+@enduml

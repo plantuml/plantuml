@@ -50,7 +50,12 @@ public class EaterLog extends Eater {
 		skipSpaces();
 		final String logData = context.applyFunctionsAndVariables(memory,
 				new StringLocated(this.eatAllToEnd(), getLineLocation()));
-		Log.userLog(() -> "[Log] " + logData);
+		write(logData);
+	}
+
+	/** What <code>!log</code> does with its text; <code>puml.log</code> does the same. */
+	static void write(String text) {
+		Log.userLog(() -> "[Log] " + text);
 	}
 
 }

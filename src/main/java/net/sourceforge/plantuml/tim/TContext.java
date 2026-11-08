@@ -399,7 +399,7 @@ public class TContext {
 			diagram.put("xargs", getXargs().orElse(""));
 			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments, diagram,
 					() -> themeMetadataAsStrings(), name -> readResource(name),
-					name -> functionsSet.doesFunctionExist(name));
+					warning -> preprocessingArtifact.addWarning(warning), name -> functionsSet.doesFunctionExist(name));
 			// and the other way round: a legacy function may not take the name of a macro
 			functionsSet.setReservedNames(name -> python.isMacro(name));
 		}

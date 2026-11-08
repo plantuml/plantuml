@@ -1051,6 +1051,16 @@ Level 0, generate text (essential):
   exist as a global alias.
 - `puml.error(msg)` raises an error attached to the current diagram line. Plain
   Python exceptions also carry the right line number.
+- `puml.log(text)` **[implemented]**: what the `!log` directive does, a line
+  `[Log] text` on the standard error (`Log.userLog`, through `EaterLog.write`).
+  `text` is a `str`, anything else is a `TypeError`; it returns `None`.
+- `puml.warning(line, ...)` **[implemented]**: adds a `Warning` to the diagram,
+  the banner drawn above it like the ones of the deprecated syntaxes. One line
+  per argument, at least one, all `str` (`TypeError` otherwise); it returns
+  `None`. The warnings of a diagram are a set, so the same call twice shows
+  one banner. They are those of the `PreprocessingArtifact`, the object
+  that `!pragma`-like options already use, so every kind of diagram that shows
+  warnings shows them; the text outputs (`-ttxt`) do not show any warning.
 - `puml.macro`, also the global `macro`: the decorator that declares a macro
   (section 11.5). **[implemented]**
 
