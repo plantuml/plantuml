@@ -94,14 +94,23 @@ public final class PythonChunks {
 			if (START.matcher(s).matches()) {
 				final StringBuilder code = new StringBuilder();
 				final List<StringLocated> lines = new ArrayList<>();
+				// an indented "!python" indents its block: that indentation is removed from each line
+				final int indent = leadingSpaces(s);
 				i++;
 				while (i < body.size() && END.matcher(body.get(i).getString()).matches() == false) {
-					code.append(body.get(i).getString()).append('\n');
+					code.append(removeIndent(body.get(i).getString(), indent)).append('\n');
 					lines.add(body.get(i));
 					i++;
 				}
-				i++; // skips !endpy (a missing one ends the block at the end of the text)
-				result.add(chunk(first, code, lines, sources));
+				if (i >= body.size()) {
+					result.add(error(first, "!python without !endpy", sources));
+				} else {
+					i++; // skips !endpy
+					result.add(chunk(first, code, lines, sources));
+				}
+			} else if (END.matcher(s).matches()) {
+				result.add(error(first, "!endpy without !python", sources));
+				i++;
 			} else if (isGutterLine(first)) {
 				final StringBuilder code = new StringBuilder();
 				final List<StringLocated> lines = new ArrayList<>();
@@ -158,6 +167,26 @@ public final class PythonChunks {
 			}
 		}
 		return result;
+	}
+
+	/** Removes up to <code>indent</code> leading spaces: the indentation of the "!python" line. */
+	private static String removeIndent(String line, int indent) {
+		int n = 0;
+		while (n < indent && n < line.length() && line.charAt(n) == ' ')
+			n++;
+		return line.substring(n);
+	}
+
+	/**
+	 * A chunk that only reports an error on its line, when it runs: a misplaced
+	 * <code>!python</code> or <code>!endpy</code>. The message is given as it is,
+	 * like <code>puml.error</code>.
+	 */
+	private static StringLocated error(StringLocated at, String message,
+			Map<StringLocated, List<StringLocated>> sources) {
+		final List<StringLocated> lines = new ArrayList<>();
+		lines.add(at);
+		return chunk(at, new StringBuilder("puml.error(\"" + message + "\")\n"), lines, sources);
 	}
 
 	/** A line that opened a block: its indentation, and whether it is a class statement. */

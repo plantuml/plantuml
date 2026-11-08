@@ -632,8 +632,18 @@ actor User
 ```
 
 Inside a `!python` block everything is Python; PlantUML text is produced with
-`emit` (section 12.1). Mixing text lines into such a block is not possible
+`emit` (section 13.1). Mixing text lines into such a block is not possible
 today **[open]**.
+
+**[implemented]**
+
+- The `!python` and `!endpy` lines may be indented. The indentation of the
+  `!python` line is removed from every line of the block, so a block indented
+  as a whole runs as if it started at column 0.
+- A `!python` without its `!endpy` is an error reported on the `!python` line
+  (`!python without !endpy`); the block no longer runs to the end of the text.
+- An `!endpy` without a `!python` before it is an error reported on its line
+  (`!endpy without !python`); it no longer goes into the diagram as text.
 
 ### 11.3 Procedures
 

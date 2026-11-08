@@ -1,6 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: 'Python syntax error: tabs are not allowed; indent with spaces (column 1)'
+---
 @startuml
 ' EXPECT (preproc):
-' ERROR: tabs are not allowed in the indentation
+' ERROR: Python syntax error: tabs are not allowed; indent with spaces (column 1)
 !for i in range(2):
 	participant P!{i}
 @enduml
