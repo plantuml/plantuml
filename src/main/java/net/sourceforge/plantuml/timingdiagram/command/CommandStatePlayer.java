@@ -30,7 +30,6 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
 package net.sourceforge.plantuml.timingdiagram.command;
@@ -44,7 +43,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
-import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -55,25 +54,38 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
-import net.sourceforge.plantuml.timingdiagram.TimingType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
+/**
+ * Declares a player whose states are labels:
+ *
+ * <pre>
+ * [compact] robust ["Display" as] CODE [#color]
+ * </pre>
+ *
+ * Subclasses provide the keyword and create the actual player.
+ */
+public abstract class CommandStatePlayer extends SingleLineCommand2<TimingDiagram> {
 
-	private static final Collection<String> FIRST_TOKENS = Arrays.asList( //
-			"compact", "concise", "rectangle", "robust");
+	private final String keyword;
+	private final Collection<String> firstTokens;
 
-	public CommandRobustConcise() {
-		super(getRegexConcat());
+	protected CommandStatePlayer(String keyword) {
+		super(getRegexConcat(keyword));
+		this.keyword = keyword;
+		this.firstTokens = Arrays.asList("compact", keyword);
 	}
 
-	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandRobustConcise.class.getName(), RegexLeaf.start(), //
+	protected abstract void createPlayer(TimingDiagram diagram, String code, String full, boolean compact,
+			Stereotype stereotype, HColor backColor);
+
+	private static IRegex getRegexConcat(String keyword) {
+		return RegexConcat.build(CommandStatePlayer.class.getName() + keyword, RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, "COMPACT", "(compact)"), //
 								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf(1, "TYPE", "(robust|concise|rectangle)"), //
+				new RegexLeaf(keyword), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
@@ -95,21 +107,15 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-		final String compact = arg.get("COMPACT", 0);
-		final String type = arg.get("TYPE", 0);
-		final String code = arg.get("CODE", 0);
 		final String full = arg.get("FULL", 0);
-		// The two stereotype slots are mutually exclusive in practice; STEREOTYPE takes priority over STEREOTYPE2
-		String stereotype = arg.get("STEREOTYPE", 0);
-		if (stereotype == null)
-			stereotype = arg.get("STEREOTYPE2", 0);
+		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		final String color = arg.getLazzy("COLOR", 0);
 
 		final StringBuilder sb = new StringBuilder();
 		sb.append("Creating a ");
-		if (compact != null)
+		if (arg.get("COMPACT", 0) != null)
 			sb.append("compact ");
-		sb.append(type).append(" timing player '").append(code).append("'");
+		sb.append(keyword).append(" timing player '").append(arg.get("CODE", 0)).append("'");
 		if (full != null)
 			sb.append(" displayed as \"").append(full).append("\"");
 		if (stereotype != null)
@@ -122,40 +128,19 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-		final String compact = arg.get("COMPACT", 0);
-		final String code = arg.get("CODE", 0);
-		String full = arg.get("FULL", 0);
-		if (full == null)
-			full = "";
+		final String full = arg.get("FULL", 0);
+		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
+		final HColor backColor = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet())
+				.getColor(ColorType.BACK);
 
-		Stereotype stereotype = null;
-		if (arg.get("STEREOTYPE", 0) != null)
-			stereotype = Stereotype.build(arg.get("STEREOTYPE", 0));
-		else if (arg.get("STEREOTYPE2", 0) != null)
-			stereotype = Stereotype.build(arg.get("STEREOTYPE2", 0));
-
-		final TimingType type = TimingType.valueOf(arg.get("TYPE", 0).toUpperCase());
-		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-
-		switch (type) {
-		case ROBUST:
-			diagram.createPlayerRobust(code, full, compact != null, stereotype, colors.getColor(ColorType.BACK));
-			break;
-		case CONCISE:
-			diagram.createPlayerConcise(code, full, compact != null, stereotype, colors.getColor(ColorType.BACK));
-			break;
-		case RECTANGLE:
-			diagram.createPlayerRectangle(code, full, compact != null, stereotype, colors.getColor(ColorType.BACK));
-			break;
-		default:
-			return CommandExecutionResult.error("Unknown timing style: " + type);
-		}
+		createPlayer(diagram, arg.get("CODE", 0), full == null ? "" : full, arg.get("COMPACT", 0) != null,
+				stereotype == null ? null : Stereotype.build(stereotype), backColor);
 		return CommandExecutionResult.ok();
 	}
 
 	@Override
-	public Collection<String> mandatoryFirstTokensFast() {
-		return FIRST_TOKENS;
+	public final Collection<String> mandatoryFirstTokensFast() {
+		return firstTokens;
 	}
 
 }

@@ -31,7 +31,7 @@
  *
  * Original Author:  Arnaud Roques
  * Contribution: The-Lum
- * 
+ *
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
@@ -50,91 +50,127 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
-import net.sourceforge.plantuml.timingdiagram.PlayerAnalogDigital;
+import net.sourceforge.plantuml.timingdiagram.AbstractNumericPlayer;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
-import net.sourceforge.plantuml.timingdiagram.TimingType;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandAnalogDigital extends SingleLineCommand2<TimingDiagram> {
+/**
+ * Declares a player whose states are numbers. The three accepted forms are:
+ *
+ * <pre>
+ * analog "Display" as CODE [between 0 and 3]
+ * analog "Display" between 0 and 3 as CODE
+ * analog CODE [between 0 and 3]
+ * </pre>
+ *
+ * Each of them may start with <code>compact</code> and carry a stereotype.
+ * Subclasses provide the keyword and create the actual player.
+ */
+public abstract class CommandNumericPlayer extends SingleLineCommand2<TimingDiagram> {
 
-	public CommandAnalogDigital() {
-		super(getRegexConcat());
+	private final String keyword;
+	private final Collection<String> firstTokens;
+
+	protected CommandNumericPlayer(String keyword) {
+		super(getRegexConcat(keyword));
+		this.keyword = keyword;
+		this.firstTokens = Arrays.asList("compact", keyword);
 	}
 
-	private static final Collection<String> FIRST_TOKENS = Arrays.asList("analog", "compact", "digital");
+	protected abstract AbstractNumericPlayer createPlayer(TimingDiagram diagram, String code, String full,
+			boolean compact, Stereotype stereotype);
 
-	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandAnalogDigital.class.getName(), RegexLeaf.start(), //
+	private static IRegex getRegexConcat(String keyword) {
+		return RegexConcat.build(CommandNumericPlayer.class.getName() + keyword, RegexLeaf.start(), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, "COMPACT", "(compact)"), //
 								RegexLeaf.spaceOneOrMore())), //
-				new RegexLeaf(1, "TYPE", "(analog|digital)"), //
+				new RegexLeaf(keyword), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexOr( //
-                    new RegexConcat( //
-                            new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
-                            StereotypePattern.optional("STEREOTYPE1"), //
-                            new RegexOr( //
-                                    new RegexConcat( //
-                                            RegexLeaf.spaceOneOrMore(), //
-                                            new RegexLeaf("as"), //
-                                            RegexLeaf.spaceOneOrMore(), //
-                                            new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
-                                            StereotypePattern.optional("STEREOTYPE2"), //
-                                            optionalBoundsRegex(1), //
-                                            StereotypePattern.optional("STEREOTYPE3")), //
-                                    new RegexConcat( //
-                                            RegexLeaf.spaceOneOrMore(), //
-                                            boundsRegex(2), //
-                                            RegexLeaf.spaceOneOrMore(), //
-                                            new RegexLeaf("as"), //
-                                            RegexLeaf.spaceOneOrMore(), //
-                                            new RegexLeaf(1, "CODE1", "([%pLN_.@]+)"), //
-                                            StereotypePattern.optional("STEREOTYPE4")))), //
-                    new RegexConcat( //
-                            new RegexLeaf(1, "CODE2", "([%pLN_.@]+)"), //
-                            StereotypePattern.optional("STEREOTYPE5"), //
-                            optionalBoundsRegex(3), //
-                            StereotypePattern.optional("STEREOTYPE6"))), //
+				new RegexOr(quotedDisplay(), codeOnly()), //
 				RegexLeaf.end());
 	}
 
-	private static IRegex optionalBoundsRegex(int group) {
+	// "Display" ...
+	private static IRegex quotedDisplay() {
+		return new RegexConcat( //
+				new RegexLeaf(1, "FULL", "[%g]([^%g]+)[%g]"), //
+				StereotypePattern.optional("STEREOTYPE1"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexOr(asCodeThenBounds(), boundsThenAsCode()));
+	}
+
+	// ... as CODE [between 0 and 3]
+	private static IRegex asCodeThenBounds() {
+		return new RegexConcat( //
+				asCode("CODE1"), //
+				StereotypePattern.optional("STEREOTYPE2"), //
+				optionalBounds(1), //
+				StereotypePattern.optional("STEREOTYPE3"));
+	}
+
+	// ... between 0 and 3 as CODE
+	private static IRegex boundsThenAsCode() {
+		return new RegexConcat( //
+				bounds(2), //
+				RegexLeaf.spaceOneOrMore(), //
+				asCode("CODE2"), //
+				StereotypePattern.optional("STEREOTYPE4"));
+	}
+
+	// CODE [between 0 and 3]
+	private static IRegex codeOnly() {
+		return new RegexConcat( //
+				code("CODE3"), //
+				StereotypePattern.optional("STEREOTYPE5"), //
+				optionalBounds(3), //
+				StereotypePattern.optional("STEREOTYPE6"));
+	}
+
+	private static IRegex asCode(String name) {
+		return new RegexConcat( //
+				new RegexLeaf("as"), //
+				RegexLeaf.spaceOneOrMore(), //
+				code(name));
+	}
+
+	private static IRegex code(String name) {
+		return new RegexLeaf(1, name, "([%pLN_.@]+)");
+	}
+
+	private static IRegex optionalBounds(int index) {
 		return new RegexOptional( //
 				new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
-						boundsRegex(group)));
+						bounds(index)));
 	}
 
-	private static IRegex boundsRegex(int group) {
+	private static IRegex bounds(int index) {
 		return new RegexConcat( //
 				new RegexOr(new RegexLeaf("between"), new RegexLeaf("from")), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf(1, "START" + group, "(-?[0-9]*\\.?[0-9]+)"), //
+				new RegexLeaf(1, "START" + index, "(-?[0-9]*\\.?[0-9]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(new RegexLeaf("and"), new RegexLeaf("to")), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf(1, "END" + group, "(-?[0-9]*\\.?[0-9]+)"));
+				new RegexLeaf(1, "END" + index, "(-?[0-9]*\\.?[0-9]+)"));
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-		final String compact = arg.get("COMPACT", 0);
-		final String type = arg.get("TYPE", 0);
-		final String code = arg.getLazzy("CODE", 0);
 		final String full = arg.get("FULL", 0);
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		final String start = arg.getLazzy("START", 0);
 		final String end = arg.getLazzy("END", 0);
 
 		final StringBuilder sb = new StringBuilder();
-		if (compact != null)
-			sb.append("Creating a compact ").append(type).append(" timing player '");
+		if (arg.get("COMPACT", 0) != null)
+			sb.append("Creating a compact ");
 		else
-			sb.append("Creating an ").append(type).append(" timing player '");
-		sb.append(code).append("'");
+			sb.append("Creating an ");
+		sb.append(keyword).append(" timing player '").append(arg.getLazzy("CODE", 0)).append("'");
 		if (full != null)
 			sb.append(" displayed as \"").append(full).append("\"");
 		if (stereotype != null)
@@ -148,19 +184,12 @@ public class CommandAnalogDigital extends SingleLineCommand2<TimingDiagram> {
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.getLazzy("CODE", 0);
-		String full = arg.get("FULL", 0);
-		if (full == null)
-			full = "";
+		final String full = arg.get("FULL", 0);
+		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 
-		final String stereotypeString = arg.getLazzy("STEREOTYPE", 0);
-		Stereotype stereotype = null;
-		if (stereotypeString != null)
-			stereotype = Stereotype.build(stereotypeString);
-
-		final TimingType type = TimingType.valueOf(arg.get("TYPE", 0).toUpperCase());
-		final PlayerAnalogDigital player = diagram.createPlayerAnalogDigital(type, code, full, compact != null, stereotype);
+		final AbstractNumericPlayer player = createPlayer(diagram, code, full == null ? "" : full,
+				arg.get("COMPACT", 0) != null, stereotype == null ? null : Stereotype.build(stereotype));
 
 		final String start = arg.getLazzy("START", 0);
 		final String end = arg.getLazzy("END", 0);
@@ -171,8 +200,8 @@ public class CommandAnalogDigital extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	public Collection<String> mandatoryFirstTokensFast() {
-		return FIRST_TOKENS;
+	public final Collection<String> mandatoryFirstTokensFast() {
+		return firstTokens;
 	}
 
 }

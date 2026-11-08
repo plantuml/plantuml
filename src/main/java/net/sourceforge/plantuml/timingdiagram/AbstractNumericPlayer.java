@@ -44,39 +44,36 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
-import net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalogDigital;
 
-public class PlayerAnalogDigital extends Player {
+/**
+ * A player whose states are numbers (a time series), as opposed to
+ * {@link AbstractStatePlayer} whose states are labels.
+ * <p>
+ * Subclasses only choose how two consecutive samples are joined, through the
+ * {@link net.sourceforge.plantuml.timingdiagram.graphic.PanelsNumeric} they
+ * build.
+ */
+public abstract class AbstractNumericPlayer extends Player {
 
 	private final TimeSeries timeSeries = new TimeSeries();
-
 	private final List<TimeConstraint> constraints = new ArrayList<>();
 
 	private Double initialState;
 	private Integer ticksEvery;
-	private TimingType type;
 
-	public PlayerAnalogDigital(TimingType type, String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-		super(code, skinParam, ruler, compact, stereotype, null, SName.retrieve(type.name()), 100);
-		this.type = type;
+	public AbstractNumericPlayer(String full, ISkinParam skinParam, TimingRuler ruler, boolean compact,
+			Stereotype stereotype, SName sname) {
+		super(full, skinParam, ruler, compact, stereotype, null, sname, 100);
 	}
 
 	@Override
-	protected Panels buildPlayerPanels() {
-		return new PanelsAnalogDigital(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), timeSeries, constraints,
-				initialState, ticksEvery, type);
-
-	}
-
-	@Override
-	public void defineState(String stateCode, String label) {
+	public final void defineState(String stateCode, String label) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setState(TimeTick now, String comment, Colors color, String... valueString) {
-		final double value = getState(valueString[0]);
+	public final void setState(TimeTick now, String comment, Colors color, String... valueString) {
+		final double value = parseValue(valueString[0]);
 		if (now == null)
 			this.initialState = value;
 		else
@@ -84,10 +81,9 @@ public class PlayerAnalogDigital extends Player {
 
 		if (this.initialState == null)
 			this.initialState = value;
-
 	}
 
-	private double getState(String value) {
+	private static double parseValue(String value) {
 		try {
 			return Double.parseDouble(value);
 		} catch (Exception e) {
@@ -97,16 +93,32 @@ public class PlayerAnalogDigital extends Player {
 	}
 
 	@Override
-	public void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
+	public final void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
 		this.constraints.add(new TimeConstraint(1, tick1, tick2, message, getSkinParam(), config));
 	}
 
-	public void setBounds(String min, String max) {
+	public final void setBounds(String min, String max) {
 		timeSeries.setBounds(min, max);
 	}
 
-	public void setTicks(int ticksEvery) {
+	public final void setTicks(int ticksEvery) {
 		this.ticksEvery = ticksEvery;
+	}
+
+	protected final TimeSeries getTimeSeries() {
+		return timeSeries;
+	}
+
+	protected final List<TimeConstraint> getConstraints() {
+		return constraints;
+	}
+
+	protected final Double getInitialState() {
+		return initialState;
+	}
+
+	protected final Integer getTicksEvery() {
+		return ticksEvery;
 	}
 
 }

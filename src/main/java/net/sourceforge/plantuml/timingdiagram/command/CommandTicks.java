@@ -47,8 +47,8 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.timingdiagram.AbstractNumericPlayer;
 import net.sourceforge.plantuml.timingdiagram.Player;
-import net.sourceforge.plantuml.timingdiagram.PlayerAnalogDigital;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -95,8 +95,8 @@ public class CommandTicks extends SingleLineCommand2<TimingDiagram> {
 		if (player == null) {
 			return CommandExecutionResult.error("No such participant " + code);
 		}
-		if (player instanceof PlayerAnalogDigital) {
-			((PlayerAnalogDigital) player).setTicks(Integer.parseInt(arg.get("NUM", 0)));
+		if (player instanceof AbstractNumericPlayer) {
+			((AbstractNumericPlayer) player).setTicks(Integer.parseInt(arg.get("NUM", 0)));
 		}
 		return CommandExecutionResult.ok();
 	}

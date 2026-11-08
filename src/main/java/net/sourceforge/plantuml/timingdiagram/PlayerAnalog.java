@@ -30,12 +30,27 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * Contribution: The-Lum
  *
  */
 package net.sourceforge.plantuml.timingdiagram;
 
-public enum TimingType {
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
+import net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalog;
 
-	ROBUST, CONCISE, RECTANGLE, ANALOG, DIGITAL
+public final class PlayerAnalog extends AbstractNumericPlayer {
+
+	public PlayerAnalog(String full, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
+		super(full, skinParam, ruler, compact, stereotype, SName.analog);
+	}
+
+	@Override
+	protected Panels buildPlayerPanels() {
+		return new PanelsAnalog(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), getTimeSeries(),
+				getConstraints(), getInitialState(), getTicksEvery());
+	}
 
 }

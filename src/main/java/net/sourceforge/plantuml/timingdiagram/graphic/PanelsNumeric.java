@@ -53,23 +53,24 @@ import net.sourceforge.plantuml.timingdiagram.TimeConstraint;
 import net.sourceforge.plantuml.timingdiagram.TimeSeries;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingRuler;
-import net.sourceforge.plantuml.timingdiagram.TimingType;
 
-public class PanelsAnalogDigital extends Panels {
+/**
+ * Draws a numeric time series: the left panel holds the scale, the right panel
+ * the curve. Subclasses only decide how two consecutive samples are joined.
+ */
+public abstract class PanelsNumeric extends Panels {
 
 	private final TimeSeries timeSeries;
 	private final Double initialState;
 	private final Integer ticksEvery;
-	private final TimingType type;
 
-	public PanelsAnalogDigital(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style, TimeSeries timeSeries,
-			List<TimeConstraint> constraints, Double initialState, Integer ticksEvery, TimingType type) {
+	public PanelsNumeric(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style,
+			TimeSeries timeSeries, List<TimeConstraint> constraints, Double initialState, Integer ticksEvery) {
 		super(ruler, skinParam, suggestedHeight, style, null, constraints);
 
 		this.timeSeries = timeSeries;
 		this.initialState = initialState;
 		this.ticksEvery = ticksEvery;
-		this.type = type;
 	}
 
 	@Override
@@ -168,15 +169,7 @@ public class PanelsAnalogDigital extends Panels {
 			final double y1 = getYpos(ug.getStringBounder(), lastValue);
 			final double y2 = getYpos(ug.getStringBounder(), ent.getValue());
 			final double x = ruler.getPosInPixel(ent.getKey());
-			switch (type) {
-			case ANALOG:
-				ug.apply(new UTranslate(lastx, y1)).draw(new ULine(x - lastx, y2 - y1));
-				break;
-			case DIGITAL:
-				ug.apply(new UTranslate(lastx, y1)).draw(ULine.hline(x - lastx));
-				ug.apply(new UTranslate(x, y1)).draw(ULine.vline(y2 - y1));
-				break;
-			}
+			drawSegment(ug, lastx, y1, x, y2);
 			lastx = x;
 			lastValue = ent.getValue();
 		}
@@ -186,8 +179,9 @@ public class PanelsAnalogDigital extends Panels {
 		drawConstraints(ug.apply(UTranslate.dy(getHeightForConstraints(ug.getStringBounder()))));
 	}
 
-	public void setBounds(String min, String max) {
-		timeSeries.setBounds(min, max);
-	}
+	/**
+	 * Joins the sample (x1, y1) to the next one (x2, y2), in pixels.
+	 */
+	protected abstract void drawSegment(UGraphic ug, double x1, double y1, double x2, double y2);
 
 }
