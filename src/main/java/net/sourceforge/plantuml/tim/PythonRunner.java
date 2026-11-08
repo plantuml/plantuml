@@ -96,7 +96,7 @@ final class PythonRunner {
 		puml.putString("filename", diagram.get("filename"));
 		puml.putString("dirpath", diagram.get("dirpath"));
 		puml.putString("filedate", diagram.get("filedate"));
-		// what follows @startuml on its first line, "" if nothing (%xargs())
+		// the first line of the diagram, @startuml included ("@startuml foo bar"): what %xargs() gives
 		puml.putString("xargs", diagram.get("xargs"));
 		puml.put("feature", (in, args) -> Boolean.valueOf(Feature.isAvailable(string("feature", args))));
 		// the same rules as %getenv: a system property first, then the environment, and the

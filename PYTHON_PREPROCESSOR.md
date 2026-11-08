@@ -1080,7 +1080,8 @@ Level 1, read the environment:
   functions, with the same code and the same security rules (`getenv` and
   `file_exists` obey the security profile). `feature` and `file_exists` give a
   `bool`, `getenv` a `str` (`""` or the default when there is none), `xargs` a
-  `str`. **[implemented]**
+  `str`: the first line of the diagram, `@startuml` included
+  (`"@startuml foo bar"`). **[implemented]**
 
 Level 2, data:
 

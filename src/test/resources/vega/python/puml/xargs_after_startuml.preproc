@@ -1,3 +1,3 @@
-@startuml foo
-title True True
+@startuml foo bar
+title [@startuml foo bar] True
 @enduml

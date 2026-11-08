@@ -1065,7 +1065,14 @@ public class TContext {
 	}
 
 	/**
-	 * Retrieve data given after @startuml.
+	 * The first line of the diagram, <code>@startuml</code> included
+	 * (<code>@startuml foo bar</code>), or empty if there is none: the value of
+	 * <code>%xargs()</code> and of <code>puml.xargs</code>.
+	 * <p>
+	 * It is the line as {@link StringLocated#toString()} writes it, after its
+	 * "(SL) " prefix: the first blank is the one of the prefix, so the whole line
+	 * is returned. This is the intended result, not only what follows the first
+	 * word.
 	 */
 	public Optional<String> getXargs() {
 		if (resultList.size() == 0)

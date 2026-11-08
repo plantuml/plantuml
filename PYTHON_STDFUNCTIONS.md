@@ -86,7 +86,7 @@ rule "plain values only at the boundaries" (section 13.1).
 | `%get_current_theme()` | `puml.theme()` **[implemented]** | a dict of strings, `{}` without theme. A **function**, unlike the three above: `!theme` can come after the interpreter is created, so a constant would be stale. |
 | `%get_all_theme()`, `%get_all_stdlib([detailed])`, `%get_stdlib(name)` | `puml.themes()`, `puml.stdlibs(detailed=False)`, ... | tools and documentation more than diagrams. Low priority; same family as `puml.modules()` (section 15.8). |
 | `%load_json(path[, charset])`, also URL | `json.loads(puml.read(path))` | `puml.read` is already planned (section 13.1) with the `!include` rules. No separate function. The legacy default value argument becomes a Python `try/except` or `puml.read(path, default=...)` **[open]**. |
-| `%xargs()` | `puml.xargs` **[implemented]** | a string, the value `%xargs()` gives. **Careful**: today it is the whole first line (`@startuml foo bar`), not only what follows `@startuml` as the comment of `getXargs` says; it is kept as it is so that both give the same, to be settled **[open]**. |
+| `%xargs()` | `puml.xargs` **[implemented]** | a string, the value `%xargs()` gives: the first line of the diagram, `@startuml` included (`"@startuml foo bar"`, or `"@startuml"` alone). This is the intended result. |
 | `%newline()` / `%n()`, `%breakline()`, `%tab()`, `%left_align()`, `%right_align()` | see 4.2 | return **private marker characters** (`Jaws.BLOCK_E1_*`), not `"\n"`. They cannot be written by the user as plain Python strings. |
 
 ### 3.3 Pure computation: colours, and no module for the rest
