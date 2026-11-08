@@ -1,0 +1,7 @@
+@startuml
+participant A
+note over A
+!item 0
+!item 1
+end note
+@enduml

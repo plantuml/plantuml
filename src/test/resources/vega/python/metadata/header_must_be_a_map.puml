@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 7
+expected-error-message: 'The YAML header must be a map of keys and values'
+---
+@startuml
+---
+- a
+- b
+---
+' EXPECT (preproc):
+' ERROR: The YAML header must be a map of keys and values
+title !{len(puml.metadata)}
+Alice -> Bob
+@enduml

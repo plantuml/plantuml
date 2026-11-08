@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="210px" preserveAspectRatio="none" style="width:318px;height:210px;background:#FFFFFF;" version="1.1" viewBox="0 0 318 210" width="318px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="2" id="part1-lifeline">
+      <g>
+        <title>Alice</title>
+        <rect fill="#000" fill-opacity="0" height="131" width="8" x="137.538" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="141.038" x2="141.038" y1="39" y2="170"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="2" id="part2-lifeline">
+      <g>
+        <title>Bob</title>
+        <rect fill="#000" fill-opacity="0" height="131" width="8" x="284.875" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="288.375" x2="288.375" y1="39" y2="170"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="2" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="118.813" y="10"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="125.813" y="27.889">Alice</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="2" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="268.906" y="10"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="275.906" y="27.889">Bob</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="2" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="118.813" y="170"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="125.813" y="187.889">Alice</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="2" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="268.906" y="170"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="275.906" y="187.889">Bob</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="2" id="msg1">
+      <polygon fill="#181818" points="276.375,62,286.375,66,276.375,70,280.375,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="141.038" x2="282.375" y1="66" y2="66"/>
+      <text fill="#000" font-size="13" textLength="123.338" x="148.038" y="61.111">run ${HOME}/bin/start</text>
+    </g>
+    <path d="M15,79 L15,128 L267,128 L267,89 L257,79 L15,79" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M257,79 L257,89 L267,89 L257,79" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="231.075" x="21" y="94.111">${JAVA_HOME} and ${{ secrets.TOKEN }}</text>
+    <text fill="#000" font-size="13" textLength="124.8" x="21" y="107.111">value !{toto} and !{} here</text>
+    <text fill="#000" font-size="13" textLength="10.806" x="21" y="120.111">1.</text>
+    <text fill="#000" font-size="13" textLength="177.45" x="35.381" y="120.111">{ruby} and %{x} and {{mustache}}</text>
+    <g class="message" data-entity-1="part2" data-entity-2="part1" data-source-line="8" id="msg2">
+      <polygon fill="#181818" points="152.038,148,142.038,152,152.038,156,148.038,152" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="146.038" x2="287.375" y1="152" y2="152"/>
+      <text fill="#000" font-size="13" textLength="70.606" x="158.038" y="147.111">port !{port} ok</text>
+    </g>
+  </g>
+</svg>

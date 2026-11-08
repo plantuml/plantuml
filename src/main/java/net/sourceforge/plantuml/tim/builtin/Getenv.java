@@ -62,14 +62,19 @@ public class Getenv extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
-		final String value = getenv(values.get(0).toString());
+		final String value = read(values.get(0).toString());
 		if (value == null)
 			return TValue.fromString("");
 
 		return TValue.fromString(value);
 	}
 
-	private String getenv(String name) {
+	/**
+	 * The value of a system property, else of an environment variable, or null if
+	 * there is none or the security profile does not allow to read it. Shared by
+	 * <code>%getenv</code> and <code>puml.getenv</code>.
+	 */
+	public static String read(String name) {
 		// Check, if the script requests secret information.
 		// A plantuml server should have an own SecurityManager to
 		// avoid access to properties and environment variables, but we should

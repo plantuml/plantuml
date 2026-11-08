@@ -1,0 +1,31 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): each pair of lines is the same value (the legacy prints JSON without spaces, json.dumps with)
+!python
+def splitstr(s, seps):
+    for c in seps[1:]:
+        s = s.replace(c, seps[0])
+    return [t for t in s.split(seps[0]) if t]
+
+def deep_merge(a, b):
+    result = dict(a)
+    for k in b:
+        if k in result and isinstance(result[k], dict) and isinstance(b[k], dict):
+            result[k] = deep_merge(result[k], b[k])
+        else:
+            result[k] = b[k]
+    return result
+!endpy
+title %splitstr("a,b;;c d", ",; ")
+title !{json.dumps(splitstr("a,b;;c d", ",; "))}
+title %splitstr("abc~def~ghi", "~")
+title !{json.dumps(splitstr("abc~def~ghi", "~"))}
+!$a = {"a": 1, "o": {"x": 1, "y": 2}}
+!$b = {"o": {"y": 3, "z": 4}, "b": 5}
+title %json_set($a, $b)
+!a = {"a": 1, "o": {"x": 1, "y": 2}}
+!b = {"o": {"y": 3, "z": 4}, "b": 5}
+title !{json.dumps(deep_merge(a, b))}
+@enduml

@@ -1,6 +1,6 @@
 # Vega tests of `@macro`
 
-Tests of the macros of text Python, section 11.5 of `PYTHON_PREPROCESSOR.md`: a
+Tests of the macros of text Python, section 5 of `PYTHON_PREPROCESSOR.md`: a
 function declared with `@macro` (or `@puml.macro`) is called by name from the
 text lines of a diagram, like the legacy `!define` and `!unquoted procedure`.
 The expected output is also written in the `' EXPECT (preproc):` comment of

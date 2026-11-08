@@ -1,0 +1,9 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the result depends on the security profile, so the test compares with
+' the legacy function; a file that does not exist is False
+' title True False
+title !{puml.file_exists("build.xml") == (%file_exists("build.xml") == 1)} !{puml.file_exists("/no/such/file")}
+@enduml

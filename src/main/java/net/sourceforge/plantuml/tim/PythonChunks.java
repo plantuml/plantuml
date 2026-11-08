@@ -232,6 +232,8 @@ public final class PythonChunks {
 	 * expands the macros of the line, then emits it.
 	 */
 	static String textToPython(String text) {
+		// "!!text" is the text "!text", as outside a block
+		text = PythonLine.unescapeBang(text);
 		final StringBuilder sb = new StringBuilder("puml._text(\"\"");
 		final StringBuilder literal = new StringBuilder();
 		int i = 0;
@@ -396,10 +398,12 @@ public final class PythonChunks {
 	/**
 	 * A line whose first non-blank character is a <code>!</code>: a Python line or
 	 * a directive, which ends the text lines of a block. A line that starts with
-	 * an interpolation, <code>!{expr}</code>, is a text line.
+	 * an interpolation, <code>!{expr}</code>, or with the escape <code>!!</code> is
+	 * a text line.
 	 */
 	private static boolean isBangLine(String text) {
-		return text.trim().startsWith("!") && PythonLine.startsWithInterpolation(text) == false;
+		return text.trim().startsWith("!") && PythonLine.startsWithInterpolation(text) == false
+				&& PythonLine.startsWithEscapedBang(text) == false;
 	}
 
 	/** Removes the one-column gutter: the text after the first <code>!</code>. */

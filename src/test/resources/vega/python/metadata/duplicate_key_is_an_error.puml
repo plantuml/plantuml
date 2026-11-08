@@ -1,0 +1,17 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 7
+expected-error-message: "Invalid YAML header: duplicate key 'name' (line 2)"
+---
+@startuml
+---
+name: foo
+name: bar
+---
+' EXPECT (preproc):
+' ERROR: Invalid YAML header: duplicate key 'name' (line 2)
+title !{puml.metadata["name"]}
+Alice -> Bob
+@enduml

@@ -47,6 +47,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -74,6 +75,8 @@ import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
+import net.sourceforge.plantuml.yaml.parser.MonomorphToPlain;
+import net.sourceforge.plantuml.yaml.parser.YamlParser;
 import net.sourceforge.plantuml.preproc.Sub;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
@@ -84,6 +87,7 @@ import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.js.browser.BrowserLog;
+import net.sourceforge.plantuml.text.PythonLine;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.theme.Theme;
@@ -380,6 +384,13 @@ public class TContext {
 		this.arguments = arguments;
 	}
 
+	/** The lines of the YAML header of the diagram: puml.metadata of Python. */
+	private List<StringLocated> yamlHeader = new ArrayList<StringLocated>();
+
+	public void setYamlHeader(List<StringLocated> yamlHeader) {
+		this.yamlHeader = yamlHeader;
+	}
+
 	/** True once the diagram is known to contain Python code (a chunk was found). */
 	private boolean hasPython;
 
@@ -387,14 +398,46 @@ public class TContext {
 	private final Map<StringLocated, List<StringLocated>> pythonSources = new IdentityHashMap<>();
 
 	/** The Python state of the diagram, created when first needed (a Python chunk or a !{expr}). */
-	private PythonRunner python() {
+	private PythonRunner python() throws EaterException {
 		if (python == null) {
-			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments,
-					name -> functionsSet.doesFunctionExist(name));
+			final Map<String, String> diagram = new LinkedHashMap<>();
+			for (String key : new String[] { "filename", "dirpath", "filedate" }) {
+				final String value = getEnvironmentValue(key);
+				diagram.put(key, value == null ? "" : value);
+			}
+			diagram.put("xargs", getXargs().orElse(""));
+			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments, parseYamlHeader(), diagram,
+					() -> themeMetadataAsStrings(), name -> readResource(name),
+					warning -> preprocessingArtifact.addWarning(warning), name -> functionsSet.doesFunctionExist(name));
 			// and the other way round: a legacy function may not take the name of a macro
 			functionsSet.setReservedNames(name -> python.isMacro(name));
 		}
 		return python;
+	}
+
+	/**
+	 * The YAML header read as plain values (a map of strings, lists and maps), parsed
+	 * only when Python needs it. An invalid header is an error on its first line.
+	 */
+	private Map<String, Object> parseYamlHeader() throws EaterException {
+		final Map<String, Object> empty = new LinkedHashMap<String, Object>();
+		if (yamlHeader.isEmpty())
+			return empty;
+		final List<String> lines = new ArrayList<String>();
+		for (StringLocated line : yamlHeader)
+			lines.add(line.getString());
+		try {
+			final Object result = MonomorphToPlain.convert(new YamlParser().parse(lines));
+			if (result instanceof Map == false)
+				throw new EaterException("The YAML header must be a map of keys and values", yamlHeader.get(0));
+			@SuppressWarnings("unchecked")
+			final Map<String, Object> map = (Map<String, Object>) result;
+			return map;
+		} catch (EaterException e) {
+			throw e;
+		} catch (RuntimeException e) {
+			throw new EaterException("Invalid YAML header: " + e.getMessage(), yamlHeader.get(0));
+		}
 	}
 
 	/**
@@ -442,6 +485,10 @@ public class TContext {
 	}
 
 	private void addPlain(TMemory memory, StringLocated s) throws EaterException {
+		// "!!text" is the text "!text" (section 8 of PYTHON_PREPROCESSOR.md)
+		final String unescaped = PythonLine.unescapeBang(s.getString());
+		if (unescaped.equals(s.getString()) == false)
+			s = new StringLocated(unescaped, s.getLocation(), s.getPreprocessorError());
 		final StringLocated tmp[] = applyFunctionsAndVariablesInternal(memory, s);
 		if (tmp != null) {
 			if (pendingAdd != null) {
@@ -477,7 +524,7 @@ public class TContext {
 
 	/**
 	 * Adds a text line, its Python macros replaced by their result (section
-	 * 11.5 of PYTHON_PREPROCESSOR.md): a result with several lines gives several
+	 * 5 of PYTHON_PREPROCESSOR.md): a result with several lines gives several
 	 * lines. Nothing happens until a macro is declared.
 	 */
 	private void addExpandingMacros(StringLocated line) throws EaterException {
@@ -785,6 +832,44 @@ public class TContext {
 		return themeMetadata;
 	}
 
+	/**
+	 * The text of a file found like an included one (puml.read): the same finder, so
+	 * the same places, URLs and security profile as !include. The line ends are
+	 * those of Python in text mode (universal newlines): every "\r\n" and "\r"
+	 * becomes "\n". Null if it cannot be read (not found, a folder, refused).
+	 */
+	private String readResource(String what) {
+		try {
+			final InputFile file = pathSystem.getInputFile(what);
+			if (file == null)
+				return null;
+			final Reader reader = file.getReader(charset);
+			if (reader == null)
+				return null;
+			try {
+				final StringBuilder sb = new StringBuilder();
+				final char[] buffer = new char[8192];
+				int n;
+				while ((n = reader.read(buffer)) != -1)
+					sb.append(buffer, 0, n);
+				// as Python reads a text file: "\r\n" and "\r" become "\n"
+				return sb.toString().replace("\r\n", "\n").replace('\r', '\n');
+			} finally {
+				reader.close();
+			}
+		} catch (IOException e) {
+			return null;
+		}
+	}
+
+	/** The metadata of the current theme (a theme gives strings only), for Python. */
+	private Map<String, String> themeMetadataAsStrings() {
+		final Map<String, String> result = new LinkedHashMap<>();
+		for (String name : themeMetadata.names())
+			result.put(name, themeMetadata.get(name).asString());
+		return result;
+	}
+
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException {
 		final EaterTheme eater = new EaterTheme(s.getTrimmed(), pathSystem);
 		eater.analyze(this, memory);
@@ -1045,7 +1130,14 @@ public class TContext {
 	}
 
 	/**
-	 * Retrieve data given after @startuml.
+	 * The first line of the diagram, <code>@startuml</code> included
+	 * (<code>@startuml foo bar</code>), or empty if there is none: the value of
+	 * <code>%xargs()</code> and of <code>puml.xargs</code>.
+	 * <p>
+	 * It is the line as {@link StringLocated#toString()} writes it, after its
+	 * "(SL) " prefix: the first blank is the one of the prefix, so the whole line
+	 * is returned. This is the intended result, not only what follows the first
+	 * word.
 	 */
 	public Optional<String> getXargs() {
 		if (resultList.size() == 0)

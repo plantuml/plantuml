@@ -1,0 +1,11 @@
+@startuml
+Alice -> Bob : hello
+note over Alice
+!important
+!Warning: read this
+!
+!!triple
+!{x}
+  !indented
+end note
+@enduml

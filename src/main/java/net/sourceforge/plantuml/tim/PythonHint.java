@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.text.TLineType;
 
 /**
  * The hint added to a legacy error on a line that would be a Python block
- * opener if it ended with a colon (section 11.4 of PYTHON_PREPROCESSOR.md).
+ * opener if it ended with a colon (section 6 of PYTHON_PREPROCESSOR.md).
  * <code>!if</code>, <code>!while</code> and <code>!else</code> exist in both
  * languages, and a missing colon makes the line legacy; its error is then
  * confusing ("Unknown built-in function len").

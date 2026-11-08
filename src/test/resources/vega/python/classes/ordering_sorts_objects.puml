@@ -1,0 +1,27 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the participants come in the order of the objects
+' participant "v1.2" as v1_2
+' participant "v1.10" as v1_10
+' participant "v2.0" as v2_0
+' title v1.2 < v1.10: True, newest v2.0
+!python
+class Version:
+    def __init__(self, text):
+        self.text = text
+        self.parts = [int(p) for p in text.split(".")]
+
+    def __lt__(self, other):
+        return self.parts < other.parts
+
+    def __str__(self):
+        return "v" + self.text
+
+versions = [Version("2.0"), Version("1.10"), Version("1.2")]
+!endpy
+!for v in sorted(versions):
+    participant "!{v}" as !{str(v).replace(".", "_")}
+title !{min(versions)} < !{sorted(versions)[1]}: !{min(versions) < sorted(versions)[1]}, newest !{max(versions)}
+@enduml

@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+' Python keywords used as legacy names and as plain text.
+!$def = "d"
+!$class = "c"
+!$lambda = 3
+!function $print($x)
+!return "p" + $x
+!endfunction
+!procedure $for($n)
+participant $n
+!endprocedure
+$for(def)
+$for(while)
+title $def $class $lambda $print(1)
+note over def : if x: pass
+note over while : for i in range(2): print(i)
+@enduml

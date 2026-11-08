@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="198px" preserveAspectRatio="none" style="width:182px;height:198px;background:#FFFFFF;" version="1.1" viewBox="0 0 182 198" width="182px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="13">
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="71.209" y="25.889">d c 3 p1</text>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="d" data-source-line="9" id="part1-lifeline">
+      <g>
+        <title>d</title>
+        <rect fill="#000" fill-opacity="0" height="84" width="8" x="36.919" y="74"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="40.419" x2="40.419" y1="74" y2="158"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="while" data-source-line="9" id="part2-lifeline">
+      <g>
+        <title>while</title>
+        <rect fill="#000" fill-opacity="0" height="84" width="8" x="80.825" y="74"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="84.325" x2="84.325" y1="74" y2="158"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="def" data-source-line="14" id="part3-lifeline">
+      <g>
+        <title>def</title>
+        <rect fill="#000" fill-opacity="0" height="84" width="8" x="130.55" y="74"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="134.05" x2="134.05" y1="74" y2="158"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="d" data-source-line="9" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="29.525" y="45"/>
+      <text fill="#000" font-size="14" x="36.525" y="62.889">d</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="while" data-source-line="9" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.025" x="61.313" y="45"/>
+      <text fill="#000" font-size="14" textLength="32.025" x="68.313" y="62.889">while</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part3" data-qualified-name="def" data-source-line="14" id="part3-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="33.425" x="117.338" y="45"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="124.338" y="62.889">def</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="d" data-source-line="9" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="29.525" y="158"/>
+      <text fill="#000" font-size="14" x="36.525" y="175.889">d</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="while" data-source-line="9" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.025" x="61.313" y="158"/>
+      <text fill="#000" font-size="14" textLength="32.025" x="68.313" y="175.889">while</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="def" data-source-line="14" id="part3-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="33.425" x="117.338" y="158"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="124.338" y="175.889">def</text>
+    </g>
+    <path d="M101.531,87 L101.531,110 L166.531,110 L166.531,97 L156.531,87 L101.531,87" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M156.531,87 L156.531,97 L166.531,97 L156.531,87" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="44.037" x="107.531" y="102.111">if x: pass</text>
+    <path d="M15,120 L15,143 L153,143 L153,130 L143,120 L15,120" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M143,120 L143,130 L153,130 L143,120" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="117.65" x="21" y="135.111">for i in range(2): print(i)</text>
+  </g>
+</svg>

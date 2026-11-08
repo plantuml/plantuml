@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+' A legacy procedure called as "!name()", as adaml does: the "!" stays in
+' front of the next line the procedure gives, here a line of a note.
+!procedure mark()
+!$marked = 1
+!endprocedure
+!procedure warn($who)
+note over $who
+!mark()
+read this, $who
+end note
+!endprocedure
+participant A
+warn(A)
+@enduml

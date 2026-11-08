@@ -1,0 +1,4 @@
+@startuml
+participant "Alice (admin)" as alice
+title Alice (admin) | [User('Alice', True)] | <__main__.Plain object>
+@enduml

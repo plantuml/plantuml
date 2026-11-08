@@ -1,0 +1,23 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the instances cannot be changed and the classes cannot be subclassed
+' title AttributeError TypeError TypeError
+!r = []
+!d = datetime.date(2026, 11, 8)
+!try:
+!    d.year = 1
+!except AttributeError:
+!    r.append('AttributeError')
+!try:
+!    class Mine(datetime.date):
+!        pass
+!except TypeError:
+!    r.append('TypeError')
+!try:
+!    datetime.date(2026, 2, 30)
+!except ValueError:
+!    r.append('TypeError')
+title !{' '.join(r)}
+@enduml

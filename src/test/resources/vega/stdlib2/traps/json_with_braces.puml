@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startjson
+{
+  "image": "app:${TAG}",
+  "command": "echo !{name}",
+  "shell": "${{ github.sha }}",
+  "flags": ["!x", "! y", "x != y"]
+}
+@endjson
