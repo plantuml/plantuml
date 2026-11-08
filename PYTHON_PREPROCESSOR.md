@@ -98,7 +98,7 @@ Accepted:
 - `del name`, `del a[i]`, `del a.x` (and a comma-separated list of those);
 - `try` / `except` / `else`, and `raise` (including a bare `raise` inside an
   `except`);
-- `import module` for builtin modules only (today: `math`). An unknown module
+- `import module` for builtin modules only (today: `math`, `json`, `time`, and in a diagram `puml` and `color`). An unknown module
   raises `ModuleNotFoundError`. Shipped modules written in Python are specified
   in section 15 and are not implemented.
 
@@ -301,6 +301,50 @@ Running out of instructions raises `ExecutionLimitError`, which is *not* a
 Python exception: `except` (even a bare one) cannot catch it, so a `try` around
 an endless loop does not defeat the limit.
 
+### 4.6 Module `time` **[implemented]**
+
+The functions of CPython's `time` that a diagram can use, with the same names
+and the same results, **in UTC and in English** (`TimeLib`):
+
+- `time()`: the seconds since the epoch, a float. The clock is the only
+  thing in the module that is not the same from one run to the next.
+- `gmtime([secs])` and `localtime([secs])`: the tuple of 9 integers (year,
+  month, day, hour, minute, second, weekday with Monday 0, day of the year
+  with January 1st 1, 0). `secs` is an int or a float (rounded down); without
+  argument, the clock. `localtime` is `gmtime`: there is no local time zone, so
+  the same diagram gives the same text on every machine. `timezone`,
+  `altzone` and `daylight` are `0`, `tzname` is `("UTC", "UTC")`.
+- `mktime(t)`: the inverse, as if `t` were UTC (it is what CPython gives when
+  `TZ` is `UTC`). The fields out of range are carried over (month 13 is
+  January of the next year, day 0 is the last day of the previous month).
+- `strftime(fmt[, t])`, `asctime([t])`, `ctime([secs])`: the formatting of the
+  C locale, computed here. The directives are those of C99: `%a %A %b %B %c %C
+  %d %D %e %F %g %G %h %H %I %j %m %M %n %p %r %R %S %t %T %u %U %V %w %W %x
+  %X %y %Y %z %Z %%`. The fields of the tuple are used as they are: the weekday
+  and the day of the year are not recomputed, as in C. Tuples with a field out
+  of range (month 13, hour 24...) are a `ValueError`, as in CPython.
+
+Differences with CPython (also in section 6):
+
+- the tuples are plain tuples, not `struct_time`: `t[0]` and not `t.tm_year`;
+- there is no time zone: `localtime` is `gmtime`, `%Z` gives `UTC` (CPython
+  gives `GMT` for a tuple of `gmtime`), `%z` gives `+0000`;
+- the text is always English, the locale of the C library is not used;
+- a directive that is not in the list (`%Q`, `%-d`, a lone `%`) is a
+  `ValueError`: glibc passes it through, Windows refuses it, here it is the
+  same everywhere. `%Y` is not padded (the year 999 is `999`, as glibc does);
+- the timestamps are limited to the years 1 to 9999 (an `OverflowError`
+  beyond), CPython goes further; an int is 32 bits, so a larger timestamp is
+  written as a float (`4102444799.0`);
+- `strptime`, `sleep`, `monotonic`, `perf_counter`, `time_ns` and
+  `struct_time` do not exist.
+
+The calendar is computed from the number of days (no `java.time`, no
+`SimpleDateFormat`, no time zone database), so the module works the same on
+the JAR, JavaScript and C editions. Tests: `python/builtins/time_gmtime_strftime`
+(21 timestamps, nine format lines each, with the output of CPython) and
+`vega/python/time`.
+
 ## 5. Limits **[implemented]**
 
 | Limit | Default | Setter | Behaviour |
@@ -324,6 +368,8 @@ addition a Java `StackOverflowError` is turned into the same `RecursionError`.
 Scripts that exercise these live in `src/test/resources/python/deviations/` and
 are not run under CPython.
 
+- The module `time` has its own list of differences (section 4.6): UTC only,
+  English only, plain tuples, a strict list of `strftime` directives.
 - `int` is 32-bit. Any result outside `[-2147483648, 2147483647]` raises
   `OverflowError` (`top + 1`, `2 ** 31`, `1 << 31`, `abs(-2**31)`,
   `int("2147483648")`, `int(3e9)`, ...). This is mainly dictated by TeaVM's
@@ -1107,7 +1153,7 @@ Level 2, data:
   `%` functions, so the strings are identical (`PythonColorModule`; Vega tests
   in `vega/python/color`). Colours are `str`; an unknown one raises a
   `ValueError`. See `PYTHON_STDFUNCTIONS.md`.
-- `puml`, `json`, `math` and `color` are bound as globals in a diagram: no
+- `puml`, `json`, `math`, `time` and `color` are bound as globals in a diagram: no
   import is needed, and none is possible with a `!` line, since `!import` is the legacy
   directive. The `import` statement stays accepted in a `!python` block.
   **[implemented]**

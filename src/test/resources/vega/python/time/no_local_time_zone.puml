@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): there is no local time zone: localtime is gmtime, timezone is 0
+' title True 0 ('UTC', 'UTC')
+title !{time.localtime(1234567890) == time.gmtime(1234567890)} !{time.timezone} !{time.tzname}
+@enduml

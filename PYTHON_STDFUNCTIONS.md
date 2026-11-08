@@ -65,6 +65,8 @@ user documentation ("legacy → Python" table).
 | `%splitstr(s, seps)` | `s.split(sep)` | **not identical**: legacy uses `StringTokenizer`: every character of `seps` is a separator and empty tokens are dropped. See the recipe in 3.5. |
 | `%dollar()`, `%percent()` | `"$"`, `"%"` | exist only to dodge the legacy preprocessor. Dropped. |
 | `%eval(expr)` | the expression itself | `eval` does not exist (section 4.2) and is not needed: `!{1+2}` or `1+2`. Dropped. |
+| `%now()` | `int(time.time())` **[implemented]** | the module `time` (4.1), UTC. `time.time()` is a float; `int()` of it is 32 bits and fails in 2038, as `%now()` wraps. |
+| `%date(fmt[, epoch[, tz]])` | `time.strftime(fmt, time.gmtime(epoch))` **[implemented]** | the formats differ: `%date` uses the patterns of `SimpleDateFormat` (`yyyy.MM.dd' at 'HH:mm`), `strftime` those of C99 (`%Y.%m.%d at %H:%M`). The result of `%date()` without argument (`Date.toString()`) is `time.asctime()` without the zone. No time zone argument: UTC. |
 | `%random(...)` | `puml.random(...)` **[implemented]**, see 4.1 | same arguments (none, `n`, `a, b`) and same generator, so not reproducible. `ValueError` for an empty range. |
 | `%str2json(s)`, `%load_json` (from text) | `json.loads(s)` | `loads` raises `ValueError`; legacy returns `""` on error. |
 | `%get_json_type(x)` | `type(x)` / `isinstance` | legacy names (`string`, `number`, `array`, `object`, `boolean`) no helper: `isinstance` is enough. |
@@ -221,16 +223,11 @@ Options:
 3. **Seed**: `puml.random` deterministic, from a seed taken from the diagram
    (a hash of the source, or `-Dseed`). Reproducible across runs and editions.
 
-**Decided for `random` only**: option 2, **implemented** as `puml.random(...)` with the arguments of `%random` and the same generator (so **not** seeded: option 3 was not taken). `puml.now` and `puml.date` stay **[open]**: leaning **2** for them. If chosen:
+**Decided for the clock: a module `time`, near CPython, in Java, UTC only, English only** (`TimeLib`, **[implemented]**: `time`, `gmtime`, `localtime` = `gmtime`, `mktime`, `strftime`, `asctime`, `ctime`; section 4.6 of `PYTHON_PREPROCESSOR.md`). The `%now()` function is `int(time.time())` (a 32-bit epoch, which stops in 2038, as `%now()` does), and `%date(fmt)` becomes `time.strftime(fmt_c99)`: the patterns of `%date` are those of `SimpleDateFormat` (`yyyy.MM.dd`), not those of `strftime` (`%Y.%m.%d`), so a diagram has to be translated by hand; a time zone argument (`%date(fmt, epoch, "Europe/Paris")`) has no equivalent. A `datetime` module in Python comes later (it needs the special methods of classes and the loading of the shipped modules). `puml.now` and `puml.date` are therefore **not** planned any more.
 
-- `%date` uses `java.text.SimpleDateFormat` patterns (`yyyy.MM.dd' at 'HH:mm`),
-  which are **not** `strftime`. Offering `strftime` is the Pythonic choice but
-  breaks translation of existing diagrams: **[open]**, probably
-  `puml.date(fmt)` keeps the Java pattern, documented as such.
-- time zones: `%date(fmt, epoch, "Europe/Paris")` validates the id. The JS and C
-  editions may not have a zone database: check before promising it.
-- `%now()` is a 32-bit epoch (it overflows in 2038 and `int(x)` in the subset is
-  32-bit too, section 6). Fine for now, worth a remark.
+**Decided for `random`**: option 2, **implemented** as `puml.random(...)` with the arguments of `%random` and the same generator (so **not** seeded: option 3 was not taken).
+
+What remains from the questions about `%date`: the patterns of `SimpleDateFormat` are not translated (a diagram that uses `%date` is rewritten with `time.strftime`), and a time zone other than UTC does not exist in Python diagrams (the JS and C editions may not have a zone database, and the Gantt works in UTC for the same reason).
 
 ### 4.2 Newline, tab and alignment markers
 
@@ -333,8 +330,7 @@ shows both results side by side.
 
 ## 9. Questions for the owner
 
-1. Time (4.1): `puml.now` and `puml.date`, or keep the ban for them? (`puml.random` is
-   done, not seeded: do we want a seed, `-Dseed` for instance, for reproducible diagrams?)
+1. Seed (4.1): `puml.random` is not seeded; do we want a seed (`-Dseed`, for instance) for reproducible diagrams? The clock itself (`time.time()`) stays irreproducible: do we want `-Dnow=` in `puml.args` as a way to freeze it?
 2. Do we want the bridge to legacy variables (3.4), or is "the whole library
    moves at once" enough?
 3. `bool` printed in text (4.3): lower case in `!{...}`?

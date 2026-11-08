@@ -22,6 +22,7 @@ final class Builtins {
 		in.builtins.put("type", Types.TYPE);
 		in.modules.put("math", MathLib.create());
 		in.modules.put("json", JsonLib.create());
+		in.modules.put("time", TimeLib.create());
 	}
 
 	private static final ArrayList<Builtin> FUNCTIONS = new ArrayList<Builtin>();

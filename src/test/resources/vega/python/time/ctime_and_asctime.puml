@@ -1,0 +1,8 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the format of the C locale; the day is padded with a space
+' title Thu Jan  1 00:00:00 1970 | Fri Feb 13 23:31:30 2009 | Fri Feb 13 23:31:30 2009
+title !{time.ctime(0)} | !{time.ctime(1234567890)} | !{time.asctime(time.gmtime(1234567890))}
+@enduml

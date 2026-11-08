@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the inverse of gmtime, as if the tuple were UTC (CPython gives these numbers when TZ is UTC)
+' title 1234567890.0 True True
+!ok = True
+!for s in [0, 1, 86399, 951782400, 1234567890, 2147483647, -1, -86400]:
+!    if time.mktime(time.gmtime(s)) != s:
+!        ok = False
+title !{time.mktime((2009, 2, 13, 23, 31, 30, 0, 0, 0))} !{ok} !{time.mktime((2025, 13, 1, 0, 0, 0, 0, 0, 0)) == time.mktime((2026, 1, 1, 0, 0, 0, 0, 0, 0))}
+@enduml
