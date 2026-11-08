@@ -1075,6 +1075,12 @@ Level 1, read the environment:
   `%get_current_theme()` returns as JSON), `{}` without theme. A function and
   not an attribute: a `!theme` line may come after the first Python line, and a
   call sees the theme known at that point. **[implemented]**
+- `puml.feature(name)`, `puml.getenv(name[, default])`, `puml.file_exists(path)`
+  and `puml.xargs`: the `%feature`, `%getenv`, `%file_exists` and `%xargs`
+  functions, with the same code and the same security rules (`getenv` and
+  `file_exists` obey the security profile). `feature` and `file_exists` give a
+  `bool`, `getenv` a `str` (`""` or the default when there is none), `xargs` a
+  `str`. **[implemented]**
 
 Level 2, data:
 

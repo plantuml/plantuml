@@ -47,7 +47,10 @@ import org.luaj.vm2.python.PyError;
 import org.luaj.vm2.python.PyModule;
 import org.luaj.vm2.python.PySyntaxError;
 
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.tim.builtin.Feature;
+import net.sourceforge.plantuml.tim.builtin.Getenv;
 import net.sourceforge.plantuml.text.StringLocated;
 
 /**
@@ -76,7 +79,7 @@ final class PythonRunner {
 	private int chunkCount;
 	private final PythonMacros macros;
 
-	PythonRunner(String version, Map<String, String> arguments, Map<String, String> source,
+	PythonRunner(String version, Map<String, String> arguments, Map<String, String> diagram,
 			Supplier<Map<String, String>> theme, PythonMacros.LegacyNames legacyNames) {
 		// What print() writes is dropped: whether print is an alias of emit is
 		// still open (see PYTHON_PREPROCESSOR.md), it is not for now.
@@ -90,9 +93,26 @@ final class PythonRunner {
 		puml.putString("edition", TeaVM.isC() ? "c" : TeaVM.isJavaScript() ? "js" : "jar");
 		puml.putStringMap("args", arguments);
 		// where the diagram comes from: "" when unknown (stdin), as %filename() and the others
-		puml.putString("filename", source.get("filename"));
-		puml.putString("dirpath", source.get("dirpath"));
-		puml.putString("filedate", source.get("filedate"));
+		puml.putString("filename", diagram.get("filename"));
+		puml.putString("dirpath", diagram.get("dirpath"));
+		puml.putString("filedate", diagram.get("filedate"));
+		// what follows @startuml on its first line, "" if nothing (%xargs())
+		puml.putString("xargs", diagram.get("xargs"));
+		puml.put("feature", (in, args) -> Boolean.valueOf(Feature.isAvailable(string("feature", args))));
+		// the same rules as %getenv: a system property first, then the environment, and the
+		// security profile decides what can be read; "" (or the default) when there is none
+		puml.put("getenv", (in, args) -> {
+			if (args.length != 1 && args.length != 2)
+				throw Builtin.typeError("getenv() takes 1 or 2 arguments (" + args.length + " given)");
+			if (args[0] instanceof String == false || args.length == 2 && args[1] instanceof String == false)
+				throw Builtin.typeError("getenv() arguments must be str");
+			final String value = Getenv.read((String) args[0]);
+			if (value != null)
+				return value;
+			return args.length == 2 ? args[1] : "";
+		});
+		// the same rules as %file_exists: SFile, so nothing in the SANDBOX profile
+		puml.put("file_exists", (in, args) -> Boolean.valueOf(new SFile(string("file_exists", args)).exists()));
 		// a function, not a constant: a !theme line may come after the interpreter is created
 		puml.put("theme", (in, args) -> {
 			if (args.length != 0)

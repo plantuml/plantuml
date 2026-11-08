@@ -391,12 +391,13 @@ public class TContext {
 	/** The Python state of the diagram, created when first needed (a Python chunk or a !{expr}). */
 	private PythonRunner python() {
 		if (python == null) {
-			final Map<String, String> source = new LinkedHashMap<>();
+			final Map<String, String> diagram = new LinkedHashMap<>();
 			for (String key : new String[] { "filename", "dirpath", "filedate" }) {
 				final String value = getEnvironmentValue(key);
-				source.put(key, value == null ? "" : value);
+				diagram.put(key, value == null ? "" : value);
 			}
-			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments, source,
+			diagram.put("xargs", getXargs().orElse(""));
+			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments, diagram,
 					() -> themeMetadataAsStrings(), name -> functionsSet.doesFunctionExist(name));
 			// and the other way round: a legacy function may not take the name of a macro
 			functionsSet.setReservedNames(name -> python.isMacro(name));

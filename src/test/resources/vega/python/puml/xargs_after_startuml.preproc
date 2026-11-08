@@ -1,0 +1,3 @@
+@startuml foo
+title True True
+@enduml

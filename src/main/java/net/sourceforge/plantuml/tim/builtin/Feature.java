@@ -61,13 +61,11 @@ public class Feature extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
-		final String arg = values.get(0).toString();
-		if ("style".equalsIgnoreCase(arg))
-			return TValue.fromInt(1);
+		return TValue.fromInt(isAvailable(values.get(0).toString()) ? 1 : 0);
+	}
 
-		if ("theme".equalsIgnoreCase(arg))
-			return TValue.fromInt(1);
-
-		return TValue.fromInt(0);
+	/** True if the feature exists in this version. Shared by <code>%feature</code> and <code>puml.feature</code>. */
+	public static boolean isAvailable(String name) {
+		return "style".equalsIgnoreCase(name) || "theme".equalsIgnoreCase(name);
 	}
 }

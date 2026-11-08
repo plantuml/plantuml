@@ -1,0 +1,9 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): PATH is not read in every security profile, so the test compares with
+' the legacy function and does not print the value; a missing variable gives "" or the default
+' title True [] [dflt]
+title !{puml.getenv("PATH") == "%getenv("PATH")"} [!{puml.getenv("plantuml.no.such.thing")}] [!{puml.getenv("plantuml.no.such.thing", "dflt")}]
+@enduml

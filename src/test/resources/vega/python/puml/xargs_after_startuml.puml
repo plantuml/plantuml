@@ -1,0 +1,7 @@
+---
+output: preproc, svg
+---
+@startuml foo
+' EXPECT (preproc): the same value as %xargs(), whatever it is
+title !{puml.xargs == "%xargs()"} !{len(puml.xargs) > 0}
+@enduml

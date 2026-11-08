@@ -79,14 +79,14 @@ rule "plain values only at the boundaries" (section 13.1).
 | Legacy | Proposal | Notes |
 |---|---|---|
 | `%version()` | `puml.version` | **[implemented]** |
-| `%feature(name)` | `puml.feature(name)` | today only `"style"` and `"theme"`, both `1`. Cheap. Or drop it: `%feature` exists for libraries that must run on old versions, and a Python module is versioned with PlantUML (section 15.8). Leaning: drop. |
-| `%getenv(name)` | `puml.getenv(name)` | must go through the security profile (`canWeReadThisEnvironmentVariable`), and reads system properties first. Returns `""` when absent or forbidden (keep, `None` would be more Pythonic: **[open]**). Not available at all on JS/C editions? To check. |
-| `%file_exists(path)` | `puml.file_exists(path)` | goes through the security profile; contradicts "no direct disk access from text Python" (section 13.1) unless it uses the same finder as `puml.read`. Leaning: through the finder only. |
+| `%feature(name)` | `puml.feature(name)` **[implemented]** | a `bool`: `True` for `"style"` and `"theme"` (case-insensitive), `False` otherwise: the same rule as the legacy function (shared code). Kept although a Python module is versioned with PlantUML (section 15.8), since a diagram may still ask what the running version knows. |
+| `puml.getenv(name[, default])` **[implemented]** | `%getenv(name)` | same code as the legacy function (`Getenv.read`): a system property first, then the environment, and the security profile decides what can be read (without `INSECURE`, only `plantuml.*`, minus `plantuml.security*`). `""` when absent or forbidden, or `default` when given. No distinction between "absent" and "forbidden", as before. |
+| `%file_exists(path)` | `puml.file_exists(path)` **[implemented]** | a `bool`, through `SFile.exists()` like the legacy function: always `False` in the `SANDBOX` profile and for the denied folders. It is not the finder of `puml.read` (not written yet): it asks the file system, with the legacy rules, and nothing else. |
 | `%filename()`, `%dirpath()`, `%filedate()` | `puml.filename`, `puml.dirpath`, `puml.filedate` **[implemented]** | values of the environment (`context.getEnvironmentValue`), constant for a diagram: attributes, like `puml.version`, not functions. `""` when unknown, as the legacy functions (kept: one type, no `None` to test). |
 | `%get_current_theme()` | `puml.theme()` **[implemented]** | a dict of strings, `{}` without theme. A **function**, unlike the three above: `!theme` can come after the interpreter is created, so a constant would be stale. |
 | `%get_all_theme()`, `%get_all_stdlib([detailed])`, `%get_stdlib(name)` | `puml.themes()`, `puml.stdlibs(detailed=False)`, ... | tools and documentation more than diagrams. Low priority; same family as `puml.modules()` (section 15.8). |
 | `%load_json(path[, charset])`, also URL | `json.loads(puml.read(path))` | `puml.read` is already planned (section 13.1) with the `!include` rules. No separate function. The legacy default value argument becomes a Python `try/except` or `puml.read(path, default=...)` **[open]**. |
-| `%xargs()` | `puml.xargs` | only for the `-x` command line option; probably dropped. |
+| `%xargs()` | `puml.xargs` **[implemented]** | a string, the value `%xargs()` gives. **Careful**: today it is the whole first line (`@startuml foo bar`), not only what follows `@startuml` as the comment of `getXargs` says; it is kept as it is so that both give the same, to be settled **[open]**. |
 | `%newline()` / `%n()`, `%breakline()`, `%tab()`, `%left_align()`, `%right_align()` | see 4.2 | return **private marker characters** (`Jaws.BLOCK_E1_*`), not `"\n"`. They cannot be written by the user as plain Python strings. |
 
 ### 3.3 Pure computation: colours, and no module for the rest
