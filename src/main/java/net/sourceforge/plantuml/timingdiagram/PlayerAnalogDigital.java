@@ -30,6 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * Contribution: The-Lum
  *
  */
 package net.sourceforge.plantuml.timingdiagram;
@@ -44,9 +45,9 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.timingdiagram.graphic.Panels;
-import net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalog;
+import net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalogDigital;
 
-public class PlayerAnalog extends Player {
+public class PlayerAnalogDigital extends Player {
 
 	private final TimeSeries timeSeries = new TimeSeries();
 
@@ -54,15 +55,17 @@ public class PlayerAnalog extends Player {
 
 	private Double initialState;
 	private Integer ticksEvery;
+	private TimingType type;
 
-	public PlayerAnalog(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-		super(code, skinParam, ruler, compact, stereotype, null, SName.analog, 100);
+	public PlayerAnalogDigital(TimingType type, String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
+		super(code, skinParam, ruler, compact, stereotype, null, SName.retrieve(type.name()), 100);
+		this.type = type;
 	}
 
 	@Override
 	protected Panels buildPlayerPanels() {
-		return new PanelsAnalog(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), timeSeries, constraints,
-				initialState, ticksEvery);
+		return new PanelsAnalogDigital(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), timeSeries, constraints,
+				initialState, ticksEvery, type);
 
 	}
 
