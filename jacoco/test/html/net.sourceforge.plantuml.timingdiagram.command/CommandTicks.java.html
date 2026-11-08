@@ -47,8 +47,8 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.timingdiagram.AbstractNumericPlayer;
 import net.sourceforge.plantuml.timingdiagram.Player;
-import net.sourceforge.plantuml.timingdiagram.PlayerAnalogDigital;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -95,8 +95,8 @@ public class CommandTicks extends SingleLineCommand2&lt;TimingDiagram&gt; {
 <span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (player == null) {</span>
 <span class="nc" id="L96">			return CommandExecutionResult.error(&quot;No such participant &quot; + code);</span>
 		}
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (player instanceof PlayerAnalogDigital) {</span>
-<span class="fc" id="L99">			((PlayerAnalogDigital) player).setTicks(Integer.parseInt(arg.get(&quot;NUM&quot;, 0)));</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (player instanceof AbstractNumericPlayer) {</span>
+<span class="fc" id="L99">			((AbstractNumericPlayer) player).setTicks(Integer.parseInt(arg.get(&quot;NUM&quot;, 0)));</span>
 		}
 <span class="fc" id="L101">		return CommandExecutionResult.ok();</span>
 	}

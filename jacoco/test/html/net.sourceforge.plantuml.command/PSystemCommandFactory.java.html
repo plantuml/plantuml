@@ -205,7 +205,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 			ParserPass currentPass, PreprocessingArtifact preprocessing) {
 <span class="fc" id="L206">		final Step step = getCandidate(it);</span>
 <span class="fc bfc" id="L207" title="All 2 branches covered.">		if (step == null) {</span>
-<span class="fc" id="L208">			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, &quot;Syntax Error?&quot;, 0, it.peek(),</span>
+<span class="fc" id="L208">			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, getSyntaxErrorMessage(it.peek()), 0, it.peek(),</span>
 <span class="fc" id="L209">					getDiagramType());</span>
 <span class="fc" id="L210">			it.next();</span>
 <span class="fc" id="L211">			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);</span>
@@ -246,20 +246,32 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 <span class="nc" id="L246">		return trace;</span>
 	}
 
+	/**
+	 * A line that no command accepts is a &quot;Syntax Error?&quot;, except an opening {@code &lt;style&gt;}
+	 * on its own line: the only way for it to be refused is that nothing closes the block,
+	 * the lines that follow having been looked at up to the end of the diagram.
+	 */
+	private static String getSyntaxErrorMessage(StringLocated line) {
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		if (line.getTrimmed().getString().equalsIgnoreCase(&quot;&lt;style&gt;&quot;))</span>
+<span class="fc" id="L256">			return &quot;Unclosed &lt;style&gt; block: '&lt;/style&gt;' is missing&quot;;</span>
+
+<span class="fc" id="L258">		return &quot;Syntax Error?&quot;;</span>
+	}
+
 	private Explanation explainFewLines(AbstractDiagram sys, UmlSource source, final IteratorCounter2 it,
 			ParserPass currentPass, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L251">		final Step step = getCandidate(it);</span>
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		if (step == null)</span>
-<span class="nc" id="L253">			return null;</span>
+<span class="fc" id="L263">		final Step step = getCandidate(it);</span>
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">		if (step == null)</span>
+<span class="nc" id="L265">			return null;</span>
 
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (step.command.isEligibleFor(currentPass) == false)</span>
-<span class="nc" id="L256">			return null;</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (step.command.isEligibleFor(currentPass) == false)</span>
+<span class="nc" id="L268">			return null;</span>
 
-<span class="fc" id="L258">		final String explain = sys.explain(step.command, step.blocLines);</span>
-<span class="pc bpc" id="L259" title="2 of 4 branches missed.">		if (explain == null || explain.isEmpty())</span>
-<span class="nc" id="L260">			return null;</span>
+<span class="fc" id="L270">		final String explain = sys.explain(step.command, step.blocLines);</span>
+<span class="pc bpc" id="L271" title="2 of 4 branches missed.">		if (explain == null || explain.isEmpty())</span>
+<span class="nc" id="L272">			return null;</span>
 
-<span class="fc" id="L262">		return new Explanation(step.blocLines, explain);</span>
+<span class="fc" id="L274">		return new Explanation(step.blocLines, explain);</span>
 
 	}
 
@@ -267,10 +279,10 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		final Command command;
 		final BlocLines blocLines;
 
-<span class="fc" id="L270">		Step(Command command, BlocLines blocLines) {</span>
-<span class="fc" id="L271">			this.command = command;</span>
-<span class="fc" id="L272">			this.blocLines = blocLines;</span>
-<span class="fc" id="L273">		}</span>
+<span class="fc" id="L282">		Step(Command command, BlocLines blocLines) {</span>
+<span class="fc" id="L283">			this.command = command;</span>
+<span class="fc" id="L284">			this.blocLines = blocLines;</span>
+<span class="fc" id="L285">		}</span>
 
 	}
 
@@ -282,10 +294,10 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	 * cached, or the map would keep every name ever met, and grow for as long as a server runs.
 	 */
 	private List&lt;Command&gt; getBucket(String token) {
-<span class="fc bfc" id="L285" title="All 2 branches covered.">		if (declaredTokens.contains(token) == false)</span>
-<span class="fc" id="L286">			return cmdsWithoutFirstToken;</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">		if (declaredTokens.contains(token) == false)</span>
+<span class="fc" id="L298">			return cmdsWithoutFirstToken;</span>
 
-<span class="fc" id="L288">		return cmdsByFirstToken.computeIfAbsent(token, this::buildBucket);</span>
+<span class="fc" id="L300">		return cmdsByFirstToken.computeIfAbsent(token, this::buildBucket);</span>
 	}
 
 	/**
@@ -294,67 +306,67 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	 * that no longer change.
 	 */
 	private List&lt;Command&gt; buildBucket(String token) {
-<span class="fc" id="L297">		final List&lt;Command&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L298" title="All 2 branches covered.">		for (int i = 0; i &lt; cmds.size(); i++)</span>
-<span class="fc bfc" id="L299" title="All 4 branches covered.">			if (declared.get(i) == null || declared.get(i).contains(token))</span>
-<span class="fc" id="L300">				result.add(cmds.get(i));</span>
+<span class="fc" id="L309">		final List&lt;Command&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">		for (int i = 0; i &lt; cmds.size(); i++)</span>
+<span class="fc bfc" id="L311" title="All 4 branches covered.">			if (declared.get(i) == null || declared.get(i).contains(token))</span>
+<span class="fc" id="L312">				result.add(cmds.get(i));</span>
 
-<span class="fc" id="L302">		return result;</span>
+<span class="fc" id="L314">		return result;</span>
 	}
 
 	private Step getCandidate(final IteratorCounter2 it) {
-<span class="fc" id="L306">		final StringLocated firstLine = it.peek();</span>
-<span class="fc" id="L307">		final BlocLines single = BlocLines.single(firstLine);</span>
-<span class="fc bfc" id="L308" title="All 2 branches covered.">		if (commandsReady == false)</span>
-<span class="fc" id="L309">			synchronized (cmds) {</span>
-<span class="pc bpc" id="L310" title="1 of 2 branches missed.">				if (commandsReady == false) {</span>
-<span class="fc" id="L311">					initCommandsList(cmds);</span>
+<span class="fc" id="L318">		final StringLocated firstLine = it.peek();</span>
+<span class="fc" id="L319">		final BlocLines single = BlocLines.single(firstLine);</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">		if (commandsReady == false)</span>
+<span class="fc" id="L321">			synchronized (cmds) {</span>
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">				if (commandsReady == false) {</span>
+<span class="fc" id="L323">					initCommandsList(cmds);</span>
 
 					// What each command declared, asked once here rather than once per line. A
 					// command returning null goes to cmdsWithoutFirstToken, and will go into every
 					// bucket as well, since it can match any line.
-<span class="fc" id="L316">					declared = new ArrayList&lt;&gt;(cmds.size());</span>
-<span class="fc bfc" id="L317" title="All 2 branches covered.">					for (Command cmd : cmds) {</span>
-<span class="fc" id="L318">						final Collection&lt;String&gt; own = cmd.mandatoryFirstTokens();</span>
-<span class="fc" id="L319">						declared.add(own);</span>
-<span class="fc bfc" id="L320" title="All 2 branches covered.">						if (own == null)</span>
-<span class="fc" id="L321">							cmdsWithoutFirstToken.add(cmd);</span>
+<span class="fc" id="L328">					declared = new ArrayList&lt;&gt;(cmds.size());</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">					for (Command cmd : cmds) {</span>
+<span class="fc" id="L330">						final Collection&lt;String&gt; own = cmd.mandatoryFirstTokens();</span>
+<span class="fc" id="L331">						declared.add(own);</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">						if (own == null)</span>
+<span class="fc" id="L333">							cmdsWithoutFirstToken.add(cmd);</span>
 						else
-<span class="fc" id="L323">							declaredTokens.addAll(own);</span>
-<span class="fc" id="L324">					}</span>
+<span class="fc" id="L335">							declaredTokens.addAll(own);</span>
+<span class="fc" id="L336">					}</span>
 
 					// How much the index actually narrows things down for this factory: the
 					// commands left in cmdsWithoutFirstToken are the ones FirstTokens could not
 					// read, and so the next patterns worth teaching it.
-<span class="pc" id="L329">					Log.info(() -&gt; getClass().getSimpleName() + &quot;: &quot; + cmdsWithoutFirstToken.size() + &quot;/&quot;</span>
-<span class="nc" id="L330">							+ cmds.size() + &quot; commands without first token, &quot; + declaredTokens.size()</span>
+<span class="pc" id="L341">					Log.info(() -&gt; getClass().getSimpleName() + &quot;: &quot; + cmdsWithoutFirstToken.size() + &quot;/&quot;</span>
+<span class="nc" id="L342">							+ cmds.size() + &quot; commands without first token, &quot; + declaredTokens.size()</span>
 							+ &quot; tokens indexed&quot;);
 
-<span class="fc" id="L333">					commandsReady = true;</span>
+<span class="fc" id="L345">					commandsReady = true;</span>
 				}
-<span class="fc" id="L335">			}</span>
+<span class="fc" id="L347">			}</span>
 
 		// Both lists are already the answer: a bucket holds the commands that claimed this token
 		// plus those that claim every line, and cmdsWithoutFirstToken holds the latter alone, for
 		// a token nobody claimed. Nothing is left to ask at this point.
-<span class="fc bfc" id="L340" title="All 2 branches covered.">		for (Command cmd : getBucket(firstLine.getFirstToken())) {</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">		for (Command cmd : getBucket(firstLine.getFirstToken())) {</span>
 
-<span class="fc" id="L342">			final CommandControl result = safeIsValid(cmd, single);</span>
-<span class="fc bfc" id="L343" title="All 2 branches covered.">			if (result == CommandControl.OK) {</span>
-<span class="fc" id="L344">				it.next();</span>
-<span class="fc" id="L345">				return new Step(cmd, single);</span>
+<span class="fc" id="L354">			final CommandControl result = safeIsValid(cmd, single);</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">			if (result == CommandControl.OK) {</span>
+<span class="fc" id="L356">				it.next();</span>
+<span class="fc" id="L357">				return new Step(cmd, single);</span>
 			}
-<span class="fc bfc" id="L347" title="All 2 branches covered.">			if (result == CommandControl.OK_PARTIAL) {</span>
-<span class="fc" id="L348">				final IteratorCounter2 cloned = it.cloneMe();</span>
-<span class="fc" id="L349">				final BlocLines lines = isMultilineCommandOk(cloned, cmd);</span>
-<span class="fc bfc" id="L350" title="All 2 branches covered.">				if (lines == null)</span>
-<span class="fc" id="L351">					continue;</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">			if (result == CommandControl.OK_PARTIAL) {</span>
+<span class="fc" id="L360">				final IteratorCounter2 cloned = it.cloneMe();</span>
+<span class="fc" id="L361">				final BlocLines lines = isMultilineCommandOk(cloned, cmd);</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">				if (lines == null)</span>
+<span class="fc" id="L363">					continue;</span>
 
-<span class="fc" id="L353">				it.copyStateFrom(cloned);</span>
-<span class="fc" id="L354">				return new Step(cmd, lines);</span>
+<span class="fc" id="L365">				it.copyStateFrom(cloned);</span>
+<span class="fc" id="L366">				return new Step(cmd, lines);</span>
 			}
-<span class="fc" id="L356">		}</span>
-<span class="fc" id="L357">		return null;</span>
+<span class="fc" id="L368">		}</span>
+<span class="fc" id="L369">		return null;</span>
 	}
 
 	/**
@@ -366,55 +378,55 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	 */
 	private static CommandControl safeIsValid(Command cmd, BlocLines single) {
 		try {
-<span class="fc" id="L369">			return cmd.isValid(single);</span>
-<span class="nc" id="L370">		} catch (Exception e) {</span>
-<span class="nc bnc" id="L371" title="All 2 branches missed.">			if (TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L372">				BrowserLog.consoleLog(cmd.getClass(), &quot;Big exception &quot; + e);</span>
-<span class="nc" id="L373">				return CommandControl.NOT_OK;</span>
+<span class="fc" id="L381">			return cmd.isValid(single);</span>
+<span class="nc" id="L382">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">			if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L384">				BrowserLog.consoleLog(cmd.getClass(), &quot;Big exception &quot; + e);</span>
+<span class="nc" id="L385">				return CommandControl.NOT_OK;</span>
 			}
-<span class="nc" id="L375">			throw e;</span>
+<span class="nc" id="L387">			throw e;</span>
 		}
 	}
 
 	private BlocLines isMultilineCommandOk(IteratorCounter2 it, Command cmd) {
-<span class="fc" id="L380">		BlocLines lines = BlocLines.create();</span>
-<span class="fc" id="L381">		int nb = 0;</span>
-<span class="fc bfc" id="L382" title="All 2 branches covered.">		while (it.hasNext()) {</span>
-<span class="fc" id="L383">			lines = addOneSingleLineManageEmbedded2(it, lines);</span>
-<span class="fc" id="L384">			final CommandControl result = cmd.isValid(lines);</span>
-<span class="fc bfc" id="L385" title="All 2 branches covered.">			if (result == CommandControl.NOT_OK)</span>
-<span class="fc" id="L386">				return null;</span>
+<span class="fc" id="L392">		BlocLines lines = BlocLines.create();</span>
+<span class="fc" id="L393">		int nb = 0;</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">		while (it.hasNext()) {</span>
+<span class="fc" id="L395">			lines = addOneSingleLineManageEmbedded2(it, lines);</span>
+<span class="fc" id="L396">			final CommandControl result = cmd.isValid(lines);</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">			if (result == CommandControl.NOT_OK)</span>
+<span class="fc" id="L398">				return null;</span>
 
-<span class="fc bfc" id="L388" title="All 2 branches covered.">			if (result == CommandControl.OK)</span>
-<span class="fc" id="L389">				return lines;</span>
+<span class="fc bfc" id="L400" title="All 2 branches covered.">			if (result == CommandControl.OK)</span>
+<span class="fc" id="L401">				return lines;</span>
 
-<span class="fc" id="L391">			nb++;</span>
-<span class="pc bpc" id="L392" title="1 of 4 branches missed.">			if (cmd instanceof CommandDecoratorMultine &amp;&amp; nb &gt; ((CommandDecoratorMultine) cmd).getNbMaxLines())</span>
-<span class="nc" id="L393">				return null;</span>
+<span class="fc" id="L403">			nb++;</span>
+<span class="pc bpc" id="L404" title="1 of 4 branches missed.">			if (cmd instanceof CommandDecoratorMultine &amp;&amp; nb &gt; ((CommandDecoratorMultine) cmd).getNbMaxLines())</span>
+<span class="nc" id="L405">				return null;</span>
 
-<span class="fc" id="L395">		}</span>
-<span class="fc" id="L396">		return null;</span>
+<span class="fc" id="L407">		}</span>
+<span class="fc" id="L408">		return null;</span>
 	}
 
 	private static BlocLines addOneSingleLineManageEmbedded2(IteratorCounter2 it, BlocLines lines) {
-<span class="fc" id="L400">		final StringLocated linetoBeAdded = it.next();</span>
-<span class="fc" id="L401">		lines = lines.add(linetoBeAdded);</span>
-<span class="fc bfc" id="L402" title="All 2 branches covered.">		if (EmbeddedDiagram.getEmbeddedType(linetoBeAdded.getString()) != null) {</span>
-<span class="fc" id="L403">			int nested = 1;</span>
-<span class="pc bpc" id="L404" title="1 of 2 branches missed.">			while (it.hasNext()) {</span>
-<span class="fc" id="L405">				final StringLocated s = it.next();</span>
-<span class="fc" id="L406">				lines = lines.add(s);</span>
-<span class="fc bfc" id="L407" title="All 2 branches covered.">				if (EmbeddedDiagram.getEmbeddedType(s.getString()) != null)</span>
-<span class="fc" id="L408">					nested++;</span>
-<span class="fc bfc" id="L409" title="All 2 branches covered.">				else if (s.getTrimmed().getString().equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
-<span class="fc" id="L410">					nested--;</span>
-<span class="fc bfc" id="L411" title="All 2 branches covered.">					if (nested == 0)</span>
-<span class="fc" id="L412">						return lines;</span>
+<span class="fc" id="L412">		final StringLocated linetoBeAdded = it.next();</span>
+<span class="fc" id="L413">		lines = lines.add(linetoBeAdded);</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">		if (EmbeddedDiagram.getEmbeddedType(linetoBeAdded.getString()) != null) {</span>
+<span class="fc" id="L415">			int nested = 1;</span>
+<span class="pc bpc" id="L416" title="1 of 2 branches missed.">			while (it.hasNext()) {</span>
+<span class="fc" id="L417">				final StringLocated s = it.next();</span>
+<span class="fc" id="L418">				lines = lines.add(s);</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">				if (EmbeddedDiagram.getEmbeddedType(s.getString()) != null)</span>
+<span class="fc" id="L420">					nested++;</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">				else if (s.getTrimmed().getString().equals(EmbeddedDiagram.EMBEDDED_END)) {</span>
+<span class="fc" id="L422">					nested--;</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">					if (nested == 0)</span>
+<span class="fc" id="L424">						return lines;</span>
 				}
-<span class="fc" id="L414">			}</span>
+<span class="fc" id="L426">			}</span>
 		}
 
-<span class="fc" id="L417">		return lines;</span>
+<span class="fc" id="L429">		return lines;</span>
 	}
 
 }

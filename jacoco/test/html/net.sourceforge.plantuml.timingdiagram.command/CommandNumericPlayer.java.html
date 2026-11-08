@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandNumericPlayer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.timingdiagram.command</a> &gt; <span class="el_source">CommandNumericPlayer.java</span></div><h1>CommandNumericPlayer.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * Contribution: The-Lum
+ *
+ */
+package net.sourceforge.plantuml.timingdiagram.command;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import net.sourceforge.plantuml.annotation.Explain;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.timingdiagram.AbstractNumericPlayer;
+import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+/**
+ * Declares a player whose states are numbers. The three accepted forms are:
+ *
+ * &lt;pre&gt;
+ * analog &quot;Display&quot; as CODE [between 0 and 3]
+ * analog &quot;Display&quot; between 0 and 3 as CODE
+ * analog CODE [between 0 and 3]
+ * &lt;/pre&gt;
+ *
+ * Each of them may start with &lt;code&gt;compact&lt;/code&gt; and carry a stereotype.
+ * Subclasses provide the keyword and create the actual player.
+ */
+public abstract class CommandNumericPlayer extends SingleLineCommand2&lt;TimingDiagram&gt; {
+
+	private final String keyword;
+	private final Collection&lt;String&gt; firstTokens;
+
+	protected CommandNumericPlayer(String keyword) {
+<span class="fc" id="L75">		super(getRegexConcat(keyword));</span>
+<span class="fc" id="L76">		this.keyword = keyword;</span>
+<span class="fc" id="L77">		this.firstTokens = Arrays.asList(&quot;compact&quot;, keyword);</span>
+<span class="fc" id="L78">	}</span>
+
+	protected abstract AbstractNumericPlayer createPlayer(TimingDiagram diagram, String code, String full,
+			boolean compact, Stereotype stereotype);
+
+	private static IRegex getRegexConcat(String keyword) {
+<span class="fc" id="L84">		return RegexConcat.build(CommandNumericPlayer.class.getName() + keyword, RegexLeaf.start(), //</span>
+				new RegexOptional( //
+						new RegexConcat( //
+								new RegexLeaf(1, &quot;COMPACT&quot;, &quot;(compact)&quot;), //
+<span class="fc" id="L88">								RegexLeaf.spaceOneOrMore())), //</span>
+				new RegexLeaf(keyword), //
+<span class="fc" id="L90">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L91">				new RegexOr(quotedDisplay(), codeOnly()), //</span>
+<span class="fc" id="L92">				RegexLeaf.end());</span>
+	}
+
+	// &quot;Display&quot; ...
+	private static IRegex quotedDisplay() {
+<span class="fc" id="L97">		return new RegexConcat( //</span>
+				new RegexLeaf(1, &quot;FULL&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
+<span class="fc" id="L99">				StereotypePattern.optional(&quot;STEREOTYPE1&quot;), //</span>
+<span class="fc" id="L100">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L101">				new RegexOr(asCodeThenBounds(), boundsThenAsCode()));</span>
+	}
+
+	// ... as CODE [between 0 and 3]
+	private static IRegex asCodeThenBounds() {
+<span class="fc" id="L106">		return new RegexConcat( //</span>
+<span class="fc" id="L107">				asCode(&quot;CODE1&quot;), //</span>
+<span class="fc" id="L108">				StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
+<span class="fc" id="L109">				optionalBounds(1), //</span>
+<span class="fc" id="L110">				StereotypePattern.optional(&quot;STEREOTYPE3&quot;));</span>
+	}
+
+	// ... between 0 and 3 as CODE
+	private static IRegex boundsThenAsCode() {
+<span class="fc" id="L115">		return new RegexConcat( //</span>
+<span class="fc" id="L116">				bounds(2), //</span>
+<span class="fc" id="L117">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L118">				asCode(&quot;CODE2&quot;), //</span>
+<span class="fc" id="L119">				StereotypePattern.optional(&quot;STEREOTYPE4&quot;));</span>
+	}
+
+	// CODE [between 0 and 3]
+	private static IRegex codeOnly() {
+<span class="fc" id="L124">		return new RegexConcat( //</span>
+<span class="fc" id="L125">				code(&quot;CODE3&quot;), //</span>
+<span class="fc" id="L126">				StereotypePattern.optional(&quot;STEREOTYPE5&quot;), //</span>
+<span class="fc" id="L127">				optionalBounds(3), //</span>
+<span class="fc" id="L128">				StereotypePattern.optional(&quot;STEREOTYPE6&quot;));</span>
+	}
+
+	private static IRegex asCode(String name) {
+<span class="fc" id="L132">		return new RegexConcat( //</span>
+				new RegexLeaf(&quot;as&quot;), //
+<span class="fc" id="L134">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L135">				code(name));</span>
+	}
+
+	private static IRegex code(String name) {
+<span class="fc" id="L139">		return new RegexLeaf(1, name, &quot;([%pLN_.@]+)&quot;);</span>
+	}
+
+	private static IRegex optionalBounds(int index) {
+<span class="fc" id="L143">		return new RegexOptional( //</span>
+				new RegexConcat( //
+<span class="fc" id="L145">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L146">						bounds(index)));</span>
+	}
+
+	private static IRegex bounds(int index) {
+<span class="fc" id="L150">		return new RegexConcat( //</span>
+				new RegexOr(new RegexLeaf(&quot;between&quot;), new RegexLeaf(&quot;from&quot;)), //
+<span class="fc" id="L152">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;START&quot; + index, &quot;(-?[0-9]*\\.?[0-9]+)&quot;), //
+<span class="fc" id="L154">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexOr(new RegexLeaf(&quot;and&quot;), new RegexLeaf(&quot;to&quot;)), //
+<span class="fc" id="L156">				RegexLeaf.spaceOneOrMore(), //</span>
+				new RegexLeaf(1, &quot;END&quot; + index, &quot;(-?[0-9]*\\.?[0-9]+)&quot;));
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L163">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
+<span class="nc" id="L164">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc" id="L165">		final String start = arg.getLazzy(&quot;START&quot;, 0);</span>
+<span class="nc" id="L166">		final String end = arg.getLazzy(&quot;END&quot;, 0);</span>
+
+<span class="nc" id="L168">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (arg.get(&quot;COMPACT&quot;, 0) != null)</span>
+<span class="nc" id="L170">			sb.append(&quot;Creating a compact &quot;);</span>
+		else
+<span class="nc" id="L172">			sb.append(&quot;Creating an &quot;);</span>
+<span class="nc" id="L173">		sb.append(keyword).append(&quot; timing player '&quot;).append(arg.getLazzy(&quot;CODE&quot;, 0)).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">		if (full != null)</span>
+<span class="nc" id="L175">			sb.append(&quot; displayed as \&quot;&quot;).append(full).append(&quot;\&quot;&quot;);</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L177">			sb.append(&quot; stereotyped &quot;).append(stereotype);</span>
+		// Bounds are only applied when both START and END are present
+<span class="nc bnc" id="L179" title="All 4 branches missed.">		if (start != null &amp;&amp; end != null)</span>
+<span class="nc" id="L180">			sb.append(&quot; with bounds from &quot;).append(start).append(&quot; to &quot;).append(end);</span>
+<span class="nc" id="L181">		return sb.toString();</span>
+	}
+
+	@Override
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="fc" id="L187">		final String code = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L188">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
+<span class="fc" id="L189">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
+
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		final AbstractNumericPlayer player = createPlayer(diagram, code, full == null ? &quot;&quot; : full,</span>
+<span class="pc bpc" id="L192" title="2 of 4 branches missed.">				arg.get(&quot;COMPACT&quot;, 0) != null, stereotype == null ? null : Stereotype.build(stereotype));</span>
+
+<span class="fc" id="L194">		final String start = arg.getLazzy(&quot;START&quot;, 0);</span>
+<span class="fc" id="L195">		final String end = arg.getLazzy(&quot;END&quot;, 0);</span>
+<span class="pc bpc" id="L196" title="1 of 4 branches missed.">		if (start != null &amp;&amp; end != null)</span>
+<span class="fc" id="L197">			player.setBounds(start, end);</span>
+
+<span class="fc" id="L199">		return CommandExecutionResult.ok();</span>
+	}
+
+	@Override
+	public final Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L204">		return firstTokens;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

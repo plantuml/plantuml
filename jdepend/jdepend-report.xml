@@ -18162,18 +18162,21 @@
 
         <Package name="net.sourceforge.plantuml.timingdiagram">
             <Stats>
-                <TotalClasses>28</TotalClasses>
+                <TotalClasses>29</TotalClasses>
                 <ConcreteClasses>24</ConcreteClasses>
-                <AbstractClasses>4</AbstractClasses>
+                <AbstractClasses>5</AbstractClasses>
                 <Ca>3</Ca>
                 <Ce>26</Ce>
-                <A>0.14</A>
+                <A>0.17</A>
                 <I>0.9</I>
-                <D>0.04</D>
+                <D>0.07</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
+                <Class sourceFile="AbstractNumericPlayer.java">
+                    net.sourceforge.plantuml.timingdiagram.AbstractNumericPlayer
+                </Class>
                 <Class sourceFile="AbstractStatePlayer.java">
                     net.sourceforge.plantuml.timingdiagram.AbstractStatePlayer
                 </Class>
@@ -18198,8 +18201,8 @@
                 <Class sourceFile="Highlight.java">
                     net.sourceforge.plantuml.timingdiagram.Highlight
                 </Class>
-                <Class sourceFile="PlayerAnalogDigital.java">
-                    net.sourceforge.plantuml.timingdiagram.PlayerAnalogDigital
+                <Class sourceFile="PlayerAnalog.java">
+                    net.sourceforge.plantuml.timingdiagram.PlayerAnalog
                 </Class>
                 <Class sourceFile="PlayerBinary.java">
                     net.sourceforge.plantuml.timingdiagram.PlayerBinary
@@ -18209,6 +18212,9 @@
                 </Class>
                 <Class sourceFile="PlayerConcise.java">
                     net.sourceforge.plantuml.timingdiagram.PlayerConcise
+                </Class>
+                <Class sourceFile="PlayerDigital.java">
+                    net.sourceforge.plantuml.timingdiagram.PlayerDigital
                 </Class>
                 <Class sourceFile="PlayerRectangle.java">
                     net.sourceforge.plantuml.timingdiagram.PlayerRectangle
@@ -18258,9 +18264,6 @@
                 <Class sourceFile="TimingRuler.java">
                     net.sourceforge.plantuml.timingdiagram.TimingRuler$TimeLabel
                 </Class>
-                <Class sourceFile="TimingType.java">
-                    net.sourceforge.plantuml.timingdiagram.TimingType
-                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
@@ -18301,8 +18304,8 @@
 
         <Package name="net.sourceforge.plantuml.timingdiagram.command">
             <Stats>
-                <TotalClasses>9</TotalClasses>
-                <ConcreteClasses>9</ConcreteClasses>
+                <TotalClasses>13</TotalClasses>
+                <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>12</Ce>
@@ -18316,6 +18319,9 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="CommandAnalog.java">
+                    net.sourceforge.plantuml.timingdiagram.command.CommandAnalog
+                </Class>
                 <Class sourceFile="CommandAtTime.java">
                     net.sourceforge.plantuml.timingdiagram.command.CommandAtTime
                 </Class>
@@ -18328,6 +18334,12 @@
                 <Class sourceFile="CommandClock.java">
                     net.sourceforge.plantuml.timingdiagram.command.CommandClock
                 </Class>
+                <Class sourceFile="CommandConcise.java">
+                    net.sourceforge.plantuml.timingdiagram.command.CommandConcise
+                </Class>
+                <Class sourceFile="CommandDigital.java">
+                    net.sourceforge.plantuml.timingdiagram.command.CommandDigital
+                </Class>
                 <Class sourceFile="CommandHideTimeAxis.java">
                     net.sourceforge.plantuml.timingdiagram.command.CommandHideTimeAxis
                 </Class>
@@ -18337,8 +18349,11 @@
                 <Class sourceFile="CommandModeCompact.java">
                     net.sourceforge.plantuml.timingdiagram.command.CommandModeCompact
                 </Class>
-                <Class sourceFile="CommandRobustConcise.java">
-                    net.sourceforge.plantuml.timingdiagram.command.CommandRobustConcise$1
+                <Class sourceFile="CommandRectangle.java">
+                    net.sourceforge.plantuml.timingdiagram.command.CommandRectangle
+                </Class>
+                <Class sourceFile="CommandRobust.java">
+                    net.sourceforge.plantuml.timingdiagram.command.CommandRobust
                 </Class>
                 <Class sourceFile="CommandScalePixel.java">
                     net.sourceforge.plantuml.timingdiagram.command.CommandScalePixel
@@ -18367,14 +18382,14 @@
 
         <Package name="net.sourceforge.plantuml.timingdiagram.graphic">
             <Stats>
-                <TotalClasses>18</TotalClasses>
+                <TotalClasses>19</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
-                <AbstractClasses>3</AbstractClasses>
+                <AbstractClasses>4</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>16</Ce>
-                <A>0.17</A>
+                <A>0.21</A>
                 <I>0.94</I>
-                <D>0.11</D>
+                <D>0.15</D>
                 <V>1</V>
             </Stats>
 
@@ -18384,6 +18399,9 @@
                 </Class>
                 <Class sourceFile="PanelsNoLeft.java">
                     net.sourceforge.plantuml.timingdiagram.graphic.PanelsNoLeft
+                </Class>
+                <Class sourceFile="PanelsNumeric.java">
+                    net.sourceforge.plantuml.timingdiagram.graphic.PanelsNumeric
                 </Class>
                 <Class sourceFile="PanelsState.java">
                     net.sourceforge.plantuml.timingdiagram.graphic.PanelsState
@@ -18397,11 +18415,8 @@
                 <Class sourceFile="IntricatedPoint.java">
                     net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint
                 </Class>
-                <Class sourceFile="PanelsAnalogDigital.java">
-                    net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalogDigital
-                </Class>
-                <Class sourceFile="PanelsAnalogDigital.java">
-                    net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalogDigital$1
+                <Class sourceFile="PanelsAnalog.java">
+                    net.sourceforge.plantuml.timingdiagram.graphic.PanelsAnalog
                 </Class>
                 <Class sourceFile="PanelsBinary.java">
                     net.sourceforge.plantuml.timingdiagram.graphic.PanelsBinary
@@ -18411,6 +18426,9 @@
                 </Class>
                 <Class sourceFile="PanelsConcise.java">
                     net.sourceforge.plantuml.timingdiagram.graphic.PanelsConcise
+                </Class>
+                <Class sourceFile="PanelsDigital.java">
+                    net.sourceforge.plantuml.timingdiagram.graphic.PanelsDigital
                 </Class>
                 <Class sourceFile="PanelsRectangle.java">
                     net.sourceforge.plantuml.timingdiagram.graphic.PanelsRectangle

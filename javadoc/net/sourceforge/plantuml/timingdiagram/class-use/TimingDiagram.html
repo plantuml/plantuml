@@ -91,11 +91,58 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected final <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandAnalogDigital.</span><code><a href="../command/CommandAnalogDigital.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
- <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
- <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
- <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
+<div class="col-first even-row-color"><code>protected <a href="../AbstractNumericPlayer.html" title="class in net.sourceforge.plantuml.timingdiagram">AbstractNumericPlayer</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandAnalog.</span><code><a href="../command/CommandAnalog.html#createPlayer(net.sourceforge.plantuml.timingdiagram.TimingDiagram,java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">createPlayer</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
+ boolean&nbsp;compact,
+ <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandConcise.</span><code><a href="../command/CommandConcise.html#createPlayer(net.sourceforge.plantuml.timingdiagram.TimingDiagram,java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">createPlayer</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
+ boolean&nbsp;compact,
+ <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
+ <a href="../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backColor)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="../AbstractNumericPlayer.html" title="class in net.sourceforge.plantuml.timingdiagram">AbstractNumericPlayer</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandDigital.</span><code><a href="../command/CommandDigital.html#createPlayer(net.sourceforge.plantuml.timingdiagram.TimingDiagram,java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">createPlayer</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
+ boolean&nbsp;compact,
+ <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected abstract <a href="../AbstractNumericPlayer.html" title="class in net.sourceforge.plantuml.timingdiagram">AbstractNumericPlayer</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandNumericPlayer.</span><code><a href="../command/CommandNumericPlayer.html#createPlayer(net.sourceforge.plantuml.timingdiagram.TimingDiagram,java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">createPlayer</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
+ boolean&nbsp;compact,
+ <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandRectangle.</span><code><a href="../command/CommandRectangle.html#createPlayer(net.sourceforge.plantuml.timingdiagram.TimingDiagram,java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">createPlayer</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
+ boolean&nbsp;compact,
+ <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
+ <a href="../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backColor)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandRobust.</span><code><a href="../command/CommandRobust.html#createPlayer(net.sourceforge.plantuml.timingdiagram.TimingDiagram,java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">createPlayer</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
+ boolean&nbsp;compact,
+ <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
+ <a href="../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backColor)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected abstract void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandStatePlayer.</span><code><a href="../command/CommandStatePlayer.html#createPlayer(net.sourceforge.plantuml.timingdiagram.TimingDiagram,java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">createPlayer</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
+ boolean&nbsp;compact,
+ <a href="../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
+ <a href="../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backColor)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected final <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CommandAtPlayer.</span><code><a href="../command/CommandAtPlayer.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
@@ -182,13 +229,13 @@ loadScripts(document, 'script');</script>
  <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected final <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandPixelHeight.</span><code><a href="../command/CommandPixelHeight.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+<div class="col-second odd-row-color"><span class="type-name-label">CommandNumericPlayer.</span><code><a href="../command/CommandNumericPlayer.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected final <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandRobustConcise.</span><code><a href="../command/CommandRobustConcise.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+<div class="col-second even-row-color"><span class="type-name-label">CommandPixelHeight.</span><code><a href="../command/CommandPixelHeight.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
@@ -200,34 +247,40 @@ loadScripts(document, 'script');</script>
  <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected final <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandTicks.</span><code><a href="../command/CommandTicks.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+<div class="col-second even-row-color"><span class="type-name-label">CommandStatePlayer.</span><code><a href="../command/CommandStatePlayer.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected final <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandTimeAxisUnit.</span><code><a href="../command/CommandTimeAxisUnit.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+<div class="col-second odd-row-color"><span class="type-name-label">CommandTicks.</span><code><a href="../command/CommandTicks.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected final <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandTimeMessage.</span><code><a href="../command/CommandTimeMessage.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+<div class="col-second even-row-color"><span class="type-name-label">CommandTimeAxisUnit.</span><code><a href="../command/CommandTimeAxisUnit.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected final <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandUseDateFormat.</span><code><a href="../command/CommandUseDateFormat.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+<div class="col-second odd-row-color"><span class="type-name-label">CommandTimeMessage.</span><code><a href="../command/CommandTimeMessage.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandNoteLong.</span><code><a href="../command/CommandNoteLong.html#executeNow(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeNow</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
- <a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
+<div class="col-first even-row-color"><code>protected final <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandUseDateFormat.</span><code><a href="../command/CommandUseDateFormat.html#executeArg(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+ <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandNoteLong.</span><code><a href="../command/CommandNoteLong.html#executeNow(net.sourceforge.plantuml.timingdiagram.TimingDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeNow</a><wbr>(<a href="../TimingDiagram.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingDiagram</a>&nbsp;diagram,
+ <a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
+ <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
