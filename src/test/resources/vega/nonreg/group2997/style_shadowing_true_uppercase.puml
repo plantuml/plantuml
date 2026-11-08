@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startmindmap
+<style>
+root {
+  Shadowing TRUE
+}
+node {
+  SameClassWidth true
+}
+</style>
+* root
+** child with a longer label
+** other
+@endmindmap

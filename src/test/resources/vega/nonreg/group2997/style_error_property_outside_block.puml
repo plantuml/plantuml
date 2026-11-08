@@ -1,0 +1,14 @@
+---
+output: svg
+expected-status: 400
+expected-description: (Error)
+expected-error-line: 2
+expected-error-message: Error in style definition: Property 'LineColor' declared outside of any block (Assumed diagram type: mindmap)
+---
+@startmindmap
+<style>
+LineColor red
+</style>
+* root
+** child
+@endmindmap

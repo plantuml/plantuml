@@ -1,0 +1,15 @@
+---
+output: svg
+expected-status: 400
+expected-description: (Error)
+expected-error-line: 1
+expected-error-message: Unclosed <style> block: '</style>' is missing (Assumed diagram type: mindmap)
+---
+@startmindmap
+<style>
+root {
+  LineColor red
+}
+* root
+** child
+@endmindmap

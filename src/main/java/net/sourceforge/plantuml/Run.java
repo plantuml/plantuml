@@ -70,6 +70,7 @@ import net.sourceforge.plantuml.code.NoPlantumlCompressionException;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
+import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.file.FileGroup;
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.ftp.FtpServer;
@@ -356,9 +357,17 @@ public class Run {
 				return;
 			final ISourceFileReader sourceFileReader = getSourceFileReader(file, option, charset);
 			exitStatus.goesHasFiles();
+			if (sourceFileReader.getBlocks().size() > 0)
+				exitStatus.goesHasBlocks();
 			if (sourceFileReader.hasError()) {
 				hasError.set(true);
 				exitStatus.goesHasErrors();
+				for (BlockUml block : sourceFileReader.getBlocks())
+					if (block.getDiagram() instanceof PSystemError) {
+						final PSystemError error = (PSystemError) block.getDiagram();
+						option.getStdrpt().errorLine(error.getLineLocation().getPosition(), file);
+						break;
+					}
 			}
 		});
 

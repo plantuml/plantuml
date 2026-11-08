@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startmindmap
+<style>
+root {
+  LineThickness 2px
+}
+node {
+  LineThickness .5
+}
+</style>
+* root
+** child
+@endmindmap

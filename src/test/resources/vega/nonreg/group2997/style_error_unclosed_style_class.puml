@@ -1,0 +1,15 @@
+---
+output: svg
+expected-status: 400
+expected-description: (Error)
+expected-error-line: 2
+expected-error-message: Unclosed <style> block: '</style>' is missing (Assumed diagram type: class)
+---
+@startuml
+class A
+<style>
+class {
+  RoundCorner 5
+}
+class B
+@enduml

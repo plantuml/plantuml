@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.core.AbstractDiagram;
+import net.sourceforge.plantuml.text.StringLocated;
 
 public class CommandExecutionResult {
 
@@ -47,8 +48,15 @@ public class CommandExecutionResult {
 	private final List<String> debugLines;
 	private final int score;
 	private final Throwable rootCause;
+	private final StringLocated errorLocation;
 
 	private CommandExecutionResult(AbstractDiagram newDiagram, String error, int score, Throwable rootCause) {
+		this(newDiagram, error, score, rootCause, null);
+	}
+
+	private CommandExecutionResult(AbstractDiagram newDiagram, String error, int score, Throwable rootCause,
+			StringLocated errorLocation) {
+		this.errorLocation = errorLocation;
 		this.error = error;
 		this.rootCause = rootCause;
 		this.newDiagram = newDiagram;
@@ -80,6 +88,21 @@ public class CommandExecutionResult {
 
 	public static CommandExecutionResult error(String error) {
 		return new CommandExecutionResult(null, error, 0, null);
+	}
+
+	/**
+	 * An error that belongs to one line of a multi-line command, as opposed to the
+	 * command as a whole (which is reported at its first line).
+	 */
+	public static CommandExecutionResult errorAt(String error, StringLocated location) {
+		return new CommandExecutionResult(null, error, 0, null, location);
+	}
+
+	/**
+	 * The line the error belongs to, or null when it belongs to the command as a whole.
+	 */
+	public StringLocated getErrorLocation() {
+		return errorLocation;
 	}
 
 	public static CommandExecutionResult error(String error, int score) {

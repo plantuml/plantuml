@@ -79,8 +79,20 @@ public final class RawStyleParser {
 	private final Deque<RawStyleRule> stack = new ArrayDeque<RawStyleRule>();
 	private final List<RawStyleRule> topLevel = new ArrayList<RawStyleRule>();
 
+	// 0-based index of the line being read: every line of the inspector ends with exactly one '\n'
+	private int lineIndex = 0;
+	// line where the statement being parsed starts, so that an error points at the faulty
+	// statement and not at wherever the parser happens to be when it notices
+	private int statementLine = 0;
+
 	private RawStyleParser(CharInspector ins) {
 		this.ins = ins;
+	}
+
+	private void jump() {
+		if (ins.peek(0) == '\n')
+			lineIndex++;
+		ins.jump();
 	}
 
 	public static RawStyleSheet parse(BlocLines lines) throws StyleParsingException {
@@ -97,14 +109,15 @@ public final class RawStyleParser {
 			if (c == '\0')
 				break;
 
+			statementLine = lineIndex;
 			if (c == '}') {
-				ins.jump();
+				jump();
 				closeCurrentRule();
 			} else if (c == '@') {
 				parseAtRule();
 			} else if (c == ':') {
 				// A selector may be written with a leading colon, e.g. ":foo {".
-				ins.jump();
+				jump();
 				parseSelectorHead(readIdentifier());
 			} else {
 				parseStatementStartingWithIdentifier();
@@ -132,7 +145,7 @@ public final class RawStyleParser {
 	private void parseStatementStartingWithIdentifier() throws StyleParsingException {
 		final String head = readIdentifier();
 		if (head.length() == 0)
-			throw new StyleParsingException("Unexpected character '" + ins.peek(0) + "'");
+			throw new StyleParsingException("Unexpected character '" + ins.peek(0) + "'", statementLine);
 
 		if (head.startsWith("--")) {
 			parseVariableDeclaration(head);
@@ -153,7 +166,7 @@ public final class RawStyleParser {
 
 		skipWhitespaceAndComments();
 		while (ins.peek(0) == ',') {
-			ins.jump();
+			jump();
 			skipWhitespaceAndComments();
 			names.add(readIdentifier());
 			skipWhitespaceAndComments();
@@ -162,13 +175,13 @@ public final class RawStyleParser {
 		boolean star = false;
 		if (ins.peek(0) == '*') {
 			star = true;
-			ins.jump();
+			jump();
 			skipWhitespaceAndComments();
 		}
 
 		if (ins.peek(0) != '{')
-			throw new StyleParsingException("Expected '{' after selector " + names);
-		ins.jump();
+			throw new StyleParsingException("Expected '{' after selector " + names, statementLine);
+		jump();
 
 		final List<RawSelector> selectors = new ArrayList<RawSelector>();
 		for (String name : names)
@@ -178,18 +191,18 @@ public final class RawStyleParser {
 	}
 
 	private void parseAtRule() throws StyleParsingException {
-		ins.jump(); // consume '@'
+		jump(); // consume '@'
 		final StringBuilder header = new StringBuilder();
 		while (true) {
 			final char c = ins.peek(0);
 			if (c == '\0' || c == '}' || c == ';')
-				throw new StyleParsingException("Unterminated @ rule: '@" + header + "'");
+				throw new StyleParsingException("Unterminated @ rule: '@" + header + "'", statementLine);
 			if (c == '{')
 				break;
 			header.append(c);
-			ins.jump();
+			jump();
 		}
-		ins.jump(); // consume '{'
+		jump(); // consume '{'
 		stack.push(RawStyleRule.forMedia(header.toString().trim()));
 	}
 
@@ -200,14 +213,65 @@ public final class RawStyleParser {
 
 	private void parsePropertyDeclaration(String name) throws StyleParsingException {
 		if (stack.isEmpty())
-			throw new StyleParsingException("Property '" + name + "' declared outside of any block");
+			throw new StyleParsingException("Property '" + name + "' declared outside of any block", statementLine);
 
 		final String rawValue = readValue();
 		final PName pname = PName.getFromName(name, StyleScheme.REGULAR);
 		if (pname == null)
 			return; // Unknown property name: silently ignored, as the legacy parser already did.
 
-		stack.peek().putProperty(pname, resolveVariables(rawValue));
+		final String value = resolveVariables(rawValue);
+		checkNumericValue(pname, value);
+		stack.peek().putProperty(pname, value);
+	}
+
+	/**
+	 * The properties read as a number by the drawing code. A value that is not one used to
+	 * go through silently and come out as NaN in the image (or as a crash), far from its
+	 * cause, so it is rejected here with the line of the declaration. As in
+	 * {@code ValueImpl#asDouble}, only digits and dots are looked at, so "10px" is still
+	 * accepted. FontSize is deliberately not in the list: its reader has a documented
+	 * fallback for a value that is not a number.
+	 */
+	private static boolean isNumeric(PName pname) {
+		switch (pname) {
+		case Shadowing:
+		case LineThickness:
+		case RoundCorner:
+		case DiagonalCorner:
+		case MinimumWidth:
+		case BarWidth:
+		case MarkerSize:
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	private void checkNumericValue(PName pname, String value) throws StyleParsingException {
+		if (isNumeric(pname) == false)
+			return;
+
+		if (value.length() == 0)
+			throw new StyleParsingException("Missing value for " + pname, statementLine);
+
+		// "Shadowing true" has always been accepted by skinparam, see Style#getShadowing
+		if (pname == PName.Shadowing && (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")
+				|| value.equalsIgnoreCase("yes") || value.equalsIgnoreCase("no")))
+			return;
+
+		final StringBuilder digits = new StringBuilder(value.length());
+		for (int i = 0; i < value.length(); i++) {
+			final char c = value.charAt(i);
+			if (c >= '0' && c <= '9' || c == '.')
+				digits.append(c);
+		}
+		try {
+			Double.parseDouble(digits.toString());
+		} catch (NumberFormatException e) {
+			throw new StyleParsingException("Invalid value '" + value + "' for " + pname + ": a number is expected",
+					statementLine);
+		}
 	}
 
 	/**
@@ -247,7 +311,7 @@ public final class RawStyleParser {
 	private String readValue() {
 		skipInlineSpaces();
 		while (ins.peek(0) == ':')
-			ins.jump();
+			jump();
 		skipInlineSpaces();
 
 		final StringBuilder sb = new StringBuilder();
@@ -256,21 +320,21 @@ public final class RawStyleParser {
 			if (c == '\0' || c == '\n' || c == '\r' || c == '}')
 				break;
 			if (c == ';') {
-				ins.jump();
+				jump();
 				break;
 			}
 			if (c == '\"') {
-				ins.jump();
+				jump();
 				while (ins.peek(0) != '\0' && ins.peek(0) != '\"') {
 					sb.append(ins.peek(0));
-					ins.jump();
+					jump();
 				}
 				if (ins.peek(0) == '\"')
-					ins.jump();
+					jump();
 				continue;
 			}
 			sb.append(c);
-			ins.jump();
+			jump();
 		}
 		return sb.toString().trim();
 	}
@@ -298,26 +362,26 @@ public final class RawStyleParser {
 			final char c = ins.peek(0);
 			if (c == ' ' && stereotypeLed) {
 				sb.append(c);
-				ins.jump();
+				jump();
 				continue;
 			}
 			if (isDelimiter(c))
 				break;
 			sb.append(c);
-			ins.jump();
+			jump();
 		}
 		return stereotypeLed ? sb.toString().trim() : sb.toString();
 	}
 
 	private String readQuoted() {
-		ins.jump(); // opening quote
+		jump(); // opening quote
 		final StringBuilder sb = new StringBuilder();
 		while (ins.peek(0) != '\0' && ins.peek(0) != '\"') {
 			sb.append(ins.peek(0));
-			ins.jump();
+			jump();
 		}
 		if (ins.peek(0) == '\"')
-			ins.jump();
+			jump();
 		return sb.toString();
 	}
 
@@ -335,23 +399,23 @@ public final class RawStyleParser {
 
 	private void skipInlineSpaces() {
 		while (ins.peek(0) == ' ' || ins.peek(0) == '\t')
-			ins.jump();
+			jump();
 	}
 
 	private void skipWhitespaceAndComments() {
 		while (true) {
 			final char c = ins.peek(0);
 			if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {
-				ins.jump();
+				jump();
 			} else if (c == '/' && ins.peek(1) == '/') {
 				skipUntil('\n');
 			} else if (c == '/' && ins.peek(1) == '*') {
-				ins.jump();
-				ins.jump();
+				jump();
+				jump();
 				skipUntilSequence('*', '/');
 			} else if (c == '/' && ins.peek(1) == '\'') {
-				ins.jump();
-				ins.jump();
+				jump();
+				jump();
 				skipUntilSequence('\'', '/');
 			} else {
 				return;
@@ -361,17 +425,17 @@ public final class RawStyleParser {
 
 	private void skipUntil(char end) {
 		while (ins.peek(0) != '\0' && ins.peek(0) != end)
-			ins.jump();
+			jump();
 	}
 
 	private void skipUntilSequence(char first, char second) {
 		while (ins.peek(0) != '\0') {
 			if (ins.peek(0) == first && ins.peek(1) == second) {
-				ins.jump();
-				ins.jump();
+				jump();
+				jump();
 				return;
 			}
-			ins.jump();
+			jump();
 		}
 	}
 

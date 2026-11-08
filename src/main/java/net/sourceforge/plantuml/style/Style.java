@@ -118,7 +118,17 @@ public class Style {
 		if (result == null)
 			return 0;
 
-		return value(PName.Shadowing).asDoubleDefaultTo(1.5);
+		// Same meaning as the legacy "skinparam shadowing true/false"
+		// (see FromSkinparamToStyle.getShadowingValue), so that both syntaxes agree.
+		final String raw = result.asString();
+		if (raw != null) {
+			final String s = raw.trim();
+			if (s.equalsIgnoreCase("true") || s.equalsIgnoreCase("yes"))
+				return 3;
+			if (s.equalsIgnoreCase("false") || s.equalsIgnoreCase("no"))
+				return 0;
+		}
+		return result.asDoubleDefaultTo(0);
 	}
 
 	public boolean hasValue(PName name) {

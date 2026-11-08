@@ -1,6 +1,7 @@
 package net.sourceforge.plantuml.cli;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Files;
@@ -24,7 +25,10 @@ class RunFlagFailFast2Test extends AbstractCliTest {
 		assertExit(ExitStatus.ERROR_200_SOME_DIAGRAMS_HAVE_ERROR, () -> {
 			Run.main(new String[] { "-failfast2", "-svg", tempDir.toAbsolutePath().toString() });
 		});
+		assertTrue(err.capturedString().contains("Error line 2 in file"));
 		assertTrue(err.capturedString().contains("Some diagram description contains errors"));
+		// The diagram was found: it is erroneous, it is not missing
+		assertFalse(err.capturedString().contains("No diagram found"));
 
 		assertLs("[test.txt]", tempDir);
 

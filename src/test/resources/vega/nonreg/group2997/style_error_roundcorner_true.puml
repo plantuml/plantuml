@@ -1,0 +1,16 @@
+---
+output: svg
+expected-status: 400
+expected-description: (Error)
+expected-error-line: 3
+expected-error-message: Error in style definition: Invalid value 'true' for RoundCorner: a number is expected (Assumed diagram type: mindmap)
+---
+@startmindmap
+<style>
+root {
+  RoundCorner true
+}
+</style>
+* root
+** child
+@endmindmap

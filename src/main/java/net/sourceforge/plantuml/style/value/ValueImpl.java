@@ -184,14 +184,19 @@ public class ValueImpl implements Value {
 			if (sb.length() == 0)
 				asDoubleCache = Double.NaN;
 			else
-				asDoubleCache = Double.parseDouble(sb.toString());
+				try {
+					asDoubleCache = Double.parseDouble(sb.toString());
+				} catch (NumberFormatException e) {
+					// "1.2.3" and the like: digits and dots, but not a number
+					asDoubleCache = Double.NaN;
+				}
 		}
 		return asDoubleCache;
 	}
 
 	public double asDoubleDefaultTo(double defaultValue) {
 		final double s = asDouble();
-		if (s == Double.NaN)
+		if (Double.isNaN(s))
 			return defaultValue;
 		return s;
 	}

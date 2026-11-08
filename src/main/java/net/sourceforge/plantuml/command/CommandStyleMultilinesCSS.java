@@ -86,7 +86,17 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram>
 	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
 		try {
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
-			diagram.getSkinParam().muteStyle(StyleLoader.parseStyleText(lines.subExtract(1, 1), styleBuilder));
+			final BlocLines body = lines.subExtract(1, 1);
+			try {
+				diagram.getSkinParam().muteStyle(StyleLoader.parseStyleText(body, styleBuilder));
+			} catch (StyleParsingException e) {
+				// Point at the faulty line of the block, not at the block
+				final int line = e.getLine();
+				if (line >= 0 && line < body.size())
+					return CommandExecutionResult.errorAt("Error in style definition: " + e.getMessage(),
+							body.getAt(line));
+				throw e;
+			}
 
 			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();
 			return CommandExecutionResult.ok();

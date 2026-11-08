@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="129px" preserveAspectRatio="none" style="width:275px;height:129px;background:#FFFFFF;" version="1.1" viewBox="0 0 275 129" width="275px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f1a1kb8ai5i09p" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" filter="url(#f1a1kb8ai5i09p)" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="44.063" x="10" y="47"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="20" y="67.889">root</text>
+    <rect fill="#F1F1F1" filter="url(#f1a1kb8ai5i09p)" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="150.2" x="104.063" y="20"/>
+    <text fill="#000" font-size="14" textLength="130.2" x="114.063" y="40.889">child with a longer label</text>
+    <path d="M54.063,64 L64.063,64 C79.063,64 79.063,37 94.063,37 L104.063,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" filter="url(#f1a1kb8ai5i09p)" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="51.85" x="104.063" y="74"/>
+    <text fill="#000" font-size="14" textLength="31.85" x="114.063" y="94.889">other</text>
+    <path d="M54.063,64 L64.063,64 C79.063,64 79.063,91 94.063,91 L104.063,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
+  </g>
+</svg>

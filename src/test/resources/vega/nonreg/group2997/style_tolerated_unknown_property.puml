@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startmindmap
+<style>
+root {
+  Bogus 1
+}
+</style>
+* root
+** child
+@endmindmap

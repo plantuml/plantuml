@@ -1,0 +1,23 @@
+---
+output: svg
+expected-status: 400
+expected-description: (Error)
+expected-error-line: 6
+expected-error-message: Error in style definition: Invalid value 'abc' for LineThickness: a number is expected (Assumed diagram type: mindmap)
+---
+@startmindmap
+<style>
+root {
+  LineColor red
+
+  // a comment
+  LineThickness abc
+  RoundCorner 5
+}
+node {
+  LineColor blue
+}
+</style>
+* root
+** child
+@endmindmap

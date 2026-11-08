@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startmindmap
+<style>
+nosuchelement {
+  LineColor red
+}
+</style>
+* root
+** child
+@endmindmap

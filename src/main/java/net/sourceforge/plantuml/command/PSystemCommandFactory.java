@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.teavm.js.browser.BrowserLog;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
@@ -204,7 +205,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 			ParserPass currentPass, PreprocessingArtifact preprocessing) {
 		final Step step = getCandidate(it);
 		if (step == null) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, it.peek(),
+			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, getSyntaxErrorMessage(it.peek()), 0, it.peek(),
 					getDiagramType());
 			it.next();
 			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);
@@ -215,10 +216,13 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 		final CommandExecutionResult result = sys.executeCommand(step.command, step.blocLines, currentPass);
 		if (result.isOk() == false) {
-			final StringLocated line = (StringLocated) step.blocLines.getFirst();
+			final StringLocated errorLocation = result.getErrorLocation();
+			final StringLocated line = errorLocation != null ? errorLocation
+					: (StringLocated) step.blocLines.getFirst();
 			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(), result.getScore(), line,
 					getDiagramType());
-			sys = PSystemErrorUtils.buildV2(source, err, result.getDebugLines(), it.getTrace(), preprocessing,
+			sys = PSystemErrorUtils.buildV2(source, err, result.getDebugLines(),
+					errorLocation != null ? traceUpTo(it.getTrace(), errorLocation) : it.getTrace(), preprocessing,
 					result.getRootCause());
 		}
 		if (result.getNewDiagram() != null)
@@ -226,6 +230,32 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 		return sys;
 
+	}
+
+	/**
+	 * The error is reported at the last line of the trace: when a multi-line command fails
+	 * on one of its lines, the lines after it are not part of what led to the error.
+	 */
+	private static List<StringLocated> traceUpTo(List<StringLocated> trace, StringLocated errorLocation) {
+		for (int i = trace.size() - 1; i >= 0; i--) {
+			final LineLocation location = trace.get(i).getLocation();
+			if (location.getPosition() == errorLocation.getLocation().getPosition()
+					&& location.getDescription().equals(errorLocation.getLocation().getDescription()))
+				return trace.subList(0, i + 1);
+		}
+		return trace;
+	}
+
+	/**
+	 * A line that no command accepts is a "Syntax Error?", except an opening {@code <style>}
+	 * on its own line: the only way for it to be refused is that nothing closes the block,
+	 * the lines that follow having been looked at up to the end of the diagram.
+	 */
+	private static String getSyntaxErrorMessage(StringLocated line) {
+		if (line.getTrimmed().getString().equalsIgnoreCase("<style>"))
+			return "Unclosed <style> block: '</style>' is missing";
+
+		return "Syntax Error?";
 	}
 
 	private Explanation explainFewLines(AbstractDiagram sys, UmlSource source, final IteratorCounter2 it,

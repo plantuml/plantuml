@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startmindmap
+<style>
+root {
+  LineColor red
+}
+}
+</style>
+* root
+** child
+@endmindmap

@@ -47,6 +47,10 @@ public interface Stdrpt {
 
 	public void finalMessage(ExitStatus error);
 
+	/**
+	 * @param lineError 0-based line of the error
+	 * @param file      the source file, or null when the source comes from standard input (-pipe)
+	 */
 	public void errorLine(int lineError, File file);
 
 }

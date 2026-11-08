@@ -67,6 +67,10 @@ public class Pipe {
 	private final PrintStream ps;
 	private final PrintStream err;
 	private final Stdrpt stdrpt;
+	// Number of lines read so far from the input, and 0-based line of the input that
+	// corresponds to line 0 of the diagram being processed (see errorLine())
+	private int linesRead;
+	private int diagramOffset;
 
 	public Pipe(CliOptions option, PrintStream ps, InputStream is, String charset) {
 		this(option, ps, System.err, is, charset);
@@ -143,6 +147,8 @@ public class Pipe {
 		// is specifically what its name promises, and --no-error-image alone makes no
 		// claim about stderr, so it must not change where this goes.
 		printInfo(noStdErr ? ps : err, sourceStringReader);
+		if (noStdErr == false)
+			errorLine(sourceStringReader);
 		if (result == null || "(error)".equalsIgnoreCase(result.getDescription()) == false) {
 			if (buffer) {
 				final ByteArrayOutputStream baos = (ByteArrayOutputStream) os;
@@ -190,6 +196,22 @@ public class Pipe {
 		}
 	}
 
+	/**
+	 * Human readable "Error line N" after the machine oriented block of printInfo(),
+	 * as in file mode. The block above is left untouched (relative to the diagram and
+	 * 0-based) because other tools parse it, whereas this line counts from the start of
+	 * the input, as in file mode.
+	 */
+	private void errorLine(final SourceStringReader sourceStringReader) {
+		final List<BlockUml> blocks = sourceStringReader.getBlocks();
+		if (blocks.size() == 0)
+			return;
+
+		final Diagram diagram = blocks.get(0).getDiagram();
+		if (diagram instanceof PSystemError)
+			stdrpt.errorLine(diagramOffset + ((PSystemError) diagram).getLineLocation().getPosition(), null);
+	}
+
 	private void printInfo(final PrintStream output, final SourceStringReader sourceStringReader) {
 		final List<BlockUml> blocks = sourceStringReader.getBlocks();
 		if (blocks.size() == 0)
@@ -212,17 +234,22 @@ public class Pipe {
 		String expectedEnd = null;
 		final StringBuilder sb = new StringBuilder();
 
+		int firstLine = -1;
 		String line;
 		while (state != State.COMPLETE && (line = br.readLine()) != null) {
+			linesRead++;
 
 			if (line.startsWith("@@@format ")) {
 				manageFormat(line);
 			} else {
-				if (state == State.NO_CONTENT && line.trim().length() > 0)
+				if (state == State.NO_CONTENT && line.trim().length() > 0) {
 					state = State.START_MARK_NOT_FOUND;
+					firstLine = linesRead - 1;
+				}
 
 				if (state == State.START_MARK_NOT_FOUND && line.startsWith("@start")) {
 					sb.setLength(0); // discard any previous input
+					firstLine = linesRead - 1;
 					state = State.START_MARK_FOUND;
 					final Matcher m = Pattern.compile("@start([A-Za-z]*)").matcher(line);
 					if (m.matches())
@@ -244,10 +271,14 @@ public class Pipe {
 		case NO_CONTENT:
 			return null;
 		case START_MARK_NOT_FOUND:
+			// The "@startuml" added here is line 0 of the diagram
+			diagramOffset = firstLine - 1;
 			return (unmarkedAllowed) ? "@startuml\n" + sb.toString() + "@enduml\n" : null;
 		case START_MARK_FOUND:
+			diagramOffset = firstLine;
 			return sb.toString() + expectedEnd;
 		case COMPLETE:
+			diagramOffset = firstLine;
 			return sb.toString();
 		default:
 			throw new IllegalStateException("Unexpected value: " + state);
