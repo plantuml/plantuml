@@ -85,7 +85,7 @@ rule "plain values only at the boundaries" (section 13.1).
 | `%filename()`, `%dirpath()`, `%filedate()` | `puml.filename`, `puml.dirpath`, `puml.filedate` **[implemented]** | values of the environment (`context.getEnvironmentValue`), constant for a diagram: attributes, like `puml.version`, not functions. `""` when unknown, as the legacy functions (kept: one type, no `None` to test). |
 | `%get_current_theme()` | `puml.theme()` **[implemented]** | a dict of strings, `{}` without theme. A **function**, unlike the three above: `!theme` can come after the interpreter is created, so a constant would be stale. |
 | `%get_all_theme()`, `%get_all_stdlib([detailed])`, `%get_stdlib(name)` | `puml.themes()`, `puml.stdlibs(detailed=False)`, ... | tools and documentation more than diagrams. Low priority; same family as `puml.modules()` (section 15.8). |
-| `%load_json(path[, charset])`, also URL | `json.loads(puml.read(path))` | `puml.read` **[implemented]** with the `!include` rules (the finder: the folder of the current file, `<stdlib>`, URLs, security profile), whole text as a `str`, `RuntimeError` when it cannot be read; no `charset` argument (the charset of the diagram). One difference: `%load_json` looks a plain path up from the current directory of the process, `puml.read` from the folder of the diagram, as `!include` does. No separate function. The legacy default value argument becomes a Python `try/except` or `puml.read(path, default=...)` **[open]**. |
+| `%load_json(path[, charset])`, also URL | `json.loads(puml.read(path))` | `puml.read` **[implemented]** with the `!include` rules (the finder: the folder of the current file, `<stdlib>`, URLs, security profile), whole text as a `str`, `RuntimeError` when it cannot be read; no `charset` argument (the charset of the diagram). Line ends: `\r\n` and `\r` become `\n`, as Python does in text mode. One difference: `%load_json` looks a plain path up from the current directory of the process, `puml.read` from the folder of the diagram, as `!include` does. No separate function. The legacy default value argument becomes a Python `try/except` or `puml.read(path, default=...)` **[open]**. |
 | `%xargs()` | `puml.xargs` **[implemented]** | a string, the value `%xargs()` gives: the first line of the diagram, `@startuml` included (`"@startuml foo bar"`, or `"@startuml"` alone). This is the intended result. |
 | `%newline()` / `%n()`, `%breakline()`, `%tab()`, `%left_align()`, `%right_align()` | see 4.2 | return **private marker characters** (`Jaws.BLOCK_E1_*`), not `"\n"`. They cannot be written by the user as plain Python strings. |
 
@@ -143,6 +143,13 @@ the whole library moves at once. It is only useful for a *diagram* that mixes
 `$variable` set by the legacy part and Python code.
 
 ### 3.5 Recipes: ordinary Python instead of a function
+
+Reading a file, for someone who comes from Python: `open(p).read()` becomes
+`puml.read(p)`. Same result for a text file (line ends included), but the name
+is looked up like an `!include` (the folder of the diagram, `<stdlib>`, URLs),
+under the security profile of PlantUML, the encoding is the one of the diagram,
+there is no file object (`readline`, iteration, `with`), and every failure is a
+`RuntimeError`.
 
 The legacy `%json_*` functions are *pure*: they return a modified **copy** and
 leave their argument alone. In Python, `list.append` and `dict.update` change

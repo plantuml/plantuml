@@ -800,8 +800,9 @@ public class TContext {
 
 	/**
 	 * The text of a file found like an included one (puml.read): the same finder, so
-	 * the same places, URLs and security profile as !include. Null if it cannot be
-	 * read (not found, a folder, refused).
+	 * the same places, URLs and security profile as !include. The line ends are
+	 * those of Python in text mode (universal newlines): every "\r\n" and "\r"
+	 * becomes "\n". Null if it cannot be read (not found, a folder, refused).
 	 */
 	private String readResource(String what) {
 		try {
@@ -817,7 +818,8 @@ public class TContext {
 				int n;
 				while ((n = reader.read(buffer)) != -1)
 					sb.append(buffer, 0, n);
-				return sb.toString();
+				// as Python reads a text file: "\r\n" and "\r" become "\n"
+				return sb.toString().replace("\r\n", "\n").replace('\r', '\n');
 			} finally {
 				reader.close();
 			}

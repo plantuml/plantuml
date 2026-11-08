@@ -1107,7 +1107,9 @@ Level 2, data:
   (`json.loads(puml.read("data.json"))` for JSON), decoded with the charset of
   the diagram; the name is looked up exactly as an `!include` (the folder of
   the current file, the standard library `<lib/file>`, URLs, archives given to
-  `!import`, the files of the host in the browser build). A file that cannot
+  `!import`, the files of the host in the browser build). The line ends are
+  those of Python in text mode (universal newlines): `\r\n` and `\r` become
+  `\n`, so a file written on Windows reads the same everywhere. A file that cannot
   be read (not found, a folder, refused by the security profile) is a
   `RuntimeError` (`cannot read 'name'`): the subset has no `OSError`.
 - `puml.random()`, `puml.random(n)`, `puml.random(a, b)` **[implemented]**: the
