@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.text.StringLocated;
  * The text API lives in the builtin module <code>puml</code>, available
  * without <code>import</code>: <code>puml.emit(line)</code> appends a line to
  * the generated text. <code>emit</code> is also a global alias.
- * <code>math</code> and <code>json</code> are bound as globals too (no import
+ * <code>math</code>, <code>json</code> and <code>color</code> are bound as globals too (no import
  * needed; <code>import math</code> stays accepted).
  * <code>puml.version</code> and <code>puml.edition</code> ("jar", "js" or "c") are
  * strings, <code>puml.args</code> is a dict of the variables defined from outside.
@@ -94,10 +94,12 @@ final class PythonRunner {
 			throw Builtin.runtimeError("a text line cannot be directly in the body of a class: put it in a method");
 		});
 		this.interp.addModule(puml);
+		this.interp.addModule(PythonColorModule.create());
 		this.interp.setGlobal("puml", puml);
 		// The builtin modules need no import in a diagram ("!import" is the legacy directive).
 		this.interp.setGlobal("math", this.interp.getModule("math"));
 		this.interp.setGlobal("json", this.interp.getModule("json"));
+		this.interp.setGlobal("color", this.interp.getModule("color"));
 		this.interp.setGlobal("emit", puml.get("emit"));
 		this.interp.setGlobal("macro", puml.get("macro"));
 	}

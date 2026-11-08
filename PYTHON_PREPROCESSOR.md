@@ -1076,8 +1076,14 @@ Level 2, data:
   first planned. `dumps` gives CPython's default text (`", "` and `": "`,
   non-ASCII escaped, insertion order); `loads` raises a `ValueError`; integers are
   32-bit. No keyword arguments yet (`indent`, `sort_keys`).
-- `puml`, `json` and `math` are bound as globals in a diagram: no import is
-  needed, and none is possible with a `!` line, since `!import` is the legacy
+- `color` **[implemented]**: the colour functions of the legacy preprocessor
+  (`darken`, `lighten`, `reverse_color`, `reverse_hsluv_color`, `is_dark`,
+  `is_light`, `hsl_color`), written in Java on top of the same code as the
+  `%` functions, so the strings are identical (`PythonColorModule`; Vega tests
+  in `vega/python/color`). Colours are `str`; an unknown one raises a
+  `ValueError`. See `PYTHON_STDFUNCTIONS.md`.
+- `puml`, `json`, `math` and `color` are bound as globals in a diagram: no
+  import is needed, and none is possible with a `!` line, since `!import` is the legacy
   directive. The `import` statement stays accepted in a `!python` block.
   **[implemented]**
 - `puml.read(name)` loads a text or JSON resource through the finder, with the

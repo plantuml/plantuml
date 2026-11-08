@@ -1,0 +1,14 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): each pair of lines is the same colour
+title %darken("red", 20)
+!emit("title " + color.darken("red", 20))
+title %darken("LightBlue", 10)
+!emit("title " + color.darken("LightBlue", 10))
+title %lighten("#336699", 30)
+!emit("title " + color.lighten("#336699", 30))
+title %lighten("red", 20)
+!emit("title " + color.lighten("red", 20))
+@enduml

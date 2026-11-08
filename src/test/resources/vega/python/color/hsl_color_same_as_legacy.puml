@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): each pair of lines is the same colour
+title %hsl_color(120, 100, 50)
+!emit("title " + color.hsl_color(120, 100, 50))
+title %hsl_color(120, 100, 50, 50)
+!emit("title " + color.hsl_color(120, 100, 50, 50))
+title %hsl_color(0, 0, 100)
+!emit("title " + color.hsl_color(0, 0, 100))
+@enduml
