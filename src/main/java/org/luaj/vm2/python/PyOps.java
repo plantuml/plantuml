@@ -529,7 +529,35 @@ final class PyOps {
 				return false;
 			return n == 0 || (x.start == y.start && (n == 1 || x.step == y.step));
 		}
+		if (isNative(a) || isNative(b)) {
+			// a == b runs a.__eq__(b), then b.__eq__(a) if it is missing or returns NotImplemented;
+			// only the classes written in Java have __eq__, the others compare by identity
+			Object r = callNative(a, "__eq__", b);
+			if (r == PyNotImplemented.INSTANCE)
+				r = callNative(b, "__eq__", a);
+			if (r != PyNotImplemented.INSTANCE)
+				return isTrue(r);
+		}
 		return false;
+	}
+
+	static boolean isNative(Object o) {
+		return o instanceof PyInstance && ((PyInstance) o).type.nativeClass;
+	}
+
+	/** Runs a special method of an instance of a native class: NotImplemented if there is none. */
+	static Object callNative(Object self, String method, Object... args) {
+		if (isNative(self)) {
+			final PyInstance instance = (PyInstance) self;
+			final Object fn = instance.type.lookup(method);
+			if (fn != null) {
+				final Object[] all = new Object[args.length + 1];
+				all[0] = instance;
+				System.arraycopy(args, 0, all, 1, args.length);
+				return instance.type.interp.call(fn, all);
+			}
+		}
+		return PyNotImplemented.INSTANCE;
 	}
 
 	private static boolean seqEq(Object[] x, Object[] y, int depth) {
@@ -1280,11 +1308,24 @@ final class PyOps {
 			return new BoundMethod(self, (PyFunction) v);
 		if (v == Builtins.EXCEPTION_INIT || v == Builtins.OBJECT_INIT)
 			return new BoundMethod(self, (Builtin) v);
+		if (v instanceof Builtin && ((Builtin) v).isMethod)
+			return new BoundMethod(self, (Builtin) v); // a method of a native class
 		return v; // as in CPython, a builtin function stored in a class is not bound
+	}
+
+	/** The instances and the classes written in Java cannot be changed, as in CPython. */
+	private static void refuseNative(Object o, String name) {
+		if (o instanceof PyInstance && ((PyInstance) o).type.nativeClass)
+			throw err(Types.ATTRIBUTE_ERROR,
+					"attribute '" + name + "' of '" + ((PyInstance) o).type.fullName() + "' objects is not writable");
+		if (o instanceof PyType && ((PyType) o).nativeClass)
+			throw err(Types.TYPE_ERROR,
+					"cannot set '" + name + "' attribute of immutable type '" + ((PyType) o).fullName() + "'");
 	}
 
 	/** Attributes can be set on instances and classes of the program, and on exceptions. */
 	static void setattr(Object o, String name, Object v) {
+		refuseNative(o, name);
 		if (o instanceof PyInstance && ((PyInstance) o).type.isClass()) {
 			((PyInstance) o).attrs.put(name, v);
 		} else if (o instanceof PyException) {
@@ -1298,6 +1339,7 @@ final class PyOps {
 	}
 
 	static void delattr(Object o, String name) {
+		refuseNative(o, name);
 		Map<String, Object> attrs = null;
 		if (o instanceof PyInstance && ((PyInstance) o).type.isClass())
 			attrs = ((PyInstance) o).attrs;

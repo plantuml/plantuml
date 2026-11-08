@@ -98,7 +98,7 @@ Accepted:
 - `del name`, `del a[i]`, `del a.x` (and a comma-separated list of those);
 - `try` / `except` / `else`, and `raise` (including a bare `raise` inside an
   `except`);
-- `import module` for builtin modules only (today: `math`, `json`, `time`, and in a diagram `puml` and `color`). An unknown module
+- `import module` for builtin modules only (today: `math`, `json`, `time`, `datetime`, and in a diagram `puml` and `color`). An unknown module
   raises `ModuleNotFoundError`. Shipped modules written in Python are specified
   in section 15 and are not implemented.
 
@@ -193,7 +193,9 @@ Rejected (syntax error):
 
 - special methods and attributes other than `__init__`, `__str__`, `__repr__`
   and the four ordering ones (`__eq__`, `__hash__`, `__add__`, `__len__`,
-  `__slots__`, ...): they are rejected rather than silently ignored;
+  `__slots__`, ...): they are rejected rather than silently ignored. The
+  classes written in Java (section 3.6) are the only ones that may have
+  `__eq__` and `__hash__`;
 - `super()`: call the base class explicitly instead, `Base.f(self, ...)`;
 - multiple inheritance, keyword arguments in the bases (`metaclass=`);
 - `@staticmethod`, `@classmethod`, `@property` (section 3.5);
@@ -229,6 +231,32 @@ def target():
 - Decorators may be used on methods and on classes nested anywhere.
 
 The main use planned is `@macro` (section 11.5).
+
+### 3.6 Native classes **[implemented]**
+
+A class can also be written in Java (`datetime.date` and `datetime.datetime`
+today; `PyType.nativeClass`). For a program it is a class like the others
+(`isinstance`, `type(x).__name__`, `repr` gives `datetime.date(2026, 11, 8)`),
+with these rules, which are those of CPython's classes written in C:
+
+- its methods are builtins bound to the instance (`d.weekday()`): a Java
+  function marked as a method (`Builtin.isMethod`) is bound when it is read
+  through an instance, as the function of a class of the program is. A plain
+  builtin stored in a class (`date.today`, called through the class) is not;
+- its constructor is a Java method too (`instantiate` accepts it, with keyword
+  arguments: `datetime.datetime(2026, 11, 8, minute=5)`);
+- its instances cannot be modified (`d.year = 3`, `d.x = 1` and `del d.year` are
+  an `AttributeError`) and the class cannot (`datetime.date.x = 1` is a
+  `TypeError`), and it cannot be subclassed (`class A(datetime.date)` is a
+  `TypeError`);
+- **it is the only kind of class that may have `__eq__` and `__hash__`**.
+  `a == b` runs `a.__eq__(b)`, then `b.__eq__(a)` when it is missing or
+  returns `NotImplemented`, then compares the identity; `!=` is its negation.
+  The instances are keys of a dict by value (`PyHashKey`: the hashes must be
+  equal and the instances `==`), and `in`, `index`, `count` and `remove` use
+  `==`. A class of the program may not define them (the Resolver rejects
+  them, section 3.4): it keeps the identity, and the question of hashing
+  stays closed for the programs. The ordering methods are the same for both.
 
 ## 4. Values and builtins **[implemented]**
 
@@ -367,6 +395,60 @@ the JAR, JavaScript and C editions. Tests: `python/builtins/time_gmtime_strftime
 (21 timestamps, nine format lines each, with the output of CPython) and
 `vega/python/time`.
 
+### 4.7 Module `datetime` **[implemented]**
+
+The first version of CPython's `datetime`, written in Java as two native
+classes (`DatetimeLib`, section 3.6): `datetime.date(year, month, day)` and
+`datetime.datetime(year, month, day, hour=0, minute=0, second=0,
+microsecond=0)`, `datetime.datetime` being a subclass of `datetime.date`, with
+the constants `MINYEAR` and `MAXYEAR`. Objects are **naive and in UTC**, as in
+`time`.
+
+- Attributes: `year`, `month`, `day`; `hour`, `minute`, `second`,
+  `microsecond` and `tzinfo` (always `None`) for a `datetime`.
+- Methods of both: `weekday`, `isoweekday`, `isocalendar` (a tuple), `isoformat`,
+  `strftime`, `ctime`, `timetuple` (a tuple, with `-1` for the last field as for
+  a naive object), `toordinal`, `replace`, `__str__`, `__repr__`, `==`, `!=`, `<`,
+  `<=`, `>`, `>=`, and the hash. `datetime` adds `timestamp`, `date`, the
+  `sep` and `timespec` arguments of `isoformat`.
+- Class methods: `date.today`, `fromordinal`, `fromtimestamp`, `fromisoformat`;
+  `datetime.now`, `today`, `fromordinal`, `fromtimestamp`, `fromisoformat`; and
+  `date.min`, `date.max`, `datetime.min`, `datetime.max`.
+- `strftime` is the one of `time` (section 4.6); for a naive object `%Z` and
+  `%z` are empty and `%f` is the microseconds on 6 digits, as in CPython.
+- `fromisoformat` reads `YYYY-MM-DD`, and for a `datetime` an optional
+  separator (any character) and `HH`, `HH:MM`, `HH:MM:SS` or `HH:MM:SS.ffffff`
+  (any number of digits, the ones after the sixth are cut).
+- The ordering and the equality are on the values; a `date` and a `datetime`
+  are never equal and cannot be compared (`TypeError`), as in CPython.
+
+**The arithmetic has no operator** (`+` and `-` are not defined on the
+classes, and there is no `timedelta`). It is written, as in CPython, with
+methods that exist:
+
+```python
+datetime.date.fromordinal(d.toordinal() + 7)          # a week later
+b.toordinal() - a.toordinal()                         # the days between two dates
+datetime.datetime.fromtimestamp(x.timestamp() + 3600) # an hour later
+```
+
+Differences with CPython (also in section 6):
+
+- no `timedelta`, `time`, `timezone`, `strptime`, `combine`, `utcnow`,
+  `fromisocalendar`; `tzinfo` must be `None`, and `now()` and `today()` give
+  UTC (CPython gives local time: the same on a machine whose zone is UTC);
+- `timestamp()` reads the object as UTC, `fromtimestamp` gives UTC; the first
+  day of the year 1 is accepted (CPython says "year 0 is out of range");
+- `isocalendar()` and `timetuple()` are plain tuples (no `.year`, `.tm_year`);
+- `fromisoformat` does not read an offset (`+01:00`, `Z`: a `ValueError`),
+  nor the forms without dashes (`20261108`) or with a week (`2026-W45-7`);
+- a directive of `strftime` outside C99 and `%f` is a `ValueError` (see 4.6).
+
+Tests: `python/builtins/datetime_date_datetime` and `datetime_timestamp`
+(the second one with `TZ=UTC`) compare with the output of CPython (dates from
+the year 1 to 9999, ISO weeks, equality, order, errors, `fromisoformat`), and
+`vega/python/datetime`.
+
 ## 5. Limits **[implemented]**
 
 | Limit | Default | Setter | Behaviour |
@@ -396,6 +478,9 @@ are not run under CPython.
   tries first the right operand when its class is a subclass of the left one's
   and redefines the method is not applied; `==` and `!=` between instances are
   always identity.
+- The module `datetime` (section 4.7) has its own list too: no `timedelta`, no
+  operator, no time zone, and `==` and the dict keys are on the values only
+  because its classes are native (section 3.6).
 - The module `time` has its own list of differences (section 4.6): UTC only,
   English only, plain tuples, a strict list of `strftime` directives.
 - `int` is 32-bit. Any result outside `[-2147483648, 2147483647]` raises
@@ -1179,7 +1264,7 @@ Level 2, data:
   `%` functions, so the strings are identical (`PythonColorModule`; Vega tests
   in `vega/python/color`). Colours are `str`; an unknown one raises a
   `ValueError`. See `PYTHON_STDFUNCTIONS.md`.
-- `puml`, `json`, `math`, `time` and `color` are bound as globals in a diagram: no
+- `puml`, `json`, `math`, `time`, `datetime` and `color` are bound as globals in a diagram: no
   import is needed, and none is possible with a `!` line, since `!import` is the legacy
   directive. The `import` statement stays accepted in a `!python` block.
   **[implemented]**
@@ -1648,8 +1733,11 @@ Interpreter:
 - Additional builtins and methods as needs appear; speed (caching of globals, a
   `LOAD_METHOD` instruction, less boxing).
 - Classes, next steps: the special methods other than `__str__`, `__repr__`
-  and the ordering ones (`__eq__` and `__hash__`, which need a decision on
-  hashing, the arithmetic operators, `__len__`, ...). Then possibly `super()` (it
+  and the ordering ones, for the classes of the program: `__eq__` and
+  `__hash__` (they exist for the native classes only, section 3.6, and the
+  hashing of a program's own instances is still undecided), the arithmetic
+  operators (which `datetime` would need for `d + timedelta(days=1)`),
+  `__len__`, ... Then possibly `super()` (it
   needs the `__class__` cell), `@staticmethod` / `@classmethod` / `@property`,
   and `getattr` / `setattr` / `hasattr`.
 - Whether the `README.md` of the test resources and the leftovers of the Lua

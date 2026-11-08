@@ -24,6 +24,7 @@ final class Builtins {
 		in.modules.put("math", MathLib.create());
 		in.modules.put("json", JsonLib.create());
 		in.modules.put("time", TimeLib.create());
+		in.modules.put("datetime", DatetimeLib.create(in));
 	}
 
 	private static final ArrayList<Builtin> FUNCTIONS = new ArrayList<Builtin>();
@@ -41,6 +42,8 @@ final class Builtins {
 			if (a[3] instanceof PyType == false)
 				throw PyOps.err(Types.TYPE_ERROR, "a class base must be a class, not '" + PyOps.typeName(a[3]) + "'");
 			parent = (PyType) a[3];
+			if (parent.nativeClass)
+				throw PyOps.err(Types.TYPE_ERROR, "subclassing the native class '" + parent.fullName() + "' is not supported");
 			if (parent.isClass() == false && parent.exception == false && parent != Types.OBJECT)
 				throw PyOps.err(Types.TYPE_ERROR, "subclassing the builtin type '" + parent.name + "' is not supported");
 		}

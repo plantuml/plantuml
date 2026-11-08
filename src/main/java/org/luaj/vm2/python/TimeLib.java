@@ -352,7 +352,7 @@ final class TimeLib {
 	}
 
 	/** The year and the number of the ISO 8601 week of the day. */
-	private static long[] isoWeek(long[] t) {
+	static long[] isoWeek(long[] t) {
 		final long year = t[0];
 		long week = (t[7] - (t[6] + 1) + 10) / 7;
 		long isoYear = year;

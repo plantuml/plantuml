@@ -27,6 +27,13 @@ final class PyType {
 	 * builtin type.
 	 */
 	Interp interp;
+	/**
+	 * True for a class written in Java (datetime.date and datetime.datetime): its
+	 * instances cannot be modified, it cannot be subclassed or changed, and it
+	 * is the only kind of class that may have __eq__ and __hash__ (a class of
+	 * the program may not: the Resolver rejects them).
+	 */
+	boolean nativeClass;
 
 	PyType(String name, PyType parent, boolean exception) {
 		this(name, parent, exception, null, null, null);

@@ -1,0 +1,11 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc): the arithmetic of CPython with the methods that exist, without operators
+' title 2026-11-08 -> 2026-11-15 (Sun 15 Nov), ISO week 46, 47 days to 2026-12-25
+!d = datetime.date(2026, 11, 8)
+!week = datetime.date.fromordinal(d.toordinal() + 7)
+!xmas = datetime.date(2026, 12, 25)
+title !{d} -> !{week} (!{week.strftime('%a %d %b')}), ISO week !{week.isocalendar()[1]}, !{xmas.toordinal() - d.toordinal()} days to !{xmas}
+@enduml

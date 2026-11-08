@@ -16,6 +16,13 @@ public final class Builtin {
 	final String name;
 	final Fn fn;
 	final KwFn kwFn;
+	/**
+	 * True for a method of a native class (a class written in Java, such as
+	 * datetime.date): read through an instance it is bound to it, as the
+	 * function of a class of the program is, and the instance is its first
+	 * argument. A builtin function stored in a class is not bound otherwise.
+	 */
+	boolean isMethod;
 
 	Builtin(String name, Fn fn) {
 		this(name, fn, null);
@@ -25,6 +32,20 @@ public final class Builtin {
 		this.name = name;
 		this.fn = fn;
 		this.kwFn = kwFn;
+	}
+
+	/** A method of a native class that takes only positional arguments. */
+	static Builtin method(String name, Fn fn) {
+		final Builtin b = new Builtin(name, fn);
+		b.isMethod = true;
+		return b;
+	}
+
+	/** A method of a native class that also takes keyword arguments (kw is null when there are none). */
+	static Builtin methodKw(String name, KwFn fn) {
+		final Builtin b = new Builtin(name, (in, a) -> fn.call(in, a, null), fn);
+		b.isMethod = true;
+		return b;
 	}
 
 	Object call(Interp in, Object[] args) {
