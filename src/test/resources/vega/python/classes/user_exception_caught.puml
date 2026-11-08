@@ -1,0 +1,23 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant Web
+' note over Web : unknown state 'lost' (code 404)
+!class StateError(ValueError):
+!    def __init__(self, state, code):
+!        ValueError.__init__(self, "unknown state '" + state + "'")
+!        self.code = code
+
+!def color(state):
+!    if state == "ok":
+!        return "#CCFFCC"
+!    raise StateError(state, 404)
+
+participant Web
+!try:
+!    color("lost")
+!except StateError as e:
+    note over Web : !{e} (code !{e.code})
+@enduml

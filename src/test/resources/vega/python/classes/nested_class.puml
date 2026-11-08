@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title Outer.Inner hello
+!class Outer:
+!    class Inner:
+!        def hello(self):
+!            return "hello"
+
+title !{Outer.Inner.__qualname__} !{Outer.Inner().hello()}
+@enduml

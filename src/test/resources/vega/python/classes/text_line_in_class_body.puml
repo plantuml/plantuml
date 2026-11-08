@@ -1,0 +1,16 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 4
+expected-error-message: 'Python error: RuntimeError: a text line cannot be directly in the body of a class: put it in a method'
+---
+@startuml
+' EXPECT (preproc):
+' ERROR: Python error: RuntimeError: a text line cannot be directly in the body of a class: put it in a method
+!class Service:
+     participant Oops
+!    def __init__(self, name):
+!        self.name = name
+!s = Service("A")
+@enduml

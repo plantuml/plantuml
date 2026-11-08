@@ -1,0 +1,7 @@
+@startuml
+
+participant Web
+note over Web : port 80
+participant API
+note over API : port 8080
+@enduml

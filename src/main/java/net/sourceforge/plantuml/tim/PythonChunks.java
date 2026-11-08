@@ -105,8 +105,8 @@ public final class PythonChunks {
 			} else if (isGutterLine(first)) {
 				final StringBuilder code = new StringBuilder();
 				final List<StringLocated> lines = new ArrayList<>();
-				// indentation of the lines that opened a block (they end with a colon)
-				final List<Integer> headers = new ArrayList<>();
+				// the lines that opened a block (they end with a colon)
+				final List<Header> headers = new ArrayList<>();
 				while (i < body.size()) {
 					final StringLocated sl = body.get(i);
 					if (isGutterLine(sl) || isIndentedGutterLine(sl)) {
@@ -135,14 +135,18 @@ public final class PythonChunks {
 						i = j + 1;
 						continue;
 					}
-					while (headers.isEmpty() == false && headers.get(headers.size() - 1) >= indent)
+					while (headers.isEmpty() == false && headers.get(headers.size() - 1).indent >= indent)
 						headers.remove(headers.size() - 1);
 					if (headers.isEmpty() || isBangLine(text))
 						break;
 					if (body.get(j).getType() != TLineType.COMMENT_SIMPLE) {
 						for (int k = 0; k < indent; k++)
 							code.append(' ');
-						code.append(textToPython(text.trim())).append('\n');
+						// directly in the body of a class, a text line would emit when the class is defined
+						if (headers.get(headers.size() - 1).isClass)
+							code.append("puml._text_in_class()\n");
+						else
+							code.append(textToPython(text.trim())).append('\n');
 						lines.add(body.get(j));
 					}
 					i = j + 1;
@@ -156,15 +160,26 @@ public final class PythonChunks {
 		return result;
 	}
 
+	/** A line that opened a block: its indentation, and whether it is a class statement. */
+	private static final class Header {
+		final int indent;
+		final boolean isClass;
+
+		Header(int indent, boolean isClass) {
+			this.indent = indent;
+			this.isClass = isClass;
+		}
+	}
+
 	/** Remembers the blocks opened so far: a line that ends with a colon opens one. */
-	private static void trackHeaders(List<Integer> headers, String python) {
+	private static void trackHeaders(List<Header> headers, String python) {
 		if (python.trim().length() == 0)
 			return;
 		final int indent = leadingSpaces(python);
-		while (headers.isEmpty() == false && headers.get(headers.size() - 1) >= indent)
+		while (headers.isEmpty() == false && headers.get(headers.size() - 1).indent >= indent)
 			headers.remove(headers.size() - 1);
 		if (python.trim().endsWith(":"))
-			headers.add(indent);
+			headers.add(new Header(indent, python.trim().startsWith("class ")));
 	}
 
 	private static int leadingSpaces(String s) {

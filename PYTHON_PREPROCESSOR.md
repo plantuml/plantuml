@@ -705,9 +705,12 @@ and no quoting problems; recursion is allowed, up to the call depth limit
 (`Interp.setMaxDepth`), beyond which a catchable `RecursionError` is raised.
 
 The same holds for the methods of a class: a text line in a method emits when
-the method is called. A text line directly in the body of a class is rejected
-(a `PySyntaxError`): it would emit when the class is defined, which is never
-what is meant. A class body only accepts the statements of section 3.4.
+the method is called. A text line directly in the body of a class is an error
+(`RuntimeError: a text line cannot be directly in the body of a class: put it
+in a method`, raised when the class statement runs and reported on the text
+line): it would emit when the class is defined, which is never what is meant.
+A class body only accepts the statements of section 3.4. **[implemented]**
+The tests of classes in diagrams are in `vega/python/classes`.
 
 ### 11.4 Python or directive?
 

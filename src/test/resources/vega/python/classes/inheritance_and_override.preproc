@@ -1,0 +1,8 @@
+@startuml
+
+
+
+rectangle "front" as front
+database "store" as store
+queue "events" as events
+@enduml

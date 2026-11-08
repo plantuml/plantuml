@@ -1,0 +1,4 @@
+@startuml
+
+title caught as LookupError: MissingNode
+@enduml

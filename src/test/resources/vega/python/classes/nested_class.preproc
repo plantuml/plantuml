@@ -1,0 +1,4 @@
+@startuml
+
+title Outer.Inner hello
+@enduml

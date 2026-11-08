@@ -1,0 +1,16 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' participant Auth #FFCCCC
+' participant Billing #CCE5FF
+!class Service:
+!    def __init__(self, name, color):
+!        self.name = name
+!        self.color = color
+
+!services = [Service("Auth", "#FFCCCC"), Service("Billing", "#CCE5FF")]
+!for s in services:
+    participant !{s.name} !{s.color}
+@enduml

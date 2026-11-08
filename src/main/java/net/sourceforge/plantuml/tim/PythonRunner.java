@@ -89,6 +89,10 @@ final class PythonRunner {
 		puml.put("macro", (in, args) -> macros.macro(args));
 		// a text line of a Python block (PythonChunks): its macros are expanded, then it is emitted
 		puml.put("_text", (in, args) -> emitLines(macros.expand(string("_text", args))));
+		// a text line directly in the body of a class (PythonChunks): section 11.3
+		puml.put("_text_in_class", (in, args) -> {
+			throw Builtin.runtimeError("a text line cannot be directly in the body of a class: put it in a method");
+		});
 		this.interp.addModule(puml);
 		this.interp.setGlobal("puml", puml);
 		// The builtin modules need no import in a diagram ("!import" is the legacy directive).

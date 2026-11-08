@@ -1,0 +1,12 @@
+---
+output: preproc, svg
+---
+@startuml
+' EXPECT (preproc):
+' title Service Service True __main__
+!class Service:
+!    pass
+
+!s = Service()
+title !{type(s).__name__} !{Service.__name__} !{type(s) is Service} !{Service.__module__}
+@enduml

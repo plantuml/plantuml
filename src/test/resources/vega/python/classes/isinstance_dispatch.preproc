@@ -1,0 +1,6 @@
+@startuml
+
+actor User
+participant API
+database DB
+@enduml
