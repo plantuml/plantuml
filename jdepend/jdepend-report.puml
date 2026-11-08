@@ -3118,7 +3118,7 @@ Total Classes: 22
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.style.parser" %lighten("red", 43.00000000000001) {
-Total Classes: 5
+Total Classes: 6
 }
 "net.sourceforge.plantuml.style.parser" --> "java.lang"
 "net.sourceforge.plantuml.style.parser" --> "java.util"

@@ -387,21 +387,21 @@ public class CommandLinkActivity extends SingleLineCommand2&lt;ActivityDiagram&g
 <span class="fc" id="L387">			return result;</span>
 		}
 <span class="fc" id="L389">		final String quoteInvisibleString = arg.get(&quot;QUOTED_INVISIBLE&quot; + suf, 0);</span>
-<span class="pc bpc" id="L390" title="1 of 2 branches missed.">		if (quoteInvisibleString != null) {</span>
-<span class="nc bnc" id="L391" title="All 2 branches missed.">			if (partition != null) {</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">		if (quoteInvisibleString != null) {</span>
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">			if (partition != null) {</span>
 <span class="nc" id="L392">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(partition));</span>
 <span class="nc" id="L393">				diagram.gotoGroup(location, quark, Display.getWithNewlines(quark), GroupType.PACKAGE);</span>
 			}
-<span class="nc" id="L395">			final Quark&lt;Entity&gt; identInvisible = diagram.quarkInContext(true, diagram.cleanId(quoteInvisibleString));</span>
-<span class="nc" id="L396">			Entity result = identInvisible.getData();</span>
-<span class="nc bnc" id="L397" title="All 2 branches missed.">			if (result == null)</span>
-<span class="nc" id="L398">				result = diagram.reallyCreateLeaf(location, identInvisible,</span>
-<span class="nc" id="L399">						Display.getWithNewlines(diagram.getPragma(), identInvisible.getName()), LeafType.ACTIVITY,</span>
+<span class="fc" id="L395">			final Quark&lt;Entity&gt; identInvisible = diagram.quarkInContext(true, diagram.cleanId(quoteInvisibleString));</span>
+<span class="fc" id="L396">			Entity result = identInvisible.getData();</span>
+<span class="pc bpc" id="L397" title="1 of 2 branches missed.">			if (result == null)</span>
+<span class="fc" id="L398">				result = diagram.reallyCreateLeaf(location, identInvisible,</span>
+<span class="fc" id="L399">						Display.getWithNewlines(diagram.getPragma(), identInvisible.getName()), LeafType.ACTIVITY,</span>
 						null);
-<span class="nc bnc" id="L401" title="All 2 branches missed.">			if (partition != null)</span>
+<span class="pc bpc" id="L401" title="1 of 2 branches missed.">			if (partition != null)</span>
 <span class="nc" id="L402">				diagram.endGroup();</span>
 
-<span class="nc" id="L404">			return result;</span>
+<span class="fc" id="L404">			return result;</span>
 		}
 <span class="fc" id="L406">		final String first = arg.get(&quot;FIRST&quot; + suf, 0);</span>
 <span class="pc bpc" id="L407" title="1 of 2 branches missed.">		if (first == null)</span>

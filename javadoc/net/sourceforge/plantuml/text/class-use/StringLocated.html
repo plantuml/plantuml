@@ -241,6 +241,17 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="net.sourceforge.plantuml.command">
 <h2>Uses of <a href="../StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a> in <a href="../../command/package-summary.html">net.sourceforge.plantuml.command</a></h2>
+<div class="caption"><span>Methods in <a href="../../command/package-summary.html">net.sourceforge.plantuml.command</a> that return <a href="../StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandExecutionResult.</span><code><a href="../../command/CommandExecutionResult.html#getErrorLocation()" class="member-name-link">getErrorLocation</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">The line the error belongs to, or null when it belongs to the command as a whole.</div>
+</div>
+</div>
 <div class="caption"><span>Methods in <a href="../../command/package-summary.html">net.sourceforge.plantuml.command</a> with parameters of type <a href="../StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -259,9 +270,16 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;trace,
  <a href="../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Trim.</span><code><a href="../../command/Trim.html#trim(net.sourceforge.plantuml.text.StringLocated)" class="member-name-link">trim</a><wbr>(<a href="../StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&nbsp;s)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandExecutionResult.</span><code><a href="../../command/CommandExecutionResult.html#errorAt(java.lang.String,net.sourceforge.plantuml.text.StringLocated)" class="member-name-link">errorAt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;error,
+ <a href="../StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&nbsp;location)</code></div>
+<div class="col-last even-row-color">
+<div class="block">An error that belongs to one line of a multi-line command, as opposed to the
+ command as a whole (which is reported at its first line).</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Trim.</span><code><a href="../../command/Trim.html#trim(net.sourceforge.plantuml.text.StringLocated)" class="member-name-link">trim</a><wbr>(<a href="../StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&nbsp;s)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../../command/package-summary.html">net.sourceforge.plantuml.command</a> with type arguments of type <a href="../StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a></span></div>
 <div class="summary-table three-column-summary">

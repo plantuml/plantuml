@@ -79,37 +79,50 @@ public final class RawStyleParser {
 <span class="fc" id="L79">	private final Deque&lt;RawStyleRule&gt; stack = new ArrayDeque&lt;RawStyleRule&gt;();</span>
 <span class="fc" id="L80">	private final List&lt;RawStyleRule&gt; topLevel = new ArrayList&lt;RawStyleRule&gt;();</span>
 
-<span class="fc" id="L82">	private RawStyleParser(CharInspector ins) {</span>
-<span class="fc" id="L83">		this.ins = ins;</span>
-<span class="fc" id="L84">	}</span>
+	// 0-based index of the line being read: every line of the inspector ends with exactly one '\n'
+<span class="fc" id="L83">	private int lineIndex = 0;</span>
+	// line where the statement being parsed starts, so that an error points at the faulty
+	// statement and not at wherever the parser happens to be when it notices
+<span class="fc" id="L86">	private int statementLine = 0;</span>
+
+<span class="fc" id="L88">	private RawStyleParser(CharInspector ins) {</span>
+<span class="fc" id="L89">		this.ins = ins;</span>
+<span class="fc" id="L90">	}</span>
+
+	private void jump() {
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (ins.peek(0) == '\n')</span>
+<span class="fc" id="L94">			lineIndex++;</span>
+<span class="fc" id="L95">		ins.jump();</span>
+<span class="fc" id="L96">	}</span>
 
 	public static RawStyleSheet parse(BlocLines lines) throws StyleParsingException {
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (lines.size() == 0)</span>
-<span class="nc" id="L88">			return new RawStyleSheet(new LinkedHashMap&lt;String, String&gt;(), new ArrayList&lt;RawStyleRule&gt;());</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (lines.size() == 0)</span>
+<span class="nc" id="L100">			return new RawStyleSheet(new LinkedHashMap&lt;String, String&gt;(), new ArrayList&lt;RawStyleRule&gt;());</span>
 
-<span class="fc" id="L90">		return new RawStyleParser(lines.inspectorWithNewlines()).run();</span>
+<span class="fc" id="L102">		return new RawStyleParser(lines.inspectorWithNewlines()).run();</span>
 	}
 
 	private RawStyleSheet run() throws StyleParsingException {
 		while (true) {
-<span class="fc" id="L95">			skipWhitespaceAndComments();</span>
-<span class="fc" id="L96">			final char c = ins.peek(0);</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (c == '\0')</span>
-<span class="fc" id="L98">				break;</span>
+<span class="fc" id="L107">			skipWhitespaceAndComments();</span>
+<span class="fc" id="L108">			final char c = ins.peek(0);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">			if (c == '\0')</span>
+<span class="fc" id="L110">				break;</span>
 
-<span class="fc bfc" id="L100" title="All 2 branches covered.">			if (c == '}') {</span>
-<span class="fc" id="L101">				ins.jump();</span>
-<span class="fc" id="L102">				closeCurrentRule();</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">			} else if (c == '@') {</span>
-<span class="fc" id="L104">				parseAtRule();</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">			} else if (c == ':') {</span>
+<span class="fc" id="L112">			statementLine = lineIndex;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">			if (c == '}') {</span>
+<span class="fc" id="L114">				jump();</span>
+<span class="fc" id="L115">				closeCurrentRule();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">			} else if (c == '@') {</span>
+<span class="fc" id="L117">				parseAtRule();</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">			} else if (c == ':') {</span>
 				// A selector may be written with a leading colon, e.g. &quot;:foo {&quot;.
-<span class="fc" id="L107">				ins.jump();</span>
-<span class="fc" id="L108">				parseSelectorHead(readIdentifier());</span>
+<span class="fc" id="L120">				jump();</span>
+<span class="fc" id="L121">				parseSelectorHead(readIdentifier());</span>
 			} else {
-<span class="fc" id="L110">				parseStatementStartingWithIdentifier();</span>
+<span class="fc" id="L123">				parseStatementStartingWithIdentifier();</span>
 			}
-<span class="fc" id="L112">		}</span>
+<span class="fc" id="L125">		}</span>
 
 		// The legacy character-level tokenizer never checked for this at all: reaching
 		// end-of-file with a selector block still open was simply the end of parsing, not an
@@ -119,10 +132,10 @@ public final class RawStyleParser {
 		// not raising an error here, only by discarding that parent along with the file's
 		// missing brace. Close every remaining open rule now instead, exactly as if the missing
 		// '}' characters had actually been there.
-<span class="fc bfc" id="L122" title="All 2 branches covered.">		while (stack.isEmpty() == false)</span>
-<span class="fc" id="L123">			closeCurrentRule();</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		while (stack.isEmpty() == false)</span>
+<span class="fc" id="L136">			closeCurrentRule();</span>
 
-<span class="fc" id="L125">		return new RawStyleSheet(variables, topLevel);</span>
+<span class="fc" id="L138">		return new RawStyleSheet(variables, topLevel);</span>
 	}
 
 	// -----------------------------------------------------------------------
@@ -130,85 +143,136 @@ public final class RawStyleParser {
 	// -----------------------------------------------------------------------
 
 	private void parseStatementStartingWithIdentifier() throws StyleParsingException {
-<span class="fc" id="L133">		final String head = readIdentifier();</span>
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (head.length() == 0)</span>
-<span class="nc" id="L135">			throw new StyleParsingException(&quot;Unexpected character '&quot; + ins.peek(0) + &quot;'&quot;);</span>
+<span class="fc" id="L146">		final String head = readIdentifier();</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (head.length() == 0)</span>
+<span class="fc" id="L148">			throw new StyleParsingException(&quot;Unexpected character '&quot; + ins.peek(0) + &quot;'&quot;, statementLine);</span>
 
-<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (head.startsWith(&quot;--&quot;)) {</span>
-<span class="fc" id="L138">			parseVariableDeclaration(head);</span>
-<span class="fc" id="L139">			return;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (head.startsWith(&quot;--&quot;)) {</span>
+<span class="fc" id="L151">			parseVariableDeclaration(head);</span>
+<span class="fc" id="L152">			return;</span>
 		}
 
-<span class="fc" id="L142">		skipWhitespaceAndComments();</span>
-<span class="fc" id="L143">		final char next = ins.peek(0);</span>
-<span class="fc bfc" id="L144" title="All 6 branches covered.">		if (next == ',' || next == '*' || next == '{')</span>
-<span class="fc" id="L145">			parseSelectorHead(head);</span>
+<span class="fc" id="L155">		skipWhitespaceAndComments();</span>
+<span class="fc" id="L156">		final char next = ins.peek(0);</span>
+<span class="fc bfc" id="L157" title="All 6 branches covered.">		if (next == ',' || next == '*' || next == '{')</span>
+<span class="fc" id="L158">			parseSelectorHead(head);</span>
 		else
-<span class="fc" id="L147">			parsePropertyDeclaration(head);</span>
-<span class="fc" id="L148">	}</span>
+<span class="fc" id="L160">			parsePropertyDeclaration(head);</span>
+<span class="fc" id="L161">	}</span>
 
 	private void parseSelectorHead(String firstName) throws StyleParsingException {
-<span class="fc" id="L151">		final List&lt;String&gt; names = new ArrayList&lt;String&gt;();</span>
-<span class="fc" id="L152">		names.add(firstName);</span>
+<span class="fc" id="L164">		final List&lt;String&gt; names = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L165">		names.add(firstName);</span>
 
-<span class="fc" id="L154">		skipWhitespaceAndComments();</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">		while (ins.peek(0) == ',') {</span>
-<span class="fc" id="L156">			ins.jump();</span>
-<span class="fc" id="L157">			skipWhitespaceAndComments();</span>
-<span class="fc" id="L158">			names.add(readIdentifier());</span>
-<span class="fc" id="L159">			skipWhitespaceAndComments();</span>
+<span class="fc" id="L167">		skipWhitespaceAndComments();</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">		while (ins.peek(0) == ',') {</span>
+<span class="fc" id="L169">			jump();</span>
+<span class="fc" id="L170">			skipWhitespaceAndComments();</span>
+<span class="fc" id="L171">			names.add(readIdentifier());</span>
+<span class="fc" id="L172">			skipWhitespaceAndComments();</span>
 		}
 
-<span class="fc" id="L162">		boolean star = false;</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (ins.peek(0) == '*') {</span>
-<span class="fc" id="L164">			star = true;</span>
-<span class="fc" id="L165">			ins.jump();</span>
-<span class="fc" id="L166">			skipWhitespaceAndComments();</span>
+<span class="fc" id="L175">		boolean star = false;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (ins.peek(0) == '*') {</span>
+<span class="fc" id="L177">			star = true;</span>
+<span class="fc" id="L178">			jump();</span>
+<span class="fc" id="L179">			skipWhitespaceAndComments();</span>
 		}
 
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		if (ins.peek(0) != '{')</span>
-<span class="nc" id="L170">			throw new StyleParsingException(&quot;Expected '{' after selector &quot; + names);</span>
-<span class="fc" id="L171">		ins.jump();</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (ins.peek(0) != '{')</span>
+<span class="nc" id="L183">			throw new StyleParsingException(&quot;Expected '{' after selector &quot; + names, statementLine);</span>
+<span class="fc" id="L184">		jump();</span>
 
-<span class="fc" id="L173">		final List&lt;RawSelector&gt; selectors = new ArrayList&lt;RawSelector&gt;();</span>
-<span class="fc bfc" id="L174" title="All 2 branches covered.">		for (String name : names)</span>
-<span class="fc" id="L175">			selectors.add(RawSelector.classify(name));</span>
+<span class="fc" id="L186">		final List&lt;RawSelector&gt; selectors = new ArrayList&lt;RawSelector&gt;();</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		for (String name : names)</span>
+<span class="fc" id="L188">			selectors.add(RawSelector.classify(name));</span>
 
-<span class="fc" id="L177">		stack.push(RawStyleRule.forSelectors(selectors, star));</span>
-<span class="fc" id="L178">	}</span>
+<span class="fc" id="L190">		stack.push(RawStyleRule.forSelectors(selectors, star));</span>
+<span class="fc" id="L191">	}</span>
 
 	private void parseAtRule() throws StyleParsingException {
-<span class="fc" id="L181">		ins.jump(); // consume '@'</span>
-<span class="fc" id="L182">		final StringBuilder header = new StringBuilder();</span>
+<span class="fc" id="L194">		jump(); // consume '@'</span>
+<span class="fc" id="L195">		final StringBuilder header = new StringBuilder();</span>
 		while (true) {
-<span class="fc" id="L184">			final char c = ins.peek(0);</span>
-<span class="pc bpc" id="L185" title="3 of 6 branches missed.">			if (c == '\0' || c == '}' || c == ';')</span>
-<span class="nc" id="L186">				throw new StyleParsingException(&quot;Unterminated @ rule: '@&quot; + header + &quot;'&quot;);</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">			if (c == '{')</span>
-<span class="fc" id="L188">				break;</span>
-<span class="fc" id="L189">			header.append(c);</span>
-<span class="fc" id="L190">			ins.jump();</span>
-<span class="fc" id="L191">		}</span>
-<span class="fc" id="L192">		ins.jump(); // consume '{'</span>
-<span class="fc" id="L193">		stack.push(RawStyleRule.forMedia(header.toString().trim()));</span>
-<span class="fc" id="L194">	}</span>
+<span class="fc" id="L197">			final char c = ins.peek(0);</span>
+<span class="pc bpc" id="L198" title="3 of 6 branches missed.">			if (c == '\0' || c == '}' || c == ';')</span>
+<span class="nc" id="L199">				throw new StyleParsingException(&quot;Unterminated @ rule: '@&quot; + header + &quot;'&quot;, statementLine);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">			if (c == '{')</span>
+<span class="fc" id="L201">				break;</span>
+<span class="fc" id="L202">			header.append(c);</span>
+<span class="fc" id="L203">			jump();</span>
+<span class="fc" id="L204">		}</span>
+<span class="fc" id="L205">		jump(); // consume '{'</span>
+<span class="fc" id="L206">		stack.push(RawStyleRule.forMedia(header.toString().trim()));</span>
+<span class="fc" id="L207">	}</span>
 
 	private void parseVariableDeclaration(String name) {
-<span class="fc" id="L197">		final String value = readValue();</span>
-<span class="fc" id="L198">		variables.put(name.substring(2), resolveVariables(value));</span>
-<span class="fc" id="L199">	}</span>
+<span class="fc" id="L210">		final String value = readValue();</span>
+<span class="fc" id="L211">		variables.put(name.substring(2), resolveVariables(value));</span>
+<span class="fc" id="L212">	}</span>
 
 	private void parsePropertyDeclaration(String name) throws StyleParsingException {
-<span class="fc bfc" id="L202" title="All 2 branches covered.">		if (stack.isEmpty())</span>
-<span class="fc" id="L203">			throw new StyleParsingException(&quot;Property '&quot; + name + &quot;' declared outside of any block&quot;);</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		if (stack.isEmpty())</span>
+<span class="fc" id="L216">			throw new StyleParsingException(&quot;Property '&quot; + name + &quot;' declared outside of any block&quot;, statementLine);</span>
 
-<span class="fc" id="L205">		final String rawValue = readValue();</span>
-<span class="fc" id="L206">		final PName pname = PName.getFromName(name, StyleScheme.REGULAR);</span>
-<span class="fc bfc" id="L207" title="All 2 branches covered.">		if (pname == null)</span>
-<span class="fc" id="L208">			return; // Unknown property name: silently ignored, as the legacy parser already did.</span>
+<span class="fc" id="L218">		final String rawValue = readValue();</span>
+<span class="fc" id="L219">		final PName pname = PName.getFromName(name, StyleScheme.REGULAR);</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (pname == null)</span>
+<span class="fc" id="L221">			return; // Unknown property name: silently ignored, as the legacy parser already did.</span>
 
-<span class="fc" id="L210">		stack.peek().putProperty(pname, resolveVariables(rawValue));</span>
-<span class="fc" id="L211">	}</span>
+<span class="fc" id="L223">		final String value = resolveVariables(rawValue);</span>
+<span class="fc" id="L224">		checkNumericValue(pname, value);</span>
+<span class="fc" id="L225">		stack.peek().putProperty(pname, value);</span>
+<span class="fc" id="L226">	}</span>
+
+	/**
+	 * The properties read as a number by the drawing code. A value that is not one used to
+	 * go through silently and come out as NaN in the image (or as a crash), far from its
+	 * cause, so it is rejected here with the line of the declaration. As in
+	 * {@code ValueImpl#asDouble}, only digits and dots are looked at, so &quot;10px&quot; is still
+	 * accepted. FontSize is deliberately not in the list: its reader has a documented
+	 * fallback for a value that is not a number.
+	 */
+	private static boolean isNumeric(PName pname) {
+<span class="fc bfc" id="L237" title="All 2 branches covered.">		switch (pname) {</span>
+		case Shadowing:
+		case LineThickness:
+		case RoundCorner:
+		case DiagonalCorner:
+		case MinimumWidth:
+		case BarWidth:
+		case MarkerSize:
+<span class="fc" id="L245">			return true;</span>
+		default:
+<span class="fc" id="L247">			return false;</span>
+		}
+	}
+
+	private void checkNumericValue(PName pname, String value) throws StyleParsingException {
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		if (isNumeric(pname) == false)</span>
+<span class="fc" id="L253">			return;</span>
+
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		if (value.length() == 0)</span>
+<span class="fc" id="L256">			throw new StyleParsingException(&quot;Missing value for &quot; + pname, statementLine);</span>
+
+		// &quot;Shadowing true&quot; has always been accepted by skinparam, see Style#getShadowing
+<span class="fc bfc" id="L259" title="All 6 branches covered.">		if (pname == PName.Shadowing &amp;&amp; (value.equalsIgnoreCase(&quot;true&quot;) || value.equalsIgnoreCase(&quot;false&quot;)</span>
+<span class="fc bfc" id="L260" title="All 4 branches covered.">				|| value.equalsIgnoreCase(&quot;yes&quot;) || value.equalsIgnoreCase(&quot;no&quot;)))</span>
+<span class="fc" id="L261">			return;</span>
+
+<span class="fc" id="L263">		final StringBuilder digits = new StringBuilder(value.length());</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		for (int i = 0; i &lt; value.length(); i++) {</span>
+<span class="fc" id="L265">			final char c = value.charAt(i);</span>
+<span class="fc bfc" id="L266" title="All 6 branches covered.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9' || c == '.')</span>
+<span class="fc" id="L267">				digits.append(c);</span>
+		}
+		try {
+<span class="fc" id="L270">			Double.parseDouble(digits.toString());</span>
+<span class="fc" id="L271">		} catch (NumberFormatException e) {</span>
+<span class="fc" id="L272">			throw new StyleParsingException(&quot;Invalid value '&quot; + value + &quot;' for &quot; + pname + &quot;: a number is expected&quot;,</span>
+					statementLine);
+<span class="fc" id="L274">		}</span>
+<span class="fc" id="L275">	}</span>
 
 	/**
 	 * A stray {@code }} with nothing open to close is silently ignored, rather than raising an
@@ -221,15 +285,15 @@ public final class RawStyleParser {
 	 * {@code &lt;/style&gt;} -- must keep parsing exactly as it did before.
 	 */
 	private void closeCurrentRule() {
-<span class="fc bfc" id="L224" title="All 2 branches covered.">		if (stack.isEmpty())</span>
-<span class="fc" id="L225">			return;</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">		if (stack.isEmpty())</span>
+<span class="fc" id="L289">			return;</span>
 
-<span class="fc" id="L227">		final RawStyleRule closed = stack.pop();</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">		if (stack.isEmpty())</span>
-<span class="fc" id="L229">			topLevel.add(closed);</span>
+<span class="fc" id="L291">		final RawStyleRule closed = stack.pop();</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">		if (stack.isEmpty())</span>
+<span class="fc" id="L293">			topLevel.add(closed);</span>
 		else
-<span class="fc" id="L231">			stack.peek().addChild(closed);</span>
-<span class="fc" id="L232">	}</span>
+<span class="fc" id="L295">			stack.peek().addChild(closed);</span>
+<span class="fc" id="L296">	}</span>
 
 	// -----------------------------------------------------------------------
 	// Lexical helpers
@@ -245,34 +309,34 @@ public final class RawStyleParser {
 	 * indistinguishable from a font name that simply doesn't exist).
 	 */
 	private String readValue() {
-<span class="fc" id="L248">		skipInlineSpaces();</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">		while (ins.peek(0) == ':')</span>
-<span class="fc" id="L250">			ins.jump();</span>
-<span class="fc" id="L251">		skipInlineSpaces();</span>
+<span class="fc" id="L312">		skipInlineSpaces();</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">		while (ins.peek(0) == ':')</span>
+<span class="fc" id="L314">			jump();</span>
+<span class="fc" id="L315">		skipInlineSpaces();</span>
 
-<span class="fc" id="L253">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L317">		final StringBuilder sb = new StringBuilder();</span>
 		while (true) {
-<span class="fc" id="L255">			final char c = ins.peek(0);</span>
-<span class="pc bpc" id="L256" title="2 of 8 branches missed.">			if (c == '\0' || c == '\n' || c == '\r' || c == '}')</span>
-<span class="fc" id="L257">				break;</span>
-<span class="fc bfc" id="L258" title="All 2 branches covered.">			if (c == ';') {</span>
-<span class="fc" id="L259">				ins.jump();</span>
-<span class="fc" id="L260">				break;</span>
+<span class="fc" id="L319">			final char c = ins.peek(0);</span>
+<span class="pc bpc" id="L320" title="2 of 8 branches missed.">			if (c == '\0' || c == '\n' || c == '\r' || c == '}')</span>
+<span class="fc" id="L321">				break;</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">			if (c == ';') {</span>
+<span class="fc" id="L323">				jump();</span>
+<span class="fc" id="L324">				break;</span>
 			}
-<span class="fc bfc" id="L262" title="All 2 branches covered.">			if (c == '\&quot;') {</span>
-<span class="fc" id="L263">				ins.jump();</span>
-<span class="pc bpc" id="L264" title="1 of 4 branches missed.">				while (ins.peek(0) != '\0' &amp;&amp; ins.peek(0) != '\&quot;') {</span>
-<span class="fc" id="L265">					sb.append(ins.peek(0));</span>
-<span class="fc" id="L266">					ins.jump();</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">			if (c == '\&quot;') {</span>
+<span class="fc" id="L327">				jump();</span>
+<span class="pc bpc" id="L328" title="1 of 4 branches missed.">				while (ins.peek(0) != '\0' &amp;&amp; ins.peek(0) != '\&quot;') {</span>
+<span class="fc" id="L329">					sb.append(ins.peek(0));</span>
+<span class="fc" id="L330">					jump();</span>
 				}
-<span class="pc bpc" id="L268" title="1 of 2 branches missed.">				if (ins.peek(0) == '\&quot;')</span>
-<span class="fc" id="L269">					ins.jump();</span>
+<span class="pc bpc" id="L332" title="1 of 2 branches missed.">				if (ins.peek(0) == '\&quot;')</span>
+<span class="fc" id="L333">					jump();</span>
 				continue;
 			}
-<span class="fc" id="L272">			sb.append(c);</span>
-<span class="fc" id="L273">			ins.jump();</span>
-<span class="fc" id="L274">		}</span>
-<span class="fc" id="L275">		return sb.toString().trim();</span>
+<span class="fc" id="L336">			sb.append(c);</span>
+<span class="fc" id="L337">			jump();</span>
+<span class="fc" id="L338">		}</span>
+<span class="fc" id="L339">		return sb.toString().trim();</span>
 	}
 
 	/**
@@ -289,36 +353,36 @@ public final class RawStyleParser {
 	 * block&quot;, instead of the two-word stereotype name the legacy parser always accepted.
 	 */
 	private String readIdentifier() {
-<span class="pc bpc" id="L292" title="1 of 2 branches missed.">		if (ins.peek(0) == '\&quot;')</span>
-<span class="nc" id="L293">			return readQuoted();</span>
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">		if (ins.peek(0) == '\&quot;')</span>
+<span class="nc" id="L357">			return readQuoted();</span>
 
-<span class="fc bfc" id="L295" title="All 2 branches covered.">		final boolean stereotypeLed = ins.peek(0) == '.';</span>
-<span class="fc" id="L296">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">		final boolean stereotypeLed = ins.peek(0) == '.';</span>
+<span class="fc" id="L360">		final StringBuilder sb = new StringBuilder();</span>
 		while (true) {
-<span class="fc" id="L298">			final char c = ins.peek(0);</span>
-<span class="fc bfc" id="L299" title="All 4 branches covered.">			if (c == ' ' &amp;&amp; stereotypeLed) {</span>
-<span class="fc" id="L300">				sb.append(c);</span>
-<span class="fc" id="L301">				ins.jump();</span>
-<span class="fc" id="L302">				continue;</span>
+<span class="fc" id="L362">			final char c = ins.peek(0);</span>
+<span class="fc bfc" id="L363" title="All 4 branches covered.">			if (c == ' ' &amp;&amp; stereotypeLed) {</span>
+<span class="fc" id="L364">				sb.append(c);</span>
+<span class="fc" id="L365">				jump();</span>
+<span class="fc" id="L366">				continue;</span>
 			}
-<span class="fc bfc" id="L304" title="All 2 branches covered.">			if (isDelimiter(c))</span>
-<span class="fc" id="L305">				break;</span>
-<span class="fc" id="L306">			sb.append(c);</span>
-<span class="fc" id="L307">			ins.jump();</span>
-<span class="fc" id="L308">		}</span>
-<span class="fc bfc" id="L309" title="All 2 branches covered.">		return stereotypeLed ? sb.toString().trim() : sb.toString();</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">			if (isDelimiter(c))</span>
+<span class="fc" id="L369">				break;</span>
+<span class="fc" id="L370">			sb.append(c);</span>
+<span class="fc" id="L371">			jump();</span>
+<span class="fc" id="L372">		}</span>
+<span class="fc bfc" id="L373" title="All 2 branches covered.">		return stereotypeLed ? sb.toString().trim() : sb.toString();</span>
 	}
 
 	private String readQuoted() {
-<span class="nc" id="L313">		ins.jump(); // opening quote</span>
-<span class="nc" id="L314">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L315" title="All 4 branches missed.">		while (ins.peek(0) != '\0' &amp;&amp; ins.peek(0) != '\&quot;') {</span>
-<span class="nc" id="L316">			sb.append(ins.peek(0));</span>
-<span class="nc" id="L317">			ins.jump();</span>
+<span class="nc" id="L377">		jump(); // opening quote</span>
+<span class="nc" id="L378">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L379" title="All 4 branches missed.">		while (ins.peek(0) != '\0' &amp;&amp; ins.peek(0) != '\&quot;') {</span>
+<span class="nc" id="L380">			sb.append(ins.peek(0));</span>
+<span class="nc" id="L381">			jump();</span>
 		}
-<span class="nc bnc" id="L319" title="All 2 branches missed.">		if (ins.peek(0) == '\&quot;')</span>
-<span class="nc" id="L320">			ins.jump();</span>
-<span class="nc" id="L321">		return sb.toString();</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">		if (ins.peek(0) == '\&quot;')</span>
+<span class="nc" id="L384">			jump();</span>
+<span class="nc" id="L385">		return sb.toString();</span>
 	}
 
 	private static boolean isDelimiter(char c) {
@@ -329,66 +393,66 @@ public final class RawStyleParser {
 		// nor RawSelector#classify's &quot;depth(n)&quot; pattern (which requires the string to end in
 		// ')') would then recognize it. &quot;depth(2)*&quot;, written without a space, is exactly the
 		// real hand-written ancestor-cascade catch-all syntax this must not break.
-<span class="pc bpc" id="L332" title="6 of 22 branches missed.">		return c == '\0' || c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '{' || c == '}' || c == ';'</span>
+<span class="pc bpc" id="L396" title="5 of 22 branches missed.">		return c == '\0' || c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '{' || c == '}' || c == ';'</span>
 				|| c == ',' || c == ':' || c == '*';
 	}
 
 	private void skipInlineSpaces() {
-<span class="pc bpc" id="L337" title="1 of 4 branches missed.">		while (ins.peek(0) == ' ' || ins.peek(0) == '\t')</span>
-<span class="fc" id="L338">			ins.jump();</span>
-<span class="fc" id="L339">	}</span>
+<span class="pc bpc" id="L401" title="1 of 4 branches missed.">		while (ins.peek(0) == ' ' || ins.peek(0) == '\t')</span>
+<span class="fc" id="L402">			jump();</span>
+<span class="fc" id="L403">	}</span>
 
 	private void skipWhitespaceAndComments() {
 		while (true) {
-<span class="fc" id="L343">			final char c = ins.peek(0);</span>
-<span class="pc bpc" id="L344" title="2 of 8 branches missed.">			if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {</span>
-<span class="fc" id="L345">				ins.jump();</span>
-<span class="fc bfc" id="L346" title="All 4 branches covered.">			} else if (c == '/' &amp;&amp; ins.peek(1) == '/') {</span>
-<span class="fc" id="L347">				skipUntil('\n');</span>
-<span class="pc bpc" id="L348" title="1 of 4 branches missed.">			} else if (c == '/' &amp;&amp; ins.peek(1) == '*') {</span>
-<span class="fc" id="L349">				ins.jump();</span>
-<span class="fc" id="L350">				ins.jump();</span>
-<span class="fc" id="L351">				skipUntilSequence('*', '/');</span>
-<span class="pc bpc" id="L352" title="3 of 4 branches missed.">			} else if (c == '/' &amp;&amp; ins.peek(1) == '\'') {</span>
-<span class="nc" id="L353">				ins.jump();</span>
-<span class="nc" id="L354">				ins.jump();</span>
-<span class="nc" id="L355">				skipUntilSequence('\'', '/');</span>
+<span class="fc" id="L407">			final char c = ins.peek(0);</span>
+<span class="pc bpc" id="L408" title="2 of 8 branches missed.">			if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {</span>
+<span class="fc" id="L409">				jump();</span>
+<span class="fc bfc" id="L410" title="All 4 branches covered.">			} else if (c == '/' &amp;&amp; ins.peek(1) == '/') {</span>
+<span class="fc" id="L411">				skipUntil('\n');</span>
+<span class="pc bpc" id="L412" title="1 of 4 branches missed.">			} else if (c == '/' &amp;&amp; ins.peek(1) == '*') {</span>
+<span class="fc" id="L413">				jump();</span>
+<span class="fc" id="L414">				jump();</span>
+<span class="fc" id="L415">				skipUntilSequence('*', '/');</span>
+<span class="pc bpc" id="L416" title="3 of 4 branches missed.">			} else if (c == '/' &amp;&amp; ins.peek(1) == '\'') {</span>
+<span class="nc" id="L417">				jump();</span>
+<span class="nc" id="L418">				jump();</span>
+<span class="nc" id="L419">				skipUntilSequence('\'', '/');</span>
 			} else {
-<span class="fc" id="L357">				return;</span>
+<span class="fc" id="L421">				return;</span>
 			}
-<span class="fc" id="L359">		}</span>
+<span class="fc" id="L423">		}</span>
 	}
 
 	private void skipUntil(char end) {
-<span class="pc bpc" id="L363" title="1 of 4 branches missed.">		while (ins.peek(0) != '\0' &amp;&amp; ins.peek(0) != end)</span>
-<span class="fc" id="L364">			ins.jump();</span>
-<span class="fc" id="L365">	}</span>
+<span class="pc bpc" id="L427" title="1 of 4 branches missed.">		while (ins.peek(0) != '\0' &amp;&amp; ins.peek(0) != end)</span>
+<span class="fc" id="L428">			jump();</span>
+<span class="fc" id="L429">	}</span>
 
 	private void skipUntilSequence(char first, char second) {
-<span class="pc bpc" id="L368" title="1 of 2 branches missed.">		while (ins.peek(0) != '\0') {</span>
-<span class="fc bfc" id="L369" title="All 4 branches covered.">			if (ins.peek(0) == first &amp;&amp; ins.peek(1) == second) {</span>
-<span class="fc" id="L370">				ins.jump();</span>
-<span class="fc" id="L371">				ins.jump();</span>
-<span class="fc" id="L372">				return;</span>
+<span class="pc bpc" id="L432" title="1 of 2 branches missed.">		while (ins.peek(0) != '\0') {</span>
+<span class="fc bfc" id="L433" title="All 4 branches covered.">			if (ins.peek(0) == first &amp;&amp; ins.peek(1) == second) {</span>
+<span class="fc" id="L434">				jump();</span>
+<span class="fc" id="L435">				jump();</span>
+<span class="fc" id="L436">				return;</span>
 			}
-<span class="fc" id="L374">			ins.jump();</span>
+<span class="fc" id="L438">			jump();</span>
 		}
-<span class="nc" id="L376">	}</span>
+<span class="nc" id="L440">	}</span>
 
 	/** Replaces every {@code var(--name)} reference with the value learnt for {@code name}. */
 	private String resolveVariables(String value) {
-<span class="fc bfc" id="L380" title="All 2 branches covered.">		if (value.indexOf(&quot;var(&quot;) == -1)</span>
-<span class="fc" id="L381">			return value;</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">		if (value.indexOf(&quot;var(&quot;) == -1)</span>
+<span class="fc" id="L445">			return value;</span>
 
-<span class="fc" id="L383">		final Matcher m = VAR_REF.matcher(value);</span>
-<span class="fc" id="L384">		final StringBuffer sb = new StringBuffer();</span>
-<span class="fc bfc" id="L385" title="All 2 branches covered.">		while (m.find()) {</span>
-<span class="fc" id="L386">			final String varName = m.group(1);</span>
-<span class="pc bpc" id="L387" title="1 of 2 branches missed.">			final String replacement = variables.containsKey(varName) ? variables.get(varName) : m.group();</span>
-<span class="fc" id="L388">			m.appendReplacement(sb, Matcher.quoteReplacement(replacement));</span>
-<span class="fc" id="L389">		}</span>
-<span class="fc" id="L390">		m.appendTail(sb);</span>
-<span class="fc" id="L391">		return sb.toString();</span>
+<span class="fc" id="L447">		final Matcher m = VAR_REF.matcher(value);</span>
+<span class="fc" id="L448">		final StringBuffer sb = new StringBuffer();</span>
+<span class="fc bfc" id="L449" title="All 2 branches covered.">		while (m.find()) {</span>
+<span class="fc" id="L450">			final String varName = m.group(1);</span>
+<span class="pc bpc" id="L451" title="1 of 2 branches missed.">			final String replacement = variables.containsKey(varName) ? variables.get(varName) : m.group();</span>
+<span class="fc" id="L452">			m.appendReplacement(sb, Matcher.quoteReplacement(replacement));</span>
+<span class="fc" id="L453">		}</span>
+<span class="fc" id="L454">		m.appendTail(sb);</span>
+<span class="fc" id="L455">		return sb.toString();</span>
 	}
 
 }

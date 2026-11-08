@@ -37,9 +37,24 @@ package net.sourceforge.plantuml.style.parser;
 
 public class StyleParsingException extends Exception {
 
+	private final int line;
+
 	public StyleParsingException(String msg) {
-<span class="fc" id="L41">		super(msg);</span>
-<span class="fc" id="L42">	}</span>
+<span class="nc" id="L43">		this(msg, -1);</span>
+<span class="nc" id="L44">	}</span>
+
+	/**
+	 * @param line 0-based index, in the text given to the parser, of the line where the
+	 *             faulty statement starts; -1 when unknown
+	 */
+	public StyleParsingException(String msg, int line) {
+<span class="fc" id="L51">		super(msg);</span>
+<span class="fc" id="L52">		this.line = line;</span>
+<span class="fc" id="L53">	}</span>
+
+	public int getLine() {
+<span class="fc" id="L56">		return line;</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

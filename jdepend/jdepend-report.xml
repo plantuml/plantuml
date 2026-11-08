@@ -15897,8 +15897,8 @@
 
         <Package name="net.sourceforge.plantuml.style.parser">
             <Stats>
-                <TotalClasses>5</TotalClasses>
-                <ConcreteClasses>5</ConcreteClasses>
+                <TotalClasses>6</TotalClasses>
+                <ConcreteClasses>6</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>4</Ca>
                 <Ce>3</Ce>
@@ -15917,6 +15917,9 @@
                 </Class>
                 <Class sourceFile="RawSelector.java">
                     net.sourceforge.plantuml.style.parser.RawSelector$Kind
+                </Class>
+                <Class sourceFile="RawStyleParser.java">
+                    net.sourceforge.plantuml.style.parser.RawStyleParser$1
                 </Class>
                 <Class sourceFile="RawStyleRule.java">
                     net.sourceforge.plantuml.style.parser.RawStyleRule

@@ -86,21 +86,31 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2&lt;TitledDiagr
 	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
 		try {
 <span class="fc" id="L88">			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();</span>
-<span class="fc" id="L89">			diagram.getSkinParam().muteStyle(StyleLoader.parseStyleText(lines.subExtract(1, 1), styleBuilder));</span>
+<span class="fc" id="L89">			final BlocLines body = lines.subExtract(1, 1);</span>
+			try {
+<span class="fc" id="L91">				diagram.getSkinParam().muteStyle(StyleLoader.parseStyleText(body, styleBuilder));</span>
+<span class="fc" id="L92">			} catch (StyleParsingException e) {</span>
+				// Point at the faulty line of the block, not at the block
+<span class="fc" id="L94">				final int line = e.getLine();</span>
+<span class="pc bpc" id="L95" title="2 of 4 branches missed.">				if (line &gt;= 0 &amp;&amp; line &lt; body.size())</span>
+<span class="fc" id="L96">					return CommandExecutionResult.errorAt(&quot;Error in style definition: &quot; + e.getMessage(),</span>
+<span class="fc" id="L97">							body.getAt(line));</span>
+<span class="nc" id="L98">				throw e;</span>
+<span class="fc" id="L99">			}</span>
 
-<span class="fc" id="L91">			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();</span>
-<span class="fc" id="L92">			return CommandExecutionResult.ok();</span>
-<span class="nc" id="L93">		} catch (StyleParsingException e) {</span>
-<span class="nc" id="L94">			return CommandExecutionResult.error(&quot;Error in style definition: &quot; + e.getMessage());</span>
-<span class="nc" id="L95">		} catch (NoStyleAvailableException e) {</span>
+<span class="fc" id="L101">			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();</span>
+<span class="fc" id="L102">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L103">		} catch (StyleParsingException e) {</span>
+<span class="nc" id="L104">			return CommandExecutionResult.error(&quot;Error in style definition: &quot; + e.getMessage());</span>
+<span class="nc" id="L105">		} catch (NoStyleAvailableException e) {</span>
 			// Logme.error(e);
-<span class="nc" id="L97">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
+<span class="nc" id="L107">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
 		}
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="fc" id="L103">		return FIRST_TOKENS;</span>
+<span class="fc" id="L113">		return FIRST_TOKENS;</span>
 	}
 
 }

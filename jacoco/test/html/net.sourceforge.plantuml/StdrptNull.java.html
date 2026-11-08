@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.utils.Log;
 <span class="fc" id="L57">	}</span>
 
 	public void errorLine(int lineError, File file) {
-<span class="fc" id="L60">		Log.error(&quot;Error line &quot; + (lineError + 1) + &quot; in file: &quot; + file.getPath());</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		Log.error(&quot;Error line &quot; + (lineError + 1) + &quot; in &quot; + (file == null ? &quot;standard input&quot; : &quot;file: &quot; + file.getPath()));</span>
 <span class="fc" id="L61">	}</span>
 
 }

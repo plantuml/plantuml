@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.core.AbstractDiagram;
+import net.sourceforge.plantuml.text.StringLocated;
 
 public class CommandExecutionResult {
 
@@ -47,91 +48,113 @@ public class CommandExecutionResult {
 	private final List&lt;String&gt; debugLines;
 	private final int score;
 	private final Throwable rootCause;
+	private final StringLocated errorLocation;
 
-<span class="fc" id="L51">	private CommandExecutionResult(AbstractDiagram newDiagram, String error, int score, Throwable rootCause) {</span>
-<span class="fc" id="L52">		this.error = error;</span>
-<span class="fc" id="L53">		this.rootCause = rootCause;</span>
-<span class="fc" id="L54">		this.newDiagram = newDiagram;</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		this.debugLines = rootCause == null ? null : getStackTrace(rootCause);</span>
-<span class="fc" id="L56">		this.score = score;</span>
+	private CommandExecutionResult(AbstractDiagram newDiagram, String error, int score, Throwable rootCause) {
+<span class="fc" id="L54">		this(newDiagram, error, score, rootCause, null);</span>
+<span class="fc" id="L55">	}</span>
 
-<span class="fc" id="L58">	}</span>
+	private CommandExecutionResult(AbstractDiagram newDiagram, String error, int score, Throwable rootCause,
+<span class="fc" id="L58">			StringLocated errorLocation) {</span>
+<span class="fc" id="L59">		this.errorLocation = errorLocation;</span>
+<span class="fc" id="L60">		this.error = error;</span>
+<span class="fc" id="L61">		this.rootCause = rootCause;</span>
+<span class="fc" id="L62">		this.newDiagram = newDiagram;</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		this.debugLines = rootCause == null ? null : getStackTrace(rootCause);</span>
+<span class="fc" id="L64">		this.score = score;</span>
+
+<span class="fc" id="L66">	}</span>
 
 	public CommandExecutionResult withDiagram(AbstractDiagram newDiagram) {
-<span class="nc" id="L61">		return new CommandExecutionResult(newDiagram, error, 0, null);</span>
+<span class="nc" id="L69">		return new CommandExecutionResult(newDiagram, error, 0, null);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L66">		return super.toString() + &quot; &quot; + error;</span>
+<span class="nc" id="L74">		return super.toString() + &quot; &quot; + error;</span>
 	}
 
 	public static CommandExecutionResult newDiagram(AbstractDiagram result) {
-<span class="fc" id="L70">		return new CommandExecutionResult(result, null, 0, null);</span>
+<span class="fc" id="L78">		return new CommandExecutionResult(result, null, 0, null);</span>
 	}
 
 	public static CommandExecutionResult ok() {
-<span class="fc" id="L74">		return new CommandExecutionResult(null, null, 0, null);</span>
+<span class="fc" id="L82">		return new CommandExecutionResult(null, null, 0, null);</span>
 	}
 
 	public static CommandExecutionResult badColor() {
-<span class="fc" id="L78">		return new CommandExecutionResult(null, &quot;No such color&quot;, 10, null);</span>
+<span class="fc" id="L86">		return new CommandExecutionResult(null, &quot;No such color&quot;, 10, null);</span>
 	}
 
 	public static CommandExecutionResult error(String error) {
-<span class="fc" id="L82">		return new CommandExecutionResult(null, error, 0, null);</span>
+<span class="fc" id="L90">		return new CommandExecutionResult(null, error, 0, null);</span>
+	}
+
+	/**
+	 * An error that belongs to one line of a multi-line command, as opposed to the
+	 * command as a whole (which is reported at its first line).
+	 */
+	public static CommandExecutionResult errorAt(String error, StringLocated location) {
+<span class="fc" id="L98">		return new CommandExecutionResult(null, error, 0, null, location);</span>
+	}
+
+	/**
+	 * The line the error belongs to, or null when it belongs to the command as a whole.
+	 */
+	public StringLocated getErrorLocation() {
+<span class="fc" id="L105">		return errorLocation;</span>
 	}
 
 	public static CommandExecutionResult error(String error, int score) {
-<span class="nc" id="L86">		return new CommandExecutionResult(null, error, score, null);</span>
+<span class="nc" id="L109">		return new CommandExecutionResult(null, error, score, null);</span>
 	}
 
 	public static CommandExecutionResult error(String error, Throwable t) {
-<span class="fc" id="L90">		return new CommandExecutionResult(null, error, 0, t);</span>
+<span class="fc" id="L113">		return new CommandExecutionResult(null, error, 0, t);</span>
 	}
 
 	public static List&lt;String&gt; getStackTrace(Throwable exception) {
-<span class="fc" id="L94">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L95">		result.add(exception.toString());</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">		for (StackTraceElement ste : exception.getStackTrace())</span>
-<span class="fc" id="L97">			result.add(&quot;  &quot; + ste.toString());</span>
+<span class="fc" id="L117">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L118">		result.add(exception.toString());</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		for (StackTraceElement ste : exception.getStackTrace())</span>
+<span class="fc" id="L120">			result.add(&quot;  &quot; + ste.toString());</span>
 
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (exception.getCause() != null) {</span>
-<span class="nc" id="L100">			final Throwable cause = exception.getCause();</span>
-<span class="nc" id="L101">			result.add(&quot;  &quot;);</span>
-<span class="nc" id="L102">			result.add(&quot;Caused by &quot; + cause.toString());</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			for (StackTraceElement ste : cause.getStackTrace())</span>
-<span class="nc" id="L104">				result.add(&quot;  &quot; + ste.toString());</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (exception.getCause() != null) {</span>
+<span class="nc" id="L123">			final Throwable cause = exception.getCause();</span>
+<span class="nc" id="L124">			result.add(&quot;  &quot;);</span>
+<span class="nc" id="L125">			result.add(&quot;Caused by &quot; + cause.toString());</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			for (StackTraceElement ste : cause.getStackTrace())</span>
+<span class="nc" id="L127">				result.add(&quot;  &quot; + ste.toString());</span>
 
 		}
-<span class="fc" id="L107">		return result;</span>
+<span class="fc" id="L130">		return result;</span>
 	}
 
 	public boolean isOk() {
-<span class="fc bfc" id="L111" title="All 2 branches covered.">		return error == null;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		return error == null;</span>
 	}
 
 	public String getError() {
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (isOk())</span>
-<span class="nc" id="L116">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (isOk())</span>
+<span class="nc" id="L139">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L118">		return error;</span>
+<span class="fc" id="L141">		return error;</span>
 	}
 
 	public int getScore() {
-<span class="fc" id="L122">		return score;</span>
+<span class="fc" id="L145">		return score;</span>
 	}
 
 	public AbstractDiagram getNewDiagram() {
-<span class="fc" id="L126">		return newDiagram;</span>
+<span class="fc" id="L149">		return newDiagram;</span>
 	}
 
 	public List&lt;String&gt; getDebugLines() {
-<span class="fc" id="L130">		return debugLines;</span>
+<span class="fc" id="L153">		return debugLines;</span>
 	}
 
 	public Throwable getRootCause() {
-<span class="fc" id="L134">		return rootCause;</span>
+<span class="fc" id="L157">		return rootCause;</span>
 	}
 
 }
