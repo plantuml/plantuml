@@ -144,8 +144,8 @@ public class UPath extends AbstractShadowable implements Iterable&lt;USegment&gt
 
 	public void moveTo(double x, double y) {
 <span class="fc" id="L146">		final double last[] = getLastCoord();</span>
-<span class="pc bpc" id="L147" title="1 of 6 branches missed.">		if (last != null &amp;&amp; last[0] == x &amp;&amp; last[1] == y)</span>
-<span class="nc" id="L148">			return;</span>
+<span class="fc bfc" id="L147" title="All 6 branches covered.">		if (last != null &amp;&amp; last[0] == x &amp;&amp; last[1] == y)</span>
+<span class="fc" id="L148">			return;</span>
 <span class="fc" id="L149">		add(new double[] { x, y }, USegmentType.SEG_MOVETO);</span>
 <span class="fc" id="L150">	}</span>
 

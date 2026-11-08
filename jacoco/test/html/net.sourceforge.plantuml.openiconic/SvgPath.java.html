@@ -204,20 +204,20 @@ public class SvgPath {
 <span class="fc bfc" id="L204" title="All 2 branches covered.">			} else if (letter == 'Q') {</span>
 <span class="fc" id="L205">				final SvgPosition ctl = move.getSvgPosition(0);</span>
 <span class="fc" id="L206">				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">			} else if (letter == 'T') {</span>
-<span class="nc bnc" id="L208" title="All 2 branches missed.">				if (previous.getLetter() == 'Q') {</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">			} else if (letter == 'T') {</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">				if (previous.getLetter() == 'Q') {</span>
 					// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
-<span class="nc" id="L210">					final SvgPosition lastCtl = previous.getSvgPosition(0);</span>
-<span class="nc" id="L211">					final SvgPosition lastP = previous.lastPosition();</span>
-<span class="nc" id="L212">					final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
-<span class="nc" id="L213">					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
-<span class="nc bnc" id="L214" title="All 2 branches missed.">				} else if (previous.getLetter() == 'T') {</span>
+<span class="fc" id="L210">					final SvgPosition lastCtl = previous.getSvgPosition(0);</span>
+<span class="fc" id="L211">					final SvgPosition lastP = previous.lastPosition();</span>
+<span class="fc" id="L212">					final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
+<span class="fc" id="L213">					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">				} else if (previous.getLetter() == 'T') {</span>
 					// Same logic as for Q followed by T: reflect the previous control point
-<span class="nc" id="L216">					final SvgPosition lastCtl = previous.getSvgPosition(0);</span>
-<span class="nc" id="L217">					final SvgPosition lastP = previous.lastPosition();</span>
-<span class="nc" id="L218">					final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
-<span class="nc" id="L219">					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
-<span class="nc" id="L220">				} else</span>
+<span class="fc" id="L216">					final SvgPosition lastCtl = previous.getSvgPosition(0);</span>
+<span class="fc" id="L217">					final SvgPosition lastP = previous.lastPosition();</span>
+<span class="fc" id="L218">					final SvgPosition ctl = lastP.getMirror(lastCtl);</span>
+<span class="fc" id="L219">					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));</span>
+<span class="fc" id="L220">				} else</span>
 <span class="nc" id="L221">					throw new IllegalArgumentException(&quot;&quot; + previous.getLetter());</span>
 <span class="fc bfc" id="L222" title="All 2 branches covered.">			} else if (letter == 'L') {</span>
 <span class="fc" id="L223">				result.lineTo(position.affine(at));</span>
