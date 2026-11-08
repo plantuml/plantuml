@@ -82,8 +82,8 @@ rule "plain values only at the boundaries" (section 13.1).
 | `%feature(name)` | `puml.feature(name)` | today only `"style"` and `"theme"`, both `1`. Cheap. Or drop it: `%feature` exists for libraries that must run on old versions, and a Python module is versioned with PlantUML (section 15.8). Leaning: drop. |
 | `%getenv(name)` | `puml.getenv(name)` | must go through the security profile (`canWeReadThisEnvironmentVariable`), and reads system properties first. Returns `""` when absent or forbidden (keep, `None` would be more Pythonic: **[open]**). Not available at all on JS/C editions? To check. |
 | `%file_exists(path)` | `puml.file_exists(path)` | goes through the security profile; contradicts "no direct disk access from text Python" (section 13.1) unless it uses the same finder as `puml.read`. Leaning: through the finder only. |
-| `%filename()`, `%dirpath()`, `%filedate()` | `puml.filename`, `puml.dirpath`, `puml.filedate` | values of the environment (`context.getEnvironmentValue`), constant for a diagram: attributes, like `puml.version`, not functions. |
-| `%get_current_theme()` | `puml.theme` | a dict (the theme metadata), `None`/empty without theme. |
+| `%filename()`, `%dirpath()`, `%filedate()` | `puml.filename`, `puml.dirpath`, `puml.filedate` **[implemented]** | values of the environment (`context.getEnvironmentValue`), constant for a diagram: attributes, like `puml.version`, not functions. `""` when unknown, as the legacy functions (kept: one type, no `None` to test). |
+| `%get_current_theme()` | `puml.theme()` **[implemented]** | a dict of strings, `{}` without theme. A **function**, unlike the three above: `!theme` can come after the interpreter is created, so a constant would be stale. |
 | `%get_all_theme()`, `%get_all_stdlib([detailed])`, `%get_stdlib(name)` | `puml.themes()`, `puml.stdlibs(detailed=False)`, ... | tools and documentation more than diagrams. Low priority; same family as `puml.modules()` (section 15.8). |
 | `%load_json(path[, charset])`, also URL | `json.loads(puml.read(path))` | `puml.read` is already planned (section 13.1) with the `!include` rules. No separate function. The legacy default value argument becomes a Python `try/except` or `puml.read(path, default=...)` **[open]**. |
 | `%xargs()` | `puml.xargs` | only for the `-x` command line option; probably dropped. |
@@ -317,7 +317,7 @@ shows both results side by side.
 2. The legacy → Python table (documentation only; no code), including the
    differences of section 3.1.
 3. `puml` additions that are plain values: `filename`, `dirpath`, `filedate`,
-   `theme`, the marker constants.
+   `theme` (**done**), then the marker constants.
 4. `color` (the most used by libraries), with the side-by-side Vega tests.
 5. The recipes of 3.5 in the user documentation (with the Vega test that
    exists).

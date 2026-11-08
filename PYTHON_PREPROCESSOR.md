@@ -1067,6 +1067,14 @@ Level 1, read the environment:
   command line (`-Dname=value`): the dict maps each name to its value, always a
   string, in the order of the definitions; it is empty without `-D`. The engine
   `args` are not there yet.
+- `puml.filename`, `puml.dirpath`, `puml.filedate`: strings, the values of
+  `%filename()`, `%dirpath()` and `%filedate()` (the name of the diagram file,
+  its directory, its date as `Date.toString()` gives it), `""` when unknown
+  (standard input). Constant for a diagram. **[implemented]**
+- `puml.theme()`: a dict of strings, the metadata of the current theme (what
+  `%get_current_theme()` returns as JSON), `{}` without theme. A function and
+  not an attribute: a `!theme` line may come after the first Python line, and a
+  call sees the theme known at that point. **[implemented]**
 
 Level 2, data:
 

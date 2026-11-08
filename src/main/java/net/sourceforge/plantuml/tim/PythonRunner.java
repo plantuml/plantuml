@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import org.luaj.vm2.python.Builtin;
 import org.luaj.vm2.python.ExecutionLimitError;
@@ -60,7 +61,10 @@ import net.sourceforge.plantuml.text.StringLocated;
  * <code>math</code>, <code>json</code> and <code>color</code> are bound as globals too (no import
  * needed; <code>import math</code> stays accepted).
  * <code>puml.version</code> and <code>puml.edition</code> ("jar", "js" or "c") are
- * strings, <code>puml.args</code> is a dict of the variables defined from outside.
+ * strings, so are <code>puml.filename</code>, <code>puml.dirpath</code> and
+ * <code>puml.filedate</code> (the values of <code>%filename()</code>,
+ * <code>%dirpath()</code> and <code>%filedate()</code>, empty when unknown),
+ * <code>puml.theme()</code> is a dict (the metadata of the current theme), <code>puml.args</code> is a dict of the variables defined from outside.
  */
 final class PythonRunner {
 
@@ -72,7 +76,8 @@ final class PythonRunner {
 	private int chunkCount;
 	private final PythonMacros macros;
 
-	PythonRunner(String version, Map<String, String> arguments, PythonMacros.LegacyNames legacyNames) {
+	PythonRunner(String version, Map<String, String> arguments, Map<String, String> source,
+			Supplier<Map<String, String>> theme, PythonMacros.LegacyNames legacyNames) {
 		// What print() writes is dropped: whether print is an alias of emit is
 		// still open (see PYTHON_PREPROCESSOR.md), it is not for now.
 		this.interp = new Interp(text -> {
@@ -84,6 +89,16 @@ final class PythonRunner {
 		puml.putString("version", version == null ? "" : version);
 		puml.putString("edition", TeaVM.isC() ? "c" : TeaVM.isJavaScript() ? "js" : "jar");
 		puml.putStringMap("args", arguments);
+		// where the diagram comes from: "" when unknown (stdin), as %filename() and the others
+		puml.putString("filename", source.get("filename"));
+		puml.putString("dirpath", source.get("dirpath"));
+		puml.putString("filedate", source.get("filedate"));
+		// a function, not a constant: a !theme line may come after the interpreter is created
+		puml.put("theme", (in, args) -> {
+			if (args.length != 0)
+				throw Builtin.typeError("theme() takes no argument (" + args.length + " given)");
+			return PyModule.stringDict(theme.get());
+		});
 		puml.put("emit", (in, args) -> emit(args));
 		puml.put("error", (in, args) -> error(string("error", args)));
 		puml.put("macro", (in, args) -> macros.macro(args));

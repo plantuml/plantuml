@@ -26,11 +26,16 @@ public final class PyModule {
 
 	/** Adds a constant {@code dict} of strings, in the order of the map. */
 	public PyModule putStringMap(String constant, Map<String, String> values) {
+		members.put(constant, stringDict(values));
+		return this;
+	}
+
+	/** A new {@code dict} of strings, in the order of the map: the value a function returns. */
+	public static Object stringDict(Map<String, String> values) {
 		final PyDict dict = new PyDict();
 		for (Map.Entry<String, String> entry : values.entrySet())
 			dict.put(entry.getKey(), entry.getValue());
-		members.put(constant, dict);
-		return this;
+		return dict;
 	}
 
 	/** The member called {@code fn} (a function, for instance), or null. */

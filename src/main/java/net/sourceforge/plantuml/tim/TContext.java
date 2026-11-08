@@ -47,6 +47,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -390,8 +391,13 @@ public class TContext {
 	/** The Python state of the diagram, created when first needed (a Python chunk or a !{expr}). */
 	private PythonRunner python() {
 		if (python == null) {
-			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments,
-					name -> functionsSet.doesFunctionExist(name));
+			final Map<String, String> source = new LinkedHashMap<>();
+			for (String key : new String[] { "filename", "dirpath", "filedate" }) {
+				final String value = getEnvironmentValue(key);
+				source.put(key, value == null ? "" : value);
+			}
+			python = new PythonRunner(getEnvironmentValue("PLANTUML_VERSION"), arguments, source,
+					() -> themeMetadataAsStrings(), name -> functionsSet.doesFunctionExist(name));
 			// and the other way round: a legacy function may not take the name of a macro
 			functionsSet.setReservedNames(name -> python.isMacro(name));
 		}
@@ -788,6 +794,14 @@ public class TContext {
 
 	public JsonObject getThemeMetadata() {
 		return themeMetadata;
+	}
+
+	/** The metadata of the current theme (a theme gives strings only), for Python. */
+	private Map<String, String> themeMetadataAsStrings() {
+		final Map<String, String> result = new LinkedHashMap<>();
+		for (String name : themeMetadata.names())
+			result.put(name, themeMetadata.get(name).asString());
+		return result;
 	}
 
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException {
