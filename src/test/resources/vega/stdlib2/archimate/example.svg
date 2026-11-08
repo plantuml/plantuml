@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="554px" preserveAspectRatio="none" style="width:621px;height:554px;background:#FFFFFF;" version="1.1" viewBox="0 0 621 554" width="621px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="37">
+      <text fill="#888" font-size="10" textLength="183.375" x="0" y="7.778">Created using Archimate.puml version 3.2.2</text>
+    </g>
+    <g class="title" data-source-line="26">
+      <text fill="#000" font-size="14" font-weight="700" textLength="213.85" x="200.075" y="31.889">Archimate Sample - Internet Browser</text>
+    </g>
+    <!--entity businessObject-->
+    <g class="entity" data-qualified-name="businessObject" data-source-line="146" id="ent0001">
+      <rect fill="#FFC" height="52" rx="0.5" ry="0.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="67.5" y="58"/>
+      <path d="M178.55,71.71 A0.5,0.5 0 0 0 178.05,72.21 L178.05,84.418 A0.5,0.5 0 0 0 178.55,84.917 L196.603,84.917 A0.5,0.5 0 0 0 197.103,84.418 L197.103,72.21 A0.5,0.5 0 0 0 196.603,71.71 M179.05,72.71 L196.103,72.71 L196.103,74.795 L179.05,74.706 M179.05,75.706 L196.103,75.795 L196.103,83.917 L179.05,83.917" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="91.788" y="97.333">A</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="99.813" y="97.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="48.75" x="99.813" y="97.333">Business</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="148.563" y="97.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="34.65" x="148.563" y="97.333">Object</text>
+    </g>
+    <!--entity someBusinessProcess-->
+    <g class="entity" data-qualified-name="someBusinessProcess" data-source-line="127" id="ent0002">
+      <rect fill="#FFC" height="52" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="143.45" x="229" y="58"/>
+      <path d="M356.179,71.5 A0.5,0.5 0 0 0 355.851,71.975 L355.876,74.611 L343.319,74.615 A0.5,0.5 0 0 0 342.819,75.115 L342.815,81.164 A0.5,0.5 0 0 0 343.317,81.664 L355.846,81.617 L355.846,83.943 A0.5,0.5 0 0 0 356.729,84.264 L361.723,78.311 A0.5,0.5 0 0 0 361.725,77.67 L356.735,71.65 A0.5,0.5 0 0 0 356.178,71.5 M356.865,73.373 L360.691,77.988 L356.847,82.568 L356.847,81.115 A0.5,0.5 0 0 0 356.345,80.615 L343.816,80.662 L343.82,75.615 L356.381,75.611 A0.5,0.5 0 0 0 356.881,75.107" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="31.35" x="239" y="97.333">Some</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="270.35" y="97.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="48.75" x="270.35" y="97.333">Business</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="319.1" y="97.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="43.35" x="319.1" y="97.333">Process</text>
+    </g>
+    <!--entity itSupportService-->
+    <g class="entity" data-qualified-name="itSupportService" data-source-line="142" id="ent0003">
+      <rect fill="#FFC" height="52" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="242.15" x="179.5" y="162"/>
+      <path d="M398.15,177.91 C395.474,177.904 393.297,180.114 393.273,182.832 C393.249,185.55 395.387,187.802 398.062,187.846 A0.5,0.5 0 0 0 398.078,187.846 L405.619,187.846 A0.5,0.5 0 0 0 405.625,187.846 C408.312,187.821 410.47,185.567 410.449,182.838 C410.428,180.12 408.252,177.911 405.58,177.912 L405.58,177.909 L405.547,177.909 M398.148,178.91 A0.5,0.5 0 0 0 398.152,178.91 L405.579,178.91 C407.702,178.91 409.431,180.654 409.448,182.846 C409.465,185.046 407.752,186.824 405.619,186.846 C405.618,186.846 405.616,186.846 405.615,186.846 L398.08,186.846 C395.955,186.811 394.253,185.034 394.273,182.842 C394.292,180.65 396.023,178.906 398.148,178.91" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="10.65" x="189.5" y="201.333">IT</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="200.15" y="201.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="42" x="200.15" y="201.333">Support</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="242.15" y="201.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="13.95" x="242.15" y="201.333">for</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="256.1" y="201.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="48.75" x="256.1" y="201.333">Business</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="304.85" y="201.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="62.775" x="304.85" y="201.333">(Application</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="367.625" y="201.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="44.025" x="367.625" y="201.333">Service)</text>
+    </g>
+    <!--entity dataObject-->
+    <g class="entity" data-qualified-name="dataObject" data-source-line="195" id="ent0004">
+      <rect fill="#C2F0FF" height="64" rx="0.5" ry="0.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="67.5" y="266"/>
+      <path d="M178.55,279.71 A0.5,0.5 0 0 0 178.05,280.21 L178.05,292.418 A0.5,0.5 0 0 0 178.55,292.917 L196.603,292.917 A0.5,0.5 0 0 0 197.103,292.418 L197.103,280.21 A0.5,0.5 0 0 0 196.603,279.71 M179.05,280.71 L196.103,280.71 L196.103,282.795 L179.05,282.706 M179.05,283.706 L196.103,283.795 L196.103,291.917 L179.05,291.917" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="24.675" x="98.463" y="305.333">Web</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="123.138" y="305.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="28.05" x="123.138" y="305.333">Page</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="151.188" y="305.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="25.35" x="151.188" y="305.333">Data</text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="15.675" x="114.175" y="317.333">'on</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="129.85" y="317.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.65" x="129.85" y="317.333">the</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="146.5" y="317.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="14.325" x="146.5" y="317.333">fly'</text>
+    </g>
+    <!--entity webpageBehaviour-->
+    <g class="entity" data-qualified-name="webpageBehaviour" data-source-line="176" id="ent0005">
+      <rect fill="#C2F0FF" height="52" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="230.5" y="272"/>
+      <path d="M350.259,286.32 L341.296,290.289 A0.5,0.5 0 0 0 340.999,290.746 L340.999,298.783 A0.5,0.5 0 0 0 341.7,299.24 L350.495,295.361 L359.288,299.24 A0.5,0.5 0 0 0 359.991,298.783 L359.991,290.779 A0.5,0.5 0 0 0 359.693,290.322 L350.665,286.32 A0.5,0.5 0 0 0 350.259,286.32 M350.462,287.324 L358.991,291.103 L358.991,298.017 L350.697,294.357 A0.5,0.5 0 0 0 350.292,294.357 L341.999,298.017 L341.999,291.072" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="24.675" x="248.45" y="311.333">Web</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="273.125" y="311.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="26.7" x="273.125" y="311.333">page</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="299.825" y="311.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="52.725" x="299.825" y="311.333">behaviour</text>
+    </g>
+    <!--entity ActivePartWebPage-->
+    <g class="entity" data-qualified-name="ActivePartWebPage" data-source-line="167" id="ent0006">
+      <rect fill="#C2F0FF" height="64" rx="0.5" ry="0.5" style="stroke:#181818;stroke-width:0.5;" width="150.05" x="392.5" y="266"/>
+      <path d="M531.31,280.639 L516.484,280.686 A0.5,0.5 0 0 0 515.984,281.186 L515.984,282.623 L513.496,282.604 A0.5,0.5 0 0 0 512.992,283.104 L512.992,285.039 A0.5,0.5 0 0 0 513.492,285.539 L515.972,285.539 L515.949,286.582 L513.449,286.563 A0.5,0.5 0 0 0 512.945,287.063 L512.945,288.998 A0.5,0.5 0 0 0 513.445,289.498 L515.937,289.498 L515.937,292.5 A0.5,0.5 0 0 0 516.438,293.001 L531.311,293.047 A0.5,0.5 0 0 0 531.812,292.547 L531.812,281.139 A0.5,0.5 0 0 0 531.311,280.639 M530.812,281.641 L530.812,292.045 L516.937,292.002 L516.937,289.498 L519.431,289.498 A0.5,0.5 0 0 0 519.931,288.998 L519.931,287.11 A0.5,0.5 0 0 0 519.435,286.61 L516.949,286.59 L516.972,285.539 L519.478,285.539 A0.5,0.5 0 0 0 519.978,285.039 L519.978,283.15 A0.5,0.5 0 0 0 519.482,282.651 L516.984,282.631 L516.984,281.684 M513.992,283.608 L518.978,283.647 L518.978,284.54 L513.992,284.54 M513.945,287.567 L518.931,287.606 L518.931,288.498 L513.945,288.498" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="32.7" x="402.5" y="305.333">Active</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="435.2" y="305.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="21.975" x="435.2" y="305.333">Part</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="457.175" y="305.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.975" x="457.175" y="305.333">of</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="467.15" y="305.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.65" x="467.15" y="305.333">the</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="483.8" y="305.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="22.05" x="483.8" y="305.333">web</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="505.85" y="305.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="26.7" x="505.85" y="305.333">page</text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="15.675" x="444.2" y="317.333">'on</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="459.875" y="317.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.65" x="459.875" y="317.333">the</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="476.525" y="317.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="14.325" x="476.525" y="317.333">fly'</text>
+    </g>
+    <!--entity inMemoryItem-->
+    <g class="entity" data-qualified-name="inMemoryItem" data-source-line="247" id="ent0007">
+      <rect fill="#C9FFC9" height="52" rx="0.5" ry="0.5" style="stroke:#181818;stroke-width:0.5;" width="199.25" x="6" y="382"/>
+      <path d="M180.28,395.55 A0.5,0.5 0 0 0 179.78,396.05 L179.78,408.259 A0.5,0.5 0 0 0 180.28,408.759 L190.528,408.759 A0.5,0.5 0 0 0 191.028,408.259 L191.028,399.132 A0.5,0.5 0 0 0 190.881,398.779 L187.802,395.697 A0.5,0.5 0 0 0 187.674,395.671 A0.5,0.5 0 0 0 187.381,395.55 M180.78,396.55 L186.948,396.55 L186.948,399.199 A0.5,0.5 0 0 0 187.448,399.699 L190.028,399.699 L190.028,407.759 L180.78,407.759 M187.948,397.324 L189.321,398.699 L187.948,398.699" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="9.375" x="16" y="421.333">in</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="25.375" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="43.275" x="25.375" y="421.333">memory</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="68.65" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="68.65" y="421.333">/</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="71.95" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="15.675" x="71.95" y="421.333">'on</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="87.625" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="16.65" x="87.625" y="421.333">the</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="104.275" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="14.325" x="104.275" y="421.333">fly'</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="118.6" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="76.65" x="118.6" y="421.333">html/javascript</text>
+    </g>
+    <!--entity internetBrowser-->
+    <g class="entity" data-qualified-name="internetBrowser" data-source-line="240" id="ent0008">
+      <rect fill="#C9FFC9" height="52" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="188.075" x="226.5" y="382"/>
+      <path d="M391.075,397.91 C388.399,397.904 386.222,400.114 386.198,402.832 C386.174,405.55 388.312,407.802 390.987,407.846 A0.5,0.5 0 0 0 391.003,407.846 L398.544,407.846 A0.5,0.5 0 0 0 398.55,407.846 C401.237,407.821 403.395,405.567 403.374,402.838 C403.353,400.12 401.177,397.911 398.505,397.912 L398.505,397.91 L398.472,397.91 M391.073,398.91 A0.5,0.5 0 0 0 391.077,398.91 L398.504,398.91 C400.627,398.91 402.356,400.654 402.373,402.846 C402.391,405.046 400.677,406.824 398.544,406.846 C398.543,406.846 398.541,406.846 398.54,406.846 L391.005,406.846 C388.88,406.811 387.178,405.034 387.198,402.842 C387.217,400.65 388.948,398.906 391.073,398.91" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="40.575" x="236.5" y="421.333">Internet</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="277.075" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="44.025" x="277.075" y="421.333">Browser</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="321.1" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="42" x="321.1" y="421.333">Generic</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="363.1" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="363.1" y="421.333">&amp;</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="371.125" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="33.45" x="371.125" y="421.333">Plugin</text>
+    </g>
+    <!--entity internetBrowserPlugin-->
+    <g class="entity" data-qualified-name="internetBrowserPlugin" data-source-line="240" id="ent0009">
+      <rect fill="#C9FFC9" height="52" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="169.4" x="436" y="382"/>
+      <path d="M581.9,397.91 C579.224,397.904 577.047,400.114 577.023,402.832 C576.999,405.55 579.137,407.802 581.812,407.846 A0.5,0.5 0 0 0 581.828,407.846 L589.369,407.846 A0.5,0.5 0 0 0 589.375,407.846 C592.062,407.821 594.22,405.567 594.199,402.838 C594.178,400.12 592.002,397.911 589.33,397.912 L589.33,397.91 L589.297,397.91 M581.898,398.91 A0.5,0.5 0 0 0 581.902,398.91 L589.329,398.91 C591.452,398.91 593.181,400.654 593.198,402.846 C593.216,405.046 591.502,406.824 589.369,406.846 C589.368,406.846 589.366,406.846 589.365,406.846 L581.83,406.846 C579.705,406.811 578.003,405.034 578.023,402.842 C578.042,400.65 579.773,398.906 581.898,398.91" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="31.35" x="446" y="421.333">Some</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="477.35" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="40.575" x="477.35" y="421.333">Internet</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="517.925" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="44.025" x="517.925" y="421.333">Browser</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="561.95" y="421.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="33.45" x="561.95" y="421.333">Plugin</text>
+    </g>
+    <!--entity webServer-->
+    <g class="entity" data-qualified-name="webServer" data-source-line="240" id="ent0010">
+      <rect fill="#C9FFC9" height="52" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="166.5" y="486"/>
+      <path d="M283,501.91 C280.324,501.904 278.147,504.114 278.123,506.832 C278.099,509.55 280.237,511.802 282.912,511.846 A0.5,0.5 0 0 0 282.928,511.846 L290.469,511.846 A0.5,0.5 0 0 0 290.475,511.846 C293.162,511.821 295.32,509.567 295.299,506.838 C295.278,504.12 293.102,501.911 290.43,501.912 L290.43,501.91 L290.397,501.91 M282.998,502.91 A0.5,0.5 0 0 0 283.002,502.91 L290.429,502.91 C292.552,502.91 294.281,504.654 294.298,506.846 C294.316,509.046 292.602,510.824 290.469,510.846 C290.468,510.846 290.466,510.846 290.465,510.846 L282.93,510.846 C280.805,510.811 279.103,509.034 279.123,506.842 C279.142,504.65 280.873,502.906 282.998,502.91" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="31.35" x="193.15" y="525.333">Some</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="224.5" y="525.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="22.05" x="224.5" y="525.333">web</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="246.55" y="525.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="33.3" x="246.55" y="525.333">server</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk12">
+      <polygon fill="#000" points="207.573,84,215.573,87,215.573,81,207.573,84" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M215.573,84 C222.648,84 221.841,84 228.932,84" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="218.25" y="76.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk14">
+      <polygon fill="#000" points="300.5,110.213,296.5,119.213,300.5,115.213,304.5,119.213,300.5,110.213" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M300.5,115.213 C300.5,130.906 300.5,146.019 300.5,161.723" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="302.5" y="139.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="extension" id="lnk16">
+      <polygon fill="none" points="300.5,214.049,294.5,232.049,306.5,232.049,300.5,214.049" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M300.5,232.049 C300.5,249.372 300.5,254.338 300.5,271.713" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="302.5" y="243.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk17">
+      <polygon fill="#000" points="230.487,298,222.487,295,222.487,301,230.487,298" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M207.573,298 C215.166,298 214.894,298 222.487,298" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="219" y="290.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="extension" id="lnk19">
+      <polygon fill="none" points="137.5,110.152,131.5,128.152,143.5,128.152,137.5,110.152" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M137.5,128.152 C137.5,166.979 137.5,223.437 137.5,265.694" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="139.5" y="191.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="dependency" id="lnk21">
+      <polygon fill="#000" points="370.839,298,378.839,301,378.839,295,370.839,298" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="386.412" cy="298" fill="#000" rx="6" ry="6" style="stroke:#000;stroke-width:1.5;"/>
+      <path d="M378.839,298 C385.97,298 373.233,298 380.412,298" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="381.5" y="290.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="extension" id="lnk23">
+      <polygon fill="none" points="128.244,330.238,117.378,345.792,128.883,349.201,128.244,330.238" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M123.131,347.496 C118.258,363.943 117.476,366.579 112.909,381.994" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="124.5" y="359.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="extension" id="lnk25">
+      <polygon fill="none" points="456.706,330.142,443.554,343.818,454.39,348.974,456.706,330.142" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M448.972,346.396 C442.965,359.018 441.879,356.183 429.5,364 C389.523,389.244 264.234,374.834 217.5,382 C213.463,382.619 209.354,383.299 205.211,384.027" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="447.5" y="359.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="extension" id="lnk26">
+      <polygon fill="none" points="226.237,408,208.237,402,208.237,414,226.237,408" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M205.133,408 C212.163,408 201.238,408 208.237,408" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="215.75" y="400.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0008" data-link-type="dependency" id="lnk28">
+      <polygon fill="#000" points="305.139,324.049,302.844,333.627,306.049,328.965,310.711,332.17,305.139,324.049" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M306.049,328.965 C309.257,346.288 312.6,364.338 315.817,381.713" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="313.5" y="359.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0009" data-link-type="dependency" id="lnk30">
+      <polygon fill="#000" points="347.382,324.149,353.473,331.888,351.804,326.483,357.208,324.813,347.382,324.149" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M351.804,326.483 C375.132,338.8 399.429,351.333 425.5,364 C437.794,369.973 451.1,376.163 463.751,381.923" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="427.5" y="359.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0009" data-link-type="aggregation" id="lnk31">
+      <polygon fill="none" points="414.644,408,420.644,412,426.644,408,420.644,404,414.644,408" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M426.644,408 C433.736,408 428.867,408 435.895,408" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="425.25" y="400.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0010" data-link-type="association" id="lnk33">
+      <path d="M137.882,434.213 C158.036,449.906 183.867,470.019 204.036,485.723" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="181.5" y="463.333"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0010" data-link-type="dependency" id="lnk35">
+      <polygon fill="#000" points="299.736,434.213,290.927,438.618,296.557,438.073,297.102,443.704,299.736,434.213" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M296.557,438.073 C283.634,453.766 270.249,470.019 257.316,485.723" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-family="Verdana" font-size="12" x="285.5" y="463.333"> </text>
+    </g>
+  </g>
+</svg>

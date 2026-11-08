@@ -1,0 +1,65 @@
+---
+output: svg
+---
+@startuml
+
+' common.puml loaded with default settings
+'(commented settings with default values are only for documentation, details see common.puml)
+' --
+' text alignment can be deactivated with ""
+' !$MDI_ALIGNMENT = "center"
+' !$MDI_DEFAULT_LABEL = "*"
+' !$MDI_DEFAULT_SHAPE = "rectangle"
+' !$MDI_DEFAULT_COLOR = ""
+' !$MDI_DEFAULT_STEREOTYPE = ""
+' --
+
+!include <material7.4.47/common>
+
+!include <material7.4.47/AccountUser/AccountAlert>
+!include <material7.4.47/Emoji/all>
+
+left to right direction
+
+package "%dollar()MdiAccountAlert() samples (and unchanged default values)\nwith required common.puml" {
+
+  note as N2
+	samples with %dollar()MdiAccountAlert(%dollar()alias, %dollar()label=%dollar()MDI_DEFAULT, %dollar()shape=%dollar()MDI_DEFAULT, %dollar()color=%dollar()MDI_DEFAULT, %dollar()scale=1, %dollar()stereo=%dollar()MDI_DEFAULT)
+  end note
+
+   ' label defined via alias (based on unchanged default setting)
+   $MdiAccountAlert(defaultAccount)
+
+   $MdiAccountAlert(labelAccount, "with changed $label")
+   $MdiAccountAlert(nolabelAccount, "")
+   $MdiAccountAlert(aliaslabelAccount, $MDI_LABEL_ALIAS)
+
+   $MdiAccountAlert(shapeDatabaseAccount, "with changed $label and $shape=database", $shape=database)
+   $MdiAccountAlert(shapeNoneIsLabelAccount, "with changed $label and $shape=%dollar()MDI_SHAPE_NONE", $shape=$MDI_SHAPE_NONE)
+
+   $MdiAccountAlert(colorRedAccount, "with changed $label and (unchanged) $color=%dollar()MDI_COLOR_NONE", $color=$MDI_COLOR_NONE)
+   $MdiAccountAlert(colorRedAccount, "with changed $label and $color=red", $color=red)
+   $MdiAccountAlert(colorBlueAccount, "with changed $label and $color=green", $color=#0000FF)
+
+   $MdiAccountAlert(scaleSmallAccount, "with changed $label and $scale=0.5", $scale=0.5)
+   $MdiAccountAlert(scaleLargeAccount, "with changed $label and $scale=2.0", $scale=2.0)
+
+   $MdiAccountAlert(stereotypeWithoutAccount, "with changed $label and\n(without) $stereo=%dollar()MDI_STEREOTYPE_NONE", $stereo=$MDI_STEREOTYPE_NONE)
+   $MdiAccountAlert(stereotypeFixAccount, "with changed $label and\n(concrete) $stereo=Abcd", $stereo=Abcd)
+   $MdiAccountAlert(stereotypeAliasAccount, "with changed $label and\n(dynamic, based on sprite) $stereo=%dollar()MDI_STEREOTYPE_SPRITE", $stereo=$MDI_STEREOTYPE_SPRITE)
+}
+
+package "%dollar()MdiAccountAlertImg() samples (and unchanged default values)\nwith required common.puml" {
+
+  note as N1
+    samples with %dollar()MdiAccountAlertImg(%dollar()color = %dollar()MDI_DEFAULT, %dollar()scale = "1")
+  end note
+
+   label "%dollar()MdiAccountAlertImg() with default values\n$MdiAccountAlertImg()" as defaultImg
+
+   label "%dollar()MdiAccountAlertImg() with $color=red\n$MdiAccountAlertImg($color=red)" as redImg
+
+   label "%dollar()MdiAccountAlertImg() with $scale=2.0\n$MdiAccountAlertImg($scale=2.0)" as scaleImg
+}
+
+@enduml

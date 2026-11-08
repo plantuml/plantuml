@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+!include <material2.1.19/common>
+' To import the sprite file you DON'T need to place a prefix!
+!include <material2.1.19/folder_move>
+
+MA_FOLDER_MOVE(Red, 1, dir, rectangle, "A label")
+@enduml

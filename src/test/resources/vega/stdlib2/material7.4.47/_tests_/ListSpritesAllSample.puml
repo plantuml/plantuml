@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+' TODO: not working atm - load dummy too
+
+' convert it with additional command line argument -DMDI_TEST_INCLUDE="./.." to use locally
+!if %variable_exists("$MDI_TEST_INCLUDE")
+  ' all.puml includes existing sdtlib sprites, therefore it cannot be used for the test
+  ' relativeall.puml all uses substitution (instead of not usable ../all.puml) not working at the moment (details unclear).
+  !include ./relativeall.puml
+
+  ' TODO: not working atm - load dummy too
+  !include %get_variable_value("$MDI_TEST_INCLUDE")/Emoji/all.puml
+!else
+  ' all.puml includes existing sdtlib sprites, therefore it cannot be used for the test
+  ' relativeall.puml all uses substitution (instead of not usable ../all.puml) not working at the moment (details unclear).
+  !include https://raw.githubusercontent.com/plantuml/plantuml-stdlib/refs/heads/master/stdlib/material7.4.47/_tests_/relativeall.puml
+
+  ' TODO: maybe not working atm - load dummy too
+  !include https://raw.githubusercontent.com/plantuml/plantuml-stdlib/refs/heads/master/stdlib/material7.4.47/Emoji/all.puml
+!endif
+
+listsprites
+
+@enduml

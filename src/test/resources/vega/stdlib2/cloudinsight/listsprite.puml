@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+!include <cloudinsight/all>
+listsprite
+@enduml

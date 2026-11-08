@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+
+' convert it with additional command line argument -DMDI_TEST_INCLUDE="./.." to use locally
+!if %variable_exists("$MDI_TEST_INCLUDE")
+  ' no common.puml loaded, text alignment remains left
+  !include %get_variable_value("$MDI_TEST_INCLUDE")/AccountUser/AccountAlert.puml
+  !include %get_variable_value("$MDI_TEST_INCLUDE")/Emoji/all.puml
+!else
+  ' no common.puml loaded, text alignment remains left
+  !include https://raw.githubusercontent.com/plantuml/plantuml-stdlib/refs/heads/master/stdlib/material7.4.47/AccountUser/AccountAlert.puml
+  !include https://raw.githubusercontent.com/plantuml/plantuml-stdlib/refs/heads/master/stdlib/material7.4.47/Emoji/all.puml
+!endif
+
+package "Possible image samples\nwithout additional dependencies" {
+  label "explicit loaded sprite in text\n<$mdiAccountAlert>" as accountAlertSprite
+
+  label "sprite loaded via collection Emoji/all.puml in text\n<$mdiEmoticonLol>" as emoticonLol
+}
+
+@enduml

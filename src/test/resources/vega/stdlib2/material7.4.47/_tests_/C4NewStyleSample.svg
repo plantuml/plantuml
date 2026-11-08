@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="441px" preserveAspectRatio="none" style="width:548px;height:441px;background:#FFFFFF;" version="1.1" viewBox="0 0 548 441" width="548px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC" height="85" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="532.812" x="3" y="3"/>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="513.875" x="10" y="12">This diagram is using the variable 'NEW_C4_STYLE' declared without '$', which is deprecated and will be removed in the future.</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="250.312" x="10" y="22">You should use '$NEW_C4_STYLE' instead in your diagram.</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="522.812" x="10" y="42">This diagram is using the variable 'ROUNDED_STYLE' declared without '$', which is deprecated and will be removed in the future.</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="259.25" x="10" y="52">You should use '$ROUNDED_STYLE' instead in your diagram.</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="520.5" x="10" y="72">This diagram is using the variable 'NO_LAY_ROTATE' declared without '$', which is deprecated and will be removed in the future.</text>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="256.937" x="10" y="82">You should use '$NO_LAY_ROTATE' instead in your diagram.</text>
+    <!--cluster Image sample\nwith C4 and new Style (!NEW_C4_STYLE = 1)-->
+    <g class="cluster" data-qualified-name="Image sample.nwith C4 and new Style ..NEW_C4_STYLE . 1." data-source-line="27" id="ent0001">
+      <path d="M16.5,94 L280.437,94 A3.75,3.75 0 0 1 282.937,96.5 L289.937,128 L289.5,128 A2.5,2.5 0 0 1 292,130.5 L292,414.5 A2.5,2.5 0 0 1 289.5,417 L16.5,417 A2.5,2.5 0 0 1 14,414.5 L14,96.5 A2.5,2.5 0 0 1 16.5,94" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="289.937" y1="128" y2="128"/>
+      <text fill="#000" font-size="14" textLength="84" x="107.469" y="106.889">Image sample</text>
+      <text fill="#000" font-size="14" textLength="262.937" x="18" y="120.889">with C4 and new Style (!NEW_C4_STYLE = 1)</text>
+    </g>
+    <!--entity A-->
+    <g class="entity" data-qualified-name="Image sample.nwith C4 and new Style ..NEW_C4_STYLE . 1..A" data-source-line="382" id="ent0002">
+      <rect fill="#FFF" height="99.692" rx="12.5" ry="12.5" style="stroke:#073B6F;stroke-width:0.5;" width="81.4" x="112.5" y="149"/>
+      <text fill="#08427B" font-size="12" font-style="italic" textLength="50.025" x="128.188" y="168.333">«person»</text>
+      <path d="M148.892,179.615 A8.615,8.615 0 0 1 157.508,188.231 A8.615,8.615 0 0 1 148.892,196.846 A8.615,8.615 0 0 1 140.277,188.231 A8.615,8.615 0 0 1 148.892,179.615 M148.892,201.154 C158.412,201.154 166.123,205.009 166.123,209.769 L166.123,214.077 L131.662,214.077 L131.662,209.769 C131.662,205.009 139.372,201.154 148.892,201.154 M170.431,196.846 L170.431,186.077 L174.738,186.077 L174.738,199 L170.431,199 M170.431,207.615 L170.431,203.308 L174.738,203.308 L174.738,207.615 L170.431,207.615" fill="#08427B"/>
+      <text fill="#08427B" font-size="16" font-weight="700" textLength="50.7" x="122.5" y="235.137">Person</text>
+      <text fill="#08427B" font-size="16" font-weight="700" x="173.2" y="235.137"> </text>
+      <text fill="#08427B" font-size="16" font-weight="700" x="173.2" y="235.137">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="Image sample.nwith C4 and new Style ..NEW_C4_STYLE . 1..B" data-source-line="382" id="ent0003">
+      <rect fill="#FFF" height="99.692" rx="12.5" ry="12.5" style="stroke:#073B6F;stroke-width:0.5;" width="81.4" x="112.5" y="301"/>
+      <text fill="#08427B" font-size="12" font-style="italic" textLength="50.025" x="128.188" y="320.333">«person»</text>
+      <path d="M153.2,327.308 A21.538,21.538 0 0 0 131.662,348.846 A21.538,21.538 0 0 0 153.2,370.385 A21.538,21.538 0 0 0 174.738,348.846 A21.538,21.538 0 0 0 153.2,327.308 M142.431,343.462 A3.231,3.231 0 0 1 145.662,340.231 A3.231,3.231 0 0 1 148.892,343.462 A3.231,3.231 0 0 1 145.662,346.692 A3.231,3.231 0 0 1 142.431,343.462 M161.815,357.462 L144.585,357.462 L144.585,353.154 L161.815,353.154 L161.815,357.462 M160.738,346.692 A3.231,3.231 0 0 1 157.508,343.462 A3.231,3.231 0 0 1 160.738,340.231 A3.231,3.231 0 0 1 163.969,343.462 A3.231,3.231 0 0 1 160.738,346.692" fill="#08427B"/>
+      <text fill="#08427B" font-size="16" font-weight="700" textLength="50.7" x="122.5" y="387.137">Person</text>
+      <text fill="#08427B" font-size="16" font-weight="700" x="173.2" y="387.137"> </text>
+      <text fill="#08427B" font-size="16" font-weight="700" x="173.2" y="387.137">B</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#666" points="153,300.774,156,292.774,150,292.774,153,300.774" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M153,249.116 C153,265.691 153,276.19 153,292.774" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="26.775" x="155" y="278.333">Calls</text>
+    </g>
+  </g>
+</svg>

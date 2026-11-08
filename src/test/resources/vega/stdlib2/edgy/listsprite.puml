@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+!include <edgy/edgy>
+listsprite
+@enduml

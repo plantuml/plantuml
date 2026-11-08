@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+
+!include <material7.4.47/AccountUser/AccountAlert>
+!include <material7.4.47/Emoji/all>
+
+' displays the explicitly included sprite and the included collection of sprites
+' (mdiAccountAlert and all mdiEmoticon*)
+listsprites
+
+@enduml

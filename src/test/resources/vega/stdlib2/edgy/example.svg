@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="426px" preserveAspectRatio="none" style="width:493px;height:426px;background:#FFFFFF;" version="1.1" viewBox="0 0 493 426" width="493px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster org-->
+    <g class="cluster" data-qualified-name="org" data-source-line="140" id="ent0004">
+      <rect fill="#DBF9FF" height="123" rx="25" ry="25" style="stroke:#4DE2FF;stroke-width:3;stroke-dasharray:5,5;" width="132" x="169.5" y="12"/>
+      <path d="M244.211,31.044 L240.918,25.076 A5.96,5.96 0 0 0 241.5,22.501 A6.01,6.01 0 0 0 235.5,16.501 A6.01,6.01 0 0 0 229.5,22.501 A5.96,5.96 0 0 0 230.082,25.076 L226.789,31.044 A6.01,6.01 0 0 0 221.5,37 A6.01,6.01 0 0 0 227.5,43 C229.503,43 231.278,42.013 232.369,40.5 L238.631,40.5 C239.721,42.013 241.497,43 243.5,43 A6.01,6.01 0 0 0 249.5,37 A6.01,6.01 0 0 0 244.211,31.044 M235.5,29.746 L237.572,33.501 L233.429,33.501 L235.501,29.746" fill="#FFF"/>
+      <path d="M243.5,33 C243.338,33 243.179,33.011 243.022,33.029 L238.604,25.021 A3.98,3.98 0 0 0 239.5,22.499 A4,4 0 1 0 231.5,22.499 A3.98,3.98 0 0 0 232.396,25.021 L227.978,33.029 A3.97,3.97 0 0 0 227.5,33 A4,4 0 1 0 227.5,41 A4,4 0 0 0 231.208,38.5 L239.792,38.5 A4,4 0 0 0 247.5,37 A4,4 0 0 0 243.5,33 M230.604,34.478 L235.022,26.47 A3.97,3.97 0 0 0 235.5,26.499 C235.662,26.499 235.821,26.488 235.978,26.47 L240.396,34.478 C240.147,34.784 239.943,35.128 239.792,35.5 L231.208,35.5 C231.058,35.128 230.853,34.785 230.604,34.478" fill="#00CAF4"/>
+      <text fill="#101010" font-size="14" font-weight="700" textLength="79.363" x="195.819" y="56.889">Organisation</text>
+    </g>
+    <!--cluster Brand-->
+    <g class="cluster" data-qualified-name="Brand" data-source-line="140" id="ent0006">
+      <rect fill="#FFF5E0" height="123" rx="25" ry="25" style="stroke:#FFC44D;stroke-width:3;stroke-dasharray:5,5;" width="90" x="80.5" y="178"/>
+      <path d="M131.488,181.544 L129.54,182.429 L125.5,184.265 L121.46,182.429 L119.512,181.544 L118.76,183.548 L117.201,187.702 L113.047,189.261 L111.043,190.013 L111.928,191.961 L113.764,196.001 L111.928,200.041 L111.043,201.989 L113.047,202.741 L117.201,204.3 L118.76,208.454 L119.512,210.458 L121.46,209.573 L125.5,207.737 L129.54,209.573 L131.488,210.458 L132.24,208.454 L133.799,204.3 L137.953,202.741 L139.957,201.989 L139.072,200.041 L137.236,196.001 L139.072,191.961 L139.957,190.013 L137.953,189.261 L133.799,187.702 L132.24,183.548 L131.488,181.544 L131.488,181.544" fill="#FFF"/>
+      <path d="M125.5,186.461 L130.367,184.25 L132.245,189.255 L137.25,191.133 L135.039,196 L137.25,200.867 L132.245,202.745 L130.367,207.75 L125.5,205.539 L120.633,207.75 L118.755,202.745 L113.75,200.867 L115.961,196 L113.75,191.133 L118.755,189.255 L120.633,184.25 L125.5,186.461" fill="#FFA500"/>
+      <path d="M125.5,190 A6,6 0 1 1 125.5,202 A6,6 0 1 1 125.5,190 M125.5,188 A8.01,8.01 0 0 0 117.5,196 A8.01,8.01 0 0 0 125.5,204 A8.01,8.01 0 0 0 133.5,196 A8.01,8.01 0 0 0 125.5,188 L125.5,188" fill="#FFF"/>
+      <text fill="#101010" font-size="14" font-weight="700" textLength="37.363" x="106.819" y="222.889">Brand</text>
+    </g>
+    <!--cluster Product-->
+    <g class="cluster" data-qualified-name="Product" data-source-line="140" id="ent0008">
+      <rect fill="#F9E5FF" height="123" rx="25" ry="25" style="stroke:#DB73FF;stroke-width:3;stroke-dasharray:5,5;" width="100" x="215.5" y="178"/>
+      <path d="M275.5,201.774 L275.5,190.227 L265.5,184.453 L255.5,190.226 L255.5,201.773 L265.5,207.547 L275.5,201.774" fill="#CF00FF"/>
+      <path d="M276.5,188.494 L266.5,182.721 L265.5,182.144 L264.5,182.721 L254.5,188.494 L253.5,189.071 L253.5,202.927 L254.5,203.504 L264.5,209.277 L265.5,209.854 L266.5,209.277 L276.5,203.504 L277.5,202.927 L277.5,189.071 L276.5,188.494 M255.541,190.203 L255.5,190.273 L255.5,190.226 L255.541,190.203" fill="#FFF"/>
+      <path d="M265.5,184.453 L274.541,189.673 L265.5,194.892 L256.459,189.673 L265.5,184.453 M255.5,201.773 L255.5,191.428 L264.5,196.624 L264.5,206.97 L255.5,201.773 M266.5,206.97 L266.5,196.624 L275.5,191.428 L275.5,201.773 L266.5,206.97" fill="#CF00FF"/>
+      <text fill="#101010" font-size="14" font-weight="700" textLength="48.212" x="241.394" y="222.889">Product</text>
+    </g>
+    <!--entity experience-->
+    <g class="entity" data-qualified-name="experience" data-source-line="140" id="ent0001">
+      <rect fill="#FFE0EB" height="66" rx="25" ry="25" style="stroke:#FF73A4;stroke-width:3;stroke-dasharray:5,5;" width="90.087" x="149.5" y="344"/>
+      <path d="M199.711,357.282 C197.331,357.282 195.767,358.084 194.544,359.153 C193.321,358.083 191.757,357.282 189.377,357.282 C188.992,357.282 188.584,357.303 188.163,357.344 C186.497,357.507 184.897,358.325 183.657,359.647 C182.294,361.1 181.48,363.046 181.301,365.275 L181.295,365.355 L181.295,366.235 L181.301,366.313 C181.467,368.442 182.522,370.595 184.72,373.296 C186.595,375.6 189.222,378.225 192.546,381.548 L193.13,382.132 L194.544,383.546 L195.958,382.132 L196.545,381.545 C199.869,378.223 202.494,375.598 204.369,373.295 C206.567,370.595 207.622,368.441 207.788,366.313 L207.794,366.235 L207.794,365.355 L207.788,365.275 C207.609,363.047 206.794,361.101 205.431,359.647 C204.191,358.324 202.59,357.506 200.924,357.344 C200.504,357.303 200.095,357.282 199.711,357.282 L199.711,357.282" fill="#FFF"/>
+      <path d="M199.711,359.282 C200.029,359.282 200.368,359.299 200.73,359.334 C202.934,359.549 205.483,361.567 205.794,365.435 L205.794,366.157 C205.505,369.858 201.465,373.796 194.544,380.717 C187.623,373.796 183.583,369.858 183.294,366.157 L183.294,365.435 C183.604,361.568 186.153,359.549 188.357,359.334 C188.719,359.299 189.058,359.282 189.376,359.282 C191.923,359.282 193.145,360.383 194.543,362.049 C195.942,360.382 197.163,359.282 199.71,359.282" fill="#FF0056"/>
+      <text fill="#101010" font-size="14" textLength="70.087" x="159.5" y="396.889">Experience</text>
+    </g>
+    <!--entity architecture-->
+    <g class="entity" data-qualified-name="architecture" data-source-line="140" id="ent0002">
+      <rect fill="#E0E9FF" height="66" rx="25" ry="25" style="stroke:#8CAEFF;stroke-width:3;stroke-dasharray:5,5;" width="94.638" x="382" y="69"/>
+      <path d="M429.319,80.172 L427.905,81.586 L417.905,91.586 L417.319,92.172 L417.319,108.5 L441.319,108.5 L441.319,92.172 L440.733,91.586 L430.733,81.586 L429.319,80.172 L429.319,80.172" fill="#FFF"/>
+      <path d="M439.319,93 L429.319,83 L419.319,93 L419.319,106.5 L439.319,106.5 L439.319,93" fill="#034CEE"/>
+      <text fill="#101010" font-size="14" textLength="74.638" x="392" y="121.889">Architecture</text>
+    </g>
+    <!--entity identity-->
+    <g class="entity" data-qualified-name="identity" data-source-line="140" id="ent0003">
+      <rect fill="#E0FFED" height="66" rx="25" ry="25" style="stroke:#4DFF9A;stroke-width:3;stroke-dasharray:5,5;" width="65.063" x="6" y="69"/>
+      <path d="M39.531,81 C32.914,81 27.531,86.383 27.531,93 A11.93,11.93 0 0 0 29.795,100.006 C27.423,100.129 25.531,102.098 25.531,104.5 C25.531,106.981 27.55,109 30.031,109 C32.512,109 34.531,106.981 34.531,104.5 C34.531,104.292 34.516,104.088 34.488,103.887 C36.022,104.6 37.731,105 39.531,105 C46.148,105 51.531,99.617 51.531,93 C51.531,86.383 46.148,81 39.531,81" fill="#FFF"/>
+      <ellipse cx="39.531" cy="93" fill="#00EA4E" rx="10" ry="10" style="stroke:#00EA4E;stroke-width:3;stroke-dasharray:5,5;"/>
+      <ellipse cx="30.031" cy="104.5" fill="#00EA4E" rx="2.5" ry="2.5" style="stroke:#00EA4E;stroke-width:3;stroke-dasharray:5,5;"/>
+      <text fill="#101010" font-size="14" textLength="45.063" x="16" y="121.889">Identity</text>
+    </g>
+    <!--entity organisation-->
+    <g class="entity" data-qualified-name="org.organisation" data-source-line="145" id="ent0005">
+      <rect fill="#4DE2FF" height="34" style="stroke:#FFF;stroke-width:2;" width="99.363" x="186" y="85"/>
+      <text fill="#101010" font-size="14" textLength="79.363" x="196" y="105.889">Organisation</text>
+    </g>
+    <!--entity brand-->
+    <g class="entity" data-qualified-name="Brand.brand" data-source-line="145" id="ent0007">
+      <rect fill="#FFC44D" height="34" style="stroke:#FFF;stroke-width:2;" width="57.363" x="97" y="251"/>
+      <text fill="#101010" font-size="14" textLength="37.363" x="107" y="271.889">Brand</text>
+    </g>
+    <!--entity product-->
+    <g class="entity" data-qualified-name="Product.product" data-source-line="145" id="ent0009">
+      <rect fill="#DB73FF" height="34" style="stroke:#FFF;stroke-width:2;" width="68.212" x="231.5" y="251"/>
+      <text fill="#101010" font-size="14" textLength="48.212" x="241.5" y="271.889">Product</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0003" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="47.668,135.022,46.674,144.821,49.227,139.773,54.275,142.327,47.668,135.022" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M113.063,250.944 C99.072,232.302 76.366,200.236 61.5,170 C56.074,158.964 52.936,151.077 49.227,139.773" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="106.113" x="63.5" y="165.111">represents/evokes</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0001" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="149.205,351.822,144.55,343.143,145.256,348.755,139.643,349.461,149.205,351.822" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M122.113,285.164 C120.45,297.115 120,313.428 126.5,326 C131.749,336.153 136.163,341.694 145.256,348.755" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="112.694" x="128.5" y="321.111">Supports/appears in</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="71.031,102,80.031,106,76.031,102,80.031,98,71.031,102" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M76.031,102 C107.286,102 149.942,102 185.924,102" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="93.113" x="82" y="94.111">pursues/authors</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="381.928,102,372.928,98,376.928,102,372.928,106,381.928,102" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M285.208,102 C314.958,102 347.566,102 376.928,102" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="75.725" x="296" y="94.111">has/performs</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0001" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="228.682,343.891,237.645,339.807,231.998,340.149,231.657,334.502,228.682,343.891" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M260.857,285.024 C256.994,296.904 250.789,313.188 242.5,326 C238.513,332.163 237.016,334.485 231.998,340.149" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="98.881" x="253.5" y="321.111">serves/features in</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0009" data-link-type="association" id="lnk17">
+      <path d="M397.49,135.01 C362.813,169.687 308.85,223.65 281.931,250.569" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="93.113" x="377.5" y="165.111">requires/creates</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="136.454,250.668,144.789,245.422,139.239,246.516,138.145,240.966,136.454,250.668" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M224.752,119.024 C203.777,150.296 160.379,214.999 139.239,246.516" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="34.044" x="202.5" y="165.111">builds</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0009" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="262.513,250.668,264.828,241.096,261.613,245.75,256.958,242.535,262.513,250.668" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M238.431,119.024 C244.152,150.296 255.847,214.233 261.613,245.75" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="38.269" x="249.5" y="165.111">makes</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="154.169,268,163.169,272,159.169,268,163.169,264,154.169,268" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M159.169,268 C181.568,268 207.764,268 231.437,268" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="56.388" x="164.75" y="260.111">embodies</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+' no common.puml loaded, text alignment remains left
+
+!include <material7.4.47/AccountUser/AccountAlert>
+!include <material7.4.47/Emoji/all>
+
+package "Possible image samples\nwithout additional dependencies" {
+  label "explicit loaded sprite in text\n<$mdiAccountAlert>" as accountAlertSprite
+
+  label "sprite loaded via collection Emoji/all.puml in text\n<$mdiEmoticonLol>" as emoticonLol
+}
+
+@enduml

@@ -1,0 +1,39 @@
+---
+output: svg
+---
+@startuml
+
+' Activate new C4 style
+!$NEW_C4_STYLE = 1
+' (stdlib <C4/C4_Container> does not yet support new C4 style, it has to be included via orig URL)
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+' convert it with additional command line argument -DMDI_TEST_INCLUDE="./.." to use locally
+!if %variable_exists("$MDI_TEST_INCLUDE")
+  ' No common.puml loaded, text alignment remains left
+  '   If common.puml should be included (which is typically not required in C4 context) then any text alignment 
+  '   of ../common.puml can be avoided via `!$MDI_ALIGNMENT=""` before the include
+  ' !$MDI_ALIGNMENT=""
+  ' !include %get_variable_value("$MDI_TEST_INCLUDE")/common.puml
+  !include %get_variable_value("$MDI_TEST_INCLUDE")/AccountUser/AccountAlert.puml
+  !include %get_variable_value("$MDI_TEST_INCLUDE")/Emoji/all.puml
+!else
+  ' No common.puml loaded, text alignment remains left
+  '   If common.puml should be included (which is typically not required in C4 context) then any text alignment 
+  '   of ../common.puml can be avoided via `!$MDI_ALIGNMENT=""` before the include
+  ' !$MDI_ALIGNMENT=""
+  ' !include https://raw.githubusercontent.com/plantuml/plantuml-stdlib/refs/heads/master/stdlib/material7.4.47/common.puml
+  !include https://raw.githubusercontent.com/plantuml/plantuml-stdlib/refs/heads/master/stdlib/material7.4.47/AccountUser/AccountAlert.puml
+  !include https://raw.githubusercontent.com/plantuml/plantuml-stdlib/refs/heads/master/stdlib/material7.4.47/Emoji/all.puml
+!endif
+
+!$text="Image sample\nwith C4 and new Style (!NEW"+"_C4_STYLE = 1)"
+package "$text" {
+
+  Person(A, $sprite="mdiAccountAlert", $label="Person A")
+  Person(B, $sprite="mdiEmoticonNeutral", $label="Person B")
+
+  Rel(A, B, "Calls")
+}
+
+@enduml

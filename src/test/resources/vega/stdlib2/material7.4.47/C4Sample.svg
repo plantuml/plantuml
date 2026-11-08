@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="351px" preserveAspectRatio="none" style="width:136px;height:351px;background:#FFFFFF;" version="1.1" viewBox="0 0 136 351" width="136px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Image sample\nwith C4-->
+    <g class="cluster" data-qualified-name="Image sample.nwith C4" data-source-line="14" id="ent0001">
+      <path d="M16.5,4 L101.5,4 A3.75,3.75 0 0 1 104,6.5 L111,38 L125.5,38 A2.5,2.5 0 0 1 128,40.5 L128,324.5 A2.5,2.5 0 0 1 125.5,327 L16.5,327 A2.5,2.5 0 0 1 14,324.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="111" y1="38" y2="38"/>
+      <text fill="#000" font-size="14" textLength="84" x="18" y="16.889">Image sample</text>
+      <text fill="#000" font-size="14" textLength="42.875" x="38.563" y="30.889">with C4</text>
+    </g>
+    <!--entity A-->
+    <g class="entity" data-qualified-name="Image sample.nwith C4.A" data-source-line="181" id="ent0002">
+      <rect fill="#08427B" height="99.692" style="stroke:#073B6F;stroke-width:0.5;" width="81.4" x="30.5" y="59"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="50.025" x="46.188" y="78.333">«person»</text>
+      <path d="M66.892,89.615 A8.615,8.615 0 0 1 75.508,98.231 A8.615,8.615 0 0 1 66.892,106.846 A8.615,8.615 0 0 1 58.277,98.231 A8.615,8.615 0 0 1 66.892,89.615 M66.892,111.154 C76.412,111.154 84.123,115.009 84.123,119.769 L84.123,124.077 L49.662,124.077 L49.662,119.769 C49.662,115.009 57.372,111.154 66.892,111.154 M88.431,106.846 L88.431,96.077 L92.738,96.077 L92.738,109 L88.431,109 M88.431,117.615 L88.431,113.308 L92.738,113.308 L92.738,117.615 L88.431,117.615" fill="#FFF"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="50.7" x="40.5" y="145.137">Person</text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="91.2" y="145.137"> </text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="91.2" y="145.137">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="Image sample.nwith C4.B" data-source-line="181" id="ent0003">
+      <rect fill="#08427B" height="99.692" style="stroke:#073B6F;stroke-width:0.5;" width="81.4" x="30.5" y="211"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="50.025" x="46.188" y="230.333">«person»</text>
+      <path d="M71.2,237.308 A21.538,21.538 0 0 0 49.662,258.846 A21.538,21.538 0 0 0 71.2,280.385 A21.538,21.538 0 0 0 92.738,258.846 A21.538,21.538 0 0 0 71.2,237.308 M60.431,253.462 A3.231,3.231 0 0 1 63.662,250.231 A3.231,3.231 0 0 1 66.892,253.462 A3.231,3.231 0 0 1 63.662,256.692 A3.231,3.231 0 0 1 60.431,253.462 M79.815,267.462 L62.585,267.462 L62.585,263.154 L79.815,263.154 L79.815,267.462 M78.738,256.692 A3.231,3.231 0 0 1 75.508,253.462 A3.231,3.231 0 0 1 78.738,250.231 A3.231,3.231 0 0 1 81.969,253.462 A3.231,3.231 0 0 1 78.738,256.692" fill="#FFF"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="50.7" x="40.5" y="297.137">Person</text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="91.2" y="297.137"> </text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="91.2" y="297.137">B</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#666" points="71,210.774,74,202.774,68,202.774,71,210.774" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M71,159.116 C71,175.691 71,186.19 71,202.774" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="26.775" x="73" y="188.333">Calls</text>
+    </g>
+  </g>
+</svg>

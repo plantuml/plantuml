@@ -1,0 +1,46 @@
+---
+output: svg
+---
+@startuml
+footer Kubernetes Plant-UML
+scale max 1024 width
+
+skinparam nodesep 10
+skinparam ranksep 10
+
+!include <k8s/Common>
+!include <k8s/Simplified>
+!include <k8s/OSS/all>
+
+actor "User" as userAlias
+left to right direction
+
+' Kubernetes Components
+Cluster_Boundary(cluster, "Kubernetes Cluster") {
+    Namespace_Boundary(ns, "Back End") {
+        KubernetesIng(ingress, "your.domain.com", "")
+        KubernetesSvc(svc, "service", "")
+        KubernetesPod(pod1, "pod1", "")
+        KubernetesPod(pod2, "pod2", "")
+        KubernetesPod(pod3, "pod3", "")
+
+        KubernetesRs(rs,"","")
+        KubernetesDeploy(deploy,"deployment","")
+        KubernetesHpa(hpa, "HPA", "")
+    }
+}
+
+Rel(userAlias,ingress," ")
+Rel(ingress,svc," ")
+
+Rel(svc,pod1," ")
+Rel(svc,pod2," ")
+Rel(svc,pod3," ")
+
+Rel_U(rs,pod1," ")
+Rel_U(rs,pod2," ")
+Rel_U(rs,pod3," ")
+
+Rel_U(deploy,rs, " ")
+Rel_U(hpa,deploy, " ")
+@enduml

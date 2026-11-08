@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="724px" preserveAspectRatio="none" style="width:545px;height:724px;background:#FFFFFF;" version="1.1" viewBox="0 0 545 724" width="545px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster package Floyd_Tuner is-->
+    <g class="cluster" data-qualified-name="package Floyd_Tuner is" data-source-line="304" id="ent0006">
+      <rect fill="#F6F6F6" height="468" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.5;" width="211" x="299.5" y="158"/>
+      <path d="M455.25,158 L455.25,169 L445.25,179 L299.5,179" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <text fill="#000" font-family="CMU Bright Bold" font-size="14" textLength="141.75" x="304.5" y="171.889">package Floyd_Tuner is</text>
+    </g>
+    <!--entity User-->
+    <g class="entity" data-qualified-name="User" data-source-line="3" id="ent0001">
+      <ellipse cx="153.675" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M153.675,28.5 L153.675,55.5 M140.675,36.5 L166.675,36.5 M153.675,55.5 L140.675,70.5 M153.675,55.5 L166.675,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="25.35" x="141" y="83.333">User</text>
+    </g>
+    <!--entity String_Instrument-->
+    <g class="entity" data-qualified-name="String_Instrument" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.575" x="6" y="200"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="94.575" x="18" y="221.333">String_Instrument</text>
+    </g>
+    <!--entity Screen-->
+    <g class="entity" data-qualified-name="Screen" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.025" x="163.5" y="476"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="38.025" x="175.5" y="497.333">Screen</text>
+    </g>
+    <!--entity Touch_Screen-->
+    <g class="entity" data-qualified-name="Touch_Screen" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="102.075" x="181.5" y="200"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="78.075" x="193.5" y="221.333">Touch_Screen</text>
+    </g>
+    <!--entity Microphone-->
+    <g class="entity" data-qualified-name="Microphone" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.7" x="116" y="672"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="62.7" x="128" y="693.333">Microphone</text>
+    </g>
+    <!--class Main-->
+    <g class="entity" data-qualified-name="package Floyd_Tuner is.Main" data-source-line="250" id="ent0007">
+      <rect fill="#FFF" height="30" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.3;" width="60.025" x="354.5" y="203"/>
+      <rect fill="#DADADA" height="30" rx="2.5" ry="2.5" style="stroke:#DADADA;stroke-width:1.3;" width="60.025" x="354.5" y="203"/>
+      <rect fill="#DADADA" height="2.5" style="stroke:#DADADA;stroke-width:1.3;" width="60.025" x="354.5" y="230.5"/>
+      <rect fill="none" height="30" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.3;" width="60.025" x="354.5" y="203"/>
+      <ellipse cx="368.5" cy="218" fill="#9AF" rx="10" ry="10" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="363.5" y="223">s</text>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="26.025" x="383.5" y="221.333">Main</text>
+    </g>
+    <!--class View-->
+    <g class="entity" data-qualified-name="package Floyd_Tuner is.View" data-source-line="250" id="ent0008">
+      <rect fill="#FFF" height="30" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.3;" width="60.1" x="315.5" y="378"/>
+      <rect fill="#DADADA" height="30" rx="2.5" ry="2.5" style="stroke:#DADADA;stroke-width:1.3;" width="60.1" x="315.5" y="378"/>
+      <rect fill="#DADADA" height="2.5" style="stroke:#DADADA;stroke-width:1.3;" width="60.1" x="315.5" y="405.5"/>
+      <rect fill="none" height="30" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.3;" width="60.1" x="315.5" y="378"/>
+      <ellipse cx="329.5" cy="393" fill="#FF3" rx="10" ry="10" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="324.5" y="398">P</text>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="26.1" x="344.5" y="396.333">View</text>
+    </g>
+    <!--class Controller-->
+    <g class="entity" data-qualified-name="package Floyd_Tuner is.Controller" data-source-line="250" id="ent0009">
+      <rect fill="#FFF" height="30" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.3;" width="86.05" x="341.5" y="292"/>
+      <rect fill="#DADADA" height="30" rx="2.5" ry="2.5" style="stroke:#DADADA;stroke-width:1.3;" width="86.05" x="341.5" y="292"/>
+      <rect fill="#DADADA" height="2.5" style="stroke:#DADADA;stroke-width:1.3;" width="86.05" x="341.5" y="319.5"/>
+      <rect fill="none" height="30" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.3;" width="86.05" x="341.5" y="292"/>
+      <ellipse cx="355.5" cy="307" fill="#FF3" rx="10" ry="10" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="350.5" y="312">P</text>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="52.05" x="370.5" y="310.333">Controller</text>
+    </g>
+    <!--class Signal_Analyzer-->
+    <g class="entity" data-qualified-name="package Floyd_Tuner is.Signal_Analyzer" data-source-line="250" id="ent0010">
+      <rect fill="#FFF" height="30" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.3;" width="120.85" x="316" y="479"/>
+      <rect fill="#DADADA" height="30" rx="2.5" ry="2.5" style="stroke:#DADADA;stroke-width:1.3;" width="120.85" x="316" y="479"/>
+      <rect fill="#DADADA" height="2.5" style="stroke:#DADADA;stroke-width:1.3;" width="120.85" x="316" y="506.5"/>
+      <rect fill="none" height="30" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.3;" width="120.85" x="316" y="479"/>
+      <ellipse cx="330" cy="494" fill="#FF3" rx="10" ry="10" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="325" y="499">P</text>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="86.85" x="345" y="497.333">Signal_Analyzer</text>
+    </g>
+    <!--class Sample_Collector-->
+    <g class="entity" data-qualified-name="package Floyd_Tuner is.Sample_Collector" data-source-line="250" id="ent0011">
+      <rect fill="#FFF" height="30" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.3;" width="128.8" x="316" y="580"/>
+      <rect fill="#DADADA" height="30" rx="2.5" ry="2.5" style="stroke:#DADADA;stroke-width:1.3;" width="128.8" x="316" y="580"/>
+      <rect fill="#DADADA" height="2.5" style="stroke:#DADADA;stroke-width:1.3;" width="128.8" x="316" y="607.5"/>
+      <rect fill="none" height="30" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.3;" width="128.8" x="316" y="580"/>
+      <ellipse cx="330" cy="595" fill="#FF3" rx="10" ry="10" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="325" y="600">P</text>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="94.8" x="345" y="598.333">Sample_Collector</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="association" id="lnk12">
+      <path d="M168.174,81.834 C184.684,116.526 210.925,171.665 224.211,199.582" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="45.3" x="204.5" y="131.333">interacts</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="association" id="lnk13">
+      <path d="M384.5,233.366 C384.5,249.583 384.5,275.796 384.5,291.901" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="29.25" x="388.5" y="267.333">starts</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk14">
+      <polygon fill="#000" points="182.42,475.653,180.984,465.909,179.745,471.429,174.226,470.19,182.42,475.653" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M153.5,88.25 C153.5,121.893 153.5,172.762 153.5,217 C153.5,217 153.5,217 153.5,394 C153.5,424.509 167.651,452.334 179.745,471.429" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="19.35" x="157.5" y="310.333">see</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk15">
+      <polygon fill="#000" points="68.828,199.881,74.646,191.934,69.889,194.995,66.828,190.237,68.828,199.881" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M138.71,63.677 C127.414,74.053 112.188,89.642 102.5,106 C84.385,136.586 74.807,172.339 69.889,194.995" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="28.05" x="107.138" y="119.333">plays</text>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" x="117.15" y="131.333">&amp;</text>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="29.325" x="106.5" y="143.333">tunes</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0009" data-link-type="dependency" id="lnk16">
+      <polygon fill="#000" points="350.838,291.94,344.255,284.614,346.273,289.898,340.989,291.917,350.838,291.94" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M255.895,236.175 C271.959,247.594 294.002,262.54 314.5,274 C326.047,280.456 334.567,284.662 346.273,289.898" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="58.65" x="318.5" y="267.333">commands</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0011" data-link-type="dependency" id="lnk17">
+      <polygon fill="#000" points="419.767,579.904,429.585,579.13,424.162,577.521,425.772,572.098,419.767,579.904" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M419.886,322.037 C443.15,333.349 471.744,351.729 485.5,378 C491.685,389.812 487.31,394.79 485.5,408 C475.855,478.405 487.366,506.892 442.5,562 C436.458,569.421 432.637,572.926 424.162,577.521" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="49.35" x="486.5" y="445.333">manages</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0010" data-link-type="dependency" id="lnk18">
+      <polygon fill="#000" points="392.615,478.892,401.697,475.082,396.043,475.252,395.873,469.597,392.615,478.892" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M397.057,322.312 C400.857,327.522 404.54,333.69 406.5,340 C422.056,390.084 424.695,408.813 406.5,458 C403.612,465.806 401.547,469.406 396.043,475.252" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="55.35" x="422.5" y="396.333">configures</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0008" data-link-type="dependency" id="lnk19">
+      <polygon fill="#000" points="340.196,377.984,341.479,368.219,338.778,373.189,333.807,370.488,340.196,377.984" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M356.937,322.016 C350.361,326.775 344.186,332.761 340.5,340 C334.491,351.8 335.544,362.259 338.778,373.189" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="58.65" x="344.5" y="353.333">commands</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0003" data-link-type="association" id="lnk20">
+      <path d="M323.865,408.184 C296.628,426.042 249.875,456.694 220.659,475.849" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="33.3" x="301.5" y="445.333">output</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0010" data-link-type="association" id="lnk21">
+      <path d="M346.504,408.09 C347.773,421.302 350.557,441.447 356.5,458 C359.101,465.246 363.16,472.727 366.943,478.903" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="24" x="369.688" y="439.333">read</text>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="42.375" x="360.5" y="451.333">results &gt;</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0011" data-link-type="association" id="lnk22">
+      <path d="M377.073,509.184 C377.834,528.004 379.168,561.035 379.928,579.842" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="24" x="397.375" y="543.333">read</text>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="51.75" x="383.5" y="555.333">samples &gt;</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0005" data-link-type="dependency" id="lnk23">
+      <polygon fill="#000" points="200.151,671.893,209.998,672.089,204.76,669.954,206.895,664.716,200.151,671.893" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M346.935,610.125 C307.57,626.69 246.955,652.198 204.76,669.954" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="25.425" x="294.5" y="647.333">ADC</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="association" id="lnk24">
+      <path d="M68.664,236.265 C71.594,253.771 75.5,281.674 75.5,306 C75.5,306 75.5,306 75.5,596 C75.5,629.07 105.113,655.656 129.174,671.799" fill="none" style="stroke:#000;stroke-width:0.8;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-family="CMU Bright Roman" font-size="12" textLength="45.975" x="79.5" y="445.333">captures</text>
+    </g>
+  </g>
+</svg>
