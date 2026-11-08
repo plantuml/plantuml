@@ -340,7 +340,17 @@ public class TContext {
 			this.simulatePlain(memory, s);
 			return null;
 		} else if (type == TLineType.PYTHON) {
-			this.executePython(s);
+			final List<StringLocated> legacyCalls = legacyCalls(s);
+			if (legacyCalls == null) {
+				this.executePython(s);
+			} else {
+				// as before Python: plain lines in which the legacy preprocessor calls the function
+				for (StringLocated call : legacyCalls)
+					if (ftype == TFunctionType.RETURN_FUNCTION)
+						this.simulatePlain(memory, call);
+					else
+						this.addPlain(memory, call);
+			}
 			return null;
 		} else if (type == TLineType.AFFECTATION_DEFINE) {
 			this.executeAffectationDefine(memory, s);
@@ -385,6 +395,36 @@ public class TContext {
 			functionsSet.setReservedNames(name -> python.isMacro(name));
 		}
 		return python;
+	}
+
+	/**
+	 * The lines of a Python chunk when every one of them is "!name(...)" where
+	 * name is a legacy function or procedure declared in the diagram, or null.
+	 * The standard library writes such calls ("!__attr_line()" in adaml): before
+	 * Python they were plain lines, and they stay so. The decision is taken
+	 * here, when the chunk runs, because the chunk is built before the legacy
+	 * declarations of the file are read.
+	 */
+	private List<StringLocated> legacyCalls(StringLocated chunk) {
+		final List<StringLocated> lines = pythonSources.get(chunk);
+		if (lines == null || lines.isEmpty())
+			return null;
+		for (StringLocated line : lines)
+			if (isLegacyCall(line.getString()) == false)
+				return null;
+		return lines;
+	}
+
+	private boolean isLegacyCall(String line) {
+		final String s = line.trim();
+		if (s.startsWith("!") == false)
+			return false;
+		int end = 1;
+		while (end < s.length() && (Character.isLetterOrDigit(s.charAt(end)) || s.charAt(end) == '_'))
+			end++;
+		if (end == 1 || end >= s.length() || s.charAt(end) != '(')
+			return false;
+		return functionsSet.doesFunctionExist(s.substring(1, end));
 	}
 
 	private void executePython(StringLocated s) throws EaterException {

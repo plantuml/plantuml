@@ -762,6 +762,15 @@ follows, in this order:
    the whole standard library: none of its 463,812 lines that start with `!`
    changes classification with this rule.
 
+   One exception is decided when the lines run, not when they are classified:
+   a `!name(...)` line where `name` is a legacy function or procedure declared
+   in the diagram is a plain line, as before Python (the legacy preprocessor
+   calls the function and the `!` stays in the text, which is what the
+   standard library expects: `!__attr_line()` in adaml). It applies to a run
+   of Python lines made only of such calls; a run that mixes them with real
+   Python is Python. **[implemented]** (`TContext.legacyCalls`; tests
+   `legacy/procedure_called_with_bang` and `legacy/adaml_constant`)
+
 The main risk is a typo: `!if x == 1` without the colon is read as legacy, and
 the resulting error would be confusing. **[implemented]** When the legacy
 preprocessor fails on a `!if`, `!while` or `!else` line, in a diagram that has
