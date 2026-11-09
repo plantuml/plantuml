@@ -49,6 +49,8 @@ import org.luaj.vm2.python.PyError;
 import org.luaj.vm2.python.PyModule;
 import org.luaj.vm2.python.PySyntaxError;
 
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsFlags;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.tim.builtin.Feature;
@@ -72,6 +74,8 @@ import net.sourceforge.plantuml.text.StringLocated;
  * <code>puml.filedate</code> (the values of <code>%filename()</code>,
  * <code>%dirpath()</code> and <code>%filedate()</code>, empty when unknown),
  * <code>puml.theme()</code> is a dict (the metadata of the current theme), <code>puml.args</code> is a dict of the variables defined from outside,
+ * <code>puml.newline()</code>, <code>n()</code>, <code>breakline()</code>, <code>tab()</code>, <code>left_align()</code>,
+ * <code>right_align()</code> and <code>backslash()</code> return the special characters of the legacy functions of the same name,
  * <code>puml.metadata</code> a dict read from the YAML header of the diagram
  * (<code>---</code> lines after <code>@startuml</code>; every scalar is a str).
  */
@@ -141,6 +145,17 @@ final class PythonRunner {
 			warnings.accept(new Warning(lines));
 			return Builtin.none();
 		});
+		// the special characters of %newline(), %n(), %breakline(), %tab(), %left_align(),
+		// %right_align() and %backslash(), with the same names and the same values
+		final String newline = JawsFlags.USE_BLOCK_E1_IN_NEWLINE_FUNCTION ? "" + Jaws.BLOCK_E1_NEWLINE : "\n";
+		final String breakline = JawsFlags.USE_BLOCK_E1_IN_NEWLINE_FUNCTION ? "" + Jaws.BLOCK_E1_BREAKLINE : "\n";
+		putConstant(puml, "newline", newline);
+		putConstant(puml, "n", newline);
+		putConstant(puml, "breakline", breakline);
+		putConstant(puml, "tab", "" + Jaws.BLOCK_E1_REAL_TABULATION);
+		putConstant(puml, "left_align", "" + Jaws.BLOCK_E1_NEWLINE_LEFT_ALIGN);
+		putConstant(puml, "right_align", "" + Jaws.BLOCK_E1_NEWLINE_RIGHT_ALIGN);
+		putConstant(puml, "backslash", "" + Jaws.BLOCK_E1_REAL_BACKSLASH);
 		// the same numbers as %random: puml.random() is 0 or 1, puml.random(n) is in [0, n),
 		// puml.random(a, b) is in [a, b); not the same from one run to the next
 		puml.put("random", (in, args) -> random(args));
@@ -181,6 +196,15 @@ final class PythonRunner {
 	}
 
 	/** The only argument of a puml function, which must be a str. */
+	// puml.<name>(): a function without argument that returns the same string every time
+	private static void putConstant(PyModule puml, String name, String value) {
+		puml.put(name, (in, args) -> {
+			if (args.length != 0)
+				throw Builtin.typeError(name + "() takes no argument (" + args.length + " given)");
+			return value;
+		});
+	}
+
 	private static String string(String function, Object[] args) {
 		if (args.length != 1)
 			throw Builtin.typeError(function + "() takes exactly 1 argument (" + args.length + " given)");

@@ -1,0 +1,17 @@
+---
+output: preproc
+---
+@startuml
+' EXPECT (preproc): these functions take no argument, like the legacy ones
+' title TypeError TypeError
+!r = []
+!try:
+!    puml.newline(1)
+!except TypeError:
+!    r.append("TypeError")
+!try:
+!    puml.backslash("a")
+!except TypeError:
+!    r.append("TypeError")
+title !{' '.join(r)}
+@enduml

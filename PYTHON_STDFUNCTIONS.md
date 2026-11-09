@@ -218,6 +218,28 @@ security profile of PlantUML.
   profile) raises a `RuntimeError` (`cannot read 'name'`).
 - There is no other access to files: no `open`, and nothing can be written.
 
+### 4.5 Special characters
+
+| Call | Value |
+|---|---|
+| `puml.newline()`, `puml.n()` | a line break inside a text, as `%newline()` and `%n()` |
+| `puml.breakline()` | a line break, as `%breakline()` |
+| `puml.tab()` | a tabulation, as `%tab()` |
+| `puml.left_align()`, `puml.right_align()` | the end of a line that is left or right aligned, as `%left_align()` and `%right_align()` |
+| `puml.backslash()` | a backslash that PlantUML does not read as an escape, as `%backslash()` |
+
+These functions take no argument (otherwise: `TypeError`) and return a `str`,
+the same one as the legacy function of the same name. PlantUML understands
+these special characters later, when it reads the text of the diagram:
+
+```plantuml
+@startuml
+!x = 1
+note over A : first!{puml.newline()}second
+note over A : left!{puml.left_align()}
+@enduml
+```
+
 ## 5. Module `color`
 
 The colour functions of the legacy preprocessor, with the same results. A
@@ -455,17 +477,18 @@ preprocessor writes `["a","b"]`, `json.dumps` writes `["a", "b"]`, and
 
 ### 10.7 Special characters
 
-`%newline()`, `%n()`, `%breakline()`, `%tab()`, `%left_align()`,
-`%right_align()` and `%backslash()` give special characters that PlantUML
-understands later. They have **no Python equivalent**:
+| Legacy | Python |
+|---|---|
+| `%newline()`, `%n()` | `puml.newline()`, `puml.n()` |
+| `%breakline()` | `puml.breakline()` |
+| `%tab()` | `puml.tab()` |
+| `%left_align()`, `%right_align()` | `puml.left_align()`, `puml.right_align()` |
+| `%backslash()` | `puml.backslash()` |
 
-- in a text line outside a Python block they can still be written, also next to
-  an interpolation: `note over A : !{first}%newline()!{second}`;
-- in text produced by Python, use the notation of PlantUML itself, for instance
-  `\n` in a label: `emit("note over A : first\\nsecond")`.
-
-A real newline in a string given to `emit` starts a new line of the diagram
-source.
+The names are the same and the functions give the same characters, see
+[4.5](#45-special-characters). The legacy `%function()` can still be written in
+a text line outside a Python block, also next to an interpolation:
+`note over A : !{first}%newline()!{second}`.
 
 ### 10.8 Variables, functions and procedures
 
