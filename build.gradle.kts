@@ -216,6 +216,16 @@ tasks.compileJava {
 	options.release.set(Integer.parseInt(javacRelease))
 }
 
+// Buildship/Eclipse imports the TeaVM output directories as required libraries,
+// even before anything has generated them. Keep them present after `gradlew eclipse`
+// so Eclipse does not report build path errors on a fresh checkout or after clean.
+tasks.named("eclipse") {
+	doLast {
+		layout.buildDirectory.dir("classes/java/teavm").get().asFile.mkdirs()
+		layout.buildDirectory.dir("resources/teavm").get().asFile.mkdirs()
+	}
+}
+
 // Local Super-Linter (same as the CI workflow): gradlew superLinter
 apply(from = "tools/linters/superlinter.gradle.kts")
 
