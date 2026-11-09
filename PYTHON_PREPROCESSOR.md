@@ -281,18 +281,23 @@ syntax its users already know.
 ```plantuml
 @startuml
 !python
+PALETTE = {"web": "#FFCCCC", "api": "#FFE5CC", "db": "#CCE5FF"}
+
 @macro
-def color(n):
-    return "#FFCCCC"
+def color(name):
+    return PALETTE.get(name.lower(), "#EEEEEE")
 
 @macro("$box")
 def box(alias, label, tags=""):
-    emit(f'rectangle "{label}" as {alias}')
+    stereotype = f" <<{tags}>>" if tags else ""
+    emit(f'rectangle "{label}" as {alias}{stereotype} {color(alias)}')
 !endpy
 
 rectangle "Web" as web color(web)
+$box(api, "API")
 $box(db, "Database", $tags="v1")
-web --> db
+web --> api
+api --> db
 @enduml
 ```
 
