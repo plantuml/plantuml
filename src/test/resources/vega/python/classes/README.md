@@ -1,6 +1,6 @@
 # Vega tests of Python classes in diagrams
 
-Classes of text Python (section 3.4 of `PYTHON_PREPROCESSOR.md`) used to build a
+Classes of text Python (section 9.4 of `PYTHON_PREPROCESSOR.md`) used to build a
 diagram. The tests avoid `emit`: the text is written as text lines with
 `!{expr}`, in `!for` loops, or in the body of a method (a method that contains
 text lines emits them when it is called). The expected output is also written

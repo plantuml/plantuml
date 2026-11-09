@@ -42,7 +42,7 @@ import java.util.Set;
 /**
  * Tells a legacy preprocessor line from a Python line, by hand (no regex).
  * Every line given here is already known to contain a <code>!</code>; the
- * rules are those of section 11.4 of PYTHON_PREPROCESSOR.md.
+ * rules are those of section 6 of PYTHON_PREPROCESSOR.md.
  */
 public final class PythonLine {
 
@@ -50,7 +50,7 @@ public final class PythonLine {
 	}
 
 	/**
-	 * The escape of a text line that starts with "!" (section 12.1 of
+	 * The escape of a text line that starts with "!" (section 8 of
 	 * PYTHON_PREPROCESSOR.md): "!!important" is the text "!important". The first
 	 * "!" is removed when the line starts, after its blanks, with "!!" not
 	 * followed by "{" ("!!{" is the escape of an interpolation, which gives
@@ -155,7 +155,7 @@ public final class PythonLine {
 			"dump_memory", "option", "assert", "local", "pragma", "assume", "exit")));
 
 	/**
-	 * The last rule (section 11.4 of PYTHON_PREPROCESSOR.md): a "!" followed,
+	 * The last rule (section 6 of PYTHON_PREPROCESSOR.md): a "!" followed,
 	 * after optional blanks, by an identifier, a digit, "(" or "[" is Python:
 	 * "!x = 1", "!x == 1", "!f(1)", "!1 + 1", "!(a, b) = c", "![1, 2]". With
 	 * blanks ("! x = 1") it is Python code indented by the gutter rule, so an

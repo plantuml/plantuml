@@ -20,7 +20,7 @@ diagram (no Python) with something that the Python layer could misread:
 - legacy conditions with `!=`, `%not`, `!ifdef` / `!ifndef` / `!undef`.
 
 Do not add here what differs **by design** between the two branches (section
-12.1 of `PYTHON_PREPROCESSOR.md`): a text line that starts with `!` and a word
+8 of `PYTHON_PREPROCESSOR.md`): a text line that starts with `!` and a word
 (`!important`), a line that starts with `!!`, a valid `!{expr}`, a `!python` or
 `!endpy` line, a block without its end (`!if` without `!endif`, ...), and
 `%version()`.

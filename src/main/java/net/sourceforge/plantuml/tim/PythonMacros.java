@@ -43,7 +43,7 @@ import org.luaj.vm2.python.Builtin;
 import org.luaj.vm2.python.Interp;
 
 /**
- * The macros of text Python (section 11.5 of PYTHON_PREPROCESSOR.md): Python
+ * The macros of text Python (section 5 of PYTHON_PREPROCESSOR.md): Python
  * functions declared with <code>@macro</code> (or <code>@puml.macro</code>) and
  * called by name from the text lines of the diagram, the way the legacy
  * <code>!define</code> and <code>!unquoted procedure</code> are called.

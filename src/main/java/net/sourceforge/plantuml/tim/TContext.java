@@ -485,7 +485,7 @@ public class TContext {
 	}
 
 	private void addPlain(TMemory memory, StringLocated s) throws EaterException {
-		// "!!text" is the text "!text" (section 12.1 of PYTHON_PREPROCESSOR.md)
+		// "!!text" is the text "!text" (section 8 of PYTHON_PREPROCESSOR.md)
 		final String unescaped = PythonLine.unescapeBang(s.getString());
 		if (unescaped.equals(s.getString()) == false)
 			s = new StringLocated(unescaped, s.getLocation(), s.getPreprocessorError());
@@ -524,7 +524,7 @@ public class TContext {
 
 	/**
 	 * Adds a text line, its Python macros replaced by their result (section
-	 * 11.5 of PYTHON_PREPROCESSOR.md): a result with several lines gives several
+	 * 5 of PYTHON_PREPROCESSOR.md): a result with several lines gives several
 	 * lines. Nothing happens until a macro is declared.
 	 */
 	private void addExpandingMacros(StringLocated line) throws EaterException {
