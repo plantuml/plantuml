@@ -146,7 +146,7 @@ final class Builtins {
 						"invalid literal for int() with base " + base + ": " + PyOps.repr(text));
 			v = v * base + d;
 			if (v > 4294967296L)
-				throw PyOps.overflow();
+				throw PyInt.overflow();
 			digits++;
 			lastDigit = true;
 		}
@@ -154,9 +154,7 @@ final class Builtins {
 			throw PyOps.err(Types.VALUE_ERROR, "invalid literal for int() with base " + base + ": " + PyOps.repr(text));
 		if (neg)
 			v = -v;
-		if (v != (int) v)
-			throw PyOps.overflow();
-		return (int) v;
+		return PyInt.check(v);
 	}
 
 	private static Object toInt(Object[] a) {
@@ -177,7 +175,7 @@ final class Builtins {
 		if (x instanceof Boolean)
 			return Integer.valueOf(PyOps.asInt(x));
 		if (x instanceof Double)
-			return Integer.valueOf(PyOps.floatToInt(((Double) x).doubleValue()));
+			return Integer.valueOf(PyInt.fromDouble(((Double) x).doubleValue()));
 		if (x instanceof String)
 			return Integer.valueOf(parseInt((String) x, 10));
 		throw PyOps.err(Types.TYPE_ERROR,
@@ -247,9 +245,7 @@ final class Builtins {
 			if (n < -10)
 				return Integer.valueOf(0);
 			long r = new BigDecimal(((Integer) x).intValue()).setScale(n, RoundingMode.HALF_EVEN).longValue();
-			if (r != (int) r)
-				throw PyOps.overflow();
-			return Integer.valueOf((int) r);
+			return PyInt.box(r);
 		}
 		if (x instanceof Double) {
 			double d = ((Double) x).doubleValue();
@@ -258,7 +254,7 @@ final class Builtins {
 					throw PyOps.err(Types.VALUE_ERROR, "cannot convert float NaN to integer");
 				if (Double.isInfinite(d))
 					throw PyOps.err(Types.OVERFLOW, "cannot convert float infinity to integer");
-				return Integer.valueOf(PyOps.floatToInt(Math.rint(d)));
+				return Integer.valueOf(PyInt.fromDouble(Math.rint(d)));
 			}
 			if (d != d || Double.isInfinite(d) || n > 400)
 				return x;
@@ -273,12 +269,7 @@ final class Builtins {
 	private static Object divmod(Object x, Object y) {
 		if (PyOps.isIntLike(x) && PyOps.isIntLike(y)) {
 			int a = PyOps.asInt(x), b = PyOps.asInt(y);
-			if (b == 0)
-				throw PyOps.err(Types.ZERO_DIVISION, "integer division or modulo by zero");
-			long q = Math.floorDiv((long) a, (long) b);
-			if (q != (int) q)
-				throw PyOps.overflow();
-			return new PyTuple(new Object[] { Integer.valueOf((int) q), Integer.valueOf((int) Math.floorMod((long) a, (long) b)) });
+			return new PyTuple(new Object[] { PyInt.floorDiv(a, b), PyInt.mod(a, b) });
 		}
 		if (PyOps.isNum(x) && PyOps.isNum(y)) {
 			double a = PyOps.asDouble(x), b = PyOps.asDouble(y);
@@ -445,10 +436,7 @@ final class Builtins {
 			if (x instanceof Double)
 				return Double.valueOf(Math.abs(((Double) x).doubleValue()));
 			if (PyOps.isIntLike(x)) {
-				int v = PyOps.asInt(x);
-				if (v == Integer.MIN_VALUE)
-					throw PyOps.overflow();
-				return Integer.valueOf(Math.abs(v));
+				return PyInt.abs(PyOps.asInt(x));
 			}
 			throw PyOps.err(Types.TYPE_ERROR, "bad operand type for abs(): '" + PyOps.typeName(x) + "'");
 		});
@@ -625,9 +613,7 @@ final class Builtins {
 		long i = start;
 		for (Object x = it.next(); x != null; x = it.next()) {
 			in.tick();
-			if (i > Integer.MAX_VALUE)
-				throw PyOps.overflow();
-			out.items.add(new PyTuple(new Object[] { Integer.valueOf((int) i++), x }));
+			out.items.add(new PyTuple(new Object[] { PyInt.box(i++), x }));
 			if (out.items.size() > PyOps.MAX_LIST)
 				throw PyOps.err(Types.MEMORY_ERROR, "sequence too large");
 		}

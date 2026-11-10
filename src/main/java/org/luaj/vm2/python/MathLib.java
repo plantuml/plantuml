@@ -45,12 +45,6 @@ final class MathLib {
 		});
 	}
 
-	private static Object box(long r) {
-		if (r != (int) r)
-			throw PyOps.overflow();
-		return Integer.valueOf((int) r);
-	}
-
 	private static boolean isClose(double a, double b, double rel, double abs) {
 		if (a == b)
 			return true;
@@ -109,7 +103,7 @@ final class MathLib {
 					x = t;
 				}
 			}
-			return PyOps.binary(Op.BIN_ADD, Integer.valueOf(0), box(g));
+			return PyOps.binary(Op.BIN_ADD, Integer.valueOf(0), PyInt.box(g));
 		});
 		put(m, "factorial", (in, a) -> {
 			Fmt0.count("factorial", a, 1);
@@ -121,10 +115,9 @@ final class MathLib {
 			long r = 1;
 			for (int i = 2; i <= n; i++) {
 				r *= i;
-				if (r != (int) r)
-					throw PyOps.overflow();
+				PyInt.check(r);
 			}
-			return box(r);
+			return PyInt.box(r);
 		});
 		put(m, "fsum", (in, a) -> {
 			Fmt0.count("fsum", a, 1);
@@ -221,19 +214,19 @@ final class MathLib {
 			Fmt0.count("floor", a, 1);
 			if (PyOps.isIntLike(a[0]))
 				return Integer.valueOf(PyOps.asInt(a[0]));
-			return Integer.valueOf(PyOps.floatToInt(Math.floor(arg(a, 0, "floor"))));
+			return Integer.valueOf(PyInt.fromDouble(Math.floor(arg(a, 0, "floor"))));
 		});
 		put(m, "ceil", (in, a) -> {
 			Fmt0.count("ceil", a, 1);
 			if (PyOps.isIntLike(a[0]))
 				return Integer.valueOf(PyOps.asInt(a[0]));
-			return Integer.valueOf(PyOps.floatToInt(Math.ceil(arg(a, 0, "ceil"))));
+			return Integer.valueOf(PyInt.fromDouble(Math.ceil(arg(a, 0, "ceil"))));
 		});
 		put(m, "trunc", (in, a) -> {
 			Fmt0.count("trunc", a, 1);
 			if (PyOps.isIntLike(a[0]))
 				return Integer.valueOf(PyOps.asInt(a[0]));
-			return Integer.valueOf(PyOps.floatToInt(arg(a, 0, "trunc")));
+			return Integer.valueOf(PyInt.fromDouble(arg(a, 0, "trunc")));
 		});
 		put(m, "isnan", (in, a) -> {
 			Fmt0.count("isnan", a, 1);

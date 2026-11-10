@@ -21,10 +21,6 @@ final class PyOps {
 		return new PyError(new PyException(type, new Object[] { message }));
 	}
 
-	static PyError overflow() {
-		return err(Types.OVERFLOW, "integer overflow (this interpreter has 32-bit integers)");
-	}
-
 	static PyType typeOf(Object o) {
 		if (o instanceof Integer)
 			return Types.INT;
@@ -132,90 +128,6 @@ final class PyOps {
 		throw err(Types.TYPE_ERROR, "indices must be integers or slices, not " + typeName(o));
 	}
 
-	static int floatToInt(double d) {
-		if (d != d)
-			throw err(Types.VALUE_ERROR, "cannot convert float NaN to integer");
-		if (Double.isInfinite(d))
-			throw err(Types.OVERFLOW, "cannot convert float infinity to integer");
-		if (d >= 2147483648.0 || d <= -2147483649.0)
-			throw overflow();
-		return (int) d;
-	}
-
-	private static Object box(long r) {
-		if (r != (int) r)
-			throw overflow();
-		return Integer.valueOf((int) r);
-	}
-
-	private static Object intPow(int x, int y) {
-		if (y < 0) {
-			if (x == 0)
-				throw err(Types.ZERO_DIVISION, "0.0 cannot be raised to a negative power");
-			return Double.valueOf(Math.pow(x, y));
-		}
-		if (x == 0)
-			return Integer.valueOf(y == 0 ? 1 : 0);
-		if (x == 1)
-			return Integer.valueOf(1);
-		if (x == -1)
-			return Integer.valueOf((y & 1) == 0 ? 1 : -1);
-		if (y > 31)
-			throw overflow();
-		long r = 1;
-		for (int i = 0; i < y; i++) {
-			r *= x;
-			if (r != (int) r)
-				throw overflow();
-		}
-		return Integer.valueOf((int) r);
-	}
-
-	private static Object intOp(int op, int x, int y) {
-		switch (op) {
-		case Op.BIN_ADD:
-			return box((long) x + y);
-		case Op.BIN_SUB:
-			return box((long) x - y);
-		case Op.BIN_MUL:
-			return box((long) x * y);
-		case Op.BIN_DIV:
-			if (y == 0)
-				throw err(Types.ZERO_DIVISION, "division by zero");
-			return Double.valueOf((double) x / y);
-		case Op.BIN_FLOORDIV:
-			if (y == 0)
-				throw err(Types.ZERO_DIVISION, "integer division or modulo by zero");
-			return box(Math.floorDiv((long) x, (long) y));
-		case Op.BIN_MOD:
-			if (y == 0)
-				throw err(Types.ZERO_DIVISION, "integer modulo by zero");
-			return Integer.valueOf((int) Math.floorMod((long) x, (long) y));
-		case Op.BIN_POW:
-			return intPow(x, y);
-		case Op.BIN_LSHIFT:
-			if (y < 0)
-				throw err(Types.VALUE_ERROR, "negative shift count");
-			if (x == 0)
-				return Integer.valueOf(0);
-			if (y >= 32)
-				throw overflow();
-			return box((long) x << y);
-		case Op.BIN_RSHIFT:
-			if (y < 0)
-				throw err(Types.VALUE_ERROR, "negative shift count");
-			if (y >= 32)
-				return Integer.valueOf(x < 0 ? -1 : 0);
-			return Integer.valueOf(x >> y);
-		case Op.BIN_AND:
-			return Integer.valueOf(x & y);
-		case Op.BIN_OR:
-			return Integer.valueOf(x | y);
-		default:
-			return Integer.valueOf(x ^ y);
-		}
-	}
-
 	static double floatMod(double x, double y) {
 		double m = x % y;
 		if (m != 0) {
@@ -294,26 +206,14 @@ final class PyOps {
 		if (a instanceof Integer && b instanceof Integer) {
 			int x = ((Integer) a).intValue(), y = ((Integer) b).intValue();
 			switch (op) {
-			case Op.BIN_ADD: {
-				long r = (long) x + y;
-				if (r != (int) r)
-					throw overflow();
-				return Integer.valueOf((int) r);
-			}
-			case Op.BIN_SUB: {
-				long r = (long) x - y;
-				if (r != (int) r)
-					throw overflow();
-				return Integer.valueOf((int) r);
-			}
-			case Op.BIN_MUL: {
-				long r = (long) x * y;
-				if (r != (int) r)
-					throw overflow();
-				return Integer.valueOf((int) r);
-			}
+			case Op.BIN_ADD:
+				return PyInt.add(x, y);
+			case Op.BIN_SUB:
+				return PyInt.sub(x, y);
+			case Op.BIN_MUL:
+				return PyInt.mul(x, y);
 			default:
-				return intOp(op, x, y);
+				return PyInt.binary(op, x, y);
 			}
 		}
 		if (a instanceof Double && b instanceof Double) {
@@ -336,7 +236,7 @@ final class PyOps {
 					boolean x = ((Boolean) a).booleanValue(), y = ((Boolean) b).booleanValue();
 					return Boolean.valueOf(op == Op.BIN_AND ? x & y : op == Op.BIN_OR ? x | y : x ^ y);
 				}
-				return intOp(op, asInt(a), asInt(b));
+				return PyInt.binary(op, asInt(a), asInt(b));
 			}
 		} else if (a instanceof String) {
 			if (op == Op.BIN_ADD && b instanceof String) {
@@ -443,10 +343,7 @@ final class PyOps {
 
 	static Object negate(Object a) {
 		if (a instanceof Integer) {
-			int x = ((Integer) a).intValue();
-			if (x == Integer.MIN_VALUE)
-				throw overflow();
-			return Integer.valueOf(-x);
+			return PyInt.neg(((Integer) a).intValue());
 		}
 		if (a instanceof Double)
 			return Double.valueOf(-((Double) a).doubleValue());
@@ -946,9 +843,7 @@ final class PyOps {
 		long newStep = (long) rg.step * r[2];
 		long newStart = (long) rg.start + (long) r[0] * rg.step;
 		long newStop = newStart + newStep * r[1];
-		if (newStart != (int) newStart || newStop != (int) newStop || newStep != (int) newStep)
-			throw overflow();
-		return new PyRange((int) newStart, (int) newStop, (int) newStep);
+		return new PyRange(PyInt.check(newStart), PyInt.check(newStop), PyInt.check(newStep));
 	}
 
 	static void setitem(Object o, Object idx, Object v) {

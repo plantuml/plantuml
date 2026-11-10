@@ -27,7 +27,7 @@ final class PyDict {
 			return Integer.valueOf(((Boolean) k).booleanValue() ? 1 : 0);
 		if (k instanceof Double) {
 			double d = ((Double) k).doubleValue();
-			if (d == Math.rint(d) && d >= Integer.MIN_VALUE && d <= Integer.MAX_VALUE)
+			if (PyInt.isWholeInt(d))
 				return Integer.valueOf((int) d);
 			return k;
 		}

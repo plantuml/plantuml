@@ -723,7 +723,7 @@ final class Fmt {
 			if (v instanceof Integer || v instanceof Boolean) {
 				iv = PyOps.asInt(v);
 			} else if (v instanceof Double) {
-				iv = PyOps.floatToInt(((Double) v).doubleValue());
+				iv = PyInt.fromDouble(((Double) v).doubleValue());
 			} else {
 				throw PyOps.err(Types.TYPE_ERROR, "%" + type + " format: a real number is required, not "
 						+ PyOps.typeName(v));

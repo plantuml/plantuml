@@ -847,7 +847,7 @@ final class CodeGen {
 			return PyNone.NONE;
 		if (v instanceof Long) {
 			long l = ((Long) v).longValue();
-			if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE)
+			if (PyInt.fits(l) == false)
 				throw new PySyntaxError("integer literal does not fit in 32 bits", line, 0);
 			return Integer.valueOf((int) l);
 		}
@@ -990,7 +990,7 @@ final class CodeGen {
 			Object v = ((Ast.Constant) operand).value;
 			if (v instanceof Long) {
 				long l = -((Long) v).longValue();
-				if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE)
+				if (PyInt.fits(l) == false)
 					throw new PySyntaxError("integer literal does not fit in 32 bits", line, 0);
 				loadConst(Integer.valueOf((int) l));
 				return;
