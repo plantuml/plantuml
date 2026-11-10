@@ -755,14 +755,27 @@ final class PyOps {
 
 	// ------------------------------------------------------------ strings and code points
 
-	private static String lastString;
-	private static boolean lastBmp;
+	/** The answer of {@link #bmp} for the last long string: an immutable pair, so that it is read and replaced as a whole. */
+	private static final class BmpAnswer {
+		final String string;
+		final boolean bmp;
+
+		BmpAnswer(String string, boolean bmp) {
+			this.string = string;
+			this.bmp = bmp;
+		}
+	}
+
+	private static volatile BmpAnswer lastAnswer;
 
 	/** True if the string has no surrogate pair, so that chars are code points. */
 	static boolean bmp(String s) {
 		int n = s.length();
-		if (n > 32 && s == lastString)
-			return lastBmp;
+		if (n > 32) {
+			BmpAnswer last = lastAnswer;
+			if (last != null && last.string == s)
+				return last.bmp;
+		}
 		boolean r = true;
 		for (int i = 0; i < n; i++) {
 			char c = s.charAt(i);
@@ -771,10 +784,8 @@ final class PyOps {
 				break;
 			}
 		}
-		if (n > 32) {
-			lastString = s;
-			lastBmp = r;
-		}
+		if (n > 32)
+			lastAnswer = new BmpAnswer(s, r);
 		return r;
 	}
 
@@ -782,10 +793,13 @@ final class PyOps {
 		return bmp(s) ? s.length() : s.codePointCount(0, s.length());
 	}
 
-	private static final String[] ASCII = new String[128];
-	static {
+	private static final String[] ASCII = asciiStrings();
+
+	private static String[] asciiStrings() {
+		String[] table = new String[128];
 		for (int i = 0; i < 128; i++)
-			ASCII[i] = String.valueOf((char) i);
+			table[i] = String.valueOf((char) i);
+		return table;
 	}
 
 	static String charString(char c) {

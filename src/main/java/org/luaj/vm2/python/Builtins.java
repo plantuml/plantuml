@@ -11,10 +11,7 @@ final class Builtins {
 	private Builtins() {
 	}
 
-	private static boolean initialised;
-
 	static void install(Interp in) {
-		init();
 		for (PyType t : Types.ALL)
 			in.builtins.put(t.name, t);
 		for (Builtin b : FUNCTIONS)
@@ -77,6 +74,11 @@ final class Builtins {
 			throw PyOps.err(Types.TYPE_ERROR, "object.__init__() takes exactly one argument (the instance to initialize)");
 		return PyNone.NONE;
 	});
+
+	// last of the static fields: init() may use any of them
+	static {
+		init();
+	}
 
 	private static void fn(String name, Builtin.Fn f) {
 		FUNCTIONS.add(new Builtin(name, f));
@@ -372,11 +374,12 @@ final class Builtins {
 
 	// ------------------------------------------------------------ registration
 
+	/**
+	 * Fills the constructors of the builtin types and the table of the builtin
+	 * functions. Called once, by the static initializer below: the JVM runs it
+	 * exactly once, whatever the number of interpreters or threads.
+	 */
 	private static void init() {
-		if (initialised)
-			return;
-		initialised = true;
-
 		Types.INT.ctor = new Builtin("int", (in, a) -> toInt(a));
 		Types.FLOAT.ctor = new Builtin("float", (in, a) -> toFloat(a));
 		Types.STR.ctor = new Builtin("str", (in, a) -> {

@@ -10,10 +10,10 @@ final class Methods {
 	private Methods() {
 	}
 
-	private static final Map<String, Builtin> STR = new HashMap<String, Builtin>();
-	private static final Map<String, Builtin> LIST = new HashMap<String, Builtin>();
-	private static final Map<String, Builtin> DICT = new HashMap<String, Builtin>();
-	private static final Map<String, Builtin> TUPLE = new HashMap<String, Builtin>();
+	private static final Map<String, Builtin> STR = strMethods();
+	private static final Map<String, Builtin> LIST = listMethods();
+	private static final Map<String, Builtin> DICT = dictMethods();
+	private static final Map<String, Builtin> TUPLE = tupleMethods();
 
 	static Builtin lookup(Object o, String name) {
 		if (o instanceof String)
@@ -356,16 +356,17 @@ final class Methods {
 		return sb.toString();
 	}
 
-	static {
-		def(STR, "upper", (in, a) -> {
+	private static Map<String, Builtin> strMethods() {
+		final Map<String, Builtin> table = new HashMap<String, Builtin>();
+		def(table, "upper", (in, a) -> {
 			need(a, 0, 0, "upper");
 			return ((String) a[0]).toUpperCase(Locale.ROOT);
 		});
-		def(STR, "lower", (in, a) -> {
+		def(table, "lower", (in, a) -> {
 			need(a, 0, 0, "lower");
 			return ((String) a[0]).toLowerCase(Locale.ROOT);
 		});
-		def(STR, "title", (in, a) -> {
+		def(table, "title", (in, a) -> {
 			need(a, 0, 0, "title");
 			String s = (String) a[0];
 			StringBuilder sb = new StringBuilder();
@@ -379,7 +380,7 @@ final class Methods {
 			}
 			return sb.toString();
 		});
-		def(STR, "capitalize", (in, a) -> {
+		def(table, "capitalize", (in, a) -> {
 			need(a, 0, 0, "capitalize");
 			String s = (String) a[0];
 			if (s.isEmpty())
@@ -388,7 +389,7 @@ final class Methods {
 			return s.substring(0, n).toUpperCase(Locale.ROOT).substring(0, 1).concat(s.substring(0, n).toUpperCase(Locale.ROOT).substring(1))
 					+ s.substring(n).toLowerCase(Locale.ROOT);
 		});
-		def(STR, "swapcase", (in, a) -> {
+		def(table, "swapcase", (in, a) -> {
 			need(a, 0, 0, "swapcase");
 			String s = (String) a[0];
 			StringBuilder sb = new StringBuilder();
@@ -402,7 +403,7 @@ final class Methods {
 		});
 		for (final boolean right : new boolean[] { false, true }) {
 			final String nm = right ? "rpartition" : "partition";
-			def(STR, nm, (in, a) -> {
+			def(table, nm, (in, a) -> {
 				need(a, 1, 1, nm);
 				String s = (String) a[0];
 				String sep = str(a, 1, nm);
@@ -414,20 +415,20 @@ final class Methods {
 				return new PyTuple(new Object[] { s.substring(0, i), sep, s.substring(i + sep.length()) });
 			});
 		}
-		def(STR, "removeprefix", (in, a) -> {
+		def(table, "removeprefix", (in, a) -> {
 			need(a, 1, 1, "removeprefix");
 			String s = (String) a[0], p = str(a, 1, "removeprefix");
 			return s.startsWith(p) ? s.substring(p.length()) : s;
 		});
-		def(STR, "removesuffix", (in, a) -> {
+		def(table, "removesuffix", (in, a) -> {
 			need(a, 1, 1, "removesuffix");
 			String s = (String) a[0], p = str(a, 1, "removesuffix");
 			return !p.isEmpty() && s.endsWith(p) ? s.substring(0, s.length() - p.length()) : s;
 		});
-		def(STR, "strip", strip(true, true, "strip"));
-		def(STR, "lstrip", strip(true, false, "lstrip"));
-		def(STR, "rstrip", strip(false, true, "rstrip"));
-		defKw(STR, "split", (in, a) -> {
+		def(table, "strip", strip(true, true, "strip"));
+		def(table, "lstrip", strip(true, false, "lstrip"));
+		def(table, "rstrip", strip(false, true, "rstrip"));
+		defKw(table, "split", (in, a) -> {
 			need(a, 0, 2, "split");
 			return split((String) a[0], a.length > 1 ? a[1] : PyNone.NONE, a.length > 2 ? PyOps.asIndex(a[2]) : -1, false);
 		}, (in, a, kw) -> {
@@ -436,7 +437,7 @@ final class Methods {
 			int max = a.length > 2 ? PyOps.asIndex(a[2]) : kw.containsKey("maxsplit") ? PyOps.asIndex(kw.get("maxsplit")) : -1;
 			return split((String) a[0], sep, max, false);
 		});
-		defKw(STR, "rsplit", (in, a) -> {
+		defKw(table, "rsplit", (in, a) -> {
 			need(a, 0, 2, "rsplit");
 			return split((String) a[0], a.length > 1 ? a[1] : PyNone.NONE, a.length > 2 ? PyOps.asIndex(a[2]) : -1, true);
 		}, (in, a, kw) -> {
@@ -445,7 +446,7 @@ final class Methods {
 			int max = a.length > 2 ? PyOps.asIndex(a[2]) : kw.containsKey("maxsplit") ? PyOps.asIndex(kw.get("maxsplit")) : -1;
 			return split((String) a[0], sep, max, true);
 		});
-		def(STR, "join", (in, a) -> {
+		def(table, "join", (in, a) -> {
 			need(a, 1, 1, "join");
 			String sep = (String) a[0];
 			ArrayList<Object> items = PyOps.toArrayList(a[1]);
@@ -463,7 +464,7 @@ final class Methods {
 			}
 			return sb.toString();
 		});
-		def(STR, "replace", (in, a) -> {
+		def(table, "replace", (in, a) -> {
 			need(a, 2, 3, "replace");
 			return replace((String) a[0], str(a, 1, "replace"), str(a, 2, "replace"),
 					a.length > 3 ? PyOps.asIndex(a[3]) : -1);
@@ -471,7 +472,7 @@ final class Methods {
 		for (final String nm : new String[] { "find", "rfind", "index", "rindex" }) {
 			final boolean last = nm.startsWith("r");
 			final boolean raise = nm.endsWith("index");
-			def(STR, nm, (in, a) -> {
+			def(table, nm, (in, a) -> {
 				need(a, 1, 3, nm);
 				String s = (String) a[0];
 				int[] w = window(a, 2, PyOps.strLen(s));
@@ -481,7 +482,7 @@ final class Methods {
 				return Integer.valueOf(r);
 			});
 		}
-		def(STR, "count", (in, a) -> {
+		def(table, "count", (in, a) -> {
 			need(a, 1, 3, "count");
 			String s = (String) a[0];
 			String sub = str(a, 1, "count");
@@ -497,18 +498,18 @@ final class Methods {
 				n++;
 			return Integer.valueOf(n);
 		});
-		def(STR, "startswith", (in, a) -> affix(a, true, "startswith"));
-		def(STR, "endswith", (in, a) -> affix(a, false, "endswith"));
-		def(STR, "isdigit", allChars("isdigit", 0));
-		def(STR, "isalpha", allChars("isalpha", 1));
-		def(STR, "isalnum", allChars("isalnum", 2));
-		def(STR, "isspace", allChars("isspace", 3));
-		def(STR, "isupper", allChars("isupper", 4));
-		def(STR, "islower", allChars("islower", 5));
-		def(STR, "ljust", padder(0, "ljust"));
-		def(STR, "rjust", padder(1, "rjust"));
-		def(STR, "center", padder(2, "center"));
-		def(STR, "zfill", (in, a) -> {
+		def(table, "startswith", (in, a) -> affix(a, true, "startswith"));
+		def(table, "endswith", (in, a) -> affix(a, false, "endswith"));
+		def(table, "isdigit", allChars("isdigit", 0));
+		def(table, "isalpha", allChars("isalpha", 1));
+		def(table, "isalnum", allChars("isalnum", 2));
+		def(table, "isspace", allChars("isspace", 3));
+		def(table, "isupper", allChars("isupper", 4));
+		def(table, "islower", allChars("islower", 5));
+		def(table, "ljust", padder(0, "ljust"));
+		def(table, "rjust", padder(1, "rjust"));
+		def(table, "center", padder(2, "center"));
+		def(table, "zfill", (in, a) -> {
 			need(a, 1, 1, "zfill");
 			String s = (String) a[0];
 			int width = PyOps.asIndex(a[1]);
@@ -528,14 +529,15 @@ final class Methods {
 			sb.append(s, start, s.length());
 			return sb.toString();
 		});
-		defKw(STR, "splitlines", (in, a) -> splitlines((String) a[0], a.length > 1 && PyOps.isTrue(a[1])),
+		defKw(table, "splitlines", (in, a) -> splitlines((String) a[0], a.length > 1 && PyOps.isTrue(a[1])),
 				(in, a, kw) -> {
 					noKw(kw, "splitlines", "keepends");
 					return splitlines((String) a[0], a.length > 1 ? PyOps.isTrue(a[1])
 							: kw.containsKey("keepends") && PyOps.isTrue(kw.get("keepends")));
 				});
-		defKw(STR, "format", (in, a) -> Fmt.strFormat((String) a[0], a, 1, null),
+		defKw(table, "format", (in, a) -> Fmt.strFormat((String) a[0], a, 1, null),
 				(in, a, kw) -> Fmt.strFormat((String) a[0], a, 1, kw));
+		return table;
 	}
 
 	private static Object splitlines(String s, boolean keep) {
@@ -565,18 +567,19 @@ final class Methods {
 
 	// ------------------------------------------------------------ list
 
-	static {
-		def(LIST, "append", (in, a) -> {
+	private static Map<String, Builtin> listMethods() {
+		final Map<String, Builtin> table = new HashMap<String, Builtin>();
+		def(table, "append", (in, a) -> {
 			need(a, 1, 1, "append");
 			((PyList) a[0]).items.add(a[1]);
 			return PyNone.NONE;
 		});
-		def(LIST, "extend", (in, a) -> {
+		def(table, "extend", (in, a) -> {
 			need(a, 1, 1, "extend");
 			((PyList) a[0]).items.addAll(PyOps.toArrayList(a[1]));
 			return PyNone.NONE;
 		});
-		def(LIST, "insert", (in, a) -> {
+		def(table, "insert", (in, a) -> {
 			need(a, 2, 2, "insert");
 			ArrayList<Object> l = ((PyList) a[0]).items;
 			int i = PyOps.asIndex(a[1]);
@@ -587,7 +590,7 @@ final class Methods {
 			l.add(i, a[2]);
 			return PyNone.NONE;
 		});
-		def(LIST, "pop", (in, a) -> {
+		def(table, "pop", (in, a) -> {
 			need(a, 0, 1, "pop");
 			ArrayList<Object> l = ((PyList) a[0]).items;
 			int i = a.length > 1 ? PyOps.asIndex(a[1]) : -1;
@@ -599,7 +602,7 @@ final class Methods {
 				throw PyOps.err(Types.INDEX_ERROR, "pop index out of range");
 			return l.remove(i);
 		});
-		def(LIST, "remove", (in, a) -> {
+		def(table, "remove", (in, a) -> {
 			need(a, 1, 1, "remove");
 			ArrayList<Object> l = ((PyList) a[0]).items;
 			for (int i = 0; i < l.size(); i++)
@@ -609,7 +612,7 @@ final class Methods {
 				}
 			throw PyOps.err(Types.VALUE_ERROR, "list.remove(x): x not in list");
 		});
-		def(LIST, "index", (in, a) -> {
+		def(table, "index", (in, a) -> {
 			need(a, 1, 3, "index");
 			ArrayList<Object> l = ((PyList) a[0]).items;
 			int[] w = window(a, 2, l.size());
@@ -618,7 +621,7 @@ final class Methods {
 					return Integer.valueOf(i);
 			throw PyOps.err(Types.VALUE_ERROR, PyOps.repr(a[1]) + " is not in list");
 		});
-		def(LIST, "count", (in, a) -> {
+		def(table, "count", (in, a) -> {
 			need(a, 1, 1, "count");
 			int n = 0;
 			for (Object o : ((PyList) a[0]).items)
@@ -626,7 +629,7 @@ final class Methods {
 					n++;
 			return Integer.valueOf(n);
 		});
-		defKw(LIST, "sort", (in, a) -> {
+		defKw(table, "sort", (in, a) -> {
 			need(a, 0, 0, "sort");
 			PyOps.sortList(((PyList) a[0]).items, in, PyNone.NONE, false);
 			return PyNone.NONE;
@@ -637,26 +640,28 @@ final class Methods {
 					kw.containsKey("reverse") && PyOps.isTrue(kw.get("reverse")));
 			return PyNone.NONE;
 		});
-		def(LIST, "reverse", (in, a) -> {
+		def(table, "reverse", (in, a) -> {
 			need(a, 0, 0, "reverse");
 			java.util.Collections.reverse(((PyList) a[0]).items);
 			return PyNone.NONE;
 		});
-		def(LIST, "clear", (in, a) -> {
+		def(table, "clear", (in, a) -> {
 			need(a, 0, 0, "clear");
 			((PyList) a[0]).items.clear();
 			return PyNone.NONE;
 		});
-		def(LIST, "copy", (in, a) -> {
+		def(table, "copy", (in, a) -> {
 			need(a, 0, 0, "copy");
 			return new PyList(new ArrayList<Object>(((PyList) a[0]).items));
 		});
+		return table;
 	}
 
 	// ------------------------------------------------------------ tuple
 
-	static {
-		def(TUPLE, "index", (in, a) -> {
+	private static Map<String, Builtin> tupleMethods() {
+		final Map<String, Builtin> table = new HashMap<String, Builtin>();
+		def(table, "index", (in, a) -> {
 			need(a, 1, 3, "index");
 			Object[] t = ((PyTuple) a[0]).items;
 			int[] w = window(a, 2, t.length);
@@ -665,7 +670,7 @@ final class Methods {
 					return Integer.valueOf(i);
 			throw PyOps.err(Types.VALUE_ERROR, "tuple.index(x): x not in tuple");
 		});
-		def(TUPLE, "count", (in, a) -> {
+		def(table, "count", (in, a) -> {
 			need(a, 1, 1, "count");
 			int n = 0;
 			for (Object o : ((PyTuple) a[0]).items)
@@ -673,6 +678,7 @@ final class Methods {
 					n++;
 			return Integer.valueOf(n);
 		});
+		return table;
 	}
 
 	// ------------------------------------------------------------ dict
@@ -708,25 +714,26 @@ final class Methods {
 				d.put(e.getKey(), e.getValue());
 	}
 
-	static {
-		def(DICT, "get", (in, a) -> {
+	private static Map<String, Builtin> dictMethods() {
+		final Map<String, Builtin> table = new HashMap<String, Builtin>();
+		def(table, "get", (in, a) -> {
 			need(a, 1, 2, "get");
 			Object v = ((PyDict) a[0]).get(a[1]);
 			return v != null ? v : a.length > 2 ? a[2] : PyNone.NONE;
 		});
-		def(DICT, "keys", (in, a) -> {
+		def(table, "keys", (in, a) -> {
 			need(a, 0, 0, "keys");
 			return new PyView((PyDict) a[0], PyView.KEYS);
 		});
-		def(DICT, "values", (in, a) -> {
+		def(table, "values", (in, a) -> {
 			need(a, 0, 0, "values");
 			return new PyView((PyDict) a[0], PyView.VALUES);
 		});
-		def(DICT, "items", (in, a) -> {
+		def(table, "items", (in, a) -> {
 			need(a, 0, 0, "items");
 			return new PyView((PyDict) a[0], PyView.ITEMS);
 		});
-		def(DICT, "pop", (in, a) -> {
+		def(table, "pop", (in, a) -> {
 			need(a, 1, 2, "pop");
 			Object v = ((PyDict) a[0]).remove(a[1]);
 			if (v != null)
@@ -735,14 +742,14 @@ final class Methods {
 				return a[2];
 			throw new PyError(new PyException(Types.KEY_ERROR, new Object[] { a[1] }));
 		});
-		defKw(DICT, "update", (in, a) -> {
+		defKw(table, "update", (in, a) -> {
 			update((PyDict) a[0], a, null);
 			return PyNone.NONE;
 		}, (in, a, kw) -> {
 			update((PyDict) a[0], a, kw);
 			return PyNone.NONE;
 		});
-		def(DICT, "setdefault", (in, a) -> {
+		def(table, "setdefault", (in, a) -> {
 			need(a, 1, 2, "setdefault");
 			PyDict d = (PyDict) a[0];
 			Object v = d.get(a[1]);
@@ -752,17 +759,18 @@ final class Methods {
 			d.put(a[1], dflt);
 			return dflt;
 		});
-		def(DICT, "clear", (in, a) -> {
+		def(table, "clear", (in, a) -> {
 			need(a, 0, 0, "clear");
 			((PyDict) a[0]).map.clear();
 			return PyNone.NONE;
 		});
-		def(DICT, "copy", (in, a) -> {
+		def(table, "copy", (in, a) -> {
 			need(a, 0, 0, "copy");
 			PyDict r = new PyDict();
 			for (PyDict.Entry e : ((PyDict) a[0]).map.values())
 				r.put(e.key, e.value);
 			return r;
 		});
+		return table;
 	}
 }
