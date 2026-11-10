@@ -9,7 +9,9 @@
     <!--cluster itd-->
     <g class="cluster" data-qualified-name="itd" data-source-line="1690" id="ent0002">
       <rect fill="none" height="528" style="stroke:#444;stroke-width:1;stroke-dasharray:7,7;" width="889" x="14" y="189"/>
-      <text fill="#444" font-size="16" font-weight="700" textLength="103.9" x="406.55" y="223.444">IT departament</text>
+      <text fill="#444" font-size="16" font-weight="700" textLength="14.2" x="406.55" y="223.444">IT</text>
+      <text fill="#444" font-size="16" font-weight="700" x="420.75" y="223.444"> </text>
+      <text fill="#444" font-size="16" font-weight="700" textLength="89.7" x="420.75" y="223.444">departament</text>
       <text fill="#444" font-size="12" font-weight="700" textLength="59.925" x="428.538" y="236.333">[enterprise]</text>
     </g>
     <!--entity client-->

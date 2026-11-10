@@ -5,8 +5,12 @@
     <g class="cluster" data-qualified-name="Image sample.nwith C4" data-source-line="14" id="ent0001">
       <path d="M16.5,4 L101.5,4 A3.75,3.75 0 0 1 104,6.5 L111,38 L125.5,38 A2.5,2.5 0 0 1 128,40.5 L128,324.5 A2.5,2.5 0 0 1 125.5,327 L16.5,327 A2.5,2.5 0 0 1 14,324.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
       <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="111" y1="38" y2="38"/>
-      <text fill="#000" font-size="14" textLength="84" x="18" y="16.889">Image sample</text>
-      <text fill="#000" font-size="14" textLength="42.875" x="38.563" y="30.889">with C4</text>
+      <text fill="#000" font-size="14" textLength="38.85" x="18" y="16.889">Image</text>
+      <text fill="#000" font-size="14" x="56.85" y="16.889"> </text>
+      <text fill="#000" font-size="14" textLength="45.15" x="56.85" y="16.889">sample</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="38.563" y="30.889">with</text>
+      <text fill="#000" font-size="14" x="63.5" y="30.889"> </text>
+      <text fill="#000" font-size="14" textLength="17.938" x="63.5" y="30.889">C4</text>
     </g>
     <!--entity A-->
     <g class="entity" data-qualified-name="Image sample.nwith C4.A" data-source-line="181" id="ent0002">

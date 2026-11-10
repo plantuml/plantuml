@@ -9,7 +9,9 @@
       <rect fill="#FFF" height="607" style="stroke:#000;stroke-width:1;" width="644" x="14" y="15"/>
       <image height="32" width="32" x="290.6" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADP0lEQVR4Xu2U+TOVYRTH/THay1KmhRBXlotkibjh2obGmltZihSTkf2WuMo+lkYUiiHDGLIWo2lK9pHtmrI0FFm+Pe9j3DH35Uo19MN9Z74z73mf857n85znnKOgqKSF3ZSC9IedlhxADiAH+H8BVE4Zwt0nCAEhkeC5+GKPsjaUTujD2MoZisqrPsrEh2vJl/yjdNIARhaO9F1N0wTeglAIgsKha2zLir8lwMjYOOpet6CsvBrTM9+QV1gCLUNrMI+FnTv1EaZkUtvI3IHaCQ/T0fn+IzgmtpicmkZNXSOev6hCd98ADh8/y9pDJsCBY7qSd09BCBYWftIsfOjqQXSiiH5vbuvAwOBnhEbEUrut/R1ihCJERAnRNzDEirmRNgXQ4V5EVHwyEsmpklKz6UkPqnGQmJyBhqY3BJBDMxMSHouyimqa/sXFReibXaIZmZ37jubWDgTfvgdVdSNWfJkAHFM7zJEAOfnFtAZyCoolAOesXfBjfh72bn4kA+0UdFw8AVfPAPT0DUpinNa3QvyDx+ju7cfXySnqJ73PpgChEXH0Dtdsf1JIzHOEFCFzDcOj46hvbIGQZINZHx0T41VNPclUFivWXpUzGBsX4+adGNYaow0BmCJbXllBdn4R0rKeoPVtJ5aWlsF3F9D1rNxCCmTv6kftZ2WV1DazcaV2ZGwSikoqEJ0gQkFRGWZn56BHsiq9z6YAjGydvOkJg25F4ZCaHmwcvegVMGsaepa4GhyB/UdXC5UJ7nstTNKeqhpcBJL/UtJyESt8RNpw4/TLBNgpsQD2qeqQk+mwHP9EPGcflFfVoqu7Dz29A9DUv8DyYQEw7VTwtBTXSfWvnwV/q089/eTqLFjfWQCMmCzcT8kg01AMUXouKS4XWv3SfrLExHAkRVtcWoGouGTUN7WxfBhtCLAmQzJQqmsbsEI6QjzxBS8ra+gU9PQPoUXKteBDm4xng/MOsOR5wD8wnBZuXUMznSNDwyO4QlqY7yGAiZUTK/6WAGtipltqZh4Gh4Zpu8l6pqZnyL3X4LLfDZoF6VjS+i2A9VLnmMPNKwBhd+PppEtISqPvTBvqmfK2fVXbBvjXkgPIAeQAuw7wC0fsJ4seAxrJAAAAAElFTkSuQmCC" y="17"/>
       <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="6.6" x="322.6" y="46.333">  </text>
-      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="58.8" x="322.6" y="46.333">AWS Cloud</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="27.375" x="322.6" y="46.333">AWS</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" x="349.975" y="46.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="31.425" x="349.975" y="46.333">Cloud</text>
     </g>
     <!--cluster vpc-->
     <g class="cluster" data-qualified-name="cloud.vpc" data-source-line="12" id="ent0002">
@@ -21,40 +23,56 @@
     <!--cluster az_1-->
     <g class="cluster" data-qualified-name="cloud.vpc.az_1" data-source-line="14" id="ent0004">
       <rect fill="#FFF" height="457" style="stroke:#5B9CD5;stroke-width:1;stroke-dasharray:7,7;" width="204" x="422" y="133"/>
-      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="90.9" x="500" y="144.333">Availability Zone 1</text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="56.85" x="502.55" y="144.333">Availability</text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" x="559.4" y="144.333"> </text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="27.375" x="559.4" y="144.333">Zone</text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" x="586.775" y="144.333"> </text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" x="586.775" y="144.333">1</text>
     </g>
     <!--cluster az_1_public-->
     <g class="cluster" data-qualified-name="cloud.vpc.az_1.az_1_public" data-source-line="15" id="ent0005">
       <rect fill="#E9F3E6" height="185" style="stroke:none;" width="172" x="438" y="172"/>
       <image height="32" width="32" x="473.613" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB00lEQVR4Xu2W3StDYRzH/TFIyo0SkRFFaOUtufEei1wQIbmgaEgmLOUlb+VtS4oiXJh3pjAbM+bC2qyFqN1/7ZyaOL92ds50SO3iU8/zfX7neT6dnnOeJ0SmDMVfEsINfpugQMACWapolI5nImconoyJQbRAyVgGju53YLCdYeNqGcdWHa7tF2jWVJJaIYgSqJ7Oh/npCuUT8m959mAsDu62odpsJ8/4Q7BAam8kLE4T8tWJZIwhpSeCfSvFo+lkjA/BAm3LNZg9HCH5VxoXy6DVT5GcD8ECMwfDaFqqIPlX0vqicPmoJzkfggU0p5OonS0kOZfbJyPJ+AgK8ArUzxdDudbMon/YYzeht+8L57v9s92xUkfm5MIrcOv55rkLiMHxZkNydziZV5QANxPDjeNSWoG84QT2B8TNvUgmwCxssp9j37INq8uMurkiUsMgmcDqxQIa5kvYtnwghj0fuDUMkgmcWHc9B1DcZ9/iNHoWCiN1kgl0rTZCZ96AYioX47p+rBu0pIZBMgGGVq0Cr+5nDG11+tyIkgow+FvA3zjD/xZo0VQhSUk3nxfJBfzxYwGzw8CegoHy4nb9TKBALUOF5wIaKEUC7oe8Ar9BUODPBT4A96U7J0+wtzAAAAAASUVORK5CYII=" y="174"/>
       <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="6.6" x="505.613" y="203.333">  </text>
-      <text fill="#1E8900" font-family="Verdana" font-size="12" font-weight="700" textLength="68.775" x="505.613" y="203.333">Public subnet</text>
+      <text fill="#1E8900" font-family="Verdana" font-size="12" font-weight="700" textLength="32.775" x="505.613" y="203.333">Public</text>
+      <text fill="#1E8900" font-family="Verdana" font-size="12" font-weight="700" x="538.388" y="203.333"> </text>
+      <text fill="#1E8900" font-family="Verdana" font-size="12" font-weight="700" textLength="36" x="538.388" y="203.333">subnet</text>
     </g>
     <!--cluster az_1_private-->
     <g class="cluster" data-qualified-name="cloud.vpc.az_1.az_1_private" data-source-line="18" id="ent0007">
       <rect fill="#E6F2F8" height="185" style="stroke:none;" width="172" x="438" y="389"/>
       <image height="32" width="32" x="471.325" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB00lEQVR4XmMQqtv9fyAxA7oAvfGoA8h2gGLHgf/W047/1+o5hCFHCibZAZZTjv3ffevN/xMP3/9ffuHZ/z1A9tknH/5HLD2PoZYYTJID3Gef+n/h6cf/dtNPoIirdx38v/3G6/9lW29g6CGEiXaARNPe/5eef/qv23sYQw6ExRv3gEPFYvIxDDl8mGgHxK24+L/v0H0McWQcsujc/xknHmGI48NEO6Dn4L3/4Yvxx7NMy77/xx+8xxDHh4l2wIzjD/97zz2NIY6OLzz7hCGGD486AK8DAhee/Z+z/ioY77/z9n8/MBHC+Ljwow/f4eyU1ZcxzETHeB0AyvPoFpCCH777/l+kAdNckhyALkYKPvfkI20doN176L8YsABCF4dhmjlAG1gBnXr88f+2G6/+X3nx+b/fgrMYakCYZg5YeObJ/6CF58BsFWCteB5HyqeZA/bcfvNfA1gBwfgXgQ4QqceMCpo5IHPdlf+br7787zzr5P/WvXf+Lzv/DEMNCNPMASActezC/1dffv6v3H4TZ0KkqQNAmJAFhORBeGg7IHLphf/C9ZjiMExzBxDCFDsAZACoFiQXv/j8kzIH6PUfBjdAycUWUwi3D/E6gB541AED7gAAyWSnCostOLMAAAAASUVORK5CYII=" y="391"/>
       <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="6.6" x="503.325" y="420.333">  </text>
-      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="73.35" x="503.325" y="420.333">Private subnet</text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="37.35" x="503.325" y="420.333">Private</text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" x="540.675" y="420.333"> </text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="36" x="540.675" y="420.333">subnet</text>
     </g>
     <!--cluster az_2-->
     <g class="cluster" data-qualified-name="cloud.vpc.az_2" data-source-line="23" id="ent0011">
       <rect fill="#FFF" height="457" style="stroke:#5B9CD5;stroke-width:1;stroke-dasharray:7,7;" width="204" x="202" y="133"/>
-      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="90.9" x="280" y="144.333">Availability Zone 2</text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="56.85" x="282.55" y="144.333">Availability</text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" x="339.4" y="144.333"> </text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="27.375" x="339.4" y="144.333">Zone</text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" x="366.775" y="144.333"> </text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" x="366.775" y="144.333">2</text>
     </g>
     <!--cluster az_2_public-->
     <g class="cluster" data-qualified-name="cloud.vpc.az_2.az_2_public" data-source-line="24" id="ent0012">
       <rect fill="#E9F3E6" height="185" style="stroke:none;" width="172" x="218" y="172"/>
       <image height="32" width="32" x="253.613" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB00lEQVR4Xu2W3StDYRzH/TFIyo0SkRFFaOUtufEei1wQIbmgaEgmLOUlb+VtS4oiXJh3pjAbM+bC2qyFqN1/7ZyaOL92ds50SO3iU8/zfX7neT6dnnOeJ0SmDMVfEsINfpugQMACWapolI5nImconoyJQbRAyVgGju53YLCdYeNqGcdWHa7tF2jWVJJaIYgSqJ7Oh/npCuUT8m959mAsDu62odpsJ8/4Q7BAam8kLE4T8tWJZIwhpSeCfSvFo+lkjA/BAm3LNZg9HCH5VxoXy6DVT5GcD8ECMwfDaFqqIPlX0vqicPmoJzkfggU0p5OonS0kOZfbJyPJ+AgK8ArUzxdDudbMon/YYzeht+8L57v9s92xUkfm5MIrcOv55rkLiMHxZkNydziZV5QANxPDjeNSWoG84QT2B8TNvUgmwCxssp9j37INq8uMurkiUsMgmcDqxQIa5kvYtnwghj0fuDUMkgmcWHc9B1DcZ9/iNHoWCiN1kgl0rTZCZ96AYioX47p+rBu0pIZBMgGGVq0Cr+5nDG11+tyIkgow+FvA3zjD/xZo0VQhSUk3nxfJBfzxYwGzw8CegoHy4nb9TKBALUOF5wIaKEUC7oe8Ar9BUODPBT4A96U7J0+wtzAAAAAASUVORK5CYII=" y="174"/>
       <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="6.6" x="285.613" y="203.333">  </text>
-      <text fill="#1E8900" font-family="Verdana" font-size="12" font-weight="700" textLength="68.775" x="285.613" y="203.333">Public subnet</text>
+      <text fill="#1E8900" font-family="Verdana" font-size="12" font-weight="700" textLength="32.775" x="285.613" y="203.333">Public</text>
+      <text fill="#1E8900" font-family="Verdana" font-size="12" font-weight="700" x="318.388" y="203.333"> </text>
+      <text fill="#1E8900" font-family="Verdana" font-size="12" font-weight="700" textLength="36" x="318.388" y="203.333">subnet</text>
     </g>
     <!--cluster az_2_private-->
     <g class="cluster" data-qualified-name="cloud.vpc.az_2.az_2_private" data-source-line="27" id="ent0014">
       <rect fill="#E6F2F8" height="185" style="stroke:none;" width="172" x="218" y="389"/>
       <image height="32" width="32" x="251.325" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAB00lEQVR4XmMQqtv9fyAxA7oAvfGoA8h2gGLHgf/W047/1+o5hCFHCibZAZZTjv3ffevN/xMP3/9ffuHZ/z1A9tknH/5HLD2PoZYYTJID3Gef+n/h6cf/dtNPoIirdx38v/3G6/9lW29g6CGEiXaARNPe/5eef/qv23sYQw6ExRv3gEPFYvIxDDl8mGgHxK24+L/v0H0McWQcsujc/xknHmGI48NEO6Dn4L3/4Yvxx7NMy77/xx+8xxDHh4l2wIzjD/97zz2NIY6OLzz7hCGGD486AK8DAhee/Z+z/ioY77/z9n8/MBHC+Ljwow/f4eyU1ZcxzETHeB0AyvPoFpCCH777/l+kAdNckhyALkYKPvfkI20doN176L8YsABCF4dhmjlAG1gBnXr88f+2G6/+X3nx+b/fgrMYakCYZg5YeObJ/6CF58BsFWCteB5HyqeZA/bcfvNfA1gBwfgXgQ4QqceMCpo5IHPdlf+br7787zzr5P/WvXf+Lzv/DEMNCNPMASActezC/1dffv6v3H4TZ0KkqQNAmJAFhORBeGg7IHLphf/C9ZjiMExzBxDCFDsAZACoFiQXv/j8kzIH6PUfBjdAycUWUwi3D/E6gB541AED7gAAyWSnCostOLMAAAAASUVORK5CYII=" y="391"/>
       <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="6.6" x="283.325" y="420.333">  </text>
-      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="73.35" x="283.325" y="420.333">Private subnet</text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="37.35" x="283.325" y="420.333">Private</text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" x="320.675" y="420.333"> </text>
+      <text fill="#5B9CD5" font-family="Verdana" font-size="12" font-weight="700" textLength="36" x="320.675" y="420.333">subnet</text>
     </g>
     <!--entity internet_gateway-->
     <g class="entity" data-qualified-name="cloud.vpc.internet_gateway" data-source-line="13" id="ent0003">

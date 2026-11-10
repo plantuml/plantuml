@@ -15,13 +15,19 @@
     <g class="cluster" data-qualified-name="grp02" data-source-line="340" id="ent0001">
       <path d="M16.5,15 L188.95,15 A3.75,3.75 0 0 1 191.45,17.5 L198.45,33 L719.5,33 A2.5,2.5 0 0 1 722,35.5 L722,898.5 A2.5,2.5 0 0 1 719.5,901 L16.5,901 A2.5,2.5 0 0 1 14,898.5 L14,17.5 A2.5,2.5 0 0 1 16.5,15" fill="#FFF" filter="url(#fr59c5n34u4br)" style="stroke:#444;stroke-width:1.5;stroke-dasharray:8,5;"/>
       <line style="stroke:#444;stroke-width:1.5;stroke-dasharray:8,5;" x1="14" x2="198.45" y1="33" y2="33"/>
-      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="171.45" x="18" y="26.333">Virtualized deployment (monolite)</text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="56.1" x="18" y="26.333">Virtualized</text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" x="74.1" y="26.333"> </text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="62.025" x="74.1" y="26.333">deployment</text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" x="136.125" y="26.333"> </text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="53.325" x="136.125" y="26.333">(monolite)</text>
     </g>
     <!--cluster grp22-->
     <g class="cluster" data-qualified-name="grp02.grp22" data-source-line="343" id="ent0002">
       <path d="M84.5,502 L203.625,502 A3.75,3.75 0 0 1 206.125,504.5 L213.125,520 L575.5,520 A2.5,2.5 0 0 1 578,522.5 L578,882.5 A2.5,2.5 0 0 1 575.5,885 L84.5,885 A2.5,2.5 0 0 1 82,882.5 L82,504.5 A2.5,2.5 0 0 1 84.5,502" fill="#D3D3D3" filter="url(#fr59c5n34u4br)" style="stroke:#000;stroke-width:1;stroke-dasharray:7,7;"/>
       <line style="stroke:#000;stroke-width:1;stroke-dasharray:7,7;" x1="82" x2="213.125" y1="520" y2="520"/>
-      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="118.125" x="86" y="513.333">Traditional deployment</text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="56.1" x="86" y="513.333">Traditional</text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" x="142.1" y="513.333"> </text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="62.025" x="142.1" y="513.333">deployment</text>
     </g>
     <!--cluster grp20-->
     <g class="cluster" data-qualified-name="grp02.grp20" data-source-line="343" id="ent0015">
@@ -39,7 +45,11 @@
     <g class="cluster" data-qualified-name="grp03" data-source-line="340" id="ent0033">
       <path d="M740.5,15 L930.875,15 A3.75,3.75 0 0 1 933.375,17.5 L940.375,33 L1443.5,33 A2.5,2.5 0 0 1 1446,35.5 L1446,760.5 A2.5,2.5 0 0 1 1443.5,763 L740.5,763 A2.5,2.5 0 0 1 738,760.5 L738,17.5 A2.5,2.5 0 0 1 740.5,15" fill="#FFF" filter="url(#fr59c5n34u4br)" style="stroke:#444;stroke-width:1.5;stroke-dasharray:8,5;"/>
       <line style="stroke:#444;stroke-width:1.5;stroke-dasharray:8,5;" x1="738" x2="940.375" y1="33" y2="33"/>
-      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="189.375" x="742" y="26.333">Container deployment (microservice)</text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="52.05" x="742" y="26.333">Container</text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" x="794.05" y="26.333"> </text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="62.025" x="794.05" y="26.333">deployment</text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" x="856.075" y="26.333"> </text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="75.3" x="856.075" y="26.333">(microservice)</text>
     </g>
     <!--cluster grp30-->
     <g class="cluster" data-qualified-name="grp03.grp30" data-source-line="343" id="ent0034">
@@ -57,7 +67,9 @@
     <g class="cluster" data-qualified-name="grp03.grp32" data-source-line="343" id="ent0048">
       <path d="M861.5,341 L980.625,341 A3.75,3.75 0 0 1 983.125,343.5 L990.125,359 L1352.5,359 A2.5,2.5 0 0 1 1355,361.5 L1355,744.5 A2.5,2.5 0 0 1 1352.5,747 L861.5,747 A2.5,2.5 0 0 1 859,744.5 L859,343.5 A2.5,2.5 0 0 1 861.5,341" fill="#D3D3D3" filter="url(#fr59c5n34u4br)" style="stroke:#000;stroke-width:1;stroke-dasharray:7,7;"/>
       <line style="stroke:#000;stroke-width:1;stroke-dasharray:7,7;" x1="859" x2="990.125" y1="359" y2="359"/>
-      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="118.125" x="863" y="352.333">Traditional deployment</text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="56.1" x="863" y="352.333">Traditional</text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" x="919.1" y="352.333"> </text>
+      <text fill="#000" font-family="Dejavu Serif" font-size="12" font-weight="700" textLength="62.025" x="919.1" y="352.333">deployment</text>
     </g>
     <!--entity HW20-->
     <g class="entity" data-qualified-name="grp02.grp22.HW20" data-source-line="207" id="ent0003">

@@ -9,7 +9,9 @@
     <!--cluster api-->
     <g class="cluster" data-qualified-name="api" data-source-line="1690" id="ent0007">
       <rect fill="none" height="461" style="stroke:#444;stroke-width:1;stroke-dasharray:7,7;" width="509" x="322" y="23"/>
-      <text fill="#444" font-size="16" font-weight="700" textLength="111.3" x="520.85" y="57.444">Web Application</text>
+      <text fill="#444" font-size="16" font-weight="700" textLength="32.9" x="520.85" y="57.444">Web</text>
+      <text fill="#444" font-size="16" font-weight="700" x="553.75" y="57.444"> </text>
+      <text fill="#444" font-size="16" font-weight="700" textLength="78.4" x="553.75" y="57.444">Application</text>
       <text fill="#444" font-size="12" font-weight="700" textLength="55.95" x="548.525" y="70.333">[container]</text>
     </g>
     <!--entity client-->

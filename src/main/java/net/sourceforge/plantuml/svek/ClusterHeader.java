@@ -126,7 +126,7 @@ public final class ClusterHeader {
 		final HorizontalAlignment alignment = style.getHorizontalAlignment();
 		// final HorizontalAlignment alignment = getTitleHorizontalAlignment();
 		// final HorizontalAlignment alignment = HorizontalAlignment.CENTER;
-		TextBlock result = label.create(fontConfiguration, alignment, g.getSkinParam());
+		TextBlock result = label.create9(fontConfiguration, alignment, g.getSkinParam(), style.wrapWidth());
 
 		final VisibilityModifier modifier = g.getVisibilityModifier();
 		if (modifier != null) {
