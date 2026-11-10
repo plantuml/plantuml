@@ -202,32 +202,37 @@ class PyParserTest {
 				"", "\n\n", "if a:\n    b\n# trailing\n", "x = 1\r\ny = 2\r\n", "f(a)\n\n  # c\n" };
 		for (String s : sources)
 			PyParser.parse(s);
-		assertEquals(2, PyParser.parse("x = 1\r\ny = 2\r\n").nodes("body").size());
+		assertEquals(2, PyParser.parse("x = 1\r\ny = 2\r\n").body.size());
 	}
 
 	@Test
 	void treeCanBeNavigated() {
-		Node module = PyParser.parse("def f(a, b=2):\n    return a + b\n");
-		Node def = module.nodes("body").get(0);
-		assertTrue(def.is("FunctionDef"));
-		assertEquals("f", def.str("name"));
-		Node args = def.node("args");
-		assertEquals(2, args.nodes("args").size());
-		assertEquals(1, args.nodes("defaults").size());
-		Node ret = def.nodes("body").get(0);
-		assertTrue(ret.is("Return"));
-		assertEquals("Add", ret.node("value").node("op").type);
+		Ast.Module module = PyParser.parse("def f(a, b=2):\n    return a + b\n");
+		Ast.FunctionDef def = (Ast.FunctionDef) module.body.get(0);
+		assertEquals("f", def.name);
+		Ast.Arguments args = def.args;
+		assertEquals(2, args.args.size());
+		assertEquals(1, args.defaults.size());
+		Ast.Return ret = (Ast.Return) def.body.get(0);
+		assertEquals(Ast.Operator.Add, ((Ast.BinOp) ret.value).op);
+		assertEquals("FunctionDef", def.type());
 		assertEquals(1, def.line);
 		assertEquals(2, ret.line);
 	}
 
 	@Test
 	void stringValuesAreDecoded() {
-		Node module = PyParser.parse("x = 'a\\n\\x41\\u00e9\\U0001F600\\101'\ny = r'\\n'\n");
-		assertEquals("a\nA\u00e9\uD83D\uDE00A", module.nodes("body").get(0).node("value").get("value"));
-		assertEquals("\\n", module.nodes("body").get(1).node("value").get("value"));
-		Node big = PyParser.parse("x = 1_000 + 0xff\n");
-		assertEquals(Long.valueOf(1000), big.nodes("body").get(0).node("value").node("left").get("value"));
-		assertEquals(Long.valueOf(255), big.nodes("body").get(0).node("value").node("right").get("value"));
+		Ast.Module module = PyParser.parse("x = 'a\\n\\x41\\u00e9\\U0001F600\\101'\ny = r'\\n'\n");
+		assertEquals("a\nA\u00e9\uD83D\uDE00A", value(module.body.get(0)));
+		assertEquals("\\n", value(module.body.get(1)));
+		Ast.Module big = PyParser.parse("x = 1_000 + 0xff\n");
+		Ast.BinOp sum = (Ast.BinOp) ((Ast.Assign) big.body.get(0)).value;
+		assertEquals(Long.valueOf(1000), ((Ast.Constant) sum.left).value);
+		assertEquals(Long.valueOf(255), ((Ast.Constant) sum.right).value);
+	}
+
+	/** The value of the constant assigned by an assignment statement. */
+	private static Object value(Ast.Stmt assign) {
+		return ((Ast.Constant) ((Ast.Assign) assign).value).value;
 	}
 }

@@ -26,11 +26,12 @@ public final class AstDump {
 			sb.append("  ");
 	}
 
-	private static boolean flat(Node n) {
-		for (int i = 0; i < n.fieldCount(); i++) {
-			Object v = n.fieldValue(i);
+	/** True if every field is a scalar, a bare name (operator, context) or an empty list. */
+	private static boolean flat(Object[] fields) {
+		for (int i = 1; i < fields.length; i += 2) {
+			Object v = fields[i];
 			if (v instanceof Node) {
-				if (((Node) v).fieldCount() != 0)
+				if (((Node) v).fields().length != 0)
 					return false;
 			} else if (v instanceof List) {
 				if (!((List<?>) v).isEmpty())
@@ -43,26 +44,29 @@ public final class AstDump {
 	private static void value(StringBuilder sb, Object v, int level) {
 		if (v instanceof Node) {
 			Node n = (Node) v;
-			sb.append(n.type);
-			if (n.fieldCount() == 0)
+			Object[] fields = n.fields();
+			sb.append(n.type());
+			if (fields.length == 0)
 				return;
 			sb.append('(');
-			boolean flat = flat(n);
-			for (int i = 0; i < n.fieldCount(); i++) {
+			boolean flat = flat(fields);
+			for (int i = 0; i < fields.length; i += 2) {
 				if (i > 0)
 					sb.append(flat ? ", " : ",");
 				if (!flat) {
 					sb.append('\n');
 					indent(sb, level + 1);
 				}
-				sb.append(n.fieldName(i)).append('=');
-				value(sb, n.fieldValue(i), level + 1);
+				sb.append((String) fields[i]).append('=');
+				value(sb, fields[i + 1], level + 1);
 			}
 			if (!flat) {
 				sb.append('\n');
 				indent(sb, level);
 			}
 			sb.append(')');
+		} else if (v instanceof Enum) {
+			sb.append(((Enum<?>) v).name());
 		} else if (v instanceof List) {
 			List<?> list = (List<?>) v;
 			if (list.isEmpty()) {

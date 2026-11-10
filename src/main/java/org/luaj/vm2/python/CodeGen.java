@@ -9,7 +9,7 @@ import java.util.Map;
 /** Compiles the syntax tree of a module to {@link Code}, one function at a time. */
 final class CodeGen {
 	/** Compiles a Module node. */
-	static Code compile(Node module, String filename) {
+	static Code compile(Ast.Module module, String filename) {
 		Scope top = Resolver.resolve(module);
 		CodeGen g = new CodeGen(top, "<module>", filename);
 		g.genModule(module);
@@ -228,93 +228,100 @@ final class CodeGen {
 
 	// ------------------------------------------------------------ functions and modules
 
-	private void genModule(Node module) {
-		statements(module.nodes("body"));
+	private void genModule(Ast.Module module) {
+		statements(module.body);
 		loadConst(PyNone.NONE);
 		emit(Op.RETURN);
 	}
 
-	private void genFunctionBody(Node n) {
+	/** The parameters that are captured by an inner scope live in cells. */
+	private void makeCells() {
 		for (String p : scope.slotNames)
 			if ((scope.flags(p) & Scope.CELL) != 0 && scope.slots.get(p).intValue() < scope.firstFree)
 				emit(Op.MAKE_CELL, scope.slotOf(p));
-		if (n.is("Lambda")) {
-			expression(n.node("body"));
-			emit(Op.RETURN);
-			return;
-		}
-		statements(n.nodes("body"));
+	}
+
+	private void genFunctionBody(List<Ast.Stmt> body) {
+		makeCells();
+		statements(body);
 		loadConst(PyNone.NONE);
 		emit(Op.RETURN);
 	}
 
-	private void genComprehension(Node n) {
-		for (String p : scope.slotNames)
-			if ((scope.flags(p) & Scope.CELL) != 0 && scope.slots.get(p).intValue() < scope.firstFree)
-				emit(Op.MAKE_CELL, scope.slotOf(p));
-		boolean list = n.is("ListComp");
+	private void genLambdaBody(Ast.Expr body) {
+		makeCells();
+		expression(body);
+		emit(Op.RETURN);
+	}
+
+	private void genComprehension(Ast.CompExpr n) {
+		makeCells();
+		boolean list = n instanceof Ast.ListComp;
 		if (list)
 			emit(Op.BUILD_LIST, 0);
 		else
 			emit(Op.BUILD_DICT, 0);
-		comprehensionLoops(n, n.nodes("generators"), 0, list);
+		comprehensionLoops(n, 0, list);
 		emit(Op.RETURN);
 	}
 
-	private void comprehensionLoops(Node n, List<Node> gens, int index, boolean list) {
+	private void comprehensionLoops(Ast.CompExpr n, int index, boolean list) {
+		List<Ast.Comprehension> gens = n.generators;
 		if (index == gens.size()) {
 			at(n);
 			int up = index + 1;
 			if (list) {
-				expression(n.node("elt"));
+				expression(((Ast.ListComp) n).elt);
 				emit(Op.LIST_APPEND, up);
 			} else {
-				expression(n.node("key"));
-				expression(n.node("value"));
+				expression(((Ast.DictComp) n).key);
+				expression(((Ast.DictComp) n).value);
 				emit(Op.MAP_ADD, up);
 			}
 			return;
 		}
-		Node g = gens.get(index);
+		Ast.Comprehension g = gens.get(index);
 		if (index == 0) {
 			emit(Op.LOAD_FAST, 0);
 		} else {
-			expression(g.node("iter"));
+			expression(g.iter);
 			emit(Op.GET_ITER);
 		}
 		Label top = new Label();
 		Label end = new Label();
 		bind(top);
 		emitJump(Op.FOR_ITER, end);
-		store(g.node("target"));
-		for (Node cond : g.nodes("ifs")) {
+		store(g.target);
+		for (Ast.Expr cond : g.ifs) {
 			expression(cond);
 			emitJump(Op.JUMP_IF_FALSE, top);
 		}
-		comprehensionLoops(n, gens, index + 1, list);
+		comprehensionLoops(n, index + 1, list);
 		emitJump(Op.JUMP, top);
 		bind(end);
 	}
 
-	/** Pushes a function object for a def, a lambda or a comprehension. */
-	private void makeFunction(Node n, String fname, Node args) {
-		Scope child = (Scope) n.info;
+	/**
+	 * Pushes a function object for a def, a lambda or a comprehension; child is
+	 * the scope the resolver made for it, args its parameters (null for a comprehension).
+	 */
+	private void makeFunction(Node n, Scope child, String fname, Ast.Arguments args) {
 		int flags = 0;
 		if (args != null) {
-			List<Node> defaults = args.nodes("defaults");
+			List<Ast.Expr> defaults = args.defaults;
 			if (!defaults.isEmpty()) {
-				for (Node d : defaults)
+				for (Ast.Expr d : defaults)
 					expression(d);
 				emit(Op.BUILD_TUPLE, defaults.size());
 				flags |= 1;
 			}
-			List<Node> kwargs = args.nodes("kwonlyargs");
-			List<Node> kwdef = args.nodes("kw_defaults");
+			List<Ast.Arg> kwargs = args.kwonlyargs;
+			List<Ast.Expr> kwdef = args.kwDefaults;
 			int count = 0;
 			for (int i = 0; i < kwargs.size(); i++) {
-				Node d = kwdef.get(i);
+				Ast.Expr d = kwdef.get(i);
 				if (d != null) {
-					loadConst(kwargs.get(i).str("arg"));
+					loadConst(kwargs.get(i).arg);
 					expression(d);
 					count++;
 				}
@@ -333,23 +340,24 @@ final class CodeGen {
 		CodeGen g = new CodeGen(child, fname, filename);
 		g.className = className;
 		g.line = n.line;
-		if (n.is("ListComp") || n.is("DictComp"))
-			g.genComprehension(n);
+		if (n instanceof Ast.CompExpr)
+			g.genComprehension((Ast.CompExpr) n);
+		else if (n instanceof Ast.Lambda)
+			g.genLambdaBody(((Ast.Lambda) n).body);
 		else
-			g.genFunctionBody(n);
+			g.genFunctionBody(((Ast.FunctionDef) n).body);
 		loadConst(g.finish());
 		emit(Op.MAKE_FUNCTION, flags);
 	}
 
 	/** As CPython: the decorators are evaluated from top to bottom, before the def or the class. */
-	private void loadDecorators(Node n) {
-		for (Node d : n.nodes("decorator_list"))
+	private void loadDecorators(List<Ast.Expr> decorators) {
+		for (Ast.Expr d : decorators)
 			expression(d);
 	}
 
 	/** ... and applied from bottom to top, once the function or the class exists. */
-	private void applyDecorators(Node n) {
-		List<Node> decorators = n.nodes("decorator_list");
+	private void applyDecorators(Node n, List<Ast.Expr> decorators) {
 		for (int i = decorators.size() - 1; i >= 0; i--) {
 			at(decorators.get(i));
 			emit(Op.CALL, 1);
@@ -362,11 +370,11 @@ final class CodeGen {
 	 * that returns a dict of its locals; Builtins.BUILD_CLASS turns it into a
 	 * class: BUILD_CLASS(body, name, qualname, *bases).
 	 */
-	private void classDef(Node n) {
-		List<Node> bases = n.nodes("bases");
+	private void classDef(Ast.ClassDef n) {
+		List<Ast.Expr> bases = n.bases;
 		if (bases.size() > 1)
 			throw error("multiple inheritance is not supported", n);
-		Scope child = (Scope) n.info;
+		Scope child = n.scope;
 		loadConst(Builtins.BUILD_CLASS);
 		int flags = 0;
 		if (child.freeNames.isEmpty() == false) {
@@ -375,22 +383,22 @@ final class CodeGen {
 			emit(Op.BUILD_TUPLE, child.freeNames.size());
 			flags |= 4;
 		}
-		CodeGen g = new CodeGen(child, n.str("name"), filename);
-		g.className = n.str("name");
+		CodeGen g = new CodeGen(child, n.name, filename);
+		g.className = n.name;
 		g.line = n.line;
-		g.genClassBody(n);
+		g.genClassBody(n.body);
 		loadConst(g.finish());
 		emit(Op.MAKE_FUNCTION, flags);
-		loadConst(n.str("name"));
+		loadConst(n.name);
 		loadConst(qualname(child));
-		for (Node b : bases)
+		for (Ast.Expr b : bases)
 			expression(b);
 		at(n);
 		emit(Op.CALL, 3 + bases.size());
 	}
 
-	private void genClassBody(Node n) {
-		statements(n.nodes("body"));
+	private void genClassBody(List<Ast.Stmt> body) {
+		statements(body);
 		// the resolver only accepts straight-line statements: every local is bound here
 		int count = 0;
 		for (int i = 0; i < scope.firstFree; i++) {
@@ -467,113 +475,94 @@ final class CodeGen {
 
 	// ------------------------------------------------------------ statements
 
-	private void statements(List<Node> body) {
-		for (Node s : body)
+	private void statements(List<Ast.Stmt> body) {
+		for (Ast.Stmt s : body)
 			statement(s);
 	}
 
-	private void statement(Node n) {
+	private void statement(Ast.Stmt n) {
 		at(n);
-		switch (n.type) {
-		case "Expr": {
-			Node v = n.node("value");
-			if (v.is("Constant"))
-				break; // docstrings and the like
+		if (n instanceof Ast.ExprStmt) {
+			Ast.Expr v = ((Ast.ExprStmt) n).value;
+			if (v instanceof Ast.Constant)
+				return; // docstrings and the like
 			expression(v);
 			emit(Op.POP);
-			break;
-		}
-		case "Assign":
-			assign(n);
-			break;
-		case "AugAssign":
-			augAssign(n);
-			break;
-		case "Pass":
-			break;
-		case "If":
-			ifStatement(n);
-			break;
-		case "While":
-			whileStatement(n);
-			break;
-		case "For":
-			forStatement(n);
-			break;
-		case "Break": {
+		} else if (n instanceof Ast.Assign) {
+			assign((Ast.Assign) n);
+		} else if (n instanceof Ast.AugAssign) {
+			augAssign((Ast.AugAssign) n);
+		} else if (n instanceof Ast.Pass) {
+			// nothing
+		} else if (n instanceof Ast.If) {
+			ifStatement((Ast.If) n);
+		} else if (n instanceof Ast.While) {
+			whileStatement((Ast.While) n);
+		} else if (n instanceof Ast.For) {
+			forStatement((Ast.For) n);
+		} else if (n instanceof Ast.Break) {
 			if (loops.isEmpty())
 				throw error("'break' outside loop", n);
 			Loop l = loops.get(loops.size() - 1);
 			if (l.iterator)
 				emit(Op.POP);
 			emitJump(Op.JUMP, l.breakLabel);
-			break;
-		}
-		case "Continue": {
+		} else if (n instanceof Ast.Continue) {
 			if (loops.isEmpty())
 				throw error("'continue' not properly in loop", n);
 			emitJump(Op.JUMP, loops.get(loops.size() - 1).continueLabel);
-			break;
-		}
-		case "Return":
+		} else if (n instanceof Ast.Return) {
+			Ast.Return r = (Ast.Return) n;
 			if (scope.kind == Scope.MODULE)
 				throw error("'return' outside function", n);
-			if (n.node("value") == null)
+			if (r.value == null)
 				loadConst(PyNone.NONE);
 			else
-				expression(n.node("value"));
+				expression(r.value);
 			at(n);
 			emit(Op.RETURN);
-			break;
-		case "FunctionDef":
-			loadDecorators(n);
-			makeFunction(n, n.str("name"), n.node("args"));
-			applyDecorators(n);
-			storeName(n.str("name"));
-			break;
-		case "ClassDef":
-			loadDecorators(n);
-			classDef(n);
-			applyDecorators(n);
-			storeName(n.str("name"));
-			break;
-		case "Delete":
-			for (Node t : n.nodes("targets"))
+		} else if (n instanceof Ast.FunctionDef) {
+			Ast.FunctionDef f = (Ast.FunctionDef) n;
+			loadDecorators(f.decorators);
+			makeFunction(f, f.scope, f.name, f.args);
+			applyDecorators(f, f.decorators);
+			storeName(f.name);
+		} else if (n instanceof Ast.ClassDef) {
+			Ast.ClassDef c = (Ast.ClassDef) n;
+			loadDecorators(c.decorators);
+			classDef(c);
+			applyDecorators(c, c.decorators);
+			storeName(c.name);
+		} else if (n instanceof Ast.Delete) {
+			for (Ast.Expr t : ((Ast.Delete) n).targets)
 				delete(t);
-			break;
-		case "Global":
-		case "Nonlocal":
-			break;
-		case "Assert":
-			assertStatement(n);
-			break;
-		case "Raise":
-			raiseStatement(n);
-			break;
-		case "Try":
-			tryStatement(n);
-			break;
-		case "Import":
-			for (Node a : n.nodes("names")) {
-				String full = a.str("name");
-				String as = (String) a.get("asname");
+		} else if (n instanceof Ast.NameDeclaration) {
+			// global and nonlocal: handled by the resolver
+		} else if (n instanceof Ast.Assert) {
+			assertStatement((Ast.Assert) n);
+		} else if (n instanceof Ast.Raise) {
+			raiseStatement((Ast.Raise) n);
+		} else if (n instanceof Ast.Try) {
+			tryStatement((Ast.Try) n);
+		} else if (n instanceof Ast.Import) {
+			for (Ast.Alias a : ((Ast.Import) n).names) {
+				String full = a.name;
 				emit(Op.IMPORT, name(full));
-				if (as != null) {
-					storeName(as);
+				if (a.asname != null) {
+					storeName(a.asname);
 				} else {
 					int dot = full.indexOf('.');
 					storeName(dot >= 0 ? full.substring(0, dot) : full);
 				}
 			}
-			break;
-		default:
-			throw error("unsupported statement " + n.type, n);
+		} else {
+			throw error("unsupported statement " + n.type(), n);
 		}
 	}
 
-	private void assign(Node n) {
-		expression(n.node("value"));
-		List<Node> targets = n.nodes("targets");
+	private void assign(Ast.Assign n) {
+		expression(n.value);
+		List<Ast.Expr> targets = n.targets;
 		for (int i = 0; i < targets.size(); i++) {
 			if (i < targets.size() - 1)
 				emit(Op.DUP);
@@ -582,194 +571,187 @@ final class CodeGen {
 	}
 
 	/** Stores the value on top of the stack into a target. */
-	private void store(Node t) {
-		switch (t.type) {
-		case "Name":
-			storeName(t.str("id"));
-			break;
-		case "Subscript":
-			expression(t.node("value"));
-			expression(t.node("slice"));
+	private void store(Ast.Expr t) {
+		if (t instanceof Ast.Name) {
+			storeName(((Ast.Name) t).id);
+		} else if (t instanceof Ast.Subscript) {
+			expression(((Ast.Subscript) t).value);
+			expression(((Ast.Subscript) t).slice);
 			at(t);
 			emit(Op.SETITEM);
-			break;
-		case "Tuple":
-		case "List": {
-			List<Node> elts = t.nodes("elts");
-			for (Node e : elts)
-				if (e.is("Starred"))
-					throw error("starred assignment targets are not supported", e);
-			emit(Op.UNPACK, elts.size());
-			for (Node e : elts)
-				store(e);
-			break;
-		}
-		case "Attribute":
-			expression(t.node("value"));
+		} else if (t instanceof Ast.TupleExpr) {
+			storeSequence(((Ast.TupleExpr) t).elts);
+		} else if (t instanceof Ast.ListExpr) {
+			storeSequence(((Ast.ListExpr) t).elts);
+		} else if (t instanceof Ast.Attribute) {
+			expression(((Ast.Attribute) t).value);
 			at(t);
-			emit(Op.STORE_ATTR, name(mangle(t.str("attr"))));
-			break;
-		default:
-			throw error("cannot assign to " + t.type, t);
+			emit(Op.STORE_ATTR, name(mangle(((Ast.Attribute) t).attr)));
+		} else {
+			throw error("cannot assign to " + t.type(), t);
 		}
 	}
 
-	private void delete(Node t) {
-		switch (t.type) {
-		case "Name":
-			deleteName(t.str("id"));
-			break;
-		case "Subscript":
-			expression(t.node("value"));
-			expression(t.node("slice"));
+	private void storeSequence(List<Ast.Expr> elts) {
+		for (Ast.Expr e : elts)
+			if (e instanceof Ast.Starred)
+				throw error("starred assignment targets are not supported", e);
+		emit(Op.UNPACK, elts.size());
+		for (Ast.Expr e : elts)
+			store(e);
+	}
+
+	private void delete(Ast.Expr t) {
+		if (t instanceof Ast.Name) {
+			deleteName(((Ast.Name) t).id);
+		} else if (t instanceof Ast.Subscript) {
+			expression(((Ast.Subscript) t).value);
+			expression(((Ast.Subscript) t).slice);
 			at(t);
 			emit(Op.DELITEM);
-			break;
-		case "Tuple":
-		case "List":
-			for (Node e : t.nodes("elts"))
+		} else if (t instanceof Ast.TupleExpr) {
+			for (Ast.Expr e : ((Ast.TupleExpr) t).elts)
 				delete(e);
-			break;
-		case "Attribute":
-			expression(t.node("value"));
+		} else if (t instanceof Ast.ListExpr) {
+			for (Ast.Expr e : ((Ast.ListExpr) t).elts)
+				delete(e);
+		} else if (t instanceof Ast.Attribute) {
+			expression(((Ast.Attribute) t).value);
 			at(t);
-			emit(Op.DELETE_ATTR, name(mangle(t.str("attr"))));
-			break;
-		default:
-			throw error("cannot delete " + t.type, t);
+			emit(Op.DELETE_ATTR, name(mangle(((Ast.Attribute) t).attr)));
+		} else {
+			throw error("cannot delete " + t.type(), t);
 		}
 	}
 
-	private static int binOp(Node op) {
-		switch (op.type) {
-		case "Add":
+	private static int binOp(Ast.Operator op) {
+		switch (op) {
+		case Add:
 			return Op.BIN_ADD;
-		case "Sub":
+		case Sub:
 			return Op.BIN_SUB;
-		case "Mult":
+		case Mult:
 			return Op.BIN_MUL;
-		case "Div":
+		case Div:
 			return Op.BIN_DIV;
-		case "FloorDiv":
+		case FloorDiv:
 			return Op.BIN_FLOORDIV;
-		case "Mod":
+		case Mod:
 			return Op.BIN_MOD;
-		case "Pow":
+		case Pow:
 			return Op.BIN_POW;
-		case "LShift":
+		case LShift:
 			return Op.BIN_LSHIFT;
-		case "RShift":
+		case RShift:
 			return Op.BIN_RSHIFT;
-		case "BitAnd":
+		case BitAnd:
 			return Op.BIN_AND;
-		case "BitOr":
+		case BitOr:
 			return Op.BIN_OR;
-		case "BitXor":
+		case BitXor:
 			return Op.BIN_XOR;
 		default:
-			throw new PySyntaxError("unsupported operator " + op.type, 0, 0);
+			throw new PySyntaxError("unsupported operator " + op.name(), 0, 0);
 		}
 	}
 
-	private void augAssign(Node n) {
-		Node t = n.node("target");
-		int op = binOp(n.node("op")) | Op.INPLACE;
-		switch (t.type) {
-		case "Name":
-			loadName(t.str("id"));
-			expression(n.node("value"));
+	private void augAssign(Ast.AugAssign n) {
+		Ast.Expr t = n.target;
+		int op = binOp(n.op) | Op.INPLACE;
+		if (t instanceof Ast.Name) {
+			String id = ((Ast.Name) t).id;
+			loadName(id);
+			expression(n.value);
 			at(n);
 			emit(Op.BINARY_OP, op);
-			storeName(t.str("id"));
-			break;
-		case "Subscript":
-			expression(t.node("value"));
-			expression(t.node("slice"));
+			storeName(id);
+		} else if (t instanceof Ast.Subscript) {
+			expression(((Ast.Subscript) t).value);
+			expression(((Ast.Subscript) t).slice);
 			emit(Op.DUP2);
 			at(t);
 			emit(Op.GETITEM);
-			expression(n.node("value"));
+			expression(n.value);
 			at(n);
 			emit(Op.BINARY_OP, op);
 			emit(Op.ROT3);
 			emit(Op.SETITEM);
-			break;
-		case "Attribute":
-			expression(t.node("value"));
+		} else if (t instanceof Ast.Attribute) {
+			Ast.Attribute attr = (Ast.Attribute) t;
+			expression(attr.value);
 			emit(Op.DUP);
 			at(t);
-			emit(Op.LOAD_ATTR, name(mangle(t.str("attr"))));
-			expression(n.node("value"));
+			emit(Op.LOAD_ATTR, name(mangle(attr.attr)));
+			expression(n.value);
 			at(n);
 			emit(Op.BINARY_OP, op);
 			emit(Op.ROT2);
 			at(t);
-			emit(Op.STORE_ATTR, name(mangle(t.str("attr"))));
-			break;
-		default:
+			emit(Op.STORE_ATTR, name(mangle(attr.attr)));
+		} else {
 			throw error("illegal target for augmented assignment", t);
 		}
 	}
 
-	private void ifStatement(Node n) {
+	private void ifStatement(Ast.If n) {
 		Label orelse = new Label();
 		Label end = new Label();
-		expression(n.node("test"));
+		expression(n.test);
 		emitJump(Op.JUMP_IF_FALSE, orelse);
-		statements(n.nodes("body"));
-		if (!n.nodes("orelse").isEmpty()) {
+		statements(n.body);
+		if (!n.orelse.isEmpty()) {
 			emitJump(Op.JUMP, end);
 			bind(orelse);
-			statements(n.nodes("orelse"));
+			statements(n.orelse);
 			bind(end);
 		} else {
 			bind(orelse);
 		}
 	}
 
-	private void whileStatement(Node n) {
+	private void whileStatement(Ast.While n) {
 		Label top = new Label();
 		Label orelse = new Label();
 		Label brk = new Label();
 		bind(top);
-		expression(n.node("test"));
+		expression(n.test);
 		emitJump(Op.JUMP_IF_FALSE, orelse);
 		loops.add(new Loop(top, brk, false));
-		statements(n.nodes("body"));
+		statements(n.body);
 		loops.remove(loops.size() - 1);
 		emitJump(Op.JUMP, top);
 		bind(orelse);
-		statements(n.nodes("orelse"));
+		statements(n.orelse);
 		bind(brk);
 	}
 
-	private void forStatement(Node n) {
+	private void forStatement(Ast.For n) {
 		Label top = new Label();
 		Label orelse = new Label();
 		Label brk = new Label();
-		expression(n.node("iter"));
+		expression(n.iter);
 		at(n);
 		emit(Op.GET_ITER);
 		bind(top);
 		emitJump(Op.FOR_ITER, orelse);
-		store(n.node("target"));
+		store(n.target);
 		loops.add(new Loop(top, brk, true));
-		statements(n.nodes("body"));
+		statements(n.body);
 		loops.remove(loops.size() - 1);
 		emitJump(Op.JUMP, top);
 		bind(orelse);
-		statements(n.nodes("orelse"));
+		statements(n.orelse);
 		bind(brk);
 	}
 
-	private void assertStatement(Node n) {
+	private void assertStatement(Ast.Assert n) {
 		Label ok = new Label();
-		expression(n.node("test"));
+		expression(n.test);
 		emitJump(Op.JUMP_IF_TRUE, ok);
 		at(n);
 		emit(Op.LOAD_GLOBAL, name("AssertionError"));
-		if (n.node("msg") != null) {
-			expression(n.node("msg"));
+		if (n.msg != null) {
+			expression(n.msg);
 			emit(Op.CALL, 1);
 		} else {
 			emit(Op.CALL, 0);
@@ -778,10 +760,10 @@ final class CodeGen {
 		bind(ok);
 	}
 
-	private void raiseStatement(Node n) {
-		if (n.node("cause") != null)
+	private void raiseStatement(Ast.Raise n) {
+		if (n.cause != null)
 			throw error("'raise ... from ...' is not supported", n);
-		if (n.node("exc") == null) {
+		if (n.exc == null) {
 			if (handlerTemps.isEmpty()) {
 				emit(Op.RAISE, 0);
 			} else {
@@ -790,23 +772,21 @@ final class CodeGen {
 			}
 			return;
 		}
-		expression(n.node("exc"));
+		expression(n.exc);
 		at(n);
 		emit(Op.RAISE, 1);
 	}
 
-	private void tryStatement(Node n) {
-		if (!n.nodes("finalbody").isEmpty())
-			throw error("'finally' is not supported", n);
+	private void tryStatement(Ast.Try n) {
 		int tmp = newTemp();
 		int depth0 = depth;
 		Label handler = new Label();
 		Label end = new Label();
 		int start = size;
-		statements(n.nodes("body"));
+		statements(n.body);
 		int stop = size;
 		if (stop == start) {
-			statements(n.nodes("orelse"));
+			statements(n.orelse);
 			return;
 		}
 		Entry e = new Entry();
@@ -815,7 +795,7 @@ final class CodeGen {
 		e.depth = depth0;
 		e.handler = handler;
 		entries.add(e);
-		statements(n.nodes("orelse"));
+		statements(n.orelse);
 		emitJump(Op.JUMP, end);
 
 		handler.depth = depth0 + 1;
@@ -824,26 +804,25 @@ final class CodeGen {
 			maxDepth = depth;
 		at(n);
 		emit(Op.STORE_FAST, tmp);
-		for (Node h : n.nodes("handlers")) {
+		for (Ast.ExceptHandler h : n.handlers) {
 			at(h);
 			Label next = new Label();
-			if (h.node("type") != null) {
+			if (h.exceptionType != null) {
 				emit(Op.LOAD_FAST, tmp);
-				expression(h.node("type"));
+				expression(h.exceptionType);
 				at(h);
 				emit(Op.EXC_MATCH);
 				emitJump(Op.JUMP_IF_FALSE, next);
 			}
-			String hname = (String) h.get("name");
-			if (hname != null) {
+			if (h.name != null) {
 				emit(Op.LOAD_FAST, tmp);
-				storeName(hname);
+				storeName(h.name);
 			}
 			handlerTemps.add(Integer.valueOf(tmp));
-			statements(h.nodes("body"));
+			statements(h.body);
 			handlerTemps.remove(handlerTemps.size() - 1);
-			if (hname != null)
-				deleteName(hname);
+			if (h.name != null)
+				deleteName(h.name);
 			emitJump(Op.JUMP, end);
 			bind(next);
 		}
@@ -856,7 +835,7 @@ final class CodeGen {
 
 	// ------------------------------------------------------------ expressions
 
-	private void expressionOrNone(Node e) {
+	private void expressionOrNone(Ast.Expr e) {
 		if (e == null)
 			loadConst(PyNone.NONE);
 		else
@@ -875,149 +854,140 @@ final class CodeGen {
 		return v;
 	}
 
-	private void expression(Node e) {
+	private void expression(Ast.Expr e) {
 		at(e);
-		switch (e.type) {
-		case "Constant":
-			loadConst(constantValue(e.get("value")));
-			break;
-		case "Name":
-			loadName(e.str("id"));
-			break;
-		case "BoolOp": {
+		if (e instanceof Ast.Constant) {
+			loadConst(constantValue(((Ast.Constant) e).value));
+		} else if (e instanceof Ast.Name) {
+			loadName(((Ast.Name) e).id);
+		} else if (e instanceof Ast.BoolOp) {
+			Ast.BoolOp b = (Ast.BoolOp) e;
 			Label end = new Label();
-			int op = e.node("op").is("And") ? Op.JUMP_IF_FALSE_KEEP : Op.JUMP_IF_TRUE_KEEP;
-			List<Node> values = e.nodes("values");
+			int op = b.op == Ast.BoolOperator.And ? Op.JUMP_IF_FALSE_KEEP : Op.JUMP_IF_TRUE_KEEP;
+			List<Ast.Expr> values = b.values;
 			for (int i = 0; i < values.size(); i++) {
 				expression(values.get(i));
 				if (i < values.size() - 1)
 					emitJump(op, end);
 			}
 			bind(end);
-			break;
-		}
-		case "BinOp":
-			expression(e.node("left"));
-			expression(e.node("right"));
+		} else if (e instanceof Ast.BinOp) {
+			Ast.BinOp b = (Ast.BinOp) e;
+			expression(b.left);
+			expression(b.right);
 			at(e);
-			emit(Op.BINARY_OP, binOp(e.node("op")));
-			break;
-		case "UnaryOp":
-			unary(e);
-			break;
-		case "IfExp": {
+			emit(Op.BINARY_OP, binOp(b.op));
+		} else if (e instanceof Ast.UnaryOp) {
+			unary((Ast.UnaryOp) e);
+		} else if (e instanceof Ast.IfExp) {
+			Ast.IfExp i = (Ast.IfExp) e;
 			Label orelse = new Label();
 			Label end = new Label();
-			expression(e.node("test"));
+			expression(i.test);
 			emitJump(Op.JUMP_IF_FALSE, orelse);
-			expression(e.node("body"));
+			expression(i.body);
 			emitJump(Op.JUMP, end);
 			bind(orelse);
-			expression(e.node("orelse"));
+			expression(i.orelse);
 			bind(end);
-			break;
-		}
-		case "Compare":
-			compare(e);
-			break;
-		case "Call":
-			call(e);
-			break;
-		case "Attribute":
-			expression(e.node("value"));
+		} else if (e instanceof Ast.Compare) {
+			compare((Ast.Compare) e);
+		} else if (e instanceof Ast.Call) {
+			call((Ast.Call) e);
+		} else if (e instanceof Ast.Attribute) {
+			Ast.Attribute a = (Ast.Attribute) e;
+			expression(a.value);
 			at(e);
-			emit(Op.LOAD_ATTR, name(mangle(e.str("attr"))));
-			break;
-		case "Subscript":
-			expression(e.node("value"));
-			expression(e.node("slice"));
+			emit(Op.LOAD_ATTR, name(mangle(a.attr)));
+		} else if (e instanceof Ast.Subscript) {
+			Ast.Subscript s = (Ast.Subscript) e;
+			expression(s.value);
+			expression(s.slice);
 			at(e);
 			emit(Op.GETITEM);
-			break;
-		case "Slice":
-			expressionOrNone(e.node("lower"));
-			expressionOrNone(e.node("upper"));
-			expressionOrNone(e.node("step"));
+		} else if (e instanceof Ast.Slice) {
+			Ast.Slice s = (Ast.Slice) e;
+			expressionOrNone(s.lower);
+			expressionOrNone(s.upper);
+			expressionOrNone(s.step);
 			at(e);
 			emit(Op.BUILD_SLICE);
-			break;
-		case "List":
-		case "Tuple": {
-			List<Node> elts = e.nodes("elts");
-			for (Node x : elts) {
-				if (x.is("Starred"))
-					throw error("starred expressions in displays are not supported", x);
-				expression(x);
+		} else if (e instanceof Ast.ListExpr) {
+			List<Ast.Expr> elts = ((Ast.ListExpr) e).elts;
+			displayElements(elts);
+			at(e);
+			emit(Op.BUILD_LIST, elts.size());
+		} else if (e instanceof Ast.TupleExpr) {
+			List<Ast.Expr> elts = ((Ast.TupleExpr) e).elts;
+			displayElements(elts);
+			at(e);
+			emit(Op.BUILD_TUPLE, elts.size());
+		} else if (e instanceof Ast.DictExpr) {
+			Ast.DictExpr d = (Ast.DictExpr) e;
+			for (int i = 0; i < d.keys.size(); i++) {
+				expression(d.keys.get(i));
+				expression(d.values.get(i));
 			}
 			at(e);
-			emit(e.is("List") ? Op.BUILD_LIST : Op.BUILD_TUPLE, elts.size());
-			break;
-		}
-		case "Dict": {
-			List<Node> keys = e.nodes("keys");
-			List<Node> values = e.nodes("values");
-			for (int i = 0; i < keys.size(); i++) {
-				expression(keys.get(i));
-				expression(values.get(i));
-			}
-			at(e);
-			emit(Op.BUILD_DICT, keys.size());
-			break;
-		}
-		case "JoinedStr": {
-			List<Node> values = e.nodes("values");
+			emit(Op.BUILD_DICT, d.keys.size());
+		} else if (e instanceof Ast.JoinedStr) {
+			List<Ast.Expr> values = ((Ast.JoinedStr) e).values;
 			if (values.isEmpty()) {
 				loadConst("");
-				break;
+				return;
 			}
-			for (Node v : values)
+			for (Ast.Expr v : values)
 				expression(v);
 			at(e);
 			emit(Op.BUILD_STRING, values.size());
-			break;
-		}
-		case "FormattedValue": {
-			expression(e.node("value"));
+		} else if (e instanceof Ast.FormattedValue) {
+			Ast.FormattedValue f = (Ast.FormattedValue) e;
+			expression(f.value);
 			int flags = 0;
-			long conv = ((Long) e.get("conversion")).longValue();
+			long conv = f.conversion;
 			if (conv == 's')
 				flags = 1;
 			else if (conv == 'r')
 				flags = 2;
 			else if (conv == 'a')
 				flags = 3;
-			if (e.node("format_spec") != null) {
-				expression(e.node("format_spec"));
+			if (f.formatSpec != null) {
+				expression(f.formatSpec);
 				flags |= 4;
 			}
 			at(e);
 			emit(Op.FORMAT_VALUE, flags);
-			break;
-		}
-		case "Lambda":
-			makeFunction(e, "<lambda>", e.node("args"));
-			break;
-		case "ListComp":
-		case "DictComp": {
-			makeFunction(e, e.is("ListComp") ? "<listcomp>" : "<dictcomp>", null);
-			expression(e.nodes("generators").get(0).node("iter"));
+		} else if (e instanceof Ast.Lambda) {
+			Ast.Lambda l = (Ast.Lambda) e;
+			makeFunction(l, l.scope, "<lambda>", l.args);
+		} else if (e instanceof Ast.CompExpr) {
+			Ast.CompExpr c = (Ast.CompExpr) e;
+			makeFunction(c, c.scope, c instanceof Ast.ListComp ? "<listcomp>" : "<dictcomp>", null);
+			expression(c.generators.get(0).iter);
 			at(e);
 			emit(Op.GET_ITER);
 			emit(Op.CALL, 1);
-			break;
-		}
-		case "Starred":
+		} else if (e instanceof Ast.Starred) {
 			throw error("can't use starred expression here", e);
-		default:
-			throw error("unsupported expression " + e.type, e);
+		} else {
+			throw error("unsupported expression " + e.type(), e);
 		}
 	}
 
-	private void unary(Node e) {
-		String op = e.node("op").type;
-		Node operand = e.node("operand");
-		if (op.equals("USub") && operand.is("Constant")) {
-			Object v = operand.get("value");
+	/** The elements of a list or tuple display. */
+	private void displayElements(List<Ast.Expr> elts) {
+		for (Ast.Expr x : elts) {
+			if (x instanceof Ast.Starred)
+				throw error("starred expressions in displays are not supported", x);
+			expression(x);
+		}
+	}
+
+	private void unary(Ast.UnaryOp e) {
+		Ast.UnaryOperator op = e.op;
+		Ast.Expr operand = e.operand;
+		if (op == Ast.UnaryOperator.USub && operand instanceof Ast.Constant) {
+			Object v = ((Ast.Constant) operand).value;
 			if (v instanceof Long) {
 				long l = -((Long) v).longValue();
 				if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE)
@@ -1033,13 +1003,13 @@ final class CodeGen {
 		expression(operand);
 		at(e);
 		switch (op) {
-		case "USub":
+		case USub:
 			emit(Op.UNARY_NEG);
 			break;
-		case "UAdd":
+		case UAdd:
 			emit(Op.UNARY_POS);
 			break;
-		case "Invert":
+		case Invert:
 			emit(Op.UNARY_INVERT);
 			break;
 		default:
@@ -1048,33 +1018,33 @@ final class CodeGen {
 		}
 	}
 
-	private void compareOp(Node op) {
-		switch (op.type) {
-		case "Eq":
+	private void compareOp(Ast.CmpOperator op) {
+		switch (op) {
+		case Eq:
 			emit(Op.COMPARE_OP, Op.CMP_EQ);
 			break;
-		case "NotEq":
+		case NotEq:
 			emit(Op.COMPARE_OP, Op.CMP_NE);
 			break;
-		case "Lt":
+		case Lt:
 			emit(Op.COMPARE_OP, Op.CMP_LT);
 			break;
-		case "LtE":
+		case LtE:
 			emit(Op.COMPARE_OP, Op.CMP_LE);
 			break;
-		case "Gt":
+		case Gt:
 			emit(Op.COMPARE_OP, Op.CMP_GT);
 			break;
-		case "GtE":
+		case GtE:
 			emit(Op.COMPARE_OP, Op.CMP_GE);
 			break;
-		case "Is":
+		case Is:
 			emit(Op.IS_OP, 0);
 			break;
-		case "IsNot":
+		case IsNot:
 			emit(Op.IS_OP, 1);
 			break;
-		case "In":
+		case In:
 			emit(Op.CONTAINS_OP, 0);
 			break;
 		default:
@@ -1083,10 +1053,10 @@ final class CodeGen {
 		}
 	}
 
-	private void compare(Node e) {
-		List<Node> ops = e.nodes("ops");
-		List<Node> comps = e.nodes("comparators");
-		expression(e.node("left"));
+	private void compare(Ast.Compare e) {
+		List<Ast.CmpOperator> ops = e.ops;
+		List<Ast.Expr> comps = e.comparators;
+		expression(e.left);
 		if (ops.size() == 1) {
 			expression(comps.get(0));
 			at(e);
@@ -1114,19 +1084,19 @@ final class CodeGen {
 		bind(end);
 	}
 
-	private void call(Node e) {
-		List<Node> args = e.nodes("args");
-		List<Node> kws = e.nodes("keywords");
+	private void call(Ast.Call e) {
+		List<Ast.Expr> args = e.args;
+		List<Ast.Keyword> kws = e.keywords;
 		boolean ex = false;
-		for (Node a : args)
-			if (a.is("Starred"))
+		for (Ast.Expr a : args)
+			if (a instanceof Ast.Starred)
 				ex = true;
-		for (Node k : kws)
-			if (k.get("arg") == null)
+		for (Ast.Keyword k : kws)
+			if (k.arg == null)
 				ex = true;
-		expression(e.node("func"));
+		expression(e.func);
 		if (!ex) {
-			for (Node a : args)
+			for (Ast.Expr a : args)
 				expression(a);
 			if (kws.isEmpty()) {
 				at(e);
@@ -1136,10 +1106,10 @@ final class CodeGen {
 			Object[] names = new Object[kws.size()];
 			for (int i = 0; i < kws.size(); i++) {
 				for (int j = 0; j < i; j++)
-					if (names[j].equals(kws.get(i).get("arg")))
+					if (names[j].equals(kws.get(i).arg))
 						throw error("keyword argument repeated: " + names[j], kws.get(i));
-				names[i] = kws.get(i).get("arg");
-				expression(kws.get(i).node("value"));
+				names[i] = kws.get(i).arg;
+				expression(kws.get(i).value);
 			}
 			loadConst(new PyTuple(names));
 			at(e);
@@ -1147,9 +1117,9 @@ final class CodeGen {
 			return;
 		}
 		emit(Op.BUILD_LIST, 0);
-		for (Node a : args) {
-			if (a.is("Starred")) {
-				expression(a.node("value"));
+		for (Ast.Expr a : args) {
+			if (a instanceof Ast.Starred) {
+				expression(((Ast.Starred) a).value);
 				emit(Op.LIST_EXTEND, 1);
 			} else {
 				expression(a);
@@ -1159,13 +1129,13 @@ final class CodeGen {
 		boolean dict = !kws.isEmpty();
 		if (dict) {
 			emit(Op.BUILD_DICT, 0);
-			for (Node k : kws) {
-				if (k.get("arg") == null) {
-					expression(k.node("value"));
+			for (Ast.Keyword k : kws) {
+				if (k.arg == null) {
+					expression(k.value);
 					emit(Op.DICT_MERGE_KW, 1);
 				} else {
-					loadConst(k.get("arg"));
-					expression(k.node("value"));
+					loadConst(k.arg);
+					expression(k.value);
 					emit(Op.DICT_ADD_KW, 1);
 				}
 			}

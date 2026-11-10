@@ -21,7 +21,7 @@ public final class PyParser {
 	}
 
 	/** Parses a whole source file into a {@code Module} node. */
-	public static Node parse(String source) {
+	public static Ast.Module parse(String source) {
 		PyParser parser = new PyParser(PyLexer.tokenize(source));
 		return parser.module();
 	}
@@ -111,19 +111,11 @@ public final class PyParser {
 			throw error("expected end of line but found '" + t + "'");
 	}
 
-	private static Node n(String type, Token t, Object... nv) {
-		return new Node(type, t.line, t.col, nv);
-	}
-
-	private static Node load() {
-		return Node.bare("Load");
-	}
-
 	// ------------------------------------------------------------ statements
 
-	private Node module() {
+	private Ast.Module module() {
 		Token start = peek();
-		List<Node> body = new ArrayList<Node>();
+		List<Ast.Stmt> body = new ArrayList<Ast.Stmt>();
 		while (peek().kind != Token.END) {
 			if (peek().kind == Token.NEWLINE) {
 				next();
@@ -131,10 +123,10 @@ public final class PyParser {
 			}
 			statement(body);
 		}
-		return n("Module", start, "body", body);
+		return new Ast.Module(start.line, start.col, body);
 	}
 
-	private void statement(List<Node> out) {
+	private void statement(List<Ast.Stmt> out) {
 		Token t = peek();
 		if (t.kind == Token.INDENT)
 			throw error("unexpected indent");
@@ -153,10 +145,10 @@ public final class PyParser {
 				out.add(tryStatement());
 				return;
 			case "def":
-				out.add(defStatement(new ArrayList<Node>()));
+				out.add(defStatement(new ArrayList<Ast.Expr>()));
 				return;
 			case "class":
-				out.add(classStatement(new ArrayList<Node>()));
+				out.add(classStatement(new ArrayList<Ast.Expr>()));
 				return;
 			case "with":
 			case "async":
@@ -173,8 +165,8 @@ public final class PyParser {
 	}
 
 	/** One or more "@expr" lines, then the def or class they apply to. */
-	private Node decorated() {
-		List<Node> decorators = new ArrayList<Node>();
+	private Ast.Stmt decorated() {
+		List<Ast.Expr> decorators = new ArrayList<Ast.Expr>();
 		while (acceptOp("@")) {
 			decorators.add(test());
 			Token end = peek();
@@ -194,7 +186,7 @@ public final class PyParser {
 		throw error("a decorator must be followed by def or class");
 	}
 
-	private void simpleStatements(List<Node> out) {
+	private void simpleStatements(List<Ast.Stmt> out) {
 		out.add(simpleStatement());
 		while (acceptOp(";")) {
 			if (peek().kind == Token.NEWLINE || peek().kind == Token.END)
@@ -204,7 +196,7 @@ public final class PyParser {
 		expectNewline();
 	}
 
-	private List<Node> block() {
+	private List<Ast.Stmt> block() {
 		enter();
 		try {
 			return blockBody();
@@ -213,9 +205,9 @@ public final class PyParser {
 		}
 	}
 
-	private List<Node> blockBody() {
+	private List<Ast.Stmt> blockBody() {
 		expectOp(":");
-		List<Node> body = new ArrayList<Node>();
+		List<Ast.Stmt> body = new ArrayList<Ast.Stmt>();
 		if (peek().kind == Token.NEWLINE) {
 			next();
 			if (peek().kind != Token.INDENT)
@@ -236,91 +228,89 @@ public final class PyParser {
 		return body;
 	}
 
-	private Node ifStatement() {
+	private Ast.If ifStatement() {
 		Token t = next(); // if / elif
-		Node test = test();
-		List<Node> body = block();
-		List<Node> orelse = new ArrayList<Node>();
+		Ast.Expr test = test();
+		List<Ast.Stmt> body = block();
+		List<Ast.Stmt> orelse = new ArrayList<Ast.Stmt>();
 		if (isKw("elif")) {
 			orelse.add(ifStatement());
 		} else if (isKw("else")) {
 			next();
 			orelse = block();
 		}
-		return n("If", t, "test", test, "body", body, "orelse", orelse);
+		return new Ast.If(t.line, t.col, test, body, orelse);
 	}
 
-	private Node whileStatement() {
+	private Ast.While whileStatement() {
 		Token t = next();
-		Node test = test();
-		List<Node> body = block();
-		List<Node> orelse = new ArrayList<Node>();
+		Ast.Expr test = test();
+		List<Ast.Stmt> body = block();
+		List<Ast.Stmt> orelse = new ArrayList<Ast.Stmt>();
 		if (acceptKw("else"))
 			orelse = block();
-		return n("While", t, "test", test, "body", body, "orelse", orelse);
+		return new Ast.While(t.line, t.col, test, body, orelse);
 	}
 
-	private Node forStatement() {
+	private Ast.For forStatement() {
 		Token t = next();
-		Node target = targetList();
-		setContext(target, "Store");
+		Ast.Expr target = targetList();
+		setContext(target, Ast.Ctx.Store);
 		expectKw("in");
-		Node iter = testList();
-		List<Node> body = block();
-		List<Node> orelse = new ArrayList<Node>();
+		Ast.Expr iter = testList();
+		List<Ast.Stmt> body = block();
+		List<Ast.Stmt> orelse = new ArrayList<Ast.Stmt>();
 		if (acceptKw("else"))
 			orelse = block();
-		return n("For", t, "target", target, "iter", iter, "body", body, "orelse", orelse);
+		return new Ast.For(t.line, t.col, target, iter, body, orelse);
 	}
 
-	private Node tryStatement() {
+	private Ast.Try tryStatement() {
 		Token t = next();
-		List<Node> body = block();
-		List<Node> handlers = new ArrayList<Node>();
+		List<Ast.Stmt> body = block();
+		List<Ast.ExceptHandler> handlers = new ArrayList<Ast.ExceptHandler>();
 		while (isKw("except")) {
 			Token h = next();
 			if (isOp("*"))
 				throw error("except* is not supported");
-			Node type = null;
+			Ast.Expr type = null;
 			String name = null;
 			if (!isOp(":")) {
 				type = test();
 				if (acceptKw("as"))
 					name = expectName();
 			}
-			List<Node> hbody = block();
-			handlers.add(n("ExceptHandler", h, "type", type, "name", name, "body", hbody));
+			List<Ast.Stmt> hbody = block();
+			handlers.add(new Ast.ExceptHandler(h.line, h.col, type, name, hbody));
 		}
 		if (isKw("finally"))
 			throw error("'finally' is not supported");
 		if (handlers.isEmpty())
 			throw error("expected 'except' block");
-		List<Node> orelse = new ArrayList<Node>();
+		List<Ast.Stmt> orelse = new ArrayList<Ast.Stmt>();
 		if (acceptKw("else"))
 			orelse = block();
 		if (isKw("finally"))
 			throw error("'finally' is not supported");
-		return n("Try", t, "body", body, "handlers", handlers, "orelse", orelse, "finalbody",
-				new ArrayList<Node>());
+		return new Ast.Try(t.line, t.col, body, handlers, orelse);
 	}
 
-	private Node defStatement(List<Node> decorators) {
+	private Ast.FunctionDef defStatement(List<Ast.Expr> decorators) {
 		Token t = next();
 		String name = expectName();
 		expectOp("(");
-		Node args = parameters(")");
+		Ast.Arguments args = parameters(")");
 		expectOp(")");
 		if (isOp("->"))
 			throw error("return annotations are not supported");
-		List<Node> body = block();
-		return n("FunctionDef", t, "name", name, "args", args, "body", body, "decorator_list", decorators,
-				"returns", null);
+		List<Ast.Stmt> body = block();
+		return new Ast.FunctionDef(t.line, t.col, name, args, body, decorators);
 	}
 
-	private Node classStatement(List<Node> decorators) {
+	private Ast.ClassDef classStatement(List<Ast.Expr> decorators) {
 		Token t = next();
 		String name = expectName();
-		List<Node> bases = new ArrayList<Node>();
+		List<Ast.Expr> bases = new ArrayList<Ast.Expr>();
 		if (acceptOp("(")) {
 			while (isOp(")") == false) {
 				if (isOp("*") || isOp("**"))
@@ -333,20 +323,19 @@ public final class PyParser {
 			}
 			expectOp(")");
 		}
-		List<Node> body = block();
-		return n("ClassDef", t, "name", name, "bases", bases, "keywords", new ArrayList<Node>(), "body", body,
-				"decorator_list", decorators);
+		List<Ast.Stmt> body = block();
+		return new Ast.ClassDef(t.line, t.col, name, bases, body, decorators);
 	}
 
 	/** Parameters of a def or lambda, up to (not including) the closing token. */
-	private Node parameters(String closer) {
+	private Ast.Arguments parameters(String closer) {
 		Token start = peek();
-		List<Node> args = new ArrayList<Node>();
-		List<Node> defaults = new ArrayList<Node>();
-		Node vararg = null;
-		List<Node> kwonly = new ArrayList<Node>();
-		List<Node> kwDefaults = new ArrayList<Node>();
-		Node kwarg = null;
+		List<Ast.Arg> args = new ArrayList<Ast.Arg>();
+		List<Ast.Expr> defaults = new ArrayList<Ast.Expr>();
+		Ast.Arg vararg = null;
+		List<Ast.Arg> kwonly = new ArrayList<Ast.Arg>();
+		List<Ast.Expr> kwDefaults = new ArrayList<Ast.Expr>();
+		Ast.Arg kwarg = null;
 		boolean seenStar = false;
 		boolean seenDefault = false;
 		while (!isOp(closer)) {
@@ -370,8 +359,8 @@ public final class PyParser {
 					throw error("arguments cannot follow var-keyword argument");
 				break;
 			} else {
-				Node a = parameter();
-				Node dflt = null;
+				Ast.Arg a = parameter();
+				Ast.Expr dflt = null;
 				if (acceptOp("="))
 					dflt = test();
 				if (seenStar) {
@@ -390,77 +379,78 @@ public final class PyParser {
 			if (!acceptOp(","))
 				break;
 		}
-		return n("arguments", start, "posonlyargs", new ArrayList<Node>(), "args", args, "vararg", vararg,
-				"kwonlyargs", kwonly, "kw_defaults", kwDefaults, "kwarg", kwarg, "defaults", defaults);
+		return new Ast.Arguments(start.line, start.col, args, vararg, kwonly, kwDefaults, kwarg, defaults);
 	}
 
-	private Node parameter() {
+	private Ast.Arg parameter() {
 		Token t = peek();
 		String name = expectName();
 		if (isOp(":") && !isLambdaParameters)
 			throw error("annotations are not supported");
-		return n("arg", t, "arg", name, "annotation", null);
+		return new Ast.Arg(t.line, t.col, name);
 	}
 
 	private boolean isLambdaParameters;
 
-	private Node simpleStatement() {
+	private Ast.Stmt simpleStatement() {
 		Token t = peek();
 		if (t.kind == Token.KEYWORD) {
 			switch (t.text) {
 			case "pass":
 				next();
-				return n("Pass", t);
+				return new Ast.Pass(t.line, t.col);
 			case "break":
 				next();
-				return n("Break", t);
+				return new Ast.Break(t.line, t.col);
 			case "continue":
 				next();
-				return n("Continue", t);
+				return new Ast.Continue(t.line, t.col);
 			case "return": {
 				next();
-				Node value = startsExpression(peek()) ? testList() : null;
-				return n("Return", t, "value", value);
+				Ast.Expr value = startsExpression(peek()) ? testList() : null;
+				return new Ast.Return(t.line, t.col, value);
 			}
 			case "raise": {
 				next();
-				Node exc = null;
-				Node cause = null;
+				Ast.Expr exc = null;
+				Ast.Expr cause = null;
 				if (startsExpression(peek())) {
 					exc = test();
 					if (acceptKw("from"))
 						cause = test();
 				}
-				return n("Raise", t, "exc", exc, "cause", cause);
+				return new Ast.Raise(t.line, t.col, exc, cause);
 			}
 			case "assert": {
 				next();
-				Node test = test();
-				Node msg = acceptOp(",") ? test() : null;
-				return n("Assert", t, "test", test, "msg", msg);
+				Ast.Expr test = test();
+				Ast.Expr msg = acceptOp(",") ? test() : null;
+				return new Ast.Assert(t.line, t.col, test, msg);
 			}
 			case "global":
 			case "nonlocal": {
 				next();
-				List<Object> names = new ArrayList<Object>();
+				List<String> names = new ArrayList<String>();
 				names.add(expectName());
 				while (acceptOp(","))
 					names.add(expectName());
-				return n(t.text.equals("global") ? "Global" : "Nonlocal", t, "names", names);
+				if (t.text.equals("global"))
+					return new Ast.Global(t.line, t.col, names);
+				return new Ast.Nonlocal(t.line, t.col, names);
 			}
 			case "del": {
 				next();
-				List<Node> targets = new ArrayList<Node>();
+				List<Ast.Expr> targets = new ArrayList<Ast.Expr>();
 				while (true) {
-					Node target = test();
-					setContext(target, "Del");
+					Ast.Expr target = test();
+					setContext(target, Ast.Ctx.Del);
 					targets.add(target);
 					if (!acceptOp(","))
 						break;
 					if (!startsExpression(peek()))
 						break;
 				}
-				return n("Delete", t, "targets", targets);
+				return new Ast.Delete(t.line, t.col, targets);
 			}
 			case "import":
 				return importStatement();
@@ -477,9 +467,9 @@ public final class PyParser {
 		return expressionStatement();
 	}
 
-	private Node importStatement() {
+	private Ast.Import importStatement() {
 		Token t = next();
-		List<Node> names = new ArrayList<Node>();
+		List<Ast.Alias> names = new ArrayList<Ast.Alias>();
 		while (true) {
 			Token nt = peek();
 			StringBuilder name = new StringBuilder(expectName());
@@ -488,99 +478,94 @@ public final class PyParser {
 			String as = null;
 			if (acceptKw("as"))
 				as = expectName();
-			names.add(n("alias", nt, "name", name.toString(), "asname", as));
+			names.add(new Ast.Alias(nt.line, nt.col, name.toString(), as));
 			if (!acceptOp(","))
 				break;
 		}
-		return n("Import", t, "names", names);
+		return new Ast.Import(t.line, t.col, names);
 	}
 
-	private static String augOp(String text) {
+	private static Ast.Operator augOp(String text) {
 		switch (text) {
 		case "+=":
-			return "Add";
+			return Ast.Operator.Add;
 		case "-=":
-			return "Sub";
+			return Ast.Operator.Sub;
 		case "*=":
-			return "Mult";
+			return Ast.Operator.Mult;
 		case "/=":
-			return "Div";
+			return Ast.Operator.Div;
 		case "//=":
-			return "FloorDiv";
+			return Ast.Operator.FloorDiv;
 		case "%=":
-			return "Mod";
+			return Ast.Operator.Mod;
 		case "**=":
-			return "Pow";
+			return Ast.Operator.Pow;
 		case "<<=":
-			return "LShift";
+			return Ast.Operator.LShift;
 		case ">>=":
-			return "RShift";
+			return Ast.Operator.RShift;
 		case "&=":
-			return "BitAnd";
+			return Ast.Operator.BitAnd;
 		case "|=":
-			return "BitOr";
+			return Ast.Operator.BitOr;
 		case "^=":
-			return "BitXor";
+			return Ast.Operator.BitXor;
 		default:
 			return null;
 		}
 	}
 
-	private Node expressionStatement() {
+	private Ast.Stmt expressionStatement() {
 		Token t = peek();
-		Node first = testList();
+		Ast.Expr first = testList();
 		Token op = peek();
 		if (op.kind == Token.OP) {
-			String aug = augOp(op.text);
+			Ast.Operator aug = augOp(op.text);
 			if (aug != null) {
-				if (!(first.is("Name") || first.is("Attribute") || first.is("Subscript")))
+				if (!(first instanceof Ast.Name || first instanceof Ast.Attribute || first instanceof Ast.Subscript))
 					throw new PySyntaxError("illegal expression for augmented assignment", op.line, op.col);
 				next();
-				setContext(first, "Store");
-				Node value = testList();
-				return n("AugAssign", t, "target", first, "op", Node.bare(aug), "value", value);
+				setContext(first, Ast.Ctx.Store);
+				Ast.Expr value = testList();
+				return new Ast.AugAssign(t.line, t.col, first, aug, value);
 			}
 			if (op.text.equals("=")) {
-				List<Node> exprs = new ArrayList<Node>();
+				List<Ast.Expr> exprs = new ArrayList<Ast.Expr>();
 				exprs.add(first);
 				while (acceptOp("="))
 					exprs.add(testList());
-				Node value = exprs.remove(exprs.size() - 1);
-				for (Node target : exprs)
-					setContext(target, "Store");
-				return n("Assign", t, "targets", exprs, "value", value);
+				Ast.Expr value = exprs.remove(exprs.size() - 1);
+				for (Ast.Expr target : exprs)
+					setContext(target, Ast.Ctx.Store);
+				return new Ast.Assign(t.line, t.col, exprs, value);
 			}
 			if (op.text.equals(":"))
 				throw error("annotated assignments are not supported");
 			if (op.text.equals(":="))
 				throw error("the walrus operator is not supported");
 		}
-		return n("Expr", t, "value", first);
+		return new Ast.ExprStmt(t.line, t.col, first);
 	}
 
-	private void setContext(Node target, String ctx) {
-		switch (target.type) {
-		case "Name":
-		case "Attribute":
-		case "Subscript":
-			target.set("ctx", Node.bare(ctx));
+	private void setContext(Ast.Expr target, Ast.Ctx ctx) {
+		if (target instanceof Ast.Name || target instanceof Ast.Attribute || target instanceof Ast.Subscript) {
+			((Ast.CtxExpr) target).ctx = ctx;
 			return;
-		case "Tuple":
-		case "List":
-			if (ctx.equals("Del") && target.is("List") && false)
-				break;
-			target.set("ctx", Node.bare(ctx));
-			for (Node e : target.nodes("elts"))
+		}
+		if (target instanceof Ast.TupleExpr || target instanceof Ast.ListExpr) {
+			((Ast.CtxExpr) target).ctx = ctx;
+			List<Ast.Expr> elts = target instanceof Ast.TupleExpr ? ((Ast.TupleExpr) target).elts
+					: ((Ast.ListExpr) target).elts;
+			for (Ast.Expr e : elts)
 				setContext(e, ctx);
 			return;
-		case "Starred":
-			throw new PySyntaxError("starred assignment targets are not supported", target.line, target.col);
-		default:
-			break;
 		}
-		String what = target.is("Constant") ? "literal" : target.is("Call") ? "function call"
-				: target.type.toLowerCase();
-		throw new PySyntaxError("cannot " + (ctx.equals("Del") ? "delete " : "assign to ") + what, target.line,
+		if (target instanceof Ast.Starred)
+			throw new PySyntaxError("starred assignment targets are not supported", target.line, target.col);
+		String what = target instanceof Ast.Constant ? "literal"
+				: target instanceof Ast.Call ? "function call" : target.type().toLowerCase();
+		throw new PySyntaxError("cannot " + (ctx == Ast.Ctx.Del ? "delete " : "assign to ") + what, target.line,
 				target.col);
 	}
 
@@ -618,38 +603,38 @@ public final class PyParser {
 	}
 
 	/** test (',' test)* [','] : a Tuple when there is a comma. */
-	private Node testList() {
+	private Ast.Expr testList() {
 		Token t = peek();
-		Node first = test();
+		Ast.Expr first = test();
 		if (!isOp(","))
 			return first;
-		List<Node> elts = new ArrayList<Node>();
+		List<Ast.Expr> elts = new ArrayList<Ast.Expr>();
 		elts.add(first);
 		while (acceptOp(",")) {
 			if (!startsExpression(peek()))
 				break;
 			elts.add(test());
 		}
-		return n("Tuple", t, "elts", elts, "ctx", load());
+		return new Ast.TupleExpr(t.line, t.col, elts);
 	}
 
 	/** Targets of a for loop or comprehension: bitwise-or expressions separated by commas. */
-	private Node targetList() {
+	private Ast.Expr targetList() {
 		Token t = peek();
-		Node first = bitOr();
+		Ast.Expr first = bitOr();
 		if (!isOp(","))
 			return first;
-		List<Node> elts = new ArrayList<Node>();
+		List<Ast.Expr> elts = new ArrayList<Ast.Expr>();
 		elts.add(first);
 		while (acceptOp(",")) {
 			if (!startsExpression(peek()) || isKw("in"))
 				break;
 			elts.add(bitOr());
 		}
-		return n("Tuple", t, "elts", elts, "ctx", load());
+		return new Ast.TupleExpr(t.line, t.col, elts);
 	}
 
-	private Node test() {
+	private Ast.Expr test() {
 		enter();
 		try {
 			return testBody();
@@ -658,64 +643,64 @@ public final class PyParser {
 		}
 	}
 
-	private Node testBody() {
+	private Ast.Expr testBody() {
 		Token t = peek();
 		if (t.isKeyword("lambda"))
 			return lambda();
 		if (t.isKeyword("yield") || t.isKeyword("await"))
 			throw error("'" + t.text + "' is not supported");
-		Node body = orTest();
+		Ast.Expr body = orTest();
 		if (isKw("if")) {
 			next();
-			Node cond = orTest();
+			Ast.Expr cond = orTest();
 			expectKw("else");
-			Node orelse = test();
-			return n("IfExp", t, "test", cond, "body", body, "orelse", orelse);
+			Ast.Expr orelse = test();
+			return new Ast.IfExp(t.line, t.col, cond, body, orelse);
 		}
 		return body;
 	}
 
-	private Node lambda() {
+	private Ast.Expr lambda() {
 		Token t = next();
 		boolean saved = isLambdaParameters;
 		isLambdaParameters = true;
-		Node args = parameters(":");
+		Ast.Arguments args = parameters(":");
 		isLambdaParameters = saved;
 		expectOp(":");
-		Node body = test();
-		return n("Lambda", t, "args", args, "body", body);
+		Ast.Expr body = test();
+		return new Ast.Lambda(t.line, t.col, args, body);
 	}
 
-	private Node orTest() {
+	private Ast.Expr orTest() {
 		Token t = peek();
-		Node first = andTest();
+		Ast.Expr first = andTest();
 		if (!isKw("or"))
 			return first;
-		List<Node> values = new ArrayList<Node>();
+		List<Ast.Expr> values = new ArrayList<Ast.Expr>();
 		values.add(first);
 		while (acceptKw("or"))
 			values.add(andTest());
-		return n("BoolOp", t, "op", Node.bare("Or"), "values", values);
+		return new Ast.BoolOp(t.line, t.col, Ast.BoolOperator.Or, values);
 	}
 
-	private Node andTest() {
+	private Ast.Expr andTest() {
 		Token t = peek();
-		Node first = notTest();
+		Ast.Expr first = notTest();
 		if (!isKw("and"))
 			return first;
-		List<Node> values = new ArrayList<Node>();
+		List<Ast.Expr> values = new ArrayList<Ast.Expr>();
 		values.add(first);
 		while (acceptKw("and"))
 			values.add(notTest());
-		return n("BoolOp", t, "op", Node.bare("And"), "values", values);
+		return new Ast.BoolOp(t.line, t.col, Ast.BoolOperator.And, values);
 	}
 
-	private Node notTest() {
+	private Ast.Expr notTest() {
 		Token t = peek();
 		if (acceptKw("not")) {
 			enter();
 			try {
-				return n("UnaryOp", t, "op", Node.bare("Not"), "operand", notTest());
+				return new Ast.UnaryOp(t.line, t.col, Ast.UnaryOperator.Not, notTest());
 			} finally {
 				depth--;
 			}
@@ -723,134 +708,134 @@ public final class PyParser {
 		return comparison();
 	}
 
-	private String comparisonOperator() {
+	private Ast.CmpOperator comparisonOperator() {
 		Token t = peek();
 		if (t.kind == Token.OP) {
 			switch (t.text) {
 			case "<":
 				next();
-				return "Lt";
+				return Ast.CmpOperator.Lt;
 			case ">":
 				next();
-				return "Gt";
+				return Ast.CmpOperator.Gt;
 			case "<=":
 				next();
-				return "LtE";
+				return Ast.CmpOperator.LtE;
 			case ">=":
 				next();
-				return "GtE";
+				return Ast.CmpOperator.GtE;
 			case "==":
 				next();
-				return "Eq";
+				return Ast.CmpOperator.Eq;
 			case "!=":
 				next();
-				return "NotEq";
+				return Ast.CmpOperator.NotEq;
 			default:
 				return null;
 			}
 		}
 		if (t.isKeyword("in")) {
 			next();
-			return "In";
+			return Ast.CmpOperator.In;
 		}
 		if (t.isKeyword("not") && peekAt(1).isKeyword("in")) {
 			next();
 			next();
-			return "NotIn";
+			return Ast.CmpOperator.NotIn;
 		}
 		if (t.isKeyword("is")) {
 			next();
-			return acceptKw("not") ? "IsNot" : "Is";
+			return acceptKw("not") ? Ast.CmpOperator.IsNot : Ast.CmpOperator.Is;
 		}
 		return null;
 	}
 
-	private Node comparison() {
+	private Ast.Expr comparison() {
 		Token t = peek();
-		Node left = bitOr();
-		List<Node> ops = null;
-		List<Node> comparators = null;
-		String op;
+		Ast.Expr left = bitOr();
+		List<Ast.CmpOperator> ops = null;
+		List<Ast.Expr> comparators = null;
+		Ast.CmpOperator op;
 		while ((op = comparisonOperator()) != null) {
 			if (ops == null) {
-				ops = new ArrayList<Node>();
-				comparators = new ArrayList<Node>();
+				ops = new ArrayList<Ast.CmpOperator>();
+				comparators = new ArrayList<Ast.Expr>();
 			}
-			ops.add(Node.bare(op));
+			ops.add(op);
 			comparators.add(bitOr());
 		}
 		if (ops == null)
 			return left;
-		return n("Compare", t, "left", left, "ops", ops, "comparators", comparators);
+		return new Ast.Compare(t.line, t.col, left, ops, comparators);
 	}
 
-	private Node binary(Node left, String op, Node right, Token t) {
-		return n("BinOp", t, "left", left, "op", Node.bare(op), "right", right);
+	private Ast.Expr binary(Ast.Expr left, Ast.Operator op, Ast.Expr right, Token t) {
+		return new Ast.BinOp(t.line, t.col, left, op, right);
 	}
 
-	private Node bitOr() {
+	private Ast.Expr bitOr() {
 		Token t = peek();
-		Node left = bitXor();
+		Ast.Expr left = bitXor();
 		while (isOp("|")) {
 			next();
-			left = binary(left, "BitOr", bitXor(), t);
+			left = binary(left, Ast.Operator.BitOr, bitXor(), t);
 		}
 		return left;
 	}
 
-	private Node bitXor() {
+	private Ast.Expr bitXor() {
 		Token t = peek();
-		Node left = bitAnd();
+		Ast.Expr left = bitAnd();
 		while (isOp("^")) {
 			next();
-			left = binary(left, "BitXor", bitAnd(), t);
+			left = binary(left, Ast.Operator.BitXor, bitAnd(), t);
 		}
 		return left;
 	}
 
-	private Node bitAnd() {
+	private Ast.Expr bitAnd() {
 		Token t = peek();
-		Node left = shift();
+		Ast.Expr left = shift();
 		while (isOp("&")) {
 			next();
-			left = binary(left, "BitAnd", shift(), t);
+			left = binary(left, Ast.Operator.BitAnd, shift(), t);
 		}
 		return left;
 	}
 
-	private Node shift() {
+	private Ast.Expr shift() {
 		Token t = peek();
-		Node left = arith();
+		Ast.Expr left = arith();
 		while (isOp("<<") || isOp(">>")) {
-			String op = next().text.equals("<<") ? "LShift" : "RShift";
+			Ast.Operator op = next().text.equals("<<") ? Ast.Operator.LShift : Ast.Operator.RShift;
 			left = binary(left, op, arith(), t);
 		}
 		return left;
 	}
 
-	private Node arith() {
+	private Ast.Expr arith() {
 		Token t = peek();
-		Node left = term();
+		Ast.Expr left = term();
 		while (isOp("+") || isOp("-")) {
-			String op = next().text.equals("+") ? "Add" : "Sub";
+			Ast.Operator op = next().text.equals("+") ? Ast.Operator.Add : Ast.Operator.Sub;
 			left = binary(left, op, term(), t);
 		}
 		return left;
 	}
 
-	private Node term() {
+	private Ast.Expr term() {
 		Token t = peek();
-		Node left = factor();
+		Ast.Expr left = factor();
 		while (true) {
-			String op;
+			Ast.Operator op;
 			if (isOp("*"))
-				op = "Mult";
+				op = Ast.Operator.Mult;
 			else if (isOp("/"))
-				op = "Div";
+				op = Ast.Operator.Div;
 			else if (isOp("//"))
-				op = "FloorDiv";
+				op = Ast.Operator.FloorDiv;
 			else if (isOp("%"))
-				op = "Mod";
+				op = Ast.Operator.Mod;
 			else if (isOp("@"))
 				throw error("the '@' operator is not supported");
 			else
@@ -860,14 +845,15 @@ public final class PyParser {
 		}
 	}
 
-	private Node factor() {
+	private Ast.Expr factor() {
 		Token t = peek();
 		if (isOp("-") || isOp("+") || isOp("~")) {
 			next();
-			String op = t.text.equals("-") ? "USub" : t.text.equals("+") ? "UAdd" : "Invert";
+			Ast.UnaryOperator op = t.text.equals("-") ? Ast.UnaryOperator.USub
+					: t.text.equals("+") ? Ast.UnaryOperator.UAdd : Ast.UnaryOperator.Invert;
 			enter();
 			try {
-				return n("UnaryOp", t, "op", Node.bare(op), "operand", factor());
+				return new Ast.UnaryOp(t.line, t.col, op, factor());
 			} finally {
 				depth--;
 			}
@@ -875,55 +861,55 @@ public final class PyParser {
 		return power();
 	}
 
-	private Node power() {
+	private Ast.Expr power() {
 		Token t = peek();
-		Node base = atomExpression();
+		Ast.Expr base = atomExpression();
 		if (isOp("**")) {
 			next();
-			return binary(base, "Pow", factor(), t);
+			return binary(base, Ast.Operator.Pow, factor(), t);
 		}
 		return base;
 	}
 
-	private Node atomExpression() {
+	private Ast.Expr atomExpression() {
 		Token t = peek();
-		Node e = atom();
+		Ast.Expr e = atom();
 		while (true) {
 			if (isOp("(")) {
 				e = call(e, t);
 			} else if (isOp("[")) {
 				Token st = next();
-				Node slice = subscriptItems();
+				Ast.Expr slice = subscriptItems();
 				expectOp("]");
-				e = n("Subscript", t, "value", e, "slice", slice, "ctx", load());
+				e = new Ast.Subscript(t.line, t.col, e, slice);
 			} else if (isOp(".")) {
 				next();
 				String attr = expectName();
-				e = n("Attribute", t, "value", e, "attr", attr, "ctx", load());
+				e = new Ast.Attribute(t.line, t.col, e, attr);
 			} else {
 				return e;
 			}
 		}
 	}
 
-	private Node call(Node func, Token t) {
+	private Ast.Expr call(Ast.Expr func, Token t) {
 		expectOp("(");
-		List<Node> args = new ArrayList<Node>();
-		List<Node> keywords = new ArrayList<Node>();
+		List<Ast.Expr> args = new ArrayList<Ast.Expr>();
+		List<Ast.Keyword> keywords = new ArrayList<Ast.Keyword>();
 		while (!isOp(")")) {
 			Token at = peek();
 			if (isOp("*")) {
 				next();
-				args.add(n("Starred", at, "value", test(), "ctx", load()));
+				args.add(new Ast.Starred(at.line, at.col, test()));
 			} else if (isOp("**")) {
 				next();
-				keywords.add(n("keyword", at, "arg", null, "value", test()));
+				keywords.add(new Ast.Keyword(at.line, at.col, null, test()));
 			} else if (at.kind == Token.NAME && peekAt(1).isOp("=")) {
 				next();
 				next();
-				keywords.add(n("keyword", at, "arg", at.text, "value", test()));
+				keywords.add(new Ast.Keyword(at.line, at.col, at.text, test()));
 			} else {
-				Node value = test();
+				Ast.Expr value = test();
 				if (isKw("for"))
 					throw error("generator expressions are not supported");
 				if (!keywords.isEmpty())
@@ -934,65 +920,65 @@ public final class PyParser {
 				break;
 		}
 		expectOp(")");
-		return n("Call", t, "func", func, "args", args, "keywords", keywords);
+		return new Ast.Call(t.line, t.col, func, args, keywords);
 	}
 
-	private Node subscriptItems() {
+	private Ast.Expr subscriptItems() {
 		Token t = peek();
-		Node first = subscriptItem();
+		Ast.Expr first = subscriptItem();
 		if (!isOp(","))
 			return first;
-		List<Node> elts = new ArrayList<Node>();
+		List<Ast.Expr> elts = new ArrayList<Ast.Expr>();
 		elts.add(first);
 		while (acceptOp(",")) {
 			if (isOp("]"))
 				break;
 			elts.add(subscriptItem());
 		}
-		return n("Tuple", t, "elts", elts, "ctx", load());
+		return new Ast.TupleExpr(t.line, t.col, elts);
 	}
 
-	private Node subscriptItem() {
+	private Ast.Expr subscriptItem() {
 		Token t = peek();
-		Node lower = null;
+		Ast.Expr lower = null;
 		if (!isOp(":"))
 			lower = test();
 		if (!isOp(":"))
 			return lower;
 		next();
-		Node upper = null;
-		Node step = null;
+		Ast.Expr upper = null;
+		Ast.Expr step = null;
 		if (!isOp(":") && !isOp(",") && !isOp("]"))
 			upper = test();
 		if (acceptOp(":")) {
 			if (!isOp(",") && !isOp("]"))
 				step = test();
 		}
-		return n("Slice", t, "lower", lower, "upper", upper, "step", step);
+		return new Ast.Slice(t.line, t.col, lower, upper, step);
 	}
 
-	private Node atom() {
+	private Ast.Expr atom() {
 		Token t = peek();
 		switch (t.kind) {
 		case Token.NAME:
 			next();
-			return n("Name", t, "id", t.text, "ctx", load());
+			return new Ast.Name(t.line, t.col, t.text);
 		case Token.NUMBER:
 			next();
-			return n("Constant", t, "value", t.value);
+			return new Ast.Constant(t.line, t.col, t.value);
 		case Token.STRING:
 			return strings();
 		case Token.KEYWORD:
 			switch (t.text) {
 			case "None":
 				next();
-				return n("Constant", t, "value", null);
+				return new Ast.Constant(t.line, t.col, null);
 			case "True":
 				next();
-				return n("Constant", t, "value", Boolean.TRUE);
+				return new Ast.Constant(t.line, t.col, Boolean.TRUE);
 			case "False":
 				next();
-				return n("Constant", t, "value", Boolean.FALSE);
+				return new Ast.Constant(t.line, t.col, Boolean.FALSE);
 			default:
 				throw invalidOrUnsupported(t);
 			}
@@ -1023,17 +1009,17 @@ public final class PyParser {
 		}
 	}
 
-	private Node parenthesized() {
+	private Ast.Expr parenthesized() {
 		Token t = next();
 		if (acceptOp(")"))
-			return n("Tuple", t, "elts", new ArrayList<Node>(), "ctx", load());
+			return new Ast.TupleExpr(t.line, t.col, new ArrayList<Ast.Expr>());
 		if (isOp("*"))
 			throw error("starred expressions are not supported");
-		Node first = test();
+		Ast.Expr first = test();
 		if (isKw("for"))
 			throw error("generator expressions are not supported");
 		if (isOp(",")) {
-			List<Node> elts = new ArrayList<Node>();
+			List<Ast.Expr> elts = new ArrayList<Ast.Expr>();
 			elts.add(first);
 			while (acceptOp(",")) {
 				if (isOp(")"))
@@ -1041,7 +1027,7 @@ public final class PyParser {
 				elts.add(test());
 			}
 			expectOp(")");
-			return n("Tuple", t, "elts", elts, "ctx", load());
+			return new Ast.TupleExpr(t.line, t.col, elts);
 		}
 		if (isOp(":="))
 			throw error("the walrus operator is not supported");
@@ -1049,18 +1035,18 @@ public final class PyParser {
 		return first;
 	}
 
-	private Node listDisplay() {
+	private Ast.Expr listDisplay() {
 		Token t = next();
-		List<Node> elts = new ArrayList<Node>();
+		List<Ast.Expr> elts = new ArrayList<Ast.Expr>();
 		if (acceptOp("]"))
-			return n("List", t, "elts", elts, "ctx", load());
+			return new Ast.ListExpr(t.line, t.col, elts);
 		if (isOp("*"))
 			throw error("starred expressions are not supported");
-		Node first = test();
+		Ast.Expr first = test();
 		if (isKw("for")) {
-			List<Node> generators = comprehensions();
+			List<Ast.Comprehension> generators = comprehensions();
 			expectOp("]");
-			return n("ListComp", t, "elt", first, "generators", generators);
+			return new Ast.ListComp(t.line, t.col, first, generators);
 		}
 		elts.add(first);
 		while (acceptOp(",")) {
@@ -1071,26 +1057,26 @@ public final class PyParser {
 			elts.add(test());
 		}
 		expectOp("]");
-		return n("List", t, "elts", elts, "ctx", load());
+		return new Ast.ListExpr(t.line, t.col, elts);
 	}
 
-	private Node dictDisplay() {
+	private Ast.Expr dictDisplay() {
 		Token t = next();
-		List<Node> keys = new ArrayList<Node>();
-		List<Node> values = new ArrayList<Node>();
+		List<Ast.Expr> keys = new ArrayList<Ast.Expr>();
+		List<Ast.Expr> values = new ArrayList<Ast.Expr>();
 		if (acceptOp("}"))
-			return n("Dict", t, "keys", keys, "values", values);
+			return new Ast.DictExpr(t.line, t.col, keys, values);
 		if (isOp("**"))
 			throw error("dictionary unpacking is not supported");
-		Node key = test();
+		Ast.Expr key = test();
 		if (!isOp(":"))
 			throw error("set displays and set comprehensions are not supported");
 		next();
-		Node value = test();
+		Ast.Expr value = test();
 		if (isKw("for")) {
-			List<Node> generators = comprehensions();
+			List<Ast.Comprehension> generators = comprehensions();
 			expectOp("}");
-			return n("DictComp", t, "key", key, "value", value, "generators", generators);
+			return new Ast.DictComp(t.line, t.col, key, value, generators);
 		}
 		keys.add(key);
 		values.add(value);
@@ -1104,24 +1090,23 @@ public final class PyParser {
 			values.add(test());
 		}
 		expectOp("}");
-		return n("Dict", t, "keys", keys, "values", values);
+		return new Ast.DictExpr(t.line, t.col, keys, values);
 	}
 
-	private List<Node> comprehensions() {
-		List<Node> generators = new ArrayList<Node>();
+	private List<Ast.Comprehension> comprehensions() {
+		List<Ast.Comprehension> generators = new ArrayList<Ast.Comprehension>();
 		while (isKw("for")) {
 			Token t = next();
-			Node target = targetList();
-			setContext(target, "Store");
+			Ast.Expr target = targetList();
+			setContext(target, Ast.Ctx.Store);
 			expectKw("in");
-			Node iter = orTest();
-			List<Node> ifs = new ArrayList<Node>();
+			Ast.Expr iter = orTest();
+			List<Ast.Expr> ifs = new ArrayList<Ast.Expr>();
 			while (isKw("if")) {
 				next();
 				ifs.add(orTest());
 			}
-			generators.add(n("comprehension", t, "target", target, "iter", iter, "ifs", ifs, "is_async",
-					Long.valueOf(0)));
+			generators.add(new Ast.Comprehension(t.line, t.col, target, iter, ifs));
 		}
 		if (isKw("async"))
 			throw error("'async' is not supported");
@@ -1130,7 +1115,7 @@ public final class PyParser {
 
 	// ------------------------------------------------------------ strings
 
-	private Node strings() {
+	private Ast.Expr strings() {
 		Token first = peek();
 		List<Object> parts = new ArrayList<Object>();
 		boolean anyF = false;
@@ -1162,11 +1147,11 @@ public final class PyParser {
 		if (pending != null && (pending.length() > 0 || !anyF))
 			merged.add(pending.toString());
 		if (!anyF)
-			return n("Constant", first, "value", merged.isEmpty() ? "" : (String) merged.get(0));
-		List<Node> values = new ArrayList<Node>();
+			return new Ast.Constant(first.line, first.col, merged.isEmpty() ? "" : (String) merged.get(0));
+		List<Ast.Expr> values = new ArrayList<Ast.Expr>();
 		for (Object part : merged)
-			values.add(part instanceof String ? n("Constant", first, "value", part) : (Node) part);
-		return n("JoinedStr", first, "values", values);
+			values.add(part instanceof String ? new Ast.Constant(first.line, first.col, part) : (Ast.Expr) part);
+		return new Ast.JoinedStr(first.line, first.col, values);
 	}
 
 	/** Splits the body of an f-string into literal Strings and FormattedValue nodes. */
@@ -1250,9 +1235,9 @@ public final class PyParser {
 		String exprText = body.substring(start, i);
 		if (exprText.trim().isEmpty())
 			throw new PySyntaxError("f-string: empty expression not allowed", t.line, t.col);
-		Node value = subExpression(exprText, t);
+		Ast.Expr value = subExpression(exprText, t);
 		long conversion = -1;
-		Node spec = null;
+		Ast.Expr spec = null;
 		if (body.charAt(i) == '!') {
 			if (i + 1 >= len)
 				throw new PySyntaxError("f-string: expecting '}'", t.line, t.col);
@@ -1281,32 +1266,32 @@ public final class PyParser {
 				throw new PySyntaxError("f-string: expecting '}'", t.line, t.col);
 			List<Object> specParts = new ArrayList<Object>();
 			fstringParts(body.substring(specStart, i), raw, t, specParts);
-			List<Node> specValues = new ArrayList<Node>();
+			List<Ast.Expr> specValues = new ArrayList<Ast.Expr>();
 			for (Object part : specParts)
-				specValues.add(part instanceof String ? n("Constant", t, "value", part) : (Node) part);
-			spec = n("JoinedStr", t, "values", specValues);
+				specValues.add(part instanceof String ? new Ast.Constant(t.line, t.col, part) : (Ast.Expr) part);
+			spec = new Ast.JoinedStr(t.line, t.col, specValues);
 		}
 		if (i >= len || body.charAt(i) != '}')
 			throw new PySyntaxError("f-string: expecting '}'", t.line, t.col);
-		out.add(n("FormattedValue", t, "value", value, "conversion", Long.valueOf(conversion), "format_spec", spec));
+		out.add(new Ast.FormattedValue(t.line, t.col, value, conversion, spec));
 		return i + 1;
 	}
 
-	private Node subExpression(String text, Token t) {
+	private Ast.Expr subExpression(String text, Token t) {
 		PyParser sub;
 		try {
 			sub = new PyParser(PyLexer.tokenize("(" + text + "\n)"));
 		} catch (PySyntaxError e) {
 			throw new PySyntaxError("f-string: " + e.getMessage(), t.line, t.col);
 		}
-		Node e = sub.testListInParens();
+		Ast.Expr e = sub.testListInParens();
 		return e;
 	}
 
 	/** Used for f-string fields: the tokens are '(' testlist NEWLINE? ')' END. */
-	private Node testListInParens() {
+	private Ast.Expr testListInParens() {
 		expectOp("(");
-		Node e = testList();
+		Ast.Expr e = testList();
 		expectOp(")");
 		if (peek().kind == Token.NEWLINE)
 			next();

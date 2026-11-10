@@ -13,13 +13,13 @@ import java.util.List;
 final class Resolver {
 	private final List<Scope> all = new ArrayList<Scope>();
 
-	/** Analyses a Module node; the scope of each function-like node is stored in its info field. */
-	static Scope resolve(Node module) {
+	/** Analyses a Module node; the scope of each function-like node is stored in its scope field. */
+	static Scope resolve(Ast.Module module) {
 		Resolver r = new Resolver();
 		Scope top = new Scope(Scope.MODULE, "<module>", null, module);
-		module.info = top;
+		module.scope = top;
 		r.all.add(top);
-		r.statements(top, module.nodes("body"));
+		r.statements(top, module.body);
 		for (Scope s : r.all)
 			r.resolveNames(s);
 		for (Scope s : r.all)
@@ -33,136 +33,126 @@ final class Resolver {
 
 	// ------------------------------------------------------------ analysis
 
-	private void statements(Scope s, List<Node> body) {
-		for (Node n : body)
+	private void statements(Scope s, List<Ast.Stmt> body) {
+		for (Ast.Stmt n : body)
 			statement(s, n);
 	}
 
-	private void bind(Scope s, String name, Node at) {
-		if ((s.flags(name) & Scope.GLOBAL) == 0 && s.kind != Scope.MODULE) {
-			// plain local binding
-		}
+	private void bind(Scope s, String name) {
 		s.addFlags(name, Scope.BOUND);
 	}
 
-	private void statement(Scope s, Node n) {
-		switch (n.type) {
-		case "FunctionDef": {
-			decorators(s, n);
-			bind(s, n.str("name"), n);
-			Node args = n.node("args");
-			defaults(s, args);
-			Scope child = function(s, n.str("name"), n, args);
-			statements(child, n.nodes("body"));
-			break;
-		}
-		case "ClassDef": {
-			decorators(s, n);
-			bind(s, n.str("name"), n);
-			for (Node b : n.nodes("bases"))
+	private void statement(Scope s, Ast.Stmt n) {
+		if (n instanceof Ast.FunctionDef) {
+			Ast.FunctionDef f = (Ast.FunctionDef) n;
+			decorators(s, f.decorators);
+			bind(s, f.name);
+			defaults(s, f.args);
+			Scope child = function(s, f.name, f, f.args);
+			f.scope = child;
+			statements(child, f.body);
+		} else if (n instanceof Ast.ClassDef) {
+			Ast.ClassDef c = (Ast.ClassDef) n;
+			decorators(s, c.decorators);
+			bind(s, c.name);
+			for (Ast.Expr b : c.bases)
 				expression(s, b);
-			Scope child = new Scope(Scope.CLASS, n.str("name"), s, n);
-			n.info = child;
+			Scope child = new Scope(Scope.CLASS, c.name, s, c);
+			c.scope = child;
 			all.add(child);
-			for (Node m : n.nodes("body")) {
+			for (Ast.Stmt m : c.body) {
 				checkClassStatement(m);
 				statement(child, m);
 			}
-			break;
-		}
-		case "Return":
-			expressionOrNull(s, n.node("value"));
-			break;
-		case "Delete":
-			for (Node t : n.nodes("targets"))
+		} else if (n instanceof Ast.Return) {
+			expressionOrNull(s, ((Ast.Return) n).value);
+		} else if (n instanceof Ast.Delete) {
+			for (Ast.Expr t : ((Ast.Delete) n).targets)
 				target(s, t);
-			break;
-		case "Assign":
-			expression(s, n.node("value"));
-			for (Node t : n.nodes("targets"))
+		} else if (n instanceof Ast.Assign) {
+			Ast.Assign a = (Ast.Assign) n;
+			expression(s, a.value);
+			for (Ast.Expr t : a.targets)
 				target(s, t);
-			break;
-		case "AugAssign":
-			expression(s, n.node("value"));
-			Node t = n.node("target");
-			if (t.is("Name")) {
-				s.addFlags(t.str("id"), Scope.USED);
-				target(s, t);
+		} else if (n instanceof Ast.AugAssign) {
+			Ast.AugAssign a = (Ast.AugAssign) n;
+			expression(s, a.value);
+			if (a.target instanceof Ast.Name) {
+				s.addFlags(((Ast.Name) a.target).id, Scope.USED);
+				target(s, a.target);
 			} else {
-				target(s, t);
-				expression(s, t);
+				target(s, a.target);
+				expression(s, a.target);
 			}
-			break;
-		case "For":
-			expression(s, n.node("iter"));
-			target(s, n.node("target"));
-			statements(s, n.nodes("body"));
-			statements(s, n.nodes("orelse"));
-			break;
-		case "While":
-		case "If":
-			expression(s, n.node("test"));
-			statements(s, n.nodes("body"));
-			statements(s, n.nodes("orelse"));
-			break;
-		case "Raise":
-			expressionOrNull(s, n.node("exc"));
-			expressionOrNull(s, n.node("cause"));
-			break;
-		case "Try":
-			statements(s, n.nodes("body"));
-			for (Node h : n.nodes("handlers")) {
-				expressionOrNull(s, h.node("type"));
-				String name = (String) h.get("name");
-				if (name != null)
-					bind(s, name, h);
-				statements(s, h.nodes("body"));
+		} else if (n instanceof Ast.For) {
+			Ast.For f = (Ast.For) n;
+			expression(s, f.iter);
+			target(s, f.target);
+			statements(s, f.body);
+			statements(s, f.orelse);
+		} else if (n instanceof Ast.While) {
+			Ast.While w = (Ast.While) n;
+			expression(s, w.test);
+			statements(s, w.body);
+			statements(s, w.orelse);
+		} else if (n instanceof Ast.If) {
+			Ast.If i = (Ast.If) n;
+			expression(s, i.test);
+			statements(s, i.body);
+			statements(s, i.orelse);
+		} else if (n instanceof Ast.Raise) {
+			Ast.Raise r = (Ast.Raise) n;
+			expressionOrNull(s, r.exc);
+			expressionOrNull(s, r.cause);
+		} else if (n instanceof Ast.Try) {
+			Ast.Try t = (Ast.Try) n;
+			statements(s, t.body);
+			for (Ast.ExceptHandler h : t.handlers) {
+				expressionOrNull(s, h.exceptionType);
+				if (h.name != null)
+					bind(s, h.name);
+				statements(s, h.body);
 			}
-			statements(s, n.nodes("orelse"));
-			statements(s, n.nodes("finalbody"));
-			break;
-		case "Assert":
-			expression(s, n.node("test"));
-			expressionOrNull(s, n.node("msg"));
-			break;
-		case "Import":
-			for (Node a : n.nodes("names")) {
-				String as = (String) a.get("asname");
-				String name = as != null ? as : a.str("name");
+			statements(s, t.orelse);
+			// finally is rejected by the parser: there is no final body
+		} else if (n instanceof Ast.Assert) {
+			Ast.Assert a = (Ast.Assert) n;
+			expression(s, a.test);
+			expressionOrNull(s, a.msg);
+		} else if (n instanceof Ast.Import) {
+			for (Ast.Alias a : ((Ast.Import) n).names) {
+				String name = a.asname != null ? a.asname : a.name;
 				int dot = name.indexOf('.');
 				if (dot >= 0)
 					name = name.substring(0, dot);
-				bind(s, name, a);
+				bind(s, name);
 			}
-			break;
-		case "Global":
-		case "Nonlocal": {
-			boolean global = n.is("Global");
-			for (Object o : (List<?>) n.get("names")) {
-				String name = (String) o;
-				if (!global && s.kind == Scope.MODULE)
-					throw error("nonlocal declaration not allowed at module level", n);
-				int f = s.flags(name);
-				if ((f & Scope.PARAM) != 0)
-					throw error("name '" + name + "' is parameter and " + (global ? "global" : "nonlocal"), n);
-				if ((f & (Scope.BOUND | Scope.USED)) != 0 && s.kind != Scope.MODULE)
-					throw error("name '" + name + "' is assigned to or used before " + (global ? "global" : "nonlocal")
-							+ " declaration", n);
-				if ((f & (global ? Scope.NONLOCAL : Scope.GLOBAL)) != 0)
-					throw error("name '" + name + "' is nonlocal and global", n);
-				s.addFlags(name, global ? Scope.GLOBAL : Scope.NONLOCAL);
-			}
-			break;
+		} else if (n instanceof Ast.NameDeclaration) {
+			declaration(s, (Ast.NameDeclaration) n);
+		} else if (n instanceof Ast.ExprStmt) {
+			expression(s, ((Ast.ExprStmt) n).value);
+		} else if (n instanceof Ast.Pass || n instanceof Ast.Break || n instanceof Ast.Continue) {
+			// nothing to resolve
+		} else {
+			throw error("unsupported statement " + n.type(), n);
 		}
-		case "Expr":
-			expression(s, n.node("value"));
-			break;
-		case "Pass":
-		case "Break":
-		case "Continue":
-			break;
-		default:
-			throw error("unsupported statement " + n.type, n);
+	}
+
+	/** A global or nonlocal statement. */
+	private void declaration(Scope s, Ast.NameDeclaration n) {
+		boolean global = n instanceof Ast.Global;
+		for (String name : n.names) {
+			if (!global && s.kind == Scope.MODULE)
+				throw error("nonlocal declaration not allowed at module level", n);
+			int f = s.flags(name);
+			if ((f & Scope.PARAM) != 0)
+				throw error("name '" + name + "' is parameter and " + (global ? "global" : "nonlocal"), n);
+			if ((f & (Scope.BOUND | Scope.USED)) != 0 && s.kind != Scope.MODULE)
+				throw error("name '" + name + "' is assigned to or used before " + (global ? "global" : "nonlocal")
+						+ " declaration", n);
+			if ((f & (global ? Scope.NONLOCAL : Scope.GLOBAL)) != 0)
+				throw error("name '" + name + "' is nonlocal and global", n);
+			s.addFlags(name, global ? Scope.GLOBAL : Scope.NONLOCAL);
 		}
 	}
 
@@ -173,16 +163,16 @@ final class Resolver {
 	 * decorators of the builtin descriptors are rejected: they would need
 	 * descriptors, which the interpreter does not have.
 	 */
-	private void decorators(Scope s, Node n) {
-		for (Node d : n.nodes("decorator_list")) {
-			Node callee = d.is("Call") ? d.node("func") : d;
-			Node root = callee;
-			while (root.is("Attribute"))
-				root = root.node("value");
-			if (root.is("Name") == false)
+	private void decorators(Scope s, List<Ast.Expr> decorators) {
+		for (Ast.Expr d : decorators) {
+			Ast.Expr callee = d instanceof Ast.Call ? ((Ast.Call) d).func : d;
+			Ast.Expr root = callee;
+			while (root instanceof Ast.Attribute)
+				root = ((Ast.Attribute) root).value;
+			if (root instanceof Ast.Name == false)
 				throw error("this form of decorator is not supported: use a name, an attribute or a call", d);
-			if (callee.is("Name")) {
-				String name = callee.str("id");
+			if (callee instanceof Ast.Name) {
+				String name = ((Ast.Name) callee).id;
 				if (name.equals("staticmethod") || name.equals("classmethod") || name.equals("property"))
 					throw error("@" + name + " is not supported", d);
 			}
@@ -195,32 +185,31 @@ final class Resolver {
 	 * binds is then bound when the body ends, and becomes an attribute. Special
 	 * methods other than __init__ are rejected rather than ignored.
 	 */
-	private static void checkClassStatement(Node m) {
-		switch (m.type) {
-		case "FunctionDef":
-		case "ClassDef":
-			checkClassMember(m.str("name"), m);
-			break;
-		case "Assign":
-			for (Node t : m.nodes("targets"))
+	private static void checkClassStatement(Ast.Stmt m) {
+		if (m instanceof Ast.FunctionDef) {
+			checkClassMember(((Ast.FunctionDef) m).name, m);
+		} else if (m instanceof Ast.ClassDef) {
+			checkClassMember(((Ast.ClassDef) m).name, m);
+		} else if (m instanceof Ast.Assign) {
+			for (Ast.Expr t : ((Ast.Assign) m).targets)
 				checkClassTarget(t);
-			break;
-		case "AugAssign":
-			checkClassTarget(m.node("target"));
-			break;
-		case "Expr":
-		case "Pass":
-			break;
-		default:
+		} else if (m instanceof Ast.AugAssign) {
+			checkClassTarget(((Ast.AugAssign) m).target);
+		} else if (m instanceof Ast.ExprStmt || m instanceof Ast.Pass) {
+			// allowed
+		} else {
 			throw error("this statement is not supported in a class body", m);
 		}
 	}
 
-	private static void checkClassTarget(Node t) {
-		if (t.is("Name")) {
-			checkClassMember(t.str("id"), t);
-		} else if (t.is("Tuple") || t.is("List")) {
-			for (Node e : t.nodes("elts"))
+	private static void checkClassTarget(Ast.Expr t) {
+		if (t instanceof Ast.Name) {
+			checkClassMember(((Ast.Name) t).id, t);
+		} else if (t instanceof Ast.TupleExpr) {
+			for (Ast.Expr e : ((Ast.TupleExpr) t).elts)
+				checkClassTarget(e);
+		} else if (t instanceof Ast.ListExpr) {
+			for (Ast.Expr e : ((Ast.ListExpr) t).elts)
 				checkClassTarget(e);
 		}
 	}
@@ -236,183 +225,159 @@ final class Resolver {
 				|| name.equals("__le__") || name.equals("__gt__") || name.equals("__ge__");
 	}
 
-	private void defaults(Scope s, Node args) {
-		for (Node d : args.nodes("defaults"))
+	private void defaults(Scope s, Ast.Arguments args) {
+		for (Ast.Expr d : args.defaults)
 			expression(s, d);
-		for (Node d : args.nodes("kw_defaults"))
+		for (Ast.Expr d : args.kwDefaults)
 			expressionOrNull(s, d);
 	}
 
-	private Scope function(Scope parent, String name, Node node, Node args) {
+	private Scope function(Scope parent, String name, Node node, Ast.Arguments args) {
 		Scope child = new Scope(Scope.FUNCTION, name, parent, node);
-		node.info = child;
 		all.add(child);
-		for (Node a : args.nodes("args"))
+		for (Ast.Arg a : args.args)
 			param(child, a);
-		child.argcount = args.nodes("args").size();
-		for (Node a : args.nodes("kwonlyargs"))
+		child.argcount = args.args.size();
+		for (Ast.Arg a : args.kwonlyargs)
 			param(child, a);
-		child.kwonlycount = args.nodes("kwonlyargs").size();
-		Node va = args.node("vararg");
-		if (va != null) {
-			param(child, va);
-			child.varargs = va.str("arg");
+		child.kwonlycount = args.kwonlyargs.size();
+		if (args.vararg != null) {
+			param(child, args.vararg);
+			child.varargs = args.vararg.arg;
 		}
-		Node kw = args.node("kwarg");
-		if (kw != null) {
-			param(child, kw);
-			child.kwargs = kw.str("arg");
+		if (args.kwarg != null) {
+			param(child, args.kwarg);
+			child.kwargs = args.kwarg.arg;
 		}
 		return child;
 	}
 
-	private void param(Scope s, Node arg) {
-		String name = arg.str("arg");
+	private void param(Scope s, Ast.Arg arg) {
+		String name = arg.arg;
 		if ((s.flags(name) & Scope.PARAM) != 0)
 			throw error("duplicate argument '" + name + "' in function definition", arg);
 		s.addFlags(name, Scope.PARAM | Scope.BOUND);
 		s.params.add(name);
 	}
 
-	private void target(Scope s, Node t) {
-		switch (t.type) {
-		case "Name":
-			s.addFlags(t.str("id"), Scope.BOUND);
-			break;
-		case "Tuple":
-		case "List":
-			for (Node e : t.nodes("elts"))
+	private void target(Scope s, Ast.Expr t) {
+		if (t instanceof Ast.Name) {
+			s.addFlags(((Ast.Name) t).id, Scope.BOUND);
+		} else if (t instanceof Ast.TupleExpr) {
+			for (Ast.Expr e : ((Ast.TupleExpr) t).elts)
 				target(s, e);
-			break;
-		case "Subscript":
-			expression(s, t.node("value"));
-			expression(s, t.node("slice"));
-			break;
-		case "Attribute":
-			expression(s, t.node("value"));
-			break;
-		default:
-			throw error("cannot assign to " + t.type, t);
+		} else if (t instanceof Ast.ListExpr) {
+			for (Ast.Expr e : ((Ast.ListExpr) t).elts)
+				target(s, e);
+		} else if (t instanceof Ast.Subscript) {
+			expression(s, ((Ast.Subscript) t).value);
+			expression(s, ((Ast.Subscript) t).slice);
+		} else if (t instanceof Ast.Attribute) {
+			expression(s, ((Ast.Attribute) t).value);
+		} else {
+			throw error("cannot assign to " + t.type(), t);
 		}
 	}
 
-	private void expressionOrNull(Scope s, Node e) {
+	private void expressionOrNull(Scope s, Ast.Expr e) {
 		if (e != null)
 			expression(s, e);
 	}
 
-	private void expression(Scope s, Node e) {
-		switch (e.type) {
-		case "Name":
-			s.addFlags(e.str("id"), Scope.USED);
-			break;
-		case "Constant":
-			break;
-		case "BoolOp":
-			for (Node v : e.nodes("values"))
-				expression(s, v);
-			break;
-		case "BinOp":
-			expression(s, e.node("left"));
-			expression(s, e.node("right"));
-			break;
-		case "UnaryOp":
-			expression(s, e.node("operand"));
-			break;
-		case "IfExp":
-			expression(s, e.node("test"));
-			expression(s, e.node("body"));
-			expression(s, e.node("orelse"));
-			break;
-		case "Dict":
-			for (Node k : e.nodes("keys"))
-				expression(s, k);
-			for (Node v : e.nodes("values"))
-				expression(s, v);
-			break;
-		case "List":
-		case "Tuple":
-			for (Node v : e.nodes("elts"))
-				expression(s, v);
-			break;
-		case "Compare":
-			expression(s, e.node("left"));
-			for (Node c : e.nodes("comparators"))
-				expression(s, c);
-			break;
-		case "Call":
-			if (e.node("func").is("Name") && e.node("func").str("id").equals("super"))
+	private void expressions(Scope s, List<Ast.Expr> list) {
+		for (Ast.Expr e : list)
+			expression(s, e);
+	}
+
+	private void expression(Scope s, Ast.Expr e) {
+		if (e instanceof Ast.Name) {
+			s.addFlags(((Ast.Name) e).id, Scope.USED);
+		} else if (e instanceof Ast.Constant) {
+			// nothing to resolve
+		} else if (e instanceof Ast.BoolOp) {
+			expressions(s, ((Ast.BoolOp) e).values);
+		} else if (e instanceof Ast.BinOp) {
+			expression(s, ((Ast.BinOp) e).left);
+			expression(s, ((Ast.BinOp) e).right);
+		} else if (e instanceof Ast.UnaryOp) {
+			expression(s, ((Ast.UnaryOp) e).operand);
+		} else if (e instanceof Ast.IfExp) {
+			Ast.IfExp i = (Ast.IfExp) e;
+			expression(s, i.test);
+			expression(s, i.body);
+			expression(s, i.orelse);
+		} else if (e instanceof Ast.DictExpr) {
+			expressions(s, ((Ast.DictExpr) e).keys);
+			expressions(s, ((Ast.DictExpr) e).values);
+		} else if (e instanceof Ast.ListExpr) {
+			expressions(s, ((Ast.ListExpr) e).elts);
+		} else if (e instanceof Ast.TupleExpr) {
+			expressions(s, ((Ast.TupleExpr) e).elts);
+		} else if (e instanceof Ast.Compare) {
+			expression(s, ((Ast.Compare) e).left);
+			expressions(s, ((Ast.Compare) e).comparators);
+		} else if (e instanceof Ast.Call) {
+			Ast.Call c = (Ast.Call) e;
+			if (c.func instanceof Ast.Name && ((Ast.Name) c.func).id.equals("super"))
 				throw error("super() is not supported: call the base class explicitly, e.g. Base.__init__(self)",
 						e);
-			expression(s, e.node("func"));
-			for (Node a : e.nodes("args"))
-				expression(s, a);
-			for (Node k : e.nodes("keywords"))
-				expression(s, k.node("value"));
-			break;
-		case "Starred":
-			expression(s, e.node("value"));
-			break;
-		case "Attribute":
-			expression(s, e.node("value"));
-			break;
-		case "Subscript":
-			expression(s, e.node("value"));
-			expression(s, e.node("slice"));
-			break;
-		case "Slice":
-			expressionOrNull(s, e.node("lower"));
-			expressionOrNull(s, e.node("upper"));
-			expressionOrNull(s, e.node("step"));
-			break;
-		case "JoinedStr":
-			for (Node v : e.nodes("values"))
-				expression(s, v);
-			break;
-		case "FormattedValue":
-			expression(s, e.node("value"));
-			expressionOrNull(s, e.node("format_spec"));
-			break;
-		case "Lambda": {
-			Node args = e.node("args");
-			defaults(s, args);
-			Scope child = function(s, "<lambda>", e, args);
-			expression(child, e.node("body"));
-			break;
-		}
-		case "ListComp":
-		case "DictComp":
-			comprehension(s, e);
-			break;
-		default:
-			throw error("unsupported expression " + e.type, e);
+			expression(s, c.func);
+			expressions(s, c.args);
+			for (Ast.Keyword k : c.keywords)
+				expression(s, k.value);
+		} else if (e instanceof Ast.Starred) {
+			expression(s, ((Ast.Starred) e).value);
+		} else if (e instanceof Ast.Attribute) {
+			expression(s, ((Ast.Attribute) e).value);
+		} else if (e instanceof Ast.Subscript) {
+			expression(s, ((Ast.Subscript) e).value);
+			expression(s, ((Ast.Subscript) e).slice);
+		} else if (e instanceof Ast.Slice) {
+			Ast.Slice sl = (Ast.Slice) e;
+			expressionOrNull(s, sl.lower);
+			expressionOrNull(s, sl.upper);
+			expressionOrNull(s, sl.step);
+		} else if (e instanceof Ast.JoinedStr) {
+			expressions(s, ((Ast.JoinedStr) e).values);
+		} else if (e instanceof Ast.FormattedValue) {
+			expression(s, ((Ast.FormattedValue) e).value);
+			expressionOrNull(s, ((Ast.FormattedValue) e).formatSpec);
+		} else if (e instanceof Ast.Lambda) {
+			Ast.Lambda l = (Ast.Lambda) e;
+			defaults(s, l.args);
+			Scope child = function(s, "<lambda>", l, l.args);
+			l.scope = child;
+			expression(child, l.body);
+		} else if (e instanceof Ast.CompExpr) {
+			comprehension(s, (Ast.CompExpr) e);
+		} else {
+			throw error("unsupported expression " + e.type(), e);
 		}
 	}
 
-	private void comprehension(Scope s, Node e) {
-		String name = e.is("ListComp") ? "<listcomp>" : "<dictcomp>";
-		Scope child = new Scope(Scope.COMPREHENSION, name, s, e);
-		e.info = child;
+	private void comprehension(Scope s, Ast.CompExpr e) {
+		boolean list = e instanceof Ast.ListComp;
+		Scope child = new Scope(Scope.COMPREHENSION, list ? "<listcomp>" : "<dictcomp>", s, e);
+		e.scope = child;
 		all.add(child);
 		child.addFlags(".0", Scope.PARAM | Scope.BOUND);
 		child.params.add(".0");
 		child.argcount = 1;
 		boolean first = true;
-		for (Node g : e.nodes("generators")) {
+		for (Ast.Comprehension g : e.generators) {
 			if (first)
-				expression(s, g.node("iter")); // evaluated in the enclosing scope
+				expression(s, g.iter); // evaluated in the enclosing scope
 			else
-				expression(child, g.node("iter"));
+				expression(child, g.iter);
 			first = false;
-			target(child, g.node("target"));
-			for (Node c : g.nodes("ifs"))
-				expression(child, c);
+			target(child, g.target);
+			expressions(child, g.ifs);
 		}
-		if (e.is("ListComp")) {
-			expression(child, e.node("elt"));
+		if (list) {
+			expression(child, ((Ast.ListComp) e).elt);
 		} else {
-			expression(child, e.node("key"));
-			expression(child, e.node("value"));
+			expression(child, ((Ast.DictComp) e).key);
+			expression(child, ((Ast.DictComp) e).value);
 		}
 	}
 
