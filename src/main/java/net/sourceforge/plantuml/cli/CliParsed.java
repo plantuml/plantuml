@@ -39,10 +39,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.sourceforge.plantuml.utils.MyCollections;
 import net.sourceforge.plantuml.utils.Peeker;
@@ -63,6 +65,14 @@ public class CliParsed {
 	private void putMapValue(CliFlag flag, String key, String value) {
 		final Map<String, String> map = maps.computeIfAbsent(flag, k -> new LinkedHashMap<>());
 		map.put(key, value);
+	}
+
+	/** The flags that were given, whatever their spelling. */
+	public Set<CliFlag> getFlags() {
+		final Set<CliFlag> result = EnumSet.noneOf(CliFlag.class);
+		result.addAll(lists.keySet());
+		result.addAll(maps.keySet());
+		return result;
 	}
 
 	public boolean isTrue(CliFlag flag) {

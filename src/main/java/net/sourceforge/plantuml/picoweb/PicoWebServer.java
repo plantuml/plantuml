@@ -52,8 +52,10 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.URLEncoder;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.ErrorUml;
@@ -61,8 +63,11 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.cli.CliFlag;
 import net.sourceforge.plantuml.cli.CliOptions;
+import net.sourceforge.plantuml.cli.CliParsed;
 import net.sourceforge.plantuml.cli.CliParser;
+import net.sourceforge.plantuml.cli.CliParsingException;
 import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.core.Diagram;
@@ -289,6 +294,9 @@ public class PicoWebServer implements Runnable {
 		final String[] options = requestOptions.length == 0 ? new String[] { "--charset", "UTF-8" } : requestOptions;
 		// Before parsing: the options themselves may be what fails
 		requestedFormat = guessFormat(requestOptions);
+		// Before CliParser.parse() too: it reads the files named by --config and -I with a plain
+		// FileReader, outside the security profiles, and the answer is drawn in the image.
+		checkOptions(options);
 		final CliOptions option = CliParser.parse(options);
 
 		final String source = renderRequest.getSource().startsWith("@start") ? renderRequest.getSource()
@@ -327,11 +335,11 @@ public class PicoWebServer implements Runnable {
 		write(out, "Content-length: " + fileData.length);
 		write(out, "X-PlantUML-Diagram-Width: " + imageData.getWidth());
 		write(out, "X-PlantUML-Diagram-Height: " + imageData.getHeight());
-		write(out, "X-PlantUML-Diagram-Description: " + system.getDescription().getDescription());
+		write(out, "X-PlantUML-Diagram-Description: " + oneLine(system.getDescription().getDescription()));
 		if (system instanceof PSystemError) {
 			final PSystemError error = (PSystemError) system;
 			for (ErrorUml err : error.getErrorsUml()) {
-				write(out, "X-PlantUML-Diagram-Error: " + err.getError());
+				write(out, "X-PlantUML-Diagram-Error: " + oneLine(err.getError()));
 				write(out, "X-PlantUML-Diagram-Error-Line: " + (1 + err.getLineLocation().getPosition()));
 			}
 		} else if (imageData.getRootCause() != null) {
@@ -353,6 +361,38 @@ public class PicoWebServer implements Runnable {
 		out.flush();
 		out.write(fileData);
 		out.flush();
+	}
+
+	/**
+	 * The options a client of "POST /render" may give: the ones that shape the image
+	 * (format, dark mode, theme, defines, skin parameters, pragmas, charset...). All the
+	 * others - --config, -I (read a file of the server), --dot-path (runs a program),
+	 * -o, -filedir, --http-server... - act on the machine of the server and are refused:
+	 * the security profile (PLANTUML_SECURITY_PROFILE) does not apply to them, so an
+	 * allow list is the only protection. A flag that is not in the list is refused by
+	 * default, whatever its spelling, as the check works on the flags the parser itself
+	 * recognized.
+	 */
+	private static final Set<CliFlag> ALLOWED_RENDER_FLAGS = EnumSet.of(CliFlag.FORMAT, CliFlag.DARK_MODE,
+			CliFlag.DEFINE, CliFlag.DEFINE_LONG, CliFlag.SKINPARAM, CliFlag.SKINPARAM_LONG, CliFlag.PRAGMA,
+			CliFlag.PRAGMA_LONG, CliFlag.THEME, CliFlag.CHARSET, CliFlag.NO_METADATA, CliFlag.DECIMAL);
+
+	static void checkOptions(String[] options) throws BadRequest400 {
+		final CliParsed parsed;
+		try {
+			parsed = CliParsed.parse(options);
+		} catch (CliParsingException e) {
+			// Not ours to judge: CliParser.parse() reports it the usual way
+			return;
+		}
+		for (CliFlag flag : parsed.getFlags()) {
+			if (ALLOWED_RENDER_FLAGS.contains(flag))
+				continue;
+			// The output formats: -tsvg, -tpng, -ttxt...
+			if (flag.getFoo() instanceof FileFormat)
+				continue;
+			throw new BadRequest400("Option not allowed here: " + oneLine(flag.toString()));
+		}
 	}
 
 	/**
@@ -449,11 +489,23 @@ public class PicoWebServer implements Runnable {
 		out.flush();
 	}
 
+	/**
+	 * A text on one line, so that it can be a header value. The error texts come from the
+	 * diagram itself, where %chr(13)%chr(10) can build a real CR/LF (an !include of a missing
+	 * file puts its expanded path in the message): left as is, the client would control the
+	 * headers of the response, and even a second response (HTTP response splitting).
+	 * Every other control character is folded as well: none belongs in a header value.
+	 */
+	static String oneLine(String text) {
+		if (text == null)
+			return "";
+		return text.replaceAll("[\\p{Cntrl}]+", " ");
+	}
+
 	/** An exception on one line, so that it can be a header value. */
 	private static String singleLine(Throwable t) {
 		final String message = t.getMessage();
-		final String text = t.getClass().getName() + (message == null ? "" : ": " + message);
-		return text.replaceAll("[\\r\\n]+", " ");
+		return oneLine(t.getClass().getName() + (message == null ? "" : ": " + message));
 	}
 
 	private String httpReturnCode(int status) {

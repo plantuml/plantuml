@@ -252,6 +252,42 @@ class PicowebTest {
 		assertContentType(resp.headers(), "text/plain");
 	}
 
+	// %chr(13)%chr(10) builds a real CR/LF inside the message of a failing !include: it must
+	// not become a header (nor the start of a second response) of the answer.
+	@Test
+	void post_render_error_text_cannot_inject_headers() throws Exception {
+		final HttpResponse<byte[]> resp = http_post_json("/render",
+				renderRequestJson("!include /nonexistent-%chr(13)%chr(10)X-Injected: yes.txt"));
+		assertFalse(resp.headers().firstValue("X-Injected").isPresent());
+		assertTrue(resp.headers().firstValue("X-PlantUML-Diagram-Error").get().contains("X-Injected"));
+	}
+
+	@Test
+	void oneLine_folds_every_control_character() {
+		assertEquals("a b c d", PicoWebServer.oneLine("a\r\nb\rc\nd"));
+		assertEquals("a b", PicoWebServer.oneLine("a\u0000b"));
+		assertEquals("", PicoWebServer.oneLine(null));
+	}
+
+	// --config and -I read a file of the server, outside of the security profiles
+	@Test
+	void post_render_refuses_options_that_act_on_the_server() throws Exception {
+		for (String option : new String[] { "--config", "-config", "-I/etc/passwd", "--include", "--dot-path",
+				"-graphvizdot", "-o", "-filedir" }) {
+			final HttpResponse<byte[]> resp = http_post_json("/render",
+					renderRequestJson("A -> B", "-tsvg", option, "/etc/passwd"));
+			assertStatus(resp, 400);
+			assertFalse(body(resp).contains("root:"), option);
+		}
+	}
+
+	@Test
+	void post_render_accepts_the_options_that_shape_the_image() throws Exception {
+		final HttpResponse<byte[]> resp = http_post_json("/render", renderRequestJson("A -> B", "-tsvg",
+				"--dark-mode", "-DFOO=1", "-Sbackgroundcolor=red", "--theme", "plain", "--charset", "UTF-8"));
+		assertStatus(resp, 200);
+	}
+
 	@Test
 	void guessFormat_reads_the_format_of_the_options() {
 		assertEquals(FileFormat.PNG, PicoWebServer.guessFormat(new String[] {}));
