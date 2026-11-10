@@ -26,7 +26,7 @@ final class PyView {
 		final int size = dict.size();
 		return new PyIter() {
 			@Override
-			Object next() {
+			public Object next() {
 				try {
 					if (dict.size() != size)
 						throw PyOps.err(Types.RUNTIME_ERROR, "dictionary changed size during iteration");

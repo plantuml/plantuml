@@ -43,15 +43,15 @@ final class TimeLib {
 		final PyModule m = new PyModule("time");
 		m.put("time", (in, a) -> {
 			count("time", a, 0, 0);
-			return Double.valueOf(System.currentTimeMillis() / 1000.0);
+			return Double.valueOf(in.currentTimeMillis() / 1000.0);
 		});
 		m.put("gmtime", (in, a) -> {
 			count("gmtime", a, 0, 1);
-			return tuple(fields(a.length == 0 ? now() : seconds("gmtime", a[0])));
+			return tuple(fields(a.length == 0 ? now(in) : seconds("gmtime", a[0])));
 		});
 		m.put("localtime", (in, a) -> {
 			count("localtime", a, 0, 1);
-			return tuple(fields(a.length == 0 ? now() : seconds("localtime", a[0])));
+			return tuple(fields(a.length == 0 ? now(in) : seconds("localtime", a[0])));
 		});
 		m.put("mktime", (in, a) -> {
 			count("mktime", a, 1, 1);
@@ -61,17 +61,17 @@ final class TimeLib {
 			count("strftime", a, 1, 2);
 			if (a[0] instanceof String == false)
 				throw PyOps.err(Types.TYPE_ERROR, "strftime() argument 1 must be str, not " + PyOps.typeName(a[0]));
-			final long[] t = a.length == 2 ? check(items("strftime", a[1])) : fields(now());
+			final long[] t = a.length == 2 ? check(items("strftime", a[1])) : fields(now(in));
 			return format((String) a[0], t);
 		});
 		m.put("asctime", (in, a) -> {
 			count("asctime", a, 0, 1);
-			final long[] t = a.length == 1 ? check(items("asctime", a[0])) : fields(now());
+			final long[] t = a.length == 1 ? check(items("asctime", a[0])) : fields(now(in));
 			return format("%a %b %e %H:%M:%S %Y", t);
 		});
 		m.put("ctime", (in, a) -> {
 			count("ctime", a, 0, 1);
-			return format("%a %b %e %H:%M:%S %Y", fields(a.length == 0 ? now() : seconds("ctime", a[0])));
+			return format("%a %b %e %H:%M:%S %Y", fields(a.length == 0 ? now(in) : seconds("ctime", a[0])));
 		});
 		m.members.put("timezone", Integer.valueOf(0));
 		m.members.put("altzone", Integer.valueOf(0));
@@ -90,8 +90,8 @@ final class TimeLib {
 		}
 	}
 
-	private static long now() {
-		return Math.floorDiv(System.currentTimeMillis(), 1000L);
+	private static long now(Interp in) {
+		return Math.floorDiv(in.currentTimeMillis(), 1000L);
 	}
 
 	/** An int or a float of seconds, as the whole seconds before it (CPython rounds towards minus infinity). */

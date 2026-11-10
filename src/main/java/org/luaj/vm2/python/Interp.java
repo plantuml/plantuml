@@ -15,10 +15,21 @@ public final class Interp {
 		void write(String text);
 	}
 
+	/** The source of the current time (time.time, datetime.now...). */
+	public interface Clock {
+		long currentTimeMillis();
+	}
+
 	final Map<String, Object> globals = new HashMap<String, Object>();
 	final Map<String, Object> builtins = new HashMap<String, Object>();
 	final Map<String, PyModule> modules = new HashMap<String, PyModule>();
 	private final Output out;
+	private Clock clock = new Clock() {
+		@Override
+		public long currentTimeMillis() {
+			return System.currentTimeMillis();
+		}
+	};
 	private long steps;
 	private long maxSteps = 200000000L;
 	private int depth;
@@ -45,6 +56,15 @@ public final class Interp {
 	/** Defines a global variable: a module, or a member of a module such as {@link PyModule#get}. */
 	public void setGlobal(String name, Object value) {
 		globals.put(name, value);
+	}
+
+	/** Replaces the clock (the system clock by default), e.g. by a fixed one for deterministic tests. */
+	public void setClock(Clock clock) {
+		this.clock = clock;
+	}
+
+	long currentTimeMillis() {
+		return clock.currentTimeMillis();
 	}
 
 	public void setMaxSteps(long n) {

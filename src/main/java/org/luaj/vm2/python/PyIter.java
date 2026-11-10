@@ -4,10 +4,10 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /** An iterator over a builtin value. {@link #next} returns Java null when it is exhausted. */
-abstract class PyIter {
-	abstract Object next();
+interface PyIter {
+	Object next();
 
-	static final class ListIter extends PyIter {
+	final class ListIter implements PyIter {
 		private final PyList list;
 		private int i;
 
@@ -16,12 +16,12 @@ abstract class PyIter {
 		}
 
 		@Override
-		Object next() {
+		public Object next() {
 			return i < list.items.size() ? list.items.get(i++) : null;
 		}
 	}
 
-	static final class ArrayIter extends PyIter {
+	final class ArrayIter implements PyIter {
 		private final Object[] a;
 		private int i;
 
@@ -30,12 +30,12 @@ abstract class PyIter {
 		}
 
 		@Override
-		Object next() {
+		public Object next() {
 			return i < a.length ? a[i++] : null;
 		}
 	}
 
-	static final class StrIter extends PyIter {
+	final class StrIter implements PyIter {
 		private final String s;
 		private int i;
 
@@ -44,7 +44,7 @@ abstract class PyIter {
 		}
 
 		@Override
-		Object next() {
+		public Object next() {
 			if (i >= s.length())
 				return null;
 			int cp = s.codePointAt(i);
@@ -55,7 +55,7 @@ abstract class PyIter {
 		}
 	}
 
-	static final class RangeIter extends PyIter {
+	final class RangeIter implements PyIter {
 		private long cur;
 		private final long stop;
 		private final long step;
@@ -67,7 +67,7 @@ abstract class PyIter {
 		}
 
 		@Override
-		Object next() {
+		public Object next() {
 			if (step > 0 ? cur >= stop : cur <= stop)
 				return null;
 			Object v = Integer.valueOf((int) cur);
@@ -76,7 +76,7 @@ abstract class PyIter {
 		}
 	}
 
-	static final class DictIter extends PyIter {
+	final class DictIter implements PyIter {
 		private final PyDict d;
 		private final Iterator<PyDict.Entry> it;
 		private final int size;
@@ -88,7 +88,7 @@ abstract class PyIter {
 		}
 
 		@Override
-		Object next() {
+		public Object next() {
 			try {
 				if (d.size() != size)
 					throw PyOps.err(Types.RUNTIME_ERROR, "dictionary changed size during iteration");

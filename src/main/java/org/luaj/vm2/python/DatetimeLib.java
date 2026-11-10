@@ -397,7 +397,7 @@ final class DatetimeLib {
 		classFn(d, "today", (in, a) -> {
 			if (a.length != 0)
 				throw PyOps.err(Types.TYPE_ERROR, "today() takes no arguments (" + a.length + " given)");
-			return dateOfSeconds(Math.floorDiv(System.currentTimeMillis(), 1000L));
+			return dateOfSeconds(Math.floorDiv(in.currentTimeMillis(), 1000L));
 		});
 		classFn(d, "fromordinal", (in, a) -> {
 			if (a.length != 1)
@@ -495,13 +495,13 @@ final class DatetimeLib {
 		classFn(d, "now", (in, a) -> {
 			if (a.length > 1 || (a.length == 1 && a[0] != PyNone.NONE))
 				throw PyOps.err(Types.TYPE_ERROR, "time zones are not supported: tz must be None");
-			final long ms = System.currentTimeMillis();
+			final long ms = in.currentTimeMillis();
 			return datetimeOf(Math.floorDiv(ms, 1000L), Math.floorMod(ms, 1000L) * 1000L);
 		});
 		classFn(d, "today", (in, a) -> {
 			if (a.length != 0)
 				throw PyOps.err(Types.TYPE_ERROR, "today() takes no arguments (" + a.length + " given)");
-			final long ms = System.currentTimeMillis();
+			final long ms = in.currentTimeMillis();
 			return datetimeOf(Math.floorDiv(ms, 1000L), Math.floorMod(ms, 1000L) * 1000L);
 		});
 		classFn(d, "fromordinal", (in, a) -> {
