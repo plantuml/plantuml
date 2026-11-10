@@ -1,6 +1,5 @@
 package org.luaj.vm2.python;
 
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /** dict.keys(), dict.values() or dict.items(): a live view of the dict. */
@@ -24,19 +23,18 @@ final class PyView {
 	PyIter iterator() {
 		final Iterator<PyDict.Entry> it = dict.map.values().iterator();
 		final int size = dict.size();
+		final int modCount = dict.modCount;
 		return new PyIter() {
 			@Override
 			public Object next() {
-				try {
-					if (dict.size() != size)
-						throw PyOps.err(Types.RUNTIME_ERROR, "dictionary changed size during iteration");
-					if (!it.hasNext())
-						return null;
-					PyDict.Entry e = it.next();
-					return kind == KEYS ? e.key : kind == VALUES ? e.value : new PyTuple(new Object[] { e.key, e.value });
-				} catch (ConcurrentModificationException ex) {
+				if (dict.size() != size)
 					throw PyOps.err(Types.RUNTIME_ERROR, "dictionary changed size during iteration");
-				}
+				if (it.hasNext() == false)
+					return null;
+				if (dict.modCount != modCount)
+					throw PyOps.err(Types.RUNTIME_ERROR, "dictionary changed size during iteration");
+				PyDict.Entry e = it.next();
+				return kind == KEYS ? e.key : kind == VALUES ? e.value : new PyTuple(new Object[] { e.key, e.value });
 			}
 		};
 	}

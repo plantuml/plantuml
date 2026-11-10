@@ -1,6 +1,5 @@
 package org.luaj.vm2.python;
 
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /** An iterator over a builtin value. {@link #next} returns Java null when it is exhausted. */
@@ -80,22 +79,24 @@ interface PyIter {
 		private final PyDict d;
 		private final Iterator<PyDict.Entry> it;
 		private final int size;
+		private final int modCount;
 
 		DictIter(PyDict d) {
 			this.d = d;
 			this.it = d.map.values().iterator();
 			this.size = d.size();
+			this.modCount = d.modCount;
 		}
 
 		@Override
 		public Object next() {
-			try {
-				if (d.size() != size)
-					throw PyOps.err(Types.RUNTIME_ERROR, "dictionary changed size during iteration");
-				return it.hasNext() ? it.next().key : null;
-			} catch (ConcurrentModificationException e) {
+			if (d.size() != size)
 				throw PyOps.err(Types.RUNTIME_ERROR, "dictionary changed size during iteration");
-			}
+			if (it.hasNext() == false)
+				return null;
+			if (d.modCount != modCount)
+				throw PyOps.err(Types.RUNTIME_ERROR, "dictionary changed size during iteration");
+			return it.next().key;
 		}
 	}
 }

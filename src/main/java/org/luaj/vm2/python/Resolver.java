@@ -11,7 +11,18 @@ import java.util.List;
  * top level of the module are globals.
  */
 final class Resolver {
+	/**
+	 * The deepest tree this pass, and CodeGen which follows the same tree, accept:
+	 * both recurse once per level. The parser limits the nesting it recurses on
+	 * (200 levels) but builds a chain such as {@code 1 + 1 + ... + 1} or
+	 * {@code a.b.c...} with a loop, so only this limit bounds those: without it,
+	 * a long chain overflows the stack, which a Go port could not recover from.
+	 */
+	private static final int MAX_NESTING = 1000;
+
 	private final List<Scope> all = new ArrayList<Scope>();
+	/** The number of levels of the tree around the node being visited. */
+	private int nesting;
 
 	/** Analyses a Module node; the scope of each function-like node is stored in its scope field. */
 	static Scope resolve(Ast.Module module) {
@@ -42,7 +53,15 @@ final class Resolver {
 		s.addFlags(name, Scope.BOUND);
 	}
 
+	/** Enters a level of the tree; the caller leaves it with {@code nesting--}. After an error nothing is reused. */
+	private void enter(Node at, int levels) {
+		nesting += levels;
+		if (nesting > MAX_NESTING)
+			throw error("too many levels of nesting", at);
+	}
+
 	private void statement(Scope s, Ast.Stmt n) {
+		enter(n, 1);
 		if (n instanceof Ast.FunctionDef) {
 			Ast.FunctionDef f = (Ast.FunctionDef) n;
 			decorators(s, f.decorators);
@@ -136,6 +155,7 @@ final class Resolver {
 		} else {
 			throw error("unsupported statement " + n.type(), n);
 		}
+		nesting--;
 	}
 
 	/** A global or nonlocal statement. */
@@ -290,6 +310,7 @@ final class Resolver {
 	}
 
 	private void expression(Scope s, Ast.Expr e) {
+		enter(e, 1);
 		if (e instanceof Ast.Name) {
 			s.addFlags(((Ast.Name) e).id, Scope.USED);
 		} else if (e instanceof Ast.Constant) {
@@ -353,6 +374,7 @@ final class Resolver {
 		} else {
 			throw error("unsupported expression " + e.type(), e);
 		}
+		nesting--;
 	}
 
 	private void comprehension(Scope s, Ast.CompExpr e) {
@@ -363,6 +385,7 @@ final class Resolver {
 		child.addFlags(".0", Scope.PARAM | Scope.BOUND);
 		child.params.add(".0");
 		child.argcount = 1;
+		enter(e, e.generators.size()); // CodeGen nests one loop per generator
 		boolean first = true;
 		for (Ast.Comprehension g : e.generators) {
 			if (first)
@@ -379,6 +402,7 @@ final class Resolver {
 			expression(child, ((Ast.DictComp) e).key);
 			expression(child, ((Ast.DictComp) e).value);
 		}
+		nesting -= e.generators.size();
 	}
 
 	// ------------------------------------------------------------ resolution

@@ -44,6 +44,11 @@ public final class PyParser {
 		return t;
 	}
 
+	/**
+	 * Counts one more level of nesting. The levels are given back by plain
+	 * decrements, not by finally blocks: after a syntax error the parser is
+	 * thrown away, and the one of an f-string is another instance.
+	 */
 	private void enter() {
 		if (++depth > MAX_DEPTH)
 			throw error("too many levels of nesting");
@@ -198,11 +203,9 @@ public final class PyParser {
 
 	private List<Ast.Stmt> block() {
 		enter();
-		try {
-			return blockBody();
-		} finally {
-			depth--;
-		}
+		List<Ast.Stmt> body = blockBody();
+		depth--;
+		return body;
 	}
 
 	private List<Ast.Stmt> blockBody() {
@@ -228,18 +231,30 @@ public final class PyParser {
 		return body;
 	}
 
+	/**
+	 * if / elif / else. The elif clauses are read in a loop and the nested If
+	 * nodes are built afterwards, so that a long chain does not recurse.
+	 */
 	private Ast.If ifStatement() {
-		Token t = next(); // if / elif
-		Ast.Expr test = test();
-		List<Ast.Stmt> body = block();
+		List<Token> starts = new ArrayList<Token>();
+		List<Ast.Expr> tests = new ArrayList<Ast.Expr>();
+		List<List<Ast.Stmt>> bodies = new ArrayList<List<Ast.Stmt>>();
+		do {
+			starts.add(next()); // if / elif
+			tests.add(test());
+			bodies.add(block());
+		} while (isKw("elif"));
 		List<Ast.Stmt> orelse = new ArrayList<Ast.Stmt>();
-		if (isKw("elif")) {
-			orelse.add(ifStatement());
-		} else if (isKw("else")) {
-			next();
+		if (acceptKw("else"))
 			orelse = block();
+		Ast.If result = null;
+		for (int i = starts.size() - 1; i >= 0; i--) {
+			Token t = starts.get(i);
+			result = new Ast.If(t.line, t.col, tests.get(i), bodies.get(i), orelse);
+			orelse = new ArrayList<Ast.Stmt>();
+			orelse.add(result);
 		}
-		return new Ast.If(t.line, t.col, test, body, orelse);
+		return result;
 	}
 
 	private Ast.While whileStatement() {
@@ -636,11 +651,9 @@ public final class PyParser {
 
 	private Ast.Expr test() {
 		enter();
-		try {
-			return testBody();
-		} finally {
-			depth--;
-		}
+		Ast.Expr e = testBody();
+		depth--;
+		return e;
 	}
 
 	private Ast.Expr testBody() {
@@ -699,11 +712,9 @@ public final class PyParser {
 		Token t = peek();
 		if (acceptKw("not")) {
 			enter();
-			try {
-				return new Ast.UnaryOp(t.line, t.col, Ast.UnaryOperator.Not, notTest());
-			} finally {
-				depth--;
-			}
+			Ast.Expr operand = notTest();
+			depth--;
+			return new Ast.UnaryOp(t.line, t.col, Ast.UnaryOperator.Not, operand);
 		}
 		return comparison();
 	}
@@ -852,11 +863,9 @@ public final class PyParser {
 			Ast.UnaryOperator op = t.text.equals("-") ? Ast.UnaryOperator.USub
 					: t.text.equals("+") ? Ast.UnaryOperator.UAdd : Ast.UnaryOperator.Invert;
 			enter();
-			try {
-				return new Ast.UnaryOp(t.line, t.col, op, factor());
-			} finally {
-				depth--;
-			}
+			Ast.Expr operand = factor();
+			depth--;
+			return new Ast.UnaryOp(t.line, t.col, op, operand);
 		}
 		return power();
 	}

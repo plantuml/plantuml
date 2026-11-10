@@ -694,13 +694,10 @@ final class Methods {
 			} else {
 				int i = 0;
 				for (Object item : PyOps.toArrayList(src)) {
-					ArrayList<Object> pair;
-					try {
-						pair = PyOps.toArrayList(item);
-					} catch (PyError e) {
+					if (PyOps.isIterable(item) == false)
 						throw PyOps.err(Types.TYPE_ERROR, "cannot convert dictionary update sequence element #" + i
 								+ " to a sequence");
-					}
+					ArrayList<Object> pair = PyOps.toArrayList(item);
 					if (pair.size() != 2)
 						throw PyOps.err(Types.VALUE_ERROR, "dictionary update sequence element #" + i
 								+ " has length " + pair.size() + "; 2 is required");
@@ -761,7 +758,7 @@ final class Methods {
 		});
 		def(table, "clear", (in, a) -> {
 			need(a, 0, 0, "clear");
-			((PyDict) a[0]).map.clear();
+			((PyDict) a[0]).clear();
 			return PyNone.NONE;
 		});
 		def(table, "copy", (in, a) -> {

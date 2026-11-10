@@ -102,11 +102,7 @@ public final class Interp {
 
 	public void run(Code code) {
 		Object[] frame = new Object[code.nslots + code.maxStack];
-		try {
-			execute(code, frame, globals);
-		} catch (PyError e) {
-			throw e;
-		}
+		execute(code, frame, globals);
 	}
 
 	/** The value of a global variable converted for display, or null if it is not defined. */
@@ -384,6 +380,9 @@ public final class Interp {
 				} catch (PyError pe) {
 					e = pe;
 				} catch (StackOverflowError so) {
+					// A safety net for the JVM and TeaVM, whose stacks are small: maxDepth and the limits on the
+					// nesting of the data (PyOps.MAX_NESTING, Resolver.MAX_NESTING) already bound every recursion,
+					// which is all a port to a language that cannot recover from a stack overflow relies on.
 					e = PyOps.err(Types.RECURSION_ERROR, "maximum recursion depth exceeded");
 				}
 				int fault = pcs[d] - 1;
@@ -677,15 +676,10 @@ public final class Interp {
 					case Op.LIST_EXTEND: {
 						Object v = f[--sp];
 						f[sp] = null;
-						try {
-							((PyList) f[sp - arg]).items.addAll(PyOps.toArrayList(v));
-						} catch (PyError e) {
-							if (e.exc.type == Types.TYPE_ERROR && !(v instanceof PyList) && !(v instanceof PyTuple)
-									&& !(v instanceof String) && !(v instanceof PyDict) && !(v instanceof PyRange))
-								throw PyOps.err(Types.TYPE_ERROR,
-										"argument after * must be an iterable, not " + PyOps.typeName(v));
-							throw e;
-						}
+						if (PyOps.isIterable(v) == false)
+							throw PyOps.err(Types.TYPE_ERROR,
+									"argument after * must be an iterable, not " + PyOps.typeName(v));
+						((PyList) f[sp - arg]).items.addAll(PyOps.toArrayList(v));
 						break;
 					}
 					case Op.MAP_ADD: {

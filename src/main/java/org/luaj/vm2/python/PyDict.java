@@ -20,7 +20,25 @@ final class PyDict {
 
 	final LinkedHashMap<Object, Entry> map = new LinkedHashMap<Object, Entry>();
 
+	/**
+	 * Incremented each time a key is added or removed: an iterator that sees
+	 * another value than the one it started with knows the dict changed under it.
+	 */
+	int modCount;
+
 	static Object norm(Object k) {
+		return norm(k, 0);
+	}
+
+	/** The deepest tuple accepted as a key: the map hashes and compares it recursively. */
+	private static final int MAX_KEY_DEPTH = 1000;
+
+	/**
+	 * Tuples are normalised inside, and then hashed and compared recursively by
+	 * the map: the depth of a key is limited, so that neither recursion can
+	 * overflow the stack.
+	 */
+	private static Object norm(Object k, int depth) {
 		if (k instanceof String || k instanceof Integer || k == PyNone.NONE)
 			return k;
 		if (k instanceof Boolean)
@@ -32,10 +50,12 @@ final class PyDict {
 			return k;
 		}
 		if (k instanceof PyTuple) {
+			if (depth > MAX_KEY_DEPTH)
+				throw PyOps.err(Types.RECURSION_ERROR, "maximum recursion depth exceeded");
 			Object[] items = ((PyTuple) k).items;
 			Object[] out = null;
 			for (int i = 0; i < items.length; i++) {
-				Object n = norm(items[i]);
+				Object n = norm(items[i], depth + 1);
 				if (n != items[i]) {
 					if (out == null)
 						out = items.clone();
@@ -63,15 +83,26 @@ final class PyDict {
 	void put(Object key, Object value) {
 		Object n = norm(key);
 		Entry e = map.get(n);
-		if (e == null)
+		if (e == null) {
 			map.put(n, new Entry(key, value));
-		else
+			modCount++;
+		} else
 			e.value = value;
 	}
 
 	Object remove(Object key) {
 		Entry e = map.remove(norm(key));
-		return e == null ? null : e.value;
+		if (e == null)
+			return null;
+		modCount++;
+		return e.value;
+	}
+
+	void clear() {
+		if (map.isEmpty())
+			return;
+		map.clear();
+		modCount++;
 	}
 
 	boolean containsKey(Object key) {

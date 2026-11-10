@@ -2,7 +2,6 @@ package org.luaj.vm2.python;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -926,6 +925,12 @@ final class PyOps {
 
 	// ------------------------------------------------------------ iteration
 
+	/** True for what {@link #getIter} accepts. */
+	static boolean isIterable(Object o) {
+		return o instanceof PyList || o instanceof PyTuple || o instanceof String || o instanceof PyRange
+				|| o instanceof PyDict || o instanceof PyView || o instanceof PyIter;
+	}
+
 	static PyIter getIter(Object o) {
 		if (o instanceof PyList)
 			return new PyIter.ListIter((PyList) o);
@@ -966,31 +971,108 @@ final class PyOps {
 	static void sortList(ArrayList<Object> items, final Interp in, final Object key, boolean reverse) {
 		int n = items.size();
 		Object[] values = items.toArray();
-		final Object[] keys = new Object[n];
+		Object[] keys = new Object[n];
 		for (int i = 0; i < n; i++)
 			keys[i] = key == PyNone.NONE ? values[i] : in.call(key, values[i]);
-		Integer[] idx = new Integer[n];
+		// reverse=True sorts the reversed list and reverses the result, so that equal elements keep their order
+		int[] idx = new int[n];
 		for (int i = 0; i < n; i++)
-			idx[i] = Integer.valueOf(i);
-		Comparator<Integer> c = new Comparator<Integer>() {
-			@Override
-			public int compare(Integer a, Integer b) {
-				return order(keys[a.intValue()], keys[b.intValue()]);
-			}
-		};
-		try {
-			List<Integer> order = java.util.Arrays.asList(idx);
-			if (reverse)
-				Collections.reverse(order);
-			Collections.sort(order, c);
-			if (reverse)
-				Collections.reverse(order);
-		} catch (IllegalArgumentException e) {
-			throw err(Types.VALUE_ERROR, "inconsistent ordering in sort");
-		}
+			idx[i] = reverse ? n - 1 - i : i;
+		sortIndices(idx, keys);
 		items.clear();
 		for (int i = 0; i < n; i++)
-			items.add(values[idx[i].intValue()]);
+			items.add(values[idx[reverse ? n - 1 - i : i]]);
+	}
+
+	/** Below this length a list is sorted by binary insertion, as CPython and the Java library do. */
+	private static final int MIN_MERGE = 32;
+
+	/**
+	 * Stable sort of the indices idx[0..n) by the order of their keys. Written
+	 * here rather than left to the Java library, whose sort may refuse a
+	 * comparison that is not a total order (a list with NaNs, for instance) while
+	 * CPython sorts it: this one always ends, whatever order() answers. order()
+	 * may raise a Python exception, which ends the sort.
+	 *
+	 * <p>A short list is sorted as CPython does (a first run, then binary
+	 * insertion), so the comparisons are made in the same order: the error for two
+	 * incomparable values names their types as CPython does, and a __lt__ of the
+	 * program is called in the same sequence. A longer one is merge sorted.
+	 */
+	private static void sortIndices(int[] idx, Object[] keys) {
+		int n = idx.length;
+		if (n < 2)
+			return;
+		if (n < MIN_MERGE) {
+			int run = countRunAndMakeAscending(idx, keys, 0, n);
+			binaryInsertionSort(idx, keys, 0, n, run);
+			return;
+		}
+		mergeSort(idx, new int[n], keys, 0, n);
+	}
+
+	/** Length of the run at lo (ascending, or strictly descending and then reversed in place). */
+	private static int countRunAndMakeAscending(int[] idx, Object[] keys, int lo, int hi) {
+		int runHi = lo + 1;
+		if (runHi == hi)
+			return 1;
+		if (order(keys[idx[runHi++]], keys[idx[lo]]) < 0) {
+			while (runHi < hi && order(keys[idx[runHi]], keys[idx[runHi - 1]]) < 0)
+				runHi++;
+			for (int i = lo, j = runHi - 1; i < j; i++, j--) {
+				int t = idx[i];
+				idx[i] = idx[j];
+				idx[j] = t;
+			}
+		} else {
+			while (runHi < hi && order(keys[idx[runHi]], keys[idx[runHi - 1]]) >= 0)
+				runHi++;
+		}
+		return runHi - lo;
+	}
+
+	/** Sorts idx[lo..hi) knowing that idx[lo..start) is sorted: each element is inserted at the place a binary search finds. */
+	private static void binaryInsertionSort(int[] idx, Object[] keys, int lo, int hi, int start) {
+		if (start == lo)
+			start++;
+		for (; start < hi; start++) {
+			int pivot = idx[start];
+			int left = lo;
+			int right = start;
+			while (left < right) {
+				int mid = (left + right) >>> 1;
+				if (order(keys[pivot], keys[idx[mid]]) < 0)
+					right = mid;
+				else
+					left = mid + 1;
+			}
+			System.arraycopy(idx, left, idx, left + 1, start - left);
+			idx[left] = pivot;
+		}
+	}
+
+	/** Stable merge sort of idx[lo..hi). */
+	private static void mergeSort(int[] idx, int[] tmp, Object[] keys, int lo, int hi) {
+		if (hi - lo < 2)
+			return;
+		int mid = (lo + hi) >>> 1;
+		mergeSort(idx, tmp, keys, lo, mid);
+		mergeSort(idx, tmp, keys, mid, hi);
+		if (order(keys[idx[mid]], keys[idx[mid - 1]]) >= 0)
+			return; // the two halves are already in order
+		int i = lo, j = mid, k = lo;
+		while (i < mid && j < hi) {
+			// an element of the right half goes first only if it is strictly smaller: that keeps the sort stable
+			if (order(keys[idx[j]], keys[idx[i]]) < 0)
+				tmp[k++] = idx[j++];
+			else
+				tmp[k++] = idx[i++];
+		}
+		while (i < mid)
+			tmp[k++] = idx[i++];
+		while (j < hi)
+			tmp[k++] = idx[j++];
+		System.arraycopy(tmp, lo, idx, lo, hi - lo);
 	}
 
 	// ------------------------------------------------------------ repr and str

@@ -642,10 +642,7 @@ final class DatetimeLib {
 				us = Long.parseLong(f);
 			}
 		}
-		try {
-			return newDatetime(ymd[0], ymd[1], ymd[2], h, mi, sec, us);
-		} catch (PyError e) {
-			throw e; // the same ValueError as the constructor, with its own message
-		}
+		// a field out of range raises the same ValueError as the constructor
+		return newDatetime(ymd[0], ymd[1], ymd[2], h, mi, sec, us);
 	}
 }
