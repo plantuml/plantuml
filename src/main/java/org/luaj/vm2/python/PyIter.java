@@ -36,10 +36,17 @@ interface PyIter {
 
 	final class StrIter implements PyIter {
 		private final String s;
+		private final boolean wrap;
 		private int i;
 
 		StrIter(String s) {
+			this(s, false);
+		}
+
+		/** @param wrap true to give the characters as PyStr, for the iteration of a PyStr */
+		StrIter(String s, boolean wrap) {
 			this.s = s;
+			this.wrap = wrap;
 		}
 
 		@Override
@@ -50,7 +57,7 @@ interface PyIter {
 			int n = Character.charCount(cp);
 			String r = s.substring(i, i + n);
 			i += n;
-			return r;
+			return wrap ? PyStr.of(r) : r;
 		}
 	}
 

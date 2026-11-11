@@ -59,10 +59,10 @@ final class TimeLib {
 		});
 		m.put("strftime", (in, a) -> {
 			count("strftime", a, 1, 2);
-			if (a[0] instanceof String == false)
+			if (PyStr.is(a[0]) == false)
 				throw PyOps.err(Types.TYPE_ERROR, "strftime() argument 1 must be str, not " + PyOps.typeName(a[0]));
 			final long[] t = a.length == 2 ? check(items("strftime", a[1])) : fields(now(in));
-			return format((String) a[0], t);
+			return format(PyStr.text(a[0]), t);
 		});
 		m.put("asctime", (in, a) -> {
 			count("asctime", a, 0, 1);

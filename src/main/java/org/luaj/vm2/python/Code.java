@@ -115,8 +115,8 @@ public final class Code {
 	private static String describe(Object c) {
 		if (c instanceof Code)
 			return "<code " + ((Code) c).name + ">";
-		if (c instanceof String)
-			return "'" + c + "'";
+		if (PyStr.is(c))
+			return "'" + PyStr.text(c) + "'";
 		if (c instanceof Builtin)
 			return "<built-in function " + ((Builtin) c).name + ">";
 		return String.valueOf(c);

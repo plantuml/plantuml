@@ -46,14 +46,14 @@ final class Builtins {
 		}
 		// as in CPython, __module__ is the __name__ of the globals the class is defined in
 		Object module = ((PyFunction) a[0]).globals.get("__name__");
-		if (module instanceof String == false)
+		if (PyStr.is(module) == false)
 			module = "__main__";
 		PyDict body = (PyDict) in.call(a[0]);
 		Map<String, Object> dict = new LinkedHashMap<String, Object>();
-		dict.put("__module__", module);
+		dict.put("__module__", PyStr.text(module));
 		for (PyDict.Entry e : body.map.values())
-			dict.put((String) e.key, e.value);
-		PyType type = new PyType((String) a[1], parent, parent.exception, dict, (String) a[2], (String) module);
+			dict.put(PyStr.text(e.key), e.value);
+		PyType type = new PyType(PyStr.text(a[1]), parent, parent.exception, dict, PyStr.text(a[2]), PyStr.text(module));
 		type.interp = in;
 		return type;
 	});
@@ -163,12 +163,12 @@ final class Builtins {
 			return Integer.valueOf(0);
 		Object x = a[0];
 		if (a.length == 2) {
-			if (!(x instanceof String))
+			if (PyStr.is(x) == false)
 				throw PyOps.err(Types.TYPE_ERROR, "int() can't convert non-string with explicit base");
 			int base = PyOps.asIndex(a[1]);
 			if (base != 0 && (base < 2 || base > 36))
 				throw PyOps.err(Types.VALUE_ERROR, "int() base must be >= 2 and <= 36, or 0");
-			return Integer.valueOf(parseInt((String) x, base));
+			return Integer.valueOf(parseInt(PyStr.text(x), base));
 		}
 		if (x instanceof Integer)
 			return x;
@@ -176,8 +176,8 @@ final class Builtins {
 			return Integer.valueOf(PyOps.asInt(x));
 		if (x instanceof Double)
 			return Integer.valueOf(PyInt.fromDouble(((Double) x).doubleValue()));
-		if (x instanceof String)
-			return Integer.valueOf(parseInt((String) x, 10));
+		if (PyStr.is(x))
+			return Integer.valueOf(parseInt(PyStr.text(x), 10));
 		throw PyOps.err(Types.TYPE_ERROR,
 				"int() argument must be a string or a real number, not '" + PyOps.typeName(x) + "'");
 	}
@@ -191,8 +191,8 @@ final class Builtins {
 			return x;
 		if (PyOps.isNum(x))
 			return Double.valueOf(PyOps.asDouble(x));
-		if (x instanceof String) {
-			Double d = Fmt.parseFloat((String) x);
+		if (PyStr.is(x)) {
+			Double d = Fmt.parseFloat(PyStr.text(x));
 			if (d == null)
 				throw PyOps.err(Types.VALUE_ERROR, "could not convert string to float: " + PyOps.repr(x));
 			return d;
@@ -411,11 +411,12 @@ final class Builtins {
 			noKw("print", kw, "sep", "end", "flush");
 			Object sep = kw.containsKey("sep") ? kw.get("sep") : PyNone.NONE;
 			Object end = kw.containsKey("end") ? kw.get("end") : PyNone.NONE;
-			if (sep != PyNone.NONE && !(sep instanceof String))
+			if (sep != PyNone.NONE && PyStr.is(sep) == false)
 				throw PyOps.err(Types.TYPE_ERROR, "sep must be None or a string, not " + PyOps.typeName(sep));
-			if (end != PyNone.NONE && !(end instanceof String))
+			if (end != PyNone.NONE && PyStr.is(end) == false)
 				throw PyOps.err(Types.TYPE_ERROR, "end must be None or a string, not " + PyOps.typeName(end));
-			printTo(in, a, sep == PyNone.NONE ? " " : (String) sep, end == PyNone.NONE ? "\n" : (String) end);
+			printTo(in, a, sep == PyNone.NONE ? " " : PyStr.text(sep),
+					end == PyNone.NONE ? "\n" : PyStr.text(end));
 			return PyNone.NONE;
 		});
 		fn("len", (in, a) -> {
@@ -428,7 +429,7 @@ final class Builtins {
 		});
 		fn("format", (in, a) -> {
 			count("format", a, 1, 2);
-			return Fmt.format(a[0], a.length > 1 ? (String) a[1] : "");
+			return Fmt.format(a[0], a.length > 1 ? PyStr.text(a[1]) : "");
 		});
 		fn("abs", (in, a) -> {
 			count("abs", a, 1, 1);
@@ -458,7 +459,7 @@ final class Builtins {
 		});
 		fn("reversed", (in, a) -> {
 			count("reversed", a, 1, 1);
-			if (a[0] instanceof PyTuple || a[0] instanceof PyList || a[0] instanceof String || a[0] instanceof PyRange
+			if (a[0] instanceof PyTuple || a[0] instanceof PyList || PyStr.is(a[0]) || a[0] instanceof PyRange
 					|| a[0] instanceof PyDict) {
 				ArrayList<Object> l = PyOps.toArrayList(a[0]);
 				java.util.Collections.reverse(l);
@@ -562,13 +563,13 @@ final class Builtins {
 		fn("pow", (in, a) -> pow(a));
 		fn("ord", (in, a) -> {
 			count("ord", a, 1, 1);
-			if (!(a[0] instanceof String))
+			if (PyStr.is(a[0]) == false)
 				throw PyOps.err(Types.TYPE_ERROR, "ord() expected string of length 1, but " + PyOps.typeName(a[0]) + " found");
-			String s = (String) a[0];
-			if (PyStr.length(s) != 1)
+			PyStr s = PyStr.from(a[0]);
+			if (s.length() != 1)
 				throw PyOps.err(Types.TYPE_ERROR,
-						"ord() expected a character, but string of length " + PyStr.length(s) + " found");
-			return Integer.valueOf(s.codePointAt(0));
+						"ord() expected a character, but string of length " + s.length() + " found");
+			return Integer.valueOf(s.s.codePointAt(0));
 		});
 		fn("chr", (in, a) -> {
 			count("chr", a, 1, 1);
@@ -625,7 +626,7 @@ final class Builtins {
 			noKw("sum", kw, "start");
 		count("sum", a, 1, 2);
 		Object acc = a.length > 1 ? a[1] : kw != null && kw.containsKey("start") ? kw.get("start") : Integer.valueOf(0);
-		if (acc instanceof String)
+		if (PyStr.is(acc))
 			throw PyOps.err(Types.TYPE_ERROR, "sum() can't sum strings [use ''.join(seq) instead]");
 		PyIter it = PyOps.getIter(a[0]);
 		for (Object x = it.next(); x != null; x = it.next()) {

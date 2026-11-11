@@ -19,9 +19,9 @@ final class JsonLib {
 		final PyModule m = new PyModule("json");
 		m.put("loads", (in, a) -> {
 			one("loads", a);
-			if (a[0] instanceof String == false)
+			if (PyStr.is(a[0]) == false)
 				throw PyOps.err(Types.TYPE_ERROR, "the JSON object must be str, not '" + PyOps.typeName(a[0]) + "'");
-			return new Parser((String) a[0]).parse();
+			return new Parser(PyStr.text(a[0])).parse();
 		});
 		m.put("dumps", (in, a) -> {
 			one("dumps", a);
@@ -42,8 +42,8 @@ final class JsonLib {
 	private static void dump(Object o, StringBuilder sb, int depth) {
 		if (depth > MAX_DEPTH)
 			throw PyOps.err(Types.RECURSION_ERROR, "maximum recursion depth exceeded while encoding a JSON object");
-		if (o instanceof String) {
-			string((String) o, sb);
+		if (PyStr.is(o)) {
+			string(PyStr.text(o), sb);
 		} else if (o instanceof Boolean) {
 			sb.append(((Boolean) o).booleanValue() ? "true" : "false");
 		} else if (o instanceof Integer) {
@@ -85,8 +85,8 @@ final class JsonLib {
 
 	/** A dict key as JSON wants it: always a string, as json.dumps converts it. */
 	private static String key(Object k) {
-		if (k instanceof String)
-			return (String) k;
+		if (PyStr.is(k))
+			return PyStr.text(k);
 		if (k instanceof Boolean)
 			return ((Boolean) k).booleanValue() ? "true" : "false";
 		if (k instanceof Integer)

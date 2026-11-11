@@ -10,13 +10,13 @@ final class Methods {
 	private Methods() {
 	}
 
-	private static final Map<String, Builtin> STR = strMethods();
+	private static final Map<String, Builtin> STR = forStr(strMethods());
 	private static final Map<String, Builtin> LIST = listMethods();
 	private static final Map<String, Builtin> DICT = dictMethods();
 	private static final Map<String, Builtin> TUPLE = tupleMethods();
 
 	static Builtin lookup(Object o, String name) {
-		if (o instanceof String)
+		if (PyStr.is(o))
 			return STR.get(name);
 		if (o instanceof PyList)
 			return LIST.get(name);
@@ -33,6 +33,51 @@ final class Methods {
 
 	private static void defKw(Map<String, Builtin> table, String name, Builtin.Fn fn, Builtin.KwFn kfn) {
 		table.put(name, new Builtin(name, fn, kfn));
+	}
+
+	/** The methods of str, each one wrapped by {@link #strFn} or {@link #strKwFn}. */
+	private static Map<String, Builtin> forStr(Map<String, Builtin> table) {
+		for (Map.Entry<String, Builtin> e : table.entrySet()) {
+			final Builtin b = e.getValue();
+			e.setValue(new Builtin(b.name, strFn(b.fn), b.kwFn == null ? null : strKwFn(b.kwFn)));
+		}
+		return table;
+	}
+
+	/**
+	 * A method of str, for a receiver and arguments that are PyStr or String:
+	 * the body gets the receiver as it is (see {@link #self}) and the arguments
+	 * as Strings, and the result is a PyStr if the receiver is.
+	 */
+	private static Builtin.Fn strFn(Builtin.Fn fn) {
+		return (in, a) -> {
+			final boolean obj = a.length > 0 && a[0] instanceof PyStr;
+			final Object r = fn.call(in, PyStr.unwrapArgs(a, 1));
+			return obj ? PyStr.wrap(r) : r;
+		};
+	}
+
+	/** The receiver of a method of str. */
+	private static PyStr self(Object[] a) {
+		return PyStr.from(a[0]);
+	}
+
+	private static Builtin.KwFn strKwFn(Builtin.KwFn fn) {
+		return (in, a, kw) -> {
+			final boolean obj = a.length > 0 && a[0] instanceof PyStr;
+			Map<String, Object> k = kw;
+			if (kw != null)
+				for (Map.Entry<String, Object> e : kw.entrySet())
+					if (e.getValue() instanceof PyStr) {
+						k = new java.util.LinkedHashMap<String, Object>(kw);
+						for (Map.Entry<String, Object> f : k.entrySet())
+							if (f.getValue() instanceof PyStr)
+								f.setValue(((PyStr) f.getValue()).s);
+						break;
+					}
+			final Object r = fn.call(in, PyStr.unwrapArgs(a, 1), k);
+			return obj ? PyStr.wrap(r) : r;
+		};
 	}
 
 	/** Checks the number of arguments, not counting the receiver. */
@@ -58,9 +103,9 @@ final class Methods {
 	}
 
 	private static String str(Object[] a, int i, String method) {
-		if (!(a[i] instanceof String))
+		if (PyStr.is(a[i]) == false)
 			throw PyOps.err(Types.TYPE_ERROR, method + "() argument must be str, not " + PyOps.typeName(a[i]));
-		return (String) a[i];
+		return PyStr.text(a[i]);
 	}
 
 	static boolean isSpace(int c) {
@@ -91,14 +136,15 @@ final class Methods {
 	}
 
 	/** Index in code points of sub in s[start:end], or -1. */
-	private static int find(String s, String sub, int start, int end, boolean last) {
-		int len = PyStr.length(s);
+	private static int find(PyStr self, String sub, int start, int end, boolean last) {
+		final String s = self.s;
+		int len = self.length();
 		if (start > len)
 			return -1;
 		if (end < start)
 			return -1;
-		int so = PyStr.offset(s, start);
-		int eo = PyStr.offset(s, end);
+		int so = self.offset(start);
+		int eo = self.offset(end);
 		int r;
 		if (last) {
 			r = eo - sub.length() < so ? -1 : s.lastIndexOf(sub, eo - sub.length());
@@ -109,7 +155,7 @@ final class Methods {
 			if (r >= 0 && r + sub.length() > eo)
 				r = -1;
 		}
-		return r < 0 ? -1 : PyStr.cpIndexOf(s, r);
+		return r < 0 ? -1 : self.cpIndexOf(r);
 	}
 
 	private static String stripWith(String s, String chars, boolean left, boolean right) {
@@ -137,7 +183,7 @@ final class Methods {
 		return (in, a) -> {
 			need(a, 0, 1, name);
 			String chars = a.length > 1 && a[1] != PyNone.NONE ? str(a, 1, name) : null;
-			return stripWith((String) a[0], chars, left, right);
+			return stripWith(self(a).s, chars, left, right);
 		};
 	}
 
@@ -225,11 +271,12 @@ final class Methods {
 		return out;
 	}
 
-	private static String pad(String s, int width, String fill, int mode) {
-		int len = PyStr.length(s);
+	private static String pad(PyStr self, int width, String fill, int mode) {
+		final String s = self.s;
+		int len = self.length();
 		if (width <= len)
 			return s;
-		if (PyStr.length(fill) != 1)
+		if (fill.codePointCount(0, fill.length()) != 1)
 			throw PyOps.err(Types.TYPE_ERROR, "The fill character must be exactly one character long");
 		if (width > PyOps.MAX_STRING)
 			throw PyOps.err(Types.MEMORY_ERROR, "string too large");
@@ -248,14 +295,14 @@ final class Methods {
 		return (in, a) -> {
 			need(a, 1, 2, name);
 			String fill = a.length > 2 ? str(a, 2, name) : " ";
-			return pad((String) a[0], PyOps.asIndex(a[1]), fill, mode);
+			return pad(self(a), PyOps.asIndex(a[1]), fill, mode);
 		};
 	}
 
 	private static Builtin.Fn allChars(final String name, final int kind) {
 		return (in, a) -> {
 			need(a, 0, 0, name);
-			String s = (String) a[0];
+			String s = self(a).s;
 			if (s.isEmpty())
 				return Boolean.FALSE;
 			boolean cased = false;
@@ -299,21 +346,21 @@ final class Methods {
 
 	private static Object affix(Object[] a, boolean prefix, String name) {
 		need(a, 1, 3, name);
-		String s = (String) a[0];
-		int len = PyStr.length(s);
+		final PyStr self = self(a);
+		int len = self.length();
 		int[] w = window(a, 2, len);
 		if (w[0] > len)
 			return Boolean.FALSE;
-		String sub = s.substring(PyStr.offset(s, w[0]), PyStr.offset(s, Math.max(w[0], w[1])));
+		String sub = self.s.substring(self.offset(w[0]), self.offset(Math.max(w[0], w[1])));
 		Object p = a[1];
 		if (p instanceof String)
 			return Boolean.valueOf(prefix ? sub.startsWith((String) p) : sub.endsWith((String) p));
 		if (p instanceof PyTuple) {
 			for (Object o : ((PyTuple) p).items) {
-				if (!(o instanceof String))
+				if (PyStr.is(o) == false)
 					throw PyOps.err(Types.TYPE_ERROR, name + " first arg must be str or a tuple of str, not "
 							+ PyOps.typeName(o));
-				if (prefix ? sub.startsWith((String) o) : sub.endsWith((String) o))
+				if (prefix ? sub.startsWith(PyStr.text(o)) : sub.endsWith(PyStr.text(o)))
 					return Boolean.TRUE;
 			}
 			return Boolean.FALSE;
@@ -360,15 +407,15 @@ final class Methods {
 		final Map<String, Builtin> table = new HashMap<String, Builtin>();
 		def(table, "upper", (in, a) -> {
 			need(a, 0, 0, "upper");
-			return ((String) a[0]).toUpperCase(Locale.ROOT);
+			return (self(a).s).toUpperCase(Locale.ROOT);
 		});
 		def(table, "lower", (in, a) -> {
 			need(a, 0, 0, "lower");
-			return ((String) a[0]).toLowerCase(Locale.ROOT);
+			return (self(a).s).toLowerCase(Locale.ROOT);
 		});
 		def(table, "title", (in, a) -> {
 			need(a, 0, 0, "title");
-			String s = (String) a[0];
+			String s = self(a).s;
 			StringBuilder sb = new StringBuilder();
 			boolean prev = false;
 			for (int i = 0; i < s.length();) {
@@ -382,7 +429,7 @@ final class Methods {
 		});
 		def(table, "capitalize", (in, a) -> {
 			need(a, 0, 0, "capitalize");
-			String s = (String) a[0];
+			String s = self(a).s;
 			if (s.isEmpty())
 				return s;
 			int n = Character.charCount(s.codePointAt(0));
@@ -391,7 +438,7 @@ final class Methods {
 		});
 		def(table, "swapcase", (in, a) -> {
 			need(a, 0, 0, "swapcase");
-			String s = (String) a[0];
+			String s = self(a).s;
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < s.length();) {
 				int cp = s.codePointAt(i);
@@ -405,7 +452,7 @@ final class Methods {
 			final String nm = right ? "rpartition" : "partition";
 			def(table, nm, (in, a) -> {
 				need(a, 1, 1, nm);
-				String s = (String) a[0];
+				String s = self(a).s;
 				String sep = str(a, 1, nm);
 				if (sep.isEmpty())
 					throw PyOps.err(Types.VALUE_ERROR, "empty separator");
@@ -417,12 +464,12 @@ final class Methods {
 		}
 		def(table, "removeprefix", (in, a) -> {
 			need(a, 1, 1, "removeprefix");
-			String s = (String) a[0], p = str(a, 1, "removeprefix");
+			String s = self(a).s, p = str(a, 1, "removeprefix");
 			return s.startsWith(p) ? s.substring(p.length()) : s;
 		});
 		def(table, "removesuffix", (in, a) -> {
 			need(a, 1, 1, "removesuffix");
-			String s = (String) a[0], p = str(a, 1, "removesuffix");
+			String s = self(a).s, p = str(a, 1, "removesuffix");
 			return !p.isEmpty() && s.endsWith(p) ? s.substring(0, s.length() - p.length()) : s;
 		});
 		def(table, "strip", strip(true, true, "strip"));
@@ -430,35 +477,35 @@ final class Methods {
 		def(table, "rstrip", strip(false, true, "rstrip"));
 		defKw(table, "split", (in, a) -> {
 			need(a, 0, 2, "split");
-			return split((String) a[0], a.length > 1 ? a[1] : PyNone.NONE, a.length > 2 ? PyOps.asIndex(a[2]) : -1, false);
+			return split(self(a).s, a.length > 1 ? a[1] : PyNone.NONE, a.length > 2 ? PyOps.asIndex(a[2]) : -1, false);
 		}, (in, a, kw) -> {
 			noKw(kw, "split", "sep", "maxsplit");
 			Object sep = a.length > 1 ? a[1] : kw.containsKey("sep") ? kw.get("sep") : PyNone.NONE;
 			int max = a.length > 2 ? PyOps.asIndex(a[2]) : kw.containsKey("maxsplit") ? PyOps.asIndex(kw.get("maxsplit")) : -1;
-			return split((String) a[0], sep, max, false);
+			return split(self(a).s, sep, max, false);
 		});
 		defKw(table, "rsplit", (in, a) -> {
 			need(a, 0, 2, "rsplit");
-			return split((String) a[0], a.length > 1 ? a[1] : PyNone.NONE, a.length > 2 ? PyOps.asIndex(a[2]) : -1, true);
+			return split(self(a).s, a.length > 1 ? a[1] : PyNone.NONE, a.length > 2 ? PyOps.asIndex(a[2]) : -1, true);
 		}, (in, a, kw) -> {
 			noKw(kw, "rsplit", "sep", "maxsplit");
 			Object sep = a.length > 1 ? a[1] : kw.containsKey("sep") ? kw.get("sep") : PyNone.NONE;
 			int max = a.length > 2 ? PyOps.asIndex(a[2]) : kw.containsKey("maxsplit") ? PyOps.asIndex(kw.get("maxsplit")) : -1;
-			return split((String) a[0], sep, max, true);
+			return split(self(a).s, sep, max, true);
 		});
 		def(table, "join", (in, a) -> {
 			need(a, 1, 1, "join");
-			String sep = (String) a[0];
+			String sep = self(a).s;
 			ArrayList<Object> items = PyOps.toArrayList(a[1]);
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < items.size(); i++) {
 				Object o = items.get(i);
-				if (!(o instanceof String))
+				if (PyStr.is(o) == false)
 					throw PyOps.err(Types.TYPE_ERROR, "sequence item " + i + ": expected str instance, "
 							+ PyOps.typeName(o) + " found");
 				if (i > 0)
 					sb.append(sep);
-				sb.append((String) o);
+				sb.append(PyStr.text(o));
 				if (sb.length() > PyOps.MAX_STRING)
 					throw PyOps.err(Types.MEMORY_ERROR, "string too large");
 			}
@@ -466,7 +513,7 @@ final class Methods {
 		});
 		def(table, "replace", (in, a) -> {
 			need(a, 2, 3, "replace");
-			return replace((String) a[0], str(a, 1, "replace"), str(a, 2, "replace"),
+			return replace(self(a).s, str(a, 1, "replace"), str(a, 2, "replace"),
 					a.length > 3 ? PyOps.asIndex(a[3]) : -1);
 		});
 		for (final String nm : new String[] { "find", "rfind", "index", "rindex" }) {
@@ -474,9 +521,9 @@ final class Methods {
 			final boolean raise = nm.endsWith("index");
 			def(table, nm, (in, a) -> {
 				need(a, 1, 3, nm);
-				String s = (String) a[0];
-				int[] w = window(a, 2, PyStr.length(s));
-				int r = find(s, str(a, 1, nm), w[0], w[1], last);
+				PyStr self = self(a);
+				int[] w = window(a, 2, self.length());
+				int r = find(self, str(a, 1, nm), w[0], w[1], last);
 				if (r < 0 && raise)
 					throw PyOps.err(Types.VALUE_ERROR, "substring not found");
 				return Integer.valueOf(r);
@@ -484,15 +531,15 @@ final class Methods {
 		}
 		def(table, "count", (in, a) -> {
 			need(a, 1, 3, "count");
-			String s = (String) a[0];
+			PyStr self = self(a);
 			String sub = str(a, 1, "count");
-			int len = PyStr.length(s);
+			int len = self.length();
 			int[] w = window(a, 2, len);
 			if (w[0] > len || w[1] < w[0])
 				return Integer.valueOf(0);
-			String part = s.substring(PyStr.offset(s, w[0]), PyStr.offset(s, w[1]));
+			String part = self.s.substring(self.offset(w[0]), self.offset(w[1]));
 			if (sub.isEmpty())
-				return Integer.valueOf(PyStr.length(part) + 1);
+				return Integer.valueOf(part.codePointCount(0, part.length()) + 1);
 			int n = 0;
 			for (int i = part.indexOf(sub); i >= 0; i = part.indexOf(sub, i + sub.length()))
 				n++;
@@ -511,9 +558,10 @@ final class Methods {
 		def(table, "center", padder(2, "center"));
 		def(table, "zfill", (in, a) -> {
 			need(a, 1, 1, "zfill");
-			String s = (String) a[0];
+			PyStr self = self(a);
+			String s = self.s;
 			int width = PyOps.asIndex(a[1]);
-			int len = PyStr.length(s);
+			int len = self.length();
 			if (width <= len)
 				return s;
 			if (width > PyOps.MAX_STRING)
@@ -529,14 +577,14 @@ final class Methods {
 			sb.append(s, start, s.length());
 			return sb.toString();
 		});
-		defKw(table, "splitlines", (in, a) -> splitlines((String) a[0], a.length > 1 && PyOps.isTrue(a[1])),
+		defKw(table, "splitlines", (in, a) -> splitlines(self(a).s, a.length > 1 && PyOps.isTrue(a[1])),
 				(in, a, kw) -> {
 					noKw(kw, "splitlines", "keepends");
-					return splitlines((String) a[0], a.length > 1 ? PyOps.isTrue(a[1])
+					return splitlines(self(a).s, a.length > 1 ? PyOps.isTrue(a[1])
 							: kw.containsKey("keepends") && PyOps.isTrue(kw.get("keepends")));
 				});
-		defKw(table, "format", (in, a) -> Fmt.strFormat((String) a[0], a, 1, null),
-				(in, a, kw) -> Fmt.strFormat((String) a[0], a, 1, kw));
+		defKw(table, "format", (in, a) -> Fmt.strFormat(self(a).s, a, 1, null),
+				(in, a, kw) -> Fmt.strFormat(self(a).s, a, 1, kw));
 		return table;
 	}
 

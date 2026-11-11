@@ -48,19 +48,33 @@ public final class Builtin {
 		return b;
 	}
 
+	/** The result of a call: a String a function gives is a str of the program, a PyStr. */
+	private static Object result(Object r) {
+		return r instanceof String ? PyStr.of((String) r) : r;
+	}
+
 	Object call(Interp in, Object[] args) {
-		return fn.call(in, args);
+		return result(fn.call(in, args));
 	}
 
 	Object callKw(Interp in, Object[] args, Map<String, Object> kw) {
 		if (kwFn == null)
 			throw PyOps.err(Types.TYPE_ERROR, name + "() takes no keyword arguments");
-		return kwFn.call(in, args, kw);
+		return result(kwFn.call(in, args, kw));
+	}
+
+	/**
+	 * A function written by the host: the str it is given are Strings, whatever
+	 * form they have inside the interpreter (a str inside a list or a dict is not
+	 * converted).
+	 */
+	static Fn forHost(Fn body) {
+		return (in, a) -> body.call(in, PyStr.unwrapArgs(a));
 	}
 
 	/** A function written in Java, to be given to Python by the host (a decorator, for instance). */
 	public static Builtin of(String name, Fn fn) {
-		return new Builtin(name, fn);
+		return new Builtin(name, forHost(fn));
 	}
 
 	/** The Python value {@code None}, for a function that returns nothing. */

@@ -154,7 +154,8 @@ final class CodeGen {
 		Integer i = constIndex.get(k);
 		if (i == null) {
 			i = Integer.valueOf(consts.size());
-			consts.add(c);
+			// a str constant is a value of the program: a PyStr
+			consts.add(c instanceof String ? PyStr.of((String) c) : c);
 			constIndex.put(k, i);
 		}
 		return i.intValue();

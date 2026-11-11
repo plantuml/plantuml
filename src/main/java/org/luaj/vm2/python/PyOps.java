@@ -23,7 +23,7 @@ final class PyOps {
 	static PyType typeOf(Object o) {
 		if (o instanceof Integer)
 			return Types.INT;
-		if (o instanceof String)
+		if (PyStr.is(o))
 			return Types.STR;
 		if (o instanceof Double)
 			return Types.FLOAT;
@@ -73,8 +73,8 @@ final class PyOps {
 			return ((Integer) v).intValue() != 0;
 		if (v == PyNone.NONE)
 			return false;
-		if (v instanceof String)
-			return !((String) v).isEmpty();
+		if (PyStr.is(v))
+			return !PyStr.text(v).isEmpty();
 		if (v instanceof Double)
 			return ((Double) v).doubleValue() != 0.0;
 		if (v instanceof PyList)
@@ -237,19 +237,19 @@ final class PyOps {
 				}
 				return PyInt.binary(op, asInt(a), asInt(b));
 			}
-		} else if (a instanceof String) {
-			if (op == Op.BIN_ADD && b instanceof String) {
-				String x = (String) a, y = (String) b;
+		} else if (PyStr.is(a)) {
+			if (op == Op.BIN_ADD && PyStr.is(b)) {
+				String x = PyStr.text(a), y = PyStr.text(b);
 				if ((long) x.length() + y.length() > MAX_STRING)
 					throw err(Types.MEMORY_ERROR, "string too large");
-				return x.concat(y);
+				return PyStr.like(a instanceof PyStr ? a : b, x.concat(y));
 			}
 			if (op == Op.BIN_MUL && isIntLike(b))
-				return repeatString((String) a, asInt(b));
+				return PyStr.like(a, repeatString(PyStr.text(a), asInt(b)));
 			if (op == Op.BIN_MOD)
-				return Fmt.percent((String) a, b);
-		} else if (b instanceof String && op == Op.BIN_MUL && isIntLike(a)) {
-			return repeatString((String) b, asInt(a));
+				return PyStr.like(a, Fmt.percent(PyStr.text(a), b));
+		} else if (PyStr.is(b) && op == Op.BIN_MUL && isIntLike(a)) {
+			return PyStr.like(b, repeatString(PyStr.text(b), asInt(a)));
 		} else if (a instanceof PyList) {
 			if (op == Op.BIN_ADD && b instanceof PyList) {
 				ArrayList<Object> x = ((PyList) a).items, y = ((PyList) b).items;
@@ -391,8 +391,8 @@ final class PyOps {
 				return asDouble(a) == asDouble(b);
 			return asInt(a) == asInt(b);
 		}
-		if (a instanceof String)
-			return b instanceof String && a.equals(b);
+		if (PyStr.is(a))
+			return PyStr.is(b) && PyStr.text(a).equals(PyStr.text(b));
 		if (a instanceof PyList) {
 			if (!(b instanceof PyList))
 				return false;
@@ -535,8 +535,8 @@ final class PyOps {
 			int x = asInt(a), y = asInt(b);
 			return test(op, x < y ? -1 : x > y ? 1 : 0);
 		}
-		if (a instanceof String && b instanceof String)
-			return test(op, compareStrings((String) a, (String) b));
+		if (PyStr.is(a) && PyStr.is(b))
+			return test(op, compareStrings(PyStr.text(a), PyStr.text(b)));
 		if (a instanceof PyList && b instanceof PyList)
 			return seqCompare(op, ((PyList) a).items.toArray(), ((PyList) b).items.toArray(), depth);
 		if (a instanceof PyTuple && b instanceof PyTuple)
@@ -593,8 +593,8 @@ final class PyOps {
 	static int order(Object a, Object b) {
 		if (a instanceof Integer && b instanceof Integer)
 			return Integer.compare(((Integer) a).intValue(), ((Integer) b).intValue());
-		if (a instanceof String && b instanceof String)
-			return compareStrings((String) a, (String) b);
+		if (PyStr.is(a) && PyStr.is(b))
+			return compareStrings(PyStr.text(a), PyStr.text(b));
 		if (compareBool(Op.CMP_LT, a, b, 0))
 			return -1;
 		if (compareBool(Op.CMP_LT, b, a, 0))
@@ -603,11 +603,11 @@ final class PyOps {
 	}
 
 	static boolean contains(Object container, Object item) {
-		if (container instanceof String) {
-			if (!(item instanceof String))
+		if (PyStr.is(container)) {
+			if (PyStr.is(item) == false)
 				throw err(Types.TYPE_ERROR,
 						"'in <string>' requires string as left operand, not " + typeName(item));
-			return ((String) container).contains((String) item);
+			return PyStr.text(container).contains(PyStr.text(item));
 		}
 		if (container instanceof PyList) {
 			ArrayList<Object> l = ((PyList) container).items;
@@ -723,8 +723,10 @@ final class PyOps {
 				throw new PyError(new PyException(Types.KEY_ERROR, new Object[] { idx }));
 			return v;
 		}
+		if (o instanceof PyStr)
+			return ((PyStr) o).getitem(idx);
 		if (o instanceof String)
-			return PyStr.getitem((String) o, idx);
+			return PyStr.of((String) o).getitem(idx);
 		if (o instanceof PyTuple) {
 			Object[] t = ((PyTuple) o).items;
 			if (idx instanceof PySlice) {
@@ -819,8 +821,10 @@ final class PyOps {
 	}
 
 	static int len(Object o) {
+		if (o instanceof PyStr)
+			return ((PyStr) o).length();
 		if (o instanceof String)
-			return PyStr.length((String) o);
+			return PyStr.of((String) o).length();
 		if (o instanceof PyList)
 			return ((PyList) o).items.size();
 		if (o instanceof PyTuple)
@@ -838,7 +842,7 @@ final class PyOps {
 
 	/** True for what {@link #getIter} accepts. */
 	static boolean isIterable(Object o) {
-		return o instanceof PyList || o instanceof PyTuple || o instanceof String || o instanceof PyRange
+		return o instanceof PyList || o instanceof PyTuple || PyStr.is(o) || o instanceof PyRange
 				|| o instanceof PyDict || o instanceof PyView || o instanceof PyIter;
 	}
 
@@ -847,6 +851,8 @@ final class PyOps {
 			return new PyIter.ListIter((PyList) o);
 		if (o instanceof PyTuple)
 			return new PyIter.ArrayIter(((PyTuple) o).items);
+		if (o instanceof PyStr)
+			return new PyIter.StrIter(((PyStr) o).s, true);
 		if (o instanceof String)
 			return new PyIter.StrIter((String) o);
 		if (o instanceof PyRange)
@@ -997,8 +1003,8 @@ final class PyOps {
 	private static void repr(Object o, StringBuilder sb, int depth) {
 		if (depth > MAX_NESTING)
 			throw err(Types.RECURSION_ERROR, "maximum recursion depth exceeded while getting the repr of an object");
-		if (o instanceof String) {
-			sb.append(Fmt.reprStr((String) o));
+		if (PyStr.is(o)) {
+			sb.append(Fmt.reprStr(PyStr.text(o)));
 		} else if (o instanceof Integer) {
 			sb.append(((Integer) o).intValue());
 		} else if (o instanceof Double) {
@@ -1104,8 +1110,8 @@ final class PyOps {
 	}
 
 	static String str(Object o) {
-		if (o instanceof String)
-			return (String) o;
+		if (PyStr.is(o))
+			return PyStr.text(o);
 		if (o instanceof PyException)
 			return excText((PyException) o);
 		if (o instanceof PyInstance) {
@@ -1127,9 +1133,9 @@ final class PyOps {
 		if (fn == null)
 			return null;
 		final Object result = o.type.interp.call(fn, o);
-		if (result instanceof String == false)
+		if (PyStr.is(result) == false)
 			throw err(Types.TYPE_ERROR, method + " returned non-string (type " + typeName(result) + ")");
-		return (String) result;
+		return PyStr.text(result);
 	}
 
 	static String excText(PyException e) {
@@ -1171,7 +1177,7 @@ final class PyOps {
 		if (o instanceof PyType && ((PyType) o).isClass()) {
 			PyType t = (PyType) o;
 			if (name.equals("__qualname__"))
-				return t.qualname;
+				return PyStr.of(t.qualname);
 			if (name.equals("__name__") == false) {
 				Object v = t.lookup(name);
 				if (v == null)
@@ -1181,13 +1187,13 @@ final class PyOps {
 		}
 		if (name.equals("__name__")) {
 			if (o instanceof PyType)
-				return ((PyType) o).name;
+				return PyStr.of(((PyType) o).name);
 			if (o instanceof PyFunction)
-				return ((PyFunction) o).code.name;
+				return PyStr.of(((PyFunction) o).code.name);
 			if (o instanceof Builtin)
-				return ((Builtin) o).name;
+				return PyStr.of(((Builtin) o).name);
 			if (o instanceof BoundMethod)
-				return ((BoundMethod) o).name();
+				return PyStr.of(((BoundMethod) o).name());
 		}
 		if (o instanceof PyType && name.equals("__init__")) {
 			// Exception.__init__(self, ...) or object.__init__(self), called by a class

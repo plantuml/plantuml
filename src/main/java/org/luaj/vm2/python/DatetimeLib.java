@@ -164,9 +164,9 @@ final class DatetimeLib {
 	}
 
 	private static String strArg(Object o, String what) {
-		if (o instanceof String == false)
+		if (PyStr.is(o) == false)
 			throw PyOps.err(Types.TYPE_ERROR, what + " must be str, not " + PyOps.typeName(o));
-		return (String) o;
+		return PyStr.text(o);
 	}
 
 	/** Binds the positional (from index from) and the keyword arguments to the names, with defaults. */

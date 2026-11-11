@@ -16,13 +16,13 @@ public final class PyModule {
 
 	/** Adds a function written in Java, callable as {@code name.fn(...)} from Python. */
 	public PyModule put(String fn, Builtin.Fn body) {
-		members.put(fn, new Builtin(fn, body));
+		members.put(fn, new Builtin(fn, Builtin.forHost(body)));
 		return this;
 	}
 
 	/** Adds a constant string, readable as {@code name.constant}. */
 	public PyModule putString(String constant, String value) {
-		members.put(constant, value);
+		members.put(constant, PyStr.of(value));
 		return this;
 	}
 
@@ -36,7 +36,7 @@ public final class PyModule {
 	public static Object stringDict(Map<String, String> values) {
 		final PyDict dict = new PyDict();
 		for (Map.Entry<String, String> entry : values.entrySet())
-			dict.put(entry.getKey(), entry.getValue());
+			dict.put(entry.getKey(), PyStr.of(entry.getValue()));
 		return dict;
 	}
 
@@ -52,7 +52,7 @@ public final class PyModule {
 	}
 
 	private static Object plain(Object value) {
-		if (value instanceof String)
+		if (PyStr.is(value))
 			return value;
 		if (value instanceof Map) {
 			final PyDict dict = new PyDict();

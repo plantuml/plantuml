@@ -40,7 +40,7 @@ public final class Interp {
 	public Interp(Output out) {
 		this.out = out;
 		Builtins.install(this);
-		globals.put("__name__", "__main__");
+		globals.put("__name__", PyStr.of("__main__"));
 	}
 
 	/** Makes a module importable ({@code import name}). Done by the host, before running anything. */
@@ -662,13 +662,13 @@ public final class Interp {
 					case Op.BUILD_STRING: {
 						StringBuilder sb = new StringBuilder();
 						for (int i = sp - arg; i < sp; i++) {
-							sb.append((String) f[i]);
+							sb.append(PyStr.text(f[i]));
 							f[i] = null;
 							if (sb.length() > PyOps.MAX_STRING)
 								throw PyOps.err(Types.MEMORY_ERROR, "string too large");
 						}
 						sp -= arg;
-						f[sp++] = sb.toString();
+						f[sp++] = PyStr.of(sb.toString());
 						break;
 					}
 					case Op.LIST_APPEND: {
@@ -711,7 +711,7 @@ public final class Interp {
 									"argument after ** must be a mapping, not " + PyOps.typeName(m));
 						PyDict d = (PyDict) f[sp - arg];
 						for (PyDict.Entry e : ((PyDict) m).map.values()) {
-							if (!(e.key instanceof String))
+							if (PyStr.is(e.key) == false)
 								throw PyOps.err(Types.TYPE_ERROR, "keywords must be strings");
 							if (d.containsKey(e.key))
 								throw PyOps.err(Types.TYPE_ERROR,
@@ -816,7 +816,7 @@ public final class Interp {
 						String[] kwn = new String[k];
 						Object[] kwv = new Object[k];
 						for (int i = 0; i < k; i++) {
-							kwn[i] = (String) names2.items[i];
+							kwn[i] = PyStr.text(names2.items[i]);
 							kwv[i] = f[base + npos + i];
 						}
 						Object r = callGeneric(f[base - 1], f, base, npos, kwn, kwv);
@@ -843,7 +843,7 @@ public final class Interp {
 							kwv = new Object[kwd.size()];
 							int i = 0;
 							for (PyDict.Entry e : kwd.map.values()) {
-								kwn[i] = (String) e.key;
+								kwn[i] = PyStr.text(e.key);
 								kwv[i++] = e.value;
 							}
 						}
@@ -868,7 +868,7 @@ public final class Interp {
 							f[sp] = null;
 							kwdef = new HashMap<String, Object>();
 							for (PyDict.Entry e : d.map.values())
-								kwdef.put((String) e.key, e.value);
+								kwdef.put(PyStr.text(e.key), e.value);
 						}
 						if ((arg & 1) != 0) {
 							defaults = ((PyTuple) f[--sp]).items;
@@ -901,7 +901,7 @@ public final class Interp {
 					case Op.FORMAT_VALUE: {
 						String spec = "";
 						if ((arg & 4) != 0) {
-							spec = (String) f[--sp];
+							spec = PyStr.text(f[--sp]);
 							f[sp] = null;
 						}
 						Object v = f[sp - 1];
@@ -918,7 +918,7 @@ public final class Interp {
 						default:
 							break;
 						}
-						f[sp - 1] = spec.isEmpty() ? PyOps.str(v) : Fmt.format(v, spec);
+						f[sp - 1] = PyStr.of(spec.isEmpty() ? PyOps.str(v) : Fmt.format(v, spec));
 						break;
 					}
 					default:

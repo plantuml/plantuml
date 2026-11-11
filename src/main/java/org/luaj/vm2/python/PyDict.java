@@ -39,6 +39,10 @@ final class PyDict {
 	 * overflow the stack.
 	 */
 	private static Object norm(Object k, int depth) {
+		// a PyStr and a String of the same characters are the same key; the map
+		// holds the String, the entry keeps the key as it was given
+		if (k instanceof PyStr)
+			return ((PyStr) k).s;
 		if (k instanceof String || k instanceof Integer || k == PyNone.NONE)
 			return k;
 		if (k instanceof Boolean)
