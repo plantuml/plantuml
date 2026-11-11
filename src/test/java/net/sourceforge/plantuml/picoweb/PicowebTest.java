@@ -273,7 +273,7 @@ class PicowebTest {
 	@Test
 	void post_render_refuses_options_that_act_on_the_server() throws Exception {
 		for (String option : new String[] { "--config", "-config", "-I/etc/passwd", "--include", "--dot-path",
-				"-graphvizdot", "-o", "-filedir" }) {
+				"-graphvizdot", "-o" }) {
 			final HttpResponse<byte[]> resp = http_post_json("/render",
 					renderRequestJson("A -> B", "-tsvg", option, "/etc/passwd"));
 			assertStatus(resp, 400);

@@ -367,7 +367,7 @@ public class PicoWebServer implements Runnable {
 	 * The options a client of "POST /render" may give: the ones that shape the image
 	 * (format, dark mode, theme, defines, skin parameters, pragmas, charset...). All the
 	 * others - --config, -I (read a file of the server), --dot-path (runs a program),
-	 * -o, -filedir, --http-server... - act on the machine of the server and are refused:
+	 * -o, --http-server... - act on the machine of the server and are refused:
 	 * the security profile (PLANTUML_SECURITY_PROFILE) does not apply to them, so an
 	 * allow list is the only protection. A flag that is not in the list is refused by
 	 * default, whatever its spelling, as the check works on the flags the parser itself
@@ -375,7 +375,10 @@ public class PicoWebServer implements Runnable {
 	 */
 	private static final Set<CliFlag> ALLOWED_RENDER_FLAGS = EnumSet.of(CliFlag.FORMAT, CliFlag.DARK_MODE,
 			CliFlag.DEFINE, CliFlag.DEFINE_LONG, CliFlag.SKINPARAM, CliFlag.SKINPARAM_LONG, CliFlag.PRAGMA,
-			CliFlag.PRAGMA_LONG, CliFlag.THEME, CliFlag.CHARSET, CliFlag.NO_METADATA, CliFlag.DECIMAL);
+			CliFlag.PRAGMA_LONG, CliFlag.THEME, CliFlag.CHARSET, CliFlag.NO_METADATA, CliFlag.DECIMAL,
+			// Only the base directory of the relative !include, which the security profile still
+			// judges: it gives nothing that the profile refuses.
+			CliFlag.FILE_DIR);
 
 	static void checkOptions(String[] options) throws BadRequest400 {
 		final CliParsed parsed;
