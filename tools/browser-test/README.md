@@ -4,6 +4,31 @@ Functional checks for the PlantUML browser (TeaVM) engine, run in headless Chrom
 real build. Unlike `perf-bench`, which measures speed and never fails a build, these assert
 behaviour and exit non-zero when it is wrong.
 
+## Running it
+
+### Requirement: `plantuml.js` and `playwright`
+```
+gradle :plantuml-mit:npmPackage -Pci
+cd tools/browser-test && npm ci && npx playwright install --with-deps --only-shell chromium
+```
+
+### Run checks
+To launch individually:
+```
+node check-<name>.js target=../../license-variants/plantuml-mit/build/npm-plantuml
+```
+or to run all checks:
+```
+node run-all-checks.js target=../../license-variants/plantuml-mit/build/npm-plantuml
+```
+
+`target` also accepts a path to the engine `.js` itself, and any directory holding a published
+package works, so a release can be checked with `npm pack @plantuml/core && node check-themes.js
+target=package`.
+
+Running it against an engine built before themes were wired up fails 8 of the 12 checks, with
+every bundled theme reported as leaving the drawing unchanged.
+
 ## check-themes.js
 
 Checks that `!theme <name>` works in the browser.
@@ -136,21 +161,6 @@ file system:
 The files live in an in-memory map on the page, keyed by an absolute path the page's loader
 resolves itself, so no file system is involved and no layout engine either.
 `node check-file-loader.js target=...`.
-
-## Running it
-
-```
-gradlew :plantuml-mit:npmPackage -Pci
-cd tools/browser-test && npm ci && npx playwright install --with-deps --only-shell chromium
-node check-themes.js target=../../license-variants/plantuml-mit/build/npm-plantuml
-```
-
-`target` also accepts a path to the engine `.js` itself, and any directory holding a published
-package works, so a release can be checked with `npm pack @plantuml/core && node check-themes.js
-target=package`.
-
-Running it against an engine built before themes were wired up fails 8 of the 12 checks, with
-every bundled theme reported as leaving the drawing unchanged.
 
 ## check-viz-fallback.js
 

@@ -79,32 +79,8 @@ jobs:
           echo "## Checks" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Check themes
-        run: node tools/browser-test/check-themes.js target=license-variants/plantuml-mit/build/npm-plantuml
-
-      - name: Check background
-        run: node tools/browser-test/check-background.js target=license-variants/plantuml-mit/build/npm-plantuml
-
-      - name: Check smetana layout
-        run: node tools/browser-test/check-smetana.js target=license-variants/plantuml-mit/build/npm-plantuml
-
-      - name: Check smetana fallback when viz is missing
-        run: node tools/browser-test/check-viz-fallback.js target=license-variants/plantuml-mit/build/npm-plantuml
-
-      - name: Check viz missing
-        run: node tools/browser-test/check-viz-missing.js target=license-variants/plantuml-mit/build/npm-plantuml
-
-      - name: Check stdlib loader
-        run: node tools/browser-test/check-stdlib-loader.js target=license-variants/plantuml-mit/build/npm-plantuml
-
-      - name: Check file loader
-        run: node tools/browser-test/check-file-loader.js target=license-variants/plantuml-mit/build/npm-plantuml
-
-      - name: Check render queue
-        run: node tools/browser-test/check-render-queue.js target=license-variants/plantuml-mit/build/npm-plantuml
-
-      - name: Check resource rounds
-        run: node tools/browser-test/check-resource-rounds.js target=license-variants/plantuml-mit/build/npm-plantuml
+      - name: ▶️ Check all (run all checks)
+        run: node tools/browser-test/run-all-checks.js target=license-variants/plantuml-mit/build/npm-plantuml
 
       - name: Add Gradle title to Summary
         run: echo "## Gradle" >> "$GITHUB_STEP_SUMMARY"
