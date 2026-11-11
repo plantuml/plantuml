@@ -79,7 +79,7 @@ jobs:
           echo "## Checks" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Check all (run all checks)
+      - name: ▶️ Check all (run all checks)
         run: node tools/browser-test/run-all-checks.js target=license-variants/plantuml-mit/build/npm-plantuml
 
       - name: Add Gradle title to Summary

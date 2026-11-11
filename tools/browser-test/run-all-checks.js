@@ -20,7 +20,7 @@ if (scripts.length === 0) {
 
 const failures = [];
 for (const script of scripts) {
-	console.log(`\n::group::{${script}}`);
+	console.log(`::group::Run ${script}`);
 	const result = spawnSync(process.execPath, [path.join(__dirname, script), targetArg], {
 		cwd: __dirname,
 		stdio: 'inherit',
@@ -33,7 +33,7 @@ for (const script of scripts) {
 		console.error(`${script} failed${result.signal ? ` (signal ${result.signal})` : ` (exit ${result.status})`}.`);
 		failures.push(script);
 	}
-	console.log(`\n::endgroup::`);
+	console.log(`::endgroup::`);
 }
 
 if (failures.length > 0) {
