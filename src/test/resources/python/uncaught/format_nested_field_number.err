@@ -1,0 +1,5 @@
+# DEVIATION: CPython prints '   b' and the script ends with no error.
+error: ValueError
+line: 4
+text: Unknown format code 'b' for object of type 'str'
+trace: 4 <module>

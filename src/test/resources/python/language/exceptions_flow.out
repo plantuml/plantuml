@@ -1,0 +1,49 @@
+key
+index/value
+index/value
+arith ZeroDivisionError
+arith OverflowError
+exception
+exception
+['body', 'else', 'after'] ['body', 'handler', 'after']
+('boom', ('boom',), 'e is gone')
+20 [0, 'e0', 2, 'e2', 4, 'e4']
+caught deep
+Child 3 code 3
+Base b
+Other Plain ()  Plain()
+Other Plain ('p', 2) ('p', 2) Plain('p', 2)
+Child 9 code 9
+True True False True
+True True True
+('a', 1, [2]) ('a', 1, [2]) ValueError('a', 1, [2]) ValueError True
+('k',) 'k' KeyError('k')
+('x',) 'x'
+() '' Plain()
+('else raises', 'raised', 'KeyError', "'from else'")
+cleanup
+('reraise', 'returned', 'outer got inner')
+('raise other', 'raised', 'KeyError', "'second'")
+('zero', 'raised', 'ZeroDivisionError')
+('zero floor', 'raised', 'ZeroDivisionError')
+('zero mod', 'raised', 'ZeroDivisionError')
+('float zero', 'raised', 'ZeroDivisionError')
+('index', 'raised', 'IndexError')
+('key', 'raised', 'KeyError')
+('attr', 'raised', 'AttributeError')
+('type', 'raised', 'TypeError')
+('value', 'raised', 'ValueError')
+('name', 'raised', 'NameError')
+('call', 'raised', 'TypeError')
+('neg shift', 'raised', 'ValueError')
+('range', 'raised', 'ValueError')
+('unpack', 'raised', 'ValueError')
+('unpack2', 'raised', 'ValueError')
+('str index', 'raised', 'IndexError')
+('pop empty', 'raised', 'IndexError')
+('max empty', 'raised', 'ValueError')
+('list remove', 'raised', 'ValueError')
+('index method', 'raised', 'ValueError')
+('str to int', 'raised', 'TypeError')
+('compare', 'raised', 'TypeError')
+('hash', 'raised', 'TypeError')
