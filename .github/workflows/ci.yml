@@ -287,19 +287,21 @@ jobs:
 
 
   upload:
-    # `upload` depends on create_c_executable, which only runs on master (and is
-    # experimental): it is skipped on a tag and may fail without blocking anything,
-    # which by default would skip `upload` too. !cancelled() overrides that default;
-    # build_artifacts and jdk8 must have succeeded (their jars/poms are what the
-    # release scripts copy); and the (snapshot || release) check restricts it to a
-    # release or snapshot run.
+    # `upload` depends on create_c_executable (master only, experimental: skipped on
+    # a tag, may fail) and on create_native_image_release (tag only: skipped on a
+    # snapshot), so one of them is always skipped, which by default would skip
+    # `upload` too. !cancelled() overrides that default; build_artifacts and jdk8
+    # must have succeeded (their jars/poms are what the release scripts copy); a
+    # snapshot never waits for a native image; an official release requires the
+    # GraalVM native images to have been built successfully.
     if: |
       !cancelled()
       && needs.build_artifacts.result == 'success'
       && needs.jdk8.result == 'success'
       && (needs.workflow_config.outputs.do_snapshot_release == 'true'
-          || needs.workflow_config.outputs.do_release == 'true')
-    needs: [ workflow_config, build_artifacts, test_linux, jdk8, create_c_executable ]
+          || (needs.workflow_config.outputs.do_release == 'true'
+              && needs.create_native_image_release.result == 'success'))
+    needs: [ workflow_config, build_artifacts, test_linux, jdk8, create_c_executable, create_native_image_release ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -320,6 +322,35 @@ jobs:
         with:
           name: plantuml-jdk8-jar
           path: build/java8
+
+      # GraalVM native images: official releases only (native-image-release.yml)
+      - name: Download native image (Windows)
+        if: needs.workflow_config.outputs.do_release == 'true'
+        uses: actions/download-artifact@v8
+        with:
+          name: windows-amd64
+          path: build/native-image
+
+      - name: Download native image (Linux)
+        if: needs.workflow_config.outputs.do_release == 'true'
+        uses: actions/download-artifact@v8
+        with:
+          name: linux-amd64
+          path: build/native-image
+
+      - name: Download native image (Linux arm64)
+        if: needs.workflow_config.outputs.do_release == 'true'
+        uses: actions/download-artifact@v8
+        with:
+          name: linux-arm64
+          path: build/native-image
+
+      - name: Download native image (macOS arm64)
+        if: needs.workflow_config.outputs.do_release == 'true'
+        uses: actions/download-artifact@v8
+        with:
+          name: macos-arm64
+          path: build/native-image
 
       # Experimental executables (Java -> C with TeaVM): they must not prevent the
       # snapshot of the JARs, so a failure of their build is not fatal here
@@ -559,6 +590,14 @@ jobs:
     needs: [ workflow_config, jdk8 ]
     if: github.ref == 'refs/heads/master'
     uses: ./.github/workflows/teavm-c.yml
+
+  # GraalVM native images: official releases only. The snapshot ships the experimental
+  # TeaVM C executables instead (create_c_executable).
+  create_native_image_release:
+    needs: [ workflow_config, jdk8 ]
+    if: needs.workflow_config.outputs.do_release == 'true'
+    uses: ./.github/workflows/native-image-release.yml
+    secrets: inherit
 
   build_for_sonar:
     needs: [ workflow_config ]

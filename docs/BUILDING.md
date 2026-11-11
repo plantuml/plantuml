@@ -109,7 +109,7 @@ gradlew build -x test -x javadoc
 
 ### Building a native image
 
-The `plantuml-natif` subproject builds a GraalVM native binary of the same code as `plantuml.jar` (headless CLI). CI no longer builds it: the snapshot ships the TeaVM C executables instead (see [`src/teavm-c/README.md`](../src/teavm-c/README.md)). The subproject is kept for now.
+The `plantuml-natif` subproject builds a GraalVM native binary of the same code as `plantuml.jar` (headless CLI). CI builds it for official releases only (`native-image-release.yml`); the snapshot ships the experimental TeaVM C executables instead (see [`src/teavm-c/README.md`](../src/teavm-c/README.md)).
 
 Do not use `:plantuml-gplv2:nativeFullCompile`: the native image comes from `:plantuml-natif:nativeCompile`.
 
