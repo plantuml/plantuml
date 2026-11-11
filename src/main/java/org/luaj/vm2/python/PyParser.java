@@ -1133,7 +1133,7 @@ public final class PyParser {
 			Token.StringLit lit = (Token.StringLit) t.value;
 			if (lit.fstring) {
 				anyF = true;
-				fstringParts(lit.body, lit.raw, t, parts);
+				fstringParts(lit.body, lit.raw, t, t.line, parts);
 			} else {
 				parts.add(lit.raw ? lit.body : unescape(lit.body, t));
 			}
@@ -1163,8 +1163,12 @@ public final class PyParser {
 		return new Ast.JoinedStr(first.line, first.col, values);
 	}
 
-	/** Splits the body of an f-string into literal Strings and FormattedValue nodes. */
-	private void fstringParts(String body, boolean raw, Token t, List<Object> out) {
+	/**
+	 * Splits the body of an f-string into literal Strings and FormattedValue nodes.
+	 * {@code firstLine} is the line of the first char of the body: the expressions of
+	 * the fields are parsed with their own line, so that an error in one is reported there.
+	 */
+	private void fstringParts(String body, boolean raw, Token t, int firstLine, List<Object> out) {
 		StringBuilder lit = new StringBuilder();
 		int i = 0;
 		int len = body.length();
@@ -1177,7 +1181,7 @@ public final class PyParser {
 					continue;
 				}
 				flushLiteral(lit, raw, t, out);
-				i = replacementField(body, i + 1, raw, t, out);
+				i = replacementField(body, i + 1, raw, t, firstLine, out);
 			} else if (c == '}') {
 				if (i + 1 < len && body.charAt(i + 1) == '}') {
 					lit.append('}');
@@ -1205,7 +1209,7 @@ public final class PyParser {
 	}
 
 	/** Parses a replacement field whose expression starts at {@code i}; returns the index after '}'. */
-	private int replacementField(String body, int i, boolean raw, Token t, List<Object> out) {
+	private int replacementField(String body, int i, boolean raw, Token t, int firstLine, List<Object> out) {
 		int len = body.length();
 		int start = i;
 		int depth = 0;
@@ -1244,7 +1248,7 @@ public final class PyParser {
 		String exprText = body.substring(start, i);
 		if (exprText.trim().isEmpty())
 			throw new PySyntaxError("f-string: empty expression not allowed", t.line, t.col);
-		Ast.Expr value = subExpression(exprText, t);
+		Ast.Expr value = subExpression(exprText, t, firstLine + newlines(body, start));
 		long conversion = -1;
 		Ast.Expr spec = null;
 		if (body.charAt(i) == '!') {
@@ -1274,7 +1278,7 @@ public final class PyParser {
 			if (i >= len)
 				throw new PySyntaxError("f-string: expecting '}'", t.line, t.col);
 			List<Object> specParts = new ArrayList<Object>();
-			fstringParts(body.substring(specStart, i), raw, t, specParts);
+			fstringParts(body.substring(specStart, i), raw, t, firstLine + newlines(body, specStart), specParts);
 			List<Ast.Expr> specValues = new ArrayList<Ast.Expr>();
 			for (Object part : specParts)
 				specValues.add(part instanceof String ? new Ast.Constant(t.line, t.col, part) : (Ast.Expr) part);
@@ -1286,10 +1290,19 @@ public final class PyParser {
 		return i + 1;
 	}
 
-	private Ast.Expr subExpression(String text, Token t) {
+	/** The number of line feeds of the text before {@code end}. */
+	private static int newlines(String text, int end) {
+		int n = 0;
+		for (int i = 0; i < end; i++)
+			if (text.charAt(i) == '\n')
+				n++;
+		return n;
+	}
+
+	private Ast.Expr subExpression(String text, Token t, int line) {
 		PyParser sub;
 		try {
-			sub = new PyParser(PyLexer.tokenize("(" + text + "\n)"));
+			sub = new PyParser(PyLexer.tokenize("(" + text + "\n)", line));
 		} catch (PySyntaxError e) {
 			throw new PySyntaxError("f-string: " + e.getMessage(), t.line, t.col);
 		}

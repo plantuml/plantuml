@@ -771,12 +771,24 @@ final class Fmt {
 
 	// ------------------------------------------------------------ str.format
 
+	/**
+	 * The numbering of the fields of one call of str.format, shared with the fields nested in the
+	 * format specs: "{:>{}}" is the field 0 whose spec is the field 1, as CPython numbers them.
+	 */
+	private static final class FieldNumbering {
+		int next;
+		boolean manual;
+		boolean automatic;
+	}
+
 	static String strFormat(String fmt, Object[] args, int firstArg, java.util.Map<String, Object> kw) {
+		return strFormat(fmt, args, firstArg, kw, new FieldNumbering());
+	}
+
+	private static String strFormat(String fmt, Object[] args, int firstArg, java.util.Map<String, Object> kw,
+			FieldNumbering numbering) {
 		StringBuilder out = new StringBuilder();
 		int n = fmt.length();
-		int auto = 0;
-		boolean manual = false;
-		boolean automatic = false;
 		for (int i = 0; i < n;) {
 			char c = fmt.charAt(i++);
 			if (c == '{') {
@@ -821,21 +833,22 @@ final class Fmt {
 					conv = head.substring(bang + 1);
 					head = head.substring(0, bang);
 				}
-				if (spec.indexOf('{') >= 0)
-					spec = strFormat(spec, args, firstArg, kw);
-				Object value = resolveField(head, args, firstArg, kw, auto);
+				Object value = resolveField(head, args, firstArg, kw, numbering.next);
 				if (head.isEmpty()) {
-					if (manual)
+					if (numbering.manual)
 						throw PyOps.err(Types.VALUE_ERROR,
 								"cannot switch from manual field specification to automatic field numbering");
-					automatic = true;
-					auto++;
+					numbering.automatic = true;
+					numbering.next++;
 				} else if (isDigits(head.split("[.\\[]")[0])) {
-					if (automatic)
+					if (numbering.automatic)
 						throw PyOps.err(Types.VALUE_ERROR,
 								"cannot switch from automatic field numbering to manual field specification");
-					manual = true;
+					numbering.manual = true;
 				}
+				// the fields nested in the spec come after the field that holds them
+				if (spec.indexOf('{') >= 0)
+					spec = strFormat(spec, args, firstArg, kw, numbering);
 				if (conv != null) {
 					if (conv.equals("r"))
 						value = PyOps.repr(value);

@@ -1,5 +1,4 @@
-# DEVIATION: CPython reports line 4 (line: 4, trace: 4 <module>).
 error: ZeroDivisionError
-line: 1
+line: 3
 text: division by zero
-trace: 1 <module>
+trace: 3 <module>

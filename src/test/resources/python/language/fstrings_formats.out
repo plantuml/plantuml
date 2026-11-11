@@ -20,6 +20,8 @@ True False True True 1.0 1e+100 -0.0 1000000000 1073741824
     0   0.0  -1  -1.50 1e-07 123456789.12345679
 1 a None
 x y x
+   b| 'a'    b| n     3.14|
+x   y    z|   q p
 1 2
 1 2 3
     a b    |   c   2.50     3 ff
@@ -36,3 +38,4 @@ Hi ! 3 -2  99.5%
    1|2   |3.14
 TypeError TypeError TypeError IndexError
 KeyError ValueError ValueError ValueError
+ValueError ValueError IndexError

@@ -1,0 +1,6 @@
+error: IndexError
+line: 2
+text: list index out of range
+trace: 8 <module>
+trace: 6 main
+trace: 2 show

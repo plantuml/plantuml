@@ -37,6 +37,13 @@ final class PyLexer {
 		return new PyLexer(source).run();
 	}
 
+	/** Tokenizes a text that starts on the given line of the source, for the tokens to carry the line of the source. */
+	static List<Token> tokenize(String source, int firstLine) {
+		PyLexer lexer = new PyLexer(source);
+		lexer.line = firstLine;
+		return lexer.run();
+	}
+
 	private PySyntaxError error(String message) {
 		return new PySyntaxError(message, line, pos - lineStart);
 	}

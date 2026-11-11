@@ -32,6 +32,9 @@ print(f"{0:5} {0.0:5} {-1:3} {-1.5:6.2f} {1e-7} {123456789.123456789}")
 # str.format
 print("{} {} {}".format(1, "a", None))
 print("{0} {1} {0}".format("x", "y"))
+# a field nested in a format spec is numbered after the field that holds it
+print("{:>{}}|".format("b", 4), "{!r} {:>{}}|".format("a", "b", 4), "{} {:{}.{}f}|".format("n", 3.14159, 8, 2))
+print("{:{}} {}".format("x", 3, "y"), "{:{}{}}|".format("z", ">", 4), "{a:>{w}} {}".format("p", a="q", w=3))
 print("{a} {b}".format(a=1, b=2))
 print("{0[0]} {0[1]} {1[k]}".format([1, 2], {"k": 3}))
 print("{:>5} {:<5}| {:^5} {:.2f} {:5d} {:x}".format("a", "b", "c", 2.5, 3, 255))
@@ -59,3 +62,4 @@ def err(fn):
 
 print(err(lambda: "%d" % "a"), err(lambda: "%d %d" % (1,)), err(lambda: "%s" % (1, 2)), err(lambda: "{}".format()))
 print(err(lambda: "{a}".format(b=1)), err(lambda: "{:d}".format("a")), err(lambda: "{:z}".format(1)), err(lambda: "%z" % 1))
+print(err(lambda: "{0:{}}".format(1, 2)), err(lambda: "{:{1}}".format(1, 2)), err(lambda: "{:{}}".format(1)))
