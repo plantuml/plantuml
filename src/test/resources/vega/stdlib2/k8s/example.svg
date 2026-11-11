@@ -4,12 +4,16 @@
     <!--cluster cluster-->
     <g class="cluster" data-qualified-name="cluster" data-source-line="15" id="ent0002">
       <rect fill="#FFF" height="514" rx="12.5" ry="12.5" style="stroke:#326CE5;stroke-width:1;" width="790" x="81" y="4"/>
-      <text fill="#000" font-size="16" font-weight="700" textLength="132.5" x="409.75" y="18.444">Kubernetes Cluster</text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="81.8" x="409.75" y="18.444">Kubernetes</text>
+      <text fill="#000" font-size="16" font-weight="700" x="491.55" y="18.444"> </text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="50.7" x="491.55" y="18.444">Cluster</text>
     </g>
     <!--cluster ns-->
     <g class="cluster" data-qualified-name="cluster.ns" data-source-line="16" id="ent0003">
       <rect fill="#FFF" height="455" rx="12.5" ry="12.5" style="stroke:#FF4216;stroke-width:1;" width="758" x="97" y="47"/>
-      <text fill="#000" font-size="16" font-weight="700" textLength="64.1" x="443.95" y="61.444">Back End</text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="35.6" x="443.95" y="61.444">Back</text>
+      <text fill="#000" font-size="16" font-weight="700" x="479.55" y="61.444"> </text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="28.5" x="479.55" y="61.444">End</text>
       <text fill="#000" font-size="12" font-weight="700" textLength="70.65" x="440.675" y="74.333">[Namespace]</text>
     </g>
     <!--entity userAlias-->

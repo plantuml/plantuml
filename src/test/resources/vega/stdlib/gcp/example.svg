@@ -5,7 +5,11 @@
     <g class="cluster" data-qualified-name="Kid . Owner" data-source-line="14" id="ent0001">
       <path d="M16.5,4 L73.525,4 A3.75,3.75 0 0 1 76.025,6.5 L83.025,22 L341.5,22 A2.5,2.5 0 0 1 344,24.5 L344,166.5 A2.5,2.5 0 0 1 341.5,169 L16.5,169 A2.5,2.5 0 0 1 14,166.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="#FFF" style="stroke:#000;stroke-width:1.5;"/>
       <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="83.025" y1="22" y2="22"/>
-      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="56.025" x="18" y="15.333">Kid / Owner</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="17.4" x="18" y="15.333">Kid</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" x="35.4" y="15.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" x="35.4" y="15.333">/</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" x="38.7" y="15.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="35.325" x="38.7" y="15.333">Owner</text>
     </g>
     <!--cluster MinecraftClients-->
     <g class="cluster" data-qualified-name="MinecraftClients" data-source-line="19" id="ent0004">
@@ -17,7 +21,9 @@
     <g class="cluster" data-qualified-name="Minecraft Project" data-source-line="23" id="ent0006">
       <path d="M362.5,6.5 L450.125,6.5 A3.75,3.75 0 0 1 452.625,9 L459.625,24.5 L865.5,24.5 A2.5,2.5 0 0 1 868,27 L868,741 A2.5,2.5 0 0 1 865.5,743.5 L362.5,743.5 A2.5,2.5 0 0 1 360,741 L360,9 A2.5,2.5 0 0 1 362.5,6.5" fill="#FFF" style="stroke:#000;stroke-width:1.5;"/>
       <line style="stroke:#000;stroke-width:1.5;" x1="360" x2="459.625" y1="24.5" y2="24.5"/>
-      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="86.625" x="364" y="17.833">Minecraft Project</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="49.275" x="364" y="17.833">Minecraft</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" x="413.275" y="17.833"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="37.35" x="413.275" y="17.833">Project</text>
     </g>
     <!--entity Users-->
     <g class="entity" data-qualified-name="Kid . Owner.Users" data-source-line="15" id="ent0002">

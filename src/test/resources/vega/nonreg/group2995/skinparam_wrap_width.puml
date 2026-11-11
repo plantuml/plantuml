@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (1 entities)
+---
+@startuml
+skinparam WrapWidth 100
+
+package "Package P1 000 111 222 333 444 555 666 777 888 999" as P1 {
+  class A
+}
+@enduml

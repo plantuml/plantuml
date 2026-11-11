@@ -15,19 +15,27 @@
     <g class="cluster" data-qualified-name="cp" data-source-line="340" id="ent0001">
       <path d="M16.5,198 L85.6,198 A3.75,3.75 0 0 1 88.1,200.5 L95.1,216 L407.5,216 A2.5,2.5 0 0 1 410,218.5 L410,507.5 A2.5,2.5 0 0 1 407.5,510 L16.5,510 A2.5,2.5 0 0 1 14,507.5 L14,200.5 A2.5,2.5 0 0 1 16.5,198" fill="#FFF" filter="url(#f1gpg6svwyyirs)" style="stroke:#444;stroke-width:1.5;stroke-dasharray:8,5;"/>
       <line style="stroke:#444;stroke-width:1.5;stroke-dasharray:8,5;" x1="14" x2="95.1" y1="216" y2="216"/>
-      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="68.1" x="18" y="209.333">Control plane</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="38.7" x="18" y="209.333">Control</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" x="56.7" y="209.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="29.4" x="56.7" y="209.333">plane</text>
     </g>
     <!--cluster if-->
     <g class="cluster" data-qualified-name="if" data-source-line="340" id="ent0011">
       <path d="M432.5,198 L528.075,198 A3.75,3.75 0 0 1 530.575,200.5 L537.575,216 L833,216 A2.5,2.5 0 0 1 835.5,218.5 L835.5,507.5 A2.5,2.5 0 0 1 833,510 L432.5,510 A2.5,2.5 0 0 1 430,507.5 L430,200.5 A2.5,2.5 0 0 1 432.5,198" fill="#FFF" filter="url(#f1gpg6svwyyirs)" style="stroke:#444;stroke-width:1.5;stroke-dasharray:8,5;"/>
       <line style="stroke:#444;stroke-width:1.5;stroke-dasharray:8,5;" x1="430" x2="537.575" y1="216" y2="216"/>
-      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="94.575" x="434" y="209.333">Identity framework</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="38.625" x="434" y="209.333">Identity</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" x="472.625" y="209.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="55.95" x="472.625" y="209.333">framework</text>
     </g>
     <!--cluster eu-->
     <g class="cluster" data-qualified-name="eu" data-source-line="340" id="ent0019">
       <path d="M240.5,15 L377.025,15 A3.75,3.75 0 0 1 379.525,17.5 L386.525,33 L837.5,33 A2.5,2.5 0 0 1 840,35.5 L840,179.5 A2.5,2.5 0 0 1 837.5,182 L240.5,182 A2.5,2.5 0 0 1 238,179.5 L238,17.5 A2.5,2.5 0 0 1 240.5,15" fill="#FFF" filter="url(#f1gpg6svwyyirs)" style="stroke:#444;stroke-width:1.5;stroke-dasharray:8,5;"/>
       <line style="stroke:#444;stroke-width:1.5;stroke-dasharray:8,5;" x1="238" x2="386.525" y1="33" y2="33"/>
-      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="135.525" x="242" y="26.333">End-user SaaS application</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="48.675" x="242" y="26.333">End-user</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" x="290.675" y="26.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="29.4" x="290.675" y="26.333">SaaS</text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" x="320.075" y="26.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" font-weight="700" textLength="57.45" x="320.075" y="26.333">application</text>
     </g>
     <!--entity tapi-->
     <g class="entity" data-qualified-name="cp.tapi" data-source-line="14" id="ent0002">
