@@ -14454,14 +14454,14 @@
 
         <Package name="net.sourceforge.plantuml.sequencediagram">
             <Stats>
-                <TotalClasses>24</TotalClasses>
-                <ConcreteClasses>19</ConcreteClasses>
+                <TotalClasses>26</TotalClasses>
+                <ConcreteClasses>21</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>12</Ca>
                 <Ce>19</Ce>
-                <A>0.21</A>
+                <A>0.19</A>
                 <I>0.61</I>
-                <D>0.18</D>
+                <D>0.19</D>
                 <V>1</V>
             </Stats>
 
@@ -14540,6 +14540,12 @@
                 </Class>
                 <Class sourceFile="SequenceDiagramFactory.java">
                     net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory
+                </Class>
+                <Class sourceFile="StereotypeVisibility.java">
+                    net.sourceforge.plantuml.sequencediagram.StereotypeVisibility
+                </Class>
+                <Class sourceFile="StereotypeVisibility.java">
+                    net.sourceforge.plantuml.sequencediagram.StereotypeVisibility$Rule
                 </Class>
             </ConcreteClasses>
 

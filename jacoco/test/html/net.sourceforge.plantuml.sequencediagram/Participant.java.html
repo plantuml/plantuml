@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -68,11 +69,12 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	private Display display;
 	private final ParticipantType type;
 
-<span class="fc" id="L71">	private int initialLife = 0;</span>
+<span class="fc" id="L72">	private int initialLife = 0;</span>
 
 	private Stereotype stereotype;
 	private boolean stereotypePositionTop;
 	private final Set&lt;EntityPortion&gt; hiddenPortions;
+	private final StereotypeVisibility stereotypeVisibility;
 	private final int order;
 	private final StyleBuilder styleBuilder;
 	private final LineLocation location;
@@ -80,158 +82,187 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 
 	@Override
 	public StyleQuery getStyleQuery() {
-<span class="fc" id="L83">		return type.getStyleQuery().addClickable(getUrl());</span>
+<span class="fc" id="L85">		return type.getStyleQuery().addClickable(getUrl());</span>
 	}
 
 	public Style[] getUsedStyles() {
 
-<span class="fc" id="L88">		final StyleQuery query = getStyleQuery().withStereotype(stereotype);</span>
-<span class="fc" id="L89">		Style tmp = styleBuilder.getMergedStyle(query);</span>
-<span class="fc" id="L90">		tmp = tmp.eventuallyOverride(getColors());</span>
-<span class="fc" id="L91">		Style stereo = styleBuilder.getMergedStyle(getStyleQuery().forStereotypeItself(stereotype));</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (tmp != null)</span>
-<span class="fc" id="L93">			stereo = tmp.mergeWith(stereo, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
+<span class="fc" id="L90">		final StyleQuery query = getStyleQuery().withStereotype(stereotype);</span>
+<span class="fc" id="L91">		Style tmp = styleBuilder.getMergedStyle(query);</span>
+<span class="fc" id="L92">		tmp = tmp.eventuallyOverride(getColors());</span>
+<span class="fc" id="L93">		Style stereo = styleBuilder.getMergedStyle(getStyleQuery().forStereotypeItself(stereotype));</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (tmp != null)</span>
+<span class="fc" id="L95">			stereo = tmp.mergeWith(stereo, MergeStrategy.OVERWRITE_EXISTING_VALUE);</span>
 
-<span class="fc" id="L95">		return new Style[] { tmp, stereo };</span>
+<span class="fc" id="L97">		return new Style[] { tmp, stereo };</span>
 	}
 
 	public Participant(LineLocation location, ParticipantType type, String code, Display display,
-<span class="fc" id="L99">			Set&lt;EntityPortion&gt; hiddenPortions, int order, StyleBuilder styleBuilder, String uid) {</span>
-<span class="fc" id="L100">		this.location = location;</span>
-<span class="fc" id="L101">		this.uid = uid;</span>
-<span class="fc" id="L102">		this.hiddenPortions = hiddenPortions;</span>
-<span class="fc" id="L103">		this.styleBuilder = styleBuilder;</span>
-<span class="fc" id="L104">		this.order = order;</span>
-<span class="fc" id="L105">		this.code = Objects.requireNonNull(code);</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (code.length() == 0)</span>
-<span class="nc" id="L107">			throw new IllegalArgumentException();</span>
+			Set&lt;EntityPortion&gt; hiddenPortions, StereotypeVisibility stereotypeVisibility, int order,
+<span class="fc" id="L102">			StyleBuilder styleBuilder, String uid) {</span>
+<span class="fc" id="L103">		this.location = location;</span>
+<span class="fc" id="L104">		this.uid = uid;</span>
+<span class="fc" id="L105">		this.hiddenPortions = hiddenPortions;</span>
+<span class="fc" id="L106">		this.stereotypeVisibility = stereotypeVisibility;</span>
+<span class="fc" id="L107">		this.styleBuilder = styleBuilder;</span>
+<span class="fc" id="L108">		this.order = order;</span>
+<span class="fc" id="L109">		this.code = Objects.requireNonNull(code);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (code.length() == 0)</span>
+<span class="nc" id="L111">			throw new IllegalArgumentException();</span>
 
-<span class="pc bpc" id="L109" title="2 of 4 branches missed.">		if (Display.isNull(display) || display.size() == 0)</span>
-<span class="nc" id="L110">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L113" title="2 of 4 branches missed.">		if (Display.isNull(display) || display.size() == 0)</span>
+<span class="nc" id="L114">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L112">		this.type = Objects.requireNonNull(type);</span>
-<span class="fc" id="L113">		this.display = display;</span>
-<span class="fc" id="L114">	}</span>
+<span class="fc" id="L116">		this.type = Objects.requireNonNull(type);</span>
+<span class="fc" id="L117">		this.display = display;</span>
+<span class="fc" id="L118">	}</span>
 
 	public String getCode() {
-<span class="fc" id="L117">		return code;</span>
+<span class="fc" id="L121">		return code;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L122">		return getCode();</span>
+<span class="nc" id="L126">		return getCode();</span>
 	}
 
 	public Display getDisplay(boolean underlined) {
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		Display result = underlined ? display.underlined() : display;</span>
-<span class="pc bpc" id="L127" title="1 of 4 branches missed.">		if (stereotype != null &amp;&amp; hiddenPortions.contains(EntityPortion.STEREOTYPE) == false) {</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (stereotypePositionTop)</span>
-<span class="fc" id="L129">				result = result.addFirst(stereotype);</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		Display result = underlined ? display.underlined() : display;</span>
+<span class="fc" id="L131">		final CharSequence visibleStereotype = visibleStereotypeText();</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (visibleStereotype != null) {</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			if (stereotypePositionTop)</span>
+<span class="fc" id="L134">				result = result.addFirst(visibleStereotype);</span>
 			else
-<span class="nc" id="L131">				result = result.add(stereotype);</span>
+<span class="nc" id="L136">				result = result.add(visibleStereotype);</span>
 
 		}
-<span class="fc" id="L134">		return result;</span>
+<span class="fc" id="L139">		return result;</span>
+	}
+
+	private CharSequence visibleStereotypeText() {
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (stereotype == null)</span>
+<span class="fc" id="L144">			return null;</span>
+
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		final String participantName = display.size() == 0 ? null : display.get(0).toString();</span>
+<span class="fc" id="L147">		final List&lt;String&gt; labels = stereotype.getLabels(Guillemet.DOUBLE_COMPARATOR);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (labels.isEmpty())</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			return stereotypeVisibility.isLabelShown(stereotype.toString(), code, participantName) ? stereotype : null;</span>
+
+<span class="fc" id="L151">		boolean everyLabelShown = true;</span>
+<span class="fc" id="L152">		final StringBuilder kept = new StringBuilder();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (String label : labels) {</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">			if (stereotypeVisibility.isLabelShown(label, code, participantName)) {</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">				if (kept.length() &gt; 0)</span>
+<span class="nc" id="L156">					kept.append(' ');</span>
+<span class="fc" id="L157">				kept.append(label);</span>
+			} else
+<span class="fc" id="L159">				everyLabelShown = false;</span>
+<span class="fc" id="L160">		}</span>
+		// Leave an untouched stereotype as the original object so diagrams that
+		// do not filter stereotypes keep their previous text.
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (everyLabelShown)</span>
+<span class="fc" id="L164">			return stereotype;</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		return kept.length() == 0 ? null : kept.toString();</span>
 	}
 
 	public ParticipantType getType() {
-<span class="fc" id="L138">		return type;</span>
+<span class="fc" id="L169">		return type;</span>
 	}
 
 	public final void setStereotype(Stereotype stereotype, boolean stereotypePositionTop) {
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (this.stereotype != null)</span>
-<span class="nc" id="L143">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (this.stereotype != null)</span>
+<span class="nc" id="L174">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L145">		this.stereotype = Objects.requireNonNull(stereotype);</span>
-<span class="fc" id="L146">		this.stereotypePositionTop = stereotypePositionTop;</span>
-<span class="fc" id="L147">	}</span>
+<span class="fc" id="L176">		this.stereotype = Objects.requireNonNull(stereotype);</span>
+<span class="fc" id="L177">		this.stereotypePositionTop = stereotypePositionTop;</span>
+<span class="fc" id="L178">	}</span>
 
 	public final int getInitialLife() {
-<span class="nc" id="L150">		return initialLife;</span>
+<span class="nc" id="L181">		return initialLife;</span>
 	}
 
-<span class="fc" id="L153">	private List&lt;Fashion&gt; liveBackcolors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L184">	private List&lt;Fashion&gt; liveBackcolors = new ArrayList&lt;&gt;();</span>
 
 	public final void incInitialLife(Fashion colors) {
-<span class="fc" id="L156">		initialLife++;</span>
-<span class="fc" id="L157">		this.liveBackcolors.add(colors);</span>
-<span class="fc" id="L158">	}</span>
+<span class="fc" id="L187">		initialLife++;</span>
+<span class="fc" id="L188">		this.liveBackcolors.add(colors);</span>
+<span class="fc" id="L189">	}</span>
 
 	public Fashion getLiveSpecificBackColors(int which) {
-<span class="nc" id="L161">		return liveBackcolors.get(which);</span>
+<span class="nc" id="L192">		return liveBackcolors.get(which);</span>
 	}
 
 	public Colors getColors() {
-<span class="fc" id="L165">		return colors;</span>
+<span class="fc" id="L196">		return colors;</span>
 	}
 
 	public void setSpecificColorTOBEREMOVED(ColorType type, HColor color) {
-<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (color != null)</span>
-<span class="fc" id="L170">			this.colors = colors.add(type, color);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (color != null)</span>
+<span class="fc" id="L201">			this.colors = colors.add(type, color);</span>
 
-<span class="fc" id="L172">	}</span>
+<span class="fc" id="L203">	}</span>
 
-<span class="fc" id="L174">	private Colors colors = Colors.empty();</span>
+<span class="fc" id="L205">	private Colors colors = Colors.empty();</span>
 
 	public void setColors(Colors colors) {
-<span class="nc" id="L177">		this.colors = colors;</span>
-<span class="nc" id="L178">	}</span>
+<span class="nc" id="L208">		this.colors = colors;</span>
+<span class="nc" id="L209">	}</span>
 
 	private Url url;
 
 	public final Url getUrl() {
-<span class="fc" id="L183">		return url;</span>
+<span class="fc" id="L214">		return url;</span>
 	}
 
 	public final void setUrl(Url url) {
-<span class="fc" id="L187">		this.url = url;</span>
-<span class="fc" id="L188">	}</span>
+<span class="fc" id="L218">		this.url = url;</span>
+<span class="fc" id="L219">	}</span>
 
 	public final Stereotype getStereotype() {
-<span class="fc" id="L191">		return stereotype;</span>
+<span class="fc" id="L222">		return stereotype;</span>
 	}
 
 	public int getOrder() {
-<span class="fc" id="L195">		return order;</span>
+<span class="fc" id="L226">		return order;</span>
 	}
 
 	public LineLocation getLocation() {
-<span class="nc" id="L199">		return location;</span>
+<span class="nc" id="L230">		return location;</span>
 	}
 
 	public UGroup groupTypeTail(Pragma pragma) {
-<span class="fc" id="L203">		final UGroup group = new UGroup(location);</span>
-<span class="fc" id="L204">		group.put(UGroupType.CLASS, &quot;participant participant-tail&quot;);</span>
-<span class="fc" id="L205">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
-<span class="fc" id="L206">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
-<span class="fc" id="L207">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
-<span class="fc" id="L208">		group.put(UGroupType.DATA_UID, uid + &quot;-tail&quot;);</span>
+<span class="fc" id="L234">		final UGroup group = new UGroup(location);</span>
+<span class="fc" id="L235">		group.put(UGroupType.CLASS, &quot;participant participant-tail&quot;);</span>
+<span class="fc" id="L236">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
+<span class="fc" id="L237">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
+<span class="fc" id="L238">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
+<span class="fc" id="L239">		group.put(UGroupType.DATA_UID, uid + &quot;-tail&quot;);</span>
 
-<span class="fc" id="L210">		return group;</span>
+<span class="fc" id="L241">		return group;</span>
 	}
 
 	public UGroup groupTypeHead(Pragma pragma) {
-<span class="fc" id="L214">		final UGroup group = new UGroup(location);</span>
-<span class="fc" id="L215">		group.put(UGroupType.CLASS, &quot;participant participant-head&quot;);</span>
-<span class="fc" id="L216">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
-<span class="fc" id="L217">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
-<span class="fc" id="L218">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
-<span class="fc" id="L219">		group.put(UGroupType.DATA_UID, uid + &quot;-head&quot;);</span>
-<span class="fc" id="L220">		return group;</span>
+<span class="fc" id="L245">		final UGroup group = new UGroup(location);</span>
+<span class="fc" id="L246">		group.put(UGroupType.CLASS, &quot;participant participant-head&quot;);</span>
+<span class="fc" id="L247">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
+<span class="fc" id="L248">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
+<span class="fc" id="L249">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
+<span class="fc" id="L250">		group.put(UGroupType.DATA_UID, uid + &quot;-head&quot;);</span>
+<span class="fc" id="L251">		return group;</span>
 	}
 
 	public UGroup groupTypeLifeline(Pragma pragma) {
-<span class="fc" id="L224">		final UGroup group = new UGroup(location);</span>
-<span class="fc" id="L225">		group.put(UGroupType.CLASS, &quot;participant-lifeline&quot;);</span>
-<span class="fc" id="L226">		group.put(UGroupType.DATA_UID, uid + &quot;-lifeline&quot;);</span>
-<span class="fc" id="L227">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
-<span class="fc" id="L228">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
-<span class="fc" id="L229">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
-<span class="fc" id="L230">		return group;</span>
+<span class="fc" id="L255">		final UGroup group = new UGroup(location);</span>
+<span class="fc" id="L256">		group.put(UGroupType.CLASS, &quot;participant-lifeline&quot;);</span>
+<span class="fc" id="L257">		group.put(UGroupType.DATA_UID, uid + &quot;-lifeline&quot;);</span>
+<span class="fc" id="L258">		group.put(UGroupType.DATA_QUALIFIED_NAME, code);</span>
+<span class="fc" id="L259">		group.put(UGroupType.DATA_PARTICIPANT, code);</span>
+<span class="fc" id="L260">		group.put(UGroupType.DATA_ENTITY_UID, uid);</span>
+<span class="fc" id="L261">		return group;</span>
 	}
 
 	public String getUid() {
-<span class="fc" id="L234">		return uid;</span>
+<span class="fc" id="L265">		return uid;</span>
 	}
 
 	// ASCII rendering: the participant draws its own head (the top box).
@@ -240,14 +271,14 @@ public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock
 	// occupies rows 0-2, columns 0..asciiDimension().getWidth()-1.
 	@Override
 	public ADimension2D asciiDimension() {
-<span class="fc" id="L243">		return new ADimension2D(code.length() + 2, 3);</span>
+<span class="fc" id="L274">		return new ADimension2D(code.length() + 2, 3);</span>
 	}
 
 	@Override
 	public void asciiDraw(InfinitePlan plan) {
-<span class="fc" id="L248">		plan.drawBox(code.length() + 2, 3);</span>
-<span class="fc" id="L249">		plan.move(1, 1).drawString(code);</span>
-<span class="fc" id="L250">	}</span>
+<span class="fc" id="L279">		plan.drawBox(code.length() + 2, 3);</span>
+<span class="fc" id="L280">		plan.move(1, 1).drawString(code);</span>
+<span class="fc" id="L281">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

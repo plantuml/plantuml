@@ -2876,8 +2876,8 @@ Total Classes: 2
 "net.sourceforge.plantuml.security.authentication.token" --> "java.util"
 "net.sourceforge.plantuml.security.authentication.token" --> "net.sourceforge.plantuml.security.authentication"
 
-class "net.sourceforge.plantuml.sequencediagram" %lighten("red", 82) {
-Total Classes: 24
+class "net.sourceforge.plantuml.sequencediagram" %lighten("red", 81) {
+Total Classes: 26
 }
 "net.sourceforge.plantuml.sequencediagram" --> "java.lang"
 "net.sourceforge.plantuml.sequencediagram" --> "java.text"
