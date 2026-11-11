@@ -14,6 +14,10 @@ cp "build/java8/plantuml.jar" "github_release/plantuml-java8-${RELEASE_VERSION}.
 cp "build/libs/plantuml-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-${RELEASE_VERSION}-javadoc.jar"
 cp "build/libs/plantuml-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-${RELEASE_VERSION}-sources.jar"
 cp "build/libs/js-plantuml-${RELEASE_VERSION}.zip" "github_release/js-plantuml-${RELEASE_VERSION}.zip"
+cp "build/native-image/native-plantuml-windows-amd64-${RELEASE_VERSION}.zip" "github_release/native-plantuml-windows-amd64-${RELEASE_VERSION}.zip"
+cp "build/native-image/native-plantuml-linux-amd64-${RELEASE_VERSION}.zip" "github_release/native-plantuml-linux-amd64-${RELEASE_VERSION}.zip"
+cp "build/native-image/native-plantuml-linux-arm64-${RELEASE_VERSION}.zip" "github_release/native-plantuml-linux-arm64-${RELEASE_VERSION}.zip"
+cp "build/native-image/native-plantuml-macos-arm64-${RELEASE_VERSION}.zip" "github_release/native-plantuml-macos-arm64-${RELEASE_VERSION}.zip"
 cp "license-variants/plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}.jar" "github_release/plantuml-asl-${RELEASE_VERSION}.jar"
 cp "license-variants/plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-asl-${RELEASE_VERSION}-javadoc.jar"
 cp "license-variants/plantuml-asl/build/libs/plantuml-asl-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-asl-${RELEASE_VERSION}-sources.jar"
@@ -68,8 +72,13 @@ if [[ -e "build/publications/maven/module.json.asc" ]]; then
   cp "license-variants/plantuml-gplv2/build/libs/plantuml-gplv2-${RELEASE_VERSION}-sources.jar.asc" "github_release/plantuml-gplv2-${RELEASE_VERSION}-sources.jar.asc"
 fi
 
+# Table of the artifacts (same layout as the snapshot), placed before the generated notes
+sed -e "s|@TAG@|${TAG}|g" -e "s|@VERSION@|${RELEASE_VERSION}|g" \
+  .github/scripts/notes-for-release.md > notes.txt
+
 gh release create \
   --target "${GITHUB_SHA}" \
+  --notes-file notes.txt \
   --generate-notes \
   --title "${TAG}" \
   "${TAG}" github_release/*
