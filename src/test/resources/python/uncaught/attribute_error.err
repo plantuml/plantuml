@@ -1,0 +1,4 @@
+error: AttributeError
+line: 7
+text: 'P' object has no attribute 'y'
+trace: 7 <module>

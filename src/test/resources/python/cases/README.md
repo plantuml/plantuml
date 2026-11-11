@@ -40,3 +40,6 @@ is no final LF. Files use LF only. A source line never starts with `### `.
   bracket. A port must reproduce this, or the case must be changed on both sides.
 * Deep nesting (100000 brackets, `not`, unary minus, 1000 nested blocks) is
   generated, not stored: see `PyParserTest.deepNestingIsAnErrorNotAStackOverflow`.
+* `accepted.cases` records a quirk: a handler of a `try` whose body cannot raise
+  is not compiled, so `try: pass` / `except E as e: raise X from e` is accepted
+  although `raise ... from` is rejected anywhere else (see `parser_unsupported.cases`).

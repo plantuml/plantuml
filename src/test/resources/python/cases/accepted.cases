@@ -53,3 +53,8 @@ def f():
 @a
 class C:
     pass
+### ok
+try:
+    pass
+except E as e:
+    raise X from e

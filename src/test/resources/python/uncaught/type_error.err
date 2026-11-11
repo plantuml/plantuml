@@ -1,0 +1,5 @@
+# DEVIATION: CPython says: can only concatenate list (not "str") to list
+error: TypeError
+line: 3
+text: unsupported operand type(s) for +: 'list' and 'str'
+trace: 3 <module>

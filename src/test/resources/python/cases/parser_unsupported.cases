@@ -72,3 +72,9 @@ try:
  pass
 except* E:
  pass
+### line 5
+def f():
+    try:
+        g()
+    except E as e:
+        raise X from e

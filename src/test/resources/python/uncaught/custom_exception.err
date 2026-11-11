@@ -1,0 +1,5 @@
+error: ConfigError
+line: 8
+text: cannot load b
+trace: 14 <module>
+trace: 8 load

@@ -1,0 +1,4 @@
+error: KeyError
+line: 3
+text: 'missing'
+trace: 3 <module>

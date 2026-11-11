@@ -1,0 +1,4 @@
+error: ZeroDivisionError
+line: 4
+text: division by zero
+trace: 4 <module>

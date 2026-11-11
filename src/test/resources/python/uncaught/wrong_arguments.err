@@ -1,0 +1,5 @@
+# DEVIATION: CPython says: f() takes from 1 to 2 positional arguments but 3 were given
+error: TypeError
+line: 5
+text: f() takes 2 positional arguments but 3 were given
+trace: 5 <module>

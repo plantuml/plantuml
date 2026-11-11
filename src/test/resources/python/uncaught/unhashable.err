@@ -1,0 +1,4 @@
+error: TypeError
+line: 2
+text: unhashable type: 'list'
+trace: 2 <module>

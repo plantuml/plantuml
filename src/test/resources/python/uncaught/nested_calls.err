@@ -1,0 +1,7 @@
+error: KeyError
+line: 2
+text: 'c'
+trace: 14 <module>
+trace: 11 outer
+trace: 7 middle
+trace: 2 inner

@@ -23,7 +23,8 @@ import org.junit.jupiter.api.TestFactory;
 /**
  * Runs the scripts of {@code python} on the interpreter. CPython is the oracle:
  * a script with a {@code .out} file must print exactly that, any other script
- * must finish without an exception. The scripts of {@code deviations} are
+ * must finish without an exception. The scripts of {@code uncaught} are run by
+ * {@link PyUncaughtTest}, those of {@code deviations} are
  * handled separately, they do not run under CPython.
  */
 class PyScriptsTest {
@@ -51,7 +52,8 @@ class PyScriptsTest {
 		Path dir = root();
 		List<Path> scripts;
 		try (Stream<Path> walk = Files.walk(dir)) {
-			scripts = walk.filter(f -> f.toString().endsWith(".py") && !f.toString().contains("deviations"))
+			scripts = walk.filter(f -> f.toString().endsWith(".py") && !f.toString().contains("deviations")
+					&& !f.toString().contains("uncaught"))
 					.sorted().collect(Collectors.toList());
 		}
 		List<DynamicTest> tests = new ArrayList<DynamicTest>();
@@ -70,15 +72,6 @@ class PyScriptsTest {
 	@Test
 	void integerOverflowRaisesOverflowError() throws Exception {
 		run(read(root().resolve("deviations/int_overflow.py")), "int_overflow.py");
-	}
-
-	@Test
-	void instructionLimitCannotBeCaught() throws Exception {
-		Interp in = new Interp(s -> {
-		});
-		in.setMaxSteps(10000);
-		String source = read(root().resolve("deviations/instruction_limit.py"));
-		assertThrows(ExecutionLimitError.class, () -> in.run(source, "instruction_limit.py"));
 	}
 
 	@Test

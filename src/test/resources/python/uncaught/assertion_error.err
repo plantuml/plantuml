@@ -1,0 +1,5 @@
+error: AssertionError
+line: 2
+text: n must be positive
+trace: 6 <module>
+trace: 2 check

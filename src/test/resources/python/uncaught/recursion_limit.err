@@ -1,0 +1,4 @@
+max-depth: 50
+error: RecursionError
+line: 3
+text: maximum recursion depth exceeded

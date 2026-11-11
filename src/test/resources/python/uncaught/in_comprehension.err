@@ -1,0 +1,6 @@
+# DEVIATION: CPython 3.12 and later has no <listcomp> frame (PEP 709), CPython 3.11 and earlier has it.
+error: ZeroDivisionError
+line: 2
+text: integer division or modulo by zero
+trace: 2 <module>
+trace: 2 <listcomp>
