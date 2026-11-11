@@ -69,7 +69,10 @@ jobs:
 
   build_linux_amd64:
     name: 'linux-amd64 (release)'
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moved to a newer image (GCC 15) whose link objects mark the
+    # executable as requiring x86-64-v3, so 1.2026.10 fails with "CPU ISA level is lower
+    # than required" on older CPUs (issue #3003). 1.2026.9 was built on 24.04 (GCC 13).
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
 
     steps:
