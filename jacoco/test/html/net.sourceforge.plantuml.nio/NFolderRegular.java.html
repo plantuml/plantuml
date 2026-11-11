@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 		final SFile result;
 <span class="fc bfc" id="L57" title="All 2 branches covered.">		if (nameOrPath.isAbsolute()) {</span>
 <span class="fc" id="L58">			result = SFile.fromFile(nameOrPath.toFile());</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (result.canRead())</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">			if (result.canRead())</span>
 <span class="fc" id="L60">				return result;</span>
 
 		} else {
