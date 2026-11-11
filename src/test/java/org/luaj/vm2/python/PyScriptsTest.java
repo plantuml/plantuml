@@ -33,9 +33,9 @@ class PyScriptsTest {
 	}
 
 	private static Path root() throws URISyntaxException {
-		URL url = PyScriptsTest.class.getClassLoader().getResource("python/README.md");
-		assertTrue(url != null, "missing resource python/README.md");
-		return Paths.get(url.toURI()).getParent();
+		URL url = PyScriptsTest.class.getClassLoader().getResource("python");
+		assertTrue(url != null, "missing resource python");
+		return Paths.get(url.toURI());
 	}
 
 	private static String run(String source, String name) {

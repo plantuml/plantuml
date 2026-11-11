@@ -80,7 +80,7 @@ class PyParserTest {
 
 	@TestFactory
 	List<DynamicTest> testScriptsMatchCPython() throws Exception {
-		Path dir = resource("python/README.md").getParent();
+		Path dir = resource("python");
 		Path root = findProjectRoot(dir);
 		assumeTrue(root != null, "tools/dump_ast.py not found");
 		try {
