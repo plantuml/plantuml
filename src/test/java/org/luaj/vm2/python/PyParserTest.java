@@ -110,35 +110,6 @@ class PyParserTest {
 	}
 
 	@Test
-	void unsupportedConstructsAreRejected() {
-		String[] sources = { "class A(metaclass=M): pass", "class A(*b): pass", "with a: pass",
-				"try:\n pass\nfinally:\n pass", "try:\n pass\nexcept E:\n pass\nfinally:\n pass", "def f(): yield 1",
-				"x = (i for i in y)", "f(i for i in y)", "{1, 2}", "{x for x in y}", "(x := 1)", "async def f(): pass",
-				"@dec\nasync def f(): pass",
-				"from a import b", "a @ b", "x: int = 1", "def f(a: int): pass", "def f() -> int: pass", "a, *b = c",
-				"[*a]", "(*a, b)", "b'bytes'", "1j", "...", "x = {**a}", "def f(a, /): pass", "x = yield",
-				"await x", "'\\N{DIGIT ONE}'", "f'{x=}'", "try:\n pass\nexcept* E:\n pass" };
-		for (String s : sources)
-			assertSyntaxError(s);
-	}
-
-	@Test
-	void invalidProgramsAreRejected() {
-		String[] sources = { "del 1", "1 = x", "f() = 1", "x + 1 = 2", "(a, 1) = x", "if a:\n\tb", "if a:\npass",
-				"  x = 1", "if a:\n    b\n  c", "x = 'abc", "x = '''abc", "x = (1", "x = 1)", "def f(a=1, b): pass",
-				"f(a=1, 2)", "x = 08", "x = 1__0", "x = 1_", "f'{}'", "f'{x'", "f'}'", "f'{x!z}'", "0x", "0b12",
-				"if a b", "else:\n pass", "def f(*): pass", "for x in: pass", "x = ", "1 +", "[1, 2", "{1: }",
-				"lambda x: ", "try:\n pass", "print(*)", "a = b = ", "$", "x = 1 ?", "def (a): pass", "for x in y:",
-				"if x:\n", "while", "a.", "a[", "f(", "'\\x4'", "'\\u12'", "f'{a:{'", "1 if 2", "lambda *: 1",
-				"def f(**k, a): pass", "del f()", "x = 99999999999999999999", "global", "import", "import a.",
-				"not", "a not b", "a is", "x = [i for i in]", "x = [for i in y]", "f(a b)", "(", ")", "}",
-				"if a:\n  b\n c", "@dec\nx = 1", "@dec", "@dec x\ndef f(): pass", "@\ndef f(): pass",
-				"@dec\n@\ndef f(): pass" };
-		for (String s : sources)
-			assertSyntaxError(s);
-	}
-
-	@Test
 	void deepNestingIsAnErrorNotAStackOverflow() {
 		StringBuilder sb = new StringBuilder("x = ");
 		for (int i = 0; i < 100000; i++)
@@ -197,11 +168,8 @@ class PyParserTest {
 	}
 
 	@Test
-	void sourceWithoutTrailingNewlineIsAccepted() {
-		String[] sources = { "x = 1", "if a:\n    b", "def f():\n    return 1\n", "x = 1\n\n\n", "# only a comment",
-				"", "\n\n", "if a:\n    b\n# trailing\n", "x = 1\r\ny = 2\r\n", "f(a)\n\n  # c\n" };
-		for (String s : sources)
-			PyParser.parse(s);
+	void crlfLineEndingsAreAccepted() {
+		// the other sources accepted with or without a final newline are in cases/accepted.cases
 		assertEquals(2, PyParser.parse("x = 1\r\ny = 2\r\n").body.size());
 	}
 

@@ -1,0 +1,55 @@
+### ok noeol
+x = 1
+### ok noeol
+if a:
+    b
+### ok
+def f():
+    return 1
+### ok
+x = 1
+
+
+### ok noeol
+# only a comment
+### ok noeol
+### ok
+
+
+### ok
+if a:
+    b
+# trailing
+### ok
+f(a)
+
+  # c
+### ok
+class A:
+    __n = 1
+    def __init__(self):
+        self.__x = 1
+    def __f(self):
+        pass
+    def __str__(self):
+        return ''
+    def __repr__(self):
+        return ''
+    def __lt__(self, o):
+        return True
+    def __le__(self, o):
+        return True
+    def __gt__(self, o):
+        return True
+    def __ge__(self, o):
+        return True
+### ok
+@a
+@a.b.c
+@a(1)
+@a.b(x=1)
+def f():
+    pass
+@a
+class C:
+    pass

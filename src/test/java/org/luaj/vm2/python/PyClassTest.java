@@ -7,8 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 /**
- * The parts of the class support that CPython cannot check: what is rejected
- * at compile time, and the documented deviations. The behaviour shared with
+ * The parts of the class support that CPython cannot check: the documented
+ * deviations. What is rejected at compile time is data, in
+ * python/cases/class_*.cases (see PyCasesTest). The behaviour shared with
  * CPython is tested by the scripts language/classes.py,
  * language/inheritance.py and errors/classes.py.
  */
@@ -18,59 +19,6 @@ class PyClassTest {
 		StringBuilder out = new StringBuilder();
 		new Interp(out::append).run(source, "classes.py");
 		return out.toString();
-	}
-
-	private static void assertRejected(String source) {
-		assertThrows(PySyntaxError.class, () -> Interp.compile(source, "classes.py"), source);
-	}
-
-	@Test
-	void unsupportedClassBodiesAreRejected() {
-		String[] sources = { "class A:\n    if x:\n        y = 1\n", "class A:\n    for i in y:\n        pass\n",
-				"class A:\n    while x:\n        pass\n", "class A:\n    try:\n        pass\n    except E:\n        pass\n",
-				"class A:\n    global g\n", "class A:\n    import math\n", "class A:\n    del x\n",
-				"class A:\n    return 1\n", "class A:\n    assert x\n", "class A:\n    raise E\n" };
-		for (String s : sources)
-			assertRejected(s);
-	}
-
-	@Test
-	void specialMethodsOtherThanTheSupportedOnesAreRejected() {
-		String[] sources = { "class A:\n    def __eq__(self, o):\n        return True\n",
-				"class A:\n    def __hash__(self):\n        return 1\n",
-				"class A:\n    def __add__(self, o):\n        return self\n",
-				"class A:\n    def __len__(self):\n        return 0\n", "class A:\n    __slots__ = ()\n",
-				"class A:\n    class __Meta__:\n        pass\n" };
-		for (String s : sources)
-			assertRejected(s);
-		// __init__, __str__, __repr__, the ordering methods and private names are accepted
-		Interp.compile("class A:\n    __n = 1\n    def __init__(self):\n        self.__x = 1\n    def __f(self):\n"
-				+ "        pass\n    def __str__(self):\n        return ''\n    def __repr__(self):\n"
-				+ "        return ''\n    def __lt__(self, o):\n        return True\n    def __le__(self, o):\n"
-				+ "        return True\n    def __gt__(self, o):\n        return True\n    def __ge__(self, o):\n"
-				+ "        return True\n", "classes.py");
-	}
-
-	@Test
-	void otherUnsupportedFormsAreRejected() {
-		assertRejected("class A(B, C):\n    pass\n");
-		assertRejected("class A(B):\n    def f(self):\n        return super().f()\n");
-		assertRejected("class A(metaclass=M):\n    pass\n");
-		// a class attribute that hides, for the methods, a variable of the enclosing function
-		assertRejected("def f():\n    x = 1\n    class A:\n        x = 2\n        def g(self):\n            return x\n"
-				+ "    return A\n");
-	}
-
-	@Test
-	void decoratorsOfBuiltinDescriptorsAndOtherFormsAreRejected() {
-		String[] sources = { "class A:\n    @staticmethod\n    def f():\n        pass\n",
-				"class A:\n    @classmethod\n    def f(cls):\n        pass\n",
-				"class A:\n    @property\n    def f(self):\n        pass\n", "@(lambda f: f)\ndef f():\n    pass\n",
-				"@decorators[0]\ndef f():\n    pass\n", "@make()()\ndef f():\n    pass\n" };
-		for (String s : sources)
-			assertRejected(s);
-		// names, attributes and calls of those are accepted
-		Interp.compile("@a\n@a.b.c\n@a(1)\n@a.b(x=1)\ndef f():\n    pass\n@a\nclass C:\n    pass\n", "d");
 	}
 
 	@Test

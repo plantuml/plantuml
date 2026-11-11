@@ -1,0 +1,155 @@
+### line 1
+del 1
+### line 1
+1 = x
+### line 1
+f() = 1
+### line 1
+x + 1 = 2
+### line 1
+(a, 1) = x
+### line 2
+if a:
+	b
+### line 2
+if a:
+pass
+### line 1
+  x = 1
+### line 3
+if a:
+    b
+  c
+### line 1
+x = 'abc
+### line 1
+x = '''abc
+### line 2
+x = (1
+### line 1
+x = 1)
+### line 1
+def f(a=1, b): pass
+### line 1
+f(a=1, 2)
+### line 1
+x = 08
+### line 1
+x = 1__0
+### line 1
+x = 1_
+### line 1
+f'{}'
+### line 1
+f'{x'
+### line 1
+f'}'
+### line 1
+f'{x!z}'
+### line 1
+0x
+### line 1
+0b12
+### line 1
+if a b
+### line 1
+else:
+ pass
+### line 1
+def f(*): pass
+### line 1
+for x in: pass
+### line 1
+x = 
+### line 1
+1 +
+### line 2
+[1, 2
+### line 1
+{1: }
+### line 1
+lambda x: 
+### line 3
+try:
+ pass
+### line 1
+print(*)
+### line 1
+a = b = 
+### line 1
+$
+### line 1
+x = 1 ?
+### line 1
+def (a): pass
+### line 2
+for x in y:
+### line 2
+if x:
+### line 1
+while
+### line 1
+a.
+### line 2
+a[
+### line 2
+f(
+### line 1
+'\x4'
+### line 1
+'\u12'
+### line 1
+f'{a:{'
+### line 1
+1 if 2
+### line 1
+lambda *: 1
+### line 1
+def f(**k, a): pass
+### line 1
+del f()
+### line 1
+x = 99999999999999999999
+### line 1
+global
+### line 1
+import
+### line 1
+import a.
+### line 1
+not
+### line 1
+a not b
+### line 1
+a is
+### line 1
+x = [i for i in]
+### line 1
+x = [for i in y]
+### line 1
+f(a b)
+### line 2
+(
+### line 1
+)
+### line 1
+}
+### line 3
+if a:
+  b
+ c
+### line 2
+@dec
+x = 1
+### line 2
+@dec
+### line 1
+@dec x
+def f(): pass
+### line 1
+@
+def f(): pass
+### line 2
+@dec
+@
+def f(): pass

@@ -1,0 +1,36 @@
+### line 2
+class A:
+    if x:
+        y = 1
+### line 2
+class A:
+    for i in y:
+        pass
+### line 2
+class A:
+    while x:
+        pass
+### line 2
+class A:
+    try:
+        pass
+    except E:
+        pass
+### line 2
+class A:
+    global g
+### line 2
+class A:
+    import math
+### line 2
+class A:
+    del x
+### line 2
+class A:
+    return 1
+### line 2
+class A:
+    assert x
+### line 2
+class A:
+    raise E

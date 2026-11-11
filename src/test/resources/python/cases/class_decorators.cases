@@ -1,0 +1,27 @@
+### line 2
+class A:
+    @staticmethod
+    def f():
+        pass
+### line 2
+class A:
+    @classmethod
+    def f(cls):
+        pass
+### line 2
+class A:
+    @property
+    def f(self):
+        pass
+### line 1
+@(lambda f: f)
+def f():
+    pass
+### line 1
+@decorators[0]
+def f():
+    pass
+### line 1
+@make()()
+def f():
+    pass
