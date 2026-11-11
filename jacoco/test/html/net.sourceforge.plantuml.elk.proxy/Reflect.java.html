@@ -181,7 +181,7 @@ import net.sourceforge.plantuml.log.Logme;
 
 	public static Method getStaticMethod(Class&lt;?&gt; cl, String method, int nbArgs) {
 <span class="pc bpc" id="L183" title="1 of 2 branches missed.">		for (Method m : cl.getMethods()) {</span>
-<span class="pc bpc" id="L184" title="1 of 4 branches missed.">			if (m.getName().equals(method) &amp;&amp; m.getParameters().length == nbArgs) {</span>
+<span class="fc bfc" id="L184" title="All 4 branches covered.">			if (m.getName().equals(method) &amp;&amp; m.getParameters().length == nbArgs) {</span>
 <span class="fc" id="L185">				return m;</span>
 			}
 		}
