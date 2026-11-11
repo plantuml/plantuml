@@ -391,7 +391,7 @@ final class Fmt {
 	}
 
 	private static int cpLength(String s) {
-		return s.codePointCount(0, s.length());
+		return PyStr.length(s);
 	}
 
 	private static String repeat(int cp, int n) {
@@ -461,7 +461,7 @@ final class Fmt {
 						"Unknown format code '" + s.type + "' for object of type 'str'");
 			String str = (String) v;
 			if (s.prec >= 0 && cpLength(str) > s.prec)
-				str = str.substring(0, str.offsetByCodePoints(0, s.prec));
+				str = str.substring(0, PyStr.offset(str, s.prec));
 			return pad(s, "", "", str, '<');
 		}
 		throw PyOps.err(Types.TYPE_ERROR, "unsupported format string passed to " + PyOps.typeName(v) + ".__format__");
@@ -696,7 +696,7 @@ final class Fmt {
 		case 'a': {
 			String str = type == 's' ? PyOps.str(v) : type == 'r' ? PyOps.repr(v) : asciiStr(PyOps.repr(v));
 			if (s.prec >= 0 && cpLength(str) > s.prec)
-				str = str.substring(0, str.offsetByCodePoints(0, s.prec));
+				str = str.substring(0, PyStr.offset(str, s.prec));
 			return pad(s, "", "", str, '>');
 		}
 		case 'c': {

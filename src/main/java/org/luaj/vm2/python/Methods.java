@@ -92,13 +92,13 @@ final class Methods {
 
 	/** Index in code points of sub in s[start:end], or -1. */
 	private static int find(String s, String sub, int start, int end, boolean last) {
-		int len = PyOps.strLen(s);
+		int len = PyStr.length(s);
 		if (start > len)
 			return -1;
 		if (end < start)
 			return -1;
-		int so = PyOps.offset(s, start);
-		int eo = PyOps.offset(s, end);
+		int so = PyStr.offset(s, start);
+		int eo = PyStr.offset(s, end);
 		int r;
 		if (last) {
 			r = eo - sub.length() < so ? -1 : s.lastIndexOf(sub, eo - sub.length());
@@ -109,7 +109,7 @@ final class Methods {
 			if (r >= 0 && r + sub.length() > eo)
 				r = -1;
 		}
-		return r < 0 ? -1 : PyOps.cpIndexOf(s, r);
+		return r < 0 ? -1 : PyStr.cpIndexOf(s, r);
 	}
 
 	private static String stripWith(String s, String chars, boolean left, boolean right) {
@@ -226,10 +226,10 @@ final class Methods {
 	}
 
 	private static String pad(String s, int width, String fill, int mode) {
-		int len = PyOps.strLen(s);
+		int len = PyStr.length(s);
 		if (width <= len)
 			return s;
-		if (PyOps.strLen(fill) != 1)
+		if (PyStr.length(fill) != 1)
 			throw PyOps.err(Types.TYPE_ERROR, "The fill character must be exactly one character long");
 		if (width > PyOps.MAX_STRING)
 			throw PyOps.err(Types.MEMORY_ERROR, "string too large");
@@ -300,11 +300,11 @@ final class Methods {
 	private static Object affix(Object[] a, boolean prefix, String name) {
 		need(a, 1, 3, name);
 		String s = (String) a[0];
-		int len = PyOps.strLen(s);
+		int len = PyStr.length(s);
 		int[] w = window(a, 2, len);
 		if (w[0] > len)
 			return Boolean.FALSE;
-		String sub = s.substring(PyOps.offset(s, w[0]), PyOps.offset(s, Math.max(w[0], w[1])));
+		String sub = s.substring(PyStr.offset(s, w[0]), PyStr.offset(s, Math.max(w[0], w[1])));
 		Object p = a[1];
 		if (p instanceof String)
 			return Boolean.valueOf(prefix ? sub.startsWith((String) p) : sub.endsWith((String) p));
@@ -475,7 +475,7 @@ final class Methods {
 			def(table, nm, (in, a) -> {
 				need(a, 1, 3, nm);
 				String s = (String) a[0];
-				int[] w = window(a, 2, PyOps.strLen(s));
+				int[] w = window(a, 2, PyStr.length(s));
 				int r = find(s, str(a, 1, nm), w[0], w[1], last);
 				if (r < 0 && raise)
 					throw PyOps.err(Types.VALUE_ERROR, "substring not found");
@@ -486,13 +486,13 @@ final class Methods {
 			need(a, 1, 3, "count");
 			String s = (String) a[0];
 			String sub = str(a, 1, "count");
-			int len = PyOps.strLen(s);
+			int len = PyStr.length(s);
 			int[] w = window(a, 2, len);
 			if (w[0] > len || w[1] < w[0])
 				return Integer.valueOf(0);
-			String part = s.substring(PyOps.offset(s, w[0]), PyOps.offset(s, w[1]));
+			String part = s.substring(PyStr.offset(s, w[0]), PyStr.offset(s, w[1]));
 			if (sub.isEmpty())
-				return Integer.valueOf(PyOps.strLen(part) + 1);
+				return Integer.valueOf(PyStr.length(part) + 1);
 			int n = 0;
 			for (int i = part.indexOf(sub); i >= 0; i = part.indexOf(sub, i + sub.length()))
 				n++;
@@ -513,7 +513,7 @@ final class Methods {
 			need(a, 1, 1, "zfill");
 			String s = (String) a[0];
 			int width = PyOps.asIndex(a[1]);
-			int len = PyOps.strLen(s);
+			int len = PyStr.length(s);
 			if (width <= len)
 				return s;
 			if (width > PyOps.MAX_STRING)

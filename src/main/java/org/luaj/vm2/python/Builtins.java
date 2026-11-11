@@ -565,9 +565,9 @@ final class Builtins {
 			if (!(a[0] instanceof String))
 				throw PyOps.err(Types.TYPE_ERROR, "ord() expected string of length 1, but " + PyOps.typeName(a[0]) + " found");
 			String s = (String) a[0];
-			if (PyOps.strLen(s) != 1)
+			if (PyStr.length(s) != 1)
 				throw PyOps.err(Types.TYPE_ERROR,
-						"ord() expected a character, but string of length " + PyOps.strLen(s) + " found");
+						"ord() expected a character, but string of length " + PyStr.length(s) + " found");
 			return Integer.valueOf(s.codePointAt(0));
 		});
 		fn("chr", (in, a) -> {

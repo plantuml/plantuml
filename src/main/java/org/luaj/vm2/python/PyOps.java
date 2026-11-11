@@ -649,76 +649,6 @@ final class PyOps {
 		throw err(Types.TYPE_ERROR, "argument of type '" + typeName(container) + "' is not iterable");
 	}
 
-	// ------------------------------------------------------------ strings and code points
-
-	/** The answer of {@link #bmp} for the last long string: an immutable pair, so that it is read and replaced as a whole. */
-	private static final class BmpAnswer {
-		final String string;
-		final boolean bmp;
-
-		BmpAnswer(String string, boolean bmp) {
-			this.string = string;
-			this.bmp = bmp;
-		}
-	}
-
-	private static volatile BmpAnswer lastAnswer;
-
-	/** True if the string has no surrogate pair, so that chars are code points. */
-	static boolean bmp(String s) {
-		int n = s.length();
-		if (n > 32) {
-			BmpAnswer last = lastAnswer;
-			if (last != null && last.string == s)
-				return last.bmp;
-		}
-		boolean r = true;
-		for (int i = 0; i < n; i++) {
-			char c = s.charAt(i);
-			if (c >= 0xd800 && c <= 0xdfff) {
-				r = false;
-				break;
-			}
-		}
-		if (n > 32)
-			lastAnswer = new BmpAnswer(s, r);
-		return r;
-	}
-
-	static int strLen(String s) {
-		return bmp(s) ? s.length() : s.codePointCount(0, s.length());
-	}
-
-	private static final String[] ASCII = asciiStrings();
-
-	private static String[] asciiStrings() {
-		String[] table = new String[128];
-		for (int i = 0; i < 128; i++)
-			table[i] = String.valueOf((char) i);
-		return table;
-	}
-
-	static String charString(char c) {
-		return c < 128 ? ASCII[c] : String.valueOf(c);
-	}
-
-	/** Offset in chars of the code point with the given index. */
-	static int offset(String s, int cpIndex) {
-		return bmp(s) ? cpIndex : s.offsetByCodePoints(0, cpIndex);
-	}
-
-	/** Index in code points of a char offset. */
-	static int cpIndexOf(String s, int charOffset) {
-		return bmp(s) ? charOffset : s.codePointCount(0, charOffset);
-	}
-
-	static String strAt(String s, int i) {
-		if (bmp(s))
-			return charString(s.charAt(i));
-		int off = s.offsetByCodePoints(0, i);
-		return s.substring(off, off + Character.charCount(s.codePointAt(off)));
-	}
-
 	// ------------------------------------------------------------ subscripts
 
 	static int normIndex(int i, int len, String what) {
@@ -793,27 +723,8 @@ final class PyOps {
 				throw new PyError(new PyException(Types.KEY_ERROR, new Object[] { idx }));
 			return v;
 		}
-		if (o instanceof String) {
-			String s = (String) o;
-			if (idx instanceof PySlice) {
-				int len = strLen(s);
-				int[] r = new int[3];
-				sliceRange((PySlice) idx, len, r);
-				if (r[2] == 1) {
-					if (r[1] == 0)
-						return "";
-					int from = offset(s, r[0]);
-					int to = bmp(s) ? from + r[1] : s.offsetByCodePoints(from, r[1]);
-					return s.substring(from, to);
-				}
-				StringBuilder sb = new StringBuilder();
-				for (int k = 0, p = r[0]; k < r[1]; k++, p += r[2])
-					sb.append(strAt(s, p));
-				return sb.toString();
-			}
-			int len = strLen(s);
-			return strAt(s, normIndex(asIndex(idx), len, "string"));
-		}
+		if (o instanceof String)
+			return PyStr.getitem((String) o, idx);
 		if (o instanceof PyTuple) {
 			Object[] t = ((PyTuple) o).items;
 			if (idx instanceof PySlice) {
@@ -909,7 +820,7 @@ final class PyOps {
 
 	static int len(Object o) {
 		if (o instanceof String)
-			return strLen((String) o);
+			return PyStr.length((String) o);
 		if (o instanceof PyList)
 			return ((PyList) o).items.size();
 		if (o instanceof PyTuple)
