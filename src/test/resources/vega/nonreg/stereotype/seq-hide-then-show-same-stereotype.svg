@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="152px" preserveAspectRatio="none" style="width:90px;height:152px;background:#FFFFFF;" version="1.1" viewBox="0 0 90 152" width="90px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Foo" data-source-line="3" id="part1-lifeline">
+      <g>
+        <title>..a..</title>
+        <rect fill="#000" fill-opacity="0" height="45" width="8" x="25.575" y="53"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="29.075" x2="29.075" y1="53" y2="98"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Foo" data-source-line="3" id="part1-head">
+      <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.15" x="10" y="10"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="23.363" x="17.394" y="27.889">«a»</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="17" y="41.889">Foo</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Foo" data-source-line="3" id="part1-tail">
+      <rect fill="#E2E2F0" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.15" x="10" y="98"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="23.363" x="17.394" y="115.889">«a»</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="17" y="129.889">Foo</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part1" data-source-line="4" id="msg1">
+      <line style="stroke:#181818;stroke-width:1;" x1="29.075" x2="71.075" y1="67" y2="67"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="71.075" x2="71.075" y1="67" y2="80"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="30.075" x2="71.075" y1="80" y2="80"/>
+      <polygon fill="#181818" points="40.075,76,30.075,80,40.075,84,36.075,80" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+  </g>
+</svg>

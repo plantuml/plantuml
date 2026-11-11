@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (1 participants)
+---
+@startuml
+hide <<a>> stereotype
+show <<a>> stereotype
+participant Foo <<a>>
+Foo -> Foo
+@enduml
