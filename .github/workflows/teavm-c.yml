@@ -194,12 +194,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # Linux: build on the OLDEST supported runner. A dynamically linked executable
+          # needs at least the glibc it was built against (ubuntu-latest is Ubuntu 26.04:
+          # GLIBC_2.43), and its link objects stamp the ELF as x86-64-v3 (issue #3003).
+          # Ubuntu 22.04 (glibc 2.35, gcc 11) runs on most distributions in use.
           - os: linux
             arch: x64
-            runner: ubuntu-latest
+            runner: ubuntu-22.04
           - os: linux
             arch: arm64
-            runner: ubuntu-24.04-arm
+            runner: ubuntu-22.04-arm
           - os: macos
             arch: x64
             runner: macos-15-intel
