@@ -387,10 +387,14 @@ public final class Interp {
 				}
 				int fault = pcs[d] - 1;
 				int h = findHandler(code, fault);
-				if (h < 0) {
+				// the frame has an entry in the traceback, as CPython adds one when the error goes through it,
+				// caught or not; a bare raise adds none, the entry of the first raise is there
+				if (e.reraised == false)
 					e.addFrame(code.filename, code.lines[fault], code.name);
+				e.reraised = false;
+				if (h < 0)
 					throw e;
-				}
+				e.exc.traceback = e;
 				sp = code.nslots + code.excDepth[h];
 				f[sp++] = e.exc;
 				pc = code.excHandler[h];
@@ -880,7 +884,7 @@ public final class Interp {
 							throw PyOps.err(Types.RUNTIME_ERROR, "No active exception to reraise");
 						throw toRaise(f[--sp]);
 					case Op.RERAISE:
-						throw new PyError((PyException) f[--sp]);
+						throw PyError.reraise((PyException) f[--sp]);
 					case Op.EXC_MATCH: {
 						Object t = f[--sp];
 						f[sp] = null;

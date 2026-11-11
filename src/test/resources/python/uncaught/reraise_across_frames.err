@@ -1,0 +1,9 @@
+error: KeyError
+line: 4
+text: 'deep'
+trace: 17 <module>
+trace: 14 caller
+trace: 8 guard
+trace: 3 risky
+trace: 3 risky
+trace: 4 risky

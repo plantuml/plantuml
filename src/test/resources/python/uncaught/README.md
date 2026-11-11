@@ -25,7 +25,7 @@ it ended; without it the script must print nothing.
 The expectations of most scripts were produced by CPython 3.13 and compared with the
 interpreter. The others say why in a `# DEVIATION` or `# NOT CPython` comment of their
 `.err`: the interpreter has 32-bit integers, an instruction limit, a depth limit,
-and a few messages and tracebacks that differ.
+and a few messages and tracebacks that differ (each says which in its `.err`).
 
 ## Limits that are specified here
 

@@ -1,0 +1,7 @@
+error: KeyError
+line: 2
+text: 'k'
+trace: 16 <module>
+trace: 12 twice
+trace: 6 only_values
+trace: 2 risky
