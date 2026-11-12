@@ -73,6 +73,18 @@ import net.sourceforge.plantuml.teavm.js.GraphVizEngineJs;
  * theme chosen by a variable, the bundle a stdlib library links to. Parsing and
  * rendering rebuild everything from the source lines, so a discarded attempt
  * leaves nothing behind but what is kept here.
+ * &lt;p&gt;
+ * An attempt that has missed a resource does not stop at the include that
+ * missed it: once {@link #hasMissing()} is true, an include, an includesub or
+ * a theme that cannot be read is skipped (see
+ * {@link net.sourceforge.plantuml.nio.PathSystem#isDiscardedTeaVMAttempt()}),
+ * so the attempt goes on and asks for the files of the following includes as
+ * well. Every file of one level is thus loaded in the same round, and a
+ * diagram of many includes side by side takes one more rendering, not one per
+ * file. The price is that a round may ask for a file the delivered rendering
+ * does not use: when an &lt;code&gt;!if&lt;/code&gt; depends on a value set in a file that
+ * is not there yet, the attempt takes the branch it sees, and its includes are
+ * asked for too.
  *
  * &lt;h2&gt;What is kept, and for how long&lt;/h2&gt;
  *
@@ -97,8 +109,9 @@ public final class PendingResources {
 
 	/**
 	 * How many times a request may be rendered again because resources were
-	 * missing. Each round loads every resource the attempt asked for, so this is
-	 * a depth (nested includes, links between libraries), not a count of files.
+	 * missing. Each round loads every resource the attempt asked for, and an
+	 * attempt reads on past the includes it could not read, so this is a depth
+	 * (nested includes, links between libraries), not a count of files.
 	 */
 	public static final int MAX_ROUNDS = 20;
 
@@ -122,41 +135,41 @@ public final class PendingResources {
 		private final String error;
 		private final boolean declined;
 
-<span class="nc" id="L125">		private Answer(String id, String text, String error, boolean declined) {</span>
-<span class="nc" id="L126">			this.id = id;</span>
-<span class="nc" id="L127">			this.text = text;</span>
-<span class="nc" id="L128">			this.error = error;</span>
-<span class="nc" id="L129">			this.declined = declined;</span>
-<span class="nc" id="L130">		}</span>
+<span class="nc" id="L138">		private Answer(String id, String text, String error, boolean declined) {</span>
+<span class="nc" id="L139">			this.id = id;</span>
+<span class="nc" id="L140">			this.text = text;</span>
+<span class="nc" id="L141">			this.error = error;</span>
+<span class="nc" id="L142">			this.declined = declined;</span>
+<span class="nc" id="L143">		}</span>
 
 		private static Answer ok(String id, String text) {
-<span class="nc" id="L133">			return new Answer(id, text, null, false);</span>
+<span class="nc" id="L146">			return new Answer(id, text, null, false);</span>
 		}
 
 		private static Answer failed(String error) {
-<span class="nc bnc" id="L137" title="All 2 branches missed.">			return new Answer(null, null, error == null ? &quot;&quot; : error, false);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">			return new Answer(null, null, error == null ? &quot;&quot; : error, false);</span>
 		}
 
 		private static Answer declinedByHost() {
-<span class="nc" id="L141">			return new Answer(null, null, null, true);</span>
+<span class="nc" id="L154">			return new Answer(null, null, null, true);</span>
 		}
 
 		public String getId() {
-<span class="nc" id="L145">			return id;</span>
+<span class="nc" id="L158">			return id;</span>
 		}
 
 		public String getText() {
-<span class="nc" id="L149">			return text;</span>
+<span class="nc" id="L162">			return text;</span>
 		}
 
 		/** The reason of a failure, or &lt;code&gt;null&lt;/code&gt; when the resource is there. */
 		public String getError() {
-<span class="nc" id="L154">			return error;</span>
+<span class="nc" id="L167">			return error;</span>
 		}
 
 		/** Whether the host declined the file (its loader returned &lt;code&gt;false&lt;/code&gt;). */
 		public boolean isDeclined() {
-<span class="nc" id="L159">			return declined;</span>
+<span class="nc" id="L172">			return declined;</span>
 		}
 	}
 
@@ -168,19 +181,19 @@ public final class PendingResources {
 		private final String from;
 		private final String kind;
 
-<span class="nc" id="L171">		private Wanted(String type, String key, String path, String from, String kind) {</span>
-<span class="nc" id="L172">			this.type = type;</span>
-<span class="nc" id="L173">			this.key = key;</span>
-<span class="nc" id="L174">			this.path = path;</span>
-<span class="nc" id="L175">			this.from = from;</span>
-<span class="nc" id="L176">			this.kind = kind;</span>
-<span class="nc" id="L177">		}</span>
+<span class="nc" id="L184">		private Wanted(String type, String key, String path, String from, String kind) {</span>
+<span class="nc" id="L185">			this.type = type;</span>
+<span class="nc" id="L186">			this.key = key;</span>
+<span class="nc" id="L187">			this.path = path;</span>
+<span class="nc" id="L188">			this.from = from;</span>
+<span class="nc" id="L189">			this.kind = kind;</span>
+<span class="nc" id="L190">		}</span>
 
 		@Override
 		public String toString() {
-<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (FILE.equals(type))</span>
-<span class="nc bnc" id="L182" title="All 2 branches missed.">				return path + (from == null ? &quot;&quot; : &quot; (from &quot; + from + &quot;)&quot;);</span>
-<span class="nc" id="L183">			return path;</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">			if (FILE.equals(type))</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">				return path + (from == null ? &quot;&quot; : &quot; (from &quot; + from + &quot;)&quot;);</span>
+<span class="nc" id="L196">			return path;</span>
 		}
 	}
 
@@ -189,10 +202,10 @@ public final class PendingResources {
 	 * new map rather than a cleared one, so that a late answer for an older
 	 * request lands in a map nobody reads any more.
 	 */
-<span class="nc" id="L192">	private static Map&lt;String, Answer&gt; answers = new HashMap&lt;String, Answer&gt;();</span>
+<span class="nc" id="L205">	private static Map&lt;String, Answer&gt; answers = new HashMap&lt;String, Answer&gt;();</span>
 
 	/** What the running attempt needed and did not find, in the order asked. */
-<span class="nc" id="L195">	private static final Map&lt;String, Wanted&gt; missing = new LinkedHashMap&lt;String, Wanted&gt;();</span>
+<span class="nc" id="L208">	private static final Map&lt;String, Wanted&gt; missing = new LinkedHashMap&lt;String, Wanted&gt;();</span>
 
 	/** Console warnings of the running attempt, written only if it is kept. */
 	private static List&lt;String&gt; warnings;
@@ -211,29 +224,29 @@ public final class PendingResources {
 	 * Viz.js instance, which is tried again.
 	 */
 	static void startRequest() {
-<span class="nc" id="L214">		answers = new HashMap&lt;String, Answer&gt;();</span>
-<span class="nc" id="L215">		missing.clear();</span>
-<span class="nc" id="L216">		GraphVizEngineJs.forgetFailure();</span>
-<span class="nc" id="L217">	}</span>
+<span class="nc" id="L227">		answers = new HashMap&lt;String, Answer&gt;();</span>
+<span class="nc" id="L228">		missing.clear();</span>
+<span class="nc" id="L229">		GraphVizEngineJs.forgetFailure();</span>
+<span class="nc" id="L230">	}</span>
 
 	static void startAttempt() {
-<span class="nc" id="L220">		missing.clear();</span>
-<span class="nc" id="L221">		warnings = new ArrayList&lt;String&gt;();</span>
-<span class="nc" id="L222">		attempting = true;</span>
-<span class="nc" id="L223">	}</span>
+<span class="nc" id="L233">		missing.clear();</span>
+<span class="nc" id="L234">		warnings = new ArrayList&lt;String&gt;();</span>
+<span class="nc" id="L235">		attempting = true;</span>
+<span class="nc" id="L236">	}</span>
 
 	/**
 	 * Ends the running attempt. The console warnings it produced are written if
 	 * it is the one whose result is delivered, and dropped if it is discarded.
 	 */
 	static void endAttempt(boolean kept) {
-<span class="nc" id="L230">		final List&lt;String&gt; pending = warnings;</span>
-<span class="nc" id="L231">		warnings = null;</span>
-<span class="nc" id="L232">		attempting = false;</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">		if (kept)</span>
-<span class="nc bnc" id="L234" title="All 2 branches missed.">			for (String message : pending)</span>
-<span class="nc" id="L235">				nativeWarn(message);</span>
-<span class="nc" id="L236">	}</span>
+<span class="nc" id="L243">		final List&lt;String&gt; pending = warnings;</span>
+<span class="nc" id="L244">		warnings = null;</span>
+<span class="nc" id="L245">		attempting = false;</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">		if (kept)</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">			for (String message : pending)</span>
+<span class="nc" id="L248">				nativeWarn(message);</span>
+<span class="nc" id="L249">	}</span>
 
 	/**
 	 * Whether the running attempt has missed a resource, and will therefore be
@@ -244,17 +257,17 @@ public final class PendingResources {
 	 * layout.
 	 */
 	public static boolean hasMissing() {
-<span class="nc bnc" id="L247" title="All 2 branches missed.">		return missing.isEmpty() == false;</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		return missing.isEmpty() == false;</span>
 	}
 
 	static String describeMissing() {
-<span class="nc" id="L251">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">		for (Wanted wanted : missing.values()) {</span>
-<span class="nc bnc" id="L253" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
-<span class="nc" id="L254">				sb.append(&quot;, &quot;);</span>
-<span class="nc" id="L255">			sb.append(wanted);</span>
-<span class="nc" id="L256">		}</span>
-<span class="nc" id="L257">		return sb.toString();</span>
+<span class="nc" id="L264">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">		for (Wanted wanted : missing.values()) {</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="nc" id="L267">				sb.append(&quot;, &quot;);</span>
+<span class="nc" id="L268">			sb.append(wanted);</span>
+<span class="nc" id="L269">		}</span>
+<span class="nc" id="L270">		return sb.toString();</span>
 	}
 
 	/**
@@ -263,11 +276,11 @@ public final class PendingResources {
 	 * does not repeat it.
 	 */
 	public static void warn(String message) {
-<span class="nc bnc" id="L266" title="All 2 branches missed.">		if (warnings != null)</span>
-<span class="nc" id="L267">			warnings.add(message);</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">		if (warnings != null)</span>
+<span class="nc" id="L280">			warnings.add(message);</span>
 		else
-<span class="nc" id="L269">			nativeWarn(message);</span>
-<span class="nc" id="L270">	}</span>
+<span class="nc" id="L282">			nativeWarn(message);</span>
+<span class="nc" id="L283">	}</span>
 
 	@JSBody(params = &quot;message&quot;, script = &quot;if (typeof console !== 'undefined' &amp;&amp; console.warn) console.warn(message);&quot;)
 	private static native void nativeWarn(String message);
@@ -282,7 +295,7 @@ public final class PendingResources {
 	 * noted as missing).
 	 */
 	static Answer script(String url) {
-<span class="nc" id="L285">		return lookup(new Wanted(SCRIPT, SCRIPT + &quot;\n&quot; + url, url, null, null));</span>
+<span class="nc" id="L298">		return lookup(new Wanted(SCRIPT, SCRIPT + &quot;\n&quot; + url, url, null, null));</span>
 	}
 
 	/**
@@ -290,19 +303,19 @@ public final class PendingResources {
 	 * when it has not been asked yet (it is then noted as missing).
 	 */
 	static Answer file(String path, String from, String kind) {
-<span class="nc" id="L293">		return lookup(new Wanted(FILE, FILE + &quot;\n&quot; + path + &quot;\n&quot; + from + &quot;\n&quot; + kind, path, from, kind));</span>
+<span class="nc" id="L306">		return lookup(new Wanted(FILE, FILE + &quot;\n&quot; + path + &quot;\n&quot; + from + &quot;\n&quot; + kind, path, from, kind));</span>
 	}
 
 	/** Notes that the Viz.js instance is needed and not ready yet. */
 	public static void requireViz() {
-<span class="nc" id="L298">		lookup(new Wanted(VIZ, VIZ, &quot;Viz.js&quot;, null, null));</span>
-<span class="nc" id="L299">	}</span>
+<span class="nc" id="L311">		lookup(new Wanted(VIZ, VIZ, &quot;Viz.js&quot;, null, null));</span>
+<span class="nc" id="L312">	}</span>
 
 	private static Answer lookup(Wanted wanted) {
-<span class="nc" id="L302">		final Answer answer = answers.get(wanted.key);</span>
-<span class="nc bnc" id="L303" title="All 6 branches missed.">		if (answer == null &amp;&amp; attempting &amp;&amp; missing.containsKey(wanted.key) == false)</span>
-<span class="nc" id="L304">			missing.put(wanted.key, wanted);</span>
-<span class="nc" id="L305">		return answer;</span>
+<span class="nc" id="L315">		final Answer answer = answers.get(wanted.key);</span>
+<span class="nc bnc" id="L316" title="All 6 branches missed.">		if (answer == null &amp;&amp; attempting &amp;&amp; missing.containsKey(wanted.key) == false)</span>
+<span class="nc" id="L317">			missing.put(wanted.key, wanted);</span>
+<span class="nc" id="L318">		return answer;</span>
 	}
 
 	// =========================================================================
@@ -316,46 +329,46 @@ public final class PendingResources {
 	 * within this call.
 	 */
 	static void loadMissing(final ScriptLoaderJs.Ok done) {
-<span class="nc" id="L319">		final Map&lt;String, Answer&gt; target = answers;</span>
-<span class="nc" id="L320">		final List&lt;Wanted&gt; list = new ArrayList&lt;Wanted&gt;(missing.values());</span>
-<span class="nc" id="L321">		missing.clear();</span>
-<span class="nc" id="L322">		final Round round = new Round(target, list.size(), done);</span>
+<span class="nc" id="L332">		final Map&lt;String, Answer&gt; target = answers;</span>
+<span class="nc" id="L333">		final List&lt;Wanted&gt; list = new ArrayList&lt;Wanted&gt;(missing.values());</span>
+<span class="nc" id="L334">		missing.clear();</span>
+<span class="nc" id="L335">		final Round round = new Round(target, list.size(), done);</span>
 
-<span class="nc bnc" id="L324" title="All 2 branches missed.">		for (Wanted wanted : list)</span>
-<span class="nc" id="L325">			start(round, wanted);</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">		for (Wanted wanted : list)</span>
+<span class="nc" id="L338">			start(round, wanted);</span>
 
-<span class="nc" id="L327">		round.timer = setTimeout(new ScriptLoaderJs.Ok() {</span>
+<span class="nc" id="L340">		round.timer = setTimeout(new ScriptLoaderJs.Ok() {</span>
 			@Override
 			public void invoke() {
-<span class="nc" id="L330">				round.timer = null;</span>
-<span class="nc bnc" id="L331" title="All 2 branches missed.">				for (Wanted wanted : list)</span>
-<span class="nc" id="L332">					round.settle(wanted.key, Answer.failed(&quot;no answer within &quot; + (ROUND_TIMEOUT_MS / 1000)</span>
+<span class="nc" id="L343">				round.timer = null;</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">				for (Wanted wanted : list)</span>
+<span class="nc" id="L345">					round.settle(wanted.key, Answer.failed(&quot;no answer within &quot; + (ROUND_TIMEOUT_MS / 1000)</span>
 							+ &quot; s while loading &quot; + wanted.path));
-<span class="nc" id="L334">			}</span>
+<span class="nc" id="L347">			}</span>
 		}, ROUND_TIMEOUT_MS);
-<span class="nc" id="L336">		round.armed = true;</span>
-<span class="nc" id="L337">		round.finishIfDone();</span>
-<span class="nc" id="L338">	}</span>
+<span class="nc" id="L349">		round.armed = true;</span>
+<span class="nc" id="L350">		round.finishIfDone();</span>
+<span class="nc" id="L351">	}</span>
 
 	private static void start(final Round round, final Wanted wanted) {
-<span class="nc" id="L341">		final String key = wanted.key;</span>
+<span class="nc" id="L354">		final String key = wanted.key;</span>
 		try {
-<span class="nc bnc" id="L343" title="All 2 branches missed.">			if (SCRIPT.equals(wanted.type)) {</span>
-<span class="nc" id="L344">				ScriptLoaderJs.loadOnce(wanted.path, () -&gt; round.settle(key, Answer.ok(null, null)),</span>
-<span class="nc" id="L345">						message -&gt; round.settle(key, Answer.failed(message)));</span>
-<span class="nc bnc" id="L346" title="All 2 branches missed.">			} else if (FILE.equals(wanted.type)) {</span>
-<span class="nc" id="L347">				final boolean handled = FileLoaderJs.load(wanted.path, wanted.from, wanted.kind,</span>
-<span class="nc" id="L348">						(id, text) -&gt; round.settle(key, Answer.ok(id, text)),</span>
-<span class="nc" id="L349">						reason -&gt; round.settle(key, Answer.failed(reason)));</span>
-<span class="nc bnc" id="L350" title="All 2 branches missed.">				if (handled == false)</span>
-<span class="nc" id="L351">					round.settle(key, Answer.declinedByHost());</span>
-<span class="nc" id="L352">			} else {</span>
-<span class="nc" id="L353">				GraphVizEngineJs.prepare(() -&gt; round.settle(key, Answer.ok(null, null)));</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">			if (SCRIPT.equals(wanted.type)) {</span>
+<span class="nc" id="L357">				ScriptLoaderJs.loadOnce(wanted.path, () -&gt; round.settle(key, Answer.ok(null, null)),</span>
+<span class="nc" id="L358">						message -&gt; round.settle(key, Answer.failed(message)));</span>
+<span class="nc bnc" id="L359" title="All 2 branches missed.">			} else if (FILE.equals(wanted.type)) {</span>
+<span class="nc" id="L360">				final boolean handled = FileLoaderJs.load(wanted.path, wanted.from, wanted.kind,</span>
+<span class="nc" id="L361">						(id, text) -&gt; round.settle(key, Answer.ok(id, text)),</span>
+<span class="nc" id="L362">						reason -&gt; round.settle(key, Answer.failed(reason)));</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">				if (handled == false)</span>
+<span class="nc" id="L364">					round.settle(key, Answer.declinedByHost());</span>
+<span class="nc" id="L365">			} else {</span>
+<span class="nc" id="L366">				GraphVizEngineJs.prepare(() -&gt; round.settle(key, Answer.ok(null, null)));</span>
 			}
-<span class="nc" id="L355">		} catch (Throwable t) {</span>
-<span class="nc" id="L356">			round.settle(key, Answer.failed(String.valueOf(t)));</span>
-<span class="nc" id="L357">		}</span>
-<span class="nc" id="L358">	}</span>
+<span class="nc" id="L368">		} catch (Throwable t) {</span>
+<span class="nc" id="L369">			round.settle(key, Answer.failed(String.valueOf(t)));</span>
+<span class="nc" id="L370">		}</span>
+<span class="nc" id="L371">	}</span>
 
 	/** One loading round: the answers it waits for, and what to do after. */
 	private static final class Round {
@@ -366,32 +379,32 @@ public final class PendingResources {
 		private boolean finished;
 		private JSObject timer;
 
-<span class="nc" id="L369">		private Round(Map&lt;String, Answer&gt; target, int pending, ScriptLoaderJs.Ok done) {</span>
-<span class="nc" id="L370">			this.target = target;</span>
-<span class="nc" id="L371">			this.pending = pending;</span>
-<span class="nc" id="L372">			this.done = done;</span>
-<span class="nc" id="L373">		}</span>
+<span class="nc" id="L382">		private Round(Map&lt;String, Answer&gt; target, int pending, ScriptLoaderJs.Ok done) {</span>
+<span class="nc" id="L383">			this.target = target;</span>
+<span class="nc" id="L384">			this.pending = pending;</span>
+<span class="nc" id="L385">			this.done = done;</span>
+<span class="nc" id="L386">		}</span>
 
 		/** Records the first answer for a key; any later one is ignored. */
 		private void settle(String key, Answer answer) {
-<span class="nc bnc" id="L377" title="All 4 branches missed.">			if (finished || target.containsKey(key))</span>
-<span class="nc" id="L378">				return;</span>
-<span class="nc" id="L379">			target.put(key, answer);</span>
-<span class="nc" id="L380">			pending--;</span>
-<span class="nc" id="L381">			finishIfDone();</span>
-<span class="nc" id="L382">		}</span>
+<span class="nc bnc" id="L390" title="All 4 branches missed.">			if (finished || target.containsKey(key))</span>
+<span class="nc" id="L391">				return;</span>
+<span class="nc" id="L392">			target.put(key, answer);</span>
+<span class="nc" id="L393">			pending--;</span>
+<span class="nc" id="L394">			finishIfDone();</span>
+<span class="nc" id="L395">		}</span>
 
 		private void finishIfDone() {
 			// Not before every loader has been started and the timer armed: an answer
 			// given synchronously must not end the round while it is being set up.
-<span class="nc bnc" id="L387" title="All 6 branches missed.">			if (finished || armed == false || pending &gt; 0)</span>
-<span class="nc" id="L388">				return;</span>
-<span class="nc" id="L389">			finished = true;</span>
-<span class="nc bnc" id="L390" title="All 2 branches missed.">			if (timer != null)</span>
-<span class="nc" id="L391">				clearTimeout(timer);</span>
-<span class="nc" id="L392">			timer = null;</span>
-<span class="nc" id="L393">			later(done);</span>
-<span class="nc" id="L394">		}</span>
+<span class="nc bnc" id="L400" title="All 6 branches missed.">			if (finished || armed == false || pending &gt; 0)</span>
+<span class="nc" id="L401">				return;</span>
+<span class="nc" id="L402">			finished = true;</span>
+<span class="nc bnc" id="L403" title="All 2 branches missed.">			if (timer != null)</span>
+<span class="nc" id="L404">				clearTimeout(timer);</span>
+<span class="nc" id="L405">			timer = null;</span>
+<span class="nc" id="L406">			later(done);</span>
+<span class="nc" id="L407">		}</span>
 	}
 
 	@JSBody(params = { &quot;callback&quot;, &quot;ms&quot; }, script = &quot;return setTimeout(function() { callback(); }, ms);&quot;)

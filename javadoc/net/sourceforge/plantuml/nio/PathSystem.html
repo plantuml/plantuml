@@ -172,18 +172,27 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../json/JsonValue.html" title="class in net.sourceforge.plantuml.json">JsonValue</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTeaVMStdlibJson(java.lang.String)" class="member-name-link">getTeaVMStdlibJson</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#main(java.lang.String%5B%5D)" class="member-name-link">main</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withCurrentDir(net.sourceforge.plantuml.nio.NFolder)" class="member-name-link">withCurrentDir</a><wbr>(<a href="NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>&nbsp;parentFile)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isDiscardedTeaVMAttempt()" class="member-name-link">isDiscardedTeaVMAttempt</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Whether the running rendering of the browser engine has already missed a
+ resource it has to ask JavaScript for (a file of the host, a support
+ script, a stdlib bundle): it is then an attempt that will be discarded and
+ rendered again once the resources are there (see
+ <code>PendingResources</code>).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#main(java.lang.String%5B%5D)" class="member-name-link">main</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withoutHostFiles()" class="member-name-link">withoutHostFiles</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withCurrentDir(net.sourceforge.plantuml.nio.NFolder)" class="member-name-link">withCurrentDir</a><wbr>(<a href="NFolder.html" title="interface in net.sourceforge.plantuml.nio">NFolder</a>&nbsp;parentFile)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PathSystem.html" title="class in net.sourceforge.plantuml.nio">PathSystem</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withoutHostFiles()" class="member-name-link">withoutHostFiles</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">This path system with the host's file loader out of reach.</div>
 </div>
 </div>
@@ -281,6 +290,20 @@ loadScripts(document, 'script');</script>
  which is what an include strategy compares for such a file; <code>null</code>
  for any other file, and always on the JVM, which never reaches the browser
  classes.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isDiscardedTeaVMAttempt()">
+<h3>isDiscardedTeaVMAttempt</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDiscardedTeaVMAttempt</span>()</div>
+<div class="block">Whether the running rendering of the browser engine has already missed a
+ resource it has to ask JavaScript for (a file of the host, a support
+ script, a stdlib bundle): it is then an attempt that will be discarded and
+ rendered again once the resources are there (see
+ <code>PendingResources</code>). An include that fails in such an attempt
+ is skipped rather than stopping the preprocessing, so that the includes
+ after it are still read, and every file of one level is asked for in the
+ same round. Always <code>false</code> on the JVM.</div>
 </section>
 </li>
 <li>
