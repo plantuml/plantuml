@@ -83,6 +83,7 @@ public final class Code {
 			case Op.LOAD_GLOBAL:
 			case Op.STORE_GLOBAL:
 			case Op.DELETE_GLOBAL:
+			case Op.DELETE_GLOBAL_Q:
 			case Op.LOAD_ATTR:
 			case Op.STORE_ATTR:
 			case Op.DELETE_ATTR:
@@ -92,6 +93,8 @@ public final class Code {
 			case Op.LOAD_FAST:
 			case Op.STORE_FAST:
 			case Op.DELETE_FAST:
+			case Op.DELETE_FAST_Q:
+			case Op.DELETE_CELL_Q:
 			case Op.LOAD_CELL:
 			case Op.STORE_CELL:
 			case Op.DELETE_CELL:

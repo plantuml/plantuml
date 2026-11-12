@@ -154,16 +154,21 @@ final class PyOps {
 		return f;
 	}
 
-	static double floatPow(double x, double y) {
-		if (y == 0)
+	/** Math.pow with the special values of C99, which Java does not follow: 1 ** y, x ** 0 and (-1) ** inf are 1. */
+	static double cPow(double x, double y) {
+		if (y == 0 || x == 1.0 || (x == -1.0 && Double.isInfinite(y)))
 			return 1.0;
-		if (x == 1.0)
+		return Math.pow(x, y);
+	}
+
+	static double floatPow(double x, double y) {
+		if (y == 0 || x == 1.0 || (x == -1.0 && Double.isInfinite(y)))
 			return 1.0;
 		if (x != x || y != y)
 			return Double.NaN;
 		if (x == 0 && y < 0)
 			throw err(Types.ZERO_DIVISION, "0.0 cannot be raised to a negative power");
-		if (x < 0 && !Double.isInfinite(y) && y != Math.rint(y))
+		if (x < 0 && y == y && !Double.isInfinite(y) && y != Math.rint(y))
 			throw err(Types.VALUE_ERROR, "negative number cannot be raised to a fractional power");
 		double r = Math.pow(x, y);
 		if (Double.isInfinite(r) && !Double.isInfinite(x) && !Double.isInfinite(y))
@@ -381,6 +386,11 @@ final class PyOps {
 		return eq(a, b, 0);
 	}
 
+	/** The comparison of the items of a container: "is" is tried before "==", so a NaN is equal to itself there. */
+	static boolean eqItem(Object a, Object b) {
+		return a == b || eq(a, b, 0);
+	}
+
 	private static boolean eq(Object a, Object b, int depth) {
 		if (a == b)
 			return !(a instanceof Double) || ((Double) a).doubleValue() == ((Double) a).doubleValue();
@@ -413,7 +423,19 @@ final class PyOps {
 				throw err(Types.RECURSION_ERROR, "maximum recursion depth exceeded in comparison");
 			for (Map.Entry<Object, PyDict.Entry> e : x.map.entrySet()) {
 				PyDict.Entry o = y.map.get(e.getKey());
-				if (o == null || !eq(e.getValue().value, o.value, depth + 1))
+				if (o == null || !(e.getValue().value == o.value || eq(e.getValue().value, o.value, depth + 1)))
+					return false;
+			}
+			return true;
+		}
+		if (a instanceof PyView && b instanceof PyView) {
+			// keys() and items() compare as sets, values() by identity (done above)
+			PyView x = (PyView) a, y = (PyView) b;
+			if (x.kind != y.kind || x.kind == PyView.VALUES || x.dict.size() != y.dict.size())
+				return false;
+			for (Map.Entry<Object, PyDict.Entry> e : x.dict.map.entrySet()) {
+				PyDict.Entry o = y.dict.map.get(e.getKey());
+				if (o == null || (x.kind == PyView.ITEMS && !eqItem(e.getValue().value, o.value)))
 					return false;
 			}
 			return true;
@@ -462,7 +484,7 @@ final class PyOps {
 		if (depth > MAX_NESTING)
 			throw err(Types.RECURSION_ERROR, "maximum recursion depth exceeded in comparison");
 		for (int i = 0; i < x.length; i++)
-			if (!eq(x[i], y[i], depth + 1))
+			if (x[i] != y[i] && !eq(x[i], y[i], depth + 1))
 				return false;
 		return true;
 	}
@@ -584,7 +606,7 @@ final class PyOps {
 			throw err(Types.RECURSION_ERROR, "maximum recursion depth exceeded in comparison");
 		int n = Math.min(x.length, y.length);
 		for (int i = 0; i < n; i++)
-			if (!eq(x[i], y[i], depth + 1))
+			if (x[i] != y[i] && !eq(x[i], y[i], depth + 1))
 				return compareBool(op, x[i], y[i], depth + 1);
 		return test(op, x.length < y.length ? -1 : x.length > y.length ? 1 : 0);
 	}
@@ -612,13 +634,13 @@ final class PyOps {
 		if (container instanceof PyList) {
 			ArrayList<Object> l = ((PyList) container).items;
 			for (int i = 0; i < l.size(); i++)
-				if (eq(l.get(i), item))
+				if (eqItem(l.get(i), item))
 					return true;
 			return false;
 		}
 		if (container instanceof PyTuple) {
 			for (Object o : ((PyTuple) container).items)
-				if (eq(o, item))
+				if (eqItem(o, item))
 					return true;
 			return false;
 		}
@@ -642,7 +664,7 @@ final class PyOps {
 				return v.dict.containsKey(item);
 			PyIter it = v.iterator();
 			for (Object x = it.next(); x != null; x = it.next())
-				if (eq(x, item))
+				if (eqItem(x, item))
 					return true;
 			return false;
 		}
@@ -1059,13 +1081,18 @@ final class PyOps {
 			sb.append(')');
 		} else if (o instanceof PyException) {
 			PyException e = (PyException) o;
-			sb.append(e.type.name).append('(');
-			for (int i = 0; i < e.args.length; i++) {
-				if (i > 0)
-					sb.append(", ");
-				repr(e.args[i], sb, depth + 1);
+			final String text = e.type.isClass() ? userText(e.type, e, "__repr__") : null;
+			if (text != null) {
+				sb.append(text);
+			} else {
+				sb.append(e.type.name).append('(');
+				for (int i = 0; i < e.args.length; i++) {
+					if (i > 0)
+						sb.append(", ");
+					repr(e.args[i], sb, depth + 1);
+				}
+				sb.append(')');
 			}
-			sb.append(')');
 		} else if (o instanceof PyType) {
 			PyType t = (PyType) o;
 			sb.append("<class '").append(t.fullName()).append("'>");
@@ -1112,8 +1139,11 @@ final class PyOps {
 	static String str(Object o) {
 		if (PyStr.is(o))
 			return PyStr.text(o);
-		if (o instanceof PyException)
-			return excText((PyException) o);
+		if (o instanceof PyException) {
+			final PyException e = (PyException) o;
+			final String text = e.type.isClass() ? userText(e.type, e, "__str__") : null;
+			return text != null ? text : excText(e);
+		}
 		if (o instanceof PyInstance) {
 			// as object.__str__, which is repr(self) when the class has no __str__
 			final String text = userText((PyInstance) o, "__str__");
@@ -1129,10 +1159,14 @@ final class PyOps {
 	 * interpreter of the class; what it returns must be a str.
 	 */
 	private static String userText(PyInstance o, String method) {
-		final Object fn = o.type.lookup(method);
+		return userText(o.type, o, method);
+	}
+
+	private static String userText(PyType type, Object o, String method) {
+		final Object fn = type.lookup(method);
 		if (fn == null)
 			return null;
-		final Object result = o.type.interp.call(fn, o);
+		final Object result = type.interp.call(fn, o);
 		if (PyStr.is(result) == false)
 			throw err(Types.TYPE_ERROR, method + " returned non-string (type " + typeName(result) + ")");
 		return PyStr.text(result);

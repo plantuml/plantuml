@@ -25,9 +25,16 @@ final class Fmt {
 		BigDecimal bd = new BigDecimal(a);
 		BigDecimal r = null;
 		for (int p = 1; p <= 17; p++) {
+			// the nearest rounding may not read back (the interval of the texts that do is
+			// asymmetric below a power of two), the one on the other side may
 			r = bd.round(new MathContext(p, RoundingMode.HALF_EVEN));
 			if (Double.parseDouble(r.toString()) == a)
 				break;
+			final BigDecimal other = bd.round(new MathContext(p, bd.compareTo(r) > 0 ? RoundingMode.UP : RoundingMode.DOWN));
+			if (other.compareTo(r) != 0 && Double.parseDouble(other.toString()) == a) {
+				r = other;
+				break;
+			}
 		}
 		String digits = r.unscaledValue().toString();
 		int decpt = digits.length() - r.scale();
@@ -100,7 +107,8 @@ final class Fmt {
 		return sb.toString();
 	}
 
-	private static String general(double a, int prec, boolean upper, boolean alt) {
+	/** {@code dot0}: the presentation of a float with a precision and no type, which leaves the fixed notation one digit earlier. */
+	private static String general(double a, int prec, boolean upper, boolean alt, boolean dot0) {
 		if (prec == 0)
 			prec = 1;
 		int x = 0;
@@ -109,9 +117,11 @@ final class Fmt {
 			x = r.unscaledValue().toString().length() - r.scale() - 1;
 		}
 		String s;
-		if (x >= -4 && x < prec)
+		if (x >= -4 && x < (dot0 ? prec - 1 : prec)) {
 			s = fixed(a, prec - 1 - x);
-		else
+			if (alt && s.indexOf('.') < 0)
+				s += ".";
+		} else
 			s = sci(a, prec - 1, upper, alt);
 		if (!alt) {
 			int e = s.indexOf(upper ? 'E' : 'e');
@@ -147,7 +157,7 @@ final class Fmt {
 		case 'E':
 			return sci(a, prec, upper, alt);
 		default:
-			return general(a, prec, upper, alt);
+			return general(a, prec, upper, alt, false);
 		}
 	}
 
@@ -257,8 +267,8 @@ final class Fmt {
 		return sb.append(quote).toString();
 	}
 
-	static String asciiStr(String s) {
-		String r = reprStr(s);
+	/** The non-ASCII characters of {@code r}, which is already a repr, as escapes. */
+	static String asciiStr(String r) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < r.length();) {
 			int cp = r.codePointAt(i);
@@ -315,6 +325,7 @@ final class Fmt {
 		char sign = '-';
 		boolean alt;
 		boolean zero;
+		boolean zeroAlign; // the '=' alignment comes from the 0 flag only
 		int width = -1;
 		char grouping;
 		int prec = -1;
@@ -384,8 +395,10 @@ final class Fmt {
 			throw PyOps.err(Types.VALUE_ERROR, "Invalid format specifier '" + spec + "'");
 		if (s.zero && !s.fillGiven) {
 			s.fill = '0';
-			if (s.align == 0)
+			if (s.align == 0) {
 				s.align = '=';
+				s.zeroAlign = true;
+			}
 		}
 		return s;
 	}
@@ -422,6 +435,20 @@ final class Fmt {
 		}
 	}
 
+	/** Groups the digits; a zero padding goes inside the groups, and takes the digits as far as the width. */
+	private static String groupPadded(String digits, Spec s, int fixedLen, int restLen, int size) {
+		if (s.align == '=' && s.fill == '0' && s.width > 0) {
+			int k = digits.length();
+			while (fixedLen + k + (k - 1) / size + restLen < s.width)
+				k++;
+			StringBuilder z = new StringBuilder();
+			for (int i = digits.length(); i < k; i++)
+				z.append('0');
+			digits = z + digits;
+		}
+		return group(digits, s.grouping, size);
+	}
+
 	private static String group(String digits, char sep, int size) {
 		int n = digits.length();
 		if (n <= size)
@@ -449,7 +476,7 @@ final class Fmt {
 		if (spec.isEmpty())
 			return PyOps.str(v);
 		Spec s = parseSpec(spec);
-		if (v instanceof Boolean && s.type != 0)
+		if (v instanceof Boolean)
 			v = Integer.valueOf(((Boolean) v).booleanValue() ? 1 : 0);
 		if (v instanceof Integer)
 			return formatInt(((Integer) v).intValue(), s);
@@ -462,6 +489,8 @@ final class Fmt {
 			String str = PyStr.text(v);
 			if (s.prec >= 0 && cpLength(str) > s.prec)
 				str = str.substring(0, str.offsetByCodePoints(0, s.prec));
+			if (s.zeroAlign)
+				s.align = '<';
 			return pad(s, "", "", str, '<');
 		}
 		throw PyOps.err(Types.TYPE_ERROR, "unsupported format string passed to " + PyOps.typeName(v) + ".__format__");
@@ -480,31 +509,31 @@ final class Fmt {
 		case 'n':
 			body = Long.toString(a);
 			if (s.grouping != 0)
-				body = group(body, s.grouping, 3);
+				body = groupPadded(body, s, signOf(s, v < 0).length(), 0, 3);
 			break;
 		case 'b':
 			body = Long.toString(a, 2);
 			prefix = s.alt ? "0b" : "";
 			if (s.grouping == '_')
-				body = group(body, '_', 4);
+				body = groupPadded(body, s, signOf(s, v < 0).length() + prefix.length(), 0, 4);
 			break;
 		case 'o':
 			body = Long.toString(a, 8);
 			prefix = s.alt ? "0o" : "";
 			if (s.grouping == '_')
-				body = group(body, '_', 4);
+				body = groupPadded(body, s, signOf(s, v < 0).length() + prefix.length(), 0, 4);
 			break;
 		case 'x':
 			body = Long.toString(a, 16);
 			prefix = s.alt ? "0x" : "";
 			if (s.grouping == '_')
-				body = group(body, '_', 4);
+				body = groupPadded(body, s, signOf(s, v < 0).length() + prefix.length(), 0, 4);
 			break;
 		case 'X':
 			body = Long.toString(a, 16).toUpperCase();
 			prefix = s.alt ? "0X" : "";
 			if (s.grouping == '_')
-				body = group(body, '_', 4);
+				body = groupPadded(body, s, signOf(s, v < 0).length() + prefix.length(), 0, 4);
 			break;
 		case 'c':
 			if (v < 0 || v > 0x10ffff)
@@ -532,6 +561,8 @@ final class Fmt {
 			int prec = s.prec < 0 ? 6 : s.prec;
 			if (tt == '%') {
 				body = floatBody(a * 100, 'f', prec, s.alt) + "%";
+			} else if (t == 0 && a == a && !Double.isInfinite(a)) {
+				body = general(a, prec, false, s.alt, true);
 			} else {
 				body = floatBody(a, tt, prec, s.alt);
 			}
@@ -542,7 +573,8 @@ final class Fmt {
 			int dot = body.indexOf('.');
 			int e = body.indexOf('e');
 			int end = dot >= 0 ? dot : e >= 0 ? e : body.length();
-			body = group(body.substring(0, end), s.grouping, 3) + body.substring(end);
+			body = groupPadded(body.substring(0, end), s, signOf(s, neg).length(), body.length() - end, 3)
+					+ body.substring(end);
 		}
 		return pad(s, signOf(s, neg), "", body, '>');
 	}

@@ -200,7 +200,7 @@ final class Methods {
 					if (i >= n)
 						break;
 					if (maxsplit >= 0 && parts.size() >= maxsplit) {
-						parts.add(stripWith(s.substring(i), null, false, true));
+						parts.add(s.substring(i));
 						break;
 					}
 					int j = i;
@@ -218,7 +218,7 @@ final class Methods {
 					if (i <= 0)
 						break;
 					if (maxsplit >= 0 && rev.size() >= maxsplit) {
-						rev.add(stripWith(s.substring(0, i), null, true, false));
+						rev.add(s.substring(0, i));
 						break;
 					}
 					int j = i;
@@ -403,6 +403,69 @@ final class Methods {
 		return sb.toString();
 	}
 
+	private static boolean isCased(int cp) {
+		return Character.isUpperCase(cp) || Character.isLowerCase(cp) || Character.isTitleCase(cp);
+	}
+
+	private static boolean isCaseIgnorable(int cp) {
+		switch (Character.getType(cp)) {
+		case Character.NON_SPACING_MARK:
+		case Character.ENCLOSING_MARK:
+		case Character.FORMAT:
+		case Character.MODIFIER_LETTER:
+		case Character.MODIFIER_SYMBOL:
+			return true;
+		default:
+			return cp == '\'' || cp == '.' || cp == ':' || cp == 0xb7 || cp == 0x2019;
+		}
+	}
+
+	/** The lower case of the character at i, with the final sigma rule, which looks at the characters around. */
+	private static String lowerAt(String s, int i) {
+		int cp = s.codePointAt(i);
+		if (cp != 0x3a3)
+			return new String(Character.toChars(cp)).toLowerCase(Locale.ROOT);
+		boolean before = false;
+		for (int j = i; j > 0;) {
+			int p = s.codePointBefore(j);
+			j -= Character.charCount(p);
+			if (isCaseIgnorable(p))
+				continue;
+			before = isCased(p);
+			break;
+		}
+		boolean after = false;
+		for (int j = i + 1; j < s.length();) {
+			int q = s.codePointAt(j);
+			j += Character.charCount(q);
+			if (isCaseIgnorable(q))
+				continue;
+			after = isCased(q);
+			break;
+		}
+		return before && !after ? "\u03c2" : "\u03c3";
+	}
+
+	/** The title case of a character: the full mapping, whose upper case that changes the length is only capital in its first cased letter. */
+	private static String titleOf(int cp) {
+		String up = new String(Character.toChars(cp)).toUpperCase(Locale.ROOT);
+		if (up.codePointCount(0, up.length()) == 1)
+			return new String(Character.toChars(Character.toTitleCase(cp)));
+		StringBuilder sb = new StringBuilder();
+		boolean seen = false;
+		for (int i = 0; i < up.length();) {
+			int c = up.codePointAt(i);
+			i += Character.charCount(c);
+			if (seen)
+				sb.append(new String(Character.toChars(c)).toLowerCase(Locale.ROOT));
+			else
+				sb.appendCodePoint(c);
+			if (isCased(c))
+				seen = true;
+		}
+		return sb.toString();
+	}
+
 	private static Map<String, Builtin> strMethods() {
 		final Map<String, Builtin> table = new HashMap<String, Builtin>();
 		def(table, "upper", (in, a) -> {
@@ -411,7 +474,13 @@ final class Methods {
 		});
 		def(table, "lower", (in, a) -> {
 			need(a, 0, 0, "lower");
-			return (self(a).s).toLowerCase(Locale.ROOT);
+			String s = self(a).s;
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < s.length();) {
+				sb.append(lowerAt(s, i));
+				i += Character.charCount(s.codePointAt(i));
+			}
+			return sb.toString();
 		});
 		def(table, "title", (in, a) -> {
 			need(a, 0, 0, "title");
@@ -420,10 +489,12 @@ final class Methods {
 			boolean prev = false;
 			for (int i = 0; i < s.length();) {
 				int cp = s.codePointAt(i);
+				if (prev)
+					sb.append(lowerAt(s, i));
+				else
+					sb.append(titleOf(cp));
+				prev = isCased(cp);
 				i += Character.charCount(cp);
-				boolean letter = Character.isLetter(cp);
-				sb.appendCodePoint(letter ? (prev ? Character.toLowerCase(cp) : Character.toTitleCase(cp)) : cp);
-				prev = letter;
 			}
 			return sb.toString();
 		});
@@ -433,8 +504,12 @@ final class Methods {
 			if (s.isEmpty())
 				return s;
 			int n = Character.charCount(s.codePointAt(0));
-			return s.substring(0, n).toUpperCase(Locale.ROOT).substring(0, 1).concat(s.substring(0, n).toUpperCase(Locale.ROOT).substring(1))
-					+ s.substring(n).toLowerCase(Locale.ROOT);
+			StringBuilder sb = new StringBuilder(titleOf(s.codePointAt(0)));
+			for (int i = n; i < s.length();) {
+				sb.append(lowerAt(s, i));
+				i += Character.charCount(s.codePointAt(i));
+			}
+			return sb.toString();
 		});
 		def(table, "swapcase", (in, a) -> {
 			need(a, 0, 0, "swapcase");
@@ -442,9 +517,13 @@ final class Methods {
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < s.length();) {
 				int cp = s.codePointAt(i);
+				if (Character.isUpperCase(cp))
+					sb.append(lowerAt(s, i));
+				else if (Character.isLowerCase(cp))
+					sb.append(new String(Character.toChars(cp)).toUpperCase(Locale.ROOT));
+				else
+					sb.appendCodePoint(cp);
 				i += Character.charCount(cp);
-				sb.appendCodePoint(Character.isUpperCase(cp) ? Character.toLowerCase(cp)
-						: Character.isLowerCase(cp) ? Character.toUpperCase(cp) : cp);
 			}
 			return sb.toString();
 		});
@@ -654,7 +733,7 @@ final class Methods {
 			need(a, 1, 1, "remove");
 			ArrayList<Object> l = ((PyList) a[0]).items;
 			for (int i = 0; i < l.size(); i++)
-				if (PyOps.eq(l.get(i), a[1])) {
+				if (PyOps.eqItem(l.get(i), a[1])) {
 					l.remove(i);
 					return PyNone.NONE;
 				}
@@ -665,7 +744,7 @@ final class Methods {
 			ArrayList<Object> l = ((PyList) a[0]).items;
 			int[] w = window(a, 2, l.size());
 			for (int i = w[0]; i < w[1]; i++)
-				if (PyOps.eq(l.get(i), a[1]))
+				if (PyOps.eqItem(l.get(i), a[1]))
 					return Integer.valueOf(i);
 			throw PyOps.err(Types.VALUE_ERROR, PyOps.repr(a[1]) + " is not in list");
 		});
@@ -673,7 +752,7 @@ final class Methods {
 			need(a, 1, 1, "count");
 			int n = 0;
 			for (Object o : ((PyList) a[0]).items)
-				if (PyOps.eq(o, a[1]))
+				if (PyOps.eqItem(o, a[1]))
 					n++;
 			return Integer.valueOf(n);
 		});
@@ -714,7 +793,7 @@ final class Methods {
 			Object[] t = ((PyTuple) a[0]).items;
 			int[] w = window(a, 2, t.length);
 			for (int i = w[0]; i < w[1]; i++)
-				if (PyOps.eq(t[i], a[1]))
+				if (PyOps.eqItem(t[i], a[1]))
 					return Integer.valueOf(i);
 			throw PyOps.err(Types.VALUE_ERROR, "tuple.index(x): x not in tuple");
 		});
@@ -722,7 +801,7 @@ final class Methods {
 			need(a, 1, 1, "count");
 			int n = 0;
 			for (Object o : ((PyTuple) a[0]).items)
-				if (PyOps.eq(o, a[1]))
+				if (PyOps.eqItem(o, a[1]))
 					n++;
 			return Integer.valueOf(n);
 		});
@@ -786,6 +865,17 @@ final class Methods {
 			if (a.length > 2)
 				return a[2];
 			throw new PyError(new PyException(Types.KEY_ERROR, new Object[] { a[1] }));
+		});
+		def(table, "popitem", (in, a) -> {
+			need(a, 0, 0, "popitem");
+			PyDict d = (PyDict) a[0];
+			PyDict.Entry last = null;
+			for (PyDict.Entry e : d.map.values())
+				last = e;
+			if (last == null)
+				throw new PyError(new PyException(Types.KEY_ERROR, new Object[] { "popitem(): dictionary is empty" }));
+			d.remove(last.key);
+			return new PyTuple(new Object[] { last.key, last.value });
 		});
 		defKw(table, "update", (in, a) -> {
 			update((PyDict) a[0], a, null);

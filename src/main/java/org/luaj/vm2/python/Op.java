@@ -83,7 +83,15 @@ final class Op {
 	/** obj.name = value: obj on top, the value under it. */
 	static final int STORE_ATTR = 58;
 	static final int DELETE_ATTR = 59;
-	static final int COUNT = 60;
+	/** Pops the exception that a handler starts to handle; argument: the nesting of the handler in its frame. */
+	static final int HANDLER_ENTER = 60;
+	/** The handler of the nesting given as argument is over. */
+	static final int HANDLER_EXIT = 61;
+	/** Like DELETE_FAST, DELETE_CELL and DELETE_GLOBAL, but the name may be unbound already. */
+	static final int DELETE_FAST_Q = 62;
+	static final int DELETE_CELL_Q = 63;
+	static final int DELETE_GLOBAL_Q = 64;
+	static final int COUNT = 65;
 
 	// BINARY_OP operators
 	static final int BIN_ADD = 0;
@@ -116,7 +124,8 @@ final class Op {
 			"MAP_ADD", "DICT_ADD_KW", "DICT_MERGE_KW", "UNPACK", "JUMP", "JUMP_IF_FALSE", "JUMP_IF_TRUE",
 			"JUMP_IF_FALSE_KEEP", "JUMP_IF_TRUE_KEEP", "GET_ITER", "FOR_ITER", "CALL", "CALL_KW", "CALL_EX",
 			"MAKE_FUNCTION", "RETURN", "RAISE", "RERAISE", "EXC_MATCH", "IMPORT", "FORMAT_VALUE",
-			"STORE_ATTR", "DELETE_ATTR" };
+			"STORE_ATTR", "DELETE_ATTR", "HANDLER_ENTER", "HANDLER_EXIT", "DELETE_FAST_Q", "DELETE_CELL_Q",
+			"DELETE_GLOBAL_Q" };
 
 	static boolean isJump(int op) {
 		return op >= JUMP && op <= JUMP_IF_TRUE_KEEP || op == FOR_ITER;
@@ -132,6 +141,10 @@ final class Op {
 		case DELETE_CELL:
 		case MAKE_CELL:
 		case DELETE_GLOBAL:
+		case HANDLER_EXIT:
+		case DELETE_FAST_Q:
+		case DELETE_CELL_Q:
+		case DELETE_GLOBAL_Q:
 		case LOAD_ATTR:
 		case UNARY_NEG:
 		case UNARY_POS:
@@ -161,6 +174,7 @@ final class Op {
 		case RERAISE:
 		case EXC_MATCH:
 		case DELETE_ATTR:
+		case HANDLER_ENTER:
 			return -1;
 		case DUP:
 		case LOAD_CONST:

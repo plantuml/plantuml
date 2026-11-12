@@ -460,7 +460,7 @@ final class Builtins {
 		fn("reversed", (in, a) -> {
 			count("reversed", a, 1, 1);
 			if (a[0] instanceof PyTuple || a[0] instanceof PyList || PyStr.is(a[0]) || a[0] instanceof PyRange
-					|| a[0] instanceof PyDict) {
+					|| a[0] instanceof PyDict || a[0] instanceof PyView) {
 				ArrayList<Object> l = PyOps.toArrayList(a[0]);
 				java.util.Collections.reverse(l);
 				return new PyList(l);

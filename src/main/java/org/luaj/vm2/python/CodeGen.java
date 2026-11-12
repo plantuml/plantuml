@@ -214,15 +214,20 @@ final class CodeGen {
 	}
 
 	private void deleteName(String n) {
+		deleteName(n, false);
+	}
+
+	/** {@code quiet}: the name is unbound at the end of an "except ... as name", it is not an error if it is already. */
+	private void deleteName(String n, boolean quiet) {
 		switch (scope.kindOf(n)) {
 		case Scope.K_GLOBAL:
-			emit(Op.DELETE_GLOBAL, name(n));
+			emit(quiet ? Op.DELETE_GLOBAL_Q : Op.DELETE_GLOBAL, name(n));
 			break;
 		case Scope.K_LOCAL:
-			emit(Op.DELETE_FAST, scope.slotOf(n));
+			emit(quiet ? Op.DELETE_FAST_Q : Op.DELETE_FAST, scope.slotOf(n));
 			break;
 		default:
-			emit(Op.DELETE_CELL, scope.slotOf(n));
+			emit(quiet ? Op.DELETE_CELL_Q : Op.DELETE_CELL, scope.slotOf(n));
 			break;
 		}
 	}
@@ -819,11 +824,16 @@ final class CodeGen {
 				emit(Op.LOAD_FAST, tmp);
 				storeName(h.name);
 			}
+			// a bare raise in a function called from the body re-raises this exception
+			final int level = handlerTemps.size();
+			emit(Op.LOAD_FAST, tmp);
+			emit(Op.HANDLER_ENTER, level);
 			handlerTemps.add(Integer.valueOf(tmp));
 			statements(h.body);
 			handlerTemps.remove(handlerTemps.size() - 1);
+			emit(Op.HANDLER_EXIT, level);
 			if (h.name != null)
-				deleteName(h.name);
+				deleteName(h.name, true);
 			emitJump(Op.JUMP, end);
 			bind(next);
 		}

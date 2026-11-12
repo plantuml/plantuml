@@ -36,6 +36,10 @@ public final class Interp {
 	private int maxDepth = 1000;
 	/** pcs[d] is the next instruction of the frame at call depth d, kept for the exception handlers. */
 	private int[] pcs = new int[1002];
+	/** The exceptions being handled, the innermost last: what a bare raise re-raises. */
+	private final ArrayList<PyException> handled = new ArrayList<PyException>();
+	/** hbase[d] is the size of {@code handled} when the frame at call depth d started. */
+	private int[] hbase = new int[1002];
 
 	public Interp(Output out) {
 		this.out = out;
@@ -74,6 +78,7 @@ public final class Interp {
 	public void setMaxDepth(int n) {
 		maxDepth = n;
 		pcs = new int[n + 2];
+		hbase = new int[n + 2];
 	}
 
 	/** Number of steps (backward jumps and calls) executed so far. */
@@ -370,6 +375,7 @@ public final class Interp {
 		if (depth >= maxDepth)
 			throw PyOps.err(Types.RECURSION_ERROR, "maximum recursion depth exceeded");
 		final int d = ++depth;
+		hbase[d] = handled.size();
 		int pc = 0;
 		int sp = code.nslots;
 		try {
@@ -400,8 +406,14 @@ public final class Interp {
 				pc = code.excHandler[h];
 			}
 		} finally {
+			truncateHandled(hbase[d]);
 			depth = d - 1;
 		}
+	}
+
+	private void truncateHandled(int size) {
+		while (handled.size() > size)
+			handled.remove(handled.size() - 1);
 	}
 
 	private static int findHandler(Code code, int pc) {
@@ -501,6 +513,15 @@ public final class Interp {
 						if (f[arg] == null)
 							throw unbound(code, arg);
 						f[arg] = null;
+						break;
+					case Op.DELETE_FAST_Q:
+						f[arg] = null;
+						break;
+					case Op.DELETE_CELL_Q:
+						((Cell) f[arg]).value = null;
+						break;
+					case Op.DELETE_GLOBAL_Q:
+						globals.remove(names[arg]);
 						break;
 					case Op.LOAD_CELL: {
 						Object v = ((Cell) f[arg]).value;
@@ -880,9 +901,20 @@ public final class Interp {
 					case Op.RETURN:
 						return f[--sp];
 					case Op.RAISE:
-						if (arg == 0)
-							throw PyOps.err(Types.RUNTIME_ERROR, "No active exception to reraise");
+						if (arg == 0) {
+							if (handled.isEmpty())
+								throw PyOps.err(Types.RUNTIME_ERROR, "No active exception to reraise");
+							throw PyError.reraise(handled.get(handled.size() - 1));
+						}
 						throw toRaise(f[--sp]);
+					case Op.HANDLER_ENTER:
+						truncateHandled(hbase[level] + arg);
+						handled.add((PyException) f[--sp]);
+						f[sp] = null;
+						break;
+					case Op.HANDLER_EXIT:
+						truncateHandled(hbase[level] + arg);
+						break;
 					case Op.RERAISE:
 						throw PyError.reraise((PyException) f[--sp]);
 					case Op.EXC_MATCH: {

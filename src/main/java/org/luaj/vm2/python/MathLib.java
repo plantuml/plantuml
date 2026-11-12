@@ -203,9 +203,9 @@ final class MathLib {
 			double x = arg(a, 0, "pow"), y = arg(a, 1, "pow");
 			if (x == 0 && y < 0)
 				throw PyOps.err(Types.VALUE_ERROR, "math domain error");
-			if (x < 0 && !Double.isInfinite(y) && y != Math.rint(y))
+			if (x < 0 && y == y && !Double.isInfinite(y) && y != Math.rint(y))
 				throw PyOps.err(Types.VALUE_ERROR, "math domain error");
-			double r = Math.pow(x, y);
+			double r = PyOps.cPow(x, y);
 			if (Double.isInfinite(r) && !Double.isInfinite(x) && !Double.isInfinite(y))
 				throw PyOps.err(Types.OVERFLOW, "math range error");
 			return Double.valueOf(r);
