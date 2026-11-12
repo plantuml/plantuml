@@ -1,0 +1,8 @@
+TypeError TypeError TypeError TypeError
+TypeError TypeError TypeError TypeError
+ValueError ValueError ValueError ValueError
+ValueError ValueError ValueError ValueError
+ValueError ValueError ValueError ValueError
+'  A|' 'A  |' ValueError
+TypeError 'abc' 'abc' 'abc'
+ValueError 0 0 1 10
