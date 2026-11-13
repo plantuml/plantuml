@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 public class ChartSeries {
 
 <span class="fc" id="L45">	public enum SeriesType {</span>
-<span class="fc" id="L46">		BAR, LINE, AREA, SCATTER</span>
+<span class="fc" id="L46">		BAR, LINE, AREA, SCATTER, PIE, RADAR</span>
 	}
 
 <span class="fc" id="L49">	public enum MarkerShape {</span>
@@ -61,118 +61,168 @@ public class ChartSeries {
 	private boolean connect;
 	private MarkerShape markerShape;
 	private Stereotype stereotype;
+	// Data written as [key: value, ...]: the key of each value, else null
+	private List&lt;String&gt; keys;
+	// Color written after a value, as in [Dogs: 386 #3366CC]: one entry per value, null if none
+	private List&lt;HColor&gt; itemColors;
+	// Pie only: show percentages, and size of the hole of a donut (0 for a plain pie)
+	private boolean showPercent;
+	private double donutHole;
 
-<span class="fc" id="L65">	public ChartSeries(String name, SeriesType type, List&lt;Double&gt; values) {</span>
-<span class="fc" id="L66">		this.name = name;</span>
-<span class="fc" id="L67">		this.type = type;</span>
-<span class="fc" id="L68">		this.values = new ArrayList&lt;&gt;(values);</span>
-<span class="fc" id="L69">		this.xValues = null; // Index-based mode</span>
-<span class="fc" id="L70">		this.useSecondaryAxis = false;</span>
-<span class="fc" id="L71">		this.showLabels = false;</span>
-<span class="fc" id="L72">		this.interpolate = false;</span>
-<span class="fc" id="L73">		this.connect = false;</span>
-<span class="fc" id="L74">		this.markerShape = MarkerShape.CIRCLE; // Default marker shape</span>
-<span class="fc" id="L75">	}</span>
+<span class="fc" id="L72">	public ChartSeries(String name, SeriesType type, List&lt;Double&gt; values) {</span>
+<span class="fc" id="L73">		this.name = name;</span>
+<span class="fc" id="L74">		this.type = type;</span>
+<span class="fc" id="L75">		this.values = new ArrayList&lt;&gt;(values);</span>
+<span class="fc" id="L76">		this.xValues = null; // Index-based mode</span>
+<span class="fc" id="L77">		this.useSecondaryAxis = false;</span>
+<span class="fc" id="L78">		this.showLabels = false;</span>
+<span class="fc" id="L79">		this.interpolate = false;</span>
+<span class="fc" id="L80">		this.connect = false;</span>
+<span class="fc" id="L81">		this.markerShape = MarkerShape.CIRCLE; // Default marker shape</span>
+<span class="fc" id="L82">	}</span>
 
-<span class="fc" id="L77">	public ChartSeries(String name, SeriesType type, List&lt;Double&gt; xValues, List&lt;Double&gt; yValues) {</span>
-<span class="fc" id="L78">		this.name = name;</span>
-<span class="fc" id="L79">		this.type = type;</span>
-<span class="fc" id="L80">		this.xValues = new ArrayList&lt;&gt;(xValues);</span>
-<span class="fc" id="L81">		this.values = new ArrayList&lt;&gt;(yValues);</span>
-<span class="fc" id="L82">		this.useSecondaryAxis = false;</span>
-<span class="fc" id="L83">		this.showLabels = false;</span>
-<span class="fc" id="L84">		this.interpolate = false;</span>
-<span class="fc" id="L85">		this.connect = false;</span>
-<span class="fc" id="L86">		this.markerShape = MarkerShape.CIRCLE; // Default marker shape</span>
-<span class="fc" id="L87">	}</span>
+<span class="fc" id="L84">	public ChartSeries(String name, SeriesType type, List&lt;Double&gt; xValues, List&lt;Double&gt; yValues) {</span>
+<span class="fc" id="L85">		this.name = name;</span>
+<span class="fc" id="L86">		this.type = type;</span>
+<span class="fc" id="L87">		this.xValues = new ArrayList&lt;&gt;(xValues);</span>
+<span class="fc" id="L88">		this.values = new ArrayList&lt;&gt;(yValues);</span>
+<span class="fc" id="L89">		this.useSecondaryAxis = false;</span>
+<span class="fc" id="L90">		this.showLabels = false;</span>
+<span class="fc" id="L91">		this.interpolate = false;</span>
+<span class="fc" id="L92">		this.connect = false;</span>
+<span class="fc" id="L93">		this.markerShape = MarkerShape.CIRCLE; // Default marker shape</span>
+<span class="fc" id="L94">	}</span>
 
 	// The same series with the given x values, as if its values had been written as coordinate pairs
 	public ChartSeries withXValues(List&lt;Double&gt; xValues) {
-<span class="fc" id="L91">		final ChartSeries result = new ChartSeries(name, type, xValues, values);</span>
-<span class="fc" id="L92">		result.color = color;</span>
-<span class="fc" id="L93">		result.useSecondaryAxis = useSecondaryAxis;</span>
-<span class="fc" id="L94">		result.showLabels = showLabels;</span>
-<span class="fc" id="L95">		result.interpolate = interpolate;</span>
-<span class="fc" id="L96">		result.connect = connect;</span>
-<span class="fc" id="L97">		result.markerShape = markerShape;</span>
-<span class="fc" id="L98">		result.stereotype = stereotype;</span>
-<span class="fc" id="L99">		return result;</span>
+<span class="fc" id="L98">		final ChartSeries result = new ChartSeries(name, type, xValues, values);</span>
+<span class="fc" id="L99">		result.color = color;</span>
+<span class="fc" id="L100">		result.useSecondaryAxis = useSecondaryAxis;</span>
+<span class="fc" id="L101">		result.showLabels = showLabels;</span>
+<span class="fc" id="L102">		result.interpolate = interpolate;</span>
+<span class="fc" id="L103">		result.connect = connect;</span>
+<span class="fc" id="L104">		result.markerShape = markerShape;</span>
+<span class="fc" id="L105">		result.stereotype = stereotype;</span>
+<span class="fc" id="L106">		result.keys = keys;</span>
+<span class="fc" id="L107">		result.itemColors = itemColors;</span>
+<span class="fc" id="L108">		result.showPercent = showPercent;</span>
+<span class="fc" id="L109">		result.donutHole = donutHole;</span>
+<span class="fc" id="L110">		return result;</span>
 	}
 
 	public String getName() {
-<span class="fc" id="L103">		return name;</span>
+<span class="fc" id="L114">		return name;</span>
 	}
 
 	public SeriesType getType() {
-<span class="fc" id="L107">		return type;</span>
+<span class="fc" id="L118">		return type;</span>
 	}
 
 	public List&lt;Double&gt; getValues() {
-<span class="fc" id="L111">		return values;</span>
+<span class="fc" id="L122">		return values;</span>
 	}
 
 	public List&lt;Double&gt; getXValues() {
-<span class="fc" id="L115">		return xValues;</span>
+<span class="fc" id="L126">		return xValues;</span>
 	}
 
 	public boolean hasExplicitXValues() {
-<span class="fc bfc" id="L119" title="All 2 branches covered.">		return xValues != null;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		return xValues != null;</span>
 	}
 
 	public HColor getColor() {
-<span class="fc" id="L123">		return color;</span>
+<span class="fc" id="L134">		return color;</span>
 	}
 
 	public void setColor(HColor color) {
-<span class="fc" id="L127">		this.color = color;</span>
-<span class="fc" id="L128">	}</span>
+<span class="fc" id="L138">		this.color = color;</span>
+<span class="fc" id="L139">	}</span>
 
 	public boolean isUseSecondaryAxis() {
-<span class="fc" id="L131">		return useSecondaryAxis;</span>
+<span class="fc" id="L142">		return useSecondaryAxis;</span>
 	}
 
 	public void setUseSecondaryAxis(boolean useSecondaryAxis) {
-<span class="fc" id="L135">		this.useSecondaryAxis = useSecondaryAxis;</span>
-<span class="fc" id="L136">	}</span>
+<span class="fc" id="L146">		this.useSecondaryAxis = useSecondaryAxis;</span>
+<span class="fc" id="L147">	}</span>
 
 	public boolean isShowLabels() {
-<span class="fc" id="L139">		return showLabels;</span>
+<span class="fc" id="L150">		return showLabels;</span>
 	}
 
 	public void setShowLabels(boolean showLabels) {
-<span class="fc" id="L143">		this.showLabels = showLabels;</span>
-<span class="fc" id="L144">	}</span>
+<span class="fc" id="L154">		this.showLabels = showLabels;</span>
+<span class="fc" id="L155">	}</span>
 
 	public boolean isInterpolate() {
-<span class="fc" id="L147">		return interpolate;</span>
+<span class="fc" id="L158">		return interpolate;</span>
 	}
 
 	public void setInterpolate(boolean interpolate) {
-<span class="fc" id="L151">		this.interpolate = interpolate;</span>
-<span class="fc" id="L152">	}</span>
+<span class="fc" id="L162">		this.interpolate = interpolate;</span>
+<span class="fc" id="L163">	}</span>
 
 	public boolean isConnect() {
-<span class="fc" id="L155">		return connect;</span>
+<span class="fc" id="L166">		return connect;</span>
 	}
 
 	public void setConnect(boolean connect) {
-<span class="fc" id="L159">		this.connect = connect;</span>
-<span class="fc" id="L160">	}</span>
+<span class="fc" id="L170">		this.connect = connect;</span>
+<span class="fc" id="L171">	}</span>
 
 	public MarkerShape getMarkerShape() {
-<span class="fc" id="L163">		return markerShape;</span>
+<span class="fc" id="L174">		return markerShape;</span>
 	}
 
 	public void setMarkerShape(MarkerShape markerShape) {
-<span class="nc" id="L167">		this.markerShape = markerShape;</span>
-<span class="nc" id="L168">	}</span>
+<span class="nc" id="L178">		this.markerShape = markerShape;</span>
+<span class="nc" id="L179">	}</span>
 
 	public Stereotype getStereotype() {
-<span class="fc" id="L171">		return stereotype;</span>
+<span class="fc" id="L182">		return stereotype;</span>
 	}
 
 	public void setStereotype(Stereotype stereotype) {
-<span class="fc" id="L175">		this.stereotype = stereotype;</span>
-<span class="fc" id="L176">	}</span>
+<span class="fc" id="L186">		this.stereotype = stereotype;</span>
+<span class="fc" id="L187">	}</span>
+
+	public List&lt;String&gt; getKeys() {
+<span class="fc" id="L190">		return keys;</span>
+	}
+
+	public boolean hasKeys() {
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		return keys != null;</span>
+	}
+
+	public void setKeys(List&lt;String&gt; keys) {
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		this.keys = keys == null ? null : new ArrayList&lt;&gt;(keys);</span>
+<span class="fc" id="L199">	}</span>
+
+	// The color written after the i-th value, or null
+	public HColor getItemColor(int i) {
+<span class="pc bpc" id="L203" title="1 of 4 branches missed.">		if (itemColors == null || i &gt;= itemColors.size())</span>
+<span class="fc" id="L204">			return null;</span>
+<span class="fc" id="L205">		return itemColors.get(i);</span>
+	}
+
+	public void setItemColors(List&lt;HColor&gt; itemColors) {
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		this.itemColors = itemColors == null ? null : new ArrayList&lt;&gt;(itemColors);</span>
+<span class="fc" id="L210">	}</span>
+
+	public boolean isShowPercent() {
+<span class="fc" id="L213">		return showPercent;</span>
+	}
+
+	public void setShowPercent(boolean showPercent) {
+<span class="fc" id="L217">		this.showPercent = showPercent;</span>
+<span class="fc" id="L218">	}</span>
+
+	public double getDonutHole() {
+<span class="fc" id="L221">		return donutHole;</span>
+	}
+
+	public void setDonutHole(double donutHole) {
+<span class="fc" id="L225">		this.donutHole = donutHole;</span>
+<span class="fc" id="L226">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -2138,10 +2138,10 @@
                 <TotalClasses>31</TotalClasses>
                 <ConcreteClasses>23</ConcreteClasses>
                 <AbstractClasses>8</AbstractClasses>
-                <Ca>30</Ca>
+                <Ca>31</Ca>
                 <Ce>18</Ce>
                 <A>0.26</A>
-                <I>0.38</I>
+                <I>0.37</I>
                 <D>0.37</D>
                 <V>1</V>
             </Stats>
@@ -2283,6 +2283,7 @@
                 <Package>net.sourceforge.plantuml.descdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
+                <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.graphml</Package>
                 <Package>net.sourceforge.plantuml.jsondiagram</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
@@ -3653,11 +3654,11 @@
                 <TotalClasses>10</TotalClasses>
                 <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>10</Ca>
+                <Ca>11</Ca>
                 <Ce>7</Ce>
                 <A>0.5</A>
-                <I>0.41</I>
-                <D>0.09</D>
+                <I>0.39</I>
+                <D>0.11</D>
                 <V>1</V>
             </Stats>
 
@@ -3713,6 +3714,7 @@
                 <Package>net.sourceforge.plantuml.directdot</Package>
                 <Package>net.sourceforge.plantuml.ditaa</Package>
                 <Package>net.sourceforge.plantuml.eggs</Package>
+                <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.jcckit</Package>
                 <Package>net.sourceforge.plantuml.stats</Package>
@@ -4619,14 +4621,14 @@
 
         <Package name="net.sourceforge.plantuml.chart">
             <Stats>
-                <TotalClasses>19</TotalClasses>
-                <ConcreteClasses>19</ConcreteClasses>
+                <TotalClasses>25</TotalClasses>
+                <ConcreteClasses>25</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>2</Ca>
-                <Ce>19</Ce>
+                <Ce>20</Ce>
                 <A>0</A>
-                <I>0.9</I>
-                <D>0.1</D>
+                <I>0.91</I>
+                <D>0.09</D>
                 <V>1</V>
             </Stats>
 
@@ -4656,6 +4658,9 @@
                     net.sourceforge.plantuml.chart.ChartDiagram$GridMode
                 </Class>
                 <Class sourceFile="ChartDiagram.java">
+                    net.sourceforge.plantuml.chart.ChartDiagram$Kind
+                </Class>
+                <Class sourceFile="ChartDiagram.java">
                     net.sourceforge.plantuml.chart.ChartDiagram$LegendPosition
                 </Class>
                 <Class sourceFile="ChartDiagram.java">
@@ -4666,6 +4671,9 @@
                 </Class>
                 <Class sourceFile="ChartDiagramFactory.java">
                     net.sourceforge.plantuml.chart.ChartDiagramFactory
+                </Class>
+                <Class sourceFile="ChartLegendBlock.java">
+                    net.sourceforge.plantuml.chart.ChartLegendBlock
                 </Class>
                 <Class sourceFile="ChartRenderer.java">
                     net.sourceforge.plantuml.chart.ChartRenderer
@@ -4685,6 +4693,18 @@
                 <Class sourceFile="LineRenderer.java">
                     net.sourceforge.plantuml.chart.LineRenderer
                 </Class>
+                <Class sourceFile="PieRenderer.java">
+                    net.sourceforge.plantuml.chart.PieRenderer$1
+                </Class>
+                <Class sourceFile="PieRenderer.java">
+                    net.sourceforge.plantuml.chart.PieRenderer$Slice
+                </Class>
+                <Class sourceFile="RadarRenderer.java">
+                    net.sourceforge.plantuml.chart.RadarRenderer
+                </Class>
+                <Class sourceFile="RadarRenderer.java">
+                    net.sourceforge.plantuml.chart.RadarRenderer$1
+                </Class>
                 <Class sourceFile="ScatterRenderer.java">
                     net.sourceforge.plantuml.chart.ScatterRenderer
                 </Class>
@@ -4702,6 +4722,7 @@
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.awt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
@@ -4723,8 +4744,8 @@
 
         <Package name="net.sourceforge.plantuml.chart.command">
             <Stats>
-                <TotalClasses>3</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
+                <TotalClasses>5</TotalClasses>
+                <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>8</Ce>
@@ -4741,8 +4762,14 @@
                 <Class sourceFile="ChartSeriesName.java">
                     net.sourceforge.plantuml.chart.command.ChartSeriesName
                 </Class>
+                <Class sourceFile="CommandChartAAxis.java">
+                    net.sourceforge.plantuml.chart.command.CommandChartAAxis
+                </Class>
                 <Class sourceFile="CommandChartHAxis.java">
                     net.sourceforge.plantuml.chart.command.CommandChartHAxis
+                </Class>
+                <Class sourceFile="CommandChartRAxis.java">
+                    net.sourceforge.plantuml.chart.command.CommandChartRAxis
                 </Class>
                 <Class sourceFile="CommandChartVAxis.java">
                     net.sourceforge.plantuml.chart.command.CommandChartVAxis
@@ -7595,11 +7622,11 @@
 
         <Package name="net.sourceforge.plantuml.filesdiagram">
             <Stats>
-                <TotalClasses>4</TotalClasses>
-                <ConcreteClasses>4</ConcreteClasses>
+                <TotalClasses>8</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>16</Ce>
+                <Ce>25</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -7610,6 +7637,9 @@
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="FEntry.java">
+                    net.sourceforge.plantuml.filesdiagram.FEntry
+                </Class>
                 <Class sourceFile="FilesDiagram.java">
                     net.sourceforge.plantuml.filesdiagram.FilesDiagram
                 </Class>
@@ -7619,27 +7649,45 @@
                 <Class sourceFile="FilesListing.java">
                     net.sourceforge.plantuml.filesdiagram.FilesListing
                 </Class>
+                <Class sourceFile="FilesListing.java">
+                    net.sourceforge.plantuml.filesdiagram.FilesListing$Row
+                </Class>
+                <Class sourceFile="FilesParser.java">
+                    net.sourceforge.plantuml.filesdiagram.FilesParser$Level
+                </Class>
                 <Class sourceFile="FilesType.java">
                     net.sourceforge.plantuml.filesdiagram.FilesType
+                </Class>
+                <Class sourceFile="TreePrefix.java">
+                    net.sourceforge.plantuml.filesdiagram.TreePrefix
                 </Class>
             </ConcreteClasses>
 
             <DependsUpon>
+                <Package>java.io</Package>
                 <Package>java.lang</Package>
+                <Package>java.nio.charset</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml</Package>
+                <Package>net.sourceforge.plantuml.abel</Package>
+                <Package>net.sourceforge.plantuml.api</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.jsondiagram</Package>
+                <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.nio</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
+                <Package>net.sourceforge.plantuml.security</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.style.parser</Package>
-                <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.style.value</Package>
+                <Package>net.sourceforge.plantuml.svek.image</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
@@ -9475,10 +9523,10 @@
                 <TotalClasses>21</TotalClasses>
                 <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>10</AbstractClasses>
-                <Ca>83</Ca>
+                <Ca>84</Ca>
                 <Ce>19</Ce>
                 <A>0.48</A>
-                <I>0.19</I>
+                <I>0.18</I>
                 <D>0.34</D>
                 <V>1</V>
             </Stats>
@@ -9602,6 +9650,7 @@
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.emoji</Package>
                 <Package>net.sourceforge.plantuml.explain</Package>
+                <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
                 <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.gantt.data</Package>
@@ -9666,11 +9715,11 @@
                 <TotalClasses>4</TotalClasses>
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>28</Ca>
+                <Ca>29</Ca>
                 <Ce>4</Ce>
                 <A>0.25</A>
                 <I>0.12</I>
-                <D>0.62</D>
+                <D>0.63</D>
                 <V>1</V>
             </Stats>
 
@@ -9703,6 +9752,7 @@
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.api.v2</Package>
+                <Package>net.sourceforge.plantuml.chart</Package>
                 <Package>net.sourceforge.plantuml.dedication</Package>
                 <Package>net.sourceforge.plantuml.ditaa</Package>
                 <Package>net.sourceforge.plantuml.eggs</Package>
@@ -9736,7 +9786,7 @@
                 <TotalClasses>30</TotalClasses>
                 <ConcreteClasses>29</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>94</Ca>
+                <Ca>95</Ca>
                 <Ce>11</Ce>
                 <A>0.03</A>
                 <I>0.1</I>
@@ -9889,6 +9939,7 @@
                 <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.emoji</Package>
+                <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
                 <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.gantt.command</Package>
@@ -10028,10 +10079,10 @@
                 <TotalClasses>19</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>65</Ca>
+                <Ca>66</Ca>
                 <Ce>14</Ce>
                 <A>0.21</A>
-                <I>0.18</I>
+                <I>0.17</I>
                 <D>0.61</D>
                 <V>1</V>
             </Stats>
@@ -10144,6 +10195,7 @@
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.ebnf</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
+                <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
                 <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.gantt.core</Package>
@@ -14204,11 +14256,11 @@
                 <TotalClasses>8</TotalClasses>
                 <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>17</Ca>
+                <Ca>18</Ca>
                 <Ce>20</Ce>
                 <A>0</A>
-                <I>0.54</I>
-                <D>0.46</D>
+                <I>0.53</I>
+                <D>0.47</D>
                 <V>1</V>
             </Stats>
 
@@ -14274,6 +14326,7 @@
                 <Package>net.sourceforge.plantuml.directdot</Package>
                 <Package>net.sourceforge.plantuml.ditaa</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
+                <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.jcckit</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.txt</Package>
@@ -15960,7 +16013,7 @@
                 <TotalClasses>4</TotalClasses>
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>25</Ca>
+                <Ca>26</Ca>
                 <Ce>6</Ce>
                 <A>0.25</A>
                 <I>0.19</I>
@@ -16006,6 +16059,7 @@
                 <Package>net.sourceforge.plantuml.decoration</Package>
                 <Package>net.sourceforge.plantuml.ebnf</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
+                <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.gantt.data</Package>
                 <Package>net.sourceforge.plantuml.gantt.draw</Package>
@@ -16562,11 +16616,11 @@
                 <TotalClasses>37</TotalClasses>
                 <ConcreteClasses>35</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>13</Ca>
+                <Ca>14</Ca>
                 <Ce>24</Ce>
                 <A>0.05</A>
-                <I>0.65</I>
-                <D>0.3</D>
+                <I>0.63</I>
+                <D>0.31</D>
                 <V>1</V>
             </Stats>
 
@@ -16721,6 +16775,7 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3.gtile</Package>
                 <Package>net.sourceforge.plantuml.decoration.symbol</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
+                <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.gantt.draw</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.sdot</Package>
@@ -17437,7 +17492,7 @@
                 <TotalClasses>5</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>41</Ca>
+                <Ca>40</Ca>
                 <Ce>4</Ce>
                 <A>0.2</A>
                 <I>0.09</I>
@@ -17485,7 +17540,6 @@
                 <Package>net.sourceforge.plantuml.ditaa</Package>
                 <Package>net.sourceforge.plantuml.donors</Package>
                 <Package>net.sourceforge.plantuml.error</Package>
-                <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.gantt.command</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.jaws</Package>
@@ -21440,7 +21494,6 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.chart">
-            <Package>net.sourceforge.plantuml.core</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>

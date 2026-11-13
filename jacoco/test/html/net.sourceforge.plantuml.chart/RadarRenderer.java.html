@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RadarRenderer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart</a> &gt; <span class="el_source">RadarRenderer.java</span></div><h1>RadarRenderer.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.awt.XColor;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.UEllipse;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
+
+/**
+ * Draws a radar chart: one spoke per category (a-axis), clockwise from 12 o'clock, rings at
+ * the ticks of the radial scale (r-axis), and one filled polygon per series.
+ */
+public class RadarRenderer {
+
+	private static final double RADIUS = 140;
+	private static final double MARGIN = 20;
+	private static final double NAME_GAP = 8;
+	private static final double LEGEND_MARGIN = 20;
+	private static final double MARKER_SIZE = 6;
+	// Opacity of the inside of a series, so that the ones below stay visible
+	private static final int FILL_ALPHA = 64;
+
+	private final ISkinParam skinParam;
+	private final List&lt;String&gt; categories;
+	private final List&lt;List&lt;Double&gt;&gt; values;
+	private final List&lt;ChartSeries&gt; series;
+	private final ChartAxis axis;
+	private final boolean circleGrid;
+	private final ChartDiagram.LegendPosition legendPosition;
+	private final FontConfiguration axisFont;
+
+	public RadarRenderer(ISkinParam skinParam, List&lt;String&gt; categories, List&lt;List&lt;Double&gt;&gt; values,
+<span class="fc" id="L87">			List&lt;ChartSeries&gt; series, ChartAxis axis, boolean circleGrid, ChartDiagram.LegendPosition legendPosition) {</span>
+<span class="fc" id="L88">		this.skinParam = skinParam;</span>
+<span class="fc" id="L89">		this.categories = categories;</span>
+<span class="fc" id="L90">		this.values = values;</span>
+<span class="fc" id="L91">		this.series = series;</span>
+<span class="fc" id="L92">		this.axis = axis;</span>
+<span class="fc" id="L93">		this.circleGrid = circleGrid;</span>
+<span class="fc" id="L94">		this.legendPosition = legendPosition;</span>
+<span class="fc" id="L95">		this.axisFont = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.CHARTDIAG_AXIS)</span>
+<span class="fc" id="L96">				.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L97">	}</span>
+
+	private double angle(int i) {
+<span class="fc" id="L100">		return 2 * Math.PI * i / categories.size();</span>
+	}
+
+	// Distance from the center of a value, kept inside the scale
+	private double radius(double value) {
+<span class="fc" id="L105">		final double range = axis.getMax() - axis.getMin();</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (range &lt;= 0)</span>
+<span class="nc" id="L107">			return 0;</span>
+<span class="fc" id="L108">		return RADIUS * Math.max(0, Math.min(1, (value - axis.getMin()) / range));</span>
+	}
+
+	private TextBlock text(String s, FontConfiguration fontConfig) {
+<span class="fc" id="L112">		return Display.getWithNewlines(skinParam.getPragma(), s).create(fontConfig, HorizontalAlignment.CENTER,</span>
+				skinParam);
+	}
+
+	private boolean hasLegend() {
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">		return legendPosition != ChartDiagram.LegendPosition.NONE &amp;&amp; series.isEmpty() == false;</span>
+	}
+
+	private ChartLegendBlock getLegend() {
+<span class="fc" id="L121">		final ChartLegendBlock legend = new ChartLegendBlock(skinParam, legendPosition);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		for (int i = 0; i &lt; series.size(); i++)</span>
+<span class="fc" id="L123">			legend.add(series.get(i).getName(), getLineColor(i));</span>
+<span class="fc" id="L124">		return legend;</span>
+	}
+
+	private Style getStyle(ChartSeries s) {
+<span class="fc" id="L128">		return ChartRenderer.getSeriesStyle(skinParam, StyleQueries.CHARTDIAG_RADAR, s);</span>
+	}
+
+	// A color given by the style of a series (&quot;radar { LineColor red }&quot; or a stereotype), or
+	// null when it is only the one inherited from the diagram, so that the series are told
+	// apart by the default colors
+	private HColor getStyledColor(ChartSeries s, PName name) {
+<span class="fc" id="L135">		final HColor color = getStyle(s).value(name).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L136">		final HColor inherited = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.CHARTDIAG)</span>
+<span class="fc" id="L137">				.value(name).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="pc bpc" id="L138" title="1 of 4 branches missed.">		if (color == null || color.equals(inherited))</span>
+<span class="fc" id="L139">			return null;</span>
+<span class="fc" id="L140">		return color;</span>
+	}
+
+	// The color of a series: explicit color &gt; style LineColor &gt; default color
+	private HColor getLineColor(int index) {
+<span class="fc" id="L145">		final ChartSeries s = series.get(index);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (s.getColor() != null)</span>
+<span class="fc" id="L147">			return s.getColor();</span>
+<span class="fc" id="L148">		final HColor color = getStyledColor(s, PName.LineColor);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (color != null)</span>
+<span class="fc" id="L150">			return color;</span>
+<span class="fc" id="L151">		return ChartRenderer.getDefaultColor(skinParam, index);</span>
+	}
+
+	// The inside of a series: style BackGroundColor, else its color, made translucent
+	private HColor getFillColor(int index, HColor lineColor) {
+<span class="fc" id="L156">		final HColor color = getStyledColor(series.get(index), PName.BackGroundColor);</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		if (color != null)</span>
+<span class="fc" id="L158">			return color;</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (lineColor instanceof HColorSimple) {</span>
+<span class="fc" id="L160">			final XColor c = ((HColorSimple) lineColor).getAwtColor();</span>
+<span class="fc" id="L161">			return HColorSimple.create(new XColor(c.getRed(), c.getGreen(), c.getBlue(), FILL_ALPHA));</span>
+		}
+<span class="nc" id="L163">		return HColors.transparent();</span>
+	}
+
+	// The box around the rings and the names of the categories, relative to the center:
+	// { minX, minY, maxX, maxY }
+	private double[] getBounds(StringBounder stringBounder) {
+<span class="fc" id="L169">		final double[] bounds = { -RADIUS, -RADIUS, RADIUS, RADIUS };</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		for (int i = 0; i &lt; categories.size(); i++) {</span>
+<span class="fc" id="L171">			final XDimension2D dim = text(categories.get(i), axisFont).calculateDimension(stringBounder);</span>
+<span class="fc" id="L172">			final UTranslate pos = PieRenderer.outside(RADIUS + NAME_GAP, angle(i), dim);</span>
+<span class="fc" id="L173">			bounds[0] = Math.min(bounds[0], pos.getDx());</span>
+<span class="fc" id="L174">			bounds[1] = Math.min(bounds[1], pos.getDy());</span>
+<span class="fc" id="L175">			bounds[2] = Math.max(bounds[2], pos.getDx() + dim.getWidth());</span>
+<span class="fc" id="L176">			bounds[3] = Math.max(bounds[3], pos.getDy() + dim.getHeight());</span>
+		}
+<span class="fc" id="L178">		return bounds;</span>
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L182">		final double[] bounds = getBounds(stringBounder);</span>
+<span class="fc" id="L183">		double width = bounds[2] - bounds[0] + 2 * MARGIN;</span>
+<span class="fc" id="L184">		double height = bounds[3] - bounds[1] + 2 * MARGIN;</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (hasLegend()) {</span>
+<span class="fc" id="L186">			final XDimension2D legend = getLegend().calculateDimension(stringBounder);</span>
+<span class="pc bpc" id="L187" title="1 of 4 branches missed.">			if (legendPosition == ChartDiagram.LegendPosition.LEFT</span>
+					|| legendPosition == ChartDiagram.LegendPosition.RIGHT) {
+<span class="fc" id="L189">				width += legend.getWidth() + LEGEND_MARGIN;</span>
+<span class="fc" id="L190">				height = Math.max(height, legend.getHeight() + 2 * MARGIN);</span>
+			} else {
+<span class="fc" id="L192">				height += legend.getHeight() + LEGEND_MARGIN;</span>
+<span class="fc" id="L193">				width = Math.max(width, legend.getWidth() + 2 * MARGIN);</span>
+			}
+		}
+<span class="fc" id="L196">		return new XDimension2D(width, height);</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L200">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L201">		final XDimension2D dim = calculateDimension(stringBounder);</span>
+<span class="fc" id="L202">		final double[] bounds = getBounds(stringBounder);</span>
+<span class="fc" id="L203">		final double chartWidth = bounds[2] - bounds[0] + 2 * MARGIN;</span>
+<span class="fc" id="L204">		final double chartHeight = bounds[3] - bounds[1] + 2 * MARGIN;</span>
+
+<span class="fc" id="L206">		double boxX = (dim.getWidth() - chartWidth) / 2;</span>
+<span class="fc" id="L207">		double boxY = (dim.getHeight() - chartHeight) / 2;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (hasLegend()) {</span>
+<span class="fc" id="L209">			final ChartLegendBlock legend = getLegend();</span>
+<span class="fc" id="L210">			final XDimension2D legendDim = legend.calculateDimension(stringBounder);</span>
+			final double legendX;
+			final double legendY;
+<span class="pc bpc" id="L213" title="2 of 4 branches missed.">			switch (legendPosition) {</span>
+			case LEFT:
+<span class="nc" id="L215">				boxX = legendDim.getWidth() + LEGEND_MARGIN;</span>
+<span class="nc" id="L216">				legendX = MARGIN;</span>
+<span class="nc" id="L217">				legendY = (dim.getHeight() - legendDim.getHeight()) / 2;</span>
+<span class="nc" id="L218">				break;</span>
+			case RIGHT:
+<span class="fc" id="L220">				boxX = 0;</span>
+<span class="fc" id="L221">				legendX = chartWidth - MARGIN + LEGEND_MARGIN;</span>
+<span class="fc" id="L222">				legendY = (dim.getHeight() - legendDim.getHeight()) / 2;</span>
+<span class="fc" id="L223">				break;</span>
+			case TOP:
+<span class="nc" id="L225">				boxY = legendDim.getHeight() + LEGEND_MARGIN;</span>
+<span class="nc" id="L226">				legendX = (dim.getWidth() - legendDim.getWidth()) / 2;</span>
+<span class="nc" id="L227">				legendY = MARGIN;</span>
+<span class="nc" id="L228">				break;</span>
+			default:
+<span class="fc" id="L230">				boxY = 0;</span>
+<span class="fc" id="L231">				legendX = (dim.getWidth() - legendDim.getWidth()) / 2;</span>
+<span class="fc" id="L232">				legendY = chartHeight - MARGIN + LEGEND_MARGIN;</span>
+				break;
+			}
+<span class="fc" id="L235">			legend.drawU(ug.apply(new UTranslate(legendX, legendY)));</span>
+		}
+
+<span class="fc" id="L238">		final UGraphic ugCenter = ug.apply(new UTranslate(boxX + MARGIN - bounds[0], boxY + MARGIN - bounds[1]));</span>
+<span class="fc" id="L239">		drawGrid(ugCenter);</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		for (int i = 0; i &lt; series.size(); i++)</span>
+<span class="fc" id="L241">			drawSeries(ugCenter, i);</span>
+<span class="fc" id="L242">		drawTickLabels(ugCenter);</span>
+<span class="fc" id="L243">	}</span>
+
+	private void drawGrid(UGraphic ug) {
+<span class="fc" id="L246">		final Style gridStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.CHARTDIAG_GRID);</span>
+<span class="fc" id="L247">		HColor gridColor = gridStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">		if (gridColor == null)</span>
+<span class="nc" id="L249">			gridColor = skinParam.getIHtmlColorSet().getColorOrWhite(&quot;#D0D0D0&quot;);</span>
+<span class="fc" id="L250">		final UGraphic ugGrid = ug.apply(gridColor).apply(HColors.transparent().bg())</span>
+<span class="fc" id="L251">				.apply(UStroke.withThickness(gridStyle.value(PName.LineThickness).asDouble()));</span>
+
+		// Rings, at the ticks of the scale
+<span class="fc bfc" id="L254" title="All 2 branches covered.">		for (Map.Entry&lt;Double, String&gt; tick : ChartRenderer.getTicks(axis)) {</span>
+<span class="fc" id="L255">			final double r = RADIUS * tick.getKey();</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">			if (r &lt;= 0)</span>
+<span class="fc" id="L257">				continue;</span>
+<span class="pc bpc" id="L258" title="1 of 4 branches missed.">			if (circleGrid || categories.size() &lt; 3)</span>
+<span class="fc" id="L259">				ugGrid.apply(new UTranslate(-r, -r)).draw(UEllipse.build(2 * r, 2 * r));</span>
+			else
+<span class="fc" id="L261">				ugGrid.draw(polygon(r));</span>
+<span class="fc" id="L262">		}</span>
+
+		// Spokes, and the name of each category at their end
+<span class="fc" id="L265">		final Style axisStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.CHARTDIAG_AXIS);</span>
+<span class="fc" id="L266">		HColor axisColor = axisStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (axisColor == null)</span>
+<span class="nc" id="L268">			axisColor = gridColor;</span>
+<span class="fc" id="L269">		final UGraphic ugAxis = ug.apply(axisColor)</span>
+<span class="fc" id="L270">				.apply(UStroke.withThickness(axisStyle.value(PName.LineThickness).asDouble()));</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">		for (int i = 0; i &lt; categories.size(); i++) {</span>
+<span class="fc" id="L272">			final XPoint2D end = PieRenderer.polar(RADIUS, angle(i));</span>
+<span class="fc" id="L273">			ugAxis.draw(new ULine(end.getX(), end.getY()));</span>
+<span class="fc" id="L274">			final TextBlock name = text(categories.get(i), axisFont);</span>
+<span class="fc" id="L275">			name.drawU(ug.apply(PieRenderer.outside(RADIUS + NAME_GAP, angle(i),</span>
+<span class="fc" id="L276">					name.calculateDimension(ug.getStringBounder()))));</span>
+		}
+<span class="fc" id="L278">	}</span>
+
+	// A ring of the grid, with a corner on each spoke
+	private UPolygon polygon(double r) {
+<span class="fc" id="L282">		final UPolygon result = new UPolygon();</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">		for (int i = 0; i &lt; categories.size(); i++)</span>
+<span class="fc" id="L284">			result.addPoint(PieRenderer.polar(r, angle(i)));</span>
+<span class="fc" id="L285">		return result;</span>
+	}
+
+	// The value of each ring, written just inside it on the right of the first spoke, so that
+	// the outer one stays clear of the name of the first category. The center is not labelled
+	private void drawTickLabels(UGraphic ug) {
+<span class="fc bfc" id="L291" title="All 2 branches covered.">		for (Map.Entry&lt;Double, String&gt; tick : ChartRenderer.getTicks(axis)) {</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">			if (tick.getKey() &lt;= 0)</span>
+<span class="fc" id="L293">				continue;</span>
+<span class="fc" id="L294">			final TextBlock text = text(tick.getValue(), axisFont);</span>
+<span class="fc" id="L295">			text.drawU(ug.apply(new UTranslate(3, -RADIUS * tick.getKey())));</span>
+<span class="fc" id="L296">		}</span>
+<span class="fc" id="L297">	}</span>
+
+	private void drawSeries(UGraphic ug, int index) {
+<span class="fc" id="L300">		final ChartSeries s = series.get(index);</span>
+<span class="fc" id="L301">		final List&lt;Double&gt; seriesValues = values.get(index);</span>
+<span class="pc bpc" id="L302" title="1 of 2 branches missed.">		if (categories.isEmpty())</span>
+<span class="nc" id="L303">			return;</span>
+<span class="fc" id="L304">		final HColor lineColor = getLineColor(index);</span>
+<span class="fc" id="L305">		final HColor fillColor = getFillColor(index, lineColor);</span>
+<span class="fc" id="L306">		final double thickness = getStyle(s).value(PName.LineThickness).asDouble();</span>
+
+		// A missing value is drawn at the center
+<span class="fc" id="L309">		final List&lt;XPoint2D&gt; points = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">		for (int i = 0; i &lt; categories.size(); i++) {</span>
+<span class="fc" id="L311">			final Double value = seriesValues.get(i);</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">			points.add(PieRenderer.polar(value == null ? 0 : radius(value), angle(i)));</span>
+		}
+
+<span class="fc" id="L315">		ug.apply(lineColor).apply(fillColor.bg()).apply(UStroke.withThickness(thickness)).draw(new UPolygon(points));</span>
+
+<span class="fc" id="L317">		final UGraphic ugMarker = ug.apply(lineColor).apply(lineColor.bg());</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">		for (int i = 0; i &lt; points.size(); i++) {</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">			if (seriesValues.get(i) == null)</span>
+<span class="fc" id="L320">				continue;</span>
+<span class="fc" id="L321">			final XPoint2D pt = points.get(i);</span>
+<span class="fc" id="L322">			ugMarker.apply(new UTranslate(pt.getX() - MARKER_SIZE / 2, pt.getY() - MARKER_SIZE / 2))</span>
+<span class="fc" id="L323">					.draw(UEllipse.build(MARKER_SIZE, MARKER_SIZE));</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">			if (s.isShowLabels()) {</span>
+<span class="fc" id="L325">				final TextBlock text = text(ChartRenderer.formatValue(seriesValues.get(i)), axisFont);</span>
+<span class="fc" id="L326">				final XDimension2D dim = text.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L327">				text.drawU(ug.apply(PieRenderer.outside(radius(seriesValues.get(i)) + MARKER_SIZE, angle(i), dim)));</span>
+			}
+		}
+<span class="fc" id="L330">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

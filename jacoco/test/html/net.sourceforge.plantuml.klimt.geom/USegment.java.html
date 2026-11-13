@@ -69,8 +69,8 @@ public class USegment {
 					new double[] { coord[0], coord[1], coord[2], coord[3], coord[4], coord[5] + dx, coord[6] + dy },
 					pathType);
 
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (pathType == USegmentType.SEG_CUBICTO) {</span>
-<span class="nc" id="L73">			return new USegment(new double[] { coord[0] + dx, coord[1] + dy, coord[2] + dx, coord[3] + dy,</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (pathType == USegmentType.SEG_CUBICTO) {</span>
+<span class="fc" id="L73">			return new USegment(new double[] { coord[0] + dx, coord[1] + dy, coord[2] + dx, coord[3] + dy,</span>
 					coord[4] + dx, coord[5] + dy }, pathType);
 		}
 <span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (coord.length != 2)</span>

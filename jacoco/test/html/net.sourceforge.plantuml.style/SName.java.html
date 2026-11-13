@@ -196,23 +196,25 @@ import java.util.Map;
 <span class="fc" id="L196">	line, //</span>
 <span class="fc" id="L197">	area, //</span>
 <span class="fc" id="L198">	scatter, //</span>
-<span class="fc" id="L199">	axis, //</span>
-<span class="fc" id="L200">	hAxis, //</span>
-<span class="fc" id="L201">	vAxis, //</span>
-<span class="fc" id="L202">	grid, //</span>
-<span class="fc" id="L203">	annotation; //</span>
+<span class="fc" id="L199">	pie, //</span>
+<span class="fc" id="L200">	radar, //</span>
+<span class="fc" id="L201">	axis, //</span>
+<span class="fc" id="L202">	hAxis, //</span>
+<span class="fc" id="L203">	vAxis, //</span>
+<span class="fc" id="L204">	grid, //</span>
+<span class="fc" id="L205">	annotation; //</span>
 
-<span class="fc" id="L205">	private static final Map&lt;String, SName&gt; ALL = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L207">	private static final Map&lt;String, SName&gt; ALL = new HashMap&lt;&gt;();</span>
 
 	static {
-<span class="fc bfc" id="L208" title="All 2 branches covered.">		for (SName sname : SName.values()) {</span>
-<span class="fc" id="L209">			final String s = sname.name().replace(&quot;_&quot;, &quot;&quot;).toLowerCase();</span>
-<span class="fc" id="L210">			ALL.put(s, sname);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		for (SName sname : SName.values()) {</span>
+<span class="fc" id="L211">			final String s = sname.name().replace(&quot;_&quot;, &quot;&quot;).toLowerCase();</span>
+<span class="fc" id="L212">			ALL.put(s, sname);</span>
 		}
-<span class="fc" id="L212">	}</span>
+<span class="fc" id="L214">	}</span>
 
 	public static SName retrieve(String s) {
-<span class="fc" id="L215">		return ALL.get(s.toLowerCase());</span>
+<span class="fc" id="L217">		return ALL.get(s.toLowerCase());</span>
 	}
 
 }

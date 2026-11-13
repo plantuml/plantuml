@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FilesParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.filesdiagram</a> &gt; <span class="el_source">FilesParser.java</span></div><h1>FilesParser.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.filesdiagram;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.regex.Pattern;
+
+/**
+ * Reads the body of a {@code @startfiles} diagram. Several syntaxes are
+ * accepted, and can even be mixed:
+ *
+ * &lt;pre&gt;
+ * /src/main/App.java          ' absolute path (the historical syntax)
+ *
+ * src/                        ' indentation
+ *     main/
+ *         App.java
+ *
+ * ├── src/                    ' &quot;tree&quot; output, light or heavy box drawing
+ * │   └── App.java
+ * ┣━━ src/
+ * ┃   ┗━━ App.java
+ *
+ * |   readme.md               ' Windows &quot;tree /f /a&quot; output
+ * +---bin
+ * |       a.exe
+ * \---etc
+ * &lt;/pre&gt;
+ *
+ * The depth of an entry is the column where its name starts, once tabs are
+ * expanded and the tree characters removed: this single rule covers every
+ * syntax above. Indentation does not need to be regular, an entry is the child
+ * of the closest previous entry that starts on its left.
+ */
+<span class="fc" id="L69">final class FilesParser {</span>
+
+	private static final int TAB_SIZE = 4;
+
+<span class="fc" id="L73">	private static final Pattern NOISE = Pattern.compile(&quot;(?i)^(\\.|[a-z]:\\.?|\\d+ director(y|ies)(, \\d+ files?)?&quot;</span>
+			+ &quot;|folder path listing.*|volume serial number.*|structure du dossier.*|le numéro de série.*&quot;
+			+ &quot;|auflistung der ordnerpfade.*|volumeseriennummer.*|no subfolders exist.*&quot;
+			+ &quot;|il n'existe aucun sous-dossier.*)$&quot;);
+
+<span class="fc" id="L78">	private final FEntry root = FEntry.createRoot();</span>
+<span class="fc" id="L79">	private final FilesIcons icons = new FilesIcons();</span>
+<span class="fc" id="L80">	private final List&lt;Level&gt; stack = new ArrayList&lt;&gt;();</span>
+	private FEntry lastCreated;
+
+	static class Level {
+		private final int column;
+		private final FEntry entry;
+
+<span class="fc" id="L87">		Level(int column, FEntry entry) {</span>
+<span class="fc" id="L88">			this.column = column;</span>
+<span class="fc" id="L89">			this.entry = entry;</span>
+<span class="fc" id="L90">		}</span>
+	}
+
+	public void parse(Iterator&lt;String&gt; it) {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		while (it.hasNext()) {</span>
+<span class="fc" id="L95">			final String line = normalize(it.next());</span>
+<span class="fc" id="L96">			final String trimmed = line.trim();</span>
+<span class="pc bpc" id="L97" title="1 of 6 branches missed.">			if (trimmed.length() == 0 || trimmed.startsWith(&quot;@startfiles&quot;) || trimmed.startsWith(&quot;@endfiles&quot;))</span>
+<span class="fc" id="L98">				continue;</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">			if (trimmed.startsWith(&quot;'&quot;))</span>
+<span class="nc" id="L100">				continue;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">			if (trimmed.startsWith(&quot;&lt;note&gt;&quot;)) {</span>
+<span class="fc" id="L102">				addNote(readNote(it));</span>
+<span class="fc" id="L103">				continue;</span>
+			}
+<span class="fc bfc" id="L105" title="All 2 branches covered.">			if (icons.declare(trimmed))</span>
+<span class="fc" id="L106">				continue;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">			if (NOISE.matcher(trimmed).matches())</span>
+<span class="fc" id="L108">				continue;</span>
+<span class="fc" id="L109">			parseEntry(line);</span>
+<span class="fc" id="L110">		}</span>
+<span class="fc" id="L111">	}</span>
+
+	private void parseEntry(String line) {
+<span class="fc" id="L114">		final TreePrefix prefix = TreePrefix.parse(line);</span>
+<span class="fc" id="L115">		final String text = line.substring(prefix.getColumn()).trim();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (text.length() == 0)</span>
+			// A line made only of tree characters, as &quot;tree&quot; prints between groups
+<span class="fc" id="L118">			return;</span>
+
+<span class="fc" id="L120">		final boolean absolute = text.startsWith(&quot;/&quot;);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		final FLabel label = FLabel.parse(absolute ? text.substring(1) : text);</span>
+<span class="fc" id="L122">		String name = label.getName();</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (name.length() == 0)</span>
+<span class="nc" id="L124">			return;</span>
+<span class="pc bpc" id="L125" title="1 of 4 branches missed.">		if (prefix.isFolder() &amp;&amp; name.endsWith(&quot;/&quot;) == false)</span>
+<span class="fc" id="L126">			name = name + &quot;/&quot;;</span>
+
+<span class="fc" id="L128">		final int column = prefix.getColumn();</span>
+<span class="fc bfc" id="L129" title="All 4 branches covered.">		while (stack.size() &gt; 0 &amp;&amp; stack.get(stack.size() - 1).column &gt;= column)</span>
+<span class="fc" id="L130">			stack.remove(stack.size() - 1);</span>
+
+		final FEntry parent;
+<span class="fc bfc" id="L133" title="All 4 branches covered.">		if (absolute || stack.size() == 0)</span>
+<span class="fc" id="L134">			parent = root;</span>
+		else
+<span class="fc" id="L136">			parent = stack.get(stack.size() - 1).entry;</span>
+
+<span class="fc" id="L138">		final FEntry entry = parent.addRawEntry(name);</span>
+<span class="fc" id="L139">		entry.applyLabel(label);</span>
+<span class="fc" id="L140">		stack.add(new Level(column, entry));</span>
+<span class="fc" id="L141">		lastCreated = entry;</span>
+<span class="fc" id="L142">	}</span>
+
+	private void addNote(List&lt;String&gt; note) {
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (lastCreated == null)</span>
+<span class="nc" id="L146">			root.addNote(note);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		else if (lastCreated.isFolder())</span>
+			// A note after a folder line goes right under the folder
+<span class="fc" id="L149">			lastCreated.addNote(note);</span>
+		else
+<span class="fc" id="L151">			lastCreated.getParent().addNote(note);</span>
+<span class="fc" id="L152">	}</span>
+
+	private static List&lt;String&gt; readNote(Iterator&lt;String&gt; it) {
+<span class="fc" id="L155">		final List&lt;String&gt; result = new ArrayList&lt;String&gt;();</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="fc" id="L157">			final String line = it.next();</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">			if (line.trim().startsWith(&quot;&lt;/note&gt;&quot;))</span>
+<span class="fc" id="L159">				return result;</span>
+<span class="fc" id="L160">			result.add(line);</span>
+<span class="fc" id="L161">		}</span>
+<span class="nc" id="L162">		return result;</span>
+	}
+
+	/**
+	 * Expands tabs and turns non-breaking spaces (that GNU tree prints after
+	 * {@code ├──}) into plain ones.
+	 */
+	static String normalize(String line) {
+<span class="pc bpc" id="L170" title="1 of 4 branches missed.">		if (line.indexOf('\t') == -1 &amp;&amp; line.indexOf(' ') == -1)</span>
+<span class="fc" id="L171">			return line;</span>
+<span class="fc" id="L172">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		for (int i = 0; i &lt; line.length(); i++) {</span>
+<span class="fc" id="L174">			final char c = line.charAt(i);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			if (c == '\t')</span>
+				do {
+<span class="fc" id="L177">					sb.append(' ');</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">				} while (sb.length() % TAB_SIZE != 0);</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">			else if (c == ' ')</span>
+<span class="nc" id="L180">				sb.append(' ');</span>
+			else
+<span class="fc" id="L182">				sb.append(c);</span>
+		}
+<span class="fc" id="L184">		return sb.toString();</span>
+	}
+
+	public FEntry getRoot() {
+<span class="fc" id="L188">		return root;</span>
+	}
+
+	public FilesIcons getIcons() {
+<span class="fc" id="L192">		return icons;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

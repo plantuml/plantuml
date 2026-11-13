@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FilesIcons.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.filesdiagram</a> &gt; <span class="el_source">FilesIcons.java</span></div><h1>FilesIcons.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.filesdiagram;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.emoji.Emoji;
+import net.sourceforge.plantuml.openiconic.OpenIconic;
+
+/**
+ * Chooses the icon drawn in front of each entry.
+ * &lt;p&gt;
+ * An icon can be given as an emoji ({@code &lt;:coffee:&gt;}, {@code :coffee:},
+ * {@code &lt;:2615:&gt;}), an OpenIconic icon ({@code &lt;&amp;folder&gt;}, {@code &amp;folder}), a
+ * sprite ({@code &lt;$mysprite&gt;}, {@code $mysprite}) or {@code none}. A bare word
+ * is tried as an emoji, then as an OpenIconic icon.
+ * &lt;p&gt;
+ * Rules can be declared in the diagram, one per line:
+ *
+ * &lt;pre&gt;
+ * [icon *.java &amp;lt;:coffee:&amp;gt;]     ' by extension (&quot;.java&quot; works too)
+ * [icon Makefile &amp;lt;:hammer:&amp;gt;]     ' by file name
+ * [icon build/ &amp;lt;&amp;amp;wrench&amp;gt;]      ' by folder name
+ * [icon * &amp;lt;:1f4c4:&amp;gt;]      ' any other file
+ * [icon *&amp;#47; none]           ' any other folder
+ * &lt;/pre&gt;
+ *
+ * Lookup order: the entry's own {@code icon(...)}, then the declared rules
+ * (name, then extension, then {@code *} or {@code *}{@code /}), then the
+ * built-in rules (name, then extension), then the default folder and file
+ * icons.
+ */
+<span class="fc" id="L69">final class FilesIcons {</span>
+
+<span class="fc" id="L71">	private static final Pattern DECLARATION = Pattern.compile(&quot;^\\[icon\\s+(\\S+)\\s+(\\S+)\\s*\\]$&quot;);</span>
+
+	static final String DEFAULT_FOLDER = &quot;&lt;:1f4c2:&gt;&quot;;
+	static final String DEFAULT_FILE = &quot;&lt;:1f4c4:&gt;&quot;;
+
+<span class="fc" id="L76">	private static final Map&lt;String, String&gt; BUILTIN_EXT = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L77">	private static final Map&lt;String, String&gt; BUILTIN_NAME = new HashMap&lt;&gt;();</span>
+
+	static {
+<span class="fc" id="L80">		builtinExt(&quot;coffee&quot;, &quot;java&quot;, &quot;class&quot;, &quot;jsp&quot;);</span>
+<span class="fc" id="L81">		builtinExt(&quot;snake&quot;, &quot;py&quot;, &quot;pyc&quot;, &quot;pyw&quot;, &quot;ipynb&quot;);</span>
+<span class="fc" id="L82">		builtinExt(&quot;gem&quot;, &quot;rb&quot;, &quot;gemspec&quot;);</span>
+<span class="fc" id="L83">		builtinExt(&quot;crab&quot;, &quot;rs&quot;);</span>
+<span class="fc" id="L84">		builtinExt(&quot;elephant&quot;, &quot;php&quot;);</span>
+<span class="fc" id="L85">		builtinExt(&quot;seedling&quot;, &quot;puml&quot;, &quot;plantuml&quot;, &quot;iuml&quot;, &quot;pu&quot;, &quot;wsd&quot;);</span>
+<span class="fc" id="L86">		builtinExt(&quot;memo&quot;, &quot;md&quot;, &quot;markdown&quot;, &quot;txt&quot;, &quot;adoc&quot;, &quot;asciidoc&quot;, &quot;rst&quot;, &quot;tex&quot;);</span>
+<span class="fc" id="L87">		builtinExt(&quot;framed_picture&quot;, &quot;png&quot;, &quot;jpg&quot;, &quot;jpeg&quot;, &quot;gif&quot;, &quot;bmp&quot;, &quot;svg&quot;, &quot;webp&quot;, &quot;ico&quot;, &quot;tif&quot;, &quot;tiff&quot;);</span>
+<span class="fc" id="L88">		builtinExt(&quot;closed_book&quot;, &quot;pdf&quot;);</span>
+<span class="fc" id="L89">		builtinExt(&quot;bar_chart&quot;, &quot;csv&quot;, &quot;tsv&quot;, &quot;xls&quot;, &quot;xlsx&quot;, &quot;ods&quot;);</span>
+<span class="fc" id="L90">		builtinExt(&quot;gear&quot;, &quot;json&quot;, &quot;yaml&quot;, &quot;yml&quot;, &quot;xml&quot;, &quot;toml&quot;, &quot;ini&quot;, &quot;properties&quot;, &quot;conf&quot;, &quot;cfg&quot;, &quot;config&quot;,</span>
+				&quot;env&quot;, &quot;gradle&quot;, &quot;kts&quot;);
+<span class="fc" id="L92">		builtinExt(&quot;package&quot;, &quot;zip&quot;, &quot;jar&quot;, &quot;war&quot;, &quot;ear&quot;, &quot;tar&quot;, &quot;gz&quot;, &quot;tgz&quot;, &quot;bz2&quot;, &quot;xz&quot;, &quot;7z&quot;, &quot;rar&quot;, &quot;deb&quot;,</span>
+				&quot;rpm&quot;, &quot;whl&quot;);
+<span class="fc" id="L94">		builtinExt(&quot;computer&quot;, &quot;sh&quot;, &quot;bash&quot;, &quot;zsh&quot;, &quot;bat&quot;, &quot;cmd&quot;, &quot;ps1&quot;, &quot;exe&quot;, &quot;dll&quot;, &quot;so&quot;, &quot;bin&quot;);</span>
+<span class="fc" id="L95">		builtinExt(&quot;globe_with_meridians&quot;, &quot;html&quot;, &quot;htm&quot;, &quot;css&quot;, &quot;scss&quot;, &quot;less&quot;);</span>
+<span class="fc" id="L96">		builtinExt(&quot;page_with_curl&quot;, &quot;c&quot;, &quot;h&quot;, &quot;cpp&quot;, &quot;hpp&quot;, &quot;cc&quot;, &quot;cs&quot;, &quot;js&quot;, &quot;mjs&quot;, &quot;ts&quot;, &quot;jsx&quot;, &quot;tsx&quot;, &quot;kt&quot;,</span>
+				&quot;scala&quot;, &quot;groovy&quot;, &quot;go&quot;, &quot;swift&quot;, &quot;lua&quot;, &quot;pl&quot;, &quot;r&quot;, &quot;vue&quot;);
+<span class="fc" id="L98">		builtinExt(&quot;card_file_box&quot;, &quot;sql&quot;, &quot;db&quot;, &quot;sqlite&quot;);</span>
+<span class="fc" id="L99">		builtinExt(&quot;scroll&quot;, &quot;log&quot;);</span>
+<span class="fc" id="L100">		builtinExt(&quot;lock&quot;, &quot;lock&quot;);</span>
+<span class="fc" id="L101">		builtinExt(&quot;key&quot;, &quot;pem&quot;, &quot;crt&quot;, &quot;cer&quot;, &quot;key&quot;, &quot;p12&quot;, &quot;jks&quot;);</span>
+<span class="fc" id="L102">		builtinExt(&quot;musical_note&quot;, &quot;mp3&quot;, &quot;wav&quot;, &quot;ogg&quot;, &quot;flac&quot;, &quot;m4a&quot;);</span>
+<span class="fc" id="L103">		builtinExt(&quot;clapper&quot;, &quot;mp4&quot;, &quot;avi&quot;, &quot;mov&quot;, &quot;mkv&quot;, &quot;webm&quot;);</span>
+
+<span class="fc" id="L105">		builtinName(&quot;whale&quot;, &quot;dockerfile&quot;, &quot;docker-compose.yml&quot;, &quot;docker-compose.yaml&quot;, &quot;compose.yaml&quot;);</span>
+<span class="fc" id="L106">		builtinName(&quot;hammer&quot;, &quot;makefile&quot;, &quot;build.xml&quot;);</span>
+<span class="fc" id="L107">		builtinName(&quot;scroll&quot;, &quot;license&quot;, &quot;licence&quot;, &quot;copying&quot;);</span>
+<span class="fc" id="L108">		builtinName(&quot;memo&quot;, &quot;readme&quot;);</span>
+<span class="fc" id="L109">		builtinName(&quot;see_no_evil&quot;, &quot;.gitignore&quot;, &quot;.dockerignore&quot;);</span>
+<span class="fc" id="L110">	}</span>
+
+	private static void builtinExt(String emoji, String... extensions) {
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		for (String ext : extensions)</span>
+<span class="fc" id="L114">			BUILTIN_EXT.put(ext, &quot;&lt;:&quot; + emoji + &quot;:&gt;&quot;);</span>
+<span class="fc" id="L115">	}</span>
+
+	private static void builtinName(String emoji, String... names) {
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		for (String name : names)</span>
+<span class="fc" id="L119">			BUILTIN_NAME.put(name, &quot;&lt;:&quot; + emoji + &quot;:&gt;&quot;);</span>
+<span class="fc" id="L120">	}</span>
+
+<span class="fc" id="L122">	private final Map&lt;String, String&gt; userExt = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L123">	private final Map&lt;String, String&gt; userFileName = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L124">	private final Map&lt;String, String&gt; userFolderName = new HashMap&lt;&gt;();</span>
+	private String userAnyFile;
+	private String userAnyFolder;
+
+	/**
+	 * Reads an {@code [icon &lt;pattern&gt; &lt;icon&gt;]} declaration.
+	 *
+	 * @return false if the line is not a declaration
+	 */
+	public boolean declare(String line) {
+<span class="fc" id="L134">		final Matcher m = DECLARATION.matcher(line.trim());</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (m.find() == false)</span>
+<span class="fc" id="L136">			return false;</span>
+<span class="fc" id="L137">		final String pattern = m.group(1);</span>
+<span class="fc" id="L138">		final String icon = toCreole(m.group(2));</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (icon == null)</span>
+<span class="nc" id="L140">			return false;</span>
+
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (pattern.equals(&quot;*&quot;))</span>
+<span class="nc" id="L143">			userAnyFile = icon;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		else if (pattern.equals(&quot;*/&quot;))</span>
+<span class="fc" id="L145">			userAnyFolder = icon;</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		else if (pattern.startsWith(&quot;*.&quot;))</span>
+<span class="fc" id="L147">			userExt.put(lower(pattern.substring(2)), icon);</span>
+<span class="pc bpc" id="L148" title="5 of 6 branches missed.">		else if (pattern.startsWith(&quot;.&quot;) &amp;&amp; pattern.length() &gt; 1 &amp;&amp; pattern.endsWith(&quot;/&quot;) == false) {</span>
+			// &quot;.env&quot; is both an extension and the name of a dot file
+<span class="nc" id="L150">			userExt.put(lower(pattern.substring(1)), icon);</span>
+<span class="nc" id="L151">			userFileName.put(lower(pattern), icon);</span>
+		}
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		else if (pattern.endsWith(&quot;/&quot;))</span>
+<span class="fc" id="L154">			userFolderName.put(lower(pattern.substring(0, pattern.length() - 1)), icon);</span>
+		else
+<span class="fc" id="L156">			userFileName.put(lower(pattern), icon);</span>
+<span class="fc" id="L157">		return true;</span>
+	}
+
+	/**
+	 * @return the creole text of the icon, empty for no icon at all
+	 */
+	public String getIcon(FEntry entry) {
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (entry.getIcon() != null) {</span>
+<span class="fc" id="L165">			final String explicit = toCreole(entry.getIcon());</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">			if (explicit != null)</span>
+<span class="fc" id="L167">				return explicit;</span>
+		}
+<span class="fc" id="L169">		final String name = lower(entry.getName());</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (entry.isFolder()) {</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			if (userFolderName.containsKey(name))</span>
+<span class="fc" id="L172">				return userFolderName.get(name);</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">			if (userAnyFolder != null)</span>
+<span class="fc" id="L174">				return userAnyFolder;</span>
+<span class="fc" id="L175">			return DEFAULT_FOLDER;</span>
+		}
+
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (userFileName.containsKey(name))</span>
+<span class="fc" id="L179">			return userFileName.get(name);</span>
+<span class="fc" id="L180">		String found = byExtension(name, userExt);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (found != null)</span>
+<span class="fc" id="L182">			return found;</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (userAnyFile != null)</span>
+<span class="nc" id="L184">			return userAnyFile;</span>
+
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		if (BUILTIN_NAME.containsKey(name))</span>
+<span class="fc" id="L187">			return BUILTIN_NAME.get(name);</span>
+<span class="fc" id="L188">		found = byExtension(name, BUILTIN_EXT);</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		if (found != null)</span>
+<span class="fc" id="L190">			return found;</span>
+<span class="fc" id="L191">		return DEFAULT_FILE;</span>
+	}
+
+	/**
+	 * Longest extension first: {@code archive.tar.gz} tries {@code tar.gz}, then
+	 * {@code gz}.
+	 */
+	private static String byExtension(String name, Map&lt;String, String&gt; map) {
+<span class="fc" id="L199">		int x = name.indexOf('.', 1);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		while (x != -1) {</span>
+<span class="fc" id="L201">			final String result = map.get(name.substring(x + 1));</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">			if (result != null)</span>
+<span class="fc" id="L203">				return result;</span>
+<span class="fc" id="L204">			x = name.indexOf('.', x + 1);</span>
+<span class="fc" id="L205">		}</span>
+<span class="fc" id="L206">		return null;</span>
+	}
+
+	private static String lower(String s) {
+<span class="fc" id="L210">		return s.toLowerCase(Locale.ROOT);</span>
+	}
+
+	/**
+	 * Turns the many accepted spellings of an icon into creole.
+	 *
+	 * @return the creole text, empty for {@code none}, or null if this cannot be
+	 *         an icon
+	 */
+	static String toCreole(String spec) {
+<span class="fc" id="L220">		spec = spec.trim();</span>
+<span class="pc bpc" id="L221" title="1 of 4 branches missed.">		if (spec.length() == 0 || spec.equalsIgnoreCase(&quot;none&quot;))</span>
+<span class="fc" id="L222">			return &quot;&quot;;</span>
+<span class="pc bpc" id="L223" title="1 of 4 branches missed.">		if (spec.startsWith(&quot;&lt;&quot;) &amp;&amp; spec.endsWith(&quot;&gt;&quot;))</span>
+<span class="fc" id="L224">			return spec;</span>
+<span class="pc bpc" id="L225" title="2 of 6 branches missed.">		if (spec.startsWith(&quot;:&quot;) &amp;&amp; spec.endsWith(&quot;:&quot;) &amp;&amp; spec.length() &gt; 2)</span>
+<span class="fc" id="L226">			return &quot;&lt;&quot; + spec + &quot;&gt;&quot;;</span>
+<span class="pc bpc" id="L227" title="3 of 4 branches missed.">		if (spec.startsWith(&quot;&amp;&quot;) || spec.startsWith(&quot;$&quot;))</span>
+<span class="fc" id="L228">			return &quot;&lt;&quot; + spec + &quot;&gt;&quot;;</span>
+		// Mermaid style &quot;pack:name&quot;: only the name can mean something here
+<span class="nc" id="L230">		final int colon = spec.lastIndexOf(':');</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (colon != -1)</span>
+<span class="nc" id="L232">			spec = spec.substring(colon + 1);</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">		if (spec.matches(&quot;[0-9a-zA-Z][-_0-9a-zA-Z]*&quot;) == false)</span>
+<span class="nc" id="L234">			return null;</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		if (Emoji.retrieve(spec) != null)</span>
+<span class="nc" id="L236">			return &quot;&lt;:&quot; + lower(spec) + &quot;:&gt;&quot;;</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">		if (OpenIconic.retrieve(spec) != null)</span>
+<span class="nc" id="L238">			return &quot;&lt;&amp;&quot; + spec + &quot;&gt;&quot;;</span>
+<span class="nc" id="L239">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

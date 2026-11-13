@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChartDataItems.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart.command</a> &gt; <span class="el_source">ChartDataItems.java</span></div><h1>ChartDataItems.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart.command;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.chart.ChartSeries;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+
+/**
+ * The data of a pie or a radar, written between brackets.
+ *
+ * Each item is a value, optionally preceded by a key and followed by a color:
+ * &lt;pre&gt;
+ * [78, 21, 1]
+ * [Nitrogen: 78, Oxygen: 21 #DC3912, &quot;Rare gases, others&quot;: 1]
+ * &lt;/pre&gt;
+ * A key holding a comma, a colon or a '#' must be quoted. Either every item has a key, or
+ * none has. An empty value, as in [4, , 5], is a missing value.
+ */
+final class ChartDataItems {
+
+<span class="fc" id="L58">	private final List&lt;String&gt; keys = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L59">	private final List&lt;Double&gt; values = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L60">	private final List&lt;HColor&gt; colors = new ArrayList&lt;&gt;();</span>
+	private boolean keyed;
+	private boolean hasColor;
+	private String error;
+
+<span class="fc" id="L65">	private ChartDataItems() {</span>
+<span class="fc" id="L66">	}</span>
+
+	static ChartDataItems parse(String data, HColorSet colorSet) {
+<span class="fc" id="L69">		final ChartDataItems result = new ChartDataItems();</span>
+<span class="pc bpc" id="L70" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="nc" id="L71">			return result;</span>
+
+<span class="fc" id="L73">		final List&lt;String&gt; items = split(data, ',');</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (items == null)</span>
+<span class="nc" id="L75">			return result.fail(&quot;Unbalanced quotes in data&quot;);</span>
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		for (int i = 0; i &lt; items.size(); i++) {</span>
+<span class="fc" id="L78">			final String error = result.add(items.get(i).trim(), colorSet);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">			if (error != null)</span>
+<span class="nc" id="L80">				return result.fail(error);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			final boolean itemKeyed = result.keys.get(i) != null;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			if (i == 0)</span>
+<span class="fc" id="L83">				result.keyed = itemKeyed;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">			else if (itemKeyed != result.keyed)</span>
+<span class="fc" id="L85">				return result.fail(&quot;Either every value has a key (key: value), or none has&quot;);</span>
+		}
+<span class="fc" id="L87">		return result;</span>
+	}
+
+	private ChartDataItems fail(String message) {
+<span class="fc" id="L91">		this.error = message;</span>
+<span class="fc" id="L92">		return this;</span>
+	}
+
+	private String add(String item, HColorSet colorSet) {
+<span class="fc" id="L96">		String key = null;</span>
+<span class="fc" id="L97">		final List&lt;String&gt; parts = split(item, ':');</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (parts.size() &gt; 2)</span>
+<span class="nc" id="L99">			return &quot;Too many ':' in \&quot;&quot; + item + &quot;\&quot;: quote the key&quot;;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (parts.size() == 2) {</span>
+<span class="fc" id="L101">			key = unquote(parts.get(0).trim());</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">			if (key.isEmpty())</span>
+<span class="nc" id="L103">				return &quot;Empty key in \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
+<span class="fc" id="L104">			item = parts.get(1).trim();</span>
+		}
+
+<span class="fc" id="L107">		HColor color = null;</span>
+<span class="fc" id="L108">		final int sharp = item.indexOf('#');</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (sharp &gt;= 0) {</span>
+<span class="fc" id="L110">			final String colorName = item.substring(sharp).trim();</span>
+<span class="fc" id="L111">			item = item.substring(0, sharp).trim();</span>
+			try {
+<span class="fc" id="L113">				color = colorSet.getColor(colorName);</span>
+<span class="nc" id="L114">			} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L115">				return &quot;Unknown color &quot; + colorName;</span>
+<span class="fc" id="L116">			}</span>
+<span class="fc" id="L117">			hasColor = true;</span>
+		}
+
+<span class="fc" id="L120">		Double value = null;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (item.isEmpty() == false)</span>
+			try {
+<span class="fc" id="L123">				value = Double.parseDouble(item);</span>
+<span class="nc" id="L124">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L125">				return &quot;Invalid number \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
+<span class="fc" id="L126">			}</span>
+
+<span class="fc" id="L128">		keys.add(key);</span>
+<span class="fc" id="L129">		values.add(value);</span>
+<span class="fc" id="L130">		colors.add(color);</span>
+<span class="fc" id="L131">		return null;</span>
+	}
+
+	// Splits on a separator outside double quotes; null when a quote is not closed
+	private static List&lt;String&gt; split(String s, char separator) {
+<span class="fc" id="L136">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L137">		final StringBuilder current = new StringBuilder();</span>
+<span class="fc" id="L138">		boolean quoted = false;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L140">			final char c = s.charAt(i);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">			if (c == '&quot;')</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">				quoted = quoted == false;</span>
+<span class="fc bfc" id="L143" title="All 4 branches covered.">			if (c == separator &amp;&amp; quoted == false) {</span>
+<span class="fc" id="L144">				result.add(current.toString());</span>
+<span class="fc" id="L145">				current.setLength(0);</span>
+			} else {
+<span class="fc" id="L147">				current.append(c);</span>
+			}
+		}
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		if (quoted)</span>
+<span class="nc" id="L151">			return null;</span>
+<span class="fc" id="L152">		result.add(current.toString());</span>
+<span class="fc" id="L153">		return result;</span>
+	}
+
+	static String unquote(String s) {
+<span class="pc bpc" id="L157" title="1 of 6 branches missed.">		if (s.length() &gt;= 2 &amp;&amp; s.startsWith(&quot;\&quot;&quot;) &amp;&amp; s.endsWith(&quot;\&quot;&quot;))</span>
+<span class="fc" id="L158">			return s.substring(1, s.length() - 1);</span>
+<span class="fc" id="L159">		return s;</span>
+	}
+
+	// A list of labels, as in a-axis [Dev, &quot;Ops, Run&quot;, QA]
+	static List&lt;String&gt; parseLabels(String data) {
+<span class="fc" id="L164">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L165" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="nc" id="L166">			return result;</span>
+<span class="fc" id="L167">		final List&lt;String&gt; parts = split(data, ',');</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (parts == null)</span>
+<span class="nc" id="L169">			return null;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		for (String part : parts)</span>
+<span class="fc" id="L171">			result.add(unquote(part.trim()));</span>
+<span class="fc" id="L172">		return result;</span>
+	}
+
+	String getError() {
+<span class="fc" id="L176">		return error;</span>
+	}
+
+	List&lt;Double&gt; getValues() {
+<span class="fc" id="L180">		return values;</span>
+	}
+
+	// Gives its keys and colors to a series built from these values
+	void applyTo(ChartSeries series) {
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (keyed)</span>
+<span class="fc" id="L186">			series.setKeys(keys);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (hasColor)</span>
+<span class="fc" id="L188">			series.setItemColors(colors);</span>
+<span class="fc" id="L189">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

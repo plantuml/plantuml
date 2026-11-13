@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandChartRAxis.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart.command</a> &gt; <span class="el_source">CommandChartRAxis.java</span></div><h1>CommandChartRAxis.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart.command;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+
+import net.sourceforge.plantuml.annotation.Explain;
+import net.sourceforge.plantuml.chart.ChartDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+/**
+ * The radial axis of a radar: its scale, and the rings drawn at its ticks.
+ * &lt;pre&gt;
+ * r-axis 0 --&gt; 5 spacing 1 grid circle
+ * r-axis 0 --&gt; 100 ticks [50: &quot;Mid&quot;, 100: &quot;Max&quot;]
+ * &lt;/pre&gt;
+ * The rings are always drawn: &quot;grid polygon&quot; (the default) or &quot;grid circle&quot; gives their shape.
+ */
+public class CommandChartRAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
+
+<span class="fc" id="L63">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;r&quot;);</span>
+
+	public CommandChartRAxis() {
+<span class="fc" id="L66">		super(false, getRegexConcat());</span>
+<span class="fc" id="L67">	}</span>
+
+	static IRegex getRegexConcat() {
+<span class="fc" id="L70">		return RegexConcat.build(CommandChartRAxis.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;r-axis&quot;), //
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(2, &quot;RANGE&quot;, &quot;(-?[0-9.]+)\\s*-?-&gt;\\s*(-?[0-9.]+)&quot;)), //
+<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexConcat( //
+						new RegexLeaf(&quot;ticks&quot;), //
+<span class="fc" id="L78">						RegexLeaf.spaceOneOrMore(), //</span>
+						new RegexLeaf(1, &quot;TICKS&quot;, &quot;\\[(.*)\\]&quot;))), //
+<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexConcat( //
+						new RegexLeaf(&quot;spacing&quot;), //
+<span class="fc" id="L83">						RegexLeaf.spaceOneOrMore(), //</span>
+						new RegexLeaf(1, &quot;SPACING&quot;, &quot;([0-9.]+)&quot;))), //
+<span class="fc" id="L85">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexConcat( //
+						new RegexLeaf(&quot;grid&quot;), //
+						new RegexOptional(new RegexConcat( //
+<span class="fc" id="L89">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(1, &quot;GRID&quot;, &quot;(circle|polygon)&quot;))))), //
+<span class="fc" id="L91">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L92">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L98">		return null;</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="fc" id="L104">		final String minStr = arg.get(&quot;RANGE&quot;, 0);</span>
+<span class="fc" id="L105">		final String maxStr = arg.get(&quot;RANGE&quot;, 1);</span>
+<span class="fc" id="L106">		final String ticksStr = arg.get(&quot;TICKS&quot;, 0);</span>
+<span class="fc" id="L107">		final String spacingStr = arg.get(&quot;SPACING&quot;, 0);</span>
+<span class="fc" id="L108">		final String gridStr = arg.get(&quot;GRID&quot;, 0);</span>
+
+<span class="fc" id="L110">		Double min = null;</span>
+<span class="fc" id="L111">		Double max = null;</span>
+<span class="pc bpc" id="L112" title="1 of 4 branches missed.">		if (minStr != null &amp;&amp; maxStr != null)</span>
+			try {
+<span class="fc" id="L114">				min = Double.parseDouble(minStr);</span>
+<span class="fc" id="L115">				max = Double.parseDouble(maxStr);</span>
+<span class="nc" id="L116">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L117">				return CommandExecutionResult.error(&quot;Invalid number format in axis range&quot;);</span>
+<span class="fc" id="L118">			}</span>
+
+<span class="fc" id="L120">		Map&lt;Double, String&gt; customTicks = null;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (ticksStr != null) {</span>
+<span class="fc" id="L122">			customTicks = CommandChartVAxis.parseCustomTicks(ticksStr);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">			if (customTicks == null)</span>
+<span class="nc" id="L124">				return CommandExecutionResult.error(&quot;Invalid tick format. Expected: [value:\&quot;label\&quot;, ...]&quot;);</span>
+		}
+
+<span class="fc" id="L127">		Double tickSpacing = null;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (spacingStr != null)</span>
+			try {
+<span class="fc" id="L130">				tickSpacing = Double.parseDouble(spacingStr);</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">				if (tickSpacing &lt;= 0)</span>
+<span class="nc" id="L132">					return CommandExecutionResult.error(&quot;Tick spacing must be greater than 0&quot;);</span>
+<span class="nc" id="L133">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L134">				return CommandExecutionResult.error(&quot;Invalid number format in spacing value&quot;);</span>
+<span class="fc" id="L135">			}</span>
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		final Boolean circleGrid = gridStr == null ? null : Boolean.valueOf(gridStr.equals(&quot;circle&quot;));</span>
+<span class="fc" id="L138">		return diagram.setRadialAxis(min, max, customTicks, tickSpacing, circleGrid);</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L143">		return FIRST_TOKENS;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

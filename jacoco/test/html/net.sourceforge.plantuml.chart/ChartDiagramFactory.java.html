@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.chart;
 import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.chart.command.CommandChartAAxis;
 import net.sourceforge.plantuml.chart.command.CommandChartAnnotation;
 import net.sourceforge.plantuml.chart.command.CommandChartArea;
 import net.sourceforge.plantuml.chart.command.CommandChartBar;
@@ -44,6 +45,9 @@ import net.sourceforge.plantuml.chart.command.CommandChartHAxis;
 import net.sourceforge.plantuml.chart.command.CommandChartLegend;
 import net.sourceforge.plantuml.chart.command.CommandChartLine;
 import net.sourceforge.plantuml.chart.command.CommandChartOrientation;
+import net.sourceforge.plantuml.chart.command.CommandChartPie;
+import net.sourceforge.plantuml.chart.command.CommandChartRAxis;
+import net.sourceforge.plantuml.chart.command.CommandChartRadar;
 import net.sourceforge.plantuml.chart.command.CommandChartScatter;
 import net.sourceforge.plantuml.chart.command.CommandChartStackMode;
 import net.sourceforge.plantuml.chart.command.CommandChartVAxis;
@@ -58,30 +62,34 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 public class ChartDiagramFactory extends PSystemCommandFactory {
 
 	public ChartDiagramFactory() {
-<span class="fc" id="L61">		super(DiagramType.CHART);</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L65">		super(DiagramType.CHART);</span>
+<span class="fc" id="L66">	}</span>
 
 	@Override
 	protected void initCommandsList(List&lt;Command&gt; cmds) {
 		// Add chart-specific commands first to take priority
-<span class="fc" id="L67">		cmds.add(new CommandChartHAxis());</span>
-<span class="fc" id="L68">		cmds.add(new CommandChartVAxis());</span>
-<span class="fc" id="L69">		cmds.add(new CommandChartBar());</span>
-<span class="fc" id="L70">		cmds.add(new CommandChartLine());</span>
-<span class="fc" id="L71">		cmds.add(new CommandChartArea());</span>
-<span class="fc" id="L72">		cmds.add(new CommandChartScatter());</span>
-<span class="fc" id="L73">		cmds.add(new CommandChartLegend());</span>
-<span class="fc" id="L74">		cmds.add(new CommandChartStackMode());</span>
-<span class="fc" id="L75">		cmds.add(new CommandChartOrientation());</span>
-<span class="fc" id="L76">		cmds.add(new CommandChartAnnotation());</span>
+<span class="fc" id="L71">		cmds.add(new CommandChartHAxis());</span>
+<span class="fc" id="L72">		cmds.add(new CommandChartVAxis());</span>
+<span class="fc" id="L73">		cmds.add(new CommandChartBar());</span>
+<span class="fc" id="L74">		cmds.add(new CommandChartLine());</span>
+<span class="fc" id="L75">		cmds.add(new CommandChartArea());</span>
+<span class="fc" id="L76">		cmds.add(new CommandChartScatter());</span>
+<span class="fc" id="L77">		cmds.add(new CommandChartPie());</span>
+<span class="fc" id="L78">		cmds.add(new CommandChartRadar());</span>
+<span class="fc" id="L79">		cmds.add(new CommandChartAAxis());</span>
+<span class="fc" id="L80">		cmds.add(new CommandChartRAxis());</span>
+<span class="fc" id="L81">		cmds.add(new CommandChartLegend());</span>
+<span class="fc" id="L82">		cmds.add(new CommandChartStackMode());</span>
+<span class="fc" id="L83">		cmds.add(new CommandChartOrientation());</span>
+<span class="fc" id="L84">		cmds.add(new CommandChartAnnotation());</span>
 		// Add common commands last so they don't override chart-specific ones
-<span class="fc" id="L78">		CommonCommands.addCommonCommands1(cmds);</span>
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L86">		CommonCommands.addCommonCommands1(cmds);</span>
+<span class="fc" id="L87">	}</span>
 
 	@Override
 	public ChartDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
-<span class="fc" id="L84">		return new ChartDiagram(source, preprocessing);</span>
+<span class="fc" id="L92">		return new ChartDiagram(source, preprocessing);</span>
 	}
 
 }

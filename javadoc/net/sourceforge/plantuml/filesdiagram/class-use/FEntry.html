@@ -74,21 +74,44 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../FEntry.html" title="class in net.sourceforge.plantuml.filesdiagram">FEntry</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">FEntry.</span><code><a href="../FEntry.html#addRawEntry(java.lang.String)" class="member-name-link">addRawEntry</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;raw)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Adds a path relative to this entry: <code>a/b/c.txt</code> creates (or reuses)
+ the folders <code>a</code> and <code>b</code>, then a file <code>c.txt</code>.</div>
+</div>
 <div class="col-first odd-row-color"><code>static <a href="../FEntry.html" title="class in net.sourceforge.plantuml.filesdiagram">FEntry</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">FEntry.</span><code><a href="../FEntry.html#createRoot()" class="member-name-link">createRoot</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../FEntry.html" title="class in net.sourceforge.plantuml.filesdiagram">FEntry</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FEntry.</span><code><a href="../FEntry.html#getParent()" class="member-name-link">getParent</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><span class="type-name-label">FEntry.</span><code><a href="../FEntry.html#getLastEntryChild()" class="member-name-link">getLastEntryChild</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">The last child that is not a note: the one where the vertical connector
+ line stops.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../FEntry.html" title="class in net.sourceforge.plantuml.filesdiagram">FEntry</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FEntry.</span><code><a href="../FEntry.html#getParent()" class="member-name-link">getParent</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.filesdiagram</a> that return types with arguments of type <a href="../FEntry.html" title="class in net.sourceforge.plantuml.filesdiagram">FEntry</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a><wbr>&lt;<a href="../FEntry.html" title="class in net.sourceforge.plantuml.filesdiagram">FEntry</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FEntry.</span><code><a href="../FEntry.html#iterator()" class="member-name-link">iterator</a>()</code></div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../FEntry.html" title="class in net.sourceforge.plantuml.filesdiagram">FEntry</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FEntry.</span><code><a href="../FEntry.html#getChildren()" class="member-name-link">getChildren</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a><wbr>&lt;<a href="../FEntry.html" title="class in net.sourceforge.plantuml.filesdiagram">FEntry</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FEntry.</span><code><a href="../FEntry.html#iterator()" class="member-name-link">iterator</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructors in <a href="../package-summary.html">net.sourceforge.plantuml.filesdiagram</a> with parameters of type <a href="../FEntry.html" title="class in net.sourceforge.plantuml.filesdiagram">FEntry</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../FilesListing.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.filesdiagram.FEntry,net.sourceforge.plantuml.filesdiagram.FilesIcons)" class="member-name-link">FilesListing</a><wbr>(<a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
+ <a href="../FEntry.html" title="class in net.sourceforge.plantuml.filesdiagram">FEntry</a>&nbsp;root,
+ net.sourceforge.plantuml.filesdiagram.FilesIcons&nbsp;icons)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

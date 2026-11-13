@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FilesTxt.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.filesdiagram</a> &gt; <span class="el_source">FilesTxt.java</span></div><h1>FilesTxt.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.filesdiagram;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Text rendering (-tutxt and -tatxt), in the style of the {@code tree} command:
+ *
+ * &lt;pre&gt;
+ * src/
+ * ├── main/
+ * │   └── App.java  ## the entry point
+ * └── test/
+ * &lt;/pre&gt;
+ *
+ * Folders get a trailing {@code /} and descriptions keep their {@code ##}, so
+ * that the output can be pasted back into a {@code @startfiles} diagram.
+ */
+final class FilesTxt {
+
+	private final String branch;
+	private final String lastBranch;
+	private final String bar;
+<span class="fc" id="L58">	private final String blank = &quot;    &quot;;</span>
+	private final boolean unicode;
+
+<span class="fc" id="L61">	FilesTxt(boolean unicode) {</span>
+<span class="fc" id="L62">		this.unicode = unicode;</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		this.branch = unicode ? &quot;├── &quot; : &quot;|-- &quot;;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		this.lastBranch = unicode ? &quot;└── &quot; : &quot;`-- &quot;;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		this.bar = unicode ? &quot;│   &quot; : &quot;|   &quot;;</span>
+<span class="fc" id="L66">	}</span>
+
+	public List&lt;String&gt; getLines(FEntry root) {
+<span class="fc" id="L69">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (FEntry child : root)</span>
+<span class="fc" id="L71">			addEntry(result, child, &quot;&quot;, &quot;&quot;);</span>
+<span class="fc" id="L72">		return result;</span>
+	}
+
+	private void addEntry(List&lt;String&gt; result, FEntry entry, String firstPrefix, String nextPrefix) {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (entry.isNote())</span>
+<span class="fc" id="L77">			addNote(result, entry.getNote(), firstPrefix);</span>
+		else
+<span class="fc" id="L79">			result.add(firstPrefix + getText(entry));</span>
+
+<span class="fc" id="L81">		final FEntry last = entry.getLastEntryChild();</span>
+<span class="fc" id="L82">		boolean afterLast = false;</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		for (FEntry child : entry) {</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">			if (child.isNote()) {</span>
+<span class="pc bpc" id="L85" title="1 of 4 branches missed.">				addEntry(result, child, nextPrefix + (afterLast || last == null ? blank : bar), null);</span>
+<span class="fc" id="L86">				continue;</span>
+			}
+<span class="fc bfc" id="L88" title="All 2 branches covered.">			final boolean isLast = child == last;</span>
+<span class="fc bfc" id="L89" title="All 4 branches covered.">			addEntry(result, child, nextPrefix + (isLast ? lastBranch : branch), nextPrefix + (isLast ? blank : bar));</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			if (isLast)</span>
+<span class="fc" id="L91">				afterLast = true;</span>
+<span class="fc" id="L92">		}</span>
+<span class="fc" id="L93">	}</span>
+
+	private String getText(FEntry entry) {
+<span class="fc" id="L96">		final StringBuilder sb = new StringBuilder(entry.getName());</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (entry.isFolder())</span>
+<span class="fc" id="L98">			sb.append('/');</span>
+<span class="pc bpc" id="L99" title="3 of 4 branches missed.">		if (entry.getDescription() != null &amp;&amp; entry.getDescription().length() &gt; 0)</span>
+<span class="nc" id="L100">			sb.append(&quot;  ## &quot;).append(entry.getDescription());</span>
+<span class="fc" id="L101">		return sb.toString();</span>
+	}
+
+	private void addNote(List&lt;String&gt; result, List&lt;String&gt; note, String prefix) {
+<span class="fc" id="L105">		int width = 0;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		for (String s : note)</span>
+<span class="fc" id="L107">			width = Math.max(width, s.length());</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		final String h = repeat(unicode ? '─' : '-', width + 2);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		final String v = unicode ? &quot;│&quot; : &quot;|&quot;;</span>
+<span class="pc bpc" id="L110" title="2 of 4 branches missed.">		result.add(prefix + (unicode ? &quot;┌&quot; : &quot;+&quot;) + h + (unicode ? &quot;┐&quot; : &quot;+&quot;));</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		for (String s : note)</span>
+<span class="fc" id="L112">			result.add(prefix + v + &quot; &quot; + s + repeat(' ', width - s.length()) + &quot; &quot; + v);</span>
+<span class="pc bpc" id="L113" title="2 of 4 branches missed.">		result.add(prefix + (unicode ? &quot;└&quot; : &quot;+&quot;) + h + (unicode ? &quot;┘&quot; : &quot;+&quot;));</span>
+<span class="fc" id="L114">	}</span>
+
+	private static String repeat(char c, int n) {
+<span class="fc" id="L117">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++)</span>
+<span class="fc" id="L119">			sb.append(c);</span>
+<span class="fc" id="L120">		return sb.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

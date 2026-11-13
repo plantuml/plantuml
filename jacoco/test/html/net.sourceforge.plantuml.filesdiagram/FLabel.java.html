@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FLabel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.filesdiagram</a> &gt; <span class="el_source">FLabel.java</span></div><h1>FLabel.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.filesdiagram;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+
+/**
+ * The text of one entry once its tree prefix (indentation, box-drawing
+ * characters...) has been removed: a name followed by optional annotations, in
+ * any order.
+ *
+ * &lt;pre&gt;
+ * App.java :::highlight &amp;lt;&amp;lt;main&amp;gt;&amp;gt; #yellow icon(&amp;lt;:coffee:&amp;gt;) ## the entry point
+ * &quot;my file ## not a description.txt&quot; ## a description
+ * &lt;/pre&gt;
+ *
+ * &lt;ul&gt;
+ * &lt;li&gt;{@code :::cls} or {@code &lt;&lt;cls&gt;&gt;}: a stereotype, styled by
+ * {@code .cls} in {@code &lt;style&gt;}&lt;/li&gt;
+ * &lt;li&gt;{@code #color}: a background color for the row&lt;/li&gt;
+ * &lt;li&gt;{@code icon(...)}: an explicit icon, see {@link FilesIcons}&lt;/li&gt;
+ * &lt;li&gt;{@code ## text}: an inline description&lt;/li&gt;
+ * &lt;/ul&gt;
+ * The name may be quoted, so that it can contain one of these markers.
+ */
+final class FLabel {
+
+<span class="fc" id="L66">	private static final Pattern STEREO1 = Pattern.compile(&quot;^:::([^\\s:]+)&quot;);</span>
+<span class="fc" id="L67">	private static final Pattern STEREO2 = Pattern.compile(&quot;^&lt;&lt;([^&lt;&gt;]+)&gt;&gt;&quot;);</span>
+<span class="fc" id="L68">	private static final Pattern ICON = Pattern.compile(&quot;^icon\\(([^)]*)\\)&quot;);</span>
+<span class="fc" id="L69">	private static final Pattern COLOR = Pattern.compile(&quot;^(#[0-9a-zA-Z]+)(?=\\s|$)&quot;);</span>
+<span class="fc" id="L70">	private static final Pattern TRAILING = Pattern</span>
+<span class="fc" id="L71">			.compile(&quot;\\s+(:::[^\\s:]+|&lt;&lt;[^&lt;&gt;]+&gt;&gt;|icon\\([^)]*\\)|#[0-9a-zA-Z]+)$&quot;);</span>
+
+	/**
+	 * Where an annotation may start, when the name is not quoted. {@code :::} and
+	 * {@code &lt;&lt;} may stick to the name, the others need a blank before them.
+	 */
+<span class="fc" id="L77">	private static final Pattern ANNOTATION_START = Pattern</span>
+<span class="fc" id="L78">			.compile(&quot;:::[^\\s:]|&lt;&lt;[^&lt;&gt;]+&gt;&gt;|\\s##|\\sicon\\(|\\s#[0-9a-zA-Z]+(?=\\s|$)&quot;);</span>
+
+	private final String name;
+	private final String description;
+	private final List&lt;String&gt; stereotypes;
+	private final String color;
+	private final String icon;
+
+<span class="fc" id="L86">	private FLabel(String name, String description, List&lt;String&gt; stereotypes, String color, String icon) {</span>
+<span class="fc" id="L87">		this.name = name;</span>
+<span class="fc" id="L88">		this.description = description;</span>
+<span class="fc" id="L89">		this.stereotypes = Collections.unmodifiableList(stereotypes);</span>
+<span class="fc" id="L90">		this.color = color;</span>
+<span class="fc" id="L91">		this.icon = icon;</span>
+<span class="fc" id="L92">	}</span>
+
+	public static FLabel parse(String text) {
+<span class="fc" id="L95">		text = text.trim();</span>
+		String name;
+		String rest;
+<span class="pc bpc" id="L98" title="1 of 4 branches missed.">		if (text.startsWith(&quot;\&quot;&quot;) &amp;&amp; text.indexOf('&quot;', 1) &gt; 0) {</span>
+<span class="fc" id="L99">			final int end = text.indexOf('&quot;', 1);</span>
+<span class="fc" id="L100">			name = text.substring(1, end);</span>
+<span class="fc" id="L101">			rest = text.substring(end + 1);</span>
+<span class="fc" id="L102">		} else {</span>
+<span class="fc" id="L103">			final int start = annotationStart(&quot; &quot; + text);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">			if (start == -1) {</span>
+<span class="fc" id="L105">				name = text;</span>
+<span class="fc" id="L106">				rest = &quot;&quot;;</span>
+			} else {
+<span class="fc" id="L108">				name = text.substring(0, start).trim();</span>
+<span class="fc" id="L109">				rest = text.substring(start);</span>
+			}
+		}
+
+<span class="fc" id="L113">		String description = null;</span>
+<span class="fc" id="L114">		String color = null;</span>
+<span class="fc" id="L115">		String icon = null;</span>
+<span class="fc" id="L116">		final List&lt;String&gt; stereotypes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L117">		final StringBuilder unknown = new StringBuilder();</span>
+
+		while (true) {
+<span class="fc" id="L120">			rest = rest.trim();</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (rest.length() == 0)</span>
+<span class="fc" id="L122">				break;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">			if (rest.startsWith(&quot;##&quot;)) {</span>
+				// The description runs to the end of the line, but annotations written after
+				// it still count, as in &quot;App.java ## the entry point :::highlight&quot;
+<span class="fc" id="L126">				String desc = rest.substring(2).trim();</span>
+				Matcher m;
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">				while ((m = TRAILING.matcher(desc)).find()) {</span>
+<span class="nc" id="L129">					final String tail = m.group(1);</span>
+<span class="nc bnc" id="L130" title="All 4 branches missed.">					if (tail.startsWith(&quot;#&quot;) &amp;&amp; isColor(tail) == false)</span>
+<span class="nc" id="L131">						break;</span>
+<span class="nc" id="L132">					desc = desc.substring(0, m.start()).trim();</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">					if (tail.startsWith(&quot;:::&quot;))</span>
+<span class="nc" id="L134">						stereotypes.add(0, tail.substring(3));</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">					else if (tail.startsWith(&quot;&lt;&lt;&quot;))</span>
+<span class="nc" id="L136">						stereotypes.add(0, tail.substring(2, tail.length() - 2).trim());</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">					else if (tail.startsWith(&quot;icon(&quot;))</span>
+<span class="nc" id="L138">						icon = tail.substring(5, tail.length() - 1).trim();</span>
+					else
+<span class="nc" id="L140">						color = tail;</span>
+<span class="nc" id="L141">				}</span>
+<span class="fc" id="L142">				description = desc;</span>
+<span class="fc" id="L143">				break;</span>
+			}
+<span class="fc" id="L145">			Matcher m = STEREO1.matcher(rest);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">			if (m.find()) {</span>
+<span class="fc" id="L147">				stereotypes.add(m.group(1));</span>
+<span class="fc" id="L148">				rest = rest.substring(m.end());</span>
+<span class="fc" id="L149">				continue;</span>
+			}
+<span class="fc" id="L151">			m = STEREO2.matcher(rest);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			if (m.find()) {</span>
+<span class="fc" id="L153">				stereotypes.add(m.group(1).trim());</span>
+<span class="fc" id="L154">				rest = rest.substring(m.end());</span>
+<span class="fc" id="L155">				continue;</span>
+			}
+<span class="fc" id="L157">			m = ICON.matcher(rest);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">			if (m.find()) {</span>
+<span class="fc" id="L159">				icon = m.group(1).trim();</span>
+<span class="fc" id="L160">				rest = rest.substring(m.end());</span>
+<span class="fc" id="L161">				continue;</span>
+			}
+<span class="fc" id="L163">			m = COLOR.matcher(rest);</span>
+<span class="pc bpc" id="L164" title="2 of 4 branches missed.">			if (m.find() &amp;&amp; isColor(m.group(1))) {</span>
+<span class="fc" id="L165">				color = m.group(1);</span>
+<span class="fc" id="L166">				rest = rest.substring(m.end());</span>
+<span class="fc" id="L167">				continue;</span>
+			}
+			// Not an annotation after all: it belongs to the name
+<span class="nc" id="L170">			final int space = firstBlank(rest);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">			final String word = space == -1 ? rest : rest.substring(0, space);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">			if (unknown.length() &gt; 0)</span>
+<span class="nc" id="L173">				unknown.append(' ');</span>
+<span class="nc" id="L174">			unknown.append(word);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			rest = space == -1 ? &quot;&quot; : rest.substring(space);</span>
+<span class="nc" id="L176">		}</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (unknown.length() &gt; 0)</span>
+<span class="nc" id="L178">			name = (name + &quot; &quot; + unknown).trim();</span>
+
+<span class="fc" id="L180">		return new FLabel(name, description, stereotypes, color, icon);</span>
+	}
+
+	private static int firstBlank(String s) {
+<span class="nc bnc" id="L184" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++)</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">			if (Character.isWhitespace(s.charAt(i)))</span>
+<span class="nc" id="L186">				return i;</span>
+<span class="nc" id="L187">		return -1;</span>
+	}
+
+	/**
+	 * Position of the first annotation in {@code &quot; &quot; + text}, given back as a
+	 * position in {@code text}, or -1.
+	 */
+	private static int annotationStart(String spaced) {
+<span class="fc" id="L195">		final Matcher m = ANNOTATION_START.matcher(spaced);</span>
+<span class="fc" id="L196">		int from = 0;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		while (m.find(from)) {</span>
+<span class="fc" id="L198">			final String found = m.group();</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">			final int start = Character.isWhitespace(found.charAt(0)) ? m.start() + 1 : m.start();</span>
+<span class="fc bfc" id="L200" title="All 4 branches covered.">			if (found.trim().startsWith(&quot;#&quot;) &amp;&amp; found.trim().startsWith(&quot;##&quot;) == false</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">					&amp;&amp; isColor(found.trim()) == false) {</span>
+<span class="nc" id="L202">				from = m.start() + 1;</span>
+<span class="nc" id="L203">				continue;</span>
+			}
+			// &quot;start&quot; counts the extra leading blank
+<span class="fc" id="L206">			return Math.max(0, start - 1);</span>
+		}
+<span class="fc" id="L208">		return -1;</span>
+	}
+
+	/**
+	 * True for {@code #red} or {@code #FFC107}, but not for {@code #12} or
+	 * {@code #todo}: a word that only looks like a color stays in the name.
+	 */
+	static boolean isColor(String s) {
+<span class="pc bpc" id="L216" title="2 of 4 branches missed.">		if (s.startsWith(&quot;#&quot;) == false || s.length() &lt; 2)</span>
+<span class="nc" id="L217">			return false;</span>
+<span class="fc" id="L218">		final String value = s.substring(1);</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (value.matches(&quot;[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8}&quot;))</span>
+<span class="nc" id="L220">			return true;</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (value.matches(&quot;[a-zA-Z]+&quot;))</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">			return HColorSet.instance().getColorOrNull(value) != null;</span>
+<span class="nc" id="L223">		return false;</span>
+	}
+
+	public String getName() {
+<span class="fc" id="L227">		return name;</span>
+	}
+
+	public String getDescription() {
+<span class="fc" id="L231">		return description;</span>
+	}
+
+	public List&lt;String&gt; getStereotypes() {
+<span class="fc" id="L235">		return stereotypes;</span>
+	}
+
+	public String getColor() {
+<span class="fc" id="L239">		return color;</span>
+	}
+
+	public String getIcon() {
+<span class="fc" id="L243">		return icon;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

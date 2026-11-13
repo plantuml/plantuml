@@ -35,154 +35,163 @@
 package net.sourceforge.plantuml.filesdiagram;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.klimt.LineBreakStrategy;
-import net.sourceforge.plantuml.klimt.UStroke;
-import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.creole.CreoleMode;
-import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.creole.Sheet;
-import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleQueries;
-import net.sourceforge.plantuml.style.StyleQuery;
-import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.utils.MyCollections;
 
+/**
+ * One node of the tree: a folder, a file or a note. This is only the model;
+ * drawing is done by {@link FilesListing} and {@link FilesTxt}.
+ */
 public class FEntry implements Iterable&lt;FEntry&gt; {
 
 	private final FEntry parent;
 	private final List&lt;String&gt; note;
 	private final String name;
 	private FilesType type;
-<span class="fc" id="L69">	private List&lt;FEntry&gt; children = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L54">	private final List&lt;FEntry&gt; children = new ArrayList&lt;&gt;();</span>
+
+	private String description;
+<span class="fc" id="L57">	private List&lt;String&gt; stereotypes = Collections.emptyList();</span>
+	private String color;
+	private String icon;
 
 	public static FEntry createRoot() {
-<span class="fc" id="L72">		return new FEntry(null, FilesType.FOLDER, &quot;&quot;, null);</span>
+<span class="fc" id="L62">		return new FEntry(null, FilesType.FOLDER, &quot;&quot;, null);</span>
 	}
 
-<span class="fc" id="L75">	private FEntry(FEntry parent, FilesType type, String name, List&lt;String&gt; note) {</span>
-<span class="fc" id="L76">		this.parent = parent;</span>
-<span class="fc" id="L77">		this.note = note;</span>
-<span class="fc" id="L78">		this.name = name;</span>
-<span class="fc" id="L79">		this.type = type;</span>
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L65">	private FEntry(FEntry parent, FilesType type, String name, List&lt;String&gt; note) {</span>
+<span class="fc" id="L66">		this.parent = parent;</span>
+<span class="fc" id="L67">		this.note = note;</span>
+<span class="fc" id="L68">		this.name = name;</span>
+<span class="fc" id="L69">		this.type = type;</span>
+<span class="fc" id="L70">	}</span>
 
+	/**
+	 * Adds a path relative to this entry: {@code a/b/c.txt} creates (or reuses)
+	 * the folders {@code a} and {@code b}, then a file {@code c.txt}. A trailing
+	 * {@code /} makes the last element a folder.
+	 *
+	 * @return the entry for the last element of the path
+	 */
 	public FEntry addRawEntry(String raw) {
-<span class="fc" id="L83">		final int x = raw.indexOf('/');</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (x == -1) {</span>
-<span class="fc" id="L85">			final FEntry result = new FEntry(this, FilesType.DATA, raw, null);</span>
-<span class="fc" id="L86">			children.add(result);</span>
-<span class="fc" id="L87">			return result;</span>
+		// A file that gets children is a folder after all
+<span class="fc" id="L81">		this.type = FilesType.FOLDER;</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		while (raw.startsWith(&quot;./&quot;))</span>
+<span class="nc" id="L83">			raw = raw.substring(2);</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		while (raw.startsWith(&quot;/&quot;))</span>
+<span class="nc" id="L85">			raw = raw.substring(1);</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (raw.length() == 0)</span>
+<span class="nc" id="L87">			return this;</span>
+<span class="fc" id="L88">		final int x = raw.indexOf('/');</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (x == -1) {</span>
+<span class="fc" id="L90">			final FEntry result = new FEntry(this, FilesType.DATA, raw, null);</span>
+<span class="fc" id="L91">			children.add(result);</span>
+<span class="fc" id="L92">			return result;</span>
 		}
-<span class="fc" id="L89">		final FEntry folder = getOrCreateFolder(raw.substring(0, x));</span>
-<span class="fc" id="L90">		final String remain = raw.substring(x + 1);</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (remain.length() != 0)</span>
-<span class="fc" id="L92">			return folder.addRawEntry(remain);</span>
-<span class="fc" id="L93">		return folder;</span>
+<span class="fc" id="L94">		final FEntry folder = getOrCreateFolder(raw.substring(0, x));</span>
+<span class="fc" id="L95">		final String remain = raw.substring(x + 1);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (remain.length() != 0)</span>
+<span class="fc" id="L97">			return folder.addRawEntry(remain);</span>
+<span class="fc" id="L98">		return folder;</span>
 	}
 
 	public boolean isFolder() {
-<span class="fc bfc" id="L97" title="All 2 branches covered.">		return type == FilesType.FOLDER;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		return type == FilesType.FOLDER;</span>
 	}
+
+	public boolean isNote() {
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		return type == FilesType.NOTE;</span>
+	}
+
+	public boolean isRoot() {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		return parent == null;</span>
+	}
+
+	void forceFolder() {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (type == FilesType.DATA)</span>
+<span class="nc" id="L115">			type = FilesType.FOLDER;</span>
+<span class="nc" id="L116">	}</span>
 
 	public void addNote(List&lt;String&gt; note) {
-<span class="fc" id="L101">		final FEntry result = new FEntry(this, FilesType.NOTE, &quot;NONE&quot;, note);</span>
-<span class="fc" id="L102">		children.add(result);</span>
-<span class="fc" id="L103">	}</span>
+<span class="fc" id="L119">		final FEntry result = new FEntry(this, FilesType.NOTE, &quot;NONE&quot;, note);</span>
+<span class="fc" id="L120">		children.add(result);</span>
+<span class="fc" id="L121">	}</span>
 
 	private FEntry getOrCreateFolder(String folderName) {
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		for (FEntry child : children)</span>
-<span class="pc bpc" id="L107" title="1 of 4 branches missed.">			if (child.type == FilesType.FOLDER &amp;&amp; child.getName().equals(folderName))</span>
-<span class="fc" id="L108">				return child;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		for (FEntry child : children)</span>
+<span class="pc bpc" id="L125" title="1 of 4 branches missed.">			if (child.type != FilesType.NOTE &amp;&amp; child.getName().equals(folderName)) {</span>
+<span class="fc" id="L126">				child.type = FilesType.FOLDER;</span>
+<span class="fc" id="L127">				return child;</span>
+			}
 
-<span class="fc" id="L110">		final FEntry result = new FEntry(this, FilesType.FOLDER, folderName, null);</span>
-<span class="fc" id="L111">		children.add(result);</span>
-<span class="fc" id="L112">		return result;</span>
+<span class="fc" id="L130">		final FEntry result = new FEntry(this, FilesType.FOLDER, folderName, null);</span>
+<span class="fc" id="L131">		children.add(result);</span>
+<span class="fc" id="L132">		return result;</span>
 	}
+
+	void applyLabel(FLabel label) {
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (label.getDescription() != null)</span>
+<span class="fc" id="L137">			this.description = label.getDescription();</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (label.getStereotypes().size() &gt; 0) {</span>
+<span class="fc" id="L139">			final List&lt;String&gt; tmp = new ArrayList&lt;&gt;(this.stereotypes);</span>
+<span class="fc" id="L140">			tmp.addAll(label.getStereotypes());</span>
+<span class="fc" id="L141">			this.stereotypes = Collections.unmodifiableList(tmp);</span>
+		}
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (label.getColor() != null)</span>
+<span class="fc" id="L144">			this.color = label.getColor();</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (label.getIcon() != null)</span>
+<span class="fc" id="L146">			this.icon = label.getIcon();</span>
+<span class="fc" id="L147">	}</span>
 
 	@Override
 	public Iterator&lt;FEntry&gt; iterator() {
-<span class="fc" id="L117">		return MyCollections.unmodifiableCollection(children).iterator();</span>
+<span class="fc" id="L151">		return MyCollections.unmodifiableCollection(children).iterator();</span>
+	}
+
+	public List&lt;FEntry&gt; getChildren() {
+<span class="nc" id="L155">		return Collections.unmodifiableList(children);</span>
+	}
+
+	/**
+	 * The last child that is not a note: the one where the vertical connector
+	 * line stops.
+	 */
+	public FEntry getLastEntryChild() {
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		for (int i = children.size() - 1; i &gt;= 0; i--)</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">			if (children.get(i).isNote() == false)</span>
+<span class="fc" id="L165">				return children.get(i);</span>
+<span class="fc" id="L166">		return null;</span>
 	}
 
 	public FEntry getParent() {
-<span class="fc" id="L121">		return parent;</span>
+<span class="fc" id="L170">		return parent;</span>
 	}
 
 	public String getName() {
-<span class="fc" id="L125">		return name;</span>
+<span class="fc" id="L174">		return name;</span>
 	}
 
-	public String getEmoticon() {
-<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (type == FilesType.FOLDER)</span>
-<span class="fc" id="L130">			return &quot;&lt;:1f4c2:&gt;&quot;;</span>
-		// return &quot;&lt;:1f4c1:&gt;&quot;;
-<span class="fc" id="L132">		return &quot;&lt;:1f4c4:&gt;&quot;;</span>
+	public List&lt;String&gt; getNote() {
+<span class="fc" id="L178">		return note;</span>
 	}
 
-	public UGraphic drawAndMove(UGraphic ug, FontConfiguration fontConfiguration, ISkinParam skinParam, double deltax) {
-<span class="fc" id="L136">		final TextBlock result = getTextBlock(fontConfiguration, skinParam);</span>
-<span class="fc" id="L137">		result.drawU(ug.apply(UTranslate.dx(deltax)));</span>
-<span class="fc" id="L138">		ug = ug.apply(UTranslate.dy(result.calculateDimension(ug.getStringBounder()).getHeight() + 2));</span>
-<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (FEntry child : children)</span>
-<span class="fc" id="L140">			ug = child.drawAndMove(ug, fontConfiguration, skinParam, deltax + 21);</span>
-<span class="fc" id="L141">		return ug;</span>
+	public String getDescription() {
+<span class="fc" id="L182">		return description;</span>
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder, FontConfiguration fontConfiguration,
-			ISkinParam skinParam, double deltax) {
-<span class="fc" id="L146">		final TextBlock result = getTextBlock(fontConfiguration, skinParam);</span>
-<span class="fc" id="L147">		final XDimension2D dim = result.calculateDimension(stringBounder);</span>
-<span class="fc" id="L148">		double width = deltax + dim.getWidth();</span>
-<span class="fc" id="L149">		double height = dim.getHeight() + 2;</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">		for (FEntry child : children) {</span>
-<span class="fc" id="L151">			final XDimension2D childDim = child.calculateDimension(stringBounder, fontConfiguration, skinParam,</span>
-					deltax + 21);
-<span class="fc" id="L153">			width = Math.max(width, childDim.getWidth());</span>
-<span class="fc" id="L154">			height += childDim.getHeight();</span>
-<span class="fc" id="L155">		}</span>
-<span class="fc" id="L156">		return new XDimension2D(width, height);</span>
+	public List&lt;String&gt; getStereotypes() {
+<span class="fc" id="L186">		return stereotypes;</span>
 	}
 
-	private TextBlock getTextBlock(FontConfiguration fontConfiguration, ISkinParam skinParam) {
-<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (type == FilesType.NOTE)</span>
-<span class="fc" id="L161">			return createOpale(skinParam);</span>
-
-<span class="fc" id="L163">		final Display display = Display.getWithNewlines(skinParam.getPragma(), getEmoticon() + getName());</span>
-<span class="fc" id="L164">		TextBlock result = display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam,</span>
-				CreoleMode.NO_CREOLE);
-<span class="fc" id="L166">		return result;</span>
+	public String getColor() {
+<span class="fc" id="L190">		return color;</span>
 	}
 
-	private Opale createOpale(ISkinParam skinParam) {
-
-<span class="fc" id="L171">		final StyleQuery signature = StyleQueries.FILESDIAG_NOTE;</span>
-<span class="fc" id="L172">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature);</span>
-
-<span class="fc" id="L174">		final FontConfiguration fc = FontConfiguration.create(skinParam, style);</span>
-<span class="fc" id="L175">		final double shadowing = style.getShadowing();</span>
-<span class="fc" id="L176">		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L177">		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L178">		final UStroke stroke = style.getStroke();</span>
-
-<span class="fc" id="L180">		final Sheet sheet = skinParam</span>
-<span class="fc" id="L181">				.sheet(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)</span>
-<span class="fc" id="L182">				.createSheet(Display.create(note));</span>
-<span class="fc" id="L183">		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());</span>
-<span class="fc" id="L184">		final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, stroke);</span>
-<span class="fc" id="L185">		return opale;</span>
+	public String getIcon() {
+<span class="fc" id="L194">		return icon;</span>
 	}
 
 }

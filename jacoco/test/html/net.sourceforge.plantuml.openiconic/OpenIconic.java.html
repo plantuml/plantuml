@@ -163,8 +163,8 @@ public class OpenIconic {
 <span class="fc" id="L163">			String s = null;</span>
 <span class="fc bfc" id="L164" title="All 2 branches covered.">			while ((s = br.readLine()) != null) {</span>
 <span class="fc" id="L165">				rawData.add(s);</span>
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">				if (s.contains(&quot;transform=\&quot;&quot;))</span>
-<span class="nc" id="L167">					translate = getTranslate(s);</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">				if (s.contains(&quot;transform=\&quot;&quot;))</span>
+<span class="fc" id="L167">					translate = getTranslate(s);</span>
 			}
 		}
 <span class="pc bpc" id="L170" title="3 of 4 branches missed.">		if (rawData.size() != 3 &amp;&amp; rawData.size() != 4)</span>
@@ -179,15 +179,15 @@ public class OpenIconic {
 <span class="fc" id="L179">	}</span>
 
 	private static UTranslate getTranslate(String s) {
-<span class="nc" id="L182">		final Matcher matcher = patternTranslate.matcher(s);</span>
+<span class="fc" id="L182">		final Matcher matcher = patternTranslate.matcher(s);</span>
 
-<span class="nc bnc" id="L184" title="All 2 branches missed.">		if (matcher.find()) {</span>
-<span class="nc" id="L185">			final String xStr = matcher.group(1);</span>
-<span class="nc" id="L186">			final String yStr = matcher.group(2);</span>
-<span class="nc" id="L187">			final int x = Integer.parseInt(xStr);</span>
-<span class="nc bnc" id="L188" title="All 4 branches missed.">			final int y = (yStr == null || yStr.isEmpty()) ? 0 : Integer.parseInt(yStr);</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (matcher.find()) {</span>
+<span class="fc" id="L185">			final String xStr = matcher.group(1);</span>
+<span class="fc" id="L186">			final String yStr = matcher.group(2);</span>
+<span class="fc" id="L187">			final int x = Integer.parseInt(xStr);</span>
+<span class="pc bpc" id="L188" title="2 of 4 branches missed.">			final int y = (yStr == null || yStr.isEmpty()) ? 0 : Integer.parseInt(yStr);</span>
 
-<span class="nc" id="L190">			return new UTranslate(x, y);</span>
+<span class="fc" id="L190">			return new UTranslate(x, y);</span>
 		}
 
 <span class="nc" id="L193">		return UTranslate.none();</span>

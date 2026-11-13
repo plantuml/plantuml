@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandChartRadar.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart.command</a> &gt; <span class="el_source">CommandChartRadar.java</span></div><h1>CommandChartRadar.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart.command;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import net.sourceforge.plantuml.annotation.Explain;
+import net.sourceforge.plantuml.chart.ChartDiagram;
+import net.sourceforge.plantuml.chart.ChartSeries;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+/**
+ * A series of a radar chart, one value per category of the a-axis:
+ * &lt;pre&gt;
+ * radar &quot;Team 1&quot; [4, 3, 5] #3366CC labels
+ * radar &quot;Team 2&quot; [QA: 2, Dev: 5, Ops: 3]
+ * &lt;/pre&gt;
+ */
+public class CommandChartRadar extends SingleLineCommand2&lt;ChartDiagram&gt; {
+
+<span class="fc" id="L64">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;radar&quot;);</span>
+
+	public CommandChartRadar() {
+<span class="fc" id="L67">		super(false, getRegexConcat());</span>
+<span class="fc" id="L68">	}</span>
+
+	static IRegex getRegexConcat() {
+<span class="fc" id="L71">		return RegexConcat.build(CommandChartRadar.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(&quot;radar&quot;), //
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(1, &quot;STEREO&quot;, &quot;(\\&lt;\\&lt;.+?\\&gt;\\&gt;)&quot;)), //
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L77">				new RegexOptional(ChartSeriesName.regex()), //</span>
+<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;DATA&quot;, &quot;\\[(.*)\\]&quot;), //
+<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOptional(new RegexLeaf(1, &quot;COLOR&quot;, &quot;#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)&quot;)), //
+				new RegexOptional( //
+						new RegexConcat( //
+<span class="fc" id="L84">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(1, &quot;LABELS&quot;, &quot;(labels)&quot;))), //
+<span class="fc" id="L86">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L87">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L93">		return null;</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
+<span class="fc" id="L99">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L100">		final String name = ChartSeriesName.get(arg);</span>
+<span class="fc" id="L101">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L102">		final ChartDataItems data = ChartDataItems.parse(arg.get(&quot;DATA&quot;, 0),</span>
+<span class="fc" id="L103">				diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (data.getError() != null)</span>
+<span class="nc" id="L105">			return CommandExecutionResult.error(data.getError());</span>
+
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		final String seriesName = name != null ? name : &quot;radar&quot; + diagram.getSeries().size();</span>
+<span class="fc" id="L108">		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.RADAR, data.getValues());</span>
+<span class="fc" id="L109">		data.applyTo(series);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L111">			series.setStereotype(Stereotype.build(stereo));</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (colorStr != null)</span>
+<span class="fc" id="L113">			series.setColor(diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr));</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (arg.get(&quot;LABELS&quot;, 0) != null)</span>
+<span class="fc" id="L115">			series.setShowLabels(true);</span>
+
+<span class="fc" id="L117">		return diagram.addSeries(series);</span>
+	}
+
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L122">		return FIRST_TOKENS;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

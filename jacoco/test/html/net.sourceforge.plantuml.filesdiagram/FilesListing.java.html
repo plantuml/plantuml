@@ -34,59 +34,244 @@
  */
 package net.sourceforge.plantuml.filesdiagram;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UStroke;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.Sheet;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.style.StyleQuery;
+import net.sourceforge.plantuml.svek.image.Opale;
 
+/**
+ * Draws the tree: one row per entry, indented by depth, with connector lines
+ * from each folder to its children.
+ */
 public class FilesListing extends TextBlockMemoized {
 
-	private final ISkinParam skinParam;
-	private final FontConfiguration fontConfiguration;
-	private final FEntry root;
-	private FEntry lastCreated;
+	/** Horizontal shift between a folder and its children. */
+	private static final double INDENT = 21;
+	/** Vertical space between two rows. */
+	private static final double ROW_SPACING = 2;
+	/** Space between the icon and the name. */
+	private static final double ICON_GAP = 6;
+	/** Space between the name and its description. */
+	private static final double DESCRIPTION_GAP = 10;
+	/** Where the connector stops, on the left of the child row. */
+	private static final double CONNECTOR_GAP = 2;
+	/** Margin of the highlight box around a row. */
+	private static final double BOX_MARGIN = 2;
 
-<span class="fc" id="L53">	public FilesListing(ISkinParam skinParam, FontConfiguration fontConfiguration) {</span>
-<span class="fc" id="L54">		this.skinParam = skinParam;</span>
-<span class="fc" id="L55">		this.fontConfiguration = fontConfiguration;</span>
-<span class="fc" id="L56">		this.root = FEntry.createRoot();</span>
-<span class="fc" id="L57">	}</span>
+	private final ISkinParam skinParam;
+	private final FEntry root;
+	private final FilesIcons icons;
+<span class="fc" id="L89">	private final Map&lt;FEntry, Row&gt; rows = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L91">	public FilesListing(ISkinParam skinParam, FEntry root, FilesIcons icons) {</span>
+<span class="fc" id="L92">		this.skinParam = skinParam;</span>
+<span class="fc" id="L93">		this.root = root;</span>
+<span class="fc" id="L94">		this.icons = icons;</span>
+<span class="fc" id="L95">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L61">		double width = 0;</span>
-<span class="fc" id="L62">		double height = 0;</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		for (FEntry ent : root) {</span>
-<span class="fc" id="L64">			final XDimension2D dim = ent.calculateDimension(stringBounder, fontConfiguration, skinParam, 0);</span>
-<span class="fc" id="L65">			width = Math.max(width, dim.getWidth());</span>
-<span class="fc" id="L66">			height += dim.getHeight();</span>
-<span class="fc" id="L67">		}</span>
-<span class="fc" id="L68">		return new XDimension2D(width, height);</span>
+<span class="fc" id="L99">		final double[] maxWidth = new double[1];</span>
+<span class="fc" id="L100">		final double height = walk(null, stringBounder, root, -INDENT, 0, maxWidth);</span>
+<span class="fc" id="L101">		return new XDimension2D(maxWidth[0] + BOX_MARGIN, height);</span>
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		for (FEntry ent : root)</span>
-<span class="fc" id="L74">			ug = ent.drawAndMove(ug, fontConfiguration, skinParam, 0);</span>
-<span class="fc" id="L75">	}</span>
+<span class="fc" id="L106">		walk(ug, ug.getStringBounder(), root, -INDENT, 0, new double[1]);</span>
+<span class="fc" id="L107">	}</span>
 
-	public void addRawEntry(String raw) {
-<span class="fc" id="L78">		lastCreated = root.addRawEntry(raw);</span>
-<span class="fc" id="L79">	}</span>
+	/**
+	 * Lays out (and draws, if {@code ug} is not null) an entry and its
+	 * descendants.
+	 *
+	 * @return the y position under the last row
+	 */
+	private double walk(UGraphic ug, StringBounder stringBounder, FEntry entry, double x, double y,
+			double[] maxWidth) {
+<span class="fc" id="L117">		double iconCenter = 0;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (entry.isRoot() == false) {</span>
+<span class="fc" id="L119">			final Row row = getRow(entry);</span>
+<span class="fc" id="L120">			final XDimension2D dim = row.calculateDimension(stringBounder);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (ug != null)</span>
+<span class="fc" id="L122">				row.drawU(ug.apply(new UTranslate(x, y)));</span>
+<span class="fc" id="L123">			maxWidth[0] = Math.max(maxWidth[0], x + dim.getWidth());</span>
+<span class="fc" id="L124">			iconCenter = x + row.getIconCenter(stringBounder);</span>
+<span class="fc" id="L125">			y += dim.getHeight() + ROW_SPACING;</span>
+		}
 
-	public void addNote(List&lt;String&gt; note) {
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (lastCreated == null)</span>
-<span class="nc" id="L83">			root.addNote(note);</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">		else if (lastCreated.isFolder())</span>
-			// A note after a folder line goes right under the folder
-<span class="fc" id="L86">			lastCreated.addNote(note);</span>
-		else
-<span class="fc" id="L88">			lastCreated.getParent().addNote(note);</span>
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L128">		final double childX = x + INDENT;</span>
+<span class="fc" id="L129">		final double startY = y;</span>
+<span class="fc" id="L130">		double lastCenter = -1;</span>
+<span class="fc" id="L131">		final FEntry last = entry.getLastEntryChild();</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		for (FEntry child : entry) {</span>
+<span class="fc" id="L133">			final double childHeight = getRow(child).calculateDimension(stringBounder).getHeight();</span>
+<span class="fc" id="L134">			final double center = y + childHeight / 2;</span>
+<span class="fc bfc" id="L135" title="All 6 branches covered.">			if (child.isNote() == false &amp;&amp; entry.isRoot() == false &amp;&amp; ug != null)</span>
+<span class="fc" id="L136">				drawConnector(ug, iconCenter, childX - CONNECTOR_GAP, center);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">			if (child == last)</span>
+<span class="fc" id="L138">				lastCenter = center;</span>
+<span class="fc" id="L139">			y = walk(ug, stringBounder, child, childX, y, maxWidth);</span>
+<span class="fc" id="L140">		}</span>
+<span class="fc bfc" id="L141" title="All 6 branches covered.">		if (lastCenter != -1 &amp;&amp; entry.isRoot() == false &amp;&amp; ug != null)</span>
+<span class="fc" id="L142">			drawConnector(ug.apply(new UTranslate(iconCenter, startY - ROW_SPACING)),</span>
+<span class="fc" id="L143">					ULine.vline(lastCenter - startY + ROW_SPACING));</span>
+<span class="fc" id="L144">		return y;</span>
+	}
+
+	private void drawConnector(UGraphic ug, double x1, double x2, double y) {
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (x2 &gt; x1)</span>
+<span class="fc" id="L149">			drawConnector(ug.apply(new UTranslate(x1, y)), ULine.hline(x2 - x1));</span>
+<span class="fc" id="L150">	}</span>
+
+	private void drawConnector(UGraphic ug, ULine line) {
+<span class="fc" id="L153">		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.FILESDIAG);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (style.getStroke().getThickness() &lt;= 0)</span>
+<span class="fc" id="L155">			return;</span>
+<span class="fc" id="L156">		style.applyStrokeAndLineColor(ug, skinParam.getIHtmlColorSet()).draw(line);</span>
+<span class="fc" id="L157">	}</span>
+
+	private Row getRow(FEntry entry) {
+<span class="fc" id="L160">		Row result = rows.get(entry);</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc" id="L162">			result = new Row(entry);</span>
+<span class="fc" id="L163">			rows.put(entry, result);</span>
+		}
+<span class="fc" id="L165">		return result;</span>
+	}
+
+	private StyleQuery withStereotypes(StyleQuery query, List&lt;String&gt; stereotypes) {
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		for (String s : stereotypes)</span>
+<span class="fc" id="L170">			query = query.withStereotype(s);</span>
+<span class="fc" id="L171">		return query;</span>
+	}
+
+	/**
+	 * What is drawn for one entry: icon, name and description, or a note.
+	 */
+	class Row extends TextBlockMemoized {
+
+		private final FEntry entry;
+		private final TextBlock icon;
+		private final TextBlock content;
+		private final HColor background;
+		private final HColor border;
+
+<span class="fc" id="L185">		Row(FEntry entry) {</span>
+<span class="fc" id="L186">			this.entry = entry;</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">			if (entry.isNote()) {</span>
+<span class="fc" id="L188">				this.icon = null;</span>
+<span class="fc" id="L189">				this.content = createOpale(entry.getNote());</span>
+<span class="fc" id="L190">				this.background = null;</span>
+<span class="fc" id="L191">				this.border = null;</span>
+<span class="fc" id="L192">				return;</span>
+			}
+<span class="fc" id="L194">			final StyleQuery query = withStereotypes(</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">					entry.isFolder() ? StyleQueries.FILESDIAG_FOLDER : StyleQueries.FILESDIAG_FILE,</span>
+<span class="fc" id="L196">					entry.getStereotypes());</span>
+<span class="fc" id="L197">			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(query);</span>
+<span class="fc" id="L198">			final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+
+<span class="fc" id="L200">			final String iconText = icons.getIcon(entry);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">			this.icon = iconText.length() == 0 ? null : text(iconText, fc, CreoleMode.NO_CREOLE);</span>
+
+<span class="fc" id="L203">			TextBlock tmp = text(entry.getName(), fc, CreoleMode.NO_CREOLE);</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">			if (this.icon != null)</span>
+<span class="fc" id="L205">				tmp = TextBlockUtils.mergeLR(this.icon,</span>
+<span class="fc" id="L206">						TextBlockUtils.mergeLR(TextBlockUtils.empty(ICON_GAP, 0), tmp, VerticalAlignment.CENTER),</span>
+						VerticalAlignment.CENTER);
+<span class="pc bpc" id="L208" title="1 of 4 branches missed.">			if (entry.getDescription() != null &amp;&amp; entry.getDescription().length() &gt; 0) {</span>
+<span class="fc" id="L209">				final Style descStyle = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L210">						.getMergedStyle(withStereotypes(StyleQueries.FILESDIAG_DESCRIPTION, entry.getStereotypes()));</span>
+<span class="fc" id="L211">				final TextBlock desc = text(entry.getDescription(),</span>
+<span class="fc" id="L212">						descStyle.getFontConfiguration(skinParam.getIHtmlColorSet()), CreoleMode.FULL);</span>
+<span class="fc" id="L213">				tmp = TextBlockUtils.mergeLR(tmp, TextBlockUtils.mergeLR(TextBlockUtils.empty(DESCRIPTION_GAP, 0),</span>
+						desc, VerticalAlignment.CENTER), VerticalAlignment.CENTER);
+			}
+<span class="fc" id="L216">			this.content = tmp;</span>
+
+<span class="fc bfc" id="L218" title="All 2 branches covered.">			if (entry.getColor() != null) {</span>
+<span class="fc" id="L219">				this.background = skinParam.getIHtmlColorSet().getColorOrNull(entry.getColor());</span>
+<span class="fc" id="L220">				this.border = this.background;</span>
+			} else {
+<span class="fc" id="L222">				final HColor back = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="pc bpc" id="L223" title="1 of 4 branches missed.">				this.background = back == null || back.isTransparent() ? null : back;</span>
+<span class="fc" id="L224">				this.border = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+			}
+<span class="fc" id="L226">		}</span>
+
+		private TextBlock text(String s, FontConfiguration fc, CreoleMode mode) {
+<span class="fc" id="L229">			return Display.getWithNewlines(skinParam.getPragma(), s).create7(fc, HorizontalAlignment.LEFT, skinParam,</span>
+					mode);
+		}
+
+		double getIconCenter(StringBounder stringBounder) {
+<span class="fc bfc" id="L234" title="All 2 branches covered.">			if (icon == null)</span>
+<span class="fc" id="L235">				return INDENT / 2 - CONNECTOR_GAP;</span>
+<span class="fc" id="L236">			return icon.calculateDimension(stringBounder).getWidth() / 2;</span>
+		}
+
+		@Override
+		public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+<span class="fc" id="L241">			return content.calculateDimension(stringBounder);</span>
+		}
+
+		@Override
+		public void drawU(UGraphic ug) {
+<span class="fc bfc" id="L246" title="All 2 branches covered.">			if (background != null) {</span>
+<span class="fc" id="L247">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L248">				final URectangle rect = URectangle</span>
+<span class="fc" id="L249">						.build(dim.getWidth() + 2 * BOX_MARGIN, dim.getHeight() + ROW_SPACING).rounded(4);</span>
+<span class="fc" id="L250">				UGraphic ugBox = ug.apply(background.bg()).apply(new UTranslate(-BOX_MARGIN, -ROW_SPACING / 2));</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">				ugBox = ugBox.apply(border == null ? background : border);</span>
+<span class="fc" id="L252">				ugBox.draw(rect);</span>
+			}
+<span class="fc" id="L254">			content.drawU(ug);</span>
+<span class="fc" id="L255">		}</span>
+
+		private Opale createOpale(List&lt;String&gt; note) {
+<span class="fc" id="L258">			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.FILESDIAG_NOTE);</span>
+
+<span class="fc" id="L260">			final FontConfiguration fc = FontConfiguration.create(skinParam, style);</span>
+<span class="fc" id="L261">			final double shadowing = style.getShadowing();</span>
+<span class="fc" id="L262">			final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L263">			final HColor noteBackgroundColor = style.value(PName.BackGroundColor)</span>
+<span class="fc" id="L264">					.asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L265">			final UStroke stroke = style.getStroke();</span>
+
+<span class="fc" id="L267">			final Sheet sheet = skinParam</span>
+<span class="fc" id="L268">					.sheet(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)</span>
+<span class="fc" id="L269">					.createSheet(Display.create(note));</span>
+<span class="fc" id="L270">			final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());</span>
+<span class="fc" id="L271">			return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, stroke);</span>
+		}
+
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChartLegendBlock.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart</a> &gt; <span class="el_source">ChartLegendBlock.java</span></div><h1>ChartLegendBlock.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.StyleQueries;
+
+/**
+ * The legend of a pie (one entry per slice) or of a radar (one entry per series): a colored
+ * square and a name per entry, one under the other on the left or the right of the chart,
+ * side by side above or below it.
+ */
+class ChartLegendBlock {
+
+	private static final double SYMBOL_SIZE = 12;
+	private static final double TEXT_SPACING = 5;
+	private static final double ITEM_SPACING = 15;
+
+<span class="fc" id="L64">	private final List&lt;String&gt; names = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L65">	private final List&lt;HColor&gt; colors = new ArrayList&lt;&gt;();</span>
+	private final boolean vertical;
+	private final ISkinParam skinParam;
+	private final FontConfiguration fontConfig;
+
+<span class="fc" id="L70">	ChartLegendBlock(ISkinParam skinParam, ChartDiagram.LegendPosition position) {</span>
+<span class="fc" id="L71">		this.skinParam = skinParam;</span>
+<span class="fc bfc" id="L72" title="All 4 branches covered.">		this.vertical = position == ChartDiagram.LegendPosition.LEFT || position == ChartDiagram.LegendPosition.RIGHT;</span>
+<span class="fc" id="L73">		this.fontConfig = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.CHARTDIAG_LEGEND)</span>
+<span class="fc" id="L74">				.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L75">	}</span>
+
+	void add(String name, HColor color) {
+<span class="fc" id="L78">		names.add(name);</span>
+<span class="fc" id="L79">		colors.add(color);</span>
+<span class="fc" id="L80">	}</span>
+
+	boolean isEmpty() {
+<span class="nc" id="L83">		return names.isEmpty();</span>
+	}
+
+	private TextBlock text(String name) {
+<span class="fc" id="L87">		return Display.getWithNewlines(skinParam.getPragma(), name).create(fontConfig, HorizontalAlignment.LEFT,</span>
+				skinParam);
+	}
+
+	XDimension2D calculateDimension(StringBounder stringBounder) {
+<span class="fc" id="L92">		double width = 0;</span>
+<span class="fc" id="L93">		double height = 0;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (int i = 0; i &lt; names.size(); i++) {</span>
+<span class="fc" id="L95">			final XDimension2D dim = text(names.get(i)).calculateDimension(stringBounder);</span>
+<span class="fc" id="L96">			final double itemWidth = SYMBOL_SIZE + TEXT_SPACING + dim.getWidth();</span>
+<span class="fc" id="L97">			final double itemHeight = Math.max(SYMBOL_SIZE, dim.getHeight());</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (vertical) {</span>
+<span class="fc" id="L99">				width = Math.max(width, itemWidth);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">				height += itemHeight + (i &gt; 0 ? ITEM_SPACING / 2 : 0);</span>
+			} else {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">				width += itemWidth + (i &gt; 0 ? ITEM_SPACING : 0);</span>
+<span class="fc" id="L103">				height = Math.max(height, itemHeight);</span>
+			}
+		}
+<span class="fc" id="L106">		return new XDimension2D(width, height);</span>
+	}
+
+	void drawU(UGraphic ug) {
+<span class="fc" id="L110">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L111">		double x = 0;</span>
+<span class="fc" id="L112">		double y = 0;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		for (int i = 0; i &lt; names.size(); i++) {</span>
+<span class="fc" id="L114">			final TextBlock text = text(names.get(i));</span>
+<span class="fc" id="L115">			final XDimension2D dim = text.calculateDimension(stringBounder);</span>
+<span class="fc" id="L116">			final double itemHeight = Math.max(SYMBOL_SIZE, dim.getHeight());</span>
+<span class="fc" id="L117">			final HColor color = colors.get(i);</span>
+<span class="fc" id="L118">			ug.apply(color).apply(color.bg())</span>
+<span class="fc" id="L119">					.apply(new UTranslate(x, y + (itemHeight - SYMBOL_SIZE) / 2))</span>
+<span class="fc" id="L120">					.draw(URectangle.build(SYMBOL_SIZE, SYMBOL_SIZE));</span>
+<span class="fc" id="L121">			text.drawU(ug.apply(new UTranslate(x + SYMBOL_SIZE + TEXT_SPACING, y + (itemHeight - dim.getHeight()) / 2)));</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			if (vertical)</span>
+<span class="fc" id="L123">				y += itemHeight + ITEM_SPACING / 2;</span>
+			else
+<span class="fc" id="L125">				x += SYMBOL_SIZE + TEXT_SPACING + dim.getWidth() + ITEM_SPACING;</span>
+		}
+<span class="fc" id="L127">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

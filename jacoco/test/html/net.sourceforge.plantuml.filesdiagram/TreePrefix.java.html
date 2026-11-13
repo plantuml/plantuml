@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TreePrefix.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.filesdiagram</a> &gt; <span class="el_source">TreePrefix.java</span></div><h1>TreePrefix.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.filesdiagram;
+
+/**
+ * The tree drawing in front of an entry name: blanks, vertical bars
+ * ({@code │ ┃ ¦ |}) and at most one branch ({@code ├── └── ┣━━ ┗━━ +--- \---
+ * |-- `--}).
+ */
+final class TreePrefix {
+
+	private final int column;
+	private final boolean folder;
+
+<span class="fc" id="L47">	private TreePrefix(int column, boolean folder) {</span>
+<span class="fc" id="L48">		this.column = column;</span>
+<span class="fc" id="L49">		this.folder = folder;</span>
+<span class="fc" id="L50">	}</span>
+
+	static boolean isBar(char c) {
+<span class="pc bpc" id="L53" title="4 of 14 branches missed.">		return c == '│' || c == '┃' || c == '¦' || c == '|' || c == '║' || c == '┆'</span>
+				|| c == '┊';
+	}
+
+	static boolean isBranch(char c) {
+<span class="pc bpc" id="L58" title="7 of 24 branches missed.">		return c == '├' || c == '└' || c == '┣' || c == '┗' || c == '╠' || c == '╚'</span>
+				|| c == '┠' || c == '┖' || c == '+' || c == '\\' || c == '`' || c == '|';
+	}
+
+	static boolean isDash(char c) {
+<span class="pc bpc" id="L63" title="1 of 8 branches missed.">		return c == '─' || c == '━' || c == '═' || c == '-';</span>
+	}
+
+	/**
+	 * @param line a line with tabs already expanded
+	 */
+	static TreePrefix parse(String line) {
+<span class="fc" id="L70">		int i = 0;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		while (i &lt; line.length()) {</span>
+<span class="fc" id="L72">			final char c = line.charAt(i);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">			if (c == ' ') {</span>
+<span class="fc" id="L74">				i++;</span>
+<span class="fc" id="L75">				continue;</span>
+			}
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			if (isBranch(c)) {</span>
+<span class="fc" id="L78">				int dashes = 0;</span>
+<span class="pc bpc" id="L79" title="1 of 4 branches missed.">				while (i + 1 + dashes &lt; line.length() &amp;&amp; isDash(line.charAt(i + 1 + dashes)))</span>
+<span class="fc" id="L80">					dashes++;</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">				if (dashes &gt; 0) {</span>
+<span class="fc" id="L82">					i += 1 + dashes;</span>
+					// Windows &quot;tree&quot; only draws a branch in front of folders, and glues the
+					// name to it: &quot;+---bin&quot; or &quot;├───bin&quot;. GNU tree puts a blank there,
+					// in front of files as well as folders: &quot;├── bin&quot;.
+<span class="pc bpc" id="L86" title="2 of 6 branches missed.">					final boolean windows = dashes == 3 &amp;&amp; i &lt; line.length() &amp;&amp; line.charAt(i) != ' ';</span>
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">					while (i &lt; line.length() &amp;&amp; line.charAt(i) == ' ')</span>
+<span class="fc" id="L88">						i++;</span>
+<span class="fc" id="L89">					return new TreePrefix(i, windows);</span>
+				}
+			}
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			if (isBar(c)) {</span>
+<span class="fc" id="L93">				i++;</span>
+<span class="fc" id="L94">				continue;</span>
+			}
+			break;
+		}
+<span class="fc" id="L98">		return new TreePrefix(i, false);</span>
+	}
+
+	public int getColumn() {
+<span class="fc" id="L102">		return column;</span>
+	}
+
+	public boolean isFolder() {
+<span class="fc" id="L106">		return folder;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

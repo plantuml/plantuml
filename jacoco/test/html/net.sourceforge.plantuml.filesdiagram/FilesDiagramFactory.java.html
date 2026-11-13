@@ -36,26 +36,35 @@
 package net.sourceforge.plantuml.filesdiagram;
 
 import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class FilesDiagramFactory extends PSystemAbstractFactory {
 
 	public FilesDiagramFactory() {
-<span class="fc" id="L50">		super(DiagramType.FILES);</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L54">		super(DiagramType.FILES);</span>
+<span class="fc" id="L55">	}</span>
 
 	@Override
 	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
-<span class="fc" id="L56">		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());</span>
+<span class="fc" id="L60">		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());</span>
 
-<span class="fc" id="L58">		return new FilesDiagram(source, styleExtractor, preprocessing);</span>
+<span class="fc" id="L62">		final FilesDiagram result = new FilesDiagram(source, styleExtractor, preprocessing);</span>
+<span class="fc" id="L63">		final String title = styleExtractor.getTitle();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (title != null)</span>
+<span class="fc" id="L65">			result.setTitle(DisplayPositioned.single(Display.getWithNewlines(result.getPragma(), title),</span>
+					HorizontalAlignment.CENTER, VerticalAlignment.CENTER));
+<span class="fc" id="L67">		return result;</span>
 	}
 
 }
