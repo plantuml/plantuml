@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="237px" preserveAspectRatio="none" style="width:142px;height:237px;background:#FFFFFF;" version="1.1" viewBox="0 0 142 237" width="142px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster ~__builtin__-->
+    <g class="cluster" data-qualified-name=".__builtin__" data-source-line="10" id="ent0005">
+      <path d="M23.5,12 L92.313,12 A3.75,3.75 0 0 1 94.813,14.5 L101.813,32 L108.5,32 A2.5,2.5 0 0 1 111,34.5 L111,98.5 A2.5,2.5 0 0 1 108.5,101 L23.5,101 A2.5,2.5 0 0 1 21,98.5 L21,14.5 A2.5,2.5 0 0 1 23.5,12" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="21" x2="101.813" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="67.813" x="25" y="24.889">__builtin__</text>
+    </g>
+    <!--class MetaSubclass-->
+    <g class="entity" data-qualified-name="MetaSubclass" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="119.938" x="6" y="189"/>
+      <ellipse cx="21" cy="205" fill="#CCC" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="210">M</text>
+      <text fill="#000" font-size="14" textLength="87.938" x="35" y="208.889">MetaSubclass</text>
+    </g>
+    <!--class MetaClass-->
+    <g class="entity" data-qualified-name="MetaClass" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98.15" x="17" y="121"/>
+      <ellipse cx="32" cy="137" fill="#CCC" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="27" y="142">M</text>
+      <text fill="#000" font-size="14" textLength="66.15" x="46" y="140.889">MetaClass</text>
+    </g>
+    <!--class type-->
+    <g class="entity" data-qualified-name=".__builtin__.type" data-source-line="10" id="ent0004">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.425" x="37" y="53"/>
+      <ellipse cx="52" cy="69" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="47" y="74">C</text>
+      <text fill="#000" font-size="14" textLength="26.425" x="66" y="72.889">type</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="66,153.308,60,171.308,72,171.308,66,153.308" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M66,171.308 C66,181.97 66,178.131 66,188.775" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="extension" id="lnk6">
+      <polygon fill="none" points="66,85.308,60,103.308,72,103.308,66,85.308" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M66,103.308 C66,113.97 66,110.131 66,120.775" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>
