@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -204,6 +205,13 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		this.leafType = null;
 	}
 
+	// Class diagram types that an entity can switch between, for instance when "A <|-- B"
+	// creates A as a class and a later "metaclass A" declares its real type.
+	private static final EnumSet<LeafType> CLASS_LIKE_TYPES = EnumSet.of(LeafType.ANNOTATION,
+			LeafType.ABSTRACT_CLASS, LeafType.CLASS, LeafType.ENUM, LeafType.INTERFACE, LeafType.RECORD,
+			LeafType.DATACLASS, LeafType.PROTOCOL, LeafType.STRUCT, LeafType.EXCEPTION, LeafType.METACLASS,
+			LeafType.STEREOTYPE, LeafType.ENTITY);
+
 	public boolean muteToType(LeafType newType, USymbol newSymbol) {
 		// checkNotGroup();
 		Objects.requireNonNull(newType);
@@ -211,15 +219,11 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 			if (newType == this.leafType)
 				return true;
 
-			if (leafType != LeafType.ANNOTATION && leafType != LeafType.ABSTRACT_CLASS && leafType != LeafType.CLASS
-					&& leafType != LeafType.ENUM && leafType != LeafType.INTERFACE && leafType != LeafType.RECORD
-					&& leafType != LeafType.DATACLASS) {
+			if (CLASS_LIKE_TYPES.contains(leafType) == false) {
 				return false;
 				// throw new IllegalArgumentException("type=" + leafType);
 			}
-			if (newType != LeafType.ANNOTATION && newType != LeafType.ABSTRACT_CLASS && newType != LeafType.CLASS
-					&& newType != LeafType.ENUM && newType != LeafType.INTERFACE && newType != LeafType.RECORD
-					&& newType != LeafType.DATACLASS && newType != LeafType.OBJECT) {
+			if (CLASS_LIKE_TYPES.contains(newType) == false && newType != LeafType.OBJECT) {
 				return false;
 				// throw new IllegalArgumentException("newtype=" + newType);
 			}

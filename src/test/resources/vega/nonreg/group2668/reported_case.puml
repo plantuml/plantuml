@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+hide empty members
+
+metaclass MetaSubclass {
+}
+MetaClass <|-- MetaSubclass
+
+metaclass MetaClass {
+}
+"~__builtin__.type" <|-- MetaClass
+@enduml

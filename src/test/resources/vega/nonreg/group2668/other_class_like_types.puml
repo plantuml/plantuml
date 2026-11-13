@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+hide empty members
+
+Proto <|.. Impl
+protocol Proto
+
+Point <-- Shape
+struct Point
+
+Failure <|-- Timeout
+exception Failure
+
+Marker <.. Model
+stereotype Marker
+
+Customer <-- Order
+entity Customer
+@enduml
