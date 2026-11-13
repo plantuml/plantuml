@@ -1,0 +1,7 @@
+readme.md
+bin/
+└── a.exe
+etc/
+├── fonts/
+│   └── fonts.conf
+└── empty/

@@ -1,0 +1,14 @@
+---
+output: svg
+dark: true
+expected-description: (Files)
+---
+@startfiles
+/src/main.c
+<note>
+note for a file
+</note>
+/docs/
+/docs/readme.md :::highlight ## read me first
+/tests/a.c
+@endfiles

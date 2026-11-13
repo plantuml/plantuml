@@ -1,0 +1,24 @@
+---
+output: svg
+expected-description: (Files)
+---
+@startfiles
+<style>
+filesDiagram {
+  .todo {
+    FontColor red
+  }
+}
+</style>
+title Annotations
+project/
+    src/
+        App.java :::highlight ## the entry point
+        Util.java ## helpers **with creole**
+        Legacy.java <<todo>> ## to be removed
+        Brand.java #lightblue
+        Rocket.java icon(:rocket:) ## explicit icon
+        Folder.java icon(&folder) :::highlight
+        Hidden.java icon(none)
+    build.gradle
+@endfiles

@@ -36,11 +36,15 @@
 package net.sourceforge.plantuml.filesdiagram;
 
 import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
@@ -55,7 +59,12 @@ public class FilesDiagramFactory extends PSystemAbstractFactory {
 			PreprocessingArtifact preprocessing) {
 		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());
 
-		return new FilesDiagram(source, styleExtractor, preprocessing);
+		final FilesDiagram result = new FilesDiagram(source, styleExtractor, preprocessing);
+		final String title = styleExtractor.getTitle();
+		if (title != null)
+			result.setTitle(DisplayPositioned.single(Display.getWithNewlines(result.getPragma(), title),
+					HorizontalAlignment.CENTER, VerticalAlignment.CENTER));
+		return result;
 	}
 
 }

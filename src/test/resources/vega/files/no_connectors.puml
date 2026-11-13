@@ -1,0 +1,14 @@
+---
+output: svg
+expected-description: (Files)
+---
+@startfiles
+<style>
+filesDiagram {
+  LineThickness 0
+}
+</style>
+/src/main.c
+/src/util.c
+/docs/readme.md
+@endfiles

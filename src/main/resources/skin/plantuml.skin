@@ -566,6 +566,22 @@ chartDiagram {
 	}
 }
 
+filesDiagram {
+  LineColor #A0A0A0
+  LineThickness 1
+  folder, file {
+    BackGroundColor transparent
+  }
+  description {
+    FontColor #6A9955
+    FontStyle italic
+  }
+  .highlight {
+    BackGroundColor #FFF3CD
+    LineColor #FFC107
+  }
+}
+
 /*
  ____             _                            _
 |  _ \  __ _ _ __| | __    _ __ ___   ___   __| | ___
@@ -767,6 +783,14 @@ ganttDiagram {
 	}
 }
 
+
+filesDiagram {
+  LineColor #707070
+  .highlight {
+    BackGroundColor #4D3D00
+    LineColor #FFC107
+  }
+}
 
 yamlDiagram,jsonDiagram {
   FontColor white

@@ -1,0 +1,16 @@
+---
+output: atxt
+expected-description: (Files)
+---
+@startfiles
+.
+├── src/
+│   ├── index.ts
+│   └── utils.ts
+┣━━ package.json
+┗━━ docs
+    ┃
+    ┗━━ README.md
+
+2 directories, 4 files
+@endfiles

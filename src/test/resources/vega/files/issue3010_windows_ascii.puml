@@ -1,0 +1,26 @@
+---
+output: utxt
+expected-description: (Files)
+---
+@startfiles
+¦   readme.md
+¦
++---bin
+¦       a.exe
+¦
++---etc
+¦   +---fonts
+¦   ¦   ¦   fonts.conf
+¦   ¦   ¦
+¦   ¦   +---conf.d
+¦   ¦           a.conf
+¦   ¦
+¦   +---gtk-3.0
++---include
+    +---2geom-1.4.0
+        +---2geom
+            ¦   2geom.h
+            ¦
+            +---intervaltree
+            +---numeric
+@endfiles

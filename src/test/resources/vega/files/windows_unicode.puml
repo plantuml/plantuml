@@ -1,0 +1,19 @@
+---
+output: utxt
+expected-description: (Files)
+---
+@startfiles
+Folder PATH listing for volume OS
+Volume serial number is 1234-ABCD
+C:.
+│   readme.md
+│
+├───bin
+│       a.exe
+│
+└───etc
+    ├───fonts
+    │       fonts.conf
+    │
+    └───empty
+@endfiles
