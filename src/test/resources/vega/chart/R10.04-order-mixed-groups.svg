@@ -27,14 +27,14 @@
     <line style="stroke:#ADD8E6;stroke-width:2;" x1="120" x2="220" y1="300" y2="270"/>
     <line style="stroke:#ADD8E6;stroke-width:2;" x1="220" x2="320" y1="270" y2="285"/>
     <line style="stroke:#ADD8E6;stroke-width:2;" x1="320" x2="420" y1="285" y2="270"/>
-    <polygon fill="#90EE90" points="120,270,220,240,320,255,420,240,420,270,320,285,220,270,120,300" style="stroke:#90EE90;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <line style="stroke:#90EE90;stroke-width:2;" x1="120" x2="220" y1="270" y2="240"/>
-    <line style="stroke:#90EE90;stroke-width:2;" x1="220" x2="320" y1="240" y2="255"/>
-    <line style="stroke:#90EE90;stroke-width:2;" x1="320" x2="420" y1="255" y2="240"/>
     <rect fill="#FFA500" height="30" style="stroke:#181818;stroke-width:0.5;" width="60" x="90" y="330"/>
     <rect fill="#FFA500" height="60" style="stroke:#181818;stroke-width:0.5;" width="60" x="190" y="300"/>
     <rect fill="#FFA500" height="90" style="stroke:#181818;stroke-width:0.5;" width="60" x="290" y="270"/>
     <rect fill="#FFA500" height="120" style="stroke:#181818;stroke-width:0.5;" width="60" x="390" y="240"/>
+    <polygon fill="#90EE90" points="120,270,220,240,320,255,420,240,420,270,320,285,220,270,120,300" style="stroke:#90EE90;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#90EE90;stroke-width:2;" x1="120" x2="220" y1="270" y2="240"/>
+    <line style="stroke:#90EE90;stroke-width:2;" x1="220" x2="320" y1="240" y2="255"/>
+    <line style="stroke:#90EE90;stroke-width:2;" x1="320" x2="420" y1="255" y2="240"/>
     <ellipse cx="120" cy="210" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
     <ellipse cx="220" cy="180" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>
     <ellipse cx="320" cy="150" fill="#000" rx="4" ry="4" style="stroke:#000;stroke-width:1;"/>

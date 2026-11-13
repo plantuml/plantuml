@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+area "A" [20, 30, 25, 30] #lightblue
+line "L" [25, 35, 30, 40] #black
+area "A2" [10, 10, 10, 10] #lightgreen
+@endchart

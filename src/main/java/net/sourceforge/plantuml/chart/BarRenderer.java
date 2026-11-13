@@ -235,6 +235,15 @@ public class BarRenderer {
 	 * Draw multiple bar series in grouped mode (side-by-side)
 	 */
 	public void drawGrouped(UGraphic ug, List<ChartSeries> barSeries, List<HColor> colors) {
+		drawGrouped(ug, barSeries, colors, 0, barSeries.size());
+	}
+
+	/**
+	 * Draw only the bar series from {@code from} (included) to {@code to} (excluded) of a grouped
+	 * set. The layout is the one of the whole set: every series keeps its own slot, so that the
+	 * other ones can be drawn at another time.
+	 */
+	public void drawGrouped(UGraphic ug, List<ChartSeries> barSeries, List<HColor> colors, int from, int to) {
 		if (categoryCount == 0 || barSeries.isEmpty())
 			return;
 
@@ -253,7 +262,7 @@ public class BarRenderer {
 		final UStroke stroke = UStroke.withThickness(lineThickness);
 
 		for (int categoryIndex = 0; categoryIndex < categoryCount; categoryIndex++) {
-			for (int seriesIndex = 0; seriesIndex < seriesCount; seriesIndex++) {
+			for (int seriesIndex = from; seriesIndex < to; seriesIndex++) {
 				final ChartSeries series = barSeries.get(seriesIndex);
 				final HColor color = colors.get(seriesIndex);
 				final List<Double> values = series.getValues();
@@ -305,6 +314,15 @@ public class BarRenderer {
 	 * Draw multiple bar series in stacked mode (one on top of another)
 	 */
 	public void drawStacked(UGraphic ug, List<ChartSeries> barSeries, List<HColor> colors) {
+		drawStacked(ug, barSeries, colors, 0, barSeries.size());
+	}
+
+	/**
+	 * Draw only the bar series from {@code from} (included) to {@code to} (excluded) of a stacked
+	 * set. The ones before {@code from} are not drawn but still count, as they are under the
+	 * others; the ones from {@code to} are above and do not change what is drawn.
+	 */
+	public void drawStacked(UGraphic ug, List<ChartSeries> barSeries, List<HColor> colors, int from, int to) {
 		if (categoryCount == 0 || barSeries.isEmpty())
 			return;
 
@@ -342,7 +360,7 @@ public class BarRenderer {
 			double cumulativePositiveY = zeroY; // Positive bars grow upward from zero
 			double cumulativeNegativeY = zeroY; // Negative bars grow downward from zero
 
-			for (int seriesIndex = 0; seriesIndex < barSeries.size(); seriesIndex++) {
+			for (int seriesIndex = 0; seriesIndex < to; seriesIndex++) {
 				final ChartSeries series = barSeries.get(seriesIndex);
 				final HColor color = colors.get(seriesIndex);
 				final List<Double> values = series.getValues();
@@ -368,6 +386,10 @@ public class BarRenderer {
 					cumulativePositiveY -= barHeight;
 					y = cumulativePositiveY;
 				}
+
+				// Below the part to draw: only its height was needed, for the stack
+				if (seriesIndex < from)
+					continue;
 
 				// Extract line color for this bar's border
 				HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());

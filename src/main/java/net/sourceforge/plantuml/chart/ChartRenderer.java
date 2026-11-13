@@ -712,28 +712,37 @@ public class ChartRenderer {
 			}
 
 		// Series are drawn in the order they are written, so that a later one is on top
-		// (#2973). Bars are grouped or stacked together and areas are stacked together, so
-		// each of these two groups is drawn as a whole, at the place of its first series:
-		// "bar, area, line" draws the bars, then the areas over them, then the line
-		boolean barsDrawn = false;
-		boolean areasDrawn = false;
-		for (ChartSeries s : series) {
-			if (s.getType() == ChartSeries.SeriesType.BAR) {
-				if (barsDrawn == false)
-					drawBars(ug, plotWidth, plotHeight, barSeries, barColors);
-				barsDrawn = true;
-			} else if (s.getType() == ChartSeries.SeriesType.AREA) {
-				if (areasDrawn == false)
-					drawAreas(ug, plotWidth, plotHeight, areaSeries, areaColors);
-				areasDrawn = true;
-			} else {
-				drawLineOrScatter(ug, plotWidth, plotHeight, s);
+		// (#2973). Bars side by side or stacked, and areas stacked, are laid out together,
+		// but this is only a layout: a run of consecutive bars (or areas) is drawn at its
+		// own place in the source, whatever is written before and after it.
+		int barDone = 0;
+		int areaDone = 0;
+		int index = 0;
+		while (index < series.size()) {
+			final ChartSeries.SeriesType type = series.get(index).getType();
+			if (type != ChartSeries.SeriesType.BAR && type != ChartSeries.SeriesType.AREA) {
+				drawLineOrScatter(ug, plotWidth, plotHeight, series.get(index));
+				index++;
+				continue;
 			}
+			int end = index;
+			while (end < series.size() && series.get(end).getType() == type)
+				end++;
+			final int count = end - index;
+			if (type == ChartSeries.SeriesType.BAR) {
+				drawBars(ug, plotWidth, plotHeight, barSeries, barColors, barDone, barDone + count);
+				barDone += count;
+			} else {
+				drawAreas(ug, plotWidth, plotHeight, areaSeries, areaColors, areaDone, areaDone + count);
+				areaDone += count;
+			}
+			index = end;
 		}
 	}
 
+	// Draws the bar series from "from" (included) to "to" (excluded) among all the bar series
 	private void drawBars(UGraphic ug, double plotWidth, double plotHeight, java.util.List<ChartSeries> barSeries,
-			java.util.List<HColor> barColors) {
+			java.util.List<HColor> barColors, int from, int to) {
 		// Render bar series (grouped or stacked based on stackMode)
 		if (!barSeries.isEmpty()) {
 			// For now, assume all bar series use the same axis (primary Y axis)
@@ -748,9 +757,9 @@ public class ChartRenderer {
 			} else {
 				// Multiple bar series - use grouped or stacked rendering
 				if (stackMode == ChartDiagram.StackMode.STACKED) {
-					barRenderer.drawStacked(ug, barSeries, barColors);
+					barRenderer.drawStacked(ug, barSeries, barColors, from, to);
 				} else {
-					barRenderer.drawGrouped(ug, barSeries, barColors);
+					barRenderer.drawGrouped(ug, barSeries, barColors, from, to);
 				}
 			}
 		}
@@ -815,8 +824,10 @@ public class ChartRenderer {
 		}
 	}
 
+	// Draws the area series from "from" (included) to "to" (excluded) among all the area series;
+	// the ones before "from" are not drawn but still are the baseline of the next ones
 	private void drawAreas(UGraphic ug, double plotWidth, double plotHeight, java.util.List<ChartSeries> areaSeries,
-			java.util.List<HColor> areaColors) {
+			java.util.List<HColor> areaColors, int from, int to) {
 		// Render area series with stacking
 		if (!areaSeries.isEmpty()) {
 			// For now, assume all area series use the same axis (primary Y axis)
@@ -826,12 +837,13 @@ public class ChartRenderer {
 			// Track cumulative values for stacking
 			java.util.List<Double> cumulativeValues = null;
 
-			for (int i = 0; i < areaSeries.size(); i++) {
+			for (int i = 0; i < to; i++) {
 				final ChartSeries areaSer = areaSeries.get(i);
 				final HColor color = areaColors.get(i);
 
 				// Draw this area with the baseline from previous areas
-				areaRenderer.draw(ug, areaSer, color, cumulativeValues);
+				if (i >= from)
+					areaRenderer.draw(ug, areaSer, color, cumulativeValues);
 
 				// Update cumulative values for next series
 				if (cumulativeValues == null) {

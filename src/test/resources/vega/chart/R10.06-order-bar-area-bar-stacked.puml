@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+stackMode stacked
+bar "A" [10, 20, 30, 40] #orange
+area "X" [50, 50, 50, 50] #lightblue
+bar "B" [20, 30, 40, 50] #red
+@endchart
