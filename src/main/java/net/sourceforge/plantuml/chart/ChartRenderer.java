@@ -702,6 +702,38 @@ public class ChartRenderer {
 			}
 		}
 
+		// Area colors, for stacked rendering
+		final java.util.List<ChartSeries> areaSeries = new java.util.ArrayList<>();
+		final java.util.List<HColor> areaColors = new java.util.ArrayList<>();
+		for (ChartSeries s : series)
+			if (s.getType() == ChartSeries.SeriesType.AREA) {
+				areaSeries.add(s);
+				areaColors.add(getAreaColor(s));
+			}
+
+		// Series are drawn in the order they are written, so that a later one is on top
+		// (#2973). Bars are grouped or stacked together and areas are stacked together, so
+		// each of these two groups is drawn as a whole, at the place of its first series:
+		// "bar, area, line" draws the bars, then the areas over them, then the line
+		boolean barsDrawn = false;
+		boolean areasDrawn = false;
+		for (ChartSeries s : series) {
+			if (s.getType() == ChartSeries.SeriesType.BAR) {
+				if (barsDrawn == false)
+					drawBars(ug, plotWidth, plotHeight, barSeries, barColors);
+				barsDrawn = true;
+			} else if (s.getType() == ChartSeries.SeriesType.AREA) {
+				if (areasDrawn == false)
+					drawAreas(ug, plotWidth, plotHeight, areaSeries, areaColors);
+				areasDrawn = true;
+			} else {
+				drawLineOrScatter(ug, plotWidth, plotHeight, s);
+			}
+		}
+	}
+
+	private void drawBars(UGraphic ug, double plotWidth, double plotHeight, java.util.List<ChartSeries> barSeries,
+			java.util.List<HColor> barColors) {
 		// Render bar series (grouped or stacked based on stackMode)
 		if (!barSeries.isEmpty()) {
 			// For now, assume all bar series use the same axis (primary Y axis)
@@ -723,71 +755,68 @@ public class ChartRenderer {
 			}
 		}
 
-		// Separate area series for stacked rendering
-		final java.util.List<ChartSeries> areaSeries = new java.util.ArrayList<>();
-		final java.util.List<HColor> areaColors = new java.util.ArrayList<>();
+	}
 
-		// Render non-bar, non-area series (line, scatter) first
-		for (ChartSeries s : series) {
-			if (s.getType() == ChartSeries.SeriesType.AREA) {
-				areaSeries.add(s);
+	private HColor getAreaColor(ChartSeries s) {
+		// Get area style with stereotype support
+		final Style areaStyle = getAreaStyle(s);
 
-				// Get area style with stereotype support
-				final Style areaStyle = getAreaStyle(s);
+		// Extract series color - priority: explicit color > style color > default color
+		HColor color = s.getColor();
+		if (color == null) {
+			// Try to get color from style
+			color = areaStyle.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+			if (color == null) {
+				color = areaStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			}
+			if (color == null) {
+				// Use default color
+				color = getDefaultColor(series.indexOf(s));
+			}
+		}
+		return color;
+	}
 
-				// Extract series color - priority: explicit color > style color > default color
-				HColor color = s.getColor();
-				if (color == null) {
-					// Try to get color from style
-					color = areaStyle.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-					if (color == null) {
-						color = areaStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-					}
-					if (color == null) {
-						// Use default color
-						color = getDefaultColor(series.indexOf(s));
-					}
-				}
-				areaColors.add(color);
-			} else if (s.getType() != ChartSeries.SeriesType.BAR) {
-				final ChartAxis axis = s.isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
+	private void drawLineOrScatter(UGraphic ug, double plotWidth, double plotHeight, ChartSeries s) {
+		final ChartAxis axis = s.isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
 
-				// Get series-specific style based on type (with stereotype support)
-				Style seriesStyle;
-				switch (s.getType()) {
-					case LINE:
-						seriesStyle = getLineStyle(s);
-						break;
-					case SCATTER:
-						seriesStyle = getScatterStyle(s);
-						break;
-					default:
-						seriesStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());
-				}
+		// Get series-specific style based on type (with stereotype support)
+		Style seriesStyle;
+		switch (s.getType()) {
+			case LINE:
+				seriesStyle = getLineStyle(s);
+				break;
+			case SCATTER:
+				seriesStyle = getScatterStyle(s);
+				break;
+			default:
+				seriesStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getStyleSignature());
+		}
 
-				// Extract series color - priority: explicit color > style color > default color
-				HColor color = s.getColor();
-				if (color == null) {
-					// Try to get color from style
-					color = seriesStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-					if (color == null) {
-						// Use default color
-						color = getDefaultColor(series.indexOf(s));
-					}
-				}
-
-				if (s.getType() == ChartSeries.SeriesType.LINE) {
-					final LineRenderer lineRenderer = new LineRenderer(skinParam, plotWidth, plotHeight,
-							xAxisLabels.size(), axis, xAxis);
-					lineRenderer.draw(ug, s, color, seriesStyle.value(PName.LineThickness).asDouble());
-				} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {
-					final ScatterRenderer scatterRenderer = new ScatterRenderer(skinParam, plotWidth, plotHeight,
-							xAxisLabels.size(), axis, xAxis);
-					scatterRenderer.draw(ug, s, color);
-				}
+		// Extract series color - priority: explicit color > style color > default color
+		HColor color = s.getColor();
+		if (color == null) {
+			// Try to get color from style
+			color = seriesStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			if (color == null) {
+				// Use default color
+				color = getDefaultColor(series.indexOf(s));
 			}
 		}
 
+		if (s.getType() == ChartSeries.SeriesType.LINE) {
+			final LineRenderer lineRenderer = new LineRenderer(skinParam, plotWidth, plotHeight,
+					xAxisLabels.size(), axis, xAxis);
+			lineRenderer.draw(ug, s, color, seriesStyle.value(PName.LineThickness).asDouble());
+		} else if (s.getType() == ChartSeries.SeriesType.SCATTER) {
+			final ScatterRenderer scatterRenderer = new ScatterRenderer(skinParam, plotWidth, plotHeight,
+					xAxisLabels.size(), axis, xAxis);
+			scatterRenderer.draw(ug, s, color);
+		}
+	}
+
+	private void drawAreas(UGraphic ug, double plotWidth, double plotHeight, java.util.List<ChartSeries> areaSeries,
+			java.util.List<HColor> areaColors) {
 		// Render area series with stacking
 		if (!areaSeries.isEmpty()) {
 			// For now, assume all area series use the same axis (primary Y axis)

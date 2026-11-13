@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startchart
+area "A" [45, 62, 58, 70] #lightblue
+line "L" [30, 40, 50, 60] #red
+@endchart

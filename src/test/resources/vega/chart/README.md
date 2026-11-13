@@ -85,7 +85,9 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R09.10 | `R09.10-range-v2-axis-after-series.puml` | `v2-axis` written after the series that uses it |
 |  | R09.11 | `R09.11-range-bar-decimal.puml` | Values below 1: 0 -> 1, ticks 0.2 apart |
 | R10 — Drawing order | R10.01 | `R10.01-order-bar-then-area.puml` | Bar defined before area issue | [#2973](https://github.com/plantuml/plantuml/issues/2973) 
-|  | R10.02 | `R10.02-order-area-then-bar.puml` | Area defined before bar |
+|  | R10.02 | `R10.02-order-area-then-bar.puml` | Area defined before bar: bars on top |
+|  | R10.03 | `R10.03-order-area-then-line.puml` | Area defined before line: line on top |
+|  | R10.04 | `R10.04-order-mixed-groups.puml` | Areas drawn together at the first area, bars at the first bar |
 | R11 — Horizontal | R11.01 | `R11.01-horizontal-grouped.puml` | Horizontal grouped bars |
 |  | R11.02 | `R11.02-horizontal-stacked.puml` | Horizontal stacked bars |
 |  | R11.03 | `R11.03-horizontal-negative-value.puml` | Horizontal bar with a negative value |
@@ -107,7 +109,8 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 > - R09: with no range, a value axis goes from 0 (or below, for negative values) to a round maximum,
 >  split in five intervals of 1, 2, 3, 4, 5, 6 or 8 times a power of ten. Stacked bars and areas count by their sums,
 >  interpolated lines by their curve, arrow annotations get room above their point.
-> - R10 records current rendering for an open enhancement request.
+> - R10: series are drawn in the order they are written. Bars (grouped or stacked) and areas (stacked) are each drawn
+>  as one group, at the place of the first series of the group: in R10.04 the area `A2`, written after the bar, is still under it.
 > - R03: a grid line is drawn at each tick of the axis it belongs to, and only there:
 >  `h-axis ... grid` gives lines across the h-axis ticks, `v-axis ... grid` across the v-axis ticks, in both orientations.
 > - R12.01 records the current behavior: `bar bar_title [...]` is a syntax error because the `NAME` pattern requires quotes.
