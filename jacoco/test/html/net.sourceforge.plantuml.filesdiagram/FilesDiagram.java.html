@@ -59,53 +59,53 @@ public class FilesDiagram extends TitledDiagram {
 	private final FilesListing list;
 
 	FilesDiagram(UmlSource source, StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L62">		super(source, DiagramType.FILES, null, preprocessing);</span>
+<span class="fc" id="L62">		super(source, DiagramType.FILES, null, preprocessing);</span>
 
-<span class="nc" id="L64">		final ISkinParam skinParam = getSkinParam();</span>
+<span class="fc" id="L64">		final ISkinParam skinParam = getSkinParam();</span>
 		try {
-<span class="nc" id="L66">			styleExtractor.applyStyles(skinParam);</span>
+<span class="fc" id="L66">			styleExtractor.applyStyles(skinParam);</span>
 <span class="nc" id="L67">		} catch (StyleParsingException e) {</span>
 <span class="nc" id="L68">			e.printStackTrace();</span>
-<span class="nc" id="L69">		}</span>
-<span class="nc" id="L70">		final Style style = skinParam.getCurrentStyleBuilder()</span>
-<span class="nc" id="L71">				.getMergedStyle(StyleQueries.FILESDIAG);</span>
+<span class="fc" id="L69">		}</span>
+<span class="fc" id="L70">		final Style style = skinParam.getCurrentStyleBuilder()</span>
+<span class="fc" id="L71">				.getMergedStyle(StyleQueries.FILESDIAG);</span>
 
 		// final FontConfiguration fontConfiguration =
 		// FontConfiguration.blackBlueTrue(UFont.courier(14));
-<span class="nc" id="L75">		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L75">		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 
-<span class="nc" id="L77">		this.list = new FilesListing(skinParam, fontConfiguration);</span>
+<span class="fc" id="L77">		this.list = new FilesListing(skinParam, fontConfiguration);</span>
 
-<span class="nc" id="L79">		final Iterator&lt;StringLocated&gt; it = source.iterator2();</span>
-<span class="nc" id="L80">		it.next();</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="nc" id="L82">			final String line = it.next().getString();</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">			if (line.startsWith(&quot;/&quot;))</span>
-<span class="nc" id="L84">				this.list.addRawEntry(line.substring(1));</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">			else if (line.startsWith(&quot;&lt;note&gt;&quot;))</span>
-<span class="nc" id="L86">				this.list.addNote(getNote(it));</span>
-<span class="nc" id="L87">		}</span>
+<span class="fc" id="L79">		final Iterator&lt;StringLocated&gt; it = source.iterator2();</span>
+<span class="fc" id="L80">		it.next();</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		while (it.hasNext()) {</span>
+<span class="fc" id="L82">			final String line = it.next().getString();</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			if (line.startsWith(&quot;/&quot;))</span>
+<span class="fc" id="L84">				this.list.addRawEntry(line.substring(1));</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			else if (line.startsWith(&quot;&lt;note&gt;&quot;))</span>
+<span class="fc" id="L86">				this.list.addNote(getNote(it));</span>
+<span class="fc" id="L87">		}</span>
 
-<span class="nc" id="L89">	}</span>
+<span class="fc" id="L89">	}</span>
 
 	private List&lt;String&gt; getNote(Iterator&lt;StringLocated&gt; it) {
-<span class="nc" id="L92">		final List&lt;String&gt; result = new ArrayList&lt;String&gt;();</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		while (it.hasNext()) {</span>
-<span class="nc" id="L94">			final String line = it.next().getString();</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (line.startsWith(&quot;&lt;/note&gt;&quot;))</span>
-<span class="nc" id="L96">				return result;</span>
-<span class="nc" id="L97">			result.add(line);</span>
-<span class="nc" id="L98">		}</span>
+<span class="fc" id="L92">		final List&lt;String&gt; result = new ArrayList&lt;String&gt;();</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="fc" id="L94">			final String line = it.next().getString();</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			if (line.startsWith(&quot;&lt;/note&gt;&quot;))</span>
+<span class="fc" id="L96">				return result;</span>
+<span class="fc" id="L97">			result.add(line);</span>
+<span class="fc" id="L98">		}</span>
 <span class="nc" id="L99">		return MyCollections.unmodifiableList(result);</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L103">		return new DiagramDescription(&quot;(Files)&quot;);</span>
+<span class="fc" id="L103">		return new DiagramDescription(&quot;(Files)&quot;);</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
-<span class="nc" id="L108">		return list;</span>
+<span class="fc" id="L108">		return list;</span>
 	}
 
 }

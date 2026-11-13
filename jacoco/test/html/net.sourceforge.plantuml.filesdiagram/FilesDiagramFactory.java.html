@@ -53,9 +53,9 @@ public class FilesDiagramFactory extends PSystemAbstractFactory {
 	@Override
 	public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
-<span class="nc" id="L56">		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());</span>
+<span class="fc" id="L56">		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());</span>
 
-<span class="nc" id="L58">		return new FilesDiagram(source, styleExtractor, preprocessing);</span>
+<span class="fc" id="L58">		return new FilesDiagram(source, styleExtractor, preprocessing);</span>
 	}
 
 }
