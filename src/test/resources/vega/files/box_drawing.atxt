@@ -1,0 +1,6 @@
+src/
+|-- index.ts
+`-- utils.ts
+package.json
+docs/
+`-- README.md

@@ -35,38 +35,28 @@
 package net.sourceforge.plantuml.filesdiagram;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.plantuml.klimt.LineBreakStrategy;
-import net.sourceforge.plantuml.klimt.UStroke;
-import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.creole.CreoleMode;
-import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.creole.Sheet;
-import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleQueries;
-import net.sourceforge.plantuml.style.StyleQuery;
-import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.utils.MyCollections;
 
+/**
+ * One node of the tree: a folder, a file or a note. This is only the model;
+ * drawing is done by {@link FilesListing} and {@link FilesTxt}.
+ */
 public class FEntry implements Iterable<FEntry> {
 
 	private final FEntry parent;
 	private final List<String> note;
 	private final String name;
 	private FilesType type;
-	private List<FEntry> children = new ArrayList<>();
+	private final List<FEntry> children = new ArrayList<>();
+
+	private String description;
+	private List<String> stereotypes = Collections.emptyList();
+	private String color;
+	private String icon;
 
 	public static FEntry createRoot() {
 		return new FEntry(null, FilesType.FOLDER, "", null);
@@ -79,7 +69,22 @@ public class FEntry implements Iterable<FEntry> {
 		this.type = type;
 	}
 
+	/**
+	 * Adds a path relative to this entry: {@code a/b/c.txt} creates (or reuses)
+	 * the folders {@code a} and {@code b}, then a file {@code c.txt}. A trailing
+	 * {@code /} makes the last element a folder.
+	 *
+	 * @return the entry for the last element of the path
+	 */
 	public FEntry addRawEntry(String raw) {
+		// A file that gets children is a folder after all
+		this.type = FilesType.FOLDER;
+		while (raw.startsWith("./"))
+			raw = raw.substring(2);
+		while (raw.startsWith("/"))
+			raw = raw.substring(1);
+		if (raw.length() == 0)
+			return this;
 		final int x = raw.indexOf('/');
 		if (x == -1) {
 			final FEntry result = new FEntry(this, FilesType.DATA, raw, null);
@@ -97,6 +102,19 @@ public class FEntry implements Iterable<FEntry> {
 		return type == FilesType.FOLDER;
 	}
 
+	public boolean isNote() {
+		return type == FilesType.NOTE;
+	}
+
+	public boolean isRoot() {
+		return parent == null;
+	}
+
+	void forceFolder() {
+		if (type == FilesType.DATA)
+			type = FilesType.FOLDER;
+	}
+
 	public void addNote(List<String> note) {
 		final FEntry result = new FEntry(this, FilesType.NOTE, "NONE", note);
 		children.add(result);
@@ -104,17 +122,48 @@ public class FEntry implements Iterable<FEntry> {
 
 	private FEntry getOrCreateFolder(String folderName) {
 		for (FEntry child : children)
-			if (child.type == FilesType.FOLDER && child.getName().equals(folderName))
+			if (child.type != FilesType.NOTE && child.getName().equals(folderName)) {
+				child.type = FilesType.FOLDER;
 				return child;
+			}
 
 		final FEntry result = new FEntry(this, FilesType.FOLDER, folderName, null);
 		children.add(result);
 		return result;
 	}
 
+	void applyLabel(FLabel label) {
+		if (label.getDescription() != null)
+			this.description = label.getDescription();
+		if (label.getStereotypes().size() > 0) {
+			final List<String> tmp = new ArrayList<>(this.stereotypes);
+			tmp.addAll(label.getStereotypes());
+			this.stereotypes = Collections.unmodifiableList(tmp);
+		}
+		if (label.getColor() != null)
+			this.color = label.getColor();
+		if (label.getIcon() != null)
+			this.icon = label.getIcon();
+	}
+
 	@Override
 	public Iterator<FEntry> iterator() {
 		return MyCollections.unmodifiableCollection(children).iterator();
+	}
+
+	public List<FEntry> getChildren() {
+		return Collections.unmodifiableList(children);
+	}
+
+	/**
+	 * The last child that is not a note: the one where the vertical connector
+	 * line stops.
+	 */
+	public FEntry getLastEntryChild() {
+		for (int i = children.size() - 1; i >= 0; i--)
+			if (children.get(i).isNote() == false)
+				return children.get(i);
+		return null;
 	}
 
 	public FEntry getParent() {
@@ -125,64 +174,24 @@ public class FEntry implements Iterable<FEntry> {
 		return name;
 	}
 
-	public String getEmoticon() {
-		if (type == FilesType.FOLDER)
-			return "<:1f4c2:>";
-		// return "<:1f4c1:>";
-		return "<:1f4c4:>";
+	public List<String> getNote() {
+		return note;
 	}
 
-	public UGraphic drawAndMove(UGraphic ug, FontConfiguration fontConfiguration, ISkinParam skinParam, double deltax) {
-		final TextBlock result = getTextBlock(fontConfiguration, skinParam);
-		result.drawU(ug.apply(UTranslate.dx(deltax)));
-		ug = ug.apply(UTranslate.dy(result.calculateDimension(ug.getStringBounder()).getHeight() + 2));
-		for (FEntry child : children)
-			ug = child.drawAndMove(ug, fontConfiguration, skinParam, deltax + 21);
-		return ug;
+	public String getDescription() {
+		return description;
 	}
 
-	public XDimension2D calculateDimension(StringBounder stringBounder, FontConfiguration fontConfiguration,
-			ISkinParam skinParam, double deltax) {
-		final TextBlock result = getTextBlock(fontConfiguration, skinParam);
-		final XDimension2D dim = result.calculateDimension(stringBounder);
-		double width = deltax + dim.getWidth();
-		double height = dim.getHeight() + 2;
-		for (FEntry child : children) {
-			final XDimension2D childDim = child.calculateDimension(stringBounder, fontConfiguration, skinParam,
-					deltax + 21);
-			width = Math.max(width, childDim.getWidth());
-			height += childDim.getHeight();
-		}
-		return new XDimension2D(width, height);
+	public List<String> getStereotypes() {
+		return stereotypes;
 	}
 
-	private TextBlock getTextBlock(FontConfiguration fontConfiguration, ISkinParam skinParam) {
-		if (type == FilesType.NOTE)
-			return createOpale(skinParam);
-
-		final Display display = Display.getWithNewlines(skinParam.getPragma(), getEmoticon() + getName());
-		TextBlock result = display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam,
-				CreoleMode.NO_CREOLE);
-		return result;
+	public String getColor() {
+		return color;
 	}
 
-	private Opale createOpale(ISkinParam skinParam) {
-
-		final StyleQuery signature = StyleQueries.FILESDIAG_NOTE;
-		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(signature);
-
-		final FontConfiguration fc = FontConfiguration.create(skinParam, style);
-		final double shadowing = style.getShadowing();
-		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
-		final UStroke stroke = style.getStroke();
-
-		final Sheet sheet = skinParam
-				.sheet(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)
-				.createSheet(Display.create(note));
-		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
-		final Opale opale = new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, stroke);
-		return opale;
+	public String getIcon() {
+		return icon;
 	}
 
 }

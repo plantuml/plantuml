@@ -1,0 +1,26 @@
+---
+output: svg
+expected-description: (Files)
+---
+@startfiles
+[icon *.kt <:gem:>]
+[icon secret.txt <&lock-locked>]
+[icon test/ <:test_tube:>]
+[icon */ <&folder>]
+/Dockerfile
+/Makefile
+/LICENSE
+/.gitignore
+/archive.tar.gz
+/src/App.java
+/src/script.py
+/src/Main.kt
+/src/notes.md
+/src/logo.png
+/src/data.csv
+/src/config.yaml
+/src/run.sh
+/src/secret.txt
+/src/unknown.xyz
+/test/AppTest.java
+@endfiles

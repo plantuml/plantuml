@@ -1,0 +1,13 @@
+my project/
+├── src/
+│   └── main/
+│       └── java/
+│           ├── App.java
+│           └── Util.java
+├── weird ## name.txt
+├── build.gradle
+└── docs/
+    ├── guide.md
+    └── images/
+        └── logo.png
+README

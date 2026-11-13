@@ -1,0 +1,18 @@
+---
+output: utxt
+expected-description: (Files)
+---
+@startfiles
+my project/
+   src/
+	main/java/
+	     App.java
+	     Util.java
+   "weird ## name.txt"
+  build.gradle
+/my project/docs/
+    guide.md
+    images/
+        logo.png
+README
+@endfiles

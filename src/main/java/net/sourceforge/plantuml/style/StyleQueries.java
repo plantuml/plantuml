@@ -159,6 +159,12 @@ public final class StyleQueries {
 
 	public static final StyleQuery FILESDIAG_NOTE = ELEMENT.add(SName.filesDiagram, SName.note);
 
+	public static final StyleQuery FILESDIAG_FOLDER = ELEMENT.add(SName.filesDiagram, SName.folder);
+
+	public static final StyleQuery FILESDIAG_FILE = ELEMENT.add(SName.filesDiagram, SName.file);
+
+	public static final StyleQuery FILESDIAG_DESCRIPTION = ELEMENT.add(SName.filesDiagram, SName.description);
+
 	public static final StyleQuery GANTTDIAG = ELEMENT.add(SName.ganttDiagram);
 
 	public static final StyleQuery GANTTDIAG_ARROW = GANTTDIAG.add(SName.arrow);

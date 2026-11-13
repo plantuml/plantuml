@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -34,69 +34,40 @@
  */
 package net.sourceforge.plantuml.filesdiagram;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleQueries;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
-import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.utils.MyCollections;
 
 public class FilesDiagram extends TitledDiagram {
 
+	private final FilesParser parser = new FilesParser();
 	private final FilesListing list;
 
 	FilesDiagram(UmlSource source, StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
 		super(source, DiagramType.FILES, null, preprocessing);
 
-		final ISkinParam skinParam = getSkinParam();
 		try {
-			styleExtractor.applyStyles(skinParam);
+			styleExtractor.applyStyles(getSkinParam());
 		} catch (StyleParsingException e) {
 			e.printStackTrace();
 		}
-		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleQueries.FILESDIAG);
-
-		// final FontConfiguration fontConfiguration =
-		// FontConfiguration.blackBlueTrue(UFont.courier(14));
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
-
-		this.list = new FilesListing(skinParam, fontConfiguration);
-
-		final Iterator<StringLocated> it = source.iterator2();
-		it.next();
-		while (it.hasNext()) {
-			final String line = it.next().getString();
-			if (line.startsWith("/"))
-				this.list.addRawEntry(line.substring(1));
-			else if (line.startsWith("<note>"))
-				this.list.addNote(getNote(it));
-		}
-
-	}
-
-	private List<String> getNote(Iterator<StringLocated> it) {
-		final List<String> result = new ArrayList<String>();
-		while (it.hasNext()) {
-			final String line = it.next().getString();
-			if (line.startsWith("</note>"))
-				return result;
-			result.add(line);
-		}
-		return MyCollections.unmodifiableList(result);
+		parser.parse(styleExtractor.getIterator());
+		this.list = new FilesListing(getSkinParam(), parser.getRoot(), parser.getIcons());
 	}
 
 	public DiagramDescription getDescription() {
@@ -106,6 +77,15 @@ public class FilesDiagram extends TitledDiagram {
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
 		return list;
+	}
+
+	@Override
+	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+		final PrintStream ps = SecurityUtils.createPrintStream(os, true, StandardCharsets.UTF_8);
+		for (String line : new FilesTxt(fileFormat == FileFormat.UTXT).getLines(parser.getRoot()))
+			ps.println(line);
+		ps.flush();
+		return ImageDataSimple.ok();
 	}
 
 }
