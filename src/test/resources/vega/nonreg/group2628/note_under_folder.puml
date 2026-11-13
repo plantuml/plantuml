@@ -1,0 +1,15 @@
+---
+output: utxt
+---
+@startfiles
+/src/main.c
+<note>
+note for a file
+</note>
+/docs/
+<note>
+note for a folder
+</note>
+/docs/readme.md
+/tests/a.c
+@endfiles

@@ -81,6 +81,9 @@ public class FilesListing extends TextBlockMemoized {
 	public void addNote(List<String> note) {
 		if (lastCreated == null)
 			root.addNote(note);
+		else if (lastCreated.isFolder())
+			// A note after a folder line goes right under the folder
+			lastCreated.addNote(note);
 		else
 			lastCreated.getParent().addNote(note);
 	}
