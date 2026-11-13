@@ -5,15 +5,15 @@
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
     <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="303.889">20</text>
+    <text fill="#000" font-size="14" x="52.213" y="303.889">8</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">40</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">16</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">60</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">24</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">80</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">32</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
-    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">100</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="63.889">40</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
     <line style="stroke:#181818;stroke-width:0.5;" x1="136.667" x2="136.667" y1="360" y2="365"/>
     <text fill="#000" font-size="14" x="132.773" y="380.889">1</text>
@@ -21,9 +21,9 @@
     <text fill="#000" font-size="14" x="266.106" y="380.889">2</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="403.333" x2="403.333" y1="360" y2="365"/>
     <text fill="#000" font-size="14" x="399.44" y="380.889">3</text>
-    <rect fill="#F1F1F1" height="3" style="stroke:#181818;stroke-width:0.5;" width="80" x="96.667" y="357"/>
-    <rect fill="#F1F1F1" height="6" style="stroke:#181818;stroke-width:0.5;" width="80" x="230" y="354"/>
-    <rect fill="#F1F1F1" height="9" style="stroke:#181818;stroke-width:0.5;" width="80" x="363.333" y="351"/>
-    <path d="M136.667,330 C181.111,302.5 225.556,275 270,270 C314.444,265 358.889,282.5 403.333,300" fill="none" style="stroke:#F00;stroke-width:2;"/>
+    <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.5;" width="80" x="96.667" y="352.5"/>
+    <rect fill="#F1F1F1" height="15" style="stroke:#181818;stroke-width:0.5;" width="80" x="230" y="345"/>
+    <rect fill="#F1F1F1" height="22.5" style="stroke:#181818;stroke-width:0.5;" width="80" x="363.333" y="337.5"/>
+    <path d="M136.667,285 C181.111,216.25 225.556,147.5 270,135 C314.444,122.5 358.889,166.25 403.333,210" fill="none" style="stroke:#F00;stroke-width:2;"/>
   </g>
 </svg>

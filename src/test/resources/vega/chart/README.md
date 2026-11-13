@@ -71,6 +71,11 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R09.04 | `R09.04-range-bar-default.puml` | Bar, default v range |
 |  | R09.05 | `R09.05-range-bar-above-100.puml` | Bar, values above 100 |
 |  | R09.06 | `R09.06-range-line-missing-value.puml` | Line with missing value, default range |
+|  | R09.07 | `R09.07-range-bar-stacked.puml` | Stacked bars: the range holds the sums (0 -> 150) |
+|  | R09.08 | `R09.08-range-horizontal-above-100.puml` | Horizontal bar above 100 stays inside the plot |
+|  | R09.09 | `R09.09-range-bar-negative.puml` | Negative value: -20 -> 80, 0 on a tick |
+|  | R09.10 | `R09.10-range-v2-axis-after-series.puml` | `v2-axis` written after the series that uses it |
+|  | R09.11 | `R09.11-range-bar-decimal.puml` | Values below 1: 0 -> 1, ticks 0.2 apart |
 | R10 — Drawing order | R10.01 | `R10.01-order-bar-then-area.puml` | Bar defined before area issue | [#2973](https://github.com/plantuml/plantuml/issues/2973) 
 |  | R10.02 | `R10.02-order-area-then-bar.puml` | Area defined before bar |
 | R11 — Horizontal | R11.01 | `R11.01-horizontal-grouped.puml` | Horizontal grouped bars |
@@ -91,7 +96,10 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 >  so the file uses `allow-failure: true` (reported as skipped) and has no reference `.svg`.
 
 > [!WARNING]
-> - R09 and R10 record current rendering for open enhancement requests.
+> - R09: with no range, a value axis goes from 0 (or below, for negative values) to a round maximum,
+>  split in five intervals of 1, 2, 3, 4, 5, 6 or 8 times a power of ten. Stacked bars and areas count by their sums,
+>  interpolated lines by their curve, arrow annotations get room above their point.
+> - R10 records current rendering for an open enhancement request.
 > - R12.01 records the current behavior: `bar bar_title [...]` is a syntax error because the `NAME` pattern requires quotes.
 > Update its reference when unquoted titles are supported.
 

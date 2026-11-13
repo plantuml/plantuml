@@ -5,15 +5,15 @@
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
     <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="303.889">20</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="303.889">10</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">40</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">20</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">60</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">30</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">80</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">40</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
-    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">100</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="63.889">50</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
     <line style="stroke:#181818;stroke-width:0.5;" x1="73.636" x2="73.636" y1="360" y2="365"/>
     <text fill="#000" font-size="14" textLength="19.425" x="63.924" y="380.889">1.1</text>
@@ -36,9 +36,9 @@
     <line style="stroke:#181818;stroke-width:0.5;" x1="433.636" x2="433.636" y1="360" y2="365"/>
     <text fill="#000" font-size="14" textLength="27.213" x="420.03" y="380.889">11.0</text>
     <text fill="#000" font-size="14" textLength="31.15" x="254.425" y="400.889">Time</text>
-    <line style="stroke:#181818;stroke-width:2;" x1="70" x2="179.091" y1="300" y2="255"/>
-    <line style="stroke:#181818;stroke-width:2;" x1="179.091" x2="360.909" y1="255" y2="210"/>
-    <ellipse cx="142.727" cy="270" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
-    <ellipse cx="470" cy="225" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="70" x2="179.091" y1="240" y2="150"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="179.091" x2="360.909" y1="150" y2="60"/>
+    <ellipse cx="142.727" cy="180" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+    <ellipse cx="470" cy="90" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
   </g>
 </svg>

@@ -45,7 +45,10 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.NaturalSpline;
+import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
@@ -107,8 +110,9 @@ public class ChartDiagram extends TitledDiagram {
 		if (orientation == Orientation.HORIZONTAL) {
 			// For horizontal: pass h-axis numeric as yAxis, v-axis labels as xAxisLabels
 			// This way bars grow along the correct axis
+			final ChartAxis valueAxis = hasCoordinatePairs() ? hAxis : getValueAxis(xAxis, false);
 			return new ChartRenderer(getSkinParam(), getCategories(yAxisLabels), yAxis.getTitle(), null,
-					xAxisLabelPosition, series, hAxis, hAxis, null, legendPosition, yGridMode, xGridMode, stackMode,
+					xAxisLabelPosition, series, hAxis, valueAxis, null, legendPosition, yGridMode, xGridMode, stackMode,
 					orientation, annotations);
 		}
 
@@ -121,8 +125,102 @@ public class ChartDiagram extends TitledDiagram {
 		// A numeric h-axis range (h-axis 0 --> 10) is kept as it is
 		final List<String> categories = xAxis.isAutoScale() ? getCategories(xAxisLabels) : xAxisLabels;
 		return new ChartRenderer(getSkinParam(), categories, hAxisTitle, xAxisTickSpacing, xAxisLabelPosition,
-				getPlottedSeries(), hAxis, yAxis, y2Axis, legendPosition, xGridMode, yGridMode, stackMode, orientation,
+				getPlottedSeries(), hAxis, getValueAxis(yAxis, false), y2Axis == null ? null : getValueAxis(y2Axis, true),
+				legendPosition, xGridMode, yGridMode, stackMode, orientation,
 				annotations);
+	}
+
+	// When no range is given for a value axis, it is fitted to the values drawn against it
+	// (see ChartAxis.withNiceRange). This is done here, once every line is parsed, rather
+	// than while the series are added: a "v2-axis" line may come after the series using it,
+	// and stacked bars and areas reach the sum of their values, not each value.
+	// Series are drawn against y2Axis when they ask for it and it exists, as ChartRenderer does
+	private ChartAxis getValueAxis(ChartAxis axis, boolean secondary) {
+		if (axis.isAutoScale() == false)
+			return axis;
+
+		double min = Double.POSITIVE_INFINITY;
+		double max = Double.NEGATIVE_INFINITY;
+		// Running totals per index: positive and negative stacked bars grow apart from 0,
+		// areas are always stacked on each other
+		final List<Double> barUp = new ArrayList<>();
+		final List<Double> barDown = new ArrayList<>();
+		final List<Double> areaTotal = new ArrayList<>();
+		for (ChartSeries s : series) {
+			if ((s.isUseSecondaryAxis() && y2Axis != null) != secondary)
+				continue;
+			final List<Double> values = s.getValues();
+			for (int i = 0; i < values.size(); i++) {
+				final Double value = values.get(i);
+				if (value == null)
+					continue;
+				final double reached;
+				if (s.getType() == ChartSeries.SeriesType.AREA)
+					reached = addAt(areaTotal, i, value);
+				else if (s.getType() == ChartSeries.SeriesType.BAR && stackMode == StackMode.STACKED)
+					reached = addAt(value >= 0 ? barUp : barDown, i, value);
+				else
+					reached = value;
+				min = Math.min(min, reached);
+				max = Math.max(max, reached);
+			}
+			if (s.getType() == ChartSeries.SeriesType.LINE && s.isInterpolate())
+				for (XCubicCurve2D curve : NaturalSpline.through(valuePoints(s)))
+					for (int k = 1; k < CURVE_SAMPLES; k++) {
+						final double y = bezierY(curve, (double) k / CURVE_SAMPLES);
+						min = Math.min(min, y);
+						max = Math.max(max, y);
+					}
+		}
+		if (min > max)
+			return axis;
+
+		// Annotations are placed against the primary value axis. An arrow is drawn
+		// downwards from its text only when it has about 55 px (text + 40) above the
+		// point, that is 19% of the 300 px plot, otherwise it is flipped below the point
+		// (see ChartRenderer.drawAnnotations). Asking for the point plus 25% of its
+		// distance to the bottom keeps the arrow above it even when the point is the
+		// maximum, as in annotation "Peak" at (B, 40) over a bar of 40
+		if (secondary == false)
+			for (ChartAnnotation annotation : annotations) {
+				final double y = annotation.getYPosition();
+				min = Math.min(min, y);
+				max = Math.max(max, y);
+				if (annotation.isShowArrow() && orientation == Orientation.VERTICAL)
+					max = Math.max(max, y + 0.25 * (y - Math.min(0, min)));
+			}
+
+		return axis.withNiceRange(min, max);
+	}
+
+	// An interpolated line is a natural spline, which overshoots its points: 38 between 12
+	// and 10 peaks near 41. Its extent is sampled so that the curve stays inside the axis.
+	// The spline is computed on values rather than pixels: it does not change under an
+	// affine change of x or y, so it is the same curve as the one LineRenderer draws
+	private static final int CURVE_SAMPLES = 32;
+
+	// The points of a series in value space (x = explicit x, or index), missing values left out
+	private static List<XPoint2D> valuePoints(ChartSeries s) {
+		final List<XPoint2D> result = new ArrayList<>();
+		final List<Double> values = s.getValues();
+		for (int i = 0; i < values.size(); i++)
+			if (values.get(i) != null)
+				result.add(new XPoint2D(s.hasExplicitXValues() ? s.getXValues().get(i) : i, values.get(i)));
+		return result;
+	}
+
+	private static double bezierY(XCubicCurve2D c, double t) {
+		final double u = 1 - t;
+		return u * u * u * c.getY1() + 3 * u * u * t * c.getCtrlY1() + 3 * u * t * t * c.getCtrlY2()
+				+ t * t * t * c.getY2();
+	}
+
+	private static double addAt(List<Double> totals, int index, double value) {
+		while (totals.size() <= index)
+			totals.add(0.0);
+		final double result = totals.get(index) + value;
+		totals.set(index, result);
+		return result;
 	}
 
 	// When no labels are given for the category axis (h-axis, or v-axis for a horizontal
@@ -308,11 +406,6 @@ public class ChartDiagram extends TitledDiagram {
 							+ xAxis.getMin() + ", " + xAxis.getMax() + "]");
 				}
 			}
-
-			// Auto-scale x-axis to include all x-values
-			for (double x : series.getXValues()) {
-				xAxis.includeValue(x);
-			}
 		} else {
 			// Index-based mode: ensure consistency
 			if (!this.series.isEmpty()) {
@@ -325,13 +418,6 @@ public class ChartDiagram extends TitledDiagram {
 		}
 
 		this.series.add(series);
-
-		// Auto-scale y-axes if needed
-		final ChartAxis axis = series.isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
-		for (Double value : series.getValues()) {
-			if (value != null)
-				axis.includeValue(value);
-		}
 
 		return CommandExecutionResult.ok();
 	}

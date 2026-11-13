@@ -937,7 +937,8 @@ public class ChartRenderer {
 			return String.format(Locale.ROOT, "%.2e", value);
 		if (value == (long) value)
 			return String.format(Locale.ROOT, "%d", (long) value);
-		return String.format(Locale.ROOT, "%.2f", value);
+		// 0.80 is written 0.8, as the automatic range gives ticks like 0, 0.8, 1.6 ...
+		return String.format(Locale.ROOT, "%.2f", value).replaceAll("0+$", "");
 	}
 
 	private HColor getDefaultColor(int index) {

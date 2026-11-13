@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2, Q3]
+bar [10, 20, 30]
+line [1000, 1500, 1200] v2
+v2-axis "y2"
+@endchart

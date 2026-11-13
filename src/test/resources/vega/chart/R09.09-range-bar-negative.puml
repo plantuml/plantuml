@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startchart
+bar [-20, 70]
+@endchart

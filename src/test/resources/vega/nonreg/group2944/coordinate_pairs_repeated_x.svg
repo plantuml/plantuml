@@ -5,15 +5,15 @@
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
     <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="303.889">20</text>
+    <text fill="#000" font-size="14" textLength="19.425" x="40.575" y="303.889">0.8</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">40</text>
+    <text fill="#000" font-size="14" textLength="19.425" x="40.575" y="243.889">1.6</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">60</text>
+    <text fill="#000" font-size="14" textLength="19.425" x="40.575" y="183.889">2.4</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
-    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">80</text>
+    <text fill="#000" font-size="14" textLength="19.425" x="40.575" y="123.889">3.2</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
-    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="63.889">100</text>
+    <text fill="#000" font-size="14" x="52.213" y="63.889">4</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="360" y2="365"/>
     <text fill="#000" font-size="14" x="66.106" y="380.889">0</text>
@@ -38,7 +38,7 @@
     <line style="stroke:#181818;stroke-width:0.5;" x1="470" x2="470" y1="360" y2="365"/>
     <text fill="#000" font-size="14" x="466.106" y="380.889">5</text>
     <text fill="#000" font-size="14" x="266.5" y="400.889">x</text>
-    <line style="stroke:#181818;stroke-width:2;" x1="150" x2="150" y1="354" y2="348"/>
-    <line style="stroke:#181818;stroke-width:2;" x1="150" x2="310" y1="348" y2="357"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="150" x2="150" y1="210" y2="60"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="150" x2="310" y1="60" y2="285"/>
   </g>
 </svg>

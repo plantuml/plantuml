@@ -116,14 +116,48 @@ public class ChartAxis {
 	}
 
 	/**
-	 * Update axis range to include the given value
+	 * A copy of this axis (title, ticks, label position) with the given range.
 	 */
-	public void includeValue(double value) {
-		if (autoScale) {
-			if (value < min)
-				min = value;
-			if (value > max)
-				max = value;
+	public ChartAxis withRange(double newMin, double newMax) {
+		final ChartAxis result = new ChartAxis(title, newMin, newMax);
+		result.customTicks = customTicks;
+		result.tickSpacing = tickSpacing;
+		result.labelPosition = labelPosition;
+		return result;
+	}
+
+	// Multipliers of a power of ten accepted as a tick step. 1.5 and 2.5 are left out on
+	// purpose: below 1 they need two decimals (0.25), which tick labels do not show
+	private static final double[] NICE_STEPS = { 1, 2, 3, 4, 5, 6, 8 };
+
+	// Number of intervals drawn by the automatic ticks of the value axis
+	private static final int TICK_INTERVALS = 5;
+
+	/**
+	 * A copy of this axis whose range is the smallest "round" range holding every value
+	 * between dataMin and dataMax, and 0. The range is split into five intervals by the
+	 * automatic ticks, so it is chosen as min + 5 * step, step being 1, 2, 3, 4, 5, 6 or
+	 * 8 times a power of ten, and min a multiple of step: 0 always falls on a tick.
+	 *
+	 * Examples: values up to 38 give 0 -> 40, up to 138 give 0 -> 150, from -20 to 70
+	 * give -20 -> 80. When there is no value at all, the axis is left as it is (0 -> 100).
+	 */
+	public ChartAxis withNiceRange(double dataMin, double dataMax) {
+		final double lo = Math.min(0, dataMin);
+		final double hi = Math.max(0, dataMax);
+		if (lo == hi)
+			return withRange(min, max);
+
+		double magnitude = Math.pow(10, Math.floor(Math.log10((hi - lo) / TICK_INTERVALS)) - 1);
+		// Termination: once step >= hi - lo, any multiple min <= lo gives min + 5 * step > hi
+		while (true) {
+			for (double nice : NICE_STEPS) {
+				final double step = nice * magnitude;
+				final double start = Math.floor(lo / step) * step;
+				if (start + TICK_INTERVALS * step >= hi)
+					return withRange(start, start + TICK_INTERVALS * step);
+			}
+			magnitude *= 10;
 		}
 	}
 

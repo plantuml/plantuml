@@ -212,17 +212,21 @@ public class BarRenderer {
 				continue;
 			final double value = values.get(i);
 			final double y = i * categoryHeight + barOffset;
-			final double barWidth = Math.abs((value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotWidth);
-			final double x = 0; // Start from left
+			// As in drawVertical: a bar goes from 0 (kept inside the plot when the range
+			// does not include it) to its value, rightwards or leftwards
+			final double zeroX = Math.max(0, Math.min(plotWidth, axis.valueToPixel(0, 0, plotWidth)));
+			final double valueX = axis.valueToPixel(value, 0, plotWidth);
+			final double x = Math.min(zeroX, valueX);
+			final double barWidth = Math.abs(valueX - zeroX);
 
-			if (barHeight > 0) {
+			if (barHeight > 0 && barWidth > 0) {
 				final URectangle rect = URectangle.build(barWidth, barHeight);
 				ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y))).draw(rect);
 			}
 
 			// Draw label if enabled
 			if (series.isShowLabels()) {
-				drawLabelHorizontal(ug, value, barWidth + 5, y + barHeight / 2);
+				drawLabelHorizontal(ug, value, x + barWidth + 5, y + barHeight / 2);
 			}
 		}
 	}
