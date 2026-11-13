@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="58px" preserveAspectRatio="none" style="width:165px;height:58px;background:#FFFFFF;" version="1.1" viewBox="0 0 165 58" width="165px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="58px" preserveAspectRatio="none" style="width:165px;height:58px;" version="1.1" viewBox="0 0 165 58" width="165px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <rect fill="#FFF" height="57" style="stroke:none;" width="164" x="0" y="0"/>
     <path d="M4.4,4.4 L71.2,4.4 L71.2,51.2 L4.4,51.2 L4.4,4.4" fill="#FF0"/>
     <path d="M4.4,4.4 L71.2,4.4 L71.2,51.2 L4.4,51.2 L4.4,4.4" fill="none" style="stroke:#FF0;stroke-width:0.8;"/>
     <text fill="#000" font-size="20" textLength="40" x="17.8" y="33.4">高亮</text>

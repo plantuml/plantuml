@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="58px" preserveAspectRatio="none" style="width:218px;height:58px;background:#FFFFFF;" version="1.1" viewBox="0 0 218 58" width="218px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="58px" preserveAspectRatio="none" style="width:218px;height:58px;" version="1.1" viewBox="0 0 218 58" width="218px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <rect fill="#FFF" height="57" style="stroke:none;" width="217" x="0" y="0"/>
     <text fill="#000" font-size="20" textLength="40" x="6.4" y="19.6">分子</text>
     <path d="M6.4,27.7 L46.4,27.7 L46.4,28.5 L6.4,28.5 L6.4,27.7" fill="#000"/>
     <text fill="#000" font-size="20" textLength="40" x="6.4" y="46.8">分母</text>

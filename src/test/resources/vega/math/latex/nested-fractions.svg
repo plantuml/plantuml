@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="67px" preserveAspectRatio="none" style="width:159px;height:67px;background:#FFFFFF;" version="1.1" viewBox="0 0 159 67" width="159px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="67px" preserveAspectRatio="none" style="width:159px;height:67px;" version="1.1" viewBox="0 0 159 67" width="159px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <rect fill="#FFF" height="66" style="stroke:none;" width="158" x="0" y="0"/>
     <path d="M31.8,10.4 L31.8,21.6 C31.8,22 31.9,22.3 32,22.4 C32.3,22.5 32.8,22.6 33.7,22.6 L34.3,22.6 L34.3,23.2 C33.8,23.2 32.8,23.2 31.1,23.2 C29.4,23.2 28.3,23.2 27.8,23.2 L27.8,22.6 L28.5,22.6 C29.5,22.6 30.1,22.5 30.2,22.2 L30.2,22.2 C30.3,22.1 30.3,21.9 30.3,21.6 L30.3,11.3 C29.6,11.6 28.8,11.8 27.7,11.8 L27.7,11.2 C29.3,11.2 30.5,10.7 31.3,9.9 C31.6,9.9 31.7,9.9 31.8,10 L31.8,10.1 C31.8,10.1 31.8,10.2 31.8,10.4" fill="#000"/>
     <path d="M6.4,31.3 L55.4,31.3 L55.4,32.1 L6.4,32.1 L6.4,31.3" fill="#000"/>
     <path d="M13.4,34.6 L13.4,42.5 C13.4,42.7 13.5,42.9 13.6,43 C13.7,43.1 14.1,43.1 14.7,43.1 L15.2,43.1 L15.2,43.6 C14.8,43.5 14.1,43.5 12.9,43.5 C11.7,43.5 11,43.5 10.6,43.6 L10.6,43.1 L11.1,43.1 C11.8,43.1 12.2,43 12.3,42.9 L12.3,42.9 C12.4,42.8 12.4,42.7 12.4,42.5 L12.4,35.2 C11.9,35.5 11.3,35.6 10.5,35.6 L10.5,35.1 C11.7,35.1 12.5,34.8 13.1,34.2 C13.3,34.2 13.4,34.3 13.4,34.3 L13.4,34.4 C13.4,34.4 13.4,34.5 13.4,34.6" fill="#000"/>

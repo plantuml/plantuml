@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.TextBlockExporter;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -58,16 +57,8 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class ScientificEquationSafe {
 
-	/** Formula: black, white in dark mode. */
 	public static final HColor DEFAULT_FOREGROUND = HColors.BLACK.withDark(HColors.WHITE);
-
-	/**
-	 * Box and page behind a formula: white, and in dark mode the same #1B1B1B as the
-	 * background of the other diagrams (document, in the dark part of plantuml.skin),
-	 * not pure black.
-	 */
-	public static final HColor DEFAULT_BACKGROUND = HColors.WHITE
-			.withDark(HColorSet.instance().getColorOrWhite("#1B1B1B"));
+	public static final HColor DEFAULT_BACKGROUND = HColors.transparent();
 
 	private final ScientificEquation equation;
 	private final String formula;
@@ -100,7 +91,9 @@ public class ScientificEquationSafe {
 		}
 	}
 
-	/** The formula, or null if it cannot be made (the source is then shown as text). */
+	/**
+	 * The formula, or null if it cannot be made (the source is then shown as text).
+	 */
 	private MathDrawing getDrawing(StringBounder stringBounder) {
 		if (drawingDone == false) {
 			drawingDone = true;
@@ -133,7 +126,7 @@ public class ScientificEquationSafe {
 			getRollback().drawU(ug);
 			return;
 		}
-		if (background != null) {
+		if (background != null && background.isTransparent() == false) {
 			final XDimension2D dim = result.getDimension();
 			ug.apply(HColors.transparent()).apply(background.bg())
 					.draw(URectangle.build(dim.getWidth(), dim.getHeight()));

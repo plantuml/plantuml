@@ -1,12 +1,13 @@
 ===========================================
  VEGA TEST SUMMARY
 ===========================================
- Total:    472
- Passed:   468
+ Total:    937
+ Passed:   932
  Failed:   0
- Skipped:  4
+ Skipped:  5
 ===========================================
  Skipped tests:
+   - chart/R07.05-error-missing-endchart.puml
    - mvp/hello-debug-skipped.puml
    - packet/R07.01-Range_Error1.puml
    - packet/R07.02-Range_Error2.puml

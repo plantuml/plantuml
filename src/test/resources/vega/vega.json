@@ -78,6 +78,27 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "asciiverse/divider_001.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/divider_002.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/divider_003.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
       "file": "asciiverse/group_001.puml",
       "folder": "asciiverse",
       "status": "pass",
@@ -253,6 +274,381 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "chart/R01.01-series-bar-basic.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R01.02-series-bar-grouped.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R01.03-series-bar-stacked.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R01.04-series-bar-horizontal.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R01.05-series-line-basic.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R01.06-series-line-coordinate-pair.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R01.07-series-area-basic.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R01.08-series-scatter-style-with-stereotypes.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R01.09-series-mixed-types.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R01.10-series-data-labels.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R02.01-axes-h-axis-spacing.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R02.02-axes-v-axis-ticks.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R02.03-axes-v-axis-negative.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R02.04-axes-v2-axis.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R02.05-axes-label-position.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R03.01-layout-legend-bottom.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R03.02-layout-grid-both.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R03.03-layout-grid-v-scatter.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R04.01-style-block.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R04.02-style-stereotypes.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R05.01-annotation-arrow.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R06.01-preproc-procedure.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R06.02-preproc-function.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R07.01-error-coordinate-pair-with-categorical-axis.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R07.02-error-coordinate-out-of-range.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R07.03-error-mixed-formats.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R07.04-error-unknown-keyword.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R07.05-error-missing-endchart.puml",
+      "folder": "chart",
+      "status": "skipped",
+      "allow-failure": "true",
+      "message": "Index 0 out of bounds for length 0",
+      "stacktrace": [
+        "java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0",
+        "java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java)",
+        "java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java)",
+        "java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java)",
+        "java.base/java.util.Objects.checkIndex(Objects.java)",
+        "java.base/java.util.ArrayList.get(ArrayList.java)",
+        "java.base/java.util.Collections$UnmodifiableList.get(Collections.java)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
+        "test.vega.VegaInputFile.lambda$(VegaInputFile.java)"
+      ]
+    },
+    {
+      "file": "chart/R08.01-missing-minimal-line-interpolate.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R08.02-missing-value-interpolate.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R08.03-missing-value-interpolate-labels.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R08.04-missing-values-interpolate-connect.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R09.01-range-line-default.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R09.02-range-line-explicit.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R09.03-range-line-above-100.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R09.04-range-bar-default.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R09.05-range-bar-above-100.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R09.06-range-line-missing-value.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R10.01-order-bar-then-area.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R10.02-order-area-then-bar.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R11.01-horizontal-grouped.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R11.02-horizontal-stacked.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R11.03-horizontal-negative-value.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R11.04-horizontal-area-legend-right.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R12.01-short-title-without-quote.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R13.01-zero-value-vertical.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R13.02-zero-value-horizontal.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R13.03-zero-value-vertical-stacked.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R13.04-zero-value-horizontal-stacked.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "component/node-style-edge-label-decorations.puml",
+      "folder": "component",
+      "status": "pass",
+      "description": "(7 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "component/node-style-edge-label-per-link.puml",
+      "folder": "component",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "component/node-style-edge-label-skinparam.puml",
+      "folder": "component",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
       "file": "crash/crash-not-crashing.puml",
       "folder": "crash",
       "status": "pass",
@@ -274,8 +670,7 @@
         "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java)",
         "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java)",
         "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
-        "test.vega.VegaTest.lambda$(VegaTest.java)"
+        "test.vega.VegaInputFile.lambda$(VegaInputFile.java)"
       ]
     },
     {
@@ -294,8 +689,7 @@
         "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java)",
         "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java)",
         "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
-        "test.vega.VegaTest.lambda$(VegaTest.java)"
+        "test.vega.VegaInputFile.lambda$(VegaInputFile.java)"
       ]
     },
     {
@@ -318,8 +712,7 @@
         "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java)",
         "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java)",
         "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
-        "test.vega.VegaTest.lambda$(VegaTest.java)"
+        "test.vega.VegaInputFile.lambda$(VegaInputFile.java)"
       ]
     },
     {
@@ -335,6 +728,1581 @@
       "status": "pass",
       "description": "(2 entities)",
       "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "math/asciimath/accents.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/arrows.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/brackets.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/cases-abs.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/cases.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/color.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/euler.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/fonts.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/fraction-binomial-like.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/fraction-continued.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/functions.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/gaussian.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/greek-lower.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/greek-upper.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/integral-bounds.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/integral-contour.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/limit-e.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/limit-sinc.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/logic.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/matrix-3x3.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/matrix-det.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/overset-underset.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/prod-limits.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/quadratic.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/quantifiers.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/quote-special.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/relations.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/root-index.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/scripts.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/sets.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/spacing.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/sqrt-nested.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/sum-limits.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/symbols.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/asciimath/text.puml",
+      "folder": "math/asciimath",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/cjk/inline-class.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/cjk/inline-note-sequence.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "math/cjk/latex-arabic-hebrew.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/cjk/latex-chinese-math-mode.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/cjk/latex-chinese-text.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/cjk/latex-colors-boxes.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/cjk/latex-emoji-and-symbols.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/cjk/latex-fullwidth-punctuation.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/cjk/latex-in-scripts-frac-sqrt.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/cjk/latex-japanese.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/cjk/latex-korean.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/cjk/latex-mixed-alphabets.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/cjk/latex-options-color-scale.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/cjk/math-quoted-text.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/cjk/math-sum-label.puml",
+      "folder": "math/cjk",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/dark/latex-dark.puml",
+      "folder": "math/dark",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/dark/math-dark-explicit-colors.puml",
+      "folder": "math/dark",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/dark/math-dark-transparent.puml",
+      "folder": "math/dark",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/dark/math-dark.puml",
+      "folder": "math/dark",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/errors/inline-invalid.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/errors/latex-ampersand-in-text.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/latex-left-without-right.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/latex-lone-backslashes.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/latex-mismatched-environment.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/latex-missing-argument.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/latex-removed-includegraphics.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/latex-spaces-only.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/latex-unbalanced-brace.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/latex-unknown-environment.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/latex-unknown-macro.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/latex-unsupported-cancel.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/latex-unsupported-color-switch.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/errors/math-garbage.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/errors/math-unbalanced.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/errors/math-unsupported-cancel.puml",
+      "folder": "math/errors",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/formats/cjk-pdf.puml",
+      "folder": "math/formats",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/formats/class-pdf.puml",
+      "folder": "math/formats",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/formats/class-svg-latex.puml",
+      "folder": "math/formats",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/formats/class-utxt-atxt.puml",
+      "folder": "math/formats",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/formats/latex-pdf.puml",
+      "folder": "math/formats",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/formats/latex-svg-pdf.puml",
+      "folder": "math/formats",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/formats/math-pdf.puml",
+      "folder": "math/formats",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/formats/tikz-cjk.puml",
+      "folder": "math/formats",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/formats/tikz-class.puml",
+      "folder": "math/formats",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/formats/tikz-note-multiline.puml",
+      "folder": "math/formats",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/formats/tikz-sequence.puml",
+      "folder": "math/formats",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "math/inline-class-label.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline-note.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline-sequence-message.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "math/inline/activity-new-syntax.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "math/inline/activity-old-syntax.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(4 activities)",
+      "diagram_class": "ActivityDiagram"
+    },
+    {
+      "file": "math/inline/class-members.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/class-title-header.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/colored-text.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/component-deployment.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "math/inline/dark-background.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/diagram-scale.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/entity-relationship.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/gantt.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(Gantt)",
+      "diagram_class": "GanttDiagram"
+    },
+    {
+      "file": "math/inline/handwritten.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/json-and-yaml-text.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(Json)",
+      "diagram_class": "JsonDiagram"
+    },
+    {
+      "file": "math/inline/legend.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/mindmap.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "math/inline/monochrome-reverse.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/monochrome.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/multiple-diagrams-pages.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities) (2 entities)",
+      "diagram_class": "NewpagedDiagram"
+    },
+    {
+      "file": "math/inline/note-floating.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/note-latex-block.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/note-multiline.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/note-positions.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(5 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/object-fields.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/rectangle-package-labels.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "math/inline/salt-wireframe.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(Salt)",
+      "diagram_class": "PSystemSalt"
+    },
+    {
+      "file": "math/inline/sequence-groups-dividers.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "math/inline/sequence-messages.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "math/inline/sequence-participants-notes.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "math/inline/sequence-self-and-multiline.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "math/inline/several-per-line.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/skinparam-dpi.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/skinparam-font-color.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/state.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "math/inline/styled-text.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/table-creole.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/text-around.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/timing.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "math/inline/title-multiline.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "math/inline/usecase.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "math/inline/wbs.puml",
+      "folder": "math/inline",
+      "status": "pass",
+      "description": "Work Breakdown Structure",
+      "diagram_class": "WBSDiagram"
+    },
+    {
+      "file": "math/latex-accents.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex-big-operators.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex-boxes.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex-braces-arrows.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex-cases.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex-colors.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex-cyrillic-greek.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex-delimiters.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex-rules-radicals.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex-text-styles.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex-transforms.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/accents-math.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/accents-wide.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/aligned.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/ams-symbols.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/array-alignment.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/array-columns-rules.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/arrows-diagonal.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/arrows-extensible-labels.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/arrows-extensible.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/arrows-long.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/arrows-simple.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/big-delimiters-stretch.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/big-operators-display.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/big-operators-more.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/binary-operators.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/binomials.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/boxes.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/braces-over-under.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/cases.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/colors-boxes.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/colors-defined.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/colors-named.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/delimiters-manual.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/delimiters-middle.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/delimiters-sizes.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/dots.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/euler-product.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/fonts-math.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/fonts-text.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/fourier.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/fractions.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/functions-limits.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/functions.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/glyph-holes.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/greek-lower.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/greek-upper.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/limits-do-not-leak.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/limits-placement.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/long-formula.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/math-classes.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/matrices-environments.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/matrices-large.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/misc-symbols.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/modular.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/negations.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/nested-fractions.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/newcommand-optional.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/newcommand.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/newline-and-breaks.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/overlapping-glyphs.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/phantoms.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/physics-maxwell.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/quantum.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/relations-sets.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/relations.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/roots.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/rotation-with-color.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/rules.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/scripts.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/size-and-style-scripts.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/spacing.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/special-chars.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/stacked.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/statistics.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/styles.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/text-accents.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/text-and-math-mixed.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/transforms.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/underline-overline.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/unicode-cyrillic-greek.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/unicode-latin.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/latex/unicode-math.puml",
+      "folder": "math/latex",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/math-fraction.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/math-greek.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/math-integral.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/math-matrix.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/math-sum-root.puml",
+      "folder": "math",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/options/latex-background.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/options/latex-color-background.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/options/latex-color-inside-formula.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/options/latex-color.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/options/latex-dpi.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/options/latex-invalid-scale.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/options/latex-scale.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/options/latex-unknown-color-is-white.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Latex)",
+      "diagram_class": "PSystemLatex"
+    },
+    {
+      "file": "math/options/math-background.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/options/math-color-background.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/options/math-color.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/options/math-dpi.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/options/math-scale-small.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
+    },
+    {
+      "file": "math/options/math-scale.puml",
+      "folder": "math/options",
+      "status": "pass",
+      "description": "(Math)",
+      "diagram_class": "PSystemMath"
     },
     {
       "file": "migration/ChenMovieAlias_Test.puml",
@@ -413,8 +2381,7 @@
         "test.vega.VegaCheckerDebug.checkDebugContains(VegaCheckerDebug.java)",
         "test.vega.VegaCheckerDebug.checkOutput(VegaCheckerDebug.java)",
         "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
-        "test.vega.VegaTest.lambda$(VegaTest.java)"
+        "test.vega.VegaInputFile.lambda$(VegaInputFile.java)"
       ]
     },
     {
@@ -650,6 +2617,13 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "nonreg/group2628/note_under_folder.puml",
+      "folder": "nonreg/group2628",
+      "status": "pass",
+      "description": "(Files)",
+      "diagram_class": "FilesDiagram"
+    },
+    {
       "file": "nonreg/group2632/connect_and_gap_side_by_side.puml",
       "folder": "nonreg/group2632",
       "status": "pass",
@@ -865,6 +2839,20 @@
       "status": "pass",
       "description": "Chart Diagram",
       "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2668/other_class_like_types.puml",
+      "folder": "nonreg/group2668",
+      "status": "pass",
+      "description": "(10 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2668/reported_case.puml",
+      "folder": "nonreg/group2668",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ClassDiagram"
     },
     {
       "file": "nonreg/group2679/border_thickness_style.puml",
@@ -1952,6 +3940,41 @@
       "diagram_class": "ClassDiagram"
     },
     {
+      "file": "nonreg/group2941/inline_color_with_legend.puml",
+      "folder": "nonreg/group2941",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2941/issue_inline_color.puml",
+      "folder": "nonreg/group2941",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2941/issue_theme.puml",
+      "folder": "nonreg/group2941",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2941/style_line_color.puml",
+      "folder": "nonreg/group2941",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2941/style_stereotype_and_inline_color.puml",
+      "folder": "nonreg/group2941",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
       "file": "nonreg/group2944/color_v2_and_labels.puml",
       "folder": "nonreg/group2944",
       "status": "pass",
@@ -1999,6 +4022,230 @@
       "status": "pass",
       "description": "Chart Diagram",
       "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2950/connect_and_interpolate.puml",
+      "folder": "nonreg/group2950",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2950/default_thickness.puml",
+      "folder": "nonreg/group2950",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2950/global_line_style.puml",
+      "folder": "nonreg/group2950",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2950/issue_example.puml",
+      "folder": "nonreg/group2950",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2972/index_inline_color.puml",
+      "folder": "nonreg/group2972",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2972/style_font_color.puml",
+      "folder": "nonreg/group2972",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group2995/package_maximum_width.puml",
+      "folder": "nonreg/group2995",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2995/skinparam_wrap_width.puml",
+      "folder": "nonreg/group2995",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group2997/skinparam_shadowing_false.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/skinparam_shadowing_true.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_error_brace_without_selector.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2997/style_error_deep_in_block.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2997/style_error_linethickness_abc.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2997/style_error_missing_value.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2997/style_error_property_outside_block.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2997/style_error_roundcorner_true.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2997/style_error_shadowing_two_dots.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2997/style_error_unclosed_style.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2997/style_error_unclosed_style_class.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2997/style_error_unclosed_style_typo.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group2997/style_linethickness_with_unit_and_dot.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_shadowing_0.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_shadowing_3.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_shadowing_false.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_shadowing_no.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_shadowing_true.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_shadowing_true_uppercase.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_shadowing_yes.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_tolerated_extra_brace.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_tolerated_unclosed_block.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_tolerated_unknown_property.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "nonreg/group2997/style_tolerated_unknown_selector.puml",
+      "folder": "nonreg/group2997",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
     },
     {
       "file": "nonreg/json/style-highlight-with-style-tags.puml",
@@ -2104,6 +4351,48 @@
       "status": "pass",
       "description": "activity3",
       "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/stereotype/seq-hide-all-show-one-stereotype.puml",
+      "folder": "nonreg/stereotype",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/stereotype/seq-hide-all-stereotypes.puml",
+      "folder": "nonreg/stereotype",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/stereotype/seq-hide-one-label-of-several.puml",
+      "folder": "nonreg/stereotype",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/stereotype/seq-hide-one-stereotype.puml",
+      "folder": "nonreg/stereotype",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/stereotype/seq-hide-stereotype-of-one-participant.puml",
+      "folder": "nonreg/stereotype",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/stereotype/seq-hide-then-show-same-stereotype.puml",
+      "folder": "nonreg/stereotype",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
     },
     {
       "file": "nonreg/stereotype/stereotype-selector-with-embedded-space.puml",
@@ -2484,8 +4773,7 @@
         "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java)",
         "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java)",
         "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
-        "test.vega.VegaTest.lambda$(VegaTest.java)"
+        "test.vega.VegaInputFile.lambda$(VegaInputFile.java)"
       ]
     },
     {
@@ -2520,8 +4808,7 @@
         "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java)",
         "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java)",
         "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
-        "test.vega.VegaTest.lambda$(VegaTest.java)"
+        "test.vega.VegaInputFile.lambda$(VegaInputFile.java)"
       ]
     },
     {
@@ -2628,8 +4915,7 @@
         "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java)",
         "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java)",
         "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
-        "test.vega.VegaTest.lambda$(VegaTest.java)"
+        "test.vega.VegaInputFile.lambda$(VegaInputFile.java)"
       ]
     },
     {
@@ -2891,9 +5177,43 @@
         "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java)",
         "test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java)",
         "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java)",
-        "test.vega.VegaTest.lambda$(VegaTest.java)"
+        "test.vega.VegaInputFile.lambda$(VegaInputFile.java)"
       ]
+    },
+    {
+      "file": "pdf/class.puml",
+      "folder": "pdf",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "pdf/colors.puml",
+      "folder": "pdf",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "pdf/hello.puml",
+      "folder": "pdf",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "pdf/link.puml",
+      "folder": "pdf",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "pdf/sprite_emoji.puml",
+      "folder": "pdf",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
     },
     {
       "file": "preproc/eval.puml",
@@ -2908,6 +5228,13 @@
       "status": "pass",
       "description": "PREPROC",
       "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "preproc/variable_dollar_alias.puml",
+      "folder": "preproc",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "SequenceDiagram"
     },
     {
       "file": "scxml/junction-pseudostate.puml",
@@ -3092,6 +5419,13 @@
       "diagram_class": "StateDiagram"
     },
     {
+      "file": "state/node-style-nonode-override.puml",
+      "folder": "state",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
       "file": "state/node-style-transition-label-orphaned-by-hide.puml",
       "folder": "state",
       "status": "pass",
@@ -3139,6 +5473,825 @@
       "status": "pass",
       "description": "(3 entities)",
       "diagram_class": "StateDiagram"
+    },
+    {
+      "file": "stdlib/adaml/example.puml",
+      "folder": "stdlib/adaml",
+      "status": "pass",
+      "description": "(10 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib/archimate/Archimate-Elements.puml",
+      "folder": "stdlib/archimate",
+      "status": "pass",
+      "description": "(63 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/archimate/archimate_deployment.puml",
+      "folder": "stdlib/archimate",
+      "status": "pass",
+      "description": "(26 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/archimate/example.puml",
+      "folder": "stdlib/archimate",
+      "status": "pass",
+      "description": "(10 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/archimate/theme.puml",
+      "folder": "stdlib/archimate",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/aws/s3.puml",
+      "folder": "stdlib/aws",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/awslib/iot.puml",
+      "folder": "stdlib/awslib",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/awslib14/raster.puml",
+      "folder": "stdlib/awslib14",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/azure/azure_iot.puml",
+      "folder": "stdlib/azure",
+      "status": "pass",
+      "description": "(8 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/azure/azure_simple.puml",
+      "folder": "stdlib/azure",
+      "status": "pass",
+      "description": "(10 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/azure/example.puml",
+      "folder": "stdlib/azure",
+      "status": "pass",
+      "description": "(5 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/bootstrap/example.puml",
+      "folder": "stdlib/bootstrap",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/c4/c4m_code.puml",
+      "folder": "stdlib/c4",
+      "status": "pass",
+      "description": "(10 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib/c4/c4m_component.puml",
+      "folder": "stdlib/c4",
+      "status": "pass",
+      "description": "(10 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/c4/c4m_container.puml",
+      "folder": "stdlib/c4",
+      "status": "pass",
+      "description": "(8 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/c4/c4m_context.puml",
+      "folder": "stdlib/c4",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/c4/c4m_deployment.puml",
+      "folder": "stdlib/c4",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/c4/example.puml",
+      "folder": "stdlib/c4",
+      "status": "pass",
+      "description": "(7 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/cloudinsight/example.puml",
+      "folder": "stdlib/cloudinsight",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/cloudogu/example.puml",
+      "folder": "stdlib/cloudogu",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/domainstory/example.puml",
+      "folder": "stdlib/domainstory",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/edgy/example.puml",
+      "folder": "stdlib/edgy",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/edgy/example2.puml",
+      "folder": "stdlib/edgy",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/edgy/listsprite.puml",
+      "folder": "stdlib/edgy",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib/edgy/listsprite2.puml",
+      "folder": "stdlib/edgy",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib/eip/eip_rabbitmq.puml",
+      "folder": "stdlib/eip",
+      "status": "pass",
+      "description": "(7 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/eip/example.puml",
+      "folder": "stdlib/eip",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/eip/listsprite.puml",
+      "folder": "stdlib/eip",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib/elastic/example.puml",
+      "folder": "stdlib/elastic",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/gcp/example.puml",
+      "folder": "stdlib/gcp",
+      "status": "pass",
+      "description": "(11 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/k8s/example.puml",
+      "folder": "stdlib/k8s",
+      "status": "pass",
+      "description": "(9 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/kubernetes/sprites.puml",
+      "folder": "stdlib/kubernetes",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/logos/logos.puml",
+      "folder": "stdlib/logos",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/material2/example.puml",
+      "folder": "stdlib/material2",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/material7/C4NewStyleSample.puml",
+      "folder": "stdlib/material7",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/material7/C4Sample.puml",
+      "folder": "stdlib/material7",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/material7/CommonChangedDefaultSample.puml",
+      "folder": "stdlib/material7",
+      "status": "pass",
+      "description": "(14 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/material7/CommonDefaultSample.puml",
+      "folder": "stdlib/material7",
+      "status": "pass",
+      "description": "(18 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/material7/OnlySpriteSample.puml",
+      "folder": "stdlib/material7",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/office/example.puml",
+      "folder": "stdlib/office",
+      "status": "pass",
+      "description": "(16 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/office/office_features_mm.puml",
+      "folder": "stdlib/office",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "stdlib/office/office_features_wbs.puml",
+      "folder": "stdlib/office",
+      "status": "pass",
+      "description": "Work Breakdown Structure",
+      "diagram_class": "WBSDiagram"
+    },
+    {
+      "file": "stdlib/office/office_network_L3.puml",
+      "folder": "stdlib/office",
+      "status": "pass",
+      "description": "(Nwdiag)",
+      "diagram_class": "NwDiagram"
+    },
+    {
+      "file": "stdlib/office/office_onboarding_00.puml",
+      "folder": "stdlib/office",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib/office/office_onboarding_01.puml",
+      "folder": "stdlib/office",
+      "status": "pass",
+      "description": "(6 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib/office/office_onboarding_02.puml",
+      "folder": "stdlib/office",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib/office/office_onboarding_03.puml",
+      "folder": "stdlib/office",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib/office/office_onboarding_04.puml",
+      "folder": "stdlib/office",
+      "status": "pass",
+      "description": "(8 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib/osa/sprites.puml",
+      "folder": "stdlib/osa",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/osa2/example.puml",
+      "folder": "stdlib/osa2",
+      "status": "pass",
+      "description": "(13 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib/osa2/listsprite.puml",
+      "folder": "stdlib/osa2",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib/preproc/include_archimate.puml",
+      "folder": "stdlib/preproc",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib/preproc/include_awslib_common.puml",
+      "folder": "stdlib/preproc",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib/preproc/include_c4_context.puml",
+      "folder": "stdlib/preproc",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib/preproc/include_classy_core.puml",
+      "folder": "stdlib/preproc",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "stdlib/preproc/include_cloudogu_common.puml",
+      "folder": "stdlib/preproc",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib/preproc/include_elastic_common.puml",
+      "folder": "stdlib/preproc",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib/preproc/include_osa2_common.puml",
+      "folder": "stdlib/preproc",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib/preproc/include_tupadr3_common.puml",
+      "folder": "stdlib/preproc",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib/preproc/theme_from_library.puml",
+      "folder": "stdlib/preproc",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib/tupadr3/font_awesome_devicons.puml",
+      "folder": "stdlib/tupadr3",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/C4/c4m_code.puml",
+      "folder": "stdlib2/C4",
+      "status": "pass",
+      "description": "(10 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib2/C4/c4m_component.puml",
+      "folder": "stdlib2/C4",
+      "status": "pass",
+      "description": "(10 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/C4/c4m_container.puml",
+      "folder": "stdlib2/C4",
+      "status": "pass",
+      "description": "(8 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/C4/c4m_context.puml",
+      "folder": "stdlib2/C4",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/C4/c4m_deployment.puml",
+      "folder": "stdlib2/C4",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/C4/example.puml",
+      "folder": "stdlib2/C4",
+      "status": "pass",
+      "description": "(7 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/DomainStory/example.puml",
+      "folder": "stdlib2/DomainStory",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/adaml/example.puml",
+      "folder": "stdlib2/adaml",
+      "status": "pass",
+      "description": "(10 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "stdlib2/archimate/Archimate-Elements.puml",
+      "folder": "stdlib2/archimate",
+      "status": "pass",
+      "description": "(63 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/archimate/archimate_deployment.puml",
+      "folder": "stdlib2/archimate",
+      "status": "pass",
+      "description": "(26 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/archimate/example.puml",
+      "folder": "stdlib2/archimate",
+      "status": "pass",
+      "description": "(10 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/awslib/example.puml",
+      "folder": "stdlib2/awslib",
+      "status": "pass",
+      "description": "(5 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/azure/azure_iot.puml",
+      "folder": "stdlib2/azure",
+      "status": "pass",
+      "description": "(8 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/azure/azure_simple.puml",
+      "folder": "stdlib2/azure",
+      "status": "pass",
+      "description": "(10 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/azure/example.puml",
+      "folder": "stdlib2/azure",
+      "status": "pass",
+      "description": "(5 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/bootstrap1.12.1/example.puml",
+      "folder": "stdlib2/bootstrap1.12.1",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/bootstrap1.12.1/listsprite.puml",
+      "folder": "stdlib2/bootstrap1.12.1",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib2/bootstrap1.13.1/example.puml",
+      "folder": "stdlib2/bootstrap1.13.1",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/bootstrap1.13.1/listsprite.puml",
+      "folder": "stdlib2/bootstrap1.13.1",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib2/cloudinsight/example.puml",
+      "folder": "stdlib2/cloudinsight",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/cloudinsight/listsprite.puml",
+      "folder": "stdlib2/cloudinsight",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib2/cloudogu/example.puml",
+      "folder": "stdlib2/cloudogu",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/edgy/example.puml",
+      "folder": "stdlib2/edgy",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/edgy/example2.puml",
+      "folder": "stdlib2/edgy",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/edgy/example_code.puml",
+      "folder": "stdlib2/edgy",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "stdlib2/edgy/listsprite.puml",
+      "folder": "stdlib2/edgy",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib2/edgy/listsprite2.puml",
+      "folder": "stdlib2/edgy",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib2/eip/eip_rabbitmq.puml",
+      "folder": "stdlib2/eip",
+      "status": "pass",
+      "description": "(7 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/eip/example.puml",
+      "folder": "stdlib2/eip",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/eip/listsprite.puml",
+      "folder": "stdlib2/eip",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib2/elastic/example.puml",
+      "folder": "stdlib2/elastic",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/elastic/listsprite.puml",
+      "folder": "stdlib2/elastic",
+      "status": "pass",
+      "description": "(20 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/gcp/example.puml",
+      "folder": "stdlib2/gcp",
+      "status": "pass",
+      "description": "(11 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/ibm/listsprite.puml",
+      "folder": "stdlib2/ibm",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "stdlib2/k8s/example.puml",
+      "folder": "stdlib2/k8s",
+      "status": "pass",
+      "description": "(9 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/material2.1.19/example.puml",
+      "folder": "stdlib2/material2.1.19",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/material7.4.47/C4NewStyleSample.puml",
+      "folder": "stdlib2/material7.4.47",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/material7.4.47/C4Sample.puml",
+      "folder": "stdlib2/material7.4.47",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/material7.4.47/CommonChangedDefaultSample.puml",
+      "folder": "stdlib2/material7.4.47",
+      "status": "pass",
+      "description": "(14 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/material7.4.47/CommonDefaultSample.puml",
+      "folder": "stdlib2/material7.4.47",
+      "status": "pass",
+      "description": "(18 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/material7.4.47/ListSpritesAllSample.puml",
+      "folder": "stdlib2/material7.4.47",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib2/material7.4.47/ListSpritesSelectionSample.puml",
+      "folder": "stdlib2/material7.4.47",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib2/material7.4.47/OnlySpriteSample.puml",
+      "folder": "stdlib2/material7.4.47",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/material7.4.47/listsprite.puml",
+      "folder": "stdlib2/material7.4.47",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
+    },
+    {
+      "file": "stdlib2/office/example.puml",
+      "folder": "stdlib2/office",
+      "status": "pass",
+      "description": "(16 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/office/office_features_mm.puml",
+      "folder": "stdlib2/office",
+      "status": "pass",
+      "description": "MindMap",
+      "diagram_class": "MindMapDiagram"
+    },
+    {
+      "file": "stdlib2/office/office_features_wbs.puml",
+      "folder": "stdlib2/office",
+      "status": "pass",
+      "description": "Work Breakdown Structure",
+      "diagram_class": "WBSDiagram"
+    },
+    {
+      "file": "stdlib2/office/office_network_L3.puml",
+      "folder": "stdlib2/office",
+      "status": "pass",
+      "description": "(Nwdiag)",
+      "diagram_class": "NwDiagram"
+    },
+    {
+      "file": "stdlib2/office/office_onboarding_00.puml",
+      "folder": "stdlib2/office",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/office/office_onboarding_01.puml",
+      "folder": "stdlib2/office",
+      "status": "pass",
+      "description": "(6 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/office/office_onboarding_02.puml",
+      "folder": "stdlib2/office",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/office/office_onboarding_03.puml",
+      "folder": "stdlib2/office",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/office/office_onboarding_04.puml",
+      "folder": "stdlib2/office",
+      "status": "pass",
+      "description": "(8 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/osa2/ExampleHardware.puml",
+      "folder": "stdlib2/osa2",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "stdlib2/osa2/example.puml",
+      "folder": "stdlib2/osa2",
+      "status": "pass",
+      "description": "(13 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/osa2/listsprite.puml",
+      "folder": "stdlib2/osa2",
+      "status": "pass",
+      "description": "(Sprites)",
+      "diagram_class": "ListSpriteDiagram"
     },
     {
       "file": "sub/includesub-basic-with-include.puml",
@@ -3337,6 +6490,13 @@
       "diagram_class": "ActivityDiagram3"
     },
     {
+      "file": "tikz/tikz-math-inline.puml",
+      "folder": "tikz",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
       "file": "tikz/tikz-scale-down.puml",
       "folder": "tikz",
       "status": "pass",
@@ -3365,6 +6525,13 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "timing/axis-break.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
       "file": "timing/clock-decimal-period-offset.puml",
       "folder": "timing",
       "status": "pass",
@@ -3380,6 +6547,97 @@
     },
     {
       "file": "timing/clock-message-to-binary.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/simple-analog-alias-at-end.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/simple-analog-alias-near-name.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/simple-analog-alias-ticks-every.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/simple-analog-alias.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/simple-analog.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/simple-digital-alias-ticks-every.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/simple-digital-alias.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/simple-digital.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/time-axis-unit-break.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/time-axis-unit-long.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/time-axis-unit-manual.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/time-axis-unit-scale.puml",
+      "folder": "timing",
+      "status": "pass",
+      "description": "(Timing Diagram)",
+      "diagram_class": "TimingDiagram"
+    },
+    {
+      "file": "timing/time-axis-unit.puml",
       "folder": "timing",
       "status": "pass",
       "description": "(Timing Diagram)",
@@ -3563,9 +6821,9 @@
     }
   ],
   "summary": {
-    "total": 472,
-    "passed": 468,
+    "total": 937,
+    "passed": 932,
     "failed": 0,
-    "skipped": 4
+    "skipped": 5
   }
 }
