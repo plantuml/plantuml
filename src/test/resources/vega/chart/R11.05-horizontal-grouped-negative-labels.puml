@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+orientation horizontal
+v-axis [A, B, C]
+h-axis -10 --> 10
+bar "Gain" [5, -3, 8] labels
+bar "Loss" [-4, 6, -2] labels
+@endchart

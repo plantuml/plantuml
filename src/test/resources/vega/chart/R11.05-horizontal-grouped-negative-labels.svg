@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="431px" preserveAspectRatio="none" style="width:501px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 431" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:1;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="65" x2="70" y1="110" y2="110"/>
+    <text fill="#000" font-size="10" x="53.313" y="112.778">A</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="65" x2="70" y1="210" y2="210"/>
+    <text fill="#000" font-size="10" x="53.313" y="212.778">B</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="65" x2="70" y1="310" y2="310"/>
+    <text fill="#000" font-size="10" x="52.75" y="312.778">C</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="70" x2="70" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" textLength="14.438" x="62.781" y="377.778">-10</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="150" x2="150" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" textLength="8.875" x="145.563" y="377.778">-6</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="230" x2="230" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" textLength="8.875" x="225.563" y="377.778">-2</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="310" x2="310" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" x="307.219" y="377.778">2</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="390" x2="390" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" x="387.219" y="377.778">6</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="470" x2="470" y1="360" y2="365"/>
+    <text fill="#000" font-size="10" textLength="11.125" x="464.438" y="377.778">10</text>
+    <rect fill="#F1F1F1" height="40" style="stroke:#181818;stroke-width:0.5;" width="100" x="270" y="70"/>
+    <text fill="#000" font-size="10" font-weight="700" x="375" y="92.778">5</text>
+    <rect fill="#F1F1F1" height="40" style="stroke:#181818;stroke-width:0.5;" width="80" x="190" y="110"/>
+    <text fill="#000" font-size="10" font-weight="700" textLength="8.875" x="275" y="132.778">-4</text>
+    <rect fill="#F1F1F1" height="40" style="stroke:#181818;stroke-width:0.5;" width="60" x="210" y="170"/>
+    <text fill="#000" font-size="10" font-weight="700" textLength="8.875" x="275" y="192.778">-3</text>
+    <rect fill="#F1F1F1" height="40" style="stroke:#181818;stroke-width:0.5;" width="120" x="270" y="210"/>
+    <text fill="#000" font-size="10" font-weight="700" x="395" y="232.778">6</text>
+    <rect fill="#F1F1F1" height="40" style="stroke:#181818;stroke-width:0.5;" width="160" x="270" y="270"/>
+    <text fill="#000" font-size="10" font-weight="700" x="435" y="292.778">8</text>
+    <rect fill="#F1F1F1" height="40" style="stroke:#181818;stroke-width:0.5;" width="40" x="230" y="310"/>
+    <text fill="#000" font-size="10" font-weight="700" textLength="8.875" x="275" y="332.778">-2</text>
+  </g>
+</svg>

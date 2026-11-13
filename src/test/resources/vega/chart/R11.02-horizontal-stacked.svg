@@ -23,13 +23,13 @@
     <text fill="#000" font-size="10" textLength="11.125" x="384.438" y="377.778">80</text>
     <line style="stroke:#181818;stroke-width:1;" x1="470" x2="470" y1="360" y2="365"/>
     <text fill="#000" font-size="10" textLength="16.688" x="461.656" y="377.778">100</text>
-    <rect fill="#3498DB" height="135" style="stroke:#181818;stroke-width:0.5;" width="60" x="90" y="225"/>
-    <rect fill="#E74C3C" height="75" style="stroke:#181818;stroke-width:0.5;" width="60" x="90" y="150"/>
-    <rect fill="#3498DB" height="186" style="stroke:#181818;stroke-width:0.5;" width="60" x="190" y="174"/>
-    <rect fill="#E74C3C" height="90" style="stroke:#181818;stroke-width:0.5;" width="60" x="190" y="84"/>
-    <rect fill="#3498DB" height="174" style="stroke:#181818;stroke-width:0.5;" width="60" x="290" y="186"/>
-    <rect fill="#E74C3C" height="84" style="stroke:#181818;stroke-width:0.5;" width="60" x="290" y="102"/>
-    <rect fill="#3498DB" height="210" style="stroke:#181818;stroke-width:0.5;" width="60" x="390" y="150"/>
-    <rect fill="#E74C3C" height="96" style="stroke:#181818;stroke-width:0.5;" width="60" x="390" y="54"/>
+    <rect fill="#3498DB" height="45" style="stroke:#181818;stroke-width:0.5;" width="180" x="70" y="75"/>
+    <rect fill="#E74C3C" height="45" style="stroke:#181818;stroke-width:0.5;" width="100" x="250" y="75"/>
+    <rect fill="#3498DB" height="45" style="stroke:#181818;stroke-width:0.5;" width="248" x="70" y="150"/>
+    <rect fill="#E74C3C" height="45" style="stroke:#181818;stroke-width:0.5;" width="120" x="318" y="150"/>
+    <rect fill="#3498DB" height="45" style="stroke:#181818;stroke-width:0.5;" width="232" x="70" y="225"/>
+    <rect fill="#E74C3C" height="45" style="stroke:#181818;stroke-width:0.5;" width="112" x="302" y="225"/>
+    <rect fill="#3498DB" height="45" style="stroke:#181818;stroke-width:0.5;" width="280" x="70" y="300"/>
+    <rect fill="#E74C3C" height="45" style="stroke:#181818;stroke-width:0.5;" width="128" x="350" y="300"/>
   </g>
 </svg>

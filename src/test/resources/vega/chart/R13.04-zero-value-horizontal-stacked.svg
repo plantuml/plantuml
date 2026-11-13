@@ -19,8 +19,8 @@
     <text fill="#000" font-size="10" textLength="11.125" x="384.438" y="377.778">12</text>
     <line style="stroke:#181818;stroke-width:1;" x1="470" x2="470" y1="360" y2="365"/>
     <text fill="#000" font-size="10" textLength="11.125" x="464.438" y="377.778">15</text>
-    <rect fill="#F1F1F1" height="100" style="stroke:#181818;stroke-width:0.5;" width="120" x="110" y="260"/>
-    <rect fill="#F1F1F1" height="160" style="stroke:#181818;stroke-width:0.5;" width="120" x="110" y="100"/>
-    <rect fill="#F1F1F1" height="60" style="stroke:#181818;stroke-width:0.5;" width="120" x="310" y="300"/>
+    <rect fill="#F1F1F1" height="90" style="stroke:#181818;stroke-width:0.5;" width="133.333" x="70" y="90"/>
+    <rect fill="#F1F1F1" height="90" style="stroke:#181818;stroke-width:0.5;" width="213.333" x="203.333" y="90"/>
+    <rect fill="#F1F1F1" height="90" style="stroke:#181818;stroke-width:0.5;" width="80" x="70" y="240"/>
   </g>
 </svg>

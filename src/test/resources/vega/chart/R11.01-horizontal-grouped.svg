@@ -23,13 +23,13 @@
     <text fill="#000" font-size="10" textLength="11.125" x="384.438" y="377.778">80</text>
     <line style="stroke:#181818;stroke-width:1;" x1="470" x2="470" y1="360" y2="365"/>
     <text fill="#000" font-size="10" textLength="16.688" x="461.656" y="377.778">100</text>
-    <rect fill="#3498DB" height="135" style="stroke:#181818;stroke-width:0.5;" width="40" x="80" y="225"/>
-    <rect fill="#E74C3C" height="75" style="stroke:#181818;stroke-width:0.5;" width="40" x="120" y="285"/>
-    <rect fill="#3498DB" height="186" style="stroke:#181818;stroke-width:0.5;" width="40" x="180" y="174"/>
-    <rect fill="#E74C3C" height="90" style="stroke:#181818;stroke-width:0.5;" width="40" x="220" y="270"/>
-    <rect fill="#3498DB" height="174" style="stroke:#181818;stroke-width:0.5;" width="40" x="280" y="186"/>
-    <rect fill="#E74C3C" height="84" style="stroke:#181818;stroke-width:0.5;" width="40" x="320" y="276"/>
-    <rect fill="#3498DB" height="210" style="stroke:#181818;stroke-width:0.5;" width="40" x="380" y="150"/>
-    <rect fill="#E74C3C" height="96" style="stroke:#181818;stroke-width:0.5;" width="40" x="420" y="264"/>
+    <rect fill="#3498DB" height="30" style="stroke:#181818;stroke-width:0.5;" width="180" x="70" y="67.5"/>
+    <rect fill="#E74C3C" height="30" style="stroke:#181818;stroke-width:0.5;" width="100" x="70" y="97.5"/>
+    <rect fill="#3498DB" height="30" style="stroke:#181818;stroke-width:0.5;" width="248" x="70" y="142.5"/>
+    <rect fill="#E74C3C" height="30" style="stroke:#181818;stroke-width:0.5;" width="120" x="70" y="172.5"/>
+    <rect fill="#3498DB" height="30" style="stroke:#181818;stroke-width:0.5;" width="232" x="70" y="217.5"/>
+    <rect fill="#E74C3C" height="30" style="stroke:#181818;stroke-width:0.5;" width="112" x="70" y="247.5"/>
+    <rect fill="#3498DB" height="30" style="stroke:#181818;stroke-width:0.5;" width="280" x="70" y="292.5"/>
+    <rect fill="#E74C3C" height="30" style="stroke:#181818;stroke-width:0.5;" width="128" x="70" y="322.5"/>
   </g>
 </svg>

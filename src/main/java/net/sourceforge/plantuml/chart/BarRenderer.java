@@ -246,6 +246,10 @@ public class BarRenderer {
 	public void drawGrouped(UGraphic ug, List<ChartSeries> barSeries, List<HColor> colors, int from, int to) {
 		if (categoryCount == 0 || barSeries.isEmpty())
 			return;
+		if (horizontal) {
+			drawGroupedHorizontal(ug, barSeries, colors, from, to);
+			return;
+		}
 
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double categoryWidth = plotWidth / categoryCount;
@@ -325,6 +329,10 @@ public class BarRenderer {
 	public void drawStacked(UGraphic ug, List<ChartSeries> barSeries, List<HColor> colors, int from, int to) {
 		if (categoryCount == 0 || barSeries.isEmpty())
 			return;
+		if (horizontal) {
+			drawStackedHorizontal(ug, barSeries, colors, from, to);
+			return;
+		}
 
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double categoryWidth = plotWidth / categoryCount;
@@ -412,6 +420,113 @@ public class BarRenderer {
 		}
 	}
 
+	// Horizontal, the categories go from top to bottom and a bar goes from 0 rightwards (or
+	// leftwards if negative): the same layouts as drawGrouped and drawStacked, turned.
+	private void drawGroupedHorizontal(UGraphic ug, List<ChartSeries> barSeries, List<HColor> colors, int from,
+			int to) {
+		final double categoryHeight = plotHeight / categoryCount;
+		final double groupHeight = categoryHeight * 0.8; // 80% of category for all bars
+		final double barHeight = groupHeight / barSeries.size();
+		final double groupOffset = (categoryHeight - groupHeight) / 2;
+
+		final Style barStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getBarStyleQuery());
+		final UStroke stroke = UStroke.withThickness(barStyle.value(PName.LineThickness).asDouble());
+		// As in drawHorizontal: 0 is kept inside the plot when the range does not include it
+		final double zeroX = Math.max(0, Math.min(plotWidth, axis.valueToPixel(0, 0, plotWidth)));
+
+		for (int categoryIndex = 0; categoryIndex < categoryCount; categoryIndex++) {
+			for (int seriesIndex = from; seriesIndex < to; seriesIndex++) {
+				final ChartSeries series = barSeries.get(seriesIndex);
+				final HColor color = colors.get(seriesIndex);
+				final List<Double> values = series.getValues();
+
+				if (categoryIndex >= values.size() || values.get(categoryIndex) == null)
+					continue;
+
+				final double value = values.get(categoryIndex);
+				final double y = categoryIndex * categoryHeight + groupOffset + seriesIndex * barHeight;
+				final double valueX = axis.valueToPixel(value, 0, plotWidth);
+				final double x = Math.min(zeroX, valueX);
+				final double barWidth = Math.abs(valueX - zeroX);
+
+				drawBarHorizontal(ug, barStyle, stroke, color, x, y, barWidth, barHeight);
+				if (series.isShowLabels())
+					drawLabelHorizontal(ug, value, x + barWidth + 5, y + barHeight / 2);
+			}
+		}
+	}
+
+	private void drawStackedHorizontal(UGraphic ug, List<ChartSeries> barSeries, List<HColor> colors, int from,
+			int to) {
+		final double categoryHeight = plotHeight / categoryCount;
+		final Style barStyle = skinParam.getCurrentStyleBuilder().getMergedStyle(getBarStyleQuery());
+
+		// Bar height ratio from style (default 0.6 = 60%)
+		double barHeightRatio = 0.6;
+		try {
+			final Double styleBarWidth = barStyle.value(PName.BarWidth).asDouble();
+			if (styleBarWidth != null && styleBarWidth > 0 && styleBarWidth <= 1.0)
+				barHeightRatio = styleBarWidth;
+		} catch (Exception e) {
+			// Use default
+		}
+		final double barHeight = categoryHeight * barHeightRatio;
+		final double barOffset = (categoryHeight - barHeight) / 2;
+		final UStroke stroke = UStroke.withThickness(barStyle.value(PName.LineThickness).asDouble());
+		final double zeroX = axis.valueToPixel(0, 0, plotWidth);
+
+		for (int categoryIndex = 0; categoryIndex < categoryCount; categoryIndex++) {
+			final double y = categoryIndex * categoryHeight + barOffset;
+			// Positive bars grow rightwards from zero, negative ones leftwards
+			double cumulativePositiveX = zeroX;
+			double cumulativeNegativeX = zeroX;
+
+			for (int seriesIndex = 0; seriesIndex < to; seriesIndex++) {
+				final ChartSeries series = barSeries.get(seriesIndex);
+				final List<Double> values = series.getValues();
+
+				if (categoryIndex >= values.size() || values.get(categoryIndex) == null)
+					continue;
+
+				final double value = values.get(categoryIndex);
+				final double valueX = axis.valueToPixel(value, 0, plotWidth);
+				final double x;
+				final double barWidth;
+				if (value < 0) {
+					barWidth = zeroX - valueX;
+					cumulativeNegativeX -= barWidth;
+					x = cumulativeNegativeX;
+				} else {
+					barWidth = valueX - zeroX;
+					x = cumulativePositiveX;
+					cumulativePositiveX += barWidth;
+				}
+
+				// Below the part to draw: only its width was needed, for the stack
+				if (seriesIndex < from)
+					continue;
+
+				drawBarHorizontal(ug, barStyle, stroke, colors.get(seriesIndex), x, y, barWidth, barHeight);
+				// A negative segment has the positive ones on its right: its label goes on its left
+				if (series.isShowLabels())
+					drawLabelHorizontal(ug, value, value < 0 ? x - 5 : x + barWidth + 5, y + barHeight / 2,
+							value < 0);
+			}
+		}
+	}
+
+	private void drawBarHorizontal(UGraphic ug, Style barStyle, UStroke stroke, HColor color, double x, double y,
+			double barWidth, double barHeight) {
+		if (barHeight <= 0 || barWidth <= 0)
+			return;
+		HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		if (lineColor == null)
+			lineColor = color; // Use fill color if no line color specified
+		final URectangle rect = URectangle.build(barWidth, barHeight);
+		ug.apply(lineColor).apply(stroke).apply(color.bg()).apply(UTranslate.dx(x).compose(UTranslate.dy(y)))
+				.draw(rect);
+	}
+
 	private void drawLabel(UGraphic ug, double value, double x, double y, StringBounder stringBounder) {
 		try {
 			final String label = formatValue(value);
@@ -430,6 +545,11 @@ public class BarRenderer {
 	}
 
 	private void drawLabelHorizontal(UGraphic ug, double value, double x, double y) {
+		drawLabelHorizontal(ug, value, x, y, false);
+	}
+
+	// The label starts at x, or ends at x when "endsAtX"
+	private void drawLabelHorizontal(UGraphic ug, double value, double x, double y, boolean endsAtX) {
 		try {
 			final String label = formatValue(value);
 			final UFont font = UFontFactory.sansSerif(10).withFontFace(UFontFace.bold());
@@ -439,7 +559,8 @@ public class BarRenderer {
 					.create(fontConfig, HorizontalAlignment.LEFT, skinParam);
 			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());
 			final double labelY = y - textDim.getHeight() / 2;
-			textBlock.drawU(ug.apply(UTranslate.dx(x).compose(UTranslate.dy(labelY))));
+			final double labelX = endsAtX ? x - textDim.getWidth() : x;
+			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));
 		} catch (Exception e) {
 			// Silently ignore rendering errors
 		}
