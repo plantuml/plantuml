@@ -844,7 +844,7 @@ Total Classes: 19
 "net.sourceforge.plantuml.chart" --> "net.sourceforge.plantuml.style.value"
 
 class "net.sourceforge.plantuml.chart.command" %lighten("red", 89) {
-Total Classes: 2
+Total Classes: 3
 }
 "net.sourceforge.plantuml.chart.command" --> "java.lang"
 "net.sourceforge.plantuml.chart.command" --> "java.util"

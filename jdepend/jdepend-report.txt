@@ -2999,8 +2999,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 2
-    Concrete Classes: 2
+    Total Classes: 3
+    Concrete Classes: 3
     Abstract Classes: 0
 
     Ca: 1
@@ -3013,6 +3013,7 @@ Stats:
 Abstract Classes:
 
 Concrete Classes:
+    net.sourceforge.plantuml.chart.command.ChartSeriesName
     net.sourceforge.plantuml.chart.command.CommandChartHAxis
     net.sourceforge.plantuml.chart.command.CommandChartVAxis
 
@@ -14341,17 +14342,17 @@ Used By:
 com.plantuml.ubrex
     |
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 com.plantuml.ubrex.builder
     |
     |   com.plantuml.ubrex
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 gen.lib.cdt
     |
@@ -14409,13 +14410,14 @@ h
 net.atmp
     |
     |   net.sourceforge.plantuml.abel
-    |   net.sourceforge.plantuml.svek
+    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml
     |
+    |   net.sourceforge.plantuml.abel
     |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
@@ -14423,7 +14425,7 @@ net.sourceforge.plantuml
 
 net.sourceforge.plantuml.abel
     |
-    |   net.sourceforge.plantuml.svek
+    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
@@ -14431,9 +14433,9 @@ net.sourceforge.plantuml.abel
 net.sourceforge.plantuml.activitydiagram
     |
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.activitydiagram.command
     |
@@ -14463,9 +14465,11 @@ net.sourceforge.plantuml.activitydiagram3.ftile
 
 net.sourceforge.plantuml.activitydiagram3.ftile.vcompact
     |
-    |-> net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.style.parser
-    |-> net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond
     |
@@ -14475,6 +14479,7 @@ net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond
 
 net.sourceforge.plantuml.activitydiagram3.ftile.vertical
     |
+    |   net.sourceforge.plantuml.activitydiagram3.ftile
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
@@ -14488,6 +14493,7 @@ net.sourceforge.plantuml.activitydiagram3.gtile
 net.sourceforge.plantuml.ant
     |
     |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
     |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
@@ -14495,18 +14501,21 @@ net.sourceforge.plantuml.ant
 
 net.sourceforge.plantuml.api
     |
-    |   net.sourceforge.plantuml.core
-    |-> net.sourceforge.plantuml.klimt.font
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.url
+    |   com.plantuml.ubrex
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.api.mda.option2
     |
     |   net.sourceforge.plantuml.mda
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.api.v2
     |
@@ -14539,14 +14548,12 @@ net.sourceforge.plantuml.asciiart
 
 net.sourceforge.plantuml.asciiverse
     |
-    |   net.sourceforge.plantuml.klimt.creole
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.board
     |
-    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
@@ -14560,15 +14567,16 @@ net.sourceforge.plantuml.bpm
 
 net.sourceforge.plantuml.braille
     |
-    |-> net.sourceforge.plantuml.klimt.font
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.chart
     |
-    |-> net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.style.parser
-    |-> net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.chart.command
     |
@@ -14586,17 +14594,21 @@ net.sourceforge.plantuml.cheneer
 
 net.sourceforge.plantuml.cheneer.command
     |
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.regex
     |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.classdiagram
     |
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.classdiagram.command
     |
@@ -14608,17 +14620,16 @@ net.sourceforge.plantuml.classdiagram.command
 net.sourceforge.plantuml.cli
     |
     |   net.sourceforge.plantuml.teavm.c
-    |   net.sourceforge.plantuml.klimt.drawing.raster
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.salt
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.code
     |
     |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
     |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
@@ -14633,10 +14644,12 @@ net.sourceforge.plantuml.command
 
 net.sourceforge.plantuml.command.note
     |
-    |   net.sourceforge.plantuml.core
-    |-> net.sourceforge.plantuml.klimt.font
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.url
+    |   com.plantuml.ubrex
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.command.note.sequence
     |
@@ -14674,45 +14687,46 @@ net.sourceforge.plantuml.cucadiagram
 net.sourceforge.plantuml.decoration
     |
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.decoration.symbol
     |
-    |-> net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.style.parser
-    |-> net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.dedication
     |
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.definition
     |
-    |   net.sourceforge.plantuml.core
+    |   net.sourceforge.plantuml.klimt.sprite
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.descdiagram
     |
-    |   net.sourceforge.plantuml.cucadiagram
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.descdiagram.command
     |
-    |   net.sourceforge.plantuml.skin
-    |-> net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.style.parser
-    |-> net.sourceforge.plantuml.style
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.directdot
     |
@@ -14729,24 +14743,23 @@ net.sourceforge.plantuml.ditaa
 
 net.sourceforge.plantuml.donors
     |
-    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.dot
     |
-    |   net.sourceforge.plantuml
-    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.ebnf
     |
-    |-> net.sourceforge.plantuml.klimt.font
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.eggs
     |
@@ -14757,14 +14770,13 @@ net.sourceforge.plantuml.eggs
 
 net.sourceforge.plantuml.elk
     |
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.emoji
     |
+    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
@@ -14790,6 +14802,7 @@ net.sourceforge.plantuml.filesdiagram
 
 net.sourceforge.plantuml.flowdiagram
     |
+    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
@@ -14803,105 +14816,121 @@ net.sourceforge.plantuml.font
 
 net.sourceforge.plantuml.gantt
     |
-    |   net.sourceforge.plantuml.gantt.core
-    |   net.sourceforge.plantuml.gantt.draw
-    |   net.sourceforge.plantuml.url
-    |   com.plantuml.ubrex
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.gantt.command
     |
+    |   com.plantuml.ubrex.builder
+    |   com.plantuml.ubrex
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
+
+net.sourceforge.plantuml.gantt.core
+    |
+    |   net.sourceforge.plantuml.gantt.draw
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
     |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
-net.sourceforge.plantuml.gantt.core
-    |
-    |   net.sourceforge.plantuml.gantt.draw
-    |   net.sourceforge.plantuml.url
-    |   com.plantuml.ubrex
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
-
 net.sourceforge.plantuml.gantt.data
     |
+    |   net.sourceforge.plantuml.gantt.draw
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.gantt.draw
     |
-    |   net.sourceforge.plantuml.url
-    |   com.plantuml.ubrex
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.gantt.draw.header
     |
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.gantt.lang
     |
-    |   net.sourceforge.plantuml.gantt.core
-    |   net.sourceforge.plantuml.gantt.draw
-    |   net.sourceforge.plantuml.url
+    |   com.plantuml.ubrex.builder
     |   com.plantuml.ubrex
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.gantt.ngm
     |
     |   net.sourceforge.plantuml.gantt.ngm.math
-    |-> net.sourceforge.plantuml.gantt.ngm
+    |   net.sourceforge.plantuml.gantt.core
+    |   net.sourceforge.plantuml.gantt.draw
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.gantt.ngm.math
     |
-    |   net.sourceforge.plantuml.gantt.ngm
-    |-> net.sourceforge.plantuml.gantt.ngm.math
+    |   net.sourceforge.plantuml.gantt.core
+    |   net.sourceforge.plantuml.gantt.draw
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.gantt.solver
     |
     |   net.sourceforge.plantuml.gantt.core
     |   net.sourceforge.plantuml.gantt.draw
-    |   net.sourceforge.plantuml.url
-    |   com.plantuml.ubrex
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.gantt.timescale
     |
-    |   net.sourceforge.plantuml.gantt.core
+    |   net.sourceforge.plantuml.gantt.data
     |   net.sourceforge.plantuml.gantt.draw
-    |   net.sourceforge.plantuml.url
-    |   com.plantuml.ubrex
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.gitlog
     |
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.golem
     |
@@ -14912,17 +14941,16 @@ net.sourceforge.plantuml.golem
 net.sourceforge.plantuml.graphml
     |
     |   net.sourceforge.plantuml.descdiagram
-    |   net.sourceforge.plantuml.cucadiagram
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.hcl
     |
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.help
     |
@@ -14934,9 +14962,9 @@ net.sourceforge.plantuml.help
 net.sourceforge.plantuml.jaws
     |
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.jcckit
     |
@@ -14948,41 +14976,39 @@ net.sourceforge.plantuml.jcckit
 net.sourceforge.plantuml.json
     |
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.jsondiagram
     |
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt
     |
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.color
     |
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.compress
     |
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.creole
     |
@@ -14999,14 +15025,12 @@ net.sourceforge.plantuml.klimt.creole.atom
 net.sourceforge.plantuml.klimt.creole.command
     |
     |   net.sourceforge.plantuml.klimt.creole.legacy
-    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.creole.legacy
     |
-    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
@@ -15026,11 +15050,12 @@ net.sourceforge.plantuml.klimt.drawing.debug
 net.sourceforge.plantuml.klimt.drawing.eps
     |
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.drawing.font
     |
@@ -15040,41 +15065,46 @@ net.sourceforge.plantuml.klimt.drawing.font
 
 net.sourceforge.plantuml.klimt.drawing.g2d
     |
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.klimt.drawing.hand
     |
     |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.drawing.html5
     |
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.drawing.raster
     |
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.drawing.svg
     |
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
@@ -15082,28 +15112,32 @@ net.sourceforge.plantuml.klimt.drawing.svg
 net.sourceforge.plantuml.klimt.drawing.tikz
     |
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.drawing.txt
     |
     |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.drawing.visio
     |
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.klimt.font
     |
@@ -15123,21 +15157,18 @@ net.sourceforge.plantuml.klimt.shape
 
 net.sourceforge.plantuml.klimt.sprite
     |
-    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.math
     |
-    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.mcp
     |
-    |   net.sourceforge.plantuml
     |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
@@ -15145,10 +15176,11 @@ net.sourceforge.plantuml.mcp
 
 net.sourceforge.plantuml.mda
     |
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.mindmap
     |
@@ -15168,25 +15200,27 @@ net.sourceforge.plantuml.nwdiag.core
     |
     |   net.sourceforge.plantuml.jaws
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.nwdiag.next
     |
-    |-> net.sourceforge.plantuml.klimt.font
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.objectdiagram
     |
     |   net.sourceforge.plantuml.decoration
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.openiconic
     |
@@ -15198,18 +15232,20 @@ net.sourceforge.plantuml.openiconic
 net.sourceforge.plantuml.openpdf
     |
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
-
-net.sourceforge.plantuml.packetdiag
-    |
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
     |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
+
+net.sourceforge.plantuml.packetdiag
+    |
+    |   net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.packetdiag.command
     |
@@ -15222,28 +15258,29 @@ net.sourceforge.plantuml.picoweb
     |
     |   net.sourceforge.plantuml.json
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.plasma
     |
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.png
     |
-    |   net.sourceforge.plantuml.security
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.posimo
     |
-    |   net.sourceforge.plantuml.klimt.drawing
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
@@ -15251,22 +15288,27 @@ net.sourceforge.plantuml.posimo
 net.sourceforge.plantuml.preproc
     |
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.preproc2
     |
     |   net.sourceforge.plantuml.preproc
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.regex
     |
     |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.regexdiagram
     |
@@ -15276,13 +15318,14 @@ net.sourceforge.plantuml.regexdiagram
 
 net.sourceforge.plantuml.salt
     |
-    |   net.sourceforge.plantuml.core
-    |-> net.sourceforge.plantuml.klimt.font
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.salt.element
     |
+    |   net.sourceforge.plantuml.klimt.drawing
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
@@ -15290,10 +15333,10 @@ net.sourceforge.plantuml.salt.element
 net.sourceforge.plantuml.salt.factory
     |
     |   net.sourceforge.plantuml.salt
-    |   net.sourceforge.plantuml.core
-    |-> net.sourceforge.plantuml.klimt.font
-    |   net.sourceforge.plantuml.klimt.geom
-    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.sdot
     |
@@ -15303,24 +15346,31 @@ net.sourceforge.plantuml.sdot
 
 net.sourceforge.plantuml.security
     |
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.security.authentication.oauth
     |
     |   net.sourceforge.plantuml.security
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.sequencediagram
     |
-    |-> net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.style.parser
-    |-> net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.url
+    |   com.plantuml.ubrex
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.sequencediagram.command
     |
@@ -15337,15 +15387,16 @@ net.sourceforge.plantuml.sequencediagram.graphic
 
 net.sourceforge.plantuml.sequencediagram.teoz
     |
+    |   net.sourceforge.plantuml.asciiverse
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.skin
     |
-    |-> net.sourceforge.plantuml.style
-    |   net.sourceforge.plantuml.style.parser
-    |-> net.sourceforge.plantuml.style
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.skin.rose
     |
@@ -15362,37 +15413,44 @@ net.sourceforge.plantuml.statediagram
 
 net.sourceforge.plantuml.statediagram.command
     |
-    |   net.sourceforge.plantuml.url
-    |   com.plantuml.ubrex
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.stats
     |
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.regex
-    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.stereo
     |
     |   com.plantuml.ubrex.builder
     |   com.plantuml.ubrex
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.style
     |
-    |   net.sourceforge.plantuml.style.parser
-    |-> net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.style.parser
     |
     |   net.sourceforge.plantuml.style
-    |-> net.sourceforge.plantuml.style.parser
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.style.value
     |
@@ -15416,33 +15474,38 @@ net.sourceforge.plantuml.svek
 net.sourceforge.plantuml.svek.extremity
     |
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.svek.image
     |
-    |   net.sourceforge.plantuml.url
-    |   com.plantuml.ubrex
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.svg.parser
     |
+    |   net.sourceforge.plantuml.klimt.color
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.swing
     |
+    |   net.sourceforge.plantuml.cli
+    |   net.sourceforge.plantuml.teavm.c
+    |   net.sourceforge.plantuml.salt
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.syntax
     |
@@ -15453,102 +15516,124 @@ net.sourceforge.plantuml.syntax
 
 net.sourceforge.plantuml.teavm.c
     |
-    |   net.sourceforge.plantuml.klimt.drawing.raster
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml.salt
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.teavm.js
     |
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.teavm.js.browser
     |
     |   net.sourceforge.plantuml.teavm.js
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.teavm.js.headless
     |
     |   net.sourceforge.plantuml.teavm.js.browser
     |   net.sourceforge.plantuml.teavm.js
     |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.text
     |
-    |   net.sourceforge.plantuml.regex
-    |-> net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.theme
     |
     |   net.sourceforge.plantuml.preproc
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.tim
     |
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.regex
-    |-> net.sourceforge.plantuml.text
-
-net.sourceforge.plantuml.tim.builtin
-    |
-    |   net.sourceforge.plantuml.jaws
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
     |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
-
-net.sourceforge.plantuml.tim.expression
-    |
-    |   net.sourceforge.plantuml.tim
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.regex
-    |-> net.sourceforge.plantuml.text
-
-net.sourceforge.plantuml.tim.iterator
-    |
-    |-> net.sourceforge.plantuml.text
-    |   net.sourceforge.plantuml.regex
-    |-> net.sourceforge.plantuml.text
-
-net.sourceforge.plantuml.timingdiagram
-    |
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
+net.sourceforge.plantuml.tim.builtin
+    |
+    |   net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
+
+net.sourceforge.plantuml.tim.expression
+    |
+    |   net.sourceforge.plantuml.tim
+    |   net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
+
+net.sourceforge.plantuml.tim.iterator
+    |
+    |   net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
+
+net.sourceforge.plantuml.timingdiagram
+    |
+    |   net.sourceforge.plantuml.style
+    |   net.sourceforge.plantuml.utils
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
+
 net.sourceforge.plantuml.timingdiagram.command
     |
-    |   net.sourceforge.plantuml.stereo
-    |   com.plantuml.ubrex.builder
-    |   com.plantuml.ubrex
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.timingdiagram.graphic
     |
+    |   net.sourceforge.plantuml.klimt
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
@@ -15557,18 +15642,21 @@ net.sourceforge.plantuml.url
     |
     |   com.plantuml.ubrex
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.utils
     |
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.version
     |
+    |   net.sourceforge.plantuml.text
+    |   net.sourceforge.plantuml
+    |   net.sourceforge.plantuml.abel
     |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
@@ -15577,57 +15665,55 @@ net.sourceforge.plantuml.version
 net.sourceforge.plantuml.vizjs
     |
     |   net.sourceforge.plantuml.dot
-    |   net.sourceforge.plantuml
-    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.wbs
     |
+    |   net.sourceforge.plantuml.core
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.wire
     |
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.xmi
     |
-    |   net.sourceforge.plantuml.decoration
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.sequencediagram.graphic
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.xmlsc
     |
-    |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |   net.sourceforge.plantuml.statediagram
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.yaml
     |
-    |   net.sourceforge.plantuml.preproc
+    |   net.sourceforge.plantuml.stereo
+    |   com.plantuml.ubrex.builder
+    |   com.plantuml.ubrex
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 net.sourceforge.plantuml.yaml.parser
     |
     |   net.sourceforge.plantuml.json
     |   net.sourceforge.plantuml.utils
-    |-> net.sourceforge.plantuml.regex
-    |   net.sourceforge.plantuml.text
-    |-> net.sourceforge.plantuml.regex
+    |-> net.sourceforge.plantuml.klimt.geom
+    |   net.sourceforge.plantuml.klimt.font
+    |-> net.sourceforge.plantuml.klimt.geom
 
 org.openpdf.text
     |
@@ -15812,7 +15898,7 @@ net.sourceforge.plantuml.bpm,32,7,0,18,0.22,1,0.22,1
 net.sourceforge.plantuml.braille,11,0,1,12,0,0.92,0.08,1
 net.sourceforge.plantuml.brotli,9,0,2,3,0,0.6,0.4,1
 net.sourceforge.plantuml.chart,19,0,2,19,0,0.9,0.1,1
-net.sourceforge.plantuml.chart.command,2,0,1,8,0,0.89,0.11,1
+net.sourceforge.plantuml.chart.command,3,0,1,8,0,0.89,0.11,1
 net.sourceforge.plantuml.cheneer,2,0,2,9,0,0.82,0.18,1
 net.sourceforge.plantuml.cheneer.command,2,0,1,13,0,0.93,0.07,1
 net.sourceforge.plantuml.classdiagram,3,0,9,16,0,0.64,0.36,1

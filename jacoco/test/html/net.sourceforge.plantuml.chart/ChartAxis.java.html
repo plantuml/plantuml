@@ -116,71 +116,105 @@ public class ChartAxis {
 	}
 
 	/**
-	 * Update axis range to include the given value
+	 * A copy of this axis (title, ticks, label position) with the given range.
 	 */
-	public void includeValue(double value) {
-<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (autoScale) {</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">			if (value &lt; min)</span>
-<span class="fc" id="L124">				min = value;</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">			if (value &gt; max)</span>
-<span class="fc" id="L126">				max = value;</span>
+	public ChartAxis withRange(double newMin, double newMax) {
+<span class="fc" id="L122">		final ChartAxis result = new ChartAxis(title, newMin, newMax);</span>
+<span class="fc" id="L123">		result.customTicks = customTicks;</span>
+<span class="fc" id="L124">		result.tickSpacing = tickSpacing;</span>
+<span class="fc" id="L125">		result.labelPosition = labelPosition;</span>
+<span class="fc" id="L126">		return result;</span>
+	}
+
+	// Multipliers of a power of ten accepted as a tick step. 1.5 and 2.5 are left out on
+	// purpose: below 1 they need two decimals (0.25), which tick labels do not show
+<span class="fc" id="L131">	private static final double[] NICE_STEPS = { 1, 2, 3, 4, 5, 6, 8 };</span>
+
+	// Number of intervals drawn by the automatic ticks of the value axis
+	private static final int TICK_INTERVALS = 5;
+
+	/**
+	 * A copy of this axis whose range is the smallest &quot;round&quot; range holding every value
+	 * between dataMin and dataMax, and 0. The range is split into five intervals by the
+	 * automatic ticks, so it is chosen as min + 5 * step, step being 1, 2, 3, 4, 5, 6 or
+	 * 8 times a power of ten, and min a multiple of step: 0 always falls on a tick.
+	 *
+	 * Examples: values up to 38 give 0 -&gt; 40, up to 138 give 0 -&gt; 150, from -20 to 70
+	 * give -20 -&gt; 80. When there is no value at all, the axis is left as it is (0 -&gt; 100).
+	 */
+	public ChartAxis withNiceRange(double dataMin, double dataMax) {
+<span class="fc" id="L146">		final double lo = Math.min(0, dataMin);</span>
+<span class="fc" id="L147">		final double hi = Math.max(0, dataMax);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (lo == hi)</span>
+<span class="nc" id="L149">			return withRange(min, max);</span>
+
+<span class="fc" id="L151">		double magnitude = Math.pow(10, Math.floor(Math.log10((hi - lo) / TICK_INTERVALS)) - 1);</span>
+		// Termination: once step &gt;= hi - lo, any multiple min &lt;= lo gives min + 5 * step &gt; hi
+		while (true) {
+<span class="fc bfc" id="L154" title="All 2 branches covered.">			for (double nice : NICE_STEPS) {</span>
+<span class="fc" id="L155">				final double step = nice * magnitude;</span>
+<span class="fc" id="L156">				final double start = Math.floor(lo / step) * step;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">				if (start + TICK_INTERVALS * step &gt;= hi)</span>
+<span class="fc" id="L158">					return withRange(start, start + TICK_INTERVALS * step);</span>
+			}
+<span class="fc" id="L160">			magnitude *= 10;</span>
 		}
-<span class="fc" id="L128">	}</span>
+	}
 
 	/**
 	 * Get custom tick labels map
 	 */
 	public Map&lt;Double, String&gt; getCustomTicks() {
-<span class="fc" id="L134">		return customTicks;</span>
+<span class="fc" id="L168">		return customTicks;</span>
 	}
 
 	/**
 	 * Set custom tick labels. The map keys are tick values and values are labels.
 	 */
 	public void setCustomTicks(Map&lt;Double, String&gt; customTicks) {
-<span class="fc" id="L141">		this.customTicks = customTicks;</span>
-<span class="fc" id="L142">	}</span>
+<span class="fc" id="L175">		this.customTicks = customTicks;</span>
+<span class="fc" id="L176">	}</span>
 
 	/**
 	 * Check if custom ticks are defined
 	 */
 	public boolean hasCustomTicks() {
-<span class="pc bpc" id="L148" title="1 of 4 branches missed.">		return customTicks != null &amp;&amp; !customTicks.isEmpty();</span>
+<span class="pc bpc" id="L182" title="1 of 4 branches missed.">		return customTicks != null &amp;&amp; !customTicks.isEmpty();</span>
 	}
 
 	/**
 	 * Get tick spacing value
 	 */
 	public Double getTickSpacing() {
-<span class="nc" id="L155">		return tickSpacing;</span>
+<span class="nc" id="L189">		return tickSpacing;</span>
 	}
 
 	/**
 	 * Set tick spacing. The value represents the interval between ticks.
 	 */
 	public void setTickSpacing(Double tickSpacing) {
-<span class="nc" id="L162">		this.tickSpacing = tickSpacing;</span>
-<span class="nc" id="L163">	}</span>
+<span class="nc" id="L196">		this.tickSpacing = tickSpacing;</span>
+<span class="nc" id="L197">	}</span>
 
 	/**
 	 * Check if custom tick spacing is defined
 	 */
 	public boolean hasTickSpacing() {
-<span class="pc bpc" id="L169" title="3 of 4 branches missed.">		return tickSpacing != null &amp;&amp; tickSpacing &gt; 0;</span>
+<span class="pc bpc" id="L203" title="3 of 4 branches missed.">		return tickSpacing != null &amp;&amp; tickSpacing &gt; 0;</span>
 	}
 
 	/**
 	 * Get label position
 	 */
 	public LabelPosition getLabelPosition() {
-<span class="fc" id="L176">		return labelPosition;</span>
+<span class="fc" id="L210">		return labelPosition;</span>
 	}
 
 	/**
 	 * Set label position
 	 */
 	public void setLabelPosition(LabelPosition labelPosition) {
-<span class="fc" id="L183">		this.labelPosition = labelPosition;</span>
-<span class="fc" id="L184">	}</span>
+<span class="fc" id="L217">		this.labelPosition = labelPosition;</span>
+<span class="fc" id="L218">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

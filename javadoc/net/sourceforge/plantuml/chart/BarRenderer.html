@@ -144,11 +144,31 @@ loadScripts(document, 'script');</script>
 <div class="block">Draw multiple bar series in grouped mode (side-by-side)</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawStacked(net.sourceforge.plantuml.klimt.drawing.UGraphic,java.util.List,java.util.List)" class="member-name-link">drawStacked</a><wbr>(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawGrouped(net.sourceforge.plantuml.klimt.drawing.UGraphic,java.util.List,java.util.List,int,int)" class="member-name-link">drawGrouped</a><wbr>(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ChartSeries.html" title="class in net.sourceforge.plantuml.chart">ChartSeries</a>&gt;&nbsp;barSeries,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colors,
+ int&nbsp;from,
+ int&nbsp;to)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Draw only the bar series from <code>from</code> (included) to <code>to</code> (excluded) of a grouped
+ set.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawStacked(net.sourceforge.plantuml.klimt.drawing.UGraphic,java.util.List,java.util.List)" class="member-name-link">drawStacked</a><wbr>(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ChartSeries.html" title="class in net.sourceforge.plantuml.chart">ChartSeries</a>&gt;&nbsp;barSeries,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colors)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Draw multiple bar series in stacked mode (one on top of another)</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawStacked(net.sourceforge.plantuml.klimt.drawing.UGraphic,java.util.List,java.util.List,int,int)" class="member-name-link">drawStacked</a><wbr>(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ChartSeries.html" title="class in net.sourceforge.plantuml.chart">ChartSeries</a>&gt;&nbsp;barSeries,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colors,
+ int&nbsp;from,
+ int&nbsp;to)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Draw only the bar series from <code>from</code> (included) to <code>to</code> (excluded) of a stacked
+ set.</div>
 </div>
 </div>
 </div>
@@ -214,12 +234,38 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="drawGrouped(net.sourceforge.plantuml.klimt.drawing.UGraphic,java.util.List,java.util.List,int,int)">
+<h3>drawGrouped</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">drawGrouped</span><wbr><span class="parameters">(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ChartSeries.html" title="class in net.sourceforge.plantuml.chart">ChartSeries</a>&gt;&nbsp;barSeries,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colors,
+ int&nbsp;from,
+ int&nbsp;to)</span></div>
+<div class="block">Draw only the bar series from <code>from</code> (included) to <code>to</code> (excluded) of a grouped
+ set. The layout is the one of the whole set: every series keeps its own slot, so that the
+ other ones can be drawn at another time.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="drawStacked(net.sourceforge.plantuml.klimt.drawing.UGraphic,java.util.List,java.util.List)">
 <h3>drawStacked</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">drawStacked</span><wbr><span class="parameters">(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ChartSeries.html" title="class in net.sourceforge.plantuml.chart">ChartSeries</a>&gt;&nbsp;barSeries,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colors)</span></div>
 <div class="block">Draw multiple bar series in stacked mode (one on top of another)</div>
+</section>
+</li>
+<li>
+<section class="detail" id="drawStacked(net.sourceforge.plantuml.klimt.drawing.UGraphic,java.util.List,java.util.List,int,int)">
+<h3>drawStacked</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">drawStacked</span><wbr><span class="parameters">(<a href="../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ChartSeries.html" title="class in net.sourceforge.plantuml.chart">ChartSeries</a>&gt;&nbsp;barSeries,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colors,
+ int&nbsp;from,
+ int&nbsp;to)</span></div>
+<div class="block">Draw only the bar series from <code>from</code> (included) to <code>to</code> (excluded) of a stacked
+ set. The ones before <code>from</code> are not drawn but still count, as they are under the
+ others; the ones from <code>to</code> are above and do not change what is drawn.</div>
 </section>
 </li>
 </ul>

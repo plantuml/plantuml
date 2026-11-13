@@ -70,7 +70,7 @@ public class CommandChartLine extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;STEREO&quot;, &quot;(\\&lt;\\&lt;.+?\\&gt;\\&gt;)&quot;)), //
 <span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexOptional(new RegexLeaf(1, &quot;NAME&quot;, &quot;\&quot;([^\&quot;]+)\&quot;&quot;)), //
+<span class="fc" id="L73">				new RegexOptional(ChartSeriesName.regex()), //</span>
 <span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;DATA&quot;, &quot;\\[(.*)\\]&quot;), //
 <span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
@@ -106,7 +106,7 @@ public class CommandChartLine extends SingleLineCommand2&lt;ChartDiagram&gt; {
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 <span class="fc" id="L108">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L109">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="fc" id="L109">		final String name = ChartSeriesName.get(arg);</span>
 <span class="fc" id="L110">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
 <span class="fc" id="L111">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
 
