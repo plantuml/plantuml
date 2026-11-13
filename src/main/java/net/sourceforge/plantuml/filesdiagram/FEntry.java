@@ -90,7 +90,11 @@ public class FEntry implements Iterable<FEntry> {
 		final String remain = raw.substring(x + 1);
 		if (remain.length() != 0)
 			return folder.addRawEntry(remain);
-		return null;
+		return folder;
+	}
+
+	public boolean isFolder() {
+		return type == FilesType.FOLDER;
 	}
 
 	public void addNote(List<String> note) {
