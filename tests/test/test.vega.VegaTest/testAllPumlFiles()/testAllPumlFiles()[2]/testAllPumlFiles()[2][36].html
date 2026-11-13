@@ -31,6 +31,9 @@
 <li>
 <a class="" href="#">summary</a>
 </li>
+<li>
+<a class="" href="#">error output</a>
+</li>
 </ul>
 <div class="tab">
 <h2>summary</h2>
@@ -62,7 +65,7 @@
 </td>
 <td>
 <div class="infoBox duration">
-<div class="counter">0.007s</div>
+<div class="counter">0.005s</div>
 <p>duration</p>
 </div>
 </td>
@@ -85,15 +88,66 @@
 <div class="clipboard-copy-btn-container">
 <button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-failure-testAllPumlFiles()[2][36]">Copy</button>
 </div>
-<pre id="root-0-test-failure-testAllPumlFiles()[2][36]">org.opentest4j.TestAbortedException: Assumption failed: Known failure (allow-failure: true): src/test/resources/vega/chart/R07.05-error-missing-endchart.puml - Index 0 out of bounds for length 0
-	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:340)
-	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:127)
-	at test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:308)
+<pre id="root-0-test-failure-testAllPumlFiles()[2][36]">org.opentest4j.TestAbortedException: Known failure (allow-failure: true): src/test/resources/vega/chart/R07.05-error-missing-endchart.puml - Index 0 out of bounds for length 0
+	at test.vega.VegaInputFile.newKnownFailure(VegaInputFile.java:336)
+	at test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:310)
 	at test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:215)
+Caused by: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+	at java.base/java.util.Objects.checkIndex(Objects.java:385)
+	at java.base/java.util.ArrayList.get(ArrayList.java:427)
+	at java.base/java.util.Collections$UnmodifiableList.get(Collections.java:1502)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:457)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Cause 1: java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+	at java.base/java.util.Objects.checkIndex(Objects.java:385)
+	at java.base/java.util.ArrayList.get(ArrayList.java:427)
+	at java.base/java.util.Collections$UnmodifiableList.get(Collections.java:1502)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:457)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
 </pre>
 </span>
 </div>
 </div>
+</div>
+<div class="tab">
+<h2>error output</h2>
+<span class="code">
+<div class="clipboard-copy-btn-container">
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-stderr-testAllPumlFiles()[2][36]">Copy</button>
+</div>
+<pre id="root-0-test-stderr-testAllPumlFiles()[2][36]">[Vega] Root cause for src/test/resources/vega/chart/R07.05-error-missing-endchart.puml:
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+	at java.base/java.util.Objects.checkIndex(Objects.java:385)
+	at java.base/java.util.ArrayList.get(ArrayList.java:427)
+	at java.base/java.util.Collections$UnmodifiableList.get(Collections.java:1502)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:457)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at org.junit.jupiter.api.AssertTimeoutPreemptively.lambda$assertTimeoutPreemptively$1(AssertTimeoutPreemptively.java:49)
+	at org.junit.jupiter.api.timeout.PreemptiveTimeoutUtils.lambda$submitTask$0(PreemptiveTimeoutUtils.java:82)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+</pre>
+</span>
 </div>
 </div>
 </div>
@@ -105,7 +159,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.9.1</a> at Nov 13, 2026, 7:36:34 PM</p>
+<a href="https://www.gradle.org">Gradle 9.9.1</a> at Nov 13, 2026, 7:55:45 PM</p>
 </div>
 </div>
 </body>

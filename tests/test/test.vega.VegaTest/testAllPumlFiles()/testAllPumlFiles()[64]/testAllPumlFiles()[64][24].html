@@ -31,6 +31,9 @@
 <li>
 <a class="" href="#">summary</a>
 </li>
+<li>
+<a class="" href="#">error output</a>
+</li>
 </ul>
 <div class="tab">
 <h2>summary</h2>
@@ -62,7 +65,7 @@
 </td>
 <td>
 <div class="infoBox duration">
-<div class="counter">0.017s</div>
+<div class="counter">0.014s</div>
 <p>duration</p>
 </div>
 </td>
@@ -85,15 +88,75 @@
 <div class="clipboard-copy-btn-container">
 <button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-failure-testAllPumlFiles()[64][24]">Copy</button>
 </div>
-<pre id="root-0-test-failure-testAllPumlFiles()[64][24]">org.opentest4j.TestAbortedException: Assumption failed: Known failure (allow-failure: true): src/test/resources/vega/packet/R07.01-Range_Error1.puml - No expected-exception declared in src/test/resources/vega/packet/R07.01-Range_Error1.puml IllegalArgumentException ==&gt; expected: not &lt;null&gt;
-	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:340)
-	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:127)
-	at test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:308)
+<pre id="root-0-test-failure-testAllPumlFiles()[64][24]">org.opentest4j.TestAbortedException: Known failure (allow-failure: true): src/test/resources/vega/packet/R07.01-Range_Error1.puml - No expected-exception declared in src/test/resources/vega/packet/R07.01-Range_Error1.puml IllegalArgumentException ==&gt; expected: not &lt;null&gt;
+	at test.vega.VegaInputFile.newKnownFailure(VegaInputFile.java:336)
+	at test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:310)
 	at test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:215)
+Caused by: java.lang.IllegalArgumentException
+	at net.sourceforge.plantuml.klimt.geom.XDimension2D.&lt;init&gt;(XDimension2D.java:50)
+	at net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java:272)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java:167)
+	at net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:170)
+	at net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:311)
+	at net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:171)
+	at net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:102)
+	at net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:191)
+	at test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:414)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:479)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Cause 1: java.lang.IllegalArgumentException
+	at net.sourceforge.plantuml.klimt.geom.XDimension2D.&lt;init&gt;(XDimension2D.java:50)
+	at net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java:272)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java:167)
+	at net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:170)
+	at net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:311)
+	at net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:171)
+	at net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:102)
+	at net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:191)
+	at test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:414)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:479)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
 </pre>
 </span>
 </div>
 </div>
+</div>
+<div class="tab">
+<h2>error output</h2>
+<span class="code">
+<div class="clipboard-copy-btn-container">
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-stderr-testAllPumlFiles()[64][24]">Copy</button>
+</div>
+<pre id="root-0-test-stderr-testAllPumlFiles()[64][24]">[Vega] Root cause for src/test/resources/vega/packet/R07.01-Range_Error1.puml:
+java.lang.IllegalArgumentException
+	at net.sourceforge.plantuml.klimt.geom.XDimension2D.&lt;init&gt;(XDimension2D.java:50)
+	at net.sourceforge.plantuml.packetdiag.PacketBlock$1.calculateDimension(PacketBlock.java:272)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram$1.calculateDimension(PacketDiagram.java:167)
+	at net.sourceforge.plantuml.klimt.shape.TextBlockUtils$2.calculateDimension(TextBlockUtils.java:170)
+	at net.sourceforge.plantuml.core.TextBlockExporter.calculateFinalDimension(TextBlockExporter.java:311)
+	at net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:171)
+	at net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:102)
+	at net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:191)
+	at test.vega.VegaInputFile.renderCapturingStderr(VegaInputFile.java:414)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:479)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at org.junit.jupiter.api.AssertTimeoutPreemptively.lambda$assertTimeoutPreemptively$1(AssertTimeoutPreemptively.java:49)
+	at org.junit.jupiter.api.timeout.PreemptiveTimeoutUtils.lambda$submitTask$0(PreemptiveTimeoutUtils.java:82)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+</pre>
+</span>
 </div>
 </div>
 </div>
@@ -105,7 +168,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.9.1</a> at Nov 13, 2026, 7:36:34 PM</p>
+<a href="https://www.gradle.org">Gradle 9.9.1</a> at Nov 13, 2026, 7:55:45 PM</p>
 </div>
 </div>
 </body>

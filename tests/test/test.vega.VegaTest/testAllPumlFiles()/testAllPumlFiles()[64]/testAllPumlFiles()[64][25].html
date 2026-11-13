@@ -31,6 +31,9 @@
 <li>
 <a class="" href="#">summary</a>
 </li>
+<li>
+<a class="" href="#">error output</a>
+</li>
 </ul>
 <div class="tab">
 <h2>summary</h2>
@@ -62,7 +65,7 @@
 </td>
 <td>
 <div class="infoBox duration">
-<div class="counter">0.006s</div>
+<div class="counter">0.007s</div>
 <p>duration</p>
 </div>
 </td>
@@ -85,15 +88,108 @@
 <div class="clipboard-copy-btn-container">
 <button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-failure-testAllPumlFiles()[64][25]">Copy</button>
 </div>
-<pre id="root-0-test-failure-testAllPumlFiles()[64][25]">org.opentest4j.TestAbortedException: Assumption failed: Known failure (allow-failure: true): src/test/resources/vega/packet/R07.02-Range_Error2.puml - No expected-exception declared in src/test/resources/vega/packet/R07.02-Range_Error2.puml ArithmeticException - / by zero ==&gt; expected: not &lt;null&gt;
-	at org.junit.jupiter.api.Assumptions.throwAssumptionFailed(Assumptions.java:340)
-	at org.junit.jupiter.api.Assumptions.assumeTrue(Assumptions.java:127)
-	at test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:308)
+<pre id="root-0-test-failure-testAllPumlFiles()[64][25]">org.opentest4j.TestAbortedException: Known failure (allow-failure: true): src/test/resources/vega/packet/R07.02-Range_Error2.puml - No expected-exception declared in src/test/resources/vega/packet/R07.02-Range_Error2.puml ArithmeticException - / by zero ==&gt; expected: not &lt;null&gt;
+	at test.vega.VegaInputFile.newKnownFailure(VegaInputFile.java:336)
+	at test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:310)
 	at test.vega.VegaTest.lambda$testAllPumlFiles$10(VegaTest.java:215)
+Caused by: java.lang.ArithmeticException: / by zero
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.remainder(PacketDiagram.java:413)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.lambda$adjustIndicators$2(PacketDiagram.java:400)
+	at java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java:180)
+	at java.base/java.util.stream.SliceOps$2$1.accept(SliceOps.java:315)
+	at java.base/java.util.stream.IntStream$1.tryAdvance(IntStream.java:960)
+	at java.base/java.util.stream.IntPipeline.forEachWithCancel(IntPipeline.java:163)
+	at java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:527)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:513)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.adjustIndicators(PacketDiagram.java:403)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.build(PacketDiagram.java:379)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.checkFinalError(PacketDiagram.java:226)
+	at net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:187)
+	at net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:178)
+	at net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:66)
+	at net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:254)
+	at net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:196)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:457)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Cause 1: java.lang.ArithmeticException: / by zero
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.remainder(PacketDiagram.java:413)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.lambda$adjustIndicators$2(PacketDiagram.java:400)
+	at java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java:180)
+	at java.base/java.util.stream.SliceOps$2$1.accept(SliceOps.java:315)
+	at java.base/java.util.stream.IntStream$1.tryAdvance(IntStream.java:960)
+	at java.base/java.util.stream.IntPipeline.forEachWithCancel(IntPipeline.java:163)
+	at java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:527)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:513)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.adjustIndicators(PacketDiagram.java:403)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.build(PacketDiagram.java:379)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.checkFinalError(PacketDiagram.java:226)
+	at net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:187)
+	at net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:178)
+	at net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:66)
+	at net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:254)
+	at net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:196)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:457)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
 </pre>
 </span>
 </div>
 </div>
+</div>
+<div class="tab">
+<h2>error output</h2>
+<span class="code">
+<div class="clipboard-copy-btn-container">
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="root-0-test-stderr-testAllPumlFiles()[64][25]">Copy</button>
+</div>
+<pre id="root-0-test-stderr-testAllPumlFiles()[64][25]">[Vega] Root cause for src/test/resources/vega/packet/R07.02-Range_Error2.puml:
+java.lang.ArithmeticException: / by zero
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.remainder(PacketDiagram.java:413)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.lambda$adjustIndicators$2(PacketDiagram.java:400)
+	at java.base/java.util.stream.IntPipeline$1$1.accept(IntPipeline.java:180)
+	at java.base/java.util.stream.SliceOps$2$1.accept(SliceOps.java:315)
+	at java.base/java.util.stream.IntStream$1.tryAdvance(IntStream.java:960)
+	at java.base/java.util.stream.IntPipeline.forEachWithCancel(IntPipeline.java:163)
+	at java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:527)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:513)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.adjustIndicators(PacketDiagram.java:403)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.build(PacketDiagram.java:379)
+	at net.sourceforge.plantuml.packetdiag.PacketDiagram.checkFinalError(PacketDiagram.java:226)
+	at net.sourceforge.plantuml.command.PSystemCommandFactory.finalizeDiagram(PSystemCommandFactory.java:187)
+	at net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:178)
+	at net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:66)
+	at net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:254)
+	at net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:196)
+	at test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:457)
+	at test.vega.VegaInputFile.lambda$doRunSingleFileWithTimeout$0(VegaInputFile.java:356)
+	at org.junit.jupiter.api.AssertTimeoutPreemptively.lambda$assertTimeoutPreemptively$1(AssertTimeoutPreemptively.java:49)
+	at org.junit.jupiter.api.timeout.PreemptiveTimeoutUtils.lambda$submitTask$0(PreemptiveTimeoutUtils.java:82)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+</pre>
+</span>
 </div>
 </div>
 </div>
@@ -105,7 +201,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.9.1</a> at Nov 13, 2026, 7:36:34 PM</p>
+<a href="https://www.gradle.org">Gradle 9.9.1</a> at Nov 13, 2026, 7:55:45 PM</p>
 </div>
 </div>
 </body>
