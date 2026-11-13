@@ -1,5 +1,4 @@
-
----
+🎉 PlantUML version @VERSION@
 
 <details open>
 <summary><strong>JavaScript</strong></summary>
