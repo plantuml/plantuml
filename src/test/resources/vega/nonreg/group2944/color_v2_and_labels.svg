@@ -25,5 +25,8 @@
     <rect fill="#F1F1F1" height="15" style="stroke:#181818;stroke-width:0.5;" width="80" x="230" y="345"/>
     <rect fill="#F1F1F1" height="22.5" style="stroke:#181818;stroke-width:0.5;" width="80" x="363.333" y="337.5"/>
     <path d="M136.667,285 C181.111,216.25 225.556,147.5 270,135 C314.444,122.5 358.889,166.25 403.333,210" fill="none" style="stroke:#F00;stroke-width:2;"/>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="131.104" y="275.778">10</text>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="264.438" y="125.778">30</text>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="397.771" y="200.778">20</text>
   </g>
 </svg>

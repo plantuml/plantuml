@@ -25,5 +25,8 @@
     <text fill="#000" font-size="14" x="416.106" y="380.889">4</text>
     <line style="stroke:#F00;stroke-width:2;" x1="120" x2="220" y1="285" y2="210"/>
     <line style="stroke:#F00;stroke-width:2;" x1="220" x2="420" y1="210" y2="60"/>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="114.438" y="275.778">10</text>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="214.438" y="200.778">20</text>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="414.438" y="50.778">40</text>
   </g>
 </svg>

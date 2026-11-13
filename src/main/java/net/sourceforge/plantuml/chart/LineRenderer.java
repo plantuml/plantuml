@@ -36,16 +36,25 @@ package net.sourceforge.plantuml.chart;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontFace;
+import net.sourceforge.plantuml.klimt.font.UFontFactory;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.NaturalSpline;
 import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.ISkinParam;
 
@@ -69,6 +78,13 @@ public class LineRenderer {
 	}
 
 	public void draw(UGraphic ug, ChartSeries series, HColor color, double lineThickness) {
+		drawLine(ug, series, color, lineThickness);
+		// The labels come last, so that the line does not cross them
+		if (series.isShowLabels())
+			drawLabels(ug, series);
+	}
+
+	private void drawLine(UGraphic ug, ChartSeries series, HColor color, double lineThickness) {
 		if (categoryCount == 0 && !series.hasExplicitXValues())
 			return;
 
@@ -173,6 +189,53 @@ public class LineRenderer {
 							plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight));
 		}
 		return result;
+	}
+
+	// The value of each point, above it. A missing value has no point, so no label
+	private void drawLabels(UGraphic ug, ChartSeries series) {
+		final List<Double> values = series.getValues();
+		final double range = axis.getMax() - axis.getMin();
+		final int count;
+		if (series.hasExplicitXValues()) {
+			if (xAxis == null)
+				return;
+			count = values.size();
+		} else {
+			count = Math.min(values.size(), categoryCount);
+		}
+		final double categoryWidth = categoryCount == 0 ? 0 : plotWidth / categoryCount;
+		for (int i = 0; i < count; i++) {
+			if (values.get(i) == null)
+				continue;
+			final double x = series.hasExplicitXValues() ? xAxis.valueToPixel(series.getXValues().get(i), 0, plotWidth)
+					: (i + 0.5) * categoryWidth;
+			final double y = plotHeight - (values.get(i) - axis.getMin()) / range * plotHeight;
+			drawLabel(ug, values.get(i), x, y - 5);
+		}
+	}
+
+	private void drawLabel(UGraphic ug, double value, double x, double y) {
+		try {
+			final UFont font = UFontFactory.sansSerif(10).withFontFace(UFontFace.bold());
+			final HColor labelColor = skinParam.getIHtmlColorSet().getColor("#000000");
+			final FontConfiguration fontConfig = FontConfiguration.create(font, labelColor, labelColor, null);
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), formatValue(value))
+					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
+			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());
+			final double labelX = x - textDim.getWidth() / 2;
+			final double labelY = y - textDim.getHeight() - 2;
+			textBlock.drawU(ug.apply(UTranslate.dx(labelX).compose(UTranslate.dy(labelY))));
+		} catch (Exception e) {
+			// Silently ignore rendering errors
+		}
+	}
+
+	private String formatValue(double value) {
+		if (Math.abs(value) < 0.01 && value != 0)
+			return String.format(Locale.ROOT, "%.2e", value);
+		if (value == (long) value)
+			return String.format(Locale.ROOT, "%d", (long) value);
+		return String.format(Locale.ROOT, "%.2f", value);
 	}
 
 }

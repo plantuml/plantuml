@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startchart
+line "Pairs" [(1,12), (3,18), (4,28)] labels
+@endchart

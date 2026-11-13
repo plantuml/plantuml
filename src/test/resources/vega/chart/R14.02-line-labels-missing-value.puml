@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+line "Trend" [12, , 28, 20.5] labels
+@endchart
