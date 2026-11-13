@@ -189,7 +189,7 @@ import net.sourceforge.plantuml.version.Version;
 		} else {
 <span class="fc" id="L190">			this.backcolorString = backcolor.toSvg(option.getColorMapper());</span>
 <span class="fc" id="L191">			final String color = backcolor.toSvg(option.getColorMapper());</span>
-<span class="pc bpc" id="L192" title="1 of 4 branches missed.">			if (color.equals(&quot;#00000000&quot;) == false &amp;&amp; color.equals(&quot;#000000&quot;) == false</span>
+<span class="fc bfc" id="L192" title="All 4 branches covered.">			if (color.equals(&quot;#00000000&quot;) == false &amp;&amp; color.equals(&quot;#000000&quot;) == false</span>
 <span class="fc bfc" id="L193" title="All 2 branches covered.">					&amp;&amp; color.equals(&quot;#FFFFFF&quot;) == false)</span>
 <span class="fc" id="L194">				this.paintBackcolor(color);</span>
 		}
@@ -789,7 +789,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="fc" id="L789">		final int maxYscaled = (int) (maxY * option.getScale());</span>
 <span class="fc" id="L790">		String style = &quot;width:&quot; + maxXscaled + &quot;px;height:&quot; + maxYscaled + &quot;px;&quot;;</span>
 
-<span class="pc bpc" id="L792" title="2 of 4 branches missed.">		if (backcolorString != null &amp;&amp; &quot;#00000000&quot;.equals(backcolorString) == false)</span>
+<span class="pc bpc" id="L792" title="1 of 4 branches missed.">		if (backcolorString != null &amp;&amp; &quot;#00000000&quot;.equals(backcolorString) == false)</span>
 <span class="fc" id="L793">			style += &quot;background:&quot; + backcolorString + &quot;;&quot;;</span>
 
 <span class="pc bpc" id="L795" title="1 of 2 branches missed.">		if (option.getSvgDimensionStyle()) {</span>
