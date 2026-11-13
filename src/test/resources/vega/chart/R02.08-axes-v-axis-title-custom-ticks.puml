@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2]
+v-axis "Level" 0 --> 3 ticks [0:"none", 1:"low", 2:"medium", 3:"very high"]
+bar [1, 3]
+@endchart

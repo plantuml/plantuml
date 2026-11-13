@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="431px" preserveAspectRatio="none" style="width:529px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 529 431" width="529px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="98.938" x2="98.938" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="98.938" x2="93.938" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" textLength="31.15" x="57.787" y="363.889">none</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="98.938" x2="93.938" y1="260" y2="260"/>
+    <text fill="#000" font-size="14" textLength="21.088" x="67.85" y="263.889">low</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="98.938" x2="93.938" y1="160" y2="160"/>
+    <text fill="#000" font-size="14" textLength="49.788" x="39.15" y="163.889">medium</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="98.938" x2="93.938" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="52.938" x="36" y="63.889">very high</text>
+    <text fill="#000" font-size="14" textLength="33.513" transform="rotate(-90 27 226.756)" x="27" y="226.756">Level</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="98.938" x2="498.938" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="198.938" x2="198.938" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="189.619" y="380.889">Q1</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="398.938" x2="398.938" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="389.619" y="380.889">Q2</text>
+    <rect fill="#F1F1F1" height="100" style="stroke:#181818;stroke-width:0.5;" width="120" x="138.938" y="260"/>
+    <rect fill="#F1F1F1" height="300" style="stroke:#181818;stroke-width:0.5;" width="120" x="338.938" y="60"/>
+  </g>
+</svg>

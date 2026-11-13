@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startchart
+h-axis "Q" [Q1, Q2]
+v-axis "Revenue ($M)" 0 --> 70000
+bar "Revenue" [45000, 62000]
+legend bottom
+@endchart

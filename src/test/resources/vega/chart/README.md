@@ -46,6 +46,9 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R02.03 | `R02.03-axes-v-axis-negative.puml` | Negative range and values |
 |  | R02.04 | `R02.04-axes-v2-axis.puml` | Secondary axis used by a line |
 |  | R02.05 | `R02.05-axes-label-position.puml` | label-right and label-top |
+|  | R02.06 | `R02.06-axes-v-axis-title-wide-labels.puml` | v-axis title clear of wide tick labels (70000) | [#2618](https://github.com/plantuml/plantuml/issues/2618)
+|  | R02.07 | `R02.07-axes-v2-axis-title-wide-labels.puml` | Same on the v2-axis, with the legend on the right |
+|  | R02.08 | `R02.08-axes-v-axis-title-custom-ticks.puml` | Same with wide custom tick labels |
 | R03 — Layout | R03.01 | `R03.01-layout-legend-bottom.puml` | Legend placed at the bottom |
 |  | R03.02 | `R03.02-layout-grid-both.puml` | Grid on both axes |
 |  | R03.03 | `R03.03-layout-grid-v-scatter.puml` | Grid on v-axis of a scatter chart |

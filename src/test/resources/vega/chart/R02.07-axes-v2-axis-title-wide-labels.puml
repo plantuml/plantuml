@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startchart
+h-axis [Q1, Q2]
+v-axis "Revenue" 0 --> 7
+v2-axis "Count" 0 --> 1500000
+bar [4, 6]
+line [100000, 1200000] v2
+legend right
+@endchart

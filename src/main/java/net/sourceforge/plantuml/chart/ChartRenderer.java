@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.chart;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -136,7 +138,8 @@ public class ChartRenderer {
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D legendDim = calculateLegendDimension(stringBounder);
-		double width = MARGIN + AXIS_LABEL_SPACE + getPlotWidth() + (y2Axis != null ? AXIS_LABEL_SPACE : 0) + MARGIN;
+		double width = MARGIN + getYAxisSpace(stringBounder, yAxis) + getPlotWidth()
+				+ (y2Axis != null ? getYAxisSpace(stringBounder, y2Axis) : 0) + MARGIN;
 		double height = MARGIN + TITLE_SPACE + getPlotHeight() + AXIS_LABEL_SPACE + MARGIN;
 
 		// Add space for X-axis title if present
@@ -167,7 +170,8 @@ public class ChartRenderer {
 
 		// Calculate legend dimensions and adjust layout
 		final XDimension2D legendDim = calculateLegendDimension(stringBounder);
-		double leftMargin = MARGIN + AXIS_LABEL_SPACE;
+		final double leftSpace = getYAxisSpace(stringBounder, yAxis);
+		double leftMargin = MARGIN + leftSpace;
 		double topMargin = MARGIN + TITLE_SPACE;
 		final double plotWidth = getPlotWidth();
 		final double plotHeight = getPlotHeight();
@@ -215,11 +219,11 @@ public class ChartRenderer {
 			// xAxisLabels = categories (draw horizontally at bottom)
 			// yAxis = numeric (draw vertically on left)
 			drawYAxis(ug.apply(UTranslate.dx(yAxisX).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth, yAxis, true,
-					lineColor, fontColor);
+					leftSpace, lineColor, fontColor);
 
 			if (y2Axis != null) {
 				drawYAxis(ug.apply(UTranslate.dx(leftMargin + plotWidth).compose(UTranslate.dy(topMargin))), plotHeight, plotWidth,
-						y2Axis, false, lineColor, fontColor);
+						y2Axis, false, getYAxisSpace(stringBounder, y2Axis), lineColor, fontColor);
 			}
 
 			drawXAxis(ug.apply(UTranslate.dx(leftMargin).compose(UTranslate.dy(xAxisY))), plotWidth,
@@ -240,8 +244,8 @@ public class ChartRenderer {
 		drawLegend(ug, leftMargin, topMargin, plotWidth, plotHeight, lineColor, fontColor);
 	}
 
-	private void drawYAxis(UGraphic ug, double height, double width, ChartAxis axis, boolean leftSide, HColor lineColor,
-			HColor fontColor) {
+	private void drawYAxis(UGraphic ug, double height, double width, ChartAxis axis, boolean leftSide, double space,
+			HColor lineColor, HColor fontColor) {
 		// Get axis-specific style
 		final Style axisStyle = skinParam.getCurrentStyleBuilder()
 			.getMergedStyle(getAxisStyleSignature(false));
@@ -280,117 +284,32 @@ public class ChartRenderer {
 
 		// Use custom ticks if defined, otherwise use automatic ticks
 		final StringBounder stringBounder = ug.getStringBounder();
-		if (axis.hasCustomTicks()) {
-			// Draw custom ticks
-			for (Map.Entry<Double, String> entry : axis.getCustomTicks().entrySet()) {
-				final double value = entry.getKey();
-				final String label = entry.getValue();
+		for (Map.Entry<Double, String> tick : getTicks(axis)) {
+			final double y = height * (1.0 - tick.getKey());
 
-				// Calculate y position based on value
-				final double y = height * (1.0 - (value - axis.getMin()) / (axis.getMax() - axis.getMin()));
-
-				// Skip if outside axis range
-				if (y < 0 || y > height)
-					continue;
-
-				// Draw grid lines if enabled (horizontal lines for Y axis)
-				// Skip if coordinate-pair mode (grid drawn separately in drawGridLines)
-				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF && xAxis == null) {
-					final ULine gridLine = ULine.hline(width);
-					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
-				}
-
-				// Draw tick
-				if (leftSide)
-					ug.apply(UTranslate.dy(y)).draw(ULine.hline(-TICK_SIZE));
-				else
-					ug.apply(UTranslate.dy(y)).draw(ULine.hline(TICK_SIZE));
-
-				// Draw custom label
-				final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
-						.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
-				final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
-
-				if (leftSide) {
-					final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
-					textBlock.drawU(ug.apply(UTranslate.dx(-TICK_SIZE - textWidth - 5).compose(UTranslate.dy(y - textHeight / 2))));
-				} else {
-					textBlock.drawU(ug.apply(UTranslate.dx(TICK_SIZE + 5).compose(UTranslate.dy(y - textHeight / 2))));
-				}
+			// Draw grid lines if enabled (horizontal lines for Y axis)
+			// Skip if coordinate-pair mode (grid drawn separately in drawGridLines)
+			if (leftSide && yGridMode != ChartDiagram.GridMode.OFF && xAxis == null) {
+				final ULine gridLine = ULine.hline(width);
+				ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
 			}
-		} else if (axis.hasTickSpacing()) {
-			// Draw ticks with custom spacing
-			final double spacing = axis.getTickSpacing();
-			final double range = axis.getMax() - axis.getMin();
 
-			// Calculate starting value (round up to nearest spacing interval)
-			double startValue = Math.ceil(axis.getMin() / spacing) * spacing;
+			// Draw tick
+			if (leftSide)
+				ug.apply(UTranslate.dy(y)).draw(ULine.hline(-TICK_SIZE));
+			else
+				ug.apply(UTranslate.dy(y)).draw(ULine.hline(TICK_SIZE));
 
-			for (double value = startValue; value <= axis.getMax(); value += spacing) {
-				// Avoid floating point precision issues
-				if (value > axis.getMax() + spacing * 0.01)
-					break;
+			// Draw label
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), tick.getValue())
+					.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
+			final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
 
-				final double y = height * (1.0 - (value - axis.getMin()) / range);
-
-				// Draw grid lines if enabled (horizontal lines for Y axis)
-				// Skip if coordinate-pair mode (grid drawn separately in drawGridLines)
-				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF && xAxis == null) {
-					final ULine gridLine = ULine.hline(width);
-					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
-				}
-
-				// Draw tick
-				if (leftSide)
-					ug.apply(UTranslate.dy(y)).draw(ULine.hline(-TICK_SIZE));
-				else
-					ug.apply(UTranslate.dy(y)).draw(ULine.hline(TICK_SIZE));
-
-				// Draw label
-				final String label = formatValue(value);
-				final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
-						.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
-				final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
-
-				if (leftSide) {
-					final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
-					textBlock.drawU(ug.apply(UTranslate.dx(-TICK_SIZE - textWidth - 5).compose(UTranslate.dy(y - textHeight / 2))));
-				} else {
-					textBlock.drawU(ug.apply(UTranslate.dx(TICK_SIZE + 5).compose(UTranslate.dy(y - textHeight / 2))));
-				}
-			}
-		} else {
-			// Draw automatic ticks
-			final int numTicks = 5;
-			for (int i = 0; i <= numTicks; i++) {
-				final double y = height * (1.0 - (double) i / numTicks);
-				final double value = axis.getMin() + (axis.getMax() - axis.getMin()) * i / numTicks;
-
-				// Draw grid lines if enabled (horizontal lines for Y axis)
-				// Skip if coordinate-pair mode (grid drawn separately in drawGridLines)
-				if (leftSide && yGridMode != ChartDiagram.GridMode.OFF && xAxis == null) {
-					final ULine gridLine = ULine.hline(width);
-					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
-				}
-
-				// Draw tick
-				if (leftSide)
-					ug.apply(UTranslate.dy(y)).draw(ULine.hline(-TICK_SIZE));
-				else
-					ug.apply(UTranslate.dy(y)).draw(ULine.hline(TICK_SIZE));
-
-				// Draw label
-				final String label = formatValue(value);
-				final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
-						.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
-				final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
-
-				if (leftSide) {
-					final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
-					textBlock.drawU(ug.apply(UTranslate.dx(-TICK_SIZE - textWidth - 5).compose(UTranslate.dy(y - textHeight / 2))));
-				} else {
-					textBlock.drawU(ug.apply(UTranslate.dx(TICK_SIZE + 5).compose(UTranslate.dy(y - textHeight / 2))));
-				}
+			if (leftSide) {
+				final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
+				textBlock.drawU(ug.apply(UTranslate.dx(-TICK_SIZE - textWidth - 5).compose(UTranslate.dy(y - textHeight / 2))));
+			} else {
+				textBlock.drawU(ug.apply(UTranslate.dx(TICK_SIZE + 5).compose(UTranslate.dy(y - textHeight / 2))));
 			}
 		}
 
@@ -398,15 +317,68 @@ public class ChartRenderer {
 		if (axis.getTitle() != null && !axis.getTitle().isEmpty()) {
 			if (axis.getLabelPosition() == ChartAxis.LabelPosition.TOP) {
 				// Draw horizontally at top
-				drawHorizontalAxisTitle(ug, axis.getTitle(), height, leftSide, fontColor, true, fontConfig);
+				drawHorizontalAxisTitle(ug, axis.getTitle(), height, leftSide, space, true, fontConfig);
 			} else {
 				// Draw vertically (default)
-				drawVerticalText(ug, axis.getTitle(), height, leftSide, fontColor, fontConfig);
+				drawVerticalText(ug, axis.getTitle(), height, leftSide, space, fontConfig);
 			}
 		}
 	}
 
-	private void drawVerticalText(UGraphic ug, String text, double height, boolean leftSide, HColor fontColor,
+	// The ticks of a vertical value axis: position from the bottom (0 to 1) and label.
+	// Custom ticks if defined, else ticks every "spacing", else five automatic intervals.
+	// Shared by drawYAxis and getYAxisSpace, so that the space measured is the space drawn
+	private List<Map.Entry<Double, String>> getTicks(ChartAxis axis) {
+		final List<Map.Entry<Double, String>> result = new ArrayList<>();
+		final double range = axis.getMax() - axis.getMin();
+		if (axis.hasCustomTicks()) {
+			for (Map.Entry<Double, String> entry : axis.getCustomTicks().entrySet()) {
+				final double ratio = (entry.getKey() - axis.getMin()) / range;
+				// Skip if outside axis range
+				if (ratio >= 0 && ratio <= 1)
+					result.add(new AbstractMap.SimpleEntry<>(ratio, entry.getValue()));
+			}
+		} else if (axis.hasTickSpacing()) {
+			final double spacing = axis.getTickSpacing();
+			// Calculate starting value (round up to nearest spacing interval)
+			final double startValue = Math.ceil(axis.getMin() / spacing) * spacing;
+			for (double value = startValue; value <= axis.getMax(); value += spacing) {
+				// Avoid floating point precision issues
+				if (value > axis.getMax() + spacing * 0.01)
+					break;
+				result.add(new AbstractMap.SimpleEntry<>((value - axis.getMin()) / range, formatValue(value)));
+			}
+		} else {
+			final int numTicks = 5;
+			for (int i = 0; i <= numTicks; i++) {
+				final double value = axis.getMin() + range * i / numTicks;
+				result.add(new AbstractMap.SimpleEntry<>((double) i / numTicks, formatValue(value)));
+			}
+		}
+		return result;
+	}
+
+	// Space between a vertical value axis and the edge of the plot area, on its side.
+	// It holds the tick (TICK_SIZE), a 5 px gap, the widest tick label and 6 px before the
+	// rotated axis title, which is drawn just beyond (see drawVerticalText). It is never
+	// less than AXIS_LABEL_SPACE, so charts with labels up to about 30 px wide ("100",
+	// "-20") keep their former layout; wider labels, such as "70000", used to run under
+	// the title (#2618)
+	private double getYAxisSpace(StringBounder stringBounder, ChartAxis axis) {
+		if (axis == null || orientation == ChartDiagram.Orientation.HORIZONTAL)
+			return AXIS_LABEL_SPACE;
+		final FontConfiguration fontConfig = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(getAxisStyleSignature(false)).getFontConfiguration(skinParam.getIHtmlColorSet());
+		double labelWidth = 0;
+		for (Map.Entry<Double, String> tick : getTicks(axis)) {
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), tick.getValue())
+					.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
+			labelWidth = Math.max(labelWidth, textBlock.calculateDimension(stringBounder).getWidth());
+		}
+		return Math.max(AXIS_LABEL_SPACE, TICK_SIZE + 5 + labelWidth + 6);
+	}
+
+	private void drawVerticalText(UGraphic ug, String text, double height, boolean leftSide, double space,
 			FontConfiguration axisFontConfig) {
 		// Use the provided font configuration (same as tick labels)
 		// Left axis (Y): 90 degrees (reads from bottom to top)
@@ -425,7 +397,7 @@ public class ChartRenderer {
 		// To center: baseline should be at (height/2 + textWidth/2) for 90° or (height/2 - textWidth/2) for 270°
 		// Add extra spacing (10 pixels) to move labels further from the axis
 		final double extraSpacing = 10;
-		final double xPos = leftSide ? -AXIS_LABEL_SPACE + textHeight / 2 - extraSpacing : AXIS_LABEL_SPACE - textHeight / 2 + extraSpacing;
+		final double xPos = leftSide ? -space + textHeight / 2 - extraSpacing : space - textHeight / 2 + extraSpacing;
 		// For 90° (left): baseline at top of text, so position at center + half width to center the text
 		// For 270° (right): baseline at bottom of text, so position at center - half width to center the text
 		final double yPos = leftSide ? (height / 2 + textWidth / 2) : (height / 2 - textWidth / 2);
@@ -433,7 +405,7 @@ public class ChartRenderer {
 		ug.apply(UTranslate.dx(xPos).compose(UTranslate.dy(yPos))).draw(utext);
 	}
 
-	private void drawHorizontalAxisTitle(UGraphic ug, String text, double height, boolean leftSide, HColor fontColor,
+	private void drawHorizontalAxisTitle(UGraphic ug, String text, double height, boolean leftSide, double space,
 			boolean isVerticalAxis, FontConfiguration axisFontConfig) {
 		// Use the provided font configuration (same as tick labels)
 		final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), text)
@@ -443,7 +415,7 @@ public class ChartRenderer {
 
 		if (isVerticalAxis) {
 			// For vertical axis with label at top
-			final double xPos = leftSide ? -AXIS_LABEL_SPACE / 2 - textWidth / 2 : AXIS_LABEL_SPACE / 2 - textWidth / 2;
+			final double xPos = leftSide ? -space / 2 - textWidth / 2 : space / 2 - textWidth / 2;
 			final double yPos = -textHeight - 15; // Position higher above the axis
 			textBlock.drawU(ug.apply(UTranslate.dx(xPos).compose(UTranslate.dy(yPos))));
 		} else {
@@ -1136,7 +1108,7 @@ public class ChartRenderer {
 			y = topMargin;
 			break;
 		case RIGHT:
-			x = leftMargin + plotWidth + (y2Axis != null ? AXIS_LABEL_SPACE : 0) + LEGEND_MARGIN;
+			x = leftMargin + plotWidth + (y2Axis != null ? getYAxisSpace(ug.getStringBounder(), y2Axis) : 0) + LEGEND_MARGIN;
 			y = topMargin;
 			break;
 		case TOP:
