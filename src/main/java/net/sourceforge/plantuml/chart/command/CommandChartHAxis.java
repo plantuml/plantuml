@@ -94,6 +94,10 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
+		final CommandExecutionResult kindError = diagram.checkKind("h-axis", ChartDiagram.Kind.CARTESIAN);
+		if (kindError != null)
+			return kindError;
+
 		final String title = arg.get("TITLE", 0);
 		final String minStr = arg.get("RANGE", 0);
 		final String maxStr = arg.get("RANGE", 1);

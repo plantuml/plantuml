@@ -105,6 +105,10 @@ public final class StyleQueries {
 
 	public static final StyleQuery CHARTDIAG_LINE = CHARTDIAG.add(SName.line);
 
+	public static final StyleQuery CHARTDIAG_PIE = CHARTDIAG.add(SName.pie);
+
+	public static final StyleQuery CHARTDIAG_RADAR = CHARTDIAG.add(SName.radar);
+
 	public static final StyleQuery CHARTDIAG_SCATTER = CHARTDIAG.add(SName.scatter);
 
 	public static final StyleQuery CHENEER_ATTRIBUTE = ELEMENT.add(SName.chenEerDiagram, SName.chenAttribute);

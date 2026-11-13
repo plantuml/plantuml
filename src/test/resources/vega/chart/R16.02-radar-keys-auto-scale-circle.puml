@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startchart
+radar [A: 10, B: 40, C: 25, D: 32, E: 18, F: 50]
+r-axis grid circle
+@endchart

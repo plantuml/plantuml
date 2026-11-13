@@ -76,6 +76,10 @@ public class CommandChartOrientation extends SingleLineCommand2<ChartDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
+		final CommandExecutionResult kindError = diagram.checkKind("orientation", ChartDiagram.Kind.CARTESIAN);
+		if (kindError != null)
+			return kindError;
+
 		final String orientationStr = arg.get("ORIENTATION", 0);
 
 		ChartDiagram.Orientation orientation;

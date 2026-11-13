@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="423px" preserveAspectRatio="none" style="width:450px;height:423px;background:#FFFFFF;" version="1.1" viewBox="0 0 450 423" width="450px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#1F77B4" height="12" style="stroke:#1F77B4;stroke-width:1;" width="12" x="330" y="131.75"/>
+    <text fill="#000" font-size="14" textLength="50.663" x="347" y="141.639">Calcium</text>
+    <rect fill="#DC3912" height="12" style="stroke:#DC3912;stroke-width:1;" width="12" x="330" y="153.25"/>
+    <text fill="#000" font-size="14" textLength="65.363" x="347" y="163.139">Potassium</text>
+    <rect fill="#2CA02C" height="12" style="stroke:#2CA02C;stroke-width:1;" width="12" x="330" y="174.75"/>
+    <text fill="#000" font-size="14" textLength="72.363" x="347" y="184.639">Magnesium</text>
+    <rect fill="#D62728" height="12" style="stroke:#D62728;stroke-width:1;" width="12" x="330" y="196.25"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="347" y="206.139">Iron</text>
+    <path d="M170,30 A140,140 0 0 1 253.915,282.064 L203.566,214.825 A56,56 0 0 0 170,114 L170,30" fill="#1F77B4" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M253.915,282.064 A140,140 0 0 1 62.716,80.055 L127.086,134.022 A56,56 0 0 0 203.566,214.825 L253.915,282.064" fill="#DC3912" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M62.716,80.055 A140,140 0 0 1 129.855,35.879 L153.942,116.352 A56,56 0 0 0 127.086,134.022 L62.716,80.055" fill="#2CA02C" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M129.855,35.879 A140,140 0 0 1 170,30 L170,114 A56,56 0 0 0 153.942,116.352 L129.855,35.879" fill="#D62728" style="stroke:#FFF;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="83.913" x="221.026" y="142.934">42.96 (39.8%)</text>
+    <text fill="#000" font-size="14" textLength="83.913" x="56.869" y="241.255">50.05 (46.3%)</text>
+    <text fill="#000" font-size="14" textLength="76.125" x="78.071" y="92.021">10.01 (9.3%)</text>
+    <text fill="#000" font-size="14" textLength="48.912" x="131.343" y="76.923">5 (4.6%)</text>
+  </g>
+</svg>

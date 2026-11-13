@@ -303,7 +303,7 @@ public class ChartRenderer {
 	// The ticks of a vertical value axis: position from the bottom (0 to 1) and label.
 	// Custom ticks if defined, else ticks every "spacing", else five automatic intervals.
 	// Shared by drawYAxis and getYAxisSpace, so that the space measured is the space drawn
-	private List<Map.Entry<Double, String>> getTicks(ChartAxis axis) {
+	static List<Map.Entry<Double, String>> getTicks(ChartAxis axis) {
 		final List<Map.Entry<Double, String>> result = new ArrayList<>();
 		final double range = axis.getMax() - axis.getMin();
 		if (axis.hasCustomTicks()) {
@@ -870,7 +870,7 @@ public class ChartRenderer {
 		return 300;
 	}
 
-	private String formatValue(double value) {
+	static String formatValue(double value) {
 		if (Math.abs(value) < 0.01 && value != 0)
 			return String.format(Locale.ROOT, "%.2e", value);
 		if (value == (long) value)
@@ -880,6 +880,11 @@ public class ChartRenderer {
 	}
 
 	private HColor getDefaultColor(int index) {
+		return getDefaultColor(skinParam, index);
+	}
+
+	// The color of the index-th series (or slice of a pie) when none is given
+	static HColor getDefaultColor(ISkinParam skinParam, int index) {
 		final String[] defaultColors = { "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b",
 				"#e377c2", "#7f7f7f", "#bcbd22", "#17becf" };
 		try {
@@ -887,6 +892,18 @@ public class ChartRenderer {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	// The style of a series: its element style, overridden by the style of its stereotype
+	static Style getSeriesStyle(ISkinParam skinParam, StyleQuery query, ChartSeries series) {
+		if (series.getStereotype() == null)
+			return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
+		final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(query.withStereotype(series.getStereotype()));
+		final Style stereoStyle = skinParam.getCurrentStyleBuilder()
+				.getMergedStyle(query.forStereotypeItself(series.getStereotype()));
+		if (style == null)
+			return stereoStyle;
+		return style.mergeWith(stereoStyle, MergeStrategy.OVERWRITE_EXISTING_VALUE);
 	}
 
 	private StyleQuery getStyleSignature() {

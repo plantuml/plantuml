@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="409px" preserveAspectRatio="none" style="width:557px;height:409px;background:#FFFFFF;" version="1.1" viewBox="0 0 557 409" width="557px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#1F77B4" height="12" style="stroke:#1F77B4;stroke-width:1;" width="12" x="30" y="153.25"/>
+    <text fill="#000" font-size="14" textLength="110.425" x="47" y="163.139">Rare gases, others</text>
+    <rect fill="#D62728" height="12" style="stroke:#D62728;stroke-width:1;" width="12" x="30" y="174.75"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="47" y="184.639">A: B</text>
+    <path d="M317.425,30 A140,140 0 0 1 416.42,268.995 L317.425,170 L317.425,30" fill="#1F77B4" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M416.42,268.995 A140,140 0 0 1 188.082,223.576 A140,140 0 0 1 317.425,30 L317.425,170 L416.42,268.995" fill="#D62728" style="stroke:#FFF;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" x="397.604" y="139.065">3</text>
+    <text fill="#000" font-size="14" x="229.458" y="208.713">5</text>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="385px" preserveAspectRatio="none" style="width:510px;height:385px;background:#FFFFFF;" version="1.1" viewBox="0 0 510 385" width="510px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#1F77B4" height="12" style="stroke:#1F77B4;stroke-width:1;" width="12" x="435.425" y="175.25"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="452.425" y="185.139">Car</text>
+    <rect fill="#FF7F0E" height="12" style="stroke:#FF7F0E;stroke-width:1;" width="12" x="435.425" y="196.75"/>
+    <text fill="#000" font-size="14" textLength="27.3" x="452.425" y="206.639">Bike</text>
+    <polygon fill="none" points="227.7,122,297.7,192,227.7,262,157.7,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="227.7,52,367.7,192,227.7,332,87.7,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="227.7" x2="227.7" y1="192" y2="52"/>
+    <text fill="#000" font-size="14" textLength="40.512" x="207.444" y="40.889">Speed</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="227.7" x2="367.7" y1="192" y2="192"/>
+    <text fill="#000" font-size="14" textLength="39.725" x="375.7" y="195.889">Power</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="227.7" x2="227.7" y1="192" y2="332"/>
+    <text fill="#000" font-size="14" textLength="41.3" x="207.05" y="350.889">Range</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="227.7" x2="87.7" y1="192" y2="192"/>
+    <text fill="#000" font-size="14" textLength="49.7" x="30" y="195.889">Comfort</text>
+    <polygon fill="#1F77B4" fill-opacity="0.251" points="227.7,80,227.7,192,227.7,276,101.7,192" style="stroke:#1F77B4;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="227.7" cy="80" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="227.7" cy="276" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="101.7" cy="192" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <polygon fill="#FF7F0E" fill-opacity="0.251" points="227.7,136,255.7,192,227.7,234,157.7,192" style="stroke:#FF7F0E;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="227.7" cy="136" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <ellipse cx="255.7" cy="192" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <ellipse cx="227.7" cy="234" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <ellipse cx="157.7" cy="192" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="230.7" y="132.889">Mid</text>
+    <text fill="#000" font-size="14" textLength="26.425" x="230.7" y="62.889">Max</text>
+  </g>
+</svg>

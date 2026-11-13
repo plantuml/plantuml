@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startchart
+pie ["Rare gases, others": 3, Water: 0, Ice: , "A: B": 5] labels
+legend left
+@endchart

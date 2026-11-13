@@ -100,6 +100,10 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
+		final CommandExecutionResult kindError = diagram.checkKind(arg.get("AXIS", 0), ChartDiagram.Kind.CARTESIAN);
+		if (kindError != null)
+			return kindError;
+
 		final String axisType = arg.get("AXIS", 0);
 		final String title = arg.get("TITLE", 0);
 		final String minStr = arg.get("RANGE", 0);
@@ -221,7 +225,7 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 		return result;
 	}
 
-	private Map<Double, String> parseCustomTicks(String ticksStr) {
+	static Map<Double, String> parseCustomTicks(String ticksStr) {
 		final Map<Double, String> ticks = new LinkedHashMap<>();
 		if (ticksStr == null || ticksStr.trim().isEmpty())
 			return ticks;

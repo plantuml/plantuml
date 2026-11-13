@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startchart
+pie "Product X" [Calcium: 42.96, Potassium: 50.05 #DC3912, Magnesium: 10.01, Iron: 5] labels percent donut 40%
+legend right
+@endchart

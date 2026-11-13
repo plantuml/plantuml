@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="432px" preserveAspectRatio="none" style="width:415px;height:432px;background:#FFFFFF;" version="1.1" viewBox="0 0 415 432" width="415px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="68.6" x="172.362" y="30.889">Team Skills</text>
+    </g>
+    <rect fill="#36C" height="12" style="stroke:#36C;stroke-width:1;" width="12" x="139.087" y="388"/>
+    <text fill="#000" font-size="14" textLength="43.575" x="156.087" y="397.889">Team 1</text>
+    <rect fill="#FF7F0E" height="12" style="stroke:#FF7F0E;stroke-width:1;" width="12" x="214.662" y="388"/>
+    <text fill="#000" font-size="14" textLength="43.575" x="231.662" y="397.889">Team 2</text>
+    <polygon fill="none" points="218.557,199,245.187,218.348,235.015,249.652,202.099,249.652,191.928,218.348" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="218.557,171,271.816,209.695,251.473,272.305,185.641,272.305,165.298,209.695" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="218.557,143,298.446,201.043,267.931,294.957,169.183,294.957,138.669,201.043" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="218.557,115,325.076,192.39,284.389,317.61,152.725,317.61,112.039,192.39" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="218.557,87,351.705,183.738,300.847,340.262,136.267,340.262,85.409,183.738" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="218.557" x2="218.557" y1="227" y2="87"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="206.088" y="75.889">Dev</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="218.557" x2="351.705" y1="227" y2="183.738"/>
+    <text fill="#000" font-size="14" textLength="25.638" x="358.686" y="182.991">Ops</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="218.557" x2="300.847" y1="227" y2="340.262"/>
+    <text fill="#000" font-size="14" textLength="20.213" x="301.384" y="356.287">QA</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="218.557" x2="136.267" y1="227" y2="340.262"/>
+    <text fill="#000" font-size="14" textLength="43.663" x="96.902" y="356.287">Design</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="218.557" x2="85.409" y1="227" y2="183.738"/>
+    <text fill="#000" font-size="14" textLength="49" x="30" y="182.991">Support</text>
+    <polygon fill="#36C" fill-opacity="0.251" points="218.557,115,298.446,201.043,300.847,340.262,185.641,272.305,112.039,192.39" style="stroke:#36C;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="218.557" cy="115" fill="#36C" rx="3" ry="3" style="stroke:#36C;stroke-width:1;"/>
+    <ellipse cx="298.446" cy="201.043" fill="#36C" rx="3" ry="3" style="stroke:#36C;stroke-width:1;"/>
+    <ellipse cx="300.847" cy="340.262" fill="#36C" rx="3" ry="3" style="stroke:#36C;stroke-width:1;"/>
+    <ellipse cx="185.641" cy="272.305" fill="#36C" rx="3" ry="3" style="stroke:#36C;stroke-width:1;"/>
+    <ellipse cx="112.039" cy="192.39" fill="#36C" rx="3" ry="3" style="stroke:#36C;stroke-width:1;"/>
+    <polygon fill="#FF7F0E" fill-opacity="0.251" points="218.557,87,298.446,201.043,251.473,272.305,152.725,317.61,191.928,218.348" style="stroke:#FF7F0E;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="218.557" cy="87" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="214.663" y="77.889">5</text>
+    <ellipse cx="298.446" cy="201.043" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="303.962" y="200.914">3</text>
+    <ellipse cx="251.473" cy="272.305" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="253.395" y="286.711">2</text>
+    <ellipse cx="152.725" cy="317.61" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="143.016" y="332.016">4</text>
+    <ellipse cx="191.928" cy="218.348" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="178.624" y="218.219">1</text>
+    <text fill="#000" font-size="14" x="221.557" y="209.889">1</text>
+    <text fill="#000" font-size="14" x="221.557" y="181.889">2</text>
+    <text fill="#000" font-size="14" x="221.557" y="153.889">3</text>
+    <text fill="#000" font-size="14" x="221.557" y="125.889">4</text>
+    <text fill="#000" font-size="14" x="221.557" y="97.889">5</text>
+  </g>
+</svg>

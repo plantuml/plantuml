@@ -196,6 +196,8 @@ public enum SName {
 	line, //
 	area, //
 	scatter, //
+	pie, //
+	radar, //
 	axis, //
 	hAxis, //
 	vAxis, //

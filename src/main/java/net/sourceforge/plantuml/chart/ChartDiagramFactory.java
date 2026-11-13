@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.chart;
 import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.chart.command.CommandChartAAxis;
 import net.sourceforge.plantuml.chart.command.CommandChartAnnotation;
 import net.sourceforge.plantuml.chart.command.CommandChartArea;
 import net.sourceforge.plantuml.chart.command.CommandChartBar;
@@ -44,6 +45,9 @@ import net.sourceforge.plantuml.chart.command.CommandChartHAxis;
 import net.sourceforge.plantuml.chart.command.CommandChartLegend;
 import net.sourceforge.plantuml.chart.command.CommandChartLine;
 import net.sourceforge.plantuml.chart.command.CommandChartOrientation;
+import net.sourceforge.plantuml.chart.command.CommandChartPie;
+import net.sourceforge.plantuml.chart.command.CommandChartRAxis;
+import net.sourceforge.plantuml.chart.command.CommandChartRadar;
 import net.sourceforge.plantuml.chart.command.CommandChartScatter;
 import net.sourceforge.plantuml.chart.command.CommandChartStackMode;
 import net.sourceforge.plantuml.chart.command.CommandChartVAxis;
@@ -70,6 +74,10 @@ public class ChartDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandChartLine());
 		cmds.add(new CommandChartArea());
 		cmds.add(new CommandChartScatter());
+		cmds.add(new CommandChartPie());
+		cmds.add(new CommandChartRadar());
+		cmds.add(new CommandChartAAxis());
+		cmds.add(new CommandChartRAxis());
 		cmds.add(new CommandChartLegend());
 		cmds.add(new CommandChartStackMode());
 		cmds.add(new CommandChartOrientation());

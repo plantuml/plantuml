@@ -1,0 +1,8 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+pie [A: 1, B: 2]
+pie [C: 3, D: 4]
+@endchart

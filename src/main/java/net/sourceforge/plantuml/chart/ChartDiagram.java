@@ -36,6 +36,8 @@ package net.sourceforge.plantuml.chart;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
@@ -70,6 +72,12 @@ public class ChartDiagram extends TitledDiagram {
 		VERTICAL, HORIZONTAL
 	}
 
+	// The family of a keyword: a chart is either drawn on cartesian axes, or is a pie, or a
+	// radar. POLAR is a keyword shared by a pie and a radar (a-axis)
+	public enum Kind {
+		CARTESIAN, PIE, RADAR, POLAR
+	}
+
 	private final List<String> xAxisLabels = new ArrayList<>();
 	private String xAxisTitle;
 	private Integer xAxisTickSpacing;
@@ -85,6 +93,12 @@ public class ChartDiagram extends TitledDiagram {
 	private StackMode stackMode = StackMode.GROUPED;
 	private Orientation orientation = Orientation.VERTICAL;
 	private final List<ChartAnnotation> annotations = new ArrayList<>();
+	// Pie and radar: the categories around the circle (a-axis), and the radial scale (r-axis)
+	private final List<String> angularLabels = new ArrayList<>();
+	private final ChartAxis radialAxis = new ChartAxis();
+	private boolean radarCircleGrid;
+	private Kind kind;
+	private String kindKeyword;
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Chart Diagram");
@@ -95,8 +109,84 @@ public class ChartDiagram extends TitledDiagram {
 	}
 
 	private void drawMe(UGraphic ug) {
-		final ChartRenderer renderer = getRenderer();
-		renderer.drawU(ug);
+		if (kind == Kind.PIE)
+			getPieRenderer().drawU(ug);
+		else if (kind == Kind.RADAR)
+			getRadarRenderer().drawU(ug);
+		else
+			getRenderer().drawU(ug);
+	}
+
+	private XDimension2D calculateDimension(StringBounder stringBounder) {
+		if (kind == Kind.PIE)
+			return getPieRenderer().calculateDimension(stringBounder);
+		if (kind == Kind.RADAR)
+			return getRadarRenderer().calculateDimension(stringBounder);
+		return getRenderer().calculateDimension(stringBounder);
+	}
+
+	private PieRenderer getPieRenderer() {
+		return new PieRenderer(getSkinParam(), series.get(0), angularLabels, legendPosition);
+	}
+
+	private RadarRenderer getRadarRenderer() {
+		return new RadarRenderer(getSkinParam(), getRadarCategories(), getRadarValues(), series, getRadialAxis(),
+				radarCircleGrid, legendPosition);
+	}
+
+	// The categories around a radar: the a-axis labels, else the keys of the first series
+	// with keys, then the keys of the next ones not seen yet, else 1, 2, ..., n
+	private List<String> getRadarCategories() {
+		if (angularLabels.isEmpty() == false)
+			return angularLabels;
+		final List<String> result = new ArrayList<>();
+		for (ChartSeries s : series)
+			if (s.hasKeys())
+				for (String key : s.getKeys())
+					if (result.contains(key) == false)
+						result.add(key);
+		int count = 0;
+		for (ChartSeries s : series)
+			if (s.hasKeys() == false)
+				count = Math.max(count, s.getValues().size());
+		for (int i = result.size() + 1; i <= count; i++)
+			result.add(Integer.toString(i));
+		return result;
+	}
+
+	// The values of each radar series, one per category (null when missing)
+	private List<List<Double>> getRadarValues() {
+		final List<String> categories = getRadarCategories();
+		final List<List<Double>> result = new ArrayList<>();
+		for (ChartSeries s : series) {
+			final List<Double> values = new ArrayList<>();
+			for (int i = 0; i < categories.size(); i++)
+				values.add(null);
+			for (int i = 0; i < s.getValues().size(); i++) {
+				final int index = s.hasKeys() ? categories.indexOf(s.getKeys().get(i)) : i;
+				if (index >= 0 && index < values.size())
+					values.set(index, s.getValues().get(i));
+			}
+			result.add(values);
+		}
+		return result;
+	}
+
+	// Without an r-axis range, the radial scale goes from 0 to a round value above the data
+	private ChartAxis getRadialAxis() {
+		if (radialAxis.isAutoScale() == false)
+			return radialAxis;
+		double min = Double.POSITIVE_INFINITY;
+		double max = Double.NEGATIVE_INFINITY;
+		for (ChartSeries s : series)
+			for (Double value : s.getValues())
+				if (value != null) {
+					min = Math.min(min, value);
+					max = Math.max(max, value);
+				}
+		if (min > max)
+			return radialAxis;
+		return radialAxis.withNiceRange(min, max);
 	}
 
 	private ChartRenderer getRenderer() {
@@ -293,6 +383,94 @@ public class ChartDiagram extends TitledDiagram {
 
 	// Command methods
 
+	/**
+	 * Checks that a keyword can be used with the ones already written: a pie, a radar and the
+	 * cartesian keywords (bar, h-axis, orientation...) cannot be mixed. Returns an error, or
+	 * null when the keyword is accepted.
+	 */
+	public CommandExecutionResult checkKind(String keyword, Kind wanted) {
+		if (kind == null || kind == wanted || wanted == Kind.POLAR && (kind == Kind.PIE || kind == Kind.RADAR)) {
+			if (kind == null)
+				kindKeyword = keyword;
+			if (kind == null || kind == Kind.POLAR)
+				kind = wanted;
+			return null;
+		}
+		if (kind == Kind.POLAR && (wanted == Kind.PIE || wanted == Kind.RADAR)) {
+			kind = wanted;
+			kindKeyword = keyword;
+			return null;
+		}
+		return CommandExecutionResult.error("\"" + keyword + "\" cannot be used with \"" + kindKeyword + "\"");
+	}
+
+	public CommandExecutionResult setAngularLabels(List<String> labels) {
+		final CommandExecutionResult error = checkKind("a-axis", Kind.POLAR);
+		if (error != null)
+			return error;
+		for (ChartSeries s : series) {
+			final CommandExecutionResult unknown = checkKeys(s, labels);
+			if (unknown != null)
+				return unknown;
+		}
+		this.angularLabels.clear();
+		this.angularLabels.addAll(labels);
+		return CommandExecutionResult.ok();
+	}
+
+	// The keys of a radar series must be categories of the a-axis, when it is given
+	private static CommandExecutionResult checkKeys(ChartSeries s, List<String> labels) {
+		if (s.getType() != ChartSeries.SeriesType.RADAR || s.hasKeys() == false || labels.isEmpty())
+			return null;
+		for (String key : s.getKeys())
+			if (labels.contains(key) == false)
+				return CommandExecutionResult.error("\"" + key + "\" is not in a-axis");
+		return null;
+	}
+
+	public CommandExecutionResult setRadialAxis(Double min, Double max, Map<Double, String> customTicks,
+			Double tickSpacing, Boolean circleGrid) {
+		final CommandExecutionResult error = checkKind("r-axis", Kind.RADAR);
+		if (error != null)
+			return error;
+		if (min != null && max != null && min >= max)
+			return CommandExecutionResult.error("r-axis range must go from a lower to a higher value");
+		if (min != null)
+			radialAxis.setMin(min);
+		if (max != null)
+			radialAxis.setMax(max);
+		if (customTicks != null)
+			radialAxis.setCustomTicks(customTicks);
+		if (tickSpacing != null)
+			radialAxis.setTickSpacing(tickSpacing);
+		if (circleGrid != null)
+			radarCircleGrid = circleGrid;
+		return CommandExecutionResult.ok();
+	}
+
+	private CommandExecutionResult addPolarSeries(ChartSeries s) {
+		if (s.getType() == ChartSeries.SeriesType.PIE) {
+			if (series.isEmpty() == false)
+				return CommandExecutionResult.error("Only one pie is allowed in a chart");
+			boolean positive = false;
+			for (Double value : s.getValues())
+				if (value != null) {
+					if (value < 0)
+						return CommandExecutionResult.error("A pie cannot have a negative value: " + value);
+					if (value > 0)
+						positive = true;
+				}
+			if (positive == false)
+				return CommandExecutionResult.error("A pie needs at least one value greater than 0");
+		} else {
+			final CommandExecutionResult unknown = checkKeys(s, angularLabels);
+			if (unknown != null)
+				return unknown;
+		}
+		series.add(s);
+		return CommandExecutionResult.ok();
+	}
+
 	public CommandExecutionResult setXAxisLabels(List<String> labels) {
 		if (labels.isEmpty() == false && xAxis.isAutoScale() && hasCoordinatePairs())
 			return CommandExecutionResult.error(
@@ -370,6 +548,16 @@ public class ChartDiagram extends TitledDiagram {
 	}
 
 	public CommandExecutionResult addSeries(ChartSeries series) {
+		final boolean polar = series.getType() == ChartSeries.SeriesType.PIE
+				|| series.getType() == ChartSeries.SeriesType.RADAR;
+		final Kind seriesKind = series.getType() == ChartSeries.SeriesType.PIE ? Kind.PIE
+				: series.getType() == ChartSeries.SeriesType.RADAR ? Kind.RADAR : Kind.CARTESIAN;
+		final CommandExecutionResult error = checkKind(series.getType().name().toLowerCase(Locale.ROOT), seriesKind);
+		if (error != null)
+			return error;
+		if (polar)
+			return addPolarSeries(series);
+
 		// Validation for coordinate-pair notation
 		if (series.hasExplicitXValues()) {
 			// Coordinate pairs only allowed for line and scatter charts
@@ -507,7 +695,7 @@ public class ChartDiagram extends TitledDiagram {
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return getRenderer().calculateDimension(stringBounder);
+				return ChartDiagram.this.calculateDimension(stringBounder);
 			}
 		};
 	}

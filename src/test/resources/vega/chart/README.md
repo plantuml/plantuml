@@ -24,6 +24,9 @@ Provide requirement-based non-regression tests for the [chart diagram](../../../
 | R11 | Horizontal orientation |
 | R12 | Short series title without quotes |
 | R13 | Zero values |
+| R15 | Pie (`pie`, `a-axis`, `labels`, `percent`, `donut`) |
+| R16 | Radar (`radar`, `a-axis`, `r-axis`) |
+| R17 | Errors of pie and radar |
 
 File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this directory.
 
@@ -99,6 +102,23 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R13.02 | `R13.02-zero-value-horizontal.puml` | Same chart, horizontal |
 |  | R13.03 | `R13.03-zero-value-vertical-stacked.puml` | Stacked bars with a zero value, vertical |
 |  | R13.04 | `R13.04-zero-value-horizontal-stacked.puml` | Stacked bars with a zero value, horizontal |
+| R15 — Pie | R15.01 | `R15.01-pie-keyed.puml` | `pie [Dogs: 386, ...]`, names around the pie | [#3011](https://github.com/plantuml/plantuml/issues/3011)
+|  | R15.02 | `R15.02-pie-a-axis-percent-legend.puml` | Names from `a-axis`, `percent`, legend at the bottom |
+|  | R15.03 | `R15.03-pie-donut-labels-colors.puml` | `labels percent donut 40%`, a color per slice, legend right |
+|  | R15.04 | `R15.04-pie-single-value-donut.puml` | A single value: a whole ring, `donut` alone is 50% |
+|  | R15.05 | `R15.05-pie-quoted-keys-missing-zero.puml` | Quoted keys with `,` and `:`; zero and missing values give no slice |
+|  | R15.06 | `R15.06-pie-style-stereotype.puml` | Stereotype style on the pie, legend at the top |
+| R16 — Radar | R16.01 | `R16.01-radar-basic.puml` | Two series, by position and by key, `r-axis 0 --> 5 spacing 1` |
+|  | R16.02 | `R16.02-radar-keys-auto-scale-circle.puml` | Categories from the keys, automatic scale, `grid circle` |
+|  | R16.03 | `R16.03-radar-missing-value-custom-ticks.puml` | Missing value at the center, custom ticks, legend right |
+|  | R16.04 | `R16.04-radar-style.puml` | `radar` style: LineColor and transparent BackGroundColor |
+| R17 — Pie and radar errors | R17.01 | `R17.01-polar-error-pie-with-h-axis.puml` | Status 400: `"pie" cannot be used with "h-axis"` |
+|  | R17.02 | `R17.02-polar-error-two-pies.puml` | Status 400: only one pie in a chart |
+|  | R17.03 | `R17.03-polar-error-pie-negative.puml` | Status 400: negative value in a pie |
+|  | R17.04 | `R17.04-polar-error-radar-with-bar.puml` | Status 400: `"bar" cannot be used with "radar"` |
+|  | R17.05 | `R17.05-polar-error-unknown-key.puml` | Status 400: key not in `a-axis` |
+|  | R17.06 | `R17.06-polar-error-mixed-keys.puml` | Status 400: keyed and positional values mixed |
+|  | R17.07 | `R17.07-polar-error-r-axis-with-pie.puml` | Status 400: `"pie" cannot be used with "r-axis"` |
 
 > [!NOTE]
 > - R07.01 to R07.04 declare `expected-status: 400`: the parser rejects the chart or the renderer reports an error, and the error image is the reference.
@@ -115,6 +135,12 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 >  as one group, at the place of the first series of the group: in R10.04 the area `A2`, written after the bar, is still under it.
 > - R03: a grid line is drawn at each tick of the axis it belongs to, and only there:
 >  `h-axis ... grid` gives lines across the h-axis ticks, `v-axis ... grid` across the v-axis ticks, in both orientations.
+> - R15/R16: a pie or a radar takes its data as values (`[78, 21, 1]`) or keyed values (`[Nitrogen: 78, ...]`),
+>  each optionally followed by a color. The categories around the circle come from `a-axis`, else from the keys.
+>  Slices and spokes go clockwise from 12 o'clock. A pie and a radar cannot be mixed with each other, nor with the
+>  cartesian keywords (bar, line, area, scatter, h-axis, v-axis, orientation, stackMode, annotation): see R17.
+> - R16: the rings of a radar are always drawn, at the ticks of `r-axis`; `grid polygon` (default) or `grid circle`
+>  gives their shape. Without a style color, each series takes a default color, its inside translucent.
 > - R12: a series name is quoted (and may hold spaces) or a single word of letters, digits, `_`, `.` and `-`,
 >  separated from the keyword by a blank.
 

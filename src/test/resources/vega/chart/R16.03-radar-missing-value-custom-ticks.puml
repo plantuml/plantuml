@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startchart
+a-axis [Speed, Power, Range, Comfort]
+r-axis 0 --> 100 ticks [50: "Mid", 100: "Max"]
+radar Car [80, , 60, 90]
+radar Bike [40, 20, 30, 50]
+legend right
+@endchart

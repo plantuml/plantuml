@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="363px" preserveAspectRatio="none" style="width:341px;height:363px;background:#FFFFFF;" version="1.1" viewBox="0 0 341 363" width="341px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <polygon fill="none" points="170,164,194.249,206,145.751,206" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="170,136,218.497,220,121.503,220" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="170,108,242.746,234,97.254,234" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="170,80,266.995,248,73.005,248" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="170,52,291.244,262,48.756,262" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="170" x2="170" y1="192" y2="52"/>
+    <text fill="#000" font-size="14" x="165.319" y="40.889">A</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="170" x2="291.244" y1="192" y2="262"/>
+    <text fill="#000" font-size="14" x="297.545" y="273.389">B</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="170" x2="48.756" y1="192" y2="262"/>
+    <text fill="#000" font-size="14" x="32.358" y="273.389">C</text>
+    <polygon fill="none" points="170,87,230.622,227,48.756,262" style="stroke:#2E7D32;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="170" cy="87" fill="#2E7D32" rx="3" ry="3" style="stroke:#2E7D32;stroke-width:1;"/>
+    <ellipse cx="230.622" cy="227" fill="#2E7D32" rx="3" ry="3" style="stroke:#2E7D32;stroke-width:1;"/>
+    <ellipse cx="48.756" cy="262" fill="#2E7D32" rx="3" ry="3" style="stroke:#2E7D32;stroke-width:1;"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="173" y="174.889">0.8</text>
+    <text fill="#000" font-size="14" textLength="19.425" x="173" y="146.889">1.6</text>
+    <text fill="#000" font-size="14" textLength="19.425" x="173" y="118.889">2.4</text>
+    <text fill="#000" font-size="14" textLength="19.425" x="173" y="90.889">3.2</text>
+    <text fill="#000" font-size="14" x="173" y="62.889">4</text>
+  </g>
+</svg>

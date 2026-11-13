@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startchart
+a-axis [Nitrogen, Oxygen, Argon]
+pie "Air" [78, 21, 1] percent
+legend bottom
+@endchart

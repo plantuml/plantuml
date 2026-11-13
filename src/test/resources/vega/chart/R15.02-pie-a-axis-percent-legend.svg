@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="418px" preserveAspectRatio="none" style="width:400px;height:418px;background:#FFFFFF;" version="1.1" viewBox="0 0 400 418" width="400px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#1F77B4" height="12" style="stroke:#1F77B4;stroke-width:1;" width="12" x="60.244" y="331"/>
+    <text fill="#000" font-size="14" textLength="52.938" x="77.244" y="340.889">Nitrogen</text>
+    <rect fill="#FF7F0E" height="12" style="stroke:#FF7F0E;stroke-width:1;" width="12" x="145.181" y="331"/>
+    <text fill="#000" font-size="14" textLength="48.212" x="162.181" y="340.889">Oxygen</text>
+    <rect fill="#2CA02C" height="12" style="stroke:#2CA02C;stroke-width:1;" width="12" x="225.394" y="331"/>
+    <text fill="#000" font-size="14" textLength="37.363" x="242.394" y="340.889">Argon</text>
+    <path d="M170,30 A140,140 0 0 1 259.239,277.872 A140,140 0 0 1 32.48,143.767 L170,170 L170,30" fill="#1F77B4" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M32.48,143.767 A140,140 0 0 1 161.209,30.276 L170,170 L32.48,143.767" fill="#FF7F0E" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M161.209,30.276 A140,140 0 0 1 170,30 L170,170 L161.209,30.276" fill="#2CA02C" style="stroke:#FFF;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="28" x="214.006" y="244.006">78%</text>
+    <text fill="#000" font-size="14" textLength="28" x="95.821" y="105.629">21%</text>
+    <text fill="#000" font-size="14" textLength="20.213" x="157.035" y="82.934">1%</text>
+  </g>
+</svg>

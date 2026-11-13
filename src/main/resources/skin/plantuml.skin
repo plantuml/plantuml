@@ -564,6 +564,13 @@ chartDiagram {
 	line {
 		LineThickness 2
 	}
+	pie {
+		LineColor #FFFFFF
+		LineThickness 1.5
+	}
+	radar {
+		LineThickness 2
+	}
 }
 
 filesDiagram {

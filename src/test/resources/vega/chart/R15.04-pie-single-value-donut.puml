@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startchart
+pie [Done: 1] percent donut
+@endchart

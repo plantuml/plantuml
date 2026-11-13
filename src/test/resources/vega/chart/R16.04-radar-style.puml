@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startchart
+<style>
+chartDiagram {
+  radar {
+    LineColor #2E7D32
+    BackGroundColor transparent
+  }
+}
+</style>
+a-axis [A, B, C]
+radar [3, 2, 4]
+@endchart

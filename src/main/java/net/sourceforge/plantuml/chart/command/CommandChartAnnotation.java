@@ -97,6 +97,10 @@ public class CommandChartAnnotation extends SingleLineCommand2<ChartDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
+		final CommandExecutionResult kindError = diagram.checkKind("annotation", ChartDiagram.Kind.CARTESIAN);
+		if (kindError != null)
+			return kindError;
+
 		final String text = arg.get("TEXT", 0);
 		final String xPosStr = arg.get("XPOS", 0).trim();
 		final String yPosStr = arg.get("YPOS", 0).trim();

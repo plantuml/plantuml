@@ -76,6 +76,10 @@ public class CommandChartStackMode extends SingleLineCommand2<ChartDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
+		final CommandExecutionResult kindError = diagram.checkKind("stackMode", ChartDiagram.Kind.CARTESIAN);
+		if (kindError != null)
+			return kindError;
+
 		final String mode = arg.get("MODE", 0);
 
 		ChartDiagram.StackMode stackMode;

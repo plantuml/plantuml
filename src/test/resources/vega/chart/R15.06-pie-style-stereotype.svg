@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="485px" preserveAspectRatio="none" style="width:432px;height:485px;background:#FFFFFF;" version="1.1" viewBox="0 0 432 485" width="432px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#1F77B4" height="12" style="stroke:#1F77B4;stroke-width:1;" width="12" x="115.063" y="31"/>
+    <text fill="#000" font-size="14" x="132.063" y="40.889">A</text>
+    <rect fill="#FF7F0E" height="12" style="stroke:#FF7F0E;stroke-width:1;" width="12" x="156.425" y="31"/>
+    <text fill="#000" font-size="14" x="173.425" y="40.889">B</text>
+    <rect fill="#2CA02C" height="12" style="stroke:#2CA02C;stroke-width:1;" width="12" x="197.788" y="31"/>
+    <text fill="#000" font-size="14" x="214.788" y="40.889">C</text>
+    <path d="M170,64 A140,140 0 0 1 291.244,134 L170,204 L170,64" fill="#1F77B4" style="stroke:#333;stroke-width:3;"/>
+    <path d="M291.244,134 A140,140 0 0 1 170,344 L170,204 L291.244,134" fill="#FF7F0E" style="stroke:#333;stroke-width:3;"/>
+    <path d="M170,344 A140,140 0 0 1 170,64 L170,204 L170,344" fill="#2CA02C" style="stroke:#333;stroke-width:3;"/>
+    <text fill="#FFF" font-size="14" font-style="italic" textLength="39.637" x="195.681" y="129.081">16.7%</text>
+    <text fill="#FFF" font-size="14" font-style="italic" textLength="39.637" x="228.99" y="253.389">33.3%</text>
+    <text fill="#FFF" font-size="14" font-style="italic" textLength="28" x="65" y="207.889">50%</text>
+  </g>
+</svg>

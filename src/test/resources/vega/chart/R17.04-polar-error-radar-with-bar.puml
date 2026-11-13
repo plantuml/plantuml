@@ -1,0 +1,8 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+radar [1, 2, 3]
+bar [1, 2, 3]
+@endchart

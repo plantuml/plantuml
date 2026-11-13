@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startchart
+title Team Skills
+a-axis [Dev, Ops, QA, Design, Support]
+r-axis 0 --> 5 spacing 1
+radar "Team 1" [4, 3, 5, 2, 4] #3366CC
+radar "Team 2" [QA: 2, Dev: 5, Ops: 3, Design: 4, Support: 1] labels
+legend bottom
+@endchart
