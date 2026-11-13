@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startchart
+orientation horizontal
+v-axis [A, B, C]
+h-axis 0 --> 100 grid
+bar [10, 50, 90]
+@endchart

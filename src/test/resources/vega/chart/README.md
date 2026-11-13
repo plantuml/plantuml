@@ -52,6 +52,11 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 | R03 — Layout | R03.01 | `R03.01-layout-legend-bottom.puml` | Legend placed at the bottom |
 |  | R03.02 | `R03.02-layout-grid-both.puml` | Grid on both axes |
 |  | R03.03 | `R03.03-layout-grid-v-scatter.puml` | Grid on v-axis of a scatter chart |
+|  | R03.04 | `R03.04-layout-grid-h-categories.puml` | h-axis grid: one line per category, at its tick | [#2636](https://github.com/plantuml/plantuml/issues/2636)
+|  | R03.05 | `R03.05-layout-grid-v-ticks.puml` | v-axis grid: one line per v-axis tick (5 intervals) |
+|  | R03.06 | `R03.06-layout-grid-spacing-custom-ticks.puml` | Grid follows h-axis `spacing` and v-axis custom ticks |
+|  | R03.07 | `R03.07-layout-grid-horizontal-categories.puml` | Horizontal chart, `v-axis [A, B, C] grid` |
+|  | R03.08 | `R03.08-layout-grid-horizontal-values.puml` | Horizontal chart, `h-axis 0 --> 100 grid` |
 | R04 — Style | R04.01 | `R04.01-style-block.puml` | chartDiagram style applied |
 |  | R04.02 | `R04.02-style-stereotypes.puml` | Stereotype-based style on a bar |
 | R05 — Annotation | R05.01 | `R05.01-annotation-arrow.puml` | Annotation with arrow |
@@ -103,6 +108,8 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 >  split in five intervals of 1, 2, 3, 4, 5, 6 or 8 times a power of ten. Stacked bars and areas count by their sums,
 >  interpolated lines by their curve, arrow annotations get room above their point.
 > - R10 records current rendering for an open enhancement request.
+> - R03: a grid line is drawn at each tick of the axis it belongs to, and only there:
+>  `h-axis ... grid` gives lines across the h-axis ticks, `v-axis ... grid` across the v-axis ticks, in both orientations.
 > - R12.01 records the current behavior: `bar bar_title [...]` is a syntax error because the `NAME` pattern requires quotes.
 > Update its reference when unquoted titles are supported.
 

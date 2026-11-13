@@ -38,15 +38,10 @@
     <line style="stroke:#181818;stroke-width:0.5;" x1="470" x2="470" y1="360" y2="365"/>
     <text fill="#000" font-size="14" textLength="15.575" x="462.213" y="380.889">10</text>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
-    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="330" y2="330"/>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="300" y2="300"/>
-    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="270" y2="270"/>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="240" y2="240"/>
-    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="210" y2="210"/>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="180" y2="180"/>
-    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="150" y2="150"/>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="120" y2="120"/>
-    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="90" y2="90"/>
     <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="60" y2="60"/>
     <ellipse cx="110" cy="300" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
     <ellipse cx="190" cy="240" fill="#181818" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>

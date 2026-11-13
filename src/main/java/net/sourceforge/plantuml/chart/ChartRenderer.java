@@ -264,35 +264,10 @@ public class ChartRenderer {
 		// Draw axis line
 		ug.draw(ULine.vline(height));
 
-		// Get grid style
-		final Style gridStyle = skinParam.getCurrentStyleBuilder()
-			.getMergedStyle(getGridStyleSignature());
-
-		// Extract grid properties
-		HColor gridColor = gridStyle.value(PName.LineColor)
-			.asColor(skinParam.getIHtmlColorSet());
-		if (gridColor == null) {
-			// Fallback to default
-			try {
-				gridColor = skinParam.getIHtmlColorSet().getColor("#D0D0D0");
-			} catch (Exception e) {
-				gridColor = lineColor;
-			}
-		}
-		final double gridThickness = gridStyle.value(PName.LineThickness).asDouble();
-		final UStroke gridStroke = UStroke.withThickness(gridThickness);
-
-		// Use custom ticks if defined, otherwise use automatic ticks
+		// Grid lines are drawn by drawGridLines, at the same ticks
 		final StringBounder stringBounder = ug.getStringBounder();
 		for (Map.Entry<Double, String> tick : getTicks(axis)) {
 			final double y = height * (1.0 - tick.getKey());
-
-			// Draw grid lines if enabled (horizontal lines for Y axis)
-			// Skip if coordinate-pair mode (grid drawn separately in drawGridLines)
-			if (leftSide && yGridMode != ChartDiagram.GridMode.OFF && xAxis == null) {
-				final ULine gridLine = ULine.hline(width);
-				ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
-			}
 
 			// Draw tick
 			if (leftSide)
@@ -456,63 +431,8 @@ public class ChartRenderer {
 		if (!xAxisLabels.isEmpty()) {
 			final double categoryWidth = width / xAxisLabels.size();
 
-		// Get grid style
-		final Style gridStyle = skinParam.getCurrentStyleBuilder()
-			.getMergedStyle(getGridStyleSignature());
-
-		// Extract grid properties
-		HColor gridColor = gridStyle.value(PName.LineColor)
-			.asColor(skinParam.getIHtmlColorSet());
-		if (gridColor == null) {
-			// Fallback to default
-			try {
-				gridColor = skinParam.getIHtmlColorSet().getColor("#D0D0D0");
-			} catch (Exception e) {
-				gridColor = lineColor;
-			}
-		}
-		final double gridThickness = gridStyle.value(PName.LineThickness).asDouble();
-		final UStroke gridStroke = UStroke.withThickness(gridThickness);
-
 		// Determine which labels to show based on spacing
 		final int spacing = (xAxisTickSpacing != null && xAxisTickSpacing > 0) ? xAxisTickSpacing : 1;
-
-		// Draw vertical grid lines at category centers spanning the full plot height
-		// Grid lines should span from top of plot to bottom of plot
-		// The height parameter represents the full plot height
-		if (xGridMode != ChartDiagram.GridMode.OFF) {
-			// Calculate where the x-axis is positioned within the plot
-			// When axis is at bottom (all positive values), draw upward by full height
-			// When axis crosses zero, draw both up (to top) and down (to bottom)
-			final double distanceToTop;
-			final double distanceToBottom;
-
-			if (yAxis != null && yAxis.getMin() <= 0 && yAxis.getMax() >= 0) {
-				// Axis crosses zero - calculate distances to top and bottom
-				final double zeroRatio = (0 - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin());
-				distanceToTop = height * (1.0 - zeroRatio);
-				distanceToBottom = height * zeroRatio;
-			} else {
-				// Axis is at bottom (all positive) or top (all negative)
-				distanceToTop = height;
-				distanceToBottom = 0;
-			}
-
-			// Draw grid lines at category centers (where data points are positioned)
-			for (int i = 0; i < xAxisLabels.size(); i++) {
-				final double gridX = (i + 0.5) * categoryWidth;
-				// Draw line upward to top of plot
-				if (distanceToTop > 0) {
-					final ULine gridLineUp = ULine.vline(-distanceToTop);
-					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dx(gridX)).draw(gridLineUp);
-				}
-				// Draw line downward to bottom of plot
-				if (distanceToBottom > 0) {
-					final ULine gridLineDown = ULine.vline(distanceToBottom);
-					ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dx(gridX)).draw(gridLineDown);
-				}
-			}
-		}
 
 		// Draw ticks and labels at category centers
 		for (int i = 0; i < xAxisLabels.size(); i++) {
@@ -676,11 +596,18 @@ public class ChartRenderer {
 	}
 
 	private void drawGridLines(UGraphic ug, double plotWidth, double plotHeight, HColor lineColor, HColor fontColor) {
-		// Draw grid lines for coordinate-pair mode (numeric axes)
+		// Every grid line falls on a tick of its own axis (#2636). Here, as everywhere in
+		// this class, "x" is the category (or numeric h-) axis and "y" the value axis, whatever
+		// the orientation: ChartDiagram swaps the grid modes for a horizontal chart, so that
+		// "v-axis [A, B] grid" gives one line per category there too.
+		// - x grid: one line per labelled category (every "spacing" categories), at its
+		//   center, or one per tick of a numeric h-axis (coordinate pairs)
+		// - y grid: one line per tick of the value axis (custom ticks, "spacing", or the
+		//   five automatic intervals; a horizontal chart only draws the automatic ones)
 		// UGraphic ug is at plot origin (leftMargin, topMargin)
 
-		if (xAxis == null || yAxis == null)
-			return; // Only draw grids for coordinate-pair mode
+		if (yAxis == null)
+			return;
 
 		// Get grid style
 		final Style gridStyle = skinParam.getCurrentStyleBuilder()
@@ -699,49 +626,47 @@ public class ChartRenderer {
 		final double gridThickness = gridStyle.value(PName.LineThickness).asDouble();
 		final UStroke gridStroke = UStroke.withThickness(gridThickness);
 
-		// Draw vertical grid lines (h-axis)
-		if (xGridMode != ChartDiagram.GridMode.OFF && xAxis != null) {
-			final double range = xAxis.getMax() - xAxis.getMin();
-			final double tickInterval;
+		final UGraphic ugGrid = ug.apply(gridColor).apply(gridStroke);
+		final boolean horizontal = orientation == ChartDiagram.Orientation.HORIZONTAL;
 
-			if (xAxisTickSpacing != null && xAxisTickSpacing > 0) {
-				tickInterval = xAxisTickSpacing;
-			} else {
-				tickInterval = range / 10.0;
-			}
+		if (xGridMode != ChartDiagram.GridMode.OFF) {
+			if (xAxisLabels.isEmpty() == false) {
+				final int spacing = horizontal || xAxisTickSpacing == null || xAxisTickSpacing <= 0 ? 1
+						: xAxisTickSpacing;
+				final int count = xAxisLabels.size();
+				for (int i = 0; i < count; i += spacing)
+					if (horizontal)
+						ugGrid.apply(UTranslate.dy((i + 0.5) * plotHeight / count)).draw(ULine.hline(plotWidth));
+					else
+						ugGrid.apply(UTranslate.dx((i + 0.5) * plotWidth / count)).draw(ULine.vline(plotHeight));
+			} else if (xAxis != null && horizontal == false) {
+				final double range = xAxis.getMax() - xAxis.getMin();
+				final double tickInterval;
+				if (xAxisTickSpacing != null && xAxisTickSpacing > 0)
+					tickInterval = xAxisTickSpacing;
+				else
+					tickInterval = range / 10.0;
 
-			final double startValue = Math.floor(xAxis.getMin() / tickInterval) * tickInterval;
-
-			for (double value = startValue; value <= xAxis.getMax() + tickInterval * 0.01; value += tickInterval) {
-				if (value < xAxis.getMin() - tickInterval * 0.01 || value > xAxis.getMax() + tickInterval * 0.01)
-					continue;
-
-				final double x = xAxis.valueToPixel(value, 0, plotWidth);
-				final ULine gridLine = ULine.vline(plotHeight);
-				ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dx(x)).draw(gridLine);
+				// Same loop as the numeric ticks of drawXAxis
+				final double startValue = Math.floor(xAxis.getMin() / tickInterval) * tickInterval;
+				for (double value = startValue; value <= xAxis.getMax() + tickInterval * 0.01; value += tickInterval) {
+					if (value < xAxis.getMin() - tickInterval * 0.01 || value > xAxis.getMax() + tickInterval * 0.01)
+						continue;
+					final double x = xAxis.valueToPixel(value, 0, plotWidth);
+					ugGrid.apply(UTranslate.dx(x)).draw(ULine.vline(plotHeight));
+				}
 			}
 		}
 
-		// Draw horizontal grid lines (v-axis)
-		if (yGridMode != ChartDiagram.GridMode.OFF && yAxis != null) {
-			final double range = yAxis.getMax() - yAxis.getMin();
-			final double tickInterval;
-
-			if (yAxis.hasTickSpacing()) {
-				tickInterval = yAxis.getTickSpacing();
+		if (yGridMode != ChartDiagram.GridMode.OFF) {
+			if (horizontal) {
+				// Same positions as the ticks of drawYAxisHorizontally
+				final int numTicks = 5;
+				for (int i = 0; i <= numTicks; i++)
+					ugGrid.apply(UTranslate.dx(plotWidth * i / numTicks)).draw(ULine.vline(plotHeight));
 			} else {
-				tickInterval = range / 10.0;
-			}
-
-			final double startValue = Math.ceil(yAxis.getMin() / tickInterval) * tickInterval;
-
-			for (double value = startValue; value <= yAxis.getMax() + tickInterval * 0.01; value += tickInterval) {
-				if (value < yAxis.getMin() - tickInterval * 0.01 || value > yAxis.getMax() + tickInterval * 0.01)
-					continue;
-
-				final double y = plotHeight * (1.0 - (value - yAxis.getMin()) / (yAxis.getMax() - yAxis.getMin()));
-				final ULine gridLine = ULine.hline(plotWidth);
-				ug.apply(gridColor).apply(gridStroke).apply(UTranslate.dy(y)).draw(gridLine);
+				for (Map.Entry<Double, String> tick : getTicks(yAxis))
+					ugGrid.apply(UTranslate.dy(plotHeight * (1.0 - tick.getKey()))).draw(ULine.hline(plotWidth));
 			}
 		}
 	}

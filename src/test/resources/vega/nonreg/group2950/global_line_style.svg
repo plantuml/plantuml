@@ -24,15 +24,10 @@
     <line style="stroke:#181818;stroke-width:0.5;" x1="420" x2="420" y1="360" y2="365"/>
     <text fill="#000" font-size="14" x="416.106" y="380.889">4</text>
     <line style="stroke:#0B0;stroke-width:4.2;" x1="70" x2="470" y1="360" y2="360"/>
-    <line style="stroke:#0B0;stroke-width:4.2;" x1="70" x2="470" y1="330" y2="330"/>
     <line style="stroke:#0B0;stroke-width:4.2;" x1="70" x2="470" y1="300" y2="300"/>
-    <line style="stroke:#0B0;stroke-width:4.2;" x1="70" x2="470" y1="270" y2="270"/>
     <line style="stroke:#0B0;stroke-width:4.2;" x1="70" x2="470" y1="240" y2="240"/>
-    <line style="stroke:#0B0;stroke-width:4.2;" x1="70" x2="470" y1="210" y2="210"/>
     <line style="stroke:#0B0;stroke-width:4.2;" x1="70" x2="470" y1="180" y2="180"/>
-    <line style="stroke:#0B0;stroke-width:4.2;" x1="70" x2="470" y1="150" y2="150"/>
     <line style="stroke:#0B0;stroke-width:4.2;" x1="70" x2="470" y1="120" y2="120"/>
-    <line style="stroke:#0B0;stroke-width:4.2;" x1="70" x2="470" y1="90" y2="90"/>
     <line style="stroke:#0B0;stroke-width:4.2;" x1="70" x2="470" y1="60" y2="60"/>
     <line style="stroke:#00F;stroke-width:6.2;" x1="120" x2="220" y1="330" y2="270"/>
     <line style="stroke:#00F;stroke-width:6.2;" x1="220" x2="320" y1="270" y2="210"/>

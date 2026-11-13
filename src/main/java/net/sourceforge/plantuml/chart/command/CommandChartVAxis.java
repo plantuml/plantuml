@@ -110,6 +110,13 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 		final String labelTopStr = arg.get("LABELTOP", 0);
 		final String gridStr = arg.get("GRID", 0);
 
+		// Enable grid if grid option is present (before any return: "v-axis [A, B] grid"
+		// asks for one line per category of a horizontal chart)
+		if (gridStr != null) {
+			// Both primary and secondary Y-axis use the same grid mode
+			diagram.setYGridMode(ChartDiagram.GridMode.MAJOR);
+		}
+
 		// If labels are provided, this is for horizontal bar chart mode
 		if (labelsStr != null) {
 			final List<String> labels = parseLabels(labelsStr);
@@ -188,12 +195,6 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 			} else {
 				diagram.getYAxis().setLabelPosition(ChartAxis.LabelPosition.TOP);
 			}
-		}
-
-		// Enable grid if grid option is present
-		if (gridStr != null) {
-			// Both primary and secondary Y-axis use the same grid mode
-			diagram.setYGridMode(ChartDiagram.GridMode.MAJOR);
 		}
 
 		return result;
