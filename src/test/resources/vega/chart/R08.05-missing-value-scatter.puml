@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startchart
+scatter [25,  , 50, 70]
+@endchart

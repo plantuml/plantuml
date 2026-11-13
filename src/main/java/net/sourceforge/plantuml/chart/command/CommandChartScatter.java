@@ -175,6 +175,11 @@ public class CommandChartScatter extends SingleLineCommand2<ChartDiagram> {
 
 		final String[] parts = data.split(",");
 		for (String part : parts) {
+			// An empty slot, as in [25, , 50], is a missing value: no marker is drawn
+			if (part.trim().isEmpty()) {
+				result.add(null);
+				continue;
+			}
 			try {
 				result.add(Double.parseDouble(part.trim()));
 			} catch (NumberFormatException e) {

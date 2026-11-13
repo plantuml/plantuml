@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startchart
+h-axis 0 -> 10
+scatter [25, , 50, 70] labels
+@endchart

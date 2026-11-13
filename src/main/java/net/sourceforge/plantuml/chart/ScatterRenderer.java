@@ -146,6 +146,9 @@ public class ScatterRenderer {
 
 			// Draw markers at data points (no connecting lines)
 			for (int i = 0; i < values.size(); i++) {
+				// A missing value (index-based data spread over an h-axis range) has no marker
+				if (values.get(i) == null)
+					continue;
 				final double xVal = xValues.get(i);
 				final double yVal = values.get(i);
 
@@ -165,6 +168,9 @@ public class ScatterRenderer {
 
 			// Draw markers at data points (no connecting lines)
 			for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
+				// A missing value leaves its category empty
+				if (values.get(i) == null)
+					continue;
 				final double value = values.get(i);
 				final double x = (i + 0.5) * categoryWidth;
 				final double y = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;

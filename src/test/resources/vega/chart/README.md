@@ -63,6 +63,8 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R08.02 | `R08.02-missing-value-interpolate.puml` | Missing value interpolated |
 |  | R08.03 | `R08.03-missing-value-interpolate-labels.puml` | Interpolate with inline colour and labels |
 |  | R08.04 | `R08.04-missing-values-interpolate-connect.puml` | Interpolate and connect over two missing values |
+|  | R08.05 | `R08.05-missing-value-scatter.puml` | Scatter with a missing value: no marker at index 2 | [#3008](https://github.com/plantuml/plantuml/issues/3008)
+|  | R08.06 | `R08.06-missing-value-scatter-h-axis-range.puml` | Same, values spread over `h-axis 0 -> 10`, with labels |
 | R09 — Default range | R09.01 | `R09.01-range-line-default.puml` | Line, default v range  | [#2956](https://github.com/plantuml/plantuml/issues/2956)
 |  | R09.02 | `R09.02-range-line-explicit.puml` | Line, explicit `v-axis 5 -> 40` |
 |  | R09.03 | `R09.03-range-line-above-100.puml` | Line, values above 100 |
