@@ -1,6 +1,5 @@
 ---
 output: svg
-expected-status: 400
 ---
 @startchart
 h-axis [1, 2, 3 ,4]

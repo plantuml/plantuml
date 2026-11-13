@@ -70,7 +70,7 @@ public class CommandChartArea extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "STEREO", "(\\<\\<.+?\\>\\>)")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf(1, "NAME", "\"([^\"]+)\"")), //
+				new RegexOptional(ChartSeriesName.regex()), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "DATA", "\\[(.*)\\]"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -98,7 +98,7 @@ public class CommandChartArea extends SingleLineCommand2<ChartDiagram> {
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 		final String stereo = arg.get("STEREO", 0);
-		final String name = arg.get("NAME", 0);
+		final String name = ChartSeriesName.get(arg);
 		final String data = arg.get("DATA", 0);
 		final String colorStr = arg.get("COLOR", 0);
 

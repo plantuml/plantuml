@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startchart
+h-axis [1, 2, 3 ,4]
+bar <<hot>> Sales-2024 [25, 62, 58, 70] #orange
+line Trend [20, 40, 60, 80] #red
+area Bg [10, 10, 10, 10]
+scatter Points [30, 50, 50, 60]
+legend right
+@endchart

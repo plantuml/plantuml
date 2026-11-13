@@ -92,7 +92,9 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R11.02 | `R11.02-horizontal-stacked.puml` | Horizontal stacked bars |
 |  | R11.03 | `R11.03-horizontal-negative-value.puml` | Horizontal bar with a negative value |
 |  | R11.04 | `R11.04-horizontal-area-legend-right.puml` | Horizontal areas with spacing and legend right |
-| R12 — Short title | R12.01 | `R12.01-short-title-without-quote.puml` | Status 400 today: the parser only accepts quoted series names (see notes) | Part 3. of [#2632](https://github.com/plantuml/plantuml/issues/2632)
+| R12 — Short title | R12.01 | `R12.01-short-title-without-quote.puml` | `bar bar_title [...]` names the series `bar_title` | Part 3. of [#2632](https://github.com/plantuml/plantuml/issues/2632)
+|  | R12.02 | `R12.02-short-title-all-series.puml` | Unquoted names on bar (with stereotype), line, area and scatter |
+|  | R12.03 | `R12.03-short-title-needs-blank.puml` | Status 400: `barfoo [1, 2]` is not a bar named `foo` |
 | R13 — Zero value | R13.01 | `R13.01-zero-value-vertical.puml` | Grouped bars with a zero value, vertical |
 |  | R13.02 | `R13.02-zero-value-horizontal.puml` | Same chart, horizontal |
 |  | R13.03 | `R13.03-zero-value-vertical-stacked.puml` | Stacked bars with a zero value, vertical |
@@ -113,8 +115,8 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 >  as one group, at the place of the first series of the group: in R10.04 the area `A2`, written after the bar, is still under it.
 > - R03: a grid line is drawn at each tick of the axis it belongs to, and only there:
 >  `h-axis ... grid` gives lines across the h-axis ticks, `v-axis ... grid` across the v-axis ticks, in both orientations.
-> - R12.01 records the current behavior: `bar bar_title [...]` is a syntax error because the `NAME` pattern requires quotes.
-> Update its reference when unquoted titles are supported.
+> - R12: a series name is quoted (and may hold spaces) or a single word of letters, digits, `_`, `.` and `-`,
+>  separated from the keyword by a blank.
 
 ## Execution notes
 
