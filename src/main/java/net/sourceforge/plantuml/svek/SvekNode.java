@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
+import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.Together;
 import net.sourceforge.plantuml.cruise.XNode;
@@ -115,6 +116,10 @@ public class SvekNode implements XNode {
 		if (dimImage == null)
 			this.dimImage = image.calculateDimension(stringBounder);
 		return dimImage;
+	}
+
+	public final LeafType getLeafType() {
+		return leaf == null ? null : leaf.getLeafType();
 	}
 
 	public final ShapeType getType() {
