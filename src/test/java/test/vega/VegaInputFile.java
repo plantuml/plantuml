@@ -303,14 +303,32 @@ public class VegaInputFile {
 			recordResult(VegaStatus.SKIPPED, System.currentTimeMillis() - startTime, e, allowFailure);
 			throw e;
 		} catch (Throwable e) {
+			final Throwable root = rootCause;
 			if (allowFailure) {
 				recordResult(VegaStatus.SKIPPED, System.currentTimeMillis() - startTime, e, allowFailure);
-				assumeTrue(false, "Known failure (allow-failure: true): " + getDisplayPath() + " - " + e.getMessage());
+				reportRootCause(root != null ? root : e);
+				final String message = "Known failure (allow-failure: true): " + getDisplayPath() + " - " + e.getMessage();
+				// The real error (the root cause, if any) is the cause, so that the JUnit
+				// report shows it instead of a bare "Assumption failed"
+				throw new TestAbortedException(message, root != null && root != e ? root : e);
 			} else {
 				recordResult(VegaStatus.FAIL, System.currentTimeMillis() - startTime, e, allowFailure);
+				reportRootCause(root != null ? root : e);
+				if (root != null && root != e)
+					e.addSuppressed(root);
 				throw e;
 			}
 		}
+	}
+
+	/**
+	 * The diagram catches its own internal errors (the image shows them), so the
+	 * root cause never reaches JUnit by itself: print it on stderr. Without a
+	 * root cause, the exception of the test itself is printed.
+	 */
+	private void reportRootCause(Throwable cause) {
+		System.err.println("[Vega] Root cause for " + getDisplayPath() + ":");
+		cause.printStackTrace();
 	}
 
 	/**
