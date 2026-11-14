@@ -76,7 +76,7 @@ public class CommandChartPie extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L77">				new RegexOptional(ChartSeriesName.regex()), //</span>
 <span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(1, &quot;DATA&quot;, &quot;\\[(.*)\\]&quot;), //
+				new RegexLeaf(1, &quot;DATA&quot;, ChartDataItems.BRACKETED), //
 				new RegexLeaf(1, &quot;OPTIONS&quot;, &quot;((?:\\s+(?:labels|percent|donut(?:\\s+[0-9.]+%)?))*)&quot;), //
 <span class="fc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L82">				RegexLeaf.end());</span>

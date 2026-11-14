@@ -92,7 +92,7 @@ public final class PieChart {
 <span class="fc" id="L92">			String name = null;</span>
 <span class="fc bfc" id="L93" title="All 2 branches covered.">			if (series.hasKeys())</span>
 <span class="fc" id="L94">				name = series.getKeys().get(i);</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			else if (i &lt; angularLabels.size())</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			else if (i &lt; angularLabels.size())</span>
 <span class="fc" id="L96">				name = angularLabels.get(i);</span>
 <span class="fc" id="L97">			slices.add(new Slice(name, value, i));</span>
 <span class="fc" id="L98">			sum += value;</span>

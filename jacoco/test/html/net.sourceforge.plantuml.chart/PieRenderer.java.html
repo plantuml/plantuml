@@ -161,8 +161,8 @@ public class PieRenderer {
 <span class="fc bfc" id="L161" title="All 2 branches covered.">		if (hasLegend())</span>
 <span class="fc" id="L162">			return bounds;</span>
 <span class="fc bfc" id="L163" title="All 2 branches covered.">		for (Slice slice : slices) {</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">			if (slice.name == null)</span>
-<span class="nc" id="L165">				continue;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">			if (slice.name == null)</span>
+<span class="fc" id="L165">				continue;</span>
 <span class="fc" id="L166">			final XDimension2D dim = text(slice.name).calculateDimension(stringBounder);</span>
 <span class="fc" id="L167">			final UTranslate pos = namePosition(slice, dim);</span>
 <span class="fc" id="L168">			bounds[0] = Math.min(bounds[0], pos.getDx());</span>
@@ -236,7 +236,7 @@ public class PieRenderer {
 <span class="fc" id="L236">		drawLabels(ugCenter);</span>
 <span class="fc bfc" id="L237" title="All 2 branches covered.">		if (hasLegend() == false)</span>
 <span class="fc bfc" id="L238" title="All 2 branches covered.">			for (Slice slice : slices)</span>
-<span class="pc bpc" id="L239" title="1 of 2 branches missed.">				if (slice.name != null) {</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">				if (slice.name != null) {</span>
 <span class="fc" id="L240">					final TextBlock text = text(slice.name);</span>
 <span class="fc" id="L241">					text.drawU(ugCenter.apply(namePosition(slice, text.calculateDimension(stringBounder))));</span>
 				}

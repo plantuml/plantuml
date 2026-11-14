@@ -76,7 +76,7 @@ public class CommandChartRadar extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
 <span class="fc" id="L77">				new RegexOptional(ChartSeriesName.regex()), //</span>
 <span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(1, &quot;DATA&quot;, &quot;\\[(.*)\\]&quot;), //
+				new RegexLeaf(1, &quot;DATA&quot;, ChartDataItems.BRACKETED), //
 <span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;COLOR&quot;, &quot;#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)&quot;)), //
 				new RegexOptional( //
@@ -101,8 +101,8 @@ public class CommandChartRadar extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc" id="L101">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
 <span class="fc" id="L102">		final ChartDataItems data = ChartDataItems.parse(arg.get(&quot;DATA&quot;, 0),</span>
 <span class="fc" id="L103">				diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (data.getError() != null)</span>
-<span class="nc" id="L105">			return CommandExecutionResult.error(data.getError());</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (data.getError() != null)</span>
+<span class="fc" id="L105">			return CommandExecutionResult.error(data.getError());</span>
 
 <span class="fc bfc" id="L107" title="All 2 branches covered.">		final String seriesName = name != null ? name : &quot;radar&quot; + diagram.getSeries().size();</span>
 <span class="fc" id="L108">		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.RADAR, data.getValues());</span>
