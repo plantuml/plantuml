@@ -34,10 +34,8 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
@@ -57,172 +55,113 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandChartScatter extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
-<span class="fc" id="L60">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;scatter&quot;);</span>
+<span class="fc" id="L58">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;scatter&quot;);</span>
 
 	public CommandChartScatter() {
-<span class="fc" id="L63">		super(false, getRegexConcat());</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L61">		super(false, getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L67">		return RegexConcat.build(CommandChartScatter.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">		return RegexConcat.build(CommandChartScatter.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;scatter&quot;), //
-<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;STEREO&quot;, &quot;(\\&lt;\\&lt;.+?\\&gt;\\&gt;)&quot;)), //
+<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				new RegexOptional(ChartSeriesName.regex()), //</span>
 <span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L73">				new RegexOptional(ChartSeriesName.regex()), //</span>
+				new RegexLeaf(1, &quot;DATA&quot;, ChartDataItems.BRACKETED), //
 <span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(1, &quot;DATA&quot;, &quot;\\[(.*)\\]&quot;), //
-<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;COLOR&quot;, &quot;#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)&quot;)), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L80">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L78">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;V2&quot;, &quot;([vy]2)&quot;))), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L84">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L82">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;LABELS&quot;, &quot;(labels)&quot;))), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L88">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L86">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;MARKER&quot;, &quot;&lt;&lt;(circle|square|triangle)&gt;&gt;&quot;))), //
-<span class="fc" id="L90">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L91">				RegexLeaf.end());</span>
+<span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L89">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L97">		return null;</span>
+<span class="nc" id="L95">		return null;</span>
 	}
 
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L104">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L105">		final String name = ChartSeriesName.get(arg);</span>
-<span class="fc" id="L106">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="fc" id="L107">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="fc" id="L108">		final String markerStr = arg.get(&quot;MARKER&quot;, 0);</span>
+<span class="fc" id="L102">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L103">		final String name = ChartSeriesName.get(arg);</span>
+<span class="fc" id="L104">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="fc" id="L105">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L106">		final String markerStr = arg.get(&quot;MARKER&quot;, 0);</span>
 
-		// Check if data contains coordinate pairs (x,y) format
 		final ChartSeries series;
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		final String seriesName = name != null ? name : &quot;scatter&quot; + diagram.getSeries().size();</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		final String seriesName = name != null ? name : &quot;scatter&quot; + diagram.getSeries().size();</span>
 
-<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (data.contains(&quot;(&quot;)) {</span>
-			// Parse coordinate pairs
-<span class="fc" id="L116">			final List&lt;Double&gt; xValues = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L117">			final List&lt;Double&gt; yValues = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (!parseCoordinatePairs(data, xValues, yValues))</span>
-<span class="nc" id="L119">				return CommandExecutionResult.error(&quot;Invalid coordinate pair format in scatter data&quot;);</span>
+<span class="fc" id="L111">		final ChartCartesianData parsed = ChartCartesianData.parse(data, true);</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (parsed.getError() != null)</span>
+<span class="nc" id="L113">			return CommandExecutionResult.error(parsed.getError());</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (parsed.isPairs())</span>
+<span class="fc" id="L115">			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, parsed.getXValues(),</span>
+<span class="fc" id="L116">					parsed.getValues());</span>
+		else
+<span class="fc" id="L118">			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, parsed.getValues());</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (parsed.isKeyed())</span>
+<span class="fc" id="L120">			series.setKeys(parsed.getKeys());</span>
 
-<span class="fc" id="L121">			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, xValues, yValues);</span>
-<span class="fc" id="L122">		} else {</span>
-			// Parse traditional y-values only
-<span class="fc" id="L124">			final List&lt;Double&gt; values = parseValues(data);</span>
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (values == null)</span>
-<span class="nc" id="L126">				return CommandExecutionResult.error(&quot;Invalid number format in scatter data&quot;);</span>
-
-<span class="fc" id="L128">			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, values);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (stereo != null) {</span>
+<span class="fc" id="L123">			series.setStereotype(Stereotype.build(stereo));</span>
 		}
 
-<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (stereo != null) {</span>
-<span class="fc" id="L132">			series.setStereotype(Stereotype.build(stereo));</span>
-		}
-
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (colorStr != null) {</span>
-<span class="fc" id="L136">			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr);</span>
-<span class="fc" id="L137">			series.setColor(color);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (colorStr != null) {</span>
+<span class="fc" id="L127">			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr);</span>
+<span class="fc" id="L128">			series.setColor(color);</span>
 		}
 
 		// Set marker shape if specified
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (markerStr != null) {</span>
-<span class="nc bnc" id="L142" title="All 3 branches missed.">			switch (markerStr.toLowerCase()) {</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (markerStr != null) {</span>
+<span class="nc bnc" id="L133" title="All 3 branches missed.">			switch (markerStr.toLowerCase()) {</span>
 			case &quot;square&quot;:
-<span class="nc" id="L144">				series.setMarkerShape(ChartSeries.MarkerShape.SQUARE);</span>
-<span class="nc" id="L145">				break;</span>
+<span class="nc" id="L135">				series.setMarkerShape(ChartSeries.MarkerShape.SQUARE);</span>
+<span class="nc" id="L136">				break;</span>
 			case &quot;triangle&quot;:
-<span class="nc" id="L147">				series.setMarkerShape(ChartSeries.MarkerShape.TRIANGLE);</span>
-<span class="nc" id="L148">				break;</span>
+<span class="nc" id="L138">				series.setMarkerShape(ChartSeries.MarkerShape.TRIANGLE);</span>
+<span class="nc" id="L139">				break;</span>
 			case &quot;circle&quot;:
 			default:
-<span class="nc" id="L151">				series.setMarkerShape(ChartSeries.MarkerShape.CIRCLE);</span>
+<span class="nc" id="L142">				series.setMarkerShape(ChartSeries.MarkerShape.CIRCLE);</span>
 				break;
 			}
 		}
 
 		// Check if this scatter should use the secondary v-axis
-<span class="fc" id="L157">		final String secondaryAxisStr = arg.get(&quot;V2&quot;, 0);</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (secondaryAxisStr != null) {</span>
-<span class="nc" id="L159">			series.setUseSecondaryAxis(true);</span>
+<span class="fc" id="L148">		final String secondaryAxisStr = arg.get(&quot;V2&quot;, 0);</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (secondaryAxisStr != null) {</span>
+<span class="nc" id="L150">			series.setUseSecondaryAxis(true);</span>
 		}
 
 		// Check if labels keyword was present
-<span class="fc" id="L163">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
-<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (labelsStr != null) {</span>
-<span class="fc" id="L165">			series.setShowLabels(true);</span>
+<span class="fc" id="L154">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (labelsStr != null) {</span>
+<span class="fc" id="L156">			series.setShowLabels(true);</span>
 		}
 
-<span class="fc" id="L168">		return diagram.addSeries(series);</span>
-	}
-
-	private List&lt;Double&gt; parseValues(String data) {
-<span class="fc" id="L172">		final List&lt;Double&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L173" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
-<span class="nc" id="L174">			return result;</span>
-
-<span class="fc" id="L176">		final String[] parts = data.split(&quot;,&quot;);</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">		for (String part : parts) {</span>
-			// An empty slot, as in [25, , 50], is a missing value: no marker is drawn
-<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (part.trim().isEmpty()) {</span>
-<span class="fc" id="L180">				result.add(null);</span>
-<span class="fc" id="L181">				continue;</span>
-			}
-			try {
-<span class="fc" id="L184">				result.add(Double.parseDouble(part.trim()));</span>
-<span class="nc" id="L185">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L186">				return null;</span>
-<span class="fc" id="L187">			}</span>
-		}
-<span class="fc" id="L189">		return result;</span>
-	}
-
-	private boolean parseCoordinatePairs(String data, List&lt;Double&gt; xValues, List&lt;Double&gt; yValues) {
-<span class="pc bpc" id="L193" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
-<span class="nc" id="L194">			return false;</span>
-
-		// Match pattern: (x,y) or (x, y)
-		// Split by closing paren followed by comma and opening paren
-<span class="fc" id="L198">		final String cleaned = data.replaceAll(&quot;\\s+&quot;, &quot;&quot;); // Remove all whitespace</span>
-<span class="fc" id="L199">		final String[] pairs = cleaned.split(&quot;\\),\\(&quot;);</span>
-
-<span class="fc bfc" id="L201" title="All 2 branches covered.">		for (String pair : pairs) {</span>
-			// Clean up the pair - remove leading/trailing parens and brackets
-<span class="fc" id="L203">			String trimmedPair = pair.trim();</span>
-<span class="fc" id="L204">			trimmedPair = trimmedPair.replaceAll(&quot;^[\\[\\(]+&quot;, &quot;&quot;); // Remove leading [ or (</span>
-<span class="fc" id="L205">			trimmedPair = trimmedPair.replaceAll(&quot;[\\]\\)]+$&quot;, &quot;&quot;); // Remove trailing ] or )</span>
-
-<span class="fc" id="L207">			final String[] coords = trimmedPair.split(&quot;,&quot;);</span>
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">			if (coords.length != 2)</span>
-<span class="nc" id="L209">				return false;</span>
-
-			try {
-<span class="fc" id="L212">				final double x = Double.parseDouble(coords[0].trim());</span>
-<span class="fc" id="L213">				final double y = Double.parseDouble(coords[1].trim());</span>
-<span class="fc" id="L214">				xValues.add(x);</span>
-<span class="fc" id="L215">				yValues.add(y);</span>
-<span class="nc" id="L216">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L217">				return false;</span>
-<span class="fc" id="L218">			}</span>
-		}
-<span class="fc" id="L220">		return true;</span>
+<span class="fc" id="L159">		return diagram.addSeries(series);</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="fc" id="L225">		return FIRST_TOKENS;</span>
+<span class="fc" id="L164">		return FIRST_TOKENS;</span>
 	}
 
 }

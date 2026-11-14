@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -57,36 +56,36 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandChartBar extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
-<span class="fc" id="L60">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;bar&quot;);</span>
+<span class="fc" id="L59">	private static final Collection&lt;String&gt; FIRST_TOKENS = Arrays.asList(&quot;bar&quot;);</span>
 
 	public CommandChartBar() {
-<span class="fc" id="L63">		super(false, getRegexConcat());</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L62">		super(false, getRegexConcat());</span>
+<span class="fc" id="L63">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L67">		return RegexConcat.build(CommandChartBar.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">		return RegexConcat.build(CommandChartBar.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;bar&quot;), //
-<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;STEREO&quot;, &quot;(\\&lt;\\&lt;.+?\\&gt;\\&gt;)&quot;)), //
-<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L73">				new RegexOptional(ChartSeriesName.regex()), //</span>
-<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(1, &quot;DATA&quot;, &quot;\\[(.*)\\]&quot;), //
-<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				new RegexOptional(ChartSeriesName.regex()), //</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexLeaf(1, &quot;DATA&quot;, ChartDataItems.BRACKETED), //
+<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;COLOR&quot;, &quot;#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)&quot;)), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L80">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L79">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;LABELS&quot;, &quot;(labels)&quot;))), //
-<span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L83">				RegexLeaf.end());</span>
+<span class="fc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L82">				RegexLeaf.end());</span>
 	}
 	
 	@Override
 	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L89">		return null;</span>
+<span class="nc" id="L88">		return null;</span>
 	}
 
 
@@ -94,60 +93,42 @@ public class CommandChartBar extends SingleLineCommand2&lt;ChartDiagram&gt; {
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L97">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L98">		final String name = ChartSeriesName.get(arg);</span>
-<span class="fc" id="L99">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="fc" id="L100">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L96">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L97">		final String name = ChartSeriesName.get(arg);</span>
+<span class="fc" id="L98">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="fc" id="L99">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
 
-<span class="fc" id="L102">		final List&lt;Double&gt; values = parseValues(data);</span>
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (values == null)</span>
-<span class="nc" id="L104">			return CommandExecutionResult.error(&quot;Invalid number format in bar data&quot;);</span>
+<span class="fc" id="L101">		final ChartCartesianData parsed = ChartCartesianData.parse(data, false);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (parsed.getError() != null)</span>
+<span class="fc" id="L103">			return CommandExecutionResult.error(parsed.getError());</span>
+<span class="fc" id="L104">		final List&lt;Double&gt; values = parsed.getValues();</span>
 
 <span class="fc bfc" id="L106" title="All 2 branches covered.">		final String seriesName = name != null ? name : &quot;bar&quot; + diagram.getSeries().size();</span>
 <span class="fc" id="L107">		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.BAR, values);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (parsed.isKeyed())</span>
+<span class="fc" id="L109">			series.setKeys(parsed.getKeys());</span>
 
-<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (stereo != null) {</span>
-<span class="fc" id="L110">			series.setStereotype(Stereotype.build(stereo));</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (stereo != null) {</span>
+<span class="fc" id="L112">			series.setStereotype(Stereotype.build(stereo));</span>
 		}
 
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (colorStr != null) {</span>
-<span class="fc" id="L114">			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr);</span>
-<span class="fc" id="L115">			series.setColor(color);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (colorStr != null) {</span>
+<span class="fc" id="L116">			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr);</span>
+<span class="fc" id="L117">			series.setColor(color);</span>
 		}
 
 		// Check if LABELS keyword was present
-<span class="fc" id="L119">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (labelsStr != null) {</span>
-<span class="fc" id="L121">			series.setShowLabels(true);</span>
+<span class="fc" id="L121">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		if (labelsStr != null) {</span>
+<span class="fc" id="L123">			series.setShowLabels(true);</span>
 		}
 
-<span class="fc" id="L124">		return diagram.addSeries(series);</span>
-	}
-
-	private List&lt;Double&gt; parseValues(String data) {
-<span class="fc" id="L128">		final List&lt;Double&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L129" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
-<span class="nc" id="L130">			return result;</span>
-
-<span class="fc" id="L132">		final String[] parts = data.split(&quot;,&quot;);</span>
-<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (String part : parts) {</span>
-			// An empty slot, as in [25, , 50], is a missing value: it is not drawn
-<span class="fc bfc" id="L135" title="All 2 branches covered.">			if (part.trim().isEmpty()) {</span>
-<span class="fc" id="L136">				result.add(null);</span>
-<span class="fc" id="L137">				continue;</span>
-			}
-			try {
-<span class="fc" id="L140">				result.add(Double.parseDouble(part.trim()));</span>
-<span class="nc" id="L141">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L142">				return null;</span>
-<span class="fc" id="L143">			}</span>
-		}
-<span class="fc" id="L145">		return result;</span>
+<span class="fc" id="L126">		return diagram.addSeries(series);</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="fc" id="L150">		return FIRST_TOKENS;</span>
+<span class="fc" id="L131">		return FIRST_TOKENS;</span>
 	}
 
 }

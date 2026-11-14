@@ -157,8 +157,8 @@ public class CommandChartHAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc bfc" id="L157" title="All 2 branches covered.">		for (String part : parts) {</span>
 <span class="fc" id="L158">			String label = part.trim();</span>
 			// Remove quotes if present
-<span class="pc bpc" id="L160" title="3 of 4 branches missed.">			if (label.startsWith(&quot;\&quot;&quot;) &amp;&amp; label.endsWith(&quot;\&quot;&quot;))</span>
-<span class="nc" id="L161">				label = label.substring(1, label.length() - 1);</span>
+<span class="pc bpc" id="L160" title="1 of 4 branches missed.">			if (label.startsWith(&quot;\&quot;&quot;) &amp;&amp; label.endsWith(&quot;\&quot;&quot;))</span>
+<span class="fc" id="L161">				label = label.substring(1, label.length() - 1);</span>
 <span class="fc" id="L162">			result.add(label);</span>
 		}
 <span class="fc" id="L164">		return result;</span>

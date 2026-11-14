@@ -731,7 +731,7 @@ public class ChartRenderer {
 		// Render area series with stacking
 <span class="pc bpc" id="L732" title="1 of 2 branches missed.">		if (!areaSeries.isEmpty()) {</span>
 			// For now, assume all area series use the same axis (primary Y axis)
-<span class="pc bpc" id="L734" title="3 of 4 branches missed.">			final ChartAxis axis = areaSeries.get(0).isUseSecondaryAxis() &amp;&amp; y2Axis != null ? y2Axis : yAxis;</span>
+<span class="pc bpc" id="L734" title="1 of 4 branches missed.">			final ChartAxis axis = areaSeries.get(0).isUseSecondaryAxis() &amp;&amp; y2Axis != null ? y2Axis : yAxis;</span>
 <span class="fc" id="L735">			final AreaRenderer areaRenderer = new AreaRenderer(skinParam, plotWidth, plotHeight, xAxisLabels.size(), axis);</span>
 
 			// Each area lies on the previous ones

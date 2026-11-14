@@ -95,134 +95,145 @@ public class ChartSeries {
 
 	// The same series with the given x values, as if its values had been written as coordinate pairs
 	public ChartSeries withXValues(List&lt;Double&gt; xValues) {
-<span class="fc" id="L98">		final ChartSeries result = new ChartSeries(name, type, xValues, values);</span>
-<span class="fc" id="L99">		result.color = color;</span>
-<span class="fc" id="L100">		result.useSecondaryAxis = useSecondaryAxis;</span>
-<span class="fc" id="L101">		result.showLabels = showLabels;</span>
-<span class="fc" id="L102">		result.interpolate = interpolate;</span>
-<span class="fc" id="L103">		result.connect = connect;</span>
-<span class="fc" id="L104">		result.markerShape = markerShape;</span>
-<span class="fc" id="L105">		result.stereotype = stereotype;</span>
-<span class="fc" id="L106">		result.keys = keys;</span>
-<span class="fc" id="L107">		result.itemColors = itemColors;</span>
-<span class="fc" id="L108">		result.showPercent = showPercent;</span>
-<span class="fc" id="L109">		result.donutHole = donutHole;</span>
-<span class="fc" id="L110">		return result;</span>
+<span class="fc" id="L98">		return copyAttributesTo(new ChartSeries(name, type, xValues, values));</span>
+	}
+
+	// The same series with other values and no keys: the values of a keyed series put in the
+	// order of the categories, a missing one being null
+	public ChartSeries withValues(List&lt;Double&gt; newValues) {
+<span class="fc" id="L104">		final ChartSeries result = copyAttributesTo(new ChartSeries(name, type, newValues));</span>
+<span class="fc" id="L105">		result.keys = null;</span>
+<span class="fc" id="L106">		return result;</span>
+	}
+
+	private ChartSeries copyAttributesTo(ChartSeries result) {
+<span class="fc" id="L110">		result.color = color;</span>
+<span class="fc" id="L111">		result.useSecondaryAxis = useSecondaryAxis;</span>
+<span class="fc" id="L112">		result.showLabels = showLabels;</span>
+<span class="fc" id="L113">		result.interpolate = interpolate;</span>
+<span class="fc" id="L114">		result.connect = connect;</span>
+<span class="fc" id="L115">		result.markerShape = markerShape;</span>
+<span class="fc" id="L116">		result.stereotype = stereotype;</span>
+<span class="fc" id="L117">		result.keys = keys;</span>
+<span class="fc" id="L118">		result.itemColors = itemColors;</span>
+<span class="fc" id="L119">		result.showPercent = showPercent;</span>
+<span class="fc" id="L120">		result.donutHole = donutHole;</span>
+<span class="fc" id="L121">		return result;</span>
 	}
 
 	public String getName() {
-<span class="fc" id="L114">		return name;</span>
+<span class="fc" id="L125">		return name;</span>
 	}
 
 	public SeriesType getType() {
-<span class="fc" id="L118">		return type;</span>
+<span class="fc" id="L129">		return type;</span>
 	}
 
 	public List&lt;Double&gt; getValues() {
-<span class="fc" id="L122">		return values;</span>
+<span class="fc" id="L133">		return values;</span>
 	}
 
 	public List&lt;Double&gt; getXValues() {
-<span class="fc" id="L126">		return xValues;</span>
+<span class="fc" id="L137">		return xValues;</span>
 	}
 
 	public boolean hasExplicitXValues() {
-<span class="fc bfc" id="L130" title="All 2 branches covered.">		return xValues != null;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		return xValues != null;</span>
 	}
 
 	public HColor getColor() {
-<span class="fc" id="L134">		return color;</span>
+<span class="fc" id="L145">		return color;</span>
 	}
 
 	public void setColor(HColor color) {
-<span class="fc" id="L138">		this.color = color;</span>
-<span class="fc" id="L139">	}</span>
+<span class="fc" id="L149">		this.color = color;</span>
+<span class="fc" id="L150">	}</span>
 
 	public boolean isUseSecondaryAxis() {
-<span class="fc" id="L142">		return useSecondaryAxis;</span>
+<span class="fc" id="L153">		return useSecondaryAxis;</span>
 	}
 
 	public void setUseSecondaryAxis(boolean useSecondaryAxis) {
-<span class="fc" id="L146">		this.useSecondaryAxis = useSecondaryAxis;</span>
-<span class="fc" id="L147">	}</span>
+<span class="fc" id="L157">		this.useSecondaryAxis = useSecondaryAxis;</span>
+<span class="fc" id="L158">	}</span>
 
 	public boolean isShowLabels() {
-<span class="fc" id="L150">		return showLabels;</span>
+<span class="fc" id="L161">		return showLabels;</span>
 	}
 
 	public void setShowLabels(boolean showLabels) {
-<span class="fc" id="L154">		this.showLabels = showLabels;</span>
-<span class="fc" id="L155">	}</span>
+<span class="fc" id="L165">		this.showLabels = showLabels;</span>
+<span class="fc" id="L166">	}</span>
 
 	public boolean isInterpolate() {
-<span class="fc" id="L158">		return interpolate;</span>
+<span class="fc" id="L169">		return interpolate;</span>
 	}
 
 	public void setInterpolate(boolean interpolate) {
-<span class="fc" id="L162">		this.interpolate = interpolate;</span>
-<span class="fc" id="L163">	}</span>
+<span class="fc" id="L173">		this.interpolate = interpolate;</span>
+<span class="fc" id="L174">	}</span>
 
 	public boolean isConnect() {
-<span class="fc" id="L166">		return connect;</span>
+<span class="fc" id="L177">		return connect;</span>
 	}
 
 	public void setConnect(boolean connect) {
-<span class="fc" id="L170">		this.connect = connect;</span>
-<span class="fc" id="L171">	}</span>
+<span class="fc" id="L181">		this.connect = connect;</span>
+<span class="fc" id="L182">	}</span>
 
 	public MarkerShape getMarkerShape() {
-<span class="fc" id="L174">		return markerShape;</span>
+<span class="fc" id="L185">		return markerShape;</span>
 	}
 
 	public void setMarkerShape(MarkerShape markerShape) {
-<span class="nc" id="L178">		this.markerShape = markerShape;</span>
-<span class="nc" id="L179">	}</span>
+<span class="nc" id="L189">		this.markerShape = markerShape;</span>
+<span class="nc" id="L190">	}</span>
 
 	public Stereotype getStereotype() {
-<span class="fc" id="L182">		return stereotype;</span>
+<span class="fc" id="L193">		return stereotype;</span>
 	}
 
 	public void setStereotype(Stereotype stereotype) {
-<span class="fc" id="L186">		this.stereotype = stereotype;</span>
-<span class="fc" id="L187">	}</span>
+<span class="fc" id="L197">		this.stereotype = stereotype;</span>
+<span class="fc" id="L198">	}</span>
 
 	public List&lt;String&gt; getKeys() {
-<span class="fc" id="L190">		return keys;</span>
+<span class="fc" id="L201">		return keys;</span>
 	}
 
 	public boolean hasKeys() {
-<span class="fc bfc" id="L194" title="All 2 branches covered.">		return keys != null;</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">		return keys != null;</span>
 	}
 
 	public void setKeys(List&lt;String&gt; keys) {
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		this.keys = keys == null ? null : new ArrayList&lt;&gt;(keys);</span>
-<span class="fc" id="L199">	}</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		this.keys = keys == null ? null : new ArrayList&lt;&gt;(keys);</span>
+<span class="fc" id="L210">	}</span>
 
 	// The color written after the i-th value, or null
 	public HColor getItemColor(int i) {
-<span class="pc bpc" id="L203" title="1 of 4 branches missed.">		if (itemColors == null || i &gt;= itemColors.size())</span>
-<span class="fc" id="L204">			return null;</span>
-<span class="fc" id="L205">		return itemColors.get(i);</span>
+<span class="pc bpc" id="L214" title="1 of 4 branches missed.">		if (itemColors == null || i &gt;= itemColors.size())</span>
+<span class="fc" id="L215">			return null;</span>
+<span class="fc" id="L216">		return itemColors.get(i);</span>
 	}
 
 	public void setItemColors(List&lt;HColor&gt; itemColors) {
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		this.itemColors = itemColors == null ? null : new ArrayList&lt;&gt;(itemColors);</span>
-<span class="fc" id="L210">	}</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		this.itemColors = itemColors == null ? null : new ArrayList&lt;&gt;(itemColors);</span>
+<span class="fc" id="L221">	}</span>
 
 	public boolean isShowPercent() {
-<span class="fc" id="L213">		return showPercent;</span>
+<span class="fc" id="L224">		return showPercent;</span>
 	}
 
 	public void setShowPercent(boolean showPercent) {
-<span class="fc" id="L217">		this.showPercent = showPercent;</span>
-<span class="fc" id="L218">	}</span>
+<span class="fc" id="L228">		this.showPercent = showPercent;</span>
+<span class="fc" id="L229">	}</span>
 
 	public double getDonutHole() {
-<span class="fc" id="L221">		return donutHole;</span>
+<span class="fc" id="L232">		return donutHole;</span>
 	}
 
 	public void setDonutHole(double donutHole) {
-<span class="fc" id="L225">		this.donutHole = donutHole;</span>
-<span class="fc" id="L226">	}</span>
+<span class="fc" id="L236">		this.donutHole = donutHole;</span>
+<span class="fc" id="L237">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

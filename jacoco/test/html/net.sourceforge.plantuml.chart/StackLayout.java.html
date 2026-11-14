@@ -103,12 +103,12 @@ public final class StackLayout {
 <span class="fc" id="L103">			final List&lt;Boolean&gt; previous = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L104">			final List&lt;Double&gt; values = s.getValues();</span>
 <span class="fc bfc" id="L105" title="All 2 branches covered.">			for (int i = 0; i &lt; values.size(); i++) {</span>
-<span class="pc bpc" id="L106" title="1 of 4 branches missed.">				previous.add(i &lt; reached.size() &amp;&amp; reached.get(i));</span>
+<span class="fc bfc" id="L106" title="All 4 branches covered.">				previous.add(i &lt; reached.size() &amp;&amp; reached.get(i));</span>
 <span class="fc" id="L107">				final Double value = values.get(i);</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">				if (value == null) {</span>
-<span class="nc" id="L109">					base.add(null);</span>
-<span class="nc" id="L110">					top.add(null);</span>
-<span class="nc" id="L111">					continue;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">				if (value == null) {</span>
+<span class="fc" id="L109">					base.add(null);</span>
+<span class="fc" id="L110">					top.add(null);</span>
+<span class="fc" id="L111">					continue;</span>
 				}
 <span class="fc" id="L113">				final double from = get(totals, i);</span>
 <span class="fc" id="L114">				final double to = addAt(totals, i, value);</span>
@@ -116,7 +116,7 @@ public final class StackLayout {
 <span class="fc" id="L116">				top.add(to);</span>
 			}
 <span class="fc bfc" id="L118" title="All 2 branches covered.">			for (int i = 0; i &lt; values.size(); i++)</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">				if (values.get(i) != null) {</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">				if (values.get(i) != null) {</span>
 <span class="fc bfc" id="L120" title="All 2 branches covered.">					while (reached.size() &lt;= i)</span>
 <span class="fc" id="L121">						reached.add(false);</span>
 <span class="fc" id="L122">					reached.set(i, true);</span>
@@ -160,12 +160,12 @@ public final class StackLayout {
 <span class="fc" id="L160">			return null;</span>
 <span class="fc" id="L161">		final List&lt;Double&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L162" title="All 2 branches covered.">		for (int i = 0; i &lt; onPrevious.get(s).size(); i++)</span>
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">			result.add(onPrevious.get(s).get(i) ? get(bases.get(s), i) : null);</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">			result.add(onPrevious.get(s).get(i) ? get(bases.get(s), i) : null);</span>
 <span class="fc" id="L164">		return result;</span>
 	}
 
 	private static double get(List&lt;Double&gt; totals, int index) {
-<span class="pc bpc" id="L168" title="1 of 4 branches missed.">		if (index &gt;= totals.size() || totals.get(index) == null)</span>
+<span class="fc bfc" id="L168" title="All 4 branches covered.">		if (index &gt;= totals.size() || totals.get(index) == null)</span>
 <span class="fc" id="L169">			return 0;</span>
 <span class="fc" id="L170">		return totals.get(index);</span>
 	}

@@ -432,11 +432,11 @@ public final class Interp {
 <span class="fc" id="L432">					return run(code, f, globals, pc, sp, d);</span>
 <span class="fc" id="L433">				} catch (PyError pe) {</span>
 <span class="fc" id="L434">					e = pe;</span>
-<span class="nc" id="L435">				} catch (StackOverflowError so) {</span>
+<span class="fc" id="L435">				} catch (StackOverflowError so) {</span>
 					// A safety net for the JVM and TeaVM, whose stacks are small: maxDepth and the limits on the
 					// nesting of the data (PyOps.MAX_NESTING, Resolver.MAX_NESTING) already bound every recursion,
 					// which is all a port to a language that cannot recover from a stack overflow relies on.
-<span class="nc" id="L439">					e = PyOps.err(Types.RECURSION_ERROR, &quot;maximum recursion depth exceeded&quot;);</span>
+<span class="fc" id="L439">					e = PyOps.err(Types.RECURSION_ERROR, &quot;maximum recursion depth exceeded&quot;);</span>
 <span class="fc" id="L440">				}</span>
 <span class="fc" id="L441">				int fault = pcs[d] - 1;</span>
 <span class="fc" id="L442">				int h = findHandler(code, fault);</span>

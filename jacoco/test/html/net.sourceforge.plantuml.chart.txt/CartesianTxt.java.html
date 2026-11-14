@@ -90,7 +90,7 @@ final class CartesianTxt {
 	 */
 	static boolean isSupported(CartesianChart chart) {
 <span class="pc bpc" id="L92" title="2 of 6 branches missed.">		if (chart.getSeries().isEmpty() || chart.getCategories().isEmpty() || chart.hasCoordinatePairs()</span>
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">				|| chart.getValueAxis2() != null)</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">				|| chart.getValueAxis2() != null)</span>
 <span class="fc" id="L94">			return false;</span>
 <span class="fc bfc" id="L95" title="All 2 branches covered.">		for (ChartSeries s : chart.getSeries()) {</span>
 <span class="fc" id="L96">			final ChartSeries.SeriesType type = s.getType();</span>
@@ -167,8 +167,8 @@ final class CartesianTxt {
 <span class="fc bfc" id="L167" title="All 2 branches covered.">		for (int b = 0; b &lt; bars.size(); b++) {</span>
 <span class="fc" id="L168">			final List&lt;Double&gt; values = bars.get(b).getValues();</span>
 <span class="fc bfc" id="L169" title="All 2 branches covered.">			for (int c = 0; c &lt; Math.min(values.size(), categories.size()); c++) {</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">				if (values.get(c) == null)</span>
-<span class="nc" id="L171">					continue;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">				if (values.get(c) == null)</span>
+<span class="fc" id="L171">					continue;</span>
 <span class="fc bfc" id="L172" title="All 2 branches covered.">				final double from = stacked ? stack.getBase(b, c) : 0;</span>
 <span class="fc bfc" id="L173" title="All 2 branches covered.">				final double to = stacked ? stack.getTop(b, c) : values.get(c);</span>
 <span class="fc" id="L174">				final double lo = toUnits(axis, Math.min(from, to), PLOT_HEIGHT);</span>
@@ -331,8 +331,8 @@ final class CartesianTxt {
 <span class="fc bfc" id="L331" title="All 2 branches covered.">		for (int b = 0; b &lt; bars.size(); b++) {</span>
 <span class="fc" id="L332">			final List&lt;Double&gt; values = bars.get(b).getValues();</span>
 <span class="fc bfc" id="L333" title="All 2 branches covered.">			for (int c = 0; c &lt; Math.min(values.size(), categories.size()); c++) {</span>
-<span class="pc bpc" id="L334" title="1 of 2 branches missed.">				if (values.get(c) == null)</span>
-<span class="nc" id="L335">					continue;</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">				if (values.get(c) == null)</span>
+<span class="fc" id="L335">					continue;</span>
 <span class="pc bpc" id="L336" title="1 of 2 branches missed.">				final double from = stacked ? stack.getBase(b, c) : 0;</span>
 <span class="pc bpc" id="L337" title="1 of 2 branches missed.">				final double to = stacked ? stack.getTop(b, c) : values.get(c);</span>
 <span class="fc" id="L338">				final double lo = toUnits(axis, Math.min(from, to), PLOT_WIDTH);</span>

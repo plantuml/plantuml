@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChartCartesianData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart.command</a> &gt; <span class="el_source">ChartCartesianData.java</span></div><h1>ChartCartesianData.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart.command;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * The data of a bar, a line, an area or a scatter, written between brackets.
+ *
+ * Each item is a value, optionally preceded by a key, or a coordinate pair (x, y) for a line
+ * or a scatter:
+ * &lt;pre&gt;
+ * [10, 20, , 40]
+ * [Jan: 10, Feb: 20, &quot;Mar&quot;: 40]
+ * [(1, 2), (3, 4)]
+ * &lt;/pre&gt;
+ * An empty value, as in [4, , 5], is a missing value. The keys are categories of the h-axis
+ * (see ChartDiagram): either every value has a key, or none has. As for a pie, the syntax is lenient
+ * enough to accept JSON-like data: the items may be enclosed in brackets, braces or
+ * parentheses, values may be quoted with double or single quotes, and a coordinate pair may
+ * be written between brackets, braces or parentheses:
+ * &lt;pre&gt;
+ * {&quot;10&quot;, '20', 30}
+ * [[1, 2], [3, &quot;4&quot;]]
+ * &lt;/pre&gt;
+ */
+final class ChartCartesianData {
+
+<span class="fc" id="L62">	private final List&lt;Double&gt; values = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L63">	private final List&lt;Double&gt; xValues = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L64">	private final List&lt;String&gt; keys = new ArrayList&lt;&gt;();</span>
+	private boolean pairs;
+	private boolean keyed;
+	private String error;
+
+<span class="fc" id="L69">	private ChartCartesianData() {</span>
+<span class="fc" id="L70">	}</span>
+
+	static ChartCartesianData parse(String data, boolean pairsAllowed) {
+<span class="fc" id="L73">		final ChartCartesianData result = new ChartCartesianData();</span>
+<span class="fc" id="L74">		final String mismatch = ChartDataItems.checkDelimiters(data);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (mismatch != null)</span>
+<span class="fc" id="L76">			return result.fail(mismatch);</span>
+<span class="fc" id="L77">		data = ChartDataItems.stripDelimiters(data);</span>
+<span class="pc bpc" id="L78" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="nc" id="L79">			return result;</span>
+
+<span class="fc" id="L81">		final List&lt;String&gt; items = split(data, ',');</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (items == null)</span>
+<span class="fc" id="L83">			return result.fail(&quot;Unbalanced quotes or brackets in data&quot;);</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		for (int i = 0; i &lt; items.size(); i++) {</span>
+<span class="fc" id="L86">			String item = items.get(i).trim();</span>
+<span class="fc" id="L87">			final List&lt;String&gt; parts = split(item, ':');</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">			if (parts.size() &gt; 2)</span>
+<span class="nc" id="L89">				return result.fail(&quot;Too many ':' in \&quot;&quot; + item + &quot;\&quot;: quote the key&quot;);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			final String key = parts.size() == 2 ? ChartDataItems.unquote(parts.get(0).trim()) : null;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (key != null) {</span>
+<span class="fc" id="L92">				item = parts.get(1).trim();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">				if (key.isEmpty())</span>
+<span class="fc" id="L94">					return result.fail(&quot;Empty key before the value &quot; + item);</span>
+			}
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			if (i == 0)</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">				result.keyed = key != null;</span>
+<span class="fc bfc" id="L98" title="All 4 branches covered.">			else if ((key != null) != result.keyed)</span>
+<span class="fc" id="L99">				return result.fail(&quot;Either every value has a key (key: value), or none has&quot;);</span>
+<span class="fc" id="L100">			result.keys.add(key);</span>
+<span class="fc bfc" id="L101" title="All 4 branches covered.">			final boolean pair = item.isEmpty() == false &amp;&amp; ChartDataItems.isOpening(item.charAt(0));</span>
+<span class="fc bfc" id="L102" title="All 4 branches covered.">			if (pair &amp;&amp; key != null)</span>
+<span class="fc" id="L103">				return result.fail(&quot;A coordinate pair cannot have a key: \&quot;&quot; + items.get(i).trim() + &quot;\&quot;&quot;);</span>
+<span class="fc bfc" id="L104" title="All 4 branches covered.">			if (pair &amp;&amp; pairsAllowed == false)</span>
+<span class="fc" id="L105">				return result.fail(&quot;Coordinate pairs are not allowed here: \&quot;&quot; + item + &quot;\&quot;&quot;);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			if (i == 0)</span>
+<span class="fc" id="L107">				result.pairs = pair;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			else if (pair != result.pairs)</span>
+<span class="fc" id="L109">				return result.fail(&quot;Either every item is a coordinate pair (x, y), or none is&quot;);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			final String error = pair ? result.addPair(item) : result.addValue(item);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			if (error != null)</span>
+<span class="fc" id="L112">				return result.fail(error);</span>
+		}
+<span class="fc" id="L114">		return result;</span>
+	}
+
+	private ChartCartesianData fail(String message) {
+<span class="fc" id="L118">		this.error = message;</span>
+<span class="fc" id="L119">		return this;</span>
+	}
+
+	private String addValue(String item) {
+<span class="fc" id="L123">		final String text = ChartDataItems.unquote(item).trim();</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (text.isEmpty()) {</span>
+<span class="fc" id="L125">			values.add(null);</span>
+<span class="fc" id="L126">			return null;</span>
+		}
+<span class="fc" id="L128">		final Double value = parseNumber(text);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (value == null)</span>
+<span class="fc" id="L130">			return &quot;Invalid number \&quot;&quot; + text + &quot;\&quot;&quot;;</span>
+<span class="fc" id="L131">		values.add(value);</span>
+<span class="fc" id="L132">		return null;</span>
+	}
+
+	private String addPair(String item) {
+<span class="fc" id="L136">		final String mismatch = ChartDataItems.checkDelimiters(item);</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		if (mismatch != null)</span>
+<span class="fc" id="L138">			return mismatch.replace(&quot;around data&quot;, &quot;around a coordinate pair&quot;);</span>
+<span class="fc" id="L139">		final List&lt;String&gt; coords = split(ChartDataItems.stripDelimiters(item), ',');</span>
+<span class="pc bpc" id="L140" title="1 of 4 branches missed.">		if (coords == null || coords.size() != 2)</span>
+<span class="fc" id="L141">			return &quot;Invalid coordinate pair \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
+<span class="fc" id="L142">		final Double x = parseNumber(ChartDataItems.unquote(coords.get(0).trim()).trim());</span>
+<span class="fc" id="L143">		final Double y = parseNumber(ChartDataItems.unquote(coords.get(1).trim()).trim());</span>
+<span class="pc bpc" id="L144" title="2 of 4 branches missed.">		if (x == null || y == null)</span>
+<span class="nc" id="L145">			return &quot;Invalid coordinate pair \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
+<span class="fc" id="L146">		xValues.add(x);</span>
+<span class="fc" id="L147">		values.add(y);</span>
+<span class="fc" id="L148">		return null;</span>
+	}
+
+	private static Double parseNumber(String text) {
+		try {
+<span class="fc" id="L153">			return Double.parseDouble(text);</span>
+<span class="fc" id="L154">		} catch (NumberFormatException e) {</span>
+<span class="fc" id="L155">			return null;</span>
+		}
+	}
+
+	// Splits on a separator outside quotes and outside nested brackets; null when unbalanced
+	private static List&lt;String&gt; split(String s, char separator) {
+<span class="fc" id="L161">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L162">		final StringBuilder current = new StringBuilder();</span>
+<span class="fc" id="L163">		char quote = 0;</span>
+<span class="fc" id="L164">		int depth = 0;</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L166">			final char c = s.charAt(i);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">			if (quote != 0) {</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">				if (c == quote)</span>
+<span class="fc" id="L169">					quote = 0;</span>
+<span class="fc bfc" id="L170" title="All 6 branches covered.">			} else if (c == '&quot;' || (c == '\'' &amp;&amp; startsText(current))) {</span>
+<span class="fc" id="L171">				quote = c;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">			} else if (ChartDataItems.isOpening(c)) {</span>
+<span class="fc" id="L173">				depth++;</span>
+<span class="fc bfc" id="L174" title="All 6 branches covered.">			} else if (c == ']' || c == '}' || c == ')') {</span>
+<span class="fc" id="L175">				depth--;</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">				if (depth &lt; 0)</span>
+<span class="nc" id="L177">					return null;</span>
+<span class="fc bfc" id="L178" title="All 4 branches covered.">			} else if (c == separator &amp;&amp; depth == 0) {</span>
+<span class="fc" id="L179">				result.add(current.toString());</span>
+<span class="fc" id="L180">				current.setLength(0);</span>
+<span class="fc" id="L181">				continue;</span>
+			}
+<span class="fc" id="L183">			current.append(c);</span>
+		}
+<span class="pc bpc" id="L185" title="1 of 4 branches missed.">		if (quote != 0 || depth != 0)</span>
+<span class="fc" id="L186">			return null;</span>
+<span class="fc" id="L187">		result.add(current.toString());</span>
+<span class="fc" id="L188">		return result;</span>
+	}
+
+	// A single quote only opens a quoted text where a text starts, so that an apostrophe, as
+	// in Driver's: 5, needs no quoting
+	private static boolean startsText(StringBuilder current) {
+<span class="fc" id="L194">		final String before = current.toString().trim();</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		if (before.isEmpty())</span>
+<span class="fc" id="L196">			return true;</span>
+<span class="fc" id="L197">		final char last = before.charAt(before.length() - 1);</span>
+<span class="pc bpc" id="L198" title="1 of 6 branches missed.">		return last == ':' || last == ',' || ChartDataItems.isOpening(last);</span>
+	}
+
+		String getError() {
+<span class="fc" id="L202">		return error;</span>
+	}
+
+	// True when the items are coordinate pairs: the y are then in getValues()
+	boolean isPairs() {
+<span class="fc" id="L207">		return pairs;</span>
+	}
+
+	// True when every value has a key: see getKeys()
+	boolean isKeyed() {
+<span class="fc" id="L212">		return keyed;</span>
+	}
+
+	List&lt;String&gt; getKeys() {
+<span class="fc" id="L216">		return keys;</span>
+	}
+
+	List&lt;Double&gt; getValues() {
+<span class="fc" id="L220">		return values;</span>
+	}
+
+	List&lt;Double&gt; getXValues() {
+<span class="fc" id="L224">		return xValues;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
