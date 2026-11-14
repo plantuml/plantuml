@@ -1,0 +1,18 @@
+---
+output: preproc, svg
+expected-description: Chart Diagram
+---
+@startchart
+---
+title: Pets adopted by volunteers
+pets:
+  Dogs: 386
+  Cats: 85
+  Rats: 15
+---
+' EXPECT (preproc):
+' title Pets adopted by volunteers
+' pie [Dogs: 386, Cats: 85, Rats: 15]
+title !{puml.metadata["title"]}
+pie [!{", ".join(f"{k}: {v}" for k, v in puml.metadata["pets"].items())}]
+@endchart

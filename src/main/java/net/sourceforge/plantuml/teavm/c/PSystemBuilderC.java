@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.packetdiag.PacketDiagramFactory;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.regexdiagram.PSystemRegexFactory;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
@@ -134,7 +135,9 @@ public class PSystemBuilderC {
 	}
 
 	public Diagram createDiagram(String[] split) {
-		final List<StringLocated> rawSource = TextareaSource.create(split, "c");
+		final List<StringLocated> textarea = TextareaSource.create(split, "c");
+		// As BlockUml does: the YAML header is not part of the diagram, but Python can read it (puml.metadata)
+		final List<StringLocated> rawSource = ReadLineWithYamlHeader.removeYamlHeader(textarea);
 
 		final PathSystem pathSystem = PathSystem.fetch();
 		final Defines defines = Defines.createEmpty();
@@ -142,6 +145,7 @@ public class PSystemBuilderC {
 		final DefinitionsContainer definitions = null;
 
 		final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, rawSource.get(0));
+		timLoader.setYamlHeader(ReadLineWithYamlHeader.getYamlHeader(textarea));
 		timLoader.load(rawSource);
 		List<StringLocated> tmp = timLoader.getResultList();
 		Jaws.mutateExpands1(tmp);

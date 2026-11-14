@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="481px" preserveAspectRatio="none" style="width:395px;height:481px;background:#FFFFFF;" version="1.1" viewBox="0 0 395 481" width="395px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="11">
+      <text fill="#000" font-size="14" font-weight="700" textLength="157.938" x="90.531" y="30.889">Pets adopted by volunteers</text>
+    </g>
+    <path d="M170,88.263 A140,140 0 0 1 254.326,340.017 A140,140 0 0 1 35.374,189.847 L170,228.263 L170,88.263" fill="#1F77B4" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M35.374,189.847 A140,140 0 0 1 143.02,90.887 L170,228.263 L35.374,189.847" fill="#FF7F0E" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M143.02,90.887 A140,140 0 0 1 170,88.263 L170,228.263 L143.02,90.887" fill="#2CA02C" style="stroke:#FFF;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="253.843" y="357.476">Dogs</text>
+    <text fill="#000" font-size="14" textLength="28.787" x="44.348" y="116.57">Cats</text>
+    <text fill="#000" font-size="14" textLength="28.787" x="139.691" y="75.889">Rats</text>
+  </g>
+</svg>

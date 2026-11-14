@@ -688,8 +688,6 @@ These were considered and are **not** available today:
   header ([`puml.metadata`](PYTHON_STDFUNCTIONS.md#43-the-yaml-header-pumlmetadata)).
 - Looking at the laid-out diagram (positions and sizes of the participants):
   not planned, it would freeze the internals of PlantUML into a public API.
-- In the native (C) edition, the YAML header of a diagram is not removed from
-  the text yet, so `puml.metadata` is for the other editions.
 
 ## 14. For contributors
 

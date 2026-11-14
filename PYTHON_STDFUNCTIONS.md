@@ -256,8 +256,8 @@ Python, with the line inside the header when there is one:
 | `Invalid YAML header: ...` | wrong indentation, text without a key, a list inside a list, an inline map |
 | `The YAML header must be a map of keys and values` | the header is a list or a scalar |
 
-Not available yet: in the native (C) edition the header is not removed from
-the text, so `puml.metadata` is for the other editions.
+The header works the same in every edition (JAR, JavaScript and native C),
+including the editor of the browser.
 
 ### 4.4 Reading a file: `puml.read`
 

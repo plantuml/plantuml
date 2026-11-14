@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.packetdiag.PacketDiagramFactory;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.regexdiagram.PSystemRegexFactory;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
@@ -132,7 +133,9 @@ public class PSystemBuilderJs {
 
 	public Diagram createDiagram(String[] split) {
 		BrowserLog.consoleLog(PSystemBuilderJs.class, "createDiagram start");
-		final List<StringLocated> rawSource = TextareaSource.create(split, "textarea");
+		final List<StringLocated> textarea = TextareaSource.create(split, "textarea");
+		// As BlockUml does: the YAML header is not part of the diagram, but Python can read it (puml.metadata)
+		final List<StringLocated> rawSource = ReadLineWithYamlHeader.removeYamlHeader(textarea);
 
 		final PathSystem pathSystem = PathSystem.fetch();
 		final Defines defines = Defines.createEmpty();
@@ -142,6 +145,7 @@ public class PSystemBuilderJs {
 		BrowserLog.consoleLog(PSystemBuilderJs.class, "wip3");
 		final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, rawSource.get(0));
 		BrowserLog.consoleLog(PSystemBuilderJs.class, "wip4");
+		timLoader.setYamlHeader(ReadLineWithYamlHeader.getYamlHeader(textarea));
 		timLoader.load(rawSource);
 		BrowserLog.consoleLog(PSystemBuilderJs.class, "createDiagram ok");
 		List<StringLocated> tmp = timLoader.getResultList();
