@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+skinparam ObjectStereotypeFontColor blue
+skinparam ObjectStereotypeFontSize 18
+object "Obj" as o <<entity>>
+map "Map" as m <<cfg>> {
+  k => v
+}
+json "Json" as j <<data>> {
+  "a": 1
+}
+@enduml
