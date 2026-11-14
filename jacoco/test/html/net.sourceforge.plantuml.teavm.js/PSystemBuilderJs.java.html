@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.packetdiag.PacketDiagramFactory;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.regexdiagram.PSystemRegexFactory;
 import net.sourceforge.plantuml.salt.PSystemSaltFactory;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagramFactory;
@@ -88,138 +89,141 @@ import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 
 public class PSystemBuilderJs {
 
-<span class="nc" id="L91">	private final static PSystemBuilderJs singleton = new PSystemBuilderJs();</span>
+<span class="fc" id="L92">	private final static PSystemBuilderJs singleton = new PSystemBuilderJs();</span>
 
-<span class="nc" id="L93">	private final List&lt;PSystemFactory&gt; factories = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L94">	private final List&lt;PSystemFactory&gt; factories = new ArrayList&lt;&gt;();</span>
 	private PSystemFactory lastFactory;
 
-<span class="nc" id="L96">	private PSystemBuilderJs() {</span>
-<span class="nc" id="L97">		factories.add(new SequenceDiagramFactory());</span>
-<span class="nc" id="L98">		factories.add(new ClassDiagramFactory());</span>
-<span class="nc" id="L99">		factories.add(new ActivityDiagramFactory());</span>
-<span class="nc" id="L100">		factories.add(new DescriptionDiagramFactory());</span>
-<span class="nc" id="L101">		factories.add(new StateDiagramFactory());</span>
-<span class="nc" id="L102">		factories.add(new ActivityDiagramFactory3());</span>
-<span class="nc" id="L103">		factories.add(new PSystemVersionFactory());</span>
-<span class="nc" id="L104">		factories.add(new PSystemSaltFactory());</span>
-<span class="nc" id="L105">		factories.add(new GanttDiagramFactory());</span>
-<span class="nc" id="L106">		factories.add(new MindMapDiagramFactory());</span>
-<span class="nc" id="L107">		factories.add(new WBSDiagramFactory());</span>
-<span class="nc" id="L108">		factories.add(new NwDiagramFactory());</span>
+<span class="fc" id="L97">	private PSystemBuilderJs() {</span>
+<span class="fc" id="L98">		factories.add(new SequenceDiagramFactory());</span>
+<span class="fc" id="L99">		factories.add(new ClassDiagramFactory());</span>
+<span class="fc" id="L100">		factories.add(new ActivityDiagramFactory());</span>
+<span class="fc" id="L101">		factories.add(new DescriptionDiagramFactory());</span>
+<span class="fc" id="L102">		factories.add(new StateDiagramFactory());</span>
+<span class="fc" id="L103">		factories.add(new ActivityDiagramFactory3());</span>
+<span class="fc" id="L104">		factories.add(new PSystemVersionFactory());</span>
+<span class="fc" id="L105">		factories.add(new PSystemSaltFactory());</span>
+<span class="fc" id="L106">		factories.add(new GanttDiagramFactory());</span>
+<span class="fc" id="L107">		factories.add(new MindMapDiagramFactory());</span>
+<span class="fc" id="L108">		factories.add(new WBSDiagramFactory());</span>
+<span class="fc" id="L109">		factories.add(new NwDiagramFactory());</span>
 		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__
-<span class="nc" id="L110">		factories.add(new PSystemSudokuFactory());</span>
+<span class="fc" id="L111">		factories.add(new PSystemSudokuFactory());</span>
 		// ::done
-<span class="nc" id="L112">		factories.add(new PSystemMathFactory());</span>
-<span class="nc" id="L113">		factories.add(new PSystemLatexFactory());</span>
-<span class="nc" id="L114">		factories.add(new PSystemCreoleFactory());</span>
-<span class="nc" id="L115">		factories.add(new TimingDiagramFactory());</span>
-<span class="nc" id="L116">		factories.add(new ChartDiagramFactory());</span>
-<span class="nc" id="L117">		factories.add(new PacketDiagramFactory());</span>
-<span class="nc" id="L118">		factories.add(new JsonDiagramFactory());</span>
-<span class="nc" id="L119">		factories.add(new YamlDiagramFactory());</span>
-<span class="nc" id="L120">		factories.add(new PSystemEbnfFactory());</span>
-<span class="nc" id="L121">		factories.add(new PSystemRegexFactory());</span>
-<span class="nc" id="L122">		factories.add(new ChenEerDiagramFactory());</span>
-<span class="nc" id="L123">	}</span>
+<span class="fc" id="L113">		factories.add(new PSystemMathFactory());</span>
+<span class="fc" id="L114">		factories.add(new PSystemLatexFactory());</span>
+<span class="fc" id="L115">		factories.add(new PSystemCreoleFactory());</span>
+<span class="fc" id="L116">		factories.add(new TimingDiagramFactory());</span>
+<span class="fc" id="L117">		factories.add(new ChartDiagramFactory());</span>
+<span class="fc" id="L118">		factories.add(new PacketDiagramFactory());</span>
+<span class="fc" id="L119">		factories.add(new JsonDiagramFactory());</span>
+<span class="fc" id="L120">		factories.add(new YamlDiagramFactory());</span>
+<span class="fc" id="L121">		factories.add(new PSystemEbnfFactory());</span>
+<span class="fc" id="L122">		factories.add(new PSystemRegexFactory());</span>
+<span class="fc" id="L123">		factories.add(new ChenEerDiagramFactory());</span>
+<span class="fc" id="L124">	}</span>
 
 	public static PSystemBuilderJs getInstance() {
-<span class="nc" id="L126">		return singleton;</span>
+<span class="fc" id="L127">		return singleton;</span>
 	}
 
 	public void reset() {
-<span class="nc" id="L130">		lastFactory = null;</span>
-<span class="nc" id="L131">	}</span>
+<span class="nc" id="L131">		lastFactory = null;</span>
+<span class="nc" id="L132">	}</span>
 
 	public Diagram createDiagram(String[] split) {
-<span class="nc" id="L134">		BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;createDiagram start&quot;);</span>
-<span class="nc" id="L135">		final List&lt;StringLocated&gt; rawSource = TextareaSource.create(split, &quot;textarea&quot;);</span>
+<span class="fc" id="L135">		BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;createDiagram start&quot;);</span>
+<span class="fc" id="L136">		final List&lt;StringLocated&gt; textarea = TextareaSource.create(split, &quot;textarea&quot;);</span>
+		// As BlockUml does: the YAML header is not part of the diagram, but Python can read it (puml.metadata)
+<span class="fc" id="L138">		final List&lt;StringLocated&gt; rawSource = ReadLineWithYamlHeader.removeYamlHeader(textarea);</span>
 
-<span class="nc" id="L137">		final PathSystem pathSystem = PathSystem.fetch();</span>
-<span class="nc" id="L138">		final Defines defines = Defines.createEmpty();</span>
-<span class="nc" id="L139">		final Charset charset = java.nio.charset.StandardCharsets.UTF_8;</span>
-<span class="nc" id="L140">		final DefinitionsContainer definitions = null;</span>
+<span class="fc" id="L140">		final PathSystem pathSystem = PathSystem.fetch();</span>
+<span class="fc" id="L141">		final Defines defines = Defines.createEmpty();</span>
+<span class="fc" id="L142">		final Charset charset = java.nio.charset.StandardCharsets.UTF_8;</span>
+<span class="fc" id="L143">		final DefinitionsContainer definitions = null;</span>
 
-<span class="nc" id="L142">		BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;wip3&quot;);</span>
-<span class="nc" id="L143">		final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, rawSource.get(0));</span>
-<span class="nc" id="L144">		BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;wip4&quot;);</span>
-<span class="nc" id="L145">		timLoader.load(rawSource);</span>
-<span class="nc" id="L146">		BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;createDiagram ok&quot;);</span>
-<span class="nc" id="L147">		List&lt;StringLocated&gt; tmp = timLoader.getResultList();</span>
-<span class="nc" id="L148">		Jaws.mutateExpands1(tmp);</span>
+<span class="fc" id="L145">		BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;wip3&quot;);</span>
+<span class="fc" id="L146">		final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, rawSource.get(0));</span>
+<span class="fc" id="L147">		BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;wip4&quot;);</span>
+<span class="fc" id="L148">		timLoader.setYamlHeader(ReadLineWithYamlHeader.getYamlHeader(textarea));</span>
+<span class="fc" id="L149">		timLoader.load(rawSource);</span>
+<span class="fc" id="L150">		BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;createDiagram ok&quot;);</span>
+<span class="fc" id="L151">		List&lt;StringLocated&gt; tmp = timLoader.getResultList();</span>
+<span class="fc" id="L152">		Jaws.mutateExpands1(tmp);</span>
 
-<span class="nc" id="L150">		final PreprocessingArtifact preprocessing = timLoader.getPreprocessingArtifact();</span>
+<span class="fc" id="L154">		final PreprocessingArtifact preprocessing = timLoader.getPreprocessingArtifact();</span>
 
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (timLoader.isPreprocessorError())</span>
-<span class="nc" id="L153">			return new PSystemErrorPreprocessor(tmp, timLoader.getDebug(), preprocessing);</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (timLoader.isPreprocessorError())</span>
+<span class="nc" id="L157">			return new PSystemErrorPreprocessor(tmp, timLoader.getDebug(), preprocessing);</span>
 
-<span class="nc" id="L155">		return createDiagramFromPreprocessed(tmp, preprocessing);</span>
+<span class="fc" id="L159">		return createDiagramFromPreprocessed(tmp, preprocessing);</span>
 	}
 
 	@DuplicateCode(reference = &quot;PSystemBuilder&quot;)
 	public Diagram createDiagramFromPreprocessed(List&lt;StringLocated&gt; source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L160">		final UmlSource umlSource = UmlSource.create(source, false);</span>
+<span class="fc" id="L164">		final UmlSource umlSource = UmlSource.create(source, false);</span>
 
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (umlSource.getTotalLineCount() &lt; 10)</span>
-<span class="nc" id="L163">			lastFactory = null;</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (umlSource.getTotalLineCount() &lt; 10)</span>
+<span class="fc" id="L167">			lastFactory = null;</span>
 
-<span class="nc" id="L165">		umlSource.patchBase64();</span>
+<span class="fc" id="L169">		umlSource.patchBase64();</span>
 
-<span class="nc" id="L167">		final Collection&lt;DiagramType&gt; explainTypes = umlSource.getExplainTypes();</span>
+<span class="fc" id="L171">		final Collection&lt;DiagramType&gt; explainTypes = umlSource.getExplainTypes();</span>
 		final Collection&lt;DiagramType&gt; diagramTypes;
-<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (explainTypes == null)</span>
-<span class="nc" id="L170">			diagramTypes = umlSource.getDiagramTypes();</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (explainTypes == null)</span>
+<span class="fc" id="L174">			diagramTypes = umlSource.getDiagramTypes();</span>
 		else
-<span class="nc" id="L172">			diagramTypes = explainTypes;</span>
+<span class="nc" id="L176">			diagramTypes = explainTypes;</span>
 
-<span class="nc" id="L174">		final UgDiagram basicCheck = PSystemErrorUtils.checkBasicError(diagramTypes, source, preprocessing, umlSource);</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (basicCheck != null)</span>
-<span class="nc" id="L176">			return null;</span>
+<span class="fc" id="L178">		final UgDiagram basicCheck = PSystemErrorUtils.checkBasicError(diagramTypes, source, preprocessing, umlSource);</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (basicCheck != null)</span>
+<span class="nc" id="L180">			return null;</span>
 
-<span class="nc" id="L178">		final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L182">		final List&lt;PSystemError&gt; errors = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L180" title="All 4 branches missed.">		if (lastFactory != null &amp;&amp; diagramTypes.contains(lastFactory.getDiagramType())) {</span>
-<span class="nc" id="L181">			final Diagram sys = lastFactory.createSystem(null, umlSource, null, preprocessing);</span>
-<span class="nc bnc" id="L182" title="All 2 branches missed.">			if (isOk(sys)) {</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">				if (explainTypes != null) {</span>
-<span class="nc" id="L184">					final List&lt;Explanation&gt; explanations = lastFactory.explain(null, umlSource, null, preprocessing);</span>
-<span class="nc" id="L185">					return new PSystemExplain(umlSource, preprocessing, explanations);</span>
+<span class="pc bpc" id="L184" title="3 of 4 branches missed.">		if (lastFactory != null &amp;&amp; diagramTypes.contains(lastFactory.getDiagramType())) {</span>
+<span class="nc" id="L185">			final Diagram sys = lastFactory.createSystem(null, umlSource, null, preprocessing);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			if (isOk(sys)) {</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">				if (explainTypes != null) {</span>
+<span class="nc" id="L188">					final List&lt;Explanation&gt; explanations = lastFactory.explain(null, umlSource, null, preprocessing);</span>
+<span class="nc" id="L189">					return new PSystemExplain(umlSource, preprocessing, explanations);</span>
 				}
-<span class="nc" id="L187">				return sys;</span>
+<span class="nc" id="L191">				return sys;</span>
 			}
-<span class="nc" id="L189">			errors.add((PSystemError) sys);</span>
+<span class="nc" id="L193">			errors.add((PSystemError) sys);</span>
 		}
 
-<span class="nc bnc" id="L192" title="All 2 branches missed.">		for (PSystemFactory f : factories) {</span>
-<span class="nc bnc" id="L193" title="All 2 branches missed.">			if (!diagramTypes.contains(f.getDiagramType()))</span>
-<span class="nc" id="L194">				continue;</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (f == lastFactory)</span>
-<span class="nc" id="L196">				continue;</span>
-<span class="nc" id="L197">			BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;trying &quot; + f.getClass());</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">		for (PSystemFactory f : factories) {</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">			if (!diagramTypes.contains(f.getDiagramType()))</span>
+<span class="fc" id="L198">				continue;</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">			if (f == lastFactory)</span>
+<span class="nc" id="L200">				continue;</span>
+<span class="fc" id="L201">			BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;trying &quot; + f.getClass());</span>
 
-<span class="nc" id="L199">			final Diagram sys = f.createSystem(null, umlSource, null, preprocessing);</span>
-<span class="nc bnc" id="L200" title="All 2 branches missed.">			if (isOk(sys)) {</span>
-<span class="nc" id="L201">				BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;ok!&quot;);</span>
-<span class="nc" id="L202">				this.lastFactory = f;</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">				if (explainTypes != null) {</span>
-<span class="nc" id="L204">					final List&lt;Explanation&gt; explanations = f.explain(null, umlSource, null, preprocessing);</span>
-<span class="nc" id="L205">					return new PSystemExplain(umlSource, preprocessing, explanations);</span>
+<span class="fc" id="L203">			final Diagram sys = f.createSystem(null, umlSource, null, preprocessing);</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">			if (isOk(sys)) {</span>
+<span class="fc" id="L205">				BrowserLog.consoleLog(PSystemBuilderJs.class, &quot;ok!&quot;);</span>
+<span class="fc" id="L206">				this.lastFactory = f;</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">				if (explainTypes != null) {</span>
+<span class="nc" id="L208">					final List&lt;Explanation&gt; explanations = f.explain(null, umlSource, null, preprocessing);</span>
+<span class="nc" id="L209">					return new PSystemExplain(umlSource, preprocessing, explanations);</span>
 				}
-<span class="nc" id="L207">				return sys;</span>
+<span class="fc" id="L211">				return sys;</span>
 			}
-<span class="nc" id="L209">			errors.add((PSystemError) sys);</span>
-<span class="nc" id="L210">		}</span>
+<span class="nc" id="L213">			errors.add((PSystemError) sys);</span>
+<span class="nc" id="L214">		}</span>
 
-<span class="nc bnc" id="L212" title="All 2 branches missed.">		if (errors.size() == 0)</span>
-<span class="nc" id="L213">			return new PSystemUnsupported(umlSource, preprocessing);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">		if (errors.size() == 0)</span>
+<span class="nc" id="L217">			return new PSystemUnsupported(umlSource, preprocessing);</span>
 
-<span class="nc" id="L215">		return PSystemErrorUtils.merge(errors);</span>
+<span class="nc" id="L219">		return PSystemErrorUtils.merge(errors);</span>
 	}
 
 	private boolean isOk(Diagram ps) {
-<span class="nc bnc" id="L219" title="All 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
-<span class="nc" id="L220">			return false;</span>
+<span class="pc bpc" id="L223" title="3 of 6 branches missed.">		if (ps == null || ps instanceof PSystemError || ps instanceof PSystemUnsupported)</span>
+<span class="nc" id="L224">			return false;</span>
 
-<span class="nc" id="L222">		return true;</span>
+<span class="fc" id="L226">		return true;</span>
 	}
 
 	/**
@@ -239,21 +243,21 @@ public class PSystemBuilderJs {
 	 */
 	@DuplicateCode(reference = &quot;PSystemBuilder&quot;)
 	public List&lt;Explanation&gt; explain(List&lt;StringLocated&gt; source, PreprocessingArtifact preprocessing) {
-<span class="nc" id="L242">		final UmlSource umlSource = UmlSource.create(source, false);</span>
-<span class="nc" id="L243">		umlSource.patchBase64();</span>
+<span class="nc" id="L246">		final UmlSource umlSource = UmlSource.create(source, false);</span>
+<span class="nc" id="L247">		umlSource.patchBase64();</span>
 
-<span class="nc" id="L245">		final Collection&lt;DiagramType&gt; diagramTypes = umlSource.getDiagramTypes();</span>
+<span class="nc" id="L249">		final Collection&lt;DiagramType&gt; diagramTypes = umlSource.getDiagramTypes();</span>
 
-<span class="nc bnc" id="L247" title="All 2 branches missed.">		for (PSystemFactory systemFactory : factories) {</span>
-<span class="nc bnc" id="L248" title="All 2 branches missed.">			if (diagramTypes.contains(systemFactory.getDiagramType()) == false)</span>
-<span class="nc" id="L249">				continue;</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">		for (PSystemFactory systemFactory : factories) {</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">			if (diagramTypes.contains(systemFactory.getDiagramType()) == false)</span>
+<span class="nc" id="L253">				continue;</span>
 
-<span class="nc" id="L251">			final Diagram sys = systemFactory.createSystem(null, umlSource, null, preprocessing);</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">			if (isOk(sys))</span>
-<span class="nc" id="L253">				return systemFactory.explain(null, umlSource, null, preprocessing);</span>
-<span class="nc" id="L254">		}</span>
+<span class="nc" id="L255">			final Diagram sys = systemFactory.createSystem(null, umlSource, null, preprocessing);</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">			if (isOk(sys))</span>
+<span class="nc" id="L257">				return systemFactory.explain(null, umlSource, null, preprocessing);</span>
+<span class="nc" id="L258">		}</span>
 
-<span class="nc" id="L256">		return null;</span>
+<span class="nc" id="L260">		return null;</span>
 	}
 
 }
