@@ -1408,12 +1408,12 @@ Stats:
     Concrete Classes: 23
     Abstract Classes: 8
 
-    Ca: 31
+    Ca: 32
     Ce: 18
 
     A: 0.26
-    I: 0.37
-    D: 0.37
+    I: 0.36
+    D: 0.38
 
 Abstract Classes:
     net.sourceforge.plantuml.abel.Bag
@@ -1476,6 +1476,7 @@ Used By:
     net.sourceforge.plantuml.activitydiagram
     net.sourceforge.plantuml.activitydiagram.command
     net.sourceforge.plantuml.activitydiagram3.ftile
+    net.sourceforge.plantuml.chart.txt
     net.sourceforge.plantuml.cheneer
     net.sourceforge.plantuml.cheneer.command
     net.sourceforge.plantuml.classdiagram.command
@@ -2937,22 +2938,23 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 25
-    Concrete Classes: 25
+    Total Classes: 32
+    Concrete Classes: 32
     Abstract Classes: 0
 
-    Ca: 2
+    Ca: 3
     Ce: 20
 
     A: 0
-    I: 0.91
-    D: 0.09
+    I: 0.87
+    D: 0.13
 
 Abstract Classes:
 
 Concrete Classes:
     net.sourceforge.plantuml.chart.AreaRenderer
     net.sourceforge.plantuml.chart.BarRenderer
+    net.sourceforge.plantuml.chart.CartesianChart
     net.sourceforge.plantuml.chart.ChartAnnotation
     net.sourceforge.plantuml.chart.ChartAxis
     net.sourceforge.plantuml.chart.ChartAxis$LabelPosition
@@ -2969,13 +2971,19 @@ Concrete Classes:
     net.sourceforge.plantuml.chart.ChartSeries
     net.sourceforge.plantuml.chart.ChartSeries$MarkerShape
     net.sourceforge.plantuml.chart.ChartSeries$SeriesType
+    net.sourceforge.plantuml.chart.ChartTicks
+    net.sourceforge.plantuml.chart.ChartTicks$Tick
     net.sourceforge.plantuml.chart.LineRenderer
+    net.sourceforge.plantuml.chart.PieChart$Slice
+    net.sourceforge.plantuml.chart.PieRenderer
     net.sourceforge.plantuml.chart.PieRenderer$1
     net.sourceforge.plantuml.chart.PieRenderer$Slice
+    net.sourceforge.plantuml.chart.RadarChart
     net.sourceforge.plantuml.chart.RadarRenderer
     net.sourceforge.plantuml.chart.RadarRenderer$1
     net.sourceforge.plantuml.chart.ScatterRenderer
     net.sourceforge.plantuml.chart.ScatterRenderer$1
+    net.sourceforge.plantuml.chart.StackLayout
 
 Depends Upon:
     java.io
@@ -3001,6 +3009,7 @@ Depends Upon:
 
 Used By:
     net.sourceforge.plantuml.chart.command
+    net.sourceforge.plantuml.chart.txt
     net.sourceforge.plantuml.teavm.c
 
 --------------------------------------------------
@@ -3040,6 +3049,40 @@ Depends Upon:
 
 Used By:
     net.sourceforge.plantuml.chart
+
+--------------------------------------------------
+- Package: net.sourceforge.plantuml.chart.txt
+--------------------------------------------------
+
+Stats:
+    Total Classes: 4
+    Concrete Classes: 4
+    Abstract Classes: 0
+
+    Ca: 0
+    Ce: 5
+
+    A: 0
+    I: 1
+    D: 0
+
+Abstract Classes:
+
+Concrete Classes:
+    net.sourceforge.plantuml.chart.txt.CharGrid
+    net.sourceforge.plantuml.chart.txt.ChartTxt
+    net.sourceforge.plantuml.chart.txt.TxtCharset
+    net.sourceforge.plantuml.chart.txt.ValueTableTxt$Row
+
+Depends Upon:
+    java.lang
+    java.util
+    net.sourceforge.plantuml.abel
+    net.sourceforge.plantuml.chart
+    net.sourceforge.plantuml.klimt.creole
+
+Used By:
+    Not used by any packages.
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.cheneer
@@ -6846,12 +6889,12 @@ Stats:
     Concrete Classes: 15
     Abstract Classes: 4
 
-    Ca: 66
+    Ca: 67
     Ce: 14
 
     A: 0.21
     I: 0.17
-    D: 0.61
+    D: 0.62
 
 Abstract Classes:
     net.sourceforge.plantuml.klimt.creole.SheetBuilder
@@ -6906,6 +6949,7 @@ Used By:
     net.sourceforge.plantuml.asciiverse
     net.sourceforge.plantuml.board
     net.sourceforge.plantuml.chart
+    net.sourceforge.plantuml.chart.txt
     net.sourceforge.plantuml.cheneer.command
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.command.note
@@ -14750,6 +14794,14 @@ net.sourceforge.plantuml.chart.command
     |   net.sourceforge.plantuml.klimt.geom
     |-> net.sourceforge.plantuml.klimt.font
 
+net.sourceforge.plantuml.chart.txt
+    |
+    |   net.sourceforge.plantuml.abel
+    |   net.sourceforge.plantuml.core
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
+
 net.sourceforge.plantuml.cheneer
     |
     |   net.sourceforge.plantuml.core
@@ -15995,7 +16047,7 @@ java.awt.font,0,0,3,0,0,0,1,1
 java.awt.geom,0,0,6,0,0,0,1,1
 java.awt.image,0,0,13,0,0,0,1,1
 java.io,0,0,85,0,0,0,1,1
-java.lang,0,0,247,0,0,0,1,1
+java.lang,0,0,248,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,3,0,0,0,1,1
 java.math,0,0,5,0,0,0,1,1
@@ -16008,7 +16060,7 @@ java.security.spec,0,0,2,0,0,0,1,1
 java.text,0,0,5,0,0,0,1,1
 java.time,0,0,12,0,0,0,1,1
 java.time.temporal,0,0,2,0,0,0,1,1
-java.util,0,0,191,0,0,0,1,1
+java.util,0,0,192,0,0,0,1,1
 java.util.concurrent,0,0,8,0,0,0,1,1
 java.util.concurrent.atomic,0,0,5,0,0,0,1,1
 java.util.function,0,0,3,0,0,0,1,1
@@ -16035,7 +16087,7 @@ jcckit.transformation,1,1,1,3,1,0.75,0.75,1
 jcckit.util,7,2,5,2,0.29,0.29,0.43,1
 net.atmp,3,0,17,10,0,0.37,0.63,1
 net.sourceforge.plantuml,38,13,101,34,0.34,0.25,0.41,1
-net.sourceforge.plantuml.abel,31,8,31,18,0.26,0.37,0.37,1
+net.sourceforge.plantuml.abel,31,8,32,18,0.26,0.36,0.38,1
 net.sourceforge.plantuml.activitydiagram,2,0,2,12,0,0.86,0.14,1
 net.sourceforge.plantuml.activitydiagram.command,4,0,1,15,0,0.94,0.06,1
 net.sourceforge.plantuml.activitydiagram3,27,4,7,26,0.15,0.79,0.06,1
@@ -16062,8 +16114,9 @@ net.sourceforge.plantuml.board,7,0,0,18,0,1,0,1
 net.sourceforge.plantuml.bpm,32,7,0,18,0.22,1,0.22,1
 net.sourceforge.plantuml.braille,11,0,1,12,0,0.92,0.08,1
 net.sourceforge.plantuml.brotli,9,0,2,3,0,0.6,0.4,1
-net.sourceforge.plantuml.chart,25,0,2,20,0,0.91,0.09,1
+net.sourceforge.plantuml.chart,32,0,3,20,0,0.87,0.13,1
 net.sourceforge.plantuml.chart.command,5,0,1,8,0,0.89,0.11,1
+net.sourceforge.plantuml.chart.txt,4,0,0,5,0,1,0,1
 net.sourceforge.plantuml.cheneer,2,0,2,9,0,0.82,0.18,1
 net.sourceforge.plantuml.cheneer.command,2,0,1,13,0,0.93,0.07,1
 net.sourceforge.plantuml.classdiagram,3,0,9,16,0,0.64,0.36,1
@@ -16134,7 +16187,7 @@ net.sourceforge.plantuml.klimt,21,10,84,19,0.48,0.18,0.34,1
 net.sourceforge.plantuml.klimt.awt,4,1,29,4,0.25,0.12,0.63,1
 net.sourceforge.plantuml.klimt.color,30,1,95,11,0.03,0.1,0.86,1
 net.sourceforge.plantuml.klimt.compress,11,2,3,9,0.18,0.75,0.07,1
-net.sourceforge.plantuml.klimt.creole,19,4,66,14,0.21,0.17,0.61,1
+net.sourceforge.plantuml.klimt.creole,19,4,67,14,0.21,0.17,0.62,1
 net.sourceforge.plantuml.klimt.creole.atom,14,2,3,16,0.14,0.84,0.02,1
 net.sourceforge.plantuml.klimt.creole.command,19,2,1,14,0.11,0.93,0.04,1
 net.sourceforge.plantuml.klimt.creole.legacy,15,2,9,24,0.13,0.73,0.14,1

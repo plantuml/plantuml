@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValueTableTxt.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart.txt</a> &gt; <span class="el_source">ValueTableTxt.java</span></div><h1>ValueTableTxt.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart.txt;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import net.sourceforge.plantuml.chart.CartesianChart;
+import net.sourceforge.plantuml.chart.ChartSeries;
+import net.sourceforge.plantuml.chart.ChartTicks;
+import net.sourceforge.plantuml.chart.PieChart;
+import net.sourceforge.plantuml.chart.RadarChart;
+
+/**
+ * Charts written as tables of values, one row per value with a bar of its size: a pie
+ * (the share of each slice), and the charts that are not drawn as text (areas, scatter,
+ * radar, coordinate pairs, secondary axis), one table per series.
+ */
+final class ValueTableTxt {
+
+	// Length of the longest bar
+	private static final int BAR_LENGTH = 30;
+
+	private final TxtCharset charset;
+
+<span class="fc" id="L59">	ValueTableTxt(TxtCharset charset) {</span>
+<span class="fc" id="L60">		this.charset = charset;</span>
+<span class="fc" id="L61">	}</span>
+
+	// A row of a table: its name, the size of its bar and its value as written
+	private static final class Row {
+		private final String name;
+		private final double size;
+		private final String value;
+
+<span class="fc" id="L69">		Row(String name, double size, String value) {</span>
+<span class="fc" id="L70">			this.name = name;</span>
+<span class="fc" id="L71">			this.size = size;</span>
+<span class="fc" id="L72">			this.value = value;</span>
+<span class="fc" id="L73">		}</span>
+	}
+
+	/**
+	 * A pie: the share of each slice.
+	 */
+	List&lt;String&gt; pie(PieChart pie) {
+<span class="fc" id="L80">		final List&lt;Row&gt; rows = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		for (PieChart.Slice slice : pie.getSlices()) {</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			final String name = slice.getName() == null ? Integer.toString(slice.getIndex() + 1) : slice.getName();</span>
+<span class="fc" id="L83">			rows.add(new Row(name, slice.getValue(), PieChart.formatPercent(pie.getPercent(slice))));</span>
+<span class="fc" id="L84">		}</span>
+<span class="fc" id="L85">		final List&lt;List&lt;Row&gt;&gt; tables = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L86">		tables.add(rows);</span>
+<span class="fc" id="L87">		return format(null, tables);</span>
+	}
+
+	/**
+	 * A chart on cartesian axes: the values of each series, named by their category, or
+	 * by their x when they are coordinate pairs.
+	 */
+	List&lt;String&gt; cartesian(CartesianChart chart) {
+<span class="fc" id="L95">		final List&lt;String&gt; headers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L96">		final List&lt;List&lt;Row&gt;&gt; tables = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L97">		final List&lt;String&gt; categories = chart.getCategories();</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (ChartSeries s : chart.getSeries()) {</span>
+<span class="fc" id="L99">			final List&lt;Row&gt; rows = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L100">			final List&lt;Double&gt; values = s.getValues();</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">			for (int i = 0; i &lt; values.size(); i++) {</span>
+<span class="fc" id="L102">				final Double value = values.get(i);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">				if (value == null)</span>
+<span class="nc" id="L104">					continue;</span>
+				final String name;
+<span class="fc bfc" id="L106" title="All 2 branches covered.">				if (s.hasExplicitXValues())</span>
+<span class="fc" id="L107">					name = ChartTicks.formatValue(s.getXValues().get(i));</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">				else if (i &lt; categories.size())</span>
+<span class="fc" id="L109">					name = categories.get(i);</span>
+				else
+<span class="nc" id="L111">					name = Integer.toString(i + 1);</span>
+<span class="fc" id="L112">				rows.add(new Row(name, Math.abs(value), ChartTicks.formatValue(value)));</span>
+			}
+<span class="fc" id="L114">			headers.add(header(s));</span>
+<span class="fc" id="L115">			tables.add(rows);</span>
+<span class="fc" id="L116">		}</span>
+<span class="fc" id="L117">		return format(headers, tables);</span>
+	}
+
+	/**
+	 * A radar: the value of each series for each category.
+	 */
+	List&lt;String&gt; radar(RadarChart radar) {
+<span class="fc" id="L124">		final List&lt;String&gt; headers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L125">		final List&lt;List&lt;Row&gt;&gt; tables = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L126">		final List&lt;String&gt; categories = radar.getCategories();</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		for (int s = 0; s &lt; radar.getSeries().size(); s++) {</span>
+<span class="fc" id="L128">			final List&lt;Row&gt; rows = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L129">			final List&lt;Double&gt; values = radar.getValues().get(s);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">			for (int i = 0; i &lt; values.size(); i++)</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">				if (values.get(i) != null)</span>
+<span class="fc" id="L132">					rows.add(new Row(categories.get(i), Math.abs(values.get(i)),</span>
+<span class="fc" id="L133">							ChartTicks.formatValue(values.get(i))));</span>
+<span class="fc" id="L134">			headers.add(header(radar.getSeries().get(s)));</span>
+<span class="fc" id="L135">			tables.add(rows);</span>
+		}
+<span class="fc" id="L137">		return format(headers, tables);</span>
+	}
+
+	private static String header(ChartSeries s) {
+<span class="fc" id="L141">		final String type = s.getType().name().toLowerCase(Locale.ROOT);</span>
+<span class="pc bpc" id="L142" title="2 of 4 branches missed.">		if (s.getName() == null || s.getName().isEmpty())</span>
+<span class="nc" id="L143">			return type;</span>
+<span class="fc" id="L144">		return s.getName() + &quot; (&quot; + type + &quot;)&quot;;</span>
+	}
+
+	// Tables one after the other, each under its header, with the same columns: the bars
+	// are on the same scale, the longest being BAR_LENGTH characters
+	private List&lt;String&gt; format(List&lt;String&gt; headers, List&lt;List&lt;Row&gt;&gt; tables) {
+<span class="fc" id="L150">		int nameWidth = 0;</span>
+<span class="fc" id="L151">		int valueWidth = 0;</span>
+<span class="fc" id="L152">		double max = 0;</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (List&lt;Row&gt; rows : tables)</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">			for (Row row : rows) {</span>
+<span class="fc" id="L155">				nameWidth = Math.max(nameWidth, row.name.length());</span>
+<span class="fc" id="L156">				valueWidth = Math.max(valueWidth, row.value.length());</span>
+<span class="fc" id="L157">				max = Math.max(max, row.size);</span>
+<span class="fc" id="L158">			}</span>
+<span class="fc" id="L159">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		for (int t = 0; t &lt; tables.size(); t++) {</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">			if (headers != null) {</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">				if (t &gt; 0)</span>
+<span class="fc" id="L163">					result.add(&quot;&quot;);</span>
+<span class="fc" id="L164">				result.add(headers.get(t));</span>
+			}
+<span class="fc bfc" id="L166" title="All 2 branches covered.">			for (Row row : tables.get(t)) {</span>
+<span class="fc" id="L167">				final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L168">				sb.append(pad(row.name, nameWidth)).append(&quot;  &quot;);</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">				int length = max &gt; 0 ? (int) Math.round(BAR_LENGTH * row.size / max) : 0;</span>
+<span class="pc bpc" id="L170" title="3 of 4 branches missed.">				if (length == 0 &amp;&amp; row.size &gt; 0)</span>
+<span class="nc" id="L171">					length = 1;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">				for (int i = 0; i &lt; BAR_LENGTH; i++)</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">					sb.append(i &lt; length ? charset.fill(0) : ' ');</span>
+<span class="fc" id="L174">				sb.append(&quot;  &quot;);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">				for (int i = row.value.length(); i &lt; valueWidth + 1; i++)</span>
+<span class="fc" id="L176">					sb.append(' ');</span>
+<span class="fc" id="L177">				sb.append(row.value);</span>
+<span class="fc" id="L178">				result.add(sb.toString());</span>
+<span class="fc" id="L179">			}</span>
+		}
+<span class="fc" id="L181">		return result;</span>
+	}
+
+	private static String pad(String s, int width) {
+<span class="fc" id="L185">		final StringBuilder sb = new StringBuilder(s);</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		while (sb.length() &lt; width)</span>
+<span class="fc" id="L187">			sb.append(' ');</span>
+<span class="fc" id="L188">		return sb.toString();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

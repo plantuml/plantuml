@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CartesianChart.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart</a> &gt; <span class="el_source">CartesianChart.java</span></div><h1>CartesianChart.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart;
+
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * A chart drawn on cartesian axes (bars, lines, areas, scatter), once every line is
+ * parsed and every implicit value resolved: the categories (1, 2, ..., n when none is
+ * given), the ranges of the value axes fitted to the data, the series as they are
+ * plotted. It is built by {@link ChartDiagram#resolveCartesian()} and read by the
+ * renderers, graphic or text, which do not need to know how it was written.
+ * &lt;p&gt;
+ * Whatever the orientation, the &quot;category&quot; axis holds the categories (or the numeric
+ * h-axis of coordinate pairs), and the &quot;value&quot; axis the values: for a horizontal chart,
+ * the categories go down the left side and the values along the bottom.
+ */
+public final class CartesianChart {
+
+	private final ChartDiagram.Orientation orientation;
+	private final List&lt;String&gt; categories;
+	private final String categoryTitle;
+	private final Integer categoryTickSpacing;
+	private final ChartAxis.LabelPosition categoryLabelPosition;
+	private final ChartAxis numericAxis;
+	private final List&lt;ChartSeries&gt; series;
+	private final ChartAxis valueAxis;
+	private final ChartAxis valueAxis2;
+	private final ChartDiagram.LegendPosition legendPosition;
+	private final ChartDiagram.GridMode categoryGridMode;
+	private final ChartDiagram.GridMode valueGridMode;
+	private final ChartDiagram.StackMode stackMode;
+	private final List&lt;ChartAnnotation&gt; annotations;
+
+	CartesianChart(ChartDiagram.Orientation orientation, List&lt;String&gt; categories, String categoryTitle,
+			Integer categoryTickSpacing, ChartAxis.LabelPosition categoryLabelPosition, ChartAxis numericAxis,
+			List&lt;ChartSeries&gt; series, ChartAxis valueAxis, ChartAxis valueAxis2,
+			ChartDiagram.LegendPosition legendPosition, ChartDiagram.GridMode categoryGridMode,
+<span class="fc" id="L72">			ChartDiagram.GridMode valueGridMode, ChartDiagram.StackMode stackMode, List&lt;ChartAnnotation&gt; annotations) {</span>
+<span class="fc" id="L73">		this.orientation = orientation;</span>
+<span class="fc" id="L74">		this.categories = Collections.unmodifiableList(categories);</span>
+<span class="fc" id="L75">		this.categoryTitle = categoryTitle;</span>
+<span class="fc" id="L76">		this.categoryTickSpacing = categoryTickSpacing;</span>
+<span class="fc" id="L77">		this.categoryLabelPosition = categoryLabelPosition;</span>
+<span class="fc" id="L78">		this.numericAxis = numericAxis;</span>
+<span class="fc" id="L79">		this.series = Collections.unmodifiableList(series);</span>
+<span class="fc" id="L80">		this.valueAxis = valueAxis;</span>
+<span class="fc" id="L81">		this.valueAxis2 = valueAxis2;</span>
+<span class="fc" id="L82">		this.legendPosition = legendPosition;</span>
+<span class="fc" id="L83">		this.categoryGridMode = categoryGridMode;</span>
+<span class="fc" id="L84">		this.valueGridMode = valueGridMode;</span>
+<span class="fc" id="L85">		this.stackMode = stackMode;</span>
+<span class="fc" id="L86">		this.annotations = Collections.unmodifiableList(annotations);</span>
+<span class="fc" id="L87">	}</span>
+
+	public ChartDiagram.Orientation getOrientation() {
+<span class="fc" id="L90">		return orientation;</span>
+	}
+
+	public boolean isHorizontal() {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		return orientation == ChartDiagram.Orientation.HORIZONTAL;</span>
+	}
+
+	/**
+	 * The labels of the categories, empty when the data are coordinate pairs.
+	 */
+	public List&lt;String&gt; getCategories() {
+<span class="fc" id="L101">		return categories;</span>
+	}
+
+	public String getCategoryTitle() {
+<span class="fc" id="L105">		return categoryTitle;</span>
+	}
+
+	public Integer getCategoryTickSpacing() {
+<span class="fc" id="L109">		return categoryTickSpacing;</span>
+	}
+
+	public ChartAxis.LabelPosition getCategoryLabelPosition() {
+<span class="fc" id="L113">		return categoryLabelPosition;</span>
+	}
+
+	/**
+	 * The numeric h-axis, used when the data are coordinate pairs (or are spread over an
+	 * h-axis range).
+	 */
+	public ChartAxis getNumericAxis() {
+<span class="fc" id="L121">		return numericAxis;</span>
+	}
+
+	public List&lt;ChartSeries&gt; getSeries() {
+<span class="fc" id="L125">		return series;</span>
+	}
+
+	public boolean hasCoordinatePairs() {
+<span class="pc bpc" id="L129" title="2 of 4 branches missed.">		return series.isEmpty() == false &amp;&amp; series.get(0).hasExplicitXValues();</span>
+	}
+
+	public ChartAxis getValueAxis() {
+<span class="fc" id="L133">		return valueAxis;</span>
+	}
+
+	/**
+	 * The secondary value axis (v2-axis), or null.
+	 */
+	public ChartAxis getValueAxis2() {
+<span class="fc" id="L140">		return valueAxis2;</span>
+	}
+
+	/**
+	 * The value axis a series is drawn against.
+	 */
+	public ChartAxis getValueAxis(ChartSeries s) {
+<span class="nc bnc" id="L147" title="All 4 branches missed.">		return s.isUseSecondaryAxis() &amp;&amp; valueAxis2 != null ? valueAxis2 : valueAxis;</span>
+	}
+
+	public ChartDiagram.LegendPosition getLegendPosition() {
+<span class="fc" id="L151">		return legendPosition;</span>
+	}
+
+	public ChartDiagram.GridMode getCategoryGridMode() {
+<span class="fc" id="L155">		return categoryGridMode;</span>
+	}
+
+	public ChartDiagram.GridMode getValueGridMode() {
+<span class="fc" id="L159">		return valueGridMode;</span>
+	}
+
+	public ChartDiagram.StackMode getStackMode() {
+<span class="fc" id="L163">		return stackMode;</span>
+	}
+
+	public List&lt;ChartAnnotation&gt; getAnnotations() {
+<span class="fc" id="L167">		return annotations;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

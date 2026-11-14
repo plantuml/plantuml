@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TxtCharset.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart.txt</a> &gt; <span class="el_source">TxtCharset.java</span></div><h1>TxtCharset.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart.txt;
+
+/**
+ * The characters of a chart drawn as text: Unicode (box drawing, blocks) for UTXT,
+ * plain ASCII for ATXT. The renderers never write a drawing character themselves.
+ */
+final class TxtCharset {
+
+	// Fill of the bars of the n-th bar series, and of the value tables
+<span class="fc" id="L44">	private static final char[] UNICODE_FILLS = { '█', '▓', '▒', '░' }; // █ ▓ ▒ ░</span>
+<span class="fc" id="L45">	private static final char[] ASCII_FILLS = { '#', '%', '@', '*' };</span>
+
+	// Lines of the n-th line series: horizontal, vertical, then the corners joining
+	// right-down, left-down, right-up and left-up
+<span class="fc" id="L49">	private static final String[] UNICODE_LINES = { &quot;─│╭╮╰╯&quot;, // ─│╭╮╰╯</span>
+			&quot;═║╔╗╚╝&quot;, // ═║╔╗╚╝
+			&quot;━┃┏┓┗┛&quot; }; // ━┃┏┓┗┛
+<span class="fc" id="L52">	private static final String[] ASCII_LINES = { &quot;-|++++&quot;, &quot;=|++++&quot;, &quot;~|++++&quot; };</span>
+
+	private final boolean unicode;
+
+<span class="fc" id="L56">	TxtCharset(boolean unicode) {</span>
+<span class="fc" id="L57">		this.unicode = unicode;</span>
+<span class="fc" id="L58">	}</span>
+
+	char dot() {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		return unicode ? '·' : '.'; // ·</span>
+	}
+
+	char vAxis() {
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		return unicode ? '│' : '|'; // │</span>
+	}
+
+	char hAxis() {
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		return unicode ? '─' : '-'; // ─</span>
+	}
+
+	// A tick on a vertical axis, its label on the left
+	char tickLeft() {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		return unicode ? '┤' : '+'; // ┤</span>
+	}
+
+	// A tick on a horizontal axis, its label below
+	char tickDown() {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		return unicode ? '┬' : '+'; // ┬</span>
+	}
+
+	char origin() {
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		return unicode ? '┼' : '+'; // ┼</span>
+	}
+
+	char fill(int style) {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		final char[] fills = unicode ? UNICODE_FILLS : ASCII_FILLS;</span>
+<span class="fc" id="L88">		return fills[style % fills.length];</span>
+	}
+
+	// Only the plain block has halves: a bar ends on a half cell
+	boolean hasHalves(int style) {
+<span class="fc bfc" id="L93" title="All 4 branches covered.">		return unicode &amp;&amp; style % UNICODE_FILLS.length == 0;</span>
+	}
+
+	char lowerHalf() {
+<span class="fc" id="L97">		return '▄'; // ▄</span>
+	}
+
+	char upperHalf() {
+<span class="nc" id="L101">		return '▀'; // ▀</span>
+	}
+
+	char leftHalf() {
+<span class="nc" id="L105">		return '▌'; // ▌</span>
+	}
+
+	char rightHalf() {
+<span class="nc" id="L109">		return '▐'; // ▐</span>
+	}
+
+	char lineH(int style) {
+<span class="fc" id="L113">		return line(style, 0);</span>
+	}
+
+	char lineV(int style) {
+<span class="fc" id="L117">		return line(style, 1);</span>
+	}
+
+	char cornerRightDown(int style) {
+<span class="fc" id="L121">		return line(style, 2);</span>
+	}
+
+	char cornerLeftDown(int style) {
+<span class="fc" id="L125">		return line(style, 3);</span>
+	}
+
+	char cornerRightUp(int style) {
+<span class="fc" id="L129">		return line(style, 4);</span>
+	}
+
+	char cornerLeftUp(int style) {
+<span class="fc" id="L133">		return line(style, 5);</span>
+	}
+
+	private char line(int style, int index) {
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		final String[] lines = unicode ? UNICODE_LINES : ASCII_LINES;</span>
+<span class="fc" id="L138">		return lines[style % lines.length].charAt(index);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

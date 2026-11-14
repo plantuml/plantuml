@@ -49,6 +49,7 @@ net.sourceforge.plantuml.braille
 net.sourceforge.plantuml.brotli
 net.sourceforge.plantuml.chart
 net.sourceforge.plantuml.chart.command
+net.sourceforge.plantuml.chart.txt
 net.sourceforge.plantuml.cheneer
 net.sourceforge.plantuml.cheneer.command
 net.sourceforge.plantuml.classdiagram

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PieChart.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart</a> &gt; <span class="el_source">PieChart.java</span></div><h1>PieChart.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+
+/**
+ * A pie (or a donut) once resolved: one slice per value greater than 0, named by its
+ * key or by the a-axis label at its index, with its share of the total. It is built by
+ * {@link ChartDiagram#resolvePie()} and read by the renderers, graphic or text.
+ */
+public final class PieChart {
+
+	private final ChartSeries series;
+	private final ChartDiagram.LegendPosition legendPosition;
+<span class="fc" id="L51">	private final List&lt;Slice&gt; slices = new ArrayList&lt;&gt;();</span>
+	private final double total;
+
+	/**
+	 * A slice: its name (null when it has none), its value, and the index of the value in
+	 * the series, which gives its color.
+	 */
+	public static final class Slice {
+
+		private final String name;
+		private final double value;
+		private final int index;
+
+<span class="fc" id="L64">		Slice(String name, double value, int index) {</span>
+<span class="fc" id="L65">			this.name = name;</span>
+<span class="fc" id="L66">			this.value = value;</span>
+<span class="fc" id="L67">			this.index = index;</span>
+<span class="fc" id="L68">		}</span>
+
+		public String getName() {
+<span class="fc" id="L71">			return name;</span>
+		}
+
+		public double getValue() {
+<span class="fc" id="L75">			return value;</span>
+		}
+
+		public int getIndex() {
+<span class="fc" id="L79">			return index;</span>
+		}
+	}
+
+<span class="fc" id="L83">	PieChart(ChartSeries series, List&lt;String&gt; angularLabels, ChartDiagram.LegendPosition legendPosition) {</span>
+<span class="fc" id="L84">		this.series = series;</span>
+<span class="fc" id="L85">		this.legendPosition = legendPosition;</span>
+<span class="fc" id="L86">		double sum = 0;</span>
+<span class="fc" id="L87">		final List&lt;Double&gt; values = series.getValues();</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		for (int i = 0; i &lt; values.size(); i++) {</span>
+<span class="fc" id="L89">			final Double value = values.get(i);</span>
+<span class="fc bfc" id="L90" title="All 4 branches covered.">			if (value == null || value &lt;= 0)</span>
+<span class="fc" id="L91">				continue;</span>
+<span class="fc" id="L92">			String name = null;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			if (series.hasKeys())</span>
+<span class="fc" id="L94">				name = series.getKeys().get(i);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			else if (i &lt; angularLabels.size())</span>
+<span class="fc" id="L96">				name = angularLabels.get(i);</span>
+<span class="fc" id="L97">			slices.add(new Slice(name, value, i));</span>
+<span class="fc" id="L98">			sum += value;</span>
+		}
+<span class="fc" id="L100">		this.total = sum;</span>
+<span class="fc" id="L101">	}</span>
+
+	public ChartSeries getSeries() {
+<span class="fc" id="L104">		return series;</span>
+	}
+
+	public ChartDiagram.LegendPosition getLegendPosition() {
+<span class="fc" id="L108">		return legendPosition;</span>
+	}
+
+	public List&lt;Slice&gt; getSlices() {
+<span class="fc" id="L112">		return Collections.unmodifiableList(slices);</span>
+	}
+
+	public double getTotal() {
+<span class="fc" id="L116">		return total;</span>
+	}
+
+	/**
+	 * The share of a slice, from 0 to 100.
+	 */
+	public double getPercent(Slice slice) {
+<span class="fc" id="L123">		return 100 * slice.value / total;</span>
+	}
+
+	/**
+	 * The label written on a slice, as asked by &quot;labels&quot; and &quot;percent&quot;, or null when
+	 * none is asked.
+	 */
+	public String getLabel(Slice slice) {
+<span class="pc bpc" id="L131" title="1 of 4 branches missed.">		if (series.isShowLabels() == false &amp;&amp; series.isShowPercent() == false)</span>
+<span class="nc" id="L132">			return null;</span>
+<span class="fc" id="L133">		final String percent = formatPercent(getPercent(slice));</span>
+<span class="fc bfc" id="L134" title="All 4 branches covered.">		if (series.isShowLabels() &amp;&amp; series.isShowPercent())</span>
+<span class="fc" id="L135">			return ChartTicks.formatValue(slice.value) + &quot; (&quot; + percent + &quot;)&quot;;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (series.isShowLabels())</span>
+<span class="fc" id="L137">			return ChartTicks.formatValue(slice.value);</span>
+<span class="fc" id="L138">		return percent;</span>
+	}
+
+	/**
+	 * A share written with one decimal at most: 33.3%, 50%, 0.4%
+	 */
+	public static String formatPercent(double percent) {
+<span class="fc" id="L145">		final String s = String.format(Locale.ROOT, &quot;%.1f&quot;, percent);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		return (s.endsWith(&quot;.0&quot;) ? s.substring(0, s.length() - 2) : s) + &quot;%&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

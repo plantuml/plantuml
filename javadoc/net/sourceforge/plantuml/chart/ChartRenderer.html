@@ -104,21 +104,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,java.util.List,java.lang.String,java.lang.Integer,net.sourceforge.plantuml.chart.ChartAxis.LabelPosition,java.util.List,net.sourceforge.plantuml.chart.ChartAxis,net.sourceforge.plantuml.chart.ChartAxis,net.sourceforge.plantuml.chart.ChartAxis,net.sourceforge.plantuml.chart.ChartDiagram.LegendPosition,net.sourceforge.plantuml.chart.ChartDiagram.GridMode,net.sourceforge.plantuml.chart.ChartDiagram.GridMode,net.sourceforge.plantuml.chart.ChartDiagram.StackMode,net.sourceforge.plantuml.chart.ChartDiagram.Orientation,java.util.List)" class="member-name-link">ChartRenderer</a><wbr>(<a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;xAxisLabels,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;xAxisTitle,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;xAxisTickSpacing,
- <a href="ChartAxis.LabelPosition.html" title="enum class in net.sourceforge.plantuml.chart">ChartAxis.LabelPosition</a>&nbsp;xAxisLabelPosition,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ChartSeries.html" title="class in net.sourceforge.plantuml.chart">ChartSeries</a>&gt;&nbsp;series,
- <a href="ChartAxis.html" title="class in net.sourceforge.plantuml.chart">ChartAxis</a>&nbsp;xAxis,
- <a href="ChartAxis.html" title="class in net.sourceforge.plantuml.chart">ChartAxis</a>&nbsp;yAxis,
- <a href="ChartAxis.html" title="class in net.sourceforge.plantuml.chart">ChartAxis</a>&nbsp;y2Axis,
- <a href="ChartDiagram.LegendPosition.html" title="enum class in net.sourceforge.plantuml.chart">ChartDiagram.LegendPosition</a>&nbsp;legendPosition,
- <a href="ChartDiagram.GridMode.html" title="enum class in net.sourceforge.plantuml.chart">ChartDiagram.GridMode</a>&nbsp;xGridMode,
- <a href="ChartDiagram.GridMode.html" title="enum class in net.sourceforge.plantuml.chart">ChartDiagram.GridMode</a>&nbsp;yGridMode,
- <a href="ChartDiagram.StackMode.html" title="enum class in net.sourceforge.plantuml.chart">ChartDiagram.StackMode</a>&nbsp;stackMode,
- <a href="ChartDiagram.Orientation.html" title="enum class in net.sourceforge.plantuml.chart">ChartDiagram.Orientation</a>&nbsp;orientation,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ChartAnnotation.html" title="class in net.sourceforge.plantuml.chart">ChartAnnotation</a>&gt;&nbsp;annotations)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.chart.CartesianChart)" class="member-name-link">ChartRenderer</a><wbr>(<a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
+ <a href="CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a>&nbsp;chart)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -158,23 +145,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.style.ISkinParam,java.util.List,java.lang.String,java.lang.Integer,net.sourceforge.plantuml.chart.ChartAxis.LabelPosition,java.util.List,net.sourceforge.plantuml.chart.ChartAxis,net.sourceforge.plantuml.chart.ChartAxis,net.sourceforge.plantuml.chart.ChartAxis,net.sourceforge.plantuml.chart.ChartDiagram.LegendPosition,net.sourceforge.plantuml.chart.ChartDiagram.GridMode,net.sourceforge.plantuml.chart.ChartDiagram.GridMode,net.sourceforge.plantuml.chart.ChartDiagram.StackMode,net.sourceforge.plantuml.chart.ChartDiagram.Orientation,java.util.List)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.chart.CartesianChart)">
 <h3>ChartRenderer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ChartRenderer</span><wbr><span class="parameters">(<a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;xAxisLabels,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;xAxisTitle,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;xAxisTickSpacing,
- <a href="ChartAxis.LabelPosition.html" title="enum class in net.sourceforge.plantuml.chart">ChartAxis.LabelPosition</a>&nbsp;xAxisLabelPosition,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ChartSeries.html" title="class in net.sourceforge.plantuml.chart">ChartSeries</a>&gt;&nbsp;series,
- <a href="ChartAxis.html" title="class in net.sourceforge.plantuml.chart">ChartAxis</a>&nbsp;xAxis,
- <a href="ChartAxis.html" title="class in net.sourceforge.plantuml.chart">ChartAxis</a>&nbsp;yAxis,
- <a href="ChartAxis.html" title="class in net.sourceforge.plantuml.chart">ChartAxis</a>&nbsp;y2Axis,
- <a href="ChartDiagram.LegendPosition.html" title="enum class in net.sourceforge.plantuml.chart">ChartDiagram.LegendPosition</a>&nbsp;legendPosition,
- <a href="ChartDiagram.GridMode.html" title="enum class in net.sourceforge.plantuml.chart">ChartDiagram.GridMode</a>&nbsp;xGridMode,
- <a href="ChartDiagram.GridMode.html" title="enum class in net.sourceforge.plantuml.chart">ChartDiagram.GridMode</a>&nbsp;yGridMode,
- <a href="ChartDiagram.StackMode.html" title="enum class in net.sourceforge.plantuml.chart">ChartDiagram.StackMode</a>&nbsp;stackMode,
- <a href="ChartDiagram.Orientation.html" title="enum class in net.sourceforge.plantuml.chart">ChartDiagram.Orientation</a>&nbsp;orientation,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ChartAnnotation.html" title="class in net.sourceforge.plantuml.chart">ChartAnnotation</a>&gt;&nbsp;annotations)</span></div>
+ <a href="CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a>&nbsp;chart)</span></div>
 </section>
 </li>
 </ul>

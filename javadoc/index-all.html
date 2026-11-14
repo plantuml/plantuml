@@ -2797,6 +2797,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/AreaRenderer.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,double,double,int,net.sourceforge.plantuml.chart.ChartAxis)" class="member-name-link">AreaRenderer(ISkinParam, double, double, int, ChartAxis)</a> - Constructor for class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/AreaRenderer.html" title="class in net.sourceforge.plantuml.chart">AreaRenderer</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/StackLayout.html#areas(java.util.List)" class="member-name-link">areas(List&lt;ChartSeries&gt;)</a> - Static method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/StackLayout.html" title="class in net.sourceforge.plantuml.chart">StackLayout</a></dt>
+<dd>
+<div class="block">The layout of areas: each one is on top of the previous ones.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/Verbs.html#areColored" class="member-name-link">areColored</a> - Static variable in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/Verbs.html" title="class in net.sourceforge.plantuml.gantt.lang">Verbs</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="sanskrit/Ast.Arg.html#arg" class="member-name-link">arg</a> - Variable in class sanskrit.<a href="sanskrit/Ast.Arg.html" title="class in sanskrit">Ast.Arg</a></dt>
@@ -4145,6 +4149,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/BarRenderer.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,double,double,int,net.sourceforge.plantuml.chart.ChartAxis,boolean)" class="member-name-link">BarRenderer(ISkinParam, double, double, int, ChartAxis, boolean)</a> - Constructor for class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/BarRenderer.html" title="class in net.sourceforge.plantuml.chart">BarRenderer</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/StackLayout.html#bars(java.util.List)" class="member-name-link">bars(List&lt;ChartSeries&gt;)</a> - Static method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/StackLayout.html" title="class in net.sourceforge.plantuml.chart">StackLayout</a></dt>
+<dd>
+<div class="block">The layout of stacked bars: positive and negative values grow apart from 0.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/style/PName.html#BarWidth" class="member-name-link">BarWidth</a> - Enum constant in enum class net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/PName.html" title="enum class in net.sourceforge.plantuml.style">PName</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="h/ST_Agedge_s.html#base" class="member-name-link">base</a> - Variable in class h.<a href="h/ST_Agedge_s.html" title="class in h">ST_Agedge_s</a></dt>
@@ -6174,6 +6182,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartDiagram.Kind.html#CARTESIAN" class="member-name-link">CARTESIAN</a> - Enum constant in enum class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartDiagram.Kind.html" title="enum class in net.sourceforge.plantuml.chart">ChartDiagram.Kind</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart">CartesianChart</a> - Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
+<dd>
+<div class="block">A chart drawn on cartesian axes (bars, lines, areas, scatter), once every line is
+ parsed and every implicit value resolved: the categories (1, 2, ..., n when none is
+ given), the ranges of the value axes fitted to the data, the series as they are
+ plotted.</div>
+</dd>
 <dt><a href="jcckit/plot/CartesianCoordinateSystem.html" class="type-name-link" title="class in jcckit.plot">CartesianCoordinateSystem</a> - Class in <a href="jcckit/plot/package-summary.html">jcckit.plot</a></dt>
 <dd>
 <div class="block">A Cartesian coordinate system.</div>
@@ -6649,7 +6664,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartRenderer.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart">ChartRenderer</a> - Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="net/sourceforge/plantuml/chart/ChartRenderer.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,java.util.List,java.lang.String,java.lang.Integer,net.sourceforge.plantuml.chart.ChartAxis.LabelPosition,java.util.List,net.sourceforge.plantuml.chart.ChartAxis,net.sourceforge.plantuml.chart.ChartAxis,net.sourceforge.plantuml.chart.ChartAxis,net.sourceforge.plantuml.chart.ChartDiagram.LegendPosition,net.sourceforge.plantuml.chart.ChartDiagram.GridMode,net.sourceforge.plantuml.chart.ChartDiagram.GridMode,net.sourceforge.plantuml.chart.ChartDiagram.StackMode,net.sourceforge.plantuml.chart.ChartDiagram.Orientation,java.util.List)" class="member-name-link">ChartRenderer(ISkinParam, List&lt;String&gt;, String, Integer, ChartAxis.LabelPosition, List&lt;ChartSeries&gt;, ChartAxis, ChartAxis, ChartAxis, ChartDiagram.LegendPosition, ChartDiagram.GridMode, ChartDiagram.GridMode, ChartDiagram.StackMode, ChartDiagram.Orientation, List&lt;ChartAnnotation&gt;)</a> - Constructor for class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartRenderer.html" title="class in net.sourceforge.plantuml.chart">ChartRenderer</a></dt>
+<dt><a href="net/sourceforge/plantuml/chart/ChartRenderer.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.chart.CartesianChart)" class="member-name-link">ChartRenderer(ISkinParam, CartesianChart)</a> - Constructor for class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartRenderer.html" title="class in net.sourceforge.plantuml.chart">ChartRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartSeries.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart">ChartSeries</a> - Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
 <dd>&nbsp;</dd>
@@ -6661,6 +6676,19 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartSeries.SeriesType.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.chart">ChartSeries.SeriesType</a> - Enum Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartTicks.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart">ChartTicks</a> - Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
+<dd>
+<div class="block">The ticks of the axes of a chart, and how their values are written.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartTicks.Tick.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart">ChartTicks.Tick</a> - Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
+<dd>
+<div class="block">A tick: its value, its position along the axis from 0 (min) to 1 (max), and its
+ label.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/chart/txt/ChartTxt.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart.txt">ChartTxt</a> - Class in <a href="net/sourceforge/plantuml/chart/txt/package-summary.html">net.sourceforge.plantuml.chart.txt</a></dt>
+<dd>
+<div class="block">A chart drawn as text (ATXT, UTXT): its title, its legend, then the chart itself.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/ulang/VerbPhraseAction.html#check(com.plantuml.ubrex.TextNavigator)" class="member-name-link">check(TextNavigator)</a> - Method in class net.sourceforge.plantuml.gantt.ulang.<a href="net/sourceforge/plantuml/gantt/ulang/VerbPhraseAction.html" title="class in net.sourceforge.plantuml.gantt.ulang">VerbPhraseAction</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/mcp/SyntaxChecker.html#check(java.lang.String)" class="member-name-link">check(String)</a> - Method in class net.sourceforge.plantuml.mcp.<a href="net/sourceforge/plantuml/mcp/SyntaxChecker.html" title="class in net.sourceforge.plantuml.mcp">SyntaxChecker</a></dt>
@@ -19523,6 +19551,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/atmp/CucaDiagram.html#exportTxt(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormat)" class="member-name-link">exportTxt(OutputStream, int, FileFormat)</a> - Method in class net.atmp.<a href="net/atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartDiagram.html#exportTxt(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormat)" class="member-name-link">exportTxt(OutputStream, int, FileFormat)</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartDiagram.html" title="class in net.sourceforge.plantuml.chart">ChartDiagram</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/core/AbstractDiagram.html#exportTxt(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormat)" class="member-name-link">exportTxt(OutputStream, int, FileFormat)</a> - Method in class net.sourceforge.plantuml.core.<a href="net/sourceforge/plantuml/core/AbstractDiagram.html" title="class in net.sourceforge.plantuml.core">AbstractDiagram</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/filesdiagram/FilesDiagram.html#exportTxt(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormat)" class="member-name-link">exportTxt(OutputStream, int, FileFormat)</a> - Method in class net.sourceforge.plantuml.filesdiagram.<a href="net/sourceforge/plantuml/filesdiagram/FilesDiagram.html" title="class in net.sourceforge.plantuml.filesdiagram">FilesDiagram</a></dt>
@@ -20838,6 +20868,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Thrown when a barcode was successfully detected, but some aspect of
  the content did not conform to the barcode's format rules.</div>
 </dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.html#formatPercent(double)" class="member-name-link">formatPercent(double)</a> - Static method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieChart.html" title="class in net.sourceforge.plantuml.chart">PieChart</a></dt>
+<dd>
+<div class="block">A share written with one decimal at most: 33.3%, 50%, 0.4%</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/drawing/eps/EpsGraphics.html#formatSimple4(double)" class="member-name-link">formatSimple4(double)</a> - Static method in class net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/EpsGraphics.html" title="class in net.sourceforge.plantuml.klimt.drawing.eps">EpsGraphics</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="sanskrit/Ast.FormattedValue.html#formatSpec" class="member-name-link">formatSpec</a> - Variable in class sanskrit.<a href="sanskrit/Ast.FormattedValue.html" title="class in sanskrit">Ast.FormattedValue</a></dt>
@@ -20848,6 +20882,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/timingdiagram/TimingFormat.html#formatTime(java.math.BigDecimal)" class="member-name-link">formatTime(BigDecimal)</a> - Method in class net.sourceforge.plantuml.timingdiagram.<a href="net/sourceforge/plantuml/timingdiagram/TimingFormat.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingFormat</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartTicks.html#formatValue(double)" class="member-name-link">formatValue(double)</a> - Static method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartTicks.html" title="class in net.sourceforge.plantuml.chart">ChartTicks</a></dt>
+<dd>
+<div class="block">A value on a value axis, or on a point label: 0.80 is written 0.8, as the
+ automatic range gives ticks like 0, 0.8, 1.6 ...</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/style/parser/RawStyleRule.html#forMedia(java.lang.String)" class="member-name-link">forMedia(String)</a> - Static method in class net.sourceforge.plantuml.style.parser.<a href="net/sourceforge/plantuml/style/parser/RawStyleRule.html" title="class in net.sourceforge.plantuml.style.parser">RawStyleRule</a></dt>
 <dd>
 <div class="block"><code>rawCondition</code> is the at-rule header text, e.g.</div>
@@ -22275,6 +22314,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the annotation layer.</div>
 </dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getAnnotations()" class="member-name-link">getAnnotations()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartDiagram.html#getAnnotations()" class="member-name-link">getAnnotations()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartDiagram.html" title="class in net.sourceforge.plantuml.chart">ChartDiagram</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/color/HColor.html#getAppropriateColor(net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">getAppropriateColor(HColor)</a> - Method in class net.sourceforge.plantuml.klimt.color.<a href="net/sourceforge/plantuml/klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></dt>
@@ -22293,6 +22334,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/sequencediagram/teoz/PartitionTile.html#getArea(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getArea(StringBounder)</a> - Method in class net.sourceforge.plantuml.sequencediagram.teoz.<a href="net/sourceforge/plantuml/sequencediagram/teoz/PartitionTile.html" title="class in net.sourceforge.plantuml.sequencediagram.teoz">PartitionTile</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/StackLayout.html#getAreaBaseline(int)" class="member-name-link">getAreaBaseline(int)</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/StackLayout.html" title="class in net.sourceforge.plantuml.chart">StackLayout</a></dt>
+<dd>
+<div class="block">Areas only: the base of each value of the s-th series, or null at an index where
+ no previous series has a value (the area then starts from the bottom of the plot).</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/version/PSystemVersion.html#getArecibo()" class="member-name-link">getArecibo()</a> - Static method in class net.sourceforge.plantuml.version.<a href="net/sourceforge/plantuml/version/PSystemVersion.html" title="class in net.sourceforge.plantuml.version">PSystemVersion</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/scilab/forge/jlatexmath/TeXParser.html#getArgument()" class="member-name-link">getArgument()</a> - Method in class org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXParser.html" title="class in org.scilab.forge.jlatexmath">TeXParser</a></dt>
@@ -22475,6 +22521,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/klimt/color/HColorSimple.html#getAwtColor()" class="member-name-link">getAwtColor()</a> - Method in class net.sourceforge.plantuml.klimt.color.<a href="net/sourceforge/plantuml/klimt/color/HColorSimple.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSimple</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/RadarChart.html#getAxis()" class="member-name-link">getAxis()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/RadarChart.html" title="class in net.sourceforge.plantuml.chart">RadarChart</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/scilab/forge/jlatexmath/DefaultTeXFont.html#getAxisHeight(int)" class="member-name-link">getAxisHeight(int)</a> - Method in class org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/DefaultTeXFont.html" title="class in org.scilab.forge.jlatexmath">DefaultTeXFont</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/scilab/forge/jlatexmath/TeXFont.html#getAxisHeight(int)" class="member-name-link">getAxisHeight(int)</a> - Method in interface org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TeXFont.html" title="interface in org.scilab.forge.jlatexmath">TeXFont</a></dt>
@@ -22591,6 +22639,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/scilab/forge/jlatexmath/TypedAtom.html#getBase()" class="member-name-link">getBase()</a> - Method in class org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/TypedAtom.html" title="class in org.scilab.forge.jlatexmath">TypedAtom</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/StackLayout.html#getBase(int,int)" class="member-name-link">getBase(int, int)</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/StackLayout.html" title="class in net.sourceforge.plantuml.chart">StackLayout</a></dt>
+<dd>
+<div class="block">The value where the segment of the i-th value of the s-th series starts.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/svek/BaseFile.html#getBasedir()" class="member-name-link">getBasedir()</a> - Method in class net.sourceforge.plantuml.svek.<a href="net/sourceforge/plantuml/svek/BaseFile.html" title="class in net.sourceforge.plantuml.svek">BaseFile</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/svek/NamedOutputStream.html#getBasefile()" class="member-name-link">getBasefile()</a> - Method in class net.sourceforge.plantuml.svek.<a href="net/sourceforge/plantuml/svek/NamedOutputStream.html" title="class in net.sourceforge.plantuml.svek">NamedOutputStream</a></dt>
@@ -22896,6 +22948,20 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/NewpagedDiagram.html#getCardinality()" class="member-name-link">getCardinality()</a> - Method in class net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/NewpagedDiagram.html" title="class in net.sourceforge.plantuml">NewpagedDiagram</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/openpdf/text/pdf/PdfWriter.html#getCatalog(org.openpdf.text.pdf.PdfIndirectReference)" class="member-name-link">getCatalog(PdfIndirectReference)</a> - Method in class org.openpdf.text.pdf.<a href="org/openpdf/text/pdf/PdfWriter.html" title="class in org.openpdf.text.pdf">PdfWriter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getCategories()" class="member-name-link">getCategories()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>
+<div class="block">The labels of the categories, empty when the data are coordinate pairs.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/chart/RadarChart.html#getCategories()" class="member-name-link">getCategories()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/RadarChart.html" title="class in net.sourceforge.plantuml.chart">RadarChart</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getCategoryGridMode()" class="member-name-link">getCategoryGridMode()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getCategoryLabelPosition()" class="member-name-link">getCategoryLabelPosition()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getCategoryTickSpacing()" class="member-name-link">getCategoryTickSpacing()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getCategoryTitle()" class="member-name-link">getCategoryTitle()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/dot/ProcessState.html#getCause()" class="member-name-link">getCause()</a> - Method in class net.sourceforge.plantuml.dot.<a href="net/sourceforge/plantuml/dot/ProcessState.html" title="class in net.sourceforge.plantuml.dot">ProcessState</a></dt>
 <dd>&nbsp;</dd>
@@ -26177,6 +26243,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the index.</div>
 </dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.Slice.html#getIndex()" class="member-name-link">getIndex()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieChart.Slice.html" title="class in net.sourceforge.plantuml.chart">PieChart.Slice</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/svek/SvgResult.html#getIndexFromColor(int)" class="member-name-link">getIndexFromColor(int)</a> - Method in class net.sourceforge.plantuml.svek.<a href="net/sourceforge/plantuml/svek/SvgResult.html" title="class in net.sourceforge.plantuml.svek">SvgResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="jcckit/data/DataContainer.html#getIndexOf(jcckit.data.DataElement)" class="member-name-link">getIndexOf(DataElement)</a> - Method in class jcckit.data.<a href="jcckit/data/DataContainer.html" title="class in jcckit.data">DataContainer</a></dt>
@@ -26594,11 +26662,15 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="net/sourceforge/plantuml/syntax/LanguageDescriptor.html#getKeyword()" class="member-name-link">getKeyword()</a> - Method in class net.sourceforge.plantuml.syntax.<a href="net/sourceforge/plantuml/syntax/LanguageDescriptor.html" title="class in net.sourceforge.plantuml.syntax">LanguageDescriptor</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartDiagram.html#getKind()" class="member-name-link">getKind()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartDiagram.html" title="class in net.sourceforge.plantuml.chart">ChartDiagram</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/style/parser/RawSelector.html#getKind()" class="member-name-link">getKind()</a> - Method in class net.sourceforge.plantuml.style.parser.<a href="net/sourceforge/plantuml/style/parser/RawSelector.html" title="class in net.sourceforge.plantuml.style.parser">RawSelector</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/abel/Link.html#getLabel()" class="member-name-link">getLabel()</a> - Method in class net.sourceforge.plantuml.abel.<a href="net/sourceforge/plantuml/abel/Link.html" title="class in net.sourceforge.plantuml.abel">Link</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/abel/LinkArg.html#getLabel()" class="member-name-link">getLabel()</a> - Method in class net.sourceforge.plantuml.abel.<a href="net/sourceforge/plantuml/abel/LinkArg.html" title="class in net.sourceforge.plantuml.abel">LinkArg</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartTicks.Tick.html#getLabel()" class="member-name-link">getLabel()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartTicks.Tick.html" title="class in net.sourceforge.plantuml.chart">ChartTicks.Tick</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/descdiagram/command/StringWithArrow.html#getLabel()" class="member-name-link">getLabel()</a> - Method in class net.sourceforge.plantuml.descdiagram.command.<a href="net/sourceforge/plantuml/descdiagram/command/StringWithArrow.html" title="class in net.sourceforge.plantuml.descdiagram.command">StringWithArrow</a></dt>
 <dd>&nbsp;</dd>
@@ -26620,6 +26692,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/wbs/WElement.html#getLabel()" class="member-name-link">getLabel()</a> - Method in class net.sourceforge.plantuml.wbs.<a href="net/sourceforge/plantuml/wbs/WElement.html" title="class in net.sourceforge.plantuml.wbs">WElement</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.html#getLabel(net.sourceforge.plantuml.chart.PieChart.Slice)" class="member-name-link">getLabel(PieChart.Slice)</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieChart.html" title="class in net.sourceforge.plantuml.chart">PieChart</a></dt>
+<dd>
+<div class="block">The label written on a slice, as asked by "labels" and "percent", or null when
+ none is asked.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/stereo/Stereotype.html#getLabel(net.sourceforge.plantuml.text.Guillemet)" class="member-name-link">getLabel(Guillemet)</a> - Method in class net.sourceforge.plantuml.stereo.<a href="net/sourceforge/plantuml/stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/atmp/CucaDiagram.html#getLabelangle()" class="member-name-link">getLabelangle()</a> - Method in class net.atmp.<a href="net/atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a></dt>
@@ -26869,7 +26946,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/TitledDiagram.html#getLegend()" class="member-name-link">getLegend()</a> - Method in class net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getLegendPosition()" class="member-name-link">getLegendPosition()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartDiagram.html#getLegendPosition()" class="member-name-link">getLegendPosition()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartDiagram.html" title="class in net.sourceforge.plantuml.chart">ChartDiagram</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.html#getLegendPosition()" class="member-name-link">getLegendPosition()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieChart.html" title="class in net.sourceforge.plantuml.chart">PieChart</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/RadarChart.html#getLegendPosition()" class="member-name-link">getLegendPosition()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/RadarChart.html" title="class in net.sourceforge.plantuml.chart">RadarChart</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="jcckit/plot/Curve.html#getLegendSymbol()" class="member-name-link">getLegendSymbol()</a> - Method in interface jcckit.plot.<a href="jcckit/plot/Curve.html" title="interface in jcckit.plot">Curve</a></dt>
 <dd>
@@ -27058,6 +27141,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/stats/TextTable.html#getLines()" class="member-name-link">getLines()</a> - Method in class net.sourceforge.plantuml.stats.<a href="net/sourceforge/plantuml/stats/TextTable.html" title="class in net.sourceforge.plantuml.stats">TextTable</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/version/PSystemVersion.html#getLines()" class="member-name-link">getLines()</a> - Method in class net.sourceforge.plantuml.version.<a href="net/sourceforge/plantuml/version/PSystemVersion.html" title="class in net.sourceforge.plantuml.version">PSystemVersion</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/txt/ChartTxt.html#getLines(net.sourceforge.plantuml.chart.ChartDiagram,boolean)" class="member-name-link">getLines(ChartDiagram, boolean)</a> - Static method in class net.sourceforge.plantuml.chart.txt.<a href="net/sourceforge/plantuml/chart/txt/ChartTxt.html" title="class in net.sourceforge.plantuml.chart.txt">ChartTxt</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/utils/BlocLines.html#getLinesAsStringForSprite()" class="member-name-link">getLinesAsStringForSprite()</a> - Method in class net.sourceforge.plantuml.utils.<a href="net/sourceforge/plantuml/utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a></dt>
 <dd>&nbsp;</dd>
@@ -28051,6 +28136,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartSeries.html#getName()" class="member-name-link">getName()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartSeries.html" title="class in net.sourceforge.plantuml.chart">ChartSeries</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.Slice.html#getName()" class="member-name-link">getName()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieChart.Slice.html" title="class in net.sourceforge.plantuml.chart">PieChart.Slice</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/file/SuggestedFile.html#getName()" class="member-name-link">getName()</a> - Method in class net.sourceforge.plantuml.file.<a href="net/sourceforge/plantuml/file/SuggestedFile.html" title="class in net.sourceforge.plantuml.file">SuggestedFile</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/filesdiagram/FEntry.html#getName()" class="member-name-link">getName()</a> - Method in class net.sourceforge.plantuml.filesdiagram.<a href="net/sourceforge/plantuml/filesdiagram/FEntry.html" title="class in net.sourceforge.plantuml.filesdiagram">FEntry</a></dt>
@@ -28396,6 +28483,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the numerator.</div>
 </dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getNumericAxis()" class="member-name-link">getNumericAxis()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>
+<div class="block">The numeric h-axis, used when the data are coordinate pairs (or are spread over an
+ h-axis range).</div>
+</dd>
 <dt><a href="zext/plantuml/com/google/zxing/qrcode/encoder/QRCode.html#getNumRSBlocks()" class="member-name-link">getNumRSBlocks()</a> - Method in class zext.plantuml.com.google.zxing.qrcode.encoder.<a href="zext/plantuml/com/google/zxing/qrcode/encoder/QRCode.html" title="class in zext.plantuml.com.google.zxing.qrcode.encoder">QRCode</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="zext/plantuml/com/google/zxing/qrcode/encoder/QRCode.html#getNumTotalBytes()" class="member-name-link">getNumTotalBytes()</a> - Method in class zext.plantuml.com.google.zxing.qrcode.encoder.<a href="zext/plantuml/com/google/zxing/qrcode/encoder/QRCode.html" title="class in zext.plantuml.com.google.zxing.qrcode.encoder">QRCode</a></dt>
@@ -28477,6 +28569,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/sequencediagram/Participant.html#getOrder()" class="member-name-link">getOrder()</a> - Method in class net.sourceforge.plantuml.sequencediagram.<a href="net/sourceforge/plantuml/sequencediagram/Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/activitydiagram3/ftile/vcompact/UGraphicInterceptorOneSwimlane.html#getOrderedListOfAllSwimlanes()" class="member-name-link">getOrderedListOfAllSwimlanes()</a> - Method in class net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.<a href="net/sourceforge/plantuml/activitydiagram3/ftile/vcompact/UGraphicInterceptorOneSwimlane.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">UGraphicInterceptorOneSwimlane</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getOrientation()" class="member-name-link">getOrientation()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartDiagram.html#getOrientation()" class="member-name-link">getOrientation()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartDiagram.html" title="class in net.sourceforge.plantuml.chart">ChartDiagram</a></dt>
 <dd>&nbsp;</dd>
@@ -28918,6 +29012,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/openpdf/text/pdf/PdfContentByte.html#getPdfWriter()" class="member-name-link">getPdfWriter()</a> - Method in class org.openpdf.text.pdf.<a href="org/openpdf/text/pdf/PdfContentByte.html" title="class in org.openpdf.text.pdf">PdfContentByte</a></dt>
 <dd>
 <div class="block">Gets the <CODE>PdfWriter</CODE> in use by this object.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.html#getPercent(net.sourceforge.plantuml.chart.PieChart.Slice)" class="member-name-link">getPercent(PieChart.Slice)</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieChart.html" title="class in net.sourceforge.plantuml.chart">PieChart</a></dt>
+<dd>
+<div class="block">The share of a slice, from 0 to 100.</div>
 </dd>
 <dt><a href="net/sourceforge/plantuml/timingdiagram/PlayerClock.html#getPeriod()" class="member-name-link">getPeriod()</a> - Method in class net.sourceforge.plantuml.timingdiagram.<a href="net/sourceforge/plantuml/timingdiagram/PlayerClock.html" title="class in net.sourceforge.plantuml.timingdiagram">PlayerClock</a></dt>
 <dd>&nbsp;</dd>
@@ -29778,6 +29876,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/style/ISkinParam.html#getRanksep()" class="member-name-link">getRanksep()</a> - Method in interface net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartTicks.Tick.html#getRatio()" class="member-name-link">getRatio()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartTicks.Tick.html" title="class in net.sourceforge.plantuml.chart">ChartTicks.Tick</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/sudoku/ISudoku.html#getRatting()" class="member-name-link">getRatting()</a> - Method in interface net.sourceforge.plantuml.sudoku.<a href="net/sourceforge/plantuml/sudoku/ISudoku.html" title="interface in net.sourceforge.plantuml.sudoku">ISudoku</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/sudoku/SudokuDLX.html#getRatting()" class="member-name-link">getRatting()</a> - Method in class net.sourceforge.plantuml.sudoku.<a href="net/sourceforge/plantuml/sudoku/SudokuDLX.html" title="class in net.sourceforge.plantuml.sudoku">SudokuDLX</a></dt>
@@ -30295,7 +30395,13 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a new serial id.</div>
 </dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getSeries()" class="member-name-link">getSeries()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartDiagram.html#getSeries()" class="member-name-link">getSeries()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartDiagram.html" title="class in net.sourceforge.plantuml.chart">ChartDiagram</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.html#getSeries()" class="member-name-link">getSeries()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieChart.html" title="class in net.sourceforge.plantuml.chart">PieChart</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/RadarChart.html#getSeries()" class="member-name-link">getSeries()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/RadarChart.html" title="class in net.sourceforge.plantuml.chart">RadarChart</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/nwdiag/next/NServerDraw.html#getServer()" class="member-name-link">getServer()</a> - Method in class net.sourceforge.plantuml.nwdiag.next.<a href="net/sourceforge/plantuml/nwdiag/next/NServerDraw.html" title="class in net.sourceforge.plantuml.nwdiag.next">NServerDraw</a></dt>
 <dd>&nbsp;</dd>
@@ -30767,6 +30873,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/scilab/forge/jlatexmath/MulticolumnAtom.html#getSkipped()" class="member-name-link">getSkipped()</a> - Method in class org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/MulticolumnAtom.html" title="class in org.scilab.forge.jlatexmath">MulticolumnAtom</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.html#getSlices()" class="member-name-link">getSlices()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieChart.html" title="class in net.sourceforge.plantuml.chart">PieChart</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/api/INumberAnalyzed.html#getSliddingMean()" class="member-name-link">getSliddingMean()</a> - Method in interface net.sourceforge.plantuml.api.<a href="net/sourceforge/plantuml/api/INumberAnalyzed.html" title="interface in net.sourceforge.plantuml.api">INumberAnalyzed</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/api/NumberAnalyzed.html#getSliddingMean()" class="member-name-link">getSliddingMean()</a> - Method in class net.sourceforge.plantuml.api.<a href="net/sourceforge/plantuml/api/NumberAnalyzed.html" title="class in net.sourceforge.plantuml.api">NumberAnalyzed</a></dt>
@@ -30904,6 +31012,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/stereo/Stereotype.html#getSprite(net.sourceforge.plantuml.klimt.sprite.SpriteContainer)" class="member-name-link">getSprite(SpriteContainer)</a> - Method in class net.sourceforge.plantuml.stereo.<a href="net/sourceforge/plantuml/stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/scilab/forge/jlatexmath/FontInfo.html#getSsId()" class="member-name-link">getSsId()</a> - Method in class org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/FontInfo.html" title="class in org.scilab.forge.jlatexmath">FontInfo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getStackMode()" class="member-name-link">getStackMode()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartDiagram.html#getStackMode()" class="member-name-link">getStackMode()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartDiagram.html" title="class in net.sourceforge.plantuml.chart">ChartDiagram</a></dt>
 <dd>&nbsp;</dd>
@@ -32543,6 +32653,11 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/scilab/forge/jlatexmath/Extension.html#getTop()" class="member-name-link">getTop()</a> - Method in class org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Extension.html" title="class in org.scilab.forge.jlatexmath">Extension</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/StackLayout.html#getTop(int,int)" class="member-name-link">getTop(int, int)</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/StackLayout.html" title="class in net.sourceforge.plantuml.chart">StackLayout</a></dt>
+<dd>
+<div class="block">The value where the segment of the i-th value of the s-th series ends: its base
+ plus its value.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/nwdiag/core/NwGroup.html#getTopHeaderHeight(net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">getTopHeaderHeight(StringBounder, ISkinParam)</a> - Method in class net.sourceforge.plantuml.nwdiag.core.<a href="net/sourceforge/plantuml/nwdiag/core/NwGroup.html" title="class in net.sourceforge.plantuml.nwdiag.core">NwGroup</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/asciiverse/InfinitePlan.html#getTopLeftChar()" class="member-name-link">getTopLeftChar()</a> - Method in class net.sourceforge.plantuml.asciiverse.<a href="net/sourceforge/plantuml/asciiverse/InfinitePlan.html" title="class in net.sourceforge.plantuml.asciiverse">InfinitePlan</a></dt>
@@ -32556,6 +32671,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/dot/DotData.html#getTopParent()" class="member-name-link">getTopParent()</a> - Method in class net.sourceforge.plantuml.dot.<a href="net/sourceforge/plantuml/dot/DotData.html" title="class in net.sourceforge.plantuml.dot">DotData</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/asciiverse/InfinitePlan.html#getTopRightChar()" class="member-name-link">getTopRightChar()</a> - Method in class net.sourceforge.plantuml.asciiverse.<a href="net/sourceforge/plantuml/asciiverse/InfinitePlan.html" title="class in net.sourceforge.plantuml.asciiverse">InfinitePlan</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.html#getTotal()" class="member-name-link">getTotal()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieChart.html" title="class in net.sourceforge.plantuml.chart">PieChart</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="zext/plantuml/com/google/zxing/datamatrix/decoder/Version.html#getTotalCodewords()" class="member-name-link">getTotalCodewords()</a> - Method in class zext.plantuml.com.google.zxing.datamatrix.decoder.<a href="zext/plantuml/com/google/zxing/datamatrix/decoder/Version.html" title="class in zext.plantuml.com.google.zxing.datamatrix.decoder">Version</a></dt>
 <dd>&nbsp;</dd>
@@ -32998,6 +33115,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/svek/image/QuadraticEquation.html#getV(double)" class="member-name-link">getV(double)</a> - Method in class net.sourceforge.plantuml.svek.image.<a href="net/sourceforge/plantuml/svek/image/QuadraticEquation.html" title="class in net.sourceforge.plantuml.svek.image">QuadraticEquation</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartTicks.Tick.html#getValue()" class="member-name-link">getValue()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartTicks.Tick.html" title="class in net.sourceforge.plantuml.chart">ChartTicks.Tick</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.Slice.html#getValue()" class="member-name-link">getValue()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieChart.Slice.html" title="class in net.sourceforge.plantuml.chart">PieChart.Slice</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/ngm/math/Segment.html#getValue()" class="member-name-link">getValue()</a> - Method in class net.sourceforge.plantuml.gantt.ngm.math.<a href="net/sourceforge/plantuml/gantt/ngm/math/Segment.html" title="class in net.sourceforge.plantuml.gantt.ngm.math">Segment</a></dt>
 <dd>
 <div class="block">Returns the constant workload value of this segment.</div>
@@ -33069,8 +33190,24 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/timingdiagram/TimeSeries.html#getValueAt(net.sourceforge.plantuml.timingdiagram.TimeTick)" class="member-name-link">getValueAt(TimeTick)</a> - Method in class net.sourceforge.plantuml.timingdiagram.<a href="net/sourceforge/plantuml/timingdiagram/TimeSeries.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeSeries</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getValueAxis()" class="member-name-link">getValueAxis()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getValueAxis(net.sourceforge.plantuml.chart.ChartSeries)" class="member-name-link">getValueAxis(ChartSeries)</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>
+<div class="block">The value axis a series is drawn against.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getValueAxis2()" class="member-name-link">getValueAxis2()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>
+<div class="block">The secondary value axis (v2-axis), or null.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#getValueGridMode()" class="member-name-link">getValueGridMode()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartSeries.html#getValues()" class="member-name-link">getValues()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartSeries.html" title="class in net.sourceforge.plantuml.chart">ChartSeries</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/RadarChart.html#getValues()" class="member-name-link">getValues()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/RadarChart.html" title="class in net.sourceforge.plantuml.chart">RadarChart</a></dt>
+<dd>
+<div class="block">For each series, its value for each category, or null when it has none.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/tim/EaterFunctionCall.html#getValues()" class="member-name-link">getValues()</a> - Method in class net.sourceforge.plantuml.tim.<a href="net/sourceforge/plantuml/tim/EaterFunctionCall.html" title="class in net.sourceforge.plantuml.tim">EaterFunctionCall</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/yaml/parser/YamlLine.html#getValues()" class="member-name-link">getValues()</a> - Method in class net.sourceforge.plantuml.yaml.parser.<a href="net/sourceforge/plantuml/yaml/parser/YamlLine.html" title="class in net.sourceforge.plantuml.yaml.parser">YamlLine</a></dt>
@@ -34657,6 +34794,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/lang/Verbs.html#happens" class="member-name-link">happens</a> - Static variable in class net.sourceforge.plantuml.gantt.lang.<a href="net/sourceforge/plantuml/gantt/lang/Verbs.html" title="class in net.sourceforge.plantuml.gantt.lang">Verbs</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/StackLayout.html#has(int,int)" class="member-name-link">has(int, int)</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/StackLayout.html" title="class in net.sourceforge.plantuml.chart">StackLayout</a></dt>
+<dd>
+<div class="block">Whether the i-th value of the s-th series is there.</div>
+</dd>
 <dt><a href="h/ST_Agdesc_s.html#has_attrs" class="member-name-link">has_attrs</a> - Variable in class h.<a href="h/ST_Agdesc_s.html" title="class in h">ST_Agdesc_s</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="h/ST_Agdesc_s.html#has_cmpnd" class="member-name-link">has_cmpnd</a> - Variable in class h.<a href="h/ST_Agdesc_s.html" title="class in h">ST_Agdesc_s</a></dt>
@@ -34702,6 +34843,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/api/PlantumlUtils.html#hasCMapData(java.lang.String)" class="member-name-link">hasCMapData(String)</a> - Static method in class net.sourceforge.plantuml.api.<a href="net/sourceforge/plantuml/api/PlantumlUtils.html" title="class in net.sourceforge.plantuml.api">PlantumlUtils</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/stathissideris/ascii2image/text/CellSet.html#hasCommonCells(org.stathissideris.ascii2image.text.CellSet)" class="member-name-link">hasCommonCells(CellSet)</a> - Method in class org.stathissideris.ascii2image.text.<a href="org/stathissideris/ascii2image/text/CellSet.html" title="class in org.stathissideris.ascii2image.text">CellSet</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#hasCoordinatePairs()" class="member-name-link">hasCoordinatePairs()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartAxis.html#hasCustomTicks()" class="member-name-link">hasCustomTicks()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartAxis.html" title="class in net.sourceforge.plantuml.chart">ChartAxis</a></dt>
 <dd>
@@ -35442,6 +35585,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/stathissideris/ascii2image/text/GridPatternGroup.html#horizontalStarOnLineCriteria" class="member-name-link">horizontalStarOnLineCriteria</a> - Static variable in class org.stathissideris.ascii2image.text.<a href="org/stathissideris/ascii2image/text/GridPatternGroup.html" title="class in org.stathissideris.ascii2image.text">GridPatternGroup</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartTicks.html#horizontalValueTicks(net.sourceforge.plantuml.chart.ChartAxis)" class="member-name-link">horizontalValueTicks(ChartAxis)</a> - Static method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartTicks.html" title="class in net.sourceforge.plantuml.chart">ChartTicks</a></dt>
+<dd>
+<div class="block">The ticks of the value axis of a horizontal chart, drawn along the bottom: always
+ the five automatic intervals, written as integers.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/timingdiagram/TimingFormat.html#HOUR" class="member-name-link">HOUR</a> - Static variable in class net.sourceforge.plantuml.timingdiagram.<a href="net/sourceforge/plantuml/timingdiagram/TimingFormat.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingFormat</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/skin/SkinParam.html#hoverPathColor()" class="member-name-link">hoverPathColor()</a> - Method in class net.sourceforge.plantuml.skin.<a href="net/sourceforge/plantuml/skin/SkinParam.html" title="class in net.sourceforge.plantuml.skin">SkinParam</a></dt>
@@ -36899,6 +37047,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/scilab/forge/jlatexmath/Dummy.html#isCharSymbol()" class="member-name-link">isCharSymbol()</a> - Method in class org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/Dummy.html" title="class in org.scilab.forge.jlatexmath">Dummy</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/RadarChart.html#isCircleGrid()" class="member-name-link">isCircleGrid()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/RadarChart.html" title="class in net.sourceforge.plantuml.chart">RadarChart</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/StringUtils.html#isCJK(char)" class="member-name-link">isCJK(char)</a> - Static method in class net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/StringUtils.html" title="class in net.sourceforge.plantuml">StringUtils</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/argon2/Argon2.html#isClearMemory()" class="member-name-link">isClearMemory()</a> - Method in class net.sourceforge.plantuml.argon2.<a href="net/sourceforge/plantuml/argon2/Argon2.html" title="class in net.sourceforge.plantuml.argon2">Argon2</a></dt>
@@ -37371,6 +37521,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="net/sourceforge/plantuml/sequencediagram/SequenceDiagram.html#isHideUnlinkedData()" class="member-name-link">isHideUnlinkedData()</a> - Method in class net.sourceforge.plantuml.sequencediagram.<a href="net/sourceforge/plantuml/sequencediagram/SequenceDiagram.html" title="class in net.sourceforge.plantuml.sequencediagram">SequenceDiagram</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/elk/proxy/graph/ElkEdge.html#isHierarchical()" class="member-name-link">isHierarchical()</a> - Method in class net.sourceforge.plantuml.elk.proxy.graph.<a href="net/sourceforge/plantuml/elk/proxy/graph/ElkEdge.html" title="class in net.sourceforge.plantuml.elk.proxy.graph">ElkEdge</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/CartesianChart.html#isHorizontal()" class="member-name-link">isHorizontal()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart">CartesianChart</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/stathissideris/ascii2image/graphics/ShapeEdge.html#isHorizontal()" class="member-name-link">isHorizontal()</a> - Method in class org.stathissideris.ascii2image.graphics.<a href="org/stathissideris/ascii2image/graphics/ShapeEdge.html" title="class in org.stathissideris.ascii2image.graphics">ShapeEdge</a></dt>
 <dd>&nbsp;</dd>
@@ -43063,6 +43215,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="net/sourceforge/plantuml/chart/command/package-summary.html">net.sourceforge.plantuml.chart.command</a> - package net.sourceforge.plantuml.chart.command</dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/txt/package-summary.html">net.sourceforge.plantuml.chart.txt</a> - package net.sourceforge.plantuml.chart.txt</dt>
+<dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/cheneer/package-summary.html">net.sourceforge.plantuml.cheneer</a> - package net.sourceforge.plantuml.cheneer</dt>
 <dd>
 <div class="block">Provides classes used to manage 
@@ -44621,6 +44775,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="zext/plantuml/com/google/zxing/qrcode/decoder/Mode.html#NUMERIC" class="member-name-link">NUMERIC</a> - Static variable in class zext.plantuml.com.google.zxing.qrcode.decoder.<a href="zext/plantuml/com/google/zxing/qrcode/decoder/Mode.html" title="class in zext.plantuml.com.google.zxing.qrcode.decoder">Mode</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartTicks.html#numericTicks(net.sourceforge.plantuml.chart.ChartAxis,java.lang.Integer)" class="member-name-link">numericTicks(ChartAxis, Integer)</a> - Static method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartTicks.html" title="class in net.sourceforge.plantuml.chart">ChartTicks</a></dt>
+<dd>
+<div class="block">The ticks of a numeric h-axis (coordinate pairs, or an h-axis range): one every
+ "spacing" when given, else about ten, starting at a multiple of the interval.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/zopfli/Options.html#numIterations" class="member-name-link">numIterations</a> - Variable in class net.sourceforge.plantuml.zopfli.<a href="net/sourceforge/plantuml/zopfli/Options.html" title="class in net.sourceforge.plantuml.zopfli">Options</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="smetana/core/Globals.html#numpts" class="member-name-link">numpts</a> - Variable in class smetana.core.<a href="smetana/core/Globals.html" title="class in smetana.core">Globals</a></dt>
@@ -46813,11 +46972,21 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/timescale/PiecewiseTimeType.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.gantt.timescale">PiecewiseTimeType</a> - Enum Class in <a href="net/sourceforge/plantuml/gantt/timescale/package-summary.html">net.sourceforge.plantuml.gantt.timescale</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart">PieChart</a> - Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
+<dd>
+<div class="block">A pie (or a donut) once resolved: one slice per value greater than 0, named by its
+ key or by the a-axis label at its index, with its share of the total.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/chart/PieChart.Slice.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart">PieChart.Slice</a> - Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
+<dd>
+<div class="block">A slice: its name (null when it has none), its value, and the index of the value in
+ the series, which gives its color.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/chart/PieRenderer.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart">PieRenderer</a> - Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
 <dd>
 <div class="block">Draws a pie (or a donut).</div>
 </dd>
-<dt><a href="net/sourceforge/plantuml/chart/PieRenderer.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.chart.ChartSeries,java.util.List,net.sourceforge.plantuml.chart.ChartDiagram.LegendPosition)" class="member-name-link">PieRenderer(ISkinParam, ChartSeries, List&lt;String&gt;, ChartDiagram.LegendPosition)</a> - Constructor for class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieRenderer.html" title="class in net.sourceforge.plantuml.chart">PieRenderer</a></dt>
+<dt><a href="net/sourceforge/plantuml/chart/PieRenderer.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.chart.PieChart)" class="member-name-link">PieRenderer(ISkinParam, PieChart)</a> - Constructor for class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/PieRenderer.html" title="class in net.sourceforge.plantuml.chart">PieRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/Pipe.html" class="type-name-link" title="class in net.sourceforge.plantuml">Pipe</a> - Class in <a href="net/sourceforge/plantuml/package-summary.html">net.sourceforge.plantuml</a></dt>
 <dd>&nbsp;</dd>
@@ -48577,12 +48746,17 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartSeries.SeriesType.html#RADAR" class="member-name-link">RADAR</a> - Enum constant in enum class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartSeries.SeriesType.html" title="enum class in net.sourceforge.plantuml.chart">ChartSeries.SeriesType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/RadarChart.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart">RadarChart</a> - Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
+<dd>
+<div class="block">A radar once resolved: its categories around the circle, the value of each series for
+ each category (null when missing), and its radial scale fitted to the data.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/chart/RadarRenderer.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart">RadarRenderer</a> - Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
 <dd>
 <div class="block">Draws a radar chart: one spoke per category (a-axis), clockwise from 12 o'clock, rings at
  the ticks of the radial scale (r-axis), and one filled polygon per series.</div>
 </dd>
-<dt><a href="net/sourceforge/plantuml/chart/RadarRenderer.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,java.util.List,java.util.List,java.util.List,net.sourceforge.plantuml.chart.ChartAxis,boolean,net.sourceforge.plantuml.chart.ChartDiagram.LegendPosition)" class="member-name-link">RadarRenderer(ISkinParam, List&lt;String&gt;, List&lt;List&lt;Double&gt;&gt;, List&lt;ChartSeries&gt;, ChartAxis, boolean, ChartDiagram.LegendPosition)</a> - Constructor for class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/RadarRenderer.html" title="class in net.sourceforge.plantuml.chart">RadarRenderer</a></dt>
+<dt><a href="net/sourceforge/plantuml/chart/RadarRenderer.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.chart.RadarChart)" class="member-name-link">RadarRenderer(ISkinParam, RadarChart)</a> - Constructor for class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/RadarRenderer.html" title="class in net.sourceforge.plantuml.chart">RadarRenderer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="smetana/core/Macro.html#RADIAL" class="member-name-link">RADIAL</a> - Static variable in class smetana.core.<a href="smetana/core/Macro.html" title="class in smetana.core">Macro</a></dt>
 <dd>&nbsp;</dd>
@@ -49897,12 +50071,25 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/scilab/forge/jlatexmath/PredefMacros.html#resizebox_macro(org.scilab.forge.jlatexmath.TeXParser,java.lang.String%5B%5D)" class="member-name-link">resizebox_macro(TeXParser, String[])</a> - Static method in class org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/PredefMacros.html" title="class in org.scilab.forge.jlatexmath">PredefMacros</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartDiagram.html#resolveCartesian()" class="member-name-link">resolveCartesian()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartDiagram.html" title="class in net.sourceforge.plantuml.chart">ChartDiagram</a></dt>
+<dd>
+<div class="block">The chart as it is drawn on cartesian axes, every implicit value resolved: see
+ <a href="net/sourceforge/plantuml/chart/CartesianChart.html" title="class in net.sourceforge.plantuml.chart"><code>CartesianChart</code></a>.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/openpdf/StringBounderOpenPdf.html#resolveFont(net.sourceforge.plantuml.klimt.font.UFont)" class="member-name-link">resolveFont(UFont)</a> - Static method in class net.sourceforge.plantuml.openpdf.<a href="net/sourceforge/plantuml/openpdf/StringBounderOpenPdf.html" title="class in net.sourceforge.plantuml.openpdf">StringBounderOpenPdf</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartDiagram.html#resolvePie()" class="member-name-link">resolvePie()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartDiagram.html" title="class in net.sourceforge.plantuml.chart">ChartDiagram</a></dt>
+<dd>
+<div class="block">The pie, its slices resolved: see <a href="net/sourceforge/plantuml/chart/PieChart.html" title="class in net.sourceforge.plantuml.chart"><code>PieChart</code></a>.</div>
+</dd>
 <dt><a href="gen/lib/common/shapes__c.html#resolvePort(h.ST_Agnode_s,h.ST_Agnode_s,h.ST_port)" class="member-name-link">resolvePort(ST_Agnode_s, ST_Agnode_s, ST_port)</a> - Static method in class gen.lib.common.<a href="gen/lib/common/shapes__c.html" title="class in gen.lib.common">shapes__c</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gen/lib/common/shapes__c.html#resolvePorts(java.lang.Object...)" class="member-name-link">resolvePorts(Object...)</a> - Static method in class gen.lib.common.<a href="gen/lib/common/shapes__c.html" title="class in gen.lib.common">shapes__c</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartDiagram.html#resolveRadar()" class="member-name-link">resolveRadar()</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartDiagram.html" title="class in net.sourceforge.plantuml.chart">ChartDiagram</a></dt>
+<dd>
+<div class="block">The radar, its categories, values and scale resolved: see <a href="net/sourceforge/plantuml/chart/RadarChart.html" title="class in net.sourceforge.plantuml.chart"><code>RadarChart</code></a>.</div>
+</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/core/Resource.html" class="type-name-link" title="class in net.sourceforge.plantuml.gantt.core">Resource</a> - Class in <a href="net/sourceforge/plantuml/gantt/core/package-summary.html">net.sourceforge.plantuml.gantt.core</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="net/sourceforge/plantuml/gantt/core/Resource.html#%3Cinit%3E(java.lang.String)" class="member-name-link">Resource(String)</a> - Constructor for class net.sourceforge.plantuml.gantt.core.<a href="net/sourceforge/plantuml/gantt/core/Resource.html" title="class in net.sourceforge.plantuml.gantt.core">Resource</a></dt>
@@ -54636,6 +54823,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="jcckit/plot/BarFactory.html#STACKED_KEY" class="member-name-link">STACKED_KEY</a> - Static variable in class jcckit.plot.<a href="jcckit/plot/BarFactory.html" title="class in jcckit.plot">BarFactory</a></dt>
 <dd>
 <div class="block">Configuration parameter key.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/chart/StackLayout.html" class="type-name-link" title="class in net.sourceforge.plantuml.chart">StackLayout</a> - Class in <a href="net/sourceforge/plantuml/chart/package-summary.html">net.sourceforge.plantuml.chart</a></dt>
+<dd>
+<div class="block">Where each value of stacked series lies, in values (not in pixels): for the i-th
+ value of the s-th series, the segment from its base to its top.</div>
 </dd>
 <dt><a href="org/scilab/forge/jlatexmath/PredefMacros.html#stackrel_macro(org.scilab.forge.jlatexmath.TeXParser,java.lang.String%5B%5D)" class="member-name-link">stackrel_macro(TeXParser, String[])</a> - Static method in class org.scilab.forge.jlatexmath.<a href="org/scilab/forge/jlatexmath/PredefMacros.html" title="class in org.scilab.forge.jlatexmath">PredefMacros</a></dt>
 <dd>&nbsp;</dd>
@@ -61824,6 +62016,11 @@ the order they are declared.</div>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
+</dd>
+<dt><a href="net/sourceforge/plantuml/chart/ChartTicks.html#valueTicks(net.sourceforge.plantuml.chart.ChartAxis)" class="member-name-link">valueTicks(ChartAxis)</a> - Static method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartTicks.html" title="class in net.sourceforge.plantuml.chart">ChartTicks</a></dt>
+<dd>
+<div class="block">The ticks of a vertical value axis (and of the radial scale of a radar): custom
+ ticks if defined, else ticks every "spacing", else five automatic intervals.</div>
 </dd>
 <dt><a href="net/sourceforge/plantuml/chart/ChartAxis.html#valueToPixel(double,double,double)" class="member-name-link">valueToPixel(double, double, double)</a> - Method in class net.sourceforge.plantuml.chart.<a href="net/sourceforge/plantuml/chart/ChartAxis.html" title="class in net.sourceforge.plantuml.chart">ChartAxis</a></dt>
 <dd>

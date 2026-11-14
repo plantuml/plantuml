@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChartTicks.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart</a> &gt; <span class="el_source">ChartTicks.java</span></div><h1>ChartTicks.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+/**
+ * The ticks of the axes of a chart, and how their values are written. They depend
+ * only on the axes, not on the way the chart is drawn: the graphic renderers and the
+ * text one place their ticks at the same values, with the same labels.
+ */
+public final class ChartTicks {
+
+	// Number of intervals drawn by the automatic ticks of a value axis
+	private static final int TICK_INTERVALS = 5;
+
+	private ChartTicks() {
+	}
+
+	/**
+	 * A tick: its value, its position along the axis from 0 (min) to 1 (max), and its
+	 * label.
+	 */
+	public static final class Tick {
+
+		private final double value;
+		private final double ratio;
+		private final String label;
+
+<span class="fc" id="L66">		Tick(double value, double ratio, String label) {</span>
+<span class="fc" id="L67">			this.value = value;</span>
+<span class="fc" id="L68">			this.ratio = ratio;</span>
+<span class="fc" id="L69">			this.label = label;</span>
+<span class="fc" id="L70">		}</span>
+
+		public double getValue() {
+<span class="fc" id="L73">			return value;</span>
+		}
+
+		public double getRatio() {
+<span class="fc" id="L77">			return ratio;</span>
+		}
+
+		public String getLabel() {
+<span class="fc" id="L81">			return label;</span>
+		}
+	}
+
+	/**
+	 * The ticks of a vertical value axis (and of the radial scale of a radar): custom
+	 * ticks if defined, else ticks every &quot;spacing&quot;, else five automatic intervals.
+	 */
+	public static List&lt;Tick&gt; valueTicks(ChartAxis axis) {
+<span class="fc" id="L90">		final List&lt;Tick&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L91">		final double range = axis.getMax() - axis.getMin();</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (axis.hasCustomTicks()) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">			for (Map.Entry&lt;Double, String&gt; entry : axis.getCustomTicks().entrySet()) {</span>
+<span class="fc" id="L94">				final double ratio = (entry.getKey() - axis.getMin()) / range;</span>
+				// Skip if outside axis range
+<span class="pc bpc" id="L96" title="2 of 4 branches missed.">				if (ratio &gt;= 0 &amp;&amp; ratio &lt;= 1)</span>
+<span class="fc" id="L97">					result.add(new Tick(entry.getKey(), ratio, entry.getValue()));</span>
+<span class="fc" id="L98">			}</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		} else if (axis.hasTickSpacing()) {</span>
+<span class="fc" id="L100">			final double spacing = axis.getTickSpacing();</span>
+			// Calculate starting value (round up to nearest spacing interval)
+<span class="fc" id="L102">			final double startValue = Math.ceil(axis.getMin() / spacing) * spacing;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			for (double value = startValue; value &lt;= axis.getMax(); value += spacing) {</span>
+				// Avoid floating point precision issues
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">				if (value &gt; axis.getMax() + spacing * 0.01)</span>
+<span class="nc" id="L106">					break;</span>
+<span class="fc" id="L107">				result.add(new Tick(value, (value - axis.getMin()) / range, formatValue(value)));</span>
+			}
+<span class="fc" id="L109">		} else {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			for (int i = 0; i &lt;= TICK_INTERVALS; i++) {</span>
+<span class="fc" id="L111">				final double value = axis.getMin() + range * i / TICK_INTERVALS;</span>
+<span class="fc" id="L112">				result.add(new Tick(value, (double) i / TICK_INTERVALS, formatValue(value)));</span>
+			}
+		}
+<span class="fc" id="L115">		return result;</span>
+	}
+
+	/**
+	 * The ticks of the value axis of a horizontal chart, drawn along the bottom: always
+	 * the five automatic intervals, written as integers.
+	 */
+	public static List&lt;Tick&gt; horizontalValueTicks(ChartAxis axis) {
+<span class="fc" id="L123">		final List&lt;Tick&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L124">		final double range = axis.getMax() - axis.getMin();</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		for (int i = 0; i &lt;= TICK_INTERVALS; i++) {</span>
+<span class="fc" id="L126">			final double value = axis.getMin() + (i * range / TICK_INTERVALS);</span>
+<span class="fc" id="L127">			result.add(new Tick(value, (double) i / TICK_INTERVALS, String.format(Locale.ROOT, &quot;%.0f&quot;, value)));</span>
+		}
+<span class="fc" id="L129">		return result;</span>
+	}
+
+	/**
+	 * The ticks of a numeric h-axis (coordinate pairs, or an h-axis range): one every
+	 * &quot;spacing&quot; when given, else about ten, starting at a multiple of the interval.
+	 * They are placed by their value, as the points of the series.
+	 */
+	public static List&lt;Tick&gt; numericTicks(ChartAxis axis, Integer spacing) {
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (axis == null)</span>
+<span class="nc" id="L139">			return Collections.emptyList();</span>
+<span class="fc" id="L140">		final List&lt;Tick&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L141">		final double range = axis.getMax() - axis.getMin();</span>
+<span class="pc bpc" id="L142" title="3 of 4 branches missed.">		final double tickInterval = spacing != null &amp;&amp; spacing &gt; 0 ? spacing : range / 10.0;</span>
+
+		// Find the starting tick value (round down to nearest multiple of tickInterval)
+<span class="fc" id="L145">		final double startValue = Math.floor(axis.getMin() / tickInterval) * tickInterval;</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		for (double value = startValue; value &lt;= axis.getMax() + tickInterval * 0.01; value += tickInterval) {</span>
+			// Skip if outside axis range
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">			if (value &lt; axis.getMin() - tickInterval * 0.01 || value &gt; axis.getMax() + tickInterval * 0.01)</span>
+<span class="nc" id="L149">				continue;</span>
+<span class="fc" id="L150">			result.add(new Tick(value, (value - axis.getMin()) / range, formatNumericValue(value)));</span>
+		}
+<span class="fc" id="L152">		return result;</span>
+	}
+
+	/**
+	 * A value on a value axis, or on a point label: 0.80 is written 0.8, as the
+	 * automatic range gives ticks like 0, 0.8, 1.6 ...
+	 */
+	public static String formatValue(double value) {
+<span class="pc bpc" id="L160" title="1 of 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
+<span class="nc" id="L161">			return String.format(Locale.ROOT, &quot;%.2e&quot;, value);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (value == (long) value)</span>
+<span class="fc" id="L163">			return String.format(Locale.ROOT, &quot;%d&quot;, (long) value);</span>
+<span class="fc" id="L164">		return String.format(Locale.ROOT, &quot;%.2f&quot;, value).replaceAll(&quot;0+$&quot;, &quot;&quot;);</span>
+	}
+
+	// A value on a numeric h-axis: one decimal at most
+	private static String formatNumericValue(double value) {
+<span class="pc bpc" id="L169" title="1 of 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
+<span class="nc" id="L170">			return String.format(Locale.ROOT, &quot;%.2e&quot;, value);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">		if (value == (long) value)</span>
+<span class="fc" id="L172">			return String.format(Locale.ROOT, &quot;%d&quot;, (long) value);</span>
+<span class="fc" id="L173">		return String.format(Locale.ROOT, &quot;%.1f&quot;, value);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

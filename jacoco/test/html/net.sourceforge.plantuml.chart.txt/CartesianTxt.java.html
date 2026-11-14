@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CartesianTxt.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart.txt</a> &gt; <span class="el_source">CartesianTxt.java</span></div><h1>CartesianTxt.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart.txt;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.chart.CartesianChart;
+import net.sourceforge.plantuml.chart.ChartAxis;
+import net.sourceforge.plantuml.chart.ChartDiagram;
+import net.sourceforge.plantuml.chart.ChartSeries;
+import net.sourceforge.plantuml.chart.ChartTicks;
+import net.sourceforge.plantuml.chart.StackLayout;
+
+/**
+ * A chart of bars and lines on cartesian axes, drawn as text.
+ * &lt;p&gt;
+ * Vertical: the value axis on the left, with the ticks of the graphic rendering, and one
+ * column of {@link #categoryWidth} characters per category. A bar fills the cells under
+ * its value, the last one by half when it is about half filled. A line goes from category
+ * to category in steps, turning halfway between them.
+ * &lt;p&gt;
+ * Horizontal: the categories down the left side, one band of rows each, and the value
+ * axis along the bottom. Only bars are drawn so.
+ * &lt;p&gt;
+ * Each bar series has its own fill and each line series its own line, so that they can be
+ * told apart; the legend (see {@link ChartTxt}) shows them.
+ */
+final class CartesianTxt {
+
+	// Rows of the plot of a vertical chart, above the h-axis
+	private static final int PLOT_HEIGHT = 20;
+	// Columns of the plot of a horizontal chart, right of the v-axis
+	private static final int PLOT_WIDTH = 60;
+
+	private final CartesianChart chart;
+	private final TxtCharset charset;
+<span class="fc" id="L70">	private final List&lt;ChartSeries&gt; bars = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L71">	private final List&lt;ChartSeries&gt; lines = new ArrayList&lt;&gt;();</span>
+	private final boolean stacked;
+	private final StackLayout stack;
+
+<span class="fc" id="L75">	CartesianTxt(CartesianChart chart, TxtCharset charset) {</span>
+<span class="fc" id="L76">		this.chart = chart;</span>
+<span class="fc" id="L77">		this.charset = charset;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		for (ChartSeries s : chart.getSeries())</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">			if (s.getType() == ChartSeries.SeriesType.BAR)</span>
+<span class="fc" id="L80">				bars.add(s);</span>
+			else
+<span class="fc" id="L82">				lines.add(s);</span>
+<span class="pc bpc" id="L83" title="1 of 4 branches missed.">		this.stacked = chart.getStackMode() == ChartDiagram.StackMode.STACKED &amp;&amp; bars.size() &gt; 1;</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		this.stack = stacked ? StackLayout.bars(bars) : null;</span>
+<span class="fc" id="L85">	}</span>
+
+	/**
+	 * Whether a chart can be drawn so: bars and lines against categories, on a single
+	 * value axis; only bars when horizontal. The others are written as a table.
+	 */
+	static boolean isSupported(CartesianChart chart) {
+<span class="pc bpc" id="L92" title="2 of 6 branches missed.">		if (chart.getSeries().isEmpty() || chart.getCategories().isEmpty() || chart.hasCoordinatePairs()</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">				|| chart.getValueAxis2() != null)</span>
+<span class="fc" id="L94">			return false;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		for (ChartSeries s : chart.getSeries()) {</span>
+<span class="fc" id="L96">			final ChartSeries.SeriesType type = s.getType();</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (type == ChartSeries.SeriesType.BAR)</span>
+<span class="fc" id="L98">				continue;</span>
+<span class="pc bpc" id="L99" title="1 of 4 branches missed.">			if (type != ChartSeries.SeriesType.LINE || chart.isHorizontal())</span>
+<span class="fc" id="L100">				return false;</span>
+<span class="fc" id="L101">		}</span>
+<span class="fc" id="L102">		return true;</span>
+	}
+
+	/**
+	 * The character showing a series in the legend.
+	 */
+	char getSymbol(ChartSeries s) {
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (s.getType() == ChartSeries.SeriesType.BAR)</span>
+<span class="fc" id="L110">			return charset.fill(bars.indexOf(s));</span>
+<span class="fc" id="L111">		return charset.lineH(lines.indexOf(s));</span>
+	}
+
+	List&lt;String&gt; getLines() {
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (chart.isHorizontal())</span>
+<span class="fc" id="L116">			return drawHorizontal();</span>
+<span class="fc" id="L117">		return drawVertical();</span>
+	}
+
+	// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	// Vertical
+
+	private List&lt;String&gt; drawVertical() {
+<span class="fc" id="L124">		final CharGrid grid = new CharGrid();</span>
+<span class="fc" id="L125">		final ChartAxis axis = chart.getValueAxis();</span>
+<span class="fc" id="L126">		final List&lt;ChartTicks.Tick&gt; ticks = ChartTicks.valueTicks(axis);</span>
+<span class="fc" id="L127">		final List&lt;String&gt; categories = chart.getCategories();</span>
+<span class="fc" id="L128">		final int spacing = getCategorySpacing();</span>
+
+<span class="fc" id="L130">		int labelWidth = 0;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		for (ChartTicks.Tick tick : ticks)</span>
+<span class="fc" id="L132">			labelWidth = Math.max(labelWidth, tick.getLabel().length());</span>
+<span class="fc" id="L133">		final int axisX = labelWidth + 1;</span>
+<span class="fc" id="L134">		final int x0 = axisX + 1;</span>
+<span class="fc bfc" id="L135" title="All 4 branches covered.">		final int slots = stacked || bars.isEmpty() ? 1 : bars.size();</span>
+<span class="fc" id="L136">		final int categoryWidth = categoryWidth(categories, spacing, slots);</span>
+<span class="fc" id="L137">		final int barWidth = barWidth(categoryWidth, slots);</span>
+<span class="fc" id="L138">		final int plotWidth = categories.size() * categoryWidth;</span>
+
+		// The title of the value axis above it
+<span class="fc" id="L141">		final String valueTitle = axis.getTitle();</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		final int top = isEmpty(valueTitle) ? 0 : 1;</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (top &gt; 0)</span>
+<span class="fc" id="L144">			grid.putString(0, 0, valueTitle);</span>
+<span class="fc" id="L145">		final int axisY = top + PLOT_HEIGHT;</span>
+
+		// Dotted grid line at each tick, then the axis
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		for (ChartTicks.Tick tick : ticks) {</span>
+<span class="fc" id="L149">			final int y = top + PLOT_HEIGHT - (int) Math.round(tick.getRatio() * PLOT_HEIGHT);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			if (y &lt; axisY)</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">				for (int x = x0; x &lt; x0 + plotWidth; x++)</span>
+<span class="fc" id="L152">					grid.put(x, y, charset.dot());</span>
+<span class="fc" id="L153">		}</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		for (int y = top; y &lt; axisY; y++)</span>
+<span class="fc" id="L155">			grid.put(axisX, y, charset.vAxis());</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		for (int x = x0; x &lt; x0 + plotWidth; x++)</span>
+<span class="fc" id="L157">			grid.put(x, axisY, charset.hAxis());</span>
+<span class="fc" id="L158">		grid.put(axisX, axisY, charset.origin());</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (ChartTicks.Tick tick : ticks) {</span>
+<span class="fc" id="L160">			final int y = top + PLOT_HEIGHT - (int) Math.round(tick.getRatio() * PLOT_HEIGHT);</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">			if (y &lt; axisY)</span>
+<span class="fc" id="L162">				grid.put(axisX, y, charset.tickLeft());</span>
+<span class="fc" id="L163">			grid.putString(axisX - tick.getLabel().length(), y, tick.getLabel());</span>
+<span class="fc" id="L164">		}</span>
+
+		// Bars, side by side or stacked
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (int b = 0; b &lt; bars.size(); b++) {</span>
+<span class="fc" id="L168">			final List&lt;Double&gt; values = bars.get(b).getValues();</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">			for (int c = 0; c &lt; Math.min(values.size(), categories.size()); c++) {</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">				if (values.get(c) == null)</span>
+<span class="nc" id="L171">					continue;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">				final double from = stacked ? stack.getBase(b, c) : 0;</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">				final double to = stacked ? stack.getTop(b, c) : values.get(c);</span>
+<span class="fc" id="L174">				final double lo = toUnits(axis, Math.min(from, to), PLOT_HEIGHT);</span>
+<span class="fc" id="L175">				final double hi = toUnits(axis, Math.max(from, to), PLOT_HEIGHT);</span>
+<span class="fc" id="L176">				final int left = x0 + c * categoryWidth + (categoryWidth - barWidth * slots) / 2</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">						+ (stacked ? 0 : b * barWidth);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">				for (int x = left; x &lt; left + barWidth; x++)</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">					for (int k = 0; k &lt; PLOT_HEIGHT; k++) {</span>
+<span class="fc" id="L180">						final char ch = cell(lo, hi, k, b, true);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">						if (ch != 0)</span>
+<span class="fc" id="L182">							grid.put(x, axisY - 1 - k, ch);</span>
+					}
+			}
+		}
+
+		// Lines, from the center of a category to the next one
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		for (int l = 0; l &lt; lines.size(); l++) {</span>
+<span class="fc" id="L189">			final List&lt;Double&gt; values = lines.get(l).getValues();</span>
+<span class="fc" id="L190">			final int count = Math.min(values.size(), categories.size());</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">			for (int c = 0; c &lt; count; c++) {</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">				if (values.get(c) == null)</span>
+<span class="fc" id="L193">					continue;</span>
+<span class="fc" id="L194">				final int x = x0 + c * categoryWidth + categoryWidth / 2;</span>
+<span class="fc" id="L195">				final int y = axisY - (int) Math.round(toUnits(axis, values.get(c), PLOT_HEIGHT));</span>
+<span class="fc bfc" id="L196" title="All 4 branches covered.">				final boolean before = c &gt; 0 &amp;&amp; values.get(c - 1) != null;</span>
+<span class="fc bfc" id="L197" title="All 4 branches covered.">				final boolean after = c + 1 &lt; count &amp;&amp; values.get(c + 1) != null;</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">				if (after) {</span>
+<span class="fc" id="L199">					final int y2 = axisY - (int) Math.round(toUnits(axis, values.get(c + 1), PLOT_HEIGHT));</span>
+<span class="fc" id="L200">					drawStep(grid, x, y, x + categoryWidth, y2, l);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">				} else if (before == false) {</span>
+					// A point alone
+<span class="fc bfc" id="L203" title="All 2 branches covered.">					for (int dx = -1; dx &lt;= 1; dx++)</span>
+<span class="fc" id="L204">						grid.put(x + dx, y, charset.lineH(l));</span>
+				}
+			}
+		}
+
+		// Category labels, centered under their tick, then the title of the h-axis
+<span class="fc" id="L210">		int bottom = axisY;</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		for (int c = 0; c &lt; categories.size(); c += spacing) {</span>
+<span class="fc" id="L212">			final int center = x0 + c * categoryWidth + categoryWidth / 2;</span>
+<span class="fc" id="L213">			grid.put(center, axisY, charset.tickDown());</span>
+<span class="fc" id="L214">			final List&lt;String&gt; wrapped = wrap(categories.get(c), categoryWidth - 1);</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">			for (int j = 0; j &lt; wrapped.size(); j++) {</span>
+<span class="fc" id="L216">				final String s = wrapped.get(j);</span>
+<span class="fc" id="L217">				grid.putString(center - (s.length() - 1) / 2, axisY + 1 + j, s);</span>
+<span class="fc" id="L218">				bottom = Math.max(bottom, axisY + 1 + j);</span>
+			}
+		}
+<span class="fc" id="L221">		final String categoryTitle = chart.getCategoryTitle();</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">		if (isEmpty(categoryTitle) == false)</span>
+<span class="fc" id="L223">			grid.putString(x0 + Math.max(0, (plotWidth - categoryTitle.length()) / 2), bottom + 1, categoryTitle);</span>
+
+<span class="fc" id="L225">		return grid.getLines();</span>
+	}
+
+	// Width of a category: its label and a margin, from 6 to 12 characters (a longer
+	// label is wrapped), and enough for the bars side by side
+	private static int categoryWidth(List&lt;String&gt; categories, int spacing, int slots) {
+<span class="fc" id="L231">		int longest = 0;</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">		for (int c = 0; c &lt; categories.size(); c += spacing)</span>
+<span class="fc" id="L233">			longest = Math.max(longest, categories.get(c).length());</span>
+<span class="fc" id="L234">		int result = Math.max(6, Math.min(12, longest + 3));</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">		while (barWidth(result, slots) * slots + 2 &gt; result)</span>
+<span class="fc" id="L236">			result++;</span>
+<span class="fc" id="L237">		return result;</span>
+	}
+
+	// Width of one bar: two thirds of the category, shared by the bars side by side,
+	// which are at least two characters wide
+	private static int barWidth(int categoryWidth, int slots) {
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		return Math.max(slots &gt; 1 ? 2 : 1, (int) Math.round(categoryWidth * 2.0 / 3 / slots));</span>
+	}
+
+	private int getCategorySpacing() {
+<span class="fc" id="L247">		final Integer spacing = chart.getCategoryTickSpacing();</span>
+<span class="pc bpc" id="L248" title="3 of 4 branches missed.">		return spacing != null &amp;&amp; spacing &gt; 0 ? spacing : 1;</span>
+	}
+
+	// A line from (x1, y1) to (x2, y2), x1 &lt; x2: level, or in a step turning halfway
+	private void drawStep(CharGrid grid, int x1, int y1, int x2, int y2, int style) {
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		if (y1 == y2) {</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">			for (int x = x1; x &lt;= x2; x++)</span>
+<span class="fc" id="L255">				grid.put(x, y1, charset.lineH(style));</span>
+<span class="fc" id="L256">			return;</span>
+		}
+<span class="fc" id="L258">		final int middle = (x1 + x2) / 2;</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">		for (int x = x1; x &lt; middle; x++)</span>
+<span class="fc" id="L260">			grid.put(x, y1, charset.lineH(style));</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">		for (int x = middle + 1; x &lt;= x2; x++)</span>
+<span class="fc" id="L262">			grid.put(x, y2, charset.lineH(style));</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		for (int y = Math.min(y1, y2) + 1; y &lt; Math.max(y1, y2); y++)</span>
+<span class="fc" id="L264">			grid.put(middle, y, charset.lineV(style));</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">		if (y2 &lt; y1) {</span>
+			// Going up
+<span class="fc" id="L267">			grid.put(middle, y1, charset.cornerLeftUp(style));</span>
+<span class="fc" id="L268">			grid.put(middle, y2, charset.cornerRightDown(style));</span>
+		} else {
+<span class="fc" id="L270">			grid.put(middle, y1, charset.cornerLeftDown(style));</span>
+<span class="fc" id="L271">			grid.put(middle, y2, charset.cornerRightUp(style));</span>
+		}
+<span class="fc" id="L273">	}</span>
+
+	// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	// Horizontal
+
+	private List&lt;String&gt; drawHorizontal() {
+<span class="fc" id="L279">		final CharGrid grid = new CharGrid();</span>
+<span class="fc" id="L280">		final ChartAxis axis = chart.getValueAxis();</span>
+<span class="fc" id="L281">		final List&lt;ChartTicks.Tick&gt; ticks = ChartTicks.horizontalValueTicks(axis);</span>
+<span class="fc" id="L282">		final List&lt;String&gt; categories = chart.getCategories();</span>
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">		final int slots = stacked ? 1 : bars.size();</span>
+<span class="fc" id="L284">		final int band = slots + 3;</span>
+
+<span class="fc" id="L286">		int labelWidth = 0;</span>
+<span class="fc bfc" id="L287" title="All 2 branches covered.">		for (String category : categories)</span>
+<span class="fc" id="L288">			labelWidth = Math.max(labelWidth, category.length());</span>
+<span class="fc" id="L289">		final int axisX = labelWidth + 1;</span>
+<span class="fc" id="L290">		final int x0 = axisX + 1;</span>
+
+		// The title of the category axis above it
+<span class="fc" id="L293">		final String categoryTitle = chart.getCategoryTitle();</span>
+<span class="pc bpc" id="L294" title="1 of 2 branches missed.">		final int top = isEmpty(categoryTitle) ? 0 : 1;</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">		if (top &gt; 0)</span>
+<span class="nc" id="L296">			grid.putString(0, 0, categoryTitle);</span>
+<span class="fc" id="L297">		final int axisY = top + categories.size() * band;</span>
+
+		// Dotted grid line at each tick, then the axis
+<span class="fc bfc" id="L300" title="All 2 branches covered.">		for (ChartTicks.Tick tick : ticks) {</span>
+<span class="fc" id="L301">			final int x = axisX + (int) Math.round(tick.getRatio() * PLOT_WIDTH);</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">			if (x &gt; axisX)</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">				for (int y = top; y &lt; axisY; y++)</span>
+<span class="fc" id="L304">					grid.put(x, y, charset.dot());</span>
+<span class="fc" id="L305">		}</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">		for (int y = top; y &lt; axisY; y++)</span>
+<span class="fc" id="L307">			grid.put(axisX, y, charset.vAxis());</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">		for (int x = x0; x &lt;= axisX + PLOT_WIDTH; x++)</span>
+<span class="fc" id="L309">			grid.put(x, axisY, charset.hAxis());</span>
+<span class="fc" id="L310">		grid.put(axisX, axisY, charset.origin());</span>
+<span class="fc" id="L311">		int lastEnd = -1;</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">		for (ChartTicks.Tick tick : ticks) {</span>
+<span class="fc" id="L313">			final int x = axisX + (int) Math.round(tick.getRatio() * PLOT_WIDTH);</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">			if (x &gt; axisX)</span>
+<span class="fc" id="L315">				grid.put(x, axisY, charset.tickDown());</span>
+<span class="fc" id="L316">			final String label = tick.getLabel();</span>
+<span class="fc" id="L317">			final int start = Math.max(0, x - (label.length() - 1) / 2);</span>
+<span class="pc bpc" id="L318" title="1 of 2 branches missed.">			if (start &gt; lastEnd) {</span>
+<span class="fc" id="L319">				grid.putString(start, axisY + 1, label);</span>
+<span class="fc" id="L320">				lastEnd = start + label.length();</span>
+			}
+<span class="fc" id="L322">		}</span>
+
+		// Category labels, in front of their bars
+<span class="fc bfc" id="L325" title="All 2 branches covered.">		for (int c = 0; c &lt; categories.size(); c++) {</span>
+<span class="fc" id="L326">			final int y = top + c * band + 2 + (slots - 1) / 2;</span>
+<span class="fc" id="L327">			grid.putString(axisX - categories.get(c).length(), y, categories.get(c));</span>
+		}
+
+		// Bars, one under the other or stacked
+<span class="fc bfc" id="L331" title="All 2 branches covered.">		for (int b = 0; b &lt; bars.size(); b++) {</span>
+<span class="fc" id="L332">			final List&lt;Double&gt; values = bars.get(b).getValues();</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">			for (int c = 0; c &lt; Math.min(values.size(), categories.size()); c++) {</span>
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">				if (values.get(c) == null)</span>
+<span class="nc" id="L335">					continue;</span>
+<span class="pc bpc" id="L336" title="1 of 2 branches missed.">				final double from = stacked ? stack.getBase(b, c) : 0;</span>
+<span class="pc bpc" id="L337" title="1 of 2 branches missed.">				final double to = stacked ? stack.getTop(b, c) : values.get(c);</span>
+<span class="fc" id="L338">				final double lo = toUnits(axis, Math.min(from, to), PLOT_WIDTH);</span>
+<span class="fc" id="L339">				final double hi = toUnits(axis, Math.max(from, to), PLOT_WIDTH);</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">				final int y = top + c * band + 2 + (stacked ? 0 : b);</span>
+<span class="fc bfc" id="L341" title="All 2 branches covered.">				for (int k = 0; k &lt; PLOT_WIDTH; k++) {</span>
+<span class="fc" id="L342">					final char ch = cell(lo, hi, k, b, false);</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">					if (ch != 0)</span>
+<span class="fc" id="L344">						grid.put(x0 + k, y, ch);</span>
+				}
+			}
+		}
+
+		// The title of the value axis under its labels
+<span class="fc" id="L350">		final String valueTitle = axis.getTitle();</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">		if (isEmpty(valueTitle) == false)</span>
+<span class="fc" id="L352">			grid.putString(x0 + Math.max(0, (PLOT_WIDTH - valueTitle.length()) / 2), axisY + 2, valueTitle);</span>
+
+<span class="fc" id="L354">		return grid.getLines();</span>
+	}
+
+	// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	// Common
+
+	// The position of a value along a plot of &quot;size&quot; cells, from the min of the axis.
+	// The value is kept inside the axis, as in the graphic rendering
+	private static double toUnits(ChartAxis axis, double value, int size) {
+<span class="fc" id="L363">		final double range = axis.getMax() - axis.getMin();</span>
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">		if (range &lt;= 0)</span>
+<span class="nc" id="L365">			return 0;</span>
+<span class="fc" id="L366">		final double clamped = Math.max(axis.getMin(), Math.min(axis.getMax(), value));</span>
+<span class="fc" id="L367">		return (clamped - axis.getMin()) / range * size;</span>
+	}
+
+	// What a bar going from lo to hi draws in the k-th cell (0 for nothing): the whole
+	// cell when it covers most of it, else a half cell for the plain block
+	private char cell(double lo, double hi, int k, int style, boolean vertical) {
+<span class="fc" id="L373">		final double covered = Math.min(hi, k + 1) - Math.max(lo, k);</span>
+<span class="fc" id="L374">		final boolean halves = charset.hasHalves(style);</span>
+<span class="fc bfc" id="L375" title="All 4 branches covered.">		if (covered &gt;= (halves ? 0.75 : 0.5))</span>
+<span class="fc" id="L376">			return charset.fill(style);</span>
+<span class="fc bfc" id="L377" title="All 4 branches covered.">		if (halves &amp;&amp; covered &gt;= 0.25) {</span>
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">			final boolean fromStart = lo &lt;= k + 1e-9;</span>
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">			if (vertical)</span>
+<span class="pc bpc" id="L380" title="1 of 2 branches missed.">				return fromStart ? charset.lowerHalf() : charset.upperHalf();</span>
+<span class="nc bnc" id="L381" title="All 2 branches missed.">			return fromStart ? charset.leftHalf() : charset.rightHalf();</span>
+		}
+<span class="fc" id="L383">		return 0;</span>
+	}
+
+	// A label cut into lines of at most &quot;width&quot; characters, each cut line ending with &quot;-&quot;
+	static List&lt;String&gt; wrap(String label, int width) {
+<span class="fc" id="L388">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L389">		String rest = label;</span>
+<span class="pc bpc" id="L390" title="1 of 4 branches missed.">		while (rest.length() &gt; width &amp;&amp; width &gt; 2) {</span>
+<span class="fc" id="L391">			result.add(rest.substring(0, width - 1) + &quot;-&quot;);</span>
+<span class="fc" id="L392">			rest = rest.substring(width - 1);</span>
+		}
+<span class="fc" id="L394">		result.add(rest);</span>
+<span class="fc" id="L395">		return result;</span>
+	}
+
+	private static boolean isEmpty(String s) {
+<span class="fc bfc" id="L399" title="All 4 branches covered.">		return s == null || s.isEmpty();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
