@@ -34,7 +34,6 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -72,7 +71,7 @@ public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(ChartSeriesName.regex()), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "DATA", "\\[(.*)\\]"), //
+				new RegexLeaf(1, "DATA", ChartDataItems.BRACKETED), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "COLOR", "#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)")), //
 				new RegexOptional( //
@@ -99,12 +98,15 @@ public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
 		final String data = arg.get("DATA", 0);
 		final String colorStr = arg.get("COLOR", 0);
 
-		final List<Double> values = parseValues(data);
-		if (values == null)
-			return CommandExecutionResult.error("Invalid number format in bar data");
+		final ChartCartesianData parsed = ChartCartesianData.parse(data, false);
+		if (parsed.getError() != null)
+			return CommandExecutionResult.error(parsed.getError());
+		final List<Double> values = parsed.getValues();
 
 		final String seriesName = name != null ? name : "bar" + diagram.getSeries().size();
 		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.BAR, values);
+		if (parsed.isKeyed())
+			series.setKeys(parsed.getKeys());
 
 		if (stereo != null) {
 			series.setStereotype(Stereotype.build(stereo));
@@ -122,27 +124,6 @@ public class CommandChartBar extends SingleLineCommand2<ChartDiagram> {
 		}
 
 		return diagram.addSeries(series);
-	}
-
-	private List<Double> parseValues(String data) {
-		final List<Double> result = new ArrayList<>();
-		if (data == null || data.trim().isEmpty())
-			return result;
-
-		final String[] parts = data.split(",");
-		for (String part : parts) {
-			// An empty slot, as in [25, , 50], is a missing value: it is not drawn
-			if (part.trim().isEmpty()) {
-				result.add(null);
-				continue;
-			}
-			try {
-				result.add(Double.parseDouble(part.trim()));
-			} catch (NumberFormatException e) {
-				return null;
-			}
-		}
-		return result;
 	}
 
 	@Override

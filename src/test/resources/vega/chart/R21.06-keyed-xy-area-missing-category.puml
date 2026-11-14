@@ -1,0 +1,9 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+area "North" {Q1: 3, Q2: 5, Q3: 4, Q4: 6}
+area "South" {Q1: 2, Q3: 3}
+legend right
+@endchart

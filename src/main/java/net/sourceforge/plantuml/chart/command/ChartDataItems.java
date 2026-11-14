@@ -80,12 +80,10 @@ final class ChartDataItems {
 
 	static ChartDataItems parse(String data, HColorSet colorSet) {
 		final ChartDataItems result = new ChartDataItems();
-		if (data != null && data.length() >= 2 && isOpening(data.charAt(0))) {
-			final char close = data.charAt(data.length() - 1);
-			if (closing(data.charAt(0)) != close)
-				return result.fail("Mismatched '" + data.charAt(0) + "' and '" + close + "' around data");
-			data = data.substring(1, data.length() - 1);
-		}
+		final String mismatch = checkDelimiters(data);
+		if (mismatch != null)
+			return result.fail(mismatch);
+		data = stripDelimiters(data);
 		if (data == null || data.trim().isEmpty())
 			return result;
 
@@ -151,11 +149,29 @@ final class ChartDataItems {
 		return null;
 	}
 
-	private static boolean isOpening(char c) {
+	// An error message when the brackets, braces or parentheses around data do not match
+	static String checkDelimiters(String data) {
+		if (data != null && data.length() >= 2 && isOpening(data.charAt(0))) {
+			final char close = data.charAt(data.length() - 1);
+			if (closing(data.charAt(0)) != close)
+				return "Mismatched '" + data.charAt(0) + "' and '" + close + "' around data";
+		}
+		return null;
+	}
+
+	// The data without the brackets, braces or parentheses around it
+	static String stripDelimiters(String data) {
+		if (data != null && data.length() >= 2 && isOpening(data.charAt(0))
+				&& closing(data.charAt(0)) == data.charAt(data.length() - 1))
+			return data.substring(1, data.length() - 1);
+		return data;
+	}
+
+	static boolean isOpening(char c) {
 		return c == '[' || c == '{' || c == '(';
 	}
 
-	private static char closing(char open) {
+	static char closing(char open) {
 		if (open == '{')
 			return '}';
 		if (open == '(')

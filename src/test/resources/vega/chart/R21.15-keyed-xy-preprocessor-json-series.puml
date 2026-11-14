@@ -1,0 +1,9 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+!$d = {"y2023": {"Q1": 10, "Q2": 20, "Q3": 30}, "y2024": {"Q2": 25, "Q3": 35, "Q4": 40}}
+bar "2023" $d.y2023
+bar "2024" $d.y2024
+legend bottom
+@endchart

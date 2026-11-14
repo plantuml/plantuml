@@ -95,7 +95,18 @@ public class ChartSeries {
 
 	// The same series with the given x values, as if its values had been written as coordinate pairs
 	public ChartSeries withXValues(List<Double> xValues) {
-		final ChartSeries result = new ChartSeries(name, type, xValues, values);
+		return copyAttributesTo(new ChartSeries(name, type, xValues, values));
+	}
+
+	// The same series with other values and no keys: the values of a keyed series put in the
+	// order of the categories, a missing one being null
+	public ChartSeries withValues(List<Double> newValues) {
+		final ChartSeries result = copyAttributesTo(new ChartSeries(name, type, newValues));
+		result.keys = null;
+		return result;
+	}
+
+	private ChartSeries copyAttributesTo(ChartSeries result) {
 		result.color = color;
 		result.useSecondaryAxis = useSecondaryAxis;
 		result.showLabels = showLabels;

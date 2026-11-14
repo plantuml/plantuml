@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="475px" preserveAspectRatio="none" style="width:501px;height:475px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 475" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
+    <text fill="#000" font-size="14" x="52.213" y="303.889">1</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
+    <text fill="#000" font-size="14" x="52.213" y="243.889">2</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
+    <text fill="#000" font-size="14" x="52.213" y="183.889">3</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
+    <text fill="#000" font-size="14" x="52.213" y="123.889">4</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" x="52.213" y="63.889">5</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="136.667" x2="136.667" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="125.379" y="380.889">Jan</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="270" x2="270" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="24.15" x="257.925" y="380.889">Feb</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="403.333" x2="403.333" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="391.302" y="380.889">Mar</text>
+    <rect fill="#F1F1F1" height="60" style="stroke:#181818;stroke-width:0.5;" width="80" x="96.667" y="300"/>
+    <rect fill="#F1F1F1" height="120" style="stroke:#181818;stroke-width:0.5;" width="80" x="230" y="240"/>
+    <rect fill="#F1F1F1" height="180" style="stroke:#181818;stroke-width:0.5;" width="80" x="363.333" y="180"/>
+    <rect fill="#F1F1F1" height="12" style="stroke:#F1F1F1;stroke-width:1;" width="12" x="70" y="410"/>
+    <text fill="#000" font-size="14" textLength="60.813" x="87" y="420.889">Positional</text>
+    <line style="stroke:#181818;stroke-width:2;" x1="162.813" x2="174.813" y1="416" y2="416"/>
+    <text fill="#000" font-size="14" textLength="39.725" x="179.813" y="420.889">Keyed</text>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [Jan, Feb, Mar]
+bar "Positional" [1, 2, 3]
+line "Keyed" {Mar: 5, Jan: 2}
+legend bottom
+@endchart

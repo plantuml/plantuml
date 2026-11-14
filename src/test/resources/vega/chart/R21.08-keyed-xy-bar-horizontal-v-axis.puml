@@ -1,0 +1,8 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+orientation horizontal
+v-axis [A, B, C]
+bar "Count" {C: 3, A: 1} labels
+@endchart

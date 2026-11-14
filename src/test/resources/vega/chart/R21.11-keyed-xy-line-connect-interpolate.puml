@@ -1,0 +1,9 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [1, 2, 3, 4, 5]
+line "Raw" {1: 10, 2: 30, 4: 20, 5: 40}
+line "Smooth" {1: 15, 2: 35, 4: 25, 5: 45} interpolate connect
+legend bottom
+@endchart

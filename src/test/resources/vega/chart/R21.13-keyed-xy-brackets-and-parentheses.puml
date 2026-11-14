@@ -1,0 +1,8 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+line "Brackets" [Jan: 1, Feb: 2, Mar: 3]
+line "Parentheses" (Mar: 4, Jan: 6, Feb: 5)
+legend bottom
+@endchart

@@ -1,0 +1,8 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+h-axis 0 --> 10
+bar [(1, 2), (3, 4)]
+@endchart

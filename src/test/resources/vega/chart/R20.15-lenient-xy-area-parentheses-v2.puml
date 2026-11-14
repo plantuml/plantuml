@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [A, B, C, D]
+v2-axis 0 --> 50
+bar "Count" [5, 9, 7, 12]
+area "Share" (10, "25", 20, '40') v2
+legend bottom
+@endchart

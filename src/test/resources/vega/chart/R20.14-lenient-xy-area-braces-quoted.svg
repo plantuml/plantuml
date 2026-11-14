@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="431px" preserveAspectRatio="none" style="width:501px;height:431px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 431" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
+    <text fill="#000" font-size="14" x="52.213" y="303.889">2</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
+    <text fill="#000" font-size="14" x="52.213" y="243.889">4</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
+    <text fill="#000" font-size="14" x="52.213" y="183.889">6</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
+    <text fill="#000" font-size="14" x="52.213" y="123.889">8</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="63.889">10</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="110" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="27.213" x="96.394" y="380.889">Mon</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="190" x2="190" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="24.15" x="177.925" y="380.889">Tue</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="270" x2="270" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="28.787" x="255.606" y="380.889">Wed</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="350" x2="350" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="24.15" x="337.925" y="380.889">Thu</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="430" x2="430" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="16.363" x="421.819" y="380.889">Fri</text>
+    <polygon fill="#36C" points="110,270,190,210,270,240,350,150,430,180,430,360,350,360,270,360,190,360,110,360" style="stroke:#36C;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#36C;stroke-width:2;" x1="110" x2="190" y1="270" y2="210"/>
+    <line style="stroke:#36C;stroke-width:2;" x1="190" x2="270" y1="210" y2="240"/>
+    <line style="stroke:#36C;stroke-width:2;" x1="270" x2="350" y1="240" y2="150"/>
+    <line style="stroke:#36C;stroke-width:2;" x1="350" x2="430" y1="150" y2="180"/>
+  </g>
+</svg>

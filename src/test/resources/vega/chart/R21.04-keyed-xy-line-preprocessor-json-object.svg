@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="466px" preserveAspectRatio="none" style="width:501px;height:466px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 466" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="5">
+      <text fill="#000" font-size="14" font-weight="700" textLength="132.213" x="183.394" y="30.889">Pets adopted by month</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="95" y2="395"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="395" y2="395"/>
+    <text fill="#000" font-size="14" x="52.213" y="398.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="335" y2="335"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="338.889">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="275" y2="275"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="278.889">40</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="215" y2="215"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="218.889">60</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="155" y2="155"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="158.889">80</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="95" y2="95"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.637" y="98.889">100</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="395" y2="395"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="120" x2="120" y1="395" y2="400"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="108.713" y="415.889">Jan</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="220" x2="220" y1="395" y2="400"/>
+    <text fill="#000" font-size="14" textLength="24.15" x="207.925" y="415.889">Feb</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="320" x2="320" y1="395" y2="400"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="307.969" y="415.889">Mar</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="420" x2="420" y1="395" y2="400"/>
+    <text fill="#000" font-size="14" textLength="21.788" x="409.106" y="415.889">Apr</text>
+    <line style="stroke:#181818;stroke-width:2;" x1="120" x2="220" y1="281" y2="239"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="220" x2="320" y1="239" y2="254"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="320" x2="420" y1="254" y2="212"/>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="114.438" y="271.778">38</text>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="214.438" y="229.778">52</text>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="314.438" y="244.778">47</text>
+    <text fill="#000" font-size="10" font-weight="700" textLength="11.125" x="414.438" y="202.778">61</text>
+  </g>
+</svg>

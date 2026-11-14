@@ -79,64 +79,69 @@ public class AreaRenderer {
 			return;
 
 		final List<Double> values = series.getValues();
-		final double categoryWidth = plotWidth / categoryCount;
+		final int count = Math.min(values.size(), categoryCount);
 
+		// A missing value (null) breaks the area: each run of present values is drawn as an
+		// area of its own, as a line is broken by a missing value
+		int i = 0;
+		while (i < count) {
+			if (values.get(i) == null) {
+				i++;
+				continue;
+			}
+			int end = i;
+			while (end + 1 < count && values.get(end + 1) != null)
+				end++;
+			drawRun(ug, values, i, end, color, baselineValues);
+			i = end + 1;
+		}
+
+		// Draw labels if enabled
+		if (series.isShowLabels())
+			for (int k = 0; k < count; k++)
+				if (values.get(k) != null) {
+					final double value = values.get(k);
+					// Calculate cumulative top value for label position
+					drawLabel(ug, value, x(k), y(top(baselineValues, k, value)) - 8);
+				}
+	}
+
+	// The area of the values from first to last, all present
+	private void drawRun(UGraphic ug, List<Double> values, int first, int last, HColor color,
+			List<Double> baselineValues) {
 		// Create polygon for filled area
 		final UPolygon polygon = new UPolygon();
 
 		// Add points along the top of the area (cumulative values)
-		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
-			final double value = values.get(i);
-			// If we have baseline values, add current value to baseline to get cumulative top
-			final double topValue = top(baselineValues, i, value);
-			final double x = (i + 0.5) * categoryWidth;
-			final double y = plotHeight - (topValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
-			polygon.addPoint(x, y);
-		}
+		for (int i = first; i <= last; i++)
+			polygon.addPoint(x(i), y(top(baselineValues, i, values.get(i))));
 
 		// Add points along the bottom (baseline - either axis minimum or previous series top)
-		for (int i = Math.min(values.size(), categoryCount) - 1; i >= 0; i--) {
-			final double x = (i + 0.5) * categoryWidth;
-			double baselineValue = axis.getMin();
-			if (hasBaseline(baselineValues, i))
-				baselineValue = baselineValues.get(i);
-			final double y = plotHeight - (baselineValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
-			polygon.addPoint(x, y);
-		}
+		for (int i = last; i >= first; i--)
+			polygon.addPoint(x(i), y(hasBaseline(baselineValues, i) ? baselineValues.get(i) : axis.getMin()));
 
 		// Draw filled area with transparency
 		ug.apply(color).apply(color.bg()).draw(polygon);
 
 		// Draw top line of the area (for definition)
-		for (int i = 0; i < Math.min(values.size() - 1, categoryCount - 1); i++) {
-			final double value1 = values.get(i);
-			final double value2 = values.get(i + 1);
-
-			// Calculate cumulative top values
-			final double topValue1 = top(baselineValues, i, value1);
-			final double topValue2 = top(baselineValues, i + 1, value2);
-
-			final double x1 = (i + 0.5) * categoryWidth;
-			final double y1 = plotHeight - (topValue1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
-
-			final double x2 = (i + 1.5) * categoryWidth;
-			final double y2 = plotHeight - (topValue2 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
-
+		for (int i = first; i < last; i++) {
+			final double x1 = x(i);
+			final double y1 = y(top(baselineValues, i, values.get(i)));
+			final double x2 = x(i + 1);
+			final double y2 = y(top(baselineValues, i + 1, values.get(i + 1)));
 			final ULine line = new ULine(x2 - x1, y2 - y1);
-			ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1))).draw(line);
+			ug.apply(color).apply(UStroke.withThickness(2.0)).apply(UTranslate.dx(x1).compose(UTranslate.dy(y1)))
+					.draw(line);
 		}
+	}
 
-		// Draw labels if enabled
-		if (series.isShowLabels()) {
-			for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
-				final double value = values.get(i);
-				// Calculate cumulative top value for label position
-				final double topValue = top(baselineValues, i, value);
-				final double x = (i + 0.5) * categoryWidth;
-				final double y = plotHeight - (topValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
-				drawLabel(ug, value, x, y - 8);
-			}
-		}
+	private double x(int i) {
+		final double categoryWidth = plotWidth / categoryCount;
+		return (i + 0.5) * categoryWidth;
+	}
+
+	private double y(double value) {
+		return plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 	}
 
 	// The base of the i-th value is the top of the previous areas, when they reach it

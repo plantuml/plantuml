@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+bar "Bar" [10, 20, 15, 25]
+line "Line" (12, "18", 22, 20)
+area "Area" {5, '8', 6, 10}
+legend bottom
+@endchart

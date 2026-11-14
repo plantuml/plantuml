@@ -1,0 +1,8 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+!$d = {"months": ["Jan", "Feb", "Mar", "Apr"], "sales": ["10", "20", "15", "30"]}
+h-axis $d.months
+line "Sales" $d.sales labels
+@endchart

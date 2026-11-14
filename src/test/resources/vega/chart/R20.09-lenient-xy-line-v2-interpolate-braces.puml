@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v2-axis 0 --> 100
+bar "Revenue" [10, 20, 15, 25]
+line "Margin" {"40", "55", '50', 70} v2 interpolate
+legend right
+@endchart

@@ -1,0 +1,8 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+line "X" {a: 1, b: 2}
+line "Y" {b: 3, c: 4}
+legend bottom
+@endchart

@@ -1,0 +1,7 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [Jan, Feb, Mar, Apr]
+bar "Sales" {"Feb": 20, "Jan": 10, "Apr": 40} labels
+@endchart

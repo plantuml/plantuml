@@ -1,0 +1,11 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+!$data = {
+  "title": "Pets adopted by month",
+  "adopted": {"Jan": 38, "Feb": 52, "Mar": 47, "Apr": 61}
+}
+title $data.title
+line "Adopted" $data.adopted labels
+@endchart

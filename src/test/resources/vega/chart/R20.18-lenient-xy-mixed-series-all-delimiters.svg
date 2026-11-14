@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="475px" preserveAspectRatio="none" style="width:501px;height:475px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 475" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
+    <text fill="#000" font-size="14" x="52.213" y="303.889">5</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="243.889">10</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="183.889">15</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="123.889">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="63.889">25</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="120" x2="120" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="110.681" y="380.889">Q1</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="220" x2="220" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="210.681" y="380.889">Q2</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="320" x2="320" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="310.681" y="380.889">Q3</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="420" x2="420" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="18.638" x="410.681" y="380.889">Q4</text>
+    <rect fill="#F1F1F1" height="120" style="stroke:#181818;stroke-width:0.5;" width="60" x="90" y="240"/>
+    <rect fill="#F1F1F1" height="240" style="stroke:#181818;stroke-width:0.5;" width="60" x="190" y="120"/>
+    <rect fill="#F1F1F1" height="180" style="stroke:#181818;stroke-width:0.5;" width="60" x="290" y="180"/>
+    <rect fill="#F1F1F1" height="300" style="stroke:#181818;stroke-width:0.5;" width="60" x="390" y="60"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="120" x2="220" y1="216" y2="144"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="220" x2="320" y1="144" y2="96"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="320" x2="420" y1="96" y2="120"/>
+    <polygon fill="#F1F1F1" points="120,300,220,264,320,288,420,240,420,360,320,360,220,360,120,360" style="stroke:#F1F1F1;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#F1F1F1;stroke-width:2;" x1="120" x2="220" y1="300" y2="264"/>
+    <line style="stroke:#F1F1F1;stroke-width:2;" x1="220" x2="320" y1="264" y2="288"/>
+    <line style="stroke:#F1F1F1;stroke-width:2;" x1="320" x2="420" y1="288" y2="240"/>
+    <rect fill="#F1F1F1" height="12" style="stroke:#F1F1F1;stroke-width:1;" width="12" x="70" y="410"/>
+    <text fill="#000" font-size="14" textLength="21.788" x="87" y="420.889">Bar</text>
+    <line style="stroke:#181818;stroke-width:2;" x1="123.788" x2="135.788" y1="416" y2="416"/>
+    <text fill="#000" font-size="14" textLength="26.512" x="140.788" y="420.889">Line</text>
+    <rect fill="#F1F1F1" height="12" style="stroke:#F1F1F1;stroke-width:1;" width="12" x="182.3" y="410"/>
+    <text fill="#000" font-size="14" textLength="29.575" x="199.3" y="420.889">Area</text>
+  </g>
+</svg>

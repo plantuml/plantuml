@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="475px" preserveAspectRatio="none" style="width:501px;height:475px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 475" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="60" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="360" y2="360"/>
+    <text fill="#000" font-size="14" x="52.213" y="363.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="300" y2="300"/>
+    <text fill="#000" font-size="14" x="52.213" y="303.889">2</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="240" y2="240"/>
+    <text fill="#000" font-size="14" x="52.213" y="243.889">4</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="180" y2="180"/>
+    <text fill="#000" font-size="14" x="52.213" y="183.889">6</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="120" y2="120"/>
+    <text fill="#000" font-size="14" x="52.213" y="123.889">8</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="60" y2="60"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="63.889">10</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="360" y2="360"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="136.667" x2="136.667" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="125.379" y="380.889">Jan</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="270" x2="270" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="24.15" x="257.925" y="380.889">Feb</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="403.333" x2="403.333" y1="360" y2="365"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="391.302" y="380.889">Mar</text>
+    <line style="stroke:#181818;stroke-width:2;" x1="136.667" x2="270" y1="330" y2="300"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="270" x2="403.333" y1="300" y2="270"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="136.667" x2="270" y1="180" y2="210"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="270" x2="403.333" y1="210" y2="240"/>
+    <line style="stroke:#181818;stroke-width:2;" x1="70" x2="82" y1="416" y2="416"/>
+    <text fill="#000" font-size="14" textLength="54.425" x="87" y="420.889">Brackets</text>
+    <line style="stroke:#181818;stroke-width:2;" x1="156.425" x2="168.425" y1="416" y2="416"/>
+    <text fill="#000" font-size="14" textLength="78.575" x="173.425" y="420.889">Parentheses</text>
+  </g>
+</svg>

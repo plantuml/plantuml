@@ -34,10 +34,8 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
@@ -72,7 +70,7 @@ public class CommandChartScatter extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(ChartSeriesName.regex()), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "DATA", "\\[(.*)\\]"), //
+				new RegexLeaf(1, "DATA", ChartDataItems.BRACKETED), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "COLOR", "#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)")), //
 				new RegexOptional( //
@@ -107,26 +105,19 @@ public class CommandChartScatter extends SingleLineCommand2<ChartDiagram> {
 		final String colorStr = arg.get("COLOR", 0);
 		final String markerStr = arg.get("MARKER", 0);
 
-		// Check if data contains coordinate pairs (x,y) format
 		final ChartSeries series;
 		final String seriesName = name != null ? name : "scatter" + diagram.getSeries().size();
 
-		if (data.contains("(")) {
-			// Parse coordinate pairs
-			final List<Double> xValues = new ArrayList<>();
-			final List<Double> yValues = new ArrayList<>();
-			if (!parseCoordinatePairs(data, xValues, yValues))
-				return CommandExecutionResult.error("Invalid coordinate pair format in scatter data");
-
-			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, xValues, yValues);
-		} else {
-			// Parse traditional y-values only
-			final List<Double> values = parseValues(data);
-			if (values == null)
-				return CommandExecutionResult.error("Invalid number format in scatter data");
-
-			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, values);
-		}
+		final ChartCartesianData parsed = ChartCartesianData.parse(data, true);
+		if (parsed.getError() != null)
+			return CommandExecutionResult.error(parsed.getError());
+		if (parsed.isPairs())
+			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, parsed.getXValues(),
+					parsed.getValues());
+		else
+			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, parsed.getValues());
+		if (parsed.isKeyed())
+			series.setKeys(parsed.getKeys());
 
 		if (stereo != null) {
 			series.setStereotype(Stereotype.build(stereo));
@@ -166,58 +157,6 @@ public class CommandChartScatter extends SingleLineCommand2<ChartDiagram> {
 		}
 
 		return diagram.addSeries(series);
-	}
-
-	private List<Double> parseValues(String data) {
-		final List<Double> result = new ArrayList<>();
-		if (data == null || data.trim().isEmpty())
-			return result;
-
-		final String[] parts = data.split(",");
-		for (String part : parts) {
-			// An empty slot, as in [25, , 50], is a missing value: no marker is drawn
-			if (part.trim().isEmpty()) {
-				result.add(null);
-				continue;
-			}
-			try {
-				result.add(Double.parseDouble(part.trim()));
-			} catch (NumberFormatException e) {
-				return null;
-			}
-		}
-		return result;
-	}
-
-	private boolean parseCoordinatePairs(String data, List<Double> xValues, List<Double> yValues) {
-		if (data == null || data.trim().isEmpty())
-			return false;
-
-		// Match pattern: (x,y) or (x, y)
-		// Split by closing paren followed by comma and opening paren
-		final String cleaned = data.replaceAll("\\s+", ""); // Remove all whitespace
-		final String[] pairs = cleaned.split("\\),\\(");
-
-		for (String pair : pairs) {
-			// Clean up the pair - remove leading/trailing parens and brackets
-			String trimmedPair = pair.trim();
-			trimmedPair = trimmedPair.replaceAll("^[\\[\\(]+", ""); // Remove leading [ or (
-			trimmedPair = trimmedPair.replaceAll("[\\]\\)]+$", ""); // Remove trailing ] or )
-
-			final String[] coords = trimmedPair.split(",");
-			if (coords.length != 2)
-				return false;
-
-			try {
-				final double x = Double.parseDouble(coords[0].trim());
-				final double y = Double.parseDouble(coords[1].trim());
-				xValues.add(x);
-				yValues.add(y);
-			} catch (NumberFormatException e) {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	@Override

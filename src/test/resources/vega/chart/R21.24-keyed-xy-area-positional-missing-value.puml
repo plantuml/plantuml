@@ -1,0 +1,9 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [A, B, C, D, E]
+area "Gaps" [2, , 3, 4, ] labels
+area "Full" [1, 2, 1, 2, 1]
+legend bottom
+@endchart

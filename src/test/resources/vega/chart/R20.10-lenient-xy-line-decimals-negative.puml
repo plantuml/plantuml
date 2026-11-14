@@ -1,0 +1,7 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [A, B, C, D]
+line {"-5", '2.5', "1e1", -2.25} labels
+@endchart

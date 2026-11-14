@@ -1,0 +1,6 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+line {"North, East": 3, 'Ratio 1:2': 4, Driver's: 5, "C#": 2} labels
+@endchart

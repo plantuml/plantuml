@@ -1,0 +1,7 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+bar {"": 1, B: 2}
+@endchart

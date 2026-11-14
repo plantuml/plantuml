@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+v2-axis 0 --> 100
+bar "Revenue" [10, 20, 15, 25]
+line "Margin" {Q4: 70, Q1: 40, Q2: 55, Q3: 50} v2
+legend right
+@endchart

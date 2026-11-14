@@ -1,0 +1,8 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+h-axis [Jan, Feb]
+line {Jan: 1, Mar: 2}
+@endchart

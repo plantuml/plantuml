@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="108px" preserveAspectRatio="none" style="width:419px;height:108px;background:#000000;" version="1.1" viewBox="0 0 419 108" width="419px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="108px" preserveAspectRatio="none" style="width:479px;height:108px;background:#000000;" version="1.1" viewBox="0 0 479 108" width="479px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <rect fill="#33FF02" height="19" style="stroke:#33FF02;stroke-width:1;" width="115.488" x="5" y="13"/>
@@ -7,6 +7,6 @@
     <text fill="#33FF02" font-size="14" font-weight="700" textLength="72.45" x="5" y="60">@startchart</text>
     <text fill="#33FF02" font-size="14" font-weight="700" textLength="78.225" x="5" y="74">h-axis 0 --&gt; 10</text>
     <text fill="#33FF02" font-size="14" font-weight="700" text-decoration="wavy underline" textLength="102.463" x="5" y="88">line [(1,2), 3, (5,6)]</text>
-    <text fill="#F00" font-size="14" font-weight="700" textLength="408.362" x="5" y="102">Invalid coordinate pair format in line data (Assumed diagram type: chart)</text>
+    <text fill="#F00" font-size="14" font-weight="700" textLength="468.125" x="5" y="102">Either every item is a coordinate pair (x, y), or none is (Assumed diagram type: chart)</text>
   </g>
 </svg>

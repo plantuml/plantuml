@@ -1,0 +1,9 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [1, 2, 3, 4, 5, 6]
+line "Gaps" {10, "", 30, , 50, '60'}
+line "Connected" (15, "", 35, , 55, 65) connect
+legend bottom
+@endchart

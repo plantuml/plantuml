@@ -1,0 +1,7 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [Mon, Tue, Wed, Thu, Fri]
+area "Load" {"3", 5, '4', 7, "6"} #3366CC
+@endchart

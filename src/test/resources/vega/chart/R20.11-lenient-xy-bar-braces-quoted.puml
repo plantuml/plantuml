@@ -1,0 +1,7 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [Widgets, Gadgets, Gizmos]
+bar "Sales" {"150", '230', 180} #3366CC labels
+@endchart
