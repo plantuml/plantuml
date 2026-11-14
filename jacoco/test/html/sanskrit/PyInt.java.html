@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyInt.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyInt.java</span></div><h1>PyInt.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+/**
+ * The integers of the interpreter. A Python int is a {@link Integer} (32 bits):
+ * an operation whose exact result does not fit raises an OverflowError, it never
+ * wraps around. Every operation that can overflow, and every test of the range,
+ * is here, so the 32-bit rule is written once. The arguments of the operations
+ * are the values of two ints, the results are boxed ints (or floats for a true
+ * division or a negative power).
+ */
+final class PyInt {
+	private PyInt() {
+	}
+
+	static final int MIN = Integer.MIN_VALUE;
+	static final int MAX = Integer.MAX_VALUE;
+
+	static PyError overflow() {
+<span class="fc" id="L19">		return PyOps.err(Types.OVERFLOW, &quot;integer overflow (this interpreter has 32-bit integers)&quot;);</span>
+	}
+
+	/** True if the value is the value of an int. */
+	static boolean fits(long v) {
+<span class="fc bfc" id="L24" title="All 2 branches covered.">		return v == (int) v;</span>
+	}
+
+	/** True if the float is a whole number that fits in an int. */
+	static boolean isWholeInt(double d) {
+<span class="pc bpc" id="L29" title="2 of 6 branches missed.">		return d == Math.rint(d) &amp;&amp; d &gt;= MIN &amp;&amp; d &lt;= MAX;</span>
+	}
+
+	/** The value as an int, or an OverflowError. */
+	static int check(long v) {
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		if (v != (int) v)</span>
+<span class="fc" id="L35">			throw overflow();</span>
+<span class="fc" id="L36">		return (int) v;</span>
+	}
+
+	/** The value as a boxed int, or an OverflowError. */
+	static Integer box(long v) {
+<span class="fc" id="L41">		return Integer.valueOf(check(v));</span>
+	}
+
+	/** A float truncated towards zero, as int(); errors for NaN, the infinities and out of range values. */
+	static int fromDouble(double d) {
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		if (d != d)</span>
+<span class="fc" id="L47">			throw PyOps.err(Types.VALUE_ERROR, &quot;cannot convert float NaN to integer&quot;);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		if (Double.isInfinite(d))</span>
+<span class="fc" id="L49">			throw PyOps.err(Types.OVERFLOW, &quot;cannot convert float infinity to integer&quot;);</span>
+<span class="pc bpc" id="L50" title="1 of 4 branches missed.">		if (d &gt;= 2147483648.0 || d &lt;= -2147483649.0)</span>
+<span class="fc" id="L51">			throw overflow();</span>
+<span class="fc" id="L52">		return (int) d;</span>
+	}
+
+	static Object add(int x, int y) {
+<span class="fc" id="L56">		return box((long) x + y);</span>
+	}
+
+	static Object sub(int x, int y) {
+<span class="fc" id="L60">		return box((long) x - y);</span>
+	}
+
+	static Object mul(int x, int y) {
+<span class="fc" id="L64">		return box((long) x * y);</span>
+	}
+
+	static Object neg(int x) {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (x == MIN)</span>
+<span class="fc" id="L69">			throw overflow();</span>
+<span class="fc" id="L70">		return Integer.valueOf(-x);</span>
+	}
+
+	static Object abs(int x) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (x == MIN)</span>
+<span class="fc" id="L75">			throw overflow();</span>
+<span class="fc" id="L76">		return Integer.valueOf(Math.abs(x));</span>
+	}
+
+	/** x // y. */
+	static Object floorDiv(int x, int y) {
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (y == 0)</span>
+<span class="fc" id="L82">			throw PyOps.err(Types.ZERO_DIVISION, &quot;integer division or modulo by zero&quot;);</span>
+<span class="fc" id="L83">		return box(Math.floorDiv((long) x, (long) y));</span>
+	}
+
+	/** x % y: the sign of the result is the sign of y. */
+	static Object mod(int x, int y) {
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (y == 0)</span>
+<span class="fc" id="L89">			throw PyOps.err(Types.ZERO_DIVISION, &quot;integer modulo by zero&quot;);</span>
+<span class="fc" id="L90">		return Integer.valueOf((int) Math.floorMod((long) x, (long) y));</span>
+	}
+
+	/** x / y, always a float. */
+	static Object trueDiv(int x, int y) {
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (y == 0)</span>
+<span class="fc" id="L96">			throw PyOps.err(Types.ZERO_DIVISION, &quot;division by zero&quot;);</span>
+<span class="fc" id="L97">		return Double.valueOf((double) x / y);</span>
+	}
+
+	/** x ** y: a float when y is negative. */
+	static Object pow(int x, int y) {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (y &lt; 0) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			if (x == 0)</span>
+<span class="fc" id="L104">				throw PyOps.err(Types.ZERO_DIVISION, &quot;0.0 cannot be raised to a negative power&quot;);</span>
+<span class="fc" id="L105">			return Double.valueOf(Math.pow(x, y));</span>
+		}
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (x == 0)</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			return Integer.valueOf(y == 0 ? 1 : 0);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (x == 1)</span>
+<span class="fc" id="L110">			return Integer.valueOf(1);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (x == -1)</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">			return Integer.valueOf((y &amp; 1) == 0 ? 1 : -1);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (y &gt; 31)</span>
+<span class="fc" id="L114">			throw overflow();</span>
+<span class="fc" id="L115">		long r = 1;</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		for (int i = 0; i &lt; y; i++) {</span>
+<span class="fc" id="L117">			r *= x;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">			if (r != (int) r)</span>
+<span class="fc" id="L119">				throw overflow();</span>
+		}
+<span class="fc" id="L121">		return Integer.valueOf((int) r);</span>
+	}
+
+	static Object lshift(int x, int y) {
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (y &lt; 0)</span>
+<span class="fc" id="L126">			throw PyOps.err(Types.VALUE_ERROR, &quot;negative shift count&quot;);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (x == 0)</span>
+<span class="fc" id="L128">			return Integer.valueOf(0);</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (y &gt;= 32)</span>
+<span class="nc" id="L130">			throw overflow();</span>
+<span class="fc" id="L131">		return box((long) x &lt;&lt; y);</span>
+	}
+
+	static Object rshift(int x, int y) {
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (y &lt; 0)</span>
+<span class="nc" id="L136">			throw PyOps.err(Types.VALUE_ERROR, &quot;negative shift count&quot;);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (y &gt;= 32)</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">			return Integer.valueOf(x &lt; 0 ? -1 : 0);</span>
+<span class="fc" id="L139">		return Integer.valueOf(x &gt;&gt; y);</span>
+	}
+
+	/** The binary operator {@code op} (an Op.BIN_* code) applied to two ints. */
+	static Object binary(int op, int x, int y) {
+<span class="pc bpc" id="L144" title="1 of 12 branches missed.">		switch (op) {</span>
+		case Op.BIN_ADD:
+<span class="fc" id="L146">			return add(x, y);</span>
+		case Op.BIN_SUB:
+<span class="nc" id="L148">			return sub(x, y);</span>
+		case Op.BIN_MUL:
+<span class="fc" id="L150">			return mul(x, y);</span>
+		case Op.BIN_DIV:
+<span class="fc" id="L152">			return trueDiv(x, y);</span>
+		case Op.BIN_FLOORDIV:
+<span class="fc" id="L154">			return floorDiv(x, y);</span>
+		case Op.BIN_MOD:
+<span class="fc" id="L156">			return mod(x, y);</span>
+		case Op.BIN_POW:
+<span class="fc" id="L158">			return pow(x, y);</span>
+		case Op.BIN_LSHIFT:
+<span class="fc" id="L160">			return lshift(x, y);</span>
+		case Op.BIN_RSHIFT:
+<span class="fc" id="L162">			return rshift(x, y);</span>
+		case Op.BIN_AND:
+<span class="fc" id="L164">			return Integer.valueOf(x &amp; y);</span>
+		case Op.BIN_OR:
+<span class="fc" id="L166">			return Integer.valueOf(x | y);</span>
+		default:
+<span class="fc" id="L168">			return Integer.valueOf(x ^ y);</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

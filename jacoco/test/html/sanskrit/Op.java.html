@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Op.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">Op.java</span></div><h1>Op.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+/**
+ * Instruction set of the stack machine. An instruction is one {@code int}:
+ * the opcode in the low 8 bits, an unsigned 24-bit argument above it.
+ */
+final class Op {
+	private Op() {
+	}
+
+	static final int NOP = 0;
+	static final int POP = 1;
+	static final int DUP = 2;
+	static final int DUP2 = 3;
+	static final int ROT2 = 4;
+	static final int ROT3 = 5;
+
+	static final int LOAD_CONST = 6;
+	static final int LOAD_FAST = 7;
+	static final int STORE_FAST = 8;
+	static final int DELETE_FAST = 9;
+	static final int LOAD_CELL = 10;
+	static final int STORE_CELL = 11;
+	static final int DELETE_CELL = 12;
+	static final int LOAD_CLOSURE = 13;
+	static final int MAKE_CELL = 14;
+	static final int LOAD_GLOBAL = 15;
+	static final int STORE_GLOBAL = 16;
+	static final int DELETE_GLOBAL = 17;
+	static final int LOAD_ATTR = 18;
+
+	/** Argument: the operator (BIN_*), plus {@link #INPLACE} for augmented assignment. */
+	static final int BINARY_OP = 19;
+	static final int UNARY_NEG = 20;
+	static final int UNARY_POS = 21;
+	static final int UNARY_INVERT = 22;
+	static final int UNARY_NOT = 23;
+	/** Argument: CMP_*. */
+	static final int COMPARE_OP = 24;
+	/** Argument: 1 for &quot;is not&quot;. */
+	static final int IS_OP = 25;
+	/** Argument: 1 for &quot;not in&quot;. */
+	static final int CONTAINS_OP = 26;
+
+	static final int GETITEM = 27;
+	static final int SETITEM = 28;
+	static final int DELITEM = 29;
+	static final int BUILD_SLICE = 30;
+	static final int BUILD_LIST = 31;
+	static final int BUILD_TUPLE = 32;
+	static final int BUILD_DICT = 33;
+	static final int BUILD_STRING = 34;
+	static final int LIST_APPEND = 35;
+	static final int LIST_EXTEND = 36;
+	static final int MAP_ADD = 37;
+	static final int BUILD_SET = 38;
+	static final int SET_ADD = 39;
+	static final int DICT_ADD_KW = 40;
+	static final int DICT_MERGE_KW = 41;
+	static final int UNPACK = 42;
+
+	static final int JUMP = 43;
+	static final int JUMP_IF_FALSE = 44;
+	static final int JUMP_IF_TRUE = 45;
+	static final int JUMP_IF_FALSE_KEEP = 46;
+	static final int JUMP_IF_TRUE_KEEP = 47;
+	static final int GET_ITER = 48;
+	static final int FOR_ITER = 49;
+
+	static final int CALL = 50;
+	static final int CALL_KW = 51;
+	/** Argument: bit 0 set if a dict of keyword arguments is on the stack. */
+	static final int CALL_EX = 52;
+	/** Argument: bit 0 defaults tuple, bit 1 keyword-only defaults dict, bit 2 closure tuple. */
+	static final int MAKE_FUNCTION = 53;
+	static final int RETURN = 54;
+	/** Argument 0: re-raise the active exception (an error here); 1: raise TOS. */
+	static final int RAISE = 55;
+	static final int RERAISE = 56;
+	static final int EXC_MATCH = 57;
+	static final int IMPORT = 58;
+	/** Pushes a member of the module on top, which stays there. */
+	static final int IMPORT_FROM = 59;
+	/** Argument: bits 0-1 conversion (0 none, 1 str, 2 repr, 3 ascii), bit 2 a format spec is on the stack. */
+	static final int FORMAT_VALUE = 60;
+
+	/** obj.name = value: obj on top, the value under it. */
+	static final int STORE_ATTR = 61;
+	static final int DELETE_ATTR = 62;
+	/** Pops the exception that a handler starts to handle; argument: the nesting of the handler in its frame. */
+	static final int HANDLER_ENTER = 63;
+	/** The handler of the nesting given as argument is over. */
+	static final int HANDLER_EXIT = 64;
+	/** Like DELETE_FAST, DELETE_CELL and DELETE_GLOBAL, but the name may be unbound already. */
+	static final int DELETE_FAST_Q = 65;
+	static final int DELETE_CELL_Q = 66;
+	static final int DELETE_GLOBAL_Q = 67;
+	static final int COUNT = 68;
+
+	// BINARY_OP operators
+	static final int BIN_ADD = 0;
+	static final int BIN_SUB = 1;
+	static final int BIN_MUL = 2;
+	static final int BIN_DIV = 3;
+	static final int BIN_FLOORDIV = 4;
+	static final int BIN_MOD = 5;
+	static final int BIN_POW = 6;
+	static final int BIN_LSHIFT = 7;
+	static final int BIN_RSHIFT = 8;
+	static final int BIN_AND = 9;
+	static final int BIN_OR = 10;
+	static final int BIN_XOR = 11;
+	static final int INPLACE = 0x100;
+
+	// COMPARE_OP operators
+	static final int CMP_EQ = 0;
+	static final int CMP_NE = 1;
+	static final int CMP_LT = 2;
+	static final int CMP_LE = 3;
+	static final int CMP_GT = 4;
+	static final int CMP_GE = 5;
+
+<span class="fc" id="L123">	static final String[] NAMES = { &quot;NOP&quot;, &quot;POP&quot;, &quot;DUP&quot;, &quot;DUP2&quot;, &quot;ROT2&quot;, &quot;ROT3&quot;, &quot;LOAD_CONST&quot;, &quot;LOAD_FAST&quot;,</span>
+			&quot;STORE_FAST&quot;, &quot;DELETE_FAST&quot;, &quot;LOAD_CELL&quot;, &quot;STORE_CELL&quot;, &quot;DELETE_CELL&quot;, &quot;LOAD_CLOSURE&quot;, &quot;MAKE_CELL&quot;,
+			&quot;LOAD_GLOBAL&quot;, &quot;STORE_GLOBAL&quot;, &quot;DELETE_GLOBAL&quot;, &quot;LOAD_ATTR&quot;, &quot;BINARY_OP&quot;, &quot;UNARY_NEG&quot;, &quot;UNARY_POS&quot;,
+			&quot;UNARY_INVERT&quot;, &quot;UNARY_NOT&quot;, &quot;COMPARE_OP&quot;, &quot;IS_OP&quot;, &quot;CONTAINS_OP&quot;, &quot;GETITEM&quot;, &quot;SETITEM&quot;, &quot;DELITEM&quot;,
+			&quot;BUILD_SLICE&quot;, &quot;BUILD_LIST&quot;, &quot;BUILD_TUPLE&quot;, &quot;BUILD_DICT&quot;, &quot;BUILD_STRING&quot;, &quot;LIST_APPEND&quot;, &quot;LIST_EXTEND&quot;,
+			&quot;MAP_ADD&quot;, &quot;BUILD_SET&quot;, &quot;SET_ADD&quot;, &quot;DICT_ADD_KW&quot;, &quot;DICT_MERGE_KW&quot;, &quot;UNPACK&quot;, &quot;JUMP&quot;, &quot;JUMP_IF_FALSE&quot;, &quot;JUMP_IF_TRUE&quot;,
+			&quot;JUMP_IF_FALSE_KEEP&quot;, &quot;JUMP_IF_TRUE_KEEP&quot;, &quot;GET_ITER&quot;, &quot;FOR_ITER&quot;, &quot;CALL&quot;, &quot;CALL_KW&quot;, &quot;CALL_EX&quot;,
+			&quot;MAKE_FUNCTION&quot;, &quot;RETURN&quot;, &quot;RAISE&quot;, &quot;RERAISE&quot;, &quot;EXC_MATCH&quot;, &quot;IMPORT&quot;, &quot;IMPORT_FROM&quot;, &quot;FORMAT_VALUE&quot;,
+			&quot;STORE_ATTR&quot;, &quot;DELETE_ATTR&quot;, &quot;HANDLER_ENTER&quot;, &quot;HANDLER_EXIT&quot;, &quot;DELETE_FAST_Q&quot;, &quot;DELETE_CELL_Q&quot;,
+			&quot;DELETE_GLOBAL_Q&quot; };
+
+	static boolean isJump(int op) {
+<span class="nc bnc" id="L135" title="All 6 branches missed.">		return op &gt;= JUMP &amp;&amp; op &lt;= JUMP_IF_TRUE_KEEP || op == FOR_ITER;</span>
+	}
+
+	/** Change of the stack depth when the instruction falls through. */
+	static int effect(int op, int arg) {
+<span class="pc bpc" id="L140" title="1 of 15 branches missed.">		switch (op) {</span>
+		case NOP:
+		case ROT2:
+		case ROT3:
+		case DELETE_FAST:
+		case DELETE_CELL:
+		case MAKE_CELL:
+		case DELETE_GLOBAL:
+		case HANDLER_EXIT:
+		case DELETE_FAST_Q:
+		case DELETE_CELL_Q:
+		case DELETE_GLOBAL_Q:
+		case LOAD_ATTR:
+		case UNARY_NEG:
+		case UNARY_POS:
+		case UNARY_INVERT:
+		case UNARY_NOT:
+		case JUMP:
+		case GET_ITER:
+<span class="fc" id="L159">			return 0;</span>
+		case POP:
+		case STORE_FAST:
+		case STORE_CELL:
+		case STORE_GLOBAL:
+		case BINARY_OP:
+		case COMPARE_OP:
+		case IS_OP:
+		case CONTAINS_OP:
+		case GETITEM:
+		case LIST_APPEND:
+		case SET_ADD:
+		case LIST_EXTEND:
+		case DICT_MERGE_KW:
+		case JUMP_IF_FALSE:
+		case JUMP_IF_TRUE:
+		case JUMP_IF_FALSE_KEEP:
+		case JUMP_IF_TRUE_KEEP:
+		case RETURN:
+		case RAISE:
+		case RERAISE:
+		case EXC_MATCH:
+		case DELETE_ATTR:
+		case HANDLER_ENTER:
+<span class="fc" id="L183">			return -1;</span>
+		case DUP:
+		case LOAD_CONST:
+		case LOAD_FAST:
+		case LOAD_CELL:
+		case LOAD_CLOSURE:
+		case LOAD_GLOBAL:
+		case FOR_ITER:
+		case IMPORT:
+		case IMPORT_FROM:
+<span class="fc" id="L193">			return 1;</span>
+		case DUP2:
+<span class="fc" id="L195">			return 2;</span>
+		case SETITEM:
+<span class="fc" id="L197">			return -3;</span>
+		case DELITEM:
+		case STORE_ATTR:
+		case BUILD_SLICE:
+		case MAP_ADD:
+		case DICT_ADD_KW:
+<span class="fc" id="L203">			return -2;</span>
+		case BUILD_LIST:
+		case BUILD_TUPLE:
+		case BUILD_SET:
+		case BUILD_STRING:
+<span class="fc" id="L208">			return 1 - arg;</span>
+		case BUILD_DICT:
+<span class="fc" id="L210">			return 1 - 2 * arg;</span>
+		case UNPACK:
+<span class="fc" id="L212">			return arg - 1;</span>
+		case CALL:
+<span class="fc" id="L214">			return -arg;</span>
+		case CALL_KW:
+<span class="fc" id="L216">			return -(arg + 1);</span>
+		case CALL_EX:
+<span class="fc" id="L218">			return -(1 + (arg &amp; 1));</span>
+		case MAKE_FUNCTION:
+<span class="fc" id="L220">			return -(Integer.bitCount(arg &amp; 7));</span>
+		case FORMAT_VALUE:
+<span class="fc" id="L222">			return -((arg &gt;&gt; 2) &amp; 1);</span>
+		default:
+<span class="nc" id="L224">			throw new IllegalArgumentException(&quot;opcode &quot; + op);</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

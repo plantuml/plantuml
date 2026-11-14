@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CodeGen.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">CodeGen.java</span></div><h1>CodeGen.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/** Compiles the syntax tree of a module to {@link Code}, one function at a time. */
+final class CodeGen {
+	/** Compiles a Module node. */
+	static Code compile(Ast.Module module, String filename) {
+<span class="fc" id="L13">		Scope top = Resolver.resolve(module);</span>
+<span class="fc" id="L14">		CodeGen g = new CodeGen(top, &quot;&lt;module&gt;&quot;, filename);</span>
+<span class="fc" id="L15">		g.genModule(module);</span>
+<span class="fc" id="L16">		return g.finish();</span>
+	}
+
+<span class="fc" id="L19">	private static final class Label {</span>
+<span class="fc" id="L20">		int pos = -1;</span>
+<span class="fc" id="L21">		int depth = -1;</span>
+<span class="fc" id="L22">		final List&lt;Integer&gt; refs = new ArrayList&lt;Integer&gt;();</span>
+	}
+
+	private static final class Loop {
+		final Label continueLabel;
+		final Label breakLabel;
+		/** True for a &quot;for&quot; loop: the iterator is on the stack and must be popped by break. */
+		final boolean iterator;
+
+<span class="fc" id="L31">		Loop(Label c, Label b, boolean it) {</span>
+<span class="fc" id="L32">			continueLabel = c;</span>
+<span class="fc" id="L33">			breakLabel = b;</span>
+<span class="fc" id="L34">			iterator = it;</span>
+<span class="fc" id="L35">		}</span>
+	}
+
+	private static final class Entry {
+		int start, end, depth;
+		Label handler;
+	}
+
+	private final Scope scope;
+	private final String name;
+	private final String filename;
+<span class="fc" id="L46">	private int[] code = new int[64];</span>
+<span class="fc" id="L47">	private int[] lines = new int[64];</span>
+	private int size;
+<span class="fc" id="L49">	private int line = 1;</span>
+<span class="fc" id="L50">	private final List&lt;Object&gt; consts = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L51">	private final Map&lt;List&lt;Object&gt;, Integer&gt; constIndex = new HashMap&lt;List&lt;Object&gt;, Integer&gt;();</span>
+<span class="fc" id="L52">	private final List&lt;String&gt; names = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L53">	private final Map&lt;String, Integer&gt; nameIndex = new HashMap&lt;String, Integer&gt;();</span>
+	private int depth;
+	private int maxDepth;
+<span class="fc" id="L56">	private boolean reachable = true;</span>
+	private int nslots;
+<span class="fc" id="L58">	private final List&lt;Entry&gt; entries = new ArrayList&lt;Entry&gt;();</span>
+<span class="fc" id="L59">	private final List&lt;Loop&gt; loops = new ArrayList&lt;Loop&gt;();</span>
+<span class="fc" id="L60">	private final List&lt;Integer&gt; handlerTemps = new ArrayList&lt;Integer&gt;();</span>
+	private Code result;
+	/** The innermost class around this code, for the mangling of private names; null outside classes. */
+	private String className;
+
+<span class="fc" id="L65">	private CodeGen(Scope scope, String name, String filename) {</span>
+<span class="fc" id="L66">		this.scope = scope;</span>
+<span class="fc" id="L67">		this.name = name;</span>
+<span class="fc" id="L68">		this.filename = filename;</span>
+<span class="fc" id="L69">		this.nslots = scope.nslots;</span>
+<span class="fc" id="L70">	}</span>
+
+	private static PySyntaxError error(String message, Node at) {
+<span class="fc" id="L73">		return new PySyntaxError(message, at.line, at.col);</span>
+	}
+
+	// ------------------------------------------------------------ emission
+
+	private void emit(int op, int arg) {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (!reachable)</span>
+<span class="fc" id="L80">			return;</span>
+<span class="pc bpc" id="L81" title="2 of 4 branches missed.">		if (arg &lt; 0 || arg &gt; 0xFFFFFF)</span>
+<span class="nc" id="L82">			throw new PySyntaxError(&quot;program too large&quot;, line, 0);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		if (size == code.length) {</span>
+<span class="fc" id="L84">			code = Arrays.copyOf(code, size * 2);</span>
+<span class="fc" id="L85">			lines = Arrays.copyOf(lines, size * 2);</span>
+		}
+<span class="fc" id="L87">		code[size] = op | (arg &lt;&lt; 8);</span>
+<span class="fc" id="L88">		lines[size] = line;</span>
+<span class="fc" id="L89">		size++;</span>
+<span class="fc" id="L90">		depth += Op.effect(op, arg);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (depth &gt; maxDepth)</span>
+<span class="fc" id="L92">			maxDepth = depth;</span>
+<span class="fc bfc" id="L93" title="All 6 branches covered.">		if (op == Op.RETURN || op == Op.RAISE || op == Op.RERAISE)</span>
+<span class="fc" id="L94">			reachable = false;</span>
+<span class="fc" id="L95">	}</span>
+
+	private void emit(int op) {
+<span class="fc" id="L98">		emit(op, 0);</span>
+<span class="fc" id="L99">	}</span>
+
+	private void emitJump(int op, Label l) {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (!reachable)</span>
+<span class="fc" id="L103">			return;</span>
+		int branch;
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		switch (op) {</span>
+		case Op.JUMP:
+		case Op.JUMP_IF_FALSE_KEEP:
+		case Op.JUMP_IF_TRUE_KEEP:
+<span class="fc" id="L109">			branch = depth;</span>
+<span class="fc" id="L110">			break;</span>
+		default:
+<span class="fc" id="L112">			branch = depth - 1;</span>
+			break;
+		}
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (l.depth &lt; 0)</span>
+<span class="fc" id="L116">			l.depth = branch;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		else if (l.depth != branch)</span>
+<span class="nc" id="L118">			throw new IllegalStateException(&quot;stack depth mismatch at line &quot; + line + &quot;: &quot; + l.depth + &quot; / &quot; + branch);</span>
+<span class="fc" id="L119">		int at = size;</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (l.pos &gt;= 0) {</span>
+<span class="fc" id="L121">			emit(op, l.pos);</span>
+		} else {
+<span class="fc" id="L123">			l.refs.add(Integer.valueOf(at));</span>
+<span class="fc" id="L124">			emit(op, 0);</span>
+		}
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (op == Op.JUMP)</span>
+<span class="fc" id="L127">			reachable = false;</span>
+<span class="fc" id="L128">	}</span>
+
+	private void bind(Label l) {
+<span class="fc" id="L131">		l.pos = size;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (reachable) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">			if (l.depth &lt; 0)</span>
+<span class="fc" id="L134">				l.depth = depth;</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">			else if (l.depth != depth)</span>
+<span class="nc" id="L136">				throw new IllegalStateException(&quot;stack depth mismatch binding label at line &quot; + line + &quot;: &quot; + l.depth</span>
+						+ &quot; / &quot; + depth);
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		} else if (l.depth &gt;= 0) {</span>
+<span class="fc" id="L139">			reachable = true;</span>
+<span class="fc" id="L140">			depth = l.depth;</span>
+		}
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		for (int at : l.refs)</span>
+<span class="fc" id="L143">			code[at] = (code[at] &amp; 0xff) | (l.pos &lt;&lt; 8);</span>
+<span class="fc" id="L144">		l.refs.clear();</span>
+<span class="fc" id="L145">	}</span>
+
+	private int constant(Object c) {
+<span class="fc" id="L148">		Object key = c;</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (c instanceof Double)</span>
+<span class="fc" id="L150">			key = Long.valueOf(Double.doubleToRawLongBits(((Double) c).doubleValue()));</span>
+<span class="fc" id="L151">		List&lt;Object&gt; k = new ArrayList&lt;Object&gt;(2);</span>
+<span class="fc" id="L152">		k.add(c.getClass());</span>
+<span class="fc" id="L153">		k.add(key);</span>
+<span class="fc" id="L154">		Integer i = constIndex.get(k);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		if (i == null) {</span>
+<span class="fc" id="L156">			i = Integer.valueOf(consts.size());</span>
+			// a str constant is a value of the program: a PyStr
+<span class="fc bfc" id="L158" title="All 2 branches covered.">			consts.add(c instanceof String ? PyStr.of((String) c) : c);</span>
+<span class="fc" id="L159">			constIndex.put(k, i);</span>
+		}
+<span class="fc" id="L161">		return i.intValue();</span>
+	}
+
+	private int name(String n) {
+<span class="fc" id="L165">		Integer i = nameIndex.get(n);</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (i == null) {</span>
+<span class="fc" id="L167">			i = Integer.valueOf(names.size());</span>
+<span class="fc" id="L168">			names.add(n);</span>
+<span class="fc" id="L169">			nameIndex.put(n, i);</span>
+		}
+<span class="fc" id="L171">		return i.intValue();</span>
+	}
+
+	private void loadConst(Object c) {
+<span class="fc" id="L175">		emit(Op.LOAD_CONST, constant(c));</span>
+<span class="fc" id="L176">	}</span>
+
+	private int newTemp() {
+<span class="fc" id="L179">		return nslots++;</span>
+	}
+
+	private void at(Node n) {
+<span class="fc" id="L183">		line = n.line;</span>
+<span class="fc" id="L184">	}</span>
+
+	// ------------------------------------------------------------ names
+
+	private void loadName(String n) {
+<span class="fc bfc" id="L189" title="All 3 branches covered.">		switch (scope.kindOf(n)) {</span>
+		case Scope.K_GLOBAL:
+<span class="fc" id="L191">			emit(Op.LOAD_GLOBAL, name(n));</span>
+<span class="fc" id="L192">			break;</span>
+		case Scope.K_LOCAL:
+<span class="fc" id="L194">			emit(Op.LOAD_FAST, scope.slotOf(n));</span>
+<span class="fc" id="L195">			break;</span>
+		default:
+<span class="fc" id="L197">			emit(Op.LOAD_CELL, scope.slotOf(n));</span>
+			break;
+		}
+<span class="fc" id="L200">	}</span>
+
+	private void storeName(String n) {
+<span class="fc bfc" id="L203" title="All 3 branches covered.">		switch (scope.kindOf(n)) {</span>
+		case Scope.K_GLOBAL:
+<span class="fc" id="L205">			emit(Op.STORE_GLOBAL, name(n));</span>
+<span class="fc" id="L206">			break;</span>
+		case Scope.K_LOCAL:
+<span class="fc" id="L208">			emit(Op.STORE_FAST, scope.slotOf(n));</span>
+<span class="fc" id="L209">			break;</span>
+		default:
+<span class="fc" id="L211">			emit(Op.STORE_CELL, scope.slotOf(n));</span>
+			break;
+		}
+<span class="fc" id="L214">	}</span>
+
+	private void deleteName(String n) {
+<span class="fc" id="L217">		deleteName(n, false);</span>
+<span class="fc" id="L218">	}</span>
+
+	/** {@code quiet}: the name is unbound at the end of an &quot;except ... as name&quot;, it is not an error if it is already. */
+	private void deleteName(String n, boolean quiet) {
+<span class="pc bpc" id="L222" title="1 of 3 branches missed.">		switch (scope.kindOf(n)) {</span>
+		case Scope.K_GLOBAL:
+<span class="fc bfc" id="L224" title="All 2 branches covered.">			emit(quiet ? Op.DELETE_GLOBAL_Q : Op.DELETE_GLOBAL, name(n));</span>
+<span class="fc" id="L225">			break;</span>
+		case Scope.K_LOCAL:
+<span class="fc bfc" id="L227" title="All 2 branches covered.">			emit(quiet ? Op.DELETE_FAST_Q : Op.DELETE_FAST, scope.slotOf(n));</span>
+<span class="fc" id="L228">			break;</span>
+		default:
+<span class="nc bnc" id="L230" title="All 2 branches missed.">			emit(quiet ? Op.DELETE_CELL_Q : Op.DELETE_CELL, scope.slotOf(n));</span>
+			break;
+		}
+<span class="fc" id="L233">	}</span>
+
+	// ------------------------------------------------------------ functions and modules
+
+	private void genModule(Ast.Module module) {
+<span class="fc" id="L238">		statements(module.body);</span>
+<span class="fc" id="L239">		loadConst(PyNone.NONE);</span>
+<span class="fc" id="L240">		emit(Op.RETURN);</span>
+<span class="fc" id="L241">	}</span>
+
+	/** The parameters that are captured by an inner scope live in cells. */
+	private void makeCells() {
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		for (String p : scope.slotNames)</span>
+<span class="pc bpc" id="L246" title="1 of 4 branches missed.">			if ((scope.flags(p) &amp; Scope.CELL) != 0 &amp;&amp; scope.slots.get(p).intValue() &lt; scope.firstFree)</span>
+<span class="fc" id="L247">				emit(Op.MAKE_CELL, scope.slotOf(p));</span>
+<span class="fc" id="L248">	}</span>
+
+	private void genFunctionBody(List&lt;Ast.Stmt&gt; body) {
+<span class="fc" id="L251">		makeCells();</span>
+<span class="fc" id="L252">		statements(body);</span>
+<span class="fc" id="L253">		loadConst(PyNone.NONE);</span>
+<span class="fc" id="L254">		emit(Op.RETURN);</span>
+<span class="fc" id="L255">	}</span>
+
+	private void genLambdaBody(Ast.Expr body) {
+<span class="fc" id="L258">		makeCells();</span>
+<span class="fc" id="L259">		expression(body);</span>
+<span class="fc" id="L260">		emit(Op.RETURN);</span>
+<span class="fc" id="L261">	}</span>
+
+	private void genComprehension(Ast.CompExpr n) {
+<span class="fc" id="L264">		makeCells();</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">		if (n instanceof Ast.SetComp)</span>
+<span class="fc" id="L266">			emit(Op.BUILD_SET, 0);</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">		else if (n.elt() != null)</span>
+<span class="fc" id="L268">			emit(Op.BUILD_LIST, 0);</span>
+		else
+<span class="fc" id="L270">			emit(Op.BUILD_DICT, 0);</span>
+<span class="fc" id="L271">		comprehensionLoops(n, 0);</span>
+<span class="fc" id="L272">		emit(Op.RETURN);</span>
+<span class="fc" id="L273">	}</span>
+
+	private void comprehensionLoops(Ast.CompExpr n, int index) {
+<span class="fc" id="L276">		List&lt;Ast.Comprehension&gt; gens = n.generators;</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">		if (index == gens.size()) {</span>
+<span class="fc" id="L278">			at(n);</span>
+<span class="fc" id="L279">			int up = index + 1;</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">			if (n.elt() != null) {</span>
+<span class="fc" id="L281">				expression(n.elt());</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">				emit(n instanceof Ast.SetComp ? Op.SET_ADD : Op.LIST_APPEND, up);</span>
+			} else {
+<span class="fc" id="L284">				expression(((Ast.DictComp) n).key);</span>
+<span class="fc" id="L285">				expression(((Ast.DictComp) n).value);</span>
+<span class="fc" id="L286">				emit(Op.MAP_ADD, up);</span>
+			}
+<span class="fc" id="L288">			return;</span>
+		}
+<span class="fc" id="L290">		Ast.Comprehension g = gens.get(index);</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">		if (index == 0) {</span>
+<span class="fc" id="L292">			emit(Op.LOAD_FAST, 0);</span>
+		} else {
+<span class="fc" id="L294">			expression(g.iter);</span>
+<span class="fc" id="L295">			emit(Op.GET_ITER);</span>
+		}
+<span class="fc" id="L297">		Label top = new Label();</span>
+<span class="fc" id="L298">		Label end = new Label();</span>
+<span class="fc" id="L299">		bind(top);</span>
+<span class="fc" id="L300">		emitJump(Op.FOR_ITER, end);</span>
+<span class="fc" id="L301">		store(g.target);</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">		for (Ast.Expr cond : g.ifs) {</span>
+<span class="fc" id="L303">			expression(cond);</span>
+<span class="fc" id="L304">			emitJump(Op.JUMP_IF_FALSE, top);</span>
+<span class="fc" id="L305">		}</span>
+<span class="fc" id="L306">		comprehensionLoops(n, index + 1);</span>
+<span class="fc" id="L307">		emitJump(Op.JUMP, top);</span>
+<span class="fc" id="L308">		bind(end);</span>
+<span class="fc" id="L309">	}</span>
+
+	/**
+	 * Pushes a function object for a def, a lambda or a comprehension; child is
+	 * the scope the resolver made for it, args its parameters (null for a comprehension).
+	 */
+	private void makeFunction(Node n, Scope child, String fname, Ast.Arguments args) {
+<span class="fc" id="L316">		int flags = 0;</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">		if (args != null) {</span>
+<span class="fc" id="L318">			List&lt;Ast.Expr&gt; defaults = args.defaults;</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">			if (!defaults.isEmpty()) {</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">				for (Ast.Expr d : defaults)</span>
+<span class="fc" id="L321">					expression(d);</span>
+<span class="fc" id="L322">				emit(Op.BUILD_TUPLE, defaults.size());</span>
+<span class="fc" id="L323">				flags |= 1;</span>
+			}
+<span class="fc" id="L325">			List&lt;Ast.Arg&gt; kwargs = args.kwonlyargs;</span>
+<span class="fc" id="L326">			List&lt;Ast.Expr&gt; kwdef = args.kwDefaults;</span>
+<span class="fc" id="L327">			int count = 0;</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">			for (int i = 0; i &lt; kwargs.size(); i++) {</span>
+<span class="fc" id="L329">				Ast.Expr d = kwdef.get(i);</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">				if (d != null) {</span>
+<span class="fc" id="L331">					loadConst(kwargs.get(i).arg);</span>
+<span class="fc" id="L332">					expression(d);</span>
+<span class="fc" id="L333">					count++;</span>
+				}
+			}
+<span class="fc bfc" id="L336" title="All 2 branches covered.">			if (count &gt; 0) {</span>
+<span class="fc" id="L337">				emit(Op.BUILD_DICT, count);</span>
+<span class="fc" id="L338">				flags |= 2;</span>
+			}
+		}
+<span class="fc bfc" id="L341" title="All 2 branches covered.">		if (!child.freeNames.isEmpty()) {</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">			for (String f : child.freeNames)</span>
+<span class="fc" id="L343">				emit(Op.LOAD_CLOSURE, scope.slotOf(f));</span>
+<span class="fc" id="L344">			emit(Op.BUILD_TUPLE, child.freeNames.size());</span>
+<span class="fc" id="L345">			flags |= 4;</span>
+		}
+<span class="fc" id="L347">		CodeGen g = new CodeGen(child, fname, filename);</span>
+<span class="fc" id="L348">		g.className = className;</span>
+<span class="fc" id="L349">		g.line = n.line;</span>
+<span class="fc bfc" id="L350" title="All 2 branches covered.">		if (n instanceof Ast.CompExpr)</span>
+<span class="fc" id="L351">			g.genComprehension((Ast.CompExpr) n);</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">		else if (n instanceof Ast.Lambda)</span>
+<span class="fc" id="L353">			g.genLambdaBody(((Ast.Lambda) n).body);</span>
+		else
+<span class="fc" id="L355">			g.genFunctionBody(((Ast.FunctionDef) n).body);</span>
+<span class="fc" id="L356">		loadConst(g.finish());</span>
+<span class="fc" id="L357">		emit(Op.MAKE_FUNCTION, flags);</span>
+<span class="fc" id="L358">	}</span>
+
+	/** As CPython: the decorators are evaluated from top to bottom, before the def or the class. */
+	private void loadDecorators(List&lt;Ast.Expr&gt; decorators) {
+<span class="fc bfc" id="L362" title="All 2 branches covered.">		for (Ast.Expr d : decorators)</span>
+<span class="fc" id="L363">			expression(d);</span>
+<span class="fc" id="L364">	}</span>
+
+	/** ... and applied from bottom to top, once the function or the class exists. */
+	private void applyDecorators(Node n, List&lt;Ast.Expr&gt; decorators) {
+<span class="fc bfc" id="L368" title="All 2 branches covered.">		for (int i = decorators.size() - 1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L369">			at(decorators.get(i));</span>
+<span class="fc" id="L370">			emit(Op.CALL, 1);</span>
+		}
+<span class="fc" id="L372">		at(n);</span>
+<span class="fc" id="L373">	}</span>
+
+	/**
+	 * A class statement: the body is compiled as a function without parameters
+	 * that returns a dict of its locals; Builtins.BUILD_CLASS turns it into a
+	 * class: BUILD_CLASS(body, name, qualname, *bases).
+	 */
+	private void classDef(Ast.ClassDef n) {
+<span class="fc" id="L381">		List&lt;Ast.Expr&gt; bases = n.bases;</span>
+<span class="fc bfc" id="L382" title="All 2 branches covered.">		if (bases.size() &gt; 1)</span>
+<span class="fc" id="L383">			throw error(&quot;multiple inheritance is not supported&quot;, n);</span>
+<span class="fc" id="L384">		Scope child = n.scope;</span>
+<span class="fc" id="L385">		loadConst(Builtins.BUILD_CLASS);</span>
+<span class="fc" id="L386">		int flags = 0;</span>
+<span class="fc bfc" id="L387" title="All 2 branches covered.">		if (child.freeNames.isEmpty() == false) {</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">			for (String f : child.freeNames)</span>
+<span class="fc" id="L389">				emit(Op.LOAD_CLOSURE, scope.slotOf(f));</span>
+<span class="fc" id="L390">			emit(Op.BUILD_TUPLE, child.freeNames.size());</span>
+<span class="fc" id="L391">			flags |= 4;</span>
+		}
+<span class="fc" id="L393">		CodeGen g = new CodeGen(child, n.name, filename);</span>
+<span class="fc" id="L394">		g.className = n.name;</span>
+<span class="fc" id="L395">		g.line = n.line;</span>
+<span class="fc" id="L396">		g.genClassBody(n.body);</span>
+<span class="fc" id="L397">		loadConst(g.finish());</span>
+<span class="fc" id="L398">		emit(Op.MAKE_FUNCTION, flags);</span>
+<span class="fc" id="L399">		loadConst(n.name);</span>
+<span class="fc" id="L400">		loadConst(qualname(child));</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">		for (Ast.Expr b : bases)</span>
+<span class="fc" id="L402">			expression(b);</span>
+<span class="fc" id="L403">		at(n);</span>
+<span class="fc" id="L404">		emit(Op.CALL, 3 + bases.size());</span>
+<span class="fc" id="L405">	}</span>
+
+	private void genClassBody(List&lt;Ast.Stmt&gt; body) {
+<span class="fc" id="L408">		statements(body);</span>
+		// the resolver only accepts straight-line statements: every local is bound here
+<span class="fc" id="L410">		int count = 0;</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">		for (int i = 0; i &lt; scope.firstFree; i++) {</span>
+<span class="fc" id="L412">			String local = scope.slotNames.get(i);</span>
+<span class="fc" id="L413">			loadConst(mangle(local));</span>
+<span class="fc" id="L414">			emit(Op.LOAD_FAST, i);</span>
+<span class="fc" id="L415">			count++;</span>
+		}
+<span class="fc" id="L417">		emit(Op.BUILD_DICT, count);</span>
+<span class="fc" id="L418">		emit(Op.RETURN);</span>
+<span class="fc" id="L419">	}</span>
+
+	/**
+	 * CPython's private name mangling: inside a class A, the attribute
+	 * {@code __x} (two leading underscores, not two trailing ones) is
+	 * {@code _A__x}. Applied to attribute names and to the names bound by a
+	 * class body; local variables need no mangling, they are not observable.
+	 */
+	private String mangle(String n) {
+<span class="fc bfc" id="L428" title="All 6 branches covered.">		if (className == null || n.startsWith(&quot;__&quot;) == false || n.endsWith(&quot;__&quot;))</span>
+<span class="fc" id="L429">			return n;</span>
+<span class="fc" id="L430">		int i = 0;</span>
+<span class="pc bpc" id="L431" title="2 of 4 branches missed.">		while (i &lt; className.length() &amp;&amp; className.charAt(i) == '_')</span>
+<span class="nc" id="L432">			i++;</span>
+<span class="pc bpc" id="L433" title="1 of 2 branches missed.">		if (i == className.length())</span>
+<span class="nc" id="L434">			return n;</span>
+<span class="fc" id="L435">		return &quot;_&quot; + className.substring(i) + n;</span>
+	}
+
+	/** CPython's __qualname__: the enclosing classes and functions, &quot;f.&lt;locals&gt;.A&quot;. */
+	private static String qualname(Scope s) {
+<span class="fc" id="L440">		StringBuilder sb = new StringBuilder(s.name);</span>
+<span class="pc bpc" id="L441" title="1 of 4 branches missed.">		for (Scope p = s.parent; p != null &amp;&amp; p.kind != Scope.MODULE; p = p.parent) {</span>
+<span class="fc bfc" id="L442" title="All 2 branches covered.">			if (p.kind == Scope.CLASS)</span>
+<span class="fc" id="L443">				sb.insert(0, p.name + &quot;.&quot;);</span>
+			else
+<span class="fc" id="L445">				sb.insert(0, p.name + &quot;.&lt;locals&gt;.&quot;);</span>
+		}
+<span class="fc" id="L447">		return sb.toString();</span>
+	}
+
+	private Code finish() {
+<span class="pc bpc" id="L451" title="1 of 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L452">			return result;</span>
+		// resolve the exception table
+<span class="fc" id="L454">		List&lt;Entry&gt; live = new ArrayList&lt;Entry&gt;();</span>
+<span class="fc bfc" id="L455" title="All 2 branches covered.">		for (Entry e : entries)</span>
+<span class="pc bpc" id="L456" title="2 of 4 branches missed.">			if (e.end &gt; e.start &amp;&amp; e.handler.pos &gt;= 0)</span>
+<span class="fc" id="L457">				live.add(e);</span>
+<span class="fc" id="L458">		int[] es = new int[live.size()], ee = new int[live.size()], eh = new int[live.size()],</span>
+<span class="fc" id="L459">				ed = new int[live.size()];</span>
+<span class="fc bfc" id="L460" title="All 2 branches covered.">		for (int i = 0; i &lt; live.size(); i++) {</span>
+<span class="fc" id="L461">			Entry e = live.get(i);</span>
+<span class="fc" id="L462">			es[i] = e.start;</span>
+<span class="fc" id="L463">			ee[i] = e.end;</span>
+<span class="fc" id="L464">			eh[i] = e.handler.pos;</span>
+<span class="fc" id="L465">			ed[i] = e.depth;</span>
+		}
+<span class="fc" id="L467">		String[] slotNames = new String[nslots];</span>
+<span class="fc bfc" id="L468" title="All 2 branches covered.">		for (int i = 0; i &lt; scope.slotNames.size(); i++)</span>
+<span class="fc" id="L469">			slotNames[i] = scope.slotNames.get(i);</span>
+<span class="fc" id="L470">		int nparams = scope.argcount + scope.kwonlycount;</span>
+<span class="fc" id="L471">		String[] paramNames = new String[nparams];</span>
+<span class="fc bfc" id="L472" title="All 2 branches covered.">		for (int i = 0; i &lt; nparams; i++)</span>
+<span class="fc" id="L473">			paramNames[i] = scope.params.get(i);</span>
+<span class="fc bfc" id="L474" title="All 2 branches covered.">		int varargsSlot = scope.varargs == null ? -1 : scope.slotOf(scope.varargs);</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">		int kwargsSlot = scope.kwargs == null ? -1 : scope.slotOf(scope.kwargs);</span>
+<span class="fc" id="L476">		result = new Code(name, filename, Arrays.copyOf(code, size), Arrays.copyOf(lines, size),</span>
+<span class="fc" id="L477">				consts.toArray(), names.toArray(new String[0]), nslots, maxDepth + 1, scope.argcount,</span>
+<span class="fc bfc" id="L478" title="All 2 branches covered.">				scope.kwonlycount, varargsSlot, kwargsSlot, paramNames, scope.firstFree, scope.freeNames.size(),</span>
+				scope.kind == Scope.MODULE, es, ee, eh, ed, slotNames);
+<span class="fc" id="L480">		return result;</span>
+	}
+
+	// ------------------------------------------------------------ statements
+
+	private void statements(List&lt;Ast.Stmt&gt; body) {
+<span class="fc bfc" id="L486" title="All 2 branches covered.">		for (Ast.Stmt s : body)</span>
+<span class="fc" id="L487">			statement(s);</span>
+<span class="fc" id="L488">	}</span>
+
+	private void statement(Ast.Stmt n) {
+<span class="fc" id="L491">		at(n);</span>
+<span class="fc bfc" id="L492" title="All 2 branches covered.">		if (n instanceof Ast.ExprStmt) {</span>
+<span class="fc" id="L493">			Ast.Expr v = ((Ast.ExprStmt) n).value;</span>
+<span class="fc bfc" id="L494" title="All 2 branches covered.">			if (v instanceof Ast.Constant)</span>
+<span class="fc" id="L495">				return; // docstrings and the like</span>
+<span class="fc" id="L496">			expression(v);</span>
+<span class="fc" id="L497">			emit(Op.POP);</span>
+<span class="fc bfc" id="L498" title="All 2 branches covered.">		} else if (n instanceof Ast.Assign) {</span>
+<span class="fc" id="L499">			assign((Ast.Assign) n);</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">		} else if (n instanceof Ast.AugAssign) {</span>
+<span class="fc" id="L501">			augAssign((Ast.AugAssign) n);</span>
+<span class="fc bfc" id="L502" title="All 2 branches covered.">		} else if (n instanceof Ast.Pass) {</span>
+			// nothing
+<span class="fc bfc" id="L504" title="All 2 branches covered.">		} else if (n instanceof Ast.If) {</span>
+<span class="fc" id="L505">			ifStatement((Ast.If) n);</span>
+<span class="fc bfc" id="L506" title="All 2 branches covered.">		} else if (n instanceof Ast.While) {</span>
+<span class="fc" id="L507">			whileStatement((Ast.While) n);</span>
+<span class="fc bfc" id="L508" title="All 2 branches covered.">		} else if (n instanceof Ast.For) {</span>
+<span class="fc" id="L509">			forStatement((Ast.For) n);</span>
+<span class="fc bfc" id="L510" title="All 2 branches covered.">		} else if (n instanceof Ast.Break) {</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">			if (loops.isEmpty())</span>
+<span class="fc" id="L512">				throw error(&quot;'break' outside loop&quot;, n);</span>
+<span class="fc" id="L513">			Loop l = loops.get(loops.size() - 1);</span>
+<span class="fc bfc" id="L514" title="All 2 branches covered.">			if (l.iterator)</span>
+<span class="fc" id="L515">				emit(Op.POP);</span>
+<span class="fc" id="L516">			emitJump(Op.JUMP, l.breakLabel);</span>
+<span class="fc bfc" id="L517" title="All 2 branches covered.">		} else if (n instanceof Ast.Continue) {</span>
+<span class="pc bpc" id="L518" title="1 of 2 branches missed.">			if (loops.isEmpty())</span>
+<span class="nc" id="L519">				throw error(&quot;'continue' not properly in loop&quot;, n);</span>
+<span class="fc" id="L520">			emitJump(Op.JUMP, loops.get(loops.size() - 1).continueLabel);</span>
+<span class="fc bfc" id="L521" title="All 2 branches covered.">		} else if (n instanceof Ast.Return) {</span>
+<span class="fc" id="L522">			Ast.Return r = (Ast.Return) n;</span>
+<span class="fc bfc" id="L523" title="All 2 branches covered.">			if (scope.kind == Scope.MODULE)</span>
+<span class="fc" id="L524">				throw error(&quot;'return' outside function&quot;, n);</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">			if (r.value == null)</span>
+<span class="fc" id="L526">				loadConst(PyNone.NONE);</span>
+			else
+<span class="fc" id="L528">				expression(r.value);</span>
+<span class="fc" id="L529">			at(n);</span>
+<span class="fc" id="L530">			emit(Op.RETURN);</span>
+<span class="fc bfc" id="L531" title="All 2 branches covered.">		} else if (n instanceof Ast.FunctionDef) {</span>
+<span class="fc" id="L532">			Ast.FunctionDef f = (Ast.FunctionDef) n;</span>
+<span class="fc" id="L533">			loadDecorators(f.decorators);</span>
+<span class="fc" id="L534">			makeFunction(f, f.scope, f.name, f.args);</span>
+<span class="fc" id="L535">			applyDecorators(f, f.decorators);</span>
+<span class="fc" id="L536">			storeName(f.name);</span>
+<span class="fc bfc" id="L537" title="All 2 branches covered.">		} else if (n instanceof Ast.ClassDef) {</span>
+<span class="fc" id="L538">			Ast.ClassDef c = (Ast.ClassDef) n;</span>
+<span class="fc" id="L539">			loadDecorators(c.decorators);</span>
+<span class="fc" id="L540">			classDef(c);</span>
+<span class="fc" id="L541">			applyDecorators(c, c.decorators);</span>
+<span class="fc" id="L542">			storeName(c.name);</span>
+<span class="fc bfc" id="L543" title="All 2 branches covered.">		} else if (n instanceof Ast.Delete) {</span>
+<span class="fc bfc" id="L544" title="All 2 branches covered.">			for (Ast.Expr t : ((Ast.Delete) n).targets)</span>
+<span class="fc" id="L545">				delete(t);</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">		} else if (n instanceof Ast.NameDeclaration) {</span>
+			// global and nonlocal: handled by the resolver
+<span class="fc bfc" id="L548" title="All 2 branches covered.">		} else if (n instanceof Ast.Assert) {</span>
+<span class="fc" id="L549">			assertStatement((Ast.Assert) n);</span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">		} else if (n instanceof Ast.Raise) {</span>
+<span class="fc" id="L551">			raiseStatement((Ast.Raise) n);</span>
+<span class="fc bfc" id="L552" title="All 2 branches covered.">		} else if (n instanceof Ast.Try) {</span>
+<span class="fc" id="L553">			tryStatement((Ast.Try) n);</span>
+<span class="fc bfc" id="L554" title="All 2 branches covered.">		} else if (n instanceof Ast.Import) {</span>
+<span class="fc bfc" id="L555" title="All 2 branches covered.">			for (Ast.Alias a : ((Ast.Import) n).names) {</span>
+<span class="fc" id="L556">				String full = a.name;</span>
+<span class="fc" id="L557">				emit(Op.IMPORT, name(full));</span>
+<span class="pc bpc" id="L558" title="1 of 2 branches missed.">				if (a.asname != null) {</span>
+<span class="nc" id="L559">					storeName(a.asname);</span>
+				} else {
+<span class="fc" id="L561">					int dot = full.indexOf('.');</span>
+<span class="pc bpc" id="L562" title="1 of 2 branches missed.">					storeName(dot &gt;= 0 ? full.substring(0, dot) : full);</span>
+				}
+<span class="fc" id="L564">			}</span>
+<span class="pc bpc" id="L565" title="1 of 2 branches missed.">		} else if (n instanceof Ast.ImportFrom) {</span>
+<span class="fc" id="L566">			Ast.ImportFrom i = (Ast.ImportFrom) n;</span>
+<span class="fc" id="L567">			emit(Op.IMPORT, name(i.module));</span>
+<span class="fc bfc" id="L568" title="All 2 branches covered.">			for (Ast.Alias a : i.names) {</span>
+<span class="fc" id="L569">				emit(Op.IMPORT_FROM, name(a.name));</span>
+<span class="fc bfc" id="L570" title="All 2 branches covered.">				storeName(a.asname != null ? a.asname : a.name);</span>
+<span class="fc" id="L571">			}</span>
+<span class="fc" id="L572">			emit(Op.POP);</span>
+<span class="fc" id="L573">		} else {</span>
+<span class="nc" id="L574">			throw error(&quot;unsupported statement &quot; + n.type(), n);</span>
+		}
+<span class="fc" id="L576">	}</span>
+
+	private void assign(Ast.Assign n) {
+<span class="fc" id="L579">		expression(n.value);</span>
+<span class="fc" id="L580">		List&lt;Ast.Expr&gt; targets = n.targets;</span>
+<span class="fc bfc" id="L581" title="All 2 branches covered.">		for (int i = 0; i &lt; targets.size(); i++) {</span>
+<span class="fc bfc" id="L582" title="All 2 branches covered.">			if (i &lt; targets.size() - 1)</span>
+<span class="fc" id="L583">				emit(Op.DUP);</span>
+<span class="fc" id="L584">			store(targets.get(i));</span>
+		}
+<span class="fc" id="L586">	}</span>
+
+	/** Stores the value on top of the stack into a target. */
+	private void store(Ast.Expr t) {
+<span class="fc bfc" id="L590" title="All 2 branches covered.">		if (t instanceof Ast.Name) {</span>
+<span class="fc" id="L591">			storeName(((Ast.Name) t).id);</span>
+<span class="fc bfc" id="L592" title="All 2 branches covered.">		} else if (t instanceof Ast.Subscript) {</span>
+<span class="fc" id="L593">			expression(((Ast.Subscript) t).value);</span>
+<span class="fc" id="L594">			expression(((Ast.Subscript) t).slice);</span>
+<span class="fc" id="L595">			at(t);</span>
+<span class="fc" id="L596">			emit(Op.SETITEM);</span>
+<span class="fc bfc" id="L597" title="All 2 branches covered.">		} else if (t instanceof Ast.TupleExpr) {</span>
+<span class="fc" id="L598">			storeSequence(((Ast.TupleExpr) t).elts);</span>
+<span class="fc bfc" id="L599" title="All 2 branches covered.">		} else if (t instanceof Ast.ListExpr) {</span>
+<span class="fc" id="L600">			storeSequence(((Ast.ListExpr) t).elts);</span>
+<span class="pc bpc" id="L601" title="1 of 2 branches missed.">		} else if (t instanceof Ast.Attribute) {</span>
+<span class="fc" id="L602">			expression(((Ast.Attribute) t).value);</span>
+<span class="fc" id="L603">			at(t);</span>
+<span class="fc" id="L604">			emit(Op.STORE_ATTR, name(mangle(((Ast.Attribute) t).attr)));</span>
+		} else {
+<span class="nc" id="L606">			throw error(&quot;cannot assign to &quot; + t.type(), t);</span>
+		}
+<span class="fc" id="L608">	}</span>
+
+	private void storeSequence(List&lt;Ast.Expr&gt; elts) {
+<span class="fc bfc" id="L611" title="All 2 branches covered.">		for (Ast.Expr e : elts)</span>
+<span class="pc bpc" id="L612" title="1 of 2 branches missed.">			if (e instanceof Ast.Starred)</span>
+<span class="nc" id="L613">				throw error(&quot;starred assignment targets are not supported&quot;, e);</span>
+<span class="fc" id="L614">		emit(Op.UNPACK, elts.size());</span>
+<span class="fc bfc" id="L615" title="All 2 branches covered.">		for (Ast.Expr e : elts)</span>
+<span class="fc" id="L616">			store(e);</span>
+<span class="fc" id="L617">	}</span>
+
+	private void delete(Ast.Expr t) {
+<span class="fc bfc" id="L620" title="All 2 branches covered.">		if (t instanceof Ast.Name) {</span>
+<span class="fc" id="L621">			deleteName(((Ast.Name) t).id);</span>
+<span class="fc bfc" id="L622" title="All 2 branches covered.">		} else if (t instanceof Ast.Subscript) {</span>
+<span class="fc" id="L623">			expression(((Ast.Subscript) t).value);</span>
+<span class="fc" id="L624">			expression(((Ast.Subscript) t).slice);</span>
+<span class="fc" id="L625">			at(t);</span>
+<span class="fc" id="L626">			emit(Op.DELITEM);</span>
+<span class="pc bpc" id="L627" title="1 of 2 branches missed.">		} else if (t instanceof Ast.TupleExpr) {</span>
+<span class="nc bnc" id="L628" title="All 2 branches missed.">			for (Ast.Expr e : ((Ast.TupleExpr) t).elts)</span>
+<span class="nc" id="L629">				delete(e);</span>
+<span class="pc bpc" id="L630" title="1 of 2 branches missed.">		} else if (t instanceof Ast.ListExpr) {</span>
+<span class="nc bnc" id="L631" title="All 2 branches missed.">			for (Ast.Expr e : ((Ast.ListExpr) t).elts)</span>
+<span class="nc" id="L632">				delete(e);</span>
+<span class="pc bpc" id="L633" title="1 of 2 branches missed.">		} else if (t instanceof Ast.Attribute) {</span>
+<span class="fc" id="L634">			expression(((Ast.Attribute) t).value);</span>
+<span class="fc" id="L635">			at(t);</span>
+<span class="fc" id="L636">			emit(Op.DELETE_ATTR, name(mangle(((Ast.Attribute) t).attr)));</span>
+		} else {
+<span class="nc" id="L638">			throw error(&quot;cannot delete &quot; + t.type(), t);</span>
+		}
+<span class="fc" id="L640">	}</span>
+
+	private static int binOp(Ast.Operator op) {
+<span class="pc bpc" id="L643" title="1 of 13 branches missed.">		switch (op) {</span>
+		case Add:
+<span class="fc" id="L645">			return Op.BIN_ADD;</span>
+		case Sub:
+<span class="fc" id="L647">			return Op.BIN_SUB;</span>
+		case Mult:
+<span class="fc" id="L649">			return Op.BIN_MUL;</span>
+		case Div:
+<span class="fc" id="L651">			return Op.BIN_DIV;</span>
+		case FloorDiv:
+<span class="fc" id="L653">			return Op.BIN_FLOORDIV;</span>
+		case Mod:
+<span class="fc" id="L655">			return Op.BIN_MOD;</span>
+		case Pow:
+<span class="fc" id="L657">			return Op.BIN_POW;</span>
+		case LShift:
+<span class="fc" id="L659">			return Op.BIN_LSHIFT;</span>
+		case RShift:
+<span class="fc" id="L661">			return Op.BIN_RSHIFT;</span>
+		case BitAnd:
+<span class="fc" id="L663">			return Op.BIN_AND;</span>
+		case BitOr:
+<span class="fc" id="L665">			return Op.BIN_OR;</span>
+		case BitXor:
+<span class="fc" id="L667">			return Op.BIN_XOR;</span>
+		default:
+<span class="nc" id="L669">			throw new PySyntaxError(&quot;unsupported operator &quot; + op.name(), 0, 0);</span>
+		}
+	}
+
+	private void augAssign(Ast.AugAssign n) {
+<span class="fc" id="L674">		Ast.Expr t = n.target;</span>
+<span class="fc" id="L675">		int op = binOp(n.op) | Op.INPLACE;</span>
+<span class="fc bfc" id="L676" title="All 2 branches covered.">		if (t instanceof Ast.Name) {</span>
+<span class="fc" id="L677">			String id = ((Ast.Name) t).id;</span>
+<span class="fc" id="L678">			loadName(id);</span>
+<span class="fc" id="L679">			expression(n.value);</span>
+<span class="fc" id="L680">			at(n);</span>
+<span class="fc" id="L681">			emit(Op.BINARY_OP, op);</span>
+<span class="fc" id="L682">			storeName(id);</span>
+<span class="fc bfc" id="L683" title="All 2 branches covered.">		} else if (t instanceof Ast.Subscript) {</span>
+<span class="fc" id="L684">			expression(((Ast.Subscript) t).value);</span>
+<span class="fc" id="L685">			expression(((Ast.Subscript) t).slice);</span>
+<span class="fc" id="L686">			emit(Op.DUP2);</span>
+<span class="fc" id="L687">			at(t);</span>
+<span class="fc" id="L688">			emit(Op.GETITEM);</span>
+<span class="fc" id="L689">			expression(n.value);</span>
+<span class="fc" id="L690">			at(n);</span>
+<span class="fc" id="L691">			emit(Op.BINARY_OP, op);</span>
+<span class="fc" id="L692">			emit(Op.ROT3);</span>
+<span class="fc" id="L693">			emit(Op.SETITEM);</span>
+<span class="pc bpc" id="L694" title="1 of 2 branches missed.">		} else if (t instanceof Ast.Attribute) {</span>
+<span class="fc" id="L695">			Ast.Attribute attr = (Ast.Attribute) t;</span>
+<span class="fc" id="L696">			expression(attr.value);</span>
+<span class="fc" id="L697">			emit(Op.DUP);</span>
+<span class="fc" id="L698">			at(t);</span>
+<span class="fc" id="L699">			emit(Op.LOAD_ATTR, name(mangle(attr.attr)));</span>
+<span class="fc" id="L700">			expression(n.value);</span>
+<span class="fc" id="L701">			at(n);</span>
+<span class="fc" id="L702">			emit(Op.BINARY_OP, op);</span>
+<span class="fc" id="L703">			emit(Op.ROT2);</span>
+<span class="fc" id="L704">			at(t);</span>
+<span class="fc" id="L705">			emit(Op.STORE_ATTR, name(mangle(attr.attr)));</span>
+<span class="fc" id="L706">		} else {</span>
+<span class="nc" id="L707">			throw error(&quot;illegal target for augmented assignment&quot;, t);</span>
+		}
+<span class="fc" id="L709">	}</span>
+
+	private void ifStatement(Ast.If n) {
+<span class="fc" id="L712">		Label orelse = new Label();</span>
+<span class="fc" id="L713">		Label end = new Label();</span>
+<span class="fc" id="L714">		expression(n.test);</span>
+<span class="fc" id="L715">		emitJump(Op.JUMP_IF_FALSE, orelse);</span>
+<span class="fc" id="L716">		statements(n.body);</span>
+<span class="fc bfc" id="L717" title="All 2 branches covered.">		if (!n.orelse.isEmpty()) {</span>
+<span class="fc" id="L718">			emitJump(Op.JUMP, end);</span>
+<span class="fc" id="L719">			bind(orelse);</span>
+<span class="fc" id="L720">			statements(n.orelse);</span>
+<span class="fc" id="L721">			bind(end);</span>
+		} else {
+<span class="fc" id="L723">			bind(orelse);</span>
+		}
+<span class="fc" id="L725">	}</span>
+
+	private void whileStatement(Ast.While n) {
+<span class="fc" id="L728">		Label top = new Label();</span>
+<span class="fc" id="L729">		Label orelse = new Label();</span>
+<span class="fc" id="L730">		Label brk = new Label();</span>
+<span class="fc" id="L731">		bind(top);</span>
+<span class="fc" id="L732">		expression(n.test);</span>
+<span class="fc" id="L733">		emitJump(Op.JUMP_IF_FALSE, orelse);</span>
+<span class="fc" id="L734">		loops.add(new Loop(top, brk, false));</span>
+<span class="fc" id="L735">		statements(n.body);</span>
+<span class="fc" id="L736">		loops.remove(loops.size() - 1);</span>
+<span class="fc" id="L737">		emitJump(Op.JUMP, top);</span>
+<span class="fc" id="L738">		bind(orelse);</span>
+<span class="fc" id="L739">		statements(n.orelse);</span>
+<span class="fc" id="L740">		bind(brk);</span>
+<span class="fc" id="L741">	}</span>
+
+	private void forStatement(Ast.For n) {
+<span class="fc" id="L744">		Label top = new Label();</span>
+<span class="fc" id="L745">		Label orelse = new Label();</span>
+<span class="fc" id="L746">		Label brk = new Label();</span>
+<span class="fc" id="L747">		expression(n.iter);</span>
+<span class="fc" id="L748">		at(n);</span>
+<span class="fc" id="L749">		emit(Op.GET_ITER);</span>
+<span class="fc" id="L750">		bind(top);</span>
+<span class="fc" id="L751">		emitJump(Op.FOR_ITER, orelse);</span>
+<span class="fc" id="L752">		store(n.target);</span>
+<span class="fc" id="L753">		loops.add(new Loop(top, brk, true));</span>
+<span class="fc" id="L754">		statements(n.body);</span>
+<span class="fc" id="L755">		loops.remove(loops.size() - 1);</span>
+<span class="fc" id="L756">		emitJump(Op.JUMP, top);</span>
+<span class="fc" id="L757">		bind(orelse);</span>
+<span class="fc" id="L758">		statements(n.orelse);</span>
+<span class="fc" id="L759">		bind(brk);</span>
+<span class="fc" id="L760">	}</span>
+
+	private void assertStatement(Ast.Assert n) {
+<span class="fc" id="L763">		Label ok = new Label();</span>
+<span class="fc" id="L764">		expression(n.test);</span>
+<span class="fc" id="L765">		emitJump(Op.JUMP_IF_TRUE, ok);</span>
+<span class="fc" id="L766">		at(n);</span>
+<span class="fc" id="L767">		emit(Op.LOAD_GLOBAL, name(&quot;AssertionError&quot;));</span>
+<span class="fc bfc" id="L768" title="All 2 branches covered.">		if (n.msg != null) {</span>
+<span class="fc" id="L769">			expression(n.msg);</span>
+<span class="fc" id="L770">			emit(Op.CALL, 1);</span>
+		} else {
+<span class="fc" id="L772">			emit(Op.CALL, 0);</span>
+		}
+<span class="fc" id="L774">		emit(Op.RAISE, 1);</span>
+<span class="fc" id="L775">		bind(ok);</span>
+<span class="fc" id="L776">	}</span>
+
+	private void raiseStatement(Ast.Raise n) {
+<span class="fc bfc" id="L779" title="All 2 branches covered.">		if (n.cause != null)</span>
+<span class="fc" id="L780">			throw error(&quot;'raise ... from ...' is not supported&quot;, n);</span>
+<span class="fc bfc" id="L781" title="All 2 branches covered.">		if (n.exc == null) {</span>
+<span class="fc bfc" id="L782" title="All 2 branches covered.">			if (handlerTemps.isEmpty()) {</span>
+<span class="fc" id="L783">				emit(Op.RAISE, 0);</span>
+			} else {
+<span class="fc" id="L785">				emit(Op.LOAD_FAST, handlerTemps.get(handlerTemps.size() - 1).intValue());</span>
+<span class="fc" id="L786">				emit(Op.RERAISE);</span>
+			}
+<span class="fc" id="L788">			return;</span>
+		}
+<span class="fc" id="L790">		expression(n.exc);</span>
+<span class="fc" id="L791">		at(n);</span>
+<span class="fc" id="L792">		emit(Op.RAISE, 1);</span>
+<span class="fc" id="L793">	}</span>
+
+	private void tryStatement(Ast.Try n) {
+<span class="fc" id="L796">		int tmp = newTemp();</span>
+<span class="fc" id="L797">		int depth0 = depth;</span>
+<span class="fc" id="L798">		Label handler = new Label();</span>
+<span class="fc" id="L799">		Label end = new Label();</span>
+<span class="fc" id="L800">		int start = size;</span>
+<span class="fc" id="L801">		statements(n.body);</span>
+<span class="fc" id="L802">		int stop = size;</span>
+<span class="fc bfc" id="L803" title="All 2 branches covered.">		if (stop == start) {</span>
+<span class="fc" id="L804">			statements(n.orelse);</span>
+<span class="fc" id="L805">			return;</span>
+		}
+<span class="fc" id="L807">		Entry e = new Entry();</span>
+<span class="fc" id="L808">		e.start = start;</span>
+<span class="fc" id="L809">		e.end = stop;</span>
+<span class="fc" id="L810">		e.depth = depth0;</span>
+<span class="fc" id="L811">		e.handler = handler;</span>
+<span class="fc" id="L812">		entries.add(e);</span>
+<span class="fc" id="L813">		statements(n.orelse);</span>
+<span class="fc" id="L814">		emitJump(Op.JUMP, end);</span>
+
+<span class="fc" id="L816">		handler.depth = depth0 + 1;</span>
+<span class="fc" id="L817">		bind(handler);</span>
+<span class="pc bpc" id="L818" title="1 of 2 branches missed.">		if (depth &gt; maxDepth)</span>
+<span class="nc" id="L819">			maxDepth = depth;</span>
+<span class="fc" id="L820">		at(n);</span>
+<span class="fc" id="L821">		emit(Op.STORE_FAST, tmp);</span>
+<span class="fc bfc" id="L822" title="All 2 branches covered.">		for (Ast.ExceptHandler h : n.handlers) {</span>
+<span class="fc" id="L823">			at(h);</span>
+<span class="fc" id="L824">			Label next = new Label();</span>
+<span class="fc bfc" id="L825" title="All 2 branches covered.">			if (h.exceptionType != null) {</span>
+<span class="fc" id="L826">				emit(Op.LOAD_FAST, tmp);</span>
+<span class="fc" id="L827">				expression(h.exceptionType);</span>
+<span class="fc" id="L828">				at(h);</span>
+<span class="fc" id="L829">				emit(Op.EXC_MATCH);</span>
+<span class="fc" id="L830">				emitJump(Op.JUMP_IF_FALSE, next);</span>
+			}
+<span class="fc bfc" id="L832" title="All 2 branches covered.">			if (h.name != null) {</span>
+<span class="fc" id="L833">				emit(Op.LOAD_FAST, tmp);</span>
+<span class="fc" id="L834">				storeName(h.name);</span>
+			}
+			// a bare raise in a function called from the body re-raises this exception
+<span class="fc" id="L837">			final int level = handlerTemps.size();</span>
+<span class="fc" id="L838">			emit(Op.LOAD_FAST, tmp);</span>
+<span class="fc" id="L839">			emit(Op.HANDLER_ENTER, level);</span>
+<span class="fc" id="L840">			handlerTemps.add(Integer.valueOf(tmp));</span>
+<span class="fc" id="L841">			statements(h.body);</span>
+<span class="fc" id="L842">			handlerTemps.remove(handlerTemps.size() - 1);</span>
+<span class="fc" id="L843">			emit(Op.HANDLER_EXIT, level);</span>
+<span class="fc bfc" id="L844" title="All 2 branches covered.">			if (h.name != null)</span>
+<span class="fc" id="L845">				deleteName(h.name, true);</span>
+<span class="fc" id="L846">			emitJump(Op.JUMP, end);</span>
+<span class="fc" id="L847">			bind(next);</span>
+<span class="fc" id="L848">		}</span>
+<span class="fc bfc" id="L849" title="All 2 branches covered.">		if (reachable) {</span>
+<span class="fc" id="L850">			emit(Op.LOAD_FAST, tmp);</span>
+<span class="fc" id="L851">			emit(Op.RERAISE);</span>
+		}
+<span class="fc" id="L853">		bind(end);</span>
+<span class="fc" id="L854">	}</span>
+
+	// ------------------------------------------------------------ expressions
+
+	private void expressionOrNone(Ast.Expr e) {
+<span class="fc bfc" id="L859" title="All 2 branches covered.">		if (e == null)</span>
+<span class="fc" id="L860">			loadConst(PyNone.NONE);</span>
+		else
+<span class="fc" id="L862">			expression(e);</span>
+<span class="fc" id="L863">	}</span>
+
+	private Object constantValue(Object v) {
+<span class="fc bfc" id="L866" title="All 2 branches covered.">		if (v == null)</span>
+<span class="fc" id="L867">			return PyNone.NONE;</span>
+<span class="fc bfc" id="L868" title="All 2 branches covered.">		if (v instanceof Long) {</span>
+<span class="fc" id="L869">			long l = ((Long) v).longValue();</span>
+<span class="fc bfc" id="L870" title="All 2 branches covered.">			if (PyInt.fits(l) == false)</span>
+<span class="fc" id="L871">				throw new PySyntaxError(&quot;integer literal does not fit in 32 bits&quot;, line, 0);</span>
+<span class="fc" id="L872">			return Integer.valueOf((int) l);</span>
+		}
+<span class="fc" id="L874">		return v;</span>
+	}
+
+	private void expression(Ast.Expr e) {
+<span class="fc" id="L878">		at(e);</span>
+<span class="fc bfc" id="L879" title="All 2 branches covered.">		if (e instanceof Ast.Constant) {</span>
+<span class="fc" id="L880">			loadConst(constantValue(((Ast.Constant) e).value));</span>
+<span class="fc bfc" id="L881" title="All 2 branches covered.">		} else if (e instanceof Ast.Name) {</span>
+<span class="fc" id="L882">			loadName(((Ast.Name) e).id);</span>
+<span class="fc bfc" id="L883" title="All 2 branches covered.">		} else if (e instanceof Ast.BoolOp) {</span>
+<span class="fc" id="L884">			Ast.BoolOp b = (Ast.BoolOp) e;</span>
+<span class="fc" id="L885">			Label end = new Label();</span>
+<span class="fc bfc" id="L886" title="All 2 branches covered.">			int op = b.op == Ast.BoolOperator.And ? Op.JUMP_IF_FALSE_KEEP : Op.JUMP_IF_TRUE_KEEP;</span>
+<span class="fc" id="L887">			List&lt;Ast.Expr&gt; values = b.values;</span>
+<span class="fc bfc" id="L888" title="All 2 branches covered.">			for (int i = 0; i &lt; values.size(); i++) {</span>
+<span class="fc" id="L889">				expression(values.get(i));</span>
+<span class="fc bfc" id="L890" title="All 2 branches covered.">				if (i &lt; values.size() - 1)</span>
+<span class="fc" id="L891">					emitJump(op, end);</span>
+			}
+<span class="fc" id="L893">			bind(end);</span>
+<span class="fc bfc" id="L894" title="All 2 branches covered.">		} else if (e instanceof Ast.BinOp) {</span>
+<span class="fc" id="L895">			Ast.BinOp b = (Ast.BinOp) e;</span>
+<span class="fc" id="L896">			expression(b.left);</span>
+<span class="fc" id="L897">			expression(b.right);</span>
+<span class="fc" id="L898">			at(e);</span>
+<span class="fc" id="L899">			emit(Op.BINARY_OP, binOp(b.op));</span>
+<span class="fc bfc" id="L900" title="All 2 branches covered.">		} else if (e instanceof Ast.UnaryOp) {</span>
+<span class="fc" id="L901">			unary((Ast.UnaryOp) e);</span>
+<span class="fc bfc" id="L902" title="All 2 branches covered.">		} else if (e instanceof Ast.IfExp) {</span>
+<span class="fc" id="L903">			Ast.IfExp i = (Ast.IfExp) e;</span>
+<span class="fc" id="L904">			Label orelse = new Label();</span>
+<span class="fc" id="L905">			Label end = new Label();</span>
+<span class="fc" id="L906">			expression(i.test);</span>
+<span class="fc" id="L907">			emitJump(Op.JUMP_IF_FALSE, orelse);</span>
+<span class="fc" id="L908">			expression(i.body);</span>
+<span class="fc" id="L909">			emitJump(Op.JUMP, end);</span>
+<span class="fc" id="L910">			bind(orelse);</span>
+<span class="fc" id="L911">			expression(i.orelse);</span>
+<span class="fc" id="L912">			bind(end);</span>
+<span class="fc bfc" id="L913" title="All 2 branches covered.">		} else if (e instanceof Ast.Compare) {</span>
+<span class="fc" id="L914">			compare((Ast.Compare) e);</span>
+<span class="fc bfc" id="L915" title="All 2 branches covered.">		} else if (e instanceof Ast.Call) {</span>
+<span class="fc" id="L916">			call((Ast.Call) e);</span>
+<span class="fc bfc" id="L917" title="All 2 branches covered.">		} else if (e instanceof Ast.Attribute) {</span>
+<span class="fc" id="L918">			Ast.Attribute a = (Ast.Attribute) e;</span>
+<span class="fc" id="L919">			expression(a.value);</span>
+<span class="fc" id="L920">			at(e);</span>
+<span class="fc" id="L921">			emit(Op.LOAD_ATTR, name(mangle(a.attr)));</span>
+<span class="fc bfc" id="L922" title="All 2 branches covered.">		} else if (e instanceof Ast.Subscript) {</span>
+<span class="fc" id="L923">			Ast.Subscript s = (Ast.Subscript) e;</span>
+<span class="fc" id="L924">			expression(s.value);</span>
+<span class="fc" id="L925">			expression(s.slice);</span>
+<span class="fc" id="L926">			at(e);</span>
+<span class="fc" id="L927">			emit(Op.GETITEM);</span>
+<span class="fc bfc" id="L928" title="All 2 branches covered.">		} else if (e instanceof Ast.Slice) {</span>
+<span class="fc" id="L929">			Ast.Slice s = (Ast.Slice) e;</span>
+<span class="fc" id="L930">			expressionOrNone(s.lower);</span>
+<span class="fc" id="L931">			expressionOrNone(s.upper);</span>
+<span class="fc" id="L932">			expressionOrNone(s.step);</span>
+<span class="fc" id="L933">			at(e);</span>
+<span class="fc" id="L934">			emit(Op.BUILD_SLICE);</span>
+<span class="fc bfc" id="L935" title="All 2 branches covered.">		} else if (e instanceof Ast.ListExpr) {</span>
+<span class="fc" id="L936">			List&lt;Ast.Expr&gt; elts = ((Ast.ListExpr) e).elts;</span>
+<span class="fc" id="L937">			displayElements(elts);</span>
+<span class="fc" id="L938">			at(e);</span>
+<span class="fc" id="L939">			emit(Op.BUILD_LIST, elts.size());</span>
+<span class="fc bfc" id="L940" title="All 2 branches covered.">		} else if (e instanceof Ast.TupleExpr) {</span>
+<span class="fc" id="L941">			List&lt;Ast.Expr&gt; elts = ((Ast.TupleExpr) e).elts;</span>
+<span class="fc" id="L942">			displayElements(elts);</span>
+<span class="fc" id="L943">			at(e);</span>
+<span class="fc" id="L944">			emit(Op.BUILD_TUPLE, elts.size());</span>
+<span class="fc bfc" id="L945" title="All 2 branches covered.">		} else if (e instanceof Ast.SetExpr) {</span>
+<span class="fc" id="L946">			List&lt;Ast.Expr&gt; elts = ((Ast.SetExpr) e).elts;</span>
+<span class="fc" id="L947">			displayElements(elts);</span>
+<span class="fc" id="L948">			at(e);</span>
+<span class="fc" id="L949">			emit(Op.BUILD_SET, elts.size());</span>
+<span class="fc bfc" id="L950" title="All 2 branches covered.">		} else if (e instanceof Ast.DictExpr) {</span>
+<span class="fc" id="L951">			Ast.DictExpr d = (Ast.DictExpr) e;</span>
+<span class="fc bfc" id="L952" title="All 2 branches covered.">			for (int i = 0; i &lt; d.keys.size(); i++) {</span>
+<span class="fc" id="L953">				expression(d.keys.get(i));</span>
+<span class="fc" id="L954">				expression(d.values.get(i));</span>
+			}
+<span class="fc" id="L956">			at(e);</span>
+<span class="fc" id="L957">			emit(Op.BUILD_DICT, d.keys.size());</span>
+<span class="fc bfc" id="L958" title="All 2 branches covered.">		} else if (e instanceof Ast.JoinedStr) {</span>
+<span class="fc" id="L959">			List&lt;Ast.Expr&gt; values = ((Ast.JoinedStr) e).values;</span>
+<span class="pc bpc" id="L960" title="1 of 2 branches missed.">			if (values.isEmpty()) {</span>
+<span class="nc" id="L961">				loadConst(&quot;&quot;);</span>
+<span class="nc" id="L962">				return;</span>
+			}
+<span class="fc bfc" id="L964" title="All 2 branches covered.">			for (Ast.Expr v : values)</span>
+<span class="fc" id="L965">				expression(v);</span>
+<span class="fc" id="L966">			at(e);</span>
+<span class="fc" id="L967">			emit(Op.BUILD_STRING, values.size());</span>
+<span class="fc bfc" id="L968" title="All 2 branches covered.">		} else if (e instanceof Ast.FormattedValue) {</span>
+<span class="fc" id="L969">			Ast.FormattedValue f = (Ast.FormattedValue) e;</span>
+<span class="fc" id="L970">			expression(f.value);</span>
+<span class="fc" id="L971">			int flags = 0;</span>
+<span class="fc" id="L972">			long conv = f.conversion;</span>
+<span class="fc bfc" id="L973" title="All 2 branches covered.">			if (conv == 's')</span>
+<span class="fc" id="L974">				flags = 1;</span>
+<span class="fc bfc" id="L975" title="All 2 branches covered.">			else if (conv == 'r')</span>
+<span class="fc" id="L976">				flags = 2;</span>
+<span class="fc bfc" id="L977" title="All 2 branches covered.">			else if (conv == 'a')</span>
+<span class="fc" id="L978">				flags = 3;</span>
+<span class="fc bfc" id="L979" title="All 2 branches covered.">			if (f.formatSpec != null) {</span>
+<span class="fc" id="L980">				expression(f.formatSpec);</span>
+<span class="fc" id="L981">				flags |= 4;</span>
+			}
+<span class="fc" id="L983">			at(e);</span>
+<span class="fc" id="L984">			emit(Op.FORMAT_VALUE, flags);</span>
+<span class="fc bfc" id="L985" title="All 2 branches covered.">		} else if (e instanceof Ast.Lambda) {</span>
+<span class="fc" id="L986">			Ast.Lambda l = (Ast.Lambda) e;</span>
+<span class="fc" id="L987">			makeFunction(l, l.scope, &quot;&lt;lambda&gt;&quot;, l.args);</span>
+<span class="pc bpc" id="L988" title="1 of 2 branches missed.">		} else if (e instanceof Ast.CompExpr) {</span>
+<span class="fc" id="L989">			Ast.CompExpr c = (Ast.CompExpr) e;</span>
+<span class="fc" id="L990">			makeFunction(c, c.scope, c.scopeName(), null);</span>
+<span class="fc" id="L991">			expression(c.generators.get(0).iter);</span>
+<span class="fc" id="L992">			at(e);</span>
+<span class="fc" id="L993">			emit(Op.GET_ITER);</span>
+<span class="fc" id="L994">			emit(Op.CALL, 1);</span>
+<span class="fc bfc" id="L995" title="All 2 branches covered.">			if (c instanceof Ast.GeneratorExp) {</span>
+				// not lazy: the elements are all computed now; the value is an iterator over them
+<span class="fc" id="L997">				at(e);</span>
+<span class="fc" id="L998">				emit(Op.GET_ITER);</span>
+			}
+<span class="pc bnc" id="L1000" title="All 2 branches missed.">		} else if (e instanceof Ast.Starred) {</span>
+<span class="nc" id="L1001">			throw error(&quot;can't use starred expression here&quot;, e);</span>
+		} else {
+<span class="nc" id="L1003">			throw error(&quot;unsupported expression &quot; + e.type(), e);</span>
+		}
+<span class="fc" id="L1005">	}</span>
+
+	/** The elements of a list or tuple display. */
+	private void displayElements(List&lt;Ast.Expr&gt; elts) {
+<span class="fc bfc" id="L1009" title="All 2 branches covered.">		for (Ast.Expr x : elts) {</span>
+<span class="pc bpc" id="L1010" title="1 of 2 branches missed.">			if (x instanceof Ast.Starred)</span>
+<span class="nc" id="L1011">				throw error(&quot;starred expressions in displays are not supported&quot;, x);</span>
+<span class="fc" id="L1012">			expression(x);</span>
+<span class="fc" id="L1013">		}</span>
+<span class="fc" id="L1014">	}</span>
+
+	private void unary(Ast.UnaryOp e) {
+<span class="fc" id="L1017">		Ast.UnaryOperator op = e.op;</span>
+<span class="fc" id="L1018">		Ast.Expr operand = e.operand;</span>
+<span class="fc bfc" id="L1019" title="All 4 branches covered.">		if (op == Ast.UnaryOperator.USub &amp;&amp; operand instanceof Ast.Constant) {</span>
+<span class="fc" id="L1020">			Object v = ((Ast.Constant) operand).value;</span>
+<span class="fc bfc" id="L1021" title="All 2 branches covered.">			if (v instanceof Long) {</span>
+<span class="fc" id="L1022">				long l = -((Long) v).longValue();</span>
+<span class="pc bpc" id="L1023" title="1 of 2 branches missed.">				if (PyInt.fits(l) == false)</span>
+<span class="nc" id="L1024">					throw new PySyntaxError(&quot;integer literal does not fit in 32 bits&quot;, line, 0);</span>
+<span class="fc" id="L1025">				loadConst(Integer.valueOf((int) l));</span>
+<span class="fc" id="L1026">				return;</span>
+			}
+<span class="fc bfc" id="L1028" title="All 2 branches covered.">			if (v instanceof Double) {</span>
+<span class="fc" id="L1029">				loadConst(Double.valueOf(-((Double) v).doubleValue()));</span>
+<span class="fc" id="L1030">				return;</span>
+			}
+		}
+<span class="fc" id="L1033">		expression(operand);</span>
+<span class="fc" id="L1034">		at(e);</span>
+<span class="fc bfc" id="L1035" title="All 4 branches covered.">		switch (op) {</span>
+		case USub:
+<span class="fc" id="L1037">			emit(Op.UNARY_NEG);</span>
+<span class="fc" id="L1038">			break;</span>
+		case UAdd:
+<span class="fc" id="L1040">			emit(Op.UNARY_POS);</span>
+<span class="fc" id="L1041">			break;</span>
+		case Invert:
+<span class="fc" id="L1043">			emit(Op.UNARY_INVERT);</span>
+<span class="fc" id="L1044">			break;</span>
+		default:
+<span class="fc" id="L1046">			emit(Op.UNARY_NOT);</span>
+			break;
+		}
+<span class="fc" id="L1049">	}</span>
+
+	private void compareOp(Ast.CmpOperator op) {
+<span class="fc bfc" id="L1052" title="All 10 branches covered.">		switch (op) {</span>
+		case Eq:
+<span class="fc" id="L1054">			emit(Op.COMPARE_OP, Op.CMP_EQ);</span>
+<span class="fc" id="L1055">			break;</span>
+		case NotEq:
+<span class="fc" id="L1057">			emit(Op.COMPARE_OP, Op.CMP_NE);</span>
+<span class="fc" id="L1058">			break;</span>
+		case Lt:
+<span class="fc" id="L1060">			emit(Op.COMPARE_OP, Op.CMP_LT);</span>
+<span class="fc" id="L1061">			break;</span>
+		case LtE:
+<span class="fc" id="L1063">			emit(Op.COMPARE_OP, Op.CMP_LE);</span>
+<span class="fc" id="L1064">			break;</span>
+		case Gt:
+<span class="fc" id="L1066">			emit(Op.COMPARE_OP, Op.CMP_GT);</span>
+<span class="fc" id="L1067">			break;</span>
+		case GtE:
+<span class="fc" id="L1069">			emit(Op.COMPARE_OP, Op.CMP_GE);</span>
+<span class="fc" id="L1070">			break;</span>
+		case Is:
+<span class="fc" id="L1072">			emit(Op.IS_OP, 0);</span>
+<span class="fc" id="L1073">			break;</span>
+		case IsNot:
+<span class="fc" id="L1075">			emit(Op.IS_OP, 1);</span>
+<span class="fc" id="L1076">			break;</span>
+		case In:
+<span class="fc" id="L1078">			emit(Op.CONTAINS_OP, 0);</span>
+<span class="fc" id="L1079">			break;</span>
+		default:
+<span class="fc" id="L1081">			emit(Op.CONTAINS_OP, 1);</span>
+			break;
+		}
+<span class="fc" id="L1084">	}</span>
+
+	private void compare(Ast.Compare e) {
+<span class="fc" id="L1087">		List&lt;Ast.CmpOperator&gt; ops = e.ops;</span>
+<span class="fc" id="L1088">		List&lt;Ast.Expr&gt; comps = e.comparators;</span>
+<span class="fc" id="L1089">		expression(e.left);</span>
+<span class="fc bfc" id="L1090" title="All 2 branches covered.">		if (ops.size() == 1) {</span>
+<span class="fc" id="L1091">			expression(comps.get(0));</span>
+<span class="fc" id="L1092">			at(e);</span>
+<span class="fc" id="L1093">			compareOp(ops.get(0));</span>
+<span class="fc" id="L1094">			return;</span>
+		}
+<span class="fc" id="L1096">		Label cleanup = new Label();</span>
+<span class="fc" id="L1097">		Label end = new Label();</span>
+<span class="fc bfc" id="L1098" title="All 2 branches covered.">		for (int i = 0; i &lt; ops.size(); i++) {</span>
+<span class="fc" id="L1099">			expression(comps.get(i));</span>
+<span class="fc" id="L1100">			at(e);</span>
+<span class="fc bfc" id="L1101" title="All 2 branches covered.">			if (i &lt; ops.size() - 1) {</span>
+<span class="fc" id="L1102">				emit(Op.DUP);</span>
+<span class="fc" id="L1103">				emit(Op.ROT3);</span>
+<span class="fc" id="L1104">				compareOp(ops.get(i));</span>
+<span class="fc" id="L1105">				emitJump(Op.JUMP_IF_FALSE_KEEP, cleanup);</span>
+			} else {
+<span class="fc" id="L1107">				compareOp(ops.get(i));</span>
+			}
+		}
+<span class="fc" id="L1110">		emitJump(Op.JUMP, end);</span>
+<span class="fc" id="L1111">		bind(cleanup);</span>
+<span class="fc" id="L1112">		emit(Op.ROT2);</span>
+<span class="fc" id="L1113">		emit(Op.POP);</span>
+<span class="fc" id="L1114">		bind(end);</span>
+<span class="fc" id="L1115">	}</span>
+
+	private void call(Ast.Call e) {
+<span class="fc" id="L1118">		List&lt;Ast.Expr&gt; args = e.args;</span>
+<span class="fc" id="L1119">		List&lt;Ast.Keyword&gt; kws = e.keywords;</span>
+<span class="fc" id="L1120">		boolean ex = false;</span>
+<span class="fc bfc" id="L1121" title="All 2 branches covered.">		for (Ast.Expr a : args)</span>
+<span class="fc bfc" id="L1122" title="All 2 branches covered.">			if (a instanceof Ast.Starred)</span>
+<span class="fc" id="L1123">				ex = true;</span>
+<span class="fc bfc" id="L1124" title="All 2 branches covered.">		for (Ast.Keyword k : kws)</span>
+<span class="fc bfc" id="L1125" title="All 2 branches covered.">			if (k.arg == null)</span>
+<span class="fc" id="L1126">				ex = true;</span>
+<span class="fc" id="L1127">		expression(e.func);</span>
+<span class="fc bfc" id="L1128" title="All 2 branches covered.">		if (!ex) {</span>
+<span class="fc bfc" id="L1129" title="All 2 branches covered.">			for (Ast.Expr a : args)</span>
+<span class="fc" id="L1130">				expression(a);</span>
+<span class="fc bfc" id="L1131" title="All 2 branches covered.">			if (kws.isEmpty()) {</span>
+<span class="fc" id="L1132">				at(e);</span>
+<span class="fc" id="L1133">				emit(Op.CALL, args.size());</span>
+<span class="fc" id="L1134">				return;</span>
+			}
+<span class="fc" id="L1136">			Object[] names = new Object[kws.size()];</span>
+<span class="fc bfc" id="L1137" title="All 2 branches covered.">			for (int i = 0; i &lt; kws.size(); i++) {</span>
+<span class="fc bfc" id="L1138" title="All 2 branches covered.">				for (int j = 0; j &lt; i; j++)</span>
+<span class="pc bpc" id="L1139" title="1 of 2 branches missed.">					if (names[j].equals(kws.get(i).arg))</span>
+<span class="nc" id="L1140">						throw error(&quot;keyword argument repeated: &quot; + names[j], kws.get(i));</span>
+<span class="fc" id="L1141">				names[i] = kws.get(i).arg;</span>
+<span class="fc" id="L1142">				expression(kws.get(i).value);</span>
+			}
+<span class="fc" id="L1144">			loadConst(new PyTuple(names));</span>
+<span class="fc" id="L1145">			at(e);</span>
+<span class="fc" id="L1146">			emit(Op.CALL_KW, args.size() + kws.size());</span>
+<span class="fc" id="L1147">			return;</span>
+		}
+<span class="fc" id="L1149">		emit(Op.BUILD_LIST, 0);</span>
+<span class="fc bfc" id="L1150" title="All 2 branches covered.">		for (Ast.Expr a : args) {</span>
+<span class="fc bfc" id="L1151" title="All 2 branches covered.">			if (a instanceof Ast.Starred) {</span>
+<span class="fc" id="L1152">				expression(((Ast.Starred) a).value);</span>
+<span class="fc" id="L1153">				emit(Op.LIST_EXTEND, 1);</span>
+			} else {
+<span class="fc" id="L1155">				expression(a);</span>
+<span class="fc" id="L1156">				emit(Op.LIST_APPEND, 1);</span>
+			}
+<span class="fc" id="L1158">		}</span>
+<span class="fc bfc" id="L1159" title="All 2 branches covered.">		boolean dict = !kws.isEmpty();</span>
+<span class="fc bfc" id="L1160" title="All 2 branches covered.">		if (dict) {</span>
+<span class="fc" id="L1161">			emit(Op.BUILD_DICT, 0);</span>
+<span class="fc bfc" id="L1162" title="All 2 branches covered.">			for (Ast.Keyword k : kws) {</span>
+<span class="fc bfc" id="L1163" title="All 2 branches covered.">				if (k.arg == null) {</span>
+<span class="fc" id="L1164">					expression(k.value);</span>
+<span class="fc" id="L1165">					emit(Op.DICT_MERGE_KW, 1);</span>
+				} else {
+<span class="fc" id="L1167">					loadConst(k.arg);</span>
+<span class="fc" id="L1168">					expression(k.value);</span>
+<span class="fc" id="L1169">					emit(Op.DICT_ADD_KW, 1);</span>
+				}
+<span class="fc" id="L1171">			}</span>
+		}
+<span class="fc" id="L1173">		at(e);</span>
+<span class="fc bfc" id="L1174" title="All 2 branches covered.">		emit(Op.CALL_EX, dict ? 1 : 0);</span>
+<span class="fc" id="L1175">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -70,192 +70,228 @@ public class YamlLine {
 <span class="fc" id="L70">			trimmedLine = trimmedLine.substring(2);</span>
 		}
 
-<span class="fc" id="L73">		final int colonIndex = findColonSeparator(trimmedLine);</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (colonIndex == -1)</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">			if (listItem)</span>
-<span class="fc" id="L76">				return new YamlLine(YamlLineType.PLAIN_ELEMENT_LIST, count, null, unquote(trimmedLine), null, listItem);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (trimmedLine.startsWith(&quot;{&quot;))</span>
+<span class="nc" id="L74">			throw new YamlSyntaxException(&quot;flow mappings {...} are not supported&quot;);</span>
+
+<span class="fc" id="L76">		final int colonIndex = findColonSeparator(trimmedLine);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (colonIndex == -1)</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">			if (listItem)</span>
+<span class="fc" id="L79">				return new YamlLine(YamlLineType.PLAIN_ELEMENT_LIST, count, null, unquote(trimmedLine), null, listItem);</span>
 			else
-<span class="fc" id="L78">				return new YamlLine(YamlLineType.NO_KEY_ONLY_TEXT, count, null, unquote(trimmedLine), null, false);</span>
+<span class="fc" id="L81">				return new YamlLine(YamlLineType.NO_KEY_ONLY_TEXT, count, null, unquote(trimmedLine), null, false);</span>
 
-<span class="fc" id="L80">		final String rawKey = trimmedLine.substring(0, colonIndex).trim();</span>
-<span class="fc" id="L81">		final String rawValue = trimmedLine.substring(colonIndex + 1).trim();</span>
+<span class="fc" id="L83">		final String rawKey = trimmedLine.substring(0, colonIndex).trim();</span>
+<span class="fc" id="L84">		final String rawValue = trimmedLine.substring(colonIndex + 1).trim();</span>
 
-<span class="fc" id="L83">		YamlLineType type = YamlLineType.KEY_AND_VALUE;</span>
+<span class="fc" id="L86">		YamlLineType type = YamlLineType.KEY_AND_VALUE;</span>
 
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (rawValue.isEmpty())</span>
-<span class="fc" id="L86">			type = YamlLineType.KEY_ONLY;</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		else if (rawValue.equals(&quot;|&quot;))</span>
-<span class="fc" id="L88">			type = YamlLineType.KEY_AND_BLOCK_STYLE;</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		else if (rawValue.equals(&quot;&gt;&quot;))</span>
-<span class="nc" id="L90">			type = YamlLineType.KEY_AND_FOLDED_STYLE;</span>
-<span class="pc bpc" id="L91" title="1 of 4 branches missed.">		else if (rawValue.startsWith(&quot;[&quot;) &amp;&amp; rawValue.endsWith(&quot;]&quot;))</span>
-<span class="fc" id="L92">			return new YamlLine(YamlLineType.KEY_AND_FLOW_SEQUENCE, count, unquote(rawKey), null,</span>
-<span class="fc" id="L93">					toList(rawValue.substring(1, rawValue.length() - 1)), listItem);</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (rawValue.isEmpty())</span>
+<span class="fc" id="L89">			type = YamlLineType.KEY_ONLY;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		else if (rawValue.equals(&quot;|&quot;))</span>
+<span class="fc" id="L91">			type = YamlLineType.KEY_AND_BLOCK_STYLE;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		else if (rawValue.equals(&quot;&gt;&quot;))</span>
+<span class="fc" id="L93">			type = YamlLineType.KEY_AND_FOLDED_STYLE;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		else if (rawValue.startsWith(&quot;{&quot;))</span>
+<span class="fc" id="L95">			throw new YamlSyntaxException(&quot;flow mappings {...} are not supported&quot;);</span>
+<span class="pc bpc" id="L96" title="1 of 4 branches missed.">		else if (rawValue.startsWith(&quot;[&quot;) &amp;&amp; rawValue.endsWith(&quot;]&quot;))</span>
+<span class="fc" id="L97">			return new YamlLine(YamlLineType.KEY_AND_FLOW_SEQUENCE, count, unquote(rawKey), null,</span>
+<span class="fc" id="L98">					toList(rawValue.substring(1, rawValue.length() - 1)), listItem);</span>
 
-<span class="fc" id="L95">		return new YamlLine(type, count, unquote(rawKey), unquote(rawValue), null, listItem);</span>
+<span class="fc" id="L100">		return new YamlLine(type, count, unquote(rawKey), unquote(rawValue), null, listItem);</span>
 
 	}
 
 	// Find the colon that separates key from value,
 	// skipping colons inside quoted strings.
 	private static int findColonSeparator(String line) {
-<span class="fc" id="L102">		char inQuote = '\0';</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">		for (int i = 0; i &lt; line.length(); i++) {</span>
-<span class="fc" id="L104">			final char c = line.charAt(i);</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">			if (inQuote != '\0') {</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">				if (c == inQuote)</span>
-<span class="fc" id="L107">					inQuote = '\0';</span>
-<span class="pc bpc" id="L108" title="1 of 4 branches missed.">			} else if (c == '&quot;' || c == '\'') {</span>
-<span class="fc" id="L109">				inQuote = c;</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">			} else if (c == ':') {</span>
-<span class="fc" id="L111">				return i;</span>
+<span class="fc" id="L107">		char inQuote = '\0';</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		for (int i = 0; i &lt; line.length(); i++) {</span>
+<span class="fc" id="L109">			final char c = line.charAt(i);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			if (inQuote != '\0') {</span>
+<span class="pc bpc" id="L111" title="3 of 4 branches missed.">				if (c == '\\' &amp;&amp; inQuote == '&quot;')</span>
+<span class="nc" id="L112">					i++;</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">				else if (c == inQuote)</span>
+<span class="fc" id="L114">					inQuote = '\0';</span>
+<span class="pc bpc" id="L115" title="1 of 4 branches missed.">			} else if (c == '&quot;' || c == '\'') {</span>
+<span class="fc" id="L116">				inQuote = c;</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">			} else if (c == ':') {</span>
+<span class="fc" id="L118">				return i;</span>
 			}
 		}
-<span class="fc" id="L114">		return -1;</span>
+<span class="fc" id="L121">		return -1;</span>
 	}
 
 	private static List&lt;String&gt; toList(String rawValue) {
-<span class="fc" id="L118">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L125">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L120">		final StringBuilder current = new StringBuilder();</span>
+<span class="fc" id="L127">		final StringBuilder current = new StringBuilder();</span>
 
 		// Zero if we are not in a quoted state or
 		// represents the quote character if we are in a quoted string
-<span class="fc" id="L124">		char inQuotedString = '\0';</span>
+<span class="fc" id="L131">		char inQuotedString = '\0';</span>
 
 		// Indicates that the current field started with a quote
-<span class="fc" id="L127">		boolean fieldStartWithQuote = false;</span>
+<span class="fc" id="L134">		boolean fieldStartWithQuote = false;</span>
 
-<span class="fc bfc" id="L129" title="All 2 branches covered.">		for (int i = 0; i &lt; rawValue.length(); i++) {</span>
-<span class="fc" id="L130">			final char c = rawValue.charAt(i);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (int i = 0; i &lt; rawValue.length(); i++) {</span>
+<span class="fc" id="L137">			final char c = rawValue.charAt(i);</span>
 
-<span class="fc bfc" id="L132" title="All 2 branches covered.">			if (inQuotedString != '\0') {</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">			if (inQuotedString != '\0') {</span>
 				// Processing a quoted string
-<span class="fc bfc" id="L134" title="All 2 branches covered.">				if (c == '\\') {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">				if (c == '\\') {</span>
 					// Handle escaping: append the next character as is if it exists
-<span class="pc bpc" id="L136" title="1 of 2 branches missed.">					if (i + 1 &lt; rawValue.length()) {</span>
-<span class="fc" id="L137">						current.append(rawValue.charAt(i + 1));</span>
-<span class="fc" id="L138">						i++; // Skip the escaped character</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">					if (i + 1 &lt; rawValue.length()) {</span>
+<span class="fc" id="L144">						current.append(rawValue.charAt(i + 1));</span>
+<span class="fc" id="L145">						i++; // Skip the escaped character</span>
 					}
-<span class="fc bfc" id="L140" title="All 2 branches covered.">				} else if (c == inQuotedString) {</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">				} else if (c == inQuotedString) {</span>
 					// End of the quoted string
-<span class="fc" id="L142">					inQuotedString = '\0';</span>
+<span class="fc" id="L149">					inQuotedString = '\0';</span>
 				} else {
-<span class="fc" id="L144">					current.append(c);</span>
+<span class="fc" id="L151">					current.append(c);</span>
 				}
 			} else {
 				// We are not in a quoted string.
 				// If the field contains only spaces and we encounter a quote,
 				// we consider that the field actually starts with a quote.
-<span class="fc bfc" id="L150" title="All 8 branches covered.">				if (fieldStartWithQuote == false &amp;&amp; current.toString().trim().isEmpty() &amp;&amp; (c == '\'' || c == '&quot;')) {</span>
-<span class="fc" id="L151">					inQuotedString = c;</span>
-<span class="fc" id="L152">					fieldStartWithQuote = true;</span>
-<span class="fc" id="L153">					current.setLength(0); // Clear any preliminary spaces</span>
-<span class="fc bfc" id="L154" title="All 2 branches covered.">				} else if (c == ',') {</span>
+<span class="fc bfc" id="L157" title="All 8 branches covered.">				if (fieldStartWithQuote == false &amp;&amp; current.toString().trim().isEmpty() &amp;&amp; (c == '\'' || c == '&quot;')) {</span>
+<span class="fc" id="L158">					inQuotedString = c;</span>
+<span class="fc" id="L159">					fieldStartWithQuote = true;</span>
+<span class="fc" id="L160">					current.setLength(0); // Clear any preliminary spaces</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">				} else if (c == ',') {</span>
 					// The field separator is encountered.
 					// For a quoted field, keep the content as is,
 					// otherwise apply trim.
-<span class="fc bfc" id="L158" title="All 2 branches covered.">					result.add(fieldStartWithQuote ? current.toString() : current.toString().trim());</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">					result.add(fieldStartWithQuote ? current.toString() : current.toString().trim());</span>
 					// Reset for the next field
-<span class="fc" id="L160">					current.setLength(0);</span>
-<span class="fc" id="L161">					fieldStartWithQuote = false;</span>
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">				} else if (c == '\\') {</span>
+<span class="fc" id="L167">					current.setLength(0);</span>
+<span class="fc" id="L168">					fieldStartWithQuote = false;</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">				} else if (c == '\\') {</span>
 					// Handle escaping outside of quotes
-<span class="nc bnc" id="L164" title="All 2 branches missed.">					if (i + 1 &lt; rawValue.length()) {</span>
-<span class="nc" id="L165">						current.append(rawValue.charAt(i + 1));</span>
-<span class="nc" id="L166">						i++; // Skip the escaped character</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">					if (i + 1 &lt; rawValue.length()) {</span>
+<span class="nc" id="L172">						current.append(rawValue.charAt(i + 1));</span>
+<span class="nc" id="L173">						i++; // Skip the escaped character</span>
 					}
 				} else {
-<span class="fc" id="L169">					current.append(c);</span>
+<span class="fc" id="L176">					current.append(c);</span>
 				}
 			}
 		}
 		// Add the last field (even if it's empty)
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		result.add(fieldStartWithQuote ? current.toString() : current.toString().trim());</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">		result.add(fieldStartWithQuote ? current.toString() : current.toString().trim());</span>
 
-<span class="fc" id="L176">		return result;</span>
+<span class="fc" id="L183">		return result;</span>
 	}
 
-<span class="fc" id="L179">	private YamlLine(YamlLineType type, int indent, String key, String value, List&lt;String&gt; values, boolean listItem) {</span>
-<span class="fc" id="L180">		this.type = type;</span>
-<span class="fc" id="L181">		this.indent = indent;</span>
-<span class="fc" id="L182">		this.key = key;</span>
-<span class="fc" id="L183">		this.value = value;</span>
-<span class="fc" id="L184">		this.values = values;</span>
-<span class="fc" id="L185">		this.listItem = listItem;</span>
-<span class="fc" id="L186">	}</span>
+<span class="fc" id="L186">	private YamlLine(YamlLineType type, int indent, String key, String value, List&lt;String&gt; values, boolean listItem) {</span>
+<span class="fc" id="L187">		this.type = type;</span>
+<span class="fc" id="L188">		this.indent = indent;</span>
+<span class="fc" id="L189">		this.key = key;</span>
+<span class="fc" id="L190">		this.value = value;</span>
+<span class="fc" id="L191">		this.values = values;</span>
+<span class="fc" id="L192">		this.listItem = listItem;</span>
+<span class="fc" id="L193">	}</span>
 
+	/**
+	 * Removes the quotes of a quoted scalar. In a single-quoted scalar, '' is a
+	 * quote; in a double-quoted one, a backslash escapes (\&quot; \\ \n \t \/).
+	 */
 	private static String unquote(String str) {
-<span class="pc bpc" id="L189" title="1 of 4 branches missed.">		if (str == null || str.length() &lt; 2)</span>
-<span class="fc" id="L190">			return str;</span>
+<span class="pc bpc" id="L200" title="1 of 4 branches missed.">		if (str == null || str.length() &lt; 2)</span>
+<span class="fc" id="L201">			return str;</span>
 
-<span class="fc" id="L192">		final char first = str.charAt(0);</span>
-<span class="fc" id="L193">		final char last = str.charAt(str.length() - 1);</span>
-<span class="pc bpc" id="L194" title="2 of 8 branches missed.">		if ((first == '&quot;' &amp;&amp; last == '&quot;') || (first == '\'' &amp;&amp; last == '\''))</span>
-<span class="fc" id="L195">			return str.substring(1, str.length() - 1);</span>
+<span class="fc" id="L203">		final char first = str.charAt(0);</span>
+<span class="fc" id="L204">		final char last = str.charAt(str.length() - 1);</span>
+<span class="pc bpc" id="L205" title="1 of 4 branches missed.">		if (first == '\'' &amp;&amp; last == '\'')</span>
+<span class="fc" id="L206">			return str.substring(1, str.length() - 1).replace(&quot;''&quot;, &quot;'&quot;);</span>
+<span class="pc bpc" id="L207" title="1 of 4 branches missed.">		if (first == '&quot;' &amp;&amp; last == '&quot;')</span>
+<span class="fc" id="L208">			return unescapeDoubleQuoted(str.substring(1, str.length() - 1));</span>
 
-<span class="fc" id="L197">		return str;</span>
+<span class="fc" id="L210">		return str;</span>
+	}
+
+	private static String unescapeDoubleQuoted(String s) {
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		if (s.indexOf('\\') == -1)</span>
+<span class="fc" id="L215">			return s;</span>
+<span class="fc" id="L216">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L218">			final char c = s.charAt(i);</span>
+<span class="pc bpc" id="L219" title="1 of 4 branches missed.">			if (c != '\\' || i + 1 == s.length()) {</span>
+<span class="fc" id="L220">				result.append(c);</span>
+<span class="fc" id="L221">				continue;</span>
+			}
+<span class="fc" id="L223">			final char next = s.charAt(++i);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">			if (next == 'n')</span>
+<span class="fc" id="L225">				result.append('\n');</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">			else if (next == 't')</span>
+<span class="nc" id="L227">				result.append('\t');</span>
+<span class="pc bpc" id="L228" title="5 of 6 branches missed.">			else if (next == '&quot;' || next == '\\' || next == '/')</span>
+<span class="fc" id="L229">				result.append(next);</span>
+			else
+<span class="nc" id="L231">				result.append(c).append(next);</span>
+		}
+<span class="fc" id="L233">		return result.toString();</span>
 	}
 
 	public int getIndent() {
-<span class="fc" id="L201">		return indent;</span>
+<span class="fc" id="L237">		return indent;</span>
 	}
 
 	@DuplicateCode(reference = &quot;YamlLines&quot;)
 	private static String removeYamlComment(String s) {
-<span class="pc bpc" id="L206" title="1 of 4 branches missed.">		if (s == null || s.isEmpty())</span>
-<span class="fc" id="L207">			return s;</span>
+<span class="pc bpc" id="L242" title="1 of 4 branches missed.">		if (s == null || s.isEmpty())</span>
+<span class="fc" id="L243">			return s;</span>
 
-<span class="fc" id="L209">		char inQuoteChar = '\0';</span>
+<span class="fc" id="L245">		char inQuoteChar = '\0';</span>
 
-<span class="fc bfc" id="L211" title="All 2 branches covered.">		if (s.charAt(0) == '#')</span>
-<span class="fc" id="L212">			return &quot;&quot;;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">		if (s.charAt(0) == '#')</span>
+<span class="fc" id="L248">			return &quot;&quot;;</span>
 
-<span class="fc bfc" id="L214" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="fc" id="L215">			final char c = s.charAt(i);</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L251">			final char c = s.charAt(i);</span>
 
-<span class="fc bfc" id="L217" title="All 4 branches covered.">			if (c == '\'' || c == '&quot;')</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">				if (inQuoteChar == '\0')</span>
-<span class="fc" id="L219">					inQuoteChar = c;</span>
-<span class="fc bfc" id="L220" title="All 2 branches covered.">				else if (c == inQuoteChar)</span>
-<span class="fc" id="L221">					inQuoteChar = '\0';</span>
+<span class="fc bfc" id="L253" title="All 4 branches covered.">			if (c == '\'' || c == '&quot;')</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">				if (inQuoteChar == '\0')</span>
+<span class="fc" id="L255">					inQuoteChar = c;</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">				else if (c == inQuoteChar)</span>
+<span class="fc" id="L257">					inQuoteChar = '\0';</span>
 
-<span class="fc bfc" id="L223" title="All 8 branches covered.">			if (inQuoteChar == '\0' &amp;&amp; i &lt; s.length() - 1 &amp;&amp; c == ' ' &amp;&amp; s.charAt(i + 1) == '#')</span>
-<span class="fc" id="L224">				return s.substring(0, i);</span>
+<span class="fc bfc" id="L259" title="All 8 branches covered.">			if (inQuoteChar == '\0' &amp;&amp; i &lt; s.length() - 1 &amp;&amp; c == ' ' &amp;&amp; s.charAt(i + 1) == '#')</span>
+<span class="fc" id="L260">				return s.substring(0, i);</span>
 
 		}
 
-<span class="fc" id="L228">		return s;</span>
+<span class="fc" id="L264">		return s;</span>
 	}
 
 	public String getKey() {
-<span class="fc" id="L232">		return key;</span>
+<span class="fc" id="L268">		return key;</span>
 	}
 
 	public String getValue() {
-<span class="pc bpc" id="L236" title="2 of 8 branches missed.">		if (type == YamlLineType.KEY_AND_VALUE || type == YamlLineType.KEY_AND_FLOW_SEQUENCE</span>
+<span class="pc bpc" id="L272" title="2 of 8 branches missed.">		if (type == YamlLineType.KEY_AND_VALUE || type == YamlLineType.KEY_AND_FLOW_SEQUENCE</span>
 				|| type == YamlLineType.PLAIN_ELEMENT_LIST || type == YamlLineType.NO_KEY_ONLY_TEXT)
-<span class="fc" id="L238">			return value;</span>
-<span class="nc" id="L239">		throw new IllegalStateException(type.name());</span>
+<span class="fc" id="L274">			return value;</span>
+<span class="nc" id="L275">		throw new IllegalStateException(type.name());</span>
 	}
 
 	public boolean isListItem() {
-<span class="fc" id="L243">		return listItem;</span>
+<span class="fc" id="L279">		return listItem;</span>
 	}
 
 	public YamlLineType getType() {
-<span class="fc" id="L247">		return type;</span>
+<span class="fc" id="L283">		return type;</span>
 	}
 
 	public List&lt;String&gt; getValues() {
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (type == YamlLineType.KEY_AND_FLOW_SEQUENCE)</span>
-<span class="fc" id="L252">			return MyCollections.unmodifiableList(values);</span>
-<span class="nc" id="L253">		throw new IllegalStateException(type.name());</span>
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">		if (type == YamlLineType.KEY_AND_FLOW_SEQUENCE)</span>
+<span class="fc" id="L288">			return MyCollections.unmodifiableList(values);</span>
+<span class="nc" id="L289">		throw new IllegalStateException(type.name());</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L258">		return &quot;YamlLine(&quot; + type + &quot; indent=&quot; + indent + &quot;, key=&quot; + key + &quot;, value=&quot; + value + &quot;)&quot;;</span>
+<span class="nc" id="L294">		return &quot;YamlLine(&quot; + type + &quot; indent=&quot; + indent + &quot;, key=&quot; + key + &quot;, value=&quot; + value + &quot;)&quot;;</span>
 	}
 
 }

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MathLib.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">MathLib.java</span></div><h1>MathLib.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+/** The math module. */
+final class MathLib {
+	private MathLib() {
+	}
+
+	private interface D1 {
+		double f(double x);
+	}
+
+	private interface D2 {
+		double f(double x, double y);
+	}
+
+	private static void put(PyModule m, String name, Builtin.Fn fn) {
+<span class="fc" id="L17">		m.members.put(name, new Builtin(name, fn));</span>
+<span class="fc" id="L18">	}</span>
+
+	private static double arg(Object[] a, int i, String name) {
+<span class="fc" id="L21">		return PyOps.asDouble(a[i]);</span>
+	}
+
+	private static void one(PyModule m, final String name, final D1 f, final boolean checkDomain) {
+<span class="fc" id="L25">		put(m, name, (in, a) -&gt; {</span>
+<span class="fc" id="L26">			Fmt0.count(name, a, 1);</span>
+<span class="fc" id="L27">			double x = arg(a, 0, name);</span>
+<span class="fc" id="L28">			double r = f.f(x);</span>
+<span class="pc bpc" id="L29" title="1 of 6 branches missed.">			if (checkDomain &amp;&amp; r != r &amp;&amp; x == x)</span>
+<span class="fc" id="L30">				throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="pc bpc" id="L31" title="3 of 4 branches missed.">			if (Double.isInfinite(r) &amp;&amp; !Double.isInfinite(x))</span>
+<span class="nc" id="L32">				throw PyOps.err(Types.OVERFLOW, &quot;math range error&quot;);</span>
+<span class="fc" id="L33">			return Double.valueOf(r);</span>
+		});
+<span class="fc" id="L35">	}</span>
+
+	private static void two(PyModule m, final String name, final D2 f) {
+<span class="fc" id="L38">		put(m, name, (in, a) -&gt; {</span>
+<span class="fc" id="L39">			Fmt0.count(name, a, 2);</span>
+<span class="fc" id="L40">			double x = arg(a, 0, name), y = arg(a, 1, name);</span>
+<span class="fc" id="L41">			double r = f.f(x, y);</span>
+<span class="pc bpc" id="L42" title="5 of 6 branches missed.">			if (r != r &amp;&amp; x == x &amp;&amp; y == y)</span>
+<span class="nc" id="L43">				throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="fc" id="L44">			return Double.valueOf(r);</span>
+		});
+<span class="fc" id="L46">	}</span>
+
+	private static boolean isClose(double a, double b, double rel, double abs) {
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (a == b)</span>
+<span class="nc" id="L50">			return true;</span>
+<span class="pc bpc" id="L51" title="2 of 4 branches missed.">		if (Double.isInfinite(a) || Double.isInfinite(b))</span>
+<span class="nc" id="L52">			return false;</span>
+<span class="fc" id="L53">		double diff = Math.abs(b - a);</span>
+<span class="pc bpc" id="L54" title="5 of 6 branches missed.">		return diff &lt;= Math.abs(rel * b) || diff &lt;= Math.abs(rel * a) || diff &lt;= abs;</span>
+	}
+
+	static PyModule create() {
+<span class="fc" id="L58">		PyModule m = new PyModule(&quot;math&quot;);</span>
+<span class="fc" id="L59">		m.members.put(&quot;pi&quot;, Double.valueOf(Math.PI));</span>
+<span class="fc" id="L60">		m.members.put(&quot;e&quot;, Double.valueOf(Math.E));</span>
+<span class="fc" id="L61">		m.members.put(&quot;inf&quot;, Double.valueOf(Double.POSITIVE_INFINITY));</span>
+<span class="fc" id="L62">		m.members.put(&quot;nan&quot;, Double.valueOf(Double.NaN));</span>
+<span class="fc" id="L63">		m.members.put(&quot;tau&quot;, Double.valueOf(2 * Math.PI));</span>
+<span class="fc" id="L64">		one(m, &quot;sinh&quot;, Math::sinh, false);</span>
+<span class="fc" id="L65">		one(m, &quot;cosh&quot;, Math::cosh, false);</span>
+<span class="fc" id="L66">		one(m, &quot;tanh&quot;, Math::tanh, false);</span>
+<span class="fc" id="L67">		one(m, &quot;expm1&quot;, Math::expm1, false);</span>
+<span class="fc" id="L68">		one(m, &quot;degrees&quot;, Math::toDegrees, false);</span>
+<span class="fc" id="L69">		one(m, &quot;radians&quot;, Math::toRadians, false);</span>
+<span class="fc" id="L70">		put(m, &quot;log1p&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L71">			Fmt0.count(&quot;log1p&quot;, a, 1);</span>
+<span class="fc" id="L72">			double x = arg(a, 0, &quot;log1p&quot;);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">			if (x &lt;= -1)</span>
+<span class="nc" id="L74">				throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="fc" id="L75">			return Double.valueOf(Math.log1p(x));</span>
+		});
+<span class="fc" id="L77">		put(m, &quot;log2&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L78">			Fmt0.count(&quot;log2&quot;, a, 1);</span>
+<span class="fc" id="L79">			double x = arg(a, 0, &quot;log2&quot;);</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">			if (x &lt;= 0)</span>
+<span class="nc" id="L81">				throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="fc" id="L82">			int e = Math.getExponent(x);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			if (x == Math.scalb(1.0, e))</span>
+<span class="fc" id="L84">				return Double.valueOf(e);</span>
+<span class="nc" id="L85">			return Double.valueOf(Math.log(x) / Math.log(2));</span>
+		});
+<span class="fc" id="L87">		two(m, &quot;hypot&quot;, Math::hypot);</span>
+<span class="fc" id="L88">		two(m, &quot;copysign&quot;, Math::copySign);</span>
+<span class="fc" id="L89">		put(m, &quot;isfinite&quot;, (in, a) -&gt; {</span>
+<span class="nc" id="L90">			Fmt0.count(&quot;isfinite&quot;, a, 1);</span>
+<span class="nc" id="L91">			double x = arg(a, 0, &quot;isfinite&quot;);</span>
+<span class="nc bnc" id="L92" title="All 4 branches missed.">			return Boolean.valueOf(!Double.isNaN(x) &amp;&amp; !Double.isInfinite(x));</span>
+		});
+<span class="fc" id="L94">		put(m, &quot;gcd&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L95">			long g = 0;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			for (Object o : a) {</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">				if (!PyOps.isIntLike(o))</span>
+<span class="nc" id="L98">					throw PyOps.err(Types.TYPE_ERROR, &quot;'&quot; + PyOps.typeName(o) + &quot;' object cannot be interpreted as an integer&quot;);</span>
+<span class="fc" id="L99">				long x = Math.abs((long) PyOps.asInt(o));</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">				while (x != 0) {</span>
+<span class="fc" id="L101">					long t = g % x;</span>
+<span class="fc" id="L102">					g = x;</span>
+<span class="fc" id="L103">					x = t;</span>
+<span class="fc" id="L104">				}</span>
+			}
+<span class="fc" id="L106">			return PyOps.binary(Op.BIN_ADD, Integer.valueOf(0), PyInt.box(g));</span>
+		});
+<span class="fc" id="L108">		put(m, &quot;factorial&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L109">			Fmt0.count(&quot;factorial&quot;, a, 1);</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">			if (!PyOps.isIntLike(a[0]))</span>
+<span class="nc" id="L111">				throw PyOps.err(Types.TYPE_ERROR, &quot;'&quot; + PyOps.typeName(a[0]) + &quot;' object cannot be interpreted as an integer&quot;);</span>
+<span class="fc" id="L112">			int n = PyOps.asInt(a[0]);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (n &lt; 0)</span>
+<span class="nc" id="L114">				throw PyOps.err(Types.VALUE_ERROR, &quot;factorial() not defined for negative values&quot;);</span>
+<span class="fc" id="L115">			long r = 1;</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">			for (int i = 2; i &lt;= n; i++) {</span>
+<span class="fc" id="L117">				r *= i;</span>
+<span class="fc" id="L118">				PyInt.check(r);</span>
+			}
+<span class="fc" id="L120">			return PyInt.box(r);</span>
+		});
+<span class="fc" id="L122">		put(m, &quot;fsum&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L123">			Fmt0.count(&quot;fsum&quot;, a, 1);</span>
+<span class="fc" id="L124">			java.math.BigDecimal sum = java.math.BigDecimal.ZERO;</span>
+<span class="fc" id="L125">			PyIter it = PyOps.getIter(a[0]);</span>
+<span class="fc" id="L126">			double special = 0;</span>
+<span class="fc" id="L127">			boolean hasSpecial = false;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">			for (Object x = it.next(); x != null; x = it.next()) {</span>
+<span class="fc" id="L129">				double d = PyOps.asDouble(x);</span>
+<span class="pc bpc" id="L130" title="2 of 4 branches missed.">				if (Double.isNaN(d) || Double.isInfinite(d)) {</span>
+<span class="nc" id="L131">					special += d;</span>
+<span class="nc" id="L132">					hasSpecial = true;</span>
+				} else {
+<span class="fc" id="L134">					sum = sum.add(new java.math.BigDecimal(d));</span>
+				}
+			}
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			return Double.valueOf(hasSpecial ? special : sum.doubleValue());</span>
+		});
+<span class="fc" id="L139">		put(m, &quot;isclose&quot;, (in, a) -&gt; {</span>
+<span class="nc" id="L140">			Fmt0.count(&quot;isclose&quot;, a, 2);</span>
+<span class="nc" id="L141">			return Boolean.valueOf(isClose(arg(a, 0, &quot;isclose&quot;), arg(a, 1, &quot;isclose&quot;), 1e-9, 0.0));</span>
+		});
+<span class="fc" id="L143">		m.members.put(&quot;isclose&quot;, new Builtin(&quot;isclose&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L144">			Fmt0.count(&quot;isclose&quot;, a, 2);</span>
+<span class="fc" id="L145">			return Boolean.valueOf(isClose(arg(a, 0, &quot;isclose&quot;), arg(a, 1, &quot;isclose&quot;), 1e-9, 0.0));</span>
+		}, (in, a, kw) -&gt; {
+<span class="nc" id="L147">			Fmt0.count(&quot;isclose&quot;, a, 2);</span>
+<span class="nc" id="L148">			Methods.noKw(kw, &quot;isclose&quot;, &quot;rel_tol&quot;, &quot;abs_tol&quot;);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			double rel = kw.containsKey(&quot;rel_tol&quot;) ? PyOps.asDouble(kw.get(&quot;rel_tol&quot;)) : 1e-9;</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">			double abs = kw.containsKey(&quot;abs_tol&quot;) ? PyOps.asDouble(kw.get(&quot;abs_tol&quot;)) : 0.0;</span>
+<span class="nc" id="L151">			return Boolean.valueOf(isClose(arg(a, 0, &quot;isclose&quot;), arg(a, 1, &quot;isclose&quot;), rel, abs));</span>
+		}));
+<span class="fc" id="L153">		one(m, &quot;sin&quot;, Math::sin, true);</span>
+<span class="fc" id="L154">		one(m, &quot;cos&quot;, Math::cos, true);</span>
+<span class="fc" id="L155">		one(m, &quot;tan&quot;, Math::tan, true);</span>
+<span class="fc" id="L156">		one(m, &quot;asin&quot;, Math::asin, true);</span>
+<span class="fc" id="L157">		one(m, &quot;acos&quot;, Math::acos, true);</span>
+<span class="fc" id="L158">		one(m, &quot;atan&quot;, Math::atan, false);</span>
+<span class="fc" id="L159">		one(m, &quot;exp&quot;, Math::exp, false);</span>
+<span class="fc" id="L160">		one(m, &quot;fabs&quot;, Math::abs, false);</span>
+<span class="fc" id="L161">		put(m, &quot;sqrt&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L162">			Fmt0.count(&quot;sqrt&quot;, a, 1);</span>
+<span class="fc" id="L163">			double x = arg(a, 0, &quot;sqrt&quot;);</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">			if (x &lt; 0)</span>
+<span class="fc" id="L165">				throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="fc" id="L166">			return Double.valueOf(Math.sqrt(x));</span>
+		});
+<span class="fc" id="L168">		put(m, &quot;log&quot;, (in, a) -&gt; {</span>
+<span class="pc bpc" id="L169" title="2 of 4 branches missed.">			if (a.length &lt; 1 || a.length &gt; 2)</span>
+<span class="nc" id="L170">				throw PyOps.err(Types.TYPE_ERROR, &quot;log expected 1 or 2 arguments, got &quot; + a.length);</span>
+<span class="fc" id="L171">			double x = arg(a, 0, &quot;log&quot;);</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">			if (x &lt;= 0)</span>
+<span class="fc" id="L173">				throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="fc" id="L174">			double r = Math.log(x);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			if (a.length == 2) {</span>
+<span class="fc" id="L176">				double b = arg(a, 1, &quot;log&quot;);</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">				if (b &lt;= 0)</span>
+<span class="nc" id="L178">					throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="fc" id="L179">				double lb = Math.log(b);</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">				if (lb == 0)</span>
+<span class="nc" id="L181">					throw PyOps.err(Types.ZERO_DIVISION, &quot;float division by zero&quot;);</span>
+<span class="fc" id="L182">				r /= lb;</span>
+			}
+<span class="fc" id="L184">			return Double.valueOf(r);</span>
+		});
+<span class="fc" id="L186">		put(m, &quot;log10&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L187">			Fmt0.count(&quot;log10&quot;, a, 1);</span>
+<span class="fc" id="L188">			double x = arg(a, 0, &quot;log10&quot;);</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">			if (x &lt;= 0)</span>
+<span class="fc" id="L190">				throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="fc" id="L191">			return Double.valueOf(Math.log10(x));</span>
+		});
+<span class="fc" id="L193">		two(m, &quot;atan2&quot;, Math::atan2);</span>
+<span class="fc" id="L194">		two(m, &quot;fmod&quot;, (x, y) -&gt; {</span>
+<span class="pc bpc" id="L195" title="1 of 4 branches missed.">			if (y == 0 &amp;&amp; x == x)</span>
+<span class="fc" id="L196">				throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">			if (Double.isInfinite(x))</span>
+<span class="nc" id="L198">				throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="fc" id="L199">			return x % y;</span>
+		});
+<span class="fc" id="L201">		put(m, &quot;pow&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L202">			Fmt0.count(&quot;pow&quot;, a, 2);</span>
+<span class="fc" id="L203">			double x = arg(a, 0, &quot;pow&quot;), y = arg(a, 1, &quot;pow&quot;);</span>
+<span class="pc bpc" id="L204" title="3 of 4 branches missed.">			if (x == 0 &amp;&amp; y &lt; 0)</span>
+<span class="nc" id="L205">				throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="pc bpc" id="L206" title="3 of 8 branches missed.">			if (x &lt; 0 &amp;&amp; y == y &amp;&amp; !Double.isInfinite(y) &amp;&amp; y != Math.rint(y))</span>
+<span class="nc" id="L207">				throw PyOps.err(Types.VALUE_ERROR, &quot;math domain error&quot;);</span>
+<span class="fc" id="L208">			double r = PyOps.cPow(x, y);</span>
+<span class="pc bpc" id="L209" title="5 of 6 branches missed.">			if (Double.isInfinite(r) &amp;&amp; !Double.isInfinite(x) &amp;&amp; !Double.isInfinite(y))</span>
+<span class="nc" id="L210">				throw PyOps.err(Types.OVERFLOW, &quot;math range error&quot;);</span>
+<span class="fc" id="L211">			return Double.valueOf(r);</span>
+		});
+<span class="fc" id="L213">		put(m, &quot;floor&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L214">			Fmt0.count(&quot;floor&quot;, a, 1);</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">			if (PyOps.isIntLike(a[0]))</span>
+<span class="fc" id="L216">				return Integer.valueOf(PyOps.asInt(a[0]));</span>
+<span class="fc" id="L217">			return Integer.valueOf(PyInt.fromDouble(Math.floor(arg(a, 0, &quot;floor&quot;))));</span>
+		});
+<span class="fc" id="L219">		put(m, &quot;ceil&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L220">			Fmt0.count(&quot;ceil&quot;, a, 1);</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">			if (PyOps.isIntLike(a[0]))</span>
+<span class="fc" id="L222">				return Integer.valueOf(PyOps.asInt(a[0]));</span>
+<span class="fc" id="L223">			return Integer.valueOf(PyInt.fromDouble(Math.ceil(arg(a, 0, &quot;ceil&quot;))));</span>
+		});
+<span class="fc" id="L225">		put(m, &quot;trunc&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L226">			Fmt0.count(&quot;trunc&quot;, a, 1);</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">			if (PyOps.isIntLike(a[0]))</span>
+<span class="nc" id="L228">				return Integer.valueOf(PyOps.asInt(a[0]));</span>
+<span class="fc" id="L229">			return Integer.valueOf(PyInt.fromDouble(arg(a, 0, &quot;trunc&quot;)));</span>
+		});
+<span class="fc" id="L231">		put(m, &quot;isnan&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L232">			Fmt0.count(&quot;isnan&quot;, a, 1);</span>
+<span class="fc" id="L233">			return Boolean.valueOf(Double.isNaN(arg(a, 0, &quot;isnan&quot;)));</span>
+		});
+<span class="fc" id="L235">		put(m, &quot;isinf&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L236">			Fmt0.count(&quot;isinf&quot;, a, 1);</span>
+<span class="fc" id="L237">			return Boolean.valueOf(Double.isInfinite(arg(a, 0, &quot;isinf&quot;)));</span>
+		});
+<span class="fc" id="L239">		return m;</span>
+	}
+
+	/** Argument counting shared by the module functions. */
+	private static final class Fmt0 {
+		static void count(String name, Object[] a, int n) {
+<span class="fc bfc" id="L245" title="All 2 branches covered.">			if (a.length != n)</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">				throw PyOps.err(Types.TYPE_ERROR, name + &quot;() takes exactly &quot; + n + &quot; argument&quot; + (n == 1 ? &quot;&quot; : &quot;s&quot;)</span>
+						+ &quot; (&quot; + a.length + &quot; given)&quot;);
+<span class="fc" id="L248">		}</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

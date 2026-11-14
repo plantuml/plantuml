@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PySet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PySet.java</span></div><h1>PySet.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/**
+ * A Python set. Its items are normalised as the keys of a {@link PyDict} (True
+ * is 1, 2.0 is 2...), and each one is kept as it was first given. It iterates
+ * in insertion order, where CPython follows the hashes of the items: the two
+ * orders differ, and a program that must give the same output on both sorts
+ * the items first.
+ */
+<span class="fc" id="L16">final class PySet {</span>
+	/** The normalised item, and the item as it was first given. */
+<span class="fc" id="L18">	final LinkedHashMap&lt;Object, Object&gt; map = new LinkedHashMap&lt;Object, Object&gt;();</span>
+
+	/**
+	 * Incremented each time an item is added or removed: an iterator that sees
+	 * another value than the one it started with knows the set changed under it.
+	 */
+	int modCount;
+
+	int size() {
+<span class="fc" id="L27">		return map.size();</span>
+	}
+
+	void add(Object item) {
+<span class="fc" id="L31">		Object n = PyDict.norm(item);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		if (!map.containsKey(n)) {</span>
+<span class="fc" id="L33">			map.put(n, item);</span>
+<span class="fc" id="L34">			modCount++;</span>
+		}
+<span class="fc" id="L36">	}</span>
+
+	/** Removes an item; false if it is absent. */
+	boolean remove(Object item) {
+<span class="fc bfc" id="L40" title="All 2 branches covered.">		if (map.remove(PyDict.norm(item)) == null)</span>
+<span class="fc" id="L41">			return false;</span>
+<span class="fc" id="L42">		modCount++;</span>
+<span class="fc" id="L43">		return true;</span>
+	}
+
+	boolean contains(Object item) {
+<span class="fc" id="L47">		return map.containsKey(PyDict.norm(item));</span>
+	}
+
+	void clear() {
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (map.isEmpty())</span>
+<span class="nc" id="L52">			return;</span>
+<span class="fc" id="L53">		map.clear();</span>
+<span class="fc" id="L54">		modCount++;</span>
+<span class="fc" id="L55">	}</span>
+
+	/** The items, in a new list. */
+	ArrayList&lt;Object&gt; items() {
+<span class="fc" id="L59">		return new ArrayList&lt;Object&gt;(map.values());</span>
+	}
+
+	PySet copy() {
+<span class="fc" id="L63">		PySet r = new PySet();</span>
+<span class="fc" id="L64">		r.map.putAll(map);</span>
+<span class="fc" id="L65">		return r;</span>
+	}
+
+	/** The iterator of a set: it may not change size while it is iterated. */
+	static final class SetIter implements PyIter {
+		private final PySet s;
+		private final Iterator&lt;Object&gt; it;
+		private final int size;
+		private final int modCount;
+
+<span class="fc" id="L75">		SetIter(PySet s) {</span>
+<span class="fc" id="L76">			this.s = s;</span>
+<span class="fc" id="L77">			this.it = s.map.values().iterator();</span>
+<span class="fc" id="L78">			this.size = s.size();</span>
+<span class="fc" id="L79">			this.modCount = s.modCount;</span>
+<span class="fc" id="L80">		}</span>
+
+		@Override
+		public Object next() {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">			if (s.size() != size)</span>
+<span class="fc" id="L85">				throw PyOps.err(Types.RUNTIME_ERROR, &quot;Set changed size during iteration&quot;);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">			if (it.hasNext() == false)</span>
+<span class="fc" id="L87">				return null;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">			if (s.modCount != modCount)</span>
+<span class="nc" id="L89">				throw PyOps.err(Types.RUNTIME_ERROR, &quot;Set changed size during iteration&quot;);</span>
+<span class="fc" id="L90">			return it.next();</span>
+		}
+	}
+
+	// ------------------------------------------------------------ operations
+
+	/** True if every item of x is in y. */
+	static boolean isSubset(PySet x, PySet y) {
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (x.size() &gt; y.size())</span>
+<span class="fc" id="L99">			return false;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		for (Object n : x.map.keySet())</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">			if (!y.map.containsKey(n))</span>
+<span class="fc" id="L102">				return false;</span>
+<span class="fc" id="L103">		return true;</span>
+	}
+
+	/** The equality of two sets of normalised keys: those of a set, or of dict.keys(). */
+	static boolean keysEqual(java.util.Set&lt;Object&gt; x, java.util.Set&lt;Object&gt; y) {
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		if (x.size() != y.size())</span>
+<span class="fc" id="L109">			return false;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		for (Object n : x)</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			if (!y.contains(n))</span>
+<span class="fc" id="L112">				return false;</span>
+<span class="fc" id="L113">		return true;</span>
+	}
+
+	/**
+	 * a | b, a &amp; b, a - b and a ^ b: a new set, the items of a first, in their
+	 * order; null for the other operators.
+	 */
+	static PySet binary(int op, PySet a, PySet b) {
+<span class="fc" id="L121">		PySet r = new PySet();</span>
+<span class="fc bfc" id="L122" title="All 5 branches covered.">		switch (op) {</span>
+		case Op.BIN_OR:
+<span class="fc" id="L124">			r = a.copy();</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">			for (Map.Entry&lt;Object, Object&gt; e : b.map.entrySet())</span>
+<span class="fc" id="L126">				r.map.putIfAbsent(e.getKey(), e.getValue());</span>
+<span class="fc" id="L127">			return r;</span>
+		case Op.BIN_AND:
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			for (Map.Entry&lt;Object, Object&gt; e : a.map.entrySet())</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">				if (b.map.containsKey(e.getKey()))</span>
+<span class="fc" id="L131">					r.map.put(e.getKey(), e.getValue());</span>
+<span class="fc" id="L132">			return r;</span>
+		case Op.BIN_SUB:
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			for (Map.Entry&lt;Object, Object&gt; e : a.map.entrySet())</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">				if (!b.map.containsKey(e.getKey()))</span>
+<span class="fc" id="L136">					r.map.put(e.getKey(), e.getValue());</span>
+<span class="fc" id="L137">			return r;</span>
+		case Op.BIN_XOR:
+<span class="fc bfc" id="L139" title="All 2 branches covered.">			for (Map.Entry&lt;Object, Object&gt; e : a.map.entrySet())</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">				if (!b.map.containsKey(e.getKey()))</span>
+<span class="fc" id="L141">					r.map.put(e.getKey(), e.getValue());</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">			for (Map.Entry&lt;Object, Object&gt; e : b.map.entrySet())</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">				if (!a.map.containsKey(e.getKey()))</span>
+<span class="fc" id="L144">					r.map.put(e.getKey(), e.getValue());</span>
+<span class="fc" id="L145">			return r;</span>
+		default:
+<span class="fc" id="L147">			return null;</span>
+		}
+	}
+
+	/**
+	 * s |= o, s &amp;= o, s -= o and s ^= o: s is changed; false for the other
+	 * operators. o may be s itself.
+	 */
+	static boolean inplace(int op, PySet s, PySet o) {
+<span class="pc bpc" id="L156" title="1 of 5 branches missed.">		switch (op) {</span>
+		case Op.BIN_OR:
+<span class="fc" id="L158">			s.update(o.items());</span>
+<span class="fc" id="L159">			return true;</span>
+		case Op.BIN_AND:
+<span class="fc" id="L161">			s.keep(o, true);</span>
+<span class="fc" id="L162">			return true;</span>
+		case Op.BIN_SUB:
+<span class="fc bfc" id="L164" title="All 2 branches covered.">			if (s == o)</span>
+<span class="fc" id="L165">				s.clear();</span>
+			else
+<span class="fc bfc" id="L167" title="All 2 branches covered.">				for (Object item : o.items())</span>
+<span class="fc" id="L168">					s.remove(item);</span>
+<span class="fc" id="L169">			return true;</span>
+		case Op.BIN_XOR:
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			if (s == o)</span>
+<span class="fc" id="L172">				s.clear();</span>
+			else
+<span class="fc" id="L174">				s.symmetricUpdate(o.items());</span>
+<span class="fc" id="L175">			return true;</span>
+		default:
+<span class="nc" id="L177">			return false;</span>
+		}
+	}
+
+	void update(Iterable&lt;Object&gt; items) {
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		for (Object item : items)</span>
+<span class="fc" id="L183">			add(item);</span>
+<span class="fc" id="L184">	}</span>
+
+	/** Removes the items that are not in o (inside true) or that are in o (inside false). */
+	void keep(PySet o, boolean inside) {
+<span class="fc bfc" id="L188" title="All 4 branches covered.">		if (map.keySet().removeIf(n -&gt; o.map.containsKey(n) != inside))</span>
+<span class="fc" id="L189">			modCount++;</span>
+<span class="fc" id="L190">	}</span>
+
+	void symmetricUpdate(ArrayList&lt;Object&gt; items) {
+		// the items of the argument are made a set first: one that is there twice
+		// is still added or removed once
+<span class="fc" id="L195">		PySet o = new PySet();</span>
+<span class="fc" id="L196">		o.update(items);</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		for (Object item : o.map.values())</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">			if (!remove(item))</span>
+<span class="fc" id="L199">				add(item);</span>
+<span class="fc" id="L200">	}</span>
+
+	/** An argument of a method of set: a set, or the items of an iterable made a set. */
+	static PySet asSet(Interp in, Object o) {
+<span class="fc bfc" id="L204" title="All 2 branches covered.">		if (o instanceof PySet)</span>
+<span class="fc" id="L205">			return (PySet) o;</span>
+<span class="fc" id="L206">		ArrayList&lt;Object&gt; items = PyOps.toArrayList(o);</span>
+<span class="fc" id="L207">		in.work(items.size());</span>
+<span class="fc" id="L208">		Memory.checkBuilt(Memory.OBJECT + (long) Memory.ENTRY * items.size());</span>
+<span class="fc" id="L209">		in.allocated(Memory.OBJECT + (long) Memory.ENTRY * items.size());</span>
+<span class="fc" id="L210">		PySet r = new PySet();</span>
+<span class="fc" id="L211">		r.update(items);</span>
+<span class="fc" id="L212">		return r;</span>
+	}
+
+	/** s.update(o): the items of an iterable added to s, with their work and their memory. */
+	static void addItems(Interp in, PySet s, Object o) {
+		// src may be s
+<span class="fc bfc" id="L218" title="All 2 branches covered.">		ArrayList&lt;Object&gt; items = o instanceof PySet ? ((PySet) o).items() : PyOps.toArrayList(o);</span>
+		// counted before the items are added: at most one entry for each; the
+		// set being built may not be seen by the measure of what is held yet
+<span class="fc" id="L221">		in.work(items.size());</span>
+<span class="fc" id="L222">		Memory.checkBuilt((long) Memory.ENTRY * items.size());</span>
+<span class="fc" id="L223">		in.allocated((long) Memory.ENTRY * items.size());</span>
+<span class="fc" id="L224">		s.update(items);</span>
+<span class="fc" id="L225">	}</span>
+
+	/** set() and set(iterable). */
+	static PySet make(Interp in, Object[] a) {
+<span class="fc" id="L229">		Builtins.count(&quot;set&quot;, a, 0, 1);</span>
+<span class="fc" id="L230">		PySet s = new PySet();</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">		if (a.length == 1) {</span>
+<span class="fc" id="L232">			in.allocated(Memory.OBJECT);</span>
+<span class="fc" id="L233">			addItems(in, s, a[0]);</span>
+		}
+<span class="fc" id="L235">		return s;</span>
+	}
+
+	// ------------------------------------------------------------ methods
+
+	static Map&lt;String, Builtin&gt; methods() {
+<span class="fc" id="L241">		final Map&lt;String, Builtin&gt; t = new HashMap&lt;String, Builtin&gt;();</span>
+<span class="fc" id="L242">		def(t, &quot;add&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L243">			Methods.need(a, 1, 1, &quot;add&quot;);</span>
+<span class="fc" id="L244">			PySet s = (PySet) a[0];</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">			if (!s.contains(a[1])) {</span>
+<span class="fc" id="L246">				in.allocated(Memory.ENTRY);</span>
+<span class="fc" id="L247">				s.add(a[1]);</span>
+			}
+<span class="fc" id="L249">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L251">		def(t, &quot;remove&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L252">			Methods.need(a, 1, 1, &quot;remove&quot;);</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">			if (!((PySet) a[0]).remove(a[1]))</span>
+<span class="fc" id="L254">				throw new PyError(new PyException(Types.KEY_ERROR, new Object[] { a[1] }));</span>
+<span class="fc" id="L255">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L257">		def(t, &quot;discard&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L258">			Methods.need(a, 1, 1, &quot;discard&quot;);</span>
+<span class="fc" id="L259">			((PySet) a[0]).remove(a[1]);</span>
+<span class="fc" id="L260">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L262">		def(t, &quot;pop&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L263">			Methods.need(a, 0, 0, &quot;pop&quot;);</span>
+<span class="fc" id="L264">			PySet s = (PySet) a[0];</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">			if (s.size() == 0)</span>
+<span class="fc" id="L266">				throw new PyError(new PyException(Types.KEY_ERROR, new Object[] { &quot;pop from an empty set&quot; }));</span>
+<span class="fc" id="L267">			Iterator&lt;Object&gt; it = s.map.values().iterator();</span>
+<span class="fc" id="L268">			Object first = it.next();</span>
+<span class="fc" id="L269">			it.remove();</span>
+<span class="fc" id="L270">			s.modCount++;</span>
+<span class="fc" id="L271">			return first;</span>
+		});
+<span class="fc" id="L273">		def(t, &quot;clear&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L274">			Methods.need(a, 0, 0, &quot;clear&quot;);</span>
+<span class="fc" id="L275">			((PySet) a[0]).clear();</span>
+<span class="fc" id="L276">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L278">		def(t, &quot;copy&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L279">			Methods.need(a, 0, 0, &quot;copy&quot;);</span>
+<span class="fc" id="L280">			return in.made(((PySet) a[0]).copy());</span>
+		});
+<span class="fc" id="L282">		def(t, &quot;update&quot;, (in, a) -&gt; {</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">			for (int i = 1; i &lt; a.length; i++)</span>
+<span class="fc" id="L284">				addItems(in, (PySet) a[0], a[i]);</span>
+<span class="fc" id="L285">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L287">		def(t, &quot;union&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L288">			PySet r = in.made(((PySet) a[0]).copy());</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">			for (int i = 1; i &lt; a.length; i++)</span>
+<span class="fc" id="L290">				addItems(in, r, a[i]);</span>
+<span class="fc" id="L291">			return r;</span>
+		});
+		// intersection, difference and their _update: the set keeps the items that
+		// are in every argument, or in none of them
+<span class="fc" id="L295">		def(t, &quot;intersection&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L296">			PySet r = in.made(((PySet) a[0]).copy());</span>
+<span class="fc" id="L297">			keep(in, r, a, true);</span>
+<span class="fc" id="L298">			return r;</span>
+		});
+<span class="fc" id="L300">		def(t, &quot;intersection_update&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L301">			keep(in, (PySet) a[0], a, true);</span>
+<span class="fc" id="L302">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L304">		def(t, &quot;difference&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L305">			PySet r = in.made(((PySet) a[0]).copy());</span>
+<span class="fc" id="L306">			keep(in, r, a, false);</span>
+<span class="fc" id="L307">			return r;</span>
+		});
+<span class="fc" id="L309">		def(t, &quot;difference_update&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L310">			PySet s = (PySet) a[0];</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">			for (int i = 1; i &lt; a.length; i++)</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">				if (a[i] == s)</span>
+<span class="fc" id="L313">					s.clear();</span>
+<span class="fc" id="L314">			keep(in, s, a, false);</span>
+<span class="fc" id="L315">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L317">		def(t, &quot;symmetric_difference&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L318">			Methods.need(a, 1, 1, &quot;symmetric_difference&quot;);</span>
+<span class="fc" id="L319">			PySet s = (PySet) a[0];</span>
+<span class="fc" id="L320">			PySet o = asSet(in, a[1]);</span>
+<span class="fc" id="L321">			in.work(s.size() + o.size());</span>
+<span class="fc" id="L322">			return in.made(binary(Op.BIN_XOR, s, o));</span>
+		});
+<span class="fc" id="L324">		def(t, &quot;symmetric_difference_update&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L325">			Methods.need(a, 1, 1, &quot;symmetric_difference_update&quot;);</span>
+<span class="fc" id="L326">			PySet s = (PySet) a[0];</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">			if (a[1] == s) {</span>
+<span class="fc" id="L328">				s.clear();</span>
+<span class="fc" id="L329">				return PyNone.NONE;</span>
+			}
+<span class="fc" id="L331">			ArrayList&lt;Object&gt; items = PyOps.toArrayList(a[1]);</span>
+<span class="fc" id="L332">			in.work(items.size());</span>
+<span class="fc" id="L333">			Memory.checkBuilt((long) Memory.ENTRY * items.size());</span>
+<span class="fc" id="L334">			in.allocated((long) Memory.ENTRY * items.size());</span>
+<span class="fc" id="L335">			s.symmetricUpdate(items);</span>
+<span class="fc" id="L336">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L338">		def(t, &quot;issubset&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L339">			Methods.need(a, 1, 1, &quot;issubset&quot;);</span>
+<span class="fc" id="L340">			in.work(((PySet) a[0]).size());</span>
+<span class="fc" id="L341">			return Boolean.valueOf(isSubset((PySet) a[0], asSet(in, a[1])));</span>
+		});
+<span class="fc" id="L343">		def(t, &quot;issuperset&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L344">			Methods.need(a, 1, 1, &quot;issuperset&quot;);</span>
+<span class="fc" id="L345">			PySet o = asSet(in, a[1]);</span>
+<span class="fc" id="L346">			in.work(o.size());</span>
+<span class="fc" id="L347">			return Boolean.valueOf(isSubset(o, (PySet) a[0]));</span>
+		});
+<span class="fc" id="L349">		def(t, &quot;isdisjoint&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L350">			Methods.need(a, 1, 1, &quot;isdisjoint&quot;);</span>
+<span class="fc" id="L351">			PySet s = (PySet) a[0];</span>
+<span class="fc" id="L352">			ArrayList&lt;Object&gt; items = PyOps.toArrayList(a[1]);</span>
+<span class="fc" id="L353">			in.work(items.size());</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">			for (Object item : items)</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">				if (s.contains(item))</span>
+<span class="fc" id="L356">					return Boolean.FALSE;</span>
+<span class="fc" id="L357">			return Boolean.TRUE;</span>
+		});
+<span class="fc" id="L359">		return t;</span>
+	}
+
+	private static void keep(Interp in, PySet s, Object[] a, boolean inside) {
+<span class="fc bfc" id="L363" title="All 2 branches covered.">		for (int i = 1; i &lt; a.length; i++) {</span>
+<span class="fc" id="L364">			in.work(s.size());</span>
+<span class="fc" id="L365">			s.keep(asSet(in, a[i]), inside);</span>
+		}
+<span class="fc" id="L367">	}</span>
+
+	private static void def(Map&lt;String, Builtin&gt; table, String name, Builtin.Fn fn) {
+<span class="fc" id="L370">		table.put(name, new Builtin(name, fn));</span>
+<span class="fc" id="L371">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

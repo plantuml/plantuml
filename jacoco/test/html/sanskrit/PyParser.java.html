@@ -1,0 +1,1495 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyParser.java</span></div><h1>PyParser.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Recursive descent parser for the Python subset described in PYTHON.md. It
+ * builds a tree shaped like CPython's {@code ast}. Constructs of Python that
+ * are outside the subset are reported as syntax errors.
+ */
+public final class PyParser {
+	/** Nesting limit, so that hostile input cannot overflow the Java stack. */
+	private static final int MAX_DEPTH = 200;
+
+	private final List&lt;Token&gt; tokens;
+	private int p;
+	private int depth;
+	/** The nesting of the format spec being parsed, in an f-string. */
+	private int specDepth;
+
+<span class="fc" id="L21">	private PyParser(List&lt;Token&gt; tokens) {</span>
+<span class="fc" id="L22">		this.tokens = tokens;</span>
+<span class="fc" id="L23">	}</span>
+
+	/** Parses a whole source file into a {@code Module} node. */
+	public static Ast.Module parse(String source) {
+<span class="fc" id="L27">		PyParser parser = new PyParser(PyLexer.tokenize(source));</span>
+<span class="fc" id="L28">		return parser.module();</span>
+	}
+
+	// ------------------------------------------------------------ helpers
+
+	private Token peek() {
+<span class="fc" id="L34">		return tokens.get(p);</span>
+	}
+
+	private Token peekAt(int offset) {
+<span class="fc" id="L38">		int i = p + offset;</span>
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">		return i &lt; tokens.size() ? tokens.get(i) : tokens.get(tokens.size() - 1);</span>
+	}
+
+	private Token next() {
+<span class="fc" id="L43">		Token t = tokens.get(p);</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">		if (t.kind != Token.END)</span>
+<span class="fc" id="L45">			p++;</span>
+<span class="fc" id="L46">		return t;</span>
+	}
+
+	/**
+	 * Counts one more level of nesting. The levels are given back by plain
+	 * decrements, not by finally blocks: after a syntax error the parser is
+	 * thrown away, and the one of an f-string is another instance.
+	 */
+	private void enter() {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (++depth &gt; MAX_DEPTH)</span>
+<span class="fc" id="L56">			throw error(&quot;too many levels of nesting&quot;);</span>
+<span class="fc" id="L57">	}</span>
+
+	private PySyntaxError error(String message) {
+<span class="fc" id="L60">		Token t = peek();</span>
+<span class="fc" id="L61">		return new PySyntaxError(message, t.line, t.col);</span>
+	}
+
+	private PySyntaxError invalid() {
+<span class="fc" id="L65">		Token t = peek();</span>
+<span class="fc" id="L66">		return new PySyntaxError(&quot;invalid syntax near '&quot; + t + &quot;'&quot;, t.line, t.col);</span>
+	}
+
+	private boolean isOp(String op) {
+<span class="fc" id="L70">		return peek().isOp(op);</span>
+	}
+
+	private boolean isKw(String kw) {
+<span class="fc" id="L74">		return peek().isKeyword(kw);</span>
+	}
+
+	private boolean acceptOp(String op) {
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (isOp(op)) {</span>
+<span class="fc" id="L79">			next();</span>
+<span class="fc" id="L80">			return true;</span>
+		}
+<span class="fc" id="L82">		return false;</span>
+	}
+
+	private boolean acceptKw(String kw) {
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (isKw(kw)) {</span>
+<span class="fc" id="L87">			next();</span>
+<span class="fc" id="L88">			return true;</span>
+		}
+<span class="fc" id="L90">		return false;</span>
+	}
+
+	private Token expectOp(String op) {
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (!isOp(op))</span>
+<span class="fc" id="L95">			throw error(&quot;expected '&quot; + op + &quot;' but found '&quot; + peek() + &quot;'&quot;);</span>
+<span class="fc" id="L96">		return next();</span>
+	}
+
+	private Token expectKw(String kw) {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (!isKw(kw))</span>
+<span class="fc" id="L101">			throw error(&quot;expected '&quot; + kw + &quot;' but found '&quot; + peek() + &quot;'&quot;);</span>
+<span class="fc" id="L102">		return next();</span>
+	}
+
+	private String expectName() {
+<span class="fc" id="L106">		Token t = peek();</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (t.kind != Token.NAME)</span>
+<span class="fc" id="L108">			throw error(&quot;expected a name but found '&quot; + t + &quot;'&quot;);</span>
+<span class="fc" id="L109">		next();</span>
+<span class="fc" id="L110">		return t.text;</span>
+	}
+
+	private void expectNewline() {
+<span class="fc" id="L114">		Token t = peek();</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (t.kind == Token.NEWLINE)</span>
+<span class="fc" id="L116">			next();</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		else if (t.kind != Token.END)</span>
+<span class="fc" id="L118">			throw error(&quot;expected end of line but found '&quot; + t + &quot;'&quot;);</span>
+<span class="fc" id="L119">	}</span>
+
+	// ------------------------------------------------------------ statements
+
+	private Ast.Module module() {
+<span class="fc" id="L124">		Token start = peek();</span>
+<span class="fc" id="L125">		List&lt;Ast.Stmt&gt; body = new ArrayList&lt;Ast.Stmt&gt;();</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		while (peek().kind != Token.END) {</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">			if (peek().kind == Token.NEWLINE) {</span>
+<span class="nc" id="L128">				next();</span>
+<span class="nc" id="L129">				continue;</span>
+			}
+<span class="fc" id="L131">			statement(body);</span>
+		}
+<span class="fc" id="L133">		return new Ast.Module(start.line, start.col, body);</span>
+	}
+
+	private void statement(List&lt;Ast.Stmt&gt; out) {
+<span class="fc" id="L137">		Token t = peek();</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (t.kind == Token.INDENT)</span>
+<span class="fc" id="L139">			throw error(&quot;unexpected indent&quot;);</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">		if (t.kind == Token.KEYWORD) {</span>
+<span class="fc bfc" id="L141" title="All 8 branches covered.">			switch (t.text) {</span>
+			case &quot;if&quot;:
+<span class="fc" id="L143">				out.add(ifStatement());</span>
+<span class="fc" id="L144">				return;</span>
+			case &quot;while&quot;:
+<span class="fc" id="L146">				out.add(whileStatement());</span>
+<span class="fc" id="L147">				return;</span>
+			case &quot;for&quot;:
+<span class="fc" id="L149">				out.add(forStatement());</span>
+<span class="fc" id="L150">				return;</span>
+			case &quot;try&quot;:
+<span class="fc" id="L152">				out.add(tryStatement());</span>
+<span class="fc" id="L153">				return;</span>
+			case &quot;def&quot;:
+<span class="fc" id="L155">				out.add(defStatement(new ArrayList&lt;Ast.Expr&gt;()));</span>
+<span class="fc" id="L156">				return;</span>
+			case &quot;class&quot;:
+<span class="fc" id="L158">				out.add(classStatement(new ArrayList&lt;Ast.Expr&gt;()));</span>
+<span class="fc" id="L159">				return;</span>
+			case &quot;with&quot;:
+			case &quot;async&quot;:
+<span class="fc" id="L162">				throw error(&quot;'&quot; + t.text + &quot;' is not supported&quot;);</span>
+			default:
+				break;
+			}
+		}
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (t.isOp(&quot;@&quot;)) {</span>
+<span class="fc" id="L168">			out.add(decorated());</span>
+<span class="fc" id="L169">			return;</span>
+		}
+<span class="fc" id="L171">		simpleStatements(out);</span>
+<span class="fc" id="L172">	}</span>
+
+	/** One or more &quot;@expr&quot; lines, then the def or class they apply to. */
+	private Ast.Stmt decorated() {
+<span class="fc" id="L176">		List&lt;Ast.Expr&gt; decorators = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		while (acceptOp(&quot;@&quot;)) {</span>
+<span class="fc" id="L178">			decorators.add(test());</span>
+<span class="fc" id="L179">			Token end = peek();</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			if (end.kind != Token.NEWLINE)</span>
+<span class="fc" id="L181">				throw error(&quot;expected end of line after a decorator but found '&quot; + end + &quot;'&quot;);</span>
+<span class="fc" id="L182">			next();</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">			while (peek().kind == Token.NEWLINE)</span>
+<span class="nc" id="L184">				next();</span>
+<span class="fc" id="L185">		}</span>
+<span class="fc" id="L186">		Token t = peek();</span>
+<span class="fc bfc" id="L187" title="All 4 branches covered.">		if (t.kind == Token.KEYWORD &amp;&amp; t.text.equals(&quot;def&quot;))</span>
+<span class="fc" id="L188">			return defStatement(decorators);</span>
+<span class="fc bfc" id="L189" title="All 4 branches covered.">		if (t.kind == Token.KEYWORD &amp;&amp; t.text.equals(&quot;class&quot;))</span>
+<span class="fc" id="L190">			return classStatement(decorators);</span>
+<span class="pc bpc" id="L191" title="1 of 4 branches missed.">		if (t.kind == Token.KEYWORD &amp;&amp; t.text.equals(&quot;async&quot;))</span>
+<span class="fc" id="L192">			throw error(&quot;'async' is not supported&quot;);</span>
+<span class="fc" id="L193">		throw error(&quot;a decorator must be followed by def or class&quot;);</span>
+	}
+
+	private void simpleStatements(List&lt;Ast.Stmt&gt; out) {
+<span class="fc" id="L197">		out.add(simpleStatement());</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		while (acceptOp(&quot;;&quot;)) {</span>
+<span class="pc bpc" id="L199" title="1 of 4 branches missed.">			if (peek().kind == Token.NEWLINE || peek().kind == Token.END)</span>
+<span class="nc" id="L200">				break;</span>
+<span class="fc" id="L201">			out.add(simpleStatement());</span>
+		}
+<span class="fc" id="L203">		expectNewline();</span>
+<span class="fc" id="L204">	}</span>
+
+	private List&lt;Ast.Stmt&gt; block() {
+<span class="fc" id="L207">		enter();</span>
+<span class="fc" id="L208">		List&lt;Ast.Stmt&gt; body = blockBody();</span>
+<span class="fc" id="L209">		depth--;</span>
+<span class="fc" id="L210">		return body;</span>
+	}
+
+	private List&lt;Ast.Stmt&gt; blockBody() {
+<span class="fc" id="L214">		expectOp(&quot;:&quot;);</span>
+<span class="fc" id="L215">		List&lt;Ast.Stmt&gt; body = new ArrayList&lt;Ast.Stmt&gt;();</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (peek().kind == Token.NEWLINE) {</span>
+<span class="fc" id="L217">			next();</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">			if (peek().kind != Token.INDENT)</span>
+<span class="fc" id="L219">				throw error(&quot;expected an indented block&quot;);</span>
+<span class="fc" id="L220">			next();</span>
+<span class="pc bpc" id="L221" title="1 of 4 branches missed.">			while (peek().kind != Token.DEDENT &amp;&amp; peek().kind != Token.END) {</span>
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">				if (peek().kind == Token.NEWLINE) {</span>
+<span class="nc" id="L223">					next();</span>
+<span class="nc" id="L224">					continue;</span>
+				}
+<span class="fc" id="L226">				statement(body);</span>
+			}
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">			if (peek().kind == Token.DEDENT)</span>
+<span class="fc" id="L229">				next();</span>
+		} else {
+<span class="fc" id="L231">			simpleStatements(body);</span>
+		}
+<span class="fc" id="L233">		return body;</span>
+	}
+
+	/**
+	 * if / elif / else. The elif clauses are read in a loop and the nested If
+	 * nodes are built afterwards, so that a long chain does not recurse.
+	 */
+	private Ast.If ifStatement() {
+<span class="fc" id="L241">		List&lt;Token&gt; starts = new ArrayList&lt;Token&gt;();</span>
+<span class="fc" id="L242">		List&lt;Ast.Expr&gt; tests = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L243">		List&lt;List&lt;Ast.Stmt&gt;&gt; bodies = new ArrayList&lt;List&lt;Ast.Stmt&gt;&gt;();</span>
+		do {
+<span class="fc" id="L245">			starts.add(next()); // if / elif</span>
+<span class="fc" id="L246">			tests.add(test());</span>
+<span class="fc" id="L247">			bodies.add(block());</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		} while (isKw(&quot;elif&quot;));</span>
+<span class="fc" id="L249">		List&lt;Ast.Stmt&gt; orelse = new ArrayList&lt;Ast.Stmt&gt;();</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		if (acceptKw(&quot;else&quot;))</span>
+<span class="fc" id="L251">			orelse = block();</span>
+<span class="fc" id="L252">		Ast.If result = null;</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		for (int i = starts.size() - 1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L254">			Token t = starts.get(i);</span>
+<span class="fc" id="L255">			result = new Ast.If(t.line, t.col, tests.get(i), bodies.get(i), orelse);</span>
+<span class="fc" id="L256">			orelse = new ArrayList&lt;Ast.Stmt&gt;();</span>
+<span class="fc" id="L257">			orelse.add(result);</span>
+		}
+<span class="fc" id="L259">		return result;</span>
+	}
+
+	private Ast.While whileStatement() {
+<span class="fc" id="L263">		Token t = next();</span>
+<span class="fc" id="L264">		Ast.Expr test = test();</span>
+<span class="fc" id="L265">		List&lt;Ast.Stmt&gt; body = block();</span>
+<span class="fc" id="L266">		List&lt;Ast.Stmt&gt; orelse = new ArrayList&lt;Ast.Stmt&gt;();</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">		if (acceptKw(&quot;else&quot;))</span>
+<span class="fc" id="L268">			orelse = block();</span>
+<span class="fc" id="L269">		return new Ast.While(t.line, t.col, test, body, orelse);</span>
+	}
+
+	private Ast.For forStatement() {
+<span class="fc" id="L273">		Token t = next();</span>
+<span class="fc" id="L274">		Ast.Expr target = targetList();</span>
+<span class="fc" id="L275">		setContext(target, Ast.Ctx.Store);</span>
+<span class="fc" id="L276">		expectKw(&quot;in&quot;);</span>
+<span class="fc" id="L277">		Ast.Expr iter = testList();</span>
+<span class="fc" id="L278">		List&lt;Ast.Stmt&gt; body = block();</span>
+<span class="fc" id="L279">		List&lt;Ast.Stmt&gt; orelse = new ArrayList&lt;Ast.Stmt&gt;();</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">		if (acceptKw(&quot;else&quot;))</span>
+<span class="fc" id="L281">			orelse = block();</span>
+<span class="fc" id="L282">		return new Ast.For(t.line, t.col, target, iter, body, orelse);</span>
+	}
+
+	private Ast.Try tryStatement() {
+<span class="fc" id="L286">		Token t = next();</span>
+<span class="fc" id="L287">		List&lt;Ast.Stmt&gt; body = block();</span>
+<span class="fc" id="L288">		List&lt;Ast.ExceptHandler&gt; handlers = new ArrayList&lt;Ast.ExceptHandler&gt;();</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">		while (isKw(&quot;except&quot;)) {</span>
+<span class="fc" id="L290">			Token h = next();</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">			if (isOp(&quot;*&quot;))</span>
+<span class="fc" id="L292">				throw error(&quot;except* is not supported&quot;);</span>
+<span class="fc" id="L293">			Ast.Expr type = null;</span>
+<span class="fc" id="L294">			String name = null;</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">			if (!isOp(&quot;:&quot;)) {</span>
+<span class="fc" id="L296">				type = test();</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">				if (acceptKw(&quot;as&quot;))</span>
+<span class="fc" id="L298">					name = expectName();</span>
+			}
+<span class="fc" id="L300">			List&lt;Ast.Stmt&gt; hbody = block();</span>
+<span class="fc" id="L301">			handlers.add(new Ast.ExceptHandler(h.line, h.col, type, name, hbody));</span>
+<span class="fc" id="L302">		}</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">		if (isKw(&quot;finally&quot;))</span>
+<span class="fc" id="L304">			throw error(&quot;'finally' is not supported&quot;);</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">		if (handlers.isEmpty())</span>
+<span class="fc" id="L306">			throw error(&quot;expected 'except' block&quot;);</span>
+<span class="fc" id="L307">		List&lt;Ast.Stmt&gt; orelse = new ArrayList&lt;Ast.Stmt&gt;();</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">		if (acceptKw(&quot;else&quot;))</span>
+<span class="fc" id="L309">			orelse = block();</span>
+<span class="pc bpc" id="L310" title="1 of 2 branches missed.">		if (isKw(&quot;finally&quot;))</span>
+<span class="nc" id="L311">			throw error(&quot;'finally' is not supported&quot;);</span>
+<span class="fc" id="L312">		return new Ast.Try(t.line, t.col, body, handlers, orelse);</span>
+	}
+
+	private Ast.FunctionDef defStatement(List&lt;Ast.Expr&gt; decorators) {
+<span class="fc" id="L316">		Token t = next();</span>
+<span class="fc" id="L317">		String name = expectName();</span>
+<span class="fc" id="L318">		expectOp(&quot;(&quot;);</span>
+<span class="fc" id="L319">		Ast.Arguments args = parameters(&quot;)&quot;);</span>
+<span class="fc" id="L320">		expectOp(&quot;)&quot;);</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">		if (isOp(&quot;-&gt;&quot;))</span>
+<span class="fc" id="L322">			throw error(&quot;return annotations are not supported&quot;);</span>
+<span class="fc" id="L323">		List&lt;Ast.Stmt&gt; body = block();</span>
+<span class="fc" id="L324">		return new Ast.FunctionDef(t.line, t.col, name, args, body, decorators);</span>
+	}
+
+	private Ast.ClassDef classStatement(List&lt;Ast.Expr&gt; decorators) {
+<span class="fc" id="L328">		Token t = next();</span>
+<span class="fc" id="L329">		String name = expectName();</span>
+<span class="fc" id="L330">		List&lt;Ast.Expr&gt; bases = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">		if (acceptOp(&quot;(&quot;)) {</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">			while (isOp(&quot;)&quot;) == false) {</span>
+<span class="pc bpc" id="L333" title="1 of 4 branches missed.">				if (isOp(&quot;*&quot;) || isOp(&quot;**&quot;))</span>
+<span class="fc" id="L334">					throw error(&quot;starred class bases are not supported&quot;);</span>
+<span class="fc" id="L335">				bases.add(test());</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">				if (isOp(&quot;=&quot;))</span>
+<span class="fc" id="L337">					throw error(&quot;class keyword arguments are not supported&quot;);</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">				if (acceptOp(&quot;,&quot;) == false)</span>
+<span class="fc" id="L339">					break;</span>
+			}
+<span class="fc" id="L341">			expectOp(&quot;)&quot;);</span>
+		}
+<span class="fc" id="L343">		List&lt;Ast.Stmt&gt; body = block();</span>
+<span class="fc" id="L344">		return new Ast.ClassDef(t.line, t.col, name, bases, body, decorators);</span>
+	}
+
+	/** Parameters of a def or lambda, up to (not including) the closing token. */
+	private Ast.Arguments parameters(String closer) {
+<span class="fc" id="L349">		Token start = peek();</span>
+<span class="fc" id="L350">		List&lt;Ast.Arg&gt; args = new ArrayList&lt;Ast.Arg&gt;();</span>
+<span class="fc" id="L351">		List&lt;Ast.Expr&gt; defaults = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L352">		Ast.Arg vararg = null;</span>
+<span class="fc" id="L353">		List&lt;Ast.Arg&gt; kwonly = new ArrayList&lt;Ast.Arg&gt;();</span>
+<span class="fc" id="L354">		List&lt;Ast.Expr&gt; kwDefaults = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L355">		Ast.Arg kwarg = null;</span>
+<span class="fc" id="L356">		boolean seenStar = false;</span>
+<span class="fc" id="L357">		boolean seenDefault = false;</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">		while (!isOp(closer)) {</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">			if (isOp(&quot;/&quot;))</span>
+<span class="fc" id="L360">				throw error(&quot;positional-only parameters are not supported&quot;);</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">			if (isOp(&quot;*&quot;)) {</span>
+<span class="fc" id="L362">				Token st = next();</span>
+<span class="pc bpc" id="L363" title="1 of 2 branches missed.">				if (seenStar)</span>
+<span class="nc" id="L364">					throw error(&quot;duplicate '*' in parameters&quot;);</span>
+<span class="fc" id="L365">				seenStar = true;</span>
+<span class="fc bfc" id="L366" title="All 4 branches covered.">				if (!isOp(&quot;,&quot;) &amp;&amp; !isOp(closer)) {</span>
+<span class="fc" id="L367">					vararg = parameter();</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">				} else if (isOp(closer)) {</span>
+<span class="fc" id="L369">					throw new PySyntaxError(&quot;named arguments must follow bare *&quot;, st.line, st.col);</span>
+				}
+<span class="fc bfc" id="L371" title="All 2 branches covered.">			} else if (isOp(&quot;**&quot;)) {</span>
+<span class="fc" id="L372">				next();</span>
+<span class="fc" id="L373">				kwarg = parameter();</span>
+<span class="fc" id="L374">				acceptOp(&quot;,&quot;);</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">				if (!isOp(closer))</span>
+<span class="fc" id="L376">					throw error(&quot;arguments cannot follow var-keyword argument&quot;);</span>
+				break;
+			} else {
+<span class="fc" id="L379">				Ast.Arg a = parameter();</span>
+<span class="fc" id="L380">				Ast.Expr dflt = null;</span>
+<span class="fc bfc" id="L381" title="All 2 branches covered.">				if (acceptOp(&quot;=&quot;))</span>
+<span class="fc" id="L382">					dflt = test();</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">				if (seenStar) {</span>
+<span class="fc" id="L384">					kwonly.add(a);</span>
+<span class="fc" id="L385">					kwDefaults.add(dflt);</span>
+				} else {
+<span class="fc" id="L387">					args.add(a);</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">					if (dflt != null) {</span>
+<span class="fc" id="L389">						defaults.add(dflt);</span>
+<span class="fc" id="L390">						seenDefault = true;</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">					} else if (seenDefault) {</span>
+<span class="fc" id="L392">						throw error(&quot;non-default argument follows default argument&quot;);</span>
+					}
+				}
+			}
+<span class="fc bfc" id="L396" title="All 2 branches covered.">			if (!acceptOp(&quot;,&quot;))</span>
+<span class="fc" id="L397">				break;</span>
+		}
+<span class="fc" id="L399">		return new Ast.Arguments(start.line, start.col, args, vararg, kwonly, kwDefaults, kwarg, defaults);</span>
+	}
+
+	private Ast.Arg parameter() {
+<span class="fc" id="L403">		Token t = peek();</span>
+<span class="fc" id="L404">		String name = expectName();</span>
+<span class="fc bfc" id="L405" title="All 4 branches covered.">		if (isOp(&quot;:&quot;) &amp;&amp; !isLambdaParameters)</span>
+<span class="fc" id="L406">			throw error(&quot;annotations are not supported&quot;);</span>
+<span class="fc" id="L407">		return new Ast.Arg(t.line, t.col, name);</span>
+	}
+
+	private boolean isLambdaParameters;
+
+	private Ast.Stmt simpleStatement() {
+<span class="fc" id="L413">		Token t = peek();</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">		if (t.kind == Token.KEYWORD) {</span>
+<span class="fc bfc" id="L415" title="All 13 branches covered.">			switch (t.text) {</span>
+			case &quot;pass&quot;:
+<span class="fc" id="L417">				next();</span>
+<span class="fc" id="L418">				return new Ast.Pass(t.line, t.col);</span>
+			case &quot;break&quot;:
+<span class="fc" id="L420">				next();</span>
+<span class="fc" id="L421">				return new Ast.Break(t.line, t.col);</span>
+			case &quot;continue&quot;:
+<span class="fc" id="L423">				next();</span>
+<span class="fc" id="L424">				return new Ast.Continue(t.line, t.col);</span>
+			case &quot;return&quot;: {
+<span class="fc" id="L426">				next();</span>
+<span class="fc bfc" id="L427" title="All 2 branches covered.">				Ast.Expr value = startsExpression(peek()) ? testList() : null;</span>
+<span class="fc" id="L428">				return new Ast.Return(t.line, t.col, value);</span>
+			}
+			case &quot;raise&quot;: {
+<span class="fc" id="L431">				next();</span>
+<span class="fc" id="L432">				Ast.Expr exc = null;</span>
+<span class="fc" id="L433">				Ast.Expr cause = null;</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">				if (startsExpression(peek())) {</span>
+<span class="fc" id="L435">					exc = test();</span>
+<span class="fc bfc" id="L436" title="All 2 branches covered.">					if (acceptKw(&quot;from&quot;))</span>
+<span class="fc" id="L437">						cause = test();</span>
+				}
+<span class="fc" id="L439">				return new Ast.Raise(t.line, t.col, exc, cause);</span>
+			}
+			case &quot;assert&quot;: {
+<span class="fc" id="L442">				next();</span>
+<span class="fc" id="L443">				Ast.Expr test = test();</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">				Ast.Expr msg = acceptOp(&quot;,&quot;) ? test() : null;</span>
+<span class="fc" id="L445">				return new Ast.Assert(t.line, t.col, test, msg);</span>
+			}
+			case &quot;global&quot;:
+			case &quot;nonlocal&quot;: {
+<span class="fc" id="L449">				next();</span>
+<span class="fc" id="L450">				List&lt;String&gt; names = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L451">				names.add(expectName());</span>
+<span class="fc bfc" id="L452" title="All 2 branches covered.">				while (acceptOp(&quot;,&quot;))</span>
+<span class="fc" id="L453">					names.add(expectName());</span>
+<span class="fc bfc" id="L454" title="All 2 branches covered.">				if (t.text.equals(&quot;global&quot;))</span>
+<span class="fc" id="L455">					return new Ast.Global(t.line, t.col, names);</span>
+<span class="fc" id="L456">				return new Ast.Nonlocal(t.line, t.col, names);</span>
+			}
+			case &quot;del&quot;: {
+<span class="fc" id="L459">				next();</span>
+<span class="fc" id="L460">				List&lt;Ast.Expr&gt; targets = new ArrayList&lt;Ast.Expr&gt;();</span>
+				while (true) {
+<span class="fc" id="L462">					Ast.Expr target = test();</span>
+<span class="fc" id="L463">					setContext(target, Ast.Ctx.Del);</span>
+<span class="fc" id="L464">					targets.add(target);</span>
+<span class="fc bfc" id="L465" title="All 2 branches covered.">					if (!acceptOp(&quot;,&quot;))</span>
+<span class="fc" id="L466">						break;</span>
+<span class="pc bpc" id="L467" title="1 of 2 branches missed.">					if (!startsExpression(peek()))</span>
+<span class="nc" id="L468">						break;</span>
+<span class="fc" id="L469">				}</span>
+<span class="fc" id="L470">				return new Ast.Delete(t.line, t.col, targets);</span>
+			}
+			case &quot;import&quot;:
+<span class="fc" id="L473">				return importStatement();</span>
+			case &quot;from&quot;:
+<span class="fc" id="L475">				return importFrom();</span>
+			case &quot;yield&quot;:
+<span class="fc" id="L477">				throw error(&quot;'yield' is not supported&quot;);</span>
+			case &quot;await&quot;:
+<span class="fc" id="L479">				throw error(&quot;'await' is not supported&quot;);</span>
+			default:
+				break;
+			}
+		}
+<span class="fc" id="L484">		return expressionStatement();</span>
+	}
+
+	/** {@code from module import a, b as c}, or the names in parentheses. */
+	private Ast.ImportFrom importFrom() {
+<span class="fc" id="L489">		Token t = next();</span>
+<span class="pc bpc" id="L490" title="1 of 4 branches missed.">		if (isOp(&quot;.&quot;) || isOp(&quot;...&quot;))</span>
+<span class="fc" id="L491">			throw error(&quot;relative imports are not supported&quot;);</span>
+<span class="fc" id="L492">		StringBuilder module = new StringBuilder(expectName());</span>
+<span class="fc bfc" id="L493" title="All 2 branches covered.">		while (acceptOp(&quot;.&quot;))</span>
+<span class="fc" id="L494">			module.append('.').append(expectName());</span>
+<span class="fc" id="L495">		expectKw(&quot;import&quot;);</span>
+<span class="fc bfc" id="L496" title="All 2 branches covered.">		if (isOp(&quot;*&quot;))</span>
+<span class="fc" id="L497">			throw error(&quot;'from ... import *' is not supported: import the names one by one&quot;);</span>
+<span class="fc" id="L498">		boolean paren = acceptOp(&quot;(&quot;);</span>
+<span class="fc" id="L499">		List&lt;Ast.Alias&gt; names = new ArrayList&lt;Ast.Alias&gt;();</span>
+		while (true) {
+<span class="fc" id="L501">			Token nt = peek();</span>
+<span class="fc" id="L502">			String name = expectName();</span>
+<span class="fc" id="L503">			String as = null;</span>
+<span class="fc bfc" id="L504" title="All 2 branches covered.">			if (acceptKw(&quot;as&quot;))</span>
+<span class="fc" id="L505">				as = expectName();</span>
+<span class="fc" id="L506">			names.add(new Ast.Alias(nt.line, nt.col, name, as));</span>
+<span class="fc bfc" id="L507" title="All 6 branches covered.">			if (!acceptOp(&quot;,&quot;) || paren &amp;&amp; isOp(&quot;)&quot;))</span>
+<span class="fc" id="L508">				break;</span>
+<span class="fc" id="L509">		}</span>
+<span class="fc bfc" id="L510" title="All 2 branches covered.">		if (paren)</span>
+<span class="fc" id="L511">			expectOp(&quot;)&quot;);</span>
+<span class="fc" id="L512">		return new Ast.ImportFrom(t.line, t.col, module.toString(), names);</span>
+	}
+
+	private Ast.Import importStatement() {
+<span class="fc" id="L516">		Token t = next();</span>
+<span class="fc" id="L517">		List&lt;Ast.Alias&gt; names = new ArrayList&lt;Ast.Alias&gt;();</span>
+		while (true) {
+<span class="fc" id="L519">			Token nt = peek();</span>
+<span class="fc" id="L520">			StringBuilder name = new StringBuilder(expectName());</span>
+<span class="fc bfc" id="L521" title="All 2 branches covered.">			while (acceptOp(&quot;.&quot;))</span>
+<span class="fc" id="L522">				name.append('.').append(expectName());</span>
+<span class="fc" id="L523">			String as = null;</span>
+<span class="fc bfc" id="L524" title="All 2 branches covered.">			if (acceptKw(&quot;as&quot;))</span>
+<span class="fc" id="L525">				as = expectName();</span>
+<span class="fc" id="L526">			names.add(new Ast.Alias(nt.line, nt.col, name.toString(), as));</span>
+<span class="fc bfc" id="L527" title="All 2 branches covered.">			if (!acceptOp(&quot;,&quot;))</span>
+<span class="fc" id="L528">				break;</span>
+<span class="fc" id="L529">		}</span>
+<span class="fc" id="L530">		return new Ast.Import(t.line, t.col, names);</span>
+	}
+
+	private static Ast.Operator augOp(String text) {
+<span class="fc bfc" id="L534" title="All 13 branches covered.">		switch (text) {</span>
+		case &quot;+=&quot;:
+<span class="fc" id="L536">			return Ast.Operator.Add;</span>
+		case &quot;-=&quot;:
+<span class="fc" id="L538">			return Ast.Operator.Sub;</span>
+		case &quot;*=&quot;:
+<span class="fc" id="L540">			return Ast.Operator.Mult;</span>
+		case &quot;/=&quot;:
+<span class="fc" id="L542">			return Ast.Operator.Div;</span>
+		case &quot;//=&quot;:
+<span class="fc" id="L544">			return Ast.Operator.FloorDiv;</span>
+		case &quot;%=&quot;:
+<span class="fc" id="L546">			return Ast.Operator.Mod;</span>
+		case &quot;**=&quot;:
+<span class="fc" id="L548">			return Ast.Operator.Pow;</span>
+		case &quot;&lt;&lt;=&quot;:
+<span class="fc" id="L550">			return Ast.Operator.LShift;</span>
+		case &quot;&gt;&gt;=&quot;:
+<span class="fc" id="L552">			return Ast.Operator.RShift;</span>
+		case &quot;&amp;=&quot;:
+<span class="fc" id="L554">			return Ast.Operator.BitAnd;</span>
+		case &quot;|=&quot;:
+<span class="fc" id="L556">			return Ast.Operator.BitOr;</span>
+		case &quot;^=&quot;:
+<span class="fc" id="L558">			return Ast.Operator.BitXor;</span>
+		default:
+<span class="fc" id="L560">			return null;</span>
+		}
+	}
+
+	private Ast.Stmt expressionStatement() {
+<span class="fc" id="L565">		Token t = peek();</span>
+<span class="fc" id="L566">		Ast.Expr first = testList();</span>
+<span class="fc" id="L567">		Token op = peek();</span>
+<span class="fc bfc" id="L568" title="All 2 branches covered.">		if (op.kind == Token.OP) {</span>
+<span class="fc" id="L569">			Ast.Operator aug = augOp(op.text);</span>
+<span class="fc bfc" id="L570" title="All 2 branches covered.">			if (aug != null) {</span>
+<span class="pc bpc" id="L571" title="1 of 6 branches missed.">				if (!(first instanceof Ast.Name || first instanceof Ast.Attribute || first instanceof Ast.Subscript))</span>
+<span class="nc" id="L572">					throw new PySyntaxError(&quot;illegal expression for augmented assignment&quot;, op.line, op.col);</span>
+<span class="fc" id="L573">				next();</span>
+<span class="fc" id="L574">				setContext(first, Ast.Ctx.Store);</span>
+<span class="fc" id="L575">				Ast.Expr value = testList();</span>
+<span class="fc" id="L576">				return new Ast.AugAssign(t.line, t.col, first, aug, value);</span>
+			}
+<span class="fc bfc" id="L578" title="All 2 branches covered.">			if (op.text.equals(&quot;=&quot;)) {</span>
+<span class="fc" id="L579">				List&lt;Ast.Expr&gt; exprs = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L580">				exprs.add(first);</span>
+<span class="fc bfc" id="L581" title="All 2 branches covered.">				while (acceptOp(&quot;=&quot;))</span>
+<span class="fc" id="L582">					exprs.add(testList());</span>
+<span class="fc" id="L583">				Ast.Expr value = exprs.remove(exprs.size() - 1);</span>
+<span class="fc bfc" id="L584" title="All 2 branches covered.">				for (Ast.Expr target : exprs)</span>
+<span class="fc" id="L585">					setContext(target, Ast.Ctx.Store);</span>
+<span class="fc" id="L586">				return new Ast.Assign(t.line, t.col, exprs, value);</span>
+			}
+<span class="fc bfc" id="L588" title="All 2 branches covered.">			if (op.text.equals(&quot;:&quot;))</span>
+<span class="fc" id="L589">				throw error(&quot;annotated assignments are not supported&quot;);</span>
+<span class="pc bpc" id="L590" title="1 of 2 branches missed.">			if (op.text.equals(&quot;:=&quot;))</span>
+<span class="nc" id="L591">				throw error(&quot;the walrus operator is not supported&quot;);</span>
+		}
+<span class="fc" id="L593">		return new Ast.ExprStmt(t.line, t.col, first);</span>
+	}
+
+	private void setContext(Ast.Expr target, Ast.Ctx ctx) {
+<span class="fc bfc" id="L597" title="All 6 branches covered.">		if (target instanceof Ast.Name || target instanceof Ast.Attribute || target instanceof Ast.Subscript) {</span>
+<span class="fc" id="L598">			((Ast.CtxExpr) target).ctx = ctx;</span>
+<span class="fc" id="L599">			return;</span>
+		}
+<span class="fc bfc" id="L601" title="All 4 branches covered.">		if (target instanceof Ast.TupleExpr || target instanceof Ast.ListExpr) {</span>
+<span class="fc" id="L602">			((Ast.CtxExpr) target).ctx = ctx;</span>
+<span class="fc bfc" id="L603" title="All 2 branches covered.">			List&lt;Ast.Expr&gt; elts = target instanceof Ast.TupleExpr ? ((Ast.TupleExpr) target).elts</span>
+<span class="fc" id="L604">					: ((Ast.ListExpr) target).elts;</span>
+<span class="fc bfc" id="L605" title="All 2 branches covered.">			for (Ast.Expr e : elts)</span>
+<span class="fc" id="L606">				setContext(e, ctx);</span>
+<span class="fc" id="L607">			return;</span>
+		}
+<span class="pc bpc" id="L609" title="1 of 2 branches missed.">		if (target instanceof Ast.Starred)</span>
+<span class="nc" id="L610">			throw new PySyntaxError(&quot;starred assignment targets are not supported&quot;, target.line, target.col);</span>
+<span class="fc bfc" id="L611" title="All 2 branches covered.">		String what = target instanceof Ast.Constant ? &quot;literal&quot;</span>
+<span class="fc bfc" id="L612" title="All 2 branches covered.">				: target instanceof Ast.Call ? &quot;function call&quot;</span>
+<span class="fc bfc" id="L613" title="All 2 branches covered.">						: target instanceof Ast.SetExpr ? &quot;set display&quot;</span>
+<span class="fc bfc" id="L614" title="All 2 branches covered.">								: target instanceof Ast.SetComp ? &quot;set comprehension&quot; : target.type().toLowerCase();</span>
+<span class="fc bfc" id="L615" title="All 2 branches covered.">		throw new PySyntaxError(&quot;cannot &quot; + (ctx == Ast.Ctx.Del ? &quot;delete &quot; : &quot;assign to &quot;) + what, target.line,</span>
+				target.col);
+	}
+
+	// ------------------------------------------------------------ expressions
+
+	/** True if the token can start an expression. */
+	private static boolean startsExpression(Token t) {
+<span class="fc bfc" id="L623" title="All 4 branches covered.">		switch (t.kind) {</span>
+		case Token.NAME:
+		case Token.NUMBER:
+		case Token.STRING:
+<span class="fc" id="L627">			return true;</span>
+		case Token.KEYWORD:
+<span class="fc bfc" id="L629" title="All 6 branches covered.">			return t.text.equals(&quot;not&quot;) || t.text.equals(&quot;lambda&quot;) || t.text.equals(&quot;None&quot;)</span>
+<span class="pc bpc" id="L630" title="3 of 6 branches missed.">					|| t.text.equals(&quot;True&quot;) || t.text.equals(&quot;False&quot;) || t.text.equals(&quot;yield&quot;)</span>
+<span class="pc bnc" id="L631" title="All 2 branches missed.">					|| t.text.equals(&quot;await&quot;);</span>
+		case Token.OP:
+<span class="fc bfc" id="L633" title="All 2 branches covered.">			switch (t.text) {</span>
+			case &quot;(&quot;:
+			case &quot;[&quot;:
+			case &quot;{&quot;:
+			case &quot;-&quot;:
+			case &quot;+&quot;:
+			case &quot;~&quot;:
+			case &quot;*&quot;:
+			case &quot;**&quot;:
+			case &quot;...&quot;:
+<span class="fc" id="L643">				return true;</span>
+			default:
+<span class="fc" id="L645">				return false;</span>
+			}
+		default:
+<span class="fc" id="L648">			return false;</span>
+		}
+	}
+
+	/** test (',' test)* [','] : a Tuple when there is a comma. */
+	private Ast.Expr testList() {
+<span class="fc" id="L654">		Token t = peek();</span>
+<span class="fc" id="L655">		Ast.Expr first = test();</span>
+<span class="fc bfc" id="L656" title="All 2 branches covered.">		if (!isOp(&quot;,&quot;))</span>
+<span class="fc" id="L657">			return first;</span>
+<span class="fc" id="L658">		List&lt;Ast.Expr&gt; elts = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L659">		elts.add(first);</span>
+<span class="fc bfc" id="L660" title="All 2 branches covered.">		while (acceptOp(&quot;,&quot;)) {</span>
+<span class="fc bfc" id="L661" title="All 2 branches covered.">			if (!startsExpression(peek()))</span>
+<span class="fc" id="L662">				break;</span>
+<span class="fc" id="L663">			elts.add(test());</span>
+		}
+<span class="fc" id="L665">		return new Ast.TupleExpr(t.line, t.col, elts);</span>
+	}
+
+	/** Targets of a for loop or comprehension: bitwise-or expressions separated by commas. */
+	private Ast.Expr targetList() {
+<span class="fc" id="L670">		Token t = peek();</span>
+<span class="fc" id="L671">		Ast.Expr first = bitOr();</span>
+<span class="fc bfc" id="L672" title="All 2 branches covered.">		if (!isOp(&quot;,&quot;))</span>
+<span class="fc" id="L673">			return first;</span>
+<span class="fc" id="L674">		List&lt;Ast.Expr&gt; elts = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L675">		elts.add(first);</span>
+<span class="fc bfc" id="L676" title="All 2 branches covered.">		while (acceptOp(&quot;,&quot;)) {</span>
+<span class="pc bpc" id="L677" title="2 of 4 branches missed.">			if (!startsExpression(peek()) || isKw(&quot;in&quot;))</span>
+<span class="nc" id="L678">				break;</span>
+<span class="fc" id="L679">			elts.add(bitOr());</span>
+		}
+<span class="fc" id="L681">		return new Ast.TupleExpr(t.line, t.col, elts);</span>
+	}
+
+	private Ast.Expr test() {
+<span class="fc" id="L685">		enter();</span>
+<span class="fc" id="L686">		Ast.Expr e = testBody();</span>
+<span class="fc" id="L687">		depth--;</span>
+<span class="fc" id="L688">		return e;</span>
+	}
+
+	private Ast.Expr testBody() {
+<span class="fc" id="L692">		Token t = peek();</span>
+<span class="fc bfc" id="L693" title="All 2 branches covered.">		if (t.isKeyword(&quot;lambda&quot;))</span>
+<span class="fc" id="L694">			return lambda();</span>
+<span class="pc bpc" id="L695" title="1 of 4 branches missed.">		if (t.isKeyword(&quot;yield&quot;) || t.isKeyword(&quot;await&quot;))</span>
+<span class="fc" id="L696">			throw error(&quot;'&quot; + t.text + &quot;' is not supported&quot;);</span>
+<span class="fc" id="L697">		Ast.Expr body = orTest();</span>
+<span class="fc bfc" id="L698" title="All 2 branches covered.">		if (isKw(&quot;if&quot;)) {</span>
+<span class="fc" id="L699">			next();</span>
+<span class="fc" id="L700">			Ast.Expr cond = orTest();</span>
+<span class="fc" id="L701">			expectKw(&quot;else&quot;);</span>
+<span class="fc" id="L702">			Ast.Expr orelse = test();</span>
+<span class="fc" id="L703">			return new Ast.IfExp(t.line, t.col, cond, body, orelse);</span>
+		}
+<span class="fc" id="L705">		return body;</span>
+	}
+
+	private Ast.Expr lambda() {
+<span class="fc" id="L709">		Token t = next();</span>
+<span class="fc" id="L710">		boolean saved = isLambdaParameters;</span>
+<span class="fc" id="L711">		isLambdaParameters = true;</span>
+<span class="fc" id="L712">		Ast.Arguments args = parameters(&quot;:&quot;);</span>
+<span class="fc" id="L713">		isLambdaParameters = saved;</span>
+<span class="fc" id="L714">		expectOp(&quot;:&quot;);</span>
+<span class="fc" id="L715">		Ast.Expr body = test();</span>
+<span class="fc" id="L716">		return new Ast.Lambda(t.line, t.col, args, body);</span>
+	}
+
+	private Ast.Expr orTest() {
+<span class="fc" id="L720">		Token t = peek();</span>
+<span class="fc" id="L721">		Ast.Expr first = andTest();</span>
+<span class="fc bfc" id="L722" title="All 2 branches covered.">		if (!isKw(&quot;or&quot;))</span>
+<span class="fc" id="L723">			return first;</span>
+<span class="fc" id="L724">		List&lt;Ast.Expr&gt; values = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L725">		values.add(first);</span>
+<span class="fc bfc" id="L726" title="All 2 branches covered.">		while (acceptKw(&quot;or&quot;))</span>
+<span class="fc" id="L727">			values.add(andTest());</span>
+<span class="fc" id="L728">		return new Ast.BoolOp(t.line, t.col, Ast.BoolOperator.Or, values);</span>
+	}
+
+	private Ast.Expr andTest() {
+<span class="fc" id="L732">		Token t = peek();</span>
+<span class="fc" id="L733">		Ast.Expr first = notTest();</span>
+<span class="fc bfc" id="L734" title="All 2 branches covered.">		if (!isKw(&quot;and&quot;))</span>
+<span class="fc" id="L735">			return first;</span>
+<span class="fc" id="L736">		List&lt;Ast.Expr&gt; values = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L737">		values.add(first);</span>
+<span class="fc bfc" id="L738" title="All 2 branches covered.">		while (acceptKw(&quot;and&quot;))</span>
+<span class="fc" id="L739">			values.add(notTest());</span>
+<span class="fc" id="L740">		return new Ast.BoolOp(t.line, t.col, Ast.BoolOperator.And, values);</span>
+	}
+
+	private Ast.Expr notTest() {
+<span class="fc" id="L744">		Token t = peek();</span>
+<span class="fc bfc" id="L745" title="All 2 branches covered.">		if (acceptKw(&quot;not&quot;)) {</span>
+<span class="fc" id="L746">			enter();</span>
+<span class="fc" id="L747">			Ast.Expr operand = notTest();</span>
+<span class="fc" id="L748">			depth--;</span>
+<span class="fc" id="L749">			return new Ast.UnaryOp(t.line, t.col, Ast.UnaryOperator.Not, operand);</span>
+		}
+<span class="fc" id="L751">		return comparison();</span>
+	}
+
+	private Ast.CmpOperator comparisonOperator() {
+<span class="fc" id="L755">		Token t = peek();</span>
+<span class="fc bfc" id="L756" title="All 2 branches covered.">		if (t.kind == Token.OP) {</span>
+<span class="fc bfc" id="L757" title="All 7 branches covered.">			switch (t.text) {</span>
+			case &quot;&lt;&quot;:
+<span class="fc" id="L759">				next();</span>
+<span class="fc" id="L760">				return Ast.CmpOperator.Lt;</span>
+			case &quot;&gt;&quot;:
+<span class="fc" id="L762">				next();</span>
+<span class="fc" id="L763">				return Ast.CmpOperator.Gt;</span>
+			case &quot;&lt;=&quot;:
+<span class="fc" id="L765">				next();</span>
+<span class="fc" id="L766">				return Ast.CmpOperator.LtE;</span>
+			case &quot;&gt;=&quot;:
+<span class="fc" id="L768">				next();</span>
+<span class="fc" id="L769">				return Ast.CmpOperator.GtE;</span>
+			case &quot;==&quot;:
+<span class="fc" id="L771">				next();</span>
+<span class="fc" id="L772">				return Ast.CmpOperator.Eq;</span>
+			case &quot;!=&quot;:
+<span class="fc" id="L774">				next();</span>
+<span class="fc" id="L775">				return Ast.CmpOperator.NotEq;</span>
+			default:
+<span class="fc" id="L777">				return null;</span>
+			}
+		}
+<span class="fc bfc" id="L780" title="All 2 branches covered.">		if (t.isKeyword(&quot;in&quot;)) {</span>
+<span class="fc" id="L781">			next();</span>
+<span class="fc" id="L782">			return Ast.CmpOperator.In;</span>
+		}
+<span class="fc bfc" id="L784" title="All 4 branches covered.">		if (t.isKeyword(&quot;not&quot;) &amp;&amp; peekAt(1).isKeyword(&quot;in&quot;)) {</span>
+<span class="fc" id="L785">			next();</span>
+<span class="fc" id="L786">			next();</span>
+<span class="fc" id="L787">			return Ast.CmpOperator.NotIn;</span>
+		}
+<span class="fc bfc" id="L789" title="All 2 branches covered.">		if (t.isKeyword(&quot;is&quot;)) {</span>
+<span class="fc" id="L790">			next();</span>
+<span class="fc bfc" id="L791" title="All 2 branches covered.">			return acceptKw(&quot;not&quot;) ? Ast.CmpOperator.IsNot : Ast.CmpOperator.Is;</span>
+		}
+<span class="fc" id="L793">		return null;</span>
+	}
+
+	private Ast.Expr comparison() {
+<span class="fc" id="L797">		Token t = peek();</span>
+<span class="fc" id="L798">		Ast.Expr left = bitOr();</span>
+<span class="fc" id="L799">		List&lt;Ast.CmpOperator&gt; ops = null;</span>
+<span class="fc" id="L800">		List&lt;Ast.Expr&gt; comparators = null;</span>
+		Ast.CmpOperator op;
+<span class="fc bfc" id="L802" title="All 2 branches covered.">		while ((op = comparisonOperator()) != null) {</span>
+<span class="fc bfc" id="L803" title="All 2 branches covered.">			if (ops == null) {</span>
+<span class="fc" id="L804">				ops = new ArrayList&lt;Ast.CmpOperator&gt;();</span>
+<span class="fc" id="L805">				comparators = new ArrayList&lt;Ast.Expr&gt;();</span>
+			}
+<span class="fc" id="L807">			ops.add(op);</span>
+<span class="fc" id="L808">			comparators.add(bitOr());</span>
+		}
+<span class="fc bfc" id="L810" title="All 2 branches covered.">		if (ops == null)</span>
+<span class="fc" id="L811">			return left;</span>
+<span class="fc" id="L812">		return new Ast.Compare(t.line, t.col, left, ops, comparators);</span>
+	}
+
+	private Ast.Expr binary(Ast.Expr left, Ast.Operator op, Ast.Expr right, Token t) {
+<span class="fc" id="L816">		return new Ast.BinOp(t.line, t.col, left, op, right);</span>
+	}
+
+	private Ast.Expr bitOr() {
+<span class="fc" id="L820">		Token t = peek();</span>
+<span class="fc" id="L821">		Ast.Expr left = bitXor();</span>
+<span class="fc bfc" id="L822" title="All 2 branches covered.">		while (isOp(&quot;|&quot;)) {</span>
+<span class="fc" id="L823">			next();</span>
+<span class="fc" id="L824">			left = binary(left, Ast.Operator.BitOr, bitXor(), t);</span>
+		}
+<span class="fc" id="L826">		return left;</span>
+	}
+
+	private Ast.Expr bitXor() {
+<span class="fc" id="L830">		Token t = peek();</span>
+<span class="fc" id="L831">		Ast.Expr left = bitAnd();</span>
+<span class="fc bfc" id="L832" title="All 2 branches covered.">		while (isOp(&quot;^&quot;)) {</span>
+<span class="fc" id="L833">			next();</span>
+<span class="fc" id="L834">			left = binary(left, Ast.Operator.BitXor, bitAnd(), t);</span>
+		}
+<span class="fc" id="L836">		return left;</span>
+	}
+
+	private Ast.Expr bitAnd() {
+<span class="fc" id="L840">		Token t = peek();</span>
+<span class="fc" id="L841">		Ast.Expr left = shift();</span>
+<span class="fc bfc" id="L842" title="All 2 branches covered.">		while (isOp(&quot;&amp;&quot;)) {</span>
+<span class="fc" id="L843">			next();</span>
+<span class="fc" id="L844">			left = binary(left, Ast.Operator.BitAnd, shift(), t);</span>
+		}
+<span class="fc" id="L846">		return left;</span>
+	}
+
+	private Ast.Expr shift() {
+<span class="fc" id="L850">		Token t = peek();</span>
+<span class="fc" id="L851">		Ast.Expr left = arith();</span>
+<span class="fc bfc" id="L852" title="All 4 branches covered.">		while (isOp(&quot;&lt;&lt;&quot;) || isOp(&quot;&gt;&gt;&quot;)) {</span>
+<span class="fc bfc" id="L853" title="All 2 branches covered.">			Ast.Operator op = next().text.equals(&quot;&lt;&lt;&quot;) ? Ast.Operator.LShift : Ast.Operator.RShift;</span>
+<span class="fc" id="L854">			left = binary(left, op, arith(), t);</span>
+<span class="fc" id="L855">		}</span>
+<span class="fc" id="L856">		return left;</span>
+	}
+
+	private Ast.Expr arith() {
+<span class="fc" id="L860">		Token t = peek();</span>
+<span class="fc" id="L861">		Ast.Expr left = term();</span>
+<span class="fc bfc" id="L862" title="All 4 branches covered.">		while (isOp(&quot;+&quot;) || isOp(&quot;-&quot;)) {</span>
+<span class="fc bfc" id="L863" title="All 2 branches covered.">			Ast.Operator op = next().text.equals(&quot;+&quot;) ? Ast.Operator.Add : Ast.Operator.Sub;</span>
+<span class="fc" id="L864">			left = binary(left, op, term(), t);</span>
+<span class="fc" id="L865">		}</span>
+<span class="fc" id="L866">		return left;</span>
+	}
+
+	private Ast.Expr term() {
+<span class="fc" id="L870">		Token t = peek();</span>
+<span class="fc" id="L871">		Ast.Expr left = factor();</span>
+		while (true) {
+			Ast.Operator op;
+<span class="fc bfc" id="L874" title="All 2 branches covered.">			if (isOp(&quot;*&quot;))</span>
+<span class="fc" id="L875">				op = Ast.Operator.Mult;</span>
+<span class="fc bfc" id="L876" title="All 2 branches covered.">			else if (isOp(&quot;/&quot;))</span>
+<span class="fc" id="L877">				op = Ast.Operator.Div;</span>
+<span class="fc bfc" id="L878" title="All 2 branches covered.">			else if (isOp(&quot;//&quot;))</span>
+<span class="fc" id="L879">				op = Ast.Operator.FloorDiv;</span>
+<span class="fc bfc" id="L880" title="All 2 branches covered.">			else if (isOp(&quot;%&quot;))</span>
+<span class="fc" id="L881">				op = Ast.Operator.Mod;</span>
+<span class="fc bfc" id="L882" title="All 2 branches covered.">			else if (isOp(&quot;@&quot;))</span>
+<span class="fc" id="L883">				throw error(&quot;the '@' operator is not supported&quot;);</span>
+			else
+<span class="fc" id="L885">				return left;</span>
+<span class="fc" id="L886">			next();</span>
+<span class="fc" id="L887">			left = binary(left, op, factor(), t);</span>
+<span class="fc" id="L888">		}</span>
+	}
+
+	private Ast.Expr factor() {
+<span class="fc" id="L892">		Token t = peek();</span>
+<span class="fc bfc" id="L893" title="All 6 branches covered.">		if (isOp(&quot;-&quot;) || isOp(&quot;+&quot;) || isOp(&quot;~&quot;)) {</span>
+<span class="fc" id="L894">			next();</span>
+<span class="fc bfc" id="L895" title="All 2 branches covered.">			Ast.UnaryOperator op = t.text.equals(&quot;-&quot;) ? Ast.UnaryOperator.USub</span>
+<span class="fc bfc" id="L896" title="All 2 branches covered.">					: t.text.equals(&quot;+&quot;) ? Ast.UnaryOperator.UAdd : Ast.UnaryOperator.Invert;</span>
+<span class="fc" id="L897">			enter();</span>
+<span class="fc" id="L898">			Ast.Expr operand = factor();</span>
+<span class="fc" id="L899">			depth--;</span>
+<span class="fc" id="L900">			return new Ast.UnaryOp(t.line, t.col, op, operand);</span>
+		}
+<span class="fc" id="L902">		return power();</span>
+	}
+
+	private Ast.Expr power() {
+<span class="fc" id="L906">		Token t = peek();</span>
+<span class="fc" id="L907">		Ast.Expr base = atomExpression();</span>
+<span class="fc bfc" id="L908" title="All 2 branches covered.">		if (isOp(&quot;**&quot;)) {</span>
+<span class="fc" id="L909">			next();</span>
+			// the right operand is one more level: a ** b ** c ** ...
+<span class="fc" id="L911">			enter();</span>
+<span class="fc" id="L912">			Ast.Expr exponent = factor();</span>
+<span class="fc" id="L913">			depth--;</span>
+<span class="fc" id="L914">			return binary(base, Ast.Operator.Pow, exponent, t);</span>
+		}
+<span class="fc" id="L916">		return base;</span>
+	}
+
+	private Ast.Expr atomExpression() {
+<span class="fc" id="L920">		Token t = peek();</span>
+<span class="fc" id="L921">		Ast.Expr e = atom();</span>
+		while (true) {
+<span class="fc bfc" id="L923" title="All 2 branches covered.">			if (isOp(&quot;(&quot;)) {</span>
+<span class="fc" id="L924">				e = call(e, t);</span>
+<span class="fc bfc" id="L925" title="All 2 branches covered.">			} else if (isOp(&quot;[&quot;)) {</span>
+<span class="fc" id="L926">				Token st = next();</span>
+<span class="fc" id="L927">				Ast.Expr slice = subscriptItems();</span>
+<span class="fc" id="L928">				expectOp(&quot;]&quot;);</span>
+<span class="fc" id="L929">				e = new Ast.Subscript(t.line, t.col, e, slice);</span>
+<span class="fc bfc" id="L930" title="All 2 branches covered.">			} else if (isOp(&quot;.&quot;)) {</span>
+<span class="fc" id="L931">				next();</span>
+<span class="fc" id="L932">				String attr = expectName();</span>
+<span class="fc" id="L933">				e = new Ast.Attribute(t.line, t.col, e, attr);</span>
+<span class="fc" id="L934">			} else {</span>
+<span class="fc" id="L935">				return e;</span>
+			}
+		}
+	}
+
+	private Ast.Expr call(Ast.Expr func, Token t) {
+<span class="fc" id="L941">		expectOp(&quot;(&quot;);</span>
+<span class="fc" id="L942">		List&lt;Ast.Expr&gt; args = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L943">		List&lt;Ast.Keyword&gt; keywords = new ArrayList&lt;Ast.Keyword&gt;();</span>
+<span class="fc bfc" id="L944" title="All 2 branches covered.">		while (!isOp(&quot;)&quot;)) {</span>
+<span class="fc" id="L945">			Token at = peek();</span>
+<span class="fc bfc" id="L946" title="All 2 branches covered.">			if (isOp(&quot;*&quot;)) {</span>
+<span class="fc" id="L947">				next();</span>
+<span class="fc" id="L948">				args.add(new Ast.Starred(at.line, at.col, test()));</span>
+<span class="fc bfc" id="L949" title="All 2 branches covered.">			} else if (isOp(&quot;**&quot;)) {</span>
+<span class="fc" id="L950">				next();</span>
+<span class="fc" id="L951">				keywords.add(new Ast.Keyword(at.line, at.col, null, test()));</span>
+<span class="fc bfc" id="L952" title="All 4 branches covered.">			} else if (at.kind == Token.NAME &amp;&amp; peekAt(1).isOp(&quot;=&quot;)) {</span>
+<span class="fc" id="L953">				next();</span>
+<span class="fc" id="L954">				next();</span>
+<span class="fc" id="L955">				keywords.add(new Ast.Keyword(at.line, at.col, at.text, test()));</span>
+			} else {
+<span class="fc" id="L957">				Ast.Expr value = test();</span>
+<span class="fc bfc" id="L958" title="All 2 branches covered.">				if (isKw(&quot;for&quot;)) {</span>
+					// f(x for x in y): the generator expression is the only argument
+<span class="fc bfc" id="L960" title="All 4 branches covered.">					if (!args.isEmpty() || !keywords.isEmpty())</span>
+<span class="fc" id="L961">						throw error(&quot;Generator expression must be parenthesized&quot;);</span>
+<span class="fc" id="L962">					List&lt;Ast.Comprehension&gt; generators = comprehensions();</span>
+<span class="fc bfc" id="L963" title="All 2 branches covered.">					if (!isOp(&quot;)&quot;))</span>
+<span class="fc" id="L964">						throw error(&quot;Generator expression must be parenthesized&quot;);</span>
+<span class="fc" id="L965">					value = new Ast.GeneratorExp(at.line, at.col, value, generators);</span>
+				}
+<span class="fc bfc" id="L967" title="All 2 branches covered.">				if (!keywords.isEmpty())</span>
+<span class="fc" id="L968">					throw new PySyntaxError(&quot;positional argument follows keyword argument&quot;, at.line, at.col);</span>
+<span class="fc" id="L969">				args.add(value);</span>
+			}
+<span class="fc bfc" id="L971" title="All 2 branches covered.">			if (!acceptOp(&quot;,&quot;))</span>
+<span class="fc" id="L972">				break;</span>
+<span class="fc" id="L973">		}</span>
+<span class="fc" id="L974">		expectOp(&quot;)&quot;);</span>
+<span class="fc" id="L975">		return new Ast.Call(t.line, t.col, func, args, keywords);</span>
+	}
+
+	private Ast.Expr subscriptItems() {
+<span class="fc" id="L979">		Token t = peek();</span>
+<span class="fc" id="L980">		Ast.Expr first = subscriptItem();</span>
+<span class="fc bfc" id="L981" title="All 2 branches covered.">		if (!isOp(&quot;,&quot;))</span>
+<span class="fc" id="L982">			return first;</span>
+<span class="fc" id="L983">		List&lt;Ast.Expr&gt; elts = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L984">		elts.add(first);</span>
+<span class="fc bfc" id="L985" title="All 2 branches covered.">		while (acceptOp(&quot;,&quot;)) {</span>
+<span class="fc bfc" id="L986" title="All 2 branches covered.">			if (isOp(&quot;]&quot;))</span>
+<span class="fc" id="L987">				break;</span>
+<span class="fc" id="L988">			elts.add(subscriptItem());</span>
+		}
+<span class="fc" id="L990">		return new Ast.TupleExpr(t.line, t.col, elts);</span>
+	}
+
+	private Ast.Expr subscriptItem() {
+<span class="fc" id="L994">		Token t = peek();</span>
+<span class="fc" id="L995">		Ast.Expr lower = null;</span>
+<span class="fc bfc" id="L996" title="All 2 branches covered.">		if (!isOp(&quot;:&quot;))</span>
+<span class="fc" id="L997">			lower = test();</span>
+<span class="fc bfc" id="L998" title="All 2 branches covered.">		if (!isOp(&quot;:&quot;))</span>
+<span class="fc" id="L999">			return lower;</span>
+<span class="fc" id="L1000">		next();</span>
+<span class="fc" id="L1001">		Ast.Expr upper = null;</span>
+<span class="fc" id="L1002">		Ast.Expr step = null;</span>
+<span class="pc bpc" id="L1003" title="1 of 6 branches missed.">		if (!isOp(&quot;:&quot;) &amp;&amp; !isOp(&quot;,&quot;) &amp;&amp; !isOp(&quot;]&quot;))</span>
+<span class="fc" id="L1004">			upper = test();</span>
+<span class="fc bfc" id="L1005" title="All 2 branches covered.">		if (acceptOp(&quot;:&quot;)) {</span>
+<span class="pc bpc" id="L1006" title="2 of 4 branches missed.">			if (!isOp(&quot;,&quot;) &amp;&amp; !isOp(&quot;]&quot;))</span>
+<span class="fc" id="L1007">				step = test();</span>
+		}
+<span class="fc" id="L1009">		return new Ast.Slice(t.line, t.col, lower, upper, step);</span>
+	}
+
+	private Ast.Expr atom() {
+<span class="fc" id="L1013">		Token t = peek();</span>
+<span class="fc bfc" id="L1014" title="All 6 branches covered.">		switch (t.kind) {</span>
+		case Token.NAME:
+<span class="fc" id="L1016">			next();</span>
+<span class="fc" id="L1017">			return new Ast.Name(t.line, t.col, t.text);</span>
+		case Token.NUMBER:
+<span class="fc" id="L1019">			next();</span>
+<span class="fc" id="L1020">			return new Ast.Constant(t.line, t.col, t.value);</span>
+		case Token.STRING:
+<span class="fc" id="L1022">			return strings();</span>
+		case Token.KEYWORD:
+<span class="fc bfc" id="L1024" title="All 4 branches covered.">			switch (t.text) {</span>
+			case &quot;None&quot;:
+<span class="fc" id="L1026">				next();</span>
+<span class="fc" id="L1027">				return new Ast.Constant(t.line, t.col, null);</span>
+			case &quot;True&quot;:
+<span class="fc" id="L1029">				next();</span>
+<span class="fc" id="L1030">				return new Ast.Constant(t.line, t.col, Boolean.TRUE);</span>
+			case &quot;False&quot;:
+<span class="fc" id="L1032">				next();</span>
+<span class="fc" id="L1033">				return new Ast.Constant(t.line, t.col, Boolean.FALSE);</span>
+			default:
+<span class="fc" id="L1035">				throw invalidOrUnsupported(t);</span>
+			}
+		case Token.OP:
+<span class="fc bfc" id="L1038" title="All 2 branches covered.">			if (t.text.equals(&quot;(&quot;))</span>
+<span class="fc" id="L1039">				return parenthesized();</span>
+<span class="fc bfc" id="L1040" title="All 2 branches covered.">			if (t.text.equals(&quot;[&quot;))</span>
+<span class="fc" id="L1041">				return listDisplay();</span>
+<span class="fc bfc" id="L1042" title="All 2 branches covered.">			if (t.text.equals(&quot;{&quot;))</span>
+<span class="fc" id="L1043">				return dictDisplay();</span>
+<span class="fc bfc" id="L1044" title="All 2 branches covered.">			if (t.text.equals(&quot;...&quot;))</span>
+<span class="fc" id="L1045">				throw error(&quot;'...' is not supported&quot;);</span>
+<span class="fc" id="L1046">			throw invalid();</span>
+		default:
+<span class="fc" id="L1048">			throw invalid();</span>
+		}
+	}
+
+	private PySyntaxError invalidOrUnsupported(Token t) {
+<span class="pc bpc" id="L1053" title="1 of 2 branches missed.">		switch (t.text) {</span>
+		case &quot;yield&quot;:
+		case &quot;await&quot;:
+		case &quot;with&quot;:
+		case &quot;async&quot;:
+<span class="nc" id="L1058">			return error(&quot;'&quot; + t.text + &quot;' is not supported&quot;);</span>
+		default:
+<span class="fc" id="L1060">			return invalid();</span>
+		}
+	}
+
+	private Ast.Expr parenthesized() {
+<span class="fc" id="L1065">		Token t = next();</span>
+<span class="fc bfc" id="L1066" title="All 2 branches covered.">		if (acceptOp(&quot;)&quot;))</span>
+<span class="fc" id="L1067">			return new Ast.TupleExpr(t.line, t.col, new ArrayList&lt;Ast.Expr&gt;());</span>
+<span class="fc bfc" id="L1068" title="All 2 branches covered.">		if (isOp(&quot;*&quot;))</span>
+<span class="fc" id="L1069">			throw error(&quot;starred expressions are not supported&quot;);</span>
+<span class="fc" id="L1070">		Ast.Expr first = test();</span>
+<span class="fc bfc" id="L1071" title="All 2 branches covered.">		if (isKw(&quot;for&quot;)) {</span>
+<span class="fc" id="L1072">			List&lt;Ast.Comprehension&gt; generators = comprehensions();</span>
+<span class="fc" id="L1073">			expectOp(&quot;)&quot;);</span>
+<span class="fc" id="L1074">			return new Ast.GeneratorExp(t.line, t.col, first, generators);</span>
+		}
+<span class="fc bfc" id="L1076" title="All 2 branches covered.">		if (isOp(&quot;,&quot;)) {</span>
+<span class="fc" id="L1077">			List&lt;Ast.Expr&gt; elts = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L1078">			elts.add(first);</span>
+<span class="fc bfc" id="L1079" title="All 2 branches covered.">			while (acceptOp(&quot;,&quot;)) {</span>
+<span class="fc bfc" id="L1080" title="All 2 branches covered.">				if (isOp(&quot;)&quot;))</span>
+<span class="fc" id="L1081">					break;</span>
+<span class="fc" id="L1082">				elts.add(test());</span>
+			}
+<span class="fc" id="L1084">			expectOp(&quot;)&quot;);</span>
+<span class="fc" id="L1085">			return new Ast.TupleExpr(t.line, t.col, elts);</span>
+		}
+<span class="fc bfc" id="L1087" title="All 2 branches covered.">		if (isOp(&quot;:=&quot;))</span>
+<span class="fc" id="L1088">			throw error(&quot;the walrus operator is not supported&quot;);</span>
+<span class="fc" id="L1089">		expectOp(&quot;)&quot;);</span>
+<span class="fc" id="L1090">		return first;</span>
+	}
+
+	private Ast.Expr listDisplay() {
+<span class="fc" id="L1094">		Token t = next();</span>
+<span class="fc" id="L1095">		List&lt;Ast.Expr&gt; elts = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc bfc" id="L1096" title="All 2 branches covered.">		if (acceptOp(&quot;]&quot;))</span>
+<span class="fc" id="L1097">			return new Ast.ListExpr(t.line, t.col, elts);</span>
+<span class="fc bfc" id="L1098" title="All 2 branches covered.">		if (isOp(&quot;*&quot;))</span>
+<span class="fc" id="L1099">			throw error(&quot;starred expressions are not supported&quot;);</span>
+<span class="fc" id="L1100">		Ast.Expr first = test();</span>
+<span class="fc bfc" id="L1101" title="All 2 branches covered.">		if (isKw(&quot;for&quot;)) {</span>
+<span class="fc" id="L1102">			List&lt;Ast.Comprehension&gt; generators = comprehensions();</span>
+<span class="fc" id="L1103">			expectOp(&quot;]&quot;);</span>
+<span class="fc" id="L1104">			return new Ast.ListComp(t.line, t.col, first, generators);</span>
+		}
+<span class="fc" id="L1106">		elts.add(first);</span>
+<span class="fc bfc" id="L1107" title="All 2 branches covered.">		while (acceptOp(&quot;,&quot;)) {</span>
+<span class="fc bfc" id="L1108" title="All 2 branches covered.">			if (isOp(&quot;]&quot;))</span>
+<span class="fc" id="L1109">				break;</span>
+<span class="pc bpc" id="L1110" title="1 of 2 branches missed.">			if (isOp(&quot;*&quot;))</span>
+<span class="nc" id="L1111">				throw error(&quot;starred expressions are not supported&quot;);</span>
+<span class="fc" id="L1112">			elts.add(test());</span>
+		}
+<span class="fc" id="L1114">		expectOp(&quot;]&quot;);</span>
+<span class="fc" id="L1115">		return new Ast.ListExpr(t.line, t.col, elts);</span>
+	}
+
+	private Ast.Expr dictDisplay() {
+<span class="fc" id="L1119">		Token t = next();</span>
+<span class="fc" id="L1120">		List&lt;Ast.Expr&gt; keys = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L1121">		List&lt;Ast.Expr&gt; values = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc bfc" id="L1122" title="All 2 branches covered.">		if (acceptOp(&quot;}&quot;))</span>
+<span class="fc" id="L1123">			return new Ast.DictExpr(t.line, t.col, keys, values);</span>
+<span class="fc bfc" id="L1124" title="All 2 branches covered.">		if (isOp(&quot;**&quot;))</span>
+<span class="fc" id="L1125">			throw error(&quot;dictionary unpacking is not supported&quot;);</span>
+<span class="fc bfc" id="L1126" title="All 2 branches covered.">		if (isOp(&quot;*&quot;))</span>
+<span class="fc" id="L1127">			throw error(&quot;starred expressions are not supported&quot;);</span>
+<span class="fc" id="L1128">		Ast.Expr key = test();</span>
+<span class="fc bfc" id="L1129" title="All 2 branches covered.">		if (!isOp(&quot;:&quot;))</span>
+<span class="fc" id="L1130">			return setDisplay(t, key);</span>
+<span class="fc" id="L1131">		next();</span>
+<span class="fc" id="L1132">		Ast.Expr value = test();</span>
+<span class="fc bfc" id="L1133" title="All 2 branches covered.">		if (isKw(&quot;for&quot;)) {</span>
+<span class="fc" id="L1134">			List&lt;Ast.Comprehension&gt; generators = comprehensions();</span>
+<span class="fc" id="L1135">			expectOp(&quot;}&quot;);</span>
+<span class="fc" id="L1136">			return new Ast.DictComp(t.line, t.col, key, value, generators);</span>
+		}
+<span class="fc" id="L1138">		keys.add(key);</span>
+<span class="fc" id="L1139">		values.add(value);</span>
+<span class="fc bfc" id="L1140" title="All 2 branches covered.">		while (acceptOp(&quot;,&quot;)) {</span>
+<span class="fc bfc" id="L1141" title="All 2 branches covered.">			if (isOp(&quot;}&quot;))</span>
+<span class="fc" id="L1142">				break;</span>
+<span class="pc bpc" id="L1143" title="1 of 2 branches missed.">			if (isOp(&quot;**&quot;))</span>
+<span class="nc" id="L1144">				throw error(&quot;dictionary unpacking is not supported&quot;);</span>
+<span class="fc" id="L1145">			keys.add(test());</span>
+<span class="fc" id="L1146">			expectOp(&quot;:&quot;);</span>
+<span class="fc" id="L1147">			values.add(test());</span>
+		}
+<span class="fc" id="L1149">		expectOp(&quot;}&quot;);</span>
+<span class="fc" id="L1150">		return new Ast.DictExpr(t.line, t.col, keys, values);</span>
+	}
+
+	/** The rest of {@code {first, ...}} or {@code {first for ...}}. */
+	private Ast.Expr setDisplay(Token t, Ast.Expr first) {
+<span class="fc bfc" id="L1155" title="All 2 branches covered.">		if (isKw(&quot;for&quot;)) {</span>
+<span class="fc" id="L1156">			List&lt;Ast.Comprehension&gt; generators = comprehensions();</span>
+<span class="fc" id="L1157">			expectOp(&quot;}&quot;);</span>
+<span class="fc" id="L1158">			return new Ast.SetComp(t.line, t.col, first, generators);</span>
+		}
+<span class="fc" id="L1160">		List&lt;Ast.Expr&gt; elts = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc" id="L1161">		elts.add(first);</span>
+<span class="fc bfc" id="L1162" title="All 2 branches covered.">		while (acceptOp(&quot;,&quot;)) {</span>
+<span class="fc bfc" id="L1163" title="All 2 branches covered.">			if (isOp(&quot;}&quot;))</span>
+<span class="fc" id="L1164">				break;</span>
+<span class="fc bfc" id="L1165" title="All 2 branches covered.">			if (isOp(&quot;*&quot;))</span>
+<span class="fc" id="L1166">				throw error(&quot;starred expressions are not supported&quot;);</span>
+<span class="fc" id="L1167">			elts.add(test());</span>
+		}
+<span class="fc" id="L1169">		expectOp(&quot;}&quot;);</span>
+<span class="fc" id="L1170">		return new Ast.SetExpr(t.line, t.col, elts);</span>
+	}
+
+	private List&lt;Ast.Comprehension&gt; comprehensions() {
+<span class="fc" id="L1174">		List&lt;Ast.Comprehension&gt; generators = new ArrayList&lt;Ast.Comprehension&gt;();</span>
+<span class="fc bfc" id="L1175" title="All 2 branches covered.">		while (isKw(&quot;for&quot;)) {</span>
+<span class="fc" id="L1176">			Token t = next();</span>
+<span class="fc" id="L1177">			Ast.Expr target = targetList();</span>
+<span class="fc" id="L1178">			setContext(target, Ast.Ctx.Store);</span>
+<span class="fc" id="L1179">			expectKw(&quot;in&quot;);</span>
+<span class="fc" id="L1180">			Ast.Expr iter = orTest();</span>
+<span class="fc" id="L1181">			List&lt;Ast.Expr&gt; ifs = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc bfc" id="L1182" title="All 2 branches covered.">			while (isKw(&quot;if&quot;)) {</span>
+<span class="fc" id="L1183">				next();</span>
+<span class="fc" id="L1184">				ifs.add(orTest());</span>
+			}
+<span class="fc" id="L1186">			generators.add(new Ast.Comprehension(t.line, t.col, target, iter, ifs));</span>
+<span class="fc" id="L1187">		}</span>
+<span class="pc bpc" id="L1188" title="1 of 2 branches missed.">		if (isKw(&quot;async&quot;))</span>
+<span class="nc" id="L1189">			throw error(&quot;'async' is not supported&quot;);</span>
+<span class="fc" id="L1190">		return generators;</span>
+	}
+
+	// ------------------------------------------------------------ strings
+
+	private Ast.Expr strings() {
+<span class="fc" id="L1196">		Token first = peek();</span>
+<span class="fc" id="L1197">		List&lt;Object&gt; parts = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L1198">		boolean anyF = false;</span>
+<span class="fc bfc" id="L1199" title="All 2 branches covered.">		while (peek().kind == Token.STRING) {</span>
+<span class="fc" id="L1200">			Token t = next();</span>
+<span class="fc" id="L1201">			Token.StringLit lit = (Token.StringLit) t.value;</span>
+<span class="fc bfc" id="L1202" title="All 2 branches covered.">			if (lit.fstring) {</span>
+<span class="fc" id="L1203">				anyF = true;</span>
+<span class="fc" id="L1204">				fstringParts(lit.body, lit.raw, t, t.line, parts);</span>
+			} else {
+<span class="fc bfc" id="L1206" title="All 2 branches covered.">				parts.add(lit.raw ? lit.body : unescape(lit.body, t));</span>
+			}
+<span class="fc" id="L1208">		}</span>
+		// merge adjacent literal parts
+<span class="fc" id="L1210">		List&lt;Object&gt; merged = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L1211">		StringBuilder pending = null;</span>
+<span class="fc bfc" id="L1212" title="All 2 branches covered.">		for (Object part : parts) {</span>
+<span class="fc bfc" id="L1213" title="All 2 branches covered.">			if (part instanceof String) {</span>
+<span class="fc bfc" id="L1214" title="All 2 branches covered.">				if (pending == null)</span>
+<span class="fc" id="L1215">					pending = new StringBuilder();</span>
+<span class="fc" id="L1216">				pending.append((String) part);</span>
+			} else {
+<span class="pc bpc" id="L1218" title="1 of 4 branches missed.">				if (pending != null &amp;&amp; pending.length() &gt; 0)</span>
+<span class="fc" id="L1219">					merged.add(pending.toString());</span>
+<span class="fc" id="L1220">				pending = null;</span>
+<span class="fc" id="L1221">				merged.add(part);</span>
+			}
+<span class="fc" id="L1223">		}</span>
+<span class="pc bpc" id="L1224" title="1 of 6 branches missed.">		if (pending != null &amp;&amp; (pending.length() &gt; 0 || !anyF))</span>
+<span class="fc" id="L1225">			merged.add(pending.toString());</span>
+<span class="fc bfc" id="L1226" title="All 2 branches covered.">		if (!anyF)</span>
+<span class="pc bpc" id="L1227" title="1 of 2 branches missed.">			return new Ast.Constant(first.line, first.col, merged.isEmpty() ? &quot;&quot; : (String) merged.get(0));</span>
+<span class="fc" id="L1228">		List&lt;Ast.Expr&gt; values = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc bfc" id="L1229" title="All 2 branches covered.">		for (Object part : merged)</span>
+<span class="fc bfc" id="L1230" title="All 2 branches covered.">			values.add(part instanceof String ? new Ast.Constant(first.line, first.col, part) : (Ast.Expr) part);</span>
+<span class="fc" id="L1231">		return new Ast.JoinedStr(first.line, first.col, values);</span>
+	}
+
+	/**
+	 * Splits the body of an f-string into literal Strings and FormattedValue nodes.
+	 * {@code firstLine} is the line of the first char of the body: the expressions of
+	 * the fields are parsed with their own line, so that an error in one is reported there.
+	 */
+	private void fstringParts(String body, boolean raw, Token t, int firstLine, List&lt;Object&gt; out) {
+<span class="fc" id="L1240">		StringBuilder lit = new StringBuilder();</span>
+<span class="fc" id="L1241">		int i = 0;</span>
+<span class="fc" id="L1242">		int len = body.length();</span>
+<span class="fc bfc" id="L1243" title="All 2 branches covered.">		while (i &lt; len) {</span>
+<span class="fc" id="L1244">			char c = body.charAt(i);</span>
+<span class="fc bfc" id="L1245" title="All 2 branches covered.">			if (c == '{') {</span>
+<span class="pc bpc" id="L1246" title="1 of 4 branches missed.">				if (i + 1 &lt; len &amp;&amp; body.charAt(i + 1) == '{') {</span>
+<span class="fc" id="L1247">					lit.append('{');</span>
+<span class="fc" id="L1248">					i += 2;</span>
+<span class="fc" id="L1249">					continue;</span>
+				}
+<span class="fc" id="L1251">				flushLiteral(lit, raw, t, out);</span>
+<span class="fc" id="L1252">				i = replacementField(body, i + 1, raw, t, firstLine, out);</span>
+<span class="fc bfc" id="L1253" title="All 2 branches covered.">			} else if (c == '}') {</span>
+<span class="pc bpc" id="L1254" title="1 of 4 branches missed.">				if (i + 1 &lt; len &amp;&amp; body.charAt(i + 1) == '}') {</span>
+<span class="fc" id="L1255">					lit.append('}');</span>
+<span class="fc" id="L1256">					i += 2;</span>
+				} else {
+<span class="fc" id="L1258">					throw new PySyntaxError(&quot;f-string: single '}' is not allowed&quot;, t.line, t.col);</span>
+				}
+<span class="pc bpc" id="L1260" title="1 of 6 branches missed.">			} else if (c == '\\' &amp;&amp; !raw &amp;&amp; i + 1 &lt; len) {</span>
+<span class="fc" id="L1261">				lit.append(c).append(body.charAt(i + 1));</span>
+<span class="fc" id="L1262">				i += 2;</span>
+			} else {
+<span class="fc" id="L1264">				lit.append(c);</span>
+<span class="fc" id="L1265">				i++;</span>
+			}
+<span class="fc" id="L1267">		}</span>
+<span class="fc" id="L1268">		flushLiteral(lit, raw, t, out);</span>
+<span class="fc" id="L1269">	}</span>
+
+	private void flushLiteral(StringBuilder lit, boolean raw, Token t, List&lt;Object&gt; out) {
+<span class="fc bfc" id="L1272" title="All 2 branches covered.">		if (lit.length() == 0)</span>
+<span class="fc" id="L1273">			return;</span>
+<span class="fc" id="L1274">		String s = lit.toString();</span>
+<span class="fc bfc" id="L1275" title="All 2 branches covered.">		out.add(raw ? s : unescape(s, t));</span>
+<span class="fc" id="L1276">		lit.setLength(0);</span>
+<span class="fc" id="L1277">	}</span>
+
+	/** Parses a replacement field whose expression starts at {@code i}; returns the index after '}'. */
+	private int replacementField(String body, int i, boolean raw, Token t, int firstLine, List&lt;Object&gt; out) {
+<span class="fc" id="L1281">		int len = body.length();</span>
+<span class="fc" id="L1282">		int start = i;</span>
+<span class="fc" id="L1283">		int depth = 0;</span>
+<span class="fc bfc" id="L1284" title="All 2 branches covered.">		while (i &lt; len) {</span>
+<span class="fc" id="L1285">			char c = body.charAt(i);</span>
+<span class="fc bfc" id="L1286" title="All 4 branches covered.">			if (c == '\'' || c == '&quot;') {</span>
+<span class="fc" id="L1287">				int j = i + 1;</span>
+<span class="fc bfc" id="L1288" title="All 4 branches covered.">				while (j &lt; len &amp;&amp; body.charAt(j) != c) {</span>
+<span class="pc bpc" id="L1289" title="1 of 2 branches missed.">					if (body.charAt(j) == '\\')</span>
+<span class="nc" id="L1290">						j++;</span>
+<span class="fc" id="L1291">					j++;</span>
+				}
+<span class="fc bfc" id="L1293" title="All 2 branches covered.">				if (j &gt;= len)</span>
+<span class="fc" id="L1294">					throw new PySyntaxError(&quot;f-string: unterminated string&quot;, t.line, t.col);</span>
+<span class="fc" id="L1295">				i = j + 1;</span>
+<span class="fc" id="L1296">				continue;</span>
+			}
+<span class="fc bfc" id="L1298" title="All 6 branches covered.">			if (c == '(' || c == '[' || c == '{')</span>
+<span class="fc" id="L1299">				depth++;</span>
+<span class="fc bfc" id="L1300" title="All 6 branches covered.">			else if (c == ')' || c == ']' || c == '}') {</span>
+<span class="fc bfc" id="L1301" title="All 2 branches covered.">				if (depth == 0)</span>
+<span class="fc" id="L1302">					break;</span>
+<span class="fc" id="L1303">				depth--;</span>
+<span class="pc bpc" id="L1304" title="2 of 8 branches missed.">			} else if (depth == 0 &amp;&amp; c == '!' &amp;&amp; !(i + 1 &lt; len &amp;&amp; body.charAt(i + 1) == '=')) {</span>
+<span class="fc" id="L1305">				break;</span>
+<span class="fc bfc" id="L1306" title="All 4 branches covered.">			} else if (depth == 0 &amp;&amp; c == ':') {</span>
+<span class="fc" id="L1307">				break;</span>
+<span class="pc bpc" id="L1308" title="1 of 8 branches missed.">			} else if (depth == 0 &amp;&amp; c == '=' &amp;&amp; i + 1 &lt; len &amp;&amp; &quot;!:}&quot;.indexOf(body.charAt(i + 1)) &gt;= 0</span>
+<span class="pc bpc" id="L1309" title="1 of 2 branches missed.">					&amp;&amp; &quot;=!&lt;&gt;&quot;.indexOf(body.charAt(i - 1)) &lt; 0) {</span>
+<span class="fc" id="L1310">				throw new PySyntaxError(&quot;f-string: the '=' specifier is not supported&quot;, t.line, t.col);</span>
+			}
+<span class="fc" id="L1312">			i++;</span>
+<span class="fc" id="L1313">		}</span>
+<span class="fc bfc" id="L1314" title="All 2 branches covered.">		if (i &gt;= len)</span>
+<span class="fc" id="L1315">			throw new PySyntaxError(&quot;f-string: expecting '}'&quot;, t.line, t.col);</span>
+<span class="fc" id="L1316">		String exprText = body.substring(start, i);</span>
+<span class="fc bfc" id="L1317" title="All 2 branches covered.">		if (exprText.trim().isEmpty())</span>
+<span class="fc" id="L1318">			throw new PySyntaxError(&quot;f-string: empty expression not allowed&quot;, t.line, t.col);</span>
+<span class="fc" id="L1319">		Ast.Expr value = subExpression(exprText, t, firstLine + newlines(body, start));</span>
+<span class="fc" id="L1320">		long conversion = -1;</span>
+<span class="fc" id="L1321">		Ast.Expr spec = null;</span>
+<span class="fc bfc" id="L1322" title="All 2 branches covered.">		if (body.charAt(i) == '!') {</span>
+<span class="pc bpc" id="L1323" title="1 of 2 branches missed.">			if (i + 1 &gt;= len)</span>
+<span class="nc" id="L1324">				throw new PySyntaxError(&quot;f-string: expecting '}'&quot;, t.line, t.col);</span>
+<span class="fc" id="L1325">			char conv = body.charAt(i + 1);</span>
+<span class="fc bfc" id="L1326" title="All 6 branches covered.">			if (conv != 'r' &amp;&amp; conv != 's' &amp;&amp; conv != 'a')</span>
+<span class="fc" id="L1327">				throw new PySyntaxError(&quot;f-string: invalid conversion character&quot;, t.line, t.col);</span>
+<span class="fc" id="L1328">			conversion = conv;</span>
+<span class="fc" id="L1329">			i += 2;</span>
+		}
+<span class="pc bpc" id="L1331" title="1 of 4 branches missed.">		if (i &lt; len &amp;&amp; body.charAt(i) == ':') {</span>
+<span class="fc" id="L1332">			i++;</span>
+<span class="fc" id="L1333">			int specStart = i;</span>
+<span class="fc" id="L1334">			int d = 0;</span>
+<span class="fc bfc" id="L1335" title="All 2 branches covered.">			while (i &lt; len) {</span>
+<span class="fc" id="L1336">				char c = body.charAt(i);</span>
+<span class="fc bfc" id="L1337" title="All 2 branches covered.">				if (c == '{')</span>
+<span class="fc" id="L1338">					d++;</span>
+<span class="fc bfc" id="L1339" title="All 2 branches covered.">				else if (c == '}') {</span>
+<span class="fc bfc" id="L1340" title="All 2 branches covered.">					if (d == 0)</span>
+<span class="fc" id="L1341">						break;</span>
+<span class="fc" id="L1342">					d--;</span>
+				}
+<span class="fc" id="L1344">				i++;</span>
+<span class="fc" id="L1345">			}</span>
+<span class="fc bfc" id="L1346" title="All 2 branches covered.">			if (i &gt;= len)</span>
+<span class="fc" id="L1347">				throw new PySyntaxError(&quot;f-string: expecting '}'&quot;, t.line, t.col);</span>
+			// as CPython: the spec of a field may have fields, and their specs too, no deeper
+<span class="fc bfc" id="L1349" title="All 2 branches covered.">			if (++specDepth &gt; 2)</span>
+<span class="fc" id="L1350">				throw new PySyntaxError(&quot;f-string: expressions nested too deeply&quot;, t.line, t.col);</span>
+<span class="fc" id="L1351">			List&lt;Object&gt; specParts = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L1352">			fstringParts(body.substring(specStart, i), raw, t, firstLine + newlines(body, specStart), specParts);</span>
+<span class="fc" id="L1353">			specDepth--;</span>
+<span class="fc" id="L1354">			List&lt;Ast.Expr&gt; specValues = new ArrayList&lt;Ast.Expr&gt;();</span>
+<span class="fc bfc" id="L1355" title="All 2 branches covered.">			for (Object part : specParts)</span>
+<span class="fc bfc" id="L1356" title="All 2 branches covered.">				specValues.add(part instanceof String ? new Ast.Constant(t.line, t.col, part) : (Ast.Expr) part);</span>
+<span class="fc" id="L1357">			spec = new Ast.JoinedStr(t.line, t.col, specValues);</span>
+		}
+<span class="pc bpc" id="L1359" title="2 of 4 branches missed.">		if (i &gt;= len || body.charAt(i) != '}')</span>
+<span class="nc" id="L1360">			throw new PySyntaxError(&quot;f-string: expecting '}'&quot;, t.line, t.col);</span>
+<span class="fc" id="L1361">		out.add(new Ast.FormattedValue(t.line, t.col, value, conversion, spec));</span>
+<span class="fc" id="L1362">		return i + 1;</span>
+	}
+
+	/** The number of line feeds of the text before {@code end}. */
+	private static int newlines(String text, int end) {
+<span class="fc" id="L1367">		int n = 0;</span>
+<span class="fc bfc" id="L1368" title="All 2 branches covered.">		for (int i = 0; i &lt; end; i++)</span>
+<span class="fc bfc" id="L1369" title="All 2 branches covered.">			if (text.charAt(i) == '\n')</span>
+<span class="fc" id="L1370">				n++;</span>
+<span class="fc" id="L1371">		return n;</span>
+	}
+
+	private Ast.Expr subExpression(String text, Token t, int line) {
+		PyParser sub;
+		try {
+<span class="fc" id="L1377">			sub = new PyParser(PyLexer.tokenize(&quot;(&quot; + text + &quot;\n)&quot;, line));</span>
+<span class="nc" id="L1378">		} catch (PySyntaxError e) {</span>
+<span class="nc" id="L1379">			throw new PySyntaxError(&quot;f-string: &quot; + e.getMessage(), t.line, t.col);</span>
+<span class="fc" id="L1380">		}</span>
+		// the expression of a field is one more level, of the same nesting: f'{f&quot;{f'{...}'}&quot;}'
+<span class="fc" id="L1382">		enter();</span>
+<span class="fc" id="L1383">		sub.depth = depth;</span>
+<span class="fc" id="L1384">		Ast.Expr e = sub.testListInParens();</span>
+<span class="fc" id="L1385">		depth--;</span>
+<span class="fc" id="L1386">		return e;</span>
+	}
+
+	/** Used for f-string fields: the tokens are '(' testlist NEWLINE? ')' END. */
+	private Ast.Expr testListInParens() {
+<span class="fc" id="L1391">		expectOp(&quot;(&quot;);</span>
+<span class="fc" id="L1392">		Ast.Expr e = testList();</span>
+<span class="fc" id="L1393">		expectOp(&quot;)&quot;);</span>
+<span class="pc bpc" id="L1394" title="1 of 2 branches missed.">		if (peek().kind == Token.NEWLINE)</span>
+<span class="fc" id="L1395">			next();</span>
+<span class="pc bpc" id="L1396" title="1 of 2 branches missed.">		if (peek().kind != Token.END)</span>
+<span class="nc" id="L1397">			throw invalid();</span>
+<span class="fc" id="L1398">		return e;</span>
+	}
+
+	/** Decodes the escape sequences of a non-raw string literal body. */
+	static String unescape(String s, Token t) {
+<span class="fc bfc" id="L1403" title="All 2 branches covered.">		if (s.indexOf('\\') &lt; 0)</span>
+<span class="fc" id="L1404">			return s;</span>
+<span class="fc" id="L1405">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L1406">		int n = s.length();</span>
+<span class="fc bfc" id="L1407" title="All 2 branches covered.">		for (int i = 0; i &lt; n;) {</span>
+<span class="fc" id="L1408">			char c = s.charAt(i++);</span>
+<span class="fc bfc" id="L1409" title="All 2 branches covered.">			if (c != '\\') {</span>
+<span class="fc" id="L1410">				sb.append(c);</span>
+<span class="fc" id="L1411">				continue;</span>
+			}
+<span class="pc bpc" id="L1413" title="1 of 2 branches missed.">			if (i &gt;= n) {</span>
+<span class="nc" id="L1414">				sb.append('\\');</span>
+<span class="nc" id="L1415">				break;</span>
+			}
+<span class="fc" id="L1417">			char e = s.charAt(i++);</span>
+<span class="fc bfc" id="L1418" title="All 16 branches covered.">			switch (e) {</span>
+			case '\n':
+<span class="fc" id="L1420">				break;</span>
+			case '\\':
+<span class="fc" id="L1422">				sb.append('\\');</span>
+<span class="fc" id="L1423">				break;</span>
+			case '\'':
+<span class="fc" id="L1425">				sb.append('\'');</span>
+<span class="fc" id="L1426">				break;</span>
+			case '&quot;':
+<span class="fc" id="L1428">				sb.append('&quot;');</span>
+<span class="fc" id="L1429">				break;</span>
+			case 'a':
+<span class="fc" id="L1431">				sb.append((char) 7);</span>
+<span class="fc" id="L1432">				break;</span>
+			case 'b':
+<span class="fc" id="L1434">				sb.append('\b');</span>
+<span class="fc" id="L1435">				break;</span>
+			case 'f':
+<span class="fc" id="L1437">				sb.append('\f');</span>
+<span class="fc" id="L1438">				break;</span>
+			case 'n':
+<span class="fc" id="L1440">				sb.append('\n');</span>
+<span class="fc" id="L1441">				break;</span>
+			case 'r':
+<span class="fc" id="L1443">				sb.append('\r');</span>
+<span class="fc" id="L1444">				break;</span>
+			case 't':
+<span class="fc" id="L1446">				sb.append('\t');</span>
+<span class="fc" id="L1447">				break;</span>
+			case 'v':
+<span class="fc" id="L1449">				sb.append((char) 11);</span>
+<span class="fc" id="L1450">				break;</span>
+			case 'x':
+<span class="fc" id="L1452">				i = hexEscape(s, i, 2, sb, t);</span>
+<span class="fc" id="L1453">				break;</span>
+			case 'u':
+<span class="fc" id="L1455">				i = hexEscape(s, i, 4, sb, t);</span>
+<span class="fc" id="L1456">				break;</span>
+			case 'U':
+<span class="fc" id="L1458">				i = hexEscape(s, i, 8, sb, t);</span>
+<span class="fc" id="L1459">				break;</span>
+			case 'N':
+<span class="fc" id="L1461">				throw new PySyntaxError(&quot;\\N{...} escapes are not supported&quot;, t.line, t.col);</span>
+			default:
+<span class="pc bpc" id="L1463" title="1 of 4 branches missed.">				if (e &gt;= '0' &amp;&amp; e &lt;= '7') {</span>
+<span class="fc" id="L1464">					int v = e - '0';</span>
+<span class="fc" id="L1465">					int count = 1;</span>
+<span class="pc bpc" id="L1466" title="1 of 8 branches missed.">					while (count &lt; 3 &amp;&amp; i &lt; n &amp;&amp; s.charAt(i) &gt;= '0' &amp;&amp; s.charAt(i) &lt;= '7') {</span>
+<span class="fc" id="L1467">						v = v * 8 + (s.charAt(i++) - '0');</span>
+<span class="fc" id="L1468">						count++;</span>
+					}
+<span class="fc" id="L1470">					PyStr.appendCp(sb, v);</span>
+<span class="fc" id="L1471">				} else {</span>
+<span class="fc" id="L1472">					sb.append('\\').append(e);</span>
+				}
+			}
+<span class="fc" id="L1475">		}</span>
+<span class="fc" id="L1476">		return sb.toString();</span>
+	}
+
+	private static int hexEscape(String s, int i, int digits, StringBuilder sb, Token t) {
+<span class="fc bfc" id="L1480" title="All 2 branches covered.">		if (i + digits &gt; s.length())</span>
+<span class="fc" id="L1481">			throw new PySyntaxError(&quot;truncated escape sequence&quot;, t.line, t.col);</span>
+<span class="fc" id="L1482">		int v = 0;</span>
+<span class="fc bfc" id="L1483" title="All 2 branches covered.">		for (int k = 0; k &lt; digits; k++) {</span>
+<span class="fc" id="L1484">			int d = Character.digit(s.charAt(i + k), 16);</span>
+<span class="pc bpc" id="L1485" title="1 of 2 branches missed.">			if (d &lt; 0)</span>
+<span class="nc" id="L1486">				throw new PySyntaxError(&quot;invalid escape sequence&quot;, t.line, t.col);</span>
+<span class="fc" id="L1487">			v = v * 16 + d;</span>
+		}
+<span class="pc bpc" id="L1489" title="2 of 4 branches missed.">		if (v &gt; 0x10FFFF || v &lt; 0)</span>
+<span class="nc" id="L1490">			throw new PySyntaxError(&quot;escape sequence out of range&quot;, t.line, t.col);</span>
+<span class="fc" id="L1491">		PyStr.appendCp(sb, v);</span>
+<span class="fc" id="L1492">		return i + digits;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

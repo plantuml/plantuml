@@ -74,8 +74,8 @@ public class ShuntingYard {
 <span class="fc" id="L74">				final String name = token.getSurface();</span>
 <span class="fc" id="L75">				final TValue variable = knowledge.getVariable(name);</span>
 <span class="fc bfc" id="L76" title="All 2 branches covered.">				if (variable == null) {</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">					if (isVariableName(name) == false)</span>
-<span class="nc" id="L78">						throw new EaterException(&quot;Parsing syntax error about &quot; + name, location);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">					if (isVariableName(name) == false)</span>
+<span class="fc" id="L78">						throw new EaterException(&quot;Parsing syntax error about &quot; + name, location);</span>
 
 <span class="fc" id="L80">					ouputQueue.add(new Token(name, TokenType.QUOTED_STRING, null));</span>
 				} else {

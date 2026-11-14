@@ -61,14 +61,12 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="fc" id="L64">		final String arg = values.get(0).toString();</span>
-<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (&quot;style&quot;.equalsIgnoreCase(arg))</span>
-<span class="fc" id="L66">			return TValue.fromInt(1);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		return TValue.fromInt(isAvailable(values.get(0).toString()) ? 1 : 0);</span>
+	}
 
-<span class="fc bfc" id="L68" title="All 2 branches covered.">		if (&quot;theme&quot;.equalsIgnoreCase(arg))</span>
-<span class="fc" id="L69">			return TValue.fromInt(1);</span>
-
-<span class="fc" id="L71">		return TValue.fromInt(0);</span>
+	/** True if the feature exists in this version. Shared by &lt;code&gt;%feature&lt;/code&gt; and &lt;code&gt;puml.feature&lt;/code&gt;. */
+	public static boolean isAvailable(String name) {
+<span class="fc bfc" id="L69" title="All 4 branches covered.">		return &quot;style&quot;.equalsIgnoreCase(name) || &quot;theme&quot;.equalsIgnoreCase(name);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

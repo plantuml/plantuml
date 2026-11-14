@@ -115,10 +115,10 @@ public abstract class PSystemError extends UgDiagram {
 <span class="fc" id="L115">		final StringBuilder sb = new StringBuilder();</span>
 <span class="fc" id="L116">		sb.append(getDescription());</span>
 <span class="fc" id="L117">		sb.append(BackSlash.CHAR_NEWLINE);</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		for (CharSequence t : getTitle().getDisplay()) {</span>
-<span class="nc" id="L119">			sb.append(t);</span>
-<span class="nc" id="L120">			sb.append(BackSlash.CHAR_NEWLINE);</span>
-<span class="nc" id="L121">		}</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		for (CharSequence t : getTitle().getDisplay()) {</span>
+<span class="fc" id="L119">			sb.append(t);</span>
+<span class="fc" id="L120">			sb.append(BackSlash.CHAR_NEWLINE);</span>
+<span class="fc" id="L121">		}</span>
 <span class="fc" id="L122">		sb.append(BackSlash.CHAR_NEWLINE);</span>
 <span class="fc" id="L123">		return sb.toString();</span>
 	}
@@ -167,9 +167,9 @@ public abstract class PSystemError extends UgDiagram {
 <span class="fc" id="L167">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
 <span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (lineLocation != null) {</span>
 <span class="fc" id="L169">			append(result, lineLocation);</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">			while (lineLocation.getParent() != null) {</span>
-<span class="nc" id="L171">				lineLocation = lineLocation.getParent();</span>
-<span class="nc" id="L172">				append(result, lineLocation);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">			while (lineLocation.getParent() != null) {</span>
+<span class="fc" id="L171">				lineLocation = lineLocation.getParent();</span>
+<span class="fc" id="L172">				append(result, lineLocation);</span>
 			}
 		}
 <span class="fc" id="L175">		return result;</span>
@@ -200,8 +200,8 @@ public abstract class PSystemError extends UgDiagram {
 
 	private void addToResult(final List&lt;String&gt; result, StringLocated s) {
 <span class="fc" id="L202">		String tmp = s.getString();</span>
-<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		if (tmp.length() &gt; 120)</span>
-<span class="nc" id="L204">			tmp = tmp.substring(0, 120) + &quot; ...&quot;;</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (tmp.length() &gt; 120)</span>
+<span class="fc" id="L204">			tmp = tmp.substring(0, 120) + &quot; ...&quot;;</span>
 
 <span class="fc" id="L206">		result.add(tmp);</span>
 <span class="fc" id="L207">	}</span>

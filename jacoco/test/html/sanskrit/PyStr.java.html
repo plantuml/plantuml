@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyStr.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyStr.java</span></div><h1>PyStr.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+
+/**
+ * The strings of the interpreter. A Python str is a sequence of code points
+ * while a Java String is a sequence of UTF-16 units: a character outside the
+ * Basic Multilingual Plane (an emoji) is one element for Python and two chars
+ * for Java. The rule &quot;one character is one code point&quot; is written here, once.
+ * &lt;p&gt;
+ * A PyStr is an immutable str: a {@link String} and what is learned about it
+ * once, on demand: whether it has a character outside the BMP and, if it has,
+ * its code points as an array, so that the length, the subscript and the slices
+ * are then O(1) instead of a walk through the String. Almost all the strings
+ * have no character outside the BMP, and for them a char is a code point.
+ * &lt;p&gt;
+ * The methods of the instance are indexed in code points; the offsets are
+ * positions in chars of the String.
+ * &lt;p&gt;
+ * A lone surrogate is a character of a Python str (chr(0xD83D)), and two of
+ * them side by side stay two characters. A Java String cannot say that: a high
+ * surrogate followed by a low one is one character outside the BMP. So a lone
+ * surrogate is never stored as itself: it is stored as two high surrogates, the
+ * first one in D800..D81F and the second one in D900..D93F (see
+ * {@link #appendCp}). With this form a String is still compared, hashed,
+ * concatenated, cut at the limits of characters and searched as it is: a text
+ * found in another one is always found at the limits of its characters.
+ * Whatever reads the characters one by one goes through {@link #cpAt}; the
+ * text given to the host goes through {@link #external}.
+ */
+final class PyStr {
+	/** The str &quot;&quot;. */
+<span class="fc" id="L33">	static final PyStr EMPTY = new PyStr(&quot;&quot;);</span>
+
+<span class="fc" id="L35">	private static final PyStr[] ASCII_STRS = asciiStrs();</span>
+
+	private static PyStr[] asciiStrs() {
+<span class="fc" id="L38">		PyStr[] table = new PyStr[128];</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">		for (int i = 0; i &lt; 128; i++)</span>
+<span class="fc" id="L40">			table[i] = new PyStr(String.valueOf((char) i));</span>
+<span class="fc" id="L41">		return table;</span>
+	}
+
+	/** The characters of the str, as the Java String that holds them. */
+	final String s;
+
+	/** 0: not known yet, 1: no surrogate (a char is a code point), 2: has surrogates. */
+	private byte kind;
+
+	/** The code points, made once and only for a str with surrogates. */
+	private volatile int[] codePoints;
+
+<span class="fc" id="L53">	private PyStr(String s) {</span>
+<span class="fc" id="L54">		this.s = s;</span>
+<span class="fc" id="L55">	}</span>
+
+	/** The str of a value for which {@link #is} is true. */
+	static PyStr from(Object o) {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		return o instanceof PyStr ? (PyStr) o : of((String) o);</span>
+	}
+
+	/** The str made of this String; the empty str and the ASCII characters are shared. */
+	static PyStr of(String s) {
+<span class="fc" id="L64">		int n = s.length();</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (n == 0)</span>
+<span class="fc" id="L66">			return EMPTY;</span>
+<span class="fc bfc" id="L67" title="All 4 branches covered.">		if (n == 1 &amp;&amp; s.charAt(0) &lt; 128)</span>
+<span class="fc" id="L68">			return ASCII_STRS[s.charAt(0)];</span>
+<span class="fc" id="L69">		return new PyStr(s);</span>
+	}
+
+	/** True if the value is a str, in either of its two forms: a PyStr or a bare String. */
+	static boolean is(Object o) {
+<span class="fc bfc" id="L74" title="All 4 branches covered.">		return o instanceof PyStr || o instanceof String;</span>
+	}
+
+	/** The characters of a value for which {@link #is} is true. */
+	static String text(Object o) {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		return o instanceof PyStr ? ((PyStr) o).s : (String) o;</span>
+	}
+
+	/** The result of an operation on {@code model}: a PyStr if the model is one, else the bare String. */
+	static Object like(Object model, String result) {
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		return model instanceof PyStr ? of(result) : result;</span>
+	}
+
+	/**
+	 * The arguments with every PyStr replaced by its String, for the code that
+	 * works on Strings: the array itself if there is none.
+	 */
+	static Object[] unwrapArgs(Object[] a) {
+<span class="fc" id="L92">		return unwrapArgs(a, 0);</span>
+	}
+
+	/** As {@link #unwrapArgs(Object[])}, but the arguments before index {@code from} are left as they are. */
+	static Object[] unwrapArgs(Object[] a, int from) {
+<span class="fc" id="L97">		Object[] out = null;</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (int i = from; i &lt; a.length; i++) {</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">			if (a[i] instanceof PyStr) {</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">				if (out == null)</span>
+<span class="fc" id="L101">					out = a.clone();</span>
+<span class="fc" id="L102">				out[i] = ((PyStr) a[i]).s;</span>
+			}
+		}
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		return out == null ? a : out;</span>
+	}
+
+	/**
+	 * The result of a method of a str called on a PyStr, as PyStr: a String
+	 * becomes one, and so do the Strings in a list or a tuple. The list or the
+	 * tuple is the one the method has just made, and is changed in place.
+	 */
+	static Object wrap(Object r) {
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (r instanceof String)</span>
+<span class="fc" id="L115">			return of((String) r);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (r instanceof PyList) {</span>
+<span class="fc" id="L117">			final ArrayList&lt;Object&gt; items = ((PyList) r).items;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">			for (int i = 0; i &lt; items.size(); i++)</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">				if (items.get(i) instanceof String)</span>
+<span class="fc" id="L120">					items.set(i, of((String) items.get(i)));</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		} else if (r instanceof PyTuple) {</span>
+<span class="fc" id="L122">			final Object[] items = ((PyTuple) r).items;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">			for (int i = 0; i &lt; items.length; i++)</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">				if (items[i] instanceof String)</span>
+<span class="fc" id="L125">					items[i] = of((String) items[i]);</span>
+		}
+<span class="fc" id="L127">		return r;</span>
+	}
+
+	// ------------------------------------------------------------ code points of a String
+
+	private static final int LONE_A = 0xd800, LONE_B = 0xd900;
+
+	private static boolean isSurrogate(int cp) {
+<span class="fc bfc" id="L135" title="All 4 branches covered.">		return cp &gt;= 0xd800 &amp;&amp; cp &lt;= 0xdfff;</span>
+	}
+
+	/** The code point that starts at this offset; a lone surrogate is one. */
+	static int cpAt(String s, int i) {
+<span class="fc" id="L140">		final char c = s.charAt(i);</span>
+<span class="fc bfc" id="L141" title="All 6 branches covered.">		if (c &lt; 0xd800 || c &gt; 0xdbff || i + 1 &gt;= s.length())</span>
+<span class="fc" id="L142">			return c;</span>
+<span class="fc" id="L143">		final char d = s.charAt(i + 1);</span>
+<span class="pc bpc" id="L144" title="1 of 4 branches missed.">		if (d &gt;= 0xdc00 &amp;&amp; d &lt;= 0xdfff)</span>
+<span class="fc" id="L145">			return Character.toCodePoint(c, d);</span>
+<span class="pc bpc" id="L146" title="2 of 6 branches missed.">		if (c &lt; LONE_A + 32 &amp;&amp; d &gt;= LONE_B &amp;&amp; d &lt; LONE_B + 64)</span>
+<span class="fc" id="L147">			return 0xd800 + ((c - LONE_A) &lt;&lt; 6 | (d - LONE_B));</span>
+<span class="fc" id="L148">		return c;</span>
+	}
+
+	/** True if a lone surrogate, in its stored form of two chars, starts at this offset. */
+	static boolean loneAt(String s, int i) {
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (i + 1 &gt;= s.length())</span>
+<span class="fc" id="L154">			return false;</span>
+<span class="fc" id="L155">		final char c = s.charAt(i), d = s.charAt(i + 1);</span>
+<span class="pc bpc" id="L156" title="2 of 8 branches missed.">		return c &gt;= LONE_A &amp;&amp; c &lt; LONE_A + 32 &amp;&amp; d &gt;= LONE_B &amp;&amp; d &lt; LONE_B + 64;</span>
+	}
+
+	/** The code point that ends at this offset. */
+	static int cpBefore(String s, int i) {
+<span class="fc" id="L161">		final char d = s.charAt(i - 1);</span>
+<span class="pc bpc" id="L162" title="2 of 6 branches missed.">		if (d &lt; 0xd800 || d &gt; 0xdfff || i &lt; 2)</span>
+<span class="fc" id="L163">			return d;</span>
+<span class="fc" id="L164">		final int cp = cpAt(s, i - 2);</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		return cpSize(cp) == 2 ? cp : d;</span>
+	}
+
+	/** The number of chars of a code point in a String: 2 outside the BMP and for a lone surrogate. */
+	static int cpSize(int cp) {
+<span class="fc bfc" id="L170" title="All 4 branches covered.">		return cp &gt;= 0x10000 || isSurrogate(cp) ? 2 : 1;</span>
+	}
+
+	static StringBuilder appendCp(StringBuilder sb, int cp) {
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		if (isSurrogate(cp))</span>
+<span class="fc" id="L175">			return sb.append((char) (LONE_A + ((cp - 0xd800) &gt;&gt; 6))).append((char) (LONE_B + ((cp - 0xd800) &amp; 63)));</span>
+<span class="fc" id="L176">		return sb.appendCodePoint(cp);</span>
+	}
+
+	/** The String of one code point. */
+	static String ofCp(int cp) {
+<span class="fc bfc" id="L181" title="All 4 branches covered.">		if (cp &lt; 0x10000 &amp;&amp; !isSurrogate(cp))</span>
+<span class="fc" id="L182">			return String.valueOf((char) cp);</span>
+<span class="fc" id="L183">		return appendCp(new StringBuilder(2), cp).toString();</span>
+	}
+
+	/** The number of code points of a String. */
+	static int cpCount(String s) {
+<span class="fc" id="L188">		int n = 0;</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i += cpSize(cpAt(s, i)))</span>
+<span class="fc" id="L190">			n++;</span>
+<span class="fc" id="L191">		return n;</span>
+	}
+
+	/** Offset in chars of the code point with the given index, which may be the number of code points. */
+	static int offsetOf(String s, int cpIndex) {
+<span class="fc" id="L196">		int i = 0;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		for (int k = 0; k &lt; cpIndex; k++)</span>
+<span class="fc" id="L198">			i += cpSize(cpAt(s, i));</span>
+<span class="fc" id="L199">		return i;</span>
+	}
+
+	/** True if the characters of the String contain this code point. */
+	static boolean containsCp(String s, int cp) {
+<span class="fc bfc" id="L204" title="All 4 branches covered.">		return cpSize(cp) == 1 ? s.indexOf(cp) &gt;= 0 : s.contains(ofCp(cp));</span>
+	}
+
+	private static int[] toCps(String s) {
+<span class="fc" id="L208">		final int[] c = new int[cpCount(s)];</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		for (int i = 0, k = 0; i &lt; s.length(); i += cpSize(c[k++]))</span>
+<span class="fc" id="L210">			c[k] = cpAt(s, i);</span>
+<span class="fc" id="L211">		return c;</span>
+	}
+
+	private static String fromCps(int[] c, int from, int count) {
+<span class="fc" id="L215">		final StringBuilder sb = new StringBuilder(count + 2);</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		for (int k = 0; k &lt; count; k++)</span>
+<span class="fc" id="L217">			appendCp(sb, c[from + k]);</span>
+<span class="fc" id="L218">		return sb.toString();</span>
+	}
+
+	/**
+	 * The text for the host: a lone surrogate is given as the char it is. (Two
+	 * of them side by side are then one character for the host: a Java String
+	 * cannot say otherwise.)
+	 */
+	static String external(String s) {
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (bmpScan(s))</span>
+<span class="fc" id="L228">			return s;</span>
+<span class="fc" id="L229">		final StringBuilder sb = new StringBuilder(s.length());</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length();) {</span>
+<span class="fc" id="L231">			final int cp = cpAt(s, i);</span>
+<span class="fc" id="L232">			i += cpSize(cp);</span>
+<span class="fc" id="L233">			sb.appendCodePoint(cp);</span>
+<span class="fc" id="L234">		}</span>
+<span class="fc" id="L235">		return sb.toString();</span>
+	}
+
+	/** True if the str has no surrogate, so that chars are code points. */
+	boolean isBmp() {
+<span class="fc" id="L240">		byte k = kind;</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		if (k == 0) {</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">			k = bmpScan(s) ? (byte) 1 : (byte) 2;</span>
+<span class="fc" id="L243">			kind = k;</span>
+		}
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		return k == 1;</span>
+	}
+
+	private int[] cps() {
+<span class="fc" id="L249">		int[] c = codePoints;</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		if (c == null) {</span>
+<span class="fc" id="L251">			c = toCps(s);</span>
+<span class="fc" id="L252">			codePoints = c;</span>
+		}
+<span class="fc" id="L254">		return c;</span>
+	}
+
+	private int cpAt(int index) {
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		return isBmp() ? s.charAt(index) : cps()[index];</span>
+	}
+
+	/** The number of code points. */
+	int length() {
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		return isBmp() ? s.length() : cps().length;</span>
+	}
+
+	/** The one-character str with the given index, which must be in range. */
+	PyStr charAt(int index) {
+<span class="fc bfc" id="L268" title="All 2 branches covered.">		if (isBmp()) {</span>
+<span class="fc" id="L269">			final char c = s.charAt(index);</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">			return c &lt; 128 ? ASCII_STRS[c] : new PyStr(String.valueOf(c));</span>
+		}
+<span class="fc" id="L272">		return of(ofCp(cps()[index]));</span>
+	}
+
+	/** The str of the {@code count} characters from index {@code from}: both must be in range. */
+	PyStr substring(int from, int count) {
+<span class="fc bfc" id="L277" title="All 2 branches covered.">		if (count == 0)</span>
+<span class="fc" id="L278">			return EMPTY;</span>
+<span class="fc bfc" id="L279" title="All 4 branches covered.">		if (from == 0 &amp;&amp; count == length())</span>
+<span class="fc" id="L280">			return this;</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">		if (isBmp())</span>
+<span class="fc" id="L282">			return of(s.substring(from, from + count));</span>
+<span class="fc" id="L283">		return of(fromCps(cps(), from, count));</span>
+	}
+
+	/** Offset in chars of the code point with the given index (the length of the str is allowed). */
+	int offset(int cpIndex) {
+<span class="fc bfc" id="L288" title="All 2 branches covered.">		return isBmp() ? cpIndex : offsetOf(s, cpIndex);</span>
+	}
+
+	/** Index in code points of a char offset. */
+	int cpIndexOf(int charOffset) {
+<span class="fc bfc" id="L293" title="All 2 branches covered.">		return isBmp() ? charOffset : cpCount(s.substring(0, charOffset));</span>
+	}
+
+	/** {@code self[idx]}: idx is an int or a slice. */
+	PyStr getitem(Object idx) {
+<span class="fc" id="L298">		int len = length();</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">		if (idx instanceof PySlice) {</span>
+<span class="fc" id="L300">			int[] r = new int[3];</span>
+<span class="fc" id="L301">			PyOps.sliceRange((PySlice) idx, len, r);</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">			if (r[2] == 1)</span>
+<span class="fc" id="L303">				return substring(r[0], r[1]);</span>
+<span class="fc" id="L304">			StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">			for (int k = 0, p = r[0]; k &lt; r[1]; k++, p += r[2])</span>
+<span class="fc" id="L306">				appendCp(sb, cpAt(p));</span>
+<span class="fc" id="L307">			return of(sb.toString());</span>
+		}
+<span class="fc" id="L309">		return charAt(PyOps.normIndex(PyOps.asIndex(idx), len, &quot;string&quot;));</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="fc" id="L314">		return s;</span>
+	}
+
+	/** Two strs are equal if their characters are: the same rule as for a String. */
+	@Override
+	public boolean equals(Object o) {
+<span class="fc bfc" id="L320" title="All 4 branches covered.">		return o instanceof PyStr &amp;&amp; s.equals(((PyStr) o).s);</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="fc" id="L325">		return s.hashCode();</span>
+	}
+
+	private static boolean bmpScan(String s) {
+<span class="fc bfc" id="L329" title="All 2 branches covered.">		for (int i = 0, n = s.length(); i &lt; n; i++) {</span>
+<span class="fc" id="L330">			char c = s.charAt(i);</span>
+<span class="fc bfc" id="L331" title="All 4 branches covered.">			if (c &gt;= 0xd800 &amp;&amp; c &lt;= 0xdfff)</span>
+<span class="fc" id="L332">				return false;</span>
+		}
+<span class="fc" id="L334">		return true;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

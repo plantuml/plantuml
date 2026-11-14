@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PythonRunner.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim</a> &gt; <span class="el_source">PythonRunner.java</span></div><h1>PythonRunner.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsFlags;
+import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.tim.builtin.Feature;
+import net.sourceforge.plantuml.tim.builtin.Getenv;
+import net.sourceforge.plantuml.tim.builtin.RandomFunction;
+import net.sourceforge.plantuml.warning.Warning;
+import sanskrit.Builtin;
+import sanskrit.ExecutionLimitError;
+import sanskrit.Interp;
+import sanskrit.PyError;
+import sanskrit.PyModule;
+import sanskrit.PySyntaxError;
+import net.sourceforge.plantuml.text.StringLocated;
+
+/**
+ * The Python state of one diagram. Created at the first Python chunk only
+ * (TContext keeps it null otherwise), so a diagram without Python pays
+ * nothing.
+ * &lt;p&gt;
+ * The text API lives in the builtin module &lt;code&gt;puml&lt;/code&gt;, available
+ * without &lt;code&gt;import&lt;/code&gt;: &lt;code&gt;puml.emit(line)&lt;/code&gt; appends a line to
+ * the generated text. &lt;code&gt;emit&lt;/code&gt; is also a global alias.
+ * &lt;code&gt;math&lt;/code&gt;, &lt;code&gt;json&lt;/code&gt;, &lt;code&gt;time&lt;/code&gt;, &lt;code&gt;datetime&lt;/code&gt; and &lt;code&gt;color&lt;/code&gt; are bound as globals too (no import
+ * needed; &lt;code&gt;import math&lt;/code&gt; stays accepted).
+ * &lt;code&gt;puml.version&lt;/code&gt; and &lt;code&gt;puml.edition&lt;/code&gt; (&quot;jar&quot;, &quot;js&quot; or &quot;c&quot;) are
+ * strings, so are &lt;code&gt;puml.filename&lt;/code&gt;, &lt;code&gt;puml.dirpath&lt;/code&gt; and
+ * &lt;code&gt;puml.filedate&lt;/code&gt; (the values of &lt;code&gt;%filename()&lt;/code&gt;,
+ * &lt;code&gt;%dirpath()&lt;/code&gt; and &lt;code&gt;%filedate()&lt;/code&gt;, empty when unknown),
+ * &lt;code&gt;puml.theme()&lt;/code&gt; is a dict (the metadata of the current theme), &lt;code&gt;puml.args&lt;/code&gt; is a dict of the variables defined from outside,
+ * &lt;code&gt;puml.newline()&lt;/code&gt;, &lt;code&gt;n()&lt;/code&gt;, &lt;code&gt;breakline()&lt;/code&gt;, &lt;code&gt;tab()&lt;/code&gt;, &lt;code&gt;left_align()&lt;/code&gt;,
+ * &lt;code&gt;right_align()&lt;/code&gt; and &lt;code&gt;backslash()&lt;/code&gt; return the special characters of the legacy functions of the same name,
+ * &lt;code&gt;puml.metadata&lt;/code&gt; a dict read from the YAML header of the diagram
+ * (&lt;code&gt;---&lt;/code&gt; lines after &lt;code&gt;@startuml&lt;/code&gt;; every scalar is a str).
+ */
+final class PythonRunner {
+
+<span class="fc" id="L83">	private final List&lt;String&gt; emitted = new ArrayList&lt;&gt;();</span>
+	private final Interp interp;
+	private String pumlError;
+	/** The diagram lines of every chunk run so far, by chunk name. */
+<span class="fc" id="L87">	private final Map&lt;String, List&lt;StringLocated&gt;&gt; sources = new HashMap&lt;&gt;();</span>
+	private int chunkCount;
+	private final PythonMacros macros;
+
+	PythonRunner(String version, Map&lt;String, String&gt; arguments, Map&lt;String, Object&gt; metadata,
+			Map&lt;String, String&gt; diagram,
+			Supplier&lt;Map&lt;String, String&gt;&gt; theme, Function&lt;String, String&gt; resources, Consumer&lt;Warning&gt; warnings,
+<span class="fc" id="L94">			PythonMacros.LegacyNames legacyNames) {</span>
+		// What print() writes is dropped: whether print is an alias of emit is
+		// still open (see PYTHON_PREPROCESSOR.md), it is not for now.
+<span class="fc" id="L97">		this.interp = new Interp(text -&gt; {</span>
+<span class="fc" id="L98">		});</span>
+<span class="fc" id="L99">		this.interp.setMaxSteps(10000000L);</span>
+<span class="fc" id="L100">		this.macros = new PythonMacros(interp, emitted, legacyNames);</span>
+
+<span class="fc" id="L102">		final PyModule puml = new PyModule(&quot;puml&quot;);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		puml.putString(&quot;version&quot;, version == null ? &quot;&quot; : version);</span>
+<span class="pc bpc" id="L104" title="2 of 4 branches missed.">		puml.putString(&quot;edition&quot;, TeaVM.isC() ? &quot;c&quot; : TeaVM.isJavaScript() ? &quot;js&quot; : &quot;jar&quot;);</span>
+<span class="fc" id="L105">		puml.putStringMap(&quot;args&quot;, arguments);</span>
+<span class="fc" id="L106">		puml.putPlain(&quot;metadata&quot;, metadata);</span>
+		// where the diagram comes from: &quot;&quot; when unknown (stdin), as %filename() and the others
+<span class="fc" id="L108">		puml.putString(&quot;filename&quot;, diagram.get(&quot;filename&quot;));</span>
+<span class="fc" id="L109">		puml.putString(&quot;dirpath&quot;, diagram.get(&quot;dirpath&quot;));</span>
+<span class="fc" id="L110">		puml.putString(&quot;filedate&quot;, diagram.get(&quot;filedate&quot;));</span>
+		// the first line of the diagram, @startuml included (&quot;@startuml foo bar&quot;): what %xargs() gives
+<span class="fc" id="L112">		puml.putString(&quot;xargs&quot;, diagram.get(&quot;xargs&quot;));</span>
+<span class="fc" id="L113">		puml.put(&quot;feature&quot;, (in, args) -&gt; Boolean.valueOf(Feature.isAvailable(string(&quot;feature&quot;, args))));</span>
+		// the same rules as %getenv: a system property first, then the environment, and the
+		// security profile decides what can be read; &quot;&quot; (or the default) when there is none
+<span class="fc" id="L116">		puml.put(&quot;getenv&quot;, (in, args) -&gt; {</span>
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">			if (args.length != 1 &amp;&amp; args.length != 2)</span>
+<span class="nc" id="L118">				throw Builtin.typeError(&quot;getenv() takes 1 or 2 arguments (&quot; + args.length + &quot; given)&quot;);</span>
+<span class="pc bpc" id="L119" title="2 of 6 branches missed.">			if (args[0] instanceof String == false || args.length == 2 &amp;&amp; args[1] instanceof String == false)</span>
+<span class="nc" id="L120">				throw Builtin.typeError(&quot;getenv() arguments must be str&quot;);</span>
+<span class="fc" id="L121">			final String value = Getenv.read((String) args[0]);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">			if (value != null)</span>
+<span class="nc" id="L123">				return value;</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">			return args.length == 2 ? args[1] : &quot;&quot;;</span>
+		});
+		// the same rules as %file_exists: SFile, so nothing in the SANDBOX profile
+<span class="fc" id="L127">		puml.put(&quot;file_exists&quot;, (in, args) -&gt; Boolean.valueOf(new SFile(string(&quot;file_exists&quot;, args)).exists()));</span>
+		// what !log does: a line on the standard error, &quot;[Log] &quot; in front of it
+<span class="fc" id="L129">		puml.put(&quot;log&quot;, (in, args) -&gt; {</span>
+<span class="fc" id="L130">			EaterLog.write(string(&quot;log&quot;, args));</span>
+<span class="fc" id="L131">			return Builtin.none();</span>
+		});
+		// a warning of the diagram, like the ones of the deprecated syntaxes: puml.warning(line, ...)
+		// has one line per argument
+<span class="fc" id="L135">		puml.put(&quot;warning&quot;, (in, args) -&gt; {</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">			if (args.length == 0)</span>
+<span class="fc" id="L137">				throw Builtin.typeError(&quot;warning() takes at least 1 argument (0 given)&quot;);</span>
+<span class="fc" id="L138">			final String[] lines = new String[args.length];</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">			for (int i = 0; i &lt; args.length; i++) {</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">				if (args[i] instanceof String == false)</span>
+<span class="fc" id="L141">					throw Builtin.typeError(&quot;warning() arguments must be str&quot;);</span>
+<span class="fc" id="L142">				lines[i] = (String) args[i];</span>
+			}
+<span class="fc" id="L144">			warnings.accept(new Warning(lines));</span>
+<span class="fc" id="L145">			return Builtin.none();</span>
+		});
+		// the special characters of %newline(), %n(), %breakline(), %tab(), %left_align(),
+		// %right_align() and %backslash(), with the same names and the same values
+<span class="fc" id="L149">		final String newline = JawsFlags.USE_BLOCK_E1_IN_NEWLINE_FUNCTION ? &quot;&quot; + Jaws.BLOCK_E1_NEWLINE : &quot;\n&quot;;</span>
+<span class="fc" id="L150">		final String breakline = JawsFlags.USE_BLOCK_E1_IN_NEWLINE_FUNCTION ? &quot;&quot; + Jaws.BLOCK_E1_BREAKLINE : &quot;\n&quot;;</span>
+<span class="fc" id="L151">		putConstant(puml, &quot;newline&quot;, newline);</span>
+<span class="fc" id="L152">		putConstant(puml, &quot;n&quot;, newline);</span>
+<span class="fc" id="L153">		putConstant(puml, &quot;breakline&quot;, breakline);</span>
+<span class="fc" id="L154">		putConstant(puml, &quot;tab&quot;, &quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION);</span>
+<span class="fc" id="L155">		putConstant(puml, &quot;left_align&quot;, &quot;&quot; + Jaws.BLOCK_E1_NEWLINE_LEFT_ALIGN);</span>
+<span class="fc" id="L156">		putConstant(puml, &quot;right_align&quot;, &quot;&quot; + Jaws.BLOCK_E1_NEWLINE_RIGHT_ALIGN);</span>
+<span class="fc" id="L157">		putConstant(puml, &quot;backslash&quot;, &quot;&quot; + Jaws.BLOCK_E1_REAL_BACKSLASH);</span>
+		// the same numbers as %random: puml.random() is 0 or 1, puml.random(n) is in [0, n),
+		// puml.random(a, b) is in [a, b); not the same from one run to the next
+<span class="fc" id="L160">		puml.put(&quot;random&quot;, (in, args) -&gt; random(args));</span>
+		// the text of a file found like an included one (same finder, same security profile)
+<span class="fc" id="L162">		puml.put(&quot;read&quot;, (in, args) -&gt; {</span>
+<span class="fc" id="L163">			final String name = string(&quot;read&quot;, args);</span>
+<span class="fc" id="L164">			final String text = resources.apply(name);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">			if (text == null)</span>
+<span class="fc" id="L166">				throw Builtin.runtimeError(&quot;cannot read '&quot; + name + &quot;'&quot;);</span>
+<span class="fc" id="L167">			return text;</span>
+		});
+		// a function, not a constant: a !theme line may come after the interpreter is created
+<span class="fc" id="L170">		puml.put(&quot;theme&quot;, (in, args) -&gt; {</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">			if (args.length != 0)</span>
+<span class="nc" id="L172">				throw Builtin.typeError(&quot;theme() takes no argument (&quot; + args.length + &quot; given)&quot;);</span>
+<span class="fc" id="L173">			return PyModule.stringDict(theme.get());</span>
+		});
+<span class="fc" id="L175">		puml.put(&quot;emit&quot;, (in, args) -&gt; emit(args));</span>
+<span class="pc" id="L176">		puml.put(&quot;error&quot;, (in, args) -&gt; error(string(&quot;error&quot;, args)));</span>
+<span class="fc" id="L177">		puml.put(&quot;macro&quot;, (in, args) -&gt; macros.macro(args));</span>
+		// a text line of a Python block (PythonChunks): its macros are expanded, then it is emitted
+<span class="fc" id="L179">		puml.put(&quot;_text&quot;, (in, args) -&gt; emitLines(macros.expand(string(&quot;_text&quot;, args))));</span>
+		// a text line directly in the body of a class (PythonChunks): section 4 of PYTHON_PREPROCESSOR.md
+<span class="fc" id="L181">		puml.put(&quot;_text_in_class&quot;, (in, args) -&gt; {</span>
+<span class="fc" id="L182">			throw Builtin.runtimeError(&quot;a text line cannot be directly in the body of a class: put it in a method&quot;);</span>
+		});
+<span class="fc" id="L184">		this.interp.addModule(puml);</span>
+<span class="fc" id="L185">		this.interp.addModule(PythonColorModule.create());</span>
+<span class="fc" id="L186">		this.interp.setGlobal(&quot;puml&quot;, puml);</span>
+		// The builtin modules need no import in a diagram (&quot;!import&quot; is the legacy directive).
+<span class="fc" id="L188">		this.interp.setGlobal(&quot;math&quot;, this.interp.getModule(&quot;math&quot;));</span>
+<span class="fc" id="L189">		this.interp.setGlobal(&quot;json&quot;, this.interp.getModule(&quot;json&quot;));</span>
+<span class="fc" id="L190">		this.interp.setGlobal(&quot;color&quot;, this.interp.getModule(&quot;color&quot;));</span>
+<span class="fc" id="L191">		this.interp.setGlobal(&quot;time&quot;, this.interp.getModule(&quot;time&quot;));</span>
+<span class="fc" id="L192">		this.interp.setGlobal(&quot;datetime&quot;, this.interp.getModule(&quot;datetime&quot;));</span>
+<span class="fc" id="L193">		this.interp.setGlobal(&quot;emit&quot;, puml.get(&quot;emit&quot;));</span>
+<span class="fc" id="L194">		this.interp.setGlobal(&quot;macro&quot;, puml.get(&quot;macro&quot;));</span>
+<span class="fc" id="L195">	}</span>
+
+	/** The only argument of a puml function, which must be a str. */
+	// puml.&lt;name&gt;(): a function without argument that returns the same string every time
+	private static void putConstant(PyModule puml, String name, String value) {
+<span class="fc" id="L200">		puml.put(name, (in, args) -&gt; {</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">			if (args.length != 0)</span>
+<span class="fc" id="L202">				throw Builtin.typeError(name + &quot;() takes no argument (&quot; + args.length + &quot; given)&quot;);</span>
+<span class="fc" id="L203">			return value;</span>
+		});
+<span class="fc" id="L205">	}</span>
+
+	private static String string(String function, Object[] args) {
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (args.length != 1)</span>
+<span class="nc" id="L209">			throw Builtin.typeError(function + &quot;() takes exactly 1 argument (&quot; + args.length + &quot; given)&quot;);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (args[0] instanceof String == false)</span>
+<span class="fc" id="L211">			throw Builtin.typeError(function + &quot;() argument must be str&quot;);</span>
+<span class="fc" id="L212">		return (String) args[0];</span>
+	}
+
+	private static Object random(Object[] args) {
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (args.length &gt; 2)</span>
+<span class="fc" id="L217">			throw Builtin.typeError(&quot;random() takes at most 2 arguments (&quot; + args.length + &quot; given)&quot;);</span>
+<span class="fc" id="L218">		final int[] n = new int[args.length];</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		for (int i = 0; i &lt; args.length; i++) {</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">			if (args[i] instanceof Integer == false)</span>
+<span class="nc" id="L221">				throw Builtin.typeError(&quot;random() arguments must be int&quot;);</span>
+<span class="fc" id="L222">			n[i] = ((Integer) args[i]).intValue();</span>
+		}
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		if (args.length == 0)</span>
+<span class="fc" id="L225">			return Integer.valueOf(RandomFunction.nextInt(2));</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">		if (args.length == 1) {</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">			if (n[0] &lt;= 0)</span>
+<span class="fc" id="L228">				throw Builtin.valueError(&quot;random(n) needs n &gt; 0&quot;);</span>
+<span class="fc" id="L229">			return Integer.valueOf(RandomFunction.nextInt(n[0]));</span>
+		}
+<span class="fc bfc" id="L231" title="All 2 branches covered.">		if (n[1] &lt;= n[0])</span>
+<span class="fc" id="L232">			throw Builtin.valueError(&quot;random(a, b) needs a &lt; b&quot;);</span>
+		// the range may not fit in an int: (b - a) would overflow
+<span class="fc" id="L234">		final long range = (long) n[1] - (long) n[0];</span>
+<span class="pc bpc" id="L235" title="1 of 2 branches missed.">		if (range &gt; Integer.MAX_VALUE)</span>
+<span class="nc" id="L236">			throw Builtin.valueError(&quot;random(a, b): the range is too large&quot;);</span>
+<span class="fc" id="L237">		return Integer.valueOf(RandomFunction.nextInt((int) range) + n[0]);</span>
+	}
+
+	private Object emit(Object[] args) {
+<span class="fc" id="L241">		return emitLines(string(&quot;emit&quot;, args));</span>
+	}
+
+	private Object emitLines(String text) {
+		// A string with several lines is several lines of PlantUML text.
+<span class="fc bfc" id="L246" title="All 2 branches covered.">		for (String line : text.split(&quot;\\r?\\n&quot;, -1))</span>
+<span class="fc" id="L247">			emitted.add(line);</span>
+<span class="fc" id="L248">		return Builtin.none();</span>
+	}
+
+	/** True if a macro of this name is declared. */
+	boolean isMacro(String name) {
+<span class="fc" id="L253">		return macros.contains(name);</span>
+	}
+
+	/** True once a macro is declared: until then, text lines are not scanned for macros. */
+	boolean hasMacros() {
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		return macros.isEmpty() == false;</span>
+	}
+
+	/**
+	 * Replaces the macro calls of a text line outside Python by their result
+	 * (several lines are separated by a newline). An error is reported on the
+	 * line of the macro that caused it, or on &lt;code&gt;at&lt;/code&gt;.
+	 */
+	String expandMacros(String text, StringLocated at) throws EaterExceptionMessage {
+<span class="fc" id="L267">		pumlError = null;</span>
+		try {
+<span class="fc" id="L269">			return macros.expand(text);</span>
+<span class="fc" id="L270">		} catch (PyError e) {</span>
+<span class="fc" id="L271">			throw translate(e, at);</span>
+<span class="nc" id="L272">		} catch (ExecutionLimitError e) {</span>
+<span class="nc" id="L273">			throw new EaterExceptionMessage(&quot;Python error: &quot; + e.getMessage(), at);</span>
+		}
+	}
+
+	/**
+	 * puml.error(msg): stops the diagram with msg, reported on the diagram
+	 * line. It is a RuntimeError, so a script may catch it like any exception.
+	 */
+	private Object error(String message) {
+<span class="fc" id="L282">		pumlError = message;</span>
+<span class="fc" id="L283">		throw Builtin.runtimeError(message);</span>
+	}
+
+	/**
+	 * Runs a chunk and returns the lines it emitted. &lt;code&gt;lines&lt;/code&gt; gives, for
+	 * each line of the code, the diagram line it comes from (null: unknown), so
+	 * that an error is reported on the line that caused it, even when it happens
+	 * in a function defined by an earlier chunk.
+	 */
+	List&lt;String&gt; run(String code, List&lt;StringLocated&gt; lines) throws EaterExceptionMessage {
+<span class="fc" id="L293">		emitted.clear();</span>
+<span class="fc" id="L294">		pumlError = null;</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">		final String name = lines == null ? &quot;&lt;diagram&gt;&quot; : &quot;&lt;python &quot; + (++chunkCount) + &quot;&gt;&quot;;</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">		if (lines != null)</span>
+<span class="fc" id="L297">			sources.put(name, lines);</span>
+		try {
+<span class="fc" id="L299">			interp.run(code, name);</span>
+<span class="fc" id="L300">		} catch (PySyntaxError e) {</span>
+<span class="fc" id="L301">			throw new EaterExceptionMessage(</span>
+<span class="fc" id="L302">					&quot;Python syntax error: &quot; + e.detail + &quot; (column &quot; + (e.col + 1) + &quot;)&quot;, locate(lines, e.line));</span>
+<span class="fc" id="L303">		} catch (PyError e) {</span>
+<span class="fc" id="L304">			throw translate(e, null);</span>
+<span class="fc" id="L305">		} catch (ExecutionLimitError e) {</span>
+<span class="fc" id="L306">			throw new EaterExceptionMessage(&quot;Python error: &quot; + e.getMessage(), null);</span>
+<span class="fc" id="L307">		}</span>
+<span class="fc" id="L308">		return new ArrayList&lt;&gt;(emitted);</span>
+	}
+
+	/**
+	 * A Python exception as a message on the diagram line that caused it (found
+	 * through the chunk and line of the innermost frame), or on
+	 * &lt;code&gt;fallback&lt;/code&gt; when it is not known.
+	 */
+	private EaterExceptionMessage translate(PyError e, StringLocated fallback) {
+<span class="fc" id="L317">		StringLocated at = locate(sources.get(e.getFile()), e.getLine());</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">		if (at == null)</span>
+<span class="fc" id="L319">			at = fallback;</span>
+		// a puml.error is reported as the plain message
+<span class="pc bpc" id="L321" title="2 of 6 branches missed.">		if (pumlError != null &amp;&amp; e.typeName().equals(&quot;RuntimeError&quot;) &amp;&amp; e.text().equals(pumlError))</span>
+<span class="fc" id="L322">			return new EaterExceptionMessage(pumlError, at);</span>
+<span class="fc" id="L323">		final String text = e.text();</span>
+<span class="pc bpc" id="L324" title="1 of 2 branches missed.">		return new EaterExceptionMessage(&quot;Python error: &quot; + e.typeName() + (text.isEmpty() ? &quot;&quot; : &quot;: &quot; + text), at);</span>
+	}
+
+	/** The diagram line of the line number (1-based) of a chunk, or null. */
+	private static StringLocated locate(List&lt;StringLocated&gt; lines, int line) {
+<span class="pc bpc" id="L329" title="2 of 6 branches missed.">		if (lines == null || line &lt; 1 || line &gt; lines.size())</span>
+<span class="fc" id="L330">			return null;</span>
+<span class="fc" id="L331">		return lines.get(line - 1);</span>
+	}
+
+	/**
+	 * Replaces each &lt;code&gt;!{expr}&lt;/code&gt; of a text line by &lt;code&gt;str(expr)&lt;/code&gt;
+	 * (Python is evaluated in the state of the diagram); as in an f-string, a
+	 * field may also be &lt;code&gt;!{expr!r}&lt;/code&gt;, &lt;code&gt;!{expr!s}&lt;/code&gt; or
+	 * &lt;code&gt;!{expr:spec}&lt;/code&gt; (see {@link PythonChunks#interpolationCode}). A doubled bang before
+	 * the brace is the escape: it gives a literal &lt;code&gt;!{&lt;/code&gt;. With
+	 * &lt;code&gt;keepOnError&lt;/code&gt;, an expression that fails stays as written in the
+	 * text instead of being an error.
+	 */
+	String interpolate(String text, boolean keepOnError) throws EaterExceptionMessage {
+<span class="fc" id="L344">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L345">		int i = 0;</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">		while (i &lt; text.length()) {</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">			if (text.startsWith(PythonChunks.ESCAPE, i)) {</span>
+<span class="fc" id="L348">				sb.append(PythonChunks.OPEN);</span>
+<span class="fc" id="L349">				i += PythonChunks.ESCAPE.length();</span>
+<span class="fc" id="L350">				continue;</span>
+			}
+<span class="fc bfc" id="L352" title="All 2 branches covered.">			final int close = text.startsWith(PythonChunks.OPEN, i) ? PythonChunks.closingBrace(text, i + 2) : -1;</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">			if (close == -1) {</span>
+<span class="fc" id="L354">				sb.append(text.charAt(i));</span>
+<span class="fc" id="L355">				i++;</span>
+<span class="fc" id="L356">				continue;</span>
+			}
+<span class="fc" id="L358">			final String expression = text.substring(i + 2, close);</span>
+			try {
+<span class="fc" id="L360">				sb.append(evaluate(expression));</span>
+<span class="fc" id="L361">			} catch (EaterExceptionMessage e) {</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">				if (keepOnError == false)</span>
+<span class="fc" id="L363">					throw e;</span>
+<span class="fc" id="L364">				sb.append(text, i, close + 1);</span>
+<span class="fc" id="L365">			}</span>
+<span class="fc" id="L366">			i = close + 1;</span>
+<span class="fc" id="L367">		}</span>
+<span class="fc" id="L368">		return sb.toString();</span>
+	}
+
+	/** The text of an interpolation: an expression, with an optional conversion and format spec. */
+	private String evaluate(String expression) throws EaterExceptionMessage {
+<span class="fc" id="L373">		run(&quot;__interpolated = &quot; + PythonChunks.interpolationCode(expression) + &quot;\n&quot;, null);</span>
+<span class="fc" id="L374">		return interp.getGlobalAsString(&quot;__interpolated&quot;);</span>
+	}
+
+	static class EaterExceptionMessage extends Exception {
+		private static final long serialVersionUID = 1L;
+
+		/** The diagram line the error comes from, or null when unknown. */
+		final StringLocated at;
+
+		EaterExceptionMessage(String message, StringLocated at) {
+<span class="fc" id="L384">			super(message);</span>
+<span class="fc" id="L385">			this.at = at;</span>
+<span class="fc" id="L386">		}</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

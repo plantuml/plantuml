@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyType.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyType.java</span></div><h1>PyType.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.Map;
+
+/** A type that is a value: int, str, ..., the exception classes and the classes defined by the program. */
+final class PyType {
+	final String name;
+	final PyType parent;
+	final boolean exception;
+	/** Called when the type itself is called, e.g. int(&quot;3&quot;). */
+	Builtin ctor;
+	/** The attributes of a class defined by the program; null for a builtin type. */
+	final Map&lt;String, Object&gt; dict;
+	/** CPython's __qualname__ of a class defined by the program; null for a builtin type. */
+	final String qualname;
+	/**
+	 * CPython's __module__ of a class defined by the program: the __name__ of
+	 * the globals it was defined in (&quot;__main__&quot; for a diagram); null for a
+	 * builtin type.
+	 */
+	final String module;
+	/**
+	 * The interpreter that ran the class statement: a class belongs to one
+	 * interpreter state and never appears in another one, so an instance can ask
+	 * its class to run a special method (__str__, __repr__, ...) from code that
+	 * has no interpreter at hand, such as the static methods of PyOps. Null for a
+	 * builtin type.
+	 */
+	Interp interp;
+	/**
+	 * True for a class written in Java (datetime.date and datetime.datetime): its
+	 * instances cannot be modified, it cannot be subclassed or changed, and it
+	 * is the only kind of class that may have __eq__ and __hash__ (a class of
+	 * the program may not: the Resolver rejects them).
+	 */
+	boolean nativeClass;
+
+	PyType(String name, PyType parent, boolean exception) {
+<span class="fc" id="L39">		this(name, parent, exception, null, null, null);</span>
+<span class="fc" id="L40">	}</span>
+
+	PyType(String name, PyType parent, boolean exception, Map&lt;String, Object&gt; dict, String qualname,
+<span class="fc" id="L43">			String module) {</span>
+<span class="fc" id="L44">		this.name = name;</span>
+<span class="fc" id="L45">		this.parent = parent;</span>
+<span class="fc" id="L46">		this.exception = exception;</span>
+<span class="fc" id="L47">		this.dict = dict;</span>
+<span class="fc" id="L48">		this.qualname = qualname;</span>
+<span class="fc" id="L49">		this.module = module;</span>
+<span class="fc" id="L50">	}</span>
+
+	/** The name used by repr: &quot;int&quot;, or &quot;palette.Box&quot; for a class of the program. */
+	String fullName() {
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		return dict == null ? name : module + &quot;.&quot; + qualname;</span>
+	}
+
+	/**
+	 * The name used in error reports, as CPython's traceback prints it: the
+	 * module is left out for a builtin type and for a class of &quot;__main__&quot;.
+	 */
+	String reportName() {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (dict == null)</span>
+<span class="fc" id="L63">			return name;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		return module.equals(&quot;__main__&quot;) ? qualname : module + &quot;.&quot; + qualname;</span>
+	}
+
+	boolean isSubtypeOf(PyType t) {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		for (PyType p = this; p != null; p = p.parent)</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">			if (p == t)</span>
+<span class="fc" id="L70">				return true;</span>
+<span class="fc" id="L71">		return false;</span>
+	}
+
+	/** True for a class defined by the program. */
+	boolean isClass() {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		return dict != null;</span>
+	}
+
+	/**
+	 * Looks a name up in the class and its bases, as CPython's MRO does for
+	 * single inheritance. Builtin bases only provide __init__ (object and the
+	 * exception classes). Returns null when the name is not found.
+	 */
+	Object lookup(String n) {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		for (PyType p = this; p != null; p = p.parent) {</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">			if (p.dict != null) {</span>
+<span class="fc" id="L87">				Object v = p.dict.get(n);</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">				if (v != null)</span>
+<span class="fc" id="L89">					return v;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">			} else if (n.equals(&quot;__init__&quot;)) {</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">				if (p.exception)</span>
+<span class="fc" id="L92">					return Builtins.EXCEPTION_INIT;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">				if (p == Types.OBJECT)</span>
+<span class="fc" id="L94">					return Builtins.OBJECT_INIT;</span>
+			}
+		}
+<span class="fc" id="L97">		return null;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

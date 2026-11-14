@@ -52,15 +52,15 @@ public class EaterDeclareReturnFunction extends Eater {
 <span class="fc" id="L52">		skipSpaces();</span>
 <span class="fc" id="L53">		checkAndEatChar(&quot;!&quot;);</span>
 <span class="fc" id="L54">		boolean unquoted = false;</span>
-<span class="pc bpc" id="L55" title="1 of 4 branches missed.">		while (peekUnquoted() || peekFinal()) {</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">			if (peekUnquoted()) {</span>
+<span class="fc bfc" id="L55" title="All 4 branches covered.">		while (peekUnquoted() || peekFinal()) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">			if (peekUnquoted()) {</span>
 <span class="fc" id="L57">				checkAndEatChar(&quot;unquoted&quot;);</span>
 <span class="fc" id="L58">				skipSpaces();</span>
 <span class="fc" id="L59">				unquoted = true;</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">			} else if (peekFinal()) {</span>
-<span class="nc" id="L61">				checkAndEatChar(&quot;final&quot;);</span>
-<span class="nc" id="L62">				skipSpaces();</span>
-<span class="nc" id="L63">				finalFlag = true;</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			} else if (peekFinal()) {</span>
+<span class="fc" id="L61">				checkAndEatChar(&quot;final&quot;);</span>
+<span class="fc" id="L62">				skipSpaces();</span>
+<span class="fc" id="L63">				finalFlag = true;</span>
 			}
 		}
 <span class="fc" id="L66">		checkAndEatChar(&quot;function&quot;);</span>
@@ -73,7 +73,7 @@ public class EaterDeclareReturnFunction extends Eater {
 	}
 
 	private boolean peekFinal() {
-<span class="pc bpc" id="L76" title="2 of 4 branches missed.">		return peekChar() == 'f' &amp;&amp; peekCharN2() == 'i';</span>
+<span class="pc bpc" id="L76" title="1 of 4 branches missed.">		return peekChar() == 'f' &amp;&amp; peekCharN2() == 'i';</span>
 	}
 
 	public TFunctionImpl getFunction() {

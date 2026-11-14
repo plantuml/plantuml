@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyHashKey.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyHashKey.java</span></div><h1>PyHashKey.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+/**
+ * The key of a dict for an instance of a native class that has __hash__ and
+ * __eq__ (datetime.date...): two keys are the same if the hashes are and the
+ * instances are equal, as in CPython. The entry of the dict keeps the instance
+ * itself, so the keys and the items come back as they were given.
+ */
+final class PyHashKey {
+	final PyInstance instance;
+	private final int hash;
+
+<span class="fc" id="L13">	PyHashKey(PyInstance instance) {</span>
+<span class="fc" id="L14">		this.instance = instance;</span>
+<span class="fc" id="L15">		final Object h = PyOps.callNative(instance, &quot;__hash__&quot;);</span>
+<span class="pc bpc" id="L16" title="1 of 2 branches missed.">		if (h instanceof Integer == false)</span>
+<span class="nc" id="L17">			throw PyOps.err(Types.TYPE_ERROR, &quot;__hash__ method should return an integer&quot;);</span>
+<span class="fc" id="L18">		this.hash = ((Integer) h).intValue();</span>
+<span class="fc" id="L19">	}</span>
+
+	@Override
+	public int hashCode() {
+<span class="fc" id="L23">		return hash;</span>
+	}
+
+	@Override
+	public boolean equals(Object o) {
+<span class="pc bpc" id="L28" title="2 of 4 branches missed.">		return o instanceof PyHashKey &amp;&amp; PyOps.eq(instance, ((PyHashKey) o).instance);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

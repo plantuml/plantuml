@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Types.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">Types.java</span></div><h1>Types.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+/** The builtin types and exception classes. */
+final class Types {
+	private Types() {
+	}
+
+	/** The root of every type, so that isinstance(x, object) is true and a class may name it as its base. */
+<span class="fc" id="L9">	static final PyType OBJECT = new PyType(&quot;object&quot;, null, false);</span>
+<span class="fc" id="L10">	static final PyType NONE_TYPE = new PyType(&quot;NoneType&quot;, OBJECT, false);</span>
+<span class="fc" id="L11">	static final PyType INT = new PyType(&quot;int&quot;, OBJECT, false);</span>
+<span class="fc" id="L12">	static final PyType BOOL = new PyType(&quot;bool&quot;, INT, false);</span>
+<span class="fc" id="L13">	static final PyType FLOAT = new PyType(&quot;float&quot;, OBJECT, false);</span>
+<span class="fc" id="L14">	static final PyType STR = new PyType(&quot;str&quot;, OBJECT, false);</span>
+<span class="fc" id="L15">	static final PyType LIST = new PyType(&quot;list&quot;, OBJECT, false);</span>
+<span class="fc" id="L16">	static final PyType TUPLE = new PyType(&quot;tuple&quot;, OBJECT, false);</span>
+<span class="fc" id="L17">	static final PyType DICT = new PyType(&quot;dict&quot;, OBJECT, false);</span>
+<span class="fc" id="L18">	static final PyType SET = new PyType(&quot;set&quot;, OBJECT, false);</span>
+<span class="fc" id="L19">	static final PyType RANGE = new PyType(&quot;range&quot;, OBJECT, false);</span>
+<span class="fc" id="L20">	static final PyType SLICE = new PyType(&quot;slice&quot;, OBJECT, false);</span>
+<span class="fc" id="L21">	static final PyType FUNCTION = new PyType(&quot;function&quot;, OBJECT, false);</span>
+<span class="fc" id="L22">	static final PyType BUILTIN = new PyType(&quot;builtin_function_or_method&quot;, OBJECT, false);</span>
+<span class="fc" id="L23">	static final PyType METHOD = new PyType(&quot;method&quot;, OBJECT, false);</span>
+<span class="fc" id="L24">	static final PyType MODULE = new PyType(&quot;module&quot;, OBJECT, false);</span>
+<span class="fc" id="L25">	static final PyType TYPE = new PyType(&quot;type&quot;, OBJECT, false);</span>
+<span class="fc" id="L26">	static final PyType DICT_KEYS = new PyType(&quot;dict_keys&quot;, OBJECT, false);</span>
+<span class="fc" id="L27">	static final PyType DICT_VALUES = new PyType(&quot;dict_values&quot;, OBJECT, false);</span>
+<span class="fc" id="L28">	static final PyType DICT_ITEMS = new PyType(&quot;dict_items&quot;, OBJECT, false);</span>
+<span class="fc" id="L29">	static final PyType ITERATOR = new PyType(&quot;iterator&quot;, OBJECT, false);</span>
+	/** The type of NotImplemented: not in ALL, CPython has no builtin name for it. */
+<span class="fc" id="L31">	static final PyType NOT_IMPLEMENTED_TYPE = new PyType(&quot;NotImplementedType&quot;, OBJECT, false);</span>
+
+<span class="fc" id="L33">	static final PyType BASE_EXCEPTION = new PyType(&quot;BaseException&quot;, OBJECT, true);</span>
+<span class="fc" id="L34">	static final PyType EXCEPTION = new PyType(&quot;Exception&quot;, BASE_EXCEPTION, true);</span>
+<span class="fc" id="L35">	static final PyType ARITHMETIC_ERROR = new PyType(&quot;ArithmeticError&quot;, EXCEPTION, true);</span>
+<span class="fc" id="L36">	static final PyType ZERO_DIVISION = new PyType(&quot;ZeroDivisionError&quot;, ARITHMETIC_ERROR, true);</span>
+<span class="fc" id="L37">	static final PyType OVERFLOW = new PyType(&quot;OverflowError&quot;, ARITHMETIC_ERROR, true);</span>
+<span class="fc" id="L38">	static final PyType LOOKUP_ERROR = new PyType(&quot;LookupError&quot;, EXCEPTION, true);</span>
+<span class="fc" id="L39">	static final PyType KEY_ERROR = new PyType(&quot;KeyError&quot;, LOOKUP_ERROR, true);</span>
+<span class="fc" id="L40">	static final PyType INDEX_ERROR = new PyType(&quot;IndexError&quot;, LOOKUP_ERROR, true);</span>
+<span class="fc" id="L41">	static final PyType VALUE_ERROR = new PyType(&quot;ValueError&quot;, EXCEPTION, true);</span>
+<span class="fc" id="L42">	static final PyType TYPE_ERROR = new PyType(&quot;TypeError&quot;, EXCEPTION, true);</span>
+<span class="fc" id="L43">	static final PyType ASSERTION_ERROR = new PyType(&quot;AssertionError&quot;, EXCEPTION, true);</span>
+<span class="fc" id="L44">	static final PyType ATTRIBUTE_ERROR = new PyType(&quot;AttributeError&quot;, EXCEPTION, true);</span>
+<span class="fc" id="L45">	static final PyType NAME_ERROR = new PyType(&quot;NameError&quot;, EXCEPTION, true);</span>
+<span class="fc" id="L46">	static final PyType UNBOUND_LOCAL = new PyType(&quot;UnboundLocalError&quot;, NAME_ERROR, true);</span>
+<span class="fc" id="L47">	static final PyType RUNTIME_ERROR = new PyType(&quot;RuntimeError&quot;, EXCEPTION, true);</span>
+<span class="fc" id="L48">	static final PyType RECURSION_ERROR = new PyType(&quot;RecursionError&quot;, RUNTIME_ERROR, true);</span>
+<span class="fc" id="L49">	static final PyType NOT_IMPLEMENTED = new PyType(&quot;NotImplementedError&quot;, RUNTIME_ERROR, true);</span>
+<span class="fc" id="L50">	static final PyType MEMORY_ERROR = new PyType(&quot;MemoryError&quot;, EXCEPTION, true);</span>
+<span class="fc" id="L51">	static final PyType IMPORT_ERROR = new PyType(&quot;ImportError&quot;, EXCEPTION, true);</span>
+<span class="fc" id="L52">	static final PyType MODULE_NOT_FOUND = new PyType(&quot;ModuleNotFoundError&quot;, IMPORT_ERROR, true);</span>
+
+<span class="fc" id="L54">	static final PyType[] ALL = { OBJECT, NONE_TYPE, INT, BOOL, FLOAT, STR, LIST, TUPLE, DICT, SET, RANGE, BASE_EXCEPTION,</span>
+			EXCEPTION, ARITHMETIC_ERROR, ZERO_DIVISION, OVERFLOW, LOOKUP_ERROR, KEY_ERROR, INDEX_ERROR, VALUE_ERROR,
+			TYPE_ERROR, ASSERTION_ERROR, ATTRIBUTE_ERROR, NAME_ERROR, UNBOUND_LOCAL, RUNTIME_ERROR, RECURSION_ERROR,
+			NOT_IMPLEMENTED, MEMORY_ERROR, IMPORT_ERROR, MODULE_NOT_FOUND };
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

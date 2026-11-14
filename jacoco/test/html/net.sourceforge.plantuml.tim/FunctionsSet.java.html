@@ -111,121 +111,142 @@ public class FunctionsSet {
 <span class="fc" id="L111">		return base.getLonguestMatchStartingIn(s, pos);</span>
 	}
 
+	/** Names that a legacy function, procedure or !define may not take: the Python macros of the diagram. */
+	public interface ReservedNames {
+		boolean isReserved(String name);
+	}
+
+	private ReservedNames reservedNames;
+
+	public void setReservedNames(ReservedNames reservedNames) {
+<span class="fc" id="L122">		this.reservedNames = reservedNames;</span>
+<span class="fc" id="L123">	}</span>
+
+	private void checkNotReserved(TFunctionSignature signature, StringLocated s) throws EaterException {
+<span class="fc" id="L126">		final String name = signature.getFunctionName();</span>
+<span class="fc bfc" id="L127" title="All 4 branches covered.">		if (reservedNames != null &amp;&amp; reservedNames.isReserved(name))</span>
+<span class="fc" id="L128">			throw new EaterException(&quot;'&quot; + name + &quot;' is already a Python macro of the diagram&quot;, s);</span>
+<span class="fc" id="L129">	}</span>
+
 	public TFunctionImpl pendingFunction() {
-<span class="fc" id="L115">		return pendingFunction;</span>
+<span class="fc" id="L132">		return pendingFunction;</span>
 	}
 
 	public void addFunction(TFunction func) {
-<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (func.getFunctionType() == TFunctionType.LEGACY_DEFINELONG)</span>
-<span class="fc" id="L120">			((TFunctionImpl) func).finalizeEnddefinelong();</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (func.getFunctionType() == TFunctionType.LEGACY_DEFINELONG)</span>
+<span class="fc" id="L137">			((TFunctionImpl) func).finalizeEnddefinelong();</span>
 
-<span class="fc" id="L122">		this.functions.put(func.getSignature(), func);</span>
-<span class="fc" id="L123">		this.functions3.add(func.getSignature().getFunctionName() + &quot;(&quot;);</span>
-<span class="fc" id="L124">		this.updateFunctionsByName(func);</span>
-<span class="fc" id="L125">	}</span>
+<span class="fc" id="L139">		this.functions.put(func.getSignature(), func);</span>
+<span class="fc" id="L140">		this.functions3.add(func.getSignature().getFunctionName() + &quot;(&quot;);</span>
+<span class="fc" id="L141">		this.updateFunctionsByName(func);</span>
+<span class="fc" id="L142">	}</span>
 
 	private void updateFunctionsByName(TFunction func) {
-<span class="fc" id="L128">		final String name = func.getSignature().getFunctionName();</span>
-<span class="fc" id="L129">		this.functionsByName.computeIfAbsent(name, k -&gt; new HashMap&lt;&gt;()).put(func.getSignature(), func);</span>
-<span class="fc" id="L130">	}</span>
+<span class="fc" id="L145">		final String name = func.getSignature().getFunctionName();</span>
+<span class="fc" id="L146">		this.functionsByName.computeIfAbsent(name, k -&gt; new HashMap&lt;&gt;()).put(func.getSignature(), func);</span>
+<span class="fc" id="L147">	}</span>
 
 	/**
 	 * Returns true if at least one function with the given name exists.
 	 */
 	public boolean doesFunctionExist(String functionName) {
-<span class="fc bfc" id="L136" title="All 6 branches covered.">		return this.functionsByName.containsKey(functionName) || (base != null &amp;&amp; base.doesFunctionExist(functionName));</span>
+<span class="fc bfc" id="L153" title="All 6 branches covered.">		return this.functionsByName.containsKey(functionName) || (base != null &amp;&amp; base.doesFunctionExist(functionName));</span>
 	}
 
 	/**
 	 * Returns the functions matching the given name, or an empty collection.
 	 */
 	public Iterable&lt;TFunction&gt; getFunctionsByName(String functionName) {
-<span class="fc" id="L143">		final Map&lt;TFunctionSignature, TFunction&gt; own = this.functionsByName.get(functionName);</span>
-<span class="fc bfc" id="L144" title="All 2 branches covered.">		final Iterable&lt;TFunction&gt; inherited = base == null ? Collections.&lt;TFunction&gt;emptyList()</span>
-<span class="fc" id="L145">				: base.getFunctionsByName(functionName);</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (own == null)</span>
-<span class="fc" id="L147">			return inherited;</span>
+<span class="fc" id="L160">		final Map&lt;TFunctionSignature, TFunction&gt; own = this.functionsByName.get(functionName);</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		final Iterable&lt;TFunction&gt; inherited = base == null ? Collections.&lt;TFunction&gt;emptyList()</span>
+<span class="fc" id="L162">				: base.getFunctionsByName(functionName);</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (own == null)</span>
+<span class="fc" id="L164">			return inherited;</span>
 
-<span class="fc" id="L149">		final List&lt;TFunction&gt; result = new ArrayList&lt;&gt;(own.values());</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">		for (TFunction func : inherited)</span>
-<span class="pc bpc" id="L151" title="1 of 2 branches missed.">			if (own.containsKey(func.getSignature()) == false)</span>
-<span class="nc" id="L152">				result.add(func);</span>
-<span class="fc" id="L153">		return result;</span>
+<span class="fc" id="L166">		final List&lt;TFunction&gt; result = new ArrayList&lt;&gt;(own.values());</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (TFunction func : inherited)</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			if (own.containsKey(func.getSignature()) == false)</span>
+<span class="nc" id="L169">				result.add(func);</span>
+<span class="fc" id="L170">		return result;</span>
 	}
 
 	public void executeEndfunction() {
-<span class="fc" id="L157">		this.addFunction(this.pendingFunction);</span>
-<span class="fc" id="L158">		this.pendingFunction = null;</span>
-<span class="fc" id="L159">	}</span>
+<span class="fc" id="L174">		this.addFunction(this.pendingFunction);</span>
+<span class="fc" id="L175">		this.pendingFunction = null;</span>
+<span class="fc" id="L176">	}</span>
 
 	public void executeLegacyDefine(TContext context, TMemory memory, StringLocated s)
 			throws EaterException {
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
-<span class="nc" id="L164">			throw new EaterException(&quot;already0048&quot;, s);</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
+<span class="nc" id="L181">			throw new EaterException(&quot;already0048&quot;, s);</span>
 
-<span class="fc" id="L166">		final EaterLegacyDefine legacyDefine = new EaterLegacyDefine(s);</span>
-<span class="fc" id="L167">		legacyDefine.analyze(context, memory);</span>
-<span class="fc" id="L168">		final TFunction function = legacyDefine.getFunction();</span>
-<span class="fc" id="L169">		this.functions.put(function.getSignature(), function);</span>
-<span class="fc" id="L170">		this.functions3.add(function.getSignature().getFunctionName() + &quot;(&quot;);</span>
-<span class="fc" id="L171">		this.updateFunctionsByName(function);</span>
-<span class="fc" id="L172">	}</span>
+<span class="fc" id="L183">		final EaterLegacyDefine legacyDefine = new EaterLegacyDefine(s);</span>
+<span class="fc" id="L184">		legacyDefine.analyze(context, memory);</span>
+<span class="fc" id="L185">		final TFunction function = legacyDefine.getFunction();</span>
+<span class="fc" id="L186">		checkNotReserved(function.getSignature(), s);</span>
+<span class="fc" id="L187">		this.functions.put(function.getSignature(), function);</span>
+<span class="fc" id="L188">		this.functions3.add(function.getSignature().getFunctionName() + &quot;(&quot;);</span>
+<span class="fc" id="L189">		this.updateFunctionsByName(function);</span>
+<span class="fc" id="L190">	}</span>
 
 	public void executeLegacyDefineLong(TContext context, TMemory memory, StringLocated s)
 			throws EaterException {
-<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
-<span class="nc" id="L177">			throw new EaterException(&quot;already0068&quot;, s);</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
+<span class="nc" id="L195">			throw new EaterException(&quot;already0068&quot;, s);</span>
 
-<span class="fc" id="L179">		final EaterLegacyDefineLong legacyDefineLong = new EaterLegacyDefineLong(s);</span>
-<span class="fc" id="L180">		legacyDefineLong.analyze(context, memory);</span>
-<span class="fc" id="L181">		this.pendingFunction = legacyDefineLong.getFunction();</span>
-<span class="fc" id="L182">	}</span>
+<span class="fc" id="L197">		final EaterLegacyDefineLong legacyDefineLong = new EaterLegacyDefineLong(s);</span>
+<span class="fc" id="L198">		legacyDefineLong.analyze(context, memory);</span>
+<span class="fc" id="L199">		checkNotReserved(legacyDefineLong.getFunction().getSignature(), s);</span>
+<span class="fc" id="L200">		this.pendingFunction = legacyDefineLong.getFunction();</span>
+<span class="fc" id="L201">	}</span>
 
 	public void executeDeclareReturnFunction(TContext context, TMemory memory, StringLocated s)
 			throws EaterException {
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
-<span class="nc" id="L187">			throw new EaterException(&quot;already0068&quot;, s);</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
+<span class="nc" id="L206">			throw new EaterException(&quot;already0068&quot;, s);</span>
 
-<span class="fc" id="L189">		final EaterDeclareReturnFunction declareFunction = new EaterDeclareReturnFunction(s);</span>
-<span class="fc" id="L190">		declareFunction.analyze(context, memory);</span>
-<span class="fc" id="L191">		final boolean finalFlag = declareFunction.getFinalFlag();</span>
-<span class="fc" id="L192">		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();</span>
-<span class="fc" id="L193">		final TFunction previous = this.getExact(declaredSignature);</span>
-<span class="pc bpc" id="L194" title="2 of 6 branches missed.">		if (previous != null &amp;&amp; (finalFlag || this.functionsFinal.contains(declaredSignature)))</span>
-<span class="nc" id="L195">			throw new EaterException(&quot;This function is already defined&quot;, s);</span>
+<span class="fc" id="L208">		final EaterDeclareReturnFunction declareFunction = new EaterDeclareReturnFunction(s);</span>
+<span class="fc" id="L209">		declareFunction.analyze(context, memory);</span>
+<span class="fc" id="L210">		final boolean finalFlag = declareFunction.getFinalFlag();</span>
+<span class="fc" id="L211">		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();</span>
+<span class="fc" id="L212">		checkNotReserved(declaredSignature, s);</span>
+<span class="fc" id="L213">		final TFunction previous = this.getExact(declaredSignature);</span>
+<span class="pc bpc" id="L214" title="2 of 6 branches missed.">		if (previous != null &amp;&amp; (finalFlag || this.functionsFinal.contains(declaredSignature)))</span>
+<span class="nc" id="L215">			throw new EaterException(&quot;This function is already defined&quot;, s);</span>
 
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (finalFlag)</span>
-<span class="nc" id="L198">			this.functionsFinal.add(declaredSignature);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (finalFlag)</span>
+<span class="fc" id="L218">			this.functionsFinal.add(declaredSignature);</span>
 
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if (declareFunction.getFunction().hasBody())</span>
-<span class="nc" id="L201">			this.addFunction(declareFunction.getFunction());</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (declareFunction.getFunction().hasBody())</span>
+<span class="nc" id="L221">			this.addFunction(declareFunction.getFunction());</span>
 		else
-<span class="fc" id="L203">			this.pendingFunction = declareFunction.getFunction();</span>
+<span class="fc" id="L223">			this.pendingFunction = declareFunction.getFunction();</span>
 
-<span class="fc" id="L205">	}</span>
+<span class="fc" id="L225">	}</span>
 
 	public void executeDeclareProcedure(TContext context, TMemory memory, StringLocated s)
 			throws EaterException {
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
-<span class="nc" id="L210">			throw new EaterException(&quot;already0068&quot;, s);</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">		if (this.pendingFunction != null)</span>
+<span class="nc" id="L230">			throw new EaterException(&quot;already0068&quot;, s);</span>
 
-<span class="fc" id="L212">		final EaterDeclareProcedure declareFunction = new EaterDeclareProcedure(s);</span>
-<span class="fc" id="L213">		declareFunction.analyze(context, memory);</span>
-<span class="fc" id="L214">		final boolean finalFlag = declareFunction.getFinalFlag();</span>
-<span class="fc" id="L215">		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();</span>
-<span class="fc" id="L216">		final TFunction previous = this.getExact(declaredSignature);</span>
-<span class="pc bpc" id="L217" title="2 of 6 branches missed.">		if (previous != null &amp;&amp; (finalFlag || this.functionsFinal.contains(declaredSignature)))</span>
-<span class="nc" id="L218">			throw new EaterException(&quot;This function is already defined&quot;, s);</span>
+<span class="fc" id="L232">		final EaterDeclareProcedure declareFunction = new EaterDeclareProcedure(s);</span>
+<span class="fc" id="L233">		declareFunction.analyze(context, memory);</span>
+<span class="fc" id="L234">		final boolean finalFlag = declareFunction.getFinalFlag();</span>
+<span class="fc" id="L235">		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();</span>
+<span class="fc" id="L236">		checkNotReserved(declaredSignature, s);</span>
+<span class="fc" id="L237">		final TFunction previous = this.getExact(declaredSignature);</span>
+<span class="pc bpc" id="L238" title="2 of 6 branches missed.">		if (previous != null &amp;&amp; (finalFlag || this.functionsFinal.contains(declaredSignature)))</span>
+<span class="nc" id="L239">			throw new EaterException(&quot;This function is already defined&quot;, s);</span>
 
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (finalFlag)</span>
-<span class="nc" id="L221">			this.functionsFinal.add(declaredSignature);</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		if (finalFlag)</span>
+<span class="nc" id="L242">			this.functionsFinal.add(declaredSignature);</span>
 
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">		if (declareFunction.getFunction().hasBody())</span>
-<span class="nc" id="L224">			this.addFunction(declareFunction.getFunction());</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">		if (declareFunction.getFunction().hasBody())</span>
+<span class="nc" id="L245">			this.addFunction(declareFunction.getFunction());</span>
 		else
-<span class="fc" id="L226">			this.pendingFunction = declareFunction.getFunction();</span>
+<span class="fc" id="L247">			this.pendingFunction = declareFunction.getFunction();</span>
 
-<span class="fc" id="L228">	}</span>
+<span class="fc" id="L249">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -107,66 +107,68 @@ public class Monomorph {
 <span class="pc bpc" id="L107" title="1 of 2 branches missed.">		} else if (this.type != MonomorphType.MAP) {</span>
 <span class="nc" id="L108">			throw new IllegalStateException(&quot;Monomorph is not of type MAP.&quot;);</span>
 		}
-<span class="fc" id="L110">		this.map.put(key, value);</span>
-<span class="fc" id="L111">	}</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (this.map.containsKey(key))</span>
+<span class="fc" id="L111">			throw new YamlSyntaxException(&quot;duplicate key '&quot; + key + &quot;'&quot;);</span>
+<span class="fc" id="L112">		this.map.put(key, value);</span>
+<span class="fc" id="L113">	}</span>
 
 	public MonomorphType getType() {
-<span class="fc" id="L114">		return type;</span>
+<span class="fc" id="L116">		return type;</span>
 	}
 
 	public String getValue() {
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (this.type != MonomorphType.SCALAR)</span>
-<span class="nc" id="L119">			throw new IllegalStateException(&quot;Not a scalar value.&quot;);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (this.type != MonomorphType.SCALAR)</span>
+<span class="nc" id="L121">			throw new IllegalStateException(&quot;Not a scalar value.&quot;);</span>
 
-<span class="fc" id="L121">		return this.value;</span>
+<span class="fc" id="L123">		return this.value;</span>
 	}
 
 	public Monomorph getElementAt(int index) {
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (this.type != MonomorphType.LIST)</span>
-<span class="nc" id="L126">			throw new IllegalStateException(&quot;Not a list.&quot;);</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (this.type != MonomorphType.LIST)</span>
+<span class="nc" id="L128">			throw new IllegalStateException(&quot;Not a list.&quot;);</span>
 
-<span class="fc" id="L128">		return this.list.get(index);</span>
+<span class="fc" id="L130">		return this.list.get(index);</span>
 	}
 
 	public Monomorph getMapValue(String key) {
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (this.type != MonomorphType.MAP)</span>
-<span class="nc" id="L133">			throw new IllegalStateException(&quot;Not a map.&quot;);</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (this.type != MonomorphType.MAP)</span>
+<span class="nc" id="L135">			throw new IllegalStateException(&quot;Not a map.&quot;);</span>
 
-<span class="fc" id="L135">		return this.map.get(key);</span>
+<span class="fc" id="L137">		return this.map.get(key);</span>
 	}
 
 	public Set&lt;String&gt; keys() {
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">		if (this.type != MonomorphType.MAP)</span>
-<span class="nc" id="L140">			throw new IllegalStateException(&quot;Not a map.&quot;);</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (this.type != MonomorphType.MAP)</span>
+<span class="nc" id="L142">			throw new IllegalStateException(&quot;Not a map.&quot;);</span>
 
-<span class="fc" id="L142">		return this.map.keySet();</span>
+<span class="fc" id="L144">		return this.map.keySet();</span>
 	}
 
 	public int size() {
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (this.type == MonomorphType.LIST)</span>
-<span class="fc" id="L147">			return this.list.size();</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">		else if (this.type == MonomorphType.MAP)</span>
-<span class="nc" id="L149">			return this.map.size();</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (this.type == MonomorphType.LIST)</span>
+<span class="fc" id="L149">			return this.list.size();</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		else if (this.type == MonomorphType.MAP)</span>
+<span class="nc" id="L151">			return this.map.size();</span>
 
-<span class="nc" id="L151">		throw new IllegalStateException(&quot;Not a container type.&quot;);</span>
+<span class="nc" id="L153">		throw new IllegalStateException(&quot;Not a container type.&quot;);</span>
 	}
 
 	public static Monomorph scalar(String value) {
-<span class="fc" id="L155">		final Monomorph result = new Monomorph();</span>
-<span class="fc" id="L156">		result.setValue(value);</span>
-<span class="fc" id="L157">		return result;</span>
+<span class="fc" id="L157">		final Monomorph result = new Monomorph();</span>
+<span class="fc" id="L158">		result.setValue(value);</span>
+<span class="fc" id="L159">		return result;</span>
 	}
 
 	public static Monomorph list(List&lt;String&gt; input) {
-<span class="fc" id="L161">		final Monomorph result = new Monomorph();</span>
+<span class="fc" id="L163">		final Monomorph result = new Monomorph();</span>
 		// If input is an empty list!
-<span class="fc" id="L163">		result.list = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L164">		result.type = MonomorphType.LIST;</span>
+<span class="fc" id="L165">		result.list = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L166">		result.type = MonomorphType.LIST;</span>
 
-<span class="fc bfc" id="L166" title="All 2 branches covered.">		for (String s : input)</span>
-<span class="fc" id="L167">			result.addInList(Monomorph.scalar(s));</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">		for (String s : input)</span>
+<span class="fc" id="L169">			result.addInList(Monomorph.scalar(s));</span>
 
-<span class="fc" id="L169">		return result;</span>
+<span class="fc" id="L171">		return result;</span>
 	}
 
 }

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AstDump.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">AstDump.java</span></div><h1>AstDump.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.List;
+
+/**
+ * Text form of a syntax tree. The format is the one written by
+ * {@code tools/dump_ast.py} for CPython's tree, which lets the two be compared.
+ * One node per line when all its fields are scalars, otherwise one field per
+ * line; lists in brackets; operators and contexts as bare names; strings
+ * escaped as backslash, u and the code point in braces outside printable ASCII; floats as
+ * {@code float:&lt;IEEE bits&gt;}.
+ */
+public final class AstDump {
+	private AstDump() {
+	}
+
+	public static String dump(Node node) {
+<span class="fc" id="L18">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L19">		value(sb, node, 0);</span>
+<span class="fc" id="L20">		sb.append('\n');</span>
+<span class="fc" id="L21">		return sb.toString();</span>
+	}
+
+	private static void indent(StringBuilder sb, int level) {
+<span class="fc bfc" id="L25" title="All 2 branches covered.">		for (int i = 0; i &lt; level; i++)</span>
+<span class="fc" id="L26">			sb.append(&quot;  &quot;);</span>
+<span class="fc" id="L27">	}</span>
+
+	/** True if every field is a scalar, a bare name (operator, context) or an empty list. */
+	private static boolean flat(Object[] fields) {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">		for (int i = 1; i &lt; fields.length; i += 2) {</span>
+<span class="fc" id="L32">			Object v = fields[i];</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">			if (v instanceof Node) {</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">				if (((Node) v).fields().length != 0)</span>
+<span class="fc" id="L35">					return false;</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">			} else if (v instanceof List) {</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">				if (!((List&lt;?&gt;) v).isEmpty())</span>
+<span class="fc" id="L38">					return false;</span>
+			}
+		}
+<span class="fc" id="L41">		return true;</span>
+	}
+
+	private static void value(StringBuilder sb, Object v, int level) {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		if (v instanceof Node) {</span>
+<span class="fc" id="L46">			Node n = (Node) v;</span>
+<span class="fc" id="L47">			Object[] fields = n.fields();</span>
+<span class="fc" id="L48">			sb.append(n.type());</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">			if (fields.length == 0)</span>
+<span class="fc" id="L50">				return;</span>
+<span class="fc" id="L51">			sb.append('(');</span>
+<span class="fc" id="L52">			boolean flat = flat(fields);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">			for (int i = 0; i &lt; fields.length; i += 2) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">				if (i &gt; 0)</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">					sb.append(flat ? &quot;, &quot; : &quot;,&quot;);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">				if (!flat) {</span>
+<span class="fc" id="L57">					sb.append('\n');</span>
+<span class="fc" id="L58">					indent(sb, level + 1);</span>
+				}
+<span class="fc" id="L60">				sb.append((String) fields[i]).append('=');</span>
+<span class="fc" id="L61">				value(sb, fields[i + 1], level + 1);</span>
+			}
+<span class="fc bfc" id="L63" title="All 2 branches covered.">			if (!flat) {</span>
+<span class="fc" id="L64">				sb.append('\n');</span>
+<span class="fc" id="L65">				indent(sb, level);</span>
+			}
+<span class="fc" id="L67">			sb.append(')');</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">		} else if (v instanceof Enum) {</span>
+<span class="fc" id="L69">			sb.append(((Enum&lt;?&gt;) v).name());</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		} else if (v instanceof List) {</span>
+<span class="fc" id="L71">			List&lt;?&gt; list = (List&lt;?&gt;) v;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			if (list.isEmpty()) {</span>
+<span class="fc" id="L73">				sb.append(&quot;[]&quot;);</span>
+<span class="fc" id="L74">				return;</span>
+			}
+<span class="fc" id="L76">			sb.append('[');</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			for (int i = 0; i &lt; list.size(); i++) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">				if (i &gt; 0)</span>
+<span class="fc" id="L79">					sb.append(',');</span>
+<span class="fc" id="L80">				sb.append('\n');</span>
+<span class="fc" id="L81">				indent(sb, level + 1);</span>
+<span class="fc" id="L82">				value(sb, list.get(i), level + 1);</span>
+			}
+<span class="fc" id="L84">			sb.append('\n');</span>
+<span class="fc" id="L85">			indent(sb, level);</span>
+<span class="fc" id="L86">			sb.append(']');</span>
+<span class="fc" id="L87">		} else {</span>
+<span class="fc" id="L88">			scalar(sb, v);</span>
+		}
+<span class="fc" id="L90">	}</span>
+
+	private static void scalar(StringBuilder sb, Object v) {
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (v == null) {</span>
+<span class="fc" id="L94">			sb.append(&quot;None&quot;);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		} else if (v instanceof Boolean) {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			sb.append(((Boolean) v).booleanValue() ? &quot;True&quot; : &quot;False&quot;);</span>
+<span class="pc bpc" id="L97" title="1 of 4 branches missed.">		} else if (v instanceof Long || v instanceof Integer) {</span>
+<span class="fc" id="L98">			sb.append(v.toString());</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		} else if (v instanceof Double) {</span>
+<span class="fc" id="L100">			String hex = Long.toHexString(Double.doubleToLongBits((Double) v));</span>
+<span class="fc" id="L101">			sb.append(&quot;float:&quot;);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			for (int i = hex.length(); i &lt; 16; i++)</span>
+<span class="fc" id="L103">				sb.append('0');</span>
+<span class="fc" id="L104">			sb.append(hex);</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		} else if (v instanceof String) {</span>
+<span class="fc" id="L106">			String s = (String) v;</span>
+<span class="fc" id="L107">			sb.append('&quot;');</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			for (int i = 0; i &lt; s.length();) {</span>
+<span class="fc" id="L109">				int c = PyStr.cpAt(s, i);</span>
+<span class="fc" id="L110">				i += PyStr.cpSize(c);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">				if (c == '&quot;')</span>
+<span class="fc" id="L112">					sb.append(&quot;\\\&quot;&quot;);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">				else if (c == '\\')</span>
+<span class="fc" id="L114">					sb.append(&quot;\\\\&quot;);</span>
+<span class="fc bfc" id="L115" title="All 4 branches covered.">				else if (c &gt;= 0x20 &amp;&amp; c &lt; 0x7f)</span>
+<span class="fc" id="L116">					sb.append((char) c);</span>
+				else
+<span class="fc" id="L118">					sb.append(&quot;\\u{&quot;).append(Integer.toHexString(c)).append('}');</span>
+<span class="fc" id="L119">			}</span>
+<span class="fc" id="L120">			sb.append('&quot;');</span>
+<span class="fc" id="L121">		} else {</span>
+<span class="nc" id="L122">			throw new IllegalArgumentException(&quot;cannot dump &quot; + v.getClass());</span>
+		}
+<span class="fc" id="L124">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -221,7 +221,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 <span class="fc bfc" id="L221" title="All 2 branches covered.">				while (tokenizer.hasMoreTokens()) {</span>
 <span class="fc" id="L222">					final String s = tokenizer.nextToken();</span>
 <span class="pc bpc" id="L223" title="1 of 4 branches missed.">					if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
-<span class="fc" id="L224">						final double remainder = x % tabSize;</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">						final double remainder = tabSize &gt; 0 ? x % tabSize : 0;</span>
 <span class="fc" id="L225">						x += tabSize - remainder;</span>
 <span class="fc" id="L226">					} else {</span>
 <span class="fc" id="L227">						final XDimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(),</span>
@@ -246,7 +246,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 <span class="fc bfc" id="L246" title="All 2 branches covered.">		while (tokenizer.hasMoreTokens()) {</span>
 <span class="fc" id="L247">			final String s = tokenizer.nextToken();</span>
 <span class="pc bpc" id="L248" title="1 of 4 branches missed.">			if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
-<span class="fc" id="L249">				final double remainder = x % tabSize;</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">				final double remainder = tabSize &gt; 0 ? x % tabSize : 0;</span>
 <span class="fc" id="L250">				x += tabSize - remainder;</span>
 <span class="fc" id="L251">			} else {</span>
 <span class="fc" id="L252">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyTuple.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyTuple.java</span></div><h1>PyTuple.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.Arrays;
+
+/** An immutable sequence; equality and hash code are structural. */
+final class PyTuple {
+<span class="fc" id="L7">	static final PyTuple EMPTY = new PyTuple(new Object[0]);</span>
+
+	final Object[] items;
+
+<span class="fc" id="L11">	PyTuple(Object[] items) {</span>
+<span class="fc" id="L12">		this.items = items;</span>
+<span class="fc" id="L13">	}</span>
+
+	@Override
+	public boolean equals(Object o) {
+<span class="pc bpc" id="L17" title="2 of 4 branches missed.">		return o instanceof PyTuple &amp;&amp; Arrays.equals(items, ((PyTuple) o).items);</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="fc" id="L22">		return Arrays.hashCode(items);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

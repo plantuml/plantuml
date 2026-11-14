@@ -1,0 +1,955 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Methods.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">Methods.java</span></div><h1>Methods.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+/** Methods of str, list, dict and tuple (those of set are in {@link PySet}). The receiver is {@code args[0]}. */
+final class Methods {
+	private Methods() {
+	}
+
+<span class="fc" id="L13">	private static final Map&lt;String, Builtin&gt; STR = forStr(strMethods());</span>
+<span class="fc" id="L14">	private static final Map&lt;String, Builtin&gt; LIST = listMethods();</span>
+<span class="fc" id="L15">	private static final Map&lt;String, Builtin&gt; DICT = dictMethods();</span>
+<span class="fc" id="L16">	private static final Map&lt;String, Builtin&gt; TUPLE = tupleMethods();</span>
+<span class="fc" id="L17">	private static final Map&lt;String, Builtin&gt; SET = PySet.methods();</span>
+
+	static Builtin lookup(Object o, String name) {
+<span class="fc bfc" id="L20" title="All 2 branches covered.">		if (PyStr.is(o))</span>
+<span class="fc" id="L21">			return STR.get(name);</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">		if (o instanceof PyList)</span>
+<span class="fc" id="L23">			return LIST.get(name);</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">		if (o instanceof PyDict)</span>
+<span class="fc" id="L25">			return DICT.get(name);</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">		if (o instanceof PyTuple)</span>
+<span class="fc" id="L27">			return TUPLE.get(name);</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">		if (o instanceof PySet)</span>
+<span class="fc" id="L29">			return SET.get(name);</span>
+<span class="fc" id="L30">		return null;</span>
+	}
+
+	private static void def(Map&lt;String, Builtin&gt; table, String name, Builtin.Fn fn) {
+<span class="fc" id="L34">		table.put(name, new Builtin(name, fn));</span>
+<span class="fc" id="L35">	}</span>
+
+	private static void defKw(Map&lt;String, Builtin&gt; table, String name, Builtin.Fn fn, Builtin.KwFn kfn) {
+<span class="fc" id="L38">		table.put(name, new Builtin(name, fn, kfn));</span>
+<span class="fc" id="L39">	}</span>
+
+	/** The methods of str, each one wrapped by {@link #strFn} or {@link #strKwFn}. */
+	private static Map&lt;String, Builtin&gt; forStr(Map&lt;String, Builtin&gt; table) {
+<span class="fc bfc" id="L43" title="All 2 branches covered.">		for (Map.Entry&lt;String, Builtin&gt; e : table.entrySet()) {</span>
+<span class="fc" id="L44">			final Builtin b = e.getValue();</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">			e.setValue(new Builtin(b.name, strFn(b.fn), b.kwFn == null ? null : strKwFn(b.kwFn)));</span>
+<span class="fc" id="L46">		}</span>
+<span class="fc" id="L47">		return table;</span>
+	}
+
+	/**
+	 * A method of str, for a receiver and arguments that are PyStr or String:
+	 * the body gets the receiver as it is (see {@link #self}) and the arguments
+	 * as Strings, and the result is a PyStr if the receiver is.
+	 */
+	private static Builtin.Fn strFn(Builtin.Fn fn) {
+<span class="fc" id="L56">		return (in, a) -&gt; {</span>
+<span class="pc bpc" id="L57" title="1 of 4 branches missed.">			final boolean obj = a.length &gt; 0 &amp;&amp; a[0] instanceof PyStr;</span>
+<span class="fc" id="L58">			final Object r = fn.call(in, PyStr.unwrapArgs(a, 1));</span>
+<span class="fc" id="L59">			strWork(in, a, r);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">			return obj ? PyStr.wrap(r) : r;</span>
+		};
+	}
+
+	/**
+	 * The work of a method of str: it reads the receiver and builds the result.
+	 * The strs of a list it returns (split) are new: their memory is counted
+	 * here, the one of the result itself is counted by the call.
+	 */
+	private static void strWork(Interp in, Object[] a, Object r) {
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		final long n = a.length &gt; 0 ? PyOps.size(a[0]) : 0;</span>
+<span class="fc" id="L71">		in.work(n + PyOps.size(r));</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (r instanceof PyList)</span>
+<span class="fc" id="L73">			in.allocated(n + (long) Memory.OBJECT * ((PyList) r).items.size());</span>
+<span class="fc" id="L74">	}</span>
+
+	/** The receiver of a method of str. */
+	private static PyStr self(Object[] a) {
+<span class="fc" id="L78">		return PyStr.from(a[0]);</span>
+	}
+
+	private static Builtin.KwFn strKwFn(Builtin.KwFn fn) {
+<span class="fc" id="L82">		return (in, a, kw) -&gt; {</span>
+<span class="pc bpc" id="L83" title="2 of 4 branches missed.">			final boolean obj = a.length &gt; 0 &amp;&amp; a[0] instanceof PyStr;</span>
+<span class="fc" id="L84">			Map&lt;String, Object&gt; k = kw;</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">			if (kw != null)</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">				for (Map.Entry&lt;String, Object&gt; e : kw.entrySet())</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">					if (e.getValue() instanceof PyStr) {</span>
+<span class="fc" id="L88">						k = new java.util.LinkedHashMap&lt;String, Object&gt;(kw);</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">						for (Map.Entry&lt;String, Object&gt; f : k.entrySet())</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">							if (f.getValue() instanceof PyStr)</span>
+<span class="fc" id="L91">								f.setValue(((PyStr) f.getValue()).s);</span>
+<span class="fc" id="L92">						break;</span>
+					}
+<span class="fc" id="L94">			final Object r = fn.call(in, PyStr.unwrapArgs(a, 1), k);</span>
+<span class="fc" id="L95">			strWork(in, a, r);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">			return obj ? PyStr.wrap(r) : r;</span>
+		};
+	}
+
+	/** Checks the number of arguments, not counting the receiver. */
+	static void need(Object[] a, int min, int max, String name) {
+<span class="fc" id="L102">		int n = a.length - 1;</span>
+<span class="fc bfc" id="L103" title="All 4 branches covered.">		if (n &lt; min || n &gt; max) {</span>
+<span class="pc bpc" id="L104" title="1 of 4 branches missed.">			String exp = min == max ? &quot;exactly &quot; + min : max == Integer.MAX_VALUE ? &quot;at least &quot; + min</span>
+<span class="fc" id="L105">					: &quot;from &quot; + min + &quot; to &quot; + max;</span>
+<span class="fc bfc" id="L106" title="All 4 branches covered.">			throw PyOps.err(Types.TYPE_ERROR, name + &quot;() takes &quot; + exp + &quot; argument&quot; + (max == 1 &amp;&amp; min == 1 ? &quot;&quot; : &quot;s&quot;)</span>
+					+ &quot; (&quot; + n + &quot; given)&quot;);
+		}
+<span class="fc" id="L109">	}</span>
+
+	static void noKw(Map&lt;String, Object&gt; kw, String name, String... allowed) {
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		for (String k : kw.keySet()) {</span>
+<span class="fc" id="L113">			boolean ok = false;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">			for (String s : allowed)</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">				if (s.equals(k))</span>
+<span class="fc" id="L116">					ok = true;</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">			if (!ok)</span>
+<span class="fc" id="L118">				throw PyOps.err(Types.TYPE_ERROR, name + &quot;() got an unexpected keyword argument '&quot; + k + &quot;'&quot;);</span>
+<span class="fc" id="L119">		}</span>
+<span class="fc" id="L120">	}</span>
+
+	private static String str(Object[] a, int i, String method) {
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (PyStr.is(a[i]) == false)</span>
+<span class="fc" id="L124">			throw PyOps.err(Types.TYPE_ERROR, method + &quot;() argument must be str, not &quot; + PyOps.typeName(a[i]));</span>
+<span class="fc" id="L125">		return PyStr.text(a[i]);</span>
+	}
+
+	static boolean isSpace(int c) {
+<span class="pc bpc" id="L129" title="11 of 30 branches missed.">		return c == 32 || (c &gt;= 9 &amp;&amp; c &lt;= 13) || (c &gt;= 28 &amp;&amp; c &lt;= 31) || c == 0x85 || c == 0xa0 || c == 0x1680</span>
+				|| (c &gt;= 0x2000 &amp;&amp; c &lt;= 0x200a) || c == 0x2028 || c == 0x2029 || c == 0x202f || c == 0x205f
+				|| c == 0x3000;
+	}
+
+	// ------------------------------------------------------------ str
+
+	private static int optIndex(Object[] a, int i, int dflt) {
+<span class="pc bpc" id="L137" title="1 of 4 branches missed.">		if (i &gt;= a.length || a[i] == PyNone.NONE)</span>
+<span class="fc" id="L138">			return dflt;</span>
+<span class="fc" id="L139">		return PyOps.asIndex(a[i]);</span>
+	}
+
+	/** Resolves optional start/end arguments in code points; returns {start, end}. */
+	private static int[] window(Object[] a, int first, int len) {
+<span class="fc" id="L144">		int start = optIndex(a, first, 0);</span>
+<span class="fc" id="L145">		int end = optIndex(a, first + 1, len);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (start &lt; 0)</span>
+<span class="fc" id="L147">			start = Math.max(0, start + len);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (end &lt; 0)</span>
+<span class="nc" id="L149">			end = Math.max(0, end + len);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (end &gt; len)</span>
+<span class="fc" id="L151">			end = len;</span>
+<span class="fc" id="L152">		return new int[] { start, end };</span>
+	}
+
+	/** Index in code points of sub in s[start:end], or -1. */
+	private static int find(PyStr self, String sub, int start, int end, boolean last) {
+<span class="fc" id="L157">		final String s = self.s;</span>
+<span class="fc" id="L158">		int len = self.length();</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (start &gt; len)</span>
+<span class="nc" id="L160">			return -1;</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (end &lt; start)</span>
+<span class="nc" id="L162">			return -1;</span>
+<span class="fc" id="L163">		int so = self.offset(start);</span>
+<span class="fc" id="L164">		int eo = self.offset(end);</span>
+		int r;
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		if (last) {</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">			r = eo - sub.length() &lt; so ? -1 : s.lastIndexOf(sub, eo - sub.length());</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">			if (r &lt; so)</span>
+<span class="fc" id="L169">				r = -1;</span>
+		} else {
+<span class="fc" id="L171">			r = s.indexOf(sub, so);</span>
+<span class="fc bfc" id="L172" title="All 4 branches covered.">			if (r &gt;= 0 &amp;&amp; r + sub.length() &gt; eo)</span>
+<span class="fc" id="L173">				r = -1;</span>
+		}
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		return r &lt; 0 ? -1 : self.cpIndexOf(r);</span>
+	}
+
+	private static String stripWith(String s, String chars, boolean left, boolean right) {
+<span class="fc" id="L179">		int start = 0, end = s.length();</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (left) {</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">			while (start &lt; end) {</span>
+<span class="fc" id="L182">				int cp = PyStr.cpAt(s, start);</span>
+<span class="fc bfc" id="L183" title="All 6 branches covered.">				if (!(chars == null ? isSpace(cp) : PyStr.containsCp(chars, cp)))</span>
+<span class="fc" id="L184">					break;</span>
+<span class="fc" id="L185">				start += PyStr.cpSize(cp);</span>
+<span class="fc" id="L186">			}</span>
+		}
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		if (right) {</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">			while (end &gt; start) {</span>
+<span class="fc" id="L190">				int cp = PyStr.cpBefore(s, end);</span>
+<span class="fc bfc" id="L191" title="All 6 branches covered.">				if (!(chars == null ? isSpace(cp) : PyStr.containsCp(chars, cp)))</span>
+<span class="fc" id="L192">					break;</span>
+<span class="fc" id="L193">				end -= PyStr.cpSize(cp);</span>
+<span class="fc" id="L194">			}</span>
+		}
+<span class="fc" id="L196">		return s.substring(start, end);</span>
+	}
+
+	private static Builtin.Fn strip(final boolean left, final boolean right, final String name) {
+<span class="fc" id="L200">		return (in, a) -&gt; {</span>
+<span class="fc" id="L201">			need(a, 0, 1, name);</span>
+<span class="pc bpc" id="L202" title="1 of 4 branches missed.">			String chars = a.length &gt; 1 &amp;&amp; a[1] != PyNone.NONE ? str(a, 1, name) : null;</span>
+<span class="fc" id="L203">			return stripWith(self(a).s, chars, left, right);</span>
+		};
+	}
+
+	private static Object split(String s, Object sepArg, int maxsplit, boolean fromRight) {
+<span class="fc" id="L208">		PyList out = new PyList();</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (sepArg == PyNone.NONE) {</span>
+<span class="fc" id="L210">			int n = s.length();</span>
+<span class="fc" id="L211">			ArrayList&lt;String&gt; parts = new ArrayList&lt;String&gt;();</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">			if (!fromRight) {</span>
+<span class="fc" id="L213">				int i = 0;</span>
+				while (true) {
+<span class="fc bfc" id="L215" title="All 4 branches covered.">					while (i &lt; n &amp;&amp; isSpace(PyStr.cpAt(s, i)))</span>
+<span class="fc" id="L216">						i += PyStr.cpSize(PyStr.cpAt(s, i));</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">					if (i &gt;= n)</span>
+<span class="fc" id="L218">						break;</span>
+<span class="fc bfc" id="L219" title="All 4 branches covered.">					if (maxsplit &gt;= 0 &amp;&amp; parts.size() &gt;= maxsplit) {</span>
+<span class="fc" id="L220">						parts.add(s.substring(i));</span>
+<span class="fc" id="L221">						break;</span>
+					}
+<span class="fc" id="L223">					int j = i;</span>
+<span class="fc bfc" id="L224" title="All 4 branches covered.">					while (j &lt; n &amp;&amp; !isSpace(PyStr.cpAt(s, j)))</span>
+<span class="fc" id="L225">						j += PyStr.cpSize(PyStr.cpAt(s, j));</span>
+<span class="fc" id="L226">					parts.add(s.substring(i, j));</span>
+<span class="fc" id="L227">					Memory.checkParts(parts.size(), s.length());</span>
+<span class="fc" id="L228">					i = j;</span>
+<span class="fc" id="L229">				}</span>
+<span class="fc" id="L230">			} else {</span>
+<span class="fc" id="L231">				int i = n;</span>
+<span class="fc" id="L232">				ArrayList&lt;String&gt; rev = new ArrayList&lt;String&gt;();</span>
+				while (true) {
+<span class="fc bfc" id="L234" title="All 4 branches covered.">					while (i &gt; 0 &amp;&amp; isSpace(PyStr.cpBefore(s, i)))</span>
+<span class="fc" id="L235">						i -= PyStr.cpSize(PyStr.cpBefore(s, i));</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">					if (i &lt;= 0)</span>
+<span class="fc" id="L237">						break;</span>
+<span class="pc bpc" id="L238" title="1 of 4 branches missed.">					if (maxsplit &gt;= 0 &amp;&amp; rev.size() &gt;= maxsplit) {</span>
+<span class="fc" id="L239">						rev.add(s.substring(0, i));</span>
+<span class="fc" id="L240">						break;</span>
+					}
+<span class="fc" id="L242">					int j = i;</span>
+<span class="pc bpc" id="L243" title="1 of 4 branches missed.">					while (j &gt; 0 &amp;&amp; !isSpace(PyStr.cpBefore(s, j)))</span>
+<span class="fc" id="L244">						j -= PyStr.cpSize(PyStr.cpBefore(s, j));</span>
+<span class="fc" id="L245">					rev.add(s.substring(j, i));</span>
+<span class="fc" id="L246">					Memory.checkParts(rev.size(), s.length());</span>
+<span class="fc" id="L247">					i = j;</span>
+<span class="fc" id="L248">				}</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">				for (int k = rev.size() - 1; k &gt;= 0; k--)</span>
+<span class="fc" id="L250">					parts.add(rev.get(k));</span>
+			}
+<span class="fc" id="L252">			out.items.addAll(parts);</span>
+<span class="fc" id="L253">			return out;</span>
+		}
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		if (!(sepArg instanceof String))</span>
+<span class="fc" id="L256">			throw PyOps.err(Types.TYPE_ERROR, &quot;must be str or None, not &quot; + PyOps.typeName(sepArg));</span>
+<span class="fc" id="L257">		String sep = (String) sepArg;</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		if (sep.isEmpty())</span>
+<span class="fc" id="L259">			throw PyOps.err(Types.VALUE_ERROR, &quot;empty separator&quot;);</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (!fromRight) {</span>
+<span class="fc" id="L261">			int i = 0;</span>
+<span class="fc" id="L262">			int count = 0;</span>
+			while (true) {
+<span class="fc bfc" id="L264" title="All 4 branches covered.">				int j = (maxsplit &gt;= 0 &amp;&amp; count &gt;= maxsplit) ? -1 : s.indexOf(sep, i);</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">				if (j &lt; 0) {</span>
+<span class="fc" id="L266">					out.items.add(s.substring(i));</span>
+<span class="fc" id="L267">					break;</span>
+				}
+<span class="fc" id="L269">				out.items.add(s.substring(i, j));</span>
+<span class="fc" id="L270">				Memory.checkParts(out.items.size(), s.length());</span>
+<span class="fc" id="L271">				i = j + sep.length();</span>
+<span class="fc" id="L272">				count++;</span>
+<span class="fc" id="L273">			}</span>
+<span class="fc" id="L274">		} else {</span>
+<span class="fc" id="L275">			ArrayList&lt;Object&gt; rev = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L276">			int end = s.length();</span>
+<span class="fc" id="L277">			int count = 0;</span>
+			while (true) {
+<span class="pc bpc" id="L279" title="2 of 6 branches missed.">				int j = (maxsplit &gt;= 0 &amp;&amp; count &gt;= maxsplit) ? -1 : (end - sep.length() &lt; 0 ? -1 : s.lastIndexOf(sep, end - sep.length()));</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">				if (j &lt; 0) {</span>
+<span class="fc" id="L281">					rev.add(s.substring(0, end));</span>
+<span class="fc" id="L282">					break;</span>
+				}
+<span class="fc" id="L284">				rev.add(s.substring(j + sep.length(), end));</span>
+<span class="fc" id="L285">				Memory.checkParts(rev.size(), s.length());</span>
+<span class="fc" id="L286">				end = j;</span>
+<span class="fc" id="L287">				count++;</span>
+<span class="fc" id="L288">			}</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">			for (int k = rev.size() - 1; k &gt;= 0; k--)</span>
+<span class="fc" id="L290">				out.items.add(rev.get(k));</span>
+		}
+<span class="fc" id="L292">		return out;</span>
+	}
+
+	private static String pad(PyStr self, int width, String fill, int mode) {
+<span class="fc" id="L296">		final String s = self.s;</span>
+<span class="fc" id="L297">		int len = self.length();</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">		if (width &lt;= len)</span>
+<span class="fc" id="L299">			return s;</span>
+<span class="pc bpc" id="L300" title="1 of 2 branches missed.">		if (PyStr.cpCount(fill) != 1)</span>
+<span class="nc" id="L301">			throw PyOps.err(Types.TYPE_ERROR, &quot;The fill character must be exactly one character long&quot;);</span>
+<span class="pc bpc" id="L302" title="1 of 2 branches missed.">		if (width &gt; PyOps.MAX_STRING)</span>
+<span class="nc" id="L303">			throw PyOps.err(Types.MEMORY_ERROR, &quot;string too large&quot;);</span>
+<span class="fc" id="L304">		int marg = width - len;</span>
+<span class="fc bfc" id="L305" title="All 4 branches covered.">		int left = mode == 0 ? 0 : mode == 1 ? marg : marg / 2 + (marg &amp; width &amp; 1);</span>
+<span class="fc" id="L306">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">		for (int i = 0; i &lt; left; i++)</span>
+<span class="fc" id="L308">			sb.append(fill);</span>
+<span class="fc" id="L309">		sb.append(s);</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">		for (int i = 0; i &lt; marg - left; i++)</span>
+<span class="fc" id="L311">			sb.append(fill);</span>
+<span class="fc" id="L312">		return sb.toString();</span>
+	}
+
+	private static Builtin.Fn padder(final int mode, final String name) {
+<span class="fc" id="L316">		return (in, a) -&gt; {</span>
+<span class="fc" id="L317">			need(a, 1, 2, name);</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">			String fill = a.length &gt; 2 ? str(a, 2, name) : &quot; &quot;;</span>
+<span class="fc" id="L319">			return pad(self(a), PyOps.asIndex(a[1]), fill, mode);</span>
+		};
+	}
+
+	private static Builtin.Fn allChars(final String name, final int kind) {
+<span class="fc" id="L324">		return (in, a) -&gt; {</span>
+<span class="fc" id="L325">			need(a, 0, 0, name);</span>
+<span class="fc" id="L326">			String s = self(a).s;</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">			if (s.isEmpty())</span>
+<span class="fc" id="L328">				return Boolean.FALSE;</span>
+<span class="fc" id="L329">			boolean cased = false;</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">			for (int i = 0; i &lt; s.length();) {</span>
+<span class="fc" id="L331">				int cp = PyStr.cpAt(s, i);</span>
+<span class="fc" id="L332">				i += PyStr.cpSize(cp);</span>
+<span class="fc bfc" id="L333" title="All 6 branches covered.">				switch (kind) {</span>
+				case 0:
+<span class="pc bpc" id="L335" title="2 of 8 branches missed.">					if (!Character.isDigit(cp) &amp;&amp; !(cp &gt;= 0xb2 &amp;&amp; cp &lt;= 0xb3) &amp;&amp; cp != 0xb9)</span>
+<span class="fc" id="L336">						return Boolean.FALSE;</span>
+					break;
+				case 1:
+<span class="fc bfc" id="L339" title="All 2 branches covered.">					if (!Character.isLetter(cp))</span>
+<span class="fc" id="L340">						return Boolean.FALSE;</span>
+					break;
+				case 2:
+<span class="fc bfc" id="L343" title="All 2 branches covered.">					if (!Character.isLetterOrDigit(cp))</span>
+<span class="fc" id="L344">						return Boolean.FALSE;</span>
+					break;
+				case 3:
+<span class="fc bfc" id="L347" title="All 2 branches covered.">					if (!isSpace(cp))</span>
+<span class="fc" id="L348">						return Boolean.FALSE;</span>
+					break;
+				case 4:
+<span class="pc bpc" id="L351" title="1 of 4 branches missed.">					if (Character.isLowerCase(cp) || Character.isTitleCase(cp))</span>
+<span class="fc" id="L352">						return Boolean.FALSE;</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">					if (Character.isUpperCase(cp))</span>
+<span class="fc" id="L354">						cased = true;</span>
+					break;
+				default:
+<span class="pc bpc" id="L357" title="1 of 4 branches missed.">					if (Character.isUpperCase(cp) || Character.isTitleCase(cp))</span>
+<span class="fc" id="L358">						return Boolean.FALSE;</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">					if (Character.isLowerCase(cp))</span>
+<span class="fc" id="L360">						cased = true;</span>
+					break;
+				}
+<span class="fc" id="L363">			}</span>
+<span class="fc bfc" id="L364" title="All 4 branches covered.">			return Boolean.valueOf(kind &lt; 4 || cased);</span>
+		};
+	}
+
+	private static Object affix(Object[] a, boolean prefix, String name) {
+<span class="fc" id="L369">		need(a, 1, 3, name);</span>
+<span class="fc" id="L370">		final PyStr self = self(a);</span>
+<span class="fc" id="L371">		int len = self.length();</span>
+<span class="fc" id="L372">		int[] w = window(a, 2, len);</span>
+<span class="pc bpc" id="L373" title="1 of 2 branches missed.">		if (w[0] &gt; len)</span>
+<span class="nc" id="L374">			return Boolean.FALSE;</span>
+<span class="fc" id="L375">		String sub = self.s.substring(self.offset(w[0]), self.offset(Math.max(w[0], w[1])));</span>
+<span class="fc" id="L376">		Object p = a[1];</span>
+<span class="fc bfc" id="L377" title="All 2 branches covered.">		if (p instanceof String)</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">			return Boolean.valueOf(prefix ? sub.startsWith((String) p) : sub.endsWith((String) p));</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">		if (p instanceof PyTuple) {</span>
+<span class="fc bfc" id="L380" title="All 2 branches covered.">			for (Object o : ((PyTuple) p).items) {</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">				if (PyStr.is(o) == false)</span>
+<span class="nc" id="L382">					throw PyOps.err(Types.TYPE_ERROR, name + &quot; first arg must be str or a tuple of str, not &quot;</span>
+<span class="nc" id="L383">							+ PyOps.typeName(o));</span>
+<span class="fc bfc" id="L384" title="All 6 branches covered.">				if (prefix ? sub.startsWith(PyStr.text(o)) : sub.endsWith(PyStr.text(o)))</span>
+<span class="fc" id="L385">					return Boolean.TRUE;</span>
+			}
+<span class="fc" id="L387">			return Boolean.FALSE;</span>
+		}
+<span class="fc" id="L389">		throw PyOps.err(Types.TYPE_ERROR, name + &quot; first arg must be str or a tuple of str, not &quot; + PyOps.typeName(p));</span>
+	}
+
+	private static String replace(String s, String old, String rep, int count) {
+<span class="fc bfc" id="L393" title="All 2 branches covered.">		if (count &lt; 0)</span>
+<span class="fc" id="L394">			count = Integer.MAX_VALUE;</span>
+		// the number of replacements, then the length of the result: it is refused before it is built
+<span class="fc" id="L396">		int n = 0;</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">		if (old.isEmpty()) {</span>
+<span class="fc" id="L398">			n = (int) Math.min(count, PyStr.cpCount(s) + 1L);</span>
+		} else {
+<span class="fc bfc" id="L400" title="All 4 branches covered.">			for (int i = s.indexOf(old); i &gt;= 0 &amp;&amp; n &lt; count; i = s.indexOf(old, i + old.length()))</span>
+<span class="fc" id="L401">				n++;</span>
+		}
+<span class="fc bfc" id="L403" title="All 2 branches covered.">		if (n == 0)</span>
+<span class="fc" id="L404">			return s;</span>
+<span class="fc" id="L405">		final long length = s.length() + (long) n * (rep.length() - old.length());</span>
+<span class="fc" id="L406">		PyOps.checkString(length);</span>
+<span class="fc" id="L407">		StringBuilder sb = new StringBuilder((int) length);</span>
+<span class="fc" id="L408">		int i = 0;</span>
+<span class="fc bfc" id="L409" title="All 2 branches covered.">		if (old.isEmpty()) {</span>
+			// rep goes before each character, and after the last one
+<span class="fc bfc" id="L411" title="All 2 branches covered.">			for (; n &gt; 0; n--) {</span>
+<span class="fc" id="L412">				sb.append(rep);</span>
+<span class="fc bfc" id="L413" title="All 2 branches covered.">				if (i &gt;= s.length())</span>
+<span class="fc" id="L414">					break;</span>
+<span class="fc" id="L415">				int size = PyStr.cpSize(PyStr.cpAt(s, i));</span>
+<span class="fc" id="L416">				sb.append(s, i, i + size);</span>
+<span class="fc" id="L417">				i += size;</span>
+			}
+		} else {
+<span class="fc bfc" id="L420" title="All 2 branches covered.">			for (; n &gt; 0; n--) {</span>
+<span class="fc" id="L421">				int j = s.indexOf(old, i);</span>
+<span class="fc" id="L422">				sb.append(s, i, j).append(rep);</span>
+<span class="fc" id="L423">				i = j + old.length();</span>
+			}
+		}
+<span class="fc" id="L426">		return sb.append(s, i, s.length()).toString();</span>
+	}
+
+	private static boolean isCased(int cp) {
+<span class="pc bpc" id="L430" title="1 of 6 branches missed.">		return Character.isUpperCase(cp) || Character.isLowerCase(cp) || Character.isTitleCase(cp);</span>
+	}
+
+	private static boolean isCaseIgnorable(int cp) {
+<span class="pc bpc" id="L434" title="1 of 2 branches missed.">		switch (Character.getType(cp)) {</span>
+		case Character.NON_SPACING_MARK:
+		case Character.ENCLOSING_MARK:
+		case Character.FORMAT:
+		case Character.MODIFIER_LETTER:
+		case Character.MODIFIER_SYMBOL:
+<span class="nc" id="L440">			return true;</span>
+		default:
+<span class="pc bpc" id="L442" title="5 of 10 branches missed.">			return cp == '\'' || cp == '.' || cp == ':' || cp == 0xb7 || cp == 0x2019;</span>
+		}
+	}
+
+	/** The lower case of the character at i, with the final sigma rule, which looks at the characters around. */
+	private static String lowerAt(String s, int i) {
+<span class="fc" id="L448">		int cp = PyStr.cpAt(s, i);</span>
+<span class="fc bfc" id="L449" title="All 2 branches covered.">		if (cp != 0x3a3)</span>
+<span class="fc" id="L450">			return PyStr.ofCp(cp).toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L451">		boolean before = false;</span>
+<span class="fc bfc" id="L452" title="All 2 branches covered.">		for (int j = i; j &gt; 0;) {</span>
+<span class="fc" id="L453">			int p = PyStr.cpBefore(s, j);</span>
+<span class="fc" id="L454">			j -= PyStr.cpSize(p);</span>
+<span class="pc bpc" id="L455" title="1 of 2 branches missed.">			if (isCaseIgnorable(p))</span>
+<span class="nc" id="L456">				continue;</span>
+<span class="fc" id="L457">			before = isCased(p);</span>
+<span class="fc" id="L458">			break;</span>
+		}
+<span class="fc" id="L460">		boolean after = false;</span>
+<span class="fc bfc" id="L461" title="All 2 branches covered.">		for (int j = i + 1; j &lt; s.length();) {</span>
+<span class="fc" id="L462">			int q = PyStr.cpAt(s, j);</span>
+<span class="fc" id="L463">			j += PyStr.cpSize(q);</span>
+<span class="pc bpc" id="L464" title="1 of 2 branches missed.">			if (isCaseIgnorable(q))</span>
+<span class="nc" id="L465">				continue;</span>
+<span class="fc" id="L466">			after = isCased(q);</span>
+<span class="fc" id="L467">			break;</span>
+		}
+<span class="pc bpc" id="L469" title="1 of 4 branches missed.">		return before &amp;&amp; !after ? &quot;\u03c2&quot; : &quot;\u03c3&quot;;</span>
+	}
+
+	/** The title case of a character: the full mapping, whose upper case that changes the length is only capital in its first cased letter. */
+	private static String titleOf(int cp) {
+<span class="fc" id="L474">		String up = PyStr.ofCp(cp).toUpperCase(Locale.ROOT);</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">		if (PyStr.cpCount(up) == 1)</span>
+<span class="fc" id="L476">			return PyStr.ofCp(Character.toTitleCase(cp));</span>
+<span class="fc" id="L477">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L478">		boolean seen = false;</span>
+<span class="fc bfc" id="L479" title="All 2 branches covered.">		for (int i = 0; i &lt; up.length();) {</span>
+<span class="fc" id="L480">			int c = PyStr.cpAt(up, i);</span>
+<span class="fc" id="L481">			i += PyStr.cpSize(c);</span>
+<span class="fc bfc" id="L482" title="All 2 branches covered.">			if (seen)</span>
+<span class="fc" id="L483">				sb.append(PyStr.ofCp(c).toLowerCase(Locale.ROOT));</span>
+			else
+<span class="fc" id="L485">				PyStr.appendCp(sb, c);</span>
+<span class="fc bfc" id="L486" title="All 2 branches covered.">			if (isCased(c))</span>
+<span class="fc" id="L487">				seen = true;</span>
+<span class="fc" id="L488">		}</span>
+<span class="fc" id="L489">		return sb.toString();</span>
+	}
+
+	private static Map&lt;String, Builtin&gt; strMethods() {
+<span class="fc" id="L493">		final Map&lt;String, Builtin&gt; table = new HashMap&lt;String, Builtin&gt;();</span>
+<span class="fc" id="L494">		def(table, &quot;upper&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L495">			need(a, 0, 0, &quot;upper&quot;);</span>
+<span class="fc" id="L496">			return (self(a).s).toUpperCase(Locale.ROOT);</span>
+		});
+<span class="fc" id="L498">		def(table, &quot;lower&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L499">			need(a, 0, 0, &quot;lower&quot;);</span>
+<span class="fc" id="L500">			String s = self(a).s;</span>
+<span class="fc" id="L501">			StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L502" title="All 2 branches covered.">			for (int i = 0; i &lt; s.length();) {</span>
+<span class="fc" id="L503">				sb.append(lowerAt(s, i));</span>
+<span class="fc" id="L504">				i += PyStr.cpSize(PyStr.cpAt(s, i));</span>
+			}
+<span class="fc" id="L506">			return sb.toString();</span>
+		});
+<span class="fc" id="L508">		def(table, &quot;title&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L509">			need(a, 0, 0, &quot;title&quot;);</span>
+<span class="fc" id="L510">			String s = self(a).s;</span>
+<span class="fc" id="L511">			StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L512">			boolean prev = false;</span>
+<span class="fc bfc" id="L513" title="All 2 branches covered.">			for (int i = 0; i &lt; s.length();) {</span>
+<span class="fc" id="L514">				int cp = PyStr.cpAt(s, i);</span>
+<span class="fc bfc" id="L515" title="All 2 branches covered.">				if (prev)</span>
+<span class="fc" id="L516">					sb.append(lowerAt(s, i));</span>
+				else
+<span class="fc" id="L518">					sb.append(titleOf(cp));</span>
+<span class="fc" id="L519">				prev = isCased(cp);</span>
+<span class="fc" id="L520">				i += PyStr.cpSize(cp);</span>
+<span class="fc" id="L521">			}</span>
+<span class="fc" id="L522">			return sb.toString();</span>
+		});
+<span class="fc" id="L524">		def(table, &quot;capitalize&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L525">			need(a, 0, 0, &quot;capitalize&quot;);</span>
+<span class="fc" id="L526">			String s = self(a).s;</span>
+<span class="pc bpc" id="L527" title="1 of 2 branches missed.">			if (s.isEmpty())</span>
+<span class="nc" id="L528">				return s;</span>
+<span class="fc" id="L529">			int n = PyStr.cpSize(PyStr.cpAt(s, 0));</span>
+<span class="fc" id="L530">			StringBuilder sb = new StringBuilder(titleOf(PyStr.cpAt(s, 0)));</span>
+<span class="fc bfc" id="L531" title="All 2 branches covered.">			for (int i = n; i &lt; s.length();) {</span>
+<span class="fc" id="L532">				sb.append(lowerAt(s, i));</span>
+<span class="fc" id="L533">				i += PyStr.cpSize(PyStr.cpAt(s, i));</span>
+			}
+<span class="fc" id="L535">			return sb.toString();</span>
+		});
+<span class="fc" id="L537">		def(table, &quot;swapcase&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L538">			need(a, 0, 0, &quot;swapcase&quot;);</span>
+<span class="fc" id="L539">			String s = self(a).s;</span>
+<span class="fc" id="L540">			StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L541" title="All 2 branches covered.">			for (int i = 0; i &lt; s.length();) {</span>
+<span class="fc" id="L542">				int cp = PyStr.cpAt(s, i);</span>
+<span class="fc bfc" id="L543" title="All 2 branches covered.">				if (Character.isUpperCase(cp))</span>
+<span class="fc" id="L544">					sb.append(lowerAt(s, i));</span>
+<span class="fc bfc" id="L545" title="All 2 branches covered.">				else if (Character.isLowerCase(cp))</span>
+<span class="fc" id="L546">					sb.append(PyStr.ofCp(cp).toUpperCase(Locale.ROOT));</span>
+				else
+<span class="fc" id="L548">					PyStr.appendCp(sb, cp);</span>
+<span class="fc" id="L549">				i += PyStr.cpSize(cp);</span>
+<span class="fc" id="L550">			}</span>
+<span class="fc" id="L551">			return sb.toString();</span>
+		});
+<span class="fc bfc" id="L553" title="All 2 branches covered.">		for (final boolean right : new boolean[] { false, true }) {</span>
+<span class="fc bfc" id="L554" title="All 2 branches covered.">			final String nm = right ? &quot;rpartition&quot; : &quot;partition&quot;;</span>
+<span class="fc" id="L555">			def(table, nm, (in, a) -&gt; {</span>
+<span class="fc" id="L556">				need(a, 1, 1, nm);</span>
+<span class="fc" id="L557">				String s = self(a).s;</span>
+<span class="fc" id="L558">				String sep = str(a, 1, nm);</span>
+<span class="pc bpc" id="L559" title="1 of 2 branches missed.">				if (sep.isEmpty())</span>
+<span class="nc" id="L560">					throw PyOps.err(Types.VALUE_ERROR, &quot;empty separator&quot;);</span>
+<span class="fc bfc" id="L561" title="All 2 branches covered.">				int i = right ? s.lastIndexOf(sep) : s.indexOf(sep);</span>
+<span class="fc bfc" id="L562" title="All 2 branches covered.">				if (i &lt; 0)</span>
+<span class="pc bpc" id="L563" title="1 of 2 branches missed.">					return new PyTuple(right ? new Object[] { &quot;&quot;, &quot;&quot;, s } : new Object[] { s, &quot;&quot;, &quot;&quot; });</span>
+<span class="fc" id="L564">				return new PyTuple(new Object[] { s.substring(0, i), sep, s.substring(i + sep.length()) });</span>
+			});
+		}
+<span class="fc" id="L567">		def(table, &quot;removeprefix&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L568">			need(a, 1, 1, &quot;removeprefix&quot;);</span>
+<span class="fc" id="L569">			String s = self(a).s, p = str(a, 1, &quot;removeprefix&quot;);</span>
+<span class="pc bpc" id="L570" title="1 of 2 branches missed.">			return s.startsWith(p) ? s.substring(p.length()) : s;</span>
+		});
+<span class="fc" id="L572">		def(table, &quot;removesuffix&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L573">			need(a, 1, 1, &quot;removesuffix&quot;);</span>
+<span class="fc" id="L574">			String s = self(a).s, p = str(a, 1, &quot;removesuffix&quot;);</span>
+<span class="pc bpc" id="L575" title="2 of 4 branches missed.">			return !p.isEmpty() &amp;&amp; s.endsWith(p) ? s.substring(0, s.length() - p.length()) : s;</span>
+		});
+<span class="fc" id="L577">		def(table, &quot;strip&quot;, strip(true, true, &quot;strip&quot;));</span>
+<span class="fc" id="L578">		def(table, &quot;lstrip&quot;, strip(true, false, &quot;lstrip&quot;));</span>
+<span class="fc" id="L579">		def(table, &quot;rstrip&quot;, strip(false, true, &quot;rstrip&quot;));</span>
+<span class="fc" id="L580">		defKw(table, &quot;split&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L581">			need(a, 0, 2, &quot;split&quot;);</span>
+<span class="fc bfc" id="L582" title="All 4 branches covered.">			return split(self(a).s, a.length &gt; 1 ? a[1] : PyNone.NONE, a.length &gt; 2 ? PyOps.asIndex(a[2]) : -1, false);</span>
+		}, (in, a, kw) -&gt; {
+<span class="fc" id="L584">			noKw(kw, &quot;split&quot;, &quot;sep&quot;, &quot;maxsplit&quot;);</span>
+<span class="pc bpc" id="L585" title="1 of 4 branches missed.">			Object sep = a.length &gt; 1 ? a[1] : kw.containsKey(&quot;sep&quot;) ? kw.get(&quot;sep&quot;) : PyNone.NONE;</span>
+<span class="pc bpc" id="L586" title="1 of 4 branches missed.">			int max = a.length &gt; 2 ? PyOps.asIndex(a[2]) : kw.containsKey(&quot;maxsplit&quot;) ? PyOps.asIndex(kw.get(&quot;maxsplit&quot;)) : -1;</span>
+<span class="fc" id="L587">			return split(self(a).s, sep, max, false);</span>
+		});
+<span class="fc" id="L589">		defKw(table, &quot;rsplit&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L590">			need(a, 0, 2, &quot;rsplit&quot;);</span>
+<span class="pc bpc" id="L591" title="2 of 4 branches missed.">			return split(self(a).s, a.length &gt; 1 ? a[1] : PyNone.NONE, a.length &gt; 2 ? PyOps.asIndex(a[2]) : -1, true);</span>
+		}, (in, a, kw) -&gt; {
+<span class="fc" id="L593">			noKw(kw, &quot;rsplit&quot;, &quot;sep&quot;, &quot;maxsplit&quot;);</span>
+<span class="pc bpc" id="L594" title="2 of 4 branches missed.">			Object sep = a.length &gt; 1 ? a[1] : kw.containsKey(&quot;sep&quot;) ? kw.get(&quot;sep&quot;) : PyNone.NONE;</span>
+<span class="pc bpc" id="L595" title="2 of 4 branches missed.">			int max = a.length &gt; 2 ? PyOps.asIndex(a[2]) : kw.containsKey(&quot;maxsplit&quot;) ? PyOps.asIndex(kw.get(&quot;maxsplit&quot;)) : -1;</span>
+<span class="fc" id="L596">			return split(self(a).s, sep, max, true);</span>
+		});
+<span class="fc" id="L598">		def(table, &quot;join&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L599">			need(a, 1, 1, &quot;join&quot;);</span>
+<span class="fc" id="L600">			String sep = self(a).s;</span>
+<span class="fc" id="L601">			ArrayList&lt;Object&gt; items = PyOps.toArrayList(a[1]);</span>
+<span class="fc" id="L602">			StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L603" title="All 2 branches covered.">			for (int i = 0; i &lt; items.size(); i++) {</span>
+<span class="fc" id="L604">				Object o = items.get(i);</span>
+<span class="fc bfc" id="L605" title="All 2 branches covered.">				if (PyStr.is(o) == false)</span>
+<span class="fc" id="L606">					throw PyOps.err(Types.TYPE_ERROR, &quot;sequence item &quot; + i + &quot;: expected str instance, &quot;</span>
+<span class="fc" id="L607">							+ PyOps.typeName(o) + &quot; found&quot;);</span>
+<span class="fc" id="L608">				PyOps.checkString((long) sb.length() + sep.length() + PyStr.text(o).length());</span>
+<span class="fc bfc" id="L609" title="All 2 branches covered.">				if (i &gt; 0)</span>
+<span class="fc" id="L610">					sb.append(sep);</span>
+<span class="fc" id="L611">				sb.append(PyStr.text(o));</span>
+			}
+<span class="fc" id="L613">			return sb.toString();</span>
+		});
+<span class="fc" id="L615">		def(table, &quot;replace&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L616">			need(a, 2, 3, &quot;replace&quot;);</span>
+<span class="fc" id="L617">			return replace(self(a).s, str(a, 1, &quot;replace&quot;), str(a, 2, &quot;replace&quot;),</span>
+<span class="fc bfc" id="L618" title="All 2 branches covered.">					a.length &gt; 3 ? PyOps.asIndex(a[3]) : -1);</span>
+		});
+<span class="fc bfc" id="L620" title="All 2 branches covered.">		for (final String nm : new String[] { &quot;find&quot;, &quot;rfind&quot;, &quot;index&quot;, &quot;rindex&quot; }) {</span>
+<span class="fc" id="L621">			final boolean last = nm.startsWith(&quot;r&quot;);</span>
+<span class="fc" id="L622">			final boolean raise = nm.endsWith(&quot;index&quot;);</span>
+<span class="fc" id="L623">			def(table, nm, (in, a) -&gt; {</span>
+<span class="fc" id="L624">				need(a, 1, 3, nm);</span>
+<span class="fc" id="L625">				PyStr self = self(a);</span>
+<span class="fc" id="L626">				int[] w = window(a, 2, self.length());</span>
+<span class="fc" id="L627">				int r = find(self, str(a, 1, nm), w[0], w[1], last);</span>
+<span class="fc bfc" id="L628" title="All 4 branches covered.">				if (r &lt; 0 &amp;&amp; raise)</span>
+<span class="fc" id="L629">					throw PyOps.err(Types.VALUE_ERROR, &quot;substring not found&quot;);</span>
+<span class="fc" id="L630">				return Integer.valueOf(r);</span>
+			});
+		}
+<span class="fc" id="L633">		def(table, &quot;count&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L634">			need(a, 1, 3, &quot;count&quot;);</span>
+<span class="fc" id="L635">			PyStr self = self(a);</span>
+<span class="fc" id="L636">			String sub = str(a, 1, &quot;count&quot;);</span>
+<span class="fc" id="L637">			int len = self.length();</span>
+<span class="fc" id="L638">			int[] w = window(a, 2, len);</span>
+<span class="pc bpc" id="L639" title="1 of 4 branches missed.">			if (w[0] &gt; len || w[1] &lt; w[0])</span>
+<span class="fc" id="L640">				return Integer.valueOf(0);</span>
+<span class="fc" id="L641">			String part = self.s.substring(self.offset(w[0]), self.offset(w[1]));</span>
+<span class="fc bfc" id="L642" title="All 2 branches covered.">			if (sub.isEmpty())</span>
+<span class="fc" id="L643">				return Integer.valueOf(PyStr.cpCount(part) + 1);</span>
+<span class="fc" id="L644">			int n = 0;</span>
+<span class="fc bfc" id="L645" title="All 2 branches covered.">			for (int i = part.indexOf(sub); i &gt;= 0; i = part.indexOf(sub, i + sub.length()))</span>
+<span class="fc" id="L646">				n++;</span>
+<span class="fc" id="L647">			return Integer.valueOf(n);</span>
+		});
+<span class="fc" id="L649">		def(table, &quot;startswith&quot;, (in, a) -&gt; affix(a, true, &quot;startswith&quot;));</span>
+<span class="fc" id="L650">		def(table, &quot;endswith&quot;, (in, a) -&gt; affix(a, false, &quot;endswith&quot;));</span>
+<span class="fc" id="L651">		def(table, &quot;isdigit&quot;, allChars(&quot;isdigit&quot;, 0));</span>
+<span class="fc" id="L652">		def(table, &quot;isalpha&quot;, allChars(&quot;isalpha&quot;, 1));</span>
+<span class="fc" id="L653">		def(table, &quot;isalnum&quot;, allChars(&quot;isalnum&quot;, 2));</span>
+<span class="fc" id="L654">		def(table, &quot;isspace&quot;, allChars(&quot;isspace&quot;, 3));</span>
+<span class="fc" id="L655">		def(table, &quot;isupper&quot;, allChars(&quot;isupper&quot;, 4));</span>
+<span class="fc" id="L656">		def(table, &quot;islower&quot;, allChars(&quot;islower&quot;, 5));</span>
+<span class="fc" id="L657">		def(table, &quot;ljust&quot;, padder(0, &quot;ljust&quot;));</span>
+<span class="fc" id="L658">		def(table, &quot;rjust&quot;, padder(1, &quot;rjust&quot;));</span>
+<span class="fc" id="L659">		def(table, &quot;center&quot;, padder(2, &quot;center&quot;));</span>
+<span class="fc" id="L660">		def(table, &quot;zfill&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L661">			need(a, 1, 1, &quot;zfill&quot;);</span>
+<span class="fc" id="L662">			PyStr self = self(a);</span>
+<span class="fc" id="L663">			String s = self.s;</span>
+<span class="fc" id="L664">			int width = PyOps.asIndex(a[1]);</span>
+<span class="fc" id="L665">			int len = self.length();</span>
+<span class="fc bfc" id="L666" title="All 2 branches covered.">			if (width &lt;= len)</span>
+<span class="fc" id="L667">				return s;</span>
+<span class="pc bpc" id="L668" title="1 of 2 branches missed.">			if (width &gt; PyOps.MAX_STRING)</span>
+<span class="nc" id="L669">				throw PyOps.err(Types.MEMORY_ERROR, &quot;string too large&quot;);</span>
+<span class="fc" id="L670">			StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L671">			int start = 0;</span>
+<span class="pc bpc" id="L672" title="1 of 6 branches missed.">			if (!s.isEmpty() &amp;&amp; (s.charAt(0) == '+' || s.charAt(0) == '-')) {</span>
+<span class="fc" id="L673">				sb.append(s.charAt(0));</span>
+<span class="fc" id="L674">				start = 1;</span>
+			}
+<span class="fc bfc" id="L676" title="All 2 branches covered.">			for (int i = len; i &lt; width; i++)</span>
+<span class="fc" id="L677">				sb.append('0');</span>
+<span class="fc" id="L678">			sb.append(s, start, s.length());</span>
+<span class="fc" id="L679">			return sb.toString();</span>
+		});
+<span class="pc bpc" id="L681" title="1 of 4 branches missed.">		defKw(table, &quot;splitlines&quot;, (in, a) -&gt; splitlines(self(a).s, a.length &gt; 1 &amp;&amp; PyOps.isTrue(a[1])),</span>
+				(in, a, kw) -&gt; {
+<span class="nc" id="L683">					noKw(kw, &quot;splitlines&quot;, &quot;keepends&quot;);</span>
+<span class="nc bnc" id="L684" title="All 2 branches missed.">					return splitlines(self(a).s, a.length &gt; 1 ? PyOps.isTrue(a[1])</span>
+<span class="nc bnc" id="L685" title="All 4 branches missed.">							: kw.containsKey(&quot;keepends&quot;) &amp;&amp; PyOps.isTrue(kw.get(&quot;keepends&quot;)));</span>
+				});
+<span class="fc" id="L687">		defKw(table, &quot;format&quot;, (in, a) -&gt; Fmt.strFormat(self(a).s, a, 1, null),</span>
+<span class="fc" id="L688">				(in, a, kw) -&gt; Fmt.strFormat(self(a).s, a, 1, kw));</span>
+<span class="fc" id="L689">		return table;</span>
+	}
+
+	private static Object splitlines(String s, boolean keep) {
+<span class="fc" id="L693">		PyList out = new PyList();</span>
+<span class="fc" id="L694">		int n = s.length();</span>
+<span class="fc" id="L695">		int start = 0;</span>
+<span class="fc" id="L696">		int i = 0;</span>
+<span class="fc bfc" id="L697" title="All 2 branches covered.">		while (i &lt; n) {</span>
+<span class="fc" id="L698">			char c = s.charAt(i);</span>
+<span class="pc bpc" id="L699" title="7 of 18 branches missed.">			boolean brk = c == '\n' || c == '\r' || c == 0x0b || c == 0x0c || (c &gt;= 0x1c &amp;&amp; c &lt;= 0x1e) || c == 0x85</span>
+					|| c == 0x2028 || c == 0x2029;
+<span class="fc bfc" id="L701" title="All 2 branches covered.">			if (!brk) {</span>
+<span class="fc" id="L702">				i++;</span>
+<span class="fc" id="L703">				continue;</span>
+			}
+<span class="fc" id="L705">			int end = i;</span>
+<span class="fc" id="L706">			i++;</span>
+<span class="pc bpc" id="L707" title="1 of 6 branches missed.">			if (c == '\r' &amp;&amp; i &lt; n &amp;&amp; s.charAt(i) == '\n')</span>
+<span class="fc" id="L708">				i++;</span>
+<span class="fc bfc" id="L709" title="All 2 branches covered.">			out.items.add(s.substring(start, keep ? i : end));</span>
+<span class="fc" id="L710">			Memory.checkParts(out.items.size(), n);</span>
+<span class="fc" id="L711">			start = i;</span>
+<span class="fc" id="L712">		}</span>
+<span class="fc bfc" id="L713" title="All 2 branches covered.">		if (start &lt; n)</span>
+<span class="fc" id="L714">			out.items.add(s.substring(start));</span>
+<span class="fc" id="L715">		return out;</span>
+	}
+
+	// ------------------------------------------------------------ list
+
+	private static Map&lt;String, Builtin&gt; listMethods() {
+<span class="fc" id="L721">		final Map&lt;String, Builtin&gt; table = new HashMap&lt;String, Builtin&gt;();</span>
+<span class="fc" id="L722">		def(table, &quot;append&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L723">			need(a, 1, 1, &quot;append&quot;);</span>
+<span class="fc" id="L724">			PyOps.checkList(((PyList) a[0]).items.size() + 1L);</span>
+<span class="fc" id="L725">			in.allocated(Memory.SLOT);</span>
+<span class="fc" id="L726">			((PyList) a[0]).items.add(a[1]);</span>
+<span class="fc" id="L727">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L729">		def(table, &quot;extend&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L730">			need(a, 1, 1, &quot;extend&quot;);</span>
+<span class="fc" id="L731">			PyOps.extend(in, ((PyList) a[0]).items, a[1]);</span>
+<span class="fc" id="L732">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L734">		def(table, &quot;insert&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L735">			need(a, 2, 2, &quot;insert&quot;);</span>
+<span class="fc" id="L736">			ArrayList&lt;Object&gt; l = ((PyList) a[0]).items;</span>
+<span class="fc" id="L737">			int i = PyOps.asIndex(a[1]);</span>
+<span class="fc bfc" id="L738" title="All 2 branches covered.">			if (i &lt; 0)</span>
+<span class="fc" id="L739">				i = Math.max(0, i + l.size());</span>
+<span class="fc bfc" id="L740" title="All 2 branches covered.">			if (i &gt; l.size())</span>
+<span class="fc" id="L741">				i = l.size();</span>
+<span class="fc" id="L742">			PyOps.checkList(l.size() + 1L);</span>
+<span class="fc" id="L743">			in.work(l.size() - i);</span>
+<span class="fc" id="L744">			in.allocated(Memory.SLOT);</span>
+<span class="fc" id="L745">			l.add(i, a[2]);</span>
+<span class="fc" id="L746">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L748">		def(table, &quot;pop&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L749">			need(a, 0, 1, &quot;pop&quot;);</span>
+<span class="fc" id="L750">			ArrayList&lt;Object&gt; l = ((PyList) a[0]).items;</span>
+<span class="fc bfc" id="L751" title="All 2 branches covered.">			int i = a.length &gt; 1 ? PyOps.asIndex(a[1]) : -1;</span>
+<span class="fc bfc" id="L752" title="All 2 branches covered.">			if (l.isEmpty())</span>
+<span class="fc" id="L753">				throw PyOps.err(Types.INDEX_ERROR, &quot;pop from empty list&quot;);</span>
+<span class="fc bfc" id="L754" title="All 2 branches covered.">			if (i &lt; 0)</span>
+<span class="fc" id="L755">				i += l.size();</span>
+<span class="pc bpc" id="L756" title="1 of 4 branches missed.">			if (i &lt; 0 || i &gt;= l.size())</span>
+<span class="fc" id="L757">				throw PyOps.err(Types.INDEX_ERROR, &quot;pop index out of range&quot;);</span>
+<span class="fc" id="L758">			in.work(l.size() - i);</span>
+<span class="fc" id="L759">			return l.remove(i);</span>
+		});
+<span class="fc" id="L761">		def(table, &quot;remove&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L762">			need(a, 1, 1, &quot;remove&quot;);</span>
+<span class="fc" id="L763">			ArrayList&lt;Object&gt; l = ((PyList) a[0]).items;</span>
+<span class="fc" id="L764">			in.work(l.size());</span>
+<span class="fc bfc" id="L765" title="All 2 branches covered.">			for (int i = 0; i &lt; l.size(); i++)</span>
+<span class="fc bfc" id="L766" title="All 2 branches covered.">				if (PyOps.eqItem(l.get(i), a[1])) {</span>
+<span class="fc" id="L767">					l.remove(i);</span>
+<span class="fc" id="L768">					return PyNone.NONE;</span>
+				}
+<span class="fc" id="L770">			throw PyOps.err(Types.VALUE_ERROR, &quot;list.remove(x): x not in list&quot;);</span>
+		});
+<span class="fc" id="L772">		def(table, &quot;index&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L773">			need(a, 1, 3, &quot;index&quot;);</span>
+<span class="fc" id="L774">			ArrayList&lt;Object&gt; l = ((PyList) a[0]).items;</span>
+<span class="fc" id="L775">			int[] w = window(a, 2, l.size());</span>
+<span class="fc" id="L776">			in.work(w[1] - w[0]);</span>
+<span class="fc bfc" id="L777" title="All 2 branches covered.">			for (int i = w[0]; i &lt; w[1]; i++)</span>
+<span class="fc bfc" id="L778" title="All 2 branches covered.">				if (PyOps.eqItem(l.get(i), a[1]))</span>
+<span class="fc" id="L779">					return Integer.valueOf(i);</span>
+<span class="fc" id="L780">			throw PyOps.err(Types.VALUE_ERROR, PyOps.repr(a[1]) + &quot; is not in list&quot;);</span>
+		});
+<span class="fc" id="L782">		def(table, &quot;count&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L783">			need(a, 1, 1, &quot;count&quot;);</span>
+<span class="fc" id="L784">			int n = 0;</span>
+<span class="fc" id="L785">			in.work(((PyList) a[0]).items.size());</span>
+<span class="fc bfc" id="L786" title="All 2 branches covered.">			for (Object o : ((PyList) a[0]).items)</span>
+<span class="fc bfc" id="L787" title="All 2 branches covered.">				if (PyOps.eqItem(o, a[1]))</span>
+<span class="fc" id="L788">					n++;</span>
+<span class="fc" id="L789">			return Integer.valueOf(n);</span>
+		});
+<span class="fc" id="L791">		defKw(table, &quot;sort&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L792">			need(a, 0, 0, &quot;sort&quot;);</span>
+<span class="fc" id="L793">			PyOps.sortList(((PyList) a[0]).items, in, PyNone.NONE, false);</span>
+<span class="fc" id="L794">			return PyNone.NONE;</span>
+		}, (in, a, kw) -&gt; {
+<span class="fc" id="L796">			need(a, 0, 0, &quot;sort&quot;);</span>
+<span class="fc" id="L797">			noKw(kw, &quot;sort&quot;, &quot;key&quot;, &quot;reverse&quot;);</span>
+<span class="fc bfc" id="L798" title="All 2 branches covered.">			PyOps.sortList(((PyList) a[0]).items, in, kw.containsKey(&quot;key&quot;) ? kw.get(&quot;key&quot;) : PyNone.NONE,</span>
+<span class="pc bpc" id="L799" title="1 of 4 branches missed.">					kw.containsKey(&quot;reverse&quot;) &amp;&amp; PyOps.isTrue(kw.get(&quot;reverse&quot;)));</span>
+<span class="fc" id="L800">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L802">		def(table, &quot;reverse&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L803">			need(a, 0, 0, &quot;reverse&quot;);</span>
+<span class="fc" id="L804">			in.work(((PyList) a[0]).items.size());</span>
+<span class="fc" id="L805">			java.util.Collections.reverse(((PyList) a[0]).items);</span>
+<span class="fc" id="L806">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L808">		def(table, &quot;clear&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L809">			need(a, 0, 0, &quot;clear&quot;);</span>
+<span class="fc" id="L810">			((PyList) a[0]).items.clear();</span>
+<span class="fc" id="L811">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L813">		def(table, &quot;copy&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L814">			need(a, 0, 0, &quot;copy&quot;);</span>
+<span class="fc" id="L815">			in.work(((PyList) a[0]).items.size());</span>
+<span class="fc" id="L816">			return new PyList(new ArrayList&lt;Object&gt;(((PyList) a[0]).items));</span>
+		});
+<span class="fc" id="L818">		return table;</span>
+	}
+
+	// ------------------------------------------------------------ tuple
+
+	private static Map&lt;String, Builtin&gt; tupleMethods() {
+<span class="fc" id="L824">		final Map&lt;String, Builtin&gt; table = new HashMap&lt;String, Builtin&gt;();</span>
+<span class="fc" id="L825">		def(table, &quot;index&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L826">			need(a, 1, 3, &quot;index&quot;);</span>
+<span class="fc" id="L827">			Object[] t = ((PyTuple) a[0]).items;</span>
+<span class="fc" id="L828">			int[] w = window(a, 2, t.length);</span>
+<span class="fc" id="L829">			in.work(w[1] - w[0]);</span>
+<span class="fc bfc" id="L830" title="All 2 branches covered.">			for (int i = w[0]; i &lt; w[1]; i++)</span>
+<span class="fc bfc" id="L831" title="All 2 branches covered.">				if (PyOps.eqItem(t[i], a[1]))</span>
+<span class="fc" id="L832">					return Integer.valueOf(i);</span>
+<span class="fc" id="L833">			throw PyOps.err(Types.VALUE_ERROR, &quot;tuple.index(x): x not in tuple&quot;);</span>
+		});
+<span class="fc" id="L835">		def(table, &quot;count&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L836">			need(a, 1, 1, &quot;count&quot;);</span>
+<span class="fc" id="L837">			int n = 0;</span>
+<span class="fc" id="L838">			in.work(((PyTuple) a[0]).items.length);</span>
+<span class="fc bfc" id="L839" title="All 2 branches covered.">			for (Object o : ((PyTuple) a[0]).items)</span>
+<span class="fc bfc" id="L840" title="All 2 branches covered.">				if (PyOps.eqItem(o, a[1]))</span>
+<span class="fc" id="L841">					n++;</span>
+<span class="fc" id="L842">			return Integer.valueOf(n);</span>
+		});
+<span class="fc" id="L844">		return table;</span>
+	}
+
+	// ------------------------------------------------------------ dict
+
+	static void update(Interp in, PyDict d, Object[] a, Map&lt;String, Object&gt; kw) {
+<span class="fc bfc" id="L850" title="All 2 branches covered.">		if (a.length &gt; 2)</span>
+<span class="fc" id="L851">			throw PyOps.err(Types.TYPE_ERROR, &quot;update expected at most 1 argument, got &quot; + (a.length - 1));</span>
+<span class="fc bfc" id="L852" title="All 2 branches covered.">		if (a.length == 2) {</span>
+<span class="fc" id="L853">			Object src = a[1];</span>
+<span class="fc bfc" id="L854" title="All 2 branches covered.">			if (src instanceof PyDict) {</span>
+<span class="fc" id="L855">				in.work(((PyDict) src).size());</span>
+<span class="fc" id="L856">				in.allocated((long) Memory.ENTRY * ((PyDict) src).size());</span>
+<span class="fc bfc" id="L857" title="All 2 branches covered.">				for (PyDict.Entry e : new ArrayList&lt;PyDict.Entry&gt;(((PyDict) src).map.values()))</span>
+<span class="fc" id="L858">					d.put(e.key, e.value);</span>
+			} else {
+<span class="fc" id="L860">				int i = 0;</span>
+<span class="fc" id="L861">				final ArrayList&lt;Object&gt; items = PyOps.toArrayList(src);</span>
+<span class="fc" id="L862">				in.work(items.size());</span>
+<span class="fc" id="L863">				in.allocated((long) Memory.ENTRY * items.size());</span>
+<span class="fc bfc" id="L864" title="All 2 branches covered.">				for (Object item : items) {</span>
+<span class="fc bfc" id="L865" title="All 2 branches covered.">					if (PyOps.isIterable(item) == false)</span>
+<span class="fc" id="L866">						throw PyOps.err(Types.TYPE_ERROR, &quot;cannot convert dictionary update sequence element #&quot; + i</span>
+								+ &quot; to a sequence&quot;);
+<span class="fc" id="L868">					ArrayList&lt;Object&gt; pair = PyOps.toArrayList(item);</span>
+<span class="fc bfc" id="L869" title="All 2 branches covered.">					if (pair.size() != 2)</span>
+<span class="fc" id="L870">						throw PyOps.err(Types.VALUE_ERROR, &quot;dictionary update sequence element #&quot; + i</span>
+<span class="fc" id="L871">								+ &quot; has length &quot; + pair.size() + &quot;; 2 is required&quot;);</span>
+<span class="fc" id="L872">					d.put(pair.get(0), pair.get(1));</span>
+<span class="fc" id="L873">					i++;</span>
+<span class="fc" id="L874">				}</span>
+			}
+		}
+<span class="fc bfc" id="L877" title="All 2 branches covered.">		if (kw != null)</span>
+<span class="fc bfc" id="L878" title="All 2 branches covered.">			for (Map.Entry&lt;String, Object&gt; e : kw.entrySet())</span>
+<span class="fc" id="L879">				d.put(e.getKey(), e.getValue());</span>
+<span class="fc" id="L880">	}</span>
+
+	private static Map&lt;String, Builtin&gt; dictMethods() {
+<span class="fc" id="L883">		final Map&lt;String, Builtin&gt; table = new HashMap&lt;String, Builtin&gt;();</span>
+<span class="fc" id="L884">		def(table, &quot;get&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L885">			need(a, 1, 2, &quot;get&quot;);</span>
+<span class="fc" id="L886">			Object v = ((PyDict) a[0]).get(a[1]);</span>
+<span class="fc bfc" id="L887" title="All 4 branches covered.">			return v != null ? v : a.length &gt; 2 ? a[2] : PyNone.NONE;</span>
+		});
+<span class="fc" id="L889">		def(table, &quot;keys&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L890">			need(a, 0, 0, &quot;keys&quot;);</span>
+<span class="fc" id="L891">			return new PyView((PyDict) a[0], PyView.KEYS);</span>
+		});
+<span class="fc" id="L893">		def(table, &quot;values&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L894">			need(a, 0, 0, &quot;values&quot;);</span>
+<span class="fc" id="L895">			return new PyView((PyDict) a[0], PyView.VALUES);</span>
+		});
+<span class="fc" id="L897">		def(table, &quot;items&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L898">			need(a, 0, 0, &quot;items&quot;);</span>
+<span class="fc" id="L899">			return new PyView((PyDict) a[0], PyView.ITEMS);</span>
+		});
+<span class="fc" id="L901">		def(table, &quot;pop&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L902">			need(a, 1, 2, &quot;pop&quot;);</span>
+<span class="fc" id="L903">			Object v = ((PyDict) a[0]).remove(a[1]);</span>
+<span class="fc bfc" id="L904" title="All 2 branches covered.">			if (v != null)</span>
+<span class="fc" id="L905">				return v;</span>
+<span class="fc bfc" id="L906" title="All 2 branches covered.">			if (a.length &gt; 2)</span>
+<span class="fc" id="L907">				return a[2];</span>
+<span class="fc" id="L908">			throw new PyError(new PyException(Types.KEY_ERROR, new Object[] { a[1] }));</span>
+		});
+<span class="fc" id="L910">		def(table, &quot;popitem&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L911">			need(a, 0, 0, &quot;popitem&quot;);</span>
+<span class="fc" id="L912">			PyDict d = (PyDict) a[0];</span>
+<span class="fc" id="L913">			PyDict.Entry last = null;</span>
+<span class="fc bfc" id="L914" title="All 2 branches covered.">			for (PyDict.Entry e : d.map.values())</span>
+<span class="fc" id="L915">				last = e;</span>
+<span class="fc bfc" id="L916" title="All 2 branches covered.">			if (last == null)</span>
+<span class="fc" id="L917">				throw new PyError(new PyException(Types.KEY_ERROR, new Object[] { &quot;popitem(): dictionary is empty&quot; }));</span>
+<span class="fc" id="L918">			d.remove(last.key);</span>
+<span class="fc" id="L919">			return new PyTuple(new Object[] { last.key, last.value });</span>
+		});
+<span class="fc" id="L921">		defKw(table, &quot;update&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L922">			update(in, (PyDict) a[0], a, null);</span>
+<span class="fc" id="L923">			return PyNone.NONE;</span>
+		}, (in, a, kw) -&gt; {
+<span class="fc" id="L925">			update(in, (PyDict) a[0], a, kw);</span>
+<span class="fc" id="L926">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L928">		def(table, &quot;setdefault&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L929">			need(a, 1, 2, &quot;setdefault&quot;);</span>
+<span class="fc" id="L930">			PyDict d = (PyDict) a[0];</span>
+<span class="fc" id="L931">			Object v = d.get(a[1]);</span>
+<span class="fc bfc" id="L932" title="All 2 branches covered.">			if (v != null)</span>
+<span class="fc" id="L933">				return v;</span>
+<span class="fc bfc" id="L934" title="All 2 branches covered.">			Object dflt = a.length &gt; 2 ? a[2] : PyNone.NONE;</span>
+<span class="fc" id="L935">			in.allocated(Memory.ENTRY);</span>
+<span class="fc" id="L936">			d.put(a[1], dflt);</span>
+<span class="fc" id="L937">			return dflt;</span>
+		});
+<span class="fc" id="L939">		def(table, &quot;clear&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L940">			need(a, 0, 0, &quot;clear&quot;);</span>
+<span class="fc" id="L941">			((PyDict) a[0]).clear();</span>
+<span class="fc" id="L942">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L944">		def(table, &quot;copy&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L945">			need(a, 0, 0, &quot;copy&quot;);</span>
+<span class="fc" id="L946">			PyDict r = new PyDict();</span>
+<span class="fc" id="L947">			in.work(((PyDict) a[0]).size());</span>
+<span class="fc bfc" id="L948" title="All 2 branches covered.">			for (PyDict.Entry e : ((PyDict) a[0]).map.values())</span>
+<span class="fc" id="L949">				r.put(e.key, e.value);</span>
+<span class="fc" id="L950">			return r;</span>
+		});
+<span class="fc" id="L952">		return table;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

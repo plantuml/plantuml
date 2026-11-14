@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PythonMacros.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim</a> &gt; <span class="el_source">PythonMacros.java</span></div><h1>PythonMacros.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import sanskrit.Builtin;
+import sanskrit.Interp;
+
+/**
+ * The macros of text Python (section 5 of PYTHON_PREPROCESSOR.md): Python
+ * functions declared with &lt;code&gt;@macro&lt;/code&gt; (or &lt;code&gt;@puml.macro&lt;/code&gt;) and
+ * called by name from the text lines of the diagram, the way the legacy
+ * &lt;code&gt;!define&lt;/code&gt; and &lt;code&gt;!unquoted procedure&lt;/code&gt; are called.
+ * &lt;p&gt;
+ * The arguments of a call are text, split as the legacy preprocessor does for
+ * an unquoted procedure: on the commas outside double quotes and parentheses,
+ * trimmed, without their double quotes. &lt;code&gt;name=value&lt;/code&gt; and
+ * &lt;code&gt;$name=value&lt;/code&gt; are keyword arguments. The call is replaced by what
+ * the function emits, followed by &lt;code&gt;str()&lt;/code&gt; of its return value when
+ * it is not &lt;code&gt;None&lt;/code&gt;; the result is not scanned again.
+ */
+final class PythonMacros {
+
+	/** Tells whether a name is already a legacy function, procedure or !define of the diagram. */
+	interface LegacyNames {
+		boolean exists(String name);
+	}
+
+	private final Interp interp;
+	/** The lines emitted by Python: what a macro emits is taken back from the end of it. */
+	private final List&lt;String&gt; emitted;
+	private final LegacyNames legacy;
+<span class="fc" id="L69">	private final Map&lt;String, Object&gt; macros = new LinkedHashMap&lt;&gt;();</span>
+
+<span class="fc" id="L71">	PythonMacros(Interp interp, List&lt;String&gt; emitted, LegacyNames legacy) {</span>
+<span class="fc" id="L72">		this.interp = interp;</span>
+<span class="fc" id="L73">		this.emitted = emitted;</span>
+<span class="fc" id="L74">		this.legacy = legacy;</span>
+<span class="fc" id="L75">	}</span>
+
+	boolean isEmpty() {
+<span class="fc" id="L78">		return macros.isEmpty();</span>
+	}
+
+	boolean contains(String name) {
+<span class="fc" id="L82">		return macros.containsKey(name);</span>
+	}
+
+	/**
+	 * The builtin &lt;code&gt;macro&lt;/code&gt;: &lt;code&gt;@macro&lt;/code&gt; declares the function
+	 * under its own name, &lt;code&gt;@macro(&quot;name&quot;)&lt;/code&gt; returns the decorator that
+	 * declares it under that name. The function is returned unchanged.
+	 */
+	Object macro(Object[] args) {
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (args.length != 1)</span>
+<span class="nc" id="L92">			throw Builtin.typeError(&quot;macro() takes exactly 1 argument (&quot; + args.length + &quot; given)&quot;);</span>
+<span class="fc" id="L93">		final Object arg = args[0];</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (arg instanceof String) {</span>
+<span class="fc" id="L95">			final String name = (String) arg;</span>
+<span class="fc" id="L96">			checkName(name);</span>
+<span class="fc" id="L97">			return Builtin.of(&quot;macro&quot;, (in, f) -&gt; {</span>
+<span class="pc bpc" id="L98" title="2 of 4 branches missed.">				if (f.length != 1 || Interp.isCallable(f[0]) == false)</span>
+<span class="nc" id="L99">					throw Builtin.typeError(&quot;macro(\&quot;&quot; + name + &quot;\&quot;) decorates a function&quot;);</span>
+<span class="fc" id="L100">				declare(name, f[0]);</span>
+<span class="fc" id="L101">				return f[0];</span>
+			});
+		}
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (Interp.isCallable(arg)) {</span>
+<span class="fc" id="L105">			final String name = Interp.functionName(arg);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">			if (name == null)</span>
+<span class="nc" id="L107">				throw Builtin.typeError(&quot;macro() needs a name for this object: use @macro(\&quot;name\&quot;)&quot;);</span>
+<span class="fc" id="L108">			checkName(name);</span>
+<span class="fc" id="L109">			declare(name, arg);</span>
+<span class="fc" id="L110">			return arg;</span>
+		}
+<span class="nc" id="L112">		throw Builtin.typeError(&quot;macro() argument must be a function or a name&quot;);</span>
+	}
+
+	private static void checkName(String name) {
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		int i = name.startsWith(&quot;$&quot;) ? 1 : 0;</span>
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">		boolean ok = i &lt; name.length() &amp;&amp; isIdentifierStart(name.charAt(i));</span>
+<span class="fc bfc" id="L118" title="All 4 branches covered.">		for (i++; ok &amp;&amp; i &lt; name.length(); i++)</span>
+<span class="fc" id="L119">			ok = isIdentifierPart(name.charAt(i));</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (ok == false)</span>
+<span class="fc" id="L121">			throw Builtin.valueError(&quot;invalid macro name '&quot; + name</span>
+					+ &quot;': a macro name is an identifier, optionally preceded by $&quot;);
+<span class="fc" id="L123">	}</span>
+
+	private void declare(String name, Object function) {
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (macros.containsKey(name))</span>
+<span class="fc" id="L127">			throw Builtin.valueError(&quot;macro '&quot; + name + &quot;' is already declared&quot;);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (legacy.exists(name))</span>
+<span class="fc" id="L129">			throw Builtin.valueError(</span>
+					&quot;macro '&quot; + name + &quot;' is also a legacy !define, !function or !procedure of the diagram&quot;);
+<span class="fc" id="L131">		macros.put(name, function);</span>
+<span class="fc" id="L132">	}</span>
+
+	/**
+	 * Replaces the macro calls of a text line by their result, which may hold
+	 * several lines. Python exceptions are thrown as they are.
+	 */
+	String expand(String text) {
+<span class="fc bfc" id="L139" title="All 4 branches covered.">		if (macros.isEmpty() || text.indexOf('(') == -1)</span>
+<span class="fc" id="L140">			return text;</span>
+<span class="fc" id="L141">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L142">		int i = 0;</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		while (i &lt; text.length()) {</span>
+<span class="fc" id="L144">			final char ch = text.charAt(i);</span>
+<span class="fc bfc" id="L145" title="All 6 branches covered.">			final boolean wordStart = (ch == '$' || isIdentifierStart(ch))</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">					&amp;&amp; (i == 0 || isIdentifierPart(text.charAt(i - 1)) == false);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">			if (wordStart == false) {</span>
+<span class="fc" id="L148">				sb.append(ch);</span>
+<span class="fc" id="L149">				i++;</span>
+<span class="fc" id="L150">				continue;</span>
+			}
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			int end = ch == '$' ? i + 1 : i;</span>
+<span class="fc bfc" id="L153" title="All 4 branches covered.">			while (end &lt; text.length() &amp;&amp; isIdentifierPart(text.charAt(end)))</span>
+<span class="fc" id="L154">				end++;</span>
+<span class="fc" id="L155">			final String name = text.substring(i, end);</span>
+<span class="fc" id="L156">			final Object function = macros.get(name);</span>
+<span class="pc bpc" id="L157" title="1 of 6 branches missed.">			final int close = function != null &amp;&amp; end &lt; text.length() &amp;&amp; text.charAt(end) == '('</span>
+<span class="fc" id="L158">					? closingParenthesis(text, end)</span>
+<span class="fc" id="L159">					: -1;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">			if (close == -1) {</span>
+<span class="fc" id="L161">				sb.append(name);</span>
+<span class="fc" id="L162">				i = Math.max(end, i + 1);</span>
+<span class="fc" id="L163">				continue;</span>
+			}
+<span class="fc" id="L165">			sb.append(call(function, text.substring(end + 1, close)));</span>
+<span class="fc" id="L166">			i = close + 1;</span>
+<span class="fc" id="L167">		}</span>
+<span class="fc" id="L168">		return sb.toString();</span>
+	}
+
+	private String call(Object function, String inside) {
+<span class="fc" id="L172">		final List&lt;Object&gt; positional = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L173">		final Map&lt;String, Object&gt; keywords = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		for (String argument : splitArguments(inside)) {</span>
+<span class="fc" id="L175">			final int equal = keywordEnd(argument);</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">			if (equal == -1) {</span>
+<span class="fc" id="L177">				positional.add(unquote(argument));</span>
+			} else {
+<span class="fc" id="L179">				String key = argument.substring(0, equal).trim();</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">				if (key.startsWith(&quot;$&quot;))</span>
+<span class="fc" id="L181">					key = key.substring(1);</span>
+<span class="fc" id="L182">				keywords.put(key, unquote(argument.substring(equal + 1).trim()));</span>
+			}
+<span class="fc" id="L184">		}</span>
+<span class="fc" id="L185">		final int before = emitted.size();</span>
+<span class="fc" id="L186">		final Object result = interp.callFunction(function, positional.toArray(), keywords);</span>
+<span class="fc" id="L187">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		while (emitted.size() &gt; before) {</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">			if (sb.length() &gt; 0)</span>
+<span class="fc" id="L190">				sb.append('\n');</span>
+<span class="fc" id="L191">			sb.append(emitted.remove(before));</span>
+		}
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (Interp.isNone(result) == false) {</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">			if (sb.length() &gt; 0)</span>
+<span class="fc" id="L195">				sb.append('\n');</span>
+<span class="fc" id="L196">			sb.append(Interp.str(result));</span>
+		}
+<span class="fc" id="L198">		return sb.toString();</span>
+	}
+
+	/** The arguments of a call, trimmed: split on the commas outside double quotes and parentheses. */
+	static List&lt;String&gt; splitArguments(String inside) {
+<span class="fc" id="L203">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">		if (inside.trim().isEmpty())</span>
+<span class="fc" id="L205">			return result;</span>
+<span class="fc" id="L206">		int depth = 0;</span>
+<span class="fc" id="L207">		boolean quoted = false;</span>
+<span class="fc" id="L208">		int start = 0;</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		for (int i = 0; i &lt; inside.length(); i++) {</span>
+<span class="fc" id="L210">			final char ch = inside.charAt(i);</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">			if (ch == '&quot;')</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">				quoted = quoted == false;</span>
+<span class="fc bfc" id="L213" title="All 4 branches covered.">			else if (quoted == false &amp;&amp; ch == '(')</span>
+<span class="fc" id="L214">				depth++;</span>
+<span class="fc bfc" id="L215" title="All 4 branches covered.">			else if (quoted == false &amp;&amp; ch == ')')</span>
+<span class="fc" id="L216">				depth--;</span>
+<span class="fc bfc" id="L217" title="All 6 branches covered.">			else if (quoted == false &amp;&amp; depth == 0 &amp;&amp; ch == ',') {</span>
+<span class="fc" id="L218">				result.add(inside.substring(start, i).trim());</span>
+<span class="fc" id="L219">				start = i + 1;</span>
+			}
+		}
+<span class="fc" id="L222">		result.add(inside.substring(start).trim());</span>
+<span class="fc" id="L223">		return result;</span>
+	}
+
+	/** The index of the &quot;=&quot; of &quot;name=value&quot; or &quot;$name=value&quot;, or -1 for a positional argument. */
+	private static int keywordEnd(String argument) {
+<span class="fc bfc" id="L228" title="All 2 branches covered.">		int i = argument.startsWith(&quot;$&quot;) ? 1 : 0;</span>
+<span class="pc bpc" id="L229" title="1 of 4 branches missed.">		if (i &gt;= argument.length() || isIdentifierStart(argument.charAt(i)) == false)</span>
+<span class="fc" id="L230">			return -1;</span>
+<span class="fc bfc" id="L231" title="All 4 branches covered.">		while (i &lt; argument.length() &amp;&amp; isIdentifierPart(argument.charAt(i)))</span>
+<span class="fc" id="L232">			i++;</span>
+<span class="pc bpc" id="L233" title="1 of 4 branches missed.">		while (i &lt; argument.length() &amp;&amp; argument.charAt(i) == ' ')</span>
+<span class="nc" id="L234">			i++;</span>
+<span class="fc bfc" id="L235" title="All 4 branches covered.">		if (i &lt; argument.length() &amp;&amp; argument.charAt(i) == '='</span>
+<span class="pc bpc" id="L236" title="2 of 4 branches missed.">				&amp;&amp; (i + 1 &gt;= argument.length() || argument.charAt(i + 1) != '='))</span>
+<span class="fc" id="L237">			return i;</span>
+<span class="fc" id="L238">		return -1;</span>
+	}
+
+	private static String unquote(String argument) {
+<span class="pc bpc" id="L242" title="1 of 6 branches missed.">		if (argument.length() &gt;= 2 &amp;&amp; argument.startsWith(&quot;\&quot;&quot;) &amp;&amp; argument.endsWith(&quot;\&quot;&quot;))</span>
+<span class="fc" id="L243">			return argument.substring(1, argument.length() - 1);</span>
+<span class="fc" id="L244">		return argument;</span>
+	}
+
+	/** The index of the &quot;)&quot; that closes the &quot;(&quot; at open, ignoring the parentheses inside double quotes, or -1. */
+	static int closingParenthesis(String text, int open) {
+<span class="fc" id="L249">		int depth = 0;</span>
+<span class="fc" id="L250">		boolean quoted = false;</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		for (int i = open; i &lt; text.length(); i++) {</span>
+<span class="fc" id="L252">			final char ch = text.charAt(i);</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">			if (ch == '&quot;') {</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">				quoted = quoted == false;</span>
+<span class="fc bfc" id="L255" title="All 4 branches covered.">			} else if (quoted == false &amp;&amp; ch == '(') {</span>
+<span class="fc" id="L256">				depth++;</span>
+<span class="fc bfc" id="L257" title="All 4 branches covered.">			} else if (quoted == false &amp;&amp; ch == ')') {</span>
+<span class="fc" id="L258">				depth--;</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">				if (depth == 0)</span>
+<span class="fc" id="L260">					return i;</span>
+			}
+		}
+<span class="nc" id="L263">		return -1;</span>
+	}
+
+	private static boolean isIdentifierStart(char ch) {
+<span class="pc bpc" id="L267" title="1 of 4 branches missed.">		return Character.isLetter(ch) || ch == '_';</span>
+	}
+
+	private static boolean isIdentifierPart(char ch) {
+<span class="pc bpc" id="L271" title="1 of 4 branches missed.">		return Character.isLetterOrDigit(ch) || ch == '_';</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

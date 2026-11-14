@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Builtins.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">Builtins.java</span></div><h1>Builtins.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/** The builtin functions, types and exception classes. */
+final class Builtins {
+	private Builtins() {
+	}
+
+	static void install(Interp in) {
+<span class="fc bfc" id="L15" title="All 2 branches covered.">		for (PyType t : Types.ALL)</span>
+<span class="fc" id="L16">			in.builtins.put(t.name, t);</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">		for (Builtin b : FUNCTIONS)</span>
+<span class="fc" id="L18">			in.builtins.put(b.name, b);</span>
+<span class="fc" id="L19">		in.builtins.put(&quot;type&quot;, Types.TYPE);</span>
+<span class="fc" id="L20">		in.builtins.put(&quot;NotImplemented&quot;, PyNotImplemented.INSTANCE);</span>
+<span class="fc" id="L21">		in.modules.put(&quot;math&quot;, MathLib.create());</span>
+<span class="fc" id="L22">		in.modules.put(&quot;json&quot;, JsonLib.create());</span>
+<span class="fc" id="L23">		in.modules.put(&quot;time&quot;, TimeLib.create());</span>
+<span class="fc" id="L24">		in.modules.put(&quot;datetime&quot;, DatetimeLib.create(in));</span>
+<span class="fc" id="L25">	}</span>
+
+<span class="fc" id="L27">	private static final ArrayList&lt;Builtin&gt; FUNCTIONS = new ArrayList&lt;Builtin&gt;();</span>
+
+	// ------------------------------------------------------------ classes
+
+	/**
+	 * Called by the code of a class statement (never through a name):
+	 * BUILD_CLASS(body, name, qualname[, base]). The body is a function that
+	 * returns the dict of the attributes.
+	 */
+<span class="fc" id="L36">	static final Builtin BUILD_CLASS = new Builtin(&quot;__build_class__&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L37">		PyType parent = Types.OBJECT;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		if (a.length &gt; 3) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">			if (a[3] instanceof PyType == false)</span>
+<span class="fc" id="L40">				throw PyOps.err(Types.TYPE_ERROR, &quot;a class base must be a class, not '&quot; + PyOps.typeName(a[3]) + &quot;'&quot;);</span>
+<span class="fc" id="L41">			parent = (PyType) a[3];</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">			if (parent.nativeClass)</span>
+<span class="fc" id="L43">				throw PyOps.err(Types.TYPE_ERROR, &quot;subclassing the native class '&quot; + parent.fullName() + &quot;' is not supported&quot;);</span>
+<span class="fc bfc" id="L44" title="All 6 branches covered.">			if (parent.isClass() == false &amp;&amp; parent.exception == false &amp;&amp; parent != Types.OBJECT)</span>
+<span class="fc" id="L45">				throw PyOps.err(Types.TYPE_ERROR, &quot;subclassing the builtin type '&quot; + parent.name + &quot;' is not supported&quot;);</span>
+		}
+		// as in CPython, __module__ is the __name__ of the globals the class is defined in
+<span class="fc" id="L48">		Object module = ((PyFunction) a[0]).globals.get(&quot;__name__&quot;);</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		if (PyStr.is(module) == false)</span>
+<span class="nc" id="L50">			module = &quot;__main__&quot;;</span>
+<span class="fc" id="L51">		PyDict body = (PyDict) in.call(a[0]);</span>
+<span class="fc" id="L52">		Map&lt;String, Object&gt; dict = new LinkedHashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L53">		dict.put(&quot;__module__&quot;, PyStr.text(module));</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		for (PyDict.Entry e : body.map.values())</span>
+<span class="fc" id="L55">			dict.put(PyStr.text(e.key), e.value);</span>
+<span class="fc" id="L56">		PyType type = new PyType(PyStr.text(a[1]), parent, parent.exception, dict, PyStr.text(a[2]), PyStr.text(module));</span>
+<span class="fc" id="L57">		type.interp = in;</span>
+<span class="fc" id="L58">		return type;</span>
+	});
+
+	/** BaseException.__init__(self, *args), for a class that calls it explicitly. */
+<span class="fc" id="L62">	static final Builtin EXCEPTION_INIT = new Builtin(&quot;__init__&quot;, (in, a) -&gt; {</span>
+<span class="pc bpc" id="L63" title="2 of 4 branches missed.">		if (a.length == 0 || a[0] instanceof PyException == false)</span>
+<span class="nc" id="L64">			throw PyOps.err(Types.TYPE_ERROR, &quot;descriptor '__init__' requires an exception object&quot;);</span>
+<span class="fc" id="L65">		Object[] args = new Object[a.length - 1];</span>
+<span class="fc" id="L66">		System.arraycopy(a, 1, args, 0, args.length);</span>
+<span class="fc" id="L67">		((PyException) a[0]).args = args;</span>
+<span class="fc" id="L68">		return PyNone.NONE;</span>
+	});
+
+	/** object.__init__(self). */
+<span class="fc" id="L72">	static final Builtin OBJECT_INIT = new Builtin(&quot;__init__&quot;, (in, a) -&gt; {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (a.length != 1)</span>
+<span class="nc" id="L74">			throw PyOps.err(Types.TYPE_ERROR, &quot;object.__init__() takes exactly one argument (the instance to initialize)&quot;);</span>
+<span class="nc" id="L75">		return PyNone.NONE;</span>
+	});
+
+	// last of the static fields: init() may use any of them
+	static {
+<span class="fc" id="L80">		init();</span>
+<span class="fc" id="L81">	}</span>
+
+	private static void fn(String name, Builtin.Fn f) {
+<span class="fc" id="L84">		FUNCTIONS.add(new Builtin(name, f));</span>
+<span class="fc" id="L85">	}</span>
+
+	private static void fnKw(String name, Builtin.Fn f, Builtin.KwFn k) {
+<span class="fc" id="L88">		FUNCTIONS.add(new Builtin(name, f, k));</span>
+<span class="fc" id="L89">	}</span>
+
+	static void count(String name, Object[] a, int min, int max) {
+<span class="fc bfc" id="L92" title="All 4 branches covered.">		if (a.length &lt; min || a.length &gt; max) {</span>
+<span class="pc bpc" id="L93" title="1 of 4 branches missed.">			String exp = min == max ? &quot;exactly &quot; + min : max == Integer.MAX_VALUE ? &quot;at least &quot; + min</span>
+<span class="fc" id="L94">					: &quot;from &quot; + min + &quot; to &quot; + max;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			throw PyOps.err(Types.TYPE_ERROR, name + &quot;() takes &quot; + exp + &quot; argument&quot; + (max == 1 ? &quot;&quot; : &quot;s&quot;) + &quot; (&quot;</span>
+					+ a.length + &quot; given)&quot;);
+		}
+<span class="fc" id="L98">	}</span>
+
+	private static void noKw(String name, Map&lt;String, Object&gt; kw, String... allowed) {
+<span class="fc" id="L101">		Methods.noKw(kw, name, allowed);</span>
+<span class="fc" id="L102">	}</span>
+
+	// ------------------------------------------------------------ int and float conversion
+
+	private static int parseInt(String text, int base) {
+<span class="fc" id="L107">		String s = text.trim();</span>
+<span class="fc" id="L108">		int i = 0;</span>
+<span class="fc" id="L109">		boolean neg = false;</span>
+<span class="fc bfc" id="L110" title="All 6 branches covered.">		if (!s.isEmpty() &amp;&amp; (s.charAt(0) == '+' || s.charAt(0) == '-')) {</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			neg = s.charAt(0) == '-';</span>
+<span class="fc" id="L112">			i = 1;</span>
+		}
+<span class="fc" id="L114">		final int givenBase = base;</span>
+		// an underscore may follow the prefix: 0x_f
+<span class="fc" id="L116">		boolean lastDigit = false;</span>
+<span class="fc bfc" id="L117" title="All 8 branches covered.">		if (base == 0 || base == 16 || base == 8 || base == 2) {</span>
+<span class="fc bfc" id="L118" title="All 4 branches covered.">			if (i + 1 &lt; s.length() &amp;&amp; s.charAt(i) == '0') {</span>
+<span class="fc" id="L119">				char p = Character.toLowerCase(s.charAt(i + 1));</span>
+<span class="fc bfc" id="L120" title="All 6 branches covered.">				int pb = p == 'x' ? 16 : p == 'o' ? 8 : p == 'b' ? 2 : 0;</span>
+<span class="pc bpc" id="L121" title="1 of 6 branches missed.">				if (pb != 0 &amp;&amp; (base == 0 || base == pb)) {</span>
+<span class="fc" id="L122">					base = pb;</span>
+<span class="fc" id="L123">					i += 2;</span>
+<span class="fc" id="L124">					lastDigit = true;</span>
+				}
+			}
+<span class="fc bfc" id="L127" title="All 2 branches covered.">			if (base == 0)</span>
+<span class="fc" id="L128">				base = 10;</span>
+		}
+		// with the base 0 the text is a literal of the language: 010 is not one
+<span class="fc bfc" id="L131" title="All 8 branches covered.">		final boolean noLeadingZero = givenBase == 0 &amp;&amp; base == 10 &amp;&amp; i &lt; s.length() &amp;&amp; s.charAt(i) == '0';</span>
+<span class="fc" id="L132">		long v = 0;</span>
+<span class="fc" id="L133">		int digits = 0;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		for (; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L135">			char c = s.charAt(i);</span>
+			int d;
+<span class="fc bfc" id="L137" title="All 6 branches covered.">			if (c == '_' &amp;&amp; lastDigit &amp;&amp; i + 1 &lt; s.length()) {</span>
+<span class="fc" id="L138">				lastDigit = false;</span>
+<span class="fc" id="L139">				continue;</span>
+			}
+<span class="fc bfc" id="L141" title="All 4 branches covered.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9')</span>
+<span class="fc" id="L142">				d = c - '0';</span>
+<span class="pc bpc" id="L143" title="1 of 4 branches missed.">			else if (c &gt;= 'a' &amp;&amp; c &lt;= 'z')</span>
+<span class="fc" id="L144">				d = c - 'a' + 10;</span>
+<span class="pc bpc" id="L145" title="1 of 4 branches missed.">			else if (c &gt;= 'A' &amp;&amp; c &lt;= 'Z')</span>
+<span class="nc" id="L146">				d = c - 'A' + 10;</span>
+			else
+<span class="fc" id="L148">				d = 99;</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">			if (d &gt;= base)</span>
+<span class="fc" id="L150">				throw PyOps.err(Types.VALUE_ERROR,</span>
+<span class="fc" id="L151">						&quot;invalid literal for int() with base &quot; + givenBase + &quot;: &quot; + PyOps.repr(text));</span>
+<span class="fc" id="L152">			v = v * base + d;</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">			if (v &gt; 4294967296L)</span>
+<span class="nc" id="L154">				throw PyInt.overflow();</span>
+<span class="fc" id="L155">			digits++;</span>
+<span class="fc" id="L156">			lastDigit = true;</span>
+		}
+<span class="pc bpc" id="L158" title="1 of 4 branches missed.">		if (digits == 0 || !lastDigit)</span>
+<span class="fc" id="L159">			throw PyOps.err(Types.VALUE_ERROR,</span>
+<span class="fc" id="L160">					&quot;invalid literal for int() with base &quot; + givenBase + &quot;: &quot; + PyOps.repr(text));</span>
+<span class="fc bfc" id="L161" title="All 4 branches covered.">		if (noLeadingZero &amp;&amp; v != 0)</span>
+<span class="fc" id="L162">			throw PyOps.err(Types.VALUE_ERROR, &quot;invalid literal for int() with base 0: &quot; + PyOps.repr(text));</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		if (neg)</span>
+<span class="fc" id="L164">			v = -v;</span>
+<span class="fc" id="L165">		return PyInt.check(v);</span>
+	}
+
+	private static Object toInt(Interp in, Object[] a) {
+<span class="fc" id="L169">		count(&quot;int&quot;, a, 0, 2);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (a.length &gt; 0)</span>
+<span class="fc" id="L171">			in.work(PyOps.size(a[0]));</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (a.length == 0)</span>
+<span class="fc" id="L173">			return Integer.valueOf(0);</span>
+<span class="fc" id="L174">		Object x = a[0];</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		if (a.length == 2) {</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">			if (PyStr.is(x) == false)</span>
+<span class="fc" id="L177">				throw PyOps.err(Types.TYPE_ERROR, &quot;int() can't convert non-string with explicit base&quot;);</span>
+<span class="fc" id="L178">			int base = PyOps.asIndex(a[1]);</span>
+<span class="fc bfc" id="L179" title="All 6 branches covered.">			if (base != 0 &amp;&amp; (base &lt; 2 || base &gt; 36))</span>
+<span class="fc" id="L180">				throw PyOps.err(Types.VALUE_ERROR, &quot;int() base must be &gt;= 2 and &lt;= 36, or 0&quot;);</span>
+<span class="fc" id="L181">			return Integer.valueOf(parseInt(PyStr.text(x), base));</span>
+		}
+<span class="fc bfc" id="L183" title="All 2 branches covered.">		if (x instanceof Integer)</span>
+<span class="fc" id="L184">			return x;</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">		if (x instanceof Boolean)</span>
+<span class="fc" id="L186">			return Integer.valueOf(PyOps.asInt(x));</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (x instanceof Double)</span>
+<span class="fc" id="L188">			return Integer.valueOf(PyInt.fromDouble(((Double) x).doubleValue()));</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">		if (PyStr.is(x))</span>
+<span class="fc" id="L190">			return Integer.valueOf(parseInt(PyStr.text(x), 10));</span>
+<span class="fc" id="L191">		throw PyOps.err(Types.TYPE_ERROR,</span>
+<span class="fc" id="L192">				&quot;int() argument must be a string or a real number, not '&quot; + PyOps.typeName(x) + &quot;'&quot;);</span>
+	}
+
+	private static Object toFloat(Interp in, Object[] a) {
+<span class="fc" id="L196">		count(&quot;float&quot;, a, 0, 1);</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		if (a.length &gt; 0)</span>
+<span class="fc" id="L198">			in.work(PyOps.size(a[0]));</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">		if (a.length == 0)</span>
+<span class="fc" id="L200">			return Double.valueOf(0.0);</span>
+<span class="fc" id="L201">		Object x = a[0];</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">		if (x instanceof Double)</span>
+<span class="nc" id="L203">			return x;</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">		if (PyOps.isNum(x))</span>
+<span class="fc" id="L205">			return Double.valueOf(PyOps.asDouble(x));</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (PyStr.is(x)) {</span>
+<span class="fc" id="L207">			Double d = Fmt.parseFloat(PyStr.text(x));</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">			if (d == null)</span>
+<span class="fc" id="L209">				throw PyOps.err(Types.VALUE_ERROR, &quot;could not convert string to float: &quot; + PyOps.repr(x));</span>
+<span class="fc" id="L210">			return d;</span>
+		}
+<span class="fc" id="L212">		throw PyOps.err(Types.TYPE_ERROR,</span>
+<span class="fc" id="L213">				&quot;float() argument must be a string or a real number, not '&quot; + PyOps.typeName(x) + &quot;'&quot;);</span>
+	}
+
+	private static Object makeDict(Interp in, Object[] a, Map&lt;String, Object&gt; kw) {
+<span class="fc" id="L217">		count(&quot;dict&quot;, a, 0, 1);</span>
+<span class="fc" id="L218">		PyDict d = new PyDict();</span>
+<span class="fc" id="L219">		Object[] self = new Object[a.length + 1];</span>
+<span class="fc" id="L220">		self[0] = d;</span>
+<span class="fc" id="L221">		System.arraycopy(a, 0, self, 1, a.length);</span>
+<span class="fc" id="L222">		Methods.update(in, d, self, kw);</span>
+<span class="fc" id="L223">		return d;</span>
+	}
+
+	private static Object makeRange(Object[] a) {
+<span class="fc" id="L227">		count(&quot;range&quot;, a, 1, 3);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">		for (Object o : a)</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">			if (!PyOps.isIntLike(o))</span>
+<span class="fc" id="L230">				throw PyOps.err(Types.TYPE_ERROR, &quot;'&quot; + PyOps.typeName(o) + &quot;' object cannot be interpreted as an integer&quot;);</span>
+<span class="fc" id="L231">		int start = 0, stop, step = 1;</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">		if (a.length == 1) {</span>
+<span class="fc" id="L233">			stop = PyOps.asInt(a[0]);</span>
+		} else {
+<span class="fc" id="L235">			start = PyOps.asInt(a[0]);</span>
+<span class="fc" id="L236">			stop = PyOps.asInt(a[1]);</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">			if (a.length == 3)</span>
+<span class="fc" id="L238">				step = PyOps.asInt(a[2]);</span>
+		}
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		if (step == 0)</span>
+<span class="fc" id="L241">			throw PyOps.err(Types.VALUE_ERROR, &quot;range() arg 3 must not be zero&quot;);</span>
+<span class="fc" id="L242">		return new PyRange(start, stop, step);</span>
+	}
+
+	// ------------------------------------------------------------ numeric helpers
+
+	private static Object round(Object[] a) {
+<span class="fc" id="L248">		count(&quot;round&quot;, a, 1, 2);</span>
+<span class="fc" id="L249">		Object x = a[0];</span>
+<span class="pc bpc" id="L250" title="1 of 4 branches missed.">		boolean hasN = a.length == 2 &amp;&amp; a[1] != PyNone.NONE;</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">		int n = hasN ? PyOps.asIndex(a[1]) : 0;</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		if (x instanceof Boolean)</span>
+<span class="nc" id="L253">			x = Integer.valueOf(PyOps.asInt(x));</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">		if (x instanceof Integer) {</span>
+<span class="pc bpc" id="L255" title="1 of 4 branches missed.">			if (!hasN || n &gt;= 0)</span>
+<span class="fc" id="L256">				return x;</span>
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">			if (n &lt; -10)</span>
+<span class="nc" id="L258">				return Integer.valueOf(0);</span>
+<span class="fc" id="L259">			long r = new BigDecimal(((Integer) x).intValue()).setScale(n, RoundingMode.HALF_EVEN).longValue();</span>
+<span class="fc" id="L260">			return PyInt.box(r);</span>
+		}
+<span class="fc bfc" id="L262" title="All 2 branches covered.">		if (x instanceof Double) {</span>
+<span class="fc" id="L263">			double d = ((Double) x).doubleValue();</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">			if (!hasN) {</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">				if (d != d)</span>
+<span class="nc" id="L266">					throw PyOps.err(Types.VALUE_ERROR, &quot;cannot convert float NaN to integer&quot;);</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">				if (Double.isInfinite(d))</span>
+<span class="nc" id="L268">					throw PyOps.err(Types.OVERFLOW, &quot;cannot convert float infinity to integer&quot;);</span>
+<span class="fc" id="L269">				return Integer.valueOf(PyInt.fromDouble(Math.rint(d)));</span>
+			}
+<span class="pc bpc" id="L271" title="3 of 6 branches missed.">			if (d != d || Double.isInfinite(d) || n &gt; 400)</span>
+<span class="nc" id="L272">				return x;</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">			if (n &lt; -400)</span>
+<span class="nc" id="L274">				return Double.valueOf(Math.copySign(0.0, d));</span>
+<span class="fc" id="L275">			double r = new BigDecimal(d).setScale(n, RoundingMode.HALF_EVEN).doubleValue();</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">			return Double.valueOf(r == 0 ? Math.copySign(0.0, d) : r);</span>
+		}
+<span class="fc" id="L278">		throw PyOps.err(Types.TYPE_ERROR, &quot;type &quot; + PyOps.typeName(x) + &quot; doesn't define __round__ method&quot;);</span>
+	}
+
+	private static Object divmod(Object x, Object y) {
+<span class="pc bpc" id="L282" title="1 of 4 branches missed.">		if (PyOps.isIntLike(x) &amp;&amp; PyOps.isIntLike(y)) {</span>
+<span class="fc" id="L283">			int a = PyOps.asInt(x), b = PyOps.asInt(y);</span>
+<span class="fc" id="L284">			return new PyTuple(new Object[] { PyInt.floorDiv(a, b), PyInt.mod(a, b) });</span>
+		}
+<span class="pc bpc" id="L286" title="2 of 4 branches missed.">		if (PyOps.isNum(x) &amp;&amp; PyOps.isNum(y)) {</span>
+<span class="fc" id="L287">			double a = PyOps.asDouble(x), b = PyOps.asDouble(y);</span>
+<span class="pc bpc" id="L288" title="1 of 2 branches missed.">			if (b == 0)</span>
+<span class="nc" id="L289">				throw PyOps.err(Types.ZERO_DIVISION, &quot;float divmod()&quot;);</span>
+<span class="fc" id="L290">			return new PyTuple(new Object[] { Double.valueOf(PyOps.floatFloorDiv(a, b)),</span>
+<span class="fc" id="L291">					Double.valueOf(PyOps.floatMod(a, b)) });</span>
+		}
+<span class="nc" id="L293">		throw PyOps.err(Types.TYPE_ERROR, &quot;unsupported operand type(s) for divmod(): '&quot; + PyOps.typeName(x) + &quot;' and '&quot;</span>
+<span class="nc" id="L294">				+ PyOps.typeName(y) + &quot;'&quot;);</span>
+	}
+
+	private static Object pow(Object[] a) {
+<span class="fc" id="L298">		count(&quot;pow&quot;, a, 2, 3);</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">		if (a.length == 2)</span>
+<span class="fc" id="L300">			return PyOps.binary(Op.BIN_POW, a[0], a[1]);</span>
+<span class="pc bpc" id="L301" title="3 of 6 branches missed.">		if (!PyOps.isIntLike(a[0]) || !PyOps.isIntLike(a[1]) || !PyOps.isIntLike(a[2]))</span>
+<span class="nc" id="L302">			throw PyOps.err(Types.TYPE_ERROR, &quot;pow() 3rd argument not allowed unless all arguments are integers&quot;);</span>
+<span class="fc" id="L303">		long base = PyOps.asInt(a[0]), exp = PyOps.asInt(a[1]), mod = PyOps.asInt(a[2]);</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">		if (mod == 0)</span>
+<span class="fc" id="L305">			throw PyOps.err(Types.VALUE_ERROR, &quot;pow() 3rd argument cannot be 0&quot;);</span>
+<span class="pc bpc" id="L306" title="1 of 2 branches missed.">		if (exp &lt; 0)</span>
+<span class="nc" id="L307">			throw PyOps.err(Types.VALUE_ERROR, &quot;pow() with a negative exponent and a modulus is not supported&quot;);</span>
+<span class="fc" id="L308">		long m = Math.abs(mod);</span>
+<span class="fc" id="L309">		long r = 1 % m;</span>
+<span class="fc" id="L310">		long b = Math.floorMod(base, m);</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">		while (exp &gt; 0) {</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">			if ((exp &amp; 1) != 0)</span>
+<span class="fc" id="L313">				r = r * b % m;</span>
+<span class="fc" id="L314">			b = b * b % m;</span>
+<span class="fc" id="L315">			exp &gt;&gt;= 1;</span>
+		}
+<span class="pc bpc" id="L317" title="3 of 4 branches missed.">		if (mod &lt; 0 &amp;&amp; r != 0)</span>
+<span class="nc" id="L318">			r += mod;</span>
+<span class="fc" id="L319">		return Integer.valueOf((int) r);</span>
+	}
+
+	private static String radix(Object x, int radix, String prefix, String name) {
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">		if (!PyOps.isIntLike(x))</span>
+<span class="nc" id="L324">			throw PyOps.err(Types.TYPE_ERROR, &quot;'&quot; + PyOps.typeName(x) + &quot;' object cannot be interpreted as an integer&quot;);</span>
+<span class="fc" id="L325">		long v = PyOps.asInt(x);</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">		return (v &lt; 0 ? &quot;-&quot; : &quot;&quot;) + prefix + Long.toString(Math.abs(v), radix);</span>
+	}
+
+	private static Object minmax(Interp in, String name, Object[] a, Map&lt;String, Object&gt; kw, boolean max) {
+<span class="fc bfc" id="L330" title="All 2 branches covered.">		if (kw != null)</span>
+<span class="fc" id="L331">			noKw(name, kw, &quot;key&quot;, &quot;default&quot;);</span>
+<span class="fc bfc" id="L332" title="All 4 branches covered.">		Object key = kw != null &amp;&amp; kw.containsKey(&quot;key&quot;) ? kw.get(&quot;key&quot;) : PyNone.NONE;</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">		if (a.length == 0)</span>
+<span class="fc" id="L334">			throw PyOps.err(Types.TYPE_ERROR, name + &quot; expected at least 1 argument, got 0&quot;);</span>
+		ArrayList&lt;Object&gt; items;
+<span class="fc bfc" id="L336" title="All 2 branches covered.">		if (a.length == 1) {</span>
+<span class="fc" id="L337">			items = PyOps.toArrayList(a[0]);</span>
+		} else {
+<span class="pc bpc" id="L339" title="3 of 4 branches missed.">			if (kw != null &amp;&amp; kw.containsKey(&quot;default&quot;))</span>
+<span class="nc" id="L340">				throw PyOps.err(Types.TYPE_ERROR,</span>
+						&quot;Cannot specify a default for &quot; + name + &quot;() with multiple positional arguments&quot;);
+<span class="fc" id="L342">			items = new ArrayList&lt;Object&gt;();</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">			for (Object o : a)</span>
+<span class="fc" id="L344">				items.add(o);</span>
+		}
+<span class="fc bfc" id="L346" title="All 2 branches covered.">		if (items.isEmpty()) {</span>
+<span class="pc bpc" id="L347" title="1 of 4 branches missed.">			if (kw != null &amp;&amp; kw.containsKey(&quot;default&quot;))</span>
+<span class="fc" id="L348">				return kw.get(&quot;default&quot;);</span>
+<span class="fc" id="L349">			throw PyOps.err(Types.VALUE_ERROR, name + &quot;() iterable argument is empty&quot;);</span>
+		}
+<span class="fc" id="L351">		Object best = items.get(0);</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">		Object bestKey = key == PyNone.NONE ? best : in.call(key, best);</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">		for (int i = 1; i &lt; items.size(); i++) {</span>
+<span class="fc" id="L354">			in.tick();</span>
+<span class="fc" id="L355">			Object x = items.get(i);</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">			Object k = key == PyNone.NONE ? x : in.call(key, x);</span>
+<span class="fc" id="L357">			int c = PyOps.order(k, bestKey);</span>
+<span class="fc bfc" id="L358" title="All 6 branches covered.">			if (max ? c &gt; 0 : c &lt; 0) {</span>
+<span class="fc" id="L359">				best = x;</span>
+<span class="fc" id="L360">				bestKey = k;</span>
+			}
+		}
+<span class="fc" id="L363">		return best;</span>
+	}
+
+	private static boolean isInstance(Object x, Object t) {
+<span class="fc bfc" id="L367" title="All 2 branches covered.">		if (t instanceof PyType)</span>
+<span class="fc" id="L368">			return PyOps.typeOf(x).isSubtypeOf((PyType) t);</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">		if (t instanceof PyTuple) {</span>
+<span class="fc bfc" id="L370" title="All 2 branches covered.">			for (Object o : ((PyTuple) t).items)</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">				if (isInstance(x, o))</span>
+<span class="fc" id="L372">					return true;</span>
+<span class="fc" id="L373">			return false;</span>
+		}
+<span class="fc" id="L375">		throw PyOps.err(Types.TYPE_ERROR, &quot;isinstance() arg 2 must be a type or tuple of types&quot;);</span>
+	}
+
+	private static boolean isSubclass(Object c, Object t) {
+<span class="fc bfc" id="L379" title="All 2 branches covered.">		if (c instanceof PyType == false)</span>
+<span class="fc" id="L380">			throw PyOps.err(Types.TYPE_ERROR, &quot;issubclass() arg 1 must be a class&quot;);</span>
+<span class="fc bfc" id="L381" title="All 2 branches covered.">		if (t instanceof PyType)</span>
+<span class="fc" id="L382">			return ((PyType) c).isSubtypeOf((PyType) t);</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">		if (t instanceof PyTuple) {</span>
+<span class="fc bfc" id="L384" title="All 2 branches covered.">			for (Object o : ((PyTuple) t).items)</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">				if (isSubclass(c, o))</span>
+<span class="fc" id="L386">					return true;</span>
+<span class="fc" id="L387">			return false;</span>
+		}
+<span class="fc" id="L389">		throw PyOps.err(Types.TYPE_ERROR, &quot;issubclass() arg 2 must be a class or tuple of classes&quot;);</span>
+	}
+
+	/** The name of an attribute, the second argument of getattr, hasattr, setattr and delattr. */
+	private static String attrName(Object name) {
+<span class="fc bfc" id="L394" title="All 2 branches covered.">		if (PyStr.is(name) == false)</span>
+<span class="fc" id="L395">			throw PyOps.err(Types.TYPE_ERROR, &quot;attribute name must be string, not '&quot; + PyOps.typeName(name) + &quot;'&quot;);</span>
+<span class="fc" id="L396">		return PyStr.text(name);</span>
+	}
+
+	/** The attribute, or null if reading it raises an AttributeError. */
+	private static Object attrOrNull(Object o, String name) {
+		try {
+<span class="fc" id="L402">			return PyOps.getattr(o, name);</span>
+<span class="fc" id="L403">		} catch (PyError e) {</span>
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">			if (e.exc.type.isSubtypeOf(Types.ATTRIBUTE_ERROR))</span>
+<span class="fc" id="L405">				return null;</span>
+<span class="nc" id="L406">			throw e;</span>
+		}
+	}
+
+	/** The items of an iterable as a new list, for list(), tuple(), sorted() and reversed(): its work and its memory. */
+	private static ArrayList&lt;Object&gt; items(Interp in, Object o) {
+<span class="fc bfc" id="L412" title="All 2 branches covered.">		if (PyStr.is(o))</span>
+<span class="fc" id="L413">			Memory.checkParts(PyOps.size(o), PyOps.size(o)); // one str for each character</span>
+<span class="fc" id="L414">		final ArrayList&lt;Object&gt; l = PyOps.toArrayList(o);</span>
+<span class="fc" id="L415">		in.work(l.size());</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">		if (PyStr.is(o))</span>
+<span class="fc" id="L417">			in.allocated((long) Memory.OBJECT * l.size());</span>
+<span class="fc" id="L418">		return l;</span>
+	}
+
+	// ------------------------------------------------------------ registration
+
+	/**
+	 * Fills the constructors of the builtin types and the table of the builtin
+	 * functions. Called once, by the static initializer below: the JVM runs it
+	 * exactly once, whatever the number of interpreters or threads.
+	 */
+	private static void init() {
+<span class="fc" id="L429">		Types.INT.ctor = new Builtin(&quot;int&quot;, (in, a) -&gt; toInt(in, a), (in, a, kw) -&gt; {</span>
+			// int(text, base=8)
+<span class="fc" id="L431">			noKw(&quot;int&quot;, kw, &quot;base&quot;);</span>
+<span class="pc bpc" id="L432" title="1 of 2 branches missed.">			if (kw.containsKey(&quot;base&quot;) == false)</span>
+<span class="nc" id="L433">				return toInt(in, a);</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">			if (a.length == 0)</span>
+<span class="fc" id="L435">				throw PyOps.err(Types.TYPE_ERROR, &quot;int() missing string argument&quot;);</span>
+<span class="fc" id="L436">			count(&quot;int&quot;, a, 1, 1);</span>
+<span class="fc" id="L437">			return toInt(in, new Object[] { a[0], kw.get(&quot;base&quot;) });</span>
+		});
+<span class="fc" id="L439">		Types.FLOAT.ctor = new Builtin(&quot;float&quot;, (in, a) -&gt; toFloat(in, a));</span>
+<span class="fc" id="L440">		Types.STR.ctor = new Builtin(&quot;str&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L441">			count(&quot;str&quot;, a, 0, 1);</span>
+<span class="pc bpc" id="L442" title="1 of 2 branches missed.">			return a.length == 0 ? &quot;&quot; : in.made(PyOps.str(a[0]));</span>
+		});
+<span class="fc" id="L444">		Types.BOOL.ctor = new Builtin(&quot;bool&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L445">			count(&quot;bool&quot;, a, 0, 1);</span>
+<span class="fc bfc" id="L446" title="All 4 branches covered.">			return Boolean.valueOf(a.length == 1 &amp;&amp; PyOps.isTrue(a[0]));</span>
+		});
+<span class="fc" id="L448">		Types.LIST.ctor = new Builtin(&quot;list&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L449">			count(&quot;list&quot;, a, 0, 1);</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">			return a.length == 0 ? new PyList() : new PyList(items(in, a[0]));</span>
+		});
+<span class="fc" id="L452">		Types.TUPLE.ctor = new Builtin(&quot;tuple&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L453">			count(&quot;tuple&quot;, a, 0, 1);</span>
+<span class="fc bfc" id="L454" title="All 2 branches covered.">			if (a.length == 0)</span>
+<span class="fc" id="L455">				return PyTuple.EMPTY;</span>
+<span class="fc bfc" id="L456" title="All 2 branches covered.">			if (a[0] instanceof PyTuple)</span>
+<span class="fc" id="L457">				return a[0];</span>
+<span class="fc" id="L458">			return new PyTuple(items(in, a[0]).toArray());</span>
+		});
+<span class="fc" id="L460">		Types.DICT.ctor = new Builtin(&quot;dict&quot;, (in, a) -&gt; makeDict(in, a, null), (in, a, kw) -&gt; makeDict(in, a, kw));</span>
+<span class="fc" id="L461">		Types.SET.ctor = new Builtin(&quot;set&quot;, (in, a) -&gt; PySet.make(in, a));</span>
+<span class="fc" id="L462">		Types.RANGE.ctor = new Builtin(&quot;range&quot;, (in, a) -&gt; makeRange(a));</span>
+<span class="fc" id="L463">		Types.OBJECT.ctor = new Builtin(&quot;object&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L464">			count(&quot;object&quot;, a, 0, 0);</span>
+<span class="fc" id="L465">			return new PyInstance(Types.OBJECT);</span>
+		});
+<span class="fc bfc" id="L467" title="All 2 branches covered.">		for (final PyType t : Types.ALL) {</span>
+<span class="fc bfc" id="L468" title="All 2 branches covered.">			if (t.exception)</span>
+<span class="fc" id="L469">				t.ctor = new Builtin(t.name, (in, a) -&gt; new PyException(t, a));</span>
+		}
+
+<span class="fc" id="L472">		fnKw(&quot;print&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L473">			printTo(in, a, &quot; &quot;, &quot;\n&quot;);</span>
+<span class="fc" id="L474">			return PyNone.NONE;</span>
+		}, (in, a, kw) -&gt; {
+<span class="fc" id="L476">			noKw(&quot;print&quot;, kw, &quot;sep&quot;, &quot;end&quot;, &quot;flush&quot;);</span>
+<span class="fc bfc" id="L477" title="All 2 branches covered.">			Object sep = kw.containsKey(&quot;sep&quot;) ? kw.get(&quot;sep&quot;) : PyNone.NONE;</span>
+<span class="fc bfc" id="L478" title="All 2 branches covered.">			Object end = kw.containsKey(&quot;end&quot;) ? kw.get(&quot;end&quot;) : PyNone.NONE;</span>
+<span class="pc bpc" id="L479" title="1 of 4 branches missed.">			if (sep != PyNone.NONE &amp;&amp; PyStr.is(sep) == false)</span>
+<span class="nc" id="L480">				throw PyOps.err(Types.TYPE_ERROR, &quot;sep must be None or a string, not &quot; + PyOps.typeName(sep));</span>
+<span class="pc bpc" id="L481" title="1 of 4 branches missed.">			if (end != PyNone.NONE &amp;&amp; PyStr.is(end) == false)</span>
+<span class="nc" id="L482">				throw PyOps.err(Types.TYPE_ERROR, &quot;end must be None or a string, not &quot; + PyOps.typeName(end));</span>
+<span class="fc bfc" id="L483" title="All 2 branches covered.">			printTo(in, a, sep == PyNone.NONE ? &quot; &quot; : PyStr.text(sep),</span>
+<span class="fc bfc" id="L484" title="All 2 branches covered.">					end == PyNone.NONE ? &quot;\n&quot; : PyStr.text(end));</span>
+<span class="fc" id="L485">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L487">		fn(&quot;len&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L488">			count(&quot;len&quot;, a, 1, 1);</span>
+<span class="fc" id="L489">			return Integer.valueOf(PyOps.len(a[0]));</span>
+		});
+<span class="fc" id="L491">		fn(&quot;repr&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L492">			count(&quot;repr&quot;, a, 1, 1);</span>
+<span class="fc" id="L493">			return in.made(PyOps.repr(a[0]));</span>
+		});
+<span class="fc" id="L495">		fn(&quot;format&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L496">			count(&quot;format&quot;, a, 1, 2);</span>
+<span class="fc bfc" id="L497" title="All 4 branches covered.">			if (a.length &gt; 1 &amp;&amp; PyStr.is(a[1]) == false)</span>
+<span class="fc" id="L498">				throw PyOps.err(Types.TYPE_ERROR, &quot;format() argument 2 must be str, not &quot;</span>
+<span class="fc bfc" id="L499" title="All 2 branches covered.">						+ (a[1] == PyNone.NONE ? &quot;None&quot; : PyOps.typeName(a[1])));</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">			return in.made(Fmt.format(a[0], a.length &gt; 1 ? PyStr.text(a[1]) : &quot;&quot;));</span>
+		});
+<span class="fc" id="L502">		fn(&quot;abs&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L503">			count(&quot;abs&quot;, a, 1, 1);</span>
+<span class="fc" id="L504">			Object x = a[0];</span>
+<span class="fc bfc" id="L505" title="All 2 branches covered.">			if (x instanceof Double)</span>
+<span class="fc" id="L506">				return Double.valueOf(Math.abs(((Double) x).doubleValue()));</span>
+<span class="fc bfc" id="L507" title="All 2 branches covered.">			if (PyOps.isIntLike(x)) {</span>
+<span class="fc" id="L508">				return PyInt.abs(PyOps.asInt(x));</span>
+			}
+<span class="fc" id="L510">			throw PyOps.err(Types.TYPE_ERROR, &quot;bad operand type for abs(): '&quot; + PyOps.typeName(x) + &quot;'&quot;);</span>
+		});
+<span class="fc" id="L512">		fnKw(&quot;min&quot;, (in, a) -&gt; minmax(in, &quot;min&quot;, a, null, false), (in, a, kw) -&gt; minmax(in, &quot;min&quot;, a, kw, false));</span>
+<span class="fc" id="L513">		fnKw(&quot;max&quot;, (in, a) -&gt; minmax(in, &quot;max&quot;, a, null, true), (in, a, kw) -&gt; minmax(in, &quot;max&quot;, a, kw, true));</span>
+<span class="pc" id="L514">		fnKw(&quot;sum&quot;, (in, a) -&gt; sum(in, a, null), (in, a, kw) -&gt; sum(in, a, kw));</span>
+<span class="fc" id="L515">		fnKw(&quot;sorted&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L516">			count(&quot;sorted&quot;, a, 1, 1);</span>
+<span class="fc" id="L517">			ArrayList&lt;Object&gt; l = items(in, a[0]);</span>
+<span class="fc" id="L518">			PyOps.sortList(l, in, PyNone.NONE, false);</span>
+<span class="fc" id="L519">			return new PyList(l);</span>
+		}, (in, a, kw) -&gt; {
+<span class="fc" id="L521">			count(&quot;sorted&quot;, a, 1, 1);</span>
+<span class="fc" id="L522">			noKw(&quot;sorted&quot;, kw, &quot;key&quot;, &quot;reverse&quot;);</span>
+<span class="fc" id="L523">			ArrayList&lt;Object&gt; l = items(in, a[0]);</span>
+<span class="fc bfc" id="L524" title="All 2 branches covered.">			PyOps.sortList(l, in, kw.containsKey(&quot;key&quot;) ? kw.get(&quot;key&quot;) : PyNone.NONE,</span>
+<span class="pc bpc" id="L525" title="1 of 4 branches missed.">					kw.containsKey(&quot;reverse&quot;) &amp;&amp; PyOps.isTrue(kw.get(&quot;reverse&quot;)));</span>
+<span class="fc" id="L526">			return new PyList(l);</span>
+		});
+<span class="fc" id="L528">		fn(&quot;reversed&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L529">			count(&quot;reversed&quot;, a, 1, 1);</span>
+<span class="fc bfc" id="L530" title="All 12 branches covered.">			if (a[0] instanceof PyTuple || a[0] instanceof PyList || PyStr.is(a[0]) || a[0] instanceof PyRange</span>
+					|| a[0] instanceof PyDict || a[0] instanceof PyView) {
+<span class="fc" id="L532">				ArrayList&lt;Object&gt; l = items(in, a[0]);</span>
+<span class="fc" id="L533">				java.util.Collections.reverse(l);</span>
+<span class="fc" id="L534">				return new PyList(l);</span>
+			}
+<span class="fc" id="L536">			throw PyOps.err(Types.TYPE_ERROR, &quot;'&quot; + PyOps.typeName(a[0]) + &quot;' object is not reversible&quot;);</span>
+		});
+<span class="fc" id="L538">		fnKw(&quot;enumerate&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L539">			count(&quot;enumerate&quot;, a, 1, 2);</span>
+<span class="fc bfc" id="L540" title="All 2 branches covered.">			return enumerate(in, new Object[] { a[0] }, a.length &gt; 1 ? PyOps.asIndex(a[1]) : 0);</span>
+		}, (in, a, kw) -&gt; {
+<span class="nc" id="L542">			noKw(&quot;enumerate&quot;, kw, &quot;start&quot;);</span>
+<span class="nc" id="L543">			count(&quot;enumerate&quot;, a, 1, 2);</span>
+<span class="nc bnc" id="L544" title="All 4 branches missed.">			Object s = a.length &gt; 1 ? a[1] : kw.containsKey(&quot;start&quot;) ? kw.get(&quot;start&quot;) : Integer.valueOf(0);</span>
+<span class="nc" id="L545">			return enumerate(in, new Object[] { a[0] }, PyOps.asIndex(s));</span>
+		});
+<span class="fc" id="L547">		fn(&quot;zip&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L548">			PyIter[] its = new PyIter[a.length];</span>
+<span class="fc bfc" id="L549" title="All 2 branches covered.">			for (int i = 0; i &lt; a.length; i++)</span>
+<span class="fc" id="L550">				its[i] = PyOps.getIter(a[i]);</span>
+<span class="fc" id="L551">			PyList out = new PyList();</span>
+<span class="fc bfc" id="L552" title="All 2 branches covered.">			if (a.length == 0)</span>
+<span class="fc" id="L553">				return out;</span>
+			outer: while (true) {
+<span class="fc" id="L555">				in.tick();</span>
+<span class="fc" id="L556">				Object[] row = new Object[a.length];</span>
+<span class="fc bfc" id="L557" title="All 2 branches covered.">				for (int i = 0; i &lt; a.length; i++) {</span>
+<span class="fc" id="L558">					row[i] = its[i].next();</span>
+<span class="fc bfc" id="L559" title="All 2 branches covered.">					if (row[i] == null)</span>
+<span class="fc" id="L560">						break outer;</span>
+				}
+<span class="fc" id="L562">				PyOps.checkList(out.items.size() + 1L);</span>
+<span class="fc" id="L563">				Memory.checkBuilt(out.items.size() * (Memory.OBJECT + Memory.SLOT * (row.length + 1L)));</span>
+<span class="fc" id="L564">				in.allocated(Memory.OBJECT + Memory.SLOT * (row.length + 1L));</span>
+<span class="fc" id="L565">				out.items.add(new PyTuple(row));</span>
+<span class="fc" id="L566">			}</span>
+<span class="fc" id="L567">			return out;</span>
+		});
+<span class="fc" id="L569">		fn(&quot;map&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L570">			count(&quot;map&quot;, a, 2, Integer.MAX_VALUE);</span>
+<span class="fc" id="L571">			PyIter[] its = new PyIter[a.length - 1];</span>
+<span class="fc bfc" id="L572" title="All 2 branches covered.">			for (int i = 1; i &lt; a.length; i++)</span>
+<span class="fc" id="L573">				its[i - 1] = PyOps.getIter(a[i]);</span>
+<span class="fc" id="L574">			PyList out = new PyList();</span>
+			outer: while (true) {
+<span class="fc" id="L576">				in.tick();</span>
+<span class="fc" id="L577">				Object[] args = new Object[its.length];</span>
+<span class="fc bfc" id="L578" title="All 2 branches covered.">				for (int i = 0; i &lt; its.length; i++) {</span>
+<span class="fc" id="L579">					args[i] = its[i].next();</span>
+<span class="fc bfc" id="L580" title="All 2 branches covered.">					if (args[i] == null)</span>
+<span class="fc" id="L581">						break outer;</span>
+				}
+<span class="fc" id="L583">				PyOps.checkList(out.items.size() + 1L);</span>
+<span class="fc" id="L584">				in.allocated(Memory.SLOT);</span>
+<span class="fc" id="L585">				out.items.add(in.callGeneric(a[0], args, 0, args.length, null, null));</span>
+<span class="fc" id="L586">			}</span>
+<span class="fc" id="L587">			return out;</span>
+		});
+<span class="fc" id="L589">		fn(&quot;filter&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L590">			count(&quot;filter&quot;, a, 2, 2);</span>
+<span class="fc" id="L591">			PyIter it = PyOps.getIter(a[1]);</span>
+<span class="fc" id="L592">			PyList out = new PyList();</span>
+<span class="fc bfc" id="L593" title="All 2 branches covered.">			for (Object x = it.next(); x != null; x = it.next()) {</span>
+<span class="fc" id="L594">				in.tick();</span>
+<span class="fc bfc" id="L595" title="All 2 branches covered.">				boolean keep = a[0] == PyNone.NONE ? PyOps.isTrue(x) : PyOps.isTrue(in.call(a[0], x));</span>
+<span class="fc bfc" id="L596" title="All 2 branches covered.">				if (keep) {</span>
+<span class="fc" id="L597">					PyOps.checkList(out.items.size() + 1L);</span>
+<span class="fc" id="L598">					in.allocated(Memory.SLOT);</span>
+<span class="fc" id="L599">					out.items.add(x);</span>
+				}
+			}
+<span class="fc" id="L602">			return out;</span>
+		});
+<span class="fc" id="L604">		fn(&quot;any&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L605">			count(&quot;any&quot;, a, 1, 1);</span>
+<span class="fc" id="L606">			PyIter it = PyOps.getIter(a[0]);</span>
+<span class="fc bfc" id="L607" title="All 2 branches covered.">			for (Object x = it.next(); x != null; x = it.next()) {</span>
+<span class="fc" id="L608">				in.tick();</span>
+<span class="fc bfc" id="L609" title="All 2 branches covered.">				if (PyOps.isTrue(x))</span>
+<span class="fc" id="L610">					return Boolean.TRUE;</span>
+			}
+<span class="fc" id="L612">			return Boolean.FALSE;</span>
+		});
+<span class="fc" id="L614">		fn(&quot;all&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L615">			count(&quot;all&quot;, a, 1, 1);</span>
+<span class="fc" id="L616">			PyIter it = PyOps.getIter(a[0]);</span>
+<span class="fc bfc" id="L617" title="All 2 branches covered.">			for (Object x = it.next(); x != null; x = it.next()) {</span>
+<span class="fc" id="L618">				in.tick();</span>
+<span class="fc bfc" id="L619" title="All 2 branches covered.">				if (!PyOps.isTrue(x))</span>
+<span class="fc" id="L620">					return Boolean.FALSE;</span>
+			}
+<span class="fc" id="L622">			return Boolean.TRUE;</span>
+		});
+<span class="fc" id="L624">		fn(&quot;isinstance&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L625">			count(&quot;isinstance&quot;, a, 2, 2);</span>
+<span class="fc" id="L626">			return Boolean.valueOf(isInstance(a[0], a[1]));</span>
+		});
+<span class="fc" id="L628">		fn(&quot;issubclass&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L629">			count(&quot;issubclass&quot;, a, 2, 2);</span>
+<span class="fc" id="L630">			return Boolean.valueOf(isSubclass(a[0], a[1]));</span>
+		});
+<span class="fc" id="L632">		fn(&quot;hasattr&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L633">			count(&quot;hasattr&quot;, a, 2, 2);</span>
+<span class="fc bfc" id="L634" title="All 2 branches covered.">			return Boolean.valueOf(attrOrNull(a[0], attrName(a[1])) != null);</span>
+		});
+<span class="fc" id="L636">		fn(&quot;getattr&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L637">			count(&quot;getattr&quot;, a, 2, 3);</span>
+<span class="fc" id="L638">			final String name = attrName(a[1]);</span>
+<span class="fc bfc" id="L639" title="All 2 branches covered.">			if (a.length == 2)</span>
+<span class="fc" id="L640">				return PyOps.getattr(a[0], name);</span>
+<span class="fc" id="L641">			final Object v = attrOrNull(a[0], name);</span>
+<span class="fc bfc" id="L642" title="All 2 branches covered.">			return v != null ? v : a[2];</span>
+		});
+<span class="fc" id="L644">		fn(&quot;setattr&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L645">			count(&quot;setattr&quot;, a, 3, 3);</span>
+<span class="fc" id="L646">			in.allocated(Memory.ATTR);</span>
+<span class="fc" id="L647">			PyOps.setattr(a[0], attrName(a[1]), a[2]);</span>
+<span class="fc" id="L648">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L650">		fn(&quot;delattr&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L651">			count(&quot;delattr&quot;, a, 2, 2);</span>
+<span class="fc" id="L652">			PyOps.delattr(a[0], attrName(a[1]));</span>
+<span class="fc" id="L653">			return PyNone.NONE;</span>
+		});
+<span class="fc" id="L655">		Types.TYPE.ctor = new Builtin(&quot;type&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L656">			count(&quot;type&quot;, a, 1, 1);</span>
+<span class="fc" id="L657">			return PyOps.typeOf(a[0]);</span>
+		});
+<span class="fc" id="L659">		fn(&quot;round&quot;, (in, a) -&gt; round(a));</span>
+<span class="fc" id="L660">		fn(&quot;divmod&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L661">			count(&quot;divmod&quot;, a, 2, 2);</span>
+<span class="fc" id="L662">			return divmod(a[0], a[1]);</span>
+		});
+<span class="fc" id="L664">		fn(&quot;pow&quot;, (in, a) -&gt; pow(a));</span>
+<span class="fc" id="L665">		fn(&quot;ord&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L666">			count(&quot;ord&quot;, a, 1, 1);</span>
+<span class="fc bfc" id="L667" title="All 2 branches covered.">			if (PyStr.is(a[0]) == false)</span>
+<span class="fc" id="L668">				throw PyOps.err(Types.TYPE_ERROR, &quot;ord() expected string of length 1, but &quot; + PyOps.typeName(a[0]) + &quot; found&quot;);</span>
+<span class="fc" id="L669">			PyStr s = PyStr.from(a[0]);</span>
+<span class="fc bfc" id="L670" title="All 2 branches covered.">			if (s.length() != 1)</span>
+<span class="fc" id="L671">				throw PyOps.err(Types.TYPE_ERROR,</span>
+<span class="fc" id="L672">						&quot;ord() expected a character, but string of length &quot; + s.length() + &quot; found&quot;);</span>
+<span class="fc" id="L673">			return Integer.valueOf(PyStr.cpAt(s.s, 0));</span>
+		});
+<span class="fc" id="L675">		fn(&quot;chr&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L676">			count(&quot;chr&quot;, a, 1, 1);</span>
+<span class="fc" id="L677">			int v = PyOps.asIndex(a[0]);</span>
+<span class="fc bfc" id="L678" title="All 4 branches covered.">			if (v &lt; 0 || v &gt; 0x10ffff)</span>
+<span class="fc" id="L679">				throw PyOps.err(Types.VALUE_ERROR, &quot;chr() arg not in range(0x110000)&quot;);</span>
+<span class="fc" id="L680">			return PyStr.ofCp(v);</span>
+		});
+<span class="fc" id="L682">		fn(&quot;hex&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L683">			count(&quot;hex&quot;, a, 1, 1);</span>
+<span class="fc" id="L684">			return radix(a[0], 16, &quot;0x&quot;, &quot;hex&quot;);</span>
+		});
+<span class="fc" id="L686">		fn(&quot;oct&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L687">			count(&quot;oct&quot;, a, 1, 1);</span>
+<span class="fc" id="L688">			return radix(a[0], 8, &quot;0o&quot;, &quot;oct&quot;);</span>
+		});
+<span class="fc" id="L690">		fn(&quot;bin&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L691">			count(&quot;bin&quot;, a, 1, 1);</span>
+<span class="fc" id="L692">			return radix(a[0], 2, &quot;0b&quot;, &quot;bin&quot;);</span>
+		});
+<span class="fc" id="L694">		fn(&quot;callable&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L695">			count(&quot;callable&quot;, a, 1, 1);</span>
+<span class="fc" id="L696">			return Boolean.valueOf(Interp.isCallable(a[0]));</span>
+		});
+<span class="fc" id="L698">	}</span>
+
+	private static void printTo(Interp in, Object[] a, String sep, String end) {
+<span class="fc" id="L701">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L702" title="All 2 branches covered.">		for (int i = 0; i &lt; a.length; i++) {</span>
+<span class="fc bfc" id="L703" title="All 2 branches covered.">			if (i &gt; 0)</span>
+<span class="fc" id="L704">				sb.append(sep);</span>
+<span class="fc" id="L705">			sb.append(PyOps.str(a[i]));</span>
+<span class="fc" id="L706">			PyOps.checkString(sb.length());</span>
+		}
+<span class="fc" id="L708">		sb.append(end);</span>
+<span class="fc" id="L709">		in.work(sb.length());</span>
+<span class="fc" id="L710">		in.write(sb.toString());</span>
+<span class="fc" id="L711">	}</span>
+
+	private static Object enumerate(Interp in, Object[] a, int start) {
+<span class="fc" id="L714">		count(&quot;enumerate&quot;, a, 1, 1);</span>
+<span class="fc" id="L715">		PyIter it = PyOps.getIter(a[0]);</span>
+<span class="fc" id="L716">		PyList out = new PyList();</span>
+<span class="fc" id="L717">		long i = start;</span>
+<span class="fc bfc" id="L718" title="All 2 branches covered.">		for (Object x = it.next(); x != null; x = it.next()) {</span>
+<span class="fc" id="L719">			in.tick();</span>
+<span class="fc" id="L720">			PyOps.checkList(out.items.size() + 1L);</span>
+<span class="fc" id="L721">			Memory.checkBuilt(out.items.size() * (Memory.OBJECT + Memory.SLOT * 3L));</span>
+<span class="fc" id="L722">			in.allocated(Memory.OBJECT + Memory.SLOT * 3);</span>
+<span class="fc" id="L723">			out.items.add(new PyTuple(new Object[] { PyInt.box(i++), x }));</span>
+		}
+<span class="fc" id="L725">		return out;</span>
+	}
+
+	private static Object sum(Interp in, Object[] a, Map&lt;String, Object&gt; kw) {
+<span class="pc bpc" id="L729" title="1 of 2 branches missed.">		if (kw != null)</span>
+<span class="nc" id="L730">			noKw(&quot;sum&quot;, kw, &quot;start&quot;);</span>
+<span class="fc" id="L731">		count(&quot;sum&quot;, a, 1, 2);</span>
+<span class="pc bpc" id="L732" title="3 of 6 branches missed.">		Object acc = a.length &gt; 1 ? a[1] : kw != null &amp;&amp; kw.containsKey(&quot;start&quot;) ? kw.get(&quot;start&quot;) : Integer.valueOf(0);</span>
+<span class="fc bfc" id="L733" title="All 2 branches covered.">		if (PyStr.is(acc))</span>
+<span class="fc" id="L734">			throw PyOps.err(Types.TYPE_ERROR, &quot;sum() can't sum strings [use ''.join(seq) instead]&quot;);</span>
+<span class="fc" id="L735">		PyIter it = PyOps.getIter(a[0]);</span>
+<span class="fc bfc" id="L736" title="All 2 branches covered.">		for (Object x = it.next(); x != null; x = it.next()) {</span>
+<span class="fc" id="L737">			in.tick();</span>
+<span class="fc" id="L738">			acc = PyOps.binary(Op.BIN_ADD, acc, x);</span>
+<span class="fc bfc" id="L739" title="All 4 branches covered.">			if (!(acc instanceof Integer || acc instanceof Double))</span>
+<span class="fc" id="L740">				in.made(acc); // sum(lists, [])</span>
+		}
+<span class="fc" id="L742">		return acc;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

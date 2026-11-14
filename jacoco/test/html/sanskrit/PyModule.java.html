@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyModule.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyModule.java</span></div><h1>PyModule.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/** A builtin module such as math. */
+public final class PyModule {
+	final String name;
+<span class="fc" id="L11">	final Map&lt;String, Object&gt; members = new HashMap&lt;String, Object&gt;();</span>
+
+<span class="fc" id="L13">	public PyModule(String name) {</span>
+<span class="fc" id="L14">		this.name = name;</span>
+<span class="fc" id="L15">	}</span>
+
+	/** Adds a function written in Java, callable as {@code name.fn(...)} from Python. */
+	public PyModule put(String fn, Builtin.Fn body) {
+<span class="fc" id="L19">		members.put(fn, new Builtin(fn, Builtin.forHost(body)));</span>
+<span class="fc" id="L20">		return this;</span>
+	}
+
+	/** Adds a constant string, readable as {@code name.constant}. */
+	public PyModule putString(String constant, String value) {
+<span class="fc" id="L25">		members.put(constant, PyStr.of(value));</span>
+<span class="fc" id="L26">		return this;</span>
+	}
+
+	/** Adds a constant {@code dict} of strings, in the order of the map. */
+	public PyModule putStringMap(String constant, Map&lt;String, String&gt; values) {
+<span class="fc" id="L31">		members.put(constant, stringDict(values));</span>
+<span class="fc" id="L32">		return this;</span>
+	}
+
+	/** A new {@code dict} of strings, in the order of the map: the value a function returns. */
+	public static Object stringDict(Map&lt;String, String&gt; values) {
+<span class="fc" id="L37">		final PyDict dict = new PyDict();</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		for (Map.Entry&lt;String, String&gt; entry : values.entrySet())</span>
+<span class="fc" id="L39">			dict.put(entry.getKey(), PyStr.of(entry.getValue()));</span>
+<span class="fc" id="L40">		return dict;</span>
+	}
+
+	/**
+	 * Adds a constant built from plain Java values: a {@code Map} with String keys
+	 * becomes a {@code dict} (in the order of the map), a {@code List} a
+	 * {@code list}, a {@code String} a {@code str}. Nothing else is accepted: no Java
+	 * object is ever exposed to a script.
+	 */
+	public PyModule putPlain(String constant, Object value) {
+<span class="fc" id="L50">		members.put(constant, plain(value));</span>
+<span class="fc" id="L51">		return this;</span>
+	}
+
+	private static Object plain(Object value) {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (PyStr.is(value))</span>
+<span class="fc" id="L56">			return value;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (value instanceof Map) {</span>
+<span class="fc" id="L58">			final PyDict dict = new PyDict();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">			for (Map.Entry&lt;?, ?&gt; entry : ((Map&lt;?, ?&gt;) value).entrySet()) {</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">				if (entry.getKey() instanceof String == false)</span>
+<span class="nc" id="L61">					throw new IllegalArgumentException(&quot;dict keys must be strings&quot;);</span>
+<span class="fc" id="L62">				dict.put(entry.getKey(), plain(entry.getValue()));</span>
+<span class="fc" id="L63">			}</span>
+<span class="fc" id="L64">			return dict;</span>
+		}
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (value instanceof List) {</span>
+<span class="fc" id="L67">			final ArrayList&lt;Object&gt; items = new ArrayList&lt;Object&gt;();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">			for (Object item : (List&lt;?&gt;) value)</span>
+<span class="fc" id="L69">				items.add(plain(item));</span>
+<span class="fc" id="L70">			return new PyList(items);</span>
+		}
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		throw new IllegalArgumentException(&quot;unsupported value: &quot; + (value == null ? &quot;null&quot; : value.getClass()));</span>
+	}
+
+	/** The member called {@code fn} (a function, for instance), or null. */
+	public Object get(String fn) {
+<span class="fc" id="L77">		return members.get(fn);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

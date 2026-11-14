@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PythonChunks.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.tim</a> &gt; <span class="el_source">PythonChunks.java</span></div><h1>PythonChunks.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.tim;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import net.sourceforge.plantuml.text.PythonLine;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.text.TLineType;
+
+/**
+ * Groups the Python lines of a diagram into chunks, before the legacy
+ * preprocessor looks at them (one single pass afterwards).
+ * &lt;ul&gt;
+ * &lt;li&gt;A &lt;code&gt;!python&lt;/code&gt; ... &lt;code&gt;!endpy&lt;/code&gt; block is taken as it is:
+ * the legacy preprocessor is not applied inside, so &lt;code&gt;'&lt;/code&gt; is a Python
+ * string delimiter, not a PlantUML comment.&lt;/li&gt;
+ * &lt;li&gt;A run of consecutive &lt;code&gt;!&lt;/code&gt; lines of type
+ * {@link TLineType#PYTHON} is one chunk; the &lt;code&gt;!&lt;/code&gt; is a one-column
+ * gutter.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * A chunk is one {@link StringLocated} whose text is
+ * {@link TLineType#PYTHON_MARKER} followed by the Python code.
+ */
+public final class PythonChunks {
+
+<span class="fc" id="L62">	private static final Pattern START = Pattern.compile(&quot;^\\s*!python\\s*$&quot;);</span>
+<span class="fc" id="L63">	private static final Pattern END = Pattern.compile(&quot;^\\s*!endpy\\s*$&quot;);</span>
+
+	private PythonChunks() {
+	}
+
+	/**
+	 * Replaces the Python lines of a body by chunks. It is idempotent: it runs
+	 * again on the body of a legacy function or procedure when this one is
+	 * executed, and a chunk it already built is kept as it is, never merged
+	 * with its neighbours.
+	 * &lt;p&gt;
+	 * &lt;code&gt;sources&lt;/code&gt; receives, for each chunk, the line of the diagram
+	 * that every line of its code comes from, to report an error on the right
+	 * line.
+	 */
+	public static List&lt;StringLocated&gt; collapse(List&lt;StringLocated&gt; body, Map&lt;StringLocated, List&lt;StringLocated&gt;&gt; sources) {
+		// Fast path: a diagram without Python pays nothing.
+<span class="fc" id="L80">		boolean found = false;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		for (StringLocated sl : body)</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			if (sl.containsExclamationMark()) {</span>
+<span class="fc" id="L83">				found = true;</span>
+<span class="fc" id="L84">				break;</span>
+			}
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (found == false)</span>
+<span class="fc" id="L87">			return body;</span>
+
+<span class="fc" id="L89">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L90">		int i = 0;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		while (i &lt; body.size()) {</span>
+<span class="fc" id="L92">			final StringLocated first = body.get(i);</span>
+<span class="fc" id="L93">			final String s = first.getString();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">			if (START.matcher(s).matches()) {</span>
+<span class="fc" id="L95">				final StringBuilder code = new StringBuilder();</span>
+<span class="fc" id="L96">				final List&lt;StringLocated&gt; lines = new ArrayList&lt;&gt;();</span>
+				// an indented &quot;!python&quot; indents its block: that indentation is removed from each line
+<span class="fc" id="L98">				final int indent = leadingSpaces(s);</span>
+<span class="fc" id="L99">				i++;</span>
+<span class="fc bfc" id="L100" title="All 4 branches covered.">				while (i &lt; body.size() &amp;&amp; END.matcher(body.get(i).getString()).matches() == false) {</span>
+<span class="fc" id="L101">					code.append(removeIndent(body.get(i).getString(), indent)).append('\n');</span>
+<span class="fc" id="L102">					lines.add(body.get(i));</span>
+<span class="fc" id="L103">					i++;</span>
+				}
+<span class="fc bfc" id="L105" title="All 2 branches covered.">				if (i &gt;= body.size()) {</span>
+<span class="fc" id="L106">					result.add(error(first, &quot;!python without !endpy&quot;, sources));</span>
+				} else {
+<span class="fc" id="L108">					i++; // skips !endpy</span>
+<span class="fc" id="L109">					result.add(chunk(first, code, lines, sources));</span>
+				}
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			} else if (END.matcher(s).matches()) {</span>
+<span class="fc" id="L112">				result.add(error(first, &quot;!endpy without !python&quot;, sources));</span>
+<span class="fc" id="L113">				i++;</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">			} else if (isGutterLine(first)) {</span>
+<span class="fc" id="L115">				final StringBuilder code = new StringBuilder();</span>
+<span class="fc" id="L116">				final List&lt;StringLocated&gt; lines = new ArrayList&lt;&gt;();</span>
+				// the lines that opened a block (they end with a colon)
+<span class="fc" id="L118">				final List&lt;Header&gt; headers = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">				while (i &lt; body.size()) {</span>
+<span class="fc" id="L120">					final StringLocated sl = body.get(i);</span>
+<span class="fc bfc" id="L121" title="All 4 branches covered.">					if (isGutterLine(sl) || isIndentedGutterLine(sl)) {</span>
+<span class="fc" id="L122">						final String python = gutter(sl.getString());</span>
+<span class="fc" id="L123">						code.append(python).append('\n');</span>
+<span class="fc" id="L124">						lines.add(sl);</span>
+<span class="fc" id="L125">						trackHeaders(headers, python);</span>
+<span class="fc" id="L126">						i++;</span>
+<span class="fc" id="L127">						continue;</span>
+					}
+<span class="fc bfc" id="L129" title="All 2 branches covered.">					if (headers.isEmpty())</span>
+<span class="fc" id="L130">						break;</span>
+					// A text line deeper than the open block belongs to it (blank lines are ignored).
+<span class="fc" id="L132">					int j = i;</span>
+<span class="pc bpc" id="L133" title="1 of 4 branches missed.">					while (j &lt; body.size() &amp;&amp; body.get(j).getString().trim().length() == 0)</span>
+<span class="fc" id="L134">						j++;</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">					if (j &gt;= body.size())</span>
+<span class="nc" id="L136">						break;</span>
+<span class="fc" id="L137">					final String text = body.get(j).getString();</span>
+					// The gutter takes one column: a text line is Python code indented by one column less.
+<span class="fc" id="L139">					final int indent = leadingSpaces(text) - 1;</span>
+<span class="pc bpc" id="L140" title="1 of 4 branches missed.">					if (text.charAt(0) == '\t' &amp;&amp; isBangLine(text) == false) {</span>
+						// tabs are not allowed in the indentation: the Python lexer reports it
+<span class="fc" id="L142">						code.append('\t').append(textToPython(text.trim())).append('\n');</span>
+<span class="fc" id="L143">						lines.add(body.get(j));</span>
+<span class="fc" id="L144">						i = j + 1;</span>
+<span class="fc" id="L145">						continue;</span>
+					}
+<span class="fc bfc" id="L147" title="All 4 branches covered.">					while (headers.isEmpty() == false &amp;&amp; headers.get(headers.size() - 1).indent &gt;= indent)</span>
+<span class="fc" id="L148">						headers.remove(headers.size() - 1);</span>
+<span class="pc bpc" id="L149" title="1 of 4 branches missed.">					if (headers.isEmpty() || isBangLine(text))</span>
+<span class="nc" id="L150">						break;</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">					if (body.get(j).getType() != TLineType.COMMENT_SIMPLE) {</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">						for (int k = 0; k &lt; indent; k++)</span>
+<span class="fc" id="L153">							code.append(' ');</span>
+						// directly in the body of a class, a text line would emit when the class is defined
+<span class="fc bfc" id="L155" title="All 2 branches covered.">						if (headers.get(headers.size() - 1).isClass)</span>
+<span class="fc" id="L156">							code.append(&quot;puml._text_in_class()\n&quot;);</span>
+						else
+<span class="fc" id="L158">							code.append(textToPython(text.trim())).append('\n');</span>
+<span class="fc" id="L159">						lines.add(body.get(j));</span>
+					}
+<span class="fc" id="L161">					i = j + 1;</span>
+<span class="fc" id="L162">				}</span>
+<span class="fc" id="L163">				result.add(chunk(first, code, lines, sources));</span>
+<span class="fc" id="L164">			} else {</span>
+<span class="fc" id="L165">				result.add(first);</span>
+<span class="fc" id="L166">				i++;</span>
+			}
+<span class="fc" id="L168">		}</span>
+<span class="fc" id="L169">		return result;</span>
+	}
+
+	/** Removes up to &lt;code&gt;indent&lt;/code&gt; leading spaces: the indentation of the &quot;!python&quot; line. */
+	private static String removeIndent(String line, int indent) {
+<span class="fc" id="L174">		int n = 0;</span>
+<span class="pc bpc" id="L175" title="2 of 6 branches missed.">		while (n &lt; indent &amp;&amp; n &lt; line.length() &amp;&amp; line.charAt(n) == ' ')</span>
+<span class="fc" id="L176">			n++;</span>
+<span class="fc" id="L177">		return line.substring(n);</span>
+	}
+
+	/**
+	 * A chunk that only reports an error on its line, when it runs: a misplaced
+	 * &lt;code&gt;!python&lt;/code&gt; or &lt;code&gt;!endpy&lt;/code&gt;. The message is given as it is,
+	 * like &lt;code&gt;puml.error&lt;/code&gt;.
+	 */
+	private static StringLocated error(StringLocated at, String message,
+			Map&lt;StringLocated, List&lt;StringLocated&gt;&gt; sources) {
+<span class="fc" id="L187">		final List&lt;StringLocated&gt; lines = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L188">		lines.add(at);</span>
+<span class="fc" id="L189">		return chunk(at, new StringBuilder(&quot;puml.error(\&quot;&quot; + message + &quot;\&quot;)\n&quot;), lines, sources);</span>
+	}
+
+	/** A line that opened a block: its indentation, and whether it is a class statement. */
+	private static final class Header {
+		final int indent;
+		final boolean isClass;
+
+<span class="fc" id="L197">		Header(int indent, boolean isClass) {</span>
+<span class="fc" id="L198">			this.indent = indent;</span>
+<span class="fc" id="L199">			this.isClass = isClass;</span>
+<span class="fc" id="L200">		}</span>
+	}
+
+	/** Remembers the blocks opened so far: a line that ends with a colon opens one. */
+	private static void trackHeaders(List&lt;Header&gt; headers, String python) {
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">		if (python.trim().length() == 0)</span>
+<span class="nc" id="L206">			return;</span>
+<span class="fc" id="L207">		final int indent = leadingSpaces(python);</span>
+<span class="fc bfc" id="L208" title="All 4 branches covered.">		while (headers.isEmpty() == false &amp;&amp; headers.get(headers.size() - 1).indent &gt;= indent)</span>
+<span class="fc" id="L209">			headers.remove(headers.size() - 1);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (python.trim().endsWith(&quot;:&quot;))</span>
+<span class="fc" id="L211">			headers.add(new Header(indent, python.trim().startsWith(&quot;class &quot;)));</span>
+<span class="fc" id="L212">	}</span>
+
+	private static int leadingSpaces(String s) {
+<span class="fc" id="L215">		int n = 0;</span>
+<span class="pc bpc" id="L216" title="1 of 6 branches missed.">		while (n &lt; s.length() &amp;&amp; (s.charAt(n) == ' ' || s.charAt(n) == '\t'))</span>
+<span class="fc" id="L217">			n++;</span>
+<span class="fc" id="L218">		return n;</span>
+	}
+
+	/** Opens an interpolation in a text line: &lt;code&gt;!{expr}&lt;/code&gt;. */
+	static final String OPEN = &quot;!{&quot;;
+
+	/** Gives a literal &lt;code&gt;!{&lt;/code&gt; in a text line. */
+	static final String ESCAPE = &quot;!!{&quot;;
+
+	/**
+	 * A PlantUML text line inside a Python block, as the Python statement that
+	 * emits it: &lt;code&gt;A -&amp;gt; !{b}&lt;/code&gt; becomes
+	 * &lt;code&gt;puml._text(&quot;A -&amp;gt; &quot; + str(b))&lt;/code&gt;. &lt;code&gt;!!{&lt;/code&gt; gives a literal
+	 * &lt;code&gt;!{&lt;/code&gt;, as in a text line outside a block. &lt;code&gt;puml._text&lt;/code&gt;
+	 * expands the macros of the line, then emits it.
+	 */
+	static String textToPython(String text) {
+		// &quot;!!text&quot; is the text &quot;!text&quot;, as outside a block
+<span class="fc" id="L236">		text = PythonLine.unescapeBang(text);</span>
+<span class="fc" id="L237">		final StringBuilder sb = new StringBuilder(&quot;puml._text(\&quot;\&quot;&quot;);</span>
+<span class="fc" id="L238">		final StringBuilder literal = new StringBuilder();</span>
+<span class="fc" id="L239">		int i = 0;</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		while (i &lt; text.length()) {</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">			if (text.startsWith(ESCAPE, i)) {</span>
+<span class="fc" id="L242">				literal.append(OPEN);</span>
+<span class="fc" id="L243">				i += ESCAPE.length();</span>
+<span class="fc" id="L244">				continue;</span>
+			}
+<span class="fc bfc" id="L246" title="All 2 branches covered.">			final int close = text.startsWith(OPEN, i) ? closingBrace(text, i + 2) : -1;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">			if (close == -1) {</span>
+<span class="fc" id="L248">				literal.append(text.charAt(i));</span>
+<span class="fc" id="L249">				i++;</span>
+<span class="fc" id="L250">				continue;</span>
+			}
+<span class="fc" id="L252">			appendLiteral(sb, literal);</span>
+<span class="fc" id="L253">			sb.append(&quot; + &quot;).append(interpolationCode(text.substring(i + 2, close)));</span>
+<span class="fc" id="L254">			i = close + 1;</span>
+<span class="fc" id="L255">		}</span>
+<span class="fc" id="L256">		appendLiteral(sb, literal);</span>
+<span class="fc" id="L257">		return sb.append(')').toString();</span>
+	}
+
+	private static void appendLiteral(StringBuilder sb, StringBuilder literal) {
+<span class="fc bfc" id="L261" title="All 2 branches covered.">		if (literal.length() == 0)</span>
+<span class="fc" id="L262">			return;</span>
+<span class="fc" id="L263">		sb.append(&quot; + \&quot;&quot;);</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		for (int i = 0; i &lt; literal.length(); i++) {</span>
+<span class="fc" id="L265">			final char ch = literal.charAt(i);</span>
+<span class="pc bpc" id="L266" title="1 of 4 branches missed.">			if (ch == '\\' || ch == '&quot;')</span>
+<span class="fc" id="L267">				sb.append('\\');</span>
+<span class="fc" id="L268">			sb.append(ch);</span>
+		}
+<span class="fc" id="L270">		sb.append('&quot;');</span>
+<span class="fc" id="L271">		literal.setLength(0);</span>
+<span class="fc" id="L272">	}</span>
+
+	/**
+	 * The Python expression that gives the text of an interpolation, read as a
+	 * field of an f-string: &lt;code&gt;expr&lt;/code&gt;, &lt;code&gt;expr!r&lt;/code&gt;,
+	 * &lt;code&gt;expr!s&lt;/code&gt;, &lt;code&gt;expr:spec&lt;/code&gt; or &lt;code&gt;expr!r:spec&lt;/code&gt;.
+	 * The conversion and the colon are found at the top level only, outside
+	 * brackets and strings (&lt;code&gt;l[1:2]&lt;/code&gt;, &lt;code&gt;d[&quot;a:b&quot;]&lt;/code&gt; and
+	 * &lt;code&gt;a != b&lt;/code&gt; are expressions), as in CPython, where a lambda must
+	 * be parenthesized for the same reason. Nested format specs
+	 * (&lt;code&gt;x:{width}&lt;/code&gt;) are not supported. A mistake gives a call of
+	 * &lt;code&gt;puml.error&lt;/code&gt;, reported on the line when it runs.
+	 */
+	static String interpolationCode(String inside) {
+<span class="fc" id="L286">		int depth = 0;</span>
+<span class="fc" id="L287">		char quote = 0;</span>
+<span class="fc" id="L288">		int end = inside.length();</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">		for (int i = 0; i &lt; inside.length(); i++) {</span>
+<span class="fc" id="L290">			final char ch = inside.charAt(i);</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">			if (quote != 0) {</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">				if (ch == '\\')</span>
+<span class="fc" id="L293">					i++;</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">				else if (ch == quote)</span>
+<span class="fc" id="L295">					quote = 0;</span>
+<span class="fc bfc" id="L296" title="All 4 branches covered.">			} else if (ch == '&quot;' || ch == '\'') {</span>
+<span class="fc" id="L297">				quote = ch;</span>
+<span class="fc bfc" id="L298" title="All 6 branches covered.">			} else if (ch == '(' || ch == '[' || ch == '{') {</span>
+<span class="fc" id="L299">				depth++;</span>
+<span class="fc bfc" id="L300" title="All 6 branches covered.">			} else if (ch == ')' || ch == ']' || ch == '}') {</span>
+<span class="fc" id="L301">				depth--;</span>
+<span class="fc bfc" id="L302" title="All 8 branches covered.">			} else if (depth == 0 &amp;&amp; (ch == ':' || (ch == '!' &amp;&amp; isNotEqualOperator(inside, i) == false))) {</span>
+<span class="fc" id="L303">				end = i;</span>
+<span class="fc" id="L304">				break;</span>
+			}
+		}
+<span class="fc" id="L307">		final String expression = inside.substring(0, end);</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">		if (expression.trim().isEmpty())</span>
+<span class="fc" id="L309">			return interpolationError(&quot;empty expression in !{}&quot;);</span>
+<span class="fc" id="L310">		char conversion = 0;</span>
+<span class="fc" id="L311">		String spec = null;</span>
+<span class="fc" id="L312">		String rest = inside.substring(end);</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">		if (rest.startsWith(&quot;!&quot;)) {</span>
+<span class="pc bpc" id="L314" title="1 of 6 branches missed.">			if (rest.length() &lt; 2 || (rest.charAt(1) != 'r' &amp;&amp; rest.charAt(1) != 's'))</span>
+<span class="fc" id="L315">				return interpolationError(&quot;invalid conversion in !{&quot; + inside + &quot;}: use !r or !s&quot;);</span>
+<span class="fc" id="L316">			conversion = rest.charAt(1);</span>
+<span class="fc" id="L317">			rest = rest.substring(2);</span>
+<span class="pc bpc" id="L318" title="1 of 4 branches missed.">			if (rest.isEmpty() == false &amp;&amp; rest.startsWith(&quot;:&quot;) == false)</span>
+<span class="nc" id="L319">				return interpolationError(&quot;invalid conversion in !{&quot; + inside + &quot;}: use !r or !s&quot;);</span>
+		}
+<span class="fc bfc" id="L321" title="All 2 branches covered.">		if (rest.startsWith(&quot;:&quot;)) {</span>
+<span class="fc" id="L322">			spec = rest.substring(1);</span>
+<span class="pc bpc" id="L323" title="1 of 4 branches missed.">			if (spec.indexOf('{') != -1 || spec.indexOf('}') != -1)</span>
+<span class="fc" id="L324">				return interpolationError(&quot;nested format specs are not supported in !{&quot; + inside + &quot;}&quot;);</span>
+		}
+<span class="fc" id="L326">		String value = &quot;(&quot; + expression + &quot;)&quot;;</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">		if (conversion == 'r')</span>
+<span class="fc" id="L328">			value = &quot;repr(&quot; + value + &quot;)&quot;;</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">		else if (conversion == 's')</span>
+<span class="fc" id="L330">			value = &quot;str(&quot; + value + &quot;)&quot;;</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">		if (spec != null)</span>
+<span class="fc" id="L332">			return &quot;format(&quot; + value + &quot;, &quot; + pythonString(spec) + &quot;)&quot;;</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">		return conversion == 0 ? &quot;str(&quot; + value + &quot;)&quot; : value;</span>
+	}
+
+	private static boolean isNotEqualOperator(String s, int bang) {
+<span class="pc bpc" id="L337" title="1 of 4 branches missed.">		return bang + 1 &lt; s.length() &amp;&amp; s.charAt(bang + 1) == '=';</span>
+	}
+
+	private static String interpolationError(String message) {
+<span class="fc" id="L341">		return &quot;puml.error(&quot; + pythonString(message) + &quot;)&quot;;</span>
+	}
+
+	/** A Python string literal for a text. */
+	private static String pythonString(String text) {
+<span class="fc" id="L346">		final StringBuilder sb = new StringBuilder(&quot;\&quot;&quot;);</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length(); i++) {</span>
+<span class="fc" id="L348">			final char ch = text.charAt(i);</span>
+<span class="pc bpc" id="L349" title="2 of 4 branches missed.">			if (ch == '\\' || ch == '&quot;')</span>
+<span class="nc" id="L350">				sb.append('\\');</span>
+<span class="fc" id="L351">			sb.append(ch);</span>
+		}
+<span class="fc" id="L353">		return sb.append('&quot;').toString();</span>
+	}
+
+	/** Index of the &quot;}&quot; that closes a &quot;!{&quot;, ignoring braces inside Python strings, or -1. */
+	static int closingBrace(String s, int start) {
+<span class="fc" id="L358">		int depth = 0;</span>
+<span class="fc" id="L359">		char quote = 0;</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">		for (int i = start; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L361">			final char ch = s.charAt(i);</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">			if (quote != 0) {</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">				if (ch == '\\')</span>
+<span class="fc" id="L364">					i++;</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">				else if (ch == quote)</span>
+<span class="fc" id="L366">					quote = 0;</span>
+<span class="fc bfc" id="L367" title="All 4 branches covered.">			} else if (ch == '&quot;' || ch == '\'') {</span>
+<span class="fc" id="L368">				quote = ch;</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">			} else if (ch == '{') {</span>
+<span class="fc" id="L370">				depth++;</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">			} else if (ch == '}') {</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">				if (depth == 0)</span>
+<span class="fc" id="L373">					return i;</span>
+<span class="fc" id="L374">				depth--;</span>
+			}
+		}
+<span class="nc" id="L377">		return -1;</span>
+	}
+
+	/** A chunk built by {@link #collapse}: its text starts with {@link TLineType#PYTHON_MARKER}. */
+	private static boolean isChunk(StringLocated sl) {
+<span class="fc" id="L382">		return sl.getString().startsWith(TLineType.PYTHON_MARKER);</span>
+	}
+
+	/** A raw &quot;!&quot; line of type Python (a chunk is not one). */
+	private static boolean isGutterLine(StringLocated sl) {
+<span class="fc bfc" id="L387" title="All 4 branches covered.">		return isChunk(sl) == false &amp;&amp; sl.getType() == TLineType.PYTHON;</span>
+	}
+
+	/** &quot;!    return x&quot;: inside a run, an indented line after the gutter continues the block. */
+	private static boolean isIndentedGutterLine(StringLocated sl) {
+<span class="fc" id="L392">		final String s = sl.getString();</span>
+<span class="pc bpc" id="L393" title="1 of 8 branches missed.">		if (isChunk(sl) || s.length() &lt; 2 || s.charAt(0) != '!' || s.charAt(1) != ' ')</span>
+<span class="fc" id="L394">			return false;</span>
+<span class="pc bpc" id="L395" title="1 of 2 branches missed.">		return sl.getType() == TLineType.PLAIN;</span>
+	}
+
+	/**
+	 * A line whose first non-blank character is a &lt;code&gt;!&lt;/code&gt;: a Python line or
+	 * a directive, which ends the text lines of a block. A line that starts with
+	 * an interpolation, &lt;code&gt;!{expr}&lt;/code&gt;, or with the escape &lt;code&gt;!!&lt;/code&gt; is
+	 * a text line.
+	 */
+	private static boolean isBangLine(String text) {
+<span class="fc bfc" id="L405" title="All 4 branches covered.">		return text.trim().startsWith(&quot;!&quot;) &amp;&amp; PythonLine.startsWithInterpolation(text) == false</span>
+<span class="pc bpc" id="L406" title="1 of 2 branches missed.">				&amp;&amp; PythonLine.startsWithEscapedBang(text) == false;</span>
+	}
+
+	/** Removes the one-column gutter: the text after the first &lt;code&gt;!&lt;/code&gt;. */
+	private static String gutter(String s) {
+<span class="fc" id="L411">		return s.substring(s.indexOf('!') + 1);</span>
+	}
+
+	private static StringLocated chunk(StringLocated first, StringBuilder code, List&lt;StringLocated&gt; lines,
+			Map&lt;StringLocated, List&lt;StringLocated&gt;&gt; sources) {
+<span class="fc" id="L416">		final StringLocated chunk = new StringLocated(TLineType.PYTHON_MARKER + code, first.getLocation(),</span>
+<span class="fc" id="L417">				first.getPreprocessorError());</span>
+<span class="fc" id="L418">		sources.put(chunk, lines);</span>
+<span class="fc" id="L419">		return chunk;</span>
+	}
+
+	/** The Python code of a chunk. */
+	public static String code(StringLocated chunk) {
+<span class="fc" id="L424">		final String s = chunk.getString();</span>
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">		if (s.startsWith(TLineType.PYTHON_MARKER))</span>
+<span class="fc" id="L426">			return s.substring(TLineType.PYTHON_MARKER.length());</span>
+<span class="nc" id="L427">		return gutter(s) + &quot;\n&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

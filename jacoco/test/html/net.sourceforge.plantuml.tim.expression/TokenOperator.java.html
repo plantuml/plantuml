@@ -39,7 +39,7 @@ package net.sourceforge.plantuml.tim.expression;
 <span class="fc" id="L39">public enum TokenOperator {</span>
 <span class="fc" id="L40">	MULTIPLICATION(100 - 3, &quot;*&quot;) {</span>
 		public TValue operate(TValue v1, TValue v2) {
-<span class="nc" id="L42">			return v1.multiply(v2);</span>
+<span class="fc" id="L42">			return v1.multiply(v2);</span>
 		}
 	},
 <span class="fc" id="L45">	DIVISION(100 - 3, &quot;/&quot;) {</span>
@@ -107,9 +107,9 @@ package net.sourceforge.plantuml.tim.expression;
 <span class="fc" id="L107">	}</span>
 
 	public static TokenOperator getTokenOperator(char ch, char ch2) {
-<span class="pc bpc" id="L110" title="1 of 11 branches missed.">		switch (ch) {</span>
+<span class="fc bfc" id="L110" title="All 11 branches covered.">		switch (ch) {</span>
 		case '*':
-<span class="nc" id="L112">			return MULTIPLICATION;</span>
+<span class="fc" id="L112">			return MULTIPLICATION;</span>
 
 		case '/':
 <span class="fc" id="L115">			return DIVISION;</span>

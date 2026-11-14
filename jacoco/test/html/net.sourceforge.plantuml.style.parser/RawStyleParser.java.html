@@ -405,7 +405,7 @@ public final class RawStyleParser {
 	private void skipWhitespaceAndComments() {
 		while (true) {
 <span class="fc" id="L407">			final char c = ins.peek(0);</span>
-<span class="pc bpc" id="L408" title="2 of 8 branches missed.">			if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {</span>
+<span class="pc bpc" id="L408" title="1 of 8 branches missed.">			if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {</span>
 <span class="fc" id="L409">				jump();</span>
 <span class="fc bfc" id="L410" title="All 4 branches covered.">			} else if (c == '/' &amp;&amp; ins.peek(1) == '/') {</span>
 <span class="fc" id="L411">				skipUntil('\n');</span>

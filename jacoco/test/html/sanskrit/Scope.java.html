@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Scope.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">Scope.java</span></div><h1>Scope.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/** The names of one module, function, lambda, comprehension or class body, and how each is stored. */
+final class Scope {
+	static final int MODULE = 0;
+	static final int FUNCTION = 1;
+	static final int COMPREHENSION = 2;
+	/** A class body: compiled like a function that returns its locals; invisible to the functions nested in it. */
+	static final int CLASS = 3;
+
+	// symbol flags
+	static final int BOUND = 1;
+	static final int USED = 2;
+	static final int GLOBAL = 4;
+	static final int NONLOCAL = 8;
+	static final int PARAM = 16;
+	/** Set by the resolver: a local that an inner scope refers to. */
+	static final int CELL = 32;
+
+	// result of a lookup
+	static final int K_GLOBAL = 0;
+	static final int K_LOCAL = 1;
+	static final int K_CELL = 2;
+	static final int K_FREE = 3;
+
+	final int kind;
+	final String name;
+	final Scope parent;
+	final Node node;
+<span class="fc" id="L37">	final Map&lt;String, Integer&gt; symbols = new LinkedHashMap&lt;String, Integer&gt;();</span>
+	/** Parameter names in slot order: positional, keyword-only, *args, **kwargs. */
+<span class="fc" id="L39">	final List&lt;String&gt; params = new ArrayList&lt;String&gt;();</span>
+	int argcount;
+	int kwonlycount;
+	String varargs;
+	String kwargs;
+<span class="fc" id="L44">	final Set&lt;String&gt; freeNames = new LinkedHashSet&lt;String&gt;();</span>
+
+	// layout, filled by layout()
+<span class="fc" id="L47">	final Map&lt;String, Integer&gt; slots = new LinkedHashMap&lt;String, Integer&gt;();</span>
+	int firstFree;
+	int nslots;
+<span class="fc" id="L50">	final List&lt;String&gt; slotNames = new ArrayList&lt;String&gt;();</span>
+
+<span class="fc" id="L52">	Scope(int kind, String name, Scope parent, Node node) {</span>
+<span class="fc" id="L53">		this.kind = kind;</span>
+<span class="fc" id="L54">		this.name = name;</span>
+<span class="fc" id="L55">		this.parent = parent;</span>
+<span class="fc" id="L56">		this.node = node;</span>
+<span class="fc" id="L57">	}</span>
+
+	int flags(String n) {
+<span class="fc" id="L60">		Integer f = symbols.get(n);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		return f == null ? 0 : f.intValue();</span>
+	}
+
+	void addFlags(String n, int f) {
+<span class="fc" id="L65">		symbols.put(n, Integer.valueOf(flags(n) | f));</span>
+<span class="fc" id="L66">	}</span>
+
+	/** True if the name is a local variable of this scope. */
+	boolean isLocal(String n) {
+<span class="fc" id="L70">		int f = flags(n);</span>
+<span class="fc bfc" id="L71" title="All 4 branches covered.">		return (f &amp; (BOUND | PARAM)) != 0 &amp;&amp; (f &amp; (GLOBAL | NONLOCAL)) == 0;</span>
+	}
+
+	void layout() {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		for (String p : params) {</span>
+<span class="fc" id="L76">			slots.put(p, Integer.valueOf(slotNames.size()));</span>
+<span class="fc" id="L77">			slotNames.add(p);</span>
+<span class="fc" id="L78">		}</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (kind != MODULE) {</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			for (Map.Entry&lt;String, Integer&gt; e : symbols.entrySet()) {</span>
+<span class="fc" id="L81">				String n = e.getKey();</span>
+<span class="fc bfc" id="L82" title="All 4 branches covered.">				if (!slots.containsKey(n) &amp;&amp; isLocal(n)) {</span>
+<span class="fc" id="L83">					slots.put(n, Integer.valueOf(slotNames.size()));</span>
+<span class="fc" id="L84">					slotNames.add(n);</span>
+				}
+<span class="fc" id="L86">			}</span>
+		}
+<span class="fc" id="L88">		firstFree = slotNames.size();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (String n : freeNames) {</span>
+<span class="fc" id="L90">			slots.put(n, Integer.valueOf(slotNames.size()));</span>
+<span class="fc" id="L91">			slotNames.add(n);</span>
+<span class="fc" id="L92">		}</span>
+<span class="fc" id="L93">		nslots = slotNames.size();</span>
+<span class="fc" id="L94">	}</span>
+
+	int kindOf(String n) {
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (kind == MODULE)</span>
+<span class="fc" id="L98">			return K_GLOBAL;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (freeNames.contains(n))</span>
+<span class="fc" id="L100">			return K_FREE;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (isLocal(n))</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			return (flags(n) &amp; CELL) != 0 ? K_CELL : K_LOCAL;</span>
+<span class="fc" id="L103">		return K_GLOBAL;</span>
+	}
+
+	int slotOf(String n) {
+<span class="fc" id="L107">		return slots.get(n).intValue();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

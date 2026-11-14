@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeLib.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">TimeLib.java</span></div><h1>TimeLib.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+/**
+ * The time module: the functions of CPython's &lt;code&gt;time&lt;/code&gt; that a diagram
+ * can use, with the same names and the same results, in UTC and in English.
+ * &lt;p&gt;
+ * Everything is computed here, from the number of seconds since the epoch: no
+ * &lt;code&gt;java.time&lt;/code&gt;, no &lt;code&gt;SimpleDateFormat&lt;/code&gt;, no locale and no
+ * time zone database, so the result is the same on every edition and on every
+ * machine. The only thing that is not deterministic is the clock itself
+ * (&lt;code&gt;time()&lt;/code&gt;, and the functions called without argument).
+ * &lt;ul&gt;
+ * &lt;li&gt;&lt;code&gt;time()&lt;/code&gt;: seconds since the epoch, a float.&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;gmtime([secs])&lt;/code&gt;, &lt;code&gt;localtime([secs])&lt;/code&gt;: the 9-tuple
+ * (year, month, day, hour, minute, second, weekday with Monday 0, day of the
+ * year with January 1st 1, 0). &lt;code&gt;localtime&lt;/code&gt; is &lt;code&gt;gmtime&lt;/code&gt;:
+ * there is no local time zone (&lt;code&gt;timezone&lt;/code&gt; is 0 and
+ * &lt;code&gt;tzname&lt;/code&gt; is &lt;code&gt;(&quot;UTC&quot;, &quot;UTC&quot;)&lt;/code&gt;).&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;mktime(t)&lt;/code&gt;: the inverse, as if t were UTC; the fields out of
+ * range are carried over (month 13 is January of the next year).&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;strftime(fmt[, t])&lt;/code&gt;, &lt;code&gt;asctime([t])&lt;/code&gt;,
+ * &lt;code&gt;ctime([secs])&lt;/code&gt;: the formatting of the C locale, see
+ * {@link #format}.&lt;/li&gt;
+ * &lt;/ul&gt;
+ * Not provided: &lt;code&gt;strptime&lt;/code&gt;, &lt;code&gt;sleep&lt;/code&gt;,
+ * &lt;code&gt;monotonic&lt;/code&gt;, &lt;code&gt;perf_counter&lt;/code&gt;, &lt;code&gt;time_ns&lt;/code&gt;
+ * (64-bit integer), &lt;code&gt;struct_time&lt;/code&gt; (the tuples are plain tuples).
+ */
+final class TimeLib {
+	/** 9999-12-31 23:59:59: the largest timestamp accepted (and the year 1 for the smallest). */
+	private static final long MAX_SECONDS = 253402300799L;
+	private static final long MIN_SECONDS = -62135596800L;
+
+<span class="fc" id="L34">	private static final String[] DAYS = { &quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;,</span>
+			&quot;Sunday&quot; };
+<span class="fc" id="L36">	private static final String[] MONTHS = { &quot;January&quot;, &quot;February&quot;, &quot;March&quot;, &quot;April&quot;, &quot;May&quot;, &quot;June&quot;, &quot;July&quot;,</span>
+			&quot;August&quot;, &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot; };
+
+	private TimeLib() {
+	}
+
+	static PyModule create() {
+<span class="fc" id="L43">		final PyModule m = new PyModule(&quot;time&quot;);</span>
+<span class="fc" id="L44">		m.put(&quot;time&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L45">			count(&quot;time&quot;, a, 0, 0);</span>
+<span class="fc" id="L46">			return Double.valueOf(in.currentTimeMillis() / 1000.0);</span>
+		});
+<span class="fc" id="L48">		m.put(&quot;gmtime&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L49">			count(&quot;gmtime&quot;, a, 0, 1);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">			return tuple(fields(a.length == 0 ? now(in) : seconds(&quot;gmtime&quot;, a[0])));</span>
+		});
+<span class="fc" id="L52">		m.put(&quot;localtime&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L53">			count(&quot;localtime&quot;, a, 0, 1);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">			return tuple(fields(a.length == 0 ? now(in) : seconds(&quot;localtime&quot;, a[0])));</span>
+		});
+<span class="fc" id="L56">		m.put(&quot;mktime&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L57">			count(&quot;mktime&quot;, a, 1, 1);</span>
+<span class="fc" id="L58">			return Double.valueOf(mktime(items(&quot;mktime&quot;, a[0])));</span>
+		});
+<span class="fc" id="L60">		m.put(&quot;strftime&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L61">			count(&quot;strftime&quot;, a, 1, 2);</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">			if (PyStr.is(a[0]) == false)</span>
+<span class="nc" id="L63">				throw PyOps.err(Types.TYPE_ERROR, &quot;strftime() argument 1 must be str, not &quot; + PyOps.typeName(a[0]));</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">			final long[] t = a.length == 2 ? check(items(&quot;strftime&quot;, a[1])) : fields(now(in));</span>
+<span class="fc" id="L65">			in.work(PyOps.size(a[0]));</span>
+<span class="fc" id="L66">			return in.made(format(PyStr.text(a[0]), t));</span>
+		});
+<span class="fc" id="L68">		m.put(&quot;asctime&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L69">			count(&quot;asctime&quot;, a, 0, 1);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">			final long[] t = a.length == 1 ? check(items(&quot;asctime&quot;, a[0])) : fields(now(in));</span>
+<span class="fc" id="L71">			return format(&quot;%a %b %e %H:%M:%S %Y&quot;, t);</span>
+		});
+<span class="fc" id="L73">		m.put(&quot;ctime&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L74">			count(&quot;ctime&quot;, a, 0, 1);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			return format(&quot;%a %b %e %H:%M:%S %Y&quot;, fields(a.length == 0 ? now(in) : seconds(&quot;ctime&quot;, a[0])));</span>
+		});
+<span class="fc" id="L77">		m.members.put(&quot;timezone&quot;, Integer.valueOf(0));</span>
+<span class="fc" id="L78">		m.members.put(&quot;altzone&quot;, Integer.valueOf(0));</span>
+<span class="fc" id="L79">		m.members.put(&quot;daylight&quot;, Integer.valueOf(0));</span>
+<span class="fc" id="L80">		m.members.put(&quot;tzname&quot;, new PyTuple(new Object[] { &quot;UTC&quot;, &quot;UTC&quot; }));</span>
+<span class="fc" id="L81">		return m;</span>
+	}
+
+	// ------------------------------------------------------------ arguments
+
+	private static void count(String name, Object[] a, int min, int max) {
+<span class="pc bpc" id="L87" title="2 of 4 branches missed.">		if (a.length &lt; min || a.length &gt; max) {</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			final String expected = min == max ? &quot;exactly &quot; + min : &quot;at most &quot; + max;</span>
+<span class="nc" id="L89">			throw PyOps.err(Types.TYPE_ERROR,</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">					name + &quot;() takes &quot; + expected + &quot; argument&quot; + (max == 1 ? &quot;&quot; : &quot;s&quot;) + &quot; (&quot; + a.length + &quot; given)&quot;);</span>
+		}
+<span class="fc" id="L92">	}</span>
+
+	private static long now(Interp in) {
+<span class="fc" id="L95">		return Math.floorDiv(in.currentTimeMillis(), 1000L);</span>
+	}
+
+	/** An int or a float of seconds, as the whole seconds before it (CPython rounds towards minus infinity). */
+	private static long seconds(String name, Object o) {
+		final long secs;
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (o instanceof Integer)</span>
+<span class="fc" id="L102">			secs = ((Integer) o).longValue();</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		else if (o instanceof Double) {</span>
+<span class="fc" id="L104">			final double d = ((Double) o).doubleValue();</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">			if (d != d)</span>
+<span class="nc" id="L106">				throw PyOps.err(Types.VALUE_ERROR, &quot;Invalid value NaN (not a number)&quot;);</span>
+<span class="fc bfc" id="L107" title="All 4 branches covered.">			if (d &gt;= MAX_SECONDS + 1.0 || d &lt; MIN_SECONDS)</span>
+<span class="fc" id="L108">				throw PyOps.err(Types.OVERFLOW, &quot;timestamp out of range for platform time_t&quot;);</span>
+<span class="fc" id="L109">			secs = (long) Math.floor(d);</span>
+<span class="fc" id="L110">		} else</span>
+<span class="nc" id="L111">			throw PyOps.err(Types.TYPE_ERROR,</span>
+<span class="nc" id="L112">					&quot;'&quot; + PyOps.typeName(o) + &quot;' object cannot be interpreted as an integer&quot;);</span>
+<span class="pc bpc" id="L113" title="2 of 4 branches missed.">		if (secs &gt; MAX_SECONDS || secs &lt; MIN_SECONDS)</span>
+<span class="nc" id="L114">			throw PyOps.err(Types.OVERFLOW, &quot;timestamp out of range for platform time_t&quot;);</span>
+<span class="fc" id="L115">		return secs;</span>
+	}
+
+	/** The 9 integers of a time tuple. */
+	private static long[] items(String name, Object o) {
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (o instanceof PyTuple == false)</span>
+<span class="fc" id="L121">			throw PyOps.err(Types.TYPE_ERROR, &quot;Tuple or struct_time argument required&quot;);</span>
+<span class="fc" id="L122">		final Object[] items = ((PyTuple) o).items;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (items.length != 9)</span>
+<span class="fc" id="L124">			throw PyOps.err(Types.TYPE_ERROR, name + &quot;(): illegal time tuple argument&quot;);</span>
+<span class="fc" id="L125">		final long[] t = new long[9];</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		for (int i = 0; i &lt; 9; i++) {</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">			if (items[i] instanceof Integer == false)</span>
+<span class="nc" id="L128">				throw PyOps.err(Types.TYPE_ERROR, &quot;'&quot; + PyOps.typeName(items[i]) + &quot;' object cannot be interpreted as an integer&quot;);</span>
+<span class="fc" id="L129">			t[i] = ((Integer) items[i]).longValue();</span>
+		}
+<span class="fc" id="L131">		return t;</span>
+	}
+
+	private static PyTuple tuple(long[] t) {
+<span class="fc" id="L135">		final Object[] items = new Object[9];</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (int i = 0; i &lt; 9; i++)</span>
+<span class="fc" id="L137">			items[i] = Integer.valueOf((int) t[i]);</span>
+<span class="fc" id="L138">		return new PyTuple(items);</span>
+	}
+
+	// ------------------------------------------------------------ calendar
+
+	/** Days since 1970-01-01 of a day of the proleptic Gregorian calendar (month 1 to 12). */
+	static long daysFromCivil(long y, int m, int d) {
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		y -= m &lt;= 2 ? 1 : 0;</span>
+<span class="fc" id="L146">		final long era = Math.floorDiv(y, 400L);</span>
+<span class="fc" id="L147">		final long yoe = y - era * 400;</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		final long doy = (153 * (m + (m &gt; 2 ? -3 : 9)) + 2) / 5 + d - 1;</span>
+<span class="fc" id="L149">		final long doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;</span>
+<span class="fc" id="L150">		return era * 146097 + doe - 719468;</span>
+	}
+
+	/** year, month (1 to 12), day of the month, of a number of days since 1970-01-01. */
+	static long[] civilFromDays(long z) {
+<span class="fc" id="L155">		z += 719468;</span>
+<span class="fc" id="L156">		final long era = Math.floorDiv(z, 146097L);</span>
+<span class="fc" id="L157">		final long doe = z - era * 146097;</span>
+<span class="fc" id="L158">		final long yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;</span>
+<span class="fc" id="L159">		final long doy = doe - (365 * yoe + yoe / 4 - yoe / 100);</span>
+<span class="fc" id="L160">		final long mp = (5 * doy + 2) / 153;</span>
+<span class="fc" id="L161">		final long d = doy - (153 * mp + 2) / 5 + 1;</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		final long m = mp &lt; 10 ? mp + 3 : mp - 9;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		final long y = yoe + era * 400 + (m &lt;= 2 ? 1 : 0);</span>
+<span class="fc" id="L164">		return new long[] { y, m, d };</span>
+	}
+
+	/** The 9 fields of a number of seconds since the epoch. */
+	static long[] fields(long secs) {
+<span class="fc" id="L169">		final long days = Math.floorDiv(secs, 86400L);</span>
+<span class="fc" id="L170">		final long rem = Math.floorMod(secs, 86400L);</span>
+<span class="fc" id="L171">		final long[] ymd = civilFromDays(days);</span>
+<span class="fc" id="L172">		final long wday = Math.floorMod(days + 3, 7L); // 1970-01-01 was a Thursday: Monday is 0</span>
+<span class="fc" id="L173">		final long yday = days - daysFromCivil(ymd[0], 1, 1) + 1;</span>
+<span class="fc" id="L174">		return new long[] { ymd[0], ymd[1], ymd[2], rem / 3600, rem % 3600 / 60, rem % 60, wday, yday, 0 };</span>
+	}
+
+	private static double mktime(long[] t) {
+		// the months are carried first, then everything else is plain arithmetic
+<span class="fc" id="L179">		final long months = t[0] * 12 + (t[1] - 1);</span>
+<span class="fc" id="L180">		final long year = Math.floorDiv(months, 12L);</span>
+<span class="fc" id="L181">		final int month = (int) Math.floorMod(months, 12L) + 1;</span>
+<span class="fc" id="L182">		final long days = daysFromCivil(year, month, 1) + (t[2] - 1);</span>
+<span class="fc" id="L183">		final long secs = days * 86400 + t[3] * 3600 + t[4] * 60 + t[5];</span>
+<span class="pc bpc" id="L184" title="2 of 4 branches missed.">		if (secs &gt; MAX_SECONDS || secs &lt; MIN_SECONDS)</span>
+<span class="nc" id="L185">			throw PyOps.err(Types.OVERFLOW, &quot;mktime argument out of range&quot;);</span>
+<span class="fc" id="L186">		return secs;</span>
+	}
+
+	// ------------------------------------------------------------ strftime
+
+	/** The checks CPython makes before it formats a tuple. */
+	private static long[] check(long[] t) {
+<span class="pc bpc" id="L193" title="1 of 4 branches missed.">		if (t[1] &lt; 1 || t[1] &gt; 12)</span>
+<span class="fc" id="L194">			throw PyOps.err(Types.VALUE_ERROR, &quot;month out of range&quot;);</span>
+<span class="pc bpc" id="L195" title="1 of 4 branches missed.">		if (t[2] &lt; 1 || t[2] &gt; 31)</span>
+<span class="fc" id="L196">			throw PyOps.err(Types.VALUE_ERROR, &quot;day of month out of range&quot;);</span>
+<span class="pc bpc" id="L197" title="1 of 4 branches missed.">		if (t[3] &lt; 0 || t[3] &gt; 23)</span>
+<span class="fc" id="L198">			throw PyOps.err(Types.VALUE_ERROR, &quot;hour out of range&quot;);</span>
+<span class="pc bpc" id="L199" title="1 of 4 branches missed.">		if (t[4] &lt; 0 || t[4] &gt; 59)</span>
+<span class="fc" id="L200">			throw PyOps.err(Types.VALUE_ERROR, &quot;minute out of range&quot;);</span>
+<span class="pc bpc" id="L201" title="1 of 4 branches missed.">		if (t[5] &lt; 0 || t[5] &gt; 61)</span>
+<span class="fc" id="L202">			throw PyOps.err(Types.VALUE_ERROR, &quot;seconds out of range&quot;);</span>
+<span class="pc bpc" id="L203" title="2 of 4 branches missed.">		if (t[6] &lt; 0 || t[6] &gt; 6)</span>
+<span class="nc" id="L204">			throw PyOps.err(Types.VALUE_ERROR, &quot;day of week out of range&quot;);</span>
+<span class="pc bpc" id="L205" title="2 of 4 branches missed.">		if (t[7] &lt; 1 || t[7] &gt; 366)</span>
+<span class="nc" id="L206">			throw PyOps.err(Types.VALUE_ERROR, &quot;day of year out of range&quot;);</span>
+<span class="fc" id="L207">		return t;</span>
+	}
+
+	/**
+	 * strftime of the C locale, on the fields of the tuple as they are (the weekday
+	 * and the day of the year are not recomputed, as in C). The directives are
+	 * those of C99: %a %A %b %B %c %C %d %D %e %F %g %G %h %H %I %j %m %M %n %p
+	 * %r %R %S %t %T %u %U %V %w %W %x %X %y %Y %z %Z %%; %Z is UTC and %z is
+	 * +0000. %Y is not padded (as glibc does). Another directive is a ValueError.
+	 */
+	static String format(String fmt, long[] t) {
+<span class="fc" id="L218">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		for (int i = 0; i &lt; fmt.length(); i++) {</span>
+<span class="fc" id="L220">			final char c = fmt.charAt(i);</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">			if (c != '%') {</span>
+<span class="fc" id="L222">				sb.append(c);</span>
+<span class="fc" id="L223">				continue;</span>
+			}
+<span class="fc bfc" id="L225" title="All 2 branches covered.">			if (++i &gt;= fmt.length())</span>
+<span class="fc" id="L226">				throw PyOps.err(Types.VALUE_ERROR, &quot;Invalid format string&quot;);</span>
+<span class="fc" id="L227">			directive(fmt.charAt(i), t, sb);</span>
+<span class="fc" id="L228">			PyOps.checkString(sb.length());</span>
+		}
+<span class="fc" id="L230">		return sb.toString();</span>
+	}
+
+	private static void directive(char d, long[] t, StringBuilder sb) {
+<span class="fc" id="L234">		final int wdaySun = (int) ((t[6] + 1) % 7); // Sunday is 0</span>
+<span class="fc" id="L235">		final long yday0 = t[7] - 1;</span>
+<span class="pc bpc" id="L236" title="2 of 36 branches missed.">		switch (d) {</span>
+		case 'a':
+<span class="fc" id="L238">			sb.append(DAYS[(int) t[6]], 0, 3);</span>
+<span class="fc" id="L239">			break;</span>
+		case 'A':
+<span class="fc" id="L241">			sb.append(DAYS[(int) t[6]]);</span>
+<span class="fc" id="L242">			break;</span>
+		case 'b':
+		case 'h':
+<span class="fc" id="L245">			sb.append(MONTHS[(int) t[1] - 1], 0, 3);</span>
+<span class="fc" id="L246">			break;</span>
+		case 'B':
+<span class="fc" id="L248">			sb.append(MONTHS[(int) t[1] - 1]);</span>
+<span class="fc" id="L249">			break;</span>
+		case 'c':
+<span class="fc" id="L251">			sb.append(format(&quot;%a %b %e %H:%M:%S %Y&quot;, t));</span>
+<span class="fc" id="L252">			break;</span>
+		case 'C':
+<span class="fc" id="L254">			pad(sb, Math.floorDiv(t[0], 100L), 2, '0');</span>
+<span class="fc" id="L255">			break;</span>
+		case 'd':
+<span class="fc" id="L257">			pad(sb, t[2], 2, '0');</span>
+<span class="fc" id="L258">			break;</span>
+		case 'D':
+<span class="fc" id="L260">			sb.append(format(&quot;%m/%d/%y&quot;, t));</span>
+<span class="fc" id="L261">			break;</span>
+		case 'e':
+<span class="fc" id="L263">			pad(sb, t[2], 2, ' ');</span>
+<span class="fc" id="L264">			break;</span>
+		case 'F':
+<span class="fc" id="L266">			sb.append(format(&quot;%Y-%m-%d&quot;, t));</span>
+<span class="fc" id="L267">			break;</span>
+		case 'g':
+<span class="fc" id="L269">			pad(sb, Math.floorMod(isoWeek(t)[0], 100L), 2, '0');</span>
+<span class="fc" id="L270">			break;</span>
+		case 'G':
+<span class="fc" id="L272">			sb.append(isoWeek(t)[0]);</span>
+<span class="fc" id="L273">			break;</span>
+		case 'H':
+<span class="fc" id="L275">			pad(sb, t[3], 2, '0');</span>
+<span class="fc" id="L276">			break;</span>
+		case 'I':
+<span class="fc bfc" id="L278" title="All 2 branches covered.">			pad(sb, t[3] % 12 == 0 ? 12 : t[3] % 12, 2, '0');</span>
+<span class="fc" id="L279">			break;</span>
+		case 'j':
+<span class="fc" id="L281">			pad(sb, t[7], 3, '0');</span>
+<span class="fc" id="L282">			break;</span>
+		case 'm':
+<span class="fc" id="L284">			pad(sb, t[1], 2, '0');</span>
+<span class="fc" id="L285">			break;</span>
+		case 'M':
+<span class="fc" id="L287">			pad(sb, t[4], 2, '0');</span>
+<span class="fc" id="L288">			break;</span>
+		case 'n':
+<span class="nc" id="L290">			sb.append('\n');</span>
+<span class="nc" id="L291">			break;</span>
+		case 'p':
+<span class="fc bfc" id="L293" title="All 2 branches covered.">			sb.append(t[3] &lt; 12 ? &quot;AM&quot; : &quot;PM&quot;);</span>
+<span class="fc" id="L294">			break;</span>
+		case 'r':
+<span class="fc" id="L296">			sb.append(format(&quot;%I:%M:%S %p&quot;, t));</span>
+<span class="fc" id="L297">			break;</span>
+		case 'R':
+<span class="fc" id="L299">			sb.append(format(&quot;%H:%M&quot;, t));</span>
+<span class="fc" id="L300">			break;</span>
+		case 'S':
+<span class="fc" id="L302">			pad(sb, t[5], 2, '0');</span>
+<span class="fc" id="L303">			break;</span>
+		case 't':
+<span class="nc" id="L305">			sb.append('\t');</span>
+<span class="nc" id="L306">			break;</span>
+		case 'T':
+		case 'X':
+<span class="fc" id="L309">			sb.append(format(&quot;%H:%M:%S&quot;, t));</span>
+<span class="fc" id="L310">			break;</span>
+		case 'u':
+<span class="fc" id="L312">			sb.append(t[6] + 1);</span>
+<span class="fc" id="L313">			break;</span>
+		case 'U':
+<span class="fc" id="L315">			pad(sb, (yday0 + 7 - wdaySun) / 7, 2, '0');</span>
+<span class="fc" id="L316">			break;</span>
+		case 'V':
+<span class="fc" id="L318">			pad(sb, isoWeek(t)[1], 2, '0');</span>
+<span class="fc" id="L319">			break;</span>
+		case 'w':
+<span class="fc" id="L321">			sb.append(wdaySun);</span>
+<span class="fc" id="L322">			break;</span>
+		case 'W':
+<span class="fc" id="L324">			pad(sb, (yday0 + 7 - (wdaySun + 6) % 7) / 7, 2, '0');</span>
+<span class="fc" id="L325">			break;</span>
+		case 'x':
+<span class="fc" id="L327">			sb.append(format(&quot;%m/%d/%y&quot;, t));</span>
+<span class="fc" id="L328">			break;</span>
+		case 'y':
+<span class="fc" id="L330">			pad(sb, Math.floorMod(t[0], 100L), 2, '0');</span>
+<span class="fc" id="L331">			break;</span>
+		case 'Y':
+<span class="fc" id="L333">			sb.append(t[0]);</span>
+<span class="fc" id="L334">			break;</span>
+		case 'z':
+<span class="fc" id="L336">			sb.append(&quot;+0000&quot;);</span>
+<span class="fc" id="L337">			break;</span>
+		case 'Z':
+<span class="fc" id="L339">			sb.append(&quot;UTC&quot;);</span>
+<span class="fc" id="L340">			break;</span>
+		case '%':
+<span class="fc" id="L342">			sb.append('%');</span>
+<span class="fc" id="L343">			break;</span>
+		default:
+<span class="fc" id="L345">			throw PyOps.err(Types.VALUE_ERROR, &quot;Invalid format directive %&quot; + d);</span>
+		}
+<span class="fc" id="L347">	}</span>
+
+	private static void pad(StringBuilder sb, long value, int width, char fill) {
+<span class="fc" id="L350">		final String s = Long.toString(value);</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">		for (int i = s.length(); i &lt; width; i++)</span>
+<span class="fc" id="L352">			sb.append(fill);</span>
+<span class="fc" id="L353">		sb.append(s);</span>
+<span class="fc" id="L354">	}</span>
+
+	/** The year and the number of the ISO 8601 week of the day. */
+	static long[] isoWeek(long[] t) {
+<span class="fc" id="L358">		final long year = t[0];</span>
+<span class="fc" id="L359">		long week = (t[7] - (t[6] + 1) + 10) / 7;</span>
+<span class="fc" id="L360">		long isoYear = year;</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">		if (week &lt; 1) {</span>
+<span class="fc" id="L362">			isoYear = year - 1;</span>
+<span class="fc" id="L363">			week = weeksInYear(isoYear);</span>
+<span class="fc bfc" id="L364" title="All 2 branches covered.">		} else if (week &gt; weeksInYear(year)) {</span>
+<span class="fc" id="L365">			isoYear = year + 1;</span>
+<span class="fc" id="L366">			week = 1;</span>
+		}
+<span class="fc" id="L368">		return new long[] { isoYear, week };</span>
+	}
+
+	private static long weeksInYear(long y) {
+<span class="pc bpc" id="L372" title="1 of 4 branches missed.">		return p(y) == 4 || p(y - 1) == 3 ? 53 : 52;</span>
+	}
+
+	private static long p(long y) {
+<span class="fc" id="L376">		return Math.floorMod(y + Math.floorDiv(y, 4L) - Math.floorDiv(y, 100L) + Math.floorDiv(y, 400L), 7L);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -215,8 +215,8 @@ public class BlocLines implements Iterable&lt;StringLocated&gt; {
 	public BlocLines removeEmptyLines() {
 <span class="fc" id="L216">		final List&lt;StringLocated&gt; copy = new ArrayList&lt;&gt;(lines);</span>
 <span class="fc bfc" id="L217" title="All 2 branches covered.">		for (final Iterator&lt;StringLocated&gt; it = copy.iterator(); it.hasNext();)</span>
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">			if (it.next().getString().length() == 0)</span>
-<span class="nc" id="L219">				it.remove();</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">			if (it.next().getString().length() == 0)</span>
+<span class="fc" id="L219">				it.remove();</span>
 
 <span class="fc" id="L221">		return new BlocLines(copy);</span>
 	}

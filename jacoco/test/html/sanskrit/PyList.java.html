@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyList.java</span></div><h1>PyList.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+
+/** A Python list. Not hashable; equality is {@link PyOps#eq}, not {@code equals}. */
+final class PyList {
+	final ArrayList&lt;Object&gt; items;
+
+<span class="fc" id="L9">	PyList() {</span>
+<span class="fc" id="L10">		items = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L11">	}</span>
+
+<span class="fc" id="L13">	PyList(ArrayList&lt;Object&gt; items) {</span>
+<span class="fc" id="L14">		this.items = items;</span>
+<span class="fc" id="L15">	}</span>
+
+<span class="nc" id="L17">	PyList(Object[] a) {</span>
+<span class="nc" id="L18">		items = new ArrayList&lt;Object&gt;(a.length);</span>
+<span class="nc bnc" id="L19" title="All 2 branches missed.">		for (Object o : a)</span>
+<span class="nc" id="L20">			items.add(o);</span>
+<span class="nc" id="L21">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

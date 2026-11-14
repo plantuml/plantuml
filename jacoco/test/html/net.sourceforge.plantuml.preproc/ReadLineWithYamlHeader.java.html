@@ -95,18 +95,34 @@ public class ReadLineWithYamlHeader implements ReadLine {
 <span class="fc" id="L95">		return MyCollections.unmodifiableMap(metadata);</span>
 	}
 
-	public static List&lt;StringLocated&gt; removeYamlHeader(List&lt;StringLocated&gt; input) {
-<span class="pc bpc" id="L99" title="2 of 4 branches missed.">		if (input.size() &gt; 1 &amp;&amp; isSeparator(input.get(1))) {</span>
-<span class="nc" id="L100">			final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L101">			result.add(input.get(0));</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">			for (int i = 2; i &lt; input.size(); i++)</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">				if (isSeparator(input.get(i))) {</span>
-<span class="nc" id="L104">					result.addAll(input.subList(i + 1, input.size()));</span>
-<span class="nc" id="L105">					return result;</span>
-				}
-		}
+	/**
+	 * The lines of the YAML header of a diagram (between the two &quot;---&quot; lines that
+	 * follow the @start line, separators excluded), or an empty list.
+	 */
+	public static List&lt;StringLocated&gt; getYamlHeader(List&lt;StringLocated&gt; input) {
+<span class="fc" id="L103">		final int end = yamlHeaderEnd(input);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (end == -1)</span>
+<span class="fc" id="L105">			return new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L106">		return new ArrayList&lt;&gt;(input.subList(2, end));</span>
+	}
 
-<span class="fc" id="L109">		return input;</span>
+	public static List&lt;StringLocated&gt; removeYamlHeader(List&lt;StringLocated&gt; input) {
+<span class="fc" id="L110">		final int end = yamlHeaderEnd(input);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (end == -1)</span>
+<span class="fc" id="L112">			return input;</span>
+<span class="fc" id="L113">		final List&lt;StringLocated&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L114">		result.add(input.get(0));</span>
+<span class="fc" id="L115">		result.addAll(input.subList(end + 1, input.size()));</span>
+<span class="fc" id="L116">		return result;</span>
+	}
+
+	/** The index of the closing &quot;---&quot; of the header that follows the first line, or -1. */
+	private static int yamlHeaderEnd(List&lt;StringLocated&gt; input) {
+<span class="pc bpc" id="L121" title="1 of 4 branches missed.">		if (input.size() &gt; 1 &amp;&amp; isSeparator(input.get(1)))</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">			for (int i = 2; i &lt; input.size(); i++)</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">				if (isSeparator(input.get(i)))</span>
+<span class="fc" id="L124">					return i;</span>
+<span class="fc" id="L125">		return -1;</span>
 	}
 
 }

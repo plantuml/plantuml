@@ -173,7 +173,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 	}
 
 	public ExtremityFactory getExtremityFactoryLegacy(HColor backgroundColor) {
-<span class="pc bpc" id="L176" title="13 of 23 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L176" title="12 of 23 branches missed.">		switch (this) {</span>
 		case PLUS:
 <span class="fc" id="L178">			return new ExtremityFactoryPlus(backgroundColor);</span>
 		case REDEFINES:
@@ -203,7 +203,7 @@ import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryTriangle;
 		case ARROW_AND_CIRCLE:
 <span class="nc" id="L204">			return new ExtremityFactoryArrowAndCircle(backgroundColor);</span>
 		case NOT_NAVIGABLE:
-<span class="nc" id="L206">			return new ExtremityFactoryNotNavigable();</span>
+<span class="fc" id="L206">			return new ExtremityFactoryNotNavigable();</span>
 		case AGGREGATION:
 <span class="fc" id="L208">			return new ExtremityFactoryDiamond(false);</span>
 		case COMPOSITION:

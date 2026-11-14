@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyError.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyError.java</span></div><h1>PyError.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/** A Python exception travelling through Java code. It carries no Java stack trace. */
+public final class PyError extends RuntimeException {
+	private static final long serialVersionUID = 1L;
+
+	final transient PyException exc;
+<span class="fc" id="L11">	private final List&lt;String&gt; frames = new ArrayList&lt;String&gt;();</span>
+
+	private String file;
+	private int line;
+
+	/**
+	 * True for the error of a bare raise, or of a handler that does not match: the frame it is in
+	 * already has its entry in the traceback, which must not get another one.
+	 */
+	boolean reraised;
+
+	/** An error that carries the exception, with the traceback the exception has if it was caught before. */
+	PyError(PyException exc) {
+<span class="fc" id="L24">		super(null, null, false, false);</span>
+<span class="fc" id="L25">		this.exc = exc;</span>
+<span class="fc" id="L26">		PyError before = exc.traceback;</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">		if (before != null) {</span>
+<span class="fc" id="L28">			frames.addAll(before.frames);</span>
+<span class="fc" id="L29">			file = before.file;</span>
+<span class="fc" id="L30">			line = before.line;</span>
+		}
+<span class="fc" id="L32">	}</span>
+
+	/** The error of a raise that continues the traceback of the exception without a new entry for the frame. */
+	static PyError reraise(PyException exc) {
+<span class="fc" id="L36">		PyError e = new PyError(exc);</span>
+<span class="fc" id="L37">		e.reraised = true;</span>
+<span class="fc" id="L38">		return e;</span>
+	}
+
+	/** The file name of the innermost Python frame (where the exception was raised), or null. */
+	public String getFile() {
+<span class="fc" id="L43">		return file;</span>
+	}
+
+	/** The line, in {@link #getFile()}, of the innermost Python frame; 0 if there is none. */
+	public int getLine() {
+<span class="fc" id="L48">		return line;</span>
+	}
+
+	void addFrame(String file, int line, String function) {
+<span class="fc bfc" id="L52" title="All 2 branches covered.">		if (frames.isEmpty()) {</span>
+			// frames are added from the innermost one outwards
+<span class="fc" id="L54">			this.file = file;</span>
+<span class="fc" id="L55">			this.line = line;</span>
+		}
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (frames.size() &lt; 50)</span>
+<span class="fc" id="L58">			frames.add(&quot;  File \&quot;&quot; + file + &quot;\&quot;, line &quot; + line + &quot;, in &quot; + function);</span>
+<span class="fc" id="L59">	}</span>
+
+	/**
+	 * The name of the exception class, as CPython's traceback prints it:
+	 * &quot;ValueError&quot;, &quot;MyError&quot; for a class of the diagram, &quot;palette.MyError&quot; for
+	 * a class of a module.
+	 */
+	public String typeName() {
+<span class="fc" id="L67">		return exc.type.reportName();</span>
+	}
+
+	/** The text of the exception, as str(e) gives it. */
+	public String text() {
+<span class="fc" id="L72">		return PyOps.excText(exc);</span>
+	}
+
+	@Override
+	public String getMessage() {
+<span class="fc" id="L77">		StringBuilder sb = new StringBuilder();</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (!frames.isEmpty()) {</span>
+<span class="fc" id="L79">			sb.append(&quot;Traceback (most recent call last):\n&quot;);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">			for (int i = frames.size() - 1; i &gt;= 0; i--)</span>
+<span class="fc" id="L81">				sb.append(frames.get(i)).append('\n');</span>
+		}
+<span class="fc" id="L83">		sb.append(typeName());</span>
+<span class="fc" id="L84">		String t = text();</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (!t.isEmpty())</span>
+<span class="fc" id="L86">			sb.append(&quot;: &quot;).append(t);</span>
+<span class="fc" id="L87">		return sb.toString();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

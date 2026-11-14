@@ -119,11 +119,11 @@ public class UPath extends AbstractShadowable implements Iterable&lt;USegment&gt
 	}
 
 	public UPath rotate(double theta) {
-<span class="nc" id="L122">		final UPath result = new UPath(comment, codeLine);</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		for (USegment seg : segments)</span>
-<span class="nc" id="L124">			result.addInternal(seg.rotate(theta));</span>
+<span class="fc" id="L122">		final UPath result = new UPath(comment, codeLine);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		for (USegment seg : segments)</span>
+<span class="fc" id="L124">			result.addInternal(seg.rotate(theta));</span>
 
-<span class="nc" id="L126">		return result;</span>
+<span class="fc" id="L126">		return result;</span>
 	}
 
 	public UPath affine(XAffineTransform transform, double angle, double scale) {

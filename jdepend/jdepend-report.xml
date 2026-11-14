@@ -17647,20 +17647,26 @@
 
         <Package name="net.sourceforge.plantuml.tim">
             <Stats>
-                <TotalClasses>40</TotalClasses>
-                <ConcreteClasses>36</ConcreteClasses>
-                <AbstractClasses>4</AbstractClasses>
+                <TotalClasses>44</TotalClasses>
+                <ConcreteClasses>38</ConcreteClasses>
+                <AbstractClasses>6</AbstractClasses>
                 <Ca>4</Ca>
                 <Ce>16</Ce>
-                <A>0.1</A>
+                <A>0.14</A>
                 <I>0.8</I>
-                <D>0.1</D>
+                <D>0.06</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
                 <Class sourceFile="ExecutionContexts.java">
                     net.sourceforge.plantuml.tim.ExecutionContexts
+                </Class>
+                <Class sourceFile="FunctionsSet.java">
+                    net.sourceforge.plantuml.tim.FunctionsSet$ReservedNames
+                </Class>
+                <Class sourceFile="PythonMacros.java">
+                    net.sourceforge.plantuml.tim.PythonMacros$LegacyNames
                 </Class>
                 <Class sourceFile="TFunction.java">
                     net.sourceforge.plantuml.tim.TFunction
@@ -17751,6 +17757,12 @@
                 </Class>
                 <Class sourceFile="ExecutionContextIf.java">
                     net.sourceforge.plantuml.tim.ExecutionContextIf
+                </Class>
+                <Class sourceFile="PythonChunks.java">
+                    net.sourceforge.plantuml.tim.PythonChunks$Header
+                </Class>
+                <Class sourceFile="PythonRunner.java">
+                    net.sourceforge.plantuml.tim.PythonRunner$EaterExceptionMessage
                 </Class>
                 <Class sourceFile="StandardFunctions.java">
                     net.sourceforge.plantuml.tim.StandardFunctions
@@ -19507,13 +19519,13 @@
 
             <ConcreteClasses>
                 <Class sourceFile="Monomorph.java">
-                    net.sourceforge.plantuml.yaml.parser.Monomorph
-                </Class>
-                <Class sourceFile="Monomorph.java">
                     net.sourceforge.plantuml.yaml.parser.Monomorph$1
                 </Class>
                 <Class sourceFile="MonomorphToJson.java">
                     net.sourceforge.plantuml.yaml.parser.MonomorphToJson
+                </Class>
+                <Class sourceFile="MonomorphToPlain.java">
+                    net.sourceforge.plantuml.yaml.parser.MonomorphToPlain
                 </Class>
                 <Class sourceFile="MonomorphType.java">
                     net.sourceforge.plantuml.yaml.parser.MonomorphType
@@ -19524,8 +19536,8 @@
                 <Class sourceFile="YamlLineType.java">
                     net.sourceforge.plantuml.yaml.parser.YamlLineType
                 </Class>
-                <Class sourceFile="YamlSyntaxException.java">
-                    net.sourceforge.plantuml.yaml.parser.YamlSyntaxException
+                <Class sourceFile="YamlParser.java">
+                    net.sourceforge.plantuml.yaml.parser.YamlParser$Lines
                 </Class>
             </ConcreteClasses>
 
@@ -20789,6 +20801,349 @@
 
         <Package name="org.xml.sax.helpers">
             <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="sanskrit">
+            <Stats>
+                <TotalClasses>105</TotalClasses>
+                <ConcreteClasses>92</ConcreteClasses>
+                <AbstractClasses>13</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>2</Ce>
+                <A>0.12</A>
+                <I>1</I>
+                <D>0.12</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$CompExpr
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$CtxExpr
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Expr
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$NameDeclaration
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Stmt
+                </Class>
+                <Class sourceFile="Builtin.java">
+                    sanskrit.Builtin$Fn
+                </Class>
+                <Class sourceFile="Builtin.java">
+                    sanskrit.Builtin$KwFn
+                </Class>
+                <Class sourceFile="Interp.java">
+                    sanskrit.Interp$Clock
+                </Class>
+                <Class sourceFile="Interp.java">
+                    sanskrit.Interp$Output
+                </Class>
+                <Class sourceFile="MathLib.java">
+                    sanskrit.MathLib$D1
+                </Class>
+                <Class sourceFile="MathLib.java">
+                    sanskrit.MathLib$D2
+                </Class>
+                <Class sourceFile="Node.java">
+                    sanskrit.Node
+                </Class>
+                <Class sourceFile="PyIter.java">
+                    sanskrit.PyIter
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Alias
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Arg
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Arguments
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Assert
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Assign
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Attribute
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$AugAssign
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$BinOp
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$BoolOp
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$BoolOperator
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Break
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Call
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$ClassDef
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$CmpOperator
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Compare
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Comprehension
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Constant
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Continue
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Ctx
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Delete
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$DictComp
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$DictExpr
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$ExceptHandler
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$ExprStmt
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$For
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$FormattedValue
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$FunctionDef
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$GeneratorExp
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Global
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$If
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$IfExp
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Import
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$ImportFrom
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$JoinedStr
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Keyword
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Lambda
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$ListComp
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$ListExpr
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Module
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Name
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Nonlocal
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Operator
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Pass
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Raise
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Return
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$SetComp
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$SetExpr
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Slice
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Starred
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Subscript
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$Try
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$TupleExpr
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$UnaryOp
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$UnaryOperator
+                </Class>
+                <Class sourceFile="Ast.java">
+                    sanskrit.Ast$While
+                </Class>
+                <Class sourceFile="BoundMethod.java">
+                    sanskrit.BoundMethod
+                </Class>
+                <Class sourceFile="Cell.java">
+                    sanskrit.Cell
+                </Class>
+                <Class sourceFile="CodeGen.java">
+                    sanskrit.CodeGen$1
+                </Class>
+                <Class sourceFile="CodeGen.java">
+                    sanskrit.CodeGen$Entry
+                </Class>
+                <Class sourceFile="CodeGen.java">
+                    sanskrit.CodeGen$Label
+                </Class>
+                <Class sourceFile="CodeGen.java">
+                    sanskrit.CodeGen$Loop
+                </Class>
+                <Class sourceFile="ExecutionLimitError.java">
+                    sanskrit.ExecutionLimitError
+                </Class>
+                <Class sourceFile="Fmt.java">
+                    sanskrit.Fmt$FieldNumbering
+                </Class>
+                <Class sourceFile="Fmt.java">
+                    sanskrit.Fmt$Spec
+                </Class>
+                <Class sourceFile="Interp.java">
+                    sanskrit.Interp$1
+                </Class>
+                <Class sourceFile="Memory.java">
+                    sanskrit.Memory
+                </Class>
+                <Class sourceFile="PyDict.java">
+                    sanskrit.PyDict$Entry
+                </Class>
+                <Class sourceFile="PyException.java">
+                    sanskrit.PyException
+                </Class>
+                <Class sourceFile="PyFunction.java">
+                    sanskrit.PyFunction
+                </Class>
+                <Class sourceFile="PyHashKey.java">
+                    sanskrit.PyHashKey
+                </Class>
+                <Class sourceFile="PyInstance.java">
+                    sanskrit.PyInstance
+                </Class>
+                <Class sourceFile="PyInt.java">
+                    sanskrit.PyInt
+                </Class>
+                <Class sourceFile="PyIter.java">
+                    sanskrit.PyIter$ArrayIter
+                </Class>
+                <Class sourceFile="PyIter.java">
+                    sanskrit.PyIter$DictIter
+                </Class>
+                <Class sourceFile="PyIter.java">
+                    sanskrit.PyIter$ListIter
+                </Class>
+                <Class sourceFile="PyIter.java">
+                    sanskrit.PyIter$RangeIter
+                </Class>
+                <Class sourceFile="PyIter.java">
+                    sanskrit.PyIter$StrIter
+                </Class>
+                <Class sourceFile="PyList.java">
+                    sanskrit.PyList
+                </Class>
+                <Class sourceFile="PyNone.java">
+                    sanskrit.PyNone
+                </Class>
+                <Class sourceFile="PyNotImplemented.java">
+                    sanskrit.PyNotImplemented
+                </Class>
+                <Class sourceFile="PyRange.java">
+                    sanskrit.PyRange
+                </Class>
+                <Class sourceFile="PySet.java">
+                    sanskrit.PySet$SetIter
+                </Class>
+                <Class sourceFile="PySlice.java">
+                    sanskrit.PySlice
+                </Class>
+                <Class sourceFile="PyStr.java">
+                    sanskrit.PyStr
+                </Class>
+                <Class sourceFile="PyTuple.java">
+                    sanskrit.PyTuple
+                </Class>
+                <Class sourceFile="PyView.java">
+                    sanskrit.PyView
+                </Class>
+                <Class sourceFile="PyView.java">
+                    sanskrit.PyView$1
+                </Class>
+                <Class sourceFile="Scope.java">
+                    sanskrit.Scope
+                </Class>
+                <Class sourceFile="Token.java">
+                    sanskrit.Token
+                </Class>
+                <Class sourceFile="Token.java">
+                    sanskrit.Token$StringLit
+                </Class>
+                <Class sourceFile="Types.java">
+                    sanskrit.Types
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
         </Package>
 
         <Package name="smetana.core">

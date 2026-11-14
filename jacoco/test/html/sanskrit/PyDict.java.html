@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyDict.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyDict.java</span></div><h1>PyDict.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.LinkedHashMap;
+
+/**
+ * A Python dict, in insertion order. Keys are normalised before they reach the
+ * map (True is 1, 2.0 is 2, tuples are normalised inside), and each entry
+ * remembers the key as it was first given.
+ */
+<span class="fc" id="L10">final class PyDict {</span>
+	static final class Entry {
+		final Object key;
+		Object value;
+
+<span class="fc" id="L15">		Entry(Object key, Object value) {</span>
+<span class="fc" id="L16">			this.key = key;</span>
+<span class="fc" id="L17">			this.value = value;</span>
+<span class="fc" id="L18">		}</span>
+	}
+
+<span class="fc" id="L21">	final LinkedHashMap&lt;Object, Entry&gt; map = new LinkedHashMap&lt;Object, Entry&gt;();</span>
+
+	/**
+	 * Incremented each time a key is added or removed: an iterator that sees
+	 * another value than the one it started with knows the dict changed under it.
+	 */
+	int modCount;
+
+	static Object norm(Object k) {
+<span class="fc" id="L30">		return norm(k, 0);</span>
+	}
+
+	/** The deepest tuple accepted as a key: the map hashes and compares it recursively. */
+	private static final int MAX_KEY_DEPTH = 1000;
+
+	/**
+	 * Tuples are normalised inside, and then hashed and compared recursively by
+	 * the map: the depth of a key is limited, so that neither recursion can
+	 * overflow the stack.
+	 */
+	private static Object norm(Object k, int depth) {
+		// a PyStr and a String of the same characters are the same key; the map
+		// holds the String, the entry keeps the key as it was given
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		if (k instanceof PyStr)</span>
+<span class="fc" id="L45">			return ((PyStr) k).s;</span>
+<span class="fc bfc" id="L46" title="All 6 branches covered.">		if (k instanceof String || k instanceof Integer || k == PyNone.NONE)</span>
+<span class="fc" id="L47">			return k;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		if (k instanceof Boolean)</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">			return Integer.valueOf(((Boolean) k).booleanValue() ? 1 : 0);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (k instanceof Double) {</span>
+<span class="fc" id="L51">			double d = ((Double) k).doubleValue();</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">			if (PyInt.isWholeInt(d))</span>
+<span class="fc" id="L53">				return Integer.valueOf((int) d);</span>
+<span class="fc" id="L54">			return k;</span>
+		}
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (k instanceof PyTuple) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">			if (depth &gt; MAX_KEY_DEPTH)</span>
+<span class="fc" id="L58">				throw PyOps.err(Types.RECURSION_ERROR, &quot;maximum recursion depth exceeded&quot;);</span>
+<span class="fc" id="L59">			Object[] items = ((PyTuple) k).items;</span>
+<span class="fc" id="L60">			Object[] out = null;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">			for (int i = 0; i &lt; items.length; i++) {</span>
+<span class="fc" id="L62">				Object n = norm(items[i], depth + 1);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">				if (n != items[i]) {</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">					if (out == null)</span>
+<span class="fc" id="L65">						out = items.clone();</span>
+<span class="fc" id="L66">					out[i] = n;</span>
+				}
+			}
+<span class="fc bfc" id="L69" title="All 2 branches covered.">			return out == null ? k : new PyTuple(out);</span>
+		}
+<span class="fc bfc" id="L71" title="All 6 branches covered.">		if (k instanceof PyList || k instanceof PyDict || k instanceof PySet)</span>
+<span class="fc" id="L72">			throw PyOps.err(Types.TYPE_ERROR, &quot;unhashable type: '&quot; + PyOps.typeName(k) + &quot;'&quot;);</span>
+<span class="pc bpc" id="L73" title="1 of 4 branches missed.">		if (PyOps.isNative(k) &amp;&amp; ((PyInstance) k).type.lookup(&quot;__hash__&quot;) != null)</span>
+<span class="fc" id="L74">			return new PyHashKey((PyInstance) k);</span>
+<span class="fc" id="L75">		return k;</span>
+	}
+
+	int size() {
+<span class="fc" id="L79">		return map.size();</span>
+	}
+
+	Object get(Object key) {
+<span class="fc" id="L83">		Entry e = map.get(norm(key));</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		return e == null ? null : e.value;</span>
+	}
+
+	void put(Object key, Object value) {
+<span class="fc" id="L88">		Object n = norm(key);</span>
+<span class="fc" id="L89">		Entry e = map.get(n);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (e == null) {</span>
+<span class="fc" id="L91">			map.put(n, new Entry(key, value));</span>
+<span class="fc" id="L92">			modCount++;</span>
+		} else
+<span class="fc" id="L94">			e.value = value;</span>
+<span class="fc" id="L95">	}</span>
+
+	Object remove(Object key) {
+<span class="fc" id="L98">		Entry e = map.remove(norm(key));</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (e == null)</span>
+<span class="fc" id="L100">			return null;</span>
+<span class="fc" id="L101">		modCount++;</span>
+<span class="fc" id="L102">		return e.value;</span>
+	}
+
+	void clear() {
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (map.isEmpty())</span>
+<span class="nc" id="L107">			return;</span>
+<span class="fc" id="L108">		map.clear();</span>
+<span class="fc" id="L109">		modCount++;</span>
+<span class="fc" id="L110">	}</span>
+
+	boolean containsKey(Object key) {
+<span class="fc" id="L113">		return map.containsKey(norm(key));</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

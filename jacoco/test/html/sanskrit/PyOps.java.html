@@ -1,0 +1,1408 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyOps.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyOps.java</span></div><h1>PyOps.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+/** The operations of the language on the builtin values. */
+final class PyOps {
+	private PyOps() {
+	}
+
+	static final int MAX_LIST = 1 &lt;&lt; 24;
+	static final int MAX_STRING = 1 &lt;&lt; 26;
+	private static final int MAX_NESTING = 200;
+
+	// ------------------------------------------------------------ errors and types
+
+	static PyError err(PyType type, String message) {
+<span class="fc" id="L20">		return new PyError(new PyException(type, new Object[] { message }));</span>
+	}
+
+	static PyType typeOf(Object o) {
+<span class="fc bfc" id="L24" title="All 2 branches covered.">		if (o instanceof Integer)</span>
+<span class="fc" id="L25">			return Types.INT;</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">		if (PyStr.is(o))</span>
+<span class="fc" id="L27">			return Types.STR;</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">		if (o instanceof Double)</span>
+<span class="fc" id="L29">			return Types.FLOAT;</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">		if (o instanceof Boolean)</span>
+<span class="fc" id="L31">			return Types.BOOL;</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		if (o == PyNone.NONE)</span>
+<span class="fc" id="L33">			return Types.NONE_TYPE;</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		if (o instanceof PyList)</span>
+<span class="fc" id="L35">			return Types.LIST;</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">		if (o instanceof PyTuple)</span>
+<span class="fc" id="L37">			return Types.TUPLE;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		if (o instanceof PyDict)</span>
+<span class="fc" id="L39">			return Types.DICT;</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">		if (o instanceof PySet)</span>
+<span class="fc" id="L41">			return Types.SET;</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">		if (o instanceof PyRange)</span>
+<span class="fc" id="L43">			return Types.RANGE;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		if (o instanceof PyFunction)</span>
+<span class="fc" id="L45">			return Types.FUNCTION;</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		if (o instanceof Builtin)</span>
+<span class="fc" id="L47">			return Types.BUILTIN;</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (o instanceof BoundMethod)</span>
+<span class="nc" id="L49">			return Types.METHOD;</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (o instanceof PyInstance)</span>
+<span class="fc" id="L51">			return ((PyInstance) o).type;</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">		if (o instanceof PyException)</span>
+<span class="fc" id="L53">			return ((PyException) o).type;</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		if (o instanceof PyType)</span>
+<span class="fc" id="L55">			return Types.TYPE;</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (o instanceof PyModule)</span>
+<span class="nc" id="L57">			return Types.MODULE;</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (o instanceof PySlice)</span>
+<span class="nc" id="L59">			return Types.SLICE;</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (o instanceof PyView)</span>
+<span class="nc" id="L61">			return ((PyView) o).type();</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (o instanceof PyNotImplemented)</span>
+<span class="fc" id="L63">			return Types.NOT_IMPLEMENTED_TYPE;</span>
+<span class="nc" id="L64">		return Types.ITERATOR;</span>
+	}
+
+	static String typeName(Object o) {
+<span class="fc" id="L68">		return typeOf(o).name;</span>
+	}
+
+	static boolean isTrue(Object v) {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (v instanceof Boolean)</span>
+<span class="fc" id="L73">			return ((Boolean) v).booleanValue();</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (v instanceof Integer)</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			return ((Integer) v).intValue() != 0;</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (v == PyNone.NONE)</span>
+<span class="fc" id="L77">			return false;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (PyStr.is(v))</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">			return !PyStr.text(v).isEmpty();</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (v instanceof Double)</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			return ((Double) v).doubleValue() != 0.0;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (v instanceof PyList)</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			return !((PyList) v).items.isEmpty();</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (v instanceof PyTuple)</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">			return ((PyTuple) v).items.length != 0;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (v instanceof PyDict)</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">			return ((PyDict) v).size() != 0;</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (v instanceof PySet)</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">			return ((PySet) v).size() != 0;</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (v instanceof PyRange)</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">			return ((PyRange) v).longLength() != 0;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (v instanceof PyView)</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			return ((PyView) v).dict.size() != 0;</span>
+<span class="nc" id="L94">		return true;</span>
+	}
+
+	/** MemoryError if a list cannot have this number of items. */
+	static void checkList(long size) {
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (size &gt; MAX_LIST)</span>
+<span class="fc" id="L100">			throw err(Types.MEMORY_ERROR, &quot;list too large&quot;);</span>
+<span class="fc" id="L101">	}</span>
+
+	/** MemoryError if a str cannot have this number of characters. */
+	static void checkString(long length) {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (length &gt; MAX_STRING)</span>
+<span class="fc" id="L106">			throw err(Types.MEMORY_ERROR, &quot;string too large&quot;);</span>
+<span class="fc" id="L107">	}</span>
+
+	/** The number of items or characters of a value, for the count of the work on it; 0 if it has none. */
+	static long size(Object o) {
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		if (o instanceof String)</span>
+<span class="fc" id="L112">			return ((String) o).length();</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (o instanceof PyStr)</span>
+<span class="fc" id="L114">			return ((PyStr) o).s.length();</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (o instanceof PyList)</span>
+<span class="fc" id="L116">			return ((PyList) o).items.size();</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (o instanceof PyTuple)</span>
+<span class="fc" id="L118">			return ((PyTuple) o).items.length;</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (o instanceof PyDict)</span>
+<span class="fc" id="L120">			return ((PyDict) o).size();</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (o instanceof PySet)</span>
+<span class="fc" id="L122">			return ((PySet) o).size();</span>
+<span class="fc" id="L123">		return 0;</span>
+	}
+
+	/** list.extend(v), l += v and [*v]: the limit, the work and the memory. */
+	static void extend(Interp in, ArrayList&lt;Object&gt; items, Object v) {
+<span class="fc" id="L128">		final ArrayList&lt;Object&gt; src = toArrayList(v);</span>
+<span class="fc" id="L129">		checkList((long) items.size() + src.size());</span>
+<span class="fc" id="L130">		in.work(src.size());</span>
+<span class="fc" id="L131">		in.allocated((long) Memory.SLOT * src.size());</span>
+<span class="fc" id="L132">		items.addAll(src);</span>
+<span class="fc" id="L133">	}</span>
+
+	// ------------------------------------------------------------ numbers
+
+	static boolean isIntLike(Object o) {
+<span class="fc bfc" id="L138" title="All 4 branches covered.">		return o instanceof Integer || o instanceof Boolean;</span>
+	}
+
+	static boolean isNum(Object o) {
+<span class="fc bfc" id="L142" title="All 6 branches covered.">		return o instanceof Integer || o instanceof Double || o instanceof Boolean;</span>
+	}
+
+	static int asInt(Object o) {
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (o instanceof Integer)</span>
+<span class="fc" id="L147">			return ((Integer) o).intValue();</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (o instanceof Boolean)</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">			return ((Boolean) o).booleanValue() ? 1 : 0;</span>
+<span class="nc" id="L150">		throw err(Types.TYPE_ERROR, &quot;an integer is required, not '&quot; + typeName(o) + &quot;'&quot;);</span>
+	}
+
+	static double asDouble(Object o) {
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (o instanceof Double)</span>
+<span class="fc" id="L155">			return ((Double) o).doubleValue();</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (o instanceof Integer)</span>
+<span class="fc" id="L157">			return ((Integer) o).intValue();</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (o instanceof Boolean)</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">			return ((Boolean) o).booleanValue() ? 1 : 0;</span>
+<span class="fc" id="L160">		throw err(Types.TYPE_ERROR, &quot;must be real number, not &quot; + typeName(o));</span>
+	}
+
+	/** An index argument. */
+	static int asIndex(Object o) {
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (o instanceof Integer)</span>
+<span class="fc" id="L166">			return ((Integer) o).intValue();</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (o instanceof Boolean)</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">			return ((Boolean) o).booleanValue() ? 1 : 0;</span>
+<span class="fc" id="L169">		throw err(Types.TYPE_ERROR, &quot;indices must be integers or slices, not &quot; + typeName(o));</span>
+	}
+
+	static double floatMod(double x, double y) {
+<span class="fc" id="L173">		double m = x % y;</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">		if (m != 0) {</span>
+<span class="fc bfc" id="L175" title="All 6 branches covered.">			if ((y &lt; 0) != (m &lt; 0))</span>
+<span class="fc" id="L176">				m += y;</span>
+		} else {
+<span class="fc" id="L178">			m = Math.copySign(0.0, y);</span>
+		}
+<span class="fc" id="L180">		return m;</span>
+	}
+
+	static double floatFloorDiv(double x, double y) {
+<span class="fc" id="L184">		double m = x % y;</span>
+<span class="fc" id="L185">		double div = (x - m) / y;</span>
+<span class="pc bpc" id="L186" title="2 of 8 branches missed.">		if (m != 0 &amp;&amp; (y &lt; 0) != (m &lt; 0))</span>
+<span class="fc" id="L187">			div -= 1.0;</span>
+		double f;
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (div != 0) {</span>
+<span class="fc" id="L190">			f = Math.floor(div);</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">			if (div - f &gt; 0.5)</span>
+<span class="nc" id="L192">				f += 1.0;</span>
+		} else {
+<span class="nc" id="L194">			f = Math.copySign(0.0, x / y);</span>
+		}
+<span class="fc" id="L196">		return f;</span>
+	}
+
+	/** Math.pow with the special values of C99, which Java does not follow: 1 ** y, x ** 0 and (-1) ** inf are 1. */
+	static double cPow(double x, double y) {
+<span class="fc bfc" id="L201" title="All 8 branches covered.">		if (y == 0 || x == 1.0 || (x == -1.0 &amp;&amp; Double.isInfinite(y)))</span>
+<span class="fc" id="L202">			return 1.0;</span>
+<span class="fc" id="L203">		return Math.pow(x, y);</span>
+	}
+
+	static double floatPow(double x, double y) {
+<span class="pc bpc" id="L207" title="1 of 8 branches missed.">		if (y == 0 || x == 1.0 || (x == -1.0 &amp;&amp; Double.isInfinite(y)))</span>
+<span class="fc" id="L208">			return 1.0;</span>
+<span class="pc bpc" id="L209" title="2 of 4 branches missed.">		if (x != x || y != y)</span>
+<span class="nc" id="L210">			return Double.NaN;</span>
+<span class="pc bpc" id="L211" title="1 of 4 branches missed.">		if (x == 0 &amp;&amp; y &lt; 0)</span>
+<span class="nc" id="L212">			throw err(Types.ZERO_DIVISION, &quot;0.0 cannot be raised to a negative power&quot;);</span>
+<span class="pc bpc" id="L213" title="3 of 8 branches missed.">		if (x &lt; 0 &amp;&amp; y == y &amp;&amp; !Double.isInfinite(y) &amp;&amp; y != Math.rint(y))</span>
+<span class="nc" id="L214">			throw err(Types.VALUE_ERROR, &quot;negative number cannot be raised to a fractional power&quot;);</span>
+<span class="fc" id="L215">		double r = Math.pow(x, y);</span>
+<span class="pc bpc" id="L216" title="1 of 6 branches missed.">		if (Double.isInfinite(r) &amp;&amp; !Double.isInfinite(x) &amp;&amp; !Double.isInfinite(y))</span>
+<span class="nc" id="L217">			throw err(Types.OVERFLOW, &quot;(34, 'Numerical result out of range')&quot;);</span>
+<span class="fc" id="L218">		return r;</span>
+	}
+
+	private static Object floatOp(int op, double x, double y) {
+<span class="fc bfc" id="L222" title="All 8 branches covered.">		switch (op) {</span>
+		case Op.BIN_ADD:
+<span class="fc" id="L224">			return Double.valueOf(x + y);</span>
+		case Op.BIN_SUB:
+<span class="fc" id="L226">			return Double.valueOf(x - y);</span>
+		case Op.BIN_MUL:
+<span class="fc" id="L228">			return Double.valueOf(x * y);</span>
+		case Op.BIN_DIV:
+<span class="fc bfc" id="L230" title="All 2 branches covered.">			if (y == 0)</span>
+<span class="fc" id="L231">				throw err(Types.ZERO_DIVISION, &quot;float division by zero&quot;);</span>
+<span class="fc" id="L232">			return Double.valueOf(x / y);</span>
+		case Op.BIN_FLOORDIV:
+<span class="fc bfc" id="L234" title="All 2 branches covered.">			if (y == 0)</span>
+<span class="fc" id="L235">				throw err(Types.ZERO_DIVISION, &quot;float floor division by zero&quot;);</span>
+<span class="fc" id="L236">			return Double.valueOf(floatFloorDiv(x, y));</span>
+		case Op.BIN_MOD:
+<span class="fc bfc" id="L238" title="All 2 branches covered.">			if (y == 0)</span>
+<span class="fc" id="L239">				throw err(Types.ZERO_DIVISION, &quot;float modulo by zero&quot;);</span>
+<span class="fc" id="L240">			return Double.valueOf(floatMod(x, y));</span>
+		case Op.BIN_POW:
+<span class="fc" id="L242">			return Double.valueOf(floatPow(x, y));</span>
+		default:
+<span class="fc" id="L244">			return null;</span>
+		}
+	}
+
+<span class="fc" id="L248">	private static final String[] OP_SYMBOLS = { &quot;+&quot;, &quot;-&quot;, &quot;*&quot;, &quot;/&quot;, &quot;//&quot;, &quot;%&quot;, &quot;** or pow()&quot;, &quot;&lt;&lt;&quot;, &quot;&gt;&gt;&quot;, &quot;&amp;&quot;, &quot;|&quot;,</span>
+			&quot;^&quot; };
+
+	static Object binary(int op, Object a, Object b) {
+<span class="fc bfc" id="L252" title="All 4 branches covered.">		if (a instanceof Integer &amp;&amp; b instanceof Integer) {</span>
+<span class="fc" id="L253">			int x = ((Integer) a).intValue(), y = ((Integer) b).intValue();</span>
+<span class="fc bfc" id="L254" title="All 4 branches covered.">			switch (op) {</span>
+			case Op.BIN_ADD:
+<span class="fc" id="L256">				return PyInt.add(x, y);</span>
+			case Op.BIN_SUB:
+<span class="fc" id="L258">				return PyInt.sub(x, y);</span>
+			case Op.BIN_MUL:
+<span class="fc" id="L260">				return PyInt.mul(x, y);</span>
+			default:
+<span class="fc" id="L262">				return PyInt.binary(op, x, y);</span>
+			}
+		}
+<span class="fc bfc" id="L265" title="All 4 branches covered.">		if (a instanceof Double &amp;&amp; b instanceof Double) {</span>
+<span class="fc" id="L266">			Object r = floatOp(op, ((Double) a).doubleValue(), ((Double) b).doubleValue());</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">			if (r != null)</span>
+<span class="fc" id="L268">				return r;</span>
+		}
+<span class="fc" id="L270">		return binarySlow(op, a, b);</span>
+	}
+
+	private static Object binarySlow(int op, Object a, Object b) {
+<span class="fc bfc" id="L274" title="All 4 branches covered.">		if (isNum(a) &amp;&amp; isNum(b)) {</span>
+<span class="fc bfc" id="L275" title="All 4 branches covered.">			if (a instanceof Double || b instanceof Double) {</span>
+<span class="fc" id="L276">				Object r = floatOp(op, asDouble(a), asDouble(b));</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">				if (r != null)</span>
+<span class="fc" id="L278">					return r;</span>
+<span class="fc" id="L279">			} else {</span>
+<span class="pc bpc" id="L280" title="2 of 10 branches missed.">				if (a instanceof Boolean &amp;&amp; b instanceof Boolean</span>
+						&amp;&amp; (op == Op.BIN_AND || op == Op.BIN_OR || op == Op.BIN_XOR)) {
+<span class="fc" id="L282">					boolean x = ((Boolean) a).booleanValue(), y = ((Boolean) b).booleanValue();</span>
+<span class="pc bpc" id="L283" title="3 of 4 branches missed.">					return Boolean.valueOf(op == Op.BIN_AND ? x &amp; y : op == Op.BIN_OR ? x | y : x ^ y);</span>
+				}
+<span class="fc" id="L285">				return PyInt.binary(op, asInt(a), asInt(b));</span>
+			}
+<span class="fc bfc" id="L287" title="All 2 branches covered.">		} else if (PyStr.is(a)) {</span>
+<span class="fc bfc" id="L288" title="All 4 branches covered.">			if (op == Op.BIN_ADD &amp;&amp; PyStr.is(b)) {</span>
+<span class="fc" id="L289">				String x = PyStr.text(a), y = PyStr.text(b);</span>
+<span class="pc bpc" id="L290" title="1 of 2 branches missed.">				if ((long) x.length() + y.length() &gt; MAX_STRING)</span>
+<span class="nc" id="L291">					throw err(Types.MEMORY_ERROR, &quot;string too large&quot;);</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">				return PyStr.like(a instanceof PyStr ? a : b, x.concat(y));</span>
+			}
+<span class="fc bfc" id="L294" title="All 4 branches covered.">			if (op == Op.BIN_MUL &amp;&amp; isIntLike(b))</span>
+<span class="fc" id="L295">				return PyStr.like(a, repeatString(PyStr.text(a), asInt(b)));</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">			if (op == Op.BIN_MOD)</span>
+<span class="fc" id="L297">				return PyStr.like(a, Fmt.percent(PyStr.text(a), b));</span>
+<span class="fc bfc" id="L298" title="All 6 branches covered.">		} else if (PyStr.is(b) &amp;&amp; op == Op.BIN_MUL &amp;&amp; isIntLike(a)) {</span>
+<span class="fc" id="L299">			return PyStr.like(b, repeatString(PyStr.text(b), asInt(a)));</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">		} else if (a instanceof PyList) {</span>
+<span class="fc bfc" id="L301" title="All 4 branches covered.">			if (op == Op.BIN_ADD &amp;&amp; b instanceof PyList) {</span>
+<span class="fc" id="L302">				ArrayList&lt;Object&gt; x = ((PyList) a).items, y = ((PyList) b).items;</span>
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">				if ((long) x.size() + y.size() &gt; MAX_LIST)</span>
+<span class="nc" id="L304">					throw err(Types.MEMORY_ERROR, &quot;list too large&quot;);</span>
+<span class="fc" id="L305">				ArrayList&lt;Object&gt; r = new ArrayList&lt;Object&gt;(x.size() + y.size());</span>
+<span class="fc" id="L306">				r.addAll(x);</span>
+<span class="fc" id="L307">				r.addAll(y);</span>
+<span class="fc" id="L308">				return new PyList(r);</span>
+			}
+<span class="fc bfc" id="L310" title="All 4 branches covered.">			if (op == Op.BIN_MUL &amp;&amp; isIntLike(b))</span>
+<span class="fc" id="L311">				return repeatList((PyList) a, asInt(b));</span>
+<span class="pc bpc" id="L312" title="1 of 6 branches missed.">		} else if (b instanceof PyList &amp;&amp; op == Op.BIN_MUL &amp;&amp; isIntLike(a)) {</span>
+<span class="fc" id="L313">			return repeatList((PyList) b, asInt(a));</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">		} else if (a instanceof PyTuple) {</span>
+<span class="fc bfc" id="L315" title="All 4 branches covered.">			if (op == Op.BIN_ADD &amp;&amp; b instanceof PyTuple) {</span>
+<span class="fc" id="L316">				Object[] x = ((PyTuple) a).items, y = ((PyTuple) b).items;</span>
+<span class="pc bpc" id="L317" title="1 of 2 branches missed.">				if ((long) x.length + y.length &gt; MAX_LIST)</span>
+<span class="nc" id="L318">					throw err(Types.MEMORY_ERROR, &quot;tuple too large&quot;);</span>
+<span class="fc" id="L319">				Object[] r = new Object[x.length + y.length];</span>
+<span class="fc" id="L320">				System.arraycopy(x, 0, r, 0, x.length);</span>
+<span class="fc" id="L321">				System.arraycopy(y, 0, r, x.length, y.length);</span>
+<span class="fc" id="L322">				return new PyTuple(r);</span>
+			}
+<span class="pc bpc" id="L324" title="1 of 4 branches missed.">			if (op == Op.BIN_MUL &amp;&amp; isIntLike(b))</span>
+<span class="fc" id="L325">				return repeatTuple((PyTuple) a, asInt(b));</span>
+<span class="pc bpc" id="L326" title="5 of 6 branches missed.">		} else if (b instanceof PyTuple &amp;&amp; op == Op.BIN_MUL &amp;&amp; isIntLike(a)) {</span>
+<span class="nc" id="L327">			return repeatTuple((PyTuple) b, asInt(a));</span>
+<span class="fc bfc" id="L328" title="All 4 branches covered.">		} else if (a instanceof PySet &amp;&amp; b instanceof PySet) {</span>
+<span class="fc" id="L329">			PySet r = PySet.binary(op, (PySet) a, (PySet) b);</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">			if (r != null)</span>
+<span class="fc" id="L331">				return r;</span>
+		}
+<span class="fc" id="L333">		throw err(Types.TYPE_ERROR, &quot;unsupported operand type(s) for &quot; + OP_SYMBOLS[op] + &quot;: '&quot; + typeName(a)</span>
+<span class="fc" id="L334">				+ &quot;' and '&quot; + typeName(b) + &quot;'&quot;);</span>
+	}
+
+	static Object inplace(int op, Object a, Object b) {
+<span class="pc bpc" id="L338" title="1 of 6 branches missed.">		if (a instanceof PySet &amp;&amp; b instanceof PySet &amp;&amp; PySet.inplace(op, (PySet) a, (PySet) b))</span>
+<span class="fc" id="L339">			return a;</span>
+<span class="fc bfc" id="L340" title="All 2 branches covered.">		if (a instanceof PyList) {</span>
+<span class="fc bfc" id="L341" title="All 2 branches covered.">			if (op == Op.BIN_ADD) {</span>
+<span class="fc" id="L342">				final ArrayList&lt;Object&gt; src = toArrayList(b);</span>
+<span class="fc" id="L343">				checkList((long) ((PyList) a).items.size() + src.size());</span>
+<span class="fc" id="L344">				((PyList) a).items.addAll(src);</span>
+<span class="fc" id="L345">				return a;</span>
+			}
+<span class="pc bpc" id="L347" title="2 of 4 branches missed.">			if (op == Op.BIN_MUL &amp;&amp; isIntLike(b)) {</span>
+<span class="fc" id="L348">				PyList l = (PyList) a;</span>
+<span class="fc" id="L349">				int n = asInt(b);</span>
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">				if (n &lt;= 0) {</span>
+<span class="nc" id="L351">					l.items.clear();</span>
+				} else {
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">					if ((long) l.items.size() * n &gt; MAX_LIST)</span>
+<span class="nc" id="L354">						throw err(Types.MEMORY_ERROR, &quot;list too large&quot;);</span>
+<span class="fc" id="L355">					ArrayList&lt;Object&gt; copy = new ArrayList&lt;Object&gt;(l.items);</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">					for (int i = 1; i &lt; n; i++)</span>
+<span class="fc" id="L357">						l.items.addAll(copy);</span>
+				}
+<span class="fc" id="L359">				return a;</span>
+			}
+		}
+<span class="fc" id="L362">		return binary(op, a, b);</span>
+	}
+
+	private static String repeatString(String s, int n) {
+<span class="pc bpc" id="L366" title="1 of 4 branches missed.">		if (n &lt;= 0 || s.isEmpty())</span>
+<span class="fc" id="L367">			return &quot;&quot;;</span>
+<span class="pc bpc" id="L368" title="1 of 2 branches missed.">		if ((long) s.length() * n &gt; MAX_STRING)</span>
+<span class="nc" id="L369">			throw err(Types.MEMORY_ERROR, &quot;string too large&quot;);</span>
+<span class="fc" id="L370">		StringBuilder sb = new StringBuilder(s.length() * n);</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++)</span>
+<span class="fc" id="L372">			sb.append(s);</span>
+<span class="fc" id="L373">		return sb.toString();</span>
+	}
+
+	private static PyList repeatList(PyList l, int n) {
+<span class="fc" id="L377">		ArrayList&lt;Object&gt; r = new ArrayList&lt;Object&gt;();</span>
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">		if (n &gt; 0) {</span>
+<span class="pc bpc" id="L379" title="1 of 2 branches missed.">			if ((long) l.items.size() * n &gt; MAX_LIST)</span>
+<span class="nc" id="L380">				throw err(Types.MEMORY_ERROR, &quot;list too large&quot;);</span>
+<span class="fc bfc" id="L381" title="All 2 branches covered.">			for (int i = 0; i &lt; n; i++)</span>
+<span class="fc" id="L382">				r.addAll(l.items);</span>
+		}
+<span class="fc" id="L384">		return new PyList(r);</span>
+	}
+
+	private static PyTuple repeatTuple(PyTuple t, int n) {
+<span class="pc bpc" id="L388" title="2 of 4 branches missed.">		if (n &lt;= 0 || t.items.length == 0)</span>
+<span class="nc" id="L389">			return PyTuple.EMPTY;</span>
+<span class="pc bpc" id="L390" title="1 of 2 branches missed.">		if ((long) t.items.length * n &gt; MAX_LIST)</span>
+<span class="nc" id="L391">			throw err(Types.MEMORY_ERROR, &quot;tuple too large&quot;);</span>
+<span class="fc" id="L392">		Object[] r = new Object[t.items.length * n];</span>
+<span class="fc bfc" id="L393" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++)</span>
+<span class="fc" id="L394">			System.arraycopy(t.items, 0, r, i * t.items.length, t.items.length);</span>
+<span class="fc" id="L395">		return new PyTuple(r);</span>
+	}
+
+	static Object negate(Object a) {
+<span class="fc bfc" id="L399" title="All 2 branches covered.">		if (a instanceof Integer) {</span>
+<span class="fc" id="L400">			return PyInt.neg(((Integer) a).intValue());</span>
+		}
+<span class="fc bfc" id="L402" title="All 2 branches covered.">		if (a instanceof Double)</span>
+<span class="fc" id="L403">			return Double.valueOf(-((Double) a).doubleValue());</span>
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">		if (a instanceof Boolean)</span>
+<span class="nc" id="L405">			return Integer.valueOf(-asInt(a));</span>
+<span class="fc" id="L406">		throw err(Types.TYPE_ERROR, &quot;bad operand type for unary -: '&quot; + typeName(a) + &quot;'&quot;);</span>
+	}
+
+	static Object plus(Object a) {
+<span class="pc bpc" id="L410" title="3 of 4 branches missed.">		if (a instanceof Integer || a instanceof Double)</span>
+<span class="fc" id="L411">			return a;</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">		if (a instanceof Boolean)</span>
+<span class="nc" id="L413">			return Integer.valueOf(asInt(a));</span>
+<span class="nc" id="L414">		throw err(Types.TYPE_ERROR, &quot;bad operand type for unary +: '&quot; + typeName(a) + &quot;'&quot;);</span>
+	}
+
+	static Object invert(Object a) {
+<span class="pc bpc" id="L418" title="1 of 4 branches missed.">		if (a instanceof Integer || a instanceof Boolean)</span>
+<span class="fc" id="L419">			return Integer.valueOf(~asInt(a));</span>
+<span class="fc" id="L420">		throw err(Types.TYPE_ERROR, &quot;bad operand type for unary ~: '&quot; + typeName(a) + &quot;'&quot;);</span>
+	}
+
+	// ------------------------------------------------------------ comparison
+
+<span class="fc" id="L425">	private static final String[] CMP_SYMBOLS = { &quot;==&quot;, &quot;!=&quot;, &quot;&lt;&quot;, &quot;&lt;=&quot;, &quot;&gt;&quot;, &quot;&gt;=&quot; };</span>
+
+	static boolean sameObject(Object a, Object b) {
+<span class="fc bfc" id="L428" title="All 2 branches covered.">		if (a == b)</span>
+<span class="fc" id="L429">			return true;</span>
+<span class="fc bfc" id="L430" title="All 4 branches covered.">		if (a instanceof Integer &amp;&amp; b instanceof Integer)</span>
+<span class="fc" id="L431">			return a.equals(b);</span>
+<span class="fc" id="L432">		return false;</span>
+	}
+
+	static boolean eq(Object a, Object b) {
+<span class="fc" id="L436">		return eq(a, b, 0);</span>
+	}
+
+	/** The comparison of the items of a container: &quot;is&quot; is tried before &quot;==&quot;, so a NaN is equal to itself there. */
+	static boolean eqItem(Object a, Object b) {
+<span class="fc bfc" id="L441" title="All 4 branches covered.">		return a == b || eq(a, b, 0);</span>
+	}
+
+	private static boolean eq(Object a, Object b, int depth) {
+<span class="fc bfc" id="L445" title="All 2 branches covered.">		if (a == b)</span>
+<span class="fc bfc" id="L446" title="All 4 branches covered.">			return !(a instanceof Double) || ((Double) a).doubleValue() == ((Double) a).doubleValue();</span>
+<span class="fc bfc" id="L447" title="All 4 branches covered.">		if (a instanceof Integer &amp;&amp; b instanceof Integer)</span>
+<span class="fc bfc" id="L448" title="All 2 branches covered.">			return ((Integer) a).intValue() == ((Integer) b).intValue();</span>
+<span class="fc bfc" id="L449" title="All 4 branches covered.">		if (isNum(a) &amp;&amp; isNum(b)) {</span>
+<span class="fc bfc" id="L450" title="All 4 branches covered.">			if (a instanceof Double || b instanceof Double)</span>
+<span class="fc bfc" id="L451" title="All 2 branches covered.">				return asDouble(a) == asDouble(b);</span>
+<span class="fc bfc" id="L452" title="All 2 branches covered.">			return asInt(a) == asInt(b);</span>
+		}
+<span class="fc bfc" id="L454" title="All 2 branches covered.">		if (PyStr.is(a))</span>
+<span class="fc bfc" id="L455" title="All 4 branches covered.">			return PyStr.is(b) &amp;&amp; PyStr.text(a).equals(PyStr.text(b));</span>
+<span class="fc bfc" id="L456" title="All 2 branches covered.">		if (a instanceof PyList) {</span>
+<span class="fc bfc" id="L457" title="All 2 branches covered.">			if (!(b instanceof PyList))</span>
+<span class="fc" id="L458">				return false;</span>
+<span class="fc" id="L459">			return seqEq(((PyList) a).items.toArray(), ((PyList) b).items.toArray(), depth);</span>
+		}
+<span class="fc bfc" id="L461" title="All 2 branches covered.">		if (a instanceof PyTuple) {</span>
+<span class="fc bfc" id="L462" title="All 2 branches covered.">			if (!(b instanceof PyTuple))</span>
+<span class="fc" id="L463">				return false;</span>
+<span class="fc" id="L464">			return seqEq(((PyTuple) a).items, ((PyTuple) b).items, depth);</span>
+		}
+<span class="fc bfc" id="L466" title="All 2 branches covered.">		if (a instanceof PyDict) {</span>
+<span class="fc bfc" id="L467" title="All 2 branches covered.">			if (!(b instanceof PyDict))</span>
+<span class="fc" id="L468">				return false;</span>
+<span class="fc" id="L469">			PyDict x = (PyDict) a, y = (PyDict) b;</span>
+<span class="fc bfc" id="L470" title="All 2 branches covered.">			if (x.size() != y.size())</span>
+<span class="fc" id="L471">				return false;</span>
+<span class="pc bpc" id="L472" title="1 of 2 branches missed.">			if (depth &gt; MAX_NESTING)</span>
+<span class="nc" id="L473">				throw err(Types.RECURSION_ERROR, &quot;maximum recursion depth exceeded in comparison&quot;);</span>
+<span class="fc bfc" id="L474" title="All 2 branches covered.">			for (Map.Entry&lt;Object, PyDict.Entry&gt; e : x.map.entrySet()) {</span>
+<span class="fc" id="L475">				PyDict.Entry o = y.map.get(e.getKey());</span>
+<span class="fc bfc" id="L476" title="All 6 branches covered.">				if (o == null || !(e.getValue().value == o.value || eq(e.getValue().value, o.value, depth + 1)))</span>
+<span class="fc" id="L477">					return false;</span>
+<span class="fc" id="L478">			}</span>
+<span class="fc" id="L479">			return true;</span>
+		}
+<span class="fc bfc" id="L481" title="All 2 branches covered.">		if (a instanceof PySet) {</span>
+<span class="fc bfc" id="L482" title="All 2 branches covered.">			if (b instanceof PySet)</span>
+<span class="fc" id="L483">				return PySet.keysEqual(((PySet) a).map.keySet(), ((PySet) b).map.keySet());</span>
+			// a set and dict.keys() compare as sets
+<span class="fc bfc" id="L485" title="All 4 branches covered.">			return b instanceof PyView &amp;&amp; ((PyView) b).kind == PyView.KEYS</span>
+<span class="pc bpc" id="L486" title="1 of 2 branches missed.">					&amp;&amp; PySet.keysEqual(((PySet) a).map.keySet(), ((PyView) b).dict.map.keySet());</span>
+		}
+<span class="fc bfc" id="L488" title="All 4 branches covered.">		if (a instanceof PyView &amp;&amp; b instanceof PySet)</span>
+<span class="fc bfc" id="L489" title="All 2 branches covered.">			return ((PyView) a).kind == PyView.KEYS</span>
+<span class="fc bfc" id="L490" title="All 2 branches covered.">					&amp;&amp; PySet.keysEqual(((PyView) a).dict.map.keySet(), ((PySet) b).map.keySet());</span>
+<span class="fc bfc" id="L491" title="All 4 branches covered.">		if (a instanceof PyView &amp;&amp; b instanceof PyView) {</span>
+			// keys() and items() compare as sets, values() by identity (done above)
+<span class="fc" id="L493">			PyView x = (PyView) a, y = (PyView) b;</span>
+<span class="pc bpc" id="L494" title="1 of 6 branches missed.">			if (x.kind != y.kind || x.kind == PyView.VALUES || x.dict.size() != y.dict.size())</span>
+<span class="fc" id="L495">				return false;</span>
+<span class="fc bfc" id="L496" title="All 2 branches covered.">			for (Map.Entry&lt;Object, PyDict.Entry&gt; e : x.dict.map.entrySet()) {</span>
+<span class="fc" id="L497">				PyDict.Entry o = y.dict.map.get(e.getKey());</span>
+<span class="pc bpc" id="L498" title="1 of 6 branches missed.">				if (o == null || (x.kind == PyView.ITEMS &amp;&amp; !eqItem(e.getValue().value, o.value)))</span>
+<span class="fc" id="L499">					return false;</span>
+<span class="fc" id="L500">			}</span>
+<span class="fc" id="L501">			return true;</span>
+		}
+<span class="pc bpc" id="L503" title="1 of 4 branches missed.">		if (a instanceof PyRange &amp;&amp; b instanceof PyRange) {</span>
+<span class="fc" id="L504">			PyRange x = (PyRange) a, y = (PyRange) b;</span>
+<span class="fc" id="L505">			long n = x.longLength();</span>
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">			if (n != y.longLength())</span>
+<span class="nc" id="L507">				return false;</span>
+<span class="pc bpc" id="L508" title="4 of 8 branches missed.">			return n == 0 || (x.start == y.start &amp;&amp; (n == 1 || x.step == y.step));</span>
+		}
+<span class="pc bpc" id="L510" title="1 of 4 branches missed.">		if (isNative(a) || isNative(b)) {</span>
+			// a == b runs a.__eq__(b), then b.__eq__(a) if it is missing or returns NotImplemented;
+			// only the classes written in Java have __eq__, the others compare by identity
+<span class="fc" id="L513">			Object r = callNative(a, &quot;__eq__&quot;, b);</span>
+<span class="fc bfc" id="L514" title="All 2 branches covered.">			if (r == PyNotImplemented.INSTANCE)</span>
+<span class="fc" id="L515">				r = callNative(b, &quot;__eq__&quot;, a);</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">			if (r != PyNotImplemented.INSTANCE)</span>
+<span class="fc" id="L517">				return isTrue(r);</span>
+		}
+<span class="fc" id="L519">		return false;</span>
+	}
+
+	static boolean isNative(Object o) {
+<span class="fc bfc" id="L523" title="All 4 branches covered.">		return o instanceof PyInstance &amp;&amp; ((PyInstance) o).type.nativeClass;</span>
+	}
+
+	/** Runs a special method of an instance of a native class: NotImplemented if there is none. */
+	static Object callNative(Object self, String method, Object... args) {
+<span class="fc bfc" id="L528" title="All 2 branches covered.">		if (isNative(self)) {</span>
+<span class="fc" id="L529">			final PyInstance instance = (PyInstance) self;</span>
+<span class="fc" id="L530">			final Object fn = instance.type.lookup(method);</span>
+<span class="pc bpc" id="L531" title="1 of 2 branches missed.">			if (fn != null) {</span>
+<span class="fc" id="L532">				final Object[] all = new Object[args.length + 1];</span>
+<span class="fc" id="L533">				all[0] = instance;</span>
+<span class="fc" id="L534">				System.arraycopy(args, 0, all, 1, args.length);</span>
+<span class="fc" id="L535">				return instance.type.interp.call(fn, all);</span>
+			}
+		}
+<span class="fc" id="L538">		return PyNotImplemented.INSTANCE;</span>
+	}
+
+	private static boolean seqEq(Object[] x, Object[] y, int depth) {
+<span class="pc bpc" id="L542" title="1 of 2 branches missed.">		if (x.length != y.length)</span>
+<span class="nc" id="L543">			return false;</span>
+<span class="pc bpc" id="L544" title="1 of 2 branches missed.">		if (depth &gt; MAX_NESTING)</span>
+<span class="nc" id="L545">			throw err(Types.RECURSION_ERROR, &quot;maximum recursion depth exceeded in comparison&quot;);</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">		for (int i = 0; i &lt; x.length; i++)</span>
+<span class="fc bfc" id="L547" title="All 4 branches covered.">			if (x[i] != y[i] &amp;&amp; !eq(x[i], y[i], depth + 1))</span>
+<span class="fc" id="L548">				return false;</span>
+<span class="fc" id="L549">		return true;</span>
+	}
+
+	/** The order of two strs: that of their code points. */
+	static int compareStrings(String a, String b) {
+<span class="fc" id="L554">		int n = Math.min(a.length(), b.length());</span>
+<span class="fc bfc" id="L555" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc" id="L556">			char x = a.charAt(i), y = b.charAt(i);</span>
+<span class="fc bfc" id="L557" title="All 2 branches covered.">			if (x != y) {</span>
+<span class="fc bfc" id="L558" title="All 4 branches covered.">				if (Character.isSurrogate(x) || Character.isSurrogate(y))</span>
+<span class="fc" id="L559">					return compareCodePoints(a, b);</span>
+<span class="fc" id="L560">				return x - y;</span>
+			}
+		}
+<span class="fc" id="L563">		return a.length() - b.length();</span>
+	}
+
+	/** For strs with a character outside the BMP or a lone surrogate, whose chars are not code points. */
+	private static int compareCodePoints(String a, String b) {
+<span class="fc" id="L568">		int i = 0, j = 0;</span>
+<span class="pc bpc" id="L569" title="2 of 4 branches missed.">		while (i &lt; a.length() &amp;&amp; j &lt; b.length()) {</span>
+<span class="fc" id="L570">			final int x = PyStr.cpAt(a, i), y = PyStr.cpAt(b, j);</span>
+<span class="fc bfc" id="L571" title="All 2 branches covered.">			if (x != y)</span>
+<span class="fc bfc" id="L572" title="All 2 branches covered.">				return x &lt; y ? -1 : 1;</span>
+<span class="fc" id="L573">			i += PyStr.cpSize(x);</span>
+<span class="fc" id="L574">			j += PyStr.cpSize(y);</span>
+<span class="fc" id="L575">		}</span>
+<span class="nc" id="L576">		return (a.length() - i) - (b.length() - j);</span>
+	}
+
+	private static boolean test(int op, int c) {
+<span class="fc bfc" id="L580" title="All 6 branches covered.">		switch (op) {</span>
+		case Op.CMP_EQ:
+<span class="fc bfc" id="L582" title="All 2 branches covered.">			return c == 0;</span>
+		case Op.CMP_NE:
+<span class="fc bfc" id="L584" title="All 2 branches covered.">			return c != 0;</span>
+		case Op.CMP_LT:
+<span class="fc bfc" id="L586" title="All 2 branches covered.">			return c &lt; 0;</span>
+		case Op.CMP_LE:
+<span class="fc bfc" id="L588" title="All 2 branches covered.">			return c &lt;= 0;</span>
+		case Op.CMP_GT:
+<span class="fc bfc" id="L590" title="All 2 branches covered.">			return c &gt; 0;</span>
+		default:
+<span class="fc bfc" id="L592" title="All 2 branches covered.">			return c &gt;= 0;</span>
+		}
+	}
+
+	static Boolean compare(int op, Object a, Object b) {
+<span class="fc" id="L597">		return Boolean.valueOf(compareBool(op, a, b, 0));</span>
+	}
+
+	private static boolean compareBool(int op, Object a, Object b, int depth) {
+<span class="fc bfc" id="L601" title="All 4 branches covered.">		if (a instanceof Integer &amp;&amp; b instanceof Integer) {</span>
+<span class="fc" id="L602">			int x = ((Integer) a).intValue(), y = ((Integer) b).intValue();</span>
+<span class="fc bfc" id="L603" title="All 4 branches covered.">			return test(op, x &lt; y ? -1 : x &gt; y ? 1 : 0);</span>
+		}
+<span class="fc bfc" id="L605" title="All 2 branches covered.">		if (op == Op.CMP_EQ)</span>
+<span class="fc" id="L606">			return eq(a, b, depth);</span>
+<span class="fc bfc" id="L607" title="All 2 branches covered.">		if (op == Op.CMP_NE)</span>
+<span class="fc bfc" id="L608" title="All 2 branches covered.">			return !eq(a, b, depth);</span>
+<span class="fc bfc" id="L609" title="All 4 branches covered.">		if (isNum(a) &amp;&amp; isNum(b)) {</span>
+<span class="fc bfc" id="L610" title="All 4 branches covered.">			if (a instanceof Double || b instanceof Double) {</span>
+<span class="fc" id="L611">				double x = asDouble(a), y = asDouble(b);</span>
+<span class="fc bfc" id="L612" title="All 4 branches covered.">				switch (op) {</span>
+				case Op.CMP_LT:
+<span class="fc bfc" id="L614" title="All 2 branches covered.">					return x &lt; y;</span>
+				case Op.CMP_LE:
+<span class="fc bfc" id="L616" title="All 2 branches covered.">					return x &lt;= y;</span>
+				case Op.CMP_GT:
+<span class="fc bfc" id="L618" title="All 2 branches covered.">					return x &gt; y;</span>
+				default:
+<span class="fc bfc" id="L620" title="All 2 branches covered.">					return x &gt;= y;</span>
+				}
+			}
+<span class="fc" id="L623">			int x = asInt(a), y = asInt(b);</span>
+<span class="pc bpc" id="L624" title="1 of 4 branches missed.">			return test(op, x &lt; y ? -1 : x &gt; y ? 1 : 0);</span>
+		}
+<span class="fc bfc" id="L626" title="All 4 branches covered.">		if (PyStr.is(a) &amp;&amp; PyStr.is(b))</span>
+<span class="fc" id="L627">			return test(op, compareStrings(PyStr.text(a), PyStr.text(b)));</span>
+<span class="fc bfc" id="L628" title="All 4 branches covered.">		if (a instanceof PyList &amp;&amp; b instanceof PyList)</span>
+<span class="fc" id="L629">			return seqCompare(op, ((PyList) a).items.toArray(), ((PyList) b).items.toArray(), depth);</span>
+<span class="fc bfc" id="L630" title="All 4 branches covered.">		if (a instanceof PyTuple &amp;&amp; b instanceof PyTuple)</span>
+<span class="fc" id="L631">			return seqCompare(op, ((PyTuple) a).items, ((PyTuple) b).items, depth);</span>
+<span class="fc bfc" id="L632" title="All 4 branches covered.">		if (a instanceof PySet &amp;&amp; b instanceof PySet) {</span>
+			// the order of sets is inclusion: a &lt; b is &quot;a is a proper subset of b&quot;
+<span class="fc" id="L634">			PySet x = (PySet) a, y = (PySet) b;</span>
+<span class="fc bfc" id="L635" title="All 4 branches covered.">			switch (op) {</span>
+			case Op.CMP_LT:
+<span class="pc bpc" id="L637" title="1 of 4 branches missed.">				return x.size() &lt; y.size() &amp;&amp; PySet.isSubset(x, y);</span>
+			case Op.CMP_LE:
+<span class="fc" id="L639">				return PySet.isSubset(x, y);</span>
+			case Op.CMP_GT:
+<span class="pc bpc" id="L641" title="1 of 4 branches missed.">				return x.size() &gt; y.size() &amp;&amp; PySet.isSubset(y, x);</span>
+			default:
+<span class="fc" id="L643">				return PySet.isSubset(y, x);</span>
+			}
+		}
+<span class="fc bfc" id="L646" title="All 4 branches covered.">		if (a instanceof PyInstance || b instanceof PyInstance) {</span>
+<span class="fc" id="L647">			final Object r = orderUser(op, a, b);</span>
+<span class="fc bfc" id="L648" title="All 2 branches covered.">			if (r != PyNotImplemented.INSTANCE)</span>
+<span class="fc" id="L649">				return isTrue(r);</span>
+		}
+<span class="fc" id="L651">		throw err(Types.TYPE_ERROR, &quot;'&quot; + CMP_SYMBOLS[op] + &quot;' not supported between instances of '&quot; + typeName(a)</span>
+<span class="fc" id="L652">				+ &quot;' and '&quot; + typeName(b) + &quot;'&quot;);</span>
+	}
+
+<span class="fc" id="L655">	private static final String[] ORDER_METHODS = { null, null, &quot;__lt__&quot;, &quot;__le__&quot;, &quot;__gt__&quot;, &quot;__ge__&quot; };</span>
+
+	/**
+	 * &amp;lt;, &amp;lt;=, &amp;gt; and &amp;gt;= between objects of classes of the program, as
+	 * CPython does: the method of the left operand (a.__lt__(b)), then, if it is
+	 * missing or returns NotImplemented, the reflected method of the right one
+	 * (b.__gt__(a)). Returns NotImplemented when neither answers, and the caller
+	 * raises the TypeError. There is no __eq__, so == and != stay identity.
+	 */
+	private static Object orderUser(int op, Object a, Object b) {
+<span class="fc" id="L665">		Object r = callOrder(a, ORDER_METHODS[op], b);</span>
+<span class="fc bfc" id="L666" title="All 2 branches covered.">		if (r != PyNotImplemented.INSTANCE)</span>
+<span class="fc" id="L667">			return r;</span>
+		// the reflected operator: a &lt; b is b &gt; a, a &lt;= b is b &gt;= a
+<span class="fc bfc" id="L669" title="All 6 branches covered.">		final int reflected = op == Op.CMP_LT ? Op.CMP_GT : op == Op.CMP_GT ? Op.CMP_LT : op == Op.CMP_LE ? Op.CMP_GE</span>
+<span class="fc" id="L670">				: Op.CMP_LE;</span>
+<span class="fc" id="L671">		return callOrder(b, ORDER_METHODS[reflected], a);</span>
+	}
+
+	private static Object callOrder(Object self, String method, Object other) {
+<span class="fc bfc" id="L675" title="All 2 branches covered.">		if (self instanceof PyInstance) {</span>
+<span class="fc" id="L676">			final PyInstance instance = (PyInstance) self;</span>
+<span class="fc" id="L677">			final Object fn = instance.type.lookup(method);</span>
+<span class="fc bfc" id="L678" title="All 2 branches covered.">			if (fn != null)</span>
+<span class="fc" id="L679">				return instance.type.interp.call(fn, instance, other);</span>
+		}
+<span class="fc" id="L681">		return PyNotImplemented.INSTANCE;</span>
+	}
+
+	private static boolean seqCompare(int op, Object[] x, Object[] y, int depth) {
+<span class="pc bpc" id="L685" title="1 of 2 branches missed.">		if (depth &gt; MAX_NESTING)</span>
+<span class="nc" id="L686">			throw err(Types.RECURSION_ERROR, &quot;maximum recursion depth exceeded in comparison&quot;);</span>
+<span class="fc" id="L687">		int n = Math.min(x.length, y.length);</span>
+<span class="fc bfc" id="L688" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++)</span>
+<span class="pc bpc" id="L689" title="1 of 4 branches missed.">			if (x[i] != y[i] &amp;&amp; !eq(x[i], y[i], depth + 1))</span>
+<span class="fc" id="L690">				return compareBool(op, x[i], y[i], depth + 1);</span>
+<span class="pc bpc" id="L691" title="3 of 4 branches missed.">		return test(op, x.length &lt; y.length ? -1 : x.length &gt; y.length ? 1 : 0);</span>
+	}
+
+	/** Three-way comparison for sorting, min and max: uses only the &quot;less than&quot; relation. */
+	static int order(Object a, Object b) {
+<span class="fc bfc" id="L696" title="All 4 branches covered.">		if (a instanceof Integer &amp;&amp; b instanceof Integer)</span>
+<span class="fc" id="L697">			return Integer.compare(((Integer) a).intValue(), ((Integer) b).intValue());</span>
+<span class="fc bfc" id="L698" title="All 4 branches covered.">		if (PyStr.is(a) &amp;&amp; PyStr.is(b))</span>
+<span class="fc" id="L699">			return compareStrings(PyStr.text(a), PyStr.text(b));</span>
+<span class="fc bfc" id="L700" title="All 2 branches covered.">		if (compareBool(Op.CMP_LT, a, b, 0))</span>
+<span class="fc" id="L701">			return -1;</span>
+<span class="fc bfc" id="L702" title="All 2 branches covered.">		if (compareBool(Op.CMP_LT, b, a, 0))</span>
+<span class="fc" id="L703">			return 1;</span>
+<span class="fc" id="L704">		return 0;</span>
+	}
+
+	static boolean contains(Object container, Object item) {
+<span class="fc bfc" id="L708" title="All 2 branches covered.">		if (PyStr.is(container)) {</span>
+<span class="fc bfc" id="L709" title="All 2 branches covered.">			if (PyStr.is(item) == false)</span>
+<span class="fc" id="L710">				throw err(Types.TYPE_ERROR,</span>
+<span class="fc" id="L711">						&quot;'in &lt;string&gt;' requires string as left operand, not &quot; + typeName(item));</span>
+<span class="fc" id="L712">			return PyStr.text(container).contains(PyStr.text(item));</span>
+		}
+<span class="fc bfc" id="L714" title="All 2 branches covered.">		if (container instanceof PyList) {</span>
+<span class="fc" id="L715">			ArrayList&lt;Object&gt; l = ((PyList) container).items;</span>
+<span class="fc bfc" id="L716" title="All 2 branches covered.">			for (int i = 0; i &lt; l.size(); i++)</span>
+<span class="fc bfc" id="L717" title="All 2 branches covered.">				if (eqItem(l.get(i), item))</span>
+<span class="fc" id="L718">					return true;</span>
+<span class="fc" id="L719">			return false;</span>
+		}
+<span class="fc bfc" id="L721" title="All 2 branches covered.">		if (container instanceof PyTuple) {</span>
+<span class="pc bpc" id="L722" title="1 of 2 branches missed.">			for (Object o : ((PyTuple) container).items)</span>
+<span class="fc bfc" id="L723" title="All 2 branches covered.">				if (eqItem(o, item))</span>
+<span class="fc" id="L724">					return true;</span>
+<span class="nc" id="L725">			return false;</span>
+		}
+<span class="fc bfc" id="L727" title="All 2 branches covered.">		if (container instanceof PyDict)</span>
+<span class="fc" id="L728">			return ((PyDict) container).containsKey(item);</span>
+<span class="fc bfc" id="L729" title="All 2 branches covered.">		if (container instanceof PySet)</span>
+<span class="fc" id="L730">			return ((PySet) container).contains(item);</span>
+<span class="fc bfc" id="L731" title="All 2 branches covered.">		if (container instanceof PyRange) {</span>
+<span class="fc" id="L732">			PyRange r = (PyRange) container;</span>
+<span class="pc bpc" id="L733" title="1 of 2 branches missed.">			if (!isNum(item))</span>
+<span class="nc" id="L734">				return false;</span>
+<span class="fc" id="L735">			double d = asDouble(item);</span>
+<span class="pc bpc" id="L736" title="1 of 2 branches missed.">			if (d != Math.rint(d))</span>
+<span class="nc" id="L737">				return false;</span>
+<span class="fc" id="L738">			long v = (long) d;</span>
+<span class="pc bpc" id="L739" title="6 of 10 branches missed.">			if (r.step &gt; 0 ? (v &lt; r.start || v &gt;= r.stop) : (v &gt; r.start || v &lt;= r.stop))</span>
+<span class="fc" id="L740">				return false;</span>
+<span class="fc bfc" id="L741" title="All 2 branches covered.">			return (v - r.start) % r.step == 0;</span>
+		}
+<span class="fc bfc" id="L743" title="All 2 branches covered.">		if (container instanceof PyView) {</span>
+<span class="fc" id="L744">			PyView v = (PyView) container;</span>
+<span class="fc bfc" id="L745" title="All 2 branches covered.">			if (v.kind == PyView.KEYS)</span>
+<span class="fc" id="L746">				return v.dict.containsKey(item);</span>
+<span class="fc" id="L747">			PyIter it = v.iterator();</span>
+<span class="pc bpc" id="L748" title="1 of 2 branches missed.">			for (Object x = it.next(); x != null; x = it.next())</span>
+<span class="fc bfc" id="L749" title="All 2 branches covered.">				if (eqItem(x, item))</span>
+<span class="fc" id="L750">					return true;</span>
+<span class="nc" id="L751">			return false;</span>
+		}
+<span class="fc" id="L753">		throw err(Types.TYPE_ERROR, &quot;argument of type '&quot; + typeName(container) + &quot;' is not iterable&quot;);</span>
+	}
+
+	// ------------------------------------------------------------ subscripts
+
+	static int normIndex(int i, int len, String what) {
+<span class="fc bfc" id="L759" title="All 2 branches covered.">		if (i &lt; 0)</span>
+<span class="fc" id="L760">			i += len;</span>
+<span class="fc bfc" id="L761" title="All 4 branches covered.">		if (i &lt; 0 || i &gt;= len)</span>
+<span class="fc" id="L762">			throw err(Types.INDEX_ERROR, what + &quot; index out of range&quot;);</span>
+<span class="fc" id="L763">		return i;</span>
+	}
+
+	/** Resolves a slice against a length: out = {start, count, step}. */
+	static void sliceRange(PySlice s, int len, int[] out) {
+<span class="fc" id="L768">		int step = 1;</span>
+<span class="fc bfc" id="L769" title="All 2 branches covered.">		if (s.step != PyNone.NONE) {</span>
+<span class="fc" id="L770">			step = asIndex(s.step);</span>
+<span class="fc bfc" id="L771" title="All 2 branches covered.">			if (step == 0)</span>
+<span class="fc" id="L772">				throw err(Types.VALUE_ERROR, &quot;slice step cannot be zero&quot;);</span>
+		}
+		long start, stop;
+<span class="fc bfc" id="L775" title="All 2 branches covered.">		if (step &gt; 0) {</span>
+<span class="fc bfc" id="L776" title="All 2 branches covered.">			start = s.lower == PyNone.NONE ? 0 : clampIndex(asIndex(s.lower), len, 0, len);</span>
+<span class="fc bfc" id="L777" title="All 2 branches covered.">			stop = s.upper == PyNone.NONE ? len : clampIndex(asIndex(s.upper), len, 0, len);</span>
+		} else {
+<span class="fc bfc" id="L779" title="All 2 branches covered.">			start = s.lower == PyNone.NONE ? len - 1 : clampIndex(asIndex(s.lower), len, -1, len - 1);</span>
+<span class="fc bfc" id="L780" title="All 2 branches covered.">			stop = s.upper == PyNone.NONE ? -1 : clampIndex(asIndex(s.upper), len, -1, len - 1);</span>
+		}
+		long count;
+<span class="fc bfc" id="L783" title="All 2 branches covered.">		if (step &gt; 0)</span>
+<span class="fc bfc" id="L784" title="All 2 branches covered.">			count = stop &gt; start ? (stop - start + step - 1) / step : 0;</span>
+		else
+<span class="fc bfc" id="L786" title="All 2 branches covered.">			count = start &gt; stop ? (start - stop + (-(long) step) - 1) / (-(long) step) : 0;</span>
+<span class="fc" id="L787">		out[0] = (int) start;</span>
+<span class="fc" id="L788">		out[1] = (int) count;</span>
+<span class="fc" id="L789">		out[2] = step;</span>
+<span class="fc" id="L790">	}</span>
+
+	private static long clampIndex(int i, int len, int lo, int hi) {
+<span class="fc" id="L793">		long v = i;</span>
+<span class="fc bfc" id="L794" title="All 2 branches covered.">		if (v &lt; 0)</span>
+<span class="fc" id="L795">			v += len;</span>
+<span class="fc bfc" id="L796" title="All 2 branches covered.">		if (v &lt; lo)</span>
+<span class="fc" id="L797">			v = lo;</span>
+<span class="fc bfc" id="L798" title="All 2 branches covered.">		if (v &gt; hi)</span>
+<span class="fc" id="L799">			v = hi;</span>
+<span class="fc" id="L800">		return v;</span>
+	}
+
+	static Object getitem(Object o, Object idx) {
+<span class="fc bfc" id="L804" title="All 2 branches covered.">		if (o instanceof PyList) {</span>
+<span class="fc" id="L805">			ArrayList&lt;Object&gt; l = ((PyList) o).items;</span>
+<span class="fc bfc" id="L806" title="All 2 branches covered.">			if (idx instanceof Integer) {</span>
+<span class="fc" id="L807">				int i = ((Integer) idx).intValue();</span>
+<span class="fc bfc" id="L808" title="All 2 branches covered.">				if (i &lt; 0)</span>
+<span class="fc" id="L809">					i += l.size();</span>
+<span class="fc bfc" id="L810" title="All 4 branches covered.">				if (i &lt; 0 || i &gt;= l.size())</span>
+<span class="fc" id="L811">					throw err(Types.INDEX_ERROR, &quot;list index out of range&quot;);</span>
+<span class="fc" id="L812">				return l.get(i);</span>
+			}
+<span class="fc bfc" id="L814" title="All 2 branches covered.">			if (idx instanceof PySlice) {</span>
+<span class="fc" id="L815">				int[] r = new int[3];</span>
+<span class="fc" id="L816">				sliceRange((PySlice) idx, l.size(), r);</span>
+<span class="fc" id="L817">				ArrayList&lt;Object&gt; out = new ArrayList&lt;Object&gt;(r[1]);</span>
+<span class="fc bfc" id="L818" title="All 2 branches covered.">				for (int k = 0, p = r[0]; k &lt; r[1]; k++, p += r[2])</span>
+<span class="fc" id="L819">					out.add(l.get(p));</span>
+<span class="fc" id="L820">				return new PyList(out);</span>
+			}
+<span class="fc" id="L822">			return l.get(normIndex(asIndex(idx), l.size(), &quot;list&quot;));</span>
+		}
+<span class="fc bfc" id="L824" title="All 2 branches covered.">		if (o instanceof PyDict) {</span>
+<span class="fc" id="L825">			Object v = ((PyDict) o).get(idx);</span>
+<span class="fc bfc" id="L826" title="All 2 branches covered.">			if (v == null)</span>
+<span class="fc" id="L827">				throw new PyError(new PyException(Types.KEY_ERROR, new Object[] { idx }));</span>
+<span class="fc" id="L828">			return v;</span>
+		}
+<span class="fc bfc" id="L830" title="All 2 branches covered.">		if (o instanceof PyStr)</span>
+<span class="fc" id="L831">			return ((PyStr) o).getitem(idx);</span>
+<span class="fc bfc" id="L832" title="All 2 branches covered.">		if (o instanceof String)</span>
+<span class="fc" id="L833">			return PyStr.of((String) o).getitem(idx);</span>
+<span class="fc bfc" id="L834" title="All 2 branches covered.">		if (o instanceof PyTuple) {</span>
+<span class="fc" id="L835">			Object[] t = ((PyTuple) o).items;</span>
+<span class="fc bfc" id="L836" title="All 2 branches covered.">			if (idx instanceof PySlice) {</span>
+<span class="fc" id="L837">				int[] r = new int[3];</span>
+<span class="fc" id="L838">				sliceRange((PySlice) idx, t.length, r);</span>
+<span class="fc" id="L839">				Object[] out = new Object[r[1]];</span>
+<span class="fc bfc" id="L840" title="All 2 branches covered.">				for (int k = 0, p = r[0]; k &lt; r[1]; k++, p += r[2])</span>
+<span class="fc" id="L841">					out[k] = t[p];</span>
+<span class="fc" id="L842">				return new PyTuple(out);</span>
+			}
+<span class="fc" id="L844">			return t[normIndex(asIndex(idx), t.length, &quot;tuple&quot;)];</span>
+		}
+<span class="fc bfc" id="L846" title="All 2 branches covered.">		if (o instanceof PyRange) {</span>
+<span class="fc" id="L847">			PyRange rg = (PyRange) o;</span>
+<span class="fc bfc" id="L848" title="All 2 branches covered.">			if (idx instanceof PySlice) {</span>
+<span class="fc" id="L849">				int[] r = new int[3];</span>
+<span class="fc" id="L850">				sliceRange((PySlice) idx, rg.length(), r);</span>
+<span class="fc" id="L851">				return sliceOfRange(rg, r);</span>
+			}
+			// the length may be above the largest int: the index is not
+<span class="fc" id="L854">			final long len = rg.longLength();</span>
+<span class="fc" id="L855">			long i = asIndex(idx);</span>
+<span class="fc bfc" id="L856" title="All 2 branches covered.">			if (i &lt; 0)</span>
+<span class="fc" id="L857">				i += len;</span>
+<span class="pc bpc" id="L858" title="1 of 4 branches missed.">			if (i &lt; 0 || i &gt;= len)</span>
+<span class="fc" id="L859">				throw err(Types.INDEX_ERROR, &quot;range object index out of range&quot;);</span>
+<span class="fc" id="L860">			return Integer.valueOf(rg.get(i));</span>
+		}
+<span class="fc" id="L862">		throw err(Types.TYPE_ERROR, &quot;'&quot; + typeName(o) + &quot;' object is not subscriptable&quot;);</span>
+	}
+
+	private static Object sliceOfRange(PyRange rg, int[] r) {
+<span class="fc" id="L866">		long newStep = (long) rg.step * r[2];</span>
+<span class="fc" id="L867">		long newStart = (long) rg.start + (long) r[0] * rg.step;</span>
+<span class="fc" id="L868">		long newStop = newStart + newStep * r[1];</span>
+<span class="fc" id="L869">		return new PyRange(PyInt.check(newStart), PyInt.check(newStop), PyInt.check(newStep));</span>
+	}
+
+	static void setitem(Object o, Object idx, Object v) {
+<span class="fc bfc" id="L873" title="All 2 branches covered.">		if (o instanceof PyList) {</span>
+<span class="fc" id="L874">			ArrayList&lt;Object&gt; l = ((PyList) o).items;</span>
+<span class="fc bfc" id="L875" title="All 2 branches covered.">			if (idx instanceof PySlice) {</span>
+<span class="fc" id="L876">				int[] r = new int[3];</span>
+<span class="fc" id="L877">				sliceRange((PySlice) idx, l.size(), r);</span>
+<span class="fc" id="L878">				ArrayList&lt;Object&gt; src = toArrayList(v);</span>
+<span class="fc bfc" id="L879" title="All 2 branches covered.">				if (r[2] == 1) {</span>
+<span class="fc" id="L880">					checkList((long) l.size() - r[1] + src.size());</span>
+<span class="fc" id="L881">					List&lt;Object&gt; sub = l.subList(r[0], r[0] + r[1]);</span>
+<span class="fc" id="L882">					sub.clear();</span>
+<span class="fc" id="L883">					l.addAll(r[0], src);</span>
+<span class="fc" id="L884">				} else {</span>
+<span class="fc bfc" id="L885" title="All 2 branches covered.">					if (src.size() != r[1])</span>
+<span class="fc" id="L886">						throw err(Types.VALUE_ERROR, &quot;attempt to assign sequence of size &quot; + src.size()</span>
+								+ &quot; to extended slice of size &quot; + r[1]);
+<span class="fc bfc" id="L888" title="All 2 branches covered.">					for (int k = 0, p = r[0]; k &lt; r[1]; k++, p += r[2])</span>
+<span class="fc" id="L889">						l.set(p, src.get(k));</span>
+				}
+<span class="fc" id="L891">				return;</span>
+			}
+<span class="fc" id="L893">			l.set(normIndex(asIndex(idx), l.size(), &quot;list assignment&quot;), v);</span>
+<span class="fc" id="L894">			return;</span>
+		}
+<span class="fc bfc" id="L896" title="All 2 branches covered.">		if (o instanceof PyDict) {</span>
+<span class="fc" id="L897">			((PyDict) o).put(idx, v);</span>
+<span class="fc" id="L898">			return;</span>
+		}
+<span class="fc" id="L900">		throw err(Types.TYPE_ERROR, &quot;'&quot; + typeName(o) + &quot;' object does not support item assignment&quot;);</span>
+	}
+
+	static void delitem(Object o, Object idx) {
+<span class="fc bfc" id="L904" title="All 2 branches covered.">		if (o instanceof PyList) {</span>
+<span class="fc" id="L905">			ArrayList&lt;Object&gt; l = ((PyList) o).items;</span>
+<span class="fc bfc" id="L906" title="All 2 branches covered.">			if (idx instanceof PySlice) {</span>
+<span class="fc" id="L907">				int[] r = new int[3];</span>
+<span class="fc" id="L908">				sliceRange((PySlice) idx, l.size(), r);</span>
+<span class="fc bfc" id="L909" title="All 2 branches covered.">				if (r[2] == 1) {</span>
+<span class="fc" id="L910">					l.subList(r[0], r[0] + r[1]).clear();</span>
+				} else {
+<span class="fc" id="L912">					boolean[] kill = new boolean[l.size()];</span>
+<span class="fc bfc" id="L913" title="All 2 branches covered.">					for (int k = 0, p = r[0]; k &lt; r[1]; k++, p += r[2])</span>
+<span class="fc" id="L914">						kill[p] = true;</span>
+<span class="fc" id="L915">					ArrayList&lt;Object&gt; keep = new ArrayList&lt;Object&gt;();</span>
+<span class="fc bfc" id="L916" title="All 2 branches covered.">					for (int i = 0; i &lt; kill.length; i++)</span>
+<span class="fc bfc" id="L917" title="All 2 branches covered.">						if (!kill[i])</span>
+<span class="fc" id="L918">							keep.add(l.get(i));</span>
+<span class="fc" id="L919">					l.clear();</span>
+<span class="fc" id="L920">					l.addAll(keep);</span>
+				}
+<span class="fc" id="L922">				return;</span>
+			}
+<span class="fc" id="L924">			l.remove(normIndex(asIndex(idx), l.size(), &quot;list assignment&quot;));</span>
+<span class="fc" id="L925">			return;</span>
+		}
+<span class="fc bfc" id="L927" title="All 2 branches covered.">		if (o instanceof PyDict) {</span>
+<span class="fc bfc" id="L928" title="All 2 branches covered.">			if (((PyDict) o).remove(idx) == null)</span>
+<span class="fc" id="L929">				throw new PyError(new PyException(Types.KEY_ERROR, new Object[] { idx }));</span>
+<span class="fc" id="L930">			return;</span>
+		}
+<span class="fc" id="L932">		throw err(Types.TYPE_ERROR, &quot;'&quot; + typeName(o) + &quot;' object doesn't support item deletion&quot;);</span>
+	}
+
+	static int len(Object o) {
+<span class="fc bfc" id="L936" title="All 2 branches covered.">		if (o instanceof PyStr)</span>
+<span class="fc" id="L937">			return ((PyStr) o).length();</span>
+<span class="fc bfc" id="L938" title="All 2 branches covered.">		if (o instanceof String)</span>
+<span class="fc" id="L939">			return PyStr.of((String) o).length();</span>
+<span class="fc bfc" id="L940" title="All 2 branches covered.">		if (o instanceof PyList)</span>
+<span class="fc" id="L941">			return ((PyList) o).items.size();</span>
+<span class="fc bfc" id="L942" title="All 2 branches covered.">		if (o instanceof PyTuple)</span>
+<span class="fc" id="L943">			return ((PyTuple) o).items.length;</span>
+<span class="fc bfc" id="L944" title="All 2 branches covered.">		if (o instanceof PyDict)</span>
+<span class="fc" id="L945">			return ((PyDict) o).size();</span>
+<span class="fc bfc" id="L946" title="All 2 branches covered.">		if (o instanceof PySet)</span>
+<span class="fc" id="L947">			return ((PySet) o).size();</span>
+<span class="fc bfc" id="L948" title="All 2 branches covered.">		if (o instanceof PyRange)</span>
+<span class="fc" id="L949">			return ((PyRange) o).length();</span>
+<span class="fc bfc" id="L950" title="All 2 branches covered.">		if (o instanceof PyView)</span>
+<span class="fc" id="L951">			return ((PyView) o).dict.size();</span>
+<span class="fc" id="L952">		throw err(Types.TYPE_ERROR, &quot;object of type '&quot; + typeName(o) + &quot;' has no len()&quot;);</span>
+	}
+
+	// ------------------------------------------------------------ iteration
+
+	/** True for what {@link #getIter} accepts. */
+	static boolean isIterable(Object o) {
+<span class="pc bpc" id="L959" title="3 of 16 branches missed.">		return o instanceof PyList || o instanceof PyTuple || PyStr.is(o) || o instanceof PyRange</span>
+				|| o instanceof PyDict || o instanceof PySet || o instanceof PyView || o instanceof PyIter;
+	}
+
+	static PyIter getIter(Object o) {
+<span class="fc bfc" id="L964" title="All 2 branches covered.">		if (o instanceof PyList)</span>
+<span class="fc" id="L965">			return new PyIter.ListIter((PyList) o);</span>
+<span class="fc bfc" id="L966" title="All 2 branches covered.">		if (o instanceof PyTuple)</span>
+<span class="fc" id="L967">			return new PyIter.ArrayIter(((PyTuple) o).items);</span>
+<span class="fc bfc" id="L968" title="All 2 branches covered.">		if (o instanceof PyStr)</span>
+<span class="fc" id="L969">			return new PyIter.StrIter(((PyStr) o).s, true);</span>
+<span class="fc bfc" id="L970" title="All 2 branches covered.">		if (o instanceof String)</span>
+<span class="fc" id="L971">			return new PyIter.StrIter((String) o);</span>
+<span class="fc bfc" id="L972" title="All 2 branches covered.">		if (o instanceof PyRange)</span>
+<span class="fc" id="L973">			return new PyIter.RangeIter((PyRange) o);</span>
+<span class="fc bfc" id="L974" title="All 2 branches covered.">		if (o instanceof PyDict)</span>
+<span class="fc" id="L975">			return new PyIter.DictIter((PyDict) o);</span>
+<span class="fc bfc" id="L976" title="All 2 branches covered.">		if (o instanceof PySet)</span>
+<span class="fc" id="L977">			return new PySet.SetIter((PySet) o);</span>
+<span class="fc bfc" id="L978" title="All 2 branches covered.">		if (o instanceof PyView)</span>
+<span class="fc" id="L979">			return ((PyView) o).iterator();</span>
+<span class="fc bfc" id="L980" title="All 2 branches covered.">		if (o instanceof PyIter)</span>
+<span class="fc" id="L981">			return (PyIter) o;</span>
+<span class="fc" id="L982">		throw err(Types.TYPE_ERROR, &quot;'&quot; + typeName(o) + &quot;' object is not iterable&quot;);</span>
+	}
+
+	static ArrayList&lt;Object&gt; toArrayList(Object o) {
+<span class="fc bfc" id="L986" title="All 2 branches covered.">		if (o instanceof PyList)</span>
+<span class="fc" id="L987">			return new ArrayList&lt;Object&gt;(((PyList) o).items);</span>
+<span class="fc" id="L988">		ArrayList&lt;Object&gt; r = new ArrayList&lt;Object&gt;();</span>
+<span class="fc bfc" id="L989" title="All 2 branches covered.">		if (o instanceof PyTuple) {</span>
+<span class="fc" id="L990">			Collections.addAll(r, ((PyTuple) o).items);</span>
+<span class="fc" id="L991">			return r;</span>
+		}
+<span class="pc bpc" id="L993" title="1 of 4 branches missed.">		if (o instanceof PyRange &amp;&amp; ((PyRange) o).longLength() &gt; MAX_LIST)</span>
+<span class="nc" id="L994">			throw err(Types.MEMORY_ERROR, &quot;range too large&quot;);</span>
+<span class="fc" id="L995">		PyIter it = getIter(o);</span>
+<span class="fc bfc" id="L996" title="All 2 branches covered.">		for (Object x = it.next(); x != null; x = it.next()) {</span>
+<span class="fc" id="L997">			r.add(x);</span>
+<span class="pc bpc" id="L998" title="1 of 2 branches missed.">			if (r.size() &gt; MAX_LIST)</span>
+<span class="nc" id="L999">				throw err(Types.MEMORY_ERROR, &quot;sequence too large&quot;);</span>
+		}
+<span class="fc" id="L1001">		return r;</span>
+	}
+
+	static void sortList(ArrayList&lt;Object&gt; items, final Interp in, final Object key, boolean reverse) {
+<span class="fc" id="L1005">		int n = items.size();</span>
+<span class="fc" id="L1006">		in.work((long) n * (32 - Integer.numberOfLeadingZeros(n)));</span>
+<span class="fc" id="L1007">		Object[] values = items.toArray();</span>
+<span class="fc" id="L1008">		Object[] keys = new Object[n];</span>
+<span class="fc bfc" id="L1009" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++)</span>
+<span class="fc bfc" id="L1010" title="All 2 branches covered.">			keys[i] = key == PyNone.NONE ? values[i] : in.call(key, values[i]);</span>
+		// reverse=True sorts the reversed list and reverses the result, so that equal elements keep their order
+<span class="fc" id="L1012">		int[] idx = new int[n];</span>
+<span class="fc bfc" id="L1013" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++)</span>
+<span class="fc bfc" id="L1014" title="All 2 branches covered.">			idx[i] = reverse ? n - 1 - i : i;</span>
+<span class="fc" id="L1015">		sortIndices(idx, keys);</span>
+<span class="fc" id="L1016">		items.clear();</span>
+<span class="fc bfc" id="L1017" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++)</span>
+<span class="fc bfc" id="L1018" title="All 2 branches covered.">			items.add(values[idx[reverse ? n - 1 - i : i]]);</span>
+<span class="fc" id="L1019">	}</span>
+
+	/** Below this length a list is sorted by binary insertion, as CPython and the Java library do. */
+	private static final int MIN_MERGE = 32;
+
+	/**
+	 * Stable sort of the indices idx[0..n) by the order of their keys. Written
+	 * here rather than left to the Java library, whose sort may refuse a
+	 * comparison that is not a total order (a list with NaNs, for instance) while
+	 * CPython sorts it: this one always ends, whatever order() answers. order()
+	 * may raise a Python exception, which ends the sort.
+	 *
+	 * &lt;p&gt;A short list is sorted as CPython does (a first run, then binary
+	 * insertion), so the comparisons are made in the same order: the error for two
+	 * incomparable values names their types as CPython does, and a __lt__ of the
+	 * program is called in the same sequence. A longer one is merge sorted.
+	 */
+	private static void sortIndices(int[] idx, Object[] keys) {
+<span class="fc" id="L1037">		int n = idx.length;</span>
+<span class="fc bfc" id="L1038" title="All 2 branches covered.">		if (n &lt; 2)</span>
+<span class="fc" id="L1039">			return;</span>
+<span class="fc bfc" id="L1040" title="All 2 branches covered.">		if (n &lt; MIN_MERGE) {</span>
+<span class="fc" id="L1041">			int run = countRunAndMakeAscending(idx, keys, 0, n);</span>
+<span class="fc" id="L1042">			binaryInsertionSort(idx, keys, 0, n, run);</span>
+<span class="fc" id="L1043">			return;</span>
+		}
+<span class="fc" id="L1045">		mergeSort(idx, new int[n], keys, 0, n);</span>
+<span class="fc" id="L1046">	}</span>
+
+	/** Length of the run at lo (ascending, or strictly descending and then reversed in place). */
+	private static int countRunAndMakeAscending(int[] idx, Object[] keys, int lo, int hi) {
+<span class="fc" id="L1050">		int runHi = lo + 1;</span>
+<span class="pc bpc" id="L1051" title="1 of 2 branches missed.">		if (runHi == hi)</span>
+<span class="nc" id="L1052">			return 1;</span>
+<span class="fc bfc" id="L1053" title="All 2 branches covered.">		if (order(keys[idx[runHi++]], keys[idx[lo]]) &lt; 0) {</span>
+<span class="fc bfc" id="L1054" title="All 4 branches covered.">			while (runHi &lt; hi &amp;&amp; order(keys[idx[runHi]], keys[idx[runHi - 1]]) &lt; 0)</span>
+<span class="fc" id="L1055">				runHi++;</span>
+<span class="fc bfc" id="L1056" title="All 2 branches covered.">			for (int i = lo, j = runHi - 1; i &lt; j; i++, j--) {</span>
+<span class="fc" id="L1057">				int t = idx[i];</span>
+<span class="fc" id="L1058">				idx[i] = idx[j];</span>
+<span class="fc" id="L1059">				idx[j] = t;</span>
+			}
+		} else {
+<span class="fc bfc" id="L1062" title="All 4 branches covered.">			while (runHi &lt; hi &amp;&amp; order(keys[idx[runHi]], keys[idx[runHi - 1]]) &gt;= 0)</span>
+<span class="fc" id="L1063">				runHi++;</span>
+		}
+<span class="fc" id="L1065">		return runHi - lo;</span>
+	}
+
+	/** Sorts idx[lo..hi) knowing that idx[lo..start) is sorted: each element is inserted at the place a binary search finds. */
+	private static void binaryInsertionSort(int[] idx, Object[] keys, int lo, int hi, int start) {
+<span class="pc bpc" id="L1070" title="1 of 2 branches missed.">		if (start == lo)</span>
+<span class="nc" id="L1071">			start++;</span>
+<span class="fc bfc" id="L1072" title="All 2 branches covered.">		for (; start &lt; hi; start++) {</span>
+<span class="fc" id="L1073">			int pivot = idx[start];</span>
+<span class="fc" id="L1074">			int left = lo;</span>
+<span class="fc" id="L1075">			int right = start;</span>
+<span class="fc bfc" id="L1076" title="All 2 branches covered.">			while (left &lt; right) {</span>
+<span class="fc" id="L1077">				int mid = (left + right) &gt;&gt;&gt; 1;</span>
+<span class="fc bfc" id="L1078" title="All 2 branches covered.">				if (order(keys[pivot], keys[idx[mid]]) &lt; 0)</span>
+<span class="fc" id="L1079">					right = mid;</span>
+				else
+<span class="fc" id="L1081">					left = mid + 1;</span>
+<span class="fc" id="L1082">			}</span>
+<span class="fc" id="L1083">			System.arraycopy(idx, left, idx, left + 1, start - left);</span>
+<span class="fc" id="L1084">			idx[left] = pivot;</span>
+		}
+<span class="fc" id="L1086">	}</span>
+
+	/** Stable merge sort of idx[lo..hi). */
+	private static void mergeSort(int[] idx, int[] tmp, Object[] keys, int lo, int hi) {
+<span class="fc bfc" id="L1090" title="All 2 branches covered.">		if (hi - lo &lt; 2)</span>
+<span class="fc" id="L1091">			return;</span>
+<span class="fc" id="L1092">		int mid = (lo + hi) &gt;&gt;&gt; 1;</span>
+<span class="fc" id="L1093">		mergeSort(idx, tmp, keys, lo, mid);</span>
+<span class="fc" id="L1094">		mergeSort(idx, tmp, keys, mid, hi);</span>
+<span class="fc bfc" id="L1095" title="All 2 branches covered.">		if (order(keys[idx[mid]], keys[idx[mid - 1]]) &gt;= 0)</span>
+<span class="fc" id="L1096">			return; // the two halves are already in order</span>
+<span class="fc" id="L1097">		int i = lo, j = mid, k = lo;</span>
+<span class="fc bfc" id="L1098" title="All 4 branches covered.">		while (i &lt; mid &amp;&amp; j &lt; hi) {</span>
+			// an element of the right half goes first only if it is strictly smaller: that keeps the sort stable
+<span class="fc bfc" id="L1100" title="All 2 branches covered.">			if (order(keys[idx[j]], keys[idx[i]]) &lt; 0)</span>
+<span class="fc" id="L1101">				tmp[k++] = idx[j++];</span>
+			else
+<span class="fc" id="L1103">				tmp[k++] = idx[i++];</span>
+		}
+<span class="fc bfc" id="L1105" title="All 2 branches covered.">		while (i &lt; mid)</span>
+<span class="fc" id="L1106">			tmp[k++] = idx[i++];</span>
+<span class="fc bfc" id="L1107" title="All 2 branches covered.">		while (j &lt; hi)</span>
+<span class="fc" id="L1108">			tmp[k++] = idx[j++];</span>
+<span class="fc" id="L1109">		System.arraycopy(tmp, lo, idx, lo, hi - lo);</span>
+<span class="fc" id="L1110">	}</span>
+
+	// ------------------------------------------------------------ repr and str
+
+	static String repr(Object o) {
+<span class="fc" id="L1115">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L1116">		repr(o, sb, 0);</span>
+<span class="fc" id="L1117">		return sb.toString();</span>
+	}
+
+	private static void repr(Object o, StringBuilder sb, int depth) {
+<span class="pc bpc" id="L1121" title="1 of 2 branches missed.">		if (depth &gt; MAX_NESTING)</span>
+<span class="nc" id="L1122">			throw err(Types.RECURSION_ERROR, &quot;maximum recursion depth exceeded while getting the repr of an object&quot;);</span>
+<span class="fc bfc" id="L1123" title="All 2 branches covered.">		if (PyStr.is(o)) {</span>
+			// the repr of a list of large strs is not built above the largest str
+<span class="fc" id="L1125">			checkString((long) sb.length() + PyStr.text(o).length());</span>
+<span class="fc" id="L1126">			sb.append(Fmt.reprStr(PyStr.text(o)));</span>
+<span class="fc bfc" id="L1127" title="All 2 branches covered.">		} else if (o instanceof Integer) {</span>
+<span class="fc" id="L1128">			sb.append(((Integer) o).intValue());</span>
+<span class="fc bfc" id="L1129" title="All 2 branches covered.">		} else if (o instanceof Double) {</span>
+<span class="fc" id="L1130">			sb.append(Fmt.repr(((Double) o).doubleValue()));</span>
+<span class="fc bfc" id="L1131" title="All 2 branches covered.">		} else if (o instanceof Boolean) {</span>
+<span class="fc bfc" id="L1132" title="All 2 branches covered.">			sb.append(((Boolean) o).booleanValue() ? &quot;True&quot; : &quot;False&quot;);</span>
+<span class="fc bfc" id="L1133" title="All 2 branches covered.">		} else if (o == PyNone.NONE) {</span>
+<span class="fc" id="L1134">			sb.append(&quot;None&quot;);</span>
+<span class="fc bfc" id="L1135" title="All 2 branches covered.">		} else if (o instanceof PyList) {</span>
+<span class="fc" id="L1136">			sb.append('[');</span>
+<span class="fc" id="L1137">			ArrayList&lt;Object&gt; l = ((PyList) o).items;</span>
+<span class="fc bfc" id="L1138" title="All 2 branches covered.">			for (int i = 0; i &lt; l.size(); i++) {</span>
+<span class="fc bfc" id="L1139" title="All 2 branches covered.">				if (i &gt; 0)</span>
+<span class="fc" id="L1140">					sb.append(&quot;, &quot;);</span>
+<span class="fc" id="L1141">				repr(l.get(i), sb, depth + 1);</span>
+			}
+<span class="fc" id="L1143">			sb.append(']');</span>
+<span class="fc bfc" id="L1144" title="All 2 branches covered.">		} else if (o instanceof PyTuple) {</span>
+<span class="fc" id="L1145">			Object[] t = ((PyTuple) o).items;</span>
+<span class="fc" id="L1146">			sb.append('(');</span>
+<span class="fc bfc" id="L1147" title="All 2 branches covered.">			for (int i = 0; i &lt; t.length; i++) {</span>
+<span class="fc bfc" id="L1148" title="All 2 branches covered.">				if (i &gt; 0)</span>
+<span class="fc" id="L1149">					sb.append(&quot;, &quot;);</span>
+<span class="fc" id="L1150">				repr(t[i], sb, depth + 1);</span>
+			}
+<span class="fc bfc" id="L1152" title="All 2 branches covered.">			if (t.length == 1)</span>
+<span class="fc" id="L1153">				sb.append(',');</span>
+<span class="fc" id="L1154">			sb.append(')');</span>
+<span class="fc bfc" id="L1155" title="All 2 branches covered.">		} else if (o instanceof PySet) {</span>
+<span class="fc" id="L1156">			PySet s = (PySet) o;</span>
+<span class="fc bfc" id="L1157" title="All 2 branches covered.">			if (s.size() == 0) {</span>
+<span class="fc" id="L1158">				sb.append(&quot;set()&quot;);</span>
+			} else {
+<span class="fc" id="L1160">				sb.append('{');</span>
+<span class="fc" id="L1161">				boolean first = true;</span>
+<span class="fc bfc" id="L1162" title="All 2 branches covered.">				for (Object item : s.map.values()) {</span>
+<span class="pc bpc" id="L1163" title="1 of 2 branches missed.">					if (!first)</span>
+<span class="nc" id="L1164">						sb.append(&quot;, &quot;);</span>
+<span class="fc" id="L1165">					first = false;</span>
+<span class="fc" id="L1166">					repr(item, sb, depth + 1);</span>
+<span class="fc" id="L1167">				}</span>
+<span class="fc" id="L1168">				sb.append('}');</span>
+			}
+<span class="fc bfc" id="L1170" title="All 2 branches covered.">		} else if (o instanceof PyDict) {</span>
+<span class="fc" id="L1171">			sb.append('{');</span>
+<span class="fc" id="L1172">			boolean first = true;</span>
+<span class="fc bfc" id="L1173" title="All 2 branches covered.">			for (PyDict.Entry e : ((PyDict) o).map.values()) {</span>
+<span class="fc bfc" id="L1174" title="All 2 branches covered.">				if (!first)</span>
+<span class="fc" id="L1175">					sb.append(&quot;, &quot;);</span>
+<span class="fc" id="L1176">				first = false;</span>
+<span class="fc" id="L1177">				repr(e.key, sb, depth + 1);</span>
+<span class="fc" id="L1178">				sb.append(&quot;: &quot;);</span>
+<span class="fc" id="L1179">				repr(e.value, sb, depth + 1);</span>
+<span class="fc" id="L1180">			}</span>
+<span class="fc" id="L1181">			sb.append('}');</span>
+<span class="pc bpc" id="L1182" title="1 of 2 branches missed.">		} else if (o instanceof PyView) {</span>
+<span class="nc" id="L1183">			PyView v = (PyView) o;</span>
+<span class="nc" id="L1184">			sb.append(v.type().name).append('(');</span>
+<span class="nc" id="L1185">			PyList l = new PyList(toArrayList(v));</span>
+<span class="nc" id="L1186">			repr(l, sb, depth + 1);</span>
+<span class="nc" id="L1187">			sb.append(')');</span>
+<span class="pc bfc" id="L1188" title="All 2 branches covered.">		} else if (o instanceof PyRange) {</span>
+<span class="fc" id="L1189">			PyRange r = (PyRange) o;</span>
+<span class="fc" id="L1190">			sb.append(&quot;range(&quot;).append(r.start).append(&quot;, &quot;).append(r.stop);</span>
+<span class="fc bfc" id="L1191" title="All 2 branches covered.">			if (r.step != 1)</span>
+<span class="fc" id="L1192">				sb.append(&quot;, &quot;).append(r.step);</span>
+<span class="fc" id="L1193">			sb.append(')');</span>
+<span class="fc bfc" id="L1194" title="All 2 branches covered.">		} else if (o instanceof PyException) {</span>
+<span class="fc" id="L1195">			PyException e = (PyException) o;</span>
+<span class="fc bfc" id="L1196" title="All 2 branches covered.">			final String text = e.type.isClass() ? userText(e.type, e, &quot;__repr__&quot;) : null;</span>
+<span class="fc bfc" id="L1197" title="All 2 branches covered.">			if (text != null) {</span>
+<span class="fc" id="L1198">				sb.append(text);</span>
+			} else {
+<span class="fc" id="L1200">				sb.append(e.type.name).append('(');</span>
+<span class="fc bfc" id="L1201" title="All 2 branches covered.">				for (int i = 0; i &lt; e.args.length; i++) {</span>
+<span class="fc bfc" id="L1202" title="All 2 branches covered.">					if (i &gt; 0)</span>
+<span class="fc" id="L1203">						sb.append(&quot;, &quot;);</span>
+<span class="fc" id="L1204">					repr(e.args[i], sb, depth + 1);</span>
+				}
+<span class="fc" id="L1206">				sb.append(')');</span>
+			}
+<span class="fc bfc" id="L1208" title="All 2 branches covered.">		} else if (o instanceof PyType) {</span>
+<span class="fc" id="L1209">			PyType t = (PyType) o;</span>
+<span class="fc" id="L1210">			sb.append(&quot;&lt;class '&quot;).append(t.fullName()).append(&quot;'&gt;&quot;);</span>
+<span class="fc bfc" id="L1211" title="All 2 branches covered.">		} else if (o instanceof PyInstance) {</span>
+<span class="fc" id="L1212">			PyType t = ((PyInstance) o).type;</span>
+<span class="fc" id="L1213">			final String text = userText((PyInstance) o, &quot;__repr__&quot;);</span>
+<span class="fc bfc" id="L1214" title="All 2 branches covered.">			if (text != null)</span>
+<span class="fc" id="L1215">				sb.append(text);</span>
+			else
+				// CPython adds the address, which is not deterministic
+<span class="fc" id="L1218">				sb.append('&lt;').append(t.fullName()).append(&quot; object&gt;&quot;);</span>
+<span class="fc bfc" id="L1219" title="All 2 branches covered.">		} else if (o instanceof PyFunction) {</span>
+<span class="fc" id="L1220">			sb.append(&quot;&lt;function &quot;).append(((PyFunction) o).code.name).append('&gt;');</span>
+<span class="fc bfc" id="L1221" title="All 2 branches covered.">		} else if (o instanceof Builtin) {</span>
+<span class="fc" id="L1222">			sb.append(&quot;&lt;built-in function &quot;).append(((Builtin) o).name).append('&gt;');</span>
+<span class="fc bfc" id="L1223" title="All 2 branches covered.">		} else if (o instanceof BoundMethod) {</span>
+<span class="fc" id="L1224">			BoundMethod m = (BoundMethod) o;</span>
+<span class="pc bpc" id="L1225" title="1 of 2 branches missed.">			if (m.function != null) {</span>
+<span class="fc" id="L1226">				sb.append(&quot;&lt;bound method &quot;).append(typeName(m.self)).append('.').append(m.name()).append(&quot; of &quot;);</span>
+<span class="fc" id="L1227">				repr(m.self, sb, depth + 1);</span>
+<span class="fc" id="L1228">				sb.append('&gt;');</span>
+			} else {
+<span class="nc" id="L1230">				sb.append(&quot;&lt;built-in method &quot;).append(m.method.name).append(&quot; of &quot;).append(typeName(m.self))</span>
+<span class="nc" id="L1231">						.append(&quot; object&gt;&quot;);</span>
+			}
+<span class="pc bpc" id="L1233" title="1 of 2 branches missed.">		} else if (o instanceof PyModule) {</span>
+<span class="nc" id="L1234">			sb.append(&quot;&lt;module '&quot;).append(((PyModule) o).name).append(&quot;'&gt;&quot;);</span>
+<span class="pc bpc" id="L1235" title="1 of 2 branches missed.">		} else if (o instanceof PyNotImplemented) {</span>
+<span class="fc" id="L1236">			sb.append(&quot;NotImplemented&quot;);</span>
+<span class="nc bnc" id="L1237" title="All 2 branches missed.">		} else if (o instanceof PySlice) {</span>
+<span class="nc" id="L1238">			PySlice s = (PySlice) o;</span>
+<span class="nc" id="L1239">			sb.append(&quot;slice(&quot;);</span>
+<span class="nc" id="L1240">			repr(s.lower, sb, depth + 1);</span>
+<span class="nc" id="L1241">			sb.append(&quot;, &quot;);</span>
+<span class="nc" id="L1242">			repr(s.upper, sb, depth + 1);</span>
+<span class="nc" id="L1243">			sb.append(&quot;, &quot;);</span>
+<span class="nc" id="L1244">			repr(s.step, sb, depth + 1);</span>
+<span class="nc" id="L1245">			sb.append(')');</span>
+<span class="nc" id="L1246">		} else {</span>
+<span class="nc" id="L1247">			sb.append(&quot;&lt;&quot;).append(typeName(o)).append(&quot; object&gt;&quot;);</span>
+		}
+<span class="fc" id="L1249">	}</span>
+
+	static String str(Object o) {
+<span class="fc bfc" id="L1252" title="All 2 branches covered.">		if (PyStr.is(o))</span>
+<span class="fc" id="L1253">			return PyStr.text(o);</span>
+<span class="fc bfc" id="L1254" title="All 2 branches covered.">		if (o instanceof PyException) {</span>
+<span class="fc" id="L1255">			final PyException e = (PyException) o;</span>
+<span class="fc bfc" id="L1256" title="All 2 branches covered.">			final String text = e.type.isClass() ? userText(e.type, e, &quot;__str__&quot;) : null;</span>
+<span class="fc bfc" id="L1257" title="All 2 branches covered.">			return text != null ? text : excText(e);</span>
+		}
+<span class="fc bfc" id="L1259" title="All 2 branches covered.">		if (o instanceof PyInstance) {</span>
+			// as object.__str__, which is repr(self) when the class has no __str__
+<span class="fc" id="L1261">			final String text = userText((PyInstance) o, &quot;__str__&quot;);</span>
+<span class="fc bfc" id="L1262" title="All 2 branches covered.">			if (text != null)</span>
+<span class="fc" id="L1263">				return text;</span>
+		}
+<span class="fc" id="L1265">		return repr(o);</span>
+	}
+
+	/**
+	 * The text a special method of the class of the program gives (__str__ or
+	 * __repr__), or null if the class has none. The method is run by the
+	 * interpreter of the class; what it returns must be a str.
+	 */
+	private static String userText(PyInstance o, String method) {
+<span class="fc" id="L1274">		return userText(o.type, o, method);</span>
+	}
+
+	private static String userText(PyType type, Object o, String method) {
+<span class="fc" id="L1278">		final Object fn = type.lookup(method);</span>
+<span class="fc bfc" id="L1279" title="All 2 branches covered.">		if (fn == null)</span>
+<span class="fc" id="L1280">			return null;</span>
+<span class="fc" id="L1281">		final Object result = type.interp.call(fn, o);</span>
+<span class="fc bfc" id="L1282" title="All 2 branches covered.">		if (PyStr.is(result) == false)</span>
+<span class="fc" id="L1283">			throw err(Types.TYPE_ERROR, method + &quot; returned non-string (type &quot; + typeName(result) + &quot;)&quot;);</span>
+<span class="fc" id="L1284">		return PyStr.text(result);</span>
+	}
+
+	static String excText(PyException e) {
+<span class="fc bfc" id="L1288" title="All 2 branches covered.">		if (e.args.length == 0)</span>
+<span class="fc" id="L1289">			return &quot;&quot;;</span>
+<span class="fc bfc" id="L1290" title="All 2 branches covered.">		if (e.args.length == 1)</span>
+<span class="fc bfc" id="L1291" title="All 2 branches covered.">			return e.type.isSubtypeOf(Types.KEY_ERROR) ? repr(e.args[0]) : str(e.args[0]);</span>
+<span class="fc" id="L1292">		return repr(new PyTuple(e.args));</span>
+	}
+
+	// ------------------------------------------------------------ attributes
+
+	static Object getattr(Object o, String name) {
+<span class="fc bfc" id="L1298" title="All 2 branches covered.">		if (o instanceof PyModule) {</span>
+<span class="fc" id="L1299">			Object v = ((PyModule) o).members.get(name);</span>
+<span class="fc bfc" id="L1300" title="All 2 branches covered.">			if (v == null)</span>
+<span class="fc" id="L1301">				throw err(Types.ATTRIBUTE_ERROR,</span>
+						&quot;module '&quot; + ((PyModule) o).name + &quot;' has no attribute '&quot; + name + &quot;'&quot;);
+<span class="fc" id="L1303">			return v;</span>
+		}
+<span class="fc bfc" id="L1305" title="All 2 branches covered.">		if (o instanceof PyInstance) {</span>
+<span class="fc" id="L1306">			Object v = ((PyInstance) o).attrs.get(name);</span>
+<span class="fc bfc" id="L1307" title="All 2 branches covered.">			if (v != null)</span>
+<span class="fc" id="L1308">				return v;</span>
+<span class="fc" id="L1309">			return classAttr(o, ((PyInstance) o).type, name);</span>
+		}
+<span class="fc bfc" id="L1311" title="All 2 branches covered.">		if (o instanceof PyException) {</span>
+<span class="fc" id="L1312">			PyException e = (PyException) o;</span>
+<span class="fc bfc" id="L1313" title="All 2 branches covered.">			if (e.attrs != null) {</span>
+<span class="fc" id="L1314">				Object v = e.attrs.get(name);</span>
+<span class="fc bfc" id="L1315" title="All 2 branches covered.">				if (v != null)</span>
+<span class="fc" id="L1316">					return v;</span>
+			}
+<span class="fc bfc" id="L1318" title="All 2 branches covered.">			if (name.equals(&quot;args&quot;))</span>
+<span class="fc" id="L1319">				return new PyTuple(e.args);</span>
+<span class="fc bfc" id="L1320" title="All 2 branches covered.">			if (e.type.isClass())</span>
+<span class="fc" id="L1321">				return classAttr(o, e.type, name);</span>
+		}
+<span class="fc bfc" id="L1323" title="All 4 branches covered.">		if (o instanceof PyType &amp;&amp; ((PyType) o).isClass()) {</span>
+<span class="fc" id="L1324">			PyType t = (PyType) o;</span>
+<span class="fc bfc" id="L1325" title="All 2 branches covered.">			if (name.equals(&quot;__qualname__&quot;))</span>
+<span class="fc" id="L1326">				return PyStr.of(t.qualname);</span>
+<span class="fc bfc" id="L1327" title="All 2 branches covered.">			if (name.equals(&quot;__name__&quot;) == false) {</span>
+<span class="fc" id="L1328">				Object v = t.lookup(name);</span>
+<span class="fc bfc" id="L1329" title="All 2 branches covered.">				if (v == null)</span>
+<span class="fc" id="L1330">					throw err(Types.ATTRIBUTE_ERROR, &quot;type object '&quot; + t.name + &quot;' has no attribute '&quot; + name + &quot;'&quot;);</span>
+<span class="fc" id="L1331">				return v;</span>
+			}
+		}
+<span class="fc bfc" id="L1334" title="All 2 branches covered.">		if (name.equals(&quot;__name__&quot;)) {</span>
+<span class="fc bfc" id="L1335" title="All 2 branches covered.">			if (o instanceof PyType)</span>
+<span class="fc" id="L1336">				return PyStr.of(((PyType) o).name);</span>
+<span class="pc bpc" id="L1337" title="1 of 2 branches missed.">			if (o instanceof PyFunction)</span>
+<span class="fc" id="L1338">				return PyStr.of(((PyFunction) o).code.name);</span>
+<span class="nc bnc" id="L1339" title="All 2 branches missed.">			if (o instanceof Builtin)</span>
+<span class="nc" id="L1340">				return PyStr.of(((Builtin) o).name);</span>
+<span class="nc bnc" id="L1341" title="All 2 branches missed.">			if (o instanceof BoundMethod)</span>
+<span class="nc" id="L1342">				return PyStr.of(((BoundMethod) o).name());</span>
+		}
+<span class="pc bpc" id="L1344" title="1 of 4 branches missed.">		if (o instanceof PyType &amp;&amp; name.equals(&quot;__init__&quot;)) {</span>
+			// Exception.__init__(self, ...) or object.__init__(self), called by a class
+<span class="fc" id="L1346">			Object v = ((PyType) o).lookup(name);</span>
+<span class="pc bpc" id="L1347" title="1 of 2 branches missed.">			if (v != null)</span>
+<span class="fc" id="L1348">				return v;</span>
+		}
+<span class="fc" id="L1350">		Builtin m = Methods.lookup(o, name);</span>
+<span class="fc bfc" id="L1351" title="All 2 branches covered.">		if (m != null)</span>
+<span class="fc" id="L1352">			return new BoundMethod(o, m);</span>
+<span class="fc" id="L1353">		throw err(Types.ATTRIBUTE_ERROR, &quot;'&quot; + typeName(o) + &quot;' object has no attribute '&quot; + name + &quot;'&quot;);</span>
+	}
+
+	/** An attribute found on the class of an instance: a function becomes a method bound to the instance. */
+	private static Object classAttr(Object self, PyType type, String name) {
+<span class="fc" id="L1358">		Object v = type.lookup(name);</span>
+<span class="fc bfc" id="L1359" title="All 2 branches covered.">		if (v == null)</span>
+<span class="fc" id="L1360">			throw err(Types.ATTRIBUTE_ERROR, &quot;'&quot; + type.name + &quot;' object has no attribute '&quot; + name + &quot;'&quot;);</span>
+<span class="fc bfc" id="L1361" title="All 2 branches covered.">		if (v instanceof PyFunction)</span>
+<span class="fc" id="L1362">			return new BoundMethod(self, (PyFunction) v);</span>
+<span class="pc bpc" id="L1363" title="2 of 4 branches missed.">		if (v == Builtins.EXCEPTION_INIT || v == Builtins.OBJECT_INIT)</span>
+<span class="nc" id="L1364">			return new BoundMethod(self, (Builtin) v);</span>
+<span class="pc bpc" id="L1365" title="1 of 4 branches missed.">		if (v instanceof Builtin &amp;&amp; ((Builtin) v).isMethod)</span>
+<span class="fc" id="L1366">			return new BoundMethod(self, (Builtin) v); // a method of a native class</span>
+<span class="fc" id="L1367">		return v; // as in CPython, a builtin function stored in a class is not bound</span>
+	}
+
+	/** The instances and the classes written in Java cannot be changed, as in CPython. */
+	private static void refuseNative(Object o, String name) {
+<span class="fc bfc" id="L1372" title="All 4 branches covered.">		if (o instanceof PyInstance &amp;&amp; ((PyInstance) o).type.nativeClass)</span>
+<span class="fc" id="L1373">			throw err(Types.ATTRIBUTE_ERROR,</span>
+<span class="fc" id="L1374">					&quot;attribute '&quot; + name + &quot;' of '&quot; + ((PyInstance) o).type.fullName() + &quot;' objects is not writable&quot;);</span>
+<span class="fc bfc" id="L1375" title="All 4 branches covered.">		if (o instanceof PyType &amp;&amp; ((PyType) o).nativeClass)</span>
+<span class="fc" id="L1376">			throw err(Types.TYPE_ERROR,</span>
+<span class="fc" id="L1377">					&quot;cannot set '&quot; + name + &quot;' attribute of immutable type '&quot; + ((PyType) o).fullName() + &quot;'&quot;);</span>
+<span class="fc" id="L1378">	}</span>
+
+	/** Attributes can be set on instances and classes of the program, and on exceptions. */
+	static void setattr(Object o, String name, Object v) {
+<span class="fc" id="L1382">		refuseNative(o, name);</span>
+<span class="fc bfc" id="L1383" title="All 4 branches covered.">		if (o instanceof PyInstance &amp;&amp; ((PyInstance) o).type.isClass()) {</span>
+<span class="fc" id="L1384">			((PyInstance) o).attrs.put(name, v);</span>
+<span class="fc bfc" id="L1385" title="All 2 branches covered.">		} else if (o instanceof PyException) {</span>
+<span class="fc" id="L1386">			((PyException) o).attrs().put(name, v);</span>
+<span class="pc bpc" id="L1387" title="1 of 4 branches missed.">		} else if (o instanceof PyType &amp;&amp; ((PyType) o).isClass()) {</span>
+<span class="fc" id="L1388">			((PyType) o).dict.put(name, v);</span>
+		} else {
+<span class="fc" id="L1390">			throw err(Types.ATTRIBUTE_ERROR, &quot;'&quot; + typeName(o) + &quot;' object has no attribute '&quot; + name</span>
+					+ &quot;' and no __dict__ for setting new attributes&quot;);
+		}
+<span class="fc" id="L1393">	}</span>
+
+	static void delattr(Object o, String name) {
+<span class="fc" id="L1396">		refuseNative(o, name);</span>
+<span class="fc" id="L1397">		Map&lt;String, Object&gt; attrs = null;</span>
+<span class="pc bpc" id="L1398" title="1 of 4 branches missed.">		if (o instanceof PyInstance &amp;&amp; ((PyInstance) o).type.isClass())</span>
+<span class="fc" id="L1399">			attrs = ((PyInstance) o).attrs;</span>
+<span class="pc bpc" id="L1400" title="1 of 2 branches missed.">		else if (o instanceof PyException)</span>
+<span class="nc" id="L1401">			attrs = ((PyException) o).attrs;</span>
+<span class="pc bpc" id="L1402" title="2 of 4 branches missed.">		else if (o instanceof PyType &amp;&amp; ((PyType) o).isClass())</span>
+<span class="fc" id="L1403">			attrs = ((PyType) o).dict;</span>
+<span class="pc bpc" id="L1404" title="1 of 4 branches missed.">		if (attrs == null || attrs.remove(name) == null)</span>
+<span class="fc" id="L1405">			throw err(Types.ATTRIBUTE_ERROR, &quot;'&quot; + typeName(o) + &quot;' object has no attribute '&quot; + name + &quot;'&quot;);</span>
+<span class="fc" id="L1406">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

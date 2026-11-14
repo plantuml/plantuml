@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Resolver.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">Resolver.java</span></div><h1>Resolver.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Decides, for every name of every scope, whether it is local, global, a cell
+ * (local captured by an inner function) or free (captured from an enclosing
+ * function). The rule is Python's: a name bound anywhere in a function is local
+ * to it, unless declared {@code global} or {@code nonlocal}; names bound at the
+ * top level of the module are globals.
+ */
+<span class="fc" id="L13">final class Resolver {</span>
+	/**
+	 * The deepest tree this pass, and CodeGen which follows the same tree, accept:
+	 * both recurse once per level. The parser limits the nesting it recurses on
+	 * (200 levels) but builds a chain such as {@code 1 + 1 + ... + 1} or
+	 * {@code a.b.c...} with a loop, so only this limit bounds those: without it,
+	 * a long chain overflows the stack, which a Go port could not recover from.
+	 */
+	private static final int MAX_NESTING = 1000;
+
+<span class="fc" id="L23">	private final List&lt;Scope&gt; all = new ArrayList&lt;Scope&gt;();</span>
+	/** The number of levels of the tree around the node being visited. */
+	private int nesting;
+
+	/** Analyses a Module node; the scope of each function-like node is stored in its scope field. */
+	static Scope resolve(Ast.Module module) {
+<span class="fc" id="L29">		Resolver r = new Resolver();</span>
+<span class="fc" id="L30">		Scope top = new Scope(Scope.MODULE, &quot;&lt;module&gt;&quot;, null, module);</span>
+<span class="fc" id="L31">		module.scope = top;</span>
+<span class="fc" id="L32">		r.all.add(top);</span>
+<span class="fc" id="L33">		r.statements(top, module.body);</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		for (Scope s : r.all)</span>
+<span class="fc" id="L35">			r.resolveNames(s);</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">		for (Scope s : r.all)</span>
+<span class="fc" id="L37">			s.layout();</span>
+<span class="fc" id="L38">		return top;</span>
+	}
+
+	private static PySyntaxError error(String message, Node at) {
+<span class="fc" id="L42">		return new PySyntaxError(message, at.line, at.col);</span>
+	}
+
+	// ------------------------------------------------------------ analysis
+
+	private void statements(Scope s, List&lt;Ast.Stmt&gt; body) {
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		for (Ast.Stmt n : body)</span>
+<span class="fc" id="L49">			statement(s, n);</span>
+<span class="fc" id="L50">	}</span>
+
+	private void bind(Scope s, String name) {
+<span class="fc" id="L53">		s.addFlags(name, Scope.BOUND);</span>
+<span class="fc" id="L54">	}</span>
+
+	/** Enters a level of the tree; the caller leaves it with {@code nesting--}. After an error nothing is reused. */
+	private void enter(Node at, int levels) {
+<span class="fc" id="L58">		nesting += levels;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (nesting &gt; MAX_NESTING)</span>
+<span class="fc" id="L60">			throw error(&quot;too many levels of nesting&quot;, at);</span>
+<span class="fc" id="L61">	}</span>
+
+	private void statement(Scope s, Ast.Stmt n) {
+<span class="fc" id="L64">		enter(n, 1);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (n instanceof Ast.FunctionDef) {</span>
+<span class="fc" id="L66">			Ast.FunctionDef f = (Ast.FunctionDef) n;</span>
+<span class="fc" id="L67">			decorators(s, f.decorators);</span>
+<span class="fc" id="L68">			bind(s, f.name);</span>
+<span class="fc" id="L69">			defaults(s, f.args);</span>
+<span class="fc" id="L70">			Scope child = function(s, f.name, f, f.args);</span>
+<span class="fc" id="L71">			f.scope = child;</span>
+<span class="fc" id="L72">			statements(child, f.body);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		} else if (n instanceof Ast.ClassDef) {</span>
+<span class="fc" id="L74">			Ast.ClassDef c = (Ast.ClassDef) n;</span>
+<span class="fc" id="L75">			decorators(s, c.decorators);</span>
+<span class="fc" id="L76">			bind(s, c.name);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			for (Ast.Expr b : c.bases)</span>
+<span class="fc" id="L78">				expression(s, b);</span>
+<span class="fc" id="L79">			Scope child = new Scope(Scope.CLASS, c.name, s, c);</span>
+<span class="fc" id="L80">			c.scope = child;</span>
+<span class="fc" id="L81">			all.add(child);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			for (Ast.Stmt m : c.body) {</span>
+<span class="fc" id="L83">				checkClassStatement(m);</span>
+<span class="fc" id="L84">				statement(child, m);</span>
+<span class="fc" id="L85">			}</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		} else if (n instanceof Ast.Return) {</span>
+<span class="fc" id="L87">			expressionOrNull(s, ((Ast.Return) n).value);</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		} else if (n instanceof Ast.Delete) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">			for (Ast.Expr t : ((Ast.Delete) n).targets)</span>
+<span class="fc" id="L90">				target(s, t);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		} else if (n instanceof Ast.Assign) {</span>
+<span class="fc" id="L92">			Ast.Assign a = (Ast.Assign) n;</span>
+<span class="fc" id="L93">			expression(s, a.value);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">			for (Ast.Expr t : a.targets)</span>
+<span class="fc" id="L95">				target(s, t);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		} else if (n instanceof Ast.AugAssign) {</span>
+<span class="fc" id="L97">			Ast.AugAssign a = (Ast.AugAssign) n;</span>
+<span class="fc" id="L98">			expression(s, a.value);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">			if (a.target instanceof Ast.Name) {</span>
+<span class="fc" id="L100">				s.addFlags(((Ast.Name) a.target).id, Scope.USED);</span>
+<span class="fc" id="L101">				target(s, a.target);</span>
+			} else {
+<span class="fc" id="L103">				target(s, a.target);</span>
+<span class="fc" id="L104">				expression(s, a.target);</span>
+			}
+<span class="fc bfc" id="L106" title="All 2 branches covered.">		} else if (n instanceof Ast.For) {</span>
+<span class="fc" id="L107">			Ast.For f = (Ast.For) n;</span>
+<span class="fc" id="L108">			expression(s, f.iter);</span>
+<span class="fc" id="L109">			target(s, f.target);</span>
+<span class="fc" id="L110">			statements(s, f.body);</span>
+<span class="fc" id="L111">			statements(s, f.orelse);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		} else if (n instanceof Ast.While) {</span>
+<span class="fc" id="L113">			Ast.While w = (Ast.While) n;</span>
+<span class="fc" id="L114">			expression(s, w.test);</span>
+<span class="fc" id="L115">			statements(s, w.body);</span>
+<span class="fc" id="L116">			statements(s, w.orelse);</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		} else if (n instanceof Ast.If) {</span>
+<span class="fc" id="L118">			Ast.If i = (Ast.If) n;</span>
+<span class="fc" id="L119">			expression(s, i.test);</span>
+<span class="fc" id="L120">			statements(s, i.body);</span>
+<span class="fc" id="L121">			statements(s, i.orelse);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		} else if (n instanceof Ast.Raise) {</span>
+<span class="fc" id="L123">			Ast.Raise r = (Ast.Raise) n;</span>
+<span class="fc" id="L124">			expressionOrNull(s, r.exc);</span>
+<span class="fc" id="L125">			expressionOrNull(s, r.cause);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		} else if (n instanceof Ast.Try) {</span>
+<span class="fc" id="L127">			Ast.Try t = (Ast.Try) n;</span>
+<span class="fc" id="L128">			statements(s, t.body);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			for (Ast.ExceptHandler h : t.handlers) {</span>
+<span class="fc" id="L130">				expressionOrNull(s, h.exceptionType);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">				if (h.name != null)</span>
+<span class="fc" id="L132">					bind(s, h.name);</span>
+<span class="fc" id="L133">				statements(s, h.body);</span>
+<span class="fc" id="L134">			}</span>
+<span class="fc" id="L135">			statements(s, t.orelse);</span>
+			// finally is rejected by the parser: there is no final body
+<span class="fc bfc" id="L137" title="All 2 branches covered.">		} else if (n instanceof Ast.Assert) {</span>
+<span class="fc" id="L138">			Ast.Assert a = (Ast.Assert) n;</span>
+<span class="fc" id="L139">			expression(s, a.test);</span>
+<span class="fc" id="L140">			expressionOrNull(s, a.msg);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		} else if (n instanceof Ast.Import) {</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">			for (Ast.Alias a : ((Ast.Import) n).names) {</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">				String name = a.asname != null ? a.asname : a.name;</span>
+<span class="fc" id="L144">				int dot = name.indexOf('.');</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">				if (dot &gt;= 0)</span>
+<span class="nc" id="L146">					name = name.substring(0, dot);</span>
+<span class="fc" id="L147">				bind(s, name);</span>
+<span class="fc" id="L148">			}</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		} else if (n instanceof Ast.ImportFrom) {</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">			for (Ast.Alias a : ((Ast.ImportFrom) n).names)</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">				bind(s, a.asname != null ? a.asname : a.name);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		} else if (n instanceof Ast.NameDeclaration) {</span>
+<span class="fc" id="L153">			declaration(s, (Ast.NameDeclaration) n);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		} else if (n instanceof Ast.ExprStmt) {</span>
+<span class="fc" id="L155">			expression(s, ((Ast.ExprStmt) n).value);</span>
+<span class="pc bpc" id="L156" title="1 of 6 branches missed.">		} else if (n instanceof Ast.Pass || n instanceof Ast.Break || n instanceof Ast.Continue) {</span>
+			// nothing to resolve
+		} else {
+<span class="nc" id="L159">			throw error(&quot;unsupported statement &quot; + n.type(), n);</span>
+		}
+<span class="fc" id="L161">		nesting--;</span>
+<span class="fc" id="L162">	}</span>
+
+	/** A global or nonlocal statement. */
+	private void declaration(Scope s, Ast.NameDeclaration n) {
+<span class="fc" id="L166">		boolean global = n instanceof Ast.Global;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (String name : n.names) {</span>
+<span class="pc bpc" id="L168" title="1 of 4 branches missed.">			if (!global &amp;&amp; s.kind == Scope.MODULE)</span>
+<span class="nc" id="L169">				throw error(&quot;nonlocal declaration not allowed at module level&quot;, n);</span>
+<span class="fc" id="L170">			int f = s.flags(name);</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">			if ((f &amp; Scope.PARAM) != 0)</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">				throw error(&quot;name '&quot; + name + &quot;' is parameter and &quot; + (global ? &quot;global&quot; : &quot;nonlocal&quot;), n);</span>
+<span class="pc bpc" id="L173" title="1 of 4 branches missed.">			if ((f &amp; (Scope.BOUND | Scope.USED)) != 0 &amp;&amp; s.kind != Scope.MODULE)</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">				throw error(&quot;name '&quot; + name + &quot;' is assigned to or used before &quot; + (global ? &quot;global&quot; : &quot;nonlocal&quot;)</span>
+						+ &quot; declaration&quot;, n);
+<span class="pc bpc" id="L176" title="1 of 4 branches missed.">			if ((f &amp; (global ? Scope.NONLOCAL : Scope.GLOBAL)) != 0)</span>
+<span class="nc" id="L177">				throw error(&quot;name '&quot; + name + &quot;' is nonlocal and global&quot;, n);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">			s.addFlags(name, global ? Scope.GLOBAL : Scope.NONLOCAL);</span>
+<span class="fc" id="L179">		}</span>
+<span class="fc" id="L180">	}</span>
+
+	/**
+	 * The decorators of a def or a class, evaluated in the enclosing scope. A
+	 * decorator is a name, an attribute or a call of one of those
+	 * ({@code @macro}, {@code @puml.macro}, {@code @macro(&quot;$color&quot;)}). The
+	 * decorators of the builtin descriptors are rejected: they would need
+	 * descriptors, which the interpreter does not have.
+	 */
+	private void decorators(Scope s, List&lt;Ast.Expr&gt; decorators) {
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		for (Ast.Expr d : decorators) {</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">			Ast.Expr callee = d instanceof Ast.Call ? ((Ast.Call) d).func : d;</span>
+<span class="fc" id="L192">			Ast.Expr root = callee;</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">			while (root instanceof Ast.Attribute)</span>
+<span class="fc" id="L194">				root = ((Ast.Attribute) root).value;</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">			if (root instanceof Ast.Name == false)</span>
+<span class="fc" id="L196">				throw error(&quot;this form of decorator is not supported: use a name, an attribute or a call&quot;, d);</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">			if (callee instanceof Ast.Name) {</span>
+<span class="fc" id="L198">				String name = ((Ast.Name) callee).id;</span>
+<span class="fc bfc" id="L199" title="All 6 branches covered.">				if (name.equals(&quot;staticmethod&quot;) || name.equals(&quot;classmethod&quot;) || name.equals(&quot;property&quot;))</span>
+<span class="fc" id="L200">					throw error(&quot;@&quot; + name + &quot; is not supported&quot;, d);</span>
+			}
+<span class="fc" id="L202">			expression(s, d);</span>
+<span class="fc" id="L203">		}</span>
+<span class="fc" id="L204">	}</span>
+
+	/**
+	 * Only straight-line statements are accepted in a class body: every name it
+	 * binds is then bound when the body ends, and becomes an attribute. Special
+	 * methods other than __init__ are rejected rather than ignored.
+	 */
+	private static void checkClassStatement(Ast.Stmt m) {
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		if (m instanceof Ast.FunctionDef) {</span>
+<span class="fc" id="L213">			checkClassMember(((Ast.FunctionDef) m).name, m);</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		} else if (m instanceof Ast.ClassDef) {</span>
+<span class="fc" id="L215">			checkClassMember(((Ast.ClassDef) m).name, m);</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		} else if (m instanceof Ast.Assign) {</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">			for (Ast.Expr t : ((Ast.Assign) m).targets)</span>
+<span class="fc" id="L218">				checkClassTarget(t);</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		} else if (m instanceof Ast.AugAssign) {</span>
+<span class="nc" id="L220">			checkClassTarget(((Ast.AugAssign) m).target);</span>
+<span class="fc bfc" id="L221" title="All 4 branches covered.">		} else if (m instanceof Ast.ExprStmt || m instanceof Ast.Pass) {</span>
+			// allowed
+		} else {
+<span class="fc" id="L224">			throw error(&quot;this statement is not supported in a class body&quot;, m);</span>
+		}
+<span class="fc" id="L226">	}</span>
+
+	private static void checkClassTarget(Ast.Expr t) {
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">		if (t instanceof Ast.Name) {</span>
+<span class="fc" id="L230">			checkClassMember(((Ast.Name) t).id, t);</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		} else if (t instanceof Ast.TupleExpr) {</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">			for (Ast.Expr e : ((Ast.TupleExpr) t).elts)</span>
+<span class="nc" id="L233">				checkClassTarget(e);</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">		} else if (t instanceof Ast.ListExpr) {</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">			for (Ast.Expr e : ((Ast.ListExpr) t).elts)</span>
+<span class="nc" id="L236">				checkClassTarget(e);</span>
+		}
+<span class="fc" id="L238">	}</span>
+
+	private static void checkClassMember(String name, Node at) {
+<span class="pc bpc" id="L241" title="1 of 8 branches missed.">		if (name.startsWith(&quot;__&quot;) &amp;&amp; name.endsWith(&quot;__&quot;) &amp;&amp; name.length() &gt; 4 &amp;&amp; isSupportedSpecial(name) == false)</span>
+<span class="fc" id="L242">			throw error(&quot;special method or attribute '&quot; + name + &quot;' is not supported&quot;, at);</span>
+<span class="fc" id="L243">	}</span>
+
+	/** The special names a class body may define: the others are rejected rather than ignored. */
+	private static boolean isSupportedSpecial(String name) {
+<span class="fc bfc" id="L247" title="All 8 branches covered.">		return name.equals(&quot;__init__&quot;) || name.equals(&quot;__str__&quot;) || name.equals(&quot;__repr__&quot;) || name.equals(&quot;__lt__&quot;)</span>
+<span class="fc bfc" id="L248" title="All 6 branches covered.">				|| name.equals(&quot;__le__&quot;) || name.equals(&quot;__gt__&quot;) || name.equals(&quot;__ge__&quot;);</span>
+	}
+
+	private void defaults(Scope s, Ast.Arguments args) {
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		for (Ast.Expr d : args.defaults)</span>
+<span class="fc" id="L253">			expression(s, d);</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">		for (Ast.Expr d : args.kwDefaults)</span>
+<span class="fc" id="L255">			expressionOrNull(s, d);</span>
+<span class="fc" id="L256">	}</span>
+
+	private Scope function(Scope parent, String name, Node node, Ast.Arguments args) {
+<span class="fc" id="L259">		Scope child = new Scope(Scope.FUNCTION, name, parent, node);</span>
+<span class="fc" id="L260">		all.add(child);</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">		for (Ast.Arg a : args.args)</span>
+<span class="fc" id="L262">			param(child, a);</span>
+<span class="fc" id="L263">		child.argcount = args.args.size();</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">		for (Ast.Arg a : args.kwonlyargs)</span>
+<span class="fc" id="L265">			param(child, a);</span>
+<span class="fc" id="L266">		child.kwonlycount = args.kwonlyargs.size();</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">		if (args.vararg != null) {</span>
+<span class="fc" id="L268">			param(child, args.vararg);</span>
+<span class="fc" id="L269">			child.varargs = args.vararg.arg;</span>
+		}
+<span class="fc bfc" id="L271" title="All 2 branches covered.">		if (args.kwarg != null) {</span>
+<span class="fc" id="L272">			param(child, args.kwarg);</span>
+<span class="fc" id="L273">			child.kwargs = args.kwarg.arg;</span>
+		}
+<span class="fc" id="L275">		return child;</span>
+	}
+
+	private void param(Scope s, Ast.Arg arg) {
+<span class="fc" id="L279">		String name = arg.arg;</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">		if ((s.flags(name) &amp; Scope.PARAM) != 0)</span>
+<span class="fc" id="L281">			throw error(&quot;duplicate argument '&quot; + name + &quot;' in function definition&quot;, arg);</span>
+<span class="fc" id="L282">		s.addFlags(name, Scope.PARAM | Scope.BOUND);</span>
+<span class="fc" id="L283">		s.params.add(name);</span>
+<span class="fc" id="L284">	}</span>
+
+	private void target(Scope s, Ast.Expr t) {
+<span class="fc bfc" id="L287" title="All 2 branches covered.">		if (t instanceof Ast.Name) {</span>
+<span class="fc" id="L288">			s.addFlags(((Ast.Name) t).id, Scope.BOUND);</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">		} else if (t instanceof Ast.TupleExpr) {</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">			for (Ast.Expr e : ((Ast.TupleExpr) t).elts)</span>
+<span class="fc" id="L291">				target(s, e);</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">		} else if (t instanceof Ast.ListExpr) {</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">			for (Ast.Expr e : ((Ast.ListExpr) t).elts)</span>
+<span class="fc" id="L294">				target(s, e);</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">		} else if (t instanceof Ast.Subscript) {</span>
+<span class="fc" id="L296">			expression(s, ((Ast.Subscript) t).value);</span>
+<span class="fc" id="L297">			expression(s, ((Ast.Subscript) t).slice);</span>
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">		} else if (t instanceof Ast.Attribute) {</span>
+<span class="fc" id="L299">			expression(s, ((Ast.Attribute) t).value);</span>
+		} else {
+<span class="nc" id="L301">			throw error(&quot;cannot assign to &quot; + t.type(), t);</span>
+		}
+<span class="fc" id="L303">	}</span>
+
+	private void expressionOrNull(Scope s, Ast.Expr e) {
+<span class="fc bfc" id="L306" title="All 2 branches covered.">		if (e != null)</span>
+<span class="fc" id="L307">			expression(s, e);</span>
+<span class="fc" id="L308">	}</span>
+
+	private void expressions(Scope s, List&lt;Ast.Expr&gt; list) {
+<span class="fc bfc" id="L311" title="All 2 branches covered.">		for (Ast.Expr e : list)</span>
+<span class="fc" id="L312">			expression(s, e);</span>
+<span class="fc" id="L313">	}</span>
+
+	private void expression(Scope s, Ast.Expr e) {
+<span class="fc" id="L316">		enter(e, 1);</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">		if (e instanceof Ast.Name) {</span>
+<span class="fc" id="L318">			s.addFlags(((Ast.Name) e).id, Scope.USED);</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">		} else if (e instanceof Ast.Constant) {</span>
+			// nothing to resolve
+<span class="fc bfc" id="L321" title="All 2 branches covered.">		} else if (e instanceof Ast.BoolOp) {</span>
+<span class="fc" id="L322">			expressions(s, ((Ast.BoolOp) e).values);</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">		} else if (e instanceof Ast.BinOp) {</span>
+<span class="fc" id="L324">			expression(s, ((Ast.BinOp) e).left);</span>
+<span class="fc" id="L325">			expression(s, ((Ast.BinOp) e).right);</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">		} else if (e instanceof Ast.UnaryOp) {</span>
+<span class="fc" id="L327">			expression(s, ((Ast.UnaryOp) e).operand);</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		} else if (e instanceof Ast.IfExp) {</span>
+<span class="fc" id="L329">			Ast.IfExp i = (Ast.IfExp) e;</span>
+<span class="fc" id="L330">			expression(s, i.test);</span>
+<span class="fc" id="L331">			expression(s, i.body);</span>
+<span class="fc" id="L332">			expression(s, i.orelse);</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">		} else if (e instanceof Ast.DictExpr) {</span>
+<span class="fc" id="L334">			expressions(s, ((Ast.DictExpr) e).keys);</span>
+<span class="fc" id="L335">			expressions(s, ((Ast.DictExpr) e).values);</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">		} else if (e instanceof Ast.ListExpr) {</span>
+<span class="fc" id="L337">			expressions(s, ((Ast.ListExpr) e).elts);</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">		} else if (e instanceof Ast.SetExpr) {</span>
+<span class="fc" id="L339">			expressions(s, ((Ast.SetExpr) e).elts);</span>
+<span class="fc bfc" id="L340" title="All 2 branches covered.">		} else if (e instanceof Ast.TupleExpr) {</span>
+<span class="fc" id="L341">			expressions(s, ((Ast.TupleExpr) e).elts);</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">		} else if (e instanceof Ast.Compare) {</span>
+<span class="fc" id="L343">			expression(s, ((Ast.Compare) e).left);</span>
+<span class="fc" id="L344">			expressions(s, ((Ast.Compare) e).comparators);</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">		} else if (e instanceof Ast.Call) {</span>
+<span class="fc" id="L346">			Ast.Call c = (Ast.Call) e;</span>
+<span class="fc bfc" id="L347" title="All 4 branches covered.">			if (c.func instanceof Ast.Name &amp;&amp; ((Ast.Name) c.func).id.equals(&quot;super&quot;))</span>
+<span class="fc" id="L348">				throw error(&quot;super() is not supported: call the base class explicitly, e.g. Base.__init__(self)&quot;,</span>
+						e);
+<span class="fc" id="L350">			expression(s, c.func);</span>
+<span class="fc" id="L351">			expressions(s, c.args);</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">			for (Ast.Keyword k : c.keywords)</span>
+<span class="fc" id="L353">				expression(s, k.value);</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">		} else if (e instanceof Ast.Starred) {</span>
+<span class="fc" id="L355">			expression(s, ((Ast.Starred) e).value);</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">		} else if (e instanceof Ast.Attribute) {</span>
+<span class="fc" id="L357">			expression(s, ((Ast.Attribute) e).value);</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">		} else if (e instanceof Ast.Subscript) {</span>
+<span class="fc" id="L359">			expression(s, ((Ast.Subscript) e).value);</span>
+<span class="fc" id="L360">			expression(s, ((Ast.Subscript) e).slice);</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">		} else if (e instanceof Ast.Slice) {</span>
+<span class="fc" id="L362">			Ast.Slice sl = (Ast.Slice) e;</span>
+<span class="fc" id="L363">			expressionOrNull(s, sl.lower);</span>
+<span class="fc" id="L364">			expressionOrNull(s, sl.upper);</span>
+<span class="fc" id="L365">			expressionOrNull(s, sl.step);</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">		} else if (e instanceof Ast.JoinedStr) {</span>
+<span class="fc" id="L367">			expressions(s, ((Ast.JoinedStr) e).values);</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">		} else if (e instanceof Ast.FormattedValue) {</span>
+<span class="fc" id="L369">			expression(s, ((Ast.FormattedValue) e).value);</span>
+<span class="fc" id="L370">			expressionOrNull(s, ((Ast.FormattedValue) e).formatSpec);</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">		} else if (e instanceof Ast.Lambda) {</span>
+<span class="fc" id="L372">			Ast.Lambda l = (Ast.Lambda) e;</span>
+<span class="fc" id="L373">			defaults(s, l.args);</span>
+<span class="fc" id="L374">			Scope child = function(s, &quot;&lt;lambda&gt;&quot;, l, l.args);</span>
+<span class="fc" id="L375">			l.scope = child;</span>
+<span class="fc" id="L376">			expression(child, l.body);</span>
+<span class="pc bpc" id="L377" title="1 of 2 branches missed.">		} else if (e instanceof Ast.CompExpr) {</span>
+<span class="fc" id="L378">			comprehension(s, (Ast.CompExpr) e);</span>
+		} else {
+<span class="nc" id="L380">			throw error(&quot;unsupported expression &quot; + e.type(), e);</span>
+		}
+<span class="fc" id="L382">		nesting--;</span>
+<span class="fc" id="L383">	}</span>
+
+	private void comprehension(Scope s, Ast.CompExpr e) {
+<span class="fc" id="L386">		Scope child = new Scope(Scope.COMPREHENSION, e.scopeName(), s, e);</span>
+<span class="fc" id="L387">		e.scope = child;</span>
+<span class="fc" id="L388">		all.add(child);</span>
+<span class="fc" id="L389">		child.addFlags(&quot;.0&quot;, Scope.PARAM | Scope.BOUND);</span>
+<span class="fc" id="L390">		child.params.add(&quot;.0&quot;);</span>
+<span class="fc" id="L391">		child.argcount = 1;</span>
+<span class="fc" id="L392">		enter(e, e.generators.size()); // CodeGen nests one loop per generator</span>
+<span class="fc" id="L393">		boolean first = true;</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">		for (Ast.Comprehension g : e.generators) {</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">			if (first)</span>
+<span class="fc" id="L396">				expression(s, g.iter); // evaluated in the enclosing scope</span>
+			else
+<span class="fc" id="L398">				expression(child, g.iter);</span>
+<span class="fc" id="L399">			first = false;</span>
+<span class="fc" id="L400">			target(child, g.target);</span>
+<span class="fc" id="L401">			expressions(child, g.ifs);</span>
+<span class="fc" id="L402">		}</span>
+<span class="fc bfc" id="L403" title="All 2 branches covered.">		if (e.elt() != null) {</span>
+<span class="fc" id="L404">			expression(child, e.elt());</span>
+		} else {
+<span class="fc" id="L406">			expression(child, ((Ast.DictComp) e).key);</span>
+<span class="fc" id="L407">			expression(child, ((Ast.DictComp) e).value);</span>
+		}
+<span class="fc" id="L409">		nesting -= e.generators.size();</span>
+<span class="fc" id="L410">	}</span>
+
+	// ------------------------------------------------------------ resolution
+
+	private void resolveNames(Scope s) {
+<span class="fc bfc" id="L415" title="All 2 branches covered.">		if (s.kind == Scope.MODULE)</span>
+<span class="fc" id="L416">			return;</span>
+<span class="fc" id="L417">		List&lt;String&gt; names = new ArrayList&lt;String&gt;(s.symbols.keySet());</span>
+<span class="fc bfc" id="L418" title="All 2 branches covered.">		for (String name : names) {</span>
+<span class="fc" id="L419">			int f = s.flags(name);</span>
+<span class="fc bfc" id="L420" title="All 2 branches covered.">			if ((f &amp; Scope.GLOBAL) != 0)</span>
+<span class="fc" id="L421">				continue;</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">			if ((f &amp; Scope.NONLOCAL) != 0) {</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">				if (!markFree(s, name))</span>
+<span class="fc" id="L424">					throw new PySyntaxError(&quot;no binding for nonlocal '&quot; + name + &quot;' found&quot;, s.node.line, s.node.col);</span>
+<span class="fc bfc" id="L425" title="All 2 branches covered.">			} else if ((f &amp; (Scope.BOUND | Scope.PARAM)) == 0) {</span>
+<span class="fc" id="L426">				markFree(s, name); // otherwise it is a global</span>
+			}
+<span class="fc" id="L428">		}</span>
+<span class="fc" id="L429">	}</span>
+
+	/** Looks for the binding of a name in the enclosing functions; makes it a cell there and free in between. */
+	private boolean markFree(Scope s, String name) {
+<span class="fc" id="L433">		Scope shadowing = null;</span>
+<span class="pc bpc" id="L434" title="1 of 4 branches missed.">		for (Scope p = s.parent; p != null &amp;&amp; p.kind != Scope.MODULE; p = p.parent) {</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">			if (p.kind == Scope.CLASS) {</span>
+				// the names of a class body are not visible from the functions nested in it
+<span class="fc bfc" id="L437" title="All 2 branches covered.">				if (p.isLocal(name))</span>
+<span class="fc" id="L438">					shadowing = p;</span>
+				continue;
+			}
+<span class="fc" id="L441">			int pf = p.flags(name);</span>
+<span class="pc bpc" id="L442" title="1 of 2 branches missed.">			if ((pf &amp; Scope.GLOBAL) != 0)</span>
+<span class="nc" id="L443">				return false;</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">			if (p.isLocal(name)) {</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">				if (shadowing != null)</span>
+<span class="fc" id="L446">					throw new PySyntaxError(&quot;class attribute '&quot; + name</span>
+							+ &quot;' has the name of a variable of the enclosing function used inside the class&quot;,
+							shadowing.node.line, shadowing.node.col);
+<span class="fc" id="L449">				p.addFlags(name, Scope.CELL);</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">				for (Scope q = s; q != p; q = q.parent)</span>
+<span class="fc" id="L451">					q.freeNames.add(name);</span>
+<span class="fc" id="L452">				return true;</span>
+			}
+		}
+<span class="fc" id="L455">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

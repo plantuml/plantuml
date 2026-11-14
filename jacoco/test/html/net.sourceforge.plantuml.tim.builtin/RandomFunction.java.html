@@ -56,35 +56,36 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 
 	@Override
 	public boolean canCover(int nbArg, Set&lt;String&gt; namedArgument) {
-<span class="nc bnc" id="L59" title="All 6 branches missed.">		return nbArg == 0 || nbArg == 1 || nbArg == 2;</span>
+<span class="pc bpc" id="L59" title="4 of 6 branches missed.">		return nbArg == 0 || nbArg == 1 || nbArg == 2;</span>
 	}
 
 	// Shared by all the diagrams (and threads): the function holds no state of its own.
 <span class="fc" id="L63">	private static final Random RANDOM = new Random();</span>
 
-	private static synchronized int nextInt(int bound) {
-<span class="fc" id="L66">		return RANDOM.nextInt(bound);</span>
+	/** A number in [0, bound). Shared by &lt;code&gt;%random&lt;/code&gt; and &lt;code&gt;puml.random&lt;/code&gt;. */
+	public static synchronized int nextInt(int bound) {
+<span class="fc" id="L67">		return RANDOM.nextInt(bound);</span>
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List&lt;TValue&gt; values,
 			Map&lt;String, TValue&gt; named) throws EaterException {
-<span class="pc bpc" id="L72" title="1 of 4 branches missed.">		switch (values.size()) {</span>
+<span class="pc bpc" id="L73" title="1 of 4 branches missed.">		switch (values.size()) {</span>
 		case 0:
-<span class="fc" id="L74">			return TValue.fromInt(nextInt(2));</span>
+<span class="fc" id="L75">			return TValue.fromInt(nextInt(2));</span>
 
 		case 1:
-<span class="fc" id="L77">			final Integer mx = values.get(0).toInt();</span>
-<span class="fc" id="L78">			return TValue.fromInt(nextInt(mx));</span>
+<span class="fc" id="L78">			final Integer mx = values.get(0).toInt();</span>
+<span class="fc" id="L79">			return TValue.fromInt(nextInt(mx));</span>
 
 		case 2:
-<span class="fc" id="L81">			final Integer min = values.get(0).toInt();</span>
-<span class="fc" id="L82">			final Integer max = values.get(1).toInt();</span>
-<span class="fc" id="L83">			return TValue.fromInt(nextInt(max - min) + min);</span>
+<span class="fc" id="L82">			final Integer min = values.get(0).toInt();</span>
+<span class="fc" id="L83">			final Integer max = values.get(1).toInt();</span>
+<span class="fc" id="L84">			return TValue.fromInt(nextInt(max - min) + min);</span>
 
 		default:
-<span class="nc" id="L86">			assert false; // Should not append because of canCover()</span>
-<span class="nc" id="L87">			throw new EaterException(&quot;Error on Random: Too many argument&quot;, location);</span>
+<span class="nc" id="L87">			assert false; // Should not append because of canCover()</span>
+<span class="nc" id="L88">			throw new EaterException(&quot;Error on Random: Too many argument&quot;, location);</span>
 		}
 	}
 }

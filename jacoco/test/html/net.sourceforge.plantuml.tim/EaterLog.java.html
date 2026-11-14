@@ -50,8 +50,13 @@ public class EaterLog extends Eater {
 <span class="fc" id="L50">		skipSpaces();</span>
 <span class="fc" id="L51">		final String logData = context.applyFunctionsAndVariables(memory,</span>
 <span class="fc" id="L52">				new StringLocated(this.eatAllToEnd(), getLineLocation()));</span>
-<span class="fc" id="L53">		Log.userLog(() -&gt; &quot;[Log] &quot; + logData);</span>
+<span class="fc" id="L53">		write(logData);</span>
 <span class="fc" id="L54">	}</span>
+
+	/** What &lt;code&gt;!log&lt;/code&gt; does with its text; &lt;code&gt;puml.log&lt;/code&gt; does the same. */
+	static void write(String text) {
+<span class="fc" id="L58">		Log.userLog(() -&gt; &quot;[Log] &quot; + text);</span>
+<span class="fc" id="L59">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

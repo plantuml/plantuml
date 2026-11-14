@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.tim.iterator;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 import net.sourceforge.plantuml.json.JsonValue;
@@ -53,78 +55,90 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 	private final TMemory memory;
 	private final List&lt;StringLocated&gt; logs;
 
+	/** The !foreach lines opened in the body this iterator reads and not closed yet. */
+<span class="fc" id="L59">	private final Deque&lt;StringLocated&gt; opened = new ArrayDeque&lt;&gt;();</span>
+
 	public CodeIteratorForeach(CodeIterator source, TContext context, TMemory memory, List&lt;StringLocated&gt; logs) {
-<span class="fc" id="L57">		super(source);</span>
-<span class="fc" id="L58">		this.context = context;</span>
-<span class="fc" id="L59">		this.memory = memory;</span>
-<span class="fc" id="L60">		this.logs = logs;</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L62">		super(source);</span>
+<span class="fc" id="L63">		this.context = context;</span>
+<span class="fc" id="L64">		this.memory = memory;</span>
+<span class="fc" id="L65">		this.logs = logs;</span>
+<span class="fc" id="L66">	}</span>
 
 	public StringLocated peek() throws EaterException {
-<span class="fc" id="L64">		int level = 0;</span>
+<span class="fc" id="L69">		int level = 0;</span>
 		while (true) {
-<span class="fc" id="L66">			final StringLocated result = source.peek();</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">			if (result == null)</span>
-<span class="fc" id="L68">				return null;</span>
+<span class="fc" id="L71">			final StringLocated result = source.peek();</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			if (result == null) {</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">				if (opened.isEmpty() == false) {</span>
+					// the error is reported on the last line of the debug list: the line left open
+<span class="fc" id="L75">					logs.add(opened.peekLast());</span>
+<span class="fc" id="L76">					throw new EaterException(&quot;!foreach without !endfor&quot;, opened.peekLast());</span>
+				}
+<span class="fc" id="L78">				return null;</span>
+			}
 
-<span class="fc" id="L70">			final ExecutionContextForeach foreach = memory.peekForeach();</span>
-<span class="pc bpc" id="L71" title="1 of 4 branches missed.">			if (foreach != null &amp;&amp; foreach.isSkipMe()) {</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">				if (result.getType() == TLineType.FOREACH) {</span>
-<span class="nc" id="L73">					level++;</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">				} else if (result.getType() == TLineType.ENDFOREACH) {</span>
-<span class="nc" id="L75">					level--;</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">					if (level == -1) {</span>
-<span class="nc" id="L77">						memory.pollForeach();</span>
-<span class="nc" id="L78">						level = 0;</span>
+<span class="fc" id="L81">			final ExecutionContextForeach foreach = memory.peekForeach();</span>
+<span class="pc bpc" id="L82" title="1 of 4 branches missed.">			if (foreach != null &amp;&amp; foreach.isSkipMe()) {</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">				if (result.getType() == TLineType.FOREACH) {</span>
+<span class="nc" id="L84">					level++;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">				} else if (result.getType() == TLineType.ENDFOREACH) {</span>
+<span class="nc" id="L86">					level--;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">					if (level == -1) {</span>
+<span class="nc" id="L88">						memory.pollForeach();</span>
+<span class="nc" id="L89">						opened.pollLast();</span>
+<span class="nc" id="L90">						level = 0;</span>
 					}
 				}
-<span class="nc" id="L81">				next();</span>
-<span class="nc" id="L82">				continue;</span>
+<span class="nc" id="L93">				next();</span>
+<span class="nc" id="L94">				continue;</span>
 			}
 
-<span class="fc bfc" id="L85" title="All 2 branches covered.">			if (result.getType() == TLineType.FOREACH) {</span>
-<span class="fc" id="L86">				logs.add(result);</span>
-<span class="fc" id="L87">				executeForeach(memory, result.getTrimmed());</span>
-<span class="fc" id="L88">				next();</span>
-<span class="fc" id="L89">				continue;</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">			} else if (result.getType() == TLineType.ENDFOREACH) {</span>
-<span class="fc" id="L91">				logs.add(result);</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">				if (foreach == null)</span>
-<span class="nc" id="L93">					throw new EaterException(&quot;No foreach related to this endforeach&quot;, result);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">			if (result.getType() == TLineType.FOREACH) {</span>
+<span class="fc" id="L98">				logs.add(result);</span>
+<span class="fc" id="L99">				opened.addLast(result);</span>
+<span class="fc" id="L100">				executeForeach(memory, result.getTrimmed());</span>
+<span class="fc" id="L101">				next();</span>
+<span class="fc" id="L102">				continue;</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			} else if (result.getType() == TLineType.ENDFOREACH) {</span>
+<span class="fc" id="L104">				logs.add(result);</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">				if (foreach == null)</span>
+<span class="nc" id="L106">					throw new EaterException(&quot;No foreach related to this endforeach&quot;, result);</span>
 
-<span class="fc" id="L95">				foreach.inc();</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">				if (foreach.isSkipMe()) {</span>
-<span class="fc" id="L97">					memory.pollForeach();</span>
+<span class="fc" id="L108">				foreach.inc();</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">				if (foreach.isSkipMe()) {</span>
+<span class="fc" id="L110">					memory.pollForeach();</span>
+<span class="fc" id="L111">					opened.pollLast();</span>
 				} else {
-<span class="fc" id="L99">					setLoopVariable(memory, foreach, result);</span>
-<span class="fc" id="L100">					source.jumpToCodePosition(foreach.getStartForeach(), result);</span>
+<span class="fc" id="L113">					setLoopVariable(memory, foreach, result);</span>
+<span class="fc" id="L114">					source.jumpToCodePosition(foreach.getStartForeach(), result);</span>
 				}
-<span class="fc" id="L102">				next();</span>
-<span class="fc" id="L103">				continue;</span>
+<span class="fc" id="L116">				next();</span>
+<span class="fc" id="L117">				continue;</span>
 			}
 
-<span class="fc" id="L106">			return result;</span>
+<span class="fc" id="L120">			return result;</span>
 		}
 	}
 
 	private void executeForeach(TMemory memory, StringLocated s) throws EaterException {
-<span class="fc" id="L111">		final EaterForeach condition = new EaterForeach(s);</span>
-<span class="fc" id="L112">		condition.analyze(context, memory);</span>
-<span class="fc" id="L113">		final ExecutionContextForeach foreach = ExecutionContextForeach.fromValue(condition.getVarname(),</span>
-<span class="fc" id="L114">				condition.getJsonValue(), source.getCodePosition());</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (condition.isSkip())</span>
-<span class="nc" id="L116">			foreach.skipMeNow();</span>
+<span class="fc" id="L125">		final EaterForeach condition = new EaterForeach(s);</span>
+<span class="fc" id="L126">		condition.analyze(context, memory);</span>
+<span class="fc" id="L127">		final ExecutionContextForeach foreach = ExecutionContextForeach.fromValue(condition.getVarname(),</span>
+<span class="fc" id="L128">				condition.getJsonValue(), source.getCodePosition());</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		if (condition.isSkip())</span>
+<span class="nc" id="L130">			foreach.skipMeNow();</span>
 		else
-<span class="fc" id="L118">			setLoopVariable(memory, foreach, s);</span>
+<span class="fc" id="L132">			setLoopVariable(memory, foreach, s);</span>
 
-<span class="fc" id="L120">		memory.addForeach(foreach);</span>
-<span class="fc" id="L121">	}</span>
+<span class="fc" id="L134">		memory.addForeach(foreach);</span>
+<span class="fc" id="L135">	}</span>
 
 	private void setLoopVariable(TMemory memory, ExecutionContextForeach foreach, StringLocated position)
 			throws EaterException {
-<span class="fc" id="L125">		final JsonValue first = foreach.currentValue();</span>
-<span class="fc" id="L126">		memory.putVariable(foreach.getVarname(), TValue.fromJson(first), TVariableScope.GLOBAL, position);</span>
-<span class="fc" id="L127">	}</span>
+<span class="fc" id="L139">		final JsonValue first = foreach.currentValue();</span>
+<span class="fc" id="L140">		memory.putVariable(foreach.getVarname(), TValue.fromJson(first), TVariableScope.GLOBAL, position);</span>
+<span class="fc" id="L141">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

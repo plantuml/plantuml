@@ -36,8 +36,23 @@ package net.sourceforge.plantuml.yaml.parser;
 
 public class YamlSyntaxException extends RuntimeException {
 
+	private final int line;
+
 	public YamlSyntaxException(String message) {
-<span class="nc" id="L40">		super(message);</span>
-<span class="nc" id="L41">	}</span>
+<span class="fc" id="L42">		super(message);</span>
+<span class="fc" id="L43">		this.line = 0;</span>
+<span class="fc" id="L44">	}</span>
+
+	/** @param line the line of the error, counted from 1 */
+	public YamlSyntaxException(String message, int line) {
+<span class="fc" id="L48">		super(message + &quot; (line &quot; + line + &quot;)&quot;);</span>
+<span class="fc" id="L49">		this.line = line;</span>
+<span class="fc" id="L50">	}</span>
+
+	/** The line of the error, counted from 1, or 0 when unknown. */
+	public int getLine() {
+<span class="fc" id="L54">		return line;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -275,7 +275,18 @@ final public class StringLocated {
 <span class="fc bfc" id="L275" title="All 2 branches covered.">		return (getFoxSignature() &amp; EXCLAMATION_MARK) != 0L;</span>
 	}
 
-<span class="fc" id="L278">	private String firstToken = null;</span>
+<span class="fc" id="L278">	private static final long INTERPOLATION_CHARS = FoxSignature.getFoxSignatureFromRealString(&quot;!{}&quot;);</span>
+
+	/**
+	 * False when the line cannot hold a &lt;code&gt;!{expr}&lt;/code&gt; (one of the characters
+	 * &lt;code&gt;!&lt;/code&gt;, &lt;code&gt;{&lt;/code&gt;, &lt;code&gt;}&lt;/code&gt; is missing); true only means that
+	 * the three are somewhere in the line, not that they form &lt;code&gt;!{&lt;/code&gt;.
+	 */
+	public boolean mayContainInterpolation() {
+<span class="fc bfc" id="L286" title="All 2 branches covered.">		return (getFoxSignature() &amp; INTERPOLATION_CHARS) == INTERPOLATION_CHARS;</span>
+	}
+
+<span class="fc" id="L289">	private String firstToken = null;</span>
 
 	/**
 	 * The token the command index files this line under: {@code PSystemCommandFactory} only tries,
@@ -310,26 +321,26 @@ final public class StringLocated {
 	 * with this same definition: the two must change together.
 	 */
 	public String getFirstToken() {
-<span class="fc bfc" id="L313" title="All 2 branches covered.">		if (firstToken == null) {</span>
-<span class="fc" id="L314">			int start = 0;</span>
-<span class="fc bfc" id="L315" title="All 4 branches covered.">			while (start &lt; s.length() &amp;&amp; StringUtils.isTrimmable(s.charAt(start)))</span>
-<span class="fc" id="L316">				start++;</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">		if (firstToken == null) {</span>
+<span class="fc" id="L325">			int start = 0;</span>
+<span class="fc bfc" id="L326" title="All 4 branches covered.">			while (start &lt; s.length() &amp;&amp; StringUtils.isTrimmable(s.charAt(start)))</span>
+<span class="fc" id="L327">				start++;</span>
 
-<span class="fc bfc" id="L318" title="All 2 branches covered.">			if (start == s.length()) {</span>
-<span class="fc" id="L319">				firstToken = &quot;&quot;;</span>
-<span class="fc bfc" id="L320" title="All 2 branches covered.">			} else if (isLetter(s.charAt(start))) {</span>
-<span class="fc" id="L321">				final StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L322">				int end = start;</span>
-<span class="fc bfc" id="L323" title="All 4 branches covered.">				while (end &lt; s.length() &amp;&amp; isLetter(s.charAt(end))) {</span>
-<span class="fc" id="L324">					sb.append(toLowerCase(s.charAt(end)));</span>
-<span class="fc" id="L325">					end++;</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">			if (start == s.length()) {</span>
+<span class="fc" id="L330">				firstToken = &quot;&quot;;</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">			} else if (isLetter(s.charAt(start))) {</span>
+<span class="fc" id="L332">				final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L333">				int end = start;</span>
+<span class="fc bfc" id="L334" title="All 4 branches covered.">				while (end &lt; s.length() &amp;&amp; isLetter(s.charAt(end))) {</span>
+<span class="fc" id="L335">					sb.append(toLowerCase(s.charAt(end)));</span>
+<span class="fc" id="L336">					end++;</span>
 				}
-<span class="fc" id="L327">				firstToken = sb.toString();</span>
-<span class="fc" id="L328">			} else {</span>
-<span class="fc" id="L329">				firstToken = String.valueOf(s.charAt(start));</span>
+<span class="fc" id="L338">				firstToken = sb.toString();</span>
+<span class="fc" id="L339">			} else {</span>
+<span class="fc" id="L340">				firstToken = String.valueOf(s.charAt(start));</span>
 			}
 		}
-<span class="fc" id="L332">		return firstToken;</span>
+<span class="fc" id="L343">		return firstToken;</span>
 	}
 
 	/**
@@ -340,13 +351,13 @@ final public class StringLocated {
 	 * indexed command here whenever the pattern itself would have matched.
 	 */
 	private static char toLowerCase(char ch) {
-<span class="pc bpc" id="L343" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
-<span class="pc bpc" id="L344" title="1 of 2 branches missed.">			assert (isLetter(ch));</span>
-<span class="fc" id="L345">		return (char) (ch | 0x20);</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L355" title="1 of 2 branches missed.">			assert (isLetter(ch));</span>
+<span class="fc" id="L356">		return (char) (ch | 0x20);</span>
 	}
 
 	private static boolean isLetter(char ch) {
-<span class="fc bfc" id="L349" title="All 8 branches covered.">		return (ch &gt;= 'a' &amp;&amp; ch &lt;= 'z') || (ch &gt;= 'A' &amp;&amp; ch &lt;= 'Z');</span>
+<span class="fc bfc" id="L360" title="All 8 branches covered.">		return (ch &gt;= 'a' &amp;&amp; ch &lt;= 'z') || (ch &gt;= 'A' &amp;&amp; ch &lt;= 'Z');</span>
 	}
 
 }

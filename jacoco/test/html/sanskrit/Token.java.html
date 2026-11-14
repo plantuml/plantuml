@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Token.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">Token.java</span></div><h1>Token.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+/** A lexical token of the Python subset. */
+final class Token {
+	static final int NAME = 1;
+	static final int KEYWORD = 2;
+	static final int NUMBER = 3;
+	static final int STRING = 4;
+	static final int OP = 5;
+	static final int NEWLINE = 6;
+	static final int INDENT = 7;
+	static final int DEDENT = 8;
+	static final int END = 9;
+
+	final int kind;
+	/** The name, keyword or operator; the source text for the other kinds. */
+	final String text;
+	final int line;
+	final int col;
+	/** NUMBER: a Long or a Double. STRING: a {@link StringLit}. */
+	final Object value;
+
+<span class="fc" id="L23">	Token(int kind, String text, int line, int col, Object value) {</span>
+<span class="fc" id="L24">		this.kind = kind;</span>
+<span class="fc" id="L25">		this.text = text;</span>
+<span class="fc" id="L26">		this.line = line;</span>
+<span class="fc" id="L27">		this.col = col;</span>
+<span class="fc" id="L28">		this.value = value;</span>
+<span class="fc" id="L29">	}</span>
+
+	boolean isOp(String op) {
+<span class="fc bfc" id="L32" title="All 4 branches covered.">		return kind == OP &amp;&amp; text.equals(op);</span>
+	}
+
+	boolean isKeyword(String kw) {
+<span class="fc bfc" id="L36" title="All 4 branches covered.">		return kind == KEYWORD &amp;&amp; text.equals(kw);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="pc bpc" id="L41" title="3 of 5 branches missed.">		switch (kind) {</span>
+		case NEWLINE:
+<span class="fc" id="L43">			return &quot;NEWLINE&quot;;</span>
+		case INDENT:
+<span class="nc" id="L45">			return &quot;INDENT&quot;;</span>
+		case DEDENT:
+<span class="nc" id="L47">			return &quot;DEDENT&quot;;</span>
+		case END:
+<span class="nc" id="L49">			return &quot;END&quot;;</span>
+		default:
+<span class="fc" id="L51">			return text;</span>
+		}
+	}
+
+	/** A string literal: its source body and prefix flags. */
+	static final class StringLit {
+		final String body;
+		final boolean raw;
+		final boolean fstring;
+
+<span class="fc" id="L61">		StringLit(String body, boolean raw, boolean fstring) {</span>
+<span class="fc" id="L62">			this.body = body;</span>
+<span class="fc" id="L63">			this.raw = raw;</span>
+<span class="fc" id="L64">			this.fstring = fstring;</span>
+<span class="fc" id="L65">		}</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

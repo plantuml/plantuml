@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PythonLine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.text</a> &gt; <span class="el_source">PythonLine.java</span></div><h1>PythonLine.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.text;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * Tells a legacy preprocessor line from a Python line, by hand (no regex).
+ * Every line given here is already known to contain a &lt;code&gt;!&lt;/code&gt;; the
+ * rules are those of section 6 of PYTHON_PREPROCESSOR.md.
+ */
+public final class PythonLine {
+
+	private PythonLine() {
+	}
+
+	/**
+	 * The escape of a text line that starts with &quot;!&quot; (section 8 of
+	 * PYTHON_PREPROCESSOR.md): &quot;!!important&quot; is the text &quot;!important&quot;. The first
+	 * &quot;!&quot; is removed when the line starts, after its blanks, with &quot;!!&quot; not
+	 * followed by &quot;{&quot; (&quot;!!{&quot; is the escape of an interpolation, which gives
+	 * &quot;!{&quot; by itself). Any other line is returned as it is.
+	 */
+	public static String unescapeBang(String s) {
+<span class="fc" id="L60">		final int i = skipSpaces(s, 0);</span>
+<span class="fc bfc" id="L61" title="All 4 branches covered.">		if (s.startsWith(&quot;!!&quot;, i) == false || s.startsWith(&quot;!!{&quot;, i))</span>
+<span class="fc" id="L62">			return s;</span>
+<span class="fc" id="L63">		return s.substring(0, i) + s.substring(i + 1);</span>
+	}
+
+	/** True for a text line that starts with the escape &quot;!!&quot; (see {@link #unescapeBang}). */
+	public static boolean startsWithEscapedBang(String s) {
+<span class="fc" id="L68">		final int i = skipSpaces(s, 0);</span>
+<span class="fc" id="L69">		return s.startsWith(&quot;!!&quot;, i);</span>
+	}
+
+	/**
+	 * &quot;!{a} -&gt; !{b}&quot;: a line that starts with an interpolation is PlantUML text,
+	 * never a directive nor a Python line (a Python statement starting with &quot;{&quot;
+	 * would be a dict display thrown away, which has no use).
+	 */
+	public static boolean startsWithInterpolation(String s) {
+<span class="fc" id="L78">		final int i = skipSpaces(s, 0);</span>
+<span class="fc" id="L79">		return s.startsWith(&quot;!{&quot;, i);</span>
+	}
+
+	/** &quot;!@macro&quot;, &quot;!@macro(\&quot;$color\&quot;)&quot;: a decorator, on the line before a &quot;!def&quot; or a &quot;!class&quot;. */
+	public static boolean isDecoratorLine(String s) {
+<span class="fc" id="L84">		final int i = afterBang(s);</span>
+<span class="pc bpc" id="L85" title="1 of 6 branches missed.">		return i &gt;= 0 &amp;&amp; i &lt; s.length() &amp;&amp; s.charAt(i) == '@';</span>
+	}
+
+<span class="fc" id="L88">	private static final Set&lt;String&gt; PYTHON_KEYWORDS = Collections.unmodifiableSet(new HashSet&lt;&gt;(Arrays.asList(</span>
+			&quot;def&quot;, &quot;for&quot;, &quot;try&quot;, &quot;pass&quot;, &quot;lambda&quot;, &quot;del&quot;, &quot;raise&quot;, &quot;global&quot;, &quot;nonlocal&quot;, &quot;elif&quot;, &quot;except&quot;, &quot;break&quot;,
+			&quot;continue&quot;, &quot;class&quot;)));
+
+	/**
+	 * A word that only exists in Python (&quot;!def&quot;, &quot;!for&quot;, ...), or a word that
+	 * exists in both languages (&quot;!if&quot;, &quot;!while&quot;, &quot;!else&quot;) on a line that ends
+	 * with a colon.
+	 */
+	public static boolean isKeywordLine(String s) {
+<span class="fc" id="L98">		final int i = afterBang(s);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (i &lt; 0)</span>
+<span class="fc" id="L100">			return false;</span>
+<span class="fc" id="L101">		final String word = s.substring(i, identifierEnd(s, i));</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (PYTHON_KEYWORDS.contains(word))</span>
+<span class="fc" id="L103">			return true;</span>
+<span class="fc bfc" id="L104" title="All 6 branches covered.">		if (word.equals(&quot;if&quot;) || word.equals(&quot;while&quot;) || word.equals(&quot;else&quot;))</span>
+<span class="fc" id="L105">			return endsWithColon(s);</span>
+<span class="fc" id="L106">		return false;</span>
+	}
+
+	/** &quot;!$x = 1&quot;, &quot;!local $x = 1&quot; and &quot;!x ?= 1&quot; are legacy. &quot;!x = 1&quot; is not. */
+	public static boolean isLegacyAffectation(String s) {
+<span class="fc" id="L111">		int i = afterBang(s);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (i &lt; 0)</span>
+<span class="fc" id="L113">			return false;</span>
+<span class="fc" id="L114">		boolean explicitScope = false;</span>
+<span class="fc" id="L115">		final int end = identifierEnd(s, i);</span>
+<span class="fc" id="L116">		final String word = s.substring(i, end);</span>
+<span class="fc bfc" id="L117" title="All 4 branches covered.">		if (word.equals(&quot;local&quot;) || word.equals(&quot;global&quot;)) {</span>
+<span class="fc" id="L118">			final int next = skipSpaces(s, end);</span>
+			// &quot;!global x&quot; alone is the Python statement, &quot;!global x = 1&quot; would be legacy
+<span class="pc bpc" id="L120" title="3 of 8 branches missed.">			if (next &gt; end &amp;&amp; next &lt; s.length() &amp;&amp; (s.charAt(next) == '$' || isIdentifierStart(s.charAt(next)))) {</span>
+<span class="fc" id="L121">				explicitScope = true;</span>
+<span class="fc" id="L122">				i = next;</span>
+			}
+		}
+<span class="pc bpc" id="L125" title="1 of 4 branches missed.">		final boolean dollar = i &lt; s.length() &amp;&amp; s.charAt(i) == '$';</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (dollar)</span>
+<span class="fc" id="L127">			i++;</span>
+<span class="fc" id="L128">		final int idEnd = identifierEnd(s, i);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (idEnd == i)</span>
+<span class="fc" id="L130">			return false;</span>
+<span class="fc" id="L131">		i = skipSpaces(s, idEnd);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (i &gt;= s.length())</span>
+<span class="fc" id="L133">			return false;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (s.charAt(i) == '?')</span>
+<span class="pc bpc" id="L135" title="2 of 4 branches missed.">			return i + 1 &lt; s.length() &amp;&amp; s.charAt(i + 1) == '=';</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		if (s.charAt(i) != '=')</span>
+<span class="fc" id="L137">			return false;</span>
+<span class="pc bpc" id="L138" title="1 of 4 branches missed.">		return dollar || explicitScope;</span>
+	}
+
+
+	/**
+	 * The words that are never Python after &quot;!&quot;, for {@link #isStatementLine}:
+	 * the Python block markers, the legacy preprocessor directives and the
+	 * diagram commands that start with &quot;!&quot;. A line that starts with one of them
+	 * is not taken for Python even when its legacy pattern did not match it (for
+	 * instance &quot;!define 4K(...)&quot;, whose name starts with a digit, or
+	 * &quot;!pragma teoz true&quot;, which the diagram reads).
+	 */
+<span class="fc" id="L150">	private static final Set&lt;String&gt; NOT_PYTHON_WORDS = Collections.unmodifiableSet(new HashSet&lt;&gt;(Arrays.asList(</span>
+			&quot;python&quot;, &quot;endpy&quot;, &quot;define&quot;, &quot;definelong&quot;, &quot;enddefinelong&quot;, &quot;undef&quot;, &quot;ifdef&quot;, &quot;ifndef&quot;, &quot;if&quot;, &quot;elseif&quot;,
+			&quot;else&quot;, &quot;endif&quot;, &quot;while&quot;, &quot;endwhile&quot;, &quot;foreach&quot;, &quot;endfor&quot;, &quot;function&quot;, &quot;procedure&quot;, &quot;unquoted&quot;, &quot;final&quot;,
+			&quot;end&quot;, &quot;endfunction&quot;, &quot;endprocedure&quot;, &quot;return&quot;, &quot;include&quot;, &quot;includeurl&quot;, &quot;include_many&quot;, &quot;include_once&quot;,
+			&quot;include_sprites&quot;, &quot;includedef&quot;, &quot;includesub&quot;, &quot;import&quot;, &quot;startsub&quot;, &quot;endsub&quot;, &quot;theme&quot;, &quot;log&quot;,
+			&quot;dump_memory&quot;, &quot;option&quot;, &quot;assert&quot;, &quot;local&quot;, &quot;pragma&quot;, &quot;assume&quot;, &quot;exit&quot;)));
+
+	/**
+	 * The last rule (section 6 of PYTHON_PREPROCESSOR.md): a &quot;!&quot; followed,
+	 * after optional blanks, by an identifier, a digit, &quot;(&quot; or &quot;[&quot; is Python:
+	 * &quot;!x = 1&quot;, &quot;!x == 1&quot;, &quot;!f(1)&quot;, &quot;!1 + 1&quot;, &quot;!(a, b) = c&quot;, &quot;![1, 2]&quot;. With
+	 * blanks (&quot;! x = 1&quot;) it is Python code indented by the gutter rule, so an
+	 * indentation error at the top level. The words of {@link #NOT_PYTHON_WORDS}
+	 * are excluded. To be tested after every legacy directive.
+	 */
+	public static boolean isStatementLine(String s) {
+<span class="fc" id="L166">		final int i = afterBang(s);</span>
+<span class="pc bpc" id="L167" title="1 of 4 branches missed.">		if (i &lt; 0 || i &gt;= s.length())</span>
+<span class="fc" id="L168">			return false;</span>
+<span class="fc" id="L169">		final char c = s.charAt(i);</span>
+<span class="fc bfc" id="L170" title="All 8 branches covered.">		if (c == '(' || c == '[' || (c &gt;= '0' &amp;&amp; c &lt;= '9'))</span>
+<span class="fc" id="L171">			return true;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (isIdentifierStart(c) == false)</span>
+<span class="fc" id="L173">			return false;</span>
+<span class="fc" id="L174">		final String word = s.substring(i, identifierEnd(s, i));</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">		return NOT_PYTHON_WORDS.contains(word) == false;</span>
+	}
+
+	private static boolean endsWithColon(String s) {
+<span class="fc" id="L179">		int e = s.length();</span>
+<span class="pc bpc" id="L180" title="2 of 4 branches missed.">		while (e &gt; 0 &amp;&amp; Character.isWhitespace(s.charAt(e - 1)))</span>
+<span class="nc" id="L181">			e--;</span>
+<span class="pc bpc" id="L182" title="1 of 4 branches missed.">		return e &gt; 0 &amp;&amp; s.charAt(e - 1) == ':';</span>
+	}
+
+	/** Index of the first character after &quot;!&quot; (blanks before and after skipped), or -1. */
+	private static int afterBang(String s) {
+<span class="fc" id="L187">		int i = skipSpaces(s, 0);</span>
+<span class="pc bpc" id="L188" title="1 of 4 branches missed.">		if (i &gt;= s.length() || s.charAt(i) != '!')</span>
+<span class="fc" id="L189">			return -1;</span>
+<span class="fc" id="L190">		return skipSpaces(s, i + 1);</span>
+	}
+
+	private static int skipSpaces(String s, int i) {
+<span class="fc bfc" id="L194" title="All 4 branches covered.">		while (i &lt; s.length() &amp;&amp; Character.isWhitespace(s.charAt(i)))</span>
+<span class="fc" id="L195">			i++;</span>
+<span class="fc" id="L196">		return i;</span>
+	}
+
+	private static boolean isIdentifierStart(char ch) {
+<span class="pc bpc" id="L200" title="1 of 6 branches missed.">		return Character.isLetter(ch) || ch == '_' || Character.isSurrogate(ch);</span>
+	}
+
+	private static int identifierEnd(String s, int i) {
+<span class="pc bpc" id="L204" title="1 of 4 branches missed.">		if (i &gt;= s.length() || isIdentifierStart(s.charAt(i)) == false)</span>
+<span class="fc" id="L205">			return i;</span>
+<span class="fc bfc" id="L206" title="All 4 branches covered.">		while (i &lt; s.length() &amp;&amp; TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(i)))</span>
+<span class="fc" id="L207">			i++;</span>
+<span class="fc" id="L208">		return i;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

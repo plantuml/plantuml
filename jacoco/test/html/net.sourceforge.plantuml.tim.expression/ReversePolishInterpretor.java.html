@@ -95,8 +95,8 @@ public class ReversePolishInterpretor {
 <span class="fc" id="L95">				final TFunction function = knowledge.getFunction(new TFunctionSignature(token2.getSurface(), nb));</span>
 				if (trace)
 					System.err.println(&quot;function=&quot; + function);
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">				if (function == null)</span>
-<span class="nc" id="L99">					throw new EaterException(&quot;Unknown built-in function &quot; + token2.getSurface(), location);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">				if (function == null)</span>
+<span class="fc" id="L99">					throw new EaterException(&quot;Unknown built-in function &quot; + token2.getSurface(), location);</span>
 
 <span class="pc bpc" id="L101" title="1 of 2 branches missed.">				if (function.canCover(nb, Collections.&lt;String&gt;emptySet()) == false)</span>
 <span class="nc" id="L102">					throw new EaterException(&quot;Bad number of arguments for &quot; + function.getSignature().getFunctionName(),</span>

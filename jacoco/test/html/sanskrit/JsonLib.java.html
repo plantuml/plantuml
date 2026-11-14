@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonLib.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">JsonLib.java</span></div><h1>JsonLib.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+
+/**
+ * The json module: &lt;code&gt;loads(s)&lt;/code&gt; and &lt;code&gt;dumps(obj)&lt;/code&gt;, written
+ * by hand (no regex, no reflection) so that the result is the same on every
+ * edition. &lt;code&gt;dumps&lt;/code&gt; gives CPython's default output: separators
+ * &lt;code&gt;&quot;, &quot;&lt;/code&gt; and &lt;code&gt;&quot;: &quot;&lt;/code&gt;, non-ASCII characters escaped, dict
+ * keys in insertion order. Integers are 32-bit like everywhere else.
+ */
+final class JsonLib {
+	private static final int MAX_DEPTH = 200;
+
+	private JsonLib() {
+	}
+
+	static PyModule create() {
+<span class="fc" id="L19">		final PyModule m = new PyModule(&quot;json&quot;);</span>
+<span class="fc" id="L20">		m.put(&quot;loads&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L21">			one(&quot;loads&quot;, a);</span>
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">			if (PyStr.is(a[0]) == false)</span>
+<span class="nc" id="L23">				throw PyOps.err(Types.TYPE_ERROR, &quot;the JSON object must be str, not '&quot; + PyOps.typeName(a[0]) + &quot;'&quot;);</span>
+			// the work of reading the text; the memory of the values is counted as they are built
+<span class="fc" id="L25">			in.work(PyOps.size(a[0]));</span>
+<span class="fc" id="L26">			final Parser parser = new Parser(PyStr.text(a[0]));</span>
+<span class="fc" id="L27">			final Object result = parser.parse();</span>
+<span class="fc" id="L28">			in.allocated(parser.units);</span>
+<span class="fc" id="L29">			return result;</span>
+		});
+<span class="fc" id="L31">		m.put(&quot;dumps&quot;, (in, a) -&gt; {</span>
+<span class="fc" id="L32">			one(&quot;dumps&quot;, a);</span>
+<span class="fc" id="L33">			final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L34">			dump(a[0], sb, 0);</span>
+<span class="fc" id="L35">			return sb.toString();</span>
+		});
+<span class="fc" id="L37">		return m;</span>
+	}
+
+	private static void one(String name, Object[] a) {
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">		if (a.length != 1)</span>
+<span class="nc" id="L42">			throw PyOps.err(Types.TYPE_ERROR, name + &quot;() takes exactly 1 argument (&quot; + a.length + &quot; given)&quot;);</span>
+<span class="fc" id="L43">	}</span>
+
+	// ------------------------------------------------------------ dumps
+
+	private static void dump(Object o, StringBuilder sb, int depth) {
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (depth &gt; MAX_DEPTH)</span>
+<span class="nc" id="L49">			throw PyOps.err(Types.RECURSION_ERROR, &quot;maximum recursion depth exceeded while encoding a JSON object&quot;);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (PyStr.is(o)) {</span>
+<span class="fc" id="L51">			string(PyStr.text(o), sb);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">		} else if (o instanceof Boolean) {</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">			sb.append(((Boolean) o).booleanValue() ? &quot;true&quot; : &quot;false&quot;);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		} else if (o instanceof Integer) {</span>
+<span class="fc" id="L55">			sb.append(((Integer) o).intValue());</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		} else if (o instanceof Double) {</span>
+<span class="fc" id="L57">			sb.append(number(((Double) o).doubleValue()));</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		} else if (o == PyNone.NONE) {</span>
+<span class="fc" id="L59">			sb.append(&quot;null&quot;);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">		} else if (o instanceof PyList) {</span>
+<span class="fc" id="L61">			array(((PyList) o).items.toArray(), sb, depth);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		} else if (o instanceof PyTuple) {</span>
+<span class="fc" id="L63">			array(((PyTuple) o).items, sb, depth);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		} else if (o instanceof PyDict) {</span>
+<span class="fc" id="L65">			sb.append('{');</span>
+<span class="fc" id="L66">			boolean first = true;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			for (PyDict.Entry e : ((PyDict) o).map.values()) {</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">				if (first == false)</span>
+<span class="fc" id="L69">					sb.append(&quot;, &quot;);</span>
+<span class="fc" id="L70">				first = false;</span>
+<span class="fc" id="L71">				string(key(e.key), sb);</span>
+<span class="fc" id="L72">				sb.append(&quot;: &quot;);</span>
+<span class="fc" id="L73">				dump(e.value, sb, depth + 1);</span>
+<span class="fc" id="L74">			}</span>
+<span class="fc" id="L75">			sb.append('}');</span>
+<span class="fc" id="L76">		} else {</span>
+<span class="fc" id="L77">			throw PyOps.err(Types.TYPE_ERROR, &quot;Object of type &quot; + PyOps.typeName(o) + &quot; is not JSON serializable&quot;);</span>
+		}
+<span class="fc" id="L79">	}</span>
+
+	private static void array(Object[] items, StringBuilder sb, int depth) {
+<span class="fc" id="L82">		sb.append('[');</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		for (int i = 0; i &lt; items.length; i++) {</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">			if (i &gt; 0)</span>
+<span class="fc" id="L85">				sb.append(&quot;, &quot;);</span>
+<span class="fc" id="L86">			dump(items[i], sb, depth + 1);</span>
+		}
+<span class="fc" id="L88">		sb.append(']');</span>
+<span class="fc" id="L89">	}</span>
+
+	/** A dict key as JSON wants it: always a string, as json.dumps converts it. */
+	private static String key(Object k) {
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (PyStr.is(k))</span>
+<span class="fc" id="L94">			return PyStr.text(k);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (k instanceof Boolean)</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			return ((Boolean) k).booleanValue() ? &quot;true&quot; : &quot;false&quot;;</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (k instanceof Integer)</span>
+<span class="fc" id="L98">			return String.valueOf(((Integer) k).intValue());</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (k instanceof Double)</span>
+<span class="nc" id="L100">			return number(((Double) k).doubleValue());</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (k == PyNone.NONE)</span>
+<span class="nc" id="L102">			return &quot;null&quot;;</span>
+<span class="nc" id="L103">		throw PyOps.err(Types.TYPE_ERROR, &quot;keys must be str, int, float, bool or None, not &quot; + PyOps.typeName(k));</span>
+	}
+
+	private static String number(double d) {
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (d != d)</span>
+<span class="nc" id="L108">			return &quot;NaN&quot;;</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (Double.isInfinite(d))</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			return d &gt; 0 ? &quot;Infinity&quot; : &quot;-Infinity&quot;;</span>
+<span class="fc" id="L111">		return Fmt.repr(d);</span>
+	}
+
+	private static void string(String s, StringBuilder sb) {
+<span class="fc" id="L115">		PyOps.checkString((long) sb.length() + s.length());</span>
+<span class="fc" id="L116">		sb.append('&quot;');</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L118">			char ch = s.charAt(i);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			if (PyStr.loneAt(s, i))</span>
+<span class="fc" id="L120">				ch = (char) PyStr.cpAt(s, i++); // a lone surrogate: one escape</span>
+<span class="pc bpc" id="L121" title="4 of 8 branches missed.">			switch (ch) {</span>
+			case '&quot;':
+<span class="fc" id="L123">				sb.append(&quot;\\\&quot;&quot;);</span>
+<span class="fc" id="L124">				break;</span>
+			case '\\':
+<span class="fc" id="L126">				sb.append(&quot;\\\\&quot;);</span>
+<span class="fc" id="L127">				break;</span>
+			case '\n':
+<span class="fc" id="L129">				sb.append(&quot;\\n&quot;);</span>
+<span class="fc" id="L130">				break;</span>
+			case '\r':
+<span class="nc" id="L132">				sb.append(&quot;\\r&quot;);</span>
+<span class="nc" id="L133">				break;</span>
+			case '\t':
+<span class="nc" id="L135">				sb.append(&quot;\\t&quot;);</span>
+<span class="nc" id="L136">				break;</span>
+			case '\b':
+<span class="nc" id="L138">				sb.append(&quot;\\b&quot;);</span>
+<span class="nc" id="L139">				break;</span>
+			case '\f':
+<span class="nc" id="L141">				sb.append(&quot;\\f&quot;);</span>
+<span class="nc" id="L142">				break;</span>
+			default:
+<span class="pc bpc" id="L144" title="1 of 4 branches missed.">				if (ch &lt; 0x20 || ch &gt; 0x7e) {</span>
+<span class="fc" id="L145">					sb.append(&quot;\\u&quot;);</span>
+<span class="fc" id="L146">					final String hex = Integer.toHexString(ch);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">					for (int k = hex.length(); k &lt; 4; k++)</span>
+<span class="fc" id="L148">						sb.append('0');</span>
+<span class="fc" id="L149">					sb.append(hex);</span>
+<span class="fc" id="L150">				} else {</span>
+<span class="fc" id="L151">					sb.append(ch);</span>
+				}
+			}
+		}
+<span class="fc" id="L155">		sb.append('&quot;');</span>
+<span class="fc" id="L156">	}</span>
+
+	// ------------------------------------------------------------ loads
+
+	private static final class Parser {
+		private final String s;
+		private int pos;
+
+<span class="fc" id="L164">		Parser(String s) {</span>
+<span class="fc" id="L165">			this.s = s;</span>
+<span class="fc" id="L166">		}</span>
+
+		Object parse() {
+<span class="fc" id="L169">			skipSpaces();</span>
+<span class="fc" id="L170">			final Object result = value(0);</span>
+<span class="fc" id="L171">			skipSpaces();</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (pos &lt; s.length())</span>
+<span class="nc" id="L173">				throw error(&quot;Extra data&quot;);</span>
+<span class="fc" id="L174">			return result;</span>
+		}
+
+		private PyError error(String message) {
+<span class="fc" id="L178">			return PyOps.err(Types.VALUE_ERROR, message + &quot;: char &quot; + pos);</span>
+		}
+
+		private void skipSpaces() {
+<span class="fc bfc" id="L182" title="All 2 branches covered.">			while (pos &lt; s.length()) {</span>
+<span class="fc" id="L183">				final char ch = s.charAt(pos);</span>
+<span class="pc bpc" id="L184" title="2 of 8 branches missed.">				if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r')</span>
+<span class="fc" id="L185">					pos++;</span>
+				else
+					break;
+<span class="fc" id="L188">			}</span>
+<span class="fc" id="L189">		}</span>
+
+		/** The units ({@link Memory}) of the values built so far. */
+		private long units;
+
+		private void built(long n) {
+<span class="fc" id="L195">			units += n;</span>
+<span class="fc" id="L196">			Memory.checkBuilt(units);</span>
+<span class="fc" id="L197">		}</span>
+
+		private Object value(int depth) {
+<span class="fc" id="L200">			built(Memory.OBJECT + Memory.SLOT);</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">			if (depth &gt; MAX_DEPTH)</span>
+<span class="nc" id="L202">				throw PyOps.err(Types.RECURSION_ERROR, &quot;maximum recursion depth exceeded while decoding a JSON document&quot;);</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">			if (pos &gt;= s.length())</span>
+<span class="nc" id="L204">				throw error(&quot;Expecting value&quot;);</span>
+<span class="fc" id="L205">			final char ch = s.charAt(pos);</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">			if (ch == '{')</span>
+<span class="fc" id="L207">				return object(depth);</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">			if (ch == '[')</span>
+<span class="fc" id="L209">				return array(depth);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">			if (ch == '&quot;')</span>
+<span class="fc" id="L211">				return string();</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">			if (s.startsWith(&quot;true&quot;, pos)) {</span>
+<span class="fc" id="L213">				pos += 4;</span>
+<span class="fc" id="L214">				return Boolean.TRUE;</span>
+			}
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">			if (s.startsWith(&quot;false&quot;, pos)) {</span>
+<span class="nc" id="L217">				pos += 5;</span>
+<span class="nc" id="L218">				return Boolean.FALSE;</span>
+			}
+<span class="fc bfc" id="L220" title="All 2 branches covered.">			if (s.startsWith(&quot;null&quot;, pos)) {</span>
+<span class="fc" id="L221">				pos += 4;</span>
+<span class="fc" id="L222">				return PyNone.NONE;</span>
+			}
+<span class="pc bpc" id="L224" title="2 of 6 branches missed.">			if (ch == '-' || (ch &gt;= '0' &amp;&amp; ch &lt;= '9'))</span>
+<span class="fc" id="L225">				return number();</span>
+<span class="nc" id="L226">			throw error(&quot;Expecting value&quot;);</span>
+		}
+
+		private Object object(int depth) {
+<span class="fc" id="L230">			final PyDict dict = new PyDict();</span>
+<span class="fc" id="L231">			pos++; // {</span>
+<span class="fc" id="L232">			skipSpaces();</span>
+<span class="pc bpc" id="L233" title="2 of 4 branches missed.">			if (pos &lt; s.length() &amp;&amp; s.charAt(pos) == '}') {</span>
+<span class="nc" id="L234">				pos++;</span>
+<span class="nc" id="L235">				return dict;</span>
+			}
+			while (true) {
+<span class="fc" id="L238">				skipSpaces();</span>
+<span class="pc bpc" id="L239" title="1 of 4 branches missed.">				if (pos &gt;= s.length() || s.charAt(pos) != '&quot;')</span>
+<span class="fc" id="L240">					throw error(&quot;Expecting property name enclosed in double quotes&quot;);</span>
+<span class="fc" id="L241">				final String key = string();</span>
+<span class="fc" id="L242">				skipSpaces();</span>
+<span class="pc bpc" id="L243" title="2 of 4 branches missed.">				if (pos &gt;= s.length() || s.charAt(pos) != ':')</span>
+<span class="nc" id="L244">					throw error(&quot;Expecting ':' delimiter&quot;);</span>
+<span class="fc" id="L245">				pos++;</span>
+<span class="fc" id="L246">				skipSpaces();</span>
+<span class="fc" id="L247">				built(Memory.ENTRY);</span>
+<span class="fc" id="L248">				dict.put(key, value(depth + 1));</span>
+<span class="fc" id="L249">				skipSpaces();</span>
+<span class="pc bpc" id="L250" title="1 of 4 branches missed.">				if (pos &lt; s.length() &amp;&amp; s.charAt(pos) == ',') {</span>
+<span class="fc" id="L251">					pos++;</span>
+<span class="fc" id="L252">					continue;</span>
+				}
+<span class="pc bpc" id="L254" title="2 of 4 branches missed.">				if (pos &lt; s.length() &amp;&amp; s.charAt(pos) == '}') {</span>
+<span class="fc" id="L255">					pos++;</span>
+<span class="fc" id="L256">					return dict;</span>
+				}
+<span class="nc" id="L258">				throw error(&quot;Expecting ',' delimiter&quot;);</span>
+			}
+		}
+
+		private Object array(int depth) {
+<span class="fc" id="L263">			final ArrayList&lt;Object&gt; items = new ArrayList&lt;Object&gt;();</span>
+<span class="fc" id="L264">			pos++; // [</span>
+<span class="fc" id="L265">			skipSpaces();</span>
+<span class="pc bpc" id="L266" title="1 of 4 branches missed.">			if (pos &lt; s.length() &amp;&amp; s.charAt(pos) == ']') {</span>
+<span class="fc" id="L267">				pos++;</span>
+<span class="fc" id="L268">				return new PyList(items);</span>
+			}
+			while (true) {
+<span class="fc" id="L271">				skipSpaces();</span>
+<span class="fc" id="L272">				items.add(value(depth + 1));</span>
+<span class="fc" id="L273">				skipSpaces();</span>
+<span class="pc bpc" id="L274" title="1 of 4 branches missed.">				if (pos &lt; s.length() &amp;&amp; s.charAt(pos) == ',') {</span>
+<span class="fc" id="L275">					pos++;</span>
+<span class="fc" id="L276">					continue;</span>
+				}
+<span class="pc bpc" id="L278" title="2 of 4 branches missed.">				if (pos &lt; s.length() &amp;&amp; s.charAt(pos) == ']') {</span>
+<span class="fc" id="L279">					pos++;</span>
+<span class="fc" id="L280">					return new PyList(items);</span>
+				}
+<span class="nc" id="L282">				throw error(&quot;Expecting ',' delimiter&quot;);</span>
+			}
+		}
+
+		private String string() {
+<span class="fc" id="L287">			pos++; // opening quote</span>
+<span class="fc" id="L288">			final StringBuilder sb = new StringBuilder();</span>
+			while (true) {
+<span class="pc bpc" id="L290" title="1 of 2 branches missed.">				if (pos &gt;= s.length())</span>
+<span class="nc" id="L291">					throw error(&quot;Unterminated string starting at&quot;);</span>
+<span class="fc" id="L292">				final char ch = s.charAt(pos++);</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">				if (ch == '&quot;') {</span>
+<span class="fc" id="L294">					built(sb.length());</span>
+<span class="fc" id="L295">					return sb.toString();</span>
+				}
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">				if (ch &lt; 0x20)</span>
+<span class="nc" id="L298">					throw error(&quot;Invalid control character at&quot;);</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">				if (ch != '\\') {</span>
+<span class="fc" id="L300">					sb.append(ch);</span>
+<span class="fc" id="L301">					continue;</span>
+				}
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">				if (pos &gt;= s.length())</span>
+<span class="nc" id="L304">					throw error(&quot;Unterminated string starting at&quot;);</span>
+<span class="fc" id="L305">				final char esc = s.charAt(pos++);</span>
+<span class="pc bpc" id="L306" title="6 of 8 branches missed.">				switch (esc) {</span>
+				case '&quot;':
+				case '\\':
+				case '/':
+<span class="nc" id="L310">					sb.append(esc);</span>
+<span class="nc" id="L311">					break;</span>
+				case 'b':
+<span class="nc" id="L313">					sb.append('\b');</span>
+<span class="nc" id="L314">					break;</span>
+				case 'f':
+<span class="nc" id="L316">					sb.append('\f');</span>
+<span class="nc" id="L317">					break;</span>
+				case 'n':
+<span class="fc" id="L319">					sb.append('\n');</span>
+<span class="fc" id="L320">					break;</span>
+				case 'r':
+<span class="nc" id="L322">					sb.append('\r');</span>
+<span class="nc" id="L323">					break;</span>
+				case 't':
+<span class="nc" id="L325">					sb.append('\t');</span>
+<span class="nc" id="L326">					break;</span>
+				case 'u':
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">					if (pos + 4 &gt; s.length())</span>
+<span class="nc" id="L329">						throw error(&quot;Invalid \\uXXXX escape&quot;);</span>
+<span class="fc" id="L330">					int code = 0;</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">					for (int k = 0; k &lt; 4; k++) {</span>
+<span class="fc" id="L332">						final int digit = Character.digit(s.charAt(pos + k), 16);</span>
+<span class="pc bpc" id="L333" title="1 of 2 branches missed.">						if (digit &lt; 0)</span>
+<span class="nc" id="L334">							throw error(&quot;Invalid \\uXXXX escape&quot;);</span>
+<span class="fc" id="L335">						code = code * 16 + digit;</span>
+					}
+<span class="fc" id="L337">					pos += 4;</span>
+					// a pair of escapes is one character, a lone surrogate stays one
+<span class="pc bpc" id="L339" title="1 of 8 branches missed.">					if (code &gt;= 0xd800 &amp;&amp; code &lt;= 0xdbff &amp;&amp; s.startsWith(&quot;\\u&quot;, pos) &amp;&amp; pos + 6 &lt;= s.length()) {</span>
+<span class="fc" id="L340">						int low = 0;</span>
+<span class="pc bpc" id="L341" title="1 of 4 branches missed.">						for (int k = 2; k &lt; 6 &amp;&amp; low &gt;= 0; k++) {</span>
+<span class="fc" id="L342">							final int digit = Character.digit(s.charAt(pos + k), 16);</span>
+<span class="pc bpc" id="L343" title="1 of 2 branches missed.">							low = digit &lt; 0 ? -1 : low * 16 + digit;</span>
+						}
+<span class="pc bpc" id="L345" title="2 of 4 branches missed.">						if (low &gt;= 0xdc00 &amp;&amp; low &lt;= 0xdfff) {</span>
+<span class="fc" id="L346">							code = Character.toCodePoint((char) code, (char) low);</span>
+<span class="fc" id="L347">							pos += 6;</span>
+						}
+					}
+<span class="fc" id="L350">					PyStr.appendCp(sb, code);</span>
+<span class="fc" id="L351">					break;</span>
+				default:
+<span class="nc" id="L353">					throw error(&quot;Invalid \\escape&quot;);</span>
+				}
+<span class="fc" id="L355">			}</span>
+		}
+
+		private Object number() {
+<span class="fc" id="L359">			final int start = pos;</span>
+<span class="fc bfc" id="L360" title="All 2 branches covered.">			if (s.charAt(pos) == '-')</span>
+<span class="fc" id="L361">				pos++;</span>
+<span class="pc bpc" id="L362" title="2 of 4 branches missed.">			if (pos &gt;= s.length() || isDigit(s.charAt(pos)) == false)</span>
+<span class="nc" id="L363">				throw error(&quot;Expecting value&quot;);</span>
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">			if (s.charAt(pos) == '0')</span>
+<span class="nc" id="L365">				pos++;</span>
+			else
+<span class="pc bpc" id="L367" title="1 of 4 branches missed.">				while (pos &lt; s.length() &amp;&amp; isDigit(s.charAt(pos)))</span>
+<span class="fc" id="L368">					pos++;</span>
+<span class="fc" id="L369">			boolean isFloat = false;</span>
+<span class="pc bpc" id="L370" title="1 of 6 branches missed.">			if (pos + 1 &lt; s.length() &amp;&amp; s.charAt(pos) == '.' &amp;&amp; isDigit(s.charAt(pos + 1))) {</span>
+<span class="fc" id="L371">				isFloat = true;</span>
+<span class="fc" id="L372">				pos++;</span>
+<span class="pc bpc" id="L373" title="1 of 4 branches missed.">				while (pos &lt; s.length() &amp;&amp; isDigit(s.charAt(pos)))</span>
+<span class="fc" id="L374">					pos++;</span>
+			}
+<span class="pc bpc" id="L376" title="3 of 6 branches missed.">			if (pos &lt; s.length() &amp;&amp; (s.charAt(pos) == 'e' || s.charAt(pos) == 'E')) {</span>
+<span class="nc" id="L377">				int p = pos + 1;</span>
+<span class="nc bnc" id="L378" title="All 6 branches missed.">				if (p &lt; s.length() &amp;&amp; (s.charAt(p) == '+' || s.charAt(p) == '-'))</span>
+<span class="nc" id="L379">					p++;</span>
+<span class="nc bnc" id="L380" title="All 4 branches missed.">				if (p &lt; s.length() &amp;&amp; isDigit(s.charAt(p))) {</span>
+<span class="nc" id="L381">					isFloat = true;</span>
+<span class="nc bnc" id="L382" title="All 4 branches missed.">					while (p &lt; s.length() &amp;&amp; isDigit(s.charAt(p)))</span>
+<span class="nc" id="L383">						p++;</span>
+<span class="nc" id="L384">					pos = p;</span>
+				}
+			}
+<span class="fc" id="L387">			final String text = s.substring(start, pos);</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">			if (isFloat)</span>
+<span class="fc" id="L389">				return Double.valueOf(Double.parseDouble(text));</span>
+			try {
+<span class="fc" id="L391">				return Integer.valueOf(Integer.parseInt(text));</span>
+<span class="nc" id="L392">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L393">				throw PyOps.err(Types.OVERFLOW, &quot;integer overflow (this interpreter has 32-bit integers)&quot;);</span>
+			}
+		}
+
+		private static boolean isDigit(char ch) {
+<span class="fc bfc" id="L398" title="All 4 branches covered.">			return ch &gt;= '0' &amp;&amp; ch &lt;= '9';</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

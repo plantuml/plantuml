@@ -12085,19 +12085,21 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 40
-    Concrete Classes: 36
-    Abstract Classes: 4
+    Total Classes: 44
+    Concrete Classes: 38
+    Abstract Classes: 6
 
     Ca: 4
     Ce: 16
 
-    A: 0.1
+    A: 0.14
     I: 0.8
-    D: 0.1
+    D: 0.06
 
 Abstract Classes:
     net.sourceforge.plantuml.tim.ExecutionContexts
+    net.sourceforge.plantuml.tim.FunctionsSet$ReservedNames
+    net.sourceforge.plantuml.tim.PythonMacros$LegacyNames
     net.sourceforge.plantuml.tim.TFunction
     net.sourceforge.plantuml.tim.TMemory
     net.sourceforge.plantuml.tim.Trie
@@ -12129,6 +12131,8 @@ Concrete Classes:
     net.sourceforge.plantuml.tim.EaterWhile
     net.sourceforge.plantuml.tim.ExecutionContextForeach
     net.sourceforge.plantuml.tim.ExecutionContextIf
+    net.sourceforge.plantuml.tim.PythonChunks$Header
+    net.sourceforge.plantuml.tim.PythonRunner$EaterExceptionMessage
     net.sourceforge.plantuml.tim.StandardFunctions
     net.sourceforge.plantuml.tim.StringEater
     net.sourceforge.plantuml.tim.TContext$1
@@ -13297,13 +13301,13 @@ Stats:
 Abstract Classes:
 
 Concrete Classes:
-    net.sourceforge.plantuml.yaml.parser.Monomorph
     net.sourceforge.plantuml.yaml.parser.Monomorph$1
     net.sourceforge.plantuml.yaml.parser.MonomorphToJson
+    net.sourceforge.plantuml.yaml.parser.MonomorphToPlain
     net.sourceforge.plantuml.yaml.parser.MonomorphType
     net.sourceforge.plantuml.yaml.parser.YamlBuilder
     net.sourceforge.plantuml.yaml.parser.YamlLineType
-    net.sourceforge.plantuml.yaml.parser.YamlSyntaxException
+    net.sourceforge.plantuml.yaml.parser.YamlParser$Lines
 
 Depends Upon:
     java.lang
@@ -14027,6 +14031,138 @@ No stats available: package referenced, but not analyzed.
 - Package: org.xml.sax.helpers
 --------------------------------------------------
 No stats available: package referenced, but not analyzed.
+
+--------------------------------------------------
+- Package: sanskrit
+--------------------------------------------------
+
+Stats:
+    Total Classes: 105
+    Concrete Classes: 92
+    Abstract Classes: 13
+
+    Ca: 0
+    Ce: 2
+
+    A: 0.12
+    I: 1
+    D: 0.12
+
+Abstract Classes:
+    sanskrit.Ast$CompExpr
+    sanskrit.Ast$CtxExpr
+    sanskrit.Ast$Expr
+    sanskrit.Ast$NameDeclaration
+    sanskrit.Ast$Stmt
+    sanskrit.Builtin$Fn
+    sanskrit.Builtin$KwFn
+    sanskrit.Interp$Clock
+    sanskrit.Interp$Output
+    sanskrit.MathLib$D1
+    sanskrit.MathLib$D2
+    sanskrit.Node
+    sanskrit.PyIter
+
+Concrete Classes:
+    sanskrit.Ast
+    sanskrit.Ast$Alias
+    sanskrit.Ast$Arg
+    sanskrit.Ast$Arguments
+    sanskrit.Ast$Assert
+    sanskrit.Ast$Assign
+    sanskrit.Ast$Attribute
+    sanskrit.Ast$AugAssign
+    sanskrit.Ast$BinOp
+    sanskrit.Ast$BoolOp
+    sanskrit.Ast$BoolOperator
+    sanskrit.Ast$Break
+    sanskrit.Ast$Call
+    sanskrit.Ast$ClassDef
+    sanskrit.Ast$CmpOperator
+    sanskrit.Ast$Compare
+    sanskrit.Ast$Comprehension
+    sanskrit.Ast$Constant
+    sanskrit.Ast$Continue
+    sanskrit.Ast$Ctx
+    sanskrit.Ast$Delete
+    sanskrit.Ast$DictComp
+    sanskrit.Ast$DictExpr
+    sanskrit.Ast$ExceptHandler
+    sanskrit.Ast$ExprStmt
+    sanskrit.Ast$For
+    sanskrit.Ast$FormattedValue
+    sanskrit.Ast$FunctionDef
+    sanskrit.Ast$GeneratorExp
+    sanskrit.Ast$Global
+    sanskrit.Ast$If
+    sanskrit.Ast$IfExp
+    sanskrit.Ast$Import
+    sanskrit.Ast$ImportFrom
+    sanskrit.Ast$JoinedStr
+    sanskrit.Ast$Keyword
+    sanskrit.Ast$Lambda
+    sanskrit.Ast$ListComp
+    sanskrit.Ast$ListExpr
+    sanskrit.Ast$Module
+    sanskrit.Ast$Name
+    sanskrit.Ast$Nonlocal
+    sanskrit.Ast$Operator
+    sanskrit.Ast$Pass
+    sanskrit.Ast$Raise
+    sanskrit.Ast$Return
+    sanskrit.Ast$SetComp
+    sanskrit.Ast$SetExpr
+    sanskrit.Ast$Slice
+    sanskrit.Ast$Starred
+    sanskrit.Ast$Subscript
+    sanskrit.Ast$Try
+    sanskrit.Ast$TupleExpr
+    sanskrit.Ast$UnaryOp
+    sanskrit.Ast$UnaryOperator
+    sanskrit.Ast$While
+    sanskrit.BoundMethod
+    sanskrit.Cell
+    sanskrit.CodeGen$1
+    sanskrit.CodeGen$Entry
+    sanskrit.CodeGen$Label
+    sanskrit.CodeGen$Loop
+    sanskrit.ExecutionLimitError
+    sanskrit.Fmt$FieldNumbering
+    sanskrit.Fmt$Spec
+    sanskrit.Interp$1
+    sanskrit.Memory
+    sanskrit.PyDict$Entry
+    sanskrit.PyException
+    sanskrit.PyFunction
+    sanskrit.PyHashKey
+    sanskrit.PyInstance
+    sanskrit.PyInt
+    sanskrit.PyIter$ArrayIter
+    sanskrit.PyIter$DictIter
+    sanskrit.PyIter$ListIter
+    sanskrit.PyIter$RangeIter
+    sanskrit.PyIter$StrIter
+    sanskrit.PyList
+    sanskrit.PyNone
+    sanskrit.PyNotImplemented
+    sanskrit.PyRange
+    sanskrit.PySet$SetIter
+    sanskrit.PySlice
+    sanskrit.PyStr
+    sanskrit.PyTuple
+    sanskrit.PyView
+    sanskrit.PyView$1
+    sanskrit.Scope
+    sanskrit.Token
+    sanskrit.Token$StringLit
+    sanskrit.Types
+
+Depends Upon:
+    java.lang
+    java.util
+
+Used By:
+    Not used by any packages.
 
 --------------------------------------------------
 - Package: smetana.core
@@ -15859,7 +15995,7 @@ java.awt.font,0,0,3,0,0,0,1,1
 java.awt.geom,0,0,6,0,0,0,1,1
 java.awt.image,0,0,13,0,0,0,1,1
 java.io,0,0,85,0,0,0,1,1
-java.lang,0,0,246,0,0,0,1,1
+java.lang,0,0,247,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,3,0,0,0,1,1
 java.math,0,0,5,0,0,0,1,1
@@ -15872,7 +16008,7 @@ java.security.spec,0,0,2,0,0,0,1,1
 java.text,0,0,5,0,0,0,1,1
 java.time,0,0,12,0,0,0,1,1
 java.time.temporal,0,0,2,0,0,0,1,1
-java.util,0,0,190,0,0,0,1,1
+java.util,0,0,191,0,0,0,1,1
 java.util.concurrent,0,0,8,0,0,0,1,1
 java.util.concurrent.atomic,0,0,5,0,0,0,1,1
 java.util.function,0,0,3,0,0,0,1,1
@@ -16085,7 +16221,7 @@ net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,40,4,0.2,0.09,0.71,1
 net.sourceforge.plantuml.theme,2,0,1,6,0,0.86,0.14,1
 net.sourceforge.plantuml.tikz,1,0,4,1,0,0.2,0.8,1
-net.sourceforge.plantuml.tim,40,4,4,16,0.1,0.8,0.1,1
+net.sourceforge.plantuml.tim,44,6,4,16,0.14,0.8,0.06,1
 net.sourceforge.plantuml.tim.builtin,68,1,1,14,0.01,0.93,0.05,1
 net.sourceforge.plantuml.tim.expression,17,3,3,3,0.18,0.5,0.32,1
 net.sourceforge.plantuml.tim.iterator,16,3,1,9,0.19,0.9,0.09,1
@@ -16127,6 +16263,7 @@ org.teavm.jso.dom.xml,0,0,1,0,0,0,1,1
 org.w3c.dom,0,0,4,0,0,0,1,1
 org.xml.sax,0,0,2,0,0,0,1,1
 org.xml.sax.helpers,0,0,2,0,0,0,1,1
+sanskrit,105,13,0,2,0.12,1,0.12,1
 smetana.core,12,5,11,8,0.42,0.42,0.16,1
 smetana.core.debug,1,0,8,1,0,0.11,0.89,1
 zext.plantuml.com.google.zxing,10,2,3,3,0.2,0.5,0.3,1

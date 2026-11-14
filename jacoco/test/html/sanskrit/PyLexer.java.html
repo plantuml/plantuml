@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PyLexer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">PyLexer.java</span></div><h1>PyLexer.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * Splits Python source into tokens, producing INDENT / DEDENT / NEWLINE the way
+ * CPython does: no newline token inside brackets, blank and comment-only lines
+ * ignored, backslash continuation. Tabs are rejected.
+ */
+final class PyLexer {
+<span class="fc" id="L15">	static final Set&lt;String&gt; KEYWORDS = new HashSet&lt;String&gt;(Arrays.asList(</span>
+			&quot;False&quot;, &quot;None&quot;, &quot;True&quot;, &quot;and&quot;, &quot;as&quot;, &quot;assert&quot;, &quot;async&quot;, &quot;await&quot;, &quot;break&quot;, &quot;class&quot;,
+			&quot;continue&quot;, &quot;def&quot;, &quot;del&quot;, &quot;elif&quot;, &quot;else&quot;, &quot;except&quot;, &quot;finally&quot;, &quot;for&quot;, &quot;from&quot;,
+			&quot;global&quot;, &quot;if&quot;, &quot;import&quot;, &quot;in&quot;, &quot;is&quot;, &quot;lambda&quot;, &quot;nonlocal&quot;, &quot;not&quot;, &quot;or&quot;, &quot;pass&quot;,
+			&quot;raise&quot;, &quot;return&quot;, &quot;try&quot;, &quot;while&quot;, &quot;with&quot;, &quot;yield&quot;));
+
+<span class="fc" id="L21">	private static final String[] OPS3 = { &quot;**=&quot;, &quot;//=&quot;, &quot;&gt;&gt;=&quot;, &quot;&lt;&lt;=&quot;, &quot;...&quot; };</span>
+<span class="fc" id="L22">	private static final String[] OPS2 = { &quot;**&quot;, &quot;//&quot;, &quot;&gt;&gt;&quot;, &quot;&lt;&lt;&quot;, &quot;&lt;=&quot;, &quot;&gt;=&quot;, &quot;==&quot;, &quot;!=&quot;, &quot;+=&quot;, &quot;-=&quot;, &quot;*=&quot;,</span>
+			&quot;/=&quot;, &quot;%=&quot;, &quot;&amp;=&quot;, &quot;|=&quot;, &quot;^=&quot;, &quot;-&gt;&quot;, &quot;:=&quot;, &quot;@=&quot; };
+	private static final String OPS1 = &quot;+-*/%&amp;|^~&lt;&gt;()[]{},:.;=@&quot;;
+
+	private final String src;
+	private int pos;
+<span class="fc" id="L28">	private int line = 1;</span>
+	private int lineStart;
+<span class="fc" id="L30">	private final List&lt;Token&gt; tokens = new ArrayList&lt;Token&gt;();</span>
+
+<span class="fc" id="L32">	private PyLexer(String source) {</span>
+<span class="fc" id="L33">		this.src = source.replace(&quot;\r\n&quot;, &quot;\n&quot;).replace('\r', '\n');</span>
+<span class="fc" id="L34">	}</span>
+
+	static List&lt;Token&gt; tokenize(String source) {
+<span class="fc" id="L37">		return new PyLexer(source).run();</span>
+	}
+
+	/** Tokenizes a text that starts on the given line of the source, for the tokens to carry the line of the source. */
+	static List&lt;Token&gt; tokenize(String source, int firstLine) {
+<span class="fc" id="L42">		PyLexer lexer = new PyLexer(source);</span>
+<span class="fc" id="L43">		lexer.line = firstLine;</span>
+<span class="fc" id="L44">		return lexer.run();</span>
+	}
+
+	private PySyntaxError error(String message) {
+<span class="fc" id="L48">		return new PySyntaxError(message, line, pos - lineStart);</span>
+	}
+
+	private void add(int kind, String text, int startLine, int startCol, Object value) {
+<span class="fc" id="L52">		tokens.add(new Token(kind, text, startLine, startCol, value));</span>
+<span class="fc" id="L53">	}</span>
+
+	private List&lt;Token&gt; run() {
+<span class="fc" id="L56">		int n = src.length();</span>
+<span class="fc" id="L57">		int[] indents = new int[100];</span>
+<span class="fc" id="L58">		int depthIndent = 0;</span>
+<span class="fc" id="L59">		int paren = 0;</span>
+<span class="fc" id="L60">		boolean lineStartPending = true;</span>
+		while (true) {
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">			if (lineStartPending &amp;&amp; paren == 0) {</span>
+				// measure the indentation of the next logical line
+<span class="fc" id="L64">				int col = 0;</span>
+<span class="fc" id="L65">				int p = pos;</span>
+<span class="fc bfc" id="L66" title="All 4 branches covered.">				while (p &lt; n &amp;&amp; src.charAt(p) == ' ') {</span>
+<span class="fc" id="L67">					p++;</span>
+<span class="fc" id="L68">					col++;</span>
+				}
+<span class="pc bpc" id="L70" title="1 of 6 branches missed.">				if (p &lt; n &amp;&amp; (src.charAt(p) == '\t' || src.charAt(p) == '\f')) {</span>
+<span class="fc" id="L71">					pos = p;</span>
+<span class="fc" id="L72">					throw error(&quot;tabs are not allowed; indent with spaces&quot;);</span>
+				}
+<span class="fc bfc" id="L74" title="All 2 branches covered.">				if (p &gt;= n) {</span>
+<span class="fc" id="L75">					pos = p;</span>
+<span class="fc" id="L76">					break;</span>
+				}
+<span class="fc" id="L78">				char c = src.charAt(p);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">				if (c == '\n') {</span>
+<span class="fc" id="L80">					pos = p + 1;</span>
+<span class="fc" id="L81">					line++;</span>
+<span class="fc" id="L82">					lineStart = pos;</span>
+<span class="fc" id="L83">					continue;</span>
+				}
+<span class="fc bfc" id="L85" title="All 2 branches covered.">				if (c == '#') {</span>
+<span class="fc bfc" id="L86" title="All 4 branches covered.">					while (p &lt; n &amp;&amp; src.charAt(p) != '\n')</span>
+<span class="fc" id="L87">						p++;</span>
+<span class="fc" id="L88">					pos = p;</span>
+<span class="fc" id="L89">					continue;</span>
+				}
+<span class="fc" id="L91">				pos = p;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">				if (col &gt; indents[depthIndent]) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">					if (depthIndent + 1 &gt;= indents.length)</span>
+<span class="fc" id="L94">						throw error(&quot;too many levels of indentation&quot;);</span>
+<span class="fc" id="L95">					indents[++depthIndent] = col;</span>
+<span class="fc" id="L96">					add(Token.INDENT, &quot;&quot;, line, 0, null);</span>
+				} else {
+<span class="fc bfc" id="L98" title="All 2 branches covered.">					while (col &lt; indents[depthIndent]) {</span>
+<span class="fc" id="L99">						depthIndent--;</span>
+<span class="fc" id="L100">						add(Token.DEDENT, &quot;&quot;, line, 0, null);</span>
+					}
+<span class="fc bfc" id="L102" title="All 2 branches covered.">					if (col != indents[depthIndent])</span>
+<span class="fc" id="L103">						throw error(&quot;unindent does not match any outer indentation level&quot;);</span>
+				}
+<span class="fc" id="L105">				lineStartPending = false;</span>
+			}
+<span class="fc bfc" id="L107" title="All 2 branches covered.">			if (pos &gt;= n)</span>
+<span class="fc" id="L108">				break;</span>
+<span class="fc" id="L109">			char c = src.charAt(pos);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">			if (c == ' ') {</span>
+<span class="fc" id="L111">				pos++;</span>
+<span class="pc bpc" id="L112" title="2 of 4 branches missed.">			} else if (c == '\t' || c == '\f') {</span>
+<span class="nc" id="L113">				throw error(&quot;tabs are not allowed; indent with spaces&quot;);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">			} else if (c == '#') {</span>
+<span class="fc bfc" id="L115" title="All 4 branches covered.">				while (pos &lt; n &amp;&amp; src.charAt(pos) != '\n')</span>
+<span class="fc" id="L116">					pos++;</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">			} else if (c == '\n') {</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">				if (paren == 0) {</span>
+<span class="fc" id="L119">					add(Token.NEWLINE, &quot;&quot;, line, pos - lineStart, null);</span>
+<span class="fc" id="L120">					lineStartPending = true;</span>
+				}
+<span class="fc" id="L122">				pos++;</span>
+<span class="fc" id="L123">				line++;</span>
+<span class="fc" id="L124">				lineStart = pos;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">			} else if (c == '\\') {</span>
+<span class="pc bpc" id="L126" title="1 of 4 branches missed.">				if (pos + 1 &lt; n &amp;&amp; src.charAt(pos + 1) == '\n') {</span>
+<span class="fc" id="L127">					pos += 2;</span>
+<span class="fc" id="L128">					line++;</span>
+<span class="fc" id="L129">					lineStart = pos;</span>
+				} else {
+<span class="fc" id="L131">					throw error(&quot;unexpected character after line continuation character&quot;);</span>
+				}
+<span class="fc bfc" id="L133" title="All 8 branches covered.">			} else if (isDigit(c) || (c == '.' &amp;&amp; pos + 1 &lt; n &amp;&amp; isDigit(src.charAt(pos + 1)))) {</span>
+<span class="fc" id="L134">				number();</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">			} else if (isIdentStart(c)) {</span>
+<span class="fc" id="L136">				nameOrString();</span>
+<span class="fc bfc" id="L137" title="All 4 branches covered.">			} else if (c == '&quot;' || c == '\'') {</span>
+<span class="fc" id="L138">				string(pos, false, false);</span>
+			} else {
+<span class="fc bfc" id="L140" title="All 2 branches covered.">				if (&quot;([{&quot;.indexOf(c) &gt;= 0)</span>
+<span class="fc" id="L141">					paren++;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">				else if (&quot;)]}&quot;.indexOf(c) &gt;= 0) {</span>
+<span class="fc" id="L143">					paren--;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">					if (paren &lt; 0)</span>
+<span class="fc" id="L145">						throw error(&quot;unmatched '&quot; + c + &quot;'&quot;);</span>
+				}
+<span class="fc" id="L147">				operator();</span>
+			}
+<span class="fc" id="L149">		}</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (paren &gt; 0)</span>
+<span class="fc" id="L151">			throw error(&quot;unexpected end of file: unclosed bracket&quot;);</span>
+<span class="fc bfc" id="L152" title="All 4 branches covered.">		if (!tokens.isEmpty() &amp;&amp; tokens.get(tokens.size() - 1).kind != Token.NEWLINE</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">				&amp;&amp; tokens.get(tokens.size() - 1).kind != Token.DEDENT</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">				&amp;&amp; tokens.get(tokens.size() - 1).kind != Token.INDENT)</span>
+<span class="fc" id="L155">			add(Token.NEWLINE, &quot;&quot;, line, pos - lineStart, null);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">		while (depthIndent &gt; 0) {</span>
+<span class="fc" id="L157">			depthIndent--;</span>
+<span class="fc" id="L158">			add(Token.DEDENT, &quot;&quot;, line, 0, null);</span>
+		}
+<span class="fc" id="L160">		add(Token.END, &quot;&quot;, line, 0, null);</span>
+<span class="fc" id="L161">		return tokens;</span>
+	}
+
+	private static boolean isDigit(char c) {
+<span class="fc bfc" id="L165" title="All 4 branches covered.">		return c &gt;= '0' &amp;&amp; c &lt;= '9';</span>
+	}
+
+	private static boolean isIdentStart(char c) {
+<span class="fc bfc" id="L169" title="All 4 branches covered.">		return c == '_' || Character.isLetter(c);</span>
+	}
+
+	private static boolean isIdentPart(char c) {
+<span class="fc bfc" id="L173" title="All 4 branches covered.">		return c == '_' || Character.isLetterOrDigit(c);</span>
+	}
+
+	private void operator() {
+<span class="fc" id="L177">		int col = pos - lineStart;</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for (String op : OPS3)</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (src.startsWith(op, pos)) {</span>
+<span class="fc" id="L180">				add(Token.OP, op, line, col, null);</span>
+<span class="fc" id="L181">				pos += 3;</span>
+<span class="fc" id="L182">				return;</span>
+			}
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		for (String op : OPS2)</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">			if (src.startsWith(op, pos)) {</span>
+<span class="fc" id="L186">				add(Token.OP, op, line, col, null);</span>
+<span class="fc" id="L187">				pos += 2;</span>
+<span class="fc" id="L188">				return;</span>
+			}
+<span class="fc" id="L190">		char c = src.charAt(pos);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		if (OPS1.indexOf(c) &gt;= 0) {</span>
+<span class="fc" id="L192">			add(Token.OP, String.valueOf(c), line, col, null);</span>
+<span class="fc" id="L193">			pos++;</span>
+<span class="fc" id="L194">			return;</span>
+		}
+<span class="fc" id="L196">		throw error(&quot;invalid character '&quot; + c + &quot;'&quot;);</span>
+	}
+
+	private void nameOrString() {
+<span class="fc" id="L200">		int start = pos;</span>
+<span class="fc" id="L201">		int col = pos - lineStart;</span>
+<span class="fc bfc" id="L202" title="All 4 branches covered.">		while (pos &lt; src.length() &amp;&amp; isIdentPart(src.charAt(pos)))</span>
+<span class="fc" id="L203">			pos++;</span>
+<span class="fc" id="L204">		String word = src.substring(start, pos);</span>
+<span class="pc bpc" id="L205" title="1 of 8 branches missed.">		if (pos &lt; src.length() &amp;&amp; (src.charAt(pos) == '&quot;' || src.charAt(pos) == '\'') &amp;&amp; word.length() &lt;= 2) {</span>
+<span class="fc" id="L206">			String p = word.toLowerCase();</span>
+<span class="fc bfc" id="L207" title="All 10 branches covered.">			if (p.equals(&quot;r&quot;) || p.equals(&quot;f&quot;) || p.equals(&quot;u&quot;) || p.equals(&quot;rf&quot;) || p.equals(&quot;fr&quot;)) {</span>
+<span class="fc bfc" id="L208" title="All 4 branches covered.">				string(start, p.indexOf('r') &gt;= 0, p.indexOf('f') &gt;= 0);</span>
+<span class="fc" id="L209">				return;</span>
+			}
+		}
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		if (KEYWORDS.contains(word))</span>
+<span class="fc" id="L213">			add(Token.KEYWORD, word, line, col, null);</span>
+		else
+<span class="fc" id="L215">			add(Token.NAME, word, line, col, null);</span>
+<span class="fc" id="L216">	}</span>
+
+	/** Reads a string whose prefix starts at {@code start}; pos is on the opening quote. */
+	private void string(int start, boolean raw, boolean fstring) {
+<span class="fc" id="L220">		int startLine = line;</span>
+<span class="fc" id="L221">		int col = start - lineStart;</span>
+<span class="fc" id="L222">		char q = src.charAt(pos);</span>
+<span class="fc" id="L223">		boolean triple = src.startsWith(String.valueOf(q) + q + q, pos);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">		pos += triple ? 3 : 1;</span>
+<span class="fc" id="L225">		int bodyStart = pos;</span>
+<span class="fc" id="L226">		int n = src.length();</span>
+		while (true) {
+<span class="fc bfc" id="L228" title="All 2 branches covered.">			if (pos &gt;= n)</span>
+<span class="fc" id="L229">				throw new PySyntaxError(&quot;unterminated string literal&quot;, startLine, col);</span>
+<span class="fc" id="L230">			char c = src.charAt(pos);</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">			if (c == '\\') {</span>
+<span class="pc bpc" id="L232" title="1 of 4 branches missed.">				if (pos + 1 &lt; n &amp;&amp; src.charAt(pos + 1) == '\n') {</span>
+<span class="fc" id="L233">					line++;</span>
+<span class="fc" id="L234">					lineStart = pos + 2;</span>
+				}
+<span class="fc" id="L236">				pos += 2;</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">			} else if (c == '\n') {</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">				if (!triple)</span>
+<span class="fc" id="L239">					throw new PySyntaxError(&quot;unterminated string literal&quot;, startLine, col);</span>
+<span class="fc" id="L240">				pos++;</span>
+<span class="fc" id="L241">				line++;</span>
+<span class="fc" id="L242">				lineStart = pos;</span>
+<span class="fc bfc" id="L243" title="All 6 branches covered.">			} else if (c == q &amp;&amp; (!triple || src.startsWith(String.valueOf(q) + q + q, pos))) {</span>
+<span class="fc" id="L244">				break;</span>
+			} else {
+<span class="fc" id="L246">				pos++;</span>
+			}
+<span class="fc" id="L248">		}</span>
+<span class="fc" id="L249">		String body = src.substring(bodyStart, pos);</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">		pos += triple ? 3 : 1;</span>
+<span class="fc" id="L251">		add(Token.STRING, src.substring(start, pos), startLine, col, new Token.StringLit(body, raw, fstring));</span>
+<span class="fc" id="L252">	}</span>
+
+	private void number() {
+<span class="fc" id="L255">		int start = pos;</span>
+<span class="fc" id="L256">		int col = pos - lineStart;</span>
+<span class="fc" id="L257">		int n = src.length();</span>
+<span class="fc" id="L258">		char c = src.charAt(pos);</span>
+<span class="pc bpc" id="L259" title="1 of 6 branches missed.">		if (c == '0' &amp;&amp; pos + 1 &lt; n &amp;&amp; &quot;xXoObB&quot;.indexOf(src.charAt(pos + 1)) &gt;= 0) {</span>
+<span class="fc" id="L260">			char kind = Character.toLowerCase(src.charAt(pos + 1));</span>
+<span class="fc bfc" id="L261" title="All 4 branches covered.">			int radix = kind == 'x' ? 16 : kind == 'o' ? 8 : 2;</span>
+<span class="fc" id="L262">			pos += 2;</span>
+<span class="fc" id="L263">			int digitsStart = pos;</span>
+<span class="fc bfc" id="L264" title="All 6 branches covered.">			while (pos &lt; n &amp;&amp; (Character.digit(src.charAt(pos), 16) &gt;= 0 || src.charAt(pos) == '_'))</span>
+<span class="fc" id="L265">				pos++;</span>
+<span class="fc" id="L266">			String digits = checkUnderscores(src.substring(digitsStart, pos));</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">			if (digits.isEmpty())</span>
+<span class="fc" id="L268">				throw error(&quot;invalid number literal&quot;);</span>
+			long v;
+			try {
+<span class="fc" id="L271">				v = Long.parseLong(digits, radix);</span>
+<span class="fc" id="L272">			} catch (NumberFormatException e) {</span>
+<span class="fc" id="L273">				throw error(&quot;invalid or too large number literal&quot;);</span>
+<span class="fc" id="L274">			}</span>
+<span class="fc" id="L275">			endOfNumber();</span>
+<span class="fc" id="L276">			add(Token.NUMBER, src.substring(start, pos), line, col, Long.valueOf(v));</span>
+<span class="fc" id="L277">			return;</span>
+		}
+<span class="fc" id="L279">		boolean isFloat = false;</span>
+<span class="fc bfc" id="L280" title="All 6 branches covered.">		while (pos &lt; n &amp;&amp; (isDigit(src.charAt(pos)) || src.charAt(pos) == '_'))</span>
+<span class="fc" id="L281">			pos++;</span>
+<span class="fc bfc" id="L282" title="All 4 branches covered.">		if (pos &lt; n &amp;&amp; src.charAt(pos) == '.') {</span>
+<span class="fc" id="L283">			isFloat = true;</span>
+<span class="fc" id="L284">			pos++;</span>
+<span class="fc bfc" id="L285" title="All 6 branches covered.">			while (pos &lt; n &amp;&amp; (isDigit(src.charAt(pos)) || src.charAt(pos) == '_'))</span>
+<span class="fc" id="L286">				pos++;</span>
+		}
+<span class="fc bfc" id="L288" title="All 6 branches covered.">		if (pos &lt; n &amp;&amp; (src.charAt(pos) == 'e' || src.charAt(pos) == 'E')) {</span>
+<span class="fc" id="L289">			int p = pos + 1;</span>
+<span class="pc bpc" id="L290" title="1 of 6 branches missed.">			if (p &lt; n &amp;&amp; (src.charAt(p) == '+' || src.charAt(p) == '-'))</span>
+<span class="fc" id="L291">				p++;</span>
+<span class="pc bpc" id="L292" title="2 of 4 branches missed.">			if (p &lt; n &amp;&amp; isDigit(src.charAt(p))) {</span>
+<span class="fc" id="L293">				isFloat = true;</span>
+<span class="fc" id="L294">				pos = p;</span>
+<span class="pc bpc" id="L295" title="1 of 6 branches missed.">				while (pos &lt; n &amp;&amp; (isDigit(src.charAt(pos)) || src.charAt(pos) == '_'))</span>
+<span class="fc" id="L296">					pos++;</span>
+			}
+		}
+<span class="fc" id="L299">		String text = checkUnderscores(src.substring(start, pos));</span>
+<span class="fc" id="L300">		endOfNumber();</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">		if (isFloat) {</span>
+<span class="fc" id="L302">			add(Token.NUMBER, src.substring(start, pos), line, col, Double.valueOf(Double.parseDouble(text)));</span>
+		} else {
+<span class="fc bfc" id="L304" title="All 6 branches covered.">			if (text.length() &gt; 1 &amp;&amp; text.charAt(0) == '0' &amp;&amp; !text.matches(&quot;0+&quot;))</span>
+<span class="fc" id="L305">				throw error(&quot;leading zeros in decimal integer literals are not permitted&quot;);</span>
+			long v;
+			try {
+<span class="fc" id="L308">				v = Long.parseLong(text);</span>
+<span class="fc" id="L309">			} catch (NumberFormatException e) {</span>
+<span class="fc" id="L310">				throw error(&quot;integer literal too large&quot;);</span>
+<span class="fc" id="L311">			}</span>
+<span class="fc" id="L312">			add(Token.NUMBER, src.substring(start, pos), line, col, Long.valueOf(v));</span>
+		}
+<span class="fc" id="L314">	}</span>
+
+	private String checkUnderscores(String s) {
+<span class="fc bfc" id="L317" title="All 2 branches covered.">		if (s.indexOf('_') &lt; 0)</span>
+<span class="fc" id="L318">			return s;</span>
+<span class="pc bpc" id="L319" title="3 of 10 branches missed.">		if (s.startsWith(&quot;_&quot;) || s.endsWith(&quot;_&quot;) || s.contains(&quot;__&quot;) || s.contains(&quot;_.&quot;) || s.contains(&quot;._&quot;)</span>
+<span class="pc bpc" id="L320" title="4 of 8 branches missed.">				|| s.contains(&quot;_e&quot;) || s.contains(&quot;_E&quot;) || s.contains(&quot;e_&quot;) || s.contains(&quot;E_&quot;))</span>
+<span class="fc" id="L321">			throw error(&quot;invalid decimal literal&quot;);</span>
+<span class="fc" id="L322">		return s.replace(&quot;_&quot;, &quot;&quot;);</span>
+	}
+
+	private void endOfNumber() {
+<span class="fc bfc" id="L326" title="All 2 branches covered.">		if (pos &lt; src.length()) {</span>
+<span class="fc" id="L327">			char c = src.charAt(pos);</span>
+<span class="pc bpc" id="L328" title="1 of 4 branches missed.">			if (c == 'j' || c == 'J')</span>
+<span class="fc" id="L329">				throw error(&quot;complex numbers are not supported&quot;);</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">			if (isIdentPart(c))</span>
+<span class="nc" id="L331">				throw error(&quot;invalid number literal&quot;);</span>
+		}
+<span class="fc" id="L333">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,1087 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Interp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">Interp.java</span></div><h1>Interp.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/**
+ * The interpreter: runs compiled code on a stack machine. One instance holds
+ * the global variables, the output sink and the limits of one program.
+ */
+public final class Interp {
+	/** Receives what the program prints. */
+	public interface Output {
+		void write(String text);
+	}
+
+	/** The source of the current time (time.time, datetime.now...). */
+	public interface Clock {
+		long currentTimeMillis();
+	}
+
+<span class="fc" id="L23">	final Map&lt;String, Object&gt; globals = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L24">	final Map&lt;String, Object&gt; builtins = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc" id="L25">	final Map&lt;String, PyModule&gt; modules = new HashMap&lt;String, PyModule&gt;();</span>
+	private final Output out;
+<span class="fc" id="L27">	private Clock clock = new Clock() {</span>
+		@Override
+		public long currentTimeMillis() {
+<span class="fc" id="L30">			return System.currentTimeMillis();</span>
+		}
+	};
+	private long steps;
+<span class="fc" id="L34">	private long maxSteps = 200000000L;</span>
+	private int depth;
+<span class="fc" id="L36">	private int maxDepth = 1000;</span>
+	/** pcs[d] is the next instruction of the frame at call depth d, kept for the exception handlers. */
+<span class="fc" id="L38">	private int[] pcs = new int[1002];</span>
+	/** The exceptions being handled, the innermost last: what a bare raise re-raises. */
+<span class="fc" id="L40">	final ArrayList&lt;PyException&gt; handled = new ArrayList&lt;PyException&gt;();</span>
+	/** The frames of the calls in progress, the innermost last: the roots of {@link Memory#live}. */
+<span class="fc" id="L42">	final ArrayList&lt;Object[]&gt; frames = new ArrayList&lt;Object[]&gt;();</span>
+	/** What the program held when it was last measured, and what it has created since: see {@link Memory}. */
+	private long liveAtMark, sinceMark;
+	/** The work counted as one step: items copied or compared, characters built or searched. */
+	static final int WORK_SHIFT = 6;
+	/** hbase[d] is the size of {@code handled} when the frame at call depth d started. */
+<span class="fc" id="L48">	private int[] hbase = new int[1002];</span>
+
+<span class="fc" id="L50">	public Interp(Output out) {</span>
+<span class="fc" id="L51">		this.out = out;</span>
+<span class="fc" id="L52">		Builtins.install(this);</span>
+<span class="fc" id="L53">		globals.put(&quot;__name__&quot;, PyStr.of(&quot;__main__&quot;));</span>
+<span class="fc" id="L54">	}</span>
+
+	/** Makes a module importable ({@code import name}). Done by the host, before running anything. */
+	public void addModule(PyModule m) {
+<span class="fc" id="L58">		modules.put(m.name, m);</span>
+<span class="fc" id="L59">	}</span>
+
+	/** A builtin module (math, json, or one added by {@link #addModule}), or null. */
+	public PyModule getModule(String name) {
+<span class="fc" id="L63">		return modules.get(name);</span>
+	}
+
+	/** Defines a global variable: a module, or a member of a module such as {@link PyModule#get}. */
+	public void setGlobal(String name, Object value) {
+<span class="fc" id="L68">		globals.put(name, value);</span>
+<span class="fc" id="L69">	}</span>
+
+	/** Replaces the clock (the system clock by default), e.g. by a fixed one for deterministic tests. */
+	public void setClock(Clock clock) {
+<span class="nc" id="L73">		this.clock = clock;</span>
+<span class="nc" id="L74">	}</span>
+
+	long currentTimeMillis() {
+<span class="fc" id="L77">		return clock.currentTimeMillis();</span>
+	}
+
+	public void setMaxSteps(long n) {
+<span class="fc" id="L81">		maxSteps = n;</span>
+<span class="fc" id="L82">	}</span>
+
+	public void setMaxDepth(int n) {
+<span class="fc" id="L85">		maxDepth = n;</span>
+<span class="fc" id="L86">		pcs = new int[n + 2];</span>
+<span class="fc" id="L87">		hbase = new int[n + 2];</span>
+<span class="fc" id="L88">	}</span>
+
+	/** Number of steps (backward jumps and calls) executed so far. */
+	public long getSteps() {
+<span class="nc" id="L92">		return steps;</span>
+	}
+
+	void write(String s) {
+<span class="fc" id="L96">		out.write(PyStr.external(s));</span>
+<span class="fc" id="L97">	}</span>
+
+	void tick() {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if (++steps &gt; maxSteps)</span>
+<span class="fc" id="L101">			throw new ExecutionLimitError(&quot;instruction limit exceeded&quot;);</span>
+<span class="fc" id="L102">	}</span>
+
+	/**
+	 * Counts the work of one operation on a large value: n items or characters
+	 * copied, compared or searched are n &gt;&gt; WORK_SHIFT steps, so that the limit on
+	 * the steps bounds the time a program takes, whatever the size of its values.
+	 */
+	void work(long n) {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (n &gt;= 1 &lt;&lt; WORK_SHIFT) {</span>
+<span class="fc" id="L111">			steps += n &gt;&gt; WORK_SHIFT;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">			if (steps &gt; maxSteps)</span>
+<span class="fc" id="L113">				throw new ExecutionLimitError(&quot;instruction limit exceeded&quot;);</span>
+		}
+<span class="fc" id="L115">	}</span>
+
+	/** Counts the units of memory ({@link Memory}) of what the program creates; MemoryError when it holds too much. */
+	void allocated(long units) {
+<span class="fc" id="L119">		sinceMark += units;</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		if (liveAtMark + sinceMark &gt; Memory.MAX) {</span>
+<span class="fc" id="L121">			final long live = Memory.live(this);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			if (live &gt; Memory.MAX_LIVE)</span>
+<span class="fc" id="L123">				throw PyOps.err(Types.MEMORY_ERROR, &quot;out of memory&quot;);</span>
+<span class="fc" id="L124">			liveAtMark = live;</span>
+<span class="fc" id="L125">			sinceMark = units;</span>
+		}
+<span class="fc" id="L127">	}</span>
+
+	/** Counts a value an operation has just made: the work to make it and its memory. */
+	&lt;T&gt; T made(T v) {
+<span class="fc" id="L131">		final long w = Memory.weight(v);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (w != 0) {</span>
+<span class="fc" id="L133">			work(PyOps.size(v));</span>
+<span class="fc" id="L134">			allocated(w);</span>
+		}
+<span class="fc" id="L136">		return v;</span>
+	}
+
+	/** Compiles a program. */
+	public static Code compile(String source, String filename) {
+<span class="fc" id="L141">		return CodeGen.compile(PyParser.parse(source), filename);</span>
+	}
+
+	/** Compiles and runs a program in this interpreter's global scope. */
+	public void run(String source, String filename) {
+<span class="fc" id="L146">		run(compile(source, filename));</span>
+<span class="fc" id="L147">	}</span>
+
+	public void run(Code code) {
+<span class="fc" id="L150">		Object[] frame = new Object[code.nslots + code.maxStack];</span>
+<span class="fc" id="L151">		execute(code, frame, globals);</span>
+<span class="fc" id="L152">	}</span>
+
+	/** The value of a global variable converted for display, or null if it is not defined. */
+	public String getGlobalAsString(String name) {
+<span class="fc" id="L156">		Object v = globals.get(name);</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		return v == null ? null : PyStr.external(PyOps.str(v));</span>
+	}
+
+	// ------------------------------------------------------------ host API
+
+	/**
+	 * Calls a Python callable from the host, with positional arguments and
+	 * keyword arguments (Python values; kwargs may be null). A Python exception
+	 * is thrown as a {@link PyError}; the call counts against the limits.
+	 */
+	public Object callFunction(Object fn, Object[] args, Map&lt;String, Object&gt; kwargs) {
+<span class="fc" id="L168">		String[] kwn = null;</span>
+<span class="fc" id="L169">		Object[] kwv = null;</span>
+<span class="pc bpc" id="L170" title="1 of 4 branches missed.">		if (kwargs != null &amp;&amp; kwargs.isEmpty() == false) {</span>
+<span class="fc" id="L171">			kwn = new String[kwargs.size()];</span>
+<span class="fc" id="L172">			kwv = new Object[kwargs.size()];</span>
+<span class="fc" id="L173">			int i = 0;</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">			for (Map.Entry&lt;String, Object&gt; e : kwargs.entrySet()) {</span>
+<span class="fc" id="L175">				kwn[i] = e.getKey();</span>
+<span class="fc" id="L176">				kwv[i] = e.getValue();</span>
+<span class="fc" id="L177">				i++;</span>
+<span class="fc" id="L178">			}</span>
+		}
+<span class="fc" id="L180">		return callGeneric(fn, args, 0, args.length, kwn, kwv);</span>
+	}
+
+	/** True for what Python's callable() accepts. */
+	public static boolean isCallable(Object v) {
+<span class="pc bpc" id="L185" title="2 of 10 branches missed.">		return v instanceof PyFunction || v instanceof Builtin || v instanceof BoundMethod</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">				|| (v instanceof PyType &amp;&amp; (((PyType) v).ctor != null || ((PyType) v).isClass()));</span>
+	}
+
+	/** The __name__ of a function, a builtin function or a method; null for anything else. */
+	public static String functionName(Object v) {
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">		if (v instanceof PyFunction)</span>
+<span class="fc" id="L192">			return ((PyFunction) v).code.name;</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (v instanceof Builtin)</span>
+<span class="nc" id="L194">			return ((Builtin) v).name;</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (v instanceof BoundMethod)</span>
+<span class="nc" id="L196">			return ((BoundMethod) v).name();</span>
+<span class="nc" id="L197">		return null;</span>
+	}
+
+	/** True for the Python value None. */
+	public static boolean isNone(Object v) {
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		return v == PyNone.NONE;</span>
+	}
+
+	/** str(v), for the host. */
+	public static String str(Object v) {
+<span class="fc" id="L207">		return PyStr.external(PyOps.str(v));</span>
+	}
+
+	// ------------------------------------------------------------ calls
+
+	Object call(Object f, Object... args) {
+<span class="fc" id="L213">		return callGeneric(f, args, 0, args.length, null, null);</span>
+	}
+
+	Object callGeneric(Object fn, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (fn instanceof PyFunction)</span>
+<span class="fc" id="L218">			return invoke((PyFunction) fn, src, off, n, kwn, kwv);</span>
+<span class="fc bfc" id="L219" title="All 4 branches covered.">		if (fn instanceof BoundMethod &amp;&amp; ((BoundMethod) fn).function != null) {</span>
+<span class="fc" id="L220">			BoundMethod m = (BoundMethod) fn;</span>
+<span class="fc" id="L221">			return invoke(m.function, withSelf(m.self, src, off, n), 0, n + 1, kwn, kwv);</span>
+		}
+<span class="fc bfc" id="L223" title="All 4 branches covered.">		if (fn instanceof PyType &amp;&amp; ((PyType) fn).isClass())</span>
+<span class="fc" id="L224">			return instantiate((PyType) fn, src, off, n, kwn, kwv);</span>
+		Builtin b;
+		Object[] args;
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (fn instanceof Builtin) {</span>
+<span class="fc" id="L228">			b = (Builtin) fn;</span>
+<span class="fc" id="L229">			args = new Object[n];</span>
+<span class="fc" id="L230">			System.arraycopy(src, off, args, 0, n);</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">		} else if (fn instanceof BoundMethod) {</span>
+<span class="fc" id="L232">			BoundMethod m = (BoundMethod) fn;</span>
+<span class="fc" id="L233">			b = m.method;</span>
+<span class="fc" id="L234">			args = new Object[n + 1];</span>
+<span class="fc" id="L235">			args[0] = m.self;</span>
+<span class="fc" id="L236">			System.arraycopy(src, off, args, 1, n);</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">		} else if (fn instanceof PyType) {</span>
+<span class="fc" id="L238">			b = ((PyType) fn).ctor;</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">			if (b == null)</span>
+<span class="nc" id="L240">				throw PyOps.err(Types.TYPE_ERROR, &quot;cannot create '&quot; + ((PyType) fn).name + &quot;' instances&quot;);</span>
+<span class="fc" id="L241">			args = new Object[n];</span>
+<span class="fc" id="L242">			System.arraycopy(src, off, args, 0, n);</span>
+		} else {
+<span class="fc" id="L244">			throw PyOps.err(Types.TYPE_ERROR, &quot;'&quot; + PyOps.typeName(fn) + &quot;' object is not callable&quot;);</span>
+		}
+<span class="fc" id="L246">		tick();</span>
+		Object r;
+<span class="pc bpc" id="L248" title="1 of 4 branches missed.">		if (kwn == null || kwn.length == 0) {</span>
+<span class="fc" id="L249">			r = b.call(this, args);</span>
+		} else {
+<span class="fc" id="L251">			Map&lt;String, Object&gt; kw = new LinkedHashMap&lt;String, Object&gt;();</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">			for (int i = 0; i &lt; kwn.length; i++)</span>
+<span class="fc" id="L253">				kw.put(kwn[i], kwv[i]);</span>
+<span class="fc" id="L254">			r = b.callKw(this, args, kw);</span>
+		}
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (r == null)</span>
+<span class="nc" id="L257">			return PyNone.NONE;</span>
+		// what a builtin returns may be new: its memory is counted (its work is counted by the builtin)
+<span class="fc" id="L259">		allocated(Memory.weight(r));</span>
+<span class="fc" id="L260">		return r;</span>
+	}
+
+	private static Object[] withSelf(Object self, Object[] src, int off, int n) {
+<span class="fc" id="L264">		Object[] args = new Object[n + 1];</span>
+<span class="fc" id="L265">		args[0] = self;</span>
+<span class="fc" id="L266">		System.arraycopy(src, off, args, 1, n);</span>
+<span class="fc" id="L267">		return args;</span>
+	}
+
+	/** Calls a class of the program: creates the instance, then runs __init__ on it. */
+	private Object instantiate(PyType t, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
+		Object self;
+<span class="fc bfc" id="L273" title="All 2 branches covered.">		if (t.exception) {</span>
+			// as BaseException.__new__ does, the arguments of the call are the args of the exception
+<span class="fc" id="L275">			Object[] args = new Object[n];</span>
+<span class="fc" id="L276">			System.arraycopy(src, off, args, 0, n);</span>
+<span class="fc" id="L277">			self = new PyException(t, args);</span>
+<span class="fc" id="L278">		} else {</span>
+<span class="fc" id="L279">			self = new PyInstance(t);</span>
+		}
+<span class="fc" id="L281">		allocated(Memory.ATTR);</span>
+<span class="fc" id="L282">		Object init = t.lookup(&quot;__init__&quot;);</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">		if (init instanceof PyFunction) {</span>
+<span class="fc" id="L284">			Object r = invoke((PyFunction) init, withSelf(self, src, off, n), 0, n + 1, kwn, kwv);</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">			if (r != PyNone.NONE)</span>
+<span class="fc" id="L286">				throw PyOps.err(Types.TYPE_ERROR, &quot;__init__() should return None, not '&quot; + PyOps.typeName(r) + &quot;'&quot;);</span>
+<span class="pc bpc" id="L287" title="1 of 4 branches missed.">		} else if (init instanceof Builtin &amp;&amp; ((Builtin) init).isMethod) {</span>
+			// the constructor of a native class
+<span class="fc" id="L289">			final Builtin b = (Builtin) init;</span>
+<span class="fc" id="L290">			final Object[] args = withSelf(self, src, off, n);</span>
+			Object r;
+<span class="pc bpc" id="L292" title="1 of 4 branches missed.">			if (kwn == null || kwn.length == 0) {</span>
+<span class="fc" id="L293">				r = b.call(this, args);</span>
+			} else {
+<span class="fc" id="L295">				Map&lt;String, Object&gt; kw = new LinkedHashMap&lt;String, Object&gt;();</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">				for (int i = 0; i &lt; kwn.length; i++)</span>
+<span class="fc" id="L297">					kw.put(kwn[i], kwv[i]);</span>
+<span class="fc" id="L298">				r = b.callKw(this, args, kw);</span>
+			}
+<span class="pc bpc" id="L300" title="2 of 4 branches missed.">			if (r != null &amp;&amp; r != PyNone.NONE)</span>
+<span class="nc" id="L301">				throw PyOps.err(Types.TYPE_ERROR, &quot;__init__() should return None, not '&quot; + PyOps.typeName(r) + &quot;'&quot;);</span>
+<span class="pc bpc" id="L302" title="1 of 4 branches missed.">		} else if (init == null || init == Builtins.OBJECT_INIT) {</span>
+<span class="pc bpc" id="L303" title="3 of 6 branches missed.">			if (n &gt; 0 || (kwn != null &amp;&amp; kwn.length &gt; 0))</span>
+<span class="fc" id="L304">				throw PyOps.err(Types.TYPE_ERROR, t.name + &quot;() takes no arguments&quot;);</span>
+		} else {
+			// BaseException.__init__: the args are already set
+<span class="pc bpc" id="L307" title="1 of 4 branches missed.">			if (kwn != null &amp;&amp; kwn.length &gt; 0)</span>
+<span class="fc" id="L308">				throw PyOps.err(Types.TYPE_ERROR, t.name + &quot;() takes no keyword arguments&quot;);</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">			if (init != Builtins.EXCEPTION_INIT)</span>
+<span class="nc" id="L310">				throw PyOps.err(Types.TYPE_ERROR, &quot;__init__ of class '&quot; + t.name + &quot;' must be a function&quot;);</span>
+		}
+<span class="fc" id="L312">		return self;</span>
+	}
+
+	private Object invoke(PyFunction fn, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
+<span class="fc" id="L316">		Code c = fn.code;</span>
+<span class="fc" id="L317">		Object[] f = new Object[c.nslots + c.maxStack];</span>
+<span class="fc bfc" id="L318" title="All 10 branches covered.">		if (kwn == null &amp;&amp; n == c.argcount &amp;&amp; c.varargsSlot &lt; 0 &amp;&amp; c.kwargsSlot &lt; 0 &amp;&amp; c.kwonlycount == 0)</span>
+<span class="fc" id="L319">			System.arraycopy(src, off, f, 0, n);</span>
+		else
+<span class="fc" id="L321">			bind(fn, f, src, off, n, kwn, kwv);</span>
+<span class="fc bfc" id="L322" title="All 2 branches covered.">		if (c.nfree &gt; 0)</span>
+<span class="fc" id="L323">			System.arraycopy(fn.closure, 0, f, c.firstFree, c.nfree);</span>
+<span class="fc" id="L324">		tick();</span>
+<span class="fc" id="L325">		return execute(c, f, fn.globals);</span>
+	}
+
+	private void bind(PyFunction fn, Object[] f, Object[] src, int off, int n, String[] kwn, Object[] kwv) {
+<span class="fc" id="L329">		Code c = fn.code;</span>
+<span class="fc" id="L330">		int argcount = c.argcount;</span>
+<span class="fc" id="L331">		int npos = Math.min(n, argcount);</span>
+<span class="fc" id="L332">		System.arraycopy(src, off, f, 0, npos);</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">		if (n &gt; argcount) {</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">			if (c.varargsSlot &lt; 0)</span>
+<span class="fc" id="L335">				throw PyOps.err(Types.TYPE_ERROR, c.name + &quot;() takes &quot; + argcount + &quot; positional argument&quot;</span>
+<span class="fc bfc" id="L336" title="All 4 branches covered.">						+ (argcount == 1 ? &quot;&quot; : &quot;s&quot;) + &quot; but &quot; + n + &quot; &quot; + (n == 1 ? &quot;was&quot; : &quot;were&quot;) + &quot; given&quot;);</span>
+<span class="fc" id="L337">			Object[] extra = new Object[n - argcount];</span>
+<span class="fc" id="L338">			System.arraycopy(src, off + argcount, extra, 0, extra.length);</span>
+<span class="fc" id="L339">			f[c.varargsSlot] = new PyTuple(extra);</span>
+<span class="fc bfc" id="L340" title="All 2 branches covered.">		} else if (c.varargsSlot &gt;= 0) {</span>
+<span class="fc" id="L341">			f[c.varargsSlot] = PyTuple.EMPTY;</span>
+		}
+<span class="fc" id="L343">		PyDict extraKw = null;</span>
+<span class="fc bfc" id="L344" title="All 2 branches covered.">		if (c.kwargsSlot &gt;= 0) {</span>
+<span class="fc" id="L345">			extraKw = new PyDict();</span>
+<span class="fc" id="L346">			f[c.kwargsSlot] = extraKw;</span>
+		}
+<span class="fc bfc" id="L348" title="All 2 branches covered.">		if (kwn != null) {</span>
+<span class="fc" id="L349">			int nparams = c.paramNames.length;</span>
+<span class="fc bfc" id="L350" title="All 2 branches covered.">			for (int k = 0; k &lt; kwn.length; k++) {</span>
+<span class="fc" id="L351">				int idx = -1;</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">				for (int p = 0; p &lt; nparams; p++)</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">					if (c.paramNames[p].equals(kwn[k])) {</span>
+<span class="fc" id="L354">						idx = p;</span>
+<span class="fc" id="L355">						break;</span>
+					}
+<span class="fc bfc" id="L357" title="All 2 branches covered.">				if (idx &gt;= 0) {</span>
+<span class="fc" id="L358">					int slot = idx;</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">					if (f[slot] != null)</span>
+<span class="fc" id="L360">						throw PyOps.err(Types.TYPE_ERROR,</span>
+								c.name + &quot;() got multiple values for argument '&quot; + kwn[k] + &quot;'&quot;);
+<span class="fc" id="L362">					f[slot] = kwv[k];</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">				} else if (extraKw != null) {</span>
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">					if (extraKw.containsKey(kwn[k]))</span>
+<span class="nc" id="L365">						throw PyOps.err(Types.TYPE_ERROR,</span>
+								c.name + &quot;() got multiple values for keyword argument '&quot; + kwn[k] + &quot;'&quot;);
+<span class="fc" id="L367">					extraKw.put(kwn[k], kwv[k]);</span>
+				} else {
+<span class="fc" id="L369">					throw PyOps.err(Types.TYPE_ERROR,</span>
+							c.name + &quot;() got an unexpected keyword argument '&quot; + kwn[k] + &quot;'&quot;);
+				}
+			}
+		}
+<span class="fc bfc" id="L374" title="All 2 branches covered.">		int ndef = fn.defaults == null ? 0 : fn.defaults.length;</span>
+<span class="fc" id="L375">		ArrayList&lt;String&gt; missing = null;</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">		for (int i = 0; i &lt; argcount; i++) {</span>
+<span class="fc bfc" id="L377" title="All 2 branches covered.">			if (f[i] == null) {</span>
+<span class="fc" id="L378">				int di = i - (argcount - ndef);</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">				if (di &gt;= 0) {</span>
+<span class="fc" id="L380">					f[i] = fn.defaults[di];</span>
+				} else {
+<span class="fc bfc" id="L382" title="All 2 branches covered.">					if (missing == null)</span>
+<span class="fc" id="L383">						missing = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L384">					missing.add(c.paramNames[i]);</span>
+				}
+			}
+		}
+<span class="fc bfc" id="L388" title="All 2 branches covered.">		if (missing != null)</span>
+<span class="fc" id="L389">			throw PyOps.err(Types.TYPE_ERROR, c.name + &quot;() missing &quot; + missing.size() + &quot; required positional argument&quot;</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">					+ (missing.size() == 1 ? &quot;&quot; : &quot;s&quot;) + &quot;: &quot; + quoteList(missing));</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">		for (int i = argcount; i &lt; argcount + c.kwonlycount; i++) {</span>
+<span class="fc bfc" id="L392" title="All 2 branches covered.">			if (f[i] == null) {</span>
+<span class="pc bpc" id="L393" title="1 of 2 branches missed.">				Object d = fn.kwdefaults == null ? null : fn.kwdefaults.get(c.paramNames[i]);</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">				if (d == null)</span>
+<span class="fc" id="L395">					throw PyOps.err(Types.TYPE_ERROR, c.name + &quot;() missing required keyword-only argument: '&quot;</span>
+							+ c.paramNames[i] + &quot;'&quot;);
+<span class="fc" id="L397">				f[i] = d;</span>
+			}
+		}
+<span class="fc" id="L400">	}</span>
+
+	private static String quoteList(ArrayList&lt;String&gt; names) {
+<span class="fc" id="L403">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">		for (int i = 0; i &lt; names.size(); i++) {</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">			if (i &gt; 0)</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">				sb.append(i == names.size() - 1 ? &quot; and &quot; : &quot;, &quot;);</span>
+<span class="fc" id="L407">			sb.append('\'').append(names.get(i)).append('\'');</span>
+		}
+<span class="fc" id="L409">		return sb.toString();</span>
+	}
+
+	// ------------------------------------------------------------ the loop
+
+	/**
+	 * Runs a frame. The interpreter loop ({@link #run}) is kept out of any
+	 * try block (entering one is slow on TeaVM C): this method has the only
+	 * one, once per call, and re-enters the loop at the handler after an
+	 * exception.
+	 */
+	private Object execute(Code code, Object[] f, Map&lt;String, Object&gt; globals) {
+<span class="fc bfc" id="L421" title="All 2 branches covered.">		if (depth &gt;= maxDepth)</span>
+<span class="fc" id="L422">			throw PyOps.err(Types.RECURSION_ERROR, &quot;maximum recursion depth exceeded&quot;);</span>
+<span class="fc" id="L423">		final int d = ++depth;</span>
+<span class="fc" id="L424">		frames.add(f);</span>
+<span class="fc" id="L425">		hbase[d] = handled.size();</span>
+<span class="fc" id="L426">		int pc = 0;</span>
+<span class="fc" id="L427">		int sp = code.nslots;</span>
+		try {
+			for (;;) {
+				PyError e;
+				try {
+<span class="fc" id="L432">					return run(code, f, globals, pc, sp, d);</span>
+<span class="fc" id="L433">				} catch (PyError pe) {</span>
+<span class="fc" id="L434">					e = pe;</span>
+<span class="fc" id="L435">				} catch (StackOverflowError so) {</span>
+					// A safety net for the JVM and TeaVM, whose stacks are small: maxDepth and the limits on the
+					// nesting of the data (PyOps.MAX_NESTING, Resolver.MAX_NESTING) already bound every recursion,
+					// which is all a port to a language that cannot recover from a stack overflow relies on.
+<span class="fc" id="L439">					e = PyOps.err(Types.RECURSION_ERROR, &quot;maximum recursion depth exceeded&quot;);</span>
+<span class="fc" id="L440">				}</span>
+<span class="fc" id="L441">				int fault = pcs[d] - 1;</span>
+<span class="fc" id="L442">				int h = findHandler(code, fault);</span>
+				// the frame has an entry in the traceback, as CPython adds one when the error goes through it,
+				// caught or not; a bare raise adds none, the entry of the first raise is there
+<span class="fc bfc" id="L445" title="All 2 branches covered.">				if (e.reraised == false)</span>
+<span class="fc" id="L446">					e.addFrame(code.filename, code.lines[fault], code.name);</span>
+<span class="fc" id="L447">				e.reraised = false;</span>
+<span class="fc bfc" id="L448" title="All 2 branches covered.">				if (h &lt; 0)</span>
+<span class="fc" id="L449">					throw e;</span>
+<span class="fc" id="L450">				e.exc.traceback = e;</span>
+<span class="fc" id="L451">				sp = code.nslots + code.excDepth[h];</span>
+<span class="fc" id="L452">				f[sp++] = e.exc;</span>
+<span class="fc" id="L453">				pc = code.excHandler[h];</span>
+<span class="fc" id="L454">			}</span>
+		} finally {
+<span class="fc" id="L456">			truncateHandled(hbase[d]);</span>
+<span class="fc" id="L457">			frames.remove(frames.size() - 1);</span>
+<span class="fc" id="L458">			depth = d - 1;</span>
+		}
+	}
+
+	private void truncateHandled(int size) {
+<span class="fc bfc" id="L463" title="All 2 branches covered.">		while (handled.size() &gt; size)</span>
+<span class="fc" id="L464">			handled.remove(handled.size() - 1);</span>
+<span class="fc" id="L465">	}</span>
+
+	private static int findHandler(Code code, int pc) {
+<span class="fc bfc" id="L468" title="All 2 branches covered.">		for (int i = 0; i &lt; code.excStart.length; i++)</span>
+<span class="pc bpc" id="L469" title="1 of 4 branches missed.">			if (pc &gt;= code.excStart[i] &amp;&amp; pc &lt; code.excEnd[i])</span>
+<span class="fc" id="L470">				return i;</span>
+<span class="fc" id="L471">		return -1;</span>
+	}
+
+	private static PyError unbound(Code code, int slot) {
+<span class="fc" id="L475">		String name = code.slotNames[slot];</span>
+<span class="pc bpc" id="L476" title="3 of 4 branches missed.">		if (slot &gt;= code.firstFree &amp;&amp; slot &lt; code.firstFree + code.nfree)</span>
+<span class="nc" id="L477">			return PyOps.err(Types.NAME_ERROR, &quot;cannot access free variable '&quot; + name</span>
+					+ &quot;' where it is not associated with a value in enclosing scope&quot;);
+<span class="fc" id="L479">		return PyOps.err(Types.UNBOUND_LOCAL,</span>
+				&quot;cannot access local variable '&quot; + name + &quot;' where it is not associated with a value&quot;);
+	}
+
+	private static boolean excMatches(PyException e, Object t) {
+<span class="pc bpc" id="L484" title="1 of 4 branches missed.">		if (t instanceof PyType &amp;&amp; ((PyType) t).exception)</span>
+<span class="fc" id="L485">			return e.type.isSubtypeOf((PyType) t);</span>
+<span class="pc bpc" id="L486" title="1 of 2 branches missed.">		if (t instanceof PyTuple) {</span>
+<span class="fc bfc" id="L487" title="All 2 branches covered.">			for (Object o : ((PyTuple) t).items)</span>
+<span class="fc bfc" id="L488" title="All 2 branches covered.">				if (excMatches(e, o))</span>
+<span class="fc" id="L489">					return true;</span>
+<span class="fc" id="L490">			return false;</span>
+		}
+<span class="nc" id="L492">		throw PyOps.err(Types.TYPE_ERROR, &quot;catching classes that do not inherit from BaseException is not allowed&quot;);</span>
+	}
+
+	private PyError toRaise(Object v) {
+<span class="fc bfc" id="L496" title="All 2 branches covered.">		if (v instanceof PyException)</span>
+<span class="fc" id="L497">			return new PyError((PyException) v);</span>
+<span class="pc bpc" id="L498" title="1 of 4 branches missed.">		if (v instanceof PyType &amp;&amp; ((PyType) v).exception) {</span>
+<span class="fc" id="L499">			PyType t = (PyType) v;</span>
+<span class="fc bfc" id="L500" title="All 2 branches covered.">			if (t.isClass())</span>
+<span class="fc" id="L501">				return toRaise(instantiate(t, new Object[0], 0, 0, null, null));</span>
+<span class="fc" id="L502">			return new PyError(new PyException(t, new Object[0]));</span>
+		}
+<span class="fc" id="L504">		return PyOps.err(Types.TYPE_ERROR, &quot;exceptions must derive from BaseException&quot;);</span>
+	}
+
+	private Object run(Code code, Object[] f, Map&lt;String, Object&gt; globals, int pc, int sp, int level) {
+<span class="fc" id="L508">		final int[] pcs = this.pcs;</span>
+<span class="fc" id="L509">		final int[] c = code.code;</span>
+<span class="fc" id="L510">		final Object[] consts = code.consts;</span>
+<span class="fc" id="L511">		final String[] names = code.names;</span>
+		for (;;) {
+			{
+				for (;;) {
+<span class="fc" id="L515">					int ins = c[pc++];</span>
+<span class="fc" id="L516">					pcs[level] = pc;</span>
+<span class="fc" id="L517">					int arg = ins &gt;&gt;&gt; 8;</span>
+<span class="pc bpc" id="L518" title="4 of 69 branches missed.">					switch (ins &amp; 0xff) {</span>
+					case Op.NOP:
+<span class="nc" id="L520">						break;</span>
+					case Op.POP:
+<span class="fc" id="L522">						f[--sp] = null;</span>
+<span class="fc" id="L523">						break;</span>
+					case Op.DUP:
+<span class="fc" id="L525">						f[sp] = f[sp - 1];</span>
+<span class="fc" id="L526">						sp++;</span>
+<span class="fc" id="L527">						break;</span>
+					case Op.DUP2:
+<span class="fc" id="L529">						f[sp] = f[sp - 2];</span>
+<span class="fc" id="L530">						f[sp + 1] = f[sp - 1];</span>
+<span class="fc" id="L531">						sp += 2;</span>
+<span class="fc" id="L532">						break;</span>
+					case Op.ROT2: {
+<span class="fc" id="L534">						Object t = f[sp - 1];</span>
+<span class="fc" id="L535">						f[sp - 1] = f[sp - 2];</span>
+<span class="fc" id="L536">						f[sp - 2] = t;</span>
+<span class="fc" id="L537">						break;</span>
+					}
+					case Op.ROT3: {
+<span class="fc" id="L540">						Object t = f[sp - 1];</span>
+<span class="fc" id="L541">						f[sp - 1] = f[sp - 2];</span>
+<span class="fc" id="L542">						f[sp - 2] = f[sp - 3];</span>
+<span class="fc" id="L543">						f[sp - 3] = t;</span>
+<span class="fc" id="L544">						break;</span>
+					}
+					case Op.LOAD_CONST:
+<span class="fc" id="L547">						f[sp++] = consts[arg];</span>
+<span class="fc" id="L548">						break;</span>
+					case Op.LOAD_FAST: {
+<span class="fc" id="L550">						Object v = f[arg];</span>
+<span class="fc bfc" id="L551" title="All 2 branches covered.">						if (v == null)</span>
+<span class="fc" id="L552">							throw unbound(code, arg);</span>
+<span class="fc" id="L553">						f[sp++] = v;</span>
+<span class="fc" id="L554">						break;</span>
+					}
+					case Op.STORE_FAST:
+<span class="fc" id="L557">						f[arg] = f[--sp];</span>
+<span class="fc" id="L558">						f[sp] = null;</span>
+<span class="fc" id="L559">						break;</span>
+					case Op.DELETE_FAST:
+<span class="pc bpc" id="L561" title="1 of 2 branches missed.">						if (f[arg] == null)</span>
+<span class="nc" id="L562">							throw unbound(code, arg);</span>
+<span class="fc" id="L563">						f[arg] = null;</span>
+<span class="fc" id="L564">						break;</span>
+					case Op.DELETE_FAST_Q:
+<span class="fc" id="L566">						f[arg] = null;</span>
+<span class="fc" id="L567">						break;</span>
+					case Op.DELETE_CELL_Q:
+<span class="nc" id="L569">						((Cell) f[arg]).value = null;</span>
+<span class="nc" id="L570">						break;</span>
+					case Op.DELETE_GLOBAL_Q:
+<span class="fc" id="L572">						globals.remove(names[arg]);</span>
+<span class="fc" id="L573">						break;</span>
+					case Op.LOAD_CELL: {
+<span class="fc" id="L575">						Object v = ((Cell) f[arg]).value;</span>
+<span class="pc bpc" id="L576" title="1 of 2 branches missed.">						if (v == null)</span>
+<span class="nc" id="L577">							throw unbound(code, arg);</span>
+<span class="fc" id="L578">						f[sp++] = v;</span>
+<span class="fc" id="L579">						break;</span>
+					}
+					case Op.STORE_CELL:
+<span class="fc" id="L582">						((Cell) f[arg]).value = f[--sp];</span>
+<span class="fc" id="L583">						f[sp] = null;</span>
+<span class="fc" id="L584">						break;</span>
+					case Op.DELETE_CELL: {
+<span class="nc" id="L586">						Cell cell = (Cell) f[arg];</span>
+<span class="nc bnc" id="L587" title="All 2 branches missed.">						if (cell.value == null)</span>
+<span class="nc" id="L588">							throw unbound(code, arg);</span>
+<span class="nc" id="L589">						cell.value = null;</span>
+<span class="nc" id="L590">						break;</span>
+					}
+					case Op.LOAD_CLOSURE:
+<span class="fc" id="L593">						f[sp++] = f[arg];</span>
+<span class="fc" id="L594">						break;</span>
+					case Op.MAKE_CELL: {
+<span class="fc" id="L596">						Cell cell = new Cell();</span>
+<span class="fc" id="L597">						cell.value = f[arg];</span>
+<span class="fc" id="L598">						f[arg] = cell;</span>
+<span class="fc" id="L599">						break;</span>
+					}
+					case Op.LOAD_GLOBAL: {
+<span class="fc" id="L602">						String name = names[arg];</span>
+<span class="fc" id="L603">						Object v = globals.get(name);</span>
+<span class="fc bfc" id="L604" title="All 2 branches covered.">						if (v == null) {</span>
+<span class="fc" id="L605">							v = builtins.get(name);</span>
+<span class="fc bfc" id="L606" title="All 2 branches covered.">							if (v == null)</span>
+<span class="fc" id="L607">								throw PyOps.err(Types.NAME_ERROR, &quot;name '&quot; + name + &quot;' is not defined&quot;);</span>
+						}
+<span class="fc" id="L609">						f[sp++] = v;</span>
+<span class="fc" id="L610">						break;</span>
+					}
+					case Op.STORE_GLOBAL:
+<span class="fc" id="L613">						globals.put(names[arg], f[--sp]);</span>
+<span class="fc" id="L614">						f[sp] = null;</span>
+<span class="fc" id="L615">						break;</span>
+					case Op.DELETE_GLOBAL:
+<span class="pc bpc" id="L617" title="1 of 2 branches missed.">						if (globals.remove(names[arg]) == null)</span>
+<span class="nc" id="L618">							throw PyOps.err(Types.NAME_ERROR, &quot;name '&quot; + names[arg] + &quot;' is not defined&quot;);</span>
+						break;
+					case Op.LOAD_ATTR:
+<span class="fc" id="L621">						f[sp - 1] = PyOps.getattr(f[sp - 1], names[arg]);</span>
+<span class="fc" id="L622">						break;</span>
+					case Op.STORE_ATTR:
+<span class="fc" id="L624">						allocated(Memory.ATTR);</span>
+<span class="fc" id="L625">						PyOps.setattr(f[sp - 1], names[arg], f[sp - 2]);</span>
+<span class="fc" id="L626">						f[--sp] = null;</span>
+<span class="fc" id="L627">						f[--sp] = null;</span>
+<span class="fc" id="L628">						break;</span>
+					case Op.DELETE_ATTR:
+<span class="fc" id="L630">						PyOps.delattr(f[sp - 1], names[arg]);</span>
+<span class="fc" id="L631">						f[--sp] = null;</span>
+<span class="fc" id="L632">						break;</span>
+					case Op.BINARY_OP: {
+<span class="fc" id="L634">						Object b = f[--sp];</span>
+<span class="fc" id="L635">						f[sp] = null;</span>
+<span class="fc" id="L636">						final Object a = f[sp - 1];</span>
+<span class="fc bfc" id="L637" title="All 2 branches covered.">						final long before = a instanceof PyList ? ((PyList) a).items.size()</span>
+<span class="fc bfc" id="L638" title="All 2 branches covered.">								: a instanceof PySet ? ((PySet) a).size() : 0;</span>
+<span class="fc bfc" id="L639" title="All 2 branches covered.">						if (a instanceof PySet) {</span>
+<span class="fc bfc" id="L640" title="All 2 branches covered.">							if ((arg &amp; Op.INPLACE) == 0)</span>
+<span class="fc" id="L641">								work(PyOps.size(a) + PyOps.size(b)); // a | b... reads both sets</span>
+							else // s |= o, s -= o, s ^= o read o; s &amp;= o reads s
+<span class="fc bfc" id="L643" title="All 2 branches covered.">								work((arg &amp; 0xff) == Op.BIN_AND ? PyOps.size(a) : PyOps.size(b));</span>
+						}
+<span class="fc bfc" id="L645" title="All 2 branches covered.">						final Object r = (arg &amp; Op.INPLACE) != 0 ? PyOps.inplace(arg &amp; 0xff, a, b) : PyOps.binary(arg, a, b);</span>
+<span class="fc bfc" id="L646" title="All 4 branches covered.">						if (!(r instanceof Integer || r instanceof Double)) {</span>
+<span class="fc bfc" id="L647" title="All 2 branches covered.">							if (r != a) {</span>
+<span class="fc" id="L648">								made(r);</span>
+<span class="fc bfc" id="L649" title="All 2 branches covered.">							} else if (a instanceof PyList) {</span>
+								// l += x, l *= n: what was added
+<span class="fc" id="L651">								final long added = Math.max(0, ((PyList) a).items.size() - before);</span>
+<span class="fc" id="L652">								work(added);</span>
+<span class="fc" id="L653">								allocated(Memory.SLOT * added);</span>
+<span class="fc bfc" id="L654" title="All 2 branches covered.">							} else if (a instanceof PySet) {</span>
+								// s |= o...: what was added
+<span class="fc" id="L656">								allocated(Memory.ENTRY * Math.max(0, ((PySet) a).size() - before));</span>
+							}
+						}
+<span class="fc" id="L659">						f[sp - 1] = r;</span>
+<span class="fc" id="L660">						break;</span>
+					}
+					case Op.UNARY_NEG:
+<span class="fc" id="L663">						f[sp - 1] = PyOps.negate(f[sp - 1]);</span>
+<span class="fc" id="L664">						break;</span>
+					case Op.UNARY_POS:
+<span class="fc" id="L666">						f[sp - 1] = PyOps.plus(f[sp - 1]);</span>
+<span class="fc" id="L667">						break;</span>
+					case Op.UNARY_INVERT:
+<span class="fc" id="L669">						f[sp - 1] = PyOps.invert(f[sp - 1]);</span>
+<span class="fc" id="L670">						break;</span>
+					case Op.UNARY_NOT:
+<span class="fc bfc" id="L672" title="All 2 branches covered.">						f[sp - 1] = PyOps.isTrue(f[sp - 1]) ? Boolean.FALSE : Boolean.TRUE;</span>
+<span class="fc" id="L673">						break;</span>
+					case Op.COMPARE_OP: {
+<span class="fc" id="L675">						Object b = f[--sp];</span>
+<span class="fc" id="L676">						f[sp] = null;</span>
+<span class="fc bfc" id="L677" title="All 4 branches covered.">						if (!(b instanceof Integer || b instanceof Double))</span>
+<span class="fc" id="L678">							work(Math.min(PyOps.size(f[sp - 1]), PyOps.size(b)));</span>
+<span class="fc" id="L679">						f[sp - 1] = PyOps.compare(arg, f[sp - 1], b);</span>
+<span class="fc" id="L680">						break;</span>
+					}
+					case Op.IS_OP: {
+<span class="fc" id="L683">						Object b = f[--sp];</span>
+<span class="fc" id="L684">						f[sp] = null;</span>
+<span class="fc" id="L685">						boolean same = PyOps.sameObject(f[sp - 1], b);</span>
+<span class="fc bfc" id="L686" title="All 4 branches covered.">						f[sp - 1] = Boolean.valueOf(arg == 0 ? same : !same);</span>
+<span class="fc" id="L687">						break;</span>
+					}
+					case Op.CONTAINS_OP: {
+<span class="fc" id="L690">						Object container = f[--sp];</span>
+<span class="fc" id="L691">						f[sp] = null;</span>
+<span class="fc bfc" id="L692" title="All 4 branches covered.">						if (container instanceof PyDict == false &amp;&amp; container instanceof PySet == false)</span>
+<span class="fc" id="L693">							work(PyOps.size(container));</span>
+<span class="fc bfc" id="L694" title="All 2 branches covered.">						else if (PyStr.is(f[sp - 1]))</span>
+<span class="fc" id="L695">							work(PyOps.size(f[sp - 1]));</span>
+<span class="fc" id="L696">						boolean in = PyOps.contains(container, f[sp - 1]);</span>
+<span class="fc bfc" id="L697" title="All 4 branches covered.">						f[sp - 1] = Boolean.valueOf(arg == 0 ? in : !in);</span>
+<span class="fc" id="L698">						break;</span>
+					}
+					case Op.GETITEM: {
+<span class="fc" id="L701">						Object idx = f[--sp];</span>
+<span class="fc" id="L702">						f[sp] = null;</span>
+<span class="fc" id="L703">						f[sp - 1] = PyOps.getitem(f[sp - 1], idx);</span>
+<span class="fc bfc" id="L704" title="All 2 branches covered.">						if (idx instanceof PySlice)</span>
+<span class="fc" id="L705">							made(f[sp - 1]);</span>
+<span class="fc bfc" id="L706" title="All 2 branches covered.">						else if (PyStr.is(idx))</span>
+<span class="fc" id="L707">							work(PyOps.size(idx)); // a key is hashed and compared</span>
+						break;
+					}
+					case Op.SETITEM: {
+<span class="fc" id="L711">						Object idx = f[--sp];</span>
+<span class="fc" id="L712">						Object obj = f[--sp];</span>
+<span class="fc" id="L713">						Object v = f[--sp];</span>
+<span class="fc" id="L714">						f[sp] = f[sp + 1] = f[sp + 2] = null;</span>
+<span class="fc bfc" id="L715" title="All 2 branches covered.">						if (idx instanceof PySlice) {</span>
+<span class="fc" id="L716">							work(PyOps.size(v) + PyOps.size(obj));</span>
+<span class="fc" id="L717">							allocated(Memory.SLOT * PyOps.size(v));</span>
+<span class="fc bfc" id="L718" title="All 2 branches covered.">						} else if (obj instanceof PyDict) {</span>
+<span class="fc" id="L719">							work(PyOps.size(idx));</span>
+<span class="fc" id="L720">							allocated(Memory.ENTRY);</span>
+						}
+<span class="fc" id="L722">						PyOps.setitem(obj, idx, v);</span>
+<span class="fc" id="L723">						break;</span>
+					}
+					case Op.DELITEM: {
+<span class="fc" id="L726">						Object idx = f[--sp];</span>
+<span class="fc" id="L727">						Object obj = f[--sp];</span>
+<span class="fc" id="L728">						f[sp] = f[sp + 1] = null;</span>
+<span class="fc" id="L729">						PyOps.delitem(obj, idx);</span>
+<span class="fc" id="L730">						break;</span>
+					}
+					case Op.BUILD_SLICE: {
+<span class="fc" id="L733">						Object step = f[--sp];</span>
+<span class="fc" id="L734">						Object upper = f[--sp];</span>
+<span class="fc" id="L735">						f[sp - 1] = new PySlice(f[sp - 1], upper, step);</span>
+<span class="fc" id="L736">						f[sp] = f[sp + 1] = null;</span>
+<span class="fc" id="L737">						break;</span>
+					}
+					case Op.BUILD_LIST: {
+<span class="fc" id="L740">						ArrayList&lt;Object&gt; l = new ArrayList&lt;Object&gt;(arg);</span>
+<span class="fc bfc" id="L741" title="All 2 branches covered.">						for (int i = sp - arg; i &lt; sp; i++) {</span>
+<span class="fc" id="L742">							l.add(f[i]);</span>
+<span class="fc" id="L743">							f[i] = null;</span>
+						}
+<span class="fc" id="L745">						sp -= arg;</span>
+<span class="fc" id="L746">						allocated(Memory.OBJECT + Memory.SLOT * arg);</span>
+<span class="fc" id="L747">						f[sp++] = new PyList(l);</span>
+<span class="fc" id="L748">						break;</span>
+					}
+					case Op.BUILD_TUPLE: {
+<span class="fc" id="L751">						Object[] t = new Object[arg];</span>
+<span class="fc" id="L752">						System.arraycopy(f, sp - arg, t, 0, arg);</span>
+<span class="fc bfc" id="L753" title="All 2 branches covered.">						for (int i = sp - arg; i &lt; sp; i++)</span>
+<span class="fc" id="L754">							f[i] = null;</span>
+<span class="fc" id="L755">						sp -= arg;</span>
+<span class="fc" id="L756">						allocated(Memory.OBJECT + Memory.SLOT * arg);</span>
+<span class="fc" id="L757">						f[sp++] = new PyTuple(t);</span>
+<span class="fc" id="L758">						break;</span>
+					}
+					case Op.BUILD_DICT: {
+<span class="fc" id="L761">						PyDict d = new PyDict();</span>
+<span class="fc" id="L762">						int base = sp - 2 * arg;</span>
+<span class="fc bfc" id="L763" title="All 2 branches covered.">						for (int i = base; i &lt; sp; i += 2) {</span>
+<span class="fc" id="L764">							d.put(f[i], f[i + 1]);</span>
+<span class="fc" id="L765">							f[i] = f[i + 1] = null;</span>
+						}
+<span class="fc" id="L767">						sp = base;</span>
+<span class="fc" id="L768">						allocated(Memory.OBJECT + Memory.ENTRY * arg);</span>
+<span class="fc" id="L769">						f[sp++] = d;</span>
+<span class="fc" id="L770">						break;</span>
+					}
+					case Op.BUILD_SET: {
+<span class="fc" id="L773">						allocated(Memory.OBJECT + Memory.ENTRY * arg);</span>
+<span class="fc" id="L774">						PySet s = new PySet();</span>
+<span class="fc bfc" id="L775" title="All 2 branches covered.">						for (int i = sp - arg; i &lt; sp; i++) {</span>
+<span class="fc" id="L776">							s.add(f[i]);</span>
+<span class="fc" id="L777">							f[i] = null;</span>
+						}
+<span class="fc" id="L779">						sp -= arg;</span>
+<span class="fc" id="L780">						f[sp++] = s;</span>
+<span class="fc" id="L781">						break;</span>
+					}
+					case Op.SET_ADD: {
+<span class="fc" id="L784">						Object v = f[--sp];</span>
+<span class="fc" id="L785">						f[sp] = null;</span>
+<span class="fc" id="L786">						final PySet s = (PySet) f[sp - arg];</span>
+<span class="fc bfc" id="L787" title="All 2 branches covered.">						if (!s.contains(v)) {</span>
+<span class="fc" id="L788">							allocated(Memory.ENTRY);</span>
+<span class="fc" id="L789">							s.add(v);</span>
+						}
+						break;
+					}
+					case Op.BUILD_STRING: {
+<span class="fc" id="L794">						StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L795" title="All 2 branches covered.">						for (int i = sp - arg; i &lt; sp; i++) {</span>
+<span class="fc" id="L796">							sb.append(PyStr.text(f[i]));</span>
+<span class="fc" id="L797">							f[i] = null;</span>
+<span class="pc bpc" id="L798" title="1 of 2 branches missed.">							if (sb.length() &gt; PyOps.MAX_STRING)</span>
+<span class="nc" id="L799">								throw PyOps.err(Types.MEMORY_ERROR, &quot;string too large&quot;);</span>
+						}
+<span class="fc" id="L801">						sp -= arg;</span>
+<span class="fc" id="L802">						f[sp++] = made(PyStr.of(sb.toString()));</span>
+<span class="fc" id="L803">						break;</span>
+					}
+					case Op.LIST_APPEND: {
+<span class="fc" id="L806">						Object v = f[--sp];</span>
+<span class="fc" id="L807">						f[sp] = null;</span>
+<span class="fc" id="L808">						final ArrayList&lt;Object&gt; items = ((PyList) f[sp - arg]).items;</span>
+<span class="fc" id="L809">						PyOps.checkList(items.size() + 1L);</span>
+<span class="fc" id="L810">						allocated(Memory.SLOT);</span>
+<span class="fc" id="L811">						items.add(v);</span>
+<span class="fc" id="L812">						break;</span>
+					}
+					case Op.LIST_EXTEND: {
+<span class="fc" id="L815">						Object v = f[--sp];</span>
+<span class="fc" id="L816">						f[sp] = null;</span>
+<span class="fc bfc" id="L817" title="All 2 branches covered.">						if (PyOps.isIterable(v) == false)</span>
+<span class="fc" id="L818">							throw PyOps.err(Types.TYPE_ERROR,</span>
+<span class="fc" id="L819">									&quot;argument after * must be an iterable, not &quot; + PyOps.typeName(v));</span>
+<span class="fc" id="L820">						PyOps.extend(this, ((PyList) f[sp - arg]).items, v);</span>
+<span class="fc" id="L821">						break;</span>
+					}
+					case Op.MAP_ADD: {
+<span class="fc" id="L824">						Object v = f[--sp];</span>
+<span class="fc" id="L825">						Object k = f[--sp];</span>
+<span class="fc" id="L826">						f[sp] = f[sp + 1] = null;</span>
+<span class="fc" id="L827">						allocated(Memory.ENTRY);</span>
+<span class="fc" id="L828">						((PyDict) f[sp - arg]).put(k, v);</span>
+<span class="fc" id="L829">						break;</span>
+					}
+					case Op.DICT_ADD_KW: {
+<span class="fc" id="L832">						Object v = f[--sp];</span>
+<span class="fc" id="L833">						Object k = f[--sp];</span>
+<span class="fc" id="L834">						f[sp] = f[sp + 1] = null;</span>
+<span class="fc" id="L835">						PyDict d = (PyDict) f[sp - arg];</span>
+<span class="pc bpc" id="L836" title="1 of 2 branches missed.">						if (d.containsKey(k))</span>
+<span class="nc" id="L837">							throw PyOps.err(Types.TYPE_ERROR, &quot;got multiple values for keyword argument '&quot; + k + &quot;'&quot;);</span>
+<span class="fc" id="L838">						d.put(k, v);</span>
+<span class="fc" id="L839">						break;</span>
+					}
+					case Op.DICT_MERGE_KW: {
+<span class="fc" id="L842">						Object m = f[--sp];</span>
+<span class="fc" id="L843">						f[sp] = null;</span>
+<span class="fc bfc" id="L844" title="All 2 branches covered.">						if (!(m instanceof PyDict))</span>
+<span class="fc" id="L845">							throw PyOps.err(Types.TYPE_ERROR,</span>
+<span class="fc" id="L846">									&quot;argument after ** must be a mapping, not &quot; + PyOps.typeName(m));</span>
+<span class="fc" id="L847">						PyDict d = (PyDict) f[sp - arg];</span>
+<span class="fc bfc" id="L848" title="All 2 branches covered.">						for (PyDict.Entry e : ((PyDict) m).map.values()) {</span>
+<span class="pc bpc" id="L849" title="1 of 2 branches missed.">							if (PyStr.is(e.key) == false)</span>
+<span class="nc" id="L850">								throw PyOps.err(Types.TYPE_ERROR, &quot;keywords must be strings&quot;);</span>
+<span class="pc bpc" id="L851" title="1 of 2 branches missed.">							if (d.containsKey(e.key))</span>
+<span class="nc" id="L852">								throw PyOps.err(Types.TYPE_ERROR,</span>
+										&quot;got multiple values for keyword argument '&quot; + e.key + &quot;'&quot;);
+<span class="fc" id="L854">							d.put(e.key, e.value);</span>
+<span class="fc" id="L855">						}</span>
+<span class="fc" id="L856">						break;</span>
+					}
+					case Op.UNPACK: {
+<span class="fc" id="L859">						Object seq = f[--sp];</span>
+						Object[] items;
+<span class="fc bfc" id="L861" title="All 2 branches covered.">						if (seq instanceof PyTuple)</span>
+<span class="fc" id="L862">							items = ((PyTuple) seq).items;</span>
+<span class="fc bfc" id="L863" title="All 2 branches covered.">						else if (seq instanceof PyList)</span>
+<span class="fc" id="L864">							items = ((PyList) seq).items.toArray();</span>
+						else
+<span class="fc" id="L866">							items = PyOps.toArrayList(seq).toArray();</span>
+<span class="fc bfc" id="L867" title="All 2 branches covered.">						if (items.length &lt; arg)</span>
+<span class="fc" id="L868">							throw PyOps.err(Types.VALUE_ERROR, &quot;not enough values to unpack (expected &quot; + arg</span>
+									+ &quot;, got &quot; + items.length + &quot;)&quot;);
+<span class="fc bfc" id="L870" title="All 2 branches covered.">						if (items.length &gt; arg)</span>
+<span class="fc" id="L871">							throw PyOps.err(Types.VALUE_ERROR, &quot;too many values to unpack (expected &quot; + arg + &quot;)&quot;);</span>
+<span class="fc bfc" id="L872" title="All 2 branches covered.">						for (int i = arg - 1; i &gt;= 0; i--)</span>
+<span class="fc" id="L873">							f[sp++] = items[i];</span>
+<span class="fc" id="L874">						break;</span>
+					}
+					case Op.JUMP:
+<span class="fc bfc" id="L877" title="All 4 branches covered.">						if (arg &lt; pc &amp;&amp; ++steps &gt; maxSteps)</span>
+<span class="fc" id="L878">							throw new ExecutionLimitError(&quot;instruction limit exceeded&quot;);</span>
+<span class="fc" id="L879">						pc = arg;</span>
+<span class="fc" id="L880">						break;</span>
+					case Op.JUMP_IF_FALSE: {
+<span class="fc" id="L882">						Object v = f[--sp];</span>
+<span class="fc" id="L883">						f[sp] = null;</span>
+<span class="fc bfc" id="L884" title="All 6 branches covered.">						if (!(v == Boolean.TRUE || (v != Boolean.FALSE &amp;&amp; PyOps.isTrue(v)))) {</span>
+<span class="pc bpc" id="L885" title="1 of 4 branches missed.">							if (arg &lt; pc &amp;&amp; ++steps &gt; maxSteps)</span>
+<span class="nc" id="L886">								throw new ExecutionLimitError(&quot;instruction limit exceeded&quot;);</span>
+<span class="fc" id="L887">							pc = arg;</span>
+						}
+						break;
+					}
+					case Op.JUMP_IF_TRUE: {
+<span class="fc" id="L892">						Object v = f[--sp];</span>
+<span class="fc" id="L893">						f[sp] = null;</span>
+<span class="fc bfc" id="L894" title="All 6 branches covered.">						if (v == Boolean.TRUE || (v != Boolean.FALSE &amp;&amp; PyOps.isTrue(v))) {</span>
+<span class="pc bpc" id="L895" title="3 of 4 branches missed.">							if (arg &lt; pc &amp;&amp; ++steps &gt; maxSteps)</span>
+<span class="nc" id="L896">								throw new ExecutionLimitError(&quot;instruction limit exceeded&quot;);</span>
+<span class="fc" id="L897">							pc = arg;</span>
+						}
+						break;
+					}
+					case Op.JUMP_IF_FALSE_KEEP:
+<span class="fc bfc" id="L902" title="All 2 branches covered.">						if (!PyOps.isTrue(f[sp - 1]))</span>
+<span class="fc" id="L903">							pc = arg;</span>
+						else
+<span class="fc" id="L905">							f[--sp] = null;</span>
+<span class="fc" id="L906">						break;</span>
+					case Op.JUMP_IF_TRUE_KEEP:
+<span class="fc bfc" id="L908" title="All 2 branches covered.">						if (PyOps.isTrue(f[sp - 1]))</span>
+<span class="fc" id="L909">							pc = arg;</span>
+						else
+<span class="fc" id="L911">							f[--sp] = null;</span>
+<span class="fc" id="L912">						break;</span>
+					case Op.GET_ITER:
+<span class="fc" id="L914">						f[sp - 1] = PyOps.getIter(f[sp - 1]);</span>
+<span class="fc" id="L915">						break;</span>
+					case Op.FOR_ITER: {
+<span class="fc" id="L917">						Object v = ((PyIter) f[sp - 1]).next();</span>
+<span class="fc bfc" id="L918" title="All 2 branches covered.">						if (v == null) {</span>
+<span class="fc" id="L919">							f[--sp] = null;</span>
+<span class="fc" id="L920">							pc = arg;</span>
+						} else {
+<span class="fc" id="L922">							f[sp++] = v;</span>
+						}
+<span class="fc" id="L924">						break;</span>
+					}
+					case Op.CALL: {
+<span class="fc" id="L927">						int base = sp - arg;</span>
+<span class="fc" id="L928">						Object fn = f[base - 1];</span>
+						Object r;
+<span class="fc bfc" id="L930" title="All 2 branches covered.">						if (fn instanceof PyFunction) {</span>
+<span class="fc" id="L931">							r = invoke((PyFunction) fn, f, base, arg, null, null);</span>
+<span class="fc bfc" id="L932" title="All 4 branches covered.">						} else if (fn instanceof BoundMethod &amp;&amp; ((BoundMethod) fn).function != null) {</span>
+							// the slot of the callee receives self: no copy of the arguments
+<span class="fc" id="L934">							f[base - 1] = ((BoundMethod) fn).self;</span>
+<span class="fc" id="L935">							r = invoke(((BoundMethod) fn).function, f, base - 1, arg + 1, null, null);</span>
+						} else {
+<span class="fc" id="L937">							r = callGeneric(fn, f, base, arg, null, null);</span>
+						}
+<span class="fc bfc" id="L939" title="All 2 branches covered.">						for (int i = base - 1; i &lt; sp; i++)</span>
+<span class="fc" id="L940">							f[i] = null;</span>
+<span class="fc" id="L941">						sp = base;</span>
+<span class="fc" id="L942">						f[sp - 1] = r;</span>
+<span class="fc" id="L943">						break;</span>
+					}
+					case Op.CALL_KW: {
+<span class="fc" id="L946">						PyTuple names2 = (PyTuple) f[--sp];</span>
+<span class="fc" id="L947">						f[sp] = null;</span>
+<span class="fc" id="L948">						int k = names2.items.length;</span>
+<span class="fc" id="L949">						int npos = arg - k;</span>
+<span class="fc" id="L950">						int base = sp - arg;</span>
+<span class="fc" id="L951">						String[] kwn = new String[k];</span>
+<span class="fc" id="L952">						Object[] kwv = new Object[k];</span>
+<span class="fc bfc" id="L953" title="All 2 branches covered.">						for (int i = 0; i &lt; k; i++) {</span>
+<span class="fc" id="L954">							kwn[i] = PyStr.text(names2.items[i]);</span>
+<span class="fc" id="L955">							kwv[i] = f[base + npos + i];</span>
+						}
+<span class="fc" id="L957">						Object r = callGeneric(f[base - 1], f, base, npos, kwn, kwv);</span>
+<span class="fc bfc" id="L958" title="All 2 branches covered.">						for (int i = base - 1; i &lt; sp; i++)</span>
+<span class="fc" id="L959">							f[i] = null;</span>
+<span class="fc" id="L960">						sp = base;</span>
+<span class="fc" id="L961">						f[sp - 1] = r;</span>
+<span class="fc" id="L962">						break;</span>
+					}
+					case Op.CALL_EX: {
+<span class="fc" id="L965">						PyDict kwd = null;</span>
+<span class="fc bfc" id="L966" title="All 2 branches covered.">						if ((arg &amp; 1) != 0) {</span>
+<span class="fc" id="L967">							kwd = (PyDict) f[--sp];</span>
+<span class="fc" id="L968">							f[sp] = null;</span>
+						}
+<span class="fc" id="L970">						PyList pos = (PyList) f[--sp];</span>
+<span class="fc" id="L971">						f[sp] = null;</span>
+<span class="fc" id="L972">						Object fn = f[sp - 1];</span>
+<span class="fc" id="L973">						Object[] args = pos.items.toArray();</span>
+<span class="fc" id="L974">						String[] kwn = null;</span>
+<span class="fc" id="L975">						Object[] kwv = null;</span>
+<span class="fc bfc" id="L976" title="All 4 branches covered.">						if (kwd != null &amp;&amp; kwd.size() &gt; 0) {</span>
+<span class="fc" id="L977">							kwn = new String[kwd.size()];</span>
+<span class="fc" id="L978">							kwv = new Object[kwd.size()];</span>
+<span class="fc" id="L979">							int i = 0;</span>
+<span class="fc bfc" id="L980" title="All 2 branches covered.">							for (PyDict.Entry e : kwd.map.values()) {</span>
+<span class="fc" id="L981">								kwn[i] = PyStr.text(e.key);</span>
+<span class="fc" id="L982">								kwv[i++] = e.value;</span>
+<span class="fc" id="L983">							}</span>
+						}
+<span class="fc" id="L985">						f[sp - 1] = callGeneric(fn, args, 0, args.length, kwn, kwv);</span>
+<span class="fc" id="L986">						break;</span>
+					}
+					case Op.MAKE_FUNCTION: {
+<span class="fc" id="L989">						Code fcode = (Code) f[--sp];</span>
+<span class="fc" id="L990">						f[sp] = null;</span>
+<span class="fc" id="L991">						Cell[] closure = null;</span>
+<span class="fc" id="L992">						Map&lt;String, Object&gt; kwdef = null;</span>
+<span class="fc" id="L993">						Object[] defaults = null;</span>
+<span class="fc bfc" id="L994" title="All 2 branches covered.">						if ((arg &amp; 4) != 0) {</span>
+<span class="fc" id="L995">							Object[] items = ((PyTuple) f[--sp]).items;</span>
+<span class="fc" id="L996">							f[sp] = null;</span>
+<span class="fc" id="L997">							closure = new Cell[items.length];</span>
+<span class="fc bfc" id="L998" title="All 2 branches covered.">							for (int i = 0; i &lt; items.length; i++)</span>
+<span class="fc" id="L999">								closure[i] = (Cell) items[i];</span>
+						}
+<span class="fc bfc" id="L1001" title="All 2 branches covered.">						if ((arg &amp; 2) != 0) {</span>
+<span class="fc" id="L1002">							PyDict d = (PyDict) f[--sp];</span>
+<span class="fc" id="L1003">							f[sp] = null;</span>
+<span class="fc" id="L1004">							kwdef = new HashMap&lt;String, Object&gt;();</span>
+<span class="fc bfc" id="L1005" title="All 2 branches covered.">							for (PyDict.Entry e : d.map.values())</span>
+<span class="fc" id="L1006">								kwdef.put(PyStr.text(e.key), e.value);</span>
+						}
+<span class="fc bfc" id="L1008" title="All 2 branches covered.">						if ((arg &amp; 1) != 0) {</span>
+<span class="fc" id="L1009">							defaults = ((PyTuple) f[--sp]).items;</span>
+<span class="fc" id="L1010">							f[sp] = null;</span>
+						}
+<span class="fc" id="L1012">						f[sp++] = new PyFunction(fcode, globals, defaults, kwdef, closure);</span>
+<span class="fc" id="L1013">						break;</span>
+					}
+					case Op.RETURN:
+<span class="fc" id="L1016">						return f[--sp];</span>
+					case Op.RAISE:
+<span class="fc bfc" id="L1018" title="All 2 branches covered.">						if (arg == 0) {</span>
+<span class="fc bfc" id="L1019" title="All 2 branches covered.">							if (handled.isEmpty())</span>
+<span class="fc" id="L1020">								throw PyOps.err(Types.RUNTIME_ERROR, &quot;No active exception to reraise&quot;);</span>
+<span class="fc" id="L1021">							throw PyError.reraise(handled.get(handled.size() - 1));</span>
+						}
+<span class="fc" id="L1023">						throw toRaise(f[--sp]);</span>
+					case Op.HANDLER_ENTER:
+<span class="fc" id="L1025">						truncateHandled(hbase[level] + arg);</span>
+<span class="fc" id="L1026">						handled.add((PyException) f[--sp]);</span>
+<span class="fc" id="L1027">						f[sp] = null;</span>
+<span class="fc" id="L1028">						break;</span>
+					case Op.HANDLER_EXIT:
+<span class="fc" id="L1030">						truncateHandled(hbase[level] + arg);</span>
+<span class="fc" id="L1031">						break;</span>
+					case Op.RERAISE:
+<span class="fc" id="L1033">						throw PyError.reraise((PyException) f[--sp]);</span>
+					case Op.EXC_MATCH: {
+<span class="fc" id="L1035">						Object t = f[--sp];</span>
+<span class="fc" id="L1036">						f[sp] = null;</span>
+<span class="fc" id="L1037">						f[sp - 1] = Boolean.valueOf(excMatches((PyException) f[sp - 1], t));</span>
+<span class="fc" id="L1038">						break;</span>
+					}
+					case Op.IMPORT: {
+<span class="fc" id="L1041">						PyModule m = modules.get(names[arg]);</span>
+<span class="fc bfc" id="L1042" title="All 2 branches covered.">						if (m == null)</span>
+<span class="fc" id="L1043">							throw PyOps.err(Types.MODULE_NOT_FOUND, &quot;No module named '&quot; + names[arg] + &quot;'&quot;);</span>
+<span class="fc" id="L1044">						f[sp++] = m;</span>
+<span class="fc" id="L1045">						break;</span>
+					}
+					case Op.IMPORT_FROM: {
+<span class="fc" id="L1048">						PyModule m = (PyModule) f[sp - 1];</span>
+<span class="fc" id="L1049">						Object v = m.members.get(names[arg]);</span>
+<span class="fc bfc" id="L1050" title="All 2 branches covered.">						if (v == null)</span>
+<span class="fc" id="L1051">							throw PyOps.err(Types.IMPORT_ERROR, &quot;cannot import name '&quot; + names[arg] + &quot;' from '&quot; + m.name</span>
+									+ &quot;' (unknown location)&quot;);
+<span class="fc" id="L1053">						f[sp++] = v;</span>
+<span class="fc" id="L1054">						break;</span>
+					}
+					case Op.FORMAT_VALUE: {
+<span class="fc" id="L1057">						String spec = &quot;&quot;;</span>
+<span class="fc bfc" id="L1058" title="All 2 branches covered.">						if ((arg &amp; 4) != 0) {</span>
+<span class="fc" id="L1059">							spec = PyStr.text(f[--sp]);</span>
+<span class="fc" id="L1060">							f[sp] = null;</span>
+						}
+<span class="fc" id="L1062">						Object v = f[sp - 1];</span>
+<span class="fc bfc" id="L1063" title="All 4 branches covered.">						switch (arg &amp; 3) {</span>
+						case 1:
+<span class="fc" id="L1065">							v = PyOps.str(v);</span>
+<span class="fc" id="L1066">							break;</span>
+						case 2:
+<span class="fc" id="L1068">							v = PyOps.repr(v);</span>
+<span class="fc" id="L1069">							break;</span>
+						case 3:
+<span class="fc" id="L1071">							v = Fmt.asciiStr(PyOps.repr(v));</span>
+<span class="fc" id="L1072">							break;</span>
+						default:
+							break;
+						}
+<span class="fc bfc" id="L1076" title="All 2 branches covered.">						f[sp - 1] = made(PyStr.of(spec.isEmpty() ? PyOps.str(v) : Fmt.format(v, spec)));</span>
+<span class="fc" id="L1077">						break;</span>
+					}
+					default:
+<span class="nc" id="L1080">						throw new IllegalStateException(&quot;bad opcode &quot; + (ins &amp; 0xff));</span>
+					}
+<span class="fc" id="L1082">				}</span>
+			}
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

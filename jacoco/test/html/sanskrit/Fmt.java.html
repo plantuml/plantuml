@@ -1,0 +1,1023 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Fmt.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">Fmt.java</span></div><h1>Fmt.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.List;
+
+/** Number and string formatting: repr of floats, format specs, the % operator. */
+final class Fmt {
+	private Fmt() {
+	}
+
+	// ------------------------------------------------------------ floats
+
+	/** repr(float): the shortest digits that read back as the same value. */
+	static String repr(double d) {
+<span class="fc bfc" id="L17" title="All 2 branches covered.">		if (d != d)</span>
+<span class="fc" id="L18">			return &quot;nan&quot;;</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">		if (Double.isInfinite(d))</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">			return d &gt; 0 ? &quot;inf&quot; : &quot;-inf&quot;;</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">		if (d == 0)</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">			return 1 / d &lt; 0 ? &quot;-0.0&quot; : &quot;0.0&quot;;</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">		boolean neg = d &lt; 0;</span>
+<span class="fc" id="L24">		double a = Math.abs(d);</span>
+<span class="fc" id="L25">		BigDecimal bd = new BigDecimal(a);</span>
+<span class="fc" id="L26">		BigDecimal r = null;</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">		for (int p = 1; p &lt;= 17; p++) {</span>
+			// the nearest rounding may not read back (the interval of the texts that do is
+			// asymmetric below a power of two), the one on the other side may
+<span class="fc" id="L30">			r = bd.round(new MathContext(p, RoundingMode.HALF_EVEN));</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">			if (Double.parseDouble(r.toString()) == a)</span>
+<span class="fc" id="L32">				break;</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">			final BigDecimal other = bd.round(new MathContext(p, bd.compareTo(r) &gt; 0 ? RoundingMode.UP : RoundingMode.DOWN));</span>
+<span class="pc bpc" id="L34" title="1 of 4 branches missed.">			if (other.compareTo(r) != 0 &amp;&amp; Double.parseDouble(other.toString()) == a) {</span>
+<span class="fc" id="L35">				r = other;</span>
+<span class="fc" id="L36">				break;</span>
+			}
+		}
+<span class="fc" id="L39">		String digits = r.unscaledValue().toString();</span>
+<span class="fc" id="L40">		int decpt = digits.length() - r.scale();</span>
+<span class="fc" id="L41">		int end = digits.length();</span>
+<span class="pc bpc" id="L42" title="1 of 4 branches missed.">		while (end &gt; 1 &amp;&amp; digits.charAt(end - 1) == '0')</span>
+<span class="nc" id="L43">			end--;</span>
+<span class="fc" id="L44">		digits = digits.substring(0, end);</span>
+<span class="fc" id="L45">		int exp = decpt - 1;</span>
+<span class="fc" id="L46">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">		if (neg)</span>
+<span class="fc" id="L48">			sb.append('-');</span>
+<span class="fc bfc" id="L49" title="All 4 branches covered.">		if (exp &lt; -4 || exp &gt;= 16) {</span>
+<span class="fc" id="L50">			sb.append(digits.charAt(0));</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">			if (digits.length() &gt; 1)</span>
+<span class="fc" id="L52">				sb.append('.').append(digits, 1, digits.length());</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">			sb.append('e').append(exp &lt; 0 ? '-' : '+');</span>
+<span class="fc" id="L54">			int ae = Math.abs(exp);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (ae &lt; 10)</span>
+<span class="fc" id="L56">				sb.append('0');</span>
+<span class="fc" id="L57">			sb.append(ae);</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		} else if (decpt &lt;= 0) {</span>
+<span class="fc" id="L59">			sb.append(&quot;0.&quot;);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">			for (int i = 0; i &lt; -decpt; i++)</span>
+<span class="fc" id="L61">				sb.append('0');</span>
+<span class="fc" id="L62">			sb.append(digits);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		} else if (decpt &gt;= digits.length()) {</span>
+<span class="fc" id="L64">			sb.append(digits);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">			for (int i = digits.length(); i &lt; decpt; i++)</span>
+<span class="fc" id="L66">				sb.append('0');</span>
+<span class="fc" id="L67">			sb.append(&quot;.0&quot;);</span>
+		} else {
+<span class="fc" id="L69">			sb.append(digits, 0, decpt).append('.').append(digits, decpt, digits.length());</span>
+		}
+<span class="fc" id="L71">		return sb.toString();</span>
+	}
+
+	/** Digits of a finite non-negative value in the fixed notation. */
+	private static String fixed(double a, int prec) {
+<span class="fc" id="L76">		final BigDecimal exact = new BigDecimal(a);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (prec &lt;= exact.scale())</span>
+<span class="fc" id="L78">			return exact.setScale(prec, RoundingMode.HALF_EVEN).toPlainString();</span>
+		// the digits after the exact value are zeros: appended, so that the time is that of the length
+<span class="fc" id="L80">		final StringBuilder sb = new StringBuilder(exact.toPlainString());</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (exact.scale() &lt;= 0)</span>
+<span class="fc" id="L82">			sb.append('.');</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		for (int i = Math.max(0, exact.scale()); i &lt; prec; i++)</span>
+<span class="fc" id="L84">			sb.append('0');</span>
+<span class="fc" id="L85">		return sb.toString();</span>
+	}
+
+	private static String sci(double a, int prec, boolean upper, boolean alt) {
+		String digits;
+		int exp;
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (a == 0) {</span>
+<span class="nc" id="L92">			StringBuilder z = new StringBuilder();</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">			for (int i = 0; i &lt;= prec; i++)</span>
+<span class="nc" id="L94">				z.append('0');</span>
+<span class="nc" id="L95">			digits = z.toString();</span>
+<span class="nc" id="L96">			exp = 0;</span>
+<span class="nc" id="L97">		} else {</span>
+<span class="fc" id="L98">			BigDecimal r = new BigDecimal(a).round(new MathContext(prec + 1, RoundingMode.HALF_EVEN));</span>
+<span class="fc" id="L99">			digits = r.unscaledValue().toString();</span>
+<span class="fc" id="L100">			exp = digits.length() - r.scale() - 1;</span>
+<span class="fc" id="L101">			StringBuilder z = new StringBuilder(digits);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">			while (z.length() &lt; prec + 1)</span>
+<span class="fc" id="L103">				z.append('0');</span>
+<span class="fc" id="L104">			digits = z.substring(0, prec + 1);</span>
+		}
+<span class="fc" id="L106">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L107">		sb.append(digits.charAt(0));</span>
+<span class="fc bfc" id="L108" title="All 4 branches covered.">		if (prec &gt; 0 || alt)</span>
+<span class="fc" id="L109">			sb.append('.');</span>
+<span class="fc" id="L110">		sb.append(digits, 1, digits.length());</span>
+<span class="fc bfc" id="L111" title="All 4 branches covered.">		sb.append(upper ? 'E' : 'e').append(exp &lt; 0 ? '-' : '+');</span>
+<span class="fc" id="L112">		int ae = Math.abs(exp);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (ae &lt; 10)</span>
+<span class="fc" id="L114">			sb.append('0');</span>
+<span class="fc" id="L115">		sb.append(ae);</span>
+<span class="fc" id="L116">		return sb.toString();</span>
+	}
+
+	/** {@code dot0}: the presentation of a float with a precision and no type, which leaves the fixed notation one digit earlier. */
+	private static String general(double a, int prec, boolean upper, boolean alt, boolean dot0) {
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (prec == 0)</span>
+<span class="fc" id="L122">			prec = 1;</span>
+<span class="fc" id="L123">		int x = 0;</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (a != 0) {</span>
+<span class="fc" id="L125">			BigDecimal r = new BigDecimal(a).round(new MathContext(prec, RoundingMode.HALF_EVEN));</span>
+<span class="fc" id="L126">			x = r.unscaledValue().toString().length() - r.scale() - 1;</span>
+		}
+		String s;
+<span class="fc bfc" id="L129" title="All 6 branches covered.">		if (x &gt;= -4 &amp;&amp; x &lt; (dot0 ? prec - 1 : prec)) {</span>
+<span class="fc" id="L130">			s = fixed(a, prec - 1 - x);</span>
+<span class="fc bfc" id="L131" title="All 4 branches covered.">			if (alt &amp;&amp; s.indexOf('.') &lt; 0)</span>
+<span class="fc" id="L132">				s += &quot;.&quot;;</span>
+		} else
+<span class="fc" id="L134">			s = sci(a, prec - 1, upper, alt);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (!alt) {</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">			int e = s.indexOf(upper ? 'E' : 'e');</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">			String mant = e &lt; 0 ? s : s.substring(0, e);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">			String tail = e &lt; 0 ? &quot;&quot; : s.substring(e);</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">			if (mant.indexOf('.') &gt;= 0) {</span>
+<span class="fc" id="L140">				int end = mant.length();</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">				while (mant.charAt(end - 1) == '0')</span>
+<span class="fc" id="L142">					end--;</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">				if (mant.charAt(end - 1) == '.')</span>
+<span class="fc" id="L144">					end--;</span>
+<span class="fc" id="L145">				mant = mant.substring(0, end);</span>
+			}
+<span class="fc" id="L147">			s = mant + tail;</span>
+		}
+<span class="fc" id="L149">		return s;</span>
+	}
+
+	/** Unsigned text of a finite or infinite value for a float presentation type. */
+	private static String floatBody(double a, char type, int prec, boolean alt) {
+<span class="pc bpc" id="L154" title="2 of 6 branches missed.">		boolean upper = type == 'E' || type == 'F' || type == 'G';</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (a != a)</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">			return upper ? &quot;NAN&quot; : &quot;nan&quot;;</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (Double.isInfinite(a))</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			return upper ? &quot;INF&quot; : &quot;inf&quot;;</span>
+<span class="fc bfc" id="L159" title="All 3 branches covered.">		switch (type) {</span>
+		case 'f':
+		case 'F': {
+<span class="fc" id="L162">			String s = fixed(a, prec);</span>
+<span class="pc bpc" id="L163" title="1 of 4 branches missed.">			return alt &amp;&amp; prec == 0 ? s + &quot;.&quot; : s;</span>
+		}
+		case 'e':
+		case 'E':
+<span class="fc" id="L167">			return sci(a, prec, upper, alt);</span>
+		default:
+<span class="fc" id="L169">			return general(a, prec, upper, alt, false);</span>
+		}
+	}
+
+	private static boolean negative(double d) {
+<span class="pc bpc" id="L174" title="1 of 6 branches missed.">		return d &lt; 0 || (d == 0 &amp;&amp; 1 / d &lt; 0);</span>
+	}
+
+	static Double parseFloat(String text) {
+<span class="fc" id="L178">		String s = text.trim();</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">		if (s.isEmpty())</span>
+<span class="fc" id="L180">			return null;</span>
+<span class="fc" id="L181">		int i = 0;</span>
+<span class="fc" id="L182">		boolean neg = false;</span>
+<span class="pc bpc" id="L183" title="1 of 4 branches missed.">		if (s.charAt(0) == '+' || s.charAt(0) == '-') {</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">			neg = s.charAt(0) == '-';</span>
+<span class="fc" id="L185">			i = 1;</span>
+		}
+<span class="fc" id="L187">		String rest = s.substring(i).toLowerCase();</span>
+<span class="fc bfc" id="L188" title="All 4 branches covered.">		if (rest.equals(&quot;inf&quot;) || rest.equals(&quot;infinity&quot;))</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">			return Double.valueOf(neg ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY);</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (rest.equals(&quot;nan&quot;))</span>
+<span class="fc" id="L191">			return Double.valueOf(Double.NaN);</span>
+<span class="fc" id="L192">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (neg)</span>
+<span class="fc" id="L194">			sb.append('-');</span>
+<span class="fc" id="L195">		int digits = 0;</span>
+<span class="fc" id="L196">		boolean lastDigit = false;</span>
+<span class="fc" id="L197">		int n = s.length();</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		for (; i &lt; n; i++) {</span>
+<span class="fc" id="L199">			char c = s.charAt(i);</span>
+<span class="fc bfc" id="L200" title="All 4 branches covered.">			if (c &gt;= '0' &amp;&amp; c &lt;= '9') {</span>
+<span class="fc" id="L201">				sb.append(c);</span>
+<span class="fc" id="L202">				digits++;</span>
+<span class="fc" id="L203">				lastDigit = true;</span>
+<span class="pc bpc" id="L204" title="4 of 10 branches missed.">			} else if (c == '_' &amp;&amp; lastDigit &amp;&amp; i + 1 &lt; n &amp;&amp; s.charAt(i + 1) &gt;= '0' &amp;&amp; s.charAt(i + 1) &lt;= '9') {</span>
+<span class="fc" id="L205">				lastDigit = false;</span>
+			} else {
+				break;
+			}
+		}
+<span class="fc bfc" id="L210" title="All 4 branches covered.">		if (i &lt; n &amp;&amp; s.charAt(i) == '.') {</span>
+<span class="fc" id="L211">			sb.append('.');</span>
+<span class="fc" id="L212">			i++;</span>
+<span class="fc" id="L213">			lastDigit = false;</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">			for (; i &lt; n; i++) {</span>
+<span class="fc" id="L215">				char c = s.charAt(i);</span>
+<span class="pc bpc" id="L216" title="2 of 4 branches missed.">				if (c &gt;= '0' &amp;&amp; c &lt;= '9') {</span>
+<span class="fc" id="L217">					sb.append(c);</span>
+<span class="fc" id="L218">					digits++;</span>
+<span class="fc" id="L219">					lastDigit = true;</span>
+<span class="nc bnc" id="L220" title="All 10 branches missed.">				} else if (c == '_' &amp;&amp; lastDigit &amp;&amp; i + 1 &lt; n &amp;&amp; s.charAt(i + 1) &gt;= '0' &amp;&amp; s.charAt(i + 1) &lt;= '9') {</span>
+<span class="nc" id="L221">					lastDigit = false;</span>
+				} else {
+					break;
+				}
+			}
+		}
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (digits == 0)</span>
+<span class="fc" id="L228">			return null;</span>
+<span class="pc bpc" id="L229" title="3 of 6 branches missed.">		if (i &lt; n &amp;&amp; (s.charAt(i) == 'e' || s.charAt(i) == 'E')) {</span>
+<span class="fc" id="L230">			sb.append('e');</span>
+<span class="fc" id="L231">			i++;</span>
+<span class="pc bpc" id="L232" title="3 of 6 branches missed.">			if (i &lt; n &amp;&amp; (s.charAt(i) == '+' || s.charAt(i) == '-'))</span>
+<span class="nc" id="L233">				sb.append(s.charAt(i++));</span>
+<span class="fc" id="L234">			int ed = 0;</span>
+<span class="pc bpc" id="L235" title="2 of 6 branches missed.">			for (; i &lt; n &amp;&amp; s.charAt(i) &gt;= '0' &amp;&amp; s.charAt(i) &lt;= '9'; i++, ed++)</span>
+<span class="fc" id="L236">				sb.append(s.charAt(i));</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">			if (ed == 0)</span>
+<span class="nc" id="L238">				return null;</span>
+		}
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">		if (i != n)</span>
+<span class="nc" id="L241">			return null;</span>
+		try {
+<span class="fc" id="L243">			return Double.valueOf(Double.parseDouble(sb.toString()));</span>
+<span class="nc" id="L244">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L245">			return null;</span>
+		}
+	}
+
+	// ------------------------------------------------------------ repr of strings
+
+	static String reprStr(String s) {
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		boolean sq = s.indexOf('\'') &gt;= 0;</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">		boolean dq = s.indexOf('&quot;') &gt;= 0;</span>
+<span class="pc bpc" id="L254" title="1 of 4 branches missed.">		char quote = sq &amp;&amp; !dq ? '&quot;' : '\'';</span>
+<span class="fc" id="L255">		StringBuilder sb = new StringBuilder(s.length() + 2);</span>
+<span class="fc" id="L256">		sb.append(quote);</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length();) {</span>
+<span class="fc" id="L258">			int cp = PyStr.cpAt(s, i);</span>
+<span class="fc" id="L259">			i += PyStr.cpSize(cp);</span>
+<span class="pc bpc" id="L260" title="1 of 4 branches missed.">			if (cp == quote || cp == '\\') {</span>
+<span class="fc" id="L261">				sb.append('\\').appendCodePoint(cp);</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">			} else if (cp == '\n') {</span>
+<span class="fc" id="L263">				sb.append(&quot;\\n&quot;);</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">			} else if (cp == '\r') {</span>
+<span class="fc" id="L265">				sb.append(&quot;\\r&quot;);</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">			} else if (cp == '\t') {</span>
+<span class="fc" id="L267">				sb.append(&quot;\\t&quot;);</span>
+<span class="fc bfc" id="L268" title="All 4 branches covered.">			} else if (cp &lt; 0x20 || cp == 0x7f) {</span>
+<span class="fc" id="L269">				sb.append(hexEscape(cp));</span>
+<span class="fc bfc" id="L270" title="All 4 branches covered.">			} else if (cp &lt; 0x7f || printable(cp)) {</span>
+<span class="fc" id="L271">				PyStr.appendCp(sb, cp);</span>
+			} else {
+<span class="fc" id="L273">				sb.append(hexEscape(cp));</span>
+			}
+<span class="fc" id="L275">		}</span>
+<span class="fc" id="L276">		return sb.append(quote).toString();</span>
+	}
+
+	/** The non-ASCII characters of {@code r}, which is already a repr, as escapes. */
+	static String asciiStr(String r) {
+<span class="fc" id="L281">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">		for (int i = 0; i &lt; r.length();) {</span>
+<span class="fc" id="L283">			int cp = PyStr.cpAt(r, i);</span>
+<span class="fc" id="L284">			i += PyStr.cpSize(cp);</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">			if (cp &lt; 0x80)</span>
+<span class="fc" id="L286">				sb.append((char) cp);</span>
+			else
+<span class="fc" id="L288">				sb.append(hexEscape(cp));</span>
+<span class="fc" id="L289">		}</span>
+<span class="fc" id="L290">		return sb.toString();</span>
+	}
+
+	private static String hexEscape(int cp) {
+<span class="fc" id="L294">		String h = Integer.toHexString(cp);</span>
+<span class="fc" id="L295">		StringBuilder sb = new StringBuilder();</span>
+		int width;
+<span class="fc bfc" id="L297" title="All 2 branches covered.">		if (cp &lt; 0x100) {</span>
+<span class="fc" id="L298">			sb.append(&quot;\\x&quot;);</span>
+<span class="fc" id="L299">			width = 2;</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">		} else if (cp &lt; 0x10000) {</span>
+<span class="fc" id="L301">			sb.append(&quot;\\u&quot;);</span>
+<span class="fc" id="L302">			width = 4;</span>
+		} else {
+<span class="fc" id="L304">			sb.append(&quot;\\U&quot;);</span>
+<span class="fc" id="L305">			width = 8;</span>
+		}
+<span class="fc bfc" id="L307" title="All 2 branches covered.">		for (int i = h.length(); i &lt; width; i++)</span>
+<span class="fc" id="L308">			sb.append('0');</span>
+<span class="fc" id="L309">		return sb.append(h).toString();</span>
+	}
+
+	private static boolean printable(int cp) {
+<span class="fc bfc" id="L313" title="All 2 branches covered.">		switch (Character.getType(cp)) {</span>
+		case Character.CONTROL:
+		case Character.FORMAT:
+		case Character.SURROGATE:
+		case Character.PRIVATE_USE:
+		case Character.UNASSIGNED:
+		case Character.LINE_SEPARATOR:
+		case Character.PARAGRAPH_SEPARATOR:
+		case Character.SPACE_SEPARATOR:
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">			return cp == ' ';</span>
+		default:
+<span class="fc" id="L324">			return true;</span>
+		}
+	}
+
+	// ------------------------------------------------------------ format specs
+
+<span class="fc" id="L330">	private static final class Spec {</span>
+<span class="fc" id="L331">		int fill = ' ';</span>
+		boolean fillGiven;
+		char align;
+<span class="fc" id="L334">		char sign = '-';</span>
+		boolean signGiven;
+		boolean alt;
+		boolean zero;
+		boolean zeroAlign; // the '=' alignment comes from the 0 flag only
+<span class="fc" id="L339">		int width = -1;</span>
+		char grouping;
+<span class="fc" id="L341">		int prec = -1;</span>
+		char type;
+	}
+
+	private static boolean isAlign(int c) {
+<span class="fc bfc" id="L346" title="All 8 branches covered.">		return c == '&lt;' || c == '&gt;' || c == '^' || c == '=';</span>
+	}
+
+	/** {@code defaultType}: the type the messages name when the spec has none ('d' for an int, 's' for a str). */
+	private static Spec parseSpec(String spec, char defaultType) {
+<span class="fc" id="L351">		Spec s = new Spec();</span>
+<span class="fc" id="L352">		int n = spec.length();</span>
+<span class="fc" id="L353">		int i = 0;</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">		if (n &gt; 0) {</span>
+<span class="fc" id="L355">			int first = PyStr.cpAt(spec, 0);</span>
+<span class="fc" id="L356">			int fl = PyStr.cpSize(first);</span>
+<span class="fc bfc" id="L357" title="All 4 branches covered.">			if (n &gt; fl &amp;&amp; isAlign(spec.charAt(fl))) {</span>
+<span class="fc" id="L358">				s.fill = first;</span>
+<span class="fc" id="L359">				s.fillGiven = true;</span>
+<span class="fc" id="L360">				s.align = spec.charAt(fl);</span>
+<span class="fc" id="L361">				i = fl + 1;</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">			} else if (isAlign(first)) {</span>
+<span class="fc" id="L363">				s.align = (char) first;</span>
+<span class="fc" id="L364">				i = 1;</span>
+			}
+		}
+<span class="pc bpc" id="L367" title="1 of 8 branches missed.">		if (i &lt; n &amp;&amp; (spec.charAt(i) == '+' || spec.charAt(i) == '-' || spec.charAt(i) == ' ')) {</span>
+<span class="fc" id="L368">			s.sign = spec.charAt(i++);</span>
+<span class="fc" id="L369">			s.signGiven = true;</span>
+		}
+<span class="fc bfc" id="L371" title="All 4 branches covered.">		if (i &lt; n &amp;&amp; spec.charAt(i) == '#') {</span>
+<span class="fc" id="L372">			s.alt = true;</span>
+<span class="fc" id="L373">			i++;</span>
+		}
+<span class="fc bfc" id="L375" title="All 4 branches covered.">		if (i &lt; n &amp;&amp; spec.charAt(i) == '0') {</span>
+<span class="fc" id="L376">			s.zero = true;</span>
+<span class="fc" id="L377">			i++;</span>
+		}
+<span class="fc" id="L379">		int w = 0;</span>
+<span class="fc" id="L380">		boolean hasW = false;</span>
+<span class="fc bfc" id="L381" title="All 6 branches covered.">		while (i &lt; n &amp;&amp; spec.charAt(i) &gt;= '0' &amp;&amp; spec.charAt(i) &lt;= '9') {</span>
+<span class="fc" id="L382">			w = w * 10 + (spec.charAt(i++) - '0');</span>
+<span class="fc" id="L383">			hasW = true;</span>
+<span class="pc bpc" id="L384" title="1 of 2 branches missed.">			if (w &gt; 100000000)</span>
+<span class="nc" id="L385">				throw PyOps.err(Types.VALUE_ERROR, &quot;Too many decimal digits in format string&quot;);</span>
+		}
+<span class="fc bfc" id="L387" title="All 2 branches covered.">		if (hasW)</span>
+<span class="fc" id="L388">			s.width = w;</span>
+<span class="fc bfc" id="L389" title="All 6 branches covered.">		if (i &lt; n &amp;&amp; (spec.charAt(i) == ',' || spec.charAt(i) == '_'))</span>
+<span class="fc" id="L390">			s.grouping = spec.charAt(i++);</span>
+<span class="fc bfc" id="L391" title="All 8 branches covered.">		if (s.grouping != 0 &amp;&amp; i &lt; n &amp;&amp; (spec.charAt(i) == ',' || spec.charAt(i) == '_')) {</span>
+<span class="fc bfc" id="L392" title="All 2 branches covered.">			if (spec.charAt(i) != s.grouping)</span>
+<span class="fc" id="L393">				throw PyOps.err(Types.VALUE_ERROR, &quot;Cannot specify both ',' and '_'.&quot;);</span>
+<span class="fc" id="L394">			throw PyOps.err(Types.VALUE_ERROR, &quot;Cannot specify '&quot; + s.grouping + &quot;' with '&quot; + s.grouping + &quot;'.&quot;);</span>
+		}
+<span class="fc bfc" id="L396" title="All 4 branches covered.">		if (i &lt; n &amp;&amp; spec.charAt(i) == '.') {</span>
+<span class="fc" id="L397">			i++;</span>
+<span class="fc" id="L398">			int p = 0;</span>
+<span class="fc" id="L399">			boolean hasP = false;</span>
+<span class="fc bfc" id="L400" title="All 6 branches covered.">			while (i &lt; n &amp;&amp; spec.charAt(i) &gt;= '0' &amp;&amp; spec.charAt(i) &lt;= '9') {</span>
+<span class="fc" id="L401">				p = p * 10 + (spec.charAt(i++) - '0');</span>
+<span class="fc" id="L402">				hasP = true;</span>
+<span class="pc bpc" id="L403" title="1 of 2 branches missed.">				if (p &gt; 100000000)</span>
+<span class="nc" id="L404">					throw PyOps.err(Types.VALUE_ERROR, &quot;Too many decimal digits in format string&quot;);</span>
+			}
+<span class="pc bpc" id="L406" title="1 of 2 branches missed.">			if (!hasP)</span>
+<span class="nc" id="L407">				throw PyOps.err(Types.VALUE_ERROR, &quot;Format specifier missing precision&quot;);</span>
+<span class="fc" id="L408">			s.prec = p;</span>
+		}
+<span class="fc bfc" id="L410" title="All 2 branches covered.">		if (i &lt; n)</span>
+<span class="fc" id="L411">			s.type = spec.charAt(i++);</span>
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">		if (i &lt; n)</span>
+<span class="nc" id="L413">			throw PyOps.err(Types.VALUE_ERROR, &quot;Invalid format specifier '&quot; + spec + &quot;'&quot;);</span>
+<span class="fc" id="L414">		checkSize(s.width, s.prec);</span>
+<span class="fc bfc" id="L415" title="All 2 branches covered.">		if (s.grouping != 0) {</span>
+			// ',' goes with the decimal types, '_' with the binary, octal and hexadecimal ones too
+<span class="fc bfc" id="L417" title="All 2 branches covered.">			final char t = s.type == 0 ? defaultType : s.type;</span>
+<span class="fc bfc" id="L418" title="All 6 branches covered.">			if (&quot;deEfFgG%&quot;.indexOf(t) &lt; 0 &amp;&amp; (s.grouping == ',' || &quot;boxX&quot;.indexOf(t) &lt; 0))</span>
+<span class="fc" id="L419">				throw PyOps.err(Types.VALUE_ERROR, &quot;Cannot specify '&quot; + s.grouping + &quot;' with '&quot; + t + &quot;'.&quot;);</span>
+		}
+<span class="pc bpc" id="L421" title="1 of 4 branches missed.">		if (s.zero &amp;&amp; !s.fillGiven) {</span>
+<span class="fc" id="L422">			s.fill = '0';</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">			if (s.align == 0) {</span>
+<span class="fc" id="L424">				s.align = '=';</span>
+<span class="fc" id="L425">				s.zeroAlign = true;</span>
+			}
+		}
+<span class="fc" id="L428">		return s;</span>
+	}
+
+	/** MemoryError for a width or a precision that asks for more than the largest str. */
+	private static void checkSize(int width, int prec) {
+<span class="fc" id="L433">		PyOps.checkString(Math.max(width, prec));</span>
+<span class="fc" id="L434">	}</span>
+
+	private static int cpLength(String s) {
+<span class="fc" id="L437">		return PyStr.cpCount(s);</span>
+	}
+
+	private static String repeat(int cp, int n) {
+<span class="fc" id="L441">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L442" title="All 2 branches covered.">		for (int i = 0; i &lt; n; i++)</span>
+<span class="fc" id="L443">			PyStr.appendCp(sb, cp);</span>
+<span class="fc" id="L444">		return sb.toString();</span>
+	}
+
+	/** Pads sign + prefix + body to the width. */
+	private static String pad(Spec s, String sign, String prefix, String body, char defaultAlign) {
+<span class="fc" id="L449">		int len = cpLength(sign) + cpLength(prefix) + cpLength(body);</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">		if (s.width &lt;= len)</span>
+<span class="fc" id="L451">			return sign + prefix + body;</span>
+<span class="fc" id="L452">		int n = s.width - len;</span>
+<span class="fc bfc" id="L453" title="All 2 branches covered.">		char a = s.align == 0 ? defaultAlign : s.align;</span>
+<span class="fc bfc" id="L454" title="All 4 branches covered.">		switch (a) {</span>
+		case '&lt;':
+<span class="fc" id="L456">			return sign + prefix + body + repeat(s.fill, n);</span>
+		case '^': {
+<span class="fc" id="L458">			int left = n / 2;</span>
+<span class="fc" id="L459">			return repeat(s.fill, left) + sign + prefix + body + repeat(s.fill, n - left);</span>
+		}
+		case '=':
+<span class="fc" id="L462">			return sign + prefix + repeat(s.fill, n) + body;</span>
+		default:
+<span class="fc" id="L464">			return repeat(s.fill, n) + sign + prefix + body;</span>
+		}
+	}
+
+	/** Groups the digits; a zero padding goes inside the groups, and takes the digits as far as the width. */
+	private static String groupPadded(String digits, Spec s, int fixedLen, int restLen, int size) {
+<span class="pc bpc" id="L470" title="2 of 6 branches missed.">		if (s.align == '=' &amp;&amp; s.fill == '0' &amp;&amp; s.width &gt; 0) {</span>
+<span class="fc" id="L471">			int k = digits.length();</span>
+<span class="fc bfc" id="L472" title="All 2 branches covered.">			while (fixedLen + k + (k - 1) / size + restLen &lt; s.width)</span>
+<span class="fc" id="L473">				k++;</span>
+<span class="fc" id="L474">			StringBuilder z = new StringBuilder();</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">			for (int i = digits.length(); i &lt; k; i++)</span>
+<span class="fc" id="L476">				z.append('0');</span>
+<span class="fc" id="L477">			digits = z + digits;</span>
+		}
+<span class="fc" id="L479">		return group(digits, s.grouping, size);</span>
+	}
+
+	private static String group(String digits, char sep, int size) {
+<span class="fc" id="L483">		int n = digits.length();</span>
+<span class="fc bfc" id="L484" title="All 2 branches covered.">		if (n &lt;= size)</span>
+<span class="fc" id="L485">			return digits;</span>
+<span class="fc" id="L486">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L487">		int first = n % size;</span>
+<span class="fc bfc" id="L488" title="All 2 branches covered.">		if (first &gt; 0)</span>
+<span class="fc" id="L489">			sb.append(digits, 0, first);</span>
+<span class="fc bfc" id="L490" title="All 2 branches covered.">		for (int i = first; i &lt; n; i += size) {</span>
+<span class="fc bfc" id="L491" title="All 2 branches covered.">			if (sb.length() &gt; 0)</span>
+<span class="fc" id="L492">				sb.append(sep);</span>
+<span class="fc" id="L493">			sb.append(digits, i, i + size);</span>
+		}
+<span class="fc" id="L495">		return sb.toString();</span>
+	}
+
+	private static String signOf(Spec s, boolean neg) {
+<span class="fc bfc" id="L499" title="All 2 branches covered.">		if (neg)</span>
+<span class="fc" id="L500">			return &quot;-&quot;;</span>
+<span class="fc bfc" id="L501" title="All 4 branches covered.">		return s.sign == '+' ? &quot;+&quot; : s.sign == ' ' ? &quot; &quot; : &quot;&quot;;</span>
+	}
+
+	/** format(value, spec). */
+	static String format(Object v, String spec) {
+<span class="fc bfc" id="L506" title="All 2 branches covered.">		if (spec.isEmpty())</span>
+<span class="fc" id="L507">			return PyOps.str(v);</span>
+<span class="fc bfc" id="L508" title="All 2 branches covered.">		if (v instanceof Boolean)</span>
+<span class="fc bfc" id="L509" title="All 2 branches covered.">			v = Integer.valueOf(((Boolean) v).booleanValue() ? 1 : 0);</span>
+<span class="fc bfc" id="L510" title="All 2 branches covered.">		if (v instanceof Integer)</span>
+<span class="fc" id="L511">			return formatInt(((Integer) v).intValue(), parseSpec(spec, 'd'));</span>
+<span class="fc bfc" id="L512" title="All 2 branches covered.">		if (v instanceof Double)</span>
+<span class="fc" id="L513">			return formatFloat(((Double) v).doubleValue(), parseSpec(spec, 'g'));</span>
+<span class="fc bfc" id="L514" title="All 2 branches covered.">		if (PyStr.is(v)) {</span>
+<span class="fc" id="L515">			Spec s = parseSpec(spec, 's');</span>
+<span class="fc bfc" id="L516" title="All 4 branches covered.">			if (s.type != 0 &amp;&amp; s.type != 's')</span>
+<span class="fc" id="L517">				throw PyOps.err(Types.VALUE_ERROR,</span>
+						&quot;Unknown format code '&quot; + s.type + &quot;' for object of type 'str'&quot;);
+<span class="fc bfc" id="L519" title="All 2 branches covered.">			if (s.signGiven)</span>
+<span class="fc" id="L520">				throw PyOps.err(Types.VALUE_ERROR,</span>
+<span class="fc bfc" id="L521" title="All 2 branches covered.">						(s.sign == ' ' ? &quot;Space&quot; : &quot;Sign&quot;) + &quot; not allowed in string format specifier&quot;);</span>
+<span class="fc bfc" id="L522" title="All 2 branches covered.">			if (s.alt)</span>
+<span class="fc" id="L523">				throw PyOps.err(Types.VALUE_ERROR, &quot;Alternate form (#) not allowed in string format specifier&quot;);</span>
+<span class="fc bfc" id="L524" title="All 4 branches covered.">			if (s.align == '=' &amp;&amp; !s.zeroAlign)</span>
+<span class="fc" id="L525">				throw PyOps.err(Types.VALUE_ERROR, &quot;'=' alignment not allowed in string format specifier&quot;);</span>
+<span class="fc" id="L526">			String str = PyStr.text(v);</span>
+<span class="pc bpc" id="L527" title="1 of 4 branches missed.">			if (s.prec &gt;= 0 &amp;&amp; cpLength(str) &gt; s.prec)</span>
+<span class="fc" id="L528">				str = str.substring(0, PyStr.offsetOf(str, s.prec));</span>
+<span class="fc bfc" id="L529" title="All 2 branches covered.">			if (s.zeroAlign)</span>
+<span class="fc" id="L530">				s.align = '&lt;';</span>
+<span class="fc" id="L531">			return pad(s, &quot;&quot;, &quot;&quot;, str, '&lt;');</span>
+		}
+<span class="fc" id="L533">		throw PyOps.err(Types.TYPE_ERROR, &quot;unsupported format string passed to &quot; + PyOps.typeName(v) + &quot;.__format__&quot;);</span>
+	}
+
+	private static String formatInt(int v, Spec s) {
+<span class="fc" id="L537">		char t = s.type;</span>
+<span class="pc bpc" id="L538" title="6 of 14 branches missed.">		if (t == 'e' || t == 'E' || t == 'f' || t == 'F' || t == 'g' || t == 'G' || t == '%')</span>
+<span class="fc" id="L539">			return formatFloat(v, s);</span>
+<span class="fc bfc" id="L540" title="All 4 branches covered.">		if (t != 0 &amp;&amp; &quot;dnboxXc&quot;.indexOf(t) &lt; 0)</span>
+<span class="fc" id="L541">			throw PyOps.err(Types.VALUE_ERROR, &quot;Unknown format code '&quot; + t + &quot;' for object of type 'int'&quot;);</span>
+<span class="fc bfc" id="L542" title="All 2 branches covered.">		if (s.prec &gt;= 0)</span>
+<span class="fc" id="L543">			throw PyOps.err(Types.VALUE_ERROR, &quot;Precision not allowed in integer format specifier&quot;);</span>
+<span class="fc" id="L544">		long a = Math.abs((long) v);</span>
+		String body;
+<span class="fc" id="L546">		String prefix = &quot;&quot;;</span>
+<span class="fc bfc" id="L547" title="All 6 branches covered.">		switch (t) {</span>
+		case 0:
+		case 'd':
+		case 'n':
+<span class="fc" id="L551">			body = Long.toString(a);</span>
+<span class="fc bfc" id="L552" title="All 2 branches covered.">			if (s.grouping != 0)</span>
+<span class="fc bfc" id="L553" title="All 2 branches covered.">				body = groupPadded(body, s, signOf(s, v &lt; 0).length(), 0, 3);</span>
+			break;
+		case 'b':
+<span class="fc" id="L556">			body = Long.toString(a, 2);</span>
+<span class="fc bfc" id="L557" title="All 2 branches covered.">			prefix = s.alt ? &quot;0b&quot; : &quot;&quot;;</span>
+<span class="pc bpc" id="L558" title="1 of 2 branches missed.">			if (s.grouping == '_')</span>
+<span class="nc bnc" id="L559" title="All 2 branches missed.">				body = groupPadded(body, s, signOf(s, v &lt; 0).length() + prefix.length(), 0, 4);</span>
+			break;
+		case 'o':
+<span class="fc" id="L562">			body = Long.toString(a, 8);</span>
+<span class="fc bfc" id="L563" title="All 2 branches covered.">			prefix = s.alt ? &quot;0o&quot; : &quot;&quot;;</span>
+<span class="pc bpc" id="L564" title="1 of 2 branches missed.">			if (s.grouping == '_')</span>
+<span class="nc bnc" id="L565" title="All 2 branches missed.">				body = groupPadded(body, s, signOf(s, v &lt; 0).length() + prefix.length(), 0, 4);</span>
+			break;
+		case 'x':
+<span class="fc" id="L568">			body = Long.toString(a, 16);</span>
+<span class="fc bfc" id="L569" title="All 2 branches covered.">			prefix = s.alt ? &quot;0x&quot; : &quot;&quot;;</span>
+<span class="fc bfc" id="L570" title="All 2 branches covered.">			if (s.grouping == '_')</span>
+<span class="pc bpc" id="L571" title="1 of 2 branches missed.">				body = groupPadded(body, s, signOf(s, v &lt; 0).length() + prefix.length(), 0, 4);</span>
+			break;
+		case 'X':
+<span class="fc" id="L574">			body = Long.toString(a, 16).toUpperCase();</span>
+<span class="pc bpc" id="L575" title="1 of 2 branches missed.">			prefix = s.alt ? &quot;0X&quot; : &quot;&quot;;</span>
+<span class="pc bpc" id="L576" title="1 of 2 branches missed.">			if (s.grouping == '_')</span>
+<span class="nc bnc" id="L577" title="All 2 branches missed.">				body = groupPadded(body, s, signOf(s, v &lt; 0).length() + prefix.length(), 0, 4);</span>
+			break;
+		default: // 'c'
+<span class="fc bfc" id="L580" title="All 2 branches covered.">			if (s.signGiven)</span>
+<span class="fc" id="L581">				throw PyOps.err(Types.VALUE_ERROR, &quot;Sign not allowed with integer format specifier 'c'&quot;);</span>
+<span class="fc bfc" id="L582" title="All 2 branches covered.">			if (s.alt)</span>
+<span class="fc" id="L583">				throw PyOps.err(Types.VALUE_ERROR, &quot;Alternate form (#) not allowed with integer format specifier 'c'&quot;);</span>
+<span class="pc bpc" id="L584" title="1 of 4 branches missed.">			if (v &lt; 0 || v &gt; 0x10ffff)</span>
+<span class="fc" id="L585">				throw PyOps.err(Types.OVERFLOW, &quot;%c arg not in range(0x110000)&quot;);</span>
+<span class="fc" id="L586">			return pad(s, &quot;&quot;, &quot;&quot;, PyStr.ofCp(v), '&gt;');</span>
+		}
+<span class="fc bfc" id="L588" title="All 2 branches covered.">		return pad(s, signOf(s, v &lt; 0), prefix, body, '&gt;');</span>
+	}
+
+	private static String formatFloat(double d, Spec s) {
+<span class="fc" id="L592">		char t = s.type;</span>
+<span class="fc bfc" id="L593" title="All 4 branches covered.">		if (t != 0 &amp;&amp; &quot;eEfFgGn%&quot;.indexOf(t) &lt; 0)</span>
+<span class="fc" id="L594">			throw PyOps.err(Types.VALUE_ERROR, &quot;Unknown format code '&quot; + t + &quot;' for object of type 'float'&quot;);</span>
+<span class="pc bpc" id="L595" title="1 of 4 branches missed.">		boolean neg = negative(d) &amp;&amp; d == d;</span>
+<span class="fc" id="L596">		double a = Math.abs(d);</span>
+		String body;
+<span class="fc bfc" id="L598" title="All 4 branches covered.">		if (t == 0 &amp;&amp; s.prec &lt; 0) {</span>
+<span class="fc" id="L599">			body = repr(a);</span>
+<span class="pc bpc" id="L600" title="1 of 2 branches missed.">			if (a != a)</span>
+<span class="nc" id="L601">				body = &quot;nan&quot;;</span>
+		} else {
+<span class="pc bpc" id="L603" title="1 of 4 branches missed.">			char tt = t == 0 || t == 'n' ? 'g' : t;</span>
+<span class="fc bfc" id="L604" title="All 2 branches covered.">			int prec = s.prec &lt; 0 ? 6 : s.prec;</span>
+<span class="fc bfc" id="L605" title="All 2 branches covered.">			if (tt == '%') {</span>
+<span class="fc" id="L606">				body = floatBody(a * 100, 'f', prec, s.alt) + &quot;%&quot;;</span>
+<span class="pc bpc" id="L607" title="2 of 6 branches missed.">			} else if (t == 0 &amp;&amp; a == a &amp;&amp; !Double.isInfinite(a)) {</span>
+<span class="fc" id="L608">				body = general(a, prec, false, s.alt, true);</span>
+			} else {
+<span class="fc" id="L610">				body = floatBody(a, tt, prec, s.alt);</span>
+			}
+<span class="pc bpc" id="L612" title="3 of 8 branches missed.">			if (t == 0 &amp;&amp; body.indexOf('.') &lt; 0 &amp;&amp; body.indexOf('e') &lt; 0 &amp;&amp; body.indexOf(&quot;n&quot;) &lt; 0)</span>
+<span class="nc" id="L613">				body += &quot;.0&quot;;</span>
+		}
+<span class="pc bpc" id="L615" title="2 of 6 branches missed.">		if (s.grouping != 0 &amp;&amp; !Double.isInfinite(a) &amp;&amp; a == a) {</span>
+<span class="fc" id="L616">			int dot = body.indexOf('.');</span>
+<span class="fc" id="L617">			int e = body.indexOf('e');</span>
+<span class="pc bpc" id="L618" title="3 of 4 branches missed.">			int end = dot &gt;= 0 ? dot : e &gt;= 0 ? e : body.length();</span>
+<span class="fc" id="L619">			body = groupPadded(body.substring(0, end), s, signOf(s, neg).length(), body.length() - end, 3)</span>
+<span class="fc" id="L620">					+ body.substring(end);</span>
+		}
+<span class="fc" id="L622">		return pad(s, signOf(s, neg), &quot;&quot;, body, '&gt;');</span>
+	}
+
+	// ------------------------------------------------------------ the % operator
+
+	static String percent(String fmt, Object arg) {
+		Object[] args;
+<span class="fc bfc" id="L629" title="All 2 branches covered.">		if (arg instanceof PyTuple)</span>
+<span class="fc" id="L630">			args = ((PyTuple) arg).items;</span>
+		else
+<span class="fc" id="L632">			args = new Object[] { arg };</span>
+		// what has a subscript and is neither a tuple nor a str: its items are read by %(key)s, and it
+		// need not be used by the format
+<span class="fc bfc" id="L635" title="All 6 branches covered.">		final boolean mapping = arg instanceof PyDict || arg instanceof PyList || arg instanceof PyRange;</span>
+<span class="fc" id="L636">		int next = 0;</span>
+<span class="fc" id="L637">		StringBuilder out = new StringBuilder();</span>
+<span class="fc" id="L638">		int n = fmt.length();</span>
+<span class="fc bfc" id="L639" title="All 2 branches covered.">		for (int i = 0; i &lt; n;) {</span>
+<span class="fc" id="L640">			char c = fmt.charAt(i++);</span>
+<span class="fc bfc" id="L641" title="All 2 branches covered.">			if (c != '%') {</span>
+<span class="fc" id="L642">				out.append(c);</span>
+<span class="fc" id="L643">				continue;</span>
+			}
+<span class="fc" id="L645">			final int start = i;</span>
+<span class="fc" id="L646">			Object keyed = null;</span>
+<span class="fc" id="L647">			boolean hasKey = false;</span>
+<span class="fc bfc" id="L648" title="All 4 branches covered.">			if (i &lt; n &amp;&amp; fmt.charAt(i) == '(') {</span>
+<span class="fc" id="L649">				int depth = 1;</span>
+<span class="fc" id="L650">				int j = i + 1;</span>
+<span class="pc bpc" id="L651" title="1 of 4 branches missed.">				while (j &lt; n &amp;&amp; depth &gt; 0) {</span>
+<span class="pc bpc" id="L652" title="1 of 2 branches missed.">					if (fmt.charAt(j) == '(')</span>
+<span class="nc" id="L653">						depth++;</span>
+<span class="fc bfc" id="L654" title="All 2 branches covered.">					else if (fmt.charAt(j) == ')')</span>
+<span class="fc" id="L655">						depth--;</span>
+<span class="fc" id="L656">					j++;</span>
+				}
+<span class="pc bpc" id="L658" title="1 of 2 branches missed.">				if (depth &gt; 0)</span>
+<span class="nc" id="L659">					throw PyOps.err(Types.VALUE_ERROR, &quot;incomplete format key&quot;);</span>
+<span class="fc bfc" id="L660" title="All 2 branches covered.">				if (!mapping)</span>
+<span class="fc" id="L661">					throw PyOps.err(Types.TYPE_ERROR, &quot;format requires a mapping&quot;);</span>
+<span class="fc" id="L662">				String key = fmt.substring(i + 1, j - 1);</span>
+<span class="fc" id="L663">				keyed = PyOps.getitem(arg, PyStr.of(key));</span>
+<span class="fc" id="L664">				hasKey = true;</span>
+<span class="fc" id="L665">				next = args.length; // a format with keys has no positional argument</span>
+<span class="fc" id="L666">				i = j;</span>
+			}
+<span class="fc" id="L668">			boolean left = false, plus = false, space = false, zero = false, alt = false;</span>
+<span class="fc bfc" id="L669" title="All 2 branches covered.">			for (; i &lt; n; i++) {</span>
+<span class="fc" id="L670">				char f = fmt.charAt(i);</span>
+<span class="fc bfc" id="L671" title="All 2 branches covered.">				if (f == '-')</span>
+<span class="fc" id="L672">					left = true;</span>
+<span class="fc bfc" id="L673" title="All 2 branches covered.">				else if (f == '+')</span>
+<span class="fc" id="L674">					plus = true;</span>
+<span class="fc bfc" id="L675" title="All 2 branches covered.">				else if (f == ' ')</span>
+<span class="fc" id="L676">					space = true;</span>
+<span class="fc bfc" id="L677" title="All 2 branches covered.">				else if (f == '0')</span>
+<span class="fc" id="L678">					zero = true;</span>
+<span class="fc bfc" id="L679" title="All 2 branches covered.">				else if (f == '#')</span>
+<span class="fc" id="L680">					alt = true;</span>
+				else
+					break;
+			}
+<span class="fc" id="L684">			int width = -1;</span>
+<span class="fc bfc" id="L685" title="All 4 branches covered.">			if (i &lt; n &amp;&amp; fmt.charAt(i) == '*') {</span>
+<span class="fc" id="L686">				i++;</span>
+<span class="fc bfc" id="L687" title="All 2 branches covered.">				if (next &gt;= args.length)</span>
+<span class="fc" id="L688">					throw PyOps.err(Types.TYPE_ERROR, &quot;not enough arguments for format string&quot;);</span>
+<span class="fc" id="L689">				Object w = args[next++];</span>
+<span class="fc bfc" id="L690" title="All 2 branches covered.">				if (!PyOps.isIntLike(w))</span>
+<span class="fc" id="L691">					throw PyOps.err(Types.TYPE_ERROR, &quot;* wants int&quot;);</span>
+<span class="fc" id="L692">				width = PyOps.asInt(w);</span>
+<span class="pc bpc" id="L693" title="1 of 2 branches missed.">				if (width &lt; 0) {</span>
+<span class="nc" id="L694">					left = true;</span>
+<span class="nc" id="L695">					width = -width;</span>
+				}
+<span class="fc" id="L697">			} else {</span>
+<span class="fc" id="L698">				int w = 0;</span>
+<span class="fc" id="L699">				boolean has = false;</span>
+<span class="fc bfc" id="L700" title="All 6 branches covered.">				while (i &lt; n &amp;&amp; fmt.charAt(i) &gt;= '0' &amp;&amp; fmt.charAt(i) &lt;= '9') {</span>
+<span class="fc" id="L701">					w = w * 10 + (fmt.charAt(i++) - '0');</span>
+<span class="fc" id="L702">					has = true;</span>
+<span class="pc bpc" id="L703" title="1 of 2 branches missed.">					if (w &gt; 100000000)</span>
+<span class="nc" id="L704">						throw PyOps.err(Types.VALUE_ERROR, &quot;width too big&quot;);</span>
+				}
+<span class="fc bfc" id="L706" title="All 2 branches covered.">				if (has)</span>
+<span class="fc" id="L707">					width = w;</span>
+			}
+<span class="fc" id="L709">			int prec = -1;</span>
+<span class="fc bfc" id="L710" title="All 4 branches covered.">			if (i &lt; n &amp;&amp; fmt.charAt(i) == '.') {</span>
+<span class="fc" id="L711">				i++;</span>
+<span class="pc bpc" id="L712" title="1 of 4 branches missed.">				if (i &lt; n &amp;&amp; fmt.charAt(i) == '*') {</span>
+<span class="fc" id="L713">					i++;</span>
+<span class="pc bpc" id="L714" title="1 of 2 branches missed.">					if (next &gt;= args.length)</span>
+<span class="nc" id="L715">						throw PyOps.err(Types.TYPE_ERROR, &quot;not enough arguments for format string&quot;);</span>
+<span class="fc" id="L716">					Object p = args[next++];</span>
+<span class="fc bfc" id="L717" title="All 2 branches covered.">					if (!PyOps.isIntLike(p))</span>
+<span class="fc" id="L718">						throw PyOps.err(Types.TYPE_ERROR, &quot;* wants int&quot;);</span>
+<span class="fc" id="L719">					prec = Math.max(0, PyOps.asInt(p));</span>
+<span class="fc" id="L720">				} else {</span>
+<span class="fc" id="L721">					int p = 0;</span>
+<span class="pc bpc" id="L722" title="1 of 6 branches missed.">					while (i &lt; n &amp;&amp; fmt.charAt(i) &gt;= '0' &amp;&amp; fmt.charAt(i) &lt;= '9') {</span>
+<span class="fc" id="L723">						p = p * 10 + (fmt.charAt(i++) - '0');</span>
+<span class="pc bpc" id="L724" title="1 of 2 branches missed.">						if (p &gt; 100000000)</span>
+<span class="nc" id="L725">							throw PyOps.err(Types.VALUE_ERROR, &quot;precision too big&quot;);</span>
+					}
+<span class="fc" id="L727">					prec = p;</span>
+				}
+			}
+<span class="pc bpc" id="L730" title="3 of 8 branches missed.">			while (i &lt; n &amp;&amp; (fmt.charAt(i) == 'l' || fmt.charAt(i) == 'h' || fmt.charAt(i) == 'L'))</span>
+<span class="nc" id="L731">				i++;</span>
+<span class="fc bfc" id="L732" title="All 2 branches covered.">			if (i &gt;= n)</span>
+<span class="fc" id="L733">				throw PyOps.err(Types.VALUE_ERROR, &quot;incomplete format&quot;);</span>
+<span class="fc" id="L734">			char type = fmt.charAt(i++);</span>
+<span class="fc bfc" id="L735" title="All 4 branches covered.">			if (type == '%' &amp;&amp; i - 1 == start) {</span>
+<span class="fc" id="L736">				out.append('%');</span>
+<span class="fc" id="L737">				continue;</span>
+			}
+			Object v;
+<span class="fc bfc" id="L740" title="All 2 branches covered.">			if (hasKey) {</span>
+<span class="fc" id="L741">				v = keyed;</span>
+			} else {
+<span class="fc bfc" id="L743" title="All 2 branches covered.">				if (next &gt;= args.length)</span>
+<span class="fc" id="L744">					throw PyOps.err(Types.TYPE_ERROR, &quot;not enough arguments for format string&quot;);</span>
+<span class="fc" id="L745">				v = args[next++];</span>
+			}
+<span class="fc bfc" id="L747" title="All 2 branches covered.">			if (&quot;sracdiuoxXeEfFgG&quot;.indexOf(type) &lt; 0) {</span>
+<span class="fc" id="L748">				final int cp = PyStr.cpAt(fmt, i - 1);</span>
+<span class="fc" id="L749">				throw PyOps.err(Types.VALUE_ERROR, &quot;unsupported format character '&quot; + PyStr.ofCp(cp)</span>
+<span class="fc" id="L750">						+ &quot;' (0x&quot; + Integer.toHexString(cp) + &quot;) at index &quot; + PyStr.cpCount(fmt.substring(0, i - 1)));</span>
+			}
+<span class="fc" id="L752">			checkSize(width, prec);</span>
+<span class="fc" id="L753">			Spec s = new Spec();</span>
+<span class="fc" id="L754">			s.width = width;</span>
+<span class="fc" id="L755">			s.prec = prec;</span>
+<span class="fc" id="L756">			s.alt = alt;</span>
+<span class="fc bfc" id="L757" title="All 4 branches covered.">			s.sign = plus ? '+' : space ? ' ' : '-';</span>
+<span class="fc bfc" id="L758" title="All 2 branches covered.">			if (left) {</span>
+<span class="fc" id="L759">				s.align = '&lt;';</span>
+<span class="pc bpc" id="L760" title="1 of 4 branches missed.">			} else if (zero &amp;&amp; &quot;diouxXeEfFgG&quot;.indexOf(type) &gt;= 0) {</span>
+<span class="fc" id="L761">				s.fill = '0';</span>
+<span class="fc" id="L762">				s.align = '=';</span>
+			}
+<span class="fc" id="L764">			out.append(percentOne(type, v, s));</span>
+<span class="fc" id="L765">			PyOps.checkString(out.length());</span>
+<span class="fc" id="L766">		}</span>
+<span class="fc bfc" id="L767" title="All 4 branches covered.">		if (next &lt; args.length &amp;&amp; !mapping)</span>
+<span class="fc" id="L768">			throw PyOps.err(Types.TYPE_ERROR, &quot;not all arguments converted during string formatting&quot;);</span>
+<span class="fc" id="L769">		return out.toString();</span>
+	}
+
+	private static String percentOne(char type, Object v, Spec s) {
+<span class="pc bpc" id="L773" title="1 of 5 branches missed.">		switch (type) {</span>
+		case 's':
+		case 'r':
+		case 'a': {
+<span class="fc bfc" id="L777" title="All 4 branches covered.">			String str = type == 's' ? PyOps.str(v) : type == 'r' ? PyOps.repr(v) : asciiStr(PyOps.repr(v));</span>
+<span class="pc bpc" id="L778" title="1 of 4 branches missed.">			if (s.prec &gt;= 0 &amp;&amp; cpLength(str) &gt; s.prec)</span>
+<span class="fc" id="L779">				str = str.substring(0, PyStr.offsetOf(str, s.prec));</span>
+<span class="fc" id="L780">			return pad(s, &quot;&quot;, &quot;&quot;, str, '&gt;');</span>
+		}
+		case 'c': {
+			String str;
+<span class="pc bpc" id="L784" title="1 of 4 branches missed.">			if (PyStr.is(v) &amp;&amp; cpLength(PyStr.text(v)) == 1) {</span>
+<span class="fc" id="L785">				str = PyStr.text(v);</span>
+<span class="pc bpc" id="L786" title="1 of 4 branches missed.">			} else if (v instanceof Integer || v instanceof Boolean) {</span>
+<span class="fc" id="L787">				int cp = PyOps.asInt(v);</span>
+<span class="pc bpc" id="L788" title="2 of 4 branches missed.">				if (cp &lt; 0 || cp &gt; 0x10ffff)</span>
+<span class="nc" id="L789">					throw PyOps.err(Types.OVERFLOW, &quot;%c arg not in range(0x110000)&quot;);</span>
+<span class="fc" id="L790">				str = PyStr.ofCp(cp);</span>
+<span class="fc" id="L791">			} else {</span>
+<span class="fc" id="L792">				throw PyOps.err(Types.TYPE_ERROR, &quot;%c requires int or char&quot;);</span>
+			}
+<span class="fc" id="L794">			return pad(s, &quot;&quot;, &quot;&quot;, str, '&gt;');</span>
+		}
+		case 'd':
+		case 'i':
+		case 'u':
+		case 'o':
+		case 'x':
+		case 'X': {
+			int iv;
+<span class="fc bfc" id="L803" title="All 6 branches covered.">			final boolean decimal = type == 'd' || type == 'i' || type == 'u';</span>
+<span class="fc bfc" id="L804" title="All 4 branches covered.">			if (v instanceof Integer || v instanceof Boolean) {</span>
+<span class="fc" id="L805">				iv = PyOps.asInt(v);</span>
+<span class="fc bfc" id="L806" title="All 4 branches covered.">			} else if (v instanceof Double &amp;&amp; decimal) {</span>
+<span class="fc" id="L807">				iv = PyInt.fromDouble(((Double) v).doubleValue());</span>
+			} else {
+				// only %d, %i and %u truncate a float
+<span class="fc" id="L810">				throw PyOps.err(Types.TYPE_ERROR, &quot;%&quot; + type + &quot; format: &quot;</span>
+<span class="fc bfc" id="L811" title="All 2 branches covered.">						+ (decimal ? &quot;a real number&quot; : &quot;an integer&quot;) + &quot; is required, not &quot; + PyOps.typeName(v));</span>
+			}
+<span class="fc bfc" id="L813" title="All 4 branches covered.">			s.type = type == 'i' || type == 'u' ? 'd' : type;</span>
+<span class="fc" id="L814">			Spec t = s;</span>
+<span class="fc bfc" id="L815" title="All 2 branches covered.">			if (t.prec &gt;= 0) {</span>
+				// precision: minimum number of digits
+<span class="fc" id="L817">				long a = Math.abs((long) iv);</span>
+<span class="pc bpc" id="L818" title="3 of 4 branches missed.">				String digits = t.type == 'd' ? Long.toString(a) : t.type == 'o' ? Long.toString(a, 8)</span>
+<span class="pc bnc" id="L819" title="All 2 branches missed.">						: t.type == 'x' ? Long.toString(a, 16) : Long.toString(a, 16).toUpperCase();</span>
+<span class="fc" id="L820">				StringBuilder z = new StringBuilder();</span>
+<span class="fc bfc" id="L821" title="All 2 branches covered.">				for (int i = digits.length(); i &lt; t.prec; i++)</span>
+<span class="fc" id="L822">					z.append('0');</span>
+<span class="pc bpc" id="L823" title="7 of 8 branches missed.">				String prefix = t.alt ? (t.type == 'o' ? &quot;0o&quot; : t.type == 'x' ? &quot;0x&quot; : t.type == 'X' ? &quot;0X&quot; : &quot;&quot;) : &quot;&quot;;</span>
+<span class="fc" id="L824">				t.fill = ' ';</span>
+<span class="pc bpc" id="L825" title="1 of 2 branches missed.">				if (t.align == '=')</span>
+<span class="nc" id="L826">					t.align = 0;</span>
+<span class="fc bfc" id="L827" title="All 2 branches covered.">				return pad(t, signOf(t, iv &lt; 0), prefix, z + digits, '&gt;');</span>
+			}
+<span class="fc" id="L829">			return formatInt(iv, t);</span>
+		}
+		case 'e':
+		case 'E':
+		case 'f':
+		case 'F':
+		case 'g':
+		case 'G': {
+			double d;
+<span class="fc bfc" id="L838" title="All 2 branches covered.">			if (v instanceof Double)</span>
+<span class="fc" id="L839">				d = ((Double) v).doubleValue();</span>
+<span class="pc bpc" id="L840" title="3 of 4 branches missed.">			else if (v instanceof Integer || v instanceof Boolean)</span>
+<span class="fc" id="L841">				d = PyOps.asInt(v);</span>
+			else
+<span class="nc" id="L843">				throw PyOps.err(Types.TYPE_ERROR, &quot;must be real number, not &quot; + PyOps.typeName(v));</span>
+<span class="fc" id="L844">			s.type = type;</span>
+<span class="fc bfc" id="L845" title="All 2 branches covered.">			if (s.prec &lt; 0)</span>
+<span class="fc" id="L846">				s.prec = 6;</span>
+<span class="fc" id="L847">			return formatFloat(d, s);</span>
+		}
+		default:
+<span class="nc" id="L850">			throw new IllegalStateException(&quot;format character &quot; + type);</span>
+		}
+	}
+
+	// ------------------------------------------------------------ str.format
+
+	/**
+	 * The numbering of the fields of one call of str.format, shared with the fields nested in the
+	 * format specs: &quot;{:&gt;{}}&quot; is the field 0 whose spec is the field 1, as CPython numbers them.
+	 */
+	private static final class FieldNumbering {
+		int next;
+		boolean manual;
+		boolean automatic;
+	}
+
+	static String strFormat(String fmt, Object[] args, int firstArg, java.util.Map&lt;String, Object&gt; kw) {
+<span class="fc" id="L867">		return strFormat(fmt, args, firstArg, kw, new FieldNumbering(), 0);</span>
+	}
+
+	/** {@code level}: 0 for the format, 1 for the spec of one of its fields; a spec has no field with a spec. */
+	private static String strFormat(String fmt, Object[] args, int firstArg, java.util.Map&lt;String, Object&gt; kw,
+			FieldNumbering numbering, int level) {
+<span class="fc" id="L873">		StringBuilder out = new StringBuilder();</span>
+<span class="fc" id="L874">		int n = fmt.length();</span>
+<span class="fc bfc" id="L875" title="All 2 branches covered.">		for (int i = 0; i &lt; n;) {</span>
+<span class="fc" id="L876">			char c = fmt.charAt(i++);</span>
+<span class="fc bfc" id="L877" title="All 2 branches covered.">			if (c == '{') {</span>
+<span class="fc bfc" id="L878" title="All 4 branches covered.">				if (i &lt; n &amp;&amp; fmt.charAt(i) == '{') {</span>
+<span class="fc" id="L879">					out.append('{');</span>
+<span class="fc" id="L880">					i++;</span>
+<span class="fc" id="L881">					continue;</span>
+				}
+<span class="fc" id="L883">				int depth = 1;</span>
+<span class="fc" id="L884">				int j = i;</span>
+<span class="fc bfc" id="L885" title="All 4 branches covered.">				while (j &lt; n &amp;&amp; depth &gt; 0) {</span>
+<span class="fc bfc" id="L886" title="All 2 branches covered.">					if (fmt.charAt(j) == '{')</span>
+<span class="fc" id="L887">						depth++;</span>
+<span class="fc bfc" id="L888" title="All 2 branches covered.">					else if (fmt.charAt(j) == '}')</span>
+<span class="fc" id="L889">						depth--;</span>
+<span class="fc" id="L890">					j++;</span>
+				}
+<span class="fc bfc" id="L892" title="All 2 branches covered.">				if (depth &gt; 0)</span>
+<span class="fc" id="L893">					throw PyOps.err(Types.VALUE_ERROR, &quot;expected '}' before end of string&quot;);</span>
+<span class="fc" id="L894">				String field = fmt.substring(i, j - 1);</span>
+<span class="fc" id="L895">				i = j;</span>
+<span class="fc" id="L896">				String spec = &quot;&quot;;</span>
+<span class="fc" id="L897">				String conv = null;</span>
+<span class="fc" id="L898">				int colon = -1;</span>
+<span class="fc bfc" id="L899" title="All 2 branches covered.">				for (int k = 0; k &lt; field.length(); k++) {</span>
+<span class="fc" id="L900">					char fc = field.charAt(k);</span>
+<span class="fc bfc" id="L901" title="All 2 branches covered.">					if (fc == '[') {</span>
+<span class="fc" id="L902">						int close = field.indexOf(']', k);</span>
+<span class="pc bpc" id="L903" title="1 of 2 branches missed.">						if (close &lt; 0)</span>
+<span class="nc" id="L904">							throw PyOps.err(Types.VALUE_ERROR, &quot;Missing ']' in format string&quot;);</span>
+<span class="fc" id="L905">						k = close;</span>
+<span class="fc bfc" id="L906" title="All 2 branches covered.">					} else if (fc == ':') {</span>
+<span class="fc" id="L907">						colon = k;</span>
+<span class="fc" id="L908">						break;</span>
+					}
+				}
+<span class="fc bfc" id="L911" title="All 2 branches covered.">				String head = colon &gt;= 0 ? field.substring(0, colon) : field;</span>
+<span class="fc bfc" id="L912" title="All 2 branches covered.">				if (colon &gt;= 0)</span>
+<span class="fc" id="L913">					spec = field.substring(colon + 1);</span>
+<span class="fc" id="L914">				int bang = head.indexOf('!');</span>
+<span class="fc bfc" id="L915" title="All 2 branches covered.">				if (bang &gt;= 0) {</span>
+<span class="fc" id="L916">					conv = head.substring(bang + 1);</span>
+<span class="fc" id="L917">					head = head.substring(0, bang);</span>
+				}
+<span class="fc" id="L919">				Object value = resolveField(head, args, firstArg, kw, numbering.next);</span>
+<span class="fc bfc" id="L920" title="All 2 branches covered.">				if (head.isEmpty()) {</span>
+<span class="fc bfc" id="L921" title="All 2 branches covered.">					if (numbering.manual)</span>
+<span class="fc" id="L922">						throw PyOps.err(Types.VALUE_ERROR,</span>
+								&quot;cannot switch from manual field specification to automatic field numbering&quot;);
+<span class="fc" id="L924">					numbering.automatic = true;</span>
+<span class="fc" id="L925">					numbering.next++;</span>
+<span class="fc bfc" id="L926" title="All 2 branches covered.">				} else if (isDigits(head.split(&quot;[.\\[]&quot;)[0])) {</span>
+<span class="fc bfc" id="L927" title="All 2 branches covered.">					if (numbering.automatic)</span>
+<span class="fc" id="L928">						throw PyOps.err(Types.VALUE_ERROR,</span>
+								&quot;cannot switch from automatic field numbering to manual field specification&quot;);
+<span class="fc" id="L930">					numbering.manual = true;</span>
+				}
+				// the fields nested in the spec come after the field that holds them
+<span class="fc bfc" id="L933" title="All 2 branches covered.">				if (spec.indexOf('{') &gt;= 0) {</span>
+<span class="fc bfc" id="L934" title="All 2 branches covered.">					if (level &gt; 0)</span>
+<span class="fc" id="L935">						throw PyOps.err(Types.VALUE_ERROR, &quot;Max string recursion exceeded&quot;);</span>
+<span class="fc" id="L936">					spec = strFormat(spec, args, firstArg, kw, numbering, level + 1);</span>
+				}
+<span class="fc bfc" id="L938" title="All 2 branches covered.">				if (conv != null) {</span>
+<span class="fc bfc" id="L939" title="All 2 branches covered.">					if (conv.equals(&quot;r&quot;))</span>
+<span class="fc" id="L940">						value = PyOps.repr(value);</span>
+<span class="fc bfc" id="L941" title="All 2 branches covered.">					else if (conv.equals(&quot;s&quot;))</span>
+<span class="fc" id="L942">						value = PyOps.str(value);</span>
+<span class="pc bpc" id="L943" title="1 of 2 branches missed.">					else if (conv.equals(&quot;a&quot;))</span>
+<span class="fc" id="L944">						value = asciiStr(PyOps.repr(value));</span>
+					else
+<span class="nc" id="L946">						throw PyOps.err(Types.VALUE_ERROR, &quot;Unknown conversion specifier &quot; + conv);</span>
+				}
+<span class="fc" id="L948">				out.append(format(value, spec));</span>
+<span class="fc" id="L949">				PyOps.checkString(out.length());</span>
+<span class="fc bfc" id="L950" title="All 2 branches covered.">			} else if (c == '}') {</span>
+<span class="pc bpc" id="L951" title="2 of 4 branches missed.">				if (i &lt; n &amp;&amp; fmt.charAt(i) == '}') {</span>
+<span class="fc" id="L952">					out.append('}');</span>
+<span class="fc" id="L953">					i++;</span>
+				} else {
+<span class="nc" id="L955">					throw PyOps.err(Types.VALUE_ERROR, &quot;Single '}' encountered in format string&quot;);</span>
+				}
+			} else {
+<span class="fc" id="L958">				out.append(c);</span>
+			}
+<span class="fc" id="L960">		}</span>
+<span class="fc" id="L961">		return out.toString();</span>
+	}
+
+	private static boolean isDigits(String s) {
+<span class="pc bpc" id="L965" title="1 of 2 branches missed.">		if (s.isEmpty())</span>
+<span class="nc" id="L966">			return false;</span>
+<span class="fc bfc" id="L967" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++)</span>
+<span class="pc bpc" id="L968" title="1 of 4 branches missed.">			if (s.charAt(i) &lt; '0' || s.charAt(i) &gt; '9')</span>
+<span class="fc" id="L969">				return false;</span>
+<span class="fc" id="L970">		return true;</span>
+	}
+
+	private static Object resolveField(String head, Object[] args, int firstArg, java.util.Map&lt;String, Object&gt; kw,
+			int auto) {
+<span class="fc" id="L975">		int end = 0;</span>
+<span class="pc bpc" id="L976" title="1 of 6 branches missed.">		while (end &lt; head.length() &amp;&amp; head.charAt(end) != '.' &amp;&amp; head.charAt(end) != '[')</span>
+<span class="fc" id="L977">			end++;</span>
+<span class="fc" id="L978">		String first = head.substring(0, end);</span>
+		Object value;
+<span class="fc bfc" id="L980" title="All 2 branches covered.">		if (first.isEmpty()) {</span>
+<span class="fc" id="L981">			int idx = firstArg + auto;</span>
+<span class="fc bfc" id="L982" title="All 2 branches covered.">			if (idx &gt;= args.length)</span>
+<span class="fc" id="L983">				throw PyOps.err(Types.INDEX_ERROR, &quot;Replacement index &quot; + auto + &quot; out of range for positional args tuple&quot;);</span>
+<span class="fc" id="L984">			value = args[idx];</span>
+<span class="fc bfc" id="L985" title="All 2 branches covered.">		} else if (isDigits(first)) {</span>
+<span class="fc" id="L986">			int idx = firstArg + Integer.parseInt(first);</span>
+<span class="pc bpc" id="L987" title="1 of 2 branches missed.">			if (idx &gt;= args.length)</span>
+<span class="nc" id="L988">				throw PyOps.err(Types.INDEX_ERROR,</span>
+						&quot;Replacement index &quot; + first + &quot; out of range for positional args tuple&quot;);
+<span class="fc" id="L990">			value = args[idx];</span>
+<span class="fc" id="L991">		} else {</span>
+<span class="pc bpc" id="L992" title="1 of 2 branches missed.">			value = kw == null ? null : kw.get(first);</span>
+<span class="fc bfc" id="L993" title="All 2 branches covered.">			if (value == null)</span>
+<span class="fc" id="L994">				throw PyOps.err(Types.KEY_ERROR, PyOps.repr(first));</span>
+		}
+<span class="fc" id="L996">		int i = end;</span>
+<span class="fc bfc" id="L997" title="All 2 branches covered.">		while (i &lt; head.length()) {</span>
+<span class="pc bpc" id="L998" title="1 of 2 branches missed.">			if (head.charAt(i) == '[') {</span>
+<span class="fc" id="L999">				int close = head.indexOf(']', i);</span>
+<span class="pc bpc" id="L1000" title="1 of 2 branches missed.">				if (close &lt; 0)</span>
+<span class="nc" id="L1001">					throw PyOps.err(Types.VALUE_ERROR, &quot;Missing ']' in format string&quot;);</span>
+<span class="fc" id="L1002">				String key = head.substring(i + 1, close);</span>
+<span class="fc bfc" id="L1003" title="All 2 branches covered.">				Object k = isDigits(key) ? (Object) Integer.valueOf(Integer.parseInt(key)) : key;</span>
+<span class="fc" id="L1004">				value = PyOps.getitem(value, k);</span>
+<span class="fc" id="L1005">				i = close + 1;</span>
+<span class="pc bnc" id="L1006" title="All 2 branches missed.">			} else if (head.charAt(i) == '.') {</span>
+<span class="nc" id="L1007">				int j = i + 1;</span>
+<span class="nc bnc" id="L1008" title="All 6 branches missed.">				while (j &lt; head.length() &amp;&amp; head.charAt(j) != '.' &amp;&amp; head.charAt(j) != '[')</span>
+<span class="nc" id="L1009">					j++;</span>
+<span class="nc" id="L1010">				throw PyOps.err(Types.ATTRIBUTE_ERROR, &quot;'&quot; + PyOps.typeName(value) + &quot;' object has no attribute '&quot;</span>
+<span class="nc" id="L1011">						+ head.substring(i + 1, j) + &quot;'&quot;);</span>
+			} else {
+<span class="nc" id="L1013">				throw PyOps.err(Types.VALUE_ERROR, &quot;Only '.' or '[' may follow ']' in format field specifier&quot;);</span>
+			}
+		}
+<span class="fc" id="L1016">		return value;</span>
+	}
+
+	@SuppressWarnings(&quot;unused&quot;)
+	private static void unused(List&lt;Object&gt; l) {
+<span class="nc" id="L1021">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

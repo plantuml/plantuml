@@ -122,8 +122,8 @@ public final class TValue {
 	}
 
 	public TValue multiply(TValue v2) {
-<span class="nc bnc" id="L125" title="All 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
-<span class="nc" id="L126">			return new TValue(this.intValue * v2.intValue);</span>
+<span class="pc bpc" id="L125" title="2 of 4 branches missed.">		if (this.isNumber() &amp;&amp; v2.isNumber()) {</span>
+<span class="fc" id="L126">			return new TValue(this.intValue * v2.intValue);</span>
 		}
 <span class="nc" id="L128">		return new TValue(toString() + &quot;*&quot; + v2.toString());</span>
 	}

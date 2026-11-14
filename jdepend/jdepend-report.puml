@@ -3412,8 +3412,8 @@ Total Classes: 1
 }
 "net.sourceforge.plantuml.tikz" --> "java.util"
 
-class "net.sourceforge.plantuml.tim" %lighten("red", 90) {
-Total Classes: 40
+class "net.sourceforge.plantuml.tim" %lighten("red", 94) {
+Total Classes: 44
 }
 "net.sourceforge.plantuml.tim" --> "java.lang"
 "net.sourceforge.plantuml.tim" --> "java.nio.charset"
@@ -3902,6 +3902,12 @@ class "org.xml.sax"{
 class "org.xml.sax.helpers"{
 
 }
+
+class "sanskrit" %lighten("red", 88) {
+Total Classes: 105
+}
+"sanskrit" --> "java.lang"
+"sanskrit" --> "java.util"
 
 class "smetana.core" %lighten("red", 84) {
 Total Classes: 12

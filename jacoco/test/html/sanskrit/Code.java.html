@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Code.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">Code.java</span></div><h1>Code.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+/** A compiled function body, or a whole module. */
+public final class Code {
+	public final String name;
+	public final String filename;
+	final int[] code;
+	/** The source line of each instruction. */
+	final int[] lines;
+	final Object[] consts;
+	final String[] names;
+	/** Number of slots of a frame: variables, then free variables, then temporaries. */
+	final int nslots;
+	final int maxStack;
+	/** Positional parameters (they come first among the slots). */
+	final int argcount;
+	/** Keyword-only parameters (the slots after the positional ones). */
+	final int kwonlycount;
+	/** The slot of {@code *args}, or -1. */
+	final int varargsSlot;
+	/** The slot of {@code **kwargs}, or -1. */
+	final int kwargsSlot;
+	/** Names of the positional and keyword-only parameters. */
+	final String[] paramNames;
+	/** First slot that receives a cell of the closure, and their number. */
+	final int firstFree;
+	final int nfree;
+	final boolean isModule;
+	/** Exception table: instructions in [start, end) are protected by the handler. */
+	final int[] excStart;
+	final int[] excEnd;
+	final int[] excHandler;
+	final int[] excDepth;
+	/** Names of the variable slots, for messages and the disassembler. */
+	final String[] slotNames;
+
+	Code(String name, String filename, int[] code, int[] lines, Object[] consts, String[] names, int nslots,
+			int maxStack, int argcount, int kwonlycount, int varargsSlot, int kwargsSlot, String[] paramNames,
+			int firstFree, int nfree, boolean isModule, int[] excStart, int[] excEnd, int[] excHandler,
+<span class="fc" id="L40">			int[] excDepth, String[] slotNames) {</span>
+<span class="fc" id="L41">		this.name = name;</span>
+<span class="fc" id="L42">		this.filename = filename;</span>
+<span class="fc" id="L43">		this.code = code;</span>
+<span class="fc" id="L44">		this.lines = lines;</span>
+<span class="fc" id="L45">		this.consts = consts;</span>
+<span class="fc" id="L46">		this.names = names;</span>
+<span class="fc" id="L47">		this.nslots = nslots;</span>
+<span class="fc" id="L48">		this.maxStack = maxStack;</span>
+<span class="fc" id="L49">		this.argcount = argcount;</span>
+<span class="fc" id="L50">		this.kwonlycount = kwonlycount;</span>
+<span class="fc" id="L51">		this.varargsSlot = varargsSlot;</span>
+<span class="fc" id="L52">		this.kwargsSlot = kwargsSlot;</span>
+<span class="fc" id="L53">		this.paramNames = paramNames;</span>
+<span class="fc" id="L54">		this.firstFree = firstFree;</span>
+<span class="fc" id="L55">		this.nfree = nfree;</span>
+<span class="fc" id="L56">		this.isModule = isModule;</span>
+<span class="fc" id="L57">		this.excStart = excStart;</span>
+<span class="fc" id="L58">		this.excEnd = excEnd;</span>
+<span class="fc" id="L59">		this.excHandler = excHandler;</span>
+<span class="fc" id="L60">		this.excDepth = excDepth;</span>
+<span class="fc" id="L61">		this.slotNames = slotNames;</span>
+<span class="fc" id="L62">	}</span>
+
+	/** Human readable listing of the code, for debugging and tests. */
+	public String disassemble() {
+<span class="fc" id="L66">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L67">		disassemble(sb, &quot;&quot;);</span>
+<span class="fc" id="L68">		return sb.toString();</span>
+	}
+
+	private void disassemble(StringBuilder sb, String indent) {
+<span class="fc" id="L72">		sb.append(indent).append(&quot;code &quot;).append(name).append(&quot; (slots=&quot;).append(nslots).append(&quot;, stack=&quot;)</span>
+<span class="fc" id="L73">				.append(maxStack).append(&quot;, args=&quot;).append(argcount).append(&quot;)\n&quot;);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		for (int i = 0; i &lt; code.length; i++) {</span>
+<span class="fc" id="L75">			int op = code[i] &amp; 0xff;</span>
+<span class="fc" id="L76">			int arg = code[i] &gt;&gt;&gt; 8;</span>
+<span class="fc" id="L77">			sb.append(indent).append(String.format(&quot;%4d  line %-4d %-20s&quot;, i, lines[i], Op.NAMES[op]));</span>
+<span class="fc" id="L78">			sb.append(arg);</span>
+<span class="fc bfc" id="L79" title="All 4 branches covered.">			switch (op) {</span>
+			case Op.LOAD_CONST:
+<span class="fc" id="L81">				sb.append(&quot;  (&quot;).append(describe(consts[arg])).append(')');</span>
+<span class="fc" id="L82">				break;</span>
+			case Op.LOAD_GLOBAL:
+			case Op.STORE_GLOBAL:
+			case Op.DELETE_GLOBAL:
+			case Op.DELETE_GLOBAL_Q:
+			case Op.LOAD_ATTR:
+			case Op.STORE_ATTR:
+			case Op.DELETE_ATTR:
+			case Op.IMPORT:
+<span class="fc" id="L91">				sb.append(&quot;  (&quot;).append(names[arg]).append(')');</span>
+<span class="fc" id="L92">				break;</span>
+			case Op.LOAD_FAST:
+			case Op.STORE_FAST:
+			case Op.DELETE_FAST:
+			case Op.DELETE_FAST_Q:
+			case Op.DELETE_CELL_Q:
+			case Op.LOAD_CELL:
+			case Op.STORE_CELL:
+			case Op.DELETE_CELL:
+			case Op.LOAD_CLOSURE:
+			case Op.MAKE_CELL:
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">				sb.append(&quot;  (&quot;).append(slotNames[arg] == null ? &quot;?&quot; : slotNames[arg]).append(')');</span>
+<span class="fc" id="L104">				break;</span>
+			default:
+				break;
+			}
+<span class="fc" id="L108">			sb.append('\n');</span>
+		}
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		for (int i = 0; i &lt; excStart.length; i++)</span>
+<span class="nc" id="L111">			sb.append(indent).append(&quot;  except [&quot;).append(excStart[i]).append(&quot;, &quot;).append(excEnd[i]).append(&quot;) -&gt; &quot;)</span>
+<span class="nc" id="L112">					.append(excHandler[i]).append(&quot; depth &quot;).append(excDepth[i]).append('\n');</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		for (Object c : consts)</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">			if (c instanceof Code)</span>
+<span class="fc" id="L115">				((Code) c).disassemble(sb, indent + &quot;    &quot;);</span>
+<span class="fc" id="L116">	}</span>
+
+	private static String describe(Object c) {
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (c instanceof Code)</span>
+<span class="fc" id="L120">			return &quot;&lt;code &quot; + ((Code) c).name + &quot;&gt;&quot;;</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (PyStr.is(c))</span>
+<span class="fc" id="L122">			return &quot;'&quot; + PyStr.text(c) + &quot;'&quot;;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (c instanceof Builtin)</span>
+<span class="fc" id="L124">			return &quot;&lt;built-in function &quot; + ((Builtin) c).name + &quot;&gt;&quot;;</span>
+<span class="fc" id="L125">		return String.valueOf(c);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

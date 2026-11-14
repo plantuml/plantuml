@@ -1,0 +1,1209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ast.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">sanskrit</a> &gt; <span class="el_source">Ast.java</span></div><h1>Ast.java</h1><pre class="source lang-java linenums">package sanskrit;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * The kinds of syntax tree nodes. Statements extend {@link Stmt}, expressions
+ * extend {@link Expr}; the other nodes (arguments, handlers, keywords...) extend
+ * {@link Node} directly. Operators and contexts are enums, whose constants carry
+ * the names CPython gives them (they are printed as is by {@link AstDump}).
+ *
+ * &lt;p&gt;A field holding a list of nodes is never null; an optional node is null.
+ * The values of a {@link Constant} are: null (None), a {@link Boolean}, a
+ * {@link Long} (int), a {@link Double} (float) or a {@link String}.
+ */
+public final class Ast {
+	private Ast() {
+	}
+
+	/** Whether a name is read, assigned or deleted. */
+<span class="fc" id="L21">	public enum Ctx {</span>
+<span class="fc" id="L22">		Load, Store, Del</span>
+	}
+
+	/** Binary operators. */
+<span class="fc" id="L26">	public enum Operator {</span>
+<span class="fc" id="L27">		Add, Sub, Mult, Div, FloorDiv, Mod, Pow, LShift, RShift, BitAnd, BitOr, BitXor</span>
+	}
+
+<span class="fc" id="L30">	public enum UnaryOperator {</span>
+<span class="fc" id="L31">		Invert, Not, UAdd, USub</span>
+	}
+
+<span class="fc" id="L34">	public enum BoolOperator {</span>
+<span class="fc" id="L35">		And, Or</span>
+	}
+
+<span class="fc" id="L38">	public enum CmpOperator {</span>
+<span class="fc" id="L39">		Eq, NotEq, Lt, LtE, Gt, GtE, Is, IsNot, In, NotIn</span>
+	}
+
+	/** A statement. */
+	public abstract static class Stmt extends Node {
+		Stmt(int line, int col) {
+<span class="fc" id="L45">			super(line, col);</span>
+<span class="fc" id="L46">		}</span>
+	}
+
+	/** An expression. */
+	public abstract static class Expr extends Node {
+		Expr(int line, int col) {
+<span class="fc" id="L52">			super(line, col);</span>
+<span class="fc" id="L53">		}</span>
+	}
+
+	/** An expression that can be a target: it carries a context. */
+	public abstract static class CtxExpr extends Expr {
+<span class="fc" id="L58">		public Ctx ctx = Ctx.Load;</span>
+
+		CtxExpr(int line, int col) {
+<span class="fc" id="L61">			super(line, col);</span>
+<span class="fc" id="L62">		}</span>
+	}
+
+	// ------------------------------------------------------------ module and statements
+
+	public static final class Module extends Node {
+		public final List&lt;Stmt&gt; body;
+		/** Set by the resolver. */
+		Scope scope;
+
+		Module(int line, int col, List&lt;Stmt&gt; body) {
+<span class="fc" id="L73">			super(line, col);</span>
+<span class="fc" id="L74">			this.body = body;</span>
+<span class="fc" id="L75">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L79">			return &quot;Module&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L84">			return new Object[] { &quot;body&quot;, body };</span>
+		}
+	}
+
+	public static final class FunctionDef extends Stmt {
+		public final String name;
+		public final Arguments args;
+		public final List&lt;Stmt&gt; body;
+		public final List&lt;Expr&gt; decorators;
+		/** Set by the resolver. */
+		Scope scope;
+
+		FunctionDef(int line, int col, String name, Arguments args, List&lt;Stmt&gt; body, List&lt;Expr&gt; decorators) {
+<span class="fc" id="L97">			super(line, col);</span>
+<span class="fc" id="L98">			this.name = name;</span>
+<span class="fc" id="L99">			this.args = args;</span>
+<span class="fc" id="L100">			this.body = body;</span>
+<span class="fc" id="L101">			this.decorators = decorators;</span>
+<span class="fc" id="L102">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L106">			return &quot;FunctionDef&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L111">			return new Object[] { &quot;name&quot;, name, &quot;args&quot;, args, &quot;body&quot;, body, &quot;decorator_list&quot;, decorators, &quot;returns&quot;,</span>
+					null };
+		}
+	}
+
+	public static final class ClassDef extends Stmt {
+		public final String name;
+		public final List&lt;Expr&gt; bases;
+		public final List&lt;Stmt&gt; body;
+		public final List&lt;Expr&gt; decorators;
+		/** Set by the resolver. */
+		Scope scope;
+
+		ClassDef(int line, int col, String name, List&lt;Expr&gt; bases, List&lt;Stmt&gt; body, List&lt;Expr&gt; decorators) {
+<span class="fc" id="L125">			super(line, col);</span>
+<span class="fc" id="L126">			this.name = name;</span>
+<span class="fc" id="L127">			this.bases = bases;</span>
+<span class="fc" id="L128">			this.body = body;</span>
+<span class="fc" id="L129">			this.decorators = decorators;</span>
+<span class="fc" id="L130">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L134">			return &quot;ClassDef&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L139">			return new Object[] { &quot;name&quot;, name, &quot;bases&quot;, bases, &quot;keywords&quot;, new ArrayList&lt;Keyword&gt;(), &quot;body&quot;, body,</span>
+					&quot;decorator_list&quot;, decorators };
+		}
+	}
+
+	public static final class Return extends Stmt {
+		public final Expr value;
+
+		Return(int line, int col, Expr value) {
+<span class="fc" id="L148">			super(line, col);</span>
+<span class="fc" id="L149">			this.value = value;</span>
+<span class="fc" id="L150">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L154">			return &quot;Return&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L159">			return new Object[] { &quot;value&quot;, value };</span>
+		}
+	}
+
+	public static final class Delete extends Stmt {
+		public final List&lt;Expr&gt; targets;
+
+		Delete(int line, int col, List&lt;Expr&gt; targets) {
+<span class="fc" id="L167">			super(line, col);</span>
+<span class="fc" id="L168">			this.targets = targets;</span>
+<span class="fc" id="L169">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L173">			return &quot;Delete&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L178">			return new Object[] { &quot;targets&quot;, targets };</span>
+		}
+	}
+
+	public static final class Assign extends Stmt {
+		public final List&lt;Expr&gt; targets;
+		public final Expr value;
+
+		Assign(int line, int col, List&lt;Expr&gt; targets, Expr value) {
+<span class="fc" id="L187">			super(line, col);</span>
+<span class="fc" id="L188">			this.targets = targets;</span>
+<span class="fc" id="L189">			this.value = value;</span>
+<span class="fc" id="L190">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L194">			return &quot;Assign&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L199">			return new Object[] { &quot;targets&quot;, targets, &quot;value&quot;, value };</span>
+		}
+	}
+
+	public static final class AugAssign extends Stmt {
+		public final Expr target;
+		public final Operator op;
+		public final Expr value;
+
+		AugAssign(int line, int col, Expr target, Operator op, Expr value) {
+<span class="fc" id="L209">			super(line, col);</span>
+<span class="fc" id="L210">			this.target = target;</span>
+<span class="fc" id="L211">			this.op = op;</span>
+<span class="fc" id="L212">			this.value = value;</span>
+<span class="fc" id="L213">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L217">			return &quot;AugAssign&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L222">			return new Object[] { &quot;target&quot;, target, &quot;op&quot;, op, &quot;value&quot;, value };</span>
+		}
+	}
+
+	public static final class For extends Stmt {
+		public final Expr target;
+		public final Expr iter;
+		public final List&lt;Stmt&gt; body;
+		public final List&lt;Stmt&gt; orelse;
+
+		For(int line, int col, Expr target, Expr iter, List&lt;Stmt&gt; body, List&lt;Stmt&gt; orelse) {
+<span class="fc" id="L233">			super(line, col);</span>
+<span class="fc" id="L234">			this.target = target;</span>
+<span class="fc" id="L235">			this.iter = iter;</span>
+<span class="fc" id="L236">			this.body = body;</span>
+<span class="fc" id="L237">			this.orelse = orelse;</span>
+<span class="fc" id="L238">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L242">			return &quot;For&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L247">			return new Object[] { &quot;target&quot;, target, &quot;iter&quot;, iter, &quot;body&quot;, body, &quot;orelse&quot;, orelse };</span>
+		}
+	}
+
+	public static final class While extends Stmt {
+		public final Expr test;
+		public final List&lt;Stmt&gt; body;
+		public final List&lt;Stmt&gt; orelse;
+
+		While(int line, int col, Expr test, List&lt;Stmt&gt; body, List&lt;Stmt&gt; orelse) {
+<span class="fc" id="L257">			super(line, col);</span>
+<span class="fc" id="L258">			this.test = test;</span>
+<span class="fc" id="L259">			this.body = body;</span>
+<span class="fc" id="L260">			this.orelse = orelse;</span>
+<span class="fc" id="L261">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L265">			return &quot;While&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L270">			return new Object[] { &quot;test&quot;, test, &quot;body&quot;, body, &quot;orelse&quot;, orelse };</span>
+		}
+	}
+
+	public static final class If extends Stmt {
+		public final Expr test;
+		public final List&lt;Stmt&gt; body;
+		public final List&lt;Stmt&gt; orelse;
+
+		If(int line, int col, Expr test, List&lt;Stmt&gt; body, List&lt;Stmt&gt; orelse) {
+<span class="fc" id="L280">			super(line, col);</span>
+<span class="fc" id="L281">			this.test = test;</span>
+<span class="fc" id="L282">			this.body = body;</span>
+<span class="fc" id="L283">			this.orelse = orelse;</span>
+<span class="fc" id="L284">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L288">			return &quot;If&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L293">			return new Object[] { &quot;test&quot;, test, &quot;body&quot;, body, &quot;orelse&quot;, orelse };</span>
+		}
+	}
+
+	public static final class Raise extends Stmt {
+		public final Expr exc;
+		public final Expr cause;
+
+		Raise(int line, int col, Expr exc, Expr cause) {
+<span class="fc" id="L302">			super(line, col);</span>
+<span class="fc" id="L303">			this.exc = exc;</span>
+<span class="fc" id="L304">			this.cause = cause;</span>
+<span class="fc" id="L305">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L309">			return &quot;Raise&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L314">			return new Object[] { &quot;exc&quot;, exc, &quot;cause&quot;, cause };</span>
+		}
+	}
+
+	public static final class Try extends Stmt {
+		public final List&lt;Stmt&gt; body;
+		public final List&lt;ExceptHandler&gt; handlers;
+		public final List&lt;Stmt&gt; orelse;
+
+		Try(int line, int col, List&lt;Stmt&gt; body, List&lt;ExceptHandler&gt; handlers, List&lt;Stmt&gt; orelse) {
+<span class="fc" id="L324">			super(line, col);</span>
+<span class="fc" id="L325">			this.body = body;</span>
+<span class="fc" id="L326">			this.handlers = handlers;</span>
+<span class="fc" id="L327">			this.orelse = orelse;</span>
+<span class="fc" id="L328">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L332">			return &quot;Try&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+			// 'finally' is rejected by the parser: finalbody is always empty
+<span class="fc" id="L338">			return new Object[] { &quot;body&quot;, body, &quot;handlers&quot;, handlers, &quot;orelse&quot;, orelse, &quot;finalbody&quot;,</span>
+					new ArrayList&lt;Stmt&gt;() };
+		}
+	}
+
+	public static final class Assert extends Stmt {
+		public final Expr test;
+		public final Expr msg;
+
+		Assert(int line, int col, Expr test, Expr msg) {
+<span class="fc" id="L348">			super(line, col);</span>
+<span class="fc" id="L349">			this.test = test;</span>
+<span class="fc" id="L350">			this.msg = msg;</span>
+<span class="fc" id="L351">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L355">			return &quot;Assert&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L360">			return new Object[] { &quot;test&quot;, test, &quot;msg&quot;, msg };</span>
+		}
+	}
+
+	public static final class Import extends Stmt {
+		public final List&lt;Alias&gt; names;
+
+		Import(int line, int col, List&lt;Alias&gt; names) {
+<span class="fc" id="L368">			super(line, col);</span>
+<span class="fc" id="L369">			this.names = names;</span>
+<span class="fc" id="L370">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L374">			return &quot;Import&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L379">			return new Object[] { &quot;names&quot;, names };</span>
+		}
+	}
+
+	/**
+	 * {@code from module import name, name as asname}. The subset has no relative
+	 * import (level is always 0) and no {@code import *}.
+	 */
+	public static final class ImportFrom extends Stmt {
+		public final String module;
+		public final List&lt;Alias&gt; names;
+		public final int level;
+
+		ImportFrom(int line, int col, String module, List&lt;Alias&gt; names) {
+<span class="fc" id="L393">			super(line, col);</span>
+<span class="fc" id="L394">			this.module = module;</span>
+<span class="fc" id="L395">			this.names = names;</span>
+<span class="fc" id="L396">			this.level = 0;</span>
+<span class="fc" id="L397">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L401">			return &quot;ImportFrom&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L406">			return new Object[] { &quot;module&quot;, module, &quot;names&quot;, names, &quot;level&quot;, Long.valueOf(level) };</span>
+		}
+	}
+
+	/** Common part of {@link Global} and {@link Nonlocal}. */
+	public abstract static class NameDeclaration extends Stmt {
+		public final List&lt;String&gt; names;
+
+		NameDeclaration(int line, int col, List&lt;String&gt; names) {
+<span class="fc" id="L415">			super(line, col);</span>
+<span class="fc" id="L416">			this.names = names;</span>
+<span class="fc" id="L417">		}</span>
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L421">			return new Object[] { &quot;names&quot;, names };</span>
+		}
+	}
+
+	public static final class Global extends NameDeclaration {
+		Global(int line, int col, List&lt;String&gt; names) {
+<span class="fc" id="L427">			super(line, col, names);</span>
+<span class="fc" id="L428">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L432">			return &quot;Global&quot;;</span>
+		}
+	}
+
+	public static final class Nonlocal extends NameDeclaration {
+		Nonlocal(int line, int col, List&lt;String&gt; names) {
+<span class="fc" id="L438">			super(line, col, names);</span>
+<span class="fc" id="L439">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L443">			return &quot;Nonlocal&quot;;</span>
+		}
+	}
+
+	/** An expression used as a statement (CPython's {@code Expr} node). */
+	public static final class ExprStmt extends Stmt {
+		public final Expr value;
+
+		ExprStmt(int line, int col, Expr value) {
+<span class="fc" id="L452">			super(line, col);</span>
+<span class="fc" id="L453">			this.value = value;</span>
+<span class="fc" id="L454">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L458">			return &quot;Expr&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L463">			return new Object[] { &quot;value&quot;, value };</span>
+		}
+	}
+
+	public static final class Pass extends Stmt {
+		Pass(int line, int col) {
+<span class="fc" id="L469">			super(line, col);</span>
+<span class="fc" id="L470">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L474">			return &quot;Pass&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L479">			return new Object[0];</span>
+		}
+	}
+
+	public static final class Break extends Stmt {
+		Break(int line, int col) {
+<span class="fc" id="L485">			super(line, col);</span>
+<span class="fc" id="L486">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L490">			return &quot;Break&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L495">			return new Object[0];</span>
+		}
+	}
+
+	public static final class Continue extends Stmt {
+		Continue(int line, int col) {
+<span class="fc" id="L501">			super(line, col);</span>
+<span class="fc" id="L502">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L506">			return &quot;Continue&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L511">			return new Object[0];</span>
+		}
+	}
+
+	// ------------------------------------------------------------ nodes that are neither statements nor expressions
+
+	public static final class ExceptHandler extends Node {
+		/** The class(es) caught, or null for a bare except. */
+		public final Expr exceptionType;
+		/** The name after &quot;as&quot;, or null. */
+		public final String name;
+		public final List&lt;Stmt&gt; body;
+
+		ExceptHandler(int line, int col, Expr exceptionType, String name, List&lt;Stmt&gt; body) {
+<span class="fc" id="L525">			super(line, col);</span>
+<span class="fc" id="L526">			this.exceptionType = exceptionType;</span>
+<span class="fc" id="L527">			this.name = name;</span>
+<span class="fc" id="L528">			this.body = body;</span>
+<span class="fc" id="L529">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L533">			return &quot;ExceptHandler&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L538">			return new Object[] { &quot;type&quot;, exceptionType, &quot;name&quot;, name, &quot;body&quot;, body };</span>
+		}
+	}
+
+	/** One name of an import statement. */
+	public static final class Alias extends Node {
+		public final String name;
+		/** The name after &quot;as&quot;, or null. */
+		public final String asname;
+
+		Alias(int line, int col, String name, String asname) {
+<span class="fc" id="L549">			super(line, col);</span>
+<span class="fc" id="L550">			this.name = name;</span>
+<span class="fc" id="L551">			this.asname = asname;</span>
+<span class="fc" id="L552">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L556">			return &quot;alias&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L561">			return new Object[] { &quot;name&quot;, name, &quot;asname&quot;, asname };</span>
+		}
+	}
+
+	/** The parameters of a def or a lambda. */
+	public static final class Arguments extends Node {
+		public final List&lt;Arg&gt; args;
+		/** The parameter after &quot;*&quot;, or null. */
+		public final Arg vararg;
+		public final List&lt;Arg&gt; kwonlyargs;
+		/** One per keyword-only parameter: its default, or null. */
+		public final List&lt;Expr&gt; kwDefaults;
+		/** The parameter after &quot;**&quot;, or null. */
+		public final Arg kwarg;
+		/** The defaults of the last positional parameters. */
+		public final List&lt;Expr&gt; defaults;
+
+		Arguments(int line, int col, List&lt;Arg&gt; args, Arg vararg, List&lt;Arg&gt; kwonlyargs, List&lt;Expr&gt; kwDefaults,
+				Arg kwarg, List&lt;Expr&gt; defaults) {
+<span class="fc" id="L580">			super(line, col);</span>
+<span class="fc" id="L581">			this.args = args;</span>
+<span class="fc" id="L582">			this.vararg = vararg;</span>
+<span class="fc" id="L583">			this.kwonlyargs = kwonlyargs;</span>
+<span class="fc" id="L584">			this.kwDefaults = kwDefaults;</span>
+<span class="fc" id="L585">			this.kwarg = kwarg;</span>
+<span class="fc" id="L586">			this.defaults = defaults;</span>
+<span class="fc" id="L587">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L591">			return &quot;arguments&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L596">			return new Object[] { &quot;posonlyargs&quot;, new ArrayList&lt;Arg&gt;(), &quot;args&quot;, args, &quot;vararg&quot;, vararg, &quot;kwonlyargs&quot;,</span>
+					kwonlyargs, &quot;kw_defaults&quot;, kwDefaults, &quot;kwarg&quot;, kwarg, &quot;defaults&quot;, defaults };
+		}
+	}
+
+	/** One parameter. */
+	public static final class Arg extends Node {
+		public final String arg;
+
+		Arg(int line, int col, String arg) {
+<span class="fc" id="L606">			super(line, col);</span>
+<span class="fc" id="L607">			this.arg = arg;</span>
+<span class="fc" id="L608">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L612">			return &quot;arg&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L617">			return new Object[] { &quot;arg&quot;, arg, &quot;annotation&quot;, null };</span>
+		}
+	}
+
+	/** A keyword argument of a call: {@code name=value}, or {@code **value} when name is null. */
+	public static final class Keyword extends Node {
+		public final String arg;
+		public final Expr value;
+
+		Keyword(int line, int col, String arg, Expr value) {
+<span class="fc" id="L627">			super(line, col);</span>
+<span class="fc" id="L628">			this.arg = arg;</span>
+<span class="fc" id="L629">			this.value = value;</span>
+<span class="fc" id="L630">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L634">			return &quot;keyword&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L639">			return new Object[] { &quot;arg&quot;, arg, &quot;value&quot;, value };</span>
+		}
+	}
+
+	/** One {@code for ... in ... if ...} clause of a comprehension. */
+	public static final class Comprehension extends Node {
+		public final Expr target;
+		public final Expr iter;
+		public final List&lt;Expr&gt; ifs;
+
+		Comprehension(int line, int col, Expr target, Expr iter, List&lt;Expr&gt; ifs) {
+<span class="fc" id="L650">			super(line, col);</span>
+<span class="fc" id="L651">			this.target = target;</span>
+<span class="fc" id="L652">			this.iter = iter;</span>
+<span class="fc" id="L653">			this.ifs = ifs;</span>
+<span class="fc" id="L654">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L658">			return &quot;comprehension&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L663">			return new Object[] { &quot;target&quot;, target, &quot;iter&quot;, iter, &quot;ifs&quot;, ifs, &quot;is_async&quot;, Long.valueOf(0) };</span>
+		}
+	}
+
+	// ------------------------------------------------------------ expressions
+
+	public static final class BoolOp extends Expr {
+		public final BoolOperator op;
+		public final List&lt;Expr&gt; values;
+
+		BoolOp(int line, int col, BoolOperator op, List&lt;Expr&gt; values) {
+<span class="fc" id="L674">			super(line, col);</span>
+<span class="fc" id="L675">			this.op = op;</span>
+<span class="fc" id="L676">			this.values = values;</span>
+<span class="fc" id="L677">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L681">			return &quot;BoolOp&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L686">			return new Object[] { &quot;op&quot;, op, &quot;values&quot;, values };</span>
+		}
+	}
+
+	public static final class BinOp extends Expr {
+		public final Expr left;
+		public final Operator op;
+		public final Expr right;
+
+		BinOp(int line, int col, Expr left, Operator op, Expr right) {
+<span class="fc" id="L696">			super(line, col);</span>
+<span class="fc" id="L697">			this.left = left;</span>
+<span class="fc" id="L698">			this.op = op;</span>
+<span class="fc" id="L699">			this.right = right;</span>
+<span class="fc" id="L700">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L704">			return &quot;BinOp&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L709">			return new Object[] { &quot;left&quot;, left, &quot;op&quot;, op, &quot;right&quot;, right };</span>
+		}
+	}
+
+	public static final class UnaryOp extends Expr {
+		public final UnaryOperator op;
+		public final Expr operand;
+
+		UnaryOp(int line, int col, UnaryOperator op, Expr operand) {
+<span class="fc" id="L718">			super(line, col);</span>
+<span class="fc" id="L719">			this.op = op;</span>
+<span class="fc" id="L720">			this.operand = operand;</span>
+<span class="fc" id="L721">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L725">			return &quot;UnaryOp&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L730">			return new Object[] { &quot;op&quot;, op, &quot;operand&quot;, operand };</span>
+		}
+	}
+
+	public static final class Lambda extends Expr {
+		public final Arguments args;
+		public final Expr body;
+		/** Set by the resolver. */
+		Scope scope;
+
+		Lambda(int line, int col, Arguments args, Expr body) {
+<span class="fc" id="L741">			super(line, col);</span>
+<span class="fc" id="L742">			this.args = args;</span>
+<span class="fc" id="L743">			this.body = body;</span>
+<span class="fc" id="L744">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L748">			return &quot;Lambda&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L753">			return new Object[] { &quot;args&quot;, args, &quot;body&quot;, body };</span>
+		}
+	}
+
+	public static final class IfExp extends Expr {
+		public final Expr test;
+		public final Expr body;
+		public final Expr orelse;
+
+		IfExp(int line, int col, Expr test, Expr body, Expr orelse) {
+<span class="fc" id="L763">			super(line, col);</span>
+<span class="fc" id="L764">			this.test = test;</span>
+<span class="fc" id="L765">			this.body = body;</span>
+<span class="fc" id="L766">			this.orelse = orelse;</span>
+<span class="fc" id="L767">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L771">			return &quot;IfExp&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L776">			return new Object[] { &quot;test&quot;, test, &quot;body&quot;, body, &quot;orelse&quot;, orelse };</span>
+		}
+	}
+
+	/** A set display: {@code {a, b}}. */
+	public static final class SetExpr extends Expr {
+		public final List&lt;Expr&gt; elts;
+
+		SetExpr(int line, int col, List&lt;Expr&gt; elts) {
+<span class="fc" id="L785">			super(line, col);</span>
+<span class="fc" id="L786">			this.elts = elts;</span>
+<span class="fc" id="L787">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L791">			return &quot;Set&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L796">			return new Object[] { &quot;elts&quot;, elts };</span>
+		}
+	}
+
+	public static final class DictExpr extends Expr {
+		public final List&lt;Expr&gt; keys;
+		public final List&lt;Expr&gt; values;
+
+		DictExpr(int line, int col, List&lt;Expr&gt; keys, List&lt;Expr&gt; values) {
+<span class="fc" id="L805">			super(line, col);</span>
+<span class="fc" id="L806">			this.keys = keys;</span>
+<span class="fc" id="L807">			this.values = values;</span>
+<span class="fc" id="L808">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L812">			return &quot;Dict&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L817">			return new Object[] { &quot;keys&quot;, keys, &quot;values&quot;, values };</span>
+		}
+	}
+
+	/** Common part of {@link ListComp}, {@link GeneratorExp}, {@link SetComp} and {@link DictComp}. */
+	public abstract static class CompExpr extends Expr {
+		public final List&lt;Comprehension&gt; generators;
+		/** Set by the resolver. */
+		Scope scope;
+
+		CompExpr(int line, int col, List&lt;Comprehension&gt; generators) {
+<span class="fc" id="L828">			super(line, col);</span>
+<span class="fc" id="L829">			this.generators = generators;</span>
+<span class="fc" id="L830">		}</span>
+
+		/** The name of the function the comprehension is compiled to: {@code &lt;listcomp&gt;}... */
+		abstract String scopeName();
+
+		/** The element of a list, a set or a generator; null for a dict. */
+		Expr elt() {
+<span class="fc" id="L837">			return null;</span>
+		}
+	}
+
+	public static final class ListComp extends CompExpr {
+		public final Expr elt;
+
+		ListComp(int line, int col, Expr elt, List&lt;Comprehension&gt; generators) {
+<span class="fc" id="L845">			super(line, col, generators);</span>
+<span class="fc" id="L846">			this.elt = elt;</span>
+<span class="fc" id="L847">		}</span>
+
+		@Override
+		String scopeName() {
+<span class="fc" id="L851">			return &quot;&lt;listcomp&gt;&quot;;</span>
+		}
+
+		@Override
+		Expr elt() {
+<span class="fc" id="L856">			return elt;</span>
+		}
+
+		@Override
+		public String type() {
+<span class="fc" id="L861">			return &quot;ListComp&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L866">			return new Object[] { &quot;elt&quot;, elt, &quot;generators&quot;, generators };</span>
+		}
+	}
+
+	/**
+	 * {@code (elt for ... in ... if ...)}. The subset has no lazy generators: it is
+	 * evaluated at once, like a list comprehension, and gives an iterator over the result.
+	 */
+	public static final class GeneratorExp extends CompExpr {
+		public final Expr elt;
+
+		GeneratorExp(int line, int col, Expr elt, List&lt;Comprehension&gt; generators) {
+<span class="fc" id="L878">			super(line, col, generators);</span>
+<span class="fc" id="L879">			this.elt = elt;</span>
+<span class="fc" id="L880">		}</span>
+
+		@Override
+		String scopeName() {
+<span class="fc" id="L884">			return &quot;&lt;genexpr&gt;&quot;;</span>
+		}
+
+		@Override
+		Expr elt() {
+<span class="fc" id="L889">			return elt;</span>
+		}
+
+		@Override
+		public String type() {
+<span class="fc" id="L894">			return &quot;GeneratorExp&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L899">			return new Object[] { &quot;elt&quot;, elt, &quot;generators&quot;, generators };</span>
+		}
+	}
+
+	public static final class SetComp extends CompExpr {
+		public final Expr elt;
+
+		SetComp(int line, int col, Expr elt, List&lt;Comprehension&gt; generators) {
+<span class="fc" id="L907">			super(line, col, generators);</span>
+<span class="fc" id="L908">			this.elt = elt;</span>
+<span class="fc" id="L909">		}</span>
+
+		@Override
+		String scopeName() {
+<span class="fc" id="L913">			return &quot;&lt;setcomp&gt;&quot;;</span>
+		}
+
+		@Override
+		Expr elt() {
+<span class="fc" id="L918">			return elt;</span>
+		}
+
+		@Override
+		public String type() {
+<span class="fc" id="L923">			return &quot;SetComp&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L928">			return new Object[] { &quot;elt&quot;, elt, &quot;generators&quot;, generators };</span>
+		}
+	}
+
+	public static final class DictComp extends CompExpr {
+		public final Expr key;
+		public final Expr value;
+
+		DictComp(int line, int col, Expr key, Expr value, List&lt;Comprehension&gt; generators) {
+<span class="fc" id="L937">			super(line, col, generators);</span>
+<span class="fc" id="L938">			this.key = key;</span>
+<span class="fc" id="L939">			this.value = value;</span>
+<span class="fc" id="L940">		}</span>
+
+		@Override
+		String scopeName() {
+<span class="fc" id="L944">			return &quot;&lt;dictcomp&gt;&quot;;</span>
+		}
+
+		@Override
+		public String type() {
+<span class="fc" id="L949">			return &quot;DictComp&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L954">			return new Object[] { &quot;key&quot;, key, &quot;value&quot;, value, &quot;generators&quot;, generators };</span>
+		}
+	}
+
+	public static final class Compare extends Expr {
+		public final Expr left;
+		public final List&lt;CmpOperator&gt; ops;
+		public final List&lt;Expr&gt; comparators;
+
+		Compare(int line, int col, Expr left, List&lt;CmpOperator&gt; ops, List&lt;Expr&gt; comparators) {
+<span class="fc" id="L964">			super(line, col);</span>
+<span class="fc" id="L965">			this.left = left;</span>
+<span class="fc" id="L966">			this.ops = ops;</span>
+<span class="fc" id="L967">			this.comparators = comparators;</span>
+<span class="fc" id="L968">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L972">			return &quot;Compare&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L977">			return new Object[] { &quot;left&quot;, left, &quot;ops&quot;, ops, &quot;comparators&quot;, comparators };</span>
+		}
+	}
+
+	public static final class Call extends Expr {
+		public final Expr func;
+		public final List&lt;Expr&gt; args;
+		public final List&lt;Keyword&gt; keywords;
+
+		Call(int line, int col, Expr func, List&lt;Expr&gt; args, List&lt;Keyword&gt; keywords) {
+<span class="fc" id="L987">			super(line, col);</span>
+<span class="fc" id="L988">			this.func = func;</span>
+<span class="fc" id="L989">			this.args = args;</span>
+<span class="fc" id="L990">			this.keywords = keywords;</span>
+<span class="fc" id="L991">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L995">			return &quot;Call&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L1000">			return new Object[] { &quot;func&quot;, func, &quot;args&quot;, args, &quot;keywords&quot;, keywords };</span>
+		}
+	}
+
+	public static final class FormattedValue extends Expr {
+		public final Expr value;
+		/** -1 (none), or the code of 's', 'r' or 'a'. */
+		public final long conversion;
+		/** A {@link JoinedStr}, or null. */
+		public final Expr formatSpec;
+
+		FormattedValue(int line, int col, Expr value, long conversion, Expr formatSpec) {
+<span class="fc" id="L1012">			super(line, col);</span>
+<span class="fc" id="L1013">			this.value = value;</span>
+<span class="fc" id="L1014">			this.conversion = conversion;</span>
+<span class="fc" id="L1015">			this.formatSpec = formatSpec;</span>
+<span class="fc" id="L1016">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L1020">			return &quot;FormattedValue&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L1025">			return new Object[] { &quot;value&quot;, value, &quot;conversion&quot;, Long.valueOf(conversion), &quot;format_spec&quot;, formatSpec };</span>
+		}
+	}
+
+	public static final class JoinedStr extends Expr {
+		public final List&lt;Expr&gt; values;
+
+		JoinedStr(int line, int col, List&lt;Expr&gt; values) {
+<span class="fc" id="L1033">			super(line, col);</span>
+<span class="fc" id="L1034">			this.values = values;</span>
+<span class="fc" id="L1035">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L1039">			return &quot;JoinedStr&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L1044">			return new Object[] { &quot;values&quot;, values };</span>
+		}
+	}
+
+	public static final class Constant extends Expr {
+		/** null (None), Boolean, Long, Double or String. */
+		public final Object value;
+
+		Constant(int line, int col, Object value) {
+<span class="fc" id="L1053">			super(line, col);</span>
+<span class="fc" id="L1054">			this.value = value;</span>
+<span class="fc" id="L1055">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L1059">			return &quot;Constant&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L1064">			return new Object[] { &quot;value&quot;, value };</span>
+		}
+	}
+
+	public static final class Attribute extends CtxExpr {
+		public final Expr value;
+		public final String attr;
+
+		Attribute(int line, int col, Expr value, String attr) {
+<span class="fc" id="L1073">			super(line, col);</span>
+<span class="fc" id="L1074">			this.value = value;</span>
+<span class="fc" id="L1075">			this.attr = attr;</span>
+<span class="fc" id="L1076">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L1080">			return &quot;Attribute&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L1085">			return new Object[] { &quot;value&quot;, value, &quot;attr&quot;, attr, &quot;ctx&quot;, ctx };</span>
+		}
+	}
+
+	public static final class Subscript extends CtxExpr {
+		public final Expr value;
+		public final Expr slice;
+
+		Subscript(int line, int col, Expr value, Expr slice) {
+<span class="fc" id="L1094">			super(line, col);</span>
+<span class="fc" id="L1095">			this.value = value;</span>
+<span class="fc" id="L1096">			this.slice = slice;</span>
+<span class="fc" id="L1097">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L1101">			return &quot;Subscript&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L1106">			return new Object[] { &quot;value&quot;, value, &quot;slice&quot;, slice, &quot;ctx&quot;, ctx };</span>
+		}
+	}
+
+	public static final class Starred extends CtxExpr {
+		public final Expr value;
+
+		Starred(int line, int col, Expr value) {
+<span class="fc" id="L1114">			super(line, col);</span>
+<span class="fc" id="L1115">			this.value = value;</span>
+<span class="fc" id="L1116">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L1120">			return &quot;Starred&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L1125">			return new Object[] { &quot;value&quot;, value, &quot;ctx&quot;, ctx };</span>
+		}
+	}
+
+	public static final class Name extends CtxExpr {
+		public final String id;
+
+		Name(int line, int col, String id) {
+<span class="fc" id="L1133">			super(line, col);</span>
+<span class="fc" id="L1134">			this.id = id;</span>
+<span class="fc" id="L1135">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L1139">			return &quot;Name&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L1144">			return new Object[] { &quot;id&quot;, id, &quot;ctx&quot;, ctx };</span>
+		}
+	}
+
+	public static final class ListExpr extends CtxExpr {
+		public final List&lt;Expr&gt; elts;
+
+		ListExpr(int line, int col, List&lt;Expr&gt; elts) {
+<span class="fc" id="L1152">			super(line, col);</span>
+<span class="fc" id="L1153">			this.elts = elts;</span>
+<span class="fc" id="L1154">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L1158">			return &quot;List&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L1163">			return new Object[] { &quot;elts&quot;, elts, &quot;ctx&quot;, ctx };</span>
+		}
+	}
+
+	public static final class TupleExpr extends CtxExpr {
+		public final List&lt;Expr&gt; elts;
+
+		TupleExpr(int line, int col, List&lt;Expr&gt; elts) {
+<span class="fc" id="L1171">			super(line, col);</span>
+<span class="fc" id="L1172">			this.elts = elts;</span>
+<span class="fc" id="L1173">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L1177">			return &quot;Tuple&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L1182">			return new Object[] { &quot;elts&quot;, elts, &quot;ctx&quot;, ctx };</span>
+		}
+	}
+
+	public static final class Slice extends Expr {
+		public final Expr lower;
+		public final Expr upper;
+		public final Expr step;
+
+		Slice(int line, int col, Expr lower, Expr upper, Expr step) {
+<span class="fc" id="L1192">			super(line, col);</span>
+<span class="fc" id="L1193">			this.lower = lower;</span>
+<span class="fc" id="L1194">			this.upper = upper;</span>
+<span class="fc" id="L1195">			this.step = step;</span>
+<span class="fc" id="L1196">		}</span>
+
+		@Override
+		public String type() {
+<span class="fc" id="L1200">			return &quot;Slice&quot;;</span>
+		}
+
+		@Override
+		Object[] fields() {
+<span class="fc" id="L1205">			return new Object[] { &quot;lower&quot;, lower, &quot;upper&quot;, upper, &quot;step&quot;, step };</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
