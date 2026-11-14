@@ -158,17 +158,27 @@ loadScripts(document, 'script');</script>
  the drivers of the other formats: for the TeaVM C build, see
  <a href="core/TextBlockExporter.html#exportSvgTo(java.io.OutputStream)"><code>TextBlockExporter.exportSvgTo(java.io.OutputStream)</code></a>.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="core/TextBlockExporter.html" title="class in net.sourceforge.plantuml.core">TextBlockExporter</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExporter(int,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">getExporter</a><wbr>(int&nbsp;index,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="core/ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#exportText(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormat)" class="member-name-link">exportText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
+ int&nbsp;index,
+ <a href="FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Exports the image as text (ATXT or UTXT) without referencing the drivers of
+ the other formats, for the TeaVM builds (C and browser): the diagrams that
+ have their own text renderer (sequence diagrams, WBS, Gantt...) use it, the
+ others are drawn by <code>UGraphicTxt</code>, as on the JVM.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="core/TextBlockExporter.html" title="class in net.sourceforge.plantuml.core">TextBlockExporter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExporter(int,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">getExporter</a><wbr>(int&nbsp;index,
  <a href="FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTextBlock(int,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">getTextBlock</a><wbr>(int&nbsp;num,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTextBlock(int,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">getTextBlock</a><wbr>(int&nbsp;num,
  <a href="FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHandwritten()" class="member-name-link">isHandwritten</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHandwritten()" class="member-name-link">isHandwritten</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -247,6 +257,23 @@ loadScripts(document, 'script');</script>
 <dd>a description of the generated image</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="exportText(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormat)">
+<h3>exportText</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="core/ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></span>&nbsp;<span class="element-name">exportText</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
+ int&nbsp;index,
+ <a href="FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</span>
+                     throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
+<div class="block">Exports the image as text (ATXT or UTXT) without referencing the drivers of
+ the other formats, for the TeaVM builds (C and browser): the diagrams that
+ have their own text renderer (sequence diagrams, WBS, Gantt...) use it, the
+ others are drawn by <code>UGraphicTxt</code>, as on the JVM.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
 </dl>
 </section>
 </li>

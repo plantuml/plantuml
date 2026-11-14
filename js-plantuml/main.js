@@ -6,6 +6,10 @@ const editor = document.getElementById("editor");
 const defaultSource = editor.value;
 const HASH_DEBOUNCE_MS = 300;
 let dark = false;
+// Output format of the preview: "svg", "utxt" (Unicode art) or "atxt" (ASCII art).
+// Kept in the ?format= query parameter so that a shared link keeps it.
+const FORMATS = ["svg", "utxt", "atxt"];
+let format = readFormatFromUrl();
 let hashDebounceTimer = null;
 let toastTimer = null;
 const livePreviews = {
@@ -14,6 +18,7 @@ const livePreviews = {
 };
 
 restoreEditorFromHash();
+formatSwitch();
 renderer();
 resize();
 controls();
@@ -47,8 +52,46 @@ function renderer() {
 
 function renderNow() {
 	const lines = editor.value.split(/\r\n|\r|\n/);
-	render(lines, "out", {dark: dark});
+	render(lines, "out", {dark: dark, format: format});
 	updateLivePreviews();
+}
+
+function readFormatFromUrl() {
+	const value = new URLSearchParams(window.location.search).get("format");
+	return FORMATS.includes(value) ? value : "svg";
+}
+
+function isTextFormat() {
+	return format !== "svg";
+}
+
+function formatSwitch() {
+	const select = document.getElementById("format");
+
+	function apply() {
+		select.value = format;
+		select.title = `Output format: ${select.selectedOptions[0].title}`;
+		const text = isTextFormat();
+		const label = format.toUpperCase();
+		document.getElementById("copy").title = `Copy ${label} to clipboard`;
+		document.getElementById("save").title = text ? `Save diagram as ${label} (.txt)` : "Save diagram as SVG";
+		// A bitmap only makes sense for the SVG rendering
+		document.getElementById("copy-bitmap").disabled = text;
+	}
+
+	select.addEventListener("change", () => {
+		format = FORMATS.includes(select.value) ? select.value : "svg";
+		const url = new URL(window.location.href);
+		if (format === "svg") {
+			url.searchParams.delete("format");
+		} else {
+			url.searchParams.set("format", format);
+		}
+		window.history.replaceState(window.history.state, "", url);
+		apply();
+		renderNow();
+	});
+	apply();
 }
 
 function restoreEditorFromHash(useDefaultWhenEmpty = false) {
@@ -257,6 +300,7 @@ function controls() {
 			() => {
 				copy.classList.add("success");
 				setTimeout(() => (copy.classList.remove("success")), 300);
+				showToast(`${format.toUpperCase()} copied`);
 			},
 			reason => {
 				console.error("Copy to clipboard failed:", reason);
@@ -346,17 +390,22 @@ function controls() {
 	const save = document.getElementById("save");
 	save.addEventListener("click", () => {
 		const content = getContent();
-		const blob = new Blob([content], {type: "image/svg+xml"});
+		const text = isTextFormat();
+		const blob = new Blob([content], {type: text ? "text/plain;charset=utf-8" : "image/svg+xml"});
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement("a");
 		a.href = url;
-		a.download = "diagram.svg";
+		a.download = text ? "diagram.txt" : "diagram.svg";
 		a.click();
 		URL.revokeObjectURL(url);
 	});
 
 	function getContent() {
 		const out = document.getElementById("out");
+		const pre = out.querySelector("pre.plantuml-txt");
+		if (pre != null) {
+			return pre.textContent;
+		}
 		const svg = out.querySelector("svg");
 		if (svg == null) {
 			return out.innerHTML;
@@ -421,7 +470,11 @@ function contextMenu() {
 		// Each entry delegates to the existing toolbar button so the
 		// real action, error handling and visual feedback live in one
 		// place (the click handlers installed by controls()).
-		const ENTRIES = [
+		const ENTRIES = isTextFormat() ? [
+			{ label: `Copy as ${format.toUpperCase()}`, buttonId: "copy" },
+			{ label: "Open live PNG preview", buttonId: "open-png"    },
+			{ label: "Open live SVG preview", buttonId: "open-svg"    }
+		] : [
 			{ label: "Copy as bitmap",       buttonId: "copy-bitmap" },
 			{ label: "Copy as SVG",          buttonId: "copy"        },
 			{ label: "Open live PNG preview", buttonId: "open-png"    },
@@ -471,7 +524,12 @@ function contextMenu() {
 	// re-render (render() rebuilds the SVG on each keystroke).
 	out.addEventListener("contextmenu", e => {
 		const target = e.target;
-		if (!target || (target.nodeName !== "svg" && !target.closest("svg"))) {
+		if (!target || (target.nodeName !== "svg" && !target.closest("svg, pre.plantuml-txt"))) {
+			return;
+		}
+		// Over a text diagram, keep the browser menu when some text is selected,
+		// so that a part of the drawing can be copied.
+		if (target.closest("pre.plantuml-txt") && String(window.getSelection())) {
 			return;
 		}
 		e.preventDefault();

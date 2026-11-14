@@ -198,12 +198,22 @@ loadScripts(document, 'script');</script>
  <a href="../TextBlockExporter.html#exportSvgTo(java.io.OutputStream)"><code>TextBlockExporter.exportSvgTo(java.io.OutputStream)</code></a>.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FileImageData.</span><code><a href="../../FileImageData.html#getImageData()" class="member-name-link">getImageData</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><span class="type-name-label">UgDiagram.</span><code><a href="../../UgDiagram.html#exportText(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormat)" class="member-name-link">exportText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
+ int&nbsp;index,
+ <a href="../../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Exports the image as text (ATXT or UTXT) without referencing the drivers of
+ the other formats, for the TeaVM builds (C and browser): the diagrams that
+ have their own text renderer (sequence diagrams, WBS, Gantt...) use it, the
+ others are drawn by <code>UGraphicTxt</code>, as on the JVM.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SourceStringReader.</span><code><a href="../../SourceStringReader.html#noValidStartFound(java.io.OutputStream,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">noValidStartFound</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
- <a href="../../FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FileImageData.</span><code><a href="../../FileImageData.html#getImageData()" class="member-name-link">getImageData</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SourceStringReader.</span><code><a href="../../SourceStringReader.html#noValidStartFound(java.io.OutputStream,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">noValidStartFound</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
+ <a href="../../FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../package-summary.html">net.sourceforge.plantuml</a> with parameters of type <a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></span></div>
 <div class="summary-table three-column-summary">
@@ -326,15 +336,22 @@ loadScripts(document, 'script');</script>
  int&nbsp;index,
  <a href="../../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected <a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">AbstractDiagram.</span><code><a href="../AbstractDiagram.html#exportXmi(java.io.OutputStream,net.sourceforge.plantuml.FileFormat)" class="member-name-link">exportXmi</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
- <a href="../../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
+<div class="col-first odd-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TextBlockExporter.</span><code><a href="../TextBlockExporter.html#exportTxtTo(java.io.OutputStream)" class="member-name-link">exportTxtTo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Exports the <a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> as text (ATXT or UTXT) with <a href="../../klimt/drawing/txt/UGraphicTxt.html" title="class in net.sourceforge.plantuml.klimt.drawing.txt"><code>UGraphicTxt</code></a>,
+ exactly as <a href="../TextBlockExporter.html#exportTo(java.io.OutputStream)"><code>TextBlockExporter.exportTo(java.io.OutputStream)</code></a> does, but without <code>TextBlockExporter.createUGraphic(net.sourceforge.plantuml.klimt.geom.XDimension2D, double)</code>, which
+ references the drivers of every format (and AWT): for the TeaVM C build.</div>
+</div>
+<div class="col-first even-row-color"><code>protected <a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractDiagram.</span><code><a href="../AbstractDiagram.html#exportXmi(java.io.OutputStream,net.sourceforge.plantuml.FileFormat)" class="member-name-link">exportXmi</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
+ <a href="../../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Exports this diagram in XMI format.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DiagramDescription.</span><code><a href="../DiagramDescription.html#getImageData()" class="member-name-link">getImageData</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DiagramDescription.</span><code><a href="../DiagramDescription.html#getImageData()" class="member-name-link">getImageData</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.core</a> with parameters of type <a href="../ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></span></div>
 <div class="summary-table three-column-summary">

@@ -8,6 +8,9 @@ import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLElement;
 import org.teavm.jso.dom.xml.Element;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
+
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Scale;
@@ -121,14 +124,14 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
  *
  * @see net.sourceforge.plantuml.teavm.js.GraphVizEngineJs
  */
-<span class="nc" id="L124">public class PlantUMLBrowser {</span>
+<span class="nc" id="L127">public class PlantUMLBrowser {</span>
 	// ::remove file when JAVA8
 
 	// =========================================================================
 	// Rendering configuration
 	// =========================================================================
 
-<span class="nc" id="L131">	private static final StringBounder STRING_BOUNDER = new StringBounderTeaVM();</span>
+<span class="nc" id="L134">	private static final StringBounder STRING_BOUNDER = new StringBounderTeaVM();</span>
 
 	/**
 	 * Default maximum width or height (in pixels) before refusing to render.
@@ -143,60 +146,74 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 	// Requests
 	// =========================================================================
 
-	/** A {@link #render} request: the SVG goes into a DOM element. */
+	/**
+	 * A {@link #render} request: the SVG (or, for a text format, a {@code &lt;pre&gt;}
+	 * holding the text) goes into a DOM element.
+	 */
 	private static final class ElementJob extends RenderQueue.Job {
 		private final String[] lines;
 		private final String elementId;
 		private final boolean darkMode;
 		private final int maxSvgSize;
+		private final FileFormat textFormat;
 		private SvgGraphicsJs svg;
+		private String text;
 		private Throwable failure;
 
-<span class="nc" id="L155">		private ElementJob(String[] lines, String elementId, boolean darkMode, int maxSvgSize) {</span>
-<span class="nc" id="L156">			this.lines = lines;</span>
-<span class="nc" id="L157">			this.elementId = elementId;</span>
-<span class="nc" id="L158">			this.darkMode = darkMode;</span>
-<span class="nc" id="L159">			this.maxSvgSize = maxSvgSize;</span>
-<span class="nc" id="L160">		}</span>
+		private ElementJob(String[] lines, String elementId, boolean darkMode, int maxSvgSize,
+<span class="nc" id="L164">				FileFormat textFormat) {</span>
+<span class="nc" id="L165">			this.lines = lines;</span>
+<span class="nc" id="L166">			this.elementId = elementId;</span>
+<span class="nc" id="L167">			this.darkMode = darkMode;</span>
+<span class="nc" id="L168">			this.maxSvgSize = maxSvgSize;</span>
+<span class="nc" id="L169">			this.textFormat = textFormat;</span>
+<span class="nc" id="L170">		}</span>
 
 		@Override
 		protected boolean replaces(RenderQueue.Job waiting) {
 			// &quot;Latest wins&quot;: a render request still waiting is dropped, in place.
-<span class="nc" id="L165">			return waiting instanceof ElementJob;</span>
+<span class="nc" id="L175">			return waiting instanceof ElementJob;</span>
 		}
 
 		@Override
 		protected void attempt() {
-<span class="nc" id="L170">			BrowserLog.reset();</span>
-<span class="nc" id="L171">			svg = null;</span>
-<span class="nc" id="L172">			failure = null;</span>
+<span class="nc" id="L180">			BrowserLog.reset();</span>
+<span class="nc" id="L181">			svg = null;</span>
+<span class="nc" id="L182">			text = null;</span>
+<span class="nc" id="L183">			failure = null;</span>
 			try {
-<span class="nc" id="L174">				svg = buildSvg(lines, darkMode, maxSvgSize);</span>
-<span class="nc" id="L175">			} catch (Throwable t) {</span>
-<span class="nc" id="L176">				failure = t;</span>
-<span class="nc" id="L177">			}</span>
-<span class="nc" id="L178">		}</span>
-
-		@Override
-		protected void deliver() {
-<span class="nc" id="L182">			final HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">			if (out != null) {</span>
-<span class="nc bnc" id="L184" title="All 2 branches missed.">				if (svg != null) {</span>
-<span class="nc" id="L185">					removeAllChildren(out);</span>
-<span class="nc" id="L186">					appendSvgElement(out, svg.getSvgRoot());</span>
-				} else {
-<span class="nc" id="L188">					out.setTextContent(describe(failure));</span>
-				}
-			}
-<span class="nc" id="L191">			BrowserLog.jsStatusDuration();</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">				if (textFormat == null)</span>
+<span class="nc" id="L186">					svg = buildSvg(lines, darkMode, maxSvgSize);</span>
+				else
+<span class="nc" id="L188">					text = buildText(lines, textFormat);</span>
+<span class="nc" id="L189">			} catch (Throwable t) {</span>
+<span class="nc" id="L190">				failure = t;</span>
+<span class="nc" id="L191">			}</span>
 <span class="nc" id="L192">		}</span>
 
 		@Override
-		protected void giveUp(String message) {
+		protected void deliver() {
 <span class="nc" id="L196">			final HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
-<span class="nc bnc" id="L197" title="All 2 branches missed.">			if (out != null)</span>
-<span class="nc" id="L198">				out.setTextContent(message);</span>
-<span class="nc" id="L199">		}</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">			if (out != null) {</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">				if (svg != null) {</span>
+<span class="nc" id="L199">					removeAllChildren(out);</span>
+<span class="nc" id="L200">					appendSvgElement(out, svg.getSvgRoot());</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">				} else if (text != null) {</span>
+<span class="nc" id="L202">					removeAllChildren(out);</span>
+<span class="nc" id="L203">					appendPreElement(out, text);</span>
+				} else {
+<span class="nc" id="L205">					out.setTextContent(describe(failure));</span>
+				}
+			}
+<span class="nc" id="L208">			BrowserLog.jsStatusDuration();</span>
+<span class="nc" id="L209">		}</span>
+
+		@Override
+		protected void giveUp(String message) {
+<span class="nc" id="L213">			final HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">			if (out != null)</span>
+<span class="nc" id="L215">				out.setTextContent(message);</span>
+<span class="nc" id="L216">		}</span>
 	}
 
 	/** A {@link #renderToString} request: the SVG goes to a callback. */
@@ -206,31 +223,38 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 		private final StringCallback onError;
 		private final boolean darkMode;
 		private final int maxSvgSize;
+		private final FileFormat textFormat;
 		private String svg;
 		private Throwable failure;
 
 		private CallbackJob(String[] lines, StringCallback onSuccess, StringCallback onError, boolean darkMode,
-<span class="nc" id="L213">				int maxSvgSize) {</span>
-<span class="nc" id="L214">			this.lines = lines;</span>
-<span class="nc" id="L215">			this.onSuccess = onSuccess;</span>
-<span class="nc" id="L216">			this.onError = onError;</span>
-<span class="nc" id="L217">			this.darkMode = darkMode;</span>
-<span class="nc" id="L218">			this.maxSvgSize = maxSvgSize;</span>
-<span class="nc" id="L219">		}</span>
+<span class="nc" id="L231">				int maxSvgSize, FileFormat textFormat) {</span>
+<span class="nc" id="L232">			this.lines = lines;</span>
+<span class="nc" id="L233">			this.onSuccess = onSuccess;</span>
+<span class="nc" id="L234">			this.onError = onError;</span>
+<span class="nc" id="L235">			this.darkMode = darkMode;</span>
+<span class="nc" id="L236">			this.maxSvgSize = maxSvgSize;</span>
+<span class="nc" id="L237">			this.textFormat = textFormat;</span>
+<span class="nc" id="L238">		}</span>
 
 		@Override
 		protected void attempt() {
-<span class="nc" id="L223">			svg = null;</span>
-<span class="nc" id="L224">			failure = null;</span>
+<span class="nc" id="L242">			svg = null;</span>
+<span class="nc" id="L243">			failure = null;</span>
 			try {
-<span class="nc" id="L226">				final SvgGraphicsJs graphics = buildSvg(lines, darkMode, maxSvgSize);</span>
-				// null: discarded attempt, which is never delivered
-<span class="nc bnc" id="L228" title="All 2 branches missed.">				if (graphics != null)</span>
-<span class="nc" id="L229">					svg = serializeSvg(graphics.getSvgRoot());</span>
-<span class="nc" id="L230">			} catch (Throwable t) {</span>
-<span class="nc" id="L231">				failure = t;</span>
-<span class="nc" id="L232">			}</span>
-<span class="nc" id="L233">		}</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">				if (textFormat != null) {</span>
+					// null: discarded attempt, which is never delivered
+<span class="nc" id="L247">					svg = buildText(lines, textFormat);</span>
+				} else {
+<span class="nc" id="L249">					final SvgGraphicsJs graphics = buildSvg(lines, darkMode, maxSvgSize);</span>
+					// null: discarded attempt, which is never delivered
+<span class="nc bnc" id="L251" title="All 2 branches missed.">					if (graphics != null)</span>
+<span class="nc" id="L252">						svg = serializeSvg(graphics.getSvgRoot());</span>
+				}
+<span class="nc" id="L254">			} catch (Throwable t) {</span>
+<span class="nc" id="L255">				failure = t;</span>
+<span class="nc" id="L256">			}</span>
+<span class="nc" id="L257">		}</span>
 
 		/**
 		 * Exactly one of the two callbacks is called, once. If the success callback
@@ -238,16 +262,16 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 		 */
 		@Override
 		protected void deliver() {
-<span class="nc bnc" id="L241" title="All 2 branches missed.">			if (svg != null)</span>
-<span class="nc" id="L242">				PlantUMLBrowser.deliver(onSuccess, svg);</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">			if (svg != null)</span>
+<span class="nc" id="L266">				PlantUMLBrowser.deliver(onSuccess, svg);</span>
 			else
-<span class="nc" id="L244">				PlantUMLBrowser.deliver(onError, describe(failure));</span>
-<span class="nc" id="L245">		}</span>
+<span class="nc" id="L268">				PlantUMLBrowser.deliver(onError, describe(failure));</span>
+<span class="nc" id="L269">		}</span>
 
 		@Override
 		protected void giveUp(String message) {
-<span class="nc" id="L249">			PlantUMLBrowser.deliver(onError, message);</span>
-<span class="nc" id="L250">		}</span>
+<span class="nc" id="L273">			PlantUMLBrowser.deliver(onError, message);</span>
+<span class="nc" id="L274">		}</span>
 	}
 
 	// =========================================================================
@@ -284,12 +308,15 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 	 * @param options   optional JS object with rendering options (e.g. {@code {
 	 *                  dark: true, maxSvgSize: 8192 }}); may be {@code null}.
 	 *                  {@code maxSvgSize} overrides {@link #DEFAULT_MAX_SVG_SIZE};
-	 *                  {@code 0} disables the size check.
+	 *                  {@code 0} disables the size check. {@code format} selects
+	 *                  the output: {@code &quot;svg&quot;} (default), {@code &quot;atxt&quot;} (ASCII
+	 *                  art) or {@code &quot;utxt&quot;} (Unicode art).
 	 */
 	@JSExport
 	public static void render(String[] lines, String elementId, JSObject options) {
-<span class="nc" id="L291">		RenderQueue.submit(new ElementJob(lines, elementId, isDark(options), resolveMaxSvgSize(options)));</span>
-<span class="nc" id="L292">	}</span>
+<span class="nc" id="L317">		RenderQueue.submit(</span>
+<span class="nc" id="L318">				new ElementJob(lines, elementId, isDark(options), resolveMaxSvgSize(options), resolveFormat(options)));</span>
+<span class="nc" id="L319">	}</span>
 
 	/**
 	 * Renders a PlantUML diagram and delivers the resulting SVG as a string via the
@@ -310,13 +337,16 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 	 * @param options   optional JS object with rendering options (e.g. {@code {
 	 *                  dark: true, maxSvgSize: 8192 }}); may be {@code null}.
 	 *                  {@code maxSvgSize} overrides {@link #DEFAULT_MAX_SVG_SIZE};
-	 *                  {@code 0} disables the size check.
+	 *                  {@code 0} disables the size check. {@code format} selects
+	 *                  the output: {@code &quot;svg&quot;} (default), {@code &quot;atxt&quot;} (ASCII
+	 *                  art) or {@code &quot;utxt&quot;} (Unicode art).
 	 */
 	@JSExport
 	public static void renderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
 			JSObject options) {
-<span class="nc" id="L318">		RenderQueue.submit(new CallbackJob(lines, onSuccess, onError, isDark(options), resolveMaxSvgSize(options)));</span>
-<span class="nc" id="L319">	}</span>
+<span class="nc" id="L347">		RenderQueue.submit(new CallbackJob(lines, onSuccess, onError, isDark(options), resolveMaxSvgSize(options),</span>
+<span class="nc" id="L348">				resolveFormat(options)));</span>
+<span class="nc" id="L349">	}</span>
 
 	// =========================================================================
 	// Options extraction (called from JavaScript)
@@ -339,14 +369,36 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 	private static native int extractMaxSvgSize(JSObject opts);
 
 	/**
+	 * Extracts the {@code format} string property from a JavaScript options
+	 * object, lower-cased, or {@code null} when absent.
+	 */
+	@JSBody(params = &quot;opts&quot;, script = &quot;return (opts &amp;&amp; typeof opts.format === 'string') ? opts.format.toLowerCase() : null;&quot;)
+	private static native String extractFormat(JSObject opts);
+
+	/**
+	 * Resolves the {@code format} option: {@code null} for SVG (the default),
+	 * otherwise {@link FileFormat#ATXT} or {@link FileFormat#UTXT}.
+	 */
+	private static FileFormat resolveFormat(JSObject opts) {
+<span class="nc" id="L383">		final String format = extractFormat(opts);</span>
+<span class="nc bnc" id="L384" title="All 4 branches missed.">		if (format == null || format.equals(&quot;svg&quot;))</span>
+<span class="nc" id="L385">			return null;</span>
+<span class="nc bnc" id="L386" title="All 4 branches missed.">		if (format.equals(&quot;atxt&quot;) || format.equals(&quot;txt&quot;))</span>
+<span class="nc" id="L387">			return FileFormat.ATXT;</span>
+<span class="nc bnc" id="L388" title="All 2 branches missed.">		if (format.equals(&quot;utxt&quot;))</span>
+<span class="nc" id="L389">			return FileFormat.UTXT;</span>
+<span class="nc" id="L390">		throw new IllegalArgumentException(&quot;Unknown format: &quot; + format + &quot; (expected svg, atxt or utxt)&quot;);</span>
+	}
+
+	/**
 	 * Resolves the effective max-SVG-size limit from the {@code options} object:
 	 * the caller-supplied {@code maxSvgSize} when present, otherwise
 	 * {@link #DEFAULT_MAX_SVG_SIZE}. A resolved value {@code &lt;= 0} means
 	 * &quot;no limit&quot;.
 	 */
 	private static int resolveMaxSvgSize(JSObject opts) {
-<span class="nc" id="L348">		final int value = extractMaxSvgSize(opts);</span>
-<span class="nc bnc" id="L349" title="All 2 branches missed.">		return value &lt; 0 ? DEFAULT_MAX_SVG_SIZE : value;</span>
+<span class="nc" id="L400">		final int value = extractMaxSvgSize(opts);</span>
+<span class="nc bnc" id="L401" title="All 2 branches missed.">		return value &lt; 0 ? DEFAULT_MAX_SVG_SIZE : value;</span>
 	}
 
 	// =========================================================================
@@ -360,63 +412,84 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 	 * layout and the drawing.
 	 */
 	private static SvgGraphicsJs buildSvg(String[] lines, boolean darkMode, int maxSvgSize) throws Exception {
-<span class="nc bnc" id="L363" title="All 2 branches missed.">		final ColorMapper colorMapper = darkMode ? ColorMapper.TEAVM_DARK : ColorMapper.TEAVM_LIGHT;</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">		final ColorMapper colorMapper = darkMode ? ColorMapper.TEAVM_DARK : ColorMapper.TEAVM_LIGHT;</span>
 
-<span class="nc" id="L365">		final Diagram diagram = PSystemBuilderJs.getInstance().createDiagram(lines);</span>
-<span class="nc bnc" id="L366" title="All 2 branches missed.">		if (PendingResources.hasMissing())</span>
-<span class="nc" id="L367">			return null;</span>
-<span class="nc" id="L368">		final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);</span>
+<span class="nc" id="L417">		final Diagram diagram = PSystemBuilderJs.getInstance().createDiagram(lines);</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">		if (PendingResources.hasMissing())</span>
+<span class="nc" id="L419">			return null;</span>
+<span class="nc" id="L420">		final FileFormatOption fileFormat = new FileFormatOption(FileFormat.SVG);</span>
 
-<span class="nc bnc" id="L370" title="All 2 branches missed.">		if (diagram instanceof FormulaDiagram)</span>
-<span class="nc" id="L371">			return buildFormulaSvg((FormulaDiagram) diagram, darkMode, colorMapper, lines);</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">		if (diagram instanceof FormulaDiagram)</span>
+<span class="nc" id="L423">			return buildFormulaSvg((FormulaDiagram) diagram, darkMode, colorMapper, lines);</span>
 
-<span class="nc bnc" id="L373" title="All 2 branches missed.">		if (diagram instanceof UgDiagram == false)</span>
-<span class="nc" id="L374">			throw new RuntimeException(&quot;Unsupported diagram type&quot;);</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">		if (diagram instanceof UgDiagram == false)</span>
+<span class="nc" id="L426">			throw new RuntimeException(&quot;Unsupported diagram type&quot;);</span>
 
-<span class="nc" id="L376">		final Scale scale = ((AbstractDiagram) diagram).getScale();</span>
-<span class="nc" id="L377">		final UgDiagram ugDiagram = (UgDiagram) diagram;</span>
-<span class="nc" id="L378">		TextBlock tb = ugDiagram.getTextBlock(0, fileFormat);</span>
+<span class="nc" id="L428">		final Scale scale = ((AbstractDiagram) diagram).getScale();</span>
+<span class="nc" id="L429">		final UgDiagram ugDiagram = (UgDiagram) diagram;</span>
+<span class="nc" id="L430">		TextBlock tb = ugDiagram.getTextBlock(0, fileFormat);</span>
 
-<span class="nc" id="L380">		HColor tbBackcolor = tb.getBackcolor();</span>
-<span class="nc bnc" id="L381" title="All 4 branches missed.">		if (tbBackcolor == null &amp;&amp; diagram instanceof TitledDiagram)</span>
-<span class="nc" id="L382">			tbBackcolor = getPaintableDocumentBackground((TitledDiagram) diagram);</span>
+<span class="nc" id="L432">		HColor tbBackcolor = tb.getBackcolor();</span>
+<span class="nc bnc" id="L433" title="All 4 branches missed.">		if (tbBackcolor == null &amp;&amp; diagram instanceof TitledDiagram)</span>
+<span class="nc" id="L434">			tbBackcolor = getPaintableDocumentBackground((TitledDiagram) diagram);</span>
 
 		final SvgGraphicsJs svg;
 
-<span class="nc bnc" id="L386" title="All 2 branches missed.">		if (tbBackcolor == null) {</span>
-<span class="nc" id="L387">			svg = new SvgGraphicsJs();</span>
-<span class="nc bnc" id="L388" title="All 2 branches missed.">			tbBackcolor = darkMode ? HColors.BLACK : HColors.WHITE;</span>
+<span class="nc bnc" id="L438" title="All 2 branches missed.">		if (tbBackcolor == null) {</span>
+<span class="nc" id="L439">			svg = new SvgGraphicsJs();</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">			tbBackcolor = darkMode ? HColors.BLACK : HColors.WHITE;</span>
 		} else {
-<span class="nc" id="L390">			svg = new SvgGraphicsJs(tbBackcolor.toSvg(colorMapper));</span>
+<span class="nc" id="L442">			svg = new SvgGraphicsJs(tbBackcolor.toSvg(colorMapper));</span>
 		}
 
-<span class="nc" id="L393">		UGraphic ug = UGraphicJs.build(tbBackcolor, colorMapper, STRING_BOUNDER, svg);</span>
+<span class="nc" id="L445">		UGraphic ug = UGraphicJs.build(tbBackcolor, colorMapper, STRING_BOUNDER, svg);</span>
 
-<span class="nc bnc" id="L395" title="All 2 branches missed.">		if (diagram instanceof TitledDiagram)</span>
-<span class="nc" id="L396">			tb = DiagramChromeFactory.create(tb, (TitledDiagram) ugDiagram,</span>
-<span class="nc" id="L397">					((TitledDiagram) ugDiagram).getSkinParam(), ugDiagram.getWarnings(), ((TitledDiagram) diagram).getTitle());</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">		if (diagram instanceof TitledDiagram)</span>
+<span class="nc" id="L448">			tb = DiagramChromeFactory.create(tb, (TitledDiagram) ugDiagram,</span>
+<span class="nc" id="L449">					((TitledDiagram) ugDiagram).getSkinParam(), ugDiagram.getWarnings(), ((TitledDiagram) diagram).getTitle());</span>
 
-<span class="nc bnc" id="L399" title="All 2 branches missed.">		if (ugDiagram.isHandwritten())</span>
-<span class="nc" id="L400">			ug = new UGraphicHandwritten(ug);</span>
+<span class="nc bnc" id="L451" title="All 2 branches missed.">		if (ugDiagram.isHandwritten())</span>
+<span class="nc" id="L452">			ug = new UGraphicHandwritten(ug);</span>
 
-<span class="nc" id="L402">		tb.drawU(ug);</span>
+<span class="nc" id="L454">		tb.drawU(ug);</span>
 
-<span class="nc" id="L404">		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);</span>
+<span class="nc" id="L456">		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);</span>
 
-<span class="nc bnc" id="L406" title="All 6 branches missed.">		if (maxSvgSize &gt; 0 &amp;&amp; (dim.getWidth() &gt; maxSvgSize || dim.getHeight() &gt; maxSvgSize))</span>
-<span class="nc" id="L407">			throw new RuntimeException(&quot;Diagram too large for browser rendering: &quot; + (int) dim.getWidth() + &quot;x&quot;</span>
-<span class="nc" id="L408">					+ (int) dim.getHeight() + &quot; (max &quot; + maxSvgSize + &quot;; override via the maxSvgSize option, or set it to 0 to disable this check)&quot;);</span>
+<span class="nc bnc" id="L458" title="All 6 branches missed.">		if (maxSvgSize &gt; 0 &amp;&amp; (dim.getWidth() &gt; maxSvgSize || dim.getHeight() &gt; maxSvgSize))</span>
+<span class="nc" id="L459">			throw new RuntimeException(&quot;Diagram too large for browser rendering: &quot; + (int) dim.getWidth() + &quot;x&quot;</span>
+<span class="nc" id="L460">					+ (int) dim.getHeight() + &quot; (max &quot; + maxSvgSize + &quot;; override via the maxSvgSize option, or set it to 0 to disable this check)&quot;);</span>
 
-<span class="nc bnc" id="L410" title="All 2 branches missed.">		final double scaleFactor = scale == null ? 1.0 : scale.getScale(dim.getWidth(), dim.getHeight());</span>
-<span class="nc" id="L411">		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), scaleFactor);</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">		final double scaleFactor = scale == null ? 1.0 : scale.getScale(dim.getWidth(), dim.getHeight());</span>
+<span class="nc" id="L463">		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), scaleFactor);</span>
 
 		// Embed the PlantUML source as a plantuml-src processing instruction, so the
 		// generated SVG can be re-imported/edited later, just like the SVGs produced
 		// by the classic Java backend and editor.plantuml.com.
 		// https://github.com/plantuml/plantuml/issues/2761
-<span class="nc" id="L417">		svg.addCommentMetadata(String.join(&quot;\n&quot;, lines));</span>
+<span class="nc" id="L469">		svg.addCommentMetadata(String.join(&quot;\n&quot;, lines));</span>
 
-<span class="nc" id="L419">		return svg;</span>
+<span class="nc" id="L471">		return svg;</span>
+	}
+
+	/**
+	 * Parses and renders PlantUML source lines as text (ATXT or UTXT), or returns
+	 * &lt;code&gt;null&lt;/code&gt; when the attempt missed a resource and is going to be
+	 * discarded (see {@link RenderQueue}).
+	 */
+	private static String buildText(String[] lines, FileFormat textFormat) throws Exception {
+<span class="nc" id="L480">		final Diagram diagram = PSystemBuilderJs.getInstance().createDiagram(lines);</span>
+<span class="nc bnc" id="L481" title="All 2 branches missed.">		if (PendingResources.hasMissing())</span>
+<span class="nc" id="L482">			return null;</span>
+
+<span class="nc bnc" id="L484" title="All 2 branches missed.">		if (diagram instanceof UgDiagram == false)</span>
+<span class="nc" id="L485">			throw new RuntimeException(&quot;Text output is not available for this diagram type&quot;);</span>
+
+<span class="nc" id="L487">		final ByteArrayOutputStream os = new ByteArrayOutputStream();</span>
+<span class="nc" id="L488">		((UgDiagram) diagram).exportText(os, 0, textFormat);</span>
+<span class="nc bnc" id="L489" title="All 2 branches missed.">		if (PendingResources.hasMissing())</span>
+<span class="nc" id="L490">			return null;</span>
+
+<span class="nc" id="L492">		return new String(os.toByteArray(), StandardCharsets.UTF_8);</span>
 	}
 
 	/**
@@ -426,17 +499,17 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 	 */
 	private static SvgGraphicsJs buildFormulaSvg(FormulaDiagram diagram, boolean darkMode, ColorMapper colorMapper,
 			String[] lines) {
-<span class="nc" id="L429">		final TextBlock tb = diagram.getFormulaBlock();</span>
-<span class="nc" id="L430">		final HColor back = diagram.getFormulaBackground();</span>
-<span class="nc bnc" id="L431" title="All 2 branches missed.">		final SvgGraphicsJs svg = back == null ? new SvgGraphicsJs() : new SvgGraphicsJs(back.toSvg(colorMapper));</span>
-<span class="nc bnc" id="L432" title="All 4 branches missed.">		final UGraphic ug = UGraphicJs.build(back == null ? (darkMode ? HColors.BLACK : HColors.WHITE) : back,</span>
+<span class="nc" id="L502">		final TextBlock tb = diagram.getFormulaBlock();</span>
+<span class="nc" id="L503">		final HColor back = diagram.getFormulaBackground();</span>
+<span class="nc bnc" id="L504" title="All 2 branches missed.">		final SvgGraphicsJs svg = back == null ? new SvgGraphicsJs() : new SvgGraphicsJs(back.toSvg(colorMapper));</span>
+<span class="nc bnc" id="L505" title="All 4 branches missed.">		final UGraphic ug = UGraphicJs.build(back == null ? (darkMode ? HColors.BLACK : HColors.WHITE) : back,</span>
 				colorMapper, STRING_BOUNDER, svg);
 
-<span class="nc" id="L435">		tb.drawU(ug);</span>
-<span class="nc" id="L436">		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);</span>
-<span class="nc" id="L437">		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), diagram.getFormulaScale());</span>
-<span class="nc" id="L438">		svg.addCommentMetadata(String.join(&quot;\n&quot;, lines));</span>
-<span class="nc" id="L439">		return svg;</span>
+<span class="nc" id="L508">		tb.drawU(ug);</span>
+<span class="nc" id="L509">		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);</span>
+<span class="nc" id="L510">		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), diagram.getFormulaScale());</span>
+<span class="nc" id="L511">		svg.addCommentMetadata(String.join(&quot;\n&quot;, lines));</span>
+<span class="nc" id="L512">		return svg;</span>
 	}
 
 	/**
@@ -456,15 +529,15 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 	 * {@code buildSvg} as the contrast reference for automatic colors.
 	 */
 	private static HColor getPaintableDocumentBackground(TitledDiagram diagram) {
-<span class="nc" id="L459">		final HColor documentBackground = diagram.calculateBackColor();</span>
-<span class="nc bnc" id="L460" title="All 2 branches missed.">		if (documentBackground == null)</span>
-<span class="nc" id="L461">			return null;</span>
+<span class="nc" id="L532">		final HColor documentBackground = diagram.calculateBackColor();</span>
+<span class="nc bnc" id="L533" title="All 2 branches missed.">		if (documentBackground == null)</span>
+<span class="nc" id="L534">			return null;</span>
 
-<span class="nc" id="L463">		final String plainColor = documentBackground.toSvg(ColorMapper.TEAVM_LIGHT);</span>
-<span class="nc bnc" id="L464" title="All 4 branches missed.">		if (&quot;#00000000&quot;.equals(plainColor) || &quot;#FFFFFF&quot;.equals(plainColor))</span>
-<span class="nc" id="L465">			return null;</span>
+<span class="nc" id="L536">		final String plainColor = documentBackground.toSvg(ColorMapper.TEAVM_LIGHT);</span>
+<span class="nc bnc" id="L537" title="All 4 branches missed.">		if (&quot;#00000000&quot;.equals(plainColor) || &quot;#FFFFFF&quot;.equals(plainColor))</span>
+<span class="nc" id="L538">			return null;</span>
 
-<span class="nc" id="L467">		return documentBackground;</span>
+<span class="nc" id="L540">		return documentBackground;</span>
 	}
 
 	/**
@@ -475,14 +548,14 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 	 * would show.
 	 */
 	private static void deliver(StringCallback callback, String value) {
-<span class="nc bnc" id="L478" title="All 2 branches missed.">		if (callback == null)</span>
-<span class="nc" id="L479">			return;</span>
+<span class="nc bnc" id="L551" title="All 2 branches missed.">		if (callback == null)</span>
+<span class="nc" id="L552">			return;</span>
 		try {
-<span class="nc" id="L481">			callback.call(value);</span>
-<span class="nc" id="L482">		} catch (Throwable t) {</span>
-<span class="nc" id="L483">			RenderQueue.consoleError(&quot;PlantUML: callback threw: &quot; + t);</span>
-<span class="nc" id="L484">		}</span>
-<span class="nc" id="L485">	}</span>
+<span class="nc" id="L554">			callback.call(value);</span>
+<span class="nc" id="L555">		} catch (Throwable t) {</span>
+<span class="nc" id="L556">			RenderQueue.consoleError(&quot;PlantUML: callback threw: &quot; + t);</span>
+<span class="nc" id="L557">		}</span>
+<span class="nc" id="L558">	}</span>
 
 	/**
 	 * Human-readable description of a rendering failure, never {@code null}.
@@ -496,19 +569,19 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 	private static String describe(Throwable e) {
 		// Not possible in Java, but seen on the Wasm GC build: TeaVM 0.16.0
 		// miscompiled some try/finally blocks into a &quot;throw null&quot;.
-<span class="nc bnc" id="L499" title="All 2 branches missed.">		if (e == null)</span>
-<span class="nc" id="L500">			return &quot;Rendering error: null exception&quot;;</span>
+<span class="nc bnc" id="L572" title="All 2 branches missed.">		if (e == null)</span>
+<span class="nc" id="L573">			return &quot;Rendering error: null exception&quot;;</span>
 
-<span class="nc bnc" id="L502" title="All 2 branches missed.">		if (BrowserLog.isDebug())</span>
-<span class="nc" id="L503">			e.printStackTrace();</span>
+<span class="nc bnc" id="L575" title="All 2 branches missed.">		if (BrowserLog.isDebug())</span>
+<span class="nc" id="L576">			e.printStackTrace();</span>
 
 		// With an obfuscated build, toString() may return null when the class name is
 		// not kept and the exception has no message.
-<span class="nc" id="L507">		final String s = e.toString();</span>
-<span class="nc bnc" id="L508" title="All 2 branches missed.">		if (s != null)</span>
-<span class="nc" id="L509">			return s;</span>
-<span class="nc" id="L510">		final String message = e.getMessage();</span>
-<span class="nc bnc" id="L511" title="All 2 branches missed.">		return &quot;Rendering error (&quot; + (message == null ? &quot;no message&quot; : message) + &quot;)&quot;;</span>
+<span class="nc" id="L580">		final String s = e.toString();</span>
+<span class="nc bnc" id="L581" title="All 2 branches missed.">		if (s != null)</span>
+<span class="nc" id="L582">			return s;</span>
+<span class="nc" id="L583">		final String message = e.getMessage();</span>
+<span class="nc bnc" id="L584" title="All 2 branches missed.">		return &quot;Rendering error (&quot; + (message == null ? &quot;no message&quot; : message) + &quot;)&quot;;</span>
 	}
 
 	// =========================================================================
@@ -518,6 +591,11 @@ import net.sourceforge.plantuml.teavm.js.UGraphicJs;
 	/** Appends an SVG element as a child of a DOM element. */
 	@JSBody(params = { &quot;p&quot;, &quot;svg&quot; }, script = &quot;p.appendChild(svg);&quot;)
 	private static native void appendSvgElement(HTMLElement p, Element svg);
+
+	/** Appends a {@code &lt;pre&gt;} element holding a text diagram. */
+	@JSBody(params = { &quot;p&quot;, &quot;text&quot; }, script = &quot;var pre=document.createElement('pre');&quot;
+			+ &quot;pre.className='plantuml-txt';pre.textContent=text;p.appendChild(pre);&quot;)
+	private static native void appendPreElement(HTMLElement p, String text);
 
 	/** Removes all child nodes from a DOM element. */
 	@JSBody(params = &quot;el&quot;, script = &quot;while(el.firstChild)el.removeChild(el.firstChild);&quot;)

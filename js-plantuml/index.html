@@ -72,7 +72,7 @@ return ok
 						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
 					</svg>
 				</button>
-				<button id="copy" type="button" title="Copy diagram to clipboard">
+				<button id="copy" type="button" title="Copy SVG to clipboard">
 					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<rect x="9" y="9" width="13" height="13" rx="2"/>
 						<path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
@@ -108,6 +108,11 @@ return ok
 						<line x1="12" y1="15" x2="12" y2="3"/>
 					</svg>
 				</button>
+				<select id="format" title="Output format" aria-label="Output format">
+					<option value="svg" title="SVG">🖼️ SVG</option>
+					<option value="utxt" title="UTXT: Unicode art">🔣 Unicode</option>
+					<option value="atxt" title="ATXT: ASCII art">🔤 ASCII</option>
+				</select>
 			</div>
 		</div>
 	</main>

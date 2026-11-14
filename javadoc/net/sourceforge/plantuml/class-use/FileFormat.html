@@ -222,9 +222,19 @@ the order they are declared.</div>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EmbeddedDiagram.</span><code><a href="../EmbeddedDiagram.html#getInternalTextBlock(net.sourceforge.plantuml.FileFormat)" class="member-name-link">getInternalTextBlock</a><wbr>(<a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../core/ImageData.html" title="interface in net.sourceforge.plantuml.core">ImageData</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UgDiagram.</span><code><a href="../UgDiagram.html#exportText(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormat)" class="member-name-link">exportText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;os,
+ int&nbsp;index,
+ <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Exports the image as text (ATXT or UTXT) without referencing the drivers of
+ the other formats, for the TeaVM builds (C and browser): the diagrams that
+ have their own text renderer (sequence diagrams, WBS, Gantt...) use it, the
+ others are drawn by <code>UGraphicTxt</code>, as on the JVM.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">EmbeddedDiagram.</span><code><a href="../EmbeddedDiagram.html#getInternalTextBlock(net.sourceforge.plantuml.FileFormat)" class="member-name-link">getInternalTextBlock</a><wbr>(<a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a>&nbsp;fileFormat)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../package-summary.html">net.sourceforge.plantuml</a> with parameters of type <a href="../FileFormat.html" title="enum class in net.sourceforge.plantuml">FileFormat</a></span></div>
 <div class="summary-table three-column-summary">
