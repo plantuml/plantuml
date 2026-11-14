@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="363px" preserveAspectRatio="none" style="width:442px;height:363px;background:#FFFFFF;" version="1.1" viewBox="0 0 442 363" width="442px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#1F77B4" height="12" style="stroke:#1F77B4;stroke-width:1;" width="12" x="349.122" y="164.25"/>
+    <text fill="#000" font-size="14" textLength="45.15" x="366.122" y="174.139">Team A</text>
+    <rect fill="#FF7F0E" height="12" style="stroke:#FF7F0E;stroke-width:1;" width="12" x="349.122" y="185.75"/>
+    <text fill="#000" font-size="14" textLength="45.15" x="366.122" y="195.639">Team B</text>
+    <polygon fill="none" points="177.03,164,201.279,206,152.782,206" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="177.03,136,225.528,220,128.533,220" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="177.03,108,249.776,234,104.284,234" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="177.03,80,274.025,248,80.035,248" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="177.03,52,298.274,262,55.787,262" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="177.03" x2="177.03" y1="192" y2="52"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="164.562" y="40.889">Dev</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="177.03" x2="298.274" y1="192" y2="262"/>
+    <text fill="#000" font-size="14" textLength="25.638" x="303.485" y="273.389">Ops</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="177.03" x2="55.787" y1="192" y2="262"/>
+    <text fill="#000" font-size="14" textLength="20.213" x="30" y="273.389">QA</text>
+    <polygon fill="#1F77B4" fill-opacity="0.251" points="177.03,80,249.776,234,55.787,262" style="stroke:#1F77B4;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="177.03" cy="80" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="249.776" cy="234" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="55.787" cy="262" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <polygon fill="#FF7F0E" fill-opacity="0.251" points="177.03,136,298.274,262,104.284,234" style="stroke:#FF7F0E;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="177.03" cy="136" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <ellipse cx="298.274" cy="262" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <ellipse cx="104.284" cy="234" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="180.03" y="174.889">1</text>
+    <text fill="#000" font-size="14" x="180.03" y="146.889">2</text>
+    <text fill="#000" font-size="14" x="180.03" y="118.889">3</text>
+    <text fill="#000" font-size="14" x="180.03" y="90.889">4</text>
+    <text fill="#000" font-size="14" x="180.03" y="62.889">5</text>
+  </g>
+</svg>

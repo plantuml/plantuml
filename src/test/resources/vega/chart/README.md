@@ -7,6 +7,7 @@ Provide requirement-based non-regression tests for the [chart diagram](../../../
 > [!TIP]
 >  Each test is a single `.puml` file, rendered to SVG by the Vega harness (`test.vega.VegaTest`), and compared with the committed reference `.svg`.
 >  The R18 tests are rendered as text instead, and compared with the committed `.utxt` and `.atxt`.
+>  The R19 tests are rendered three times, as SVG, `.utxt` and `.atxt` (the error tests as SVG only).
 
 ## Requirement groups
 
@@ -29,6 +30,7 @@ Provide requirement-based non-regression tests for the [chart diagram](../../../
 | R16 | Radar (`radar`, `a-axis`, `r-axis`) |
 | R17 | Errors of pie and radar |
 | R18 | Text output (`utxt`, `atxt`) |
+| R19 | Lenient JSON-like data for pie and radar (`{}`, `()`, single and double quotes) |
 
 File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this directory.
 
@@ -134,6 +136,30 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R18.11 | `R18.11-txt-missing-value.puml` | A missing value breaks the line, the points alone are short dashes |
 |  | R18.12 | `R18.12-txt-no-series.puml` | No series: only the title |
 |  | R18.13 | `R18.13-txt-table-coordinate-pairs.puml` | Coordinate pairs written as a table, named by their x |
+| R19 — Lenient data | R19.01 | `R19.01-lenient-pie-json-braces.puml` | Braces, quoted values: `{"Dogs": 386, "Cats": "85"}` |
+|  | R19.02 | `R19.02-lenient-pie-parentheses.puml` | Data between parentheses |
+|  | R19.03 | `R19.03-lenient-pie-single-quotes.puml` | Keys and values between single quotes |
+|  | R19.04 | `R19.04-lenient-pie-quoted-values-spaces.puml` | Spaces around `:`, `,` and inside quoted values |
+|  | R19.05 | `R19.05-lenient-pie-json-colors-donut.puml` | Colors after quoted values, donut, legend right |
+|  | R19.06 | `R19.06-lenient-pie-apostrophe-and-quoted-comma.puml` | Unquoted apostrophe (`Driver's`), comma in single quotes, apostrophe in double quotes |
+|  | R19.07 | `R19.07-lenient-pie-preprocessor-json.puml` | The data of a preprocessor JSON variable: `pie $data.pets`, `title $data.title` |
+|  | R19.08 | `R19.08-lenient-pie-json-missing-value.puml` | `""` and an empty value are missing values |
+|  | R19.09 | `R19.09-lenient-pie-name-stereotype-braces.puml` | Stereotype and name before braces |
+|  | R19.10 | `R19.10-lenient-pie-json-decimals.puml` | Decimals and exponent, quoted or not |
+|  | R19.11 | `R19.11-lenient-pie-json-a-axis-order.puml` | `a-axis` with JSON-like keyed data |
+|  | R19.12 | `R19.12-lenient-pie-quoted-hash-and-colon.puml` | `#` and `:` inside quoted keys |
+|  | R19.13 | `R19.13-lenient-pie-positional-braces.puml` | Positional values in braces, quoted or not |
+|  | R19.14 | `R19.14-lenient-radar-braces-two-series.puml` | A series between brackets and a keyed series between braces |
+|  | R19.15 | `R19.15-lenient-radar-parentheses-single-quotes.puml` | Parentheses, single quotes, unquoted apostrophe |
+|  | R19.16 | `R19.16-lenient-radar-preprocessor-json.puml` | Two series from the members of a preprocessor JSON variable |
+|  | R19.17 | `R19.17-lenient-radar-positional-braces-color.puml` | Positional values in braces with a color |
+|  | R19.18 | `R19.18-lenient-radar-json-missing-value.puml` | `""` is a missing value |
+|  | R19.19 | `R19.19-lenient-radar-mixed-brackets-series.puml` | Three series using brackets, parentheses and braces |
+|  | R19.20 | `R19.20-lenient-error-mismatched-brackets.puml` | Status 400: `Mismatched '{' and ']' around data` |
+|  | R19.21 | `R19.21-lenient-error-unclosed-single-quote.puml` | Status 400: unbalanced quotes |
+|  | R19.22 | `R19.22-lenient-error-quoted-non-number.puml` | Status 400: `Invalid number "many"` |
+|  | R19.23 | `R19.23-lenient-error-braces-mixed-keys.puml` | Status 400: keyed and positional values mixed |
+|  | R19.24 | `R19.24-lenient-error-radar-mismatched-parentheses.puml` | Status 400: `Mismatched '(' and '}' around data` |
 
 > [!NOTE]
 > - R07.01 to R07.04 declare `expected-status: 400`: the parser rejects the chart or the renderer reports an error, and the error image is the reference.
@@ -150,6 +176,9 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 >  as one group, at the place of the first series of the group: in R10.04 the area `A2`, written after the bar, is still under it.
 > - R03: a grid line is drawn at each tick of the axis it belongs to, and only there:
 >  `h-axis ... grid` gives lines across the h-axis ticks, `v-axis ... grid` across the v-axis ticks, in both orientations.
+> - R19: the data of a pie or a radar may be JSON-like: enclosed in `[]`, `{}` or `()`, with keys and values quoted with
+>  `"` or `'`, so that a preprocessor JSON object can be used directly (`pie $data.pets`). A single quote only opens a
+>  quoted text at the start of an item, so an apostrophe (`Driver's: 5`) needs no quoting.
 > - R15/R16: a pie or a radar takes its data as values (`[78, 21, 1]`) or keyed values (`[Nitrogen: 78, ...]`),
 >  each optionally followed by a color. The categories around the circle come from `a-axis`, else from the keys.
 >  Slices and spokes go clockwise from 12 o'clock. A pie and a radar cannot be mixed with each other, nor with the

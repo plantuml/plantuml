@@ -1,0 +1,6 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+pie {'Dogs': '386', 'Cats': '85', 'Rats': 15} labels percent
+@endchart

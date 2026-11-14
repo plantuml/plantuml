@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="419px" preserveAspectRatio="none" style="width:426px;height:419px;background:#FFFFFF;" version="1.1" viewBox="0 0 426 419" width="426px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#1F77B4" height="12" style="stroke:#1F77B4;stroke-width:1;" width="12" x="144.575" y="375"/>
+    <text fill="#000" font-size="14" textLength="43.575" x="161.575" y="384.889">Team 1</text>
+    <rect fill="#FF7F0E" height="12" style="stroke:#FF7F0E;stroke-width:1;" width="12" x="220.15" y="375"/>
+    <text fill="#000" font-size="14" textLength="43.575" x="237.15" y="384.889">Team 2</text>
+    <polygon fill="none" points="221.663,164,249.663,192,221.663,220,193.663,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="221.663,136,277.663,192,221.663,248,165.663,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="221.663,108,305.663,192,221.663,276,137.663,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="221.663,80,333.663,192,221.663,304,109.663,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="221.663,52,361.663,192,221.663,332,81.663,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="221.663" x2="221.663" y1="192" y2="52"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="209.194" y="40.889">Dev</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="221.663" x2="361.663" y1="192" y2="192"/>
+    <text fill="#000" font-size="14" textLength="25.638" x="369.663" y="195.889">Ops</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="221.663" x2="221.663" y1="192" y2="332"/>
+    <text fill="#000" font-size="14" textLength="20.213" x="211.556" y="350.889">QA</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="221.663" x2="81.663" y1="192" y2="192"/>
+    <text fill="#000" font-size="14" textLength="43.663" x="30" y="195.889">Design</text>
+    <polygon fill="#1F77B4" fill-opacity="0.251" points="221.663,80,305.663,192,221.663,332,165.663,192" style="stroke:#1F77B4;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="221.663" cy="80" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="305.663" cy="192" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="221.663" cy="332" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="165.663" cy="192" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <polygon fill="#FF7F0E" fill-opacity="0.251" points="221.663,52,305.663,192,221.663,248,109.663,192" style="stroke:#FF7F0E;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="221.663" cy="52" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="217.769" y="42.889">5</text>
+    <ellipse cx="305.663" cy="192" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="311.663" y="195.889">3</text>
+    <ellipse cx="221.663" cy="248" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="217.769" y="264.889">2</text>
+    <ellipse cx="109.663" cy="192" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="95.875" y="195.889">4</text>
+    <text fill="#000" font-size="14" x="224.663" y="174.889">1</text>
+    <text fill="#000" font-size="14" x="224.663" y="146.889">2</text>
+    <text fill="#000" font-size="14" x="224.663" y="118.889">3</text>
+    <text fill="#000" font-size="14" x="224.663" y="90.889">4</text>
+    <text fill="#000" font-size="14" x="224.663" y="62.889">5</text>
+  </g>
+</svg>

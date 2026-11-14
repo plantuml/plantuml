@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="413px" preserveAspectRatio="none" style="width:450px;height:413px;background:#FFFFFF;" version="1.1" viewBox="0 0 450 413" width="450px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M170,45.19 A140,140 0 0 1 257.289,75.733 L170,185.19 L170,45.19" fill="#1F77B4" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M257.289,75.733 A140,140 0 0 1 309.12,200.865 L170,185.19 L257.289,75.733" fill="#FF7F0E" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M309.12,200.865 A140,140 0 0 1 306.49,216.343 L170,185.19 L309.12,200.865" fill="#2CA02C" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M306.49,216.343 A140,140 0 0 1 60.544,272.478 A140,140 0 0 1 170,45.19 L170,185.19 L306.49,216.343" fill="#D62728" style="stroke:#FFF;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="190.343" y="103.185">1.5</text>
+    <text fill="#000" font-size="14" textLength="27.213" x="240.467" y="154.254">2.25</text>
+    <text fill="#000" font-size="14" textLength="27.213" x="246.108" y="204.322">0.25</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="91.066" y="245.816">10</text>
+    <text fill="#000" font-size="14" x="216.934" y="40.889">a</text>
+    <text fill="#000" font-size="14" x="308.286" y="128.997">b</text>
+    <text fill="#000" font-size="14" x="317.831" y="215.377">c</text>
+    <text fill="#000" font-size="14" x="45.787" y="286.966">d</text>
+  </g>
+</svg>

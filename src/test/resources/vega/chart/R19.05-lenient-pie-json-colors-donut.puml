@@ -1,0 +1,7 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+pie {"Dogs": 386 #3366CC, "Cats": "85" #DC3912, 'Rats': '15' #FF9900} labels donut 40%
+legend right
+@endchart

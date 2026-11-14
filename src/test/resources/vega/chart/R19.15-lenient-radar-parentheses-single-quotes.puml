@@ -1,0 +1,6 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+radar (Speed: 3, 'Comfort, safety': "4", Driver's: '5') labels
+@endchart

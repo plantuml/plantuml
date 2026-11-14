@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="419px" preserveAspectRatio="none" style="width:416px;height:419px;background:#FFFFFF;" version="1.1" viewBox="0 0 416 419" width="416px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#1F77B4" height="12" style="stroke:#1F77B4;stroke-width:1;" width="12" x="120.656" y="375"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="137.656" y="384.889">Day</text>
+    <rect fill="#FF7F0E" height="12" style="stroke:#FF7F0E;stroke-width:1;" width="12" x="177.594" y="375"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="194.594" y="384.889">Night</text>
+    <rect fill="#2CA02C" height="12" style="stroke:#2CA02C;stroke-width:1;" width="12" x="242.319" y="375"/>
+    <text fill="#000" font-size="14" textLength="35.875" x="259.319" y="384.889">Dawn</text>
+    <polygon fill="none" points="209.85,164,237.85,192,209.85,220,181.85,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="209.85,136,265.85,192,209.85,248,153.85,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="209.85,108,293.85,192,209.85,276,125.85,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="209.85,80,321.85,192,209.85,304,97.85,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="209.85,52,349.85,192,209.85,332,69.85,192" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="209.85" x2="209.85" y1="192" y2="52"/>
+    <text fill="#000" font-size="14" textLength="34.213" x="192.744" y="40.889">North</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="209.85" x2="349.85" y1="192" y2="192"/>
+    <text fill="#000" font-size="14" textLength="28" x="357.85" y="195.889">East</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="209.85" x2="209.85" y1="192" y2="332"/>
+    <text fill="#000" font-size="14" textLength="36.575" x="191.563" y="350.889">South</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="209.85" x2="69.85" y1="192" y2="192"/>
+    <text fill="#000" font-size="14" textLength="31.85" x="30" y="195.889">West</text>
+    <polygon fill="#1F77B4" fill-opacity="0.251" points="209.85,108,321.85,192,209.85,248,69.85,192" style="stroke:#1F77B4;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="209.85" cy="108" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="321.85" cy="192" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="209.85" cy="248" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <ellipse cx="69.85" cy="192" fill="#1F77B4" rx="3" ry="3" style="stroke:#1F77B4;stroke-width:1;"/>
+    <polygon fill="#FF7F0E" fill-opacity="0.251" points="209.85,164,265.85,192,209.85,304,153.85,192" style="stroke:#FF7F0E;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="209.85" cy="164" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <ellipse cx="265.85" cy="192" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <ellipse cx="209.85" cy="304" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <ellipse cx="153.85" cy="192" fill="#FF7F0E" rx="3" ry="3" style="stroke:#FF7F0E;stroke-width:1;"/>
+    <polygon fill="#2CA02C" fill-opacity="0.251" points="209.85,136,293.85,192,209.85,276,125.85,192" style="stroke:#2CA02C;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="209.85" cy="136" fill="#2CA02C" rx="3" ry="3" style="stroke:#2CA02C;stroke-width:1;"/>
+    <ellipse cx="293.85" cy="192" fill="#2CA02C" rx="3" ry="3" style="stroke:#2CA02C;stroke-width:1;"/>
+    <ellipse cx="209.85" cy="276" fill="#2CA02C" rx="3" ry="3" style="stroke:#2CA02C;stroke-width:1;"/>
+    <ellipse cx="125.85" cy="192" fill="#2CA02C" rx="3" ry="3" style="stroke:#2CA02C;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="212.85" y="174.889">1</text>
+    <text fill="#000" font-size="14" x="212.85" y="146.889">2</text>
+    <text fill="#000" font-size="14" x="212.85" y="118.889">3</text>
+    <text fill="#000" font-size="14" x="212.85" y="90.889">4</text>
+    <text fill="#000" font-size="14" x="212.85" y="62.889">5</text>
+  </g>
+</svg>

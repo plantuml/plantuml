@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="451px" preserveAspectRatio="none" style="width:341px;height:451px;background:#FFFFFF;" version="1.1" viewBox="0 0 341 451" width="341px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M170,30 A140,140 0 0 1 170,310 L170,170 L170,30" fill="#1F77B4" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M170,310 A140,140 0 0 1 36.852,126.738 L170,170 L170,310" fill="#FF7F0E" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M36.852,126.738 A140,140 0 0 1 170,30 L170,170 L36.852,126.738" fill="#2CA02C" style="stroke:#FFF;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="28" x="247" y="173.889">50%</text>
+    <text fill="#000" font-size="14" textLength="28" x="82.379" y="227.377">30%</text>
+    <text fill="#000" font-size="14" textLength="28" x="102.512" y="100.268">20%</text>
+  </g>
+</svg>

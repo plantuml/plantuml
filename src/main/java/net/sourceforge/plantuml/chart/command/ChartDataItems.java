@@ -52,6 +52,13 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
  * </pre>
  * A key holding a comma, a colon or a '#' must be quoted. Either every item has a key, or
  * none has. An empty value, as in [4, , 5], is a missing value.
+ *
+ * The syntax is lenient enough to accept JSON-like data: the items may be enclosed in
+ * brackets, braces or parentheses, and keys and values may be quoted with double or single
+ * quotes:
+ * <pre>
+ * {"Dogs": 386, "Cats": "85", 'Rats': '15'}
+ * </pre>
  */
 final class ChartDataItems {
 
@@ -62,11 +69,23 @@ final class ChartDataItems {
 	private boolean hasColor;
 	private String error;
 
+	/**
+	 * The regex of the data, captured with its enclosing brackets, braces or parentheses
+	 * (checked by {@link #parse}).
+	 */
+	static final String BRACKETED = "([\\[\\{\\(].*[\\]\\}\\)])";
+
 	private ChartDataItems() {
 	}
 
 	static ChartDataItems parse(String data, HColorSet colorSet) {
 		final ChartDataItems result = new ChartDataItems();
+		if (data != null && data.length() >= 2 && isOpening(data.charAt(0))) {
+			final char close = data.charAt(data.length() - 1);
+			if (closing(data.charAt(0)) != close)
+				return result.fail("Mismatched '" + data.charAt(0) + "' and '" + close + "' around data");
+			data = data.substring(1, data.length() - 1);
+		}
 		if (data == null || data.trim().isEmpty())
 			return result;
 
@@ -117,6 +136,7 @@ final class ChartDataItems {
 			hasColor = true;
 		}
 
+		item = unquote(item).trim();
 		Double value = null;
 		if (item.isEmpty() == false)
 			try {
@@ -131,30 +151,50 @@ final class ChartDataItems {
 		return null;
 	}
 
-	// Splits on a separator outside double quotes; null when a quote is not closed
+	private static boolean isOpening(char c) {
+		return c == '[' || c == '{' || c == '(';
+	}
+
+	private static char closing(char open) {
+		if (open == '{')
+			return '}';
+		if (open == '(')
+			return ')';
+		return ']';
+	}
+
+	private static boolean isQuote(char c) {
+		return c == '"' || c == '\'';
+	}
+
+	// Splits on a separator outside quotes; null when a quote is not closed
 	private static List<String> split(String s, char separator) {
 		final List<String> result = new ArrayList<>();
 		final StringBuilder current = new StringBuilder();
-		boolean quoted = false;
+		char quote = 0;
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);
-			if (c == '"')
-				quoted = quoted == false;
-			if (c == separator && quoted == false) {
+			// A single quote only opens a quoted text at the start of an item, so that an
+			// apostrophe, as in Children's: 5, needs no quoting
+			if (quote == 0 && (c == '"' || (c == '\'' && current.toString().trim().isEmpty())))
+				quote = c;
+			else if (c == quote)
+				quote = 0;
+			if (c == separator && quote == 0) {
 				result.add(current.toString());
 				current.setLength(0);
 			} else {
 				current.append(c);
 			}
 		}
-		if (quoted)
+		if (quote != 0)
 			return null;
 		result.add(current.toString());
 		return result;
 	}
 
 	static String unquote(String s) {
-		if (s.length() >= 2 && s.startsWith("\"") && s.endsWith("\""))
+		if (s.length() >= 2 && isQuote(s.charAt(0)) && s.charAt(s.length() - 1) == s.charAt(0))
 			return s.substring(1, s.length() - 1);
 		return s;
 	}

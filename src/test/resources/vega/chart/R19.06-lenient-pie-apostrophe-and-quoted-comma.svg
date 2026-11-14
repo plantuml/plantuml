@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="451px" preserveAspectRatio="none" style="width:461px;height:451px;background:#FFFFFF;" version="1.1" viewBox="0 0 461 451" width="461px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M233.505,30 A140,140 0 0 1 233.505,310 L233.505,170 L233.505,30" fill="#1F77B4" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M233.505,310 A140,140 0 0 1 100.357,126.738 L233.505,170 L233.505,310" fill="#FF7F0E" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M100.357,126.738 A140,140 0 0 1 233.505,30 L233.505,170 L100.357,126.738" fill="#2CA02C" style="stroke:#FFF;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" x="320.611" y="173.889">5</text>
+    <text fill="#000" font-size="14" x="155.99" y="227.377">3</text>
+    <text fill="#000" font-size="14" x="176.122" y="100.268">2</text>
+    <text fill="#000" font-size="14" textLength="47.075" x="383.505" y="173.889">Driver's</text>
+    <text fill="#000" font-size="14" textLength="90.825" x="30" y="266.171">Comfort, safety</text>
+    <text fill="#000" font-size="14" textLength="95.375" x="69.619" y="46.873">Children's seats</text>
+  </g>
+</svg>

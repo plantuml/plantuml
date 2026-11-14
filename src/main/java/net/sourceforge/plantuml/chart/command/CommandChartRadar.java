@@ -76,7 +76,7 @@ public class CommandChartRadar extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(ChartSeriesName.regex()), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "DATA", "\\[(.*)\\]"), //
+				new RegexLeaf(1, "DATA", ChartDataItems.BRACKETED), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "COLOR", "#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)")), //
 				new RegexOptional( //

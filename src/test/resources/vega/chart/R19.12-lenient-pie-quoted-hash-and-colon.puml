@@ -1,0 +1,6 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+pie {"C#": 5, "F#": 3, 'Ratio 1:2': 2} labels
+@endchart

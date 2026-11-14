@@ -1,0 +1,6 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+pie (Driver's: 5, 'Comfort, safety': 3, "Children's seats": 2) labels
+@endchart

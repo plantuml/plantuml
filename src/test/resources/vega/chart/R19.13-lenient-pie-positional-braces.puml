@@ -1,0 +1,6 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+pie {50, "30", '20'} percent
+@endchart

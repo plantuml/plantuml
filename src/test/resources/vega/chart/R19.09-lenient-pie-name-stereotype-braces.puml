@@ -1,0 +1,12 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+<style>
+.pets {
+  LineColor #444444
+}
+</style>
+pie <<pets>> "Pets" {"Dogs": 386, "Cats": 85} percent
+legend left
+@endchart

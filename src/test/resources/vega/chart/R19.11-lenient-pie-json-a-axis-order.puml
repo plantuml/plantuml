@@ -1,0 +1,7 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+a-axis [Rats, Cats, Dogs]
+pie {"Dogs": 386, "Cats": "85", "Rats": "15"} labels
+@endchart

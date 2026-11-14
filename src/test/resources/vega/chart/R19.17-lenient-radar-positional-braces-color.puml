@@ -1,0 +1,7 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+a-axis [A, B, C, D, E]
+radar {4, "3", '5', 2, 4} #3366CC labels
+@endchart

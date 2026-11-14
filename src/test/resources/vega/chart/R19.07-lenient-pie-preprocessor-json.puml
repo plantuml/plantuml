@@ -1,0 +1,12 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+!$data = {
+  "title": "Pets adopted by volunteers",
+  "pets": {"Dogs": 386, "Cats": 85, "Rats": 15}
+}
+title $data.title
+pie $data.pets percent
+legend bottom
+@endchart

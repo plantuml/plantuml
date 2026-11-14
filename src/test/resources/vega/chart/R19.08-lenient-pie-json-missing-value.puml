@@ -1,0 +1,6 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+pie {"A": 10, "B": "", "C": 30, "D": } labels
+@endchart

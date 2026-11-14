@@ -1,0 +1,6 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+pie (Nitrogen: 78, Oxygen: 21, Argon: 1) labels
+@endchart

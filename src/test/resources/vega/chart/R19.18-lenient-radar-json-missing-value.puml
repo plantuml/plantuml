@@ -1,0 +1,6 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+radar {"Dev": 4, "Ops": "", "QA": 5, "Design": 3}
+@endchart

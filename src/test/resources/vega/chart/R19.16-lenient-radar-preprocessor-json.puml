@@ -1,0 +1,9 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+!$skills = {"teamA": {"Dev": 4, "Ops": 3, "QA": 5}, "teamB": {"Dev": 2, "Ops": 5, "QA": 3}}
+radar "Team A" $skills.teamA
+radar "Team B" $skills.teamB
+legend right
+@endchart

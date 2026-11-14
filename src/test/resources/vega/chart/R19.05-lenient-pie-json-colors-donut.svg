@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="422px" preserveAspectRatio="none" style="width:410px;height:422px;background:#FFFFFF;" version="1.1" viewBox="0 0 410 422" width="410px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#36C" height="12" style="stroke:#36C;stroke-width:1;" width="12" x="330" y="142.5"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="347" y="152.389">Dogs</text>
+    <rect fill="#DC3912" height="12" style="stroke:#DC3912;stroke-width:1;" width="12" x="330" y="164"/>
+    <text fill="#000" font-size="14" textLength="28.787" x="347" y="173.889">Cats</text>
+    <rect fill="#F90" height="12" style="stroke:#F90;stroke-width:1;" width="12" x="330" y="185.5"/>
+    <text fill="#000" font-size="14" textLength="28.787" x="347" y="195.389">Rats</text>
+    <path d="M170,30 A140,140 0 0 1 254.326,281.754 A140,140 0 0 1 35.374,131.585 L116.149,154.634 A56,56 0 0 0 203.731,214.702 A56,56 0 0 0 170,114 L170,30" fill="#36C" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M35.374,131.585 A140,140 0 0 1 143.02,32.624 L159.208,115.05 A56,56 0 0 0 116.149,154.634 L35.374,131.585" fill="#DC3912" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M143.02,32.624 A140,140 0 0 1 170,30 L170,114 A56,56 0 0 0 159.208,115.05 L143.02,32.624" fill="#F90" style="stroke:#FFF;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="217.347" y="252.117">386</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="95.888" y="101.743">85</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="152.725" y="76.349">15</text>
+  </g>
+</svg>
