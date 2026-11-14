@@ -8,6 +8,9 @@ import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLElement;
 import org.teavm.jso.dom.xml.Element;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
+
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Scale;
@@ -143,20 +146,27 @@ public class PlantUMLBrowser {
 	// Requests
 	// =========================================================================
 
-	/** A {@link #render} request: the SVG goes into a DOM element. */
+	/**
+	 * A {@link #render} request: the SVG (or, for a text format, a {@code <pre>}
+	 * holding the text) goes into a DOM element.
+	 */
 	private static final class ElementJob extends RenderQueue.Job {
 		private final String[] lines;
 		private final String elementId;
 		private final boolean darkMode;
 		private final int maxSvgSize;
+		private final FileFormat textFormat;
 		private SvgGraphicsJs svg;
+		private String text;
 		private Throwable failure;
 
-		private ElementJob(String[] lines, String elementId, boolean darkMode, int maxSvgSize) {
+		private ElementJob(String[] lines, String elementId, boolean darkMode, int maxSvgSize,
+				FileFormat textFormat) {
 			this.lines = lines;
 			this.elementId = elementId;
 			this.darkMode = darkMode;
 			this.maxSvgSize = maxSvgSize;
+			this.textFormat = textFormat;
 		}
 
 		@Override
@@ -169,9 +179,13 @@ public class PlantUMLBrowser {
 		protected void attempt() {
 			BrowserLog.reset();
 			svg = null;
+			text = null;
 			failure = null;
 			try {
-				svg = buildSvg(lines, darkMode, maxSvgSize);
+				if (textFormat == null)
+					svg = buildSvg(lines, darkMode, maxSvgSize);
+				else
+					text = buildText(lines, textFormat);
 			} catch (Throwable t) {
 				failure = t;
 			}
@@ -184,6 +198,9 @@ public class PlantUMLBrowser {
 				if (svg != null) {
 					removeAllChildren(out);
 					appendSvgElement(out, svg.getSvgRoot());
+				} else if (text != null) {
+					removeAllChildren(out);
+					appendPreElement(out, text);
 				} else {
 					out.setTextContent(describe(failure));
 				}
@@ -206,16 +223,18 @@ public class PlantUMLBrowser {
 		private final StringCallback onError;
 		private final boolean darkMode;
 		private final int maxSvgSize;
+		private final FileFormat textFormat;
 		private String svg;
 		private Throwable failure;
 
 		private CallbackJob(String[] lines, StringCallback onSuccess, StringCallback onError, boolean darkMode,
-				int maxSvgSize) {
+				int maxSvgSize, FileFormat textFormat) {
 			this.lines = lines;
 			this.onSuccess = onSuccess;
 			this.onError = onError;
 			this.darkMode = darkMode;
 			this.maxSvgSize = maxSvgSize;
+			this.textFormat = textFormat;
 		}
 
 		@Override
@@ -223,10 +242,15 @@ public class PlantUMLBrowser {
 			svg = null;
 			failure = null;
 			try {
-				final SvgGraphicsJs graphics = buildSvg(lines, darkMode, maxSvgSize);
-				// null: discarded attempt, which is never delivered
-				if (graphics != null)
-					svg = serializeSvg(graphics.getSvgRoot());
+				if (textFormat != null) {
+					// null: discarded attempt, which is never delivered
+					svg = buildText(lines, textFormat);
+				} else {
+					final SvgGraphicsJs graphics = buildSvg(lines, darkMode, maxSvgSize);
+					// null: discarded attempt, which is never delivered
+					if (graphics != null)
+						svg = serializeSvg(graphics.getSvgRoot());
+				}
 			} catch (Throwable t) {
 				failure = t;
 			}
@@ -284,11 +308,14 @@ public class PlantUMLBrowser {
 	 * @param options   optional JS object with rendering options (e.g. {@code {
 	 *                  dark: true, maxSvgSize: 8192 }}); may be {@code null}.
 	 *                  {@code maxSvgSize} overrides {@link #DEFAULT_MAX_SVG_SIZE};
-	 *                  {@code 0} disables the size check.
+	 *                  {@code 0} disables the size check. {@code format} selects
+	 *                  the output: {@code "svg"} (default), {@code "atxt"} (ASCII
+	 *                  art) or {@code "utxt"} (Unicode art).
 	 */
 	@JSExport
 	public static void render(String[] lines, String elementId, JSObject options) {
-		RenderQueue.submit(new ElementJob(lines, elementId, isDark(options), resolveMaxSvgSize(options)));
+		RenderQueue.submit(
+				new ElementJob(lines, elementId, isDark(options), resolveMaxSvgSize(options), resolveFormat(options)));
 	}
 
 	/**
@@ -310,12 +337,15 @@ public class PlantUMLBrowser {
 	 * @param options   optional JS object with rendering options (e.g. {@code {
 	 *                  dark: true, maxSvgSize: 8192 }}); may be {@code null}.
 	 *                  {@code maxSvgSize} overrides {@link #DEFAULT_MAX_SVG_SIZE};
-	 *                  {@code 0} disables the size check.
+	 *                  {@code 0} disables the size check. {@code format} selects
+	 *                  the output: {@code "svg"} (default), {@code "atxt"} (ASCII
+	 *                  art) or {@code "utxt"} (Unicode art).
 	 */
 	@JSExport
 	public static void renderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
 			JSObject options) {
-		RenderQueue.submit(new CallbackJob(lines, onSuccess, onError, isDark(options), resolveMaxSvgSize(options)));
+		RenderQueue.submit(new CallbackJob(lines, onSuccess, onError, isDark(options), resolveMaxSvgSize(options),
+				resolveFormat(options)));
 	}
 
 	// =========================================================================
@@ -337,6 +367,28 @@ public class PlantUMLBrowser {
 	 */
 	@JSBody(params = "opts", script = "return (opts && typeof opts.maxSvgSize === 'number') ? opts.maxSvgSize : -1;")
 	private static native int extractMaxSvgSize(JSObject opts);
+
+	/**
+	 * Extracts the {@code format} string property from a JavaScript options
+	 * object, lower-cased, or {@code null} when absent.
+	 */
+	@JSBody(params = "opts", script = "return (opts && typeof opts.format === 'string') ? opts.format.toLowerCase() : null;")
+	private static native String extractFormat(JSObject opts);
+
+	/**
+	 * Resolves the {@code format} option: {@code null} for SVG (the default),
+	 * otherwise {@link FileFormat#ATXT} or {@link FileFormat#UTXT}.
+	 */
+	private static FileFormat resolveFormat(JSObject opts) {
+		final String format = extractFormat(opts);
+		if (format == null || format.equals("svg"))
+			return null;
+		if (format.equals("atxt") || format.equals("txt"))
+			return FileFormat.ATXT;
+		if (format.equals("utxt"))
+			return FileFormat.UTXT;
+		throw new IllegalArgumentException("Unknown format: " + format + " (expected svg, atxt or utxt)");
+	}
 
 	/**
 	 * Resolves the effective max-SVG-size limit from the {@code options} object:
@@ -417,6 +469,27 @@ public class PlantUMLBrowser {
 		svg.addCommentMetadata(String.join("\n", lines));
 
 		return svg;
+	}
+
+	/**
+	 * Parses and renders PlantUML source lines as text (ATXT or UTXT), or returns
+	 * <code>null</code> when the attempt missed a resource and is going to be
+	 * discarded (see {@link RenderQueue}).
+	 */
+	private static String buildText(String[] lines, FileFormat textFormat) throws Exception {
+		final Diagram diagram = PSystemBuilderJs.getInstance().createDiagram(lines);
+		if (PendingResources.hasMissing())
+			return null;
+
+		if (diagram instanceof UgDiagram == false)
+			throw new RuntimeException("Text output is not available for this diagram type");
+
+		final ByteArrayOutputStream os = new ByteArrayOutputStream();
+		((UgDiagram) diagram).exportText(os, 0, textFormat);
+		if (PendingResources.hasMissing())
+			return null;
+
+		return new String(os.toByteArray(), StandardCharsets.UTF_8);
 	}
 
 	/**
@@ -518,6 +591,11 @@ public class PlantUMLBrowser {
 	/** Appends an SVG element as a child of a DOM element. */
 	@JSBody(params = { "p", "svg" }, script = "p.appendChild(svg);")
 	private static native void appendSvgElement(HTMLElement p, Element svg);
+
+	/** Appends a {@code <pre>} element holding a text diagram. */
+	@JSBody(params = { "p", "text" }, script = "var pre=document.createElement('pre');"
+			+ "pre.className='plantuml-txt';pre.textContent=text;p.appendChild(pre);")
+	private static native void appendPreElement(HTMLElement p, String text);
 
 	/** Removes all child nodes from a DOM element. */
 	@JSBody(params = "el", script = "while(el.firstChild)el.removeChild(el.firstChild);")

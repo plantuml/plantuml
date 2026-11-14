@@ -135,11 +135,8 @@ public abstract class UgDiagram extends AbstractDiagram {
 	private ImageData exportDiagramC(OutputStream os, int index, FileFormatOption fileFormatOption) {
 		try {
 			final FileFormat fileFormat = fileFormatOption.getFileFormat();
-			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
-				final ImageData txt = exportTxt(os, index, fileFormat);
-				if (txt != null)
-					return txt;
-			}
+			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)
+				return exportText(os, index, fileFormat);
 			return getExporter(index, fileFormatOption).exportTo(os);
 		} catch (Throwable e) {
 			Logme.error(e);
@@ -147,6 +144,21 @@ public abstract class UgDiagram extends AbstractDiagram {
 		}
 	}
 	// ::done
+
+	/**
+	 * Exports the image as text (ATXT or UTXT) without referencing the drivers of
+	 * the other formats, for the TeaVM builds (C and browser): the diagrams that
+	 * have their own text renderer (sequence diagrams, WBS, Gantt...) use it, the
+	 * others are drawn by {@code UGraphicTxt}, as on the JVM.
+	 */
+	public ImageData exportText(OutputStream os, int index, FileFormat fileFormat) throws Exception {
+		if (fileFormat != FileFormat.ATXT && fileFormat != FileFormat.UTXT)
+			throw new IllegalArgumentException("Not a text format: " + fileFormat);
+		final ImageData txt = exportTxt(os, index, fileFormat);
+		if (txt != null)
+			return txt;
+		return getExporter(index, new FileFormatOption(fileFormat)).exportTxtTo(os);
+	}
 
 	public boolean isHandwritten() {
 		if (getPreprocessingArtifact().getOption().isTrue(OptionKey.HANDWRITTEN))

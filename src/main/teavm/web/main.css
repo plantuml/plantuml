@@ -97,8 +97,20 @@ main {
 	z-index: 0;
 }
 
-#out svg {
+#out svg,
+#out pre.plantuml-txt {
 	zoom: var(--preview-zoom, 1);
+}
+
+/* ATXT / UTXT output: line-height 1 so box-drawing characters connect */
+#out pre.plantuml-txt {
+	margin: 0;
+	padding-top: 3rem; /* clear the toolbar */
+	font-family: ui-monospace, "Cascadia Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace;
+	font-size: 0.875rem;
+	line-height: 1.15;
+	color: var(--fg);
+	user-select: text;
 }
 
 #status {
@@ -131,6 +143,46 @@ main {
 	align-items: center;
 	gap: 0.25rem;
 	z-index: 1;
+}
+
+/* Output format drop-down, shaped like the round toolbar buttons */
+#format {
+	appearance: none;
+	align-self: center;
+	height: 2rem;
+	border: none;
+	border-radius: 1rem;
+	padding: 0 1.6rem 0 0.75rem;
+	background-color: var(--surface);
+	/* chevron, drawn with two gradients so it follows the theme colors */
+	background-image:
+		linear-gradient(45deg, transparent 50%, var(--fg) 50%),
+		linear-gradient(135deg, var(--fg) 50%, transparent 50%);
+	background-position: right 0.85rem center, right 0.6rem center;
+	background-size: 0.25rem 0.25rem;
+	background-repeat: no-repeat;
+	color: var(--fg);
+	font-family: sans-serif;
+	font-size: 0.875rem;
+	cursor: pointer;
+}
+
+#format:hover {
+	outline: 1px solid color-mix(in srgb, var(--accent) 30%, var(--surface));
+}
+
+#format:focus {
+	outline: 1px solid var(--accent);
+}
+
+#format option {
+	background-color: var(--bg);
+	color: var(--fg);
+}
+
+.controls button:disabled {
+	cursor: default;
+	opacity: 0.45;
 }
 
 .controls button,

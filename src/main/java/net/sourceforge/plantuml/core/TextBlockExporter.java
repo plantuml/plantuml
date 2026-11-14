@@ -260,13 +260,13 @@ public class TextBlockExporter {
 	 * exactly as {@link #exportTo} does, but without {@link #createUGraphic}, which
 	 * references the drivers of every format (and AWT): for the TeaVM C build. The
 	 * diagrams that have their own text renderer (sequence diagrams) do not come
-	 * here, see {@code UgDiagram#exportDiagramC}.
+	 * here, see {@code UgDiagram#exportText}.
 	 *
 	 * @param os the output stream to write to
 	 * @return image metadata (dimensions)
 	 * @throws IOException if an I/O error occurs
 	 */
-	private ImageData exportTxtTo(OutputStream os) throws IOException {
+	public ImageData exportTxtTo(OutputStream os) throws IOException {
 		final XDimension2D dim = calculateFinalDimension();
 		final double scaleFactor = computeScaleFactor(dim);
 		checkScaleFactor(scaleFactor);
