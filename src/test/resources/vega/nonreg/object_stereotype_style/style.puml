@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+<style>
+stereotype {
+  FontColor red
+  FontSize 20
+}
+</style>
+object "Obj" as o <<entity>>
+map "Map" as m <<cfg>> {
+  k => v
+}
+json "Json" as j <<data>> {
+  "a": 1
+}
+@enduml

@@ -221,6 +221,24 @@ classDiagram {
   }
 }
 
+objectDiagram {
+  object {
+    stereotype {
+      FontSize 12
+    }
+  }
+  map {
+    stereotype {
+      FontSize 12
+    }
+  }
+  json {
+    stereotype {
+      FontSize 12
+    }
+  }
+}
+
 visibilityIcon {
   public {
     LineColor #038048

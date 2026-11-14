@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.klimt.creole.Stencil;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.PlacementStrategyY1Y2;
@@ -65,6 +64,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleQueries;
 import net.sourceforge.plantuml.style.StyleQuery;
@@ -101,7 +101,7 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 			this.stereo = null;
 		else
 			this.stereo = Display.create(stereotype.getLabels(getSkinParam().guillemet())).create(
-					FontConfiguration.create(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),
+					getStereotypeFontConfiguration(stereotype),
 					HorizontalAlignment.CENTER, getSkinParam());
 
 		final FontConfiguration fontConfiguration = getStyle().getFontConfiguration(getSkinParam().getIHtmlColorSet());
@@ -133,6 +133,12 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 
 		final double height = getMethodOrFieldHeight(dimFields) + dimTitle.getHeight();
 		return new XDimension2D(width, height);
+	}
+
+	private FontConfiguration getStereotypeFontConfiguration(Stereotype stereotype) {
+		final Style styleStereo = getSkinParam().getCurrentStyleBuilder()
+				.getMergedStyle(getStyleQuery().add(SName.stereotype).forStereotypeItself(stereotype));
+		return styleStereo.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 	}
 
 	@Override
