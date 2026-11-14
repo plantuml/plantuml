@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.chart;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -83,15 +82,14 @@ public class RadarRenderer {
 	private final ChartDiagram.LegendPosition legendPosition;
 	private final FontConfiguration axisFont;
 
-	public RadarRenderer(ISkinParam skinParam, List<String> categories, List<List<Double>> values,
-			List<ChartSeries> series, ChartAxis axis, boolean circleGrid, ChartDiagram.LegendPosition legendPosition) {
+	public RadarRenderer(ISkinParam skinParam, RadarChart chart) {
 		this.skinParam = skinParam;
-		this.categories = categories;
-		this.values = values;
-		this.series = series;
-		this.axis = axis;
-		this.circleGrid = circleGrid;
-		this.legendPosition = legendPosition;
+		this.categories = chart.getCategories();
+		this.values = chart.getValues();
+		this.series = chart.getSeries();
+		this.axis = chart.getAxis();
+		this.circleGrid = chart.isCircleGrid();
+		this.legendPosition = chart.getLegendPosition();
 		this.axisFont = skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.CHARTDIAG_AXIS)
 				.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
@@ -251,8 +249,8 @@ public class RadarRenderer {
 				.apply(UStroke.withThickness(gridStyle.value(PName.LineThickness).asDouble()));
 
 		// Rings, at the ticks of the scale
-		for (Map.Entry<Double, String> tick : ChartRenderer.getTicks(axis)) {
-			final double r = RADIUS * tick.getKey();
+		for (ChartTicks.Tick tick : ChartTicks.valueTicks(axis)) {
+			final double r = RADIUS * tick.getRatio();
 			if (r <= 0)
 				continue;
 			if (circleGrid || categories.size() < 3)
@@ -288,11 +286,11 @@ public class RadarRenderer {
 	// The value of each ring, written just inside it on the right of the first spoke, so that
 	// the outer one stays clear of the name of the first category. The center is not labelled
 	private void drawTickLabels(UGraphic ug) {
-		for (Map.Entry<Double, String> tick : ChartRenderer.getTicks(axis)) {
-			if (tick.getKey() <= 0)
+		for (ChartTicks.Tick tick : ChartTicks.valueTicks(axis)) {
+			if (tick.getRatio() <= 0)
 				continue;
-			final TextBlock text = text(tick.getValue(), axisFont);
-			text.drawU(ug.apply(new UTranslate(3, -RADIUS * tick.getKey())));
+			final TextBlock text = text(tick.getLabel(), axisFont);
+			text.drawU(ug.apply(new UTranslate(3, -RADIUS * tick.getRatio())));
 		}
 	}
 
@@ -322,7 +320,7 @@ public class RadarRenderer {
 			ugMarker.apply(new UTranslate(pt.getX() - MARKER_SIZE / 2, pt.getY() - MARKER_SIZE / 2))
 					.draw(UEllipse.build(MARKER_SIZE, MARKER_SIZE));
 			if (s.isShowLabels()) {
-				final TextBlock text = text(ChartRenderer.formatValue(seriesValues.get(i)), axisFont);
+				final TextBlock text = text(ChartTicks.formatValue(seriesValues.get(i)), axisFont);
 				final XDimension2D dim = text.calculateDimension(ug.getStringBounder());
 				text.drawU(ug.apply(PieRenderer.outside(radius(seriesValues.get(i)) + MARKER_SIZE, angle(i), dim)));
 			}

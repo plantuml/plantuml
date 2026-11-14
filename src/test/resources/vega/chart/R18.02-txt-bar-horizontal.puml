@@ -1,0 +1,9 @@
+---
+output: utxt, atxt
+---
+@startchart
+title Language Popularity
+orientation horizontal
+v-axis [Python, JavaScript, Java, Go, Rust]
+bar [30, 25, 20, 12, 8]
+@endchart

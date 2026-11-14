@@ -6,6 +6,7 @@ Provide requirement-based non-regression tests for the [chart diagram](../../../
 
 > [!TIP]
 >  Each test is a single `.puml` file, rendered to SVG by the Vega harness (`test.vega.VegaTest`), and compared with the committed reference `.svg`.
+>  The R18 tests are rendered as text instead, and compared with the committed `.utxt` and `.atxt`.
 
 ## Requirement groups
 
@@ -27,6 +28,7 @@ Provide requirement-based non-regression tests for the [chart diagram](../../../
 | R15 | Pie (`pie`, `a-axis`, `labels`, `percent`, `donut`) |
 | R16 | Radar (`radar`, `a-axis`, `r-axis`) |
 | R17 | Errors of pie and radar |
+| R18 | Text output (`utxt`, `atxt`) |
 
 File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this directory.
 
@@ -119,6 +121,19 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 |  | R17.05 | `R17.05-polar-error-unknown-key.puml` | Status 400: key not in `a-axis` |
 |  | R17.06 | `R17.06-polar-error-mixed-keys.puml` | Status 400: keyed and positional values mixed |
 |  | R17.07 | `R17.07-polar-error-r-axis-with-pie.puml` | Status 400: `"pie" cannot be used with "r-axis"` |
+| R18 — Text output | R18.01 | `R18.01-txt-bar-vertical.puml` | Vertical bars, half blocks at the top, a long category label wrapped |
+|  | R18.02 | `R18.02-txt-bar-horizontal.puml` | Horizontal bars, a band of rows per category, value ticks along the bottom |
+|  | R18.03 | `R18.03-txt-line.puml` | A line in steps turning halfway between categories |
+|  | R18.04 | `R18.04-txt-bar-line-axis-title.puml` | Bars and a line on a `v-axis` range with a title, legend under the title |
+|  | R18.05 | `R18.05-txt-bar-grouped-line-legend.puml` | Three bar series side by side, each with its own fill, and a line |
+|  | R18.06 | `R18.06-txt-bar-stacked-negative.puml` | Stacked bars, negative values growing downwards from 0 |
+|  | R18.07 | `R18.07-txt-horizontal-grouped-titles.puml` | Horizontal grouped bars, title of the value axis under its ticks |
+|  | R18.08 | `R18.08-txt-pie-table.puml` | A pie written as a table of shares |
+|  | R18.09 | `R18.09-txt-table-area-line.puml` | An area cannot be drawn as text: the whole chart is a table of values |
+|  | R18.10 | `R18.10-txt-table-radar.puml` | A radar written as a table, one per series |
+|  | R18.11 | `R18.11-txt-missing-value.puml` | A missing value breaks the line, the points alone are short dashes |
+|  | R18.12 | `R18.12-txt-no-series.puml` | No series: only the title |
+|  | R18.13 | `R18.13-txt-table-coordinate-pairs.puml` | Coordinate pairs written as a table, named by their x |
 
 > [!NOTE]
 > - R07.01 to R07.04 declare `expected-status: 400`: the parser rejects the chart or the renderer reports an error, and the error image is the reference.
@@ -139,6 +154,9 @@ File names follow `Rnn.xx-<group>-<slug>.puml`; all files are flat in this direc
 >  each optionally followed by a color. The categories around the circle come from `a-axis`, else from the keys.
 >  Slices and spokes go clockwise from 12 o'clock. A pie and a radar cannot be mixed with each other, nor with the
 >  cartesian keywords (bar, line, area, scatter, h-axis, v-axis, orientation, stackMode, annotation): see R17.
+> - R18: as text, bars and lines are drawn on axes with the ticks of the graphic rendering; every value axis tick
+>  gets a dotted line. A pie, and a chart holding an area, a scatter, coordinate pairs or a `v2-axis` (or a line in a
+>  horizontal chart), are written as tables of values. Annotations, value labels and colors are not shown.
 > - R16: the rings of a radar are always drawn, at the ticks of `r-axis`; `grid polygon` (default) or `grid circle`
 >  gives their shape. Without a style color, each series takes a default color, its inside translucent.
 > - R12: a series name is quoted (and may hold spaces) or a single word of letters, digits, `_`, `.` and `-`,

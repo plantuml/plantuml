@@ -88,10 +88,7 @@ public class AreaRenderer {
 		for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
 			final double value = values.get(i);
 			// If we have baseline values, add current value to baseline to get cumulative top
-			double topValue = value;
-			if (baselineValues != null && i < baselineValues.size()) {
-				topValue = baselineValues.get(i) + value;
-			}
+			final double topValue = top(baselineValues, i, value);
 			final double x = (i + 0.5) * categoryWidth;
 			final double y = plotHeight - (topValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 			polygon.addPoint(x, y);
@@ -101,9 +98,8 @@ public class AreaRenderer {
 		for (int i = Math.min(values.size(), categoryCount) - 1; i >= 0; i--) {
 			final double x = (i + 0.5) * categoryWidth;
 			double baselineValue = axis.getMin();
-			if (baselineValues != null && i < baselineValues.size()) {
+			if (hasBaseline(baselineValues, i))
 				baselineValue = baselineValues.get(i);
-			}
 			final double y = plotHeight - (baselineValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 			polygon.addPoint(x, y);
 		}
@@ -117,16 +113,8 @@ public class AreaRenderer {
 			final double value2 = values.get(i + 1);
 
 			// Calculate cumulative top values
-			double topValue1 = value1;
-			double topValue2 = value2;
-			if (baselineValues != null) {
-				if (i < baselineValues.size()) {
-					topValue1 = baselineValues.get(i) + value1;
-				}
-				if (i + 1 < baselineValues.size()) {
-					topValue2 = baselineValues.get(i + 1) + value2;
-				}
-			}
+			final double topValue1 = top(baselineValues, i, value1);
+			final double topValue2 = top(baselineValues, i + 1, value2);
 
 			final double x1 = (i + 0.5) * categoryWidth;
 			final double y1 = plotHeight - (topValue1 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
@@ -143,15 +131,24 @@ public class AreaRenderer {
 			for (int i = 0; i < Math.min(values.size(), categoryCount); i++) {
 				final double value = values.get(i);
 				// Calculate cumulative top value for label position
-				double topValue = value;
-				if (baselineValues != null && i < baselineValues.size()) {
-					topValue = baselineValues.get(i) + value;
-				}
+				final double topValue = top(baselineValues, i, value);
 				final double x = (i + 0.5) * categoryWidth;
 				final double y = plotHeight - (topValue - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 				drawLabel(ug, value, x, y - 8);
 			}
 		}
+	}
+
+	// The base of the i-th value is the top of the previous areas, when they reach it
+	// (see StackLayout.getAreaBaseline)
+	private static boolean hasBaseline(List<Double> baselineValues, int i) {
+		return baselineValues != null && i < baselineValues.size() && baselineValues.get(i) != null;
+	}
+
+	private static double top(List<Double> baselineValues, int i, double value) {
+		if (hasBaseline(baselineValues, i))
+			return baselineValues.get(i) + value;
+		return value;
 	}
 
 	private void drawLabel(UGraphic ug, double value, double x, double y) {

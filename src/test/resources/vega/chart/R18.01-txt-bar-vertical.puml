@@ -1,0 +1,8 @@
+---
+output: utxt, atxt
+---
+@startchart
+title Product Sales
+h-axis [Widgets, Gadgets, Gizmos, Doodads, Thingamajigs]
+bar [150, 230, 180, 95, 310]
+@endchart

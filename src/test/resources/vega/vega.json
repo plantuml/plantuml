@@ -817,6 +817,216 @@
       "diagram_class": "ChartDiagram"
     },
     {
+      "file": "chart/R15.01-pie-keyed.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R15.02-pie-a-axis-percent-legend.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R15.03-pie-donut-labels-colors.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R15.04-pie-single-value-donut.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R15.05-pie-quoted-keys-missing-zero.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R15.06-pie-style-stereotype.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R16.01-radar-basic.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R16.02-radar-keys-auto-scale-circle.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R16.03-radar-missing-value-custom-ticks.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R16.04-radar-style.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R17.01-polar-error-pie-with-h-axis.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R17.02-polar-error-two-pies.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R17.03-polar-error-pie-negative.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R17.04-polar-error-radar-with-bar.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R17.05-polar-error-unknown-key.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R17.06-polar-error-mixed-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R17.07-polar-error-r-axis-with-pie.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R18.01-txt-bar-vertical.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.02-txt-bar-horizontal.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.03-txt-line.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.04-txt-bar-line-axis-title.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.05-txt-bar-grouped-line-legend.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.06-txt-bar-stacked-negative.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.07-txt-horizontal-grouped-titles.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.08-txt-pie-table.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.09-txt-table-area-line.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.10-txt-table-radar.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.11-txt-missing-value.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.12-txt-no-series.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R18.13-txt-table-coordinate-pairs.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
       "file": "component/node-style-edge-label-decorations.puml",
       "folder": "component",
       "status": "pass",
@@ -5468,6 +5678,41 @@
       "diagram_class": "ClassDiagram"
     },
     {
+      "file": "preproc/if_around_include.puml",
+      "folder": "preproc",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "preproc/unclosed_foreach.puml",
+      "folder": "preproc",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "preproc/unclosed_if.puml",
+      "folder": "preproc",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "preproc/unclosed_ifdef_in_procedure.puml",
+      "folder": "preproc",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "preproc/unclosed_while.puml",
+      "folder": "preproc",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
       "file": "preproc/upper.puml",
       "folder": "preproc",
       "status": "pass",
@@ -5480,6 +5725,1994 @@
       "status": "pass",
       "description": "PREPROC",
       "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/basic/python_basic.puml",
+      "folder": "python/basic",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/basic/python_basic2.puml",
+      "folder": "python/basic",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/basic/python_classify.puml",
+      "folder": "python/basic",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/basic/python_classify2.puml",
+      "folder": "python/basic",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/basic/python_emit.puml",
+      "folder": "python/basic",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/basic/python_puml.puml",
+      "folder": "python/basic",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/basic/python_puml2.puml",
+      "folder": "python/basic",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/blocks/bang_inside_string.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/bang_inside_string2.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/basic.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/blocks/basic2.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/blocks/decorator.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/blocks/def_then_used_by_gutter_line.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/blocks/def_then_used_by_gutter_line2.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/blocks/endpy_without_python.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/blocks/hash_comment.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/hash_comment2.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/indented_directives.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/indented_directives2.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/legacy_not_applied_inside.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/legacy_not_applied_inside2.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/quote_is_python_string.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/quote_is_python_string2.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/state_shared_between_chunks.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/state_shared_between_chunks2.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/two_blocks.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/two_blocks2.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/blocks/unterminated.puml",
+      "folder": "python/blocks",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/classes/bound_method_kept.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classes/class_attribute_counter.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "python/classes/class_built_in_a_function.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classes/class_in_a_python_block.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classes/default_and_keyword_arguments.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "python/classes/exception_hierarchy.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classes/fluent_builder.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classes/inheritance_and_override.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "python/classes/instance_repr_has_no_address.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classes/instances_in_a_loop.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classes/isinstance_dispatch.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classes/method_returns_text.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classes/method_with_text_lines.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classes/nested_class.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classes/ordering_sorts_objects.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classes/private_attribute.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classes/sorted_by_attribute.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classes/str_and_repr_in_text.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classes/subclassing_list_is_rejected.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/classes/super_is_rejected.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/classes/text_line_in_class_body.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/classes/type_and_name.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classes/uncaught_user_exception.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/classes/user_exception_caught.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classes/with_a_macro.puml",
+      "folder": "python/classes",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classify/attribute_call.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classify/attribute_call2.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classify/augmented_assignments.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classify/augmented_assignments2.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classify/bang_digit_parenthesis_bracket.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classify/bang_escape_in_block.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classify/bang_escape_in_note.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classify/bang_escape_in_procedure.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classify/bang_word_in_note_is_python.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/classify/directive_typo_is_python.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/classify/double_equal_is_not_assignment.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/classify/space_after_bang.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/classify/subscript_assignment.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/classify/subscript_assignment2.puml",
+      "folder": "python/classify",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/color/darken_lighten_same_as_legacy.puml",
+      "folder": "python/color",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/color/hsl_color_same_as_legacy.puml",
+      "folder": "python/color",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/color/import_color.puml",
+      "folder": "python/color",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/color/is_dark_is_light.puml",
+      "folder": "python/color",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/color/no_such_color.puml",
+      "folder": "python/color",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/color/reverse_same_as_legacy.puml",
+      "folder": "python/color",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/color/usable_in_a_function.puml",
+      "folder": "python/color",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/datetime/bad_date_is_an_error.puml",
+      "folder": "python/datetime",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/datetime/date_arithmetic.puml",
+      "folder": "python/datetime",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/datetime/equality_and_dict_keys.puml",
+      "folder": "python/datetime",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/datetime/iso_text.puml",
+      "folder": "python/datetime",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/datetime/native_class_rules.puml",
+      "folder": "python/datetime",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/datetime/now_is_a_datetime.puml",
+      "folder": "python/datetime",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/errors/endless_loop_is_stopped.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/endless_loop_not_catchable.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/endless_loop_not_catchable2.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/error_after_some_output.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/error_after_some_output2.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/error_in_function_of_earlier_chunk.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/if_without_colon_is_legacy.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/missing_colon_else.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/missing_colon_for.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/missing_colon_for_second_line.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/missing_colon_if_unknown_function.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/missing_colon_while_operator.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/no_hint_in_a_legacy_diagram.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/no_hint_when_not_python.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/python_error_in_included_file.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/recursion_is_catchable.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/errors/recursion_is_catchable2.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/errors/runtime_error_line.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/second_line_of_a_block.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/errors/syntax_error_line.puml",
+      "folder": "python/errors",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/gutter/blank_line_in_block.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/dedent_closes_block.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/function_returns_value.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/if_else_text.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/loop_enumerate.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/loop_text.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/nested_loops.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/procedure_calls_procedure.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/procedure_emit_body.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/procedure_mixed.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/procedure_recursive.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/procedure_text_body.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/tab_indentation_rejected.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/gutter/text_before_any_python.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/gutter/text_column0_is_top_level.puml",
+      "folder": "python/gutter",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/interpolation/bool_none_float.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/closing_brace_in_string.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/colon_and_bang_inside_expressions.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/conversion_r_s.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/dict_and_list_access.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/dollar_brace_is_plain_text.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "python/interpolation/error_kept_without_python.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/error_raised_when_python_is_later.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/interpolation/escape_bang.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/escape_bang_in_block.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/expression.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/format_spec.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/format_spec_alignment.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/format_spec_does_not_apply.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/interpolation/format_spec_in_a_block.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/interpolation/format_spec_numbers.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/format_spec_without_python.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/function_call.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/invalid_conversion.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/interpolation/legacy_variable_beside.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/line_starts_with_interpolation.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/interpolation/nested_format_spec_is_rejected.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/interpolation/not_a_python_diagram.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/simple.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/string_and_fstring.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/interpolation/two_per_line.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/interpolation/undefined_name_is_an_error.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/interpolation/without_python_line.puml",
+      "folder": "python/interpolation",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/closure.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/closure2.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/comprehension_emit.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/language/comprehension_emit2.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/language/dict_iteration_order.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/dict_iteration_order2.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/dollar_name_is_not_python.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/language/f_string_format.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/f_string_format2.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/global_in_def.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/global_in_def2.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/int_overflow_is_32_bits.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/language/try_except.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/try_except2.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/unsupported_class.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/language/unsupported_with.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/language/while_with_colon_is_python.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/language/while_with_colon_is_python2.puml",
+      "folder": "python/language",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/adaml_constant.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "python/legacy/define_untouched.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/dollar_variable_stays_legacy.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/emit_does_not_include.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/function_beside_python_def.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/include_defines_python.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/include_defines_python2.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/include_then_python.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/legacy/include_then_python2.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/legacy/legacy_if_beside_python.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/legacy_while_without_colon.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/pragma_untouched.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/legacy/pragma_untouched2.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/legacy/preprocessor_output_not_reprocessed.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/procedure_called_with_bang.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "python/legacy/python_and_legacy_variables_are_separate.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/question_equal_stays_legacy.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/return_inside_python_def.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/legacy/theme_untouched.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/legacy/theme_untouched2.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/arguments_are_strings.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/macro/arguments_are_strings2.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/macro/arguments_are_strings3.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/macro/called_from_a_legacy_procedure.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/called_inside_a_python_block.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/conflict_with_legacy_define.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/macro/declared_before_use.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/declared_on_a_bang_line.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/duplicate_declaration.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/macro/emits_then_returns.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/error_inside_a_macro.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/macro/explicit_dollar_name.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/explicit_legacy_name.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/function_still_callable.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/inline_value.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/interpolation_first.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/invalid_explicit_name.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/macro/keyword_arguments_and_defaults.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "python/macro/legacy_define_after_macro.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/macro/macro_calls_macro_as_python.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/name_followed_directly_by_parenthesis.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/macro/no_arguments.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/macro/no_macro_no_change.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/macro/parentheses_inside_arguments.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/macro/procedure_emits_lines.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/procedure_with_text_lines.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/puml_macro_alias.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/quoted_and_bare_arguments.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "python/macro/replaced_inside_quotes.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/result_not_rescanned.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/macro/returns_none_and_emits_nothing.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/macro/several_calls_per_line.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/macro/too_many_arguments.puml",
+      "folder": "python/macro",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/metadata/basic.puml",
+      "folder": "python/metadata",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/metadata/block_text_keeps_indentation.puml",
+      "folder": "python/metadata",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/metadata/chart_pie_from_header.puml",
+      "folder": "python/metadata",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "python/metadata/duplicate_key_is_an_error.puml",
+      "folder": "python/metadata",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/metadata/get_with_default.puml",
+      "folder": "python/metadata",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/metadata/header_must_be_a_map.puml",
+      "folder": "python/metadata",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/metadata/header_without_python_is_ignored.puml",
+      "folder": "python/metadata",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/metadata/keys_in_document_order.puml",
+      "folder": "python/metadata",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/metadata/nested_map_and_list.puml",
+      "folder": "python/metadata",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/metadata/no_header_is_empty_dict.puml",
+      "folder": "python/metadata",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/metadata/values_are_str.puml",
+      "folder": "python/metadata",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/puml/args_default_is_empty_dict.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/args_default_is_empty_dict2.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/edition_is_jar_js_or_c.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/edition_is_jar_js_or_c2.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/emit_alias.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/emit_several_lines.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/puml/emit_wrong_type.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/puml/error_can_be_caught.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/error_can_be_caught2.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/error_is_reported_on_its_line.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/puml/feature_same_as_legacy.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/file_exists_same_as_legacy.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/getenv_same_as_legacy.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/import_of_a_user_module.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "python/puml/import_statement_in_a_block.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/import_statement_in_a_block2.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/json_dumps.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/json_dumps2.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/json_loads.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/json_loads2.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/json_loads_error_is_a_value_error.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/json_loads_error_is_a_value_error2.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/json_round_trip_and_ascii.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/json_round_trip_and_ascii2.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/log_returns_none.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/math_is_a_global.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/math_is_a_global2.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/print_is_not_emit.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/puml_is_a_global.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/random_bad_range.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/random_range.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/random_same_as_legacy.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/read_json_file.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/read_missing_file.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/read_newlines.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/read_text_file.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/source_same_as_legacy.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/special_chars_bad_argument.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/special_chars_same_as_legacy.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "python/puml/theme_read_when_called.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/theme_same_as_legacy.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/theme_without_theme.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/version_and_edition.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/version_and_edition2.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/version_is_the_legacy_version.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/warning_bad_arguments.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/warning_banner.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/puml/warning_same_twice.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/puml/xargs_after_startuml.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/puml/xargs_same_as_legacy.puml",
+      "folder": "python/puml",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/recipes/splitstr_and_json_set.puml",
+      "folder": "python/recipes",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/time/clock.puml",
+      "folder": "python/time",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/time/ctime_and_asctime.puml",
+      "folder": "python/time",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/time/gmtime_fields.puml",
+      "folder": "python/time",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/time/mktime.puml",
+      "folder": "python/time",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/time/mktime_carries.puml",
+      "folder": "python/time",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/time/no_local_time_zone.puml",
+      "folder": "python/time",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/time/out_of_range.puml",
+      "folder": "python/time",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "python/time/strftime_strict.puml",
+      "folder": "python/time",
+      "status": "pass",
+      "description": "(0 entities)",
+      "diagram_class": "ClassDiagram"
     },
     {
       "file": "scxml/junction-pseudostate.puml",
@@ -6539,6 +8772,97 @@
       "diagram_class": "ListSpriteDiagram"
     },
     {
+      "file": "stdlib2/traps/bang_inside_lines.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/traps/braces_and_dollars_in_notes.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/traps/comments_with_python_words.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/traps/include_and_subparts.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/traps/indented_legacy_directives.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/traps/json_with_braces.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(Json)",
+      "diagram_class": "JsonDiagram"
+    },
+    {
+      "file": "stdlib2/traps/legacy_conditions_with_bang.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/traps/legacy_functions_in_text.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/traps/legacy_procedure_called_with_bang.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/traps/pragma_and_teoz.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/traps/python_keywords_as_legacy_names.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "stdlib2/traps/unquoted_final_local_global.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "stdlib2/traps/yaml_with_braces.puml",
+      "folder": "stdlib2/traps",
+      "status": "pass",
+      "description": "(Yaml)",
+      "diagram_class": "JsonDiagram"
+    },
+    {
       "file": "sub/includesub-basic-with-include.puml",
       "folder": "sub",
       "status": "pass",
@@ -7066,8 +9390,8 @@
     }
   ],
   "summary": {
-    "total": 972,
-    "passed": 967,
+    "total": 1304,
+    "passed": 1299,
     "failed": 0,
     "skipped": 5
   }

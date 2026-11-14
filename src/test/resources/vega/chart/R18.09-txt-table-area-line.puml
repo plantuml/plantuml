@@ -1,0 +1,9 @@
+---
+output: utxt, atxt
+---
+@startchart
+title Mixed
+h-axis [Jan, Feb, Mar]
+area "Visits" [5, 8, 3]
+line "Sales" [4, 2, 6]
+@endchart

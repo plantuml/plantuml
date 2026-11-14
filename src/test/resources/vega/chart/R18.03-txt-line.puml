@@ -1,0 +1,8 @@
+---
+output: utxt, atxt
+---
+@startchart
+title Revenue Growth
+h-axis [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025]
+line [320, 420, 540, 680, 820, 950, 1080, 1200]
+@endchart

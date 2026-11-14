@@ -1,0 +1,10 @@
+---
+output: utxt, atxt
+---
+@startchart
+orientation horizontal
+v-axis "Team" [Q1, Q2, Q3, Q4]
+h-axis "Amount" 0 --> 100
+bar "Revenue" [45, 62, 58, 70]
+bar "Costs" [25, 30, 28, 32]
+@endchart

@@ -34,11 +34,7 @@
  */
 package net.sourceforge.plantuml.chart;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -91,49 +87,22 @@ public class ChartRenderer {
 	private static final double LEGEND_TEXT_SPACING = 5;
 	private static final double LEGEND_ITEM_SPACING = 15;
 
-	public ChartRenderer(ISkinParam skinParam, List<String> xAxisLabels, String xAxisTitle, Integer xAxisTickSpacing,
-			ChartAxis.LabelPosition xAxisLabelPosition, List<ChartSeries> series, ChartAxis xAxis, ChartAxis yAxis, ChartAxis y2Axis,
-			ChartDiagram.LegendPosition legendPosition, ChartDiagram.GridMode xGridMode, ChartDiagram.GridMode yGridMode,
-			ChartDiagram.StackMode stackMode, ChartDiagram.Orientation orientation, List<ChartAnnotation> annotations) {
+	public ChartRenderer(ISkinParam skinParam, CartesianChart chart) {
 		this.skinParam = skinParam;
-		this.orientation = orientation;
-
-		// For horizontal orientation: swap x and y axis interpretation
-		// User writes: x-axis "Revenue" 0 --> 100, y-axis [A, B, C]
-		// We need: yAxis = numeric (for horizontal bars), xAxisLabels = categories
-		// So we interpret user's "x-axis" range as our Y-axis, and "y-axis" labels as our X-axis
-		if (orientation == ChartDiagram.Orientation.HORIZONTAL) {
-			// Create Y-axis from what user specified as X-axis (numeric range)
-			// Note: User's x-axis data comes in as xAxisLabels (categories), but for horizontal
-			// they would specify it as numeric range which goes to... wait, that won't work.
-			// The user can't specify a numeric range for X-axis, only labels!
-
-			// Actually, keep it simple: just swap the data we received
-			this.xAxisLabels = xAxisLabels;
-			this.xAxisTitle = xAxisTitle;
-			this.xAxisTickSpacing = xAxisTickSpacing;
-			this.xAxisLabelPosition = xAxisLabelPosition;
-			this.xAxis = xAxis;
-			this.yAxis = yAxis;
-			this.y2Axis = y2Axis;
-			this.xGridMode = xGridMode;
-			this.yGridMode = yGridMode;
-		} else {
-			this.xAxisLabels = xAxisLabels;
-			this.xAxisTitle = xAxisTitle;
-			this.xAxisTickSpacing = xAxisTickSpacing;
-			this.xAxisLabelPosition = xAxisLabelPosition;
-			this.xAxis = xAxis;
-			this.yAxis = yAxis;
-			this.y2Axis = y2Axis;
-			this.xGridMode = xGridMode;
-			this.yGridMode = yGridMode;
-		}
-
-		this.series = series;
-		this.legendPosition = legendPosition;
-		this.stackMode = stackMode;
-		this.annotations = annotations;
+		this.orientation = chart.getOrientation();
+		this.xAxisLabels = chart.getCategories();
+		this.xAxisTitle = chart.getCategoryTitle();
+		this.xAxisTickSpacing = chart.getCategoryTickSpacing();
+		this.xAxisLabelPosition = chart.getCategoryLabelPosition();
+		this.xAxis = chart.getNumericAxis();
+		this.yAxis = chart.getValueAxis();
+		this.y2Axis = chart.getValueAxis2();
+		this.xGridMode = chart.getCategoryGridMode();
+		this.yGridMode = chart.getValueGridMode();
+		this.series = chart.getSeries();
+		this.legendPosition = chart.getLegendPosition();
+		this.stackMode = chart.getStackMode();
+		this.annotations = chart.getAnnotations();
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -266,8 +235,8 @@ public class ChartRenderer {
 
 		// Grid lines are drawn by drawGridLines, at the same ticks
 		final StringBounder stringBounder = ug.getStringBounder();
-		for (Map.Entry<Double, String> tick : getTicks(axis)) {
-			final double y = height * (1.0 - tick.getKey());
+		for (ChartTicks.Tick tick : ChartTicks.valueTicks(axis)) {
+			final double y = height * (1.0 - tick.getRatio());
 
 			// Draw tick
 			if (leftSide)
@@ -276,7 +245,7 @@ public class ChartRenderer {
 				ug.apply(UTranslate.dy(y)).draw(ULine.hline(TICK_SIZE));
 
 			// Draw label
-			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), tick.getValue())
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), tick.getLabel())
 					.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
 			final double textHeight = textBlock.calculateDimension(stringBounder).getHeight();
 
@@ -300,39 +269,6 @@ public class ChartRenderer {
 		}
 	}
 
-	// The ticks of a vertical value axis: position from the bottom (0 to 1) and label.
-	// Custom ticks if defined, else ticks every "spacing", else five automatic intervals.
-	// Shared by drawYAxis and getYAxisSpace, so that the space measured is the space drawn
-	static List<Map.Entry<Double, String>> getTicks(ChartAxis axis) {
-		final List<Map.Entry<Double, String>> result = new ArrayList<>();
-		final double range = axis.getMax() - axis.getMin();
-		if (axis.hasCustomTicks()) {
-			for (Map.Entry<Double, String> entry : axis.getCustomTicks().entrySet()) {
-				final double ratio = (entry.getKey() - axis.getMin()) / range;
-				// Skip if outside axis range
-				if (ratio >= 0 && ratio <= 1)
-					result.add(new AbstractMap.SimpleEntry<>(ratio, entry.getValue()));
-			}
-		} else if (axis.hasTickSpacing()) {
-			final double spacing = axis.getTickSpacing();
-			// Calculate starting value (round up to nearest spacing interval)
-			final double startValue = Math.ceil(axis.getMin() / spacing) * spacing;
-			for (double value = startValue; value <= axis.getMax(); value += spacing) {
-				// Avoid floating point precision issues
-				if (value > axis.getMax() + spacing * 0.01)
-					break;
-				result.add(new AbstractMap.SimpleEntry<>((value - axis.getMin()) / range, formatValue(value)));
-			}
-		} else {
-			final int numTicks = 5;
-			for (int i = 0; i <= numTicks; i++) {
-				final double value = axis.getMin() + range * i / numTicks;
-				result.add(new AbstractMap.SimpleEntry<>((double) i / numTicks, formatValue(value)));
-			}
-		}
-		return result;
-	}
-
 	// Space between a vertical value axis and the edge of the plot area, on its side.
 	// It holds the tick (TICK_SIZE), a 5 px gap, the widest tick label and 6 px before the
 	// rotated axis title, which is drawn just beyond (see drawVerticalText). It is never
@@ -345,8 +281,8 @@ public class ChartRenderer {
 		final FontConfiguration fontConfig = skinParam.getCurrentStyleBuilder()
 				.getMergedStyle(getAxisStyleSignature(false)).getFontConfiguration(skinParam.getIHtmlColorSet());
 		double labelWidth = 0;
-		for (Map.Entry<Double, String> tick : getTicks(axis)) {
-			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), tick.getValue())
+		for (ChartTicks.Tick tick : ChartTicks.valueTicks(axis)) {
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), tick.getLabel())
 					.create(fontConfig, HorizontalAlignment.RIGHT, skinParam);
 			labelWidth = Math.max(labelWidth, textBlock.calculateDimension(stringBounder).getWidth());
 		}
@@ -470,34 +406,14 @@ public class ChartRenderer {
 		}
 		} else if (xAxis != null) {
 			// Draw numeric x-axis ticks for coordinate-pair mode
-			final double range = xAxis.getMax() - xAxis.getMin();
-			final double tickInterval;
-
-			if (xAxisTickSpacing != null && xAxisTickSpacing > 0) {
-				// Spacing directly specifies the tick interval
-				tickInterval = xAxisTickSpacing;
-			} else {
-				// Default: approximately 10 ticks
-				tickInterval = range / 10.0;
-			}
-
-			// Find the starting tick value (round down to nearest multiple of tickInterval)
-			final double startValue = Math.floor(xAxis.getMin() / tickInterval) * tickInterval;
-
-			// Draw ticks and labels from start to end
-			for (double value = startValue; value <= xAxis.getMax() + tickInterval * 0.01; value += tickInterval) {
-				// Skip if outside axis range
-				if (value < xAxis.getMin() - tickInterval * 0.01 || value > xAxis.getMax() + tickInterval * 0.01)
-					continue;
-
-				final double x = xAxis.valueToPixel(value, 0, width);
+			for (ChartTicks.Tick tick : ChartTicks.numericTicks(xAxis, xAxisTickSpacing)) {
+				final double x = xAxis.valueToPixel(tick.getValue(), 0, width);
 
 				// Draw tick mark
 				ug.apply(UTranslate.dx(x)).draw(ULine.vline(TICK_SIZE));
 
 				// Draw label
-				final String label = formatAxisValue(value);
-				final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
+				final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), tick.getLabel())
 						.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
 				final double textWidth = textBlock.calculateDimension(stringBounder).getWidth();
 				textBlock.drawU(ug.apply(UTranslate.dx(x - textWidth / 2).compose(UTranslate.dy(TICK_SIZE + 5))));
@@ -567,19 +483,14 @@ public class ChartRenderer {
 		}
 
 		// Use automatic ticks (similar to vertical Y-axis logic)
-		final double range = axis.getMax() - axis.getMin();
-		final int NUM_TICKS = 5;
-
-		for (int i = 0; i <= NUM_TICKS; i++) {
-			final double value = axis.getMin() + (i * range / NUM_TICKS);
-			final double x = width * i / NUM_TICKS;
+		for (ChartTicks.Tick tick : ChartTicks.horizontalValueTicks(axis)) {
+			final double x = width * tick.getRatio();
 
 			// Draw tick mark pointing down
 			ug.apply(UTranslate.dx(x)).draw(ULine.vline(TICK_SIZE));
 
 			// Draw label below the tick
-			final String label = String.format(Locale.ROOT, "%.0f", value);
-			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), label)
+			final TextBlock textBlock = Display.getWithNewlines(skinParam.getPragma(), tick.getLabel())
 					.create(fontConfig, HorizontalAlignment.CENTER, skinParam);
 			final double textWidth = textBlock.calculateDimension(ug.getStringBounder()).getWidth();
 			textBlock.drawU(ug.apply(UTranslate.dx(x - textWidth / 2).compose(UTranslate.dy(TICK_SIZE + 5))));
@@ -640,19 +551,9 @@ public class ChartRenderer {
 					else
 						ugGrid.apply(UTranslate.dx((i + 0.5) * plotWidth / count)).draw(ULine.vline(plotHeight));
 			} else if (xAxis != null && horizontal == false) {
-				final double range = xAxis.getMax() - xAxis.getMin();
-				final double tickInterval;
-				if (xAxisTickSpacing != null && xAxisTickSpacing > 0)
-					tickInterval = xAxisTickSpacing;
-				else
-					tickInterval = range / 10.0;
-
-				// Same loop as the numeric ticks of drawXAxis
-				final double startValue = Math.floor(xAxis.getMin() / tickInterval) * tickInterval;
-				for (double value = startValue; value <= xAxis.getMax() + tickInterval * 0.01; value += tickInterval) {
-					if (value < xAxis.getMin() - tickInterval * 0.01 || value > xAxis.getMax() + tickInterval * 0.01)
-						continue;
-					final double x = xAxis.valueToPixel(value, 0, plotWidth);
+				// Same ticks as drawXAxis
+				for (ChartTicks.Tick tick : ChartTicks.numericTicks(xAxis, xAxisTickSpacing)) {
+					final double x = xAxis.valueToPixel(tick.getValue(), 0, plotWidth);
 					ugGrid.apply(UTranslate.dx(x)).draw(ULine.vline(plotHeight));
 				}
 			}
@@ -661,12 +562,11 @@ public class ChartRenderer {
 		if (yGridMode != ChartDiagram.GridMode.OFF) {
 			if (horizontal) {
 				// Same positions as the ticks of drawYAxisHorizontally
-				final int numTicks = 5;
-				for (int i = 0; i <= numTicks; i++)
-					ugGrid.apply(UTranslate.dx(plotWidth * i / numTicks)).draw(ULine.vline(plotHeight));
+				for (ChartTicks.Tick tick : ChartTicks.horizontalValueTicks(yAxis))
+					ugGrid.apply(UTranslate.dx(plotWidth * tick.getRatio())).draw(ULine.vline(plotHeight));
 			} else {
-				for (Map.Entry<Double, String> tick : getTicks(yAxis))
-					ugGrid.apply(UTranslate.dy(plotHeight * (1.0 - tick.getKey()))).draw(ULine.hline(plotWidth));
+				for (ChartTicks.Tick tick : ChartTicks.valueTicks(yAxis))
+					ugGrid.apply(UTranslate.dy(plotHeight * (1.0 - tick.getRatio()))).draw(ULine.hline(plotWidth));
 			}
 		}
 	}
@@ -834,31 +734,10 @@ public class ChartRenderer {
 			final ChartAxis axis = areaSeries.get(0).isUseSecondaryAxis() && y2Axis != null ? y2Axis : yAxis;
 			final AreaRenderer areaRenderer = new AreaRenderer(skinParam, plotWidth, plotHeight, xAxisLabels.size(), axis);
 
-			// Track cumulative values for stacking
-			java.util.List<Double> cumulativeValues = null;
-
-			for (int i = 0; i < to; i++) {
-				final ChartSeries areaSer = areaSeries.get(i);
-				final HColor color = areaColors.get(i);
-
-				// Draw this area with the baseline from previous areas
-				if (i >= from)
-					areaRenderer.draw(ug, areaSer, color, cumulativeValues);
-
-				// Update cumulative values for next series
-				if (cumulativeValues == null) {
-					cumulativeValues = new java.util.ArrayList<>(areaSer.getValues());
-				} else {
-					// Add current series values to cumulative
-					for (int j = 0; j < Math.min(areaSer.getValues().size(), cumulativeValues.size()); j++) {
-						cumulativeValues.set(j, cumulativeValues.get(j) + areaSer.getValues().get(j));
-					}
-					// If current series has more values than cumulative, add them
-					for (int j = cumulativeValues.size(); j < areaSer.getValues().size(); j++) {
-						cumulativeValues.add(areaSer.getValues().get(j));
-					}
-				}
-			}
+			// Each area lies on the previous ones
+			final StackLayout stack = StackLayout.areas(areaSeries);
+			for (int i = from; i < to; i++)
+				areaRenderer.draw(ug, areaSeries.get(i), areaColors.get(i), stack.getAreaBaseline(i));
 		}
 	}
 
@@ -868,15 +747,6 @@ public class ChartRenderer {
 
 	private double getPlotHeight() {
 		return 300;
-	}
-
-	static String formatValue(double value) {
-		if (Math.abs(value) < 0.01 && value != 0)
-			return String.format(Locale.ROOT, "%.2e", value);
-		if (value == (long) value)
-			return String.format(Locale.ROOT, "%d", (long) value);
-		// 0.80 is written 0.8, as the automatic range gives ticks like 0, 0.8, 1.6 ...
-		return String.format(Locale.ROOT, "%.2f", value).replaceAll("0+$", "");
 	}
 
 	private HColor getDefaultColor(int index) {
@@ -981,15 +851,6 @@ public class ChartRenderer {
 			return stereoStyle;
 		}
 		return skinParam.getCurrentStyleBuilder().getMergedStyle(query);
-	}
-
-	private String formatAxisValue(double value) {
-		// Format axis tick labels
-		if (Math.abs(value) < 0.01 && value != 0)
-			return String.format(Locale.ROOT, "%.2e", value);
-		if (value == (long) value)
-			return String.format(Locale.ROOT, "%d", (long) value);
-		return String.format(Locale.ROOT, "%.1f", value);
 	}
 
 	private StyleQuery getScatterStyleQuery() {

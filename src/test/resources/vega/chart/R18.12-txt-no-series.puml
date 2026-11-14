@@ -1,0 +1,7 @@
+---
+output: utxt, atxt
+---
+@startchart
+title Empty
+h-axis [A, B]
+@endchart

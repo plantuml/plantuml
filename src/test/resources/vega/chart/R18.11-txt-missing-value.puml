@@ -1,0 +1,8 @@
+---
+output: utxt, atxt
+---
+@startchart
+h-axis [A, B, C]
+line [5, , 7]
+bar [1, 2, 3]
+@endchart

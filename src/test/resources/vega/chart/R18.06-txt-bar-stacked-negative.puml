@@ -1,0 +1,10 @@
+---
+output: utxt, atxt
+---
+@startchart
+title Stacked
+stackMode stacked
+h-axis [A, B, C, D]
+bar "s1" [10, -5, 7, -3]
+bar "s2" [-4, 8, -6, 2]
+@endchart

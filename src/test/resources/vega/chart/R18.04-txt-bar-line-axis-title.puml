@@ -1,0 +1,10 @@
+---
+output: utxt, atxt
+---
+@startchart
+title Ocean Temperature
+h-axis [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]
+v-axis "Temperature (in °F)" 74 --> 82
+bar "Bar 1" [76.3, 75.9, 76.0, 76.7, 77.8, 78.9, 79.9, 80.7, 81.1, 80.5, 79.1, 77.4]
+line "Line 1" [76.3, 75.9, 76.0, 76.7, 77.8, 78.9, 79.9, 80.7, 81.1, 80.5, 79.1, 77.4]
+@endchart

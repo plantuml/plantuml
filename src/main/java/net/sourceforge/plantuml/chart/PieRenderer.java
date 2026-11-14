@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.chart;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -68,23 +67,24 @@ public class PieRenderer {
 	private static final double LEGEND_MARGIN = 20;
 
 	private final ISkinParam skinParam;
+	private final PieChart pie;
 	private final ChartSeries series;
 	private final ChartDiagram.LegendPosition legendPosition;
 	private final Style style;
 	private final FontConfiguration fontConfig;
 	private final List<Slice> slices = new ArrayList<>();
-	private final double total;
 
+	// A slice of the pie, with its color and its angles
 	private static class Slice {
+		private final PieChart.Slice source;
 		private final String name;
-		private final double value;
 		private final HColor color;
 		private double start;
 		private double end;
 
-		Slice(String name, double value, HColor color) {
-			this.name = name;
-			this.value = value;
+		Slice(PieChart.Slice source, HColor color) {
+			this.source = source;
+			this.name = source.getName();
 			this.color = color;
 		}
 
@@ -93,37 +93,25 @@ public class PieRenderer {
 		}
 	}
 
-	public PieRenderer(ISkinParam skinParam, ChartSeries series, List<String> angularLabels,
-			ChartDiagram.LegendPosition legendPosition) {
+	public PieRenderer(ISkinParam skinParam, PieChart pie) {
 		this.skinParam = skinParam;
-		this.series = series;
-		this.legendPosition = legendPosition;
+		this.pie = pie;
+		this.series = pie.getSeries();
+		this.legendPosition = pie.getLegendPosition();
 		this.style = ChartRenderer.getSeriesStyle(skinParam, StyleQueries.CHARTDIAG_PIE, series);
 		this.fontConfig = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 
-		double sum = 0;
-		final List<Double> values = series.getValues();
-		for (int i = 0; i < values.size(); i++) {
-			final Double value = values.get(i);
-			if (value == null || value <= 0)
-				continue;
-			String name = null;
-			if (series.hasKeys())
-				name = series.getKeys().get(i);
-			else if (i < angularLabels.size())
-				name = angularLabels.get(i);
-			HColor color = series.getItemColor(i);
+		for (PieChart.Slice source : pie.getSlices()) {
+			HColor color = series.getItemColor(source.getIndex());
 			if (color == null)
-				color = ChartRenderer.getDefaultColor(skinParam, i);
-			slices.add(new Slice(name, value, color));
-			sum += value;
+				color = ChartRenderer.getDefaultColor(skinParam, source.getIndex());
+			slices.add(new Slice(source, color));
 		}
-		this.total = sum;
 
 		double angle = 0;
 		for (Slice slice : slices) {
 			slice.start = angle;
-			angle += 2 * Math.PI * slice.value / total;
+			angle += 2 * Math.PI * slice.source.getValue() / pie.getTotal();
 			slice.end = angle;
 		}
 	}
@@ -298,26 +286,11 @@ public class PieRenderer {
 		final double hole = series.getDonutHole();
 		final double r = hole > 0 ? RADIUS * (1 + hole) / 2 : RADIUS * 0.65;
 		for (Slice slice : slices) {
-			final TextBlock text = text(getLabel(slice));
+			final TextBlock text = text(pie.getLabel(slice.source));
 			final XDimension2D dim = text.calculateDimension(ug.getStringBounder());
 			final XPoint2D center = slices.size() == 1 && hole == 0 ? new XPoint2D(0, 0) : polar(r, slice.middle());
 			text.drawU(ug.apply(new UTranslate(center.getX() - dim.getWidth() / 2, center.getY() - dim.getHeight() / 2)));
 		}
-	}
-
-	private String getLabel(Slice slice) {
-		final String percent = formatPercent(100 * slice.value / total);
-		if (series.isShowLabels() && series.isShowPercent())
-			return ChartRenderer.formatValue(slice.value) + " (" + percent + ")";
-		if (series.isShowLabels())
-			return ChartRenderer.formatValue(slice.value);
-		return percent;
-	}
-
-	// 33.3%, 50%, 0.4%
-	private static String formatPercent(double percent) {
-		final String s = String.format(Locale.ROOT, "%.1f", percent);
-		return (s.endsWith(".0") ? s.substring(0, s.length() - 2) : s) + "%";
 	}
 
 }

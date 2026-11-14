@@ -1,0 +1,8 @@
+---
+output: utxt, atxt
+---
+@startchart
+title Players
+radar "Alice" [Speed: 8, Power: 6, Skill: 9]
+radar "Bob" [Speed: 5, Power: 9, Skill: 4]
+@endchart

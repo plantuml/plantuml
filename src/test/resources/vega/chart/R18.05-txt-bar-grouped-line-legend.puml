@@ -1,0 +1,12 @@
+---
+output: utxt, atxt
+---
+@startchart
+title Grouped
+h-axis "Quarter" [Q1, Q2, Q3]
+v-axis "k€"
+bar "North" [10, 20, 15]
+bar "South" [12, 8, 18]
+bar "East" [5, 9, 11]
+line "Target" [15, 15, 20]
+@endchart

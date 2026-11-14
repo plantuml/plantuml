@@ -1,0 +1,8 @@
+---
+output: utxt, atxt
+---
+@startchart
+title Measures
+h-axis "x" 0 --> 10
+scatter "Samples" [(1,2.5), (3,4), (7.5,-1)]
+@endchart

@@ -34,10 +34,8 @@
  */
 package net.sourceforge.plantuml.chart;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -353,51 +351,27 @@ public class BarRenderer {
 		final double barWidth = categoryWidth * barWidthRatio;
 		final double barOffset = (categoryWidth - barWidth) / 2;
 
-		// Track cumulative heights for each category
-		final Map<Integer, Double> cumulativeHeights = new HashMap<>();
+		// Positive values stack upward from zero, negative ones downward
+		final StackLayout stack = StackLayout.bars(barSeries);
 
 		// Extract line thickness for bar borders
 		final double lineThickness = barStyle.value(PName.LineThickness).asDouble();
 		final UStroke stroke = UStroke.withThickness(lineThickness);
 
 		for (int categoryIndex = 0; categoryIndex < categoryCount; categoryIndex++) {
-			// Calculate zero position
-			final double zeroY = plotHeight - (0 - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
-
-			// Track cumulative positions for positive and negative stacks separately
-			double cumulativePositiveY = zeroY; // Positive bars grow upward from zero
-			double cumulativeNegativeY = zeroY; // Negative bars grow downward from zero
-
-			for (int seriesIndex = 0; seriesIndex < to; seriesIndex++) {
+			for (int seriesIndex = from; seriesIndex < to; seriesIndex++) {
 				final ChartSeries series = barSeries.get(seriesIndex);
 				final HColor color = colors.get(seriesIndex);
-				final List<Double> values = series.getValues();
 
-				if (categoryIndex >= values.size() || values.get(categoryIndex) == null)
+				if (stack.has(seriesIndex, categoryIndex) == false)
 					continue;
 
-				final double value = values.get(categoryIndex);
+				final double value = series.getValues().get(categoryIndex);
 				final double x = categoryIndex * categoryWidth + barOffset;
-				final double valueY = plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
-
-				final double y;
-				final double barHeight;
-
-				if (value < 0) {
-					// Negative values stack downward from zero
-					barHeight = valueY - zeroY;
-					y = cumulativeNegativeY;
-					cumulativeNegativeY += barHeight;
-				} else {
-					// Positive values stack upward from zero
-					barHeight = zeroY - valueY;
-					cumulativePositiveY -= barHeight;
-					y = cumulativePositiveY;
-				}
-
-				// Below the part to draw: only its height was needed, for the stack
-				if (seriesIndex < from)
-					continue;
+				final double baseY = toY(stack.getBase(seriesIndex, categoryIndex));
+				final double topY = toY(stack.getTop(seriesIndex, categoryIndex));
+				final double y = Math.min(baseY, topY);
+				final double barHeight = Math.abs(baseY - topY);
 
 				// Extract line color for this bar's border
 				HColor lineColor = barStyle.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
@@ -473,38 +447,23 @@ public class BarRenderer {
 		final double barHeight = categoryHeight * barHeightRatio;
 		final double barOffset = (categoryHeight - barHeight) / 2;
 		final UStroke stroke = UStroke.withThickness(barStyle.value(PName.LineThickness).asDouble());
-		final double zeroX = axis.valueToPixel(0, 0, plotWidth);
+		// Positive bars grow rightwards from zero, negative ones leftwards
+		final StackLayout stack = StackLayout.bars(barSeries);
 
 		for (int categoryIndex = 0; categoryIndex < categoryCount; categoryIndex++) {
 			final double y = categoryIndex * categoryHeight + barOffset;
-			// Positive bars grow rightwards from zero, negative ones leftwards
-			double cumulativePositiveX = zeroX;
-			double cumulativeNegativeX = zeroX;
 
-			for (int seriesIndex = 0; seriesIndex < to; seriesIndex++) {
+			for (int seriesIndex = from; seriesIndex < to; seriesIndex++) {
 				final ChartSeries series = barSeries.get(seriesIndex);
-				final List<Double> values = series.getValues();
 
-				if (categoryIndex >= values.size() || values.get(categoryIndex) == null)
+				if (stack.has(seriesIndex, categoryIndex) == false)
 					continue;
 
-				final double value = values.get(categoryIndex);
-				final double valueX = axis.valueToPixel(value, 0, plotWidth);
-				final double x;
-				final double barWidth;
-				if (value < 0) {
-					barWidth = zeroX - valueX;
-					cumulativeNegativeX -= barWidth;
-					x = cumulativeNegativeX;
-				} else {
-					barWidth = valueX - zeroX;
-					x = cumulativePositiveX;
-					cumulativePositiveX += barWidth;
-				}
-
-				// Below the part to draw: only its width was needed, for the stack
-				if (seriesIndex < from)
-					continue;
+				final double value = series.getValues().get(categoryIndex);
+				final double baseX = axis.valueToPixel(stack.getBase(seriesIndex, categoryIndex), 0, plotWidth);
+				final double topX = axis.valueToPixel(stack.getTop(seriesIndex, categoryIndex), 0, plotWidth);
+				final double x = Math.min(baseX, topX);
+				final double barWidth = Math.abs(topX - baseX);
 
 				drawBarHorizontal(ug, barStyle, stroke, colors.get(seriesIndex), x, y, barWidth, barHeight);
 				// A negative segment has the positive ones on its right: its label goes on its left
@@ -513,6 +472,11 @@ public class BarRenderer {
 							value < 0);
 			}
 		}
+	}
+
+	// The vertical position of a value in the plot
+	private double toY(double value) {
+		return plotHeight - (value - axis.getMin()) / (axis.getMax() - axis.getMin()) * plotHeight;
 	}
 
 	private void drawBarHorizontal(UGraphic ug, Style barStyle, UStroke stroke, HColor color, double x, double y,
