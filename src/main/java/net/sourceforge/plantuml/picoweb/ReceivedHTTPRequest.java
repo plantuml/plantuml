@@ -14,6 +14,12 @@ public class ReceivedHTTPRequest {
 
 	private byte[] body;
 
+	private String origin;
+
+	public String getOrigin() {
+		return origin;
+	}
+
 	public String getMethod() {
 		return method;
 	}
@@ -48,6 +54,8 @@ public class ReceivedHTTPRequest {
 				break;
 			} else if (line.toLowerCase().startsWith(CONTENT_LENGTH_HEADER)) {
 				contentLength = parseContentLengthHeader(line);
+			} else if (line.toLowerCase().startsWith("origin:")) {
+				request.origin = line.substring("origin:".length()).trim();
 			}
 		}
 

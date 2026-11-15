@@ -135,6 +135,24 @@ public class PicoWebServer implements Runnable {
 			out = new BufferedOutputStream(connect.getOutputStream());
 
 			final ReceivedHTTPRequest request = ReceivedHTTPRequest.fromStream(in);
+			final PicoMcp.Answer mcp = PicoMcp.handle(request.getMethod(), request.getPath(), request.getBody(),
+					request.getOrigin());
+			if (mcp != null) {
+				final byte[] data = mcp.text.getBytes(UTF_8);
+				write(out, "HTTP/1.1 " + mcp.status);
+				write(out, "Cache-Control: no-cache");
+				write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
+				write(out, "Access-Control-Allow-Origin: *");
+				// The connection is closed after each answer: say it, or a client that keeps it alive
+				// may send its next request on a socket we are closing
+				write(out, "Connection: close");
+				write(out, "Content-type: " + mcp.contentType + "; charset=UTF-8");
+				write(out, "Content-length: " + data.length);
+				write(out, "");
+				out.write(data);
+				out.flush();
+				return;
+			}
 			if (request.getMethod().equals("GET")) {
 				if (request.getPath().startsWith("/png/") && handleGET(request, out, FileFormat.PNG))
 					return;
