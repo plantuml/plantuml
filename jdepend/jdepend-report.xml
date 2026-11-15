@@ -17402,14 +17402,14 @@
 
         <Package name="net.sourceforge.plantuml.teavm.js.browser">
             <Stats>
-                <TotalClasses>12</TotalClasses>
-                <ConcreteClasses>7</ConcreteClasses>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>6</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
                 <Ca>4</Ca>
                 <Ce>10</Ce>
-                <A>0.42</A>
+                <A>0.45</A>
                 <I>0.71</I>
-                <D>0.13</D>
+                <D>0.17</D>
                 <V>1</V>
             </Stats>
 
@@ -17449,9 +17449,6 @@
                 </Class>
                 <Class sourceFile="PlantUMLBrowser.java">
                     net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser$ElementJob
-                </Class>
-                <Class sourceFile="ScriptLoaderJs.java">
-                    net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs
                 </Class>
             </ConcreteClasses>
 

@@ -11875,16 +11875,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 12
-    Concrete Classes: 7
+    Total Classes: 11
+    Concrete Classes: 6
     Abstract Classes: 5
 
     Ca: 4
     Ce: 10
 
-    A: 0.42
+    A: 0.45
     I: 0.71
-    D: 0.13
+    D: 0.17
 
 Abstract Classes:
     net.sourceforge.plantuml.teavm.js.browser.FileLoaderJs$Loaded
@@ -11900,7 +11900,6 @@ Concrete Classes:
     net.sourceforge.plantuml.teavm.js.browser.PendingResources$Round
     net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser$CallbackJob
     net.sourceforge.plantuml.teavm.js.browser.PlantUMLBrowser$ElementJob
-    net.sourceforge.plantuml.teavm.js.browser.ScriptLoaderJs
 
 Depends Upon:
     java.io
@@ -16260,7 +16259,7 @@ net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
 net.sourceforge.plantuml.teavm,2,0,46,3,0,0.06,0.94,1
 net.sourceforge.plantuml.teavm.c,13,0,3,41,0,0.93,0.07,1
 net.sourceforge.plantuml.teavm.js,19,0,3,17,0,0.85,0.15,1
-net.sourceforge.plantuml.teavm.js.browser,12,5,4,10,0.42,0.71,0.13,1
+net.sourceforge.plantuml.teavm.js.browser,11,5,4,10,0.45,0.71,0.17,1
 net.sourceforge.plantuml.teavm.js.headless,3,1,0,4,0.33,1,0.33,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,40,4,0.2,0.09,0.71,1

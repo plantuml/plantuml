@@ -50,7 +50,9 @@ public final class ScriptLoaderJs {
 	 * then skips loading entirely. With neither global set, the behaviour is
 	 * exactly what it always was.
 	 */
-	@JSBody(params = { &quot;url&quot;, &quot;onOk&quot;, &quot;onErr&quot; }, script = &quot;var w = (typeof globalThis !== 'undefined') ? globalThis&quot;
+	@JSBody(params = { &quot;url&quot;, &quot;onOk&quot;, &quot;onErr&quot; }, script = &quot;if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(url)) {&quot;
+			+ &quot;  onErr('Refused script name: ' + url); return; }&quot;
+			+ &quot;var w = (typeof globalThis !== 'undefined') ? globalThis&quot;
 			+ &quot; : ((typeof self !== 'undefined') ? self : window);&quot;
 			+ &quot;w.__pl_script_state = w.__pl_script_state || Object.create(null);&quot; + &quot;var st = w.__pl_script_state[url];&quot;
 			+
@@ -129,8 +131,8 @@ public final class ScriptLoaderJs {
 	 * {@link PendingResources#warn(String)}).
 	 */
 	public static void consoleWarn(String message) {
-<span class="nc" id="L132">		PendingResources.warn(message);</span>
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L134">		PendingResources.warn(message);</span>
+<span class="nc" id="L135">	}</span>
 
 	/**
 	 * 
@@ -213,15 +215,26 @@ public final class ScriptLoaderJs {
 	 *                          failed during the current request
 	 */
 	public static boolean require(String url) {
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (isPlainScriptName(url) == false)</span>
+<span class="nc" id="L219">			throw new RuntimeException(&quot;Refused script name: &quot; + url);</span>
+
 		// Fast path: already loaded
-<span class="nc bnc" id="L217" title="All 2 branches missed.">		if (isLoaded(url))</span>
-<span class="nc" id="L218">			return true;</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		if (isLoaded(url))</span>
+<span class="nc" id="L223">			return true;</span>
 
-<span class="nc" id="L220">		final PendingResources.Answer answer = PendingResources.script(url);</span>
-<span class="nc bnc" id="L221" title="All 4 branches missed.">		if (answer != null &amp;&amp; answer.getError() != null)</span>
-<span class="nc" id="L222">			throw new RuntimeException(answer.getError());</span>
+<span class="nc" id="L225">		final PendingResources.Answer answer = PendingResources.script(url);</span>
+<span class="nc bnc" id="L226" title="All 4 branches missed.">		if (answer != null &amp;&amp; answer.getError() != null)</span>
+<span class="nc" id="L227">			throw new RuntimeException(answer.getError());</span>
 
-<span class="nc" id="L224">		return false;</span>
+<span class="nc" id="L229">		return false;</span>
+	}
+
+	/**
+	 * Letters, digits, dot, underscore and hyphen only, starting with a letter or a
+	 * digit.
+	 */
+	static boolean isPlainScriptName(String name) {
+<span class="nc bnc" id="L237" title="All 4 branches missed.">		return name != null &amp;&amp; name.matches(&quot;[A-Za-z0-9][A-Za-z0-9._-]*&quot;);</span>
 	}
 
 	private ScriptLoaderJs() {
