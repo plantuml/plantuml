@@ -212,14 +212,14 @@ public class CommandCreateMap extends CommandMultilines2&lt;AbstractEntityDiagra
 <span class="nc" id="L212">			return null;</span>
 
 <span class="fc" id="L214">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (Display.isNull(display))</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		if (Display.isNull(display))</span>
 <span class="fc" id="L216">			display = Display.getWithNewlines(diagram.getPragma(), name).withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
 
 <span class="fc" id="L218">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.MAP, null);</span>
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L220">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
-<span class="nc" id="L221">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
-<span class="nc" id="L222">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (stereotype != null)</span>
+<span class="fc" id="L220">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="fc" id="L221">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="fc" id="L222">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
 <span class="fc" id="L224">		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
 <span class="fc" id="L225">		final String s = line0.get(&quot;LINECOLOR&quot;, 1);</span>

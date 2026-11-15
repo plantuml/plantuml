@@ -188,8 +188,8 @@ import net.sourceforge.plantuml.text.Guillemet;
 <span class="fc bfc" id="L188" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.MAP)</span>
 <span class="fc" id="L189">			return new EntityImageMap(leaf, portionShower);</span>
 
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">		if (leaf.getLeafType() == LeafType.JSON)</span>
-<span class="nc" id="L192">			return new EntityImageJson(leaf, portionShower);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">		if (leaf.getLeafType() == LeafType.JSON)</span>
+<span class="fc" id="L192">			return new EntityImageJson(leaf, portionShower);</span>
 
 <span class="pc bpc" id="L194" title="1 of 4 branches missed.">		if (leaf.getLeafType() == LeafType.SYNCHRO_BAR || leaf.getLeafType() == LeafType.STATE_FORK_JOIN)</span>
 <span class="fc" id="L195">			return new EntityImageSynchroBar(leaf);</span>

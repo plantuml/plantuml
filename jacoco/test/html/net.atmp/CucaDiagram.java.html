@@ -868,8 +868,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		final Bodier bodier;
 <span class="fc bfc" id="L869" title="All 2 branches covered.">		if (Objects.requireNonNull(entityType) == LeafType.MAP)</span>
 <span class="fc" id="L870">			bodier = new BodierMap();</span>
-<span class="pc bpc" id="L871" title="1 of 2 branches missed.">		else if (Objects.requireNonNull(entityType) == LeafType.JSON)</span>
-<span class="nc" id="L872">			bodier = new BodierJSon();</span>
+<span class="fc bfc" id="L871" title="All 2 branches covered.">		else if (Objects.requireNonNull(entityType) == LeafType.JSON)</span>
+<span class="fc" id="L872">			bodier = new BodierJSon();</span>
 		else
 <span class="fc" id="L874">			bodier = BodyFactory.createLeaf(getSkinParam(), entityType, hideVisibilityModifier);</span>
 

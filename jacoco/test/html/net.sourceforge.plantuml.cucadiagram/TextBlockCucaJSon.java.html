@@ -66,34 +66,34 @@ public class TextBlockCucaJSon implements TextBlock, WithPorts {
 	private final LineBreakStrategy wordWrap;
 
 	public TextBlockCucaJSon(FontConfiguration fontConfiguration, ISkinParam skinParam, JsonValue json,
-<span class="nc" id="L69">			LineBreakStrategy wordWrap) {</span>
-<span class="nc" id="L70">		this.skinParam = skinParam;</span>
-<span class="nc" id="L71">		this.json = json;</span>
-<span class="nc" id="L72">		this.fontConfiguration = fontConfiguration;</span>
-<span class="nc" id="L73">		this.wordWrap = wordWrap;</span>
-<span class="nc" id="L74">	}</span>
+<span class="fc" id="L69">			LineBreakStrategy wordWrap) {</span>
+<span class="fc" id="L70">		this.skinParam = skinParam;</span>
+<span class="fc" id="L71">		this.json = json;</span>
+<span class="fc" id="L72">		this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L73">		this.wordWrap = wordWrap;</span>
+<span class="fc" id="L74">	}</span>
 
 	private TextBlock getJsonTextBlock() {
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (jsonTextBlock == null)</span>
-<span class="nc" id="L78">			this.jsonTextBlock = getTextBlockValue(json, 0);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (jsonTextBlock == null)</span>
+<span class="fc" id="L78">			this.jsonTextBlock = getTextBlockValue(json, 0);</span>
 
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (jsonTextBlock instanceof TextBlockJson)</span>
-<span class="nc" id="L81">			((TextBlockJson) jsonTextBlock).jsonTotalWidth = mainTotalWidth;</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (jsonTextBlock instanceof TextBlockArray)</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (jsonTextBlock instanceof TextBlockJson)</span>
+<span class="fc" id="L81">			((TextBlockJson) jsonTextBlock).jsonTotalWidth = mainTotalWidth;</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (jsonTextBlock instanceof TextBlockArray)</span>
 <span class="nc" id="L83">			((TextBlockArray) jsonTextBlock).arrayTotalWidth = mainTotalWidth;</span>
 
-<span class="nc" id="L85">		return jsonTextBlock;</span>
+<span class="fc" id="L85">		return jsonTextBlock;</span>
 	}
 
 	private TextBlock getTextBlockValue(JsonValue value, double width2) {
-<span class="nc bnc" id="L89" title="All 10 branches missed.">		if (value.isString() || value.isNull() || value.isTrue() || value.isFalse() || value.isNumber()) {</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">			final String tmp = value.isString() ? value.asString() : value.toString();</span>
-<span class="nc" id="L91">			return getTextBlock(tmp);</span>
+<span class="pc bpc" id="L89" title="4 of 10 branches missed.">		if (value.isString() || value.isNull() || value.isTrue() || value.isFalse() || value.isNumber()) {</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">			final String tmp = value.isString() ? value.asString() : value.toString();</span>
+<span class="fc" id="L91">			return getTextBlock(tmp);</span>
 		}
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (value.isArray())</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (value.isArray())</span>
 <span class="nc" id="L94">			return new TextBlockArray(value.asArray(), width2);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (value.isObject())</span>
-<span class="nc" id="L96">			return new TextBlockJson(value.asObject(), width2);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (value.isObject())</span>
+<span class="fc" id="L96">			return new TextBlockJson(value.asObject(), width2);</span>
 
 <span class="nc" id="L98">		final String tmp = value.getClass().getSimpleName();</span>
 <span class="nc" id="L99">		return getTextBlock(tmp);</span>
@@ -107,86 +107,86 @@ public class TextBlockCucaJSon implements TextBlock, WithPorts {
 	@Fast
 	@Override
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L110">		return getJsonTextBlock().calculateDimension(stringBounder);</span>
+<span class="fc" id="L110">		return getJsonTextBlock().calculateDimension(stringBounder);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L114">		getJsonTextBlock().drawU(ug);</span>
-<span class="nc" id="L115">	}</span>
+<span class="fc" id="L114">		getJsonTextBlock().drawU(ug);</span>
+<span class="fc" id="L115">	}</span>
 
 	class TextBlockJson extends TextBlockMemoized {
 
 		private final JsonObject obj;
 		private double jsonTotalWidth;
 
-<span class="nc" id="L122">		public TextBlockJson(JsonObject json, double totalWidth) {</span>
-<span class="nc" id="L123">			this.obj = json;</span>
-<span class="nc" id="L124">			this.jsonTotalWidth = totalWidth;</span>
-<span class="nc" id="L125">		}</span>
+<span class="fc" id="L122">		public TextBlockJson(JsonObject json, double totalWidth) {</span>
+<span class="fc" id="L123">			this.obj = json;</span>
+<span class="fc" id="L124">			this.jsonTotalWidth = totalWidth;</span>
+<span class="fc" id="L125">		}</span>
 
 		@Override
 		public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L129">			return new XDimension2D(getWidth1(stringBounder) + getWidth2(stringBounder), getHeight(stringBounder));</span>
+<span class="fc" id="L129">			return new XDimension2D(getWidth1(stringBounder) + getWidth2(stringBounder), getHeight(stringBounder));</span>
 		}
 
 		private double getWidth1(StringBounder stringBounder) {
-<span class="nc" id="L133">			double result = 0;</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">			for (JsonObject.Member s : obj) {</span>
-<span class="nc" id="L135">				final TextBlock tb1 = getTextBlock(s.getName());</span>
-<span class="nc" id="L136">				result = Math.max(result, tb1.calculateDimension(stringBounder).getWidth());</span>
-<span class="nc" id="L137">			}</span>
-<span class="nc" id="L138">			return result;</span>
+<span class="fc" id="L133">			double result = 0;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			for (JsonObject.Member s : obj) {</span>
+<span class="fc" id="L135">				final TextBlock tb1 = getTextBlock(s.getName());</span>
+<span class="fc" id="L136">				result = Math.max(result, tb1.calculateDimension(stringBounder).getWidth());</span>
+<span class="fc" id="L137">			}</span>
+<span class="fc" id="L138">			return result;</span>
 		}
 
 		private double getWidth2(StringBounder stringBounder) {
-<span class="nc" id="L142">			double result = 0;</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">			for (JsonObject.Member s : obj) {</span>
-<span class="nc" id="L144">				final TextBlock tb2 = getTextBlockValue(s.getValue(), jsonTotalWidth);</span>
-<span class="nc" id="L145">				result = Math.max(result, tb2.calculateDimension(stringBounder).getWidth());</span>
-<span class="nc" id="L146">			}</span>
-<span class="nc" id="L147">			return result;</span>
+<span class="fc" id="L142">			double result = 0;</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">			for (JsonObject.Member s : obj) {</span>
+<span class="fc" id="L144">				final TextBlock tb2 = getTextBlockValue(s.getValue(), jsonTotalWidth);</span>
+<span class="fc" id="L145">				result = Math.max(result, tb2.calculateDimension(stringBounder).getWidth());</span>
+<span class="fc" id="L146">			}</span>
+<span class="fc" id="L147">			return result;</span>
 		}
 
 		private double getHeight(StringBounder stringBounder) {
-<span class="nc" id="L151">			double result = 0;</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">			for (JsonObject.Member s : obj) {</span>
-<span class="nc" id="L153">				final TextBlock tb1 = getTextBlock(s.getName());</span>
-<span class="nc" id="L154">				final TextBlock tb2 = getTextBlockValue(s.getValue(), jsonTotalWidth);</span>
-<span class="nc" id="L155">				final XDimension2D dim1 = tb1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L156">				final XDimension2D dim2 = tb2.calculateDimension(stringBounder);</span>
-<span class="nc" id="L157">				result += Math.max(dim1.getHeight(), dim2.getHeight());</span>
-<span class="nc" id="L158">			}</span>
-<span class="nc" id="L159">			return result;</span>
+<span class="fc" id="L151">			double result = 0;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			for (JsonObject.Member s : obj) {</span>
+<span class="fc" id="L153">				final TextBlock tb1 = getTextBlock(s.getName());</span>
+<span class="fc" id="L154">				final TextBlock tb2 = getTextBlockValue(s.getValue(), jsonTotalWidth);</span>
+<span class="fc" id="L155">				final XDimension2D dim1 = tb1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L156">				final XDimension2D dim2 = tb2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L157">				result += Math.max(dim1.getHeight(), dim2.getHeight());</span>
+<span class="fc" id="L158">			}</span>
+<span class="fc" id="L159">			return result;</span>
 		}
 
 		@Override
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L164">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L165">			final double width1 = getWidth1(stringBounder);</span>
-<span class="nc" id="L166">			final double height = getHeight(stringBounder);</span>
-<span class="nc" id="L167">			ug.apply(UTranslate.dx(width1)).draw(ULine.vline(height));</span>
-<span class="nc" id="L168">			final ULine hline = ULine.hline(this.jsonTotalWidth);</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">			for (JsonObject.Member s : obj) {</span>
-<span class="nc" id="L170">				final TextBlock tb1 = getTextBlock(s.getName());</span>
-<span class="nc" id="L171">				final TextBlock tb2 = getTextBlockValue(s.getValue(), this.jsonTotalWidth - width1);</span>
-<span class="nc" id="L172">				final XDimension2D dim1 = tb1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L173">				final XDimension2D dim2 = tb2.calculateDimension(stringBounder);</span>
-<span class="nc" id="L174">				ug.draw(hline);</span>
-<span class="nc" id="L175">				tb1.drawU(ug);</span>
-<span class="nc" id="L176">				tb2.drawU(ug.apply(UTranslate.dx(width1)));</span>
-<span class="nc" id="L177">				ug = ug.apply(UTranslate.dy(Math.max(dim1.getHeight(), dim2.getHeight())));</span>
-<span class="nc" id="L178">			}</span>
+<span class="fc" id="L164">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L165">			final double width1 = getWidth1(stringBounder);</span>
+<span class="fc" id="L166">			final double height = getHeight(stringBounder);</span>
+<span class="fc" id="L167">			ug.apply(UTranslate.dx(width1)).draw(ULine.vline(height));</span>
+<span class="fc" id="L168">			final ULine hline = ULine.hline(this.jsonTotalWidth);</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">			for (JsonObject.Member s : obj) {</span>
+<span class="fc" id="L170">				final TextBlock tb1 = getTextBlock(s.getName());</span>
+<span class="fc" id="L171">				final TextBlock tb2 = getTextBlockValue(s.getValue(), this.jsonTotalWidth - width1);</span>
+<span class="fc" id="L172">				final XDimension2D dim1 = tb1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L173">				final XDimension2D dim2 = tb2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L174">				ug.draw(hline);</span>
+<span class="fc" id="L175">				tb1.drawU(ug);</span>
+<span class="fc" id="L176">				tb2.drawU(ug.apply(UTranslate.dx(width1)));</span>
+<span class="fc" id="L177">				ug = ug.apply(UTranslate.dy(Math.max(dim1.getHeight(), dim2.getHeight())));</span>
+<span class="fc" id="L178">			}</span>
 
-<span class="nc" id="L180">		}</span>
+<span class="fc" id="L180">		}</span>
 
 	}
 
 	private TextBlock getTextBlock(String key) {
-<span class="nc" id="L185">		final Display display = Display.getWithNewlines(skinParam.getPragma(), key);</span>
-<span class="nc" id="L186">		TextBlock result = display.create0(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam, wordWrap,</span>
+<span class="fc" id="L185">		final Display display = Display.getWithNewlines(skinParam.getPragma(), key);</span>
+<span class="fc" id="L186">		TextBlock result = display.create0(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam, wordWrap,</span>
 				CreoleMode.FULL, null, null);
-<span class="nc" id="L188">		result = TextBlockUtils.withMargin(result, 5, 2);</span>
-<span class="nc" id="L189">		return result;</span>
+<span class="fc" id="L188">		result = TextBlockUtils.withMargin(result, 5, 2);</span>
+<span class="fc" id="L189">		return result;</span>
 	}
 
 	class TextBlockArray extends TextBlockMemoized {
@@ -227,12 +227,12 @@ public class TextBlockCucaJSon implements TextBlock, WithPorts {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-<span class="nc" id="L230">		return fontConfiguration;</span>
+<span class="fc" id="L230">		return fontConfiguration;</span>
 	}
 
 	public void setTotalWidth(double totalWidth) {
-<span class="nc" id="L234">		this.mainTotalWidth = totalWidth;</span>
-<span class="nc" id="L235">	}</span>
+<span class="fc" id="L234">		this.mainTotalWidth = totalWidth;</span>
+<span class="fc" id="L235">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
