@@ -68,9 +68,9 @@ public class CommandChartScatter extends SingleLineCommand2&lt;ChartDiagram&gt; 
 <span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;STEREO&quot;, &quot;(\\&lt;\\&lt;.+?\\&gt;\\&gt;)&quot;)), //
 <span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L71">				new RegexOptional(ChartSeriesName.regex()), //</span>
+<span class="fc" id="L71">				new RegexOptional(ChartSeriesName.regex(&quot;v2&quot;, &quot;y2&quot;, &quot;labels&quot;)), //</span>
 <span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(1, &quot;DATA&quot;, ChartDataItems.BRACKETED), //
+				new RegexOptional(new RegexLeaf(1, &quot;DATA&quot;, ChartDataItems.BRACKETED)), //
 <span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;COLOR&quot;, &quot;#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)&quot;)), //
 				new RegexOptional( //
@@ -156,12 +156,15 @@ public class CommandChartScatter extends SingleLineCommand2&lt;ChartDiagram&gt; 
 <span class="fc" id="L156">			series.setShowLabels(true);</span>
 		}
 
-<span class="fc" id="L159">		return diagram.addSeries(series);</span>
+		// Written without data, the series takes its values from the list items that follow it
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (data == null)</span>
+<span class="fc" id="L161">			return diagram.openSeries(series);</span>
+<span class="fc" id="L162">		return diagram.addSeries(series);</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="fc" id="L164">		return FIRST_TOKENS;</span>
+<span class="fc" id="L167">		return FIRST_TOKENS;</span>
 	}
 
 }

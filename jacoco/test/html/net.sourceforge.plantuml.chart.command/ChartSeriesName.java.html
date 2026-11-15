@@ -58,16 +58,24 @@ final class ChartSeriesName {
 	}
 
 	static IRegex regex() {
-<span class="fc" id="L61">		return new RegexOr(//</span>
+<span class="nc" id="L61">		return regex(new String[0]);</span>
+	}
+
+	// The same, an unquoted name not being one of the given keywords: &quot;pie labels&quot; is a pie
+	// with labels, written without data, not a pie named &quot;labels&quot;
+	static IRegex regex(String... keywords) {
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		final String exclude = keywords.length == 0 ? &quot;&quot;</span>
+<span class="fc" id="L68">				: &quot;(?!(?:&quot; + String.join(&quot;|&quot;, keywords) + &quot;)(?![\\p{L}0-9_.\\-]))&quot;;</span>
+<span class="fc" id="L69">		return new RegexOr(//</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;\&quot;([^\&quot;]+)\&quot;&quot;), //
 				new RegexConcat(//
-<span class="fc" id="L64">						RegexLeaf.spaceOneOrMore(), //</span>
-						new RegexLeaf(1, &quot;NAMEWORD&quot;, &quot;([\\p{L}0-9_][\\p{L}0-9_.\\-]*)&quot;)));
+<span class="fc" id="L72">						RegexLeaf.spaceOneOrMore(), //</span>
+						new RegexLeaf(1, &quot;NAMEWORD&quot;, exclude + &quot;([\\p{L}0-9_][\\p{L}0-9_.\\-]*)&quot;)));
 	}
 
 	static String get(RegexResult arg) {
-<span class="fc" id="L69">		final String quoted = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		return quoted != null ? quoted : arg.get(&quot;NAMEWORD&quot;, 0);</span>
+<span class="fc" id="L77">		final String quoted = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		return quoted != null ? quoted : arg.get(&quot;NAMEWORD&quot;, 0);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -74,9 +74,9 @@ public class CommandChartRadar extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;STEREO&quot;, &quot;(\\&lt;\\&lt;.+?\\&gt;\\&gt;)&quot;)), //
 <span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L77">				new RegexOptional(ChartSeriesName.regex()), //</span>
+<span class="fc" id="L77">				new RegexOptional(ChartSeriesName.regex(&quot;labels&quot;)), //</span>
 <span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
-				new RegexLeaf(1, &quot;DATA&quot;, ChartDataItems.BRACKETED), //
+				new RegexOptional(new RegexLeaf(1, &quot;DATA&quot;, ChartDataItems.BRACKETED)), //
 <span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;COLOR&quot;, &quot;#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)&quot;)), //
 				new RegexOptional( //
@@ -99,27 +99,31 @@ public class CommandChartRadar extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc" id="L99">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
 <span class="fc" id="L100">		final String name = ChartSeriesName.get(arg);</span>
 <span class="fc" id="L101">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="fc" id="L102">		final ChartDataItems data = ChartDataItems.parse(arg.get(&quot;DATA&quot;, 0),</span>
-<span class="fc" id="L103">				diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (data.getError() != null)</span>
-<span class="fc" id="L105">			return CommandExecutionResult.error(data.getError());</span>
+<span class="fc" id="L102">		final String rawData = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="fc" id="L103">		final ChartDataItems data = ChartDataItems.parse(rawData,</span>
+<span class="fc" id="L104">				diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (data.getError() != null)</span>
+<span class="fc" id="L106">			return CommandExecutionResult.error(data.getError());</span>
 
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		final String seriesName = name != null ? name : &quot;radar&quot; + diagram.getSeries().size();</span>
-<span class="fc" id="L108">		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.RADAR, data.getValues());</span>
-<span class="fc" id="L109">		data.applyTo(series);</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (stereo != null)</span>
-<span class="nc" id="L111">			series.setStereotype(Stereotype.build(stereo));</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (colorStr != null)</span>
-<span class="fc" id="L113">			series.setColor(diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr));</span>
-<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (arg.get(&quot;LABELS&quot;, 0) != null)</span>
-<span class="fc" id="L115">			series.setShowLabels(true);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		final String seriesName = name != null ? name : &quot;radar&quot; + diagram.getSeries().size();</span>
+<span class="fc" id="L109">		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.RADAR, data.getValues());</span>
+<span class="fc" id="L110">		data.applyTo(series);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L112">			series.setStereotype(Stereotype.build(stereo));</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (colorStr != null)</span>
+<span class="fc" id="L114">			series.setColor(diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr));</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">		if (arg.get(&quot;LABELS&quot;, 0) != null)</span>
+<span class="fc" id="L116">			series.setShowLabels(true);</span>
 
-<span class="fc" id="L117">		return diagram.addSeries(series);</span>
+		// Written without data, the radar takes its values from the list items that follow it
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (rawData == null)</span>
+<span class="fc" id="L120">			return diagram.openSeries(series);</span>
+<span class="fc" id="L121">		return diagram.addSeries(series);</span>
 	}
 
 	@Override
 	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
-<span class="fc" id="L122">		return FIRST_TOKENS;</span>
+<span class="fc" id="L126">		return FIRST_TOKENS;</span>
 	}
 
 }

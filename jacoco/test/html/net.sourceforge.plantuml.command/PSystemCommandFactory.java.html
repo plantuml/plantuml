@@ -185,9 +185,9 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 <span class="nc" id="L185">			return null;</span>
 
 <span class="fc" id="L187">		final String err = sys.checkFinalError();</span>
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (err != null) {</span>
-<span class="nc" id="L189">			final StringLocated location = it.next();</span>
-<span class="nc" id="L190">			return buildExecutionError(source, err, location, it.getTrace(), preprocessing);</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		if (err != null) {</span>
+<span class="fc" id="L189">			final StringLocated location = it.next();</span>
+<span class="fc" id="L190">			return buildExecutionError(source, err, location, it.getTrace(), preprocessing);</span>
 		}
 <span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (source.getTotalLineCount() == 2) {</span>
 <span class="nc" id="L193">			final StringLocated location = it.next();</span>

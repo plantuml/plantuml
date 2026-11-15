@@ -84,8 +84,8 @@ final class ChartDataItems {
 <span class="fc bfc" id="L84" title="All 2 branches covered.">		if (mismatch != null)</span>
 <span class="fc" id="L85">			return result.fail(mismatch);</span>
 <span class="fc" id="L86">		data = stripDelimiters(data);</span>
-<span class="pc bpc" id="L87" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
-<span class="nc" id="L88">			return result;</span>
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="fc" id="L88">			return result;</span>
 
 <span class="fc" id="L90">		final List&lt;String&gt; items = split(data, ',');</span>
 <span class="fc bfc" id="L91" title="All 2 branches covered.">		if (items == null)</span>
@@ -104,145 +104,170 @@ final class ChartDataItems {
 <span class="fc" id="L104">		return result;</span>
 	}
 
+	/**
+	 * A single item, as written on a line of a list (see {@link CommandChartItem}): it is not
+	 * split on commas, so that a key may hold one without quotes, as in &quot;Rare gases, others: 1&quot;.
+	 */
+	static ChartDataItems parseSingle(String item, HColorSet colorSet) {
+<span class="fc" id="L112">		final ChartDataItems result = new ChartDataItems();</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (split(item, ':') == null)</span>
+<span class="fc" id="L114">			return result.fail(&quot;Unbalanced quotes in: &quot; + item);</span>
+<span class="fc" id="L115">		final String error = result.add(item.trim(), colorSet);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (error != null)</span>
+<span class="fc" id="L117">			return result.fail(error);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		result.keyed = result.keys.get(0) != null;</span>
+<span class="fc" id="L119">		return result;</span>
+	}
+
 	private ChartDataItems fail(String message) {
-<span class="fc" id="L108">		this.error = message;</span>
-<span class="fc" id="L109">		return this;</span>
+<span class="fc" id="L123">		this.error = message;</span>
+<span class="fc" id="L124">		return this;</span>
 	}
 
 	private String add(String item, HColorSet colorSet) {
-<span class="fc" id="L113">		String key = null;</span>
-<span class="fc" id="L114">		final List&lt;String&gt; parts = split(item, ':');</span>
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (parts.size() &gt; 2)</span>
-<span class="nc" id="L116">			return &quot;Too many ':' in \&quot;&quot; + item + &quot;\&quot;: quote the key&quot;;</span>
-<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (parts.size() == 2) {</span>
-<span class="fc" id="L118">			key = unquote(parts.get(0).trim());</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">			if (key.isEmpty())</span>
-<span class="nc" id="L120">				return &quot;Empty key in \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
-<span class="fc" id="L121">			item = parts.get(1).trim();</span>
+<span class="fc" id="L128">		String key = null;</span>
+<span class="fc" id="L129">		final List&lt;String&gt; parts = split(item, ':');</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (parts.size() &gt; 2)</span>
+<span class="nc" id="L131">			return &quot;Too many ':' in \&quot;&quot; + item + &quot;\&quot;: quote the key&quot;;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (parts.size() == 2) {</span>
+<span class="fc" id="L133">			key = unquote(parts.get(0).trim());</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			if (key.isEmpty())</span>
+<span class="nc" id="L135">				return &quot;Empty key in \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
+<span class="fc" id="L136">			item = parts.get(1).trim();</span>
 		}
 
-<span class="fc" id="L124">		HColor color = null;</span>
-<span class="fc" id="L125">		final int sharp = item.indexOf('#');</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (sharp &gt;= 0) {</span>
-<span class="fc" id="L127">			final String colorName = item.substring(sharp).trim();</span>
-<span class="fc" id="L128">			item = item.substring(0, sharp).trim();</span>
+<span class="fc" id="L139">		HColor color = null;</span>
+<span class="fc" id="L140">		final int sharp = item.indexOf('#');</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		if (sharp &gt;= 0) {</span>
+<span class="fc" id="L142">			final String colorName = item.substring(sharp).trim();</span>
+<span class="fc" id="L143">			item = item.substring(0, sharp).trim();</span>
 			try {
-<span class="fc" id="L130">				color = colorSet.getColor(colorName);</span>
-<span class="nc" id="L131">			} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L132">				return &quot;Unknown color &quot; + colorName;</span>
-<span class="fc" id="L133">			}</span>
-<span class="fc" id="L134">			hasColor = true;</span>
+<span class="fc" id="L145">				color = colorSet.getColor(colorName);</span>
+<span class="nc" id="L146">			} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L147">				return &quot;Unknown color &quot; + colorName;</span>
+<span class="fc" id="L148">			}</span>
+<span class="fc" id="L149">			hasColor = true;</span>
 		}
 
-<span class="fc" id="L137">		item = unquote(item).trim();</span>
-<span class="fc" id="L138">		Double value = null;</span>
-<span class="fc bfc" id="L139" title="All 2 branches covered.">		if (item.isEmpty() == false)</span>
+<span class="fc" id="L152">		item = unquote(item).trim();</span>
+<span class="fc" id="L153">		Double value = null;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (item.isEmpty() == false)</span>
 			try {
-<span class="fc" id="L141">				value = Double.parseDouble(item);</span>
-<span class="fc" id="L142">			} catch (NumberFormatException e) {</span>
-<span class="fc" id="L143">				return &quot;Invalid number \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
-<span class="fc" id="L144">			}</span>
+<span class="fc" id="L156">				value = Double.parseDouble(item);</span>
+<span class="fc" id="L157">			} catch (NumberFormatException e) {</span>
+<span class="fc" id="L158">				return &quot;Invalid number \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
+<span class="fc" id="L159">			}</span>
 
-<span class="fc" id="L146">		keys.add(key);</span>
-<span class="fc" id="L147">		values.add(value);</span>
-<span class="fc" id="L148">		colors.add(color);</span>
-<span class="fc" id="L149">		return null;</span>
+<span class="fc" id="L161">		keys.add(key);</span>
+<span class="fc" id="L162">		values.add(value);</span>
+<span class="fc" id="L163">		colors.add(color);</span>
+<span class="fc" id="L164">		return null;</span>
 	}
 
 	// An error message when the brackets, braces or parentheses around data do not match
 	static String checkDelimiters(String data) {
-<span class="pc bpc" id="L154" title="3 of 6 branches missed.">		if (data != null &amp;&amp; data.length() &gt;= 2 &amp;&amp; isOpening(data.charAt(0))) {</span>
-<span class="fc" id="L155">			final char close = data.charAt(data.length() - 1);</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">			if (closing(data.charAt(0)) != close)</span>
-<span class="fc" id="L157">				return &quot;Mismatched '&quot; + data.charAt(0) + &quot;' and '&quot; + close + &quot;' around data&quot;;</span>
+<span class="pc bpc" id="L169" title="2 of 6 branches missed.">		if (data != null &amp;&amp; data.length() &gt;= 2 &amp;&amp; isOpening(data.charAt(0))) {</span>
+<span class="fc" id="L170">			final char close = data.charAt(data.length() - 1);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">			if (closing(data.charAt(0)) != close)</span>
+<span class="fc" id="L172">				return &quot;Mismatched '&quot; + data.charAt(0) + &quot;' and '&quot; + close + &quot;' around data&quot;;</span>
 		}
-<span class="fc" id="L159">		return null;</span>
+<span class="fc" id="L174">		return null;</span>
 	}
 
 	// The data without the brackets, braces or parentheses around it
 	static String stripDelimiters(String data) {
-<span class="pc bpc" id="L164" title="3 of 6 branches missed.">		if (data != null &amp;&amp; data.length() &gt;= 2 &amp;&amp; isOpening(data.charAt(0))</span>
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">				&amp;&amp; closing(data.charAt(0)) == data.charAt(data.length() - 1))</span>
-<span class="fc" id="L166">			return data.substring(1, data.length() - 1);</span>
-<span class="nc" id="L167">		return data;</span>
+<span class="pc bpc" id="L179" title="2 of 6 branches missed.">		if (data != null &amp;&amp; data.length() &gt;= 2 &amp;&amp; isOpening(data.charAt(0))</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">				&amp;&amp; closing(data.charAt(0)) == data.charAt(data.length() - 1))</span>
+<span class="fc" id="L181">			return data.substring(1, data.length() - 1);</span>
+<span class="fc" id="L182">		return data;</span>
 	}
 
 	static boolean isOpening(char c) {
-<span class="fc bfc" id="L171" title="All 6 branches covered.">		return c == '[' || c == '{' || c == '(';</span>
+<span class="fc bfc" id="L186" title="All 6 branches covered.">		return c == '[' || c == '{' || c == '(';</span>
 	}
 
 	static char closing(char open) {
-<span class="fc bfc" id="L175" title="All 2 branches covered.">		if (open == '{')</span>
-<span class="fc" id="L176">			return '}';</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">		if (open == '(')</span>
-<span class="fc" id="L178">			return ')';</span>
-<span class="fc" id="L179">		return ']';</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (open == '{')</span>
+<span class="fc" id="L191">			return '}';</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">		if (open == '(')</span>
+<span class="fc" id="L193">			return ')';</span>
+<span class="fc" id="L194">		return ']';</span>
 	}
 
 	private static boolean isQuote(char c) {
-<span class="fc bfc" id="L183" title="All 4 branches covered.">		return c == '&quot;' || c == '\'';</span>
+<span class="fc bfc" id="L198" title="All 4 branches covered.">		return c == '&quot;' || c == '\'';</span>
 	}
 
 	// Splits on a separator outside quotes; null when a quote is not closed
 	private static List&lt;String&gt; split(String s, char separator) {
-<span class="fc" id="L188">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L189">		final StringBuilder current = new StringBuilder();</span>
-<span class="fc" id="L190">		char quote = 0;</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
-<span class="fc" id="L192">			final char c = s.charAt(i);</span>
+<span class="fc" id="L203">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L204">		final StringBuilder current = new StringBuilder();</span>
+<span class="fc" id="L205">		char quote = 0;</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="fc" id="L207">			final char c = s.charAt(i);</span>
 			// A single quote only opens a quoted text at the start of an item, so that an
 			// apostrophe, as in Children's: 5, needs no quoting
-<span class="fc bfc" id="L195" title="All 8 branches covered.">			if (quote == 0 &amp;&amp; (c == '&quot;' || (c == '\'' &amp;&amp; current.toString().trim().isEmpty())))</span>
-<span class="fc" id="L196">				quote = c;</span>
-<span class="fc bfc" id="L197" title="All 2 branches covered.">			else if (c == quote)</span>
-<span class="fc" id="L198">				quote = 0;</span>
-<span class="fc bfc" id="L199" title="All 4 branches covered.">			if (c == separator &amp;&amp; quote == 0) {</span>
-<span class="fc" id="L200">				result.add(current.toString());</span>
-<span class="fc" id="L201">				current.setLength(0);</span>
+<span class="fc bfc" id="L210" title="All 8 branches covered.">			if (quote == 0 &amp;&amp; (c == '&quot;' || (c == '\'' &amp;&amp; current.toString().trim().isEmpty())))</span>
+<span class="fc" id="L211">				quote = c;</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">			else if (c == quote)</span>
+<span class="fc" id="L213">				quote = 0;</span>
+<span class="fc bfc" id="L214" title="All 4 branches covered.">			if (c == separator &amp;&amp; quote == 0) {</span>
+<span class="fc" id="L215">				result.add(current.toString());</span>
+<span class="fc" id="L216">				current.setLength(0);</span>
 			} else {
-<span class="fc" id="L203">				current.append(c);</span>
+<span class="fc" id="L218">				current.append(c);</span>
 			}
 		}
-<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (quote != 0)</span>
-<span class="fc" id="L207">			return null;</span>
-<span class="fc" id="L208">		result.add(current.toString());</span>
-<span class="fc" id="L209">		return result;</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">		if (quote != 0)</span>
+<span class="fc" id="L222">			return null;</span>
+<span class="fc" id="L223">		result.add(current.toString());</span>
+<span class="fc" id="L224">		return result;</span>
 	}
 
 	static String unquote(String s) {
-<span class="pc bpc" id="L213" title="1 of 6 branches missed.">		if (s.length() &gt;= 2 &amp;&amp; isQuote(s.charAt(0)) &amp;&amp; s.charAt(s.length() - 1) == s.charAt(0))</span>
-<span class="fc" id="L214">			return s.substring(1, s.length() - 1);</span>
-<span class="fc" id="L215">		return s;</span>
+<span class="pc bpc" id="L228" title="1 of 6 branches missed.">		if (s.length() &gt;= 2 &amp;&amp; isQuote(s.charAt(0)) &amp;&amp; s.charAt(s.length() - 1) == s.charAt(0))</span>
+<span class="fc" id="L229">			return s.substring(1, s.length() - 1);</span>
+<span class="fc" id="L230">		return s;</span>
 	}
 
 	// A list of labels, as in a-axis [Dev, &quot;Ops, Run&quot;, QA]
 	static List&lt;String&gt; parseLabels(String data) {
-<span class="fc" id="L220">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="pc bpc" id="L221" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
-<span class="nc" id="L222">			return result;</span>
-<span class="fc" id="L223">		final List&lt;String&gt; parts = split(data, ',');</span>
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (parts == null)</span>
-<span class="nc" id="L225">			return null;</span>
-<span class="fc bfc" id="L226" title="All 2 branches covered.">		for (String part : parts)</span>
-<span class="fc" id="L227">			result.add(unquote(part.trim()));</span>
-<span class="fc" id="L228">		return result;</span>
+<span class="fc" id="L235">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L236" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="nc" id="L237">			return result;</span>
+<span class="fc" id="L238">		final List&lt;String&gt; parts = split(data, ',');</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">		if (parts == null)</span>
+<span class="nc" id="L240">			return null;</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		for (String part : parts)</span>
+<span class="fc" id="L242">			result.add(unquote(part.trim()));</span>
+<span class="fc" id="L243">		return result;</span>
+	}
+
+	// The key of the i-th value, or null
+	String getKey(int i) {
+<span class="fc" id="L248">		return keys.get(i);</span>
+	}
+
+	// The color written after the i-th value, or null
+	HColor getColor(int i) {
+<span class="fc" id="L253">		return colors.get(i);</span>
 	}
 
 	String getError() {
-<span class="fc" id="L232">		return error;</span>
+<span class="fc" id="L257">		return error;</span>
 	}
 
 	List&lt;Double&gt; getValues() {
-<span class="fc" id="L236">		return values;</span>
+<span class="fc" id="L261">		return values;</span>
 	}
 
 	// Gives its keys and colors to a series built from these values
 	void applyTo(ChartSeries series) {
-<span class="fc bfc" id="L241" title="All 2 branches covered.">		if (keyed)</span>
-<span class="fc" id="L242">			series.setKeys(keys);</span>
-<span class="fc bfc" id="L243" title="All 2 branches covered.">		if (hasColor)</span>
-<span class="fc" id="L244">			series.setItemColors(colors);</span>
-<span class="fc" id="L245">	}</span>
+<span class="fc bfc" id="L266" title="All 2 branches covered.">		if (keyed)</span>
+<span class="fc" id="L267">			series.setKeys(keys);</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">		if (hasColor)</span>
+<span class="fc" id="L269">			series.setItemColors(colors);</span>
+<span class="fc" id="L270">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

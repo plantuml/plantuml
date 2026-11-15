@@ -70,7 +70,7 @@ public final class ChartTxt {
 <span class="fc bfc" id="L70" title="All 2 branches covered.">			if (CartesianTxt.isSupported(chart)) {</span>
 <span class="fc" id="L71">				final CartesianTxt cartesian = new CartesianTxt(chart, charset);</span>
 <span class="fc" id="L72">				body = cartesian.getLines();</span>
-<span class="pc bpc" id="L73" title="1 of 4 branches missed.">				if (chart.getSeries().size() &gt; 1 || chart.getLegendPosition() != ChartDiagram.LegendPosition.NONE)</span>
+<span class="fc bfc" id="L73" title="All 4 branches covered.">				if (chart.getSeries().size() &gt; 1 || chart.getLegendPosition() != ChartDiagram.LegendPosition.NONE)</span>
 <span class="fc" id="L74">					legend = getLegend(chart, cartesian);</span>
 <span class="fc" id="L75">			} else {</span>
 <span class="fc" id="L76">				body = tables.cartesian(chart);</span>

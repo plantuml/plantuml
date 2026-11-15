@@ -103,6 +103,13 @@ loadScripts(document, 'script');</script>
  <pre>
  pie "Air" [Nitrogen: 78, Oxygen: 21, Argon: 1] labels percent donut 40%
  </pre>
+ Written without data, the pie takes its values from the list items that follow it (see
+ <a href="CommandChartItem.html" title="class in net.sourceforge.plantuml.chart.command"><code>CommandChartItem</code></a>):
+ <pre>
+ pie "Air" labels
+   * Nitrogen : 78
+   * Oxygen : 21
+ </pre>
  Options, in any order: "labels" shows the value of each slice, "percent" its share,
  "donut" (optionally followed by the size of the hole, 50% by default) draws a ring.</div>
 </section>

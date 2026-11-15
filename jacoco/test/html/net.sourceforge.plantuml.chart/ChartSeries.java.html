@@ -209,31 +209,52 @@ public class ChartSeries {
 <span class="pc bpc" id="L209" title="1 of 2 branches missed.">		this.keys = keys == null ? null : new ArrayList&lt;&gt;(keys);</span>
 <span class="fc" id="L210">	}</span>
 
+	/**
+	 * Adds a value at the end, as written on a line of a list after a pie or a radar given
+	 * without data. The key is null for a value without key: the caller checks that either
+	 * every value has a key, or none has.
+	 */
+	public void addItem(String key, Double value, HColor itemColor) {
+<span class="fc" id="L218">		values.add(value);</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (key != null) {</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">			if (keys == null)</span>
+<span class="fc" id="L221">				keys = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L222">			keys.add(key);</span>
+		}
+<span class="fc bfc" id="L224" title="All 4 branches covered.">		if (itemColor != null &amp;&amp; itemColors == null) {</span>
+<span class="fc" id="L225">			itemColors = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">			for (int i = 0; i &lt; values.size() - 1; i++)</span>
+<span class="nc" id="L227">				itemColors.add(null);</span>
+		}
+<span class="fc bfc" id="L229" title="All 2 branches covered.">		if (itemColors != null)</span>
+<span class="fc" id="L230">			itemColors.add(itemColor);</span>
+<span class="fc" id="L231">	}</span>
+
 	// The color written after the i-th value, or null
 	public HColor getItemColor(int i) {
-<span class="pc bpc" id="L214" title="1 of 4 branches missed.">		if (itemColors == null || i &gt;= itemColors.size())</span>
-<span class="fc" id="L215">			return null;</span>
-<span class="fc" id="L216">		return itemColors.get(i);</span>
+<span class="pc bpc" id="L235" title="1 of 4 branches missed.">		if (itemColors == null || i &gt;= itemColors.size())</span>
+<span class="fc" id="L236">			return null;</span>
+<span class="fc" id="L237">		return itemColors.get(i);</span>
 	}
 
 	public void setItemColors(List&lt;HColor&gt; itemColors) {
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		this.itemColors = itemColors == null ? null : new ArrayList&lt;&gt;(itemColors);</span>
-<span class="fc" id="L221">	}</span>
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">		this.itemColors = itemColors == null ? null : new ArrayList&lt;&gt;(itemColors);</span>
+<span class="fc" id="L242">	}</span>
 
 	public boolean isShowPercent() {
-<span class="fc" id="L224">		return showPercent;</span>
+<span class="fc" id="L245">		return showPercent;</span>
 	}
 
 	public void setShowPercent(boolean showPercent) {
-<span class="fc" id="L228">		this.showPercent = showPercent;</span>
-<span class="fc" id="L229">	}</span>
+<span class="fc" id="L249">		this.showPercent = showPercent;</span>
+<span class="fc" id="L250">	}</span>
 
 	public double getDonutHole() {
-<span class="fc" id="L232">		return donutHole;</span>
+<span class="fc" id="L253">		return donutHole;</span>
 	}
 
 	public void setDonutHole(double donutHole) {
-<span class="fc" id="L236">		this.donutHole = donutHole;</span>
-<span class="fc" id="L237">	}</span>
+<span class="fc" id="L257">		this.donutHole = donutHole;</span>
+<span class="fc" id="L258">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

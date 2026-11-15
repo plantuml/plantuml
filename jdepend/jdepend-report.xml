@@ -4762,10 +4762,10 @@
                 <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>8</Ce>
+                <Ce>9</Ce>
                 <A>0</A>
-                <I>0.89</I>
-                <D>0.11</D>
+                <I>0.9</I>
+                <D>0.1</D>
                 <V>1</V>
             </Stats>
 
@@ -4773,14 +4773,14 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="ChartSeriesName.java">
-                    net.sourceforge.plantuml.chart.command.ChartSeriesName
-                </Class>
                 <Class sourceFile="CommandChartAAxis.java">
                     net.sourceforge.plantuml.chart.command.CommandChartAAxis
                 </Class>
                 <Class sourceFile="CommandChartHAxis.java">
                     net.sourceforge.plantuml.chart.command.CommandChartHAxis
+                </Class>
+                <Class sourceFile="CommandChartItem.java">
+                    net.sourceforge.plantuml.chart.command.CommandChartItem
                 </Class>
                 <Class sourceFile="CommandChartRAxis.java">
                     net.sourceforge.plantuml.chart.command.CommandChartRAxis
@@ -4798,6 +4798,7 @@
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
             </DependsUpon>
 
@@ -15835,10 +15836,10 @@
                 <TotalClasses>22</TotalClasses>
                 <ConcreteClasses>17</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>68</Ca>
+                <Ca>69</Ca>
                 <Ce>21</Ce>
                 <A>0.23</A>
-                <I>0.24</I>
+                <I>0.23</I>
                 <D>0.54</D>
                 <V>1</V>
             </Stats>
@@ -15953,6 +15954,7 @@
                 <Package>net.sourceforge.plantuml.board</Package>
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
+                <Package>net.sourceforge.plantuml.chart.command</Package>
                 <Package>net.sourceforge.plantuml.cheneer.command</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.command.note</Package>

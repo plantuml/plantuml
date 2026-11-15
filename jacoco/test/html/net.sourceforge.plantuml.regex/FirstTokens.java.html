@@ -359,7 +359,7 @@ public final class FirstTokens {
 <span class="fc" id="L359">			pos++;</span>
 			// \s, \d and the escaped control characters are the ones we are sure keep out of the
 			// letters; \w, \p{L}, \S and the rest may well be one, and \b is not a character at all.
-<span class="pc bpc" id="L362" title="5 of 14 branches missed.">			if (isAsciiLetter(escaped) &amp;&amp; escaped != 's' &amp;&amp; escaped != 'd' &amp;&amp; escaped != 'n'</span>
+<span class="pc bpc" id="L362" title="4 of 14 branches missed.">			if (isAsciiLetter(escaped) &amp;&amp; escaped != 's' &amp;&amp; escaped != 'd' &amp;&amp; escaped != 'n'</span>
 					&amp;&amp; escaped != 't' &amp;&amp; escaped != 'r' &amp;&amp; escaped != 'f') {
 <span class="fc" id="L364">				unknown = true;</span>
 <span class="fc" id="L365">				return state;</span>
@@ -367,8 +367,8 @@ public final class FirstTokens {
 <span class="fc" id="L367">			final State after = state.copy();</span>
 <span class="fc bfc" id="L368" title="All 2 branches covered.">			if (escaped == 'd')</span>
 <span class="fc" id="L369">				after.separator(DIGITS);</span>
-<span class="pc bpc" id="L370" title="1 of 2 branches missed.">			else if (isAsciiLetter(escaped))</span>
-<span class="nc" id="L371">				after.blank();</span>
+<span class="fc bfc" id="L370" title="All 2 branches covered.">			else if (isAsciiLetter(escaped))</span>
+<span class="fc" id="L371">				after.blank();</span>
 			else
 				// An escaped punctuation sign: the character itself, and no blank.
 <span class="fc" id="L374">				after.separator(Collections.singleton(escaped));</span>

@@ -75,8 +75,8 @@ final class ChartCartesianData {
 <span class="fc bfc" id="L75" title="All 2 branches covered.">		if (mismatch != null)</span>
 <span class="fc" id="L76">			return result.fail(mismatch);</span>
 <span class="fc" id="L77">		data = ChartDataItems.stripDelimiters(data);</span>
-<span class="pc bpc" id="L78" title="2 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
-<span class="nc" id="L79">			return result;</span>
+<span class="pc bpc" id="L78" title="1 of 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="fc" id="L79">			return result;</span>
 
 <span class="fc" id="L81">		final List&lt;String&gt; items = split(data, ',');</span>
 <span class="fc bfc" id="L82" title="All 2 branches covered.">		if (items == null)</span>

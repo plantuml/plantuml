@@ -104,8 +104,8 @@ package com.plantuml.ubrex;
 <span class="fc" id="L104">			ch = CaseMode.ensureLowercase(ch);</span>
 
 <span class="fc" id="L106">		final int offset = getOffset(ch);</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (offset &gt; 128)</span>
-<span class="nc" id="L108">			return false;</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (offset &gt; 128)</span>
+<span class="fc" id="L108">			return false;</span>
 <span class="fc bfc" id="L109" title="All 2 branches covered.">		if (offset &lt; 64)</span>
 <span class="fc bfc" id="L110" title="All 2 branches covered.">			return (mask1 &amp; (1L &lt;&lt; offset)) != 0;</span>
 		else

@@ -3015,18 +3015,18 @@ Stats:
     Abstract Classes: 0
 
     Ca: 1
-    Ce: 8
+    Ce: 9
 
     A: 0
-    I: 0.89
-    D: 0.11
+    I: 0.9
+    D: 0.1
 
 Abstract Classes:
 
 Concrete Classes:
-    net.sourceforge.plantuml.chart.command.ChartSeriesName
     net.sourceforge.plantuml.chart.command.CommandChartAAxis
     net.sourceforge.plantuml.chart.command.CommandChartHAxis
+    net.sourceforge.plantuml.chart.command.CommandChartItem
     net.sourceforge.plantuml.chart.command.CommandChartRAxis
     net.sourceforge.plantuml.chart.command.CommandChartVAxis
 
@@ -3038,6 +3038,7 @@ Depends Upon:
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.klimt.color
     net.sourceforge.plantuml.regex
+    net.sourceforge.plantuml.style
     net.sourceforge.plantuml.utils
 
 Used By:
@@ -10888,11 +10889,11 @@ Stats:
     Concrete Classes: 17
     Abstract Classes: 5
 
-    Ca: 68
+    Ca: 69
     Ce: 21
 
     A: 0.23
-    I: 0.24
+    I: 0.23
     D: 0.54
 
 Abstract Classes:
@@ -10958,6 +10959,7 @@ Used By:
     net.sourceforge.plantuml.board
     net.sourceforge.plantuml.bpm
     net.sourceforge.plantuml.chart
+    net.sourceforge.plantuml.chart.command
     net.sourceforge.plantuml.cheneer.command
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.command.note
@@ -16104,7 +16106,7 @@ net.sourceforge.plantuml.bpm,32,7,0,18,0.22,1,0.22,1
 net.sourceforge.plantuml.braille,11,0,1,12,0,0.92,0.08,1
 net.sourceforge.plantuml.brotli,9,0,2,3,0,0.6,0.4,1
 net.sourceforge.plantuml.chart,32,0,3,20,0,0.87,0.13,1
-net.sourceforge.plantuml.chart.command,5,0,1,8,0,0.89,0.11,1
+net.sourceforge.plantuml.chart.command,5,0,1,9,0,0.9,0.1,1
 net.sourceforge.plantuml.chart.txt,4,0,0,5,0,1,0,1
 net.sourceforge.plantuml.cheneer,2,0,2,9,0,0.82,0.18,1
 net.sourceforge.plantuml.cheneer.command,2,0,1,13,0,0.93,0.07,1
@@ -16244,7 +16246,7 @@ net.sourceforge.plantuml.statediagram.command,6,0,2,17,0,0.89,0.11,1
 net.sourceforge.plantuml.stats,14,1,1,12,0.07,0.92,0.01,1
 net.sourceforge.plantuml.stats.api,4,3,1,2,0.75,0.67,0.42,1
 net.sourceforge.plantuml.stereo,2,0,35,5,0,0.12,0.88,1
-net.sourceforge.plantuml.style,22,5,68,21,0.23,0.24,0.54,1
+net.sourceforge.plantuml.style,22,5,69,21,0.23,0.23,0.54,1
 net.sourceforge.plantuml.style.parser,6,0,4,3,0,0.43,0.57,1
 net.sourceforge.plantuml.style.value,4,1,26,6,0.25,0.19,0.56,1
 net.sourceforge.plantuml.sudoku,4,1,1,8,0.25,0.89,0.14,1

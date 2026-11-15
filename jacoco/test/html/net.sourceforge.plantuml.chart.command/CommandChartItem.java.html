@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandChartItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart.command</a> &gt; <span class="el_source">CommandChartItem.java</span></div><h1>CommandChartItem.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart.command;
+
+import java.util.Collection;
+
+import net.sourceforge.plantuml.annotation.Explain;
+import net.sourceforge.plantuml.chart.ChartDiagram;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
+
+/**
+ * A value of a series written without data, on a line of its own, as a Markdown list item or
+ * as in Mermaid:
+ * &lt;pre&gt;
+ * pie &quot;Air&quot;
+ *   * Nitrogen : 78
+ *   - Oxygen : 21 #DC3912
+ *   &quot;Argon&quot;: 1
+ * bar &quot;Sales&quot;
+ *   * Jan : 10
+ *   * Feb : 20
+ * &lt;/pre&gt;
+ * The keys of a bar, a line, an area or a scatter are categories of the h-axis, as when they
+ * are written between brackets; their values take no color, and coordinate pairs cannot be
+ * written as list items.
+ * A line starting with '*' or '-' may hold a value alone; a line without them must hold a key.
+ * The item is read as an item between brackets (see {@link ChartDataItems}), except that a
+ * key may hold a comma without quotes. This command comes after every other one, so that a
+ * line such as &quot;title Air: composition&quot; keeps its meaning.
+ */
+public class CommandChartItem extends SingleLineCommand2&lt;ChartDiagram&gt; {
+
+	public CommandChartItem() {
+<span class="fc" id="L74">		super(false, getRegexConcat());</span>
+<span class="fc" id="L75">	}</span>
+
+	static IRegex getRegexConcat() {
+<span class="fc" id="L78">		return RegexConcat.build(CommandChartItem.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
+				new RegexOr( //
+						new RegexConcat( //
+								new RegexLeaf(&quot;[*-]&quot;), //
+<span class="fc" id="L83">								RegexLeaf.spaceOneOrMore(), //</span>
+								new RegexLeaf(1, &quot;BULLETED&quot;, &quot;(.*?)&quot;)), //
+						new RegexLeaf(1, &quot;KEYED&quot;, &quot;([^*\\-\\s].*:.*?)&quot;)), //
+<span class="fc" id="L86">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L87">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L93">		return null;</span>
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="fc" id="L99">		final String bulleted = arg.get(&quot;BULLETED&quot;, 0);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		final String item = bulleted != null ? bulleted : arg.get(&quot;KEYED&quot;, 0);</span>
+<span class="fc" id="L101">		final ChartDataItems data = ChartDataItems.parseSingle(item, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (data.getError() != null) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">			if (startsWithPair(item))</span>
+<span class="fc" id="L104">				return CommandExecutionResult</span>
+<span class="fc" id="L105">						.error(&quot;A coordinate pair cannot be written as a list item: write [(x, y), ...]&quot;);</span>
+<span class="fc" id="L106">			return CommandExecutionResult.error(data.getError());</span>
+		}
+<span class="fc" id="L108">		return diagram.addItem(data.getKey(0), data.getValues().get(0), data.getColor(0));</span>
+	}
+
+	private static boolean startsWithPair(String item) {
+<span class="fc" id="L112">		final String trimmed = item.trim();</span>
+<span class="pc bpc" id="L113" title="1 of 4 branches missed.">		return trimmed.isEmpty() == false &amp;&amp; ChartDataItems.isOpening(trimmed.charAt(0));</span>
+	}
+
+	// A key may start with almost anything: the command is tried on every line
+	@Override
+	public Collection&lt;String&gt; mandatoryFirstTokensFast() {
+<span class="fc" id="L119">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

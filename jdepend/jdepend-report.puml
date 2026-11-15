@@ -838,7 +838,7 @@ Total Classes: 32
 "net.sourceforge.plantuml.chart" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.chart" --> "net.sourceforge.plantuml.style.value"
 
-class "net.sourceforge.plantuml.chart.command" %lighten("red", 89) {
+class "net.sourceforge.plantuml.chart.command" %lighten("red", 90) {
 Total Classes: 5
 }
 "net.sourceforge.plantuml.chart.command" --> "java.lang"
@@ -848,6 +848,7 @@ Total Classes: 5
 "net.sourceforge.plantuml.chart.command" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.chart.command" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.chart.command" --> "net.sourceforge.plantuml.regex"
+"net.sourceforge.plantuml.chart.command" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.chart.command" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.chart.txt" %lighten("red", 100) {
