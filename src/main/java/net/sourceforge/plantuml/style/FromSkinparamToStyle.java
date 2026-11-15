@@ -205,6 +205,10 @@ public class FromSkinparamToStyle {
 		addConvert("objectBorderColor", PName.LineColor, SName.object);
 		addConFont("object", SName.object);
 		addConFont("objectAttribute", SName.object);
+		// FontParam.OBJECT_STEREOTYPE was used for the stereotype of objects, maps and JSON alike
+		addConFont("objectStereotype", SName.object, SName.stereotype);
+		addConFont("objectStereotype", SName.map, SName.stereotype);
+		addConFont("objectStereotype", SName.json, SName.stereotype);
 		addConvert("objectBorderThickness", PName.LineThickness, SName.object);
 
 		addConvert("stateBackgroundColor", PName.BackGroundColor, SName.state);
