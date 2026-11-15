@@ -84,9 +84,9 @@ public class McpResult {
 <span class="fc" id="L84">	}</span>
 
 	public McpResult(Diagram diagram, String svg) {
-<span class="nc" id="L87">		this(diagram);</span>
-<span class="nc" id="L88">		this.svg = svg;</span>
-<span class="nc" id="L89">	}</span>
+<span class="fc" id="L87">		this(diagram);</span>
+<span class="fc" id="L88">		this.svg = svg;</span>
+<span class="fc" id="L89">	}</span>
 
 	/**
 	 * Builds a result for a diagram that parsed correctly but failed to render. The
@@ -105,9 +105,9 @@ public class McpResult {
 	}
 
 	public static McpResult badInput() {
-<span class="nc" id="L108">		final McpResult result = new McpResult();</span>
-<span class="nc" id="L109">		result.errorMessage = &quot;Expected exactly one diagram in the source&quot;;</span>
-<span class="nc" id="L110">		return result;</span>
+<span class="fc" id="L108">		final McpResult result = new McpResult();</span>
+<span class="fc" id="L109">		result.errorMessage = &quot;Expected exactly one diagram in the source&quot;;</span>
+<span class="fc" id="L110">		return result;</span>
 	}
 
 	public static McpResult noAtStart() {
@@ -169,11 +169,11 @@ public class McpResult {
 	 * @return the offending source line, or {@code null} when not available
 	 */
 	public String getErrorContext() {
-<span class="nc" id="L172">		return errorContext;</span>
+<span class="fc" id="L172">		return errorContext;</span>
 	}
 
 	public String getSvg() {
-<span class="nc" id="L176">		return svg;</span>
+<span class="fc" id="L176">		return svg;</span>
 	}
 
 }

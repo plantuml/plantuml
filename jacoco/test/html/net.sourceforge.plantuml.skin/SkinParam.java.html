@@ -459,11 +459,11 @@ public class SkinParam implements ISkinParam {
 <span class="fc" id="L459">	}</span>
 
 	private int getFontSize(Stereotype stereotype, FontParam... param) {
-<span class="fc bfc" id="L462" title="All 2 branches covered.">		if (stereotype != null) {</span>
-<span class="fc" id="L463">			checkStereotype(stereotype);</span>
-<span class="fc" id="L464">			final String value2 = getFirstValueNonNullWithSuffix(</span>
-<span class="fc" id="L465">					&quot;fontsize&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR), param);</span>
-<span class="pc bpc" id="L466" title="1 of 2 branches missed.">			if (isDigits(value2))</span>
+<span class="pc bpc" id="L462" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
+<span class="nc" id="L463">			checkStereotype(stereotype);</span>
+<span class="nc" id="L464">			final String value2 = getFirstValueNonNullWithSuffix(</span>
+<span class="nc" id="L465">					&quot;fontsize&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR), param);</span>
+<span class="nc bnc" id="L466" title="All 2 branches missed.">			if (isDigits(value2))</span>
 <span class="nc" id="L467">				return Integer.parseInt(value2);</span>
 
 		}
@@ -478,11 +478,11 @@ public class SkinParam implements ISkinParam {
 	}
 
 	private String getFontFamily(Stereotype stereotype, FontParam... param) {
-<span class="fc bfc" id="L481" title="All 2 branches covered.">		if (stereotype != null) {</span>
-<span class="fc" id="L482">			checkStereotype(stereotype);</span>
-<span class="fc" id="L483">			final String value2 = getFirstValueNonNullWithSuffix(</span>
-<span class="fc" id="L484">					&quot;fontname&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR), param);</span>
-<span class="pc bpc" id="L485" title="1 of 2 branches missed.">			if (value2 != null)</span>
+<span class="pc bpc" id="L481" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
+<span class="nc" id="L482">			checkStereotype(stereotype);</span>
+<span class="nc" id="L483">			final String value2 = getFirstValueNonNullWithSuffix(</span>
+<span class="nc" id="L484">					&quot;fontname&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR), param);</span>
+<span class="nc bnc" id="L485" title="All 2 branches missed.">			if (value2 != null)</span>
 <span class="nc" id="L486">				return StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(value2);</span>
 
 		}
@@ -503,9 +503,9 @@ public class SkinParam implements ISkinParam {
 	@Override
 	public HColor getFontHtmlColor(Stereotype stereotype, FontParam... param) {
 <span class="fc" id="L505">		String value = null;</span>
-<span class="fc bfc" id="L506" title="All 2 branches covered.">		if (stereotype != null) {</span>
-<span class="fc" id="L507">			checkStereotype(stereotype);</span>
-<span class="fc" id="L508">			value = getFirstValueNonNullWithSuffix(&quot;fontcolor&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR),</span>
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
+<span class="nc" id="L507">			checkStereotype(stereotype);</span>
+<span class="nc" id="L508">			value = getFirstValueNonNullWithSuffix(&quot;fontcolor&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR),</span>
 					param);
 		}
 
@@ -536,9 +536,9 @@ public class SkinParam implements ISkinParam {
 
 	private UFontFace getFontFace(Stereotype stereotype, boolean inPackageTitle, FontParam... param) {
 <span class="fc" id="L538">		String value = null;</span>
-<span class="fc bfc" id="L539" title="All 2 branches covered.">		if (stereotype != null) {</span>
-<span class="fc" id="L540">			checkStereotype(stereotype);</span>
-<span class="fc" id="L541">			value = getFirstValueNonNullWithSuffix(&quot;fontstyle&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR),</span>
+<span class="pc bpc" id="L539" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
+<span class="nc" id="L540">			checkStereotype(stereotype);</span>
+<span class="nc" id="L541">			value = getFirstValueNonNullWithSuffix(&quot;fontstyle&quot; + stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR),</span>
 					param);
 		}
 <span class="pc bpc" id="L544" title="1 of 2 branches missed.">		if (value == null)</span>
@@ -564,8 +564,8 @@ public class SkinParam implements ISkinParam {
 
 	@Override
 	public UFont getFont(Stereotype stereotype, boolean inPackageTitle, FontParam... fontParam) {
-<span class="fc bfc" id="L567" title="All 2 branches covered.">		if (stereotype != null)</span>
-<span class="fc" id="L568">			checkStereotype(stereotype);</span>
+<span class="pc bpc" id="L567" title="1 of 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L568">			checkStereotype(stereotype);</span>
 
 <span class="fc" id="L570">		final String fontFamily = getFontFamily(stereotype, fontParam);</span>
 <span class="fc" id="L571">		final UFontFace face = getFontFace(stereotype, inPackageTitle, fontParam);</span>

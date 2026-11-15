@@ -47,9 +47,9 @@ import net.sourceforge.plantuml.SourceStringReader;
 <span class="fc" id="L47">public class DiagramExplainer {</span>
 
 	public List&lt;Explanation&gt; explain(String source) throws IOException {
-<span class="pc bpc" id="L50" title="1 of 2 branches missed.">		if (source.startsWith(&quot;@start&quot;) == false)</span>
-<span class="nc" id="L51">			return Arrays.asList(</span>
-<span class="nc" id="L52">					Explanation.ofError(&quot;The input must start with a @start... directive (for example @startuml)&quot;));</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (source.startsWith(&quot;@start&quot;) == false)</span>
+<span class="fc" id="L51">			return Arrays.asList(</span>
+<span class="fc" id="L52">					Explanation.ofError(&quot;The input must start with a @start... directive (for example @startuml)&quot;));</span>
 
 <span class="fc" id="L54">		final SourceStringReader ss = new SourceStringReader(source, UTF_8);</span>
 <span class="fc" id="L55">		final List&lt;BlockUml&gt; blocks = ss.getBlocks();</span>

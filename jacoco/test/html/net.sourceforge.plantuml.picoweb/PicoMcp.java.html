@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PicoMcp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.picoweb</a> &gt; <span class="el_source">PicoMcp.java</span></div><h1>PicoMcp.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.picoweb;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.IOException;
+import java.util.List;
+
+import net.sourceforge.plantuml.explain.DiagramExplainer;
+import net.sourceforge.plantuml.explain.Explanation;
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonArray;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.mcp.DiagramRenderer;
+import net.sourceforge.plantuml.mcp.McpResult;
+import net.sourceforge.plantuml.mcp.SyntaxChecker;
+import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.version.Version;
+
+/**
+ * The tools of plantuml-mcp-js/server.js as plain HTTP endpoints of the
+ * PicoWebServer, with the same JSON answers:
+ * &lt;ul&gt;
+ * &lt;li&gt;GET /plantuml_version (text)&lt;/li&gt;
+ * &lt;li&gt;POST /check_syntax&lt;/li&gt;
+ * &lt;li&gt;POST /render_diagram&lt;/li&gt;
+ * &lt;li&gt;POST /explain_diagram&lt;/li&gt;
+ * &lt;li&gt;POST /mcp: the same tools through JSON-RPC 2.0 (MCP, Streamable HTTP without
+ * session nor SSE), written by hand: initialize, ping, tools/list, tools/call&lt;/li&gt;
+ * &lt;/ul&gt;
+ * The body of a POST is either the raw diagram source or {&quot;source&quot;: &quot;...&quot;}.
+ */
+final class PicoMcp {
+
+	private PicoMcp() {
+	}
+
+	/** @return the answer, or null if this request is not one of ours. */
+	static Answer handle(String method, String path, byte[] body, String origin) throws IOException {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		final String tool = path.startsWith(&quot;/plantuml/&quot;) ? path.substring(&quot;/plantuml&quot;.length()) : path;</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (tool.equals(&quot;/mcp&quot;)) {</span>
+<span class="fc" id="L77">			checkOrigin(origin);</span>
+			// No server-initiated stream (SSE) here
+<span class="fc bfc" id="L79" title="All 2 branches covered.">			if (method.equals(&quot;POST&quot;) == false)</span>
+<span class="fc" id="L80">				return new Answer(405, &quot;text/plain&quot;, &quot;Method Not Allowed&quot;);</span>
+<span class="fc" id="L81">			return rpc(body);</span>
+		}
+<span class="fc bfc" id="L83" title="All 4 branches covered.">		if (method.equals(&quot;GET&quot;) &amp;&amp; tool.equals(&quot;/plantuml_version&quot;))</span>
+<span class="fc" id="L84">			return new Answer(200, &quot;text/plain&quot;, Version.fullDescription());</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (method.equals(&quot;POST&quot;) == false)</span>
+<span class="fc" id="L86">			return null;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (tool.equals(&quot;/check_syntax&quot;))</span>
+<span class="fc" id="L88">			return json(check(source(body)));</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (tool.equals(&quot;/render_diagram&quot;))</span>
+<span class="fc" id="L90">			return json(render(source(body)));</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (tool.equals(&quot;/explain_diagram&quot;))</span>
+<span class="fc" id="L92">			return json(explain(source(body)));</span>
+<span class="fc" id="L93">		return null;</span>
+	}
+
+	private static Answer json(JsonValue value) {
+<span class="fc" id="L97">		return new Answer(200, &quot;application/json&quot;, value.toString());</span>
+	}
+
+	/**
+	 * A web page of the user's browser can call a local server (DNS rebinding):
+	 * the MCP specification asks to refuse any Origin that is not local.
+	 */
+	private static void checkOrigin(String origin) throws BadRequest400 {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (origin == null)</span>
+<span class="fc" id="L106">			return;</span>
+<span class="fc" id="L107">		final String host = origin.replaceFirst(&quot;^[a-zA-Z]+://&quot;, &quot;&quot;).replaceFirst(&quot;:\\d+$&quot;, &quot;&quot;);</span>
+<span class="fc bfc" id="L108" title="All 6 branches covered.">		if (host.equals(&quot;localhost&quot;) || host.equals(&quot;127.0.0.1&quot;) || host.equals(&quot;[::1]&quot;))</span>
+<span class="fc" id="L109">			return;</span>
+<span class="fc" id="L110">		throw new BadRequest400(&quot;Origin not allowed: &quot; + PicoWebServer.oneLine(origin));</span>
+	}
+
+	// ---- JSON-RPC 2.0 / MCP (what the SDK does for server.js) ----
+
+<span class="fc" id="L115">	private static final String[] TOOLS = { &quot;plantuml_version&quot;, &quot;check_syntax&quot;, &quot;render_diagram&quot;, &quot;explain_diagram&quot; };</span>
+
+<span class="fc" id="L117">	private static final String[] DESCRIPTIONS = { //</span>
+			&quot;Returns the version of the embedded PlantUML library.&quot;, //
+			&quot;Checks the syntax of a single PlantUML diagram without rendering it. Returns a JSON object &quot;
+					+ &quot;containing: 'valid' (boolean), 'diagramType' (if valid), 'lineCount', 'warnings' (list of &quot;
+					+ &quot;non-fatal warnings), and on failure 'errorLineNumber' (1-based line number), &quot;
+					+ &quot;'errorMessage', 'errorLine' (the offending source line, when available), and 'errorContext'.&quot;, //
+			&quot;Renders a single PlantUML diagram to a deterministic SVG. Returns a JSON object containing: &quot;
+					+ &quot;'valid' (boolean), and when valid 'diagramType', 'lineCount', 'warnings' (list of &quot;
+					+ &quot;non-fatal warnings) and 'svg' (the rendered SVG as a string). On failure it has the same &quot;
+					+ &quot;error shape as check_syntax.&quot;, //
+			&quot;Explains how a single PlantUML diagram is parsed, line by line. Returns a JSON array of &quot;
+					+ &quot;objects, each containing: 'input' (the source line(s) that produced the explanation), &quot;
+					+ &quot;'explain' (a human-readable explanation), and 'lineNumber' (1-based line number, when &quot;
+					+ &quot;available).&quot; };
+
+	private static Answer rpc(byte[] body) throws IOException {
+		final JsonObject request;
+		try {
+<span class="fc" id="L135">			final JsonValue parsed = Json.parse(new String(body, UTF_8));</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">			if (parsed.isObject() == false)</span>
+<span class="fc" id="L137">				return rpcError(null, -32600, &quot;Invalid Request&quot;);</span>
+<span class="fc" id="L138">			request = parsed.asObject();</span>
+<span class="fc" id="L139">		} catch (RuntimeException e) {</span>
+<span class="fc" id="L140">			return rpcError(null, -32700, &quot;Parse error&quot;);</span>
+<span class="fc" id="L141">		}</span>
+<span class="fc" id="L142">		final JsonValue id = request.get(&quot;id&quot;);</span>
+		// A notification (initialized, cancelled...) has no id and gets no answer
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (id == null)</span>
+<span class="fc" id="L145">			return new Answer(202, &quot;text/plain&quot;, &quot;&quot;);</span>
+<span class="fc" id="L146">		final JsonValue m = request.get(&quot;method&quot;);</span>
+<span class="fc" id="L147">		final JsonValue p = request.get(&quot;params&quot;);</span>
+<span class="pc bpc" id="L148" title="2 of 4 branches missed.">		final String method = m != null &amp;&amp; m.isString() ? m.asString() : &quot;&quot;;</span>
+<span class="pc bpc" id="L149" title="1 of 4 branches missed.">		final JsonObject params = p != null &amp;&amp; p.isObject() ? p.asObject() : Json.object();</span>
+
+		final JsonValue result;
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (method.equals(&quot;initialize&quot;)) {</span>
+<span class="fc" id="L153">			final JsonValue version = params.get(&quot;protocolVersion&quot;);</span>
+<span class="fc" id="L154">			result = Json.object() //</span>
+<span class="pc bpc" id="L155" title="1 of 4 branches missed.">					.add(&quot;protocolVersion&quot;, version != null &amp;&amp; version.isString() ? version.asString() : &quot;2025-03-26&quot;) //</span>
+<span class="fc" id="L156">					.add(&quot;capabilities&quot;, Json.object().add(&quot;tools&quot;, Json.object())) //</span>
+<span class="fc" id="L157">					.add(&quot;serverInfo&quot;, Json.object().add(&quot;name&quot;, &quot;plantuml-picoweb&quot;).add(&quot;version&quot;,</span>
+<span class="fc" id="L158">							Version.versionString()));</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		} else if (method.equals(&quot;ping&quot;)) {</span>
+<span class="fc" id="L160">			result = Json.object();</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		} else if (method.equals(&quot;tools/list&quot;)) {</span>
+<span class="fc" id="L162">			result = Json.object().add(&quot;tools&quot;, toolList());</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">		} else if (method.equals(&quot;tools/call&quot;)) {</span>
+<span class="fc" id="L164">			return callTool(id, params);</span>
+		} else {
+<span class="fc" id="L166">			return rpcError(id, -32601, &quot;Method not found: &quot; + method);</span>
+		}
+<span class="fc" id="L168">		return rpcResult(id, result);</span>
+	}
+
+	private static JsonArray toolList() {
+<span class="fc" id="L172">		final JsonArray tools = Json.array();</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		for (int i = 0; i &lt; TOOLS.length; i++) {</span>
+<span class="fc" id="L174">			final JsonObject properties = Json.object();</span>
+<span class="fc" id="L175">			final JsonArray required = Json.array();</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">			if (i &gt; 0) {</span>
+<span class="fc" id="L177">				properties.add(&quot;source&quot;, Json.object().add(&quot;type&quot;, &quot;string&quot;).add(&quot;description&quot;,</span>
+						&quot;The PlantUML source, including @start.../@end... (a single diagram)&quot;));
+<span class="fc" id="L179">				required.add(&quot;source&quot;);</span>
+			}
+<span class="fc" id="L181">			final JsonObject schema = Json.object().add(&quot;type&quot;, &quot;object&quot;).add(&quot;properties&quot;, properties);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">			if (i &gt; 0)</span>
+<span class="fc" id="L183">				schema.add(&quot;required&quot;, required);</span>
+<span class="fc" id="L184">			tools.add(Json.object().add(&quot;name&quot;, TOOLS[i]).add(&quot;description&quot;, DESCRIPTIONS[i]).add(&quot;inputSchema&quot;,</span>
+					schema));
+		}
+<span class="fc" id="L187">		return tools;</span>
+	}
+
+	private static Answer callTool(JsonValue id, JsonObject params) {
+<span class="fc" id="L191">		final JsonValue n = params.get(&quot;name&quot;);</span>
+<span class="pc bpc" id="L192" title="2 of 4 branches missed.">		final String name = n != null &amp;&amp; n.isString() ? n.asString() : &quot;&quot;;</span>
+<span class="fc" id="L193">		int index = -1;</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		for (int i = 0; i &lt; TOOLS.length; i++)</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">			if (TOOLS[i].equals(name))</span>
+<span class="fc" id="L196">				index = i;</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		if (index == -1)</span>
+<span class="fc" id="L198">			return rpcError(id, -32602, &quot;Unknown tool: &quot; + name);</span>
+
+		final String text;
+<span class="fc" id="L201">		boolean isError = false;</span>
+		try {
+<span class="fc bfc" id="L203" title="All 2 branches covered.">			if (index == 0) {</span>
+<span class="fc" id="L204">				text = Version.fullDescription();</span>
+			} else {
+<span class="fc" id="L206">				final JsonValue a = params.get(&quot;arguments&quot;);</span>
+<span class="pc bpc" id="L207" title="1 of 4 branches missed.">				final JsonValue s = a != null &amp;&amp; a.isObject() ? a.asObject().get(&quot;source&quot;) : null;</span>
+<span class="fc bfc" id="L208" title="All 4 branches covered.">				if (s == null || s.isString() == false)</span>
+<span class="fc" id="L209">					return rpcError(id, -32602, &quot;Invalid arguments: 'source' must be a string&quot;);</span>
+<span class="fc" id="L210">				final String source = s.asString();</span>
+<span class="fc bfc" id="L211" title="All 4 branches covered.">				final JsonValue json = index == 1 ? check(source) : index == 2 ? render(source) : explain(source);</span>
+<span class="fc" id="L212">				text = json.toString();</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">				final JsonValue valid = json.isObject() ? json.asObject().get(&quot;valid&quot;) : null;</span>
+<span class="fc bfc" id="L214" title="All 4 branches covered.">				isError = valid != null &amp;&amp; valid.isFalse();</span>
+			}
+<span class="nc" id="L216">		} catch (Exception e) {</span>
+<span class="nc" id="L217">			return rpcResult(id, toolResult(&quot;Tool failed: &quot; + e, true));</span>
+<span class="fc" id="L218">		}</span>
+<span class="fc" id="L219">		return rpcResult(id, toolResult(text, isError));</span>
+	}
+
+	private static JsonObject toolResult(String text, boolean isError) {
+<span class="fc" id="L223">		final JsonArray content = Json.array().add(Json.object().add(&quot;type&quot;, &quot;text&quot;).add(&quot;text&quot;, text));</span>
+<span class="fc" id="L224">		return Json.object().add(&quot;content&quot;, content).add(&quot;isError&quot;, isError);</span>
+	}
+
+	private static Answer rpcResult(JsonValue id, JsonValue result) {
+<span class="fc" id="L228">		return json(Json.object().add(&quot;jsonrpc&quot;, &quot;2.0&quot;).add(&quot;id&quot;, id).add(&quot;result&quot;, result));</span>
+	}
+
+	private static Answer rpcError(JsonValue id, int code, String message) {
+<span class="fc" id="L232">		final JsonObject error = Json.object().add(&quot;code&quot;, code).add(&quot;message&quot;, message);</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		return json(Json.object().add(&quot;jsonrpc&quot;, &quot;2.0&quot;).add(&quot;id&quot;, id == null ? Json.NULL : id).add(&quot;error&quot;, error));</span>
+	}
+
+	private static String source(byte[] body) throws BadRequest400 {
+<span class="fc" id="L237">		final String text = new String(body, UTF_8);</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">		if (text.trim().startsWith(&quot;{&quot;) == false)</span>
+<span class="fc" id="L239">			return text;</span>
+		try {
+<span class="fc" id="L241">			final JsonValue source = Json.parse(text).asObject().get(&quot;source&quot;);</span>
+<span class="fc bfc" id="L242" title="All 4 branches covered.">			if (source != null &amp;&amp; source.isString())</span>
+<span class="fc" id="L243">				return source.asString();</span>
+<span class="fc" id="L244">		} catch (RuntimeException e) {</span>
+			// Same message as below
+<span class="fc" id="L246">		}</span>
+<span class="fc" id="L247">		throw new BadRequest400(&quot;Expected raw source or a JSON object with a 'source' string&quot;);</span>
+	}
+
+	private static JsonObject check(String source) throws IOException {
+<span class="fc" id="L251">		return toJson(new SyntaxChecker().check(source), false);</span>
+	}
+
+	private static JsonObject render(String source) throws IOException {
+<span class="fc" id="L255">		return toJson(new DiagramRenderer().render(source, &quot;svg&quot;), true);</span>
+	}
+
+	private static JsonObject toJson(McpResult result, boolean withSvg) {
+<span class="fc" id="L259">		final JsonObject json = Json.object().add(&quot;valid&quot;, result.isOk());</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (result.isOk())</span>
+<span class="fc" id="L261">			json.add(&quot;diagramType&quot;, result.getDiagramType());</span>
+<span class="fc" id="L262">		json.add(&quot;lineCount&quot;, result.getLineCount());</span>
+<span class="fc" id="L263">		final JsonArray warnings = Json.array();</span>
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">		for (String w : result.getWarnings())</span>
+<span class="nc" id="L265">			warnings.add(w);</span>
+<span class="fc" id="L266">		json.add(&quot;warnings&quot;, warnings);</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">		if (result.isOk()) {</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">			if (withSvg)</span>
+<span class="fc" id="L269">				json.add(&quot;svg&quot;, result.getSvg());</span>
+		} else {
+<span class="fc bfc" id="L271" title="All 2 branches covered.">			if (result.getErrorLineNumber() &gt; 0)</span>
+<span class="fc" id="L272">				json.add(&quot;errorLineNumber&quot;, result.getErrorLineNumber());</span>
+<span class="fc" id="L273">			addIfNotEmpty(json, &quot;errorMessage&quot;, result.getErrorMessage());</span>
+<span class="fc" id="L274">			addIfNotEmpty(json, &quot;errorLine&quot;, result.getErrorLine());</span>
+<span class="fc" id="L275">			addIfNotEmpty(json, &quot;errorContext&quot;, result.getErrorContext());</span>
+		}
+<span class="fc" id="L277">		return json;</span>
+	}
+
+	private static void addIfNotEmpty(JsonObject json, String key, String value) {
+<span class="pc bpc" id="L281" title="1 of 4 branches missed.">		if (value != null &amp;&amp; value.length() &gt; 0)</span>
+<span class="fc" id="L282">			json.add(key, value);</span>
+<span class="fc" id="L283">	}</span>
+
+	private static JsonArray explain(String source) throws IOException {
+<span class="fc" id="L286">		final JsonArray result = Json.array();</span>
+<span class="fc" id="L287">		final List&lt;Explanation&gt; explanations = new DiagramExplainer().explain(source);</span>
+		// null for a diagram that is a syntax error: nothing to explain
+<span class="fc bfc" id="L289" title="All 2 branches covered.">		if (explanations == null)</span>
+<span class="fc" id="L290">			return result;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">		for (Explanation explanation : explanations) {</span>
+<span class="fc" id="L292">			final JsonArray input = Json.array();</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">			for (String s : explanation.getInput())</span>
+<span class="fc" id="L294">				input.add(s);</span>
+<span class="fc" id="L295">			final JsonObject item = Json.object().add(&quot;input&quot;, input).add(&quot;explain&quot;, explanation.getExplain());</span>
+<span class="fc" id="L296">			final LineLocation location = explanation.getLocation();</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">			if (location != null)</span>
+<span class="fc" id="L298">				item.add(&quot;lineNumber&quot;, location.getPosition() + 1);</span>
+<span class="fc" id="L299">			result.add(item);</span>
+<span class="fc" id="L300">		}</span>
+<span class="fc" id="L301">		return result;</span>
+	}
+
+	static final class Answer {
+		final int status;
+		final String contentType;
+		final String text;
+
+<span class="fc" id="L309">		Answer(int status, String contentType, String text) {</span>
+<span class="fc" id="L310">			this.status = status;</span>
+<span class="fc" id="L311">			this.contentType = contentType;</span>
+<span class="fc" id="L312">			this.text = text;</span>
+<span class="fc" id="L313">		}</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

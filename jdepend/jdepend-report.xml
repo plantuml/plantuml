@@ -13215,8 +13215,8 @@
 
         <Package name="net.sourceforge.plantuml.picoweb">
             <Stats>
-                <TotalClasses>3</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
+                <TotalClasses>4</TotalClasses>
+                <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>4</Ce>
@@ -13232,6 +13232,9 @@
             <ConcreteClasses>
                 <Class sourceFile="BadRequest400.java">
                     net.sourceforge.plantuml.picoweb.BadRequest400
+                </Class>
+                <Class sourceFile="PicoMcp.java">
+                    net.sourceforge.plantuml.picoweb.PicoMcp$Answer
                 </Class>
                 <Class sourceFile="ReceivedHTTPRequest.java">
                     net.sourceforge.plantuml.picoweb.ReceivedHTTPRequest

@@ -204,9 +204,9 @@ public class PSystemBuilder {
 
 <span class="fc" id="L205">		final Collection&lt;DiagramType&gt; diagramTypes = umlSource.getDiagramTypes();</span>
 
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">		for (PSystemFactory systemFactory : factories) {</span>
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">			if (!diagramTypes.contains(systemFactory.getDiagramType()))</span>
-<span class="nc" id="L209">				continue;</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		for (PSystemFactory systemFactory : factories) {</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">			if (!diagramTypes.contains(systemFactory.getDiagramType()))</span>
+<span class="fc" id="L209">				continue;</span>
 
 <span class="fc" id="L211">			final Diagram sys = systemFactory.createSystem(pathSystem, umlSource, previous, preprocessing);</span>
 <span class="fc bfc" id="L212" title="All 2 branches covered.">			if (isOk(sys)) {</span>
@@ -214,7 +214,7 @@ public class PSystemBuilder {
 			}
 <span class="fc" id="L215">		}</span>
 
-<span class="nc" id="L217">		return null;</span>
+<span class="fc" id="L217">		return null;</span>
 
 	}
 

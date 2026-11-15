@@ -329,7 +329,7 @@ public class JsonParser {
 
 	private void readEscape() throws IOException {
 <span class="fc" id="L331">		read();</span>
-<span class="pc bpc" id="L332" title="7 of 8 branches missed.">		switch (current) {</span>
+<span class="pc bpc" id="L332" title="6 of 8 branches missed.">		switch (current) {</span>
 		case '&quot;':
 		case '/':
 		case '\\':
@@ -342,8 +342,8 @@ public class JsonParser {
 <span class="nc" id="L342">			captureBuffer.append('\f');</span>
 <span class="nc" id="L343">			break;</span>
 		case 'n':
-<span class="nc" id="L345">			captureBuffer.append('\n');</span>
-<span class="nc" id="L346">			break;</span>
+<span class="fc" id="L345">			captureBuffer.append('\n');</span>
+<span class="fc" id="L346">			break;</span>
 		case 'r':
 <span class="nc" id="L348">			captureBuffer.append('\r');</span>
 <span class="nc" id="L349">			break;</span>

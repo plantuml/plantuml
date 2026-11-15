@@ -48,24 +48,24 @@ import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 
-<span class="nc" id="L51">public class DiagramRenderer {</span>
+<span class="fc" id="L51">public class DiagramRenderer {</span>
 
 	public McpResult render(String source, String format) throws IOException {
-<span class="nc bnc" id="L54" title="All 2 branches missed.">		if (source.startsWith(&quot;@start&quot;) == false)</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (source.startsWith(&quot;@start&quot;) == false)</span>
 <span class="nc" id="L55">			return McpResult.noAtStart();</span>
 
-<span class="nc" id="L57">		final SourceStringReader ss = new SourceStringReader(source, UTF_8);</span>
-<span class="nc" id="L58">		final List&lt;BlockUml&gt; blocks = ss.getBlocks();</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (blocks.size() != 1)</span>
+<span class="fc" id="L57">		final SourceStringReader ss = new SourceStringReader(source, UTF_8);</span>
+<span class="fc" id="L58">		final List&lt;BlockUml&gt; blocks = ss.getBlocks();</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">		if (blocks.size() != 1)</span>
 <span class="nc" id="L60">			return McpResult.badInput();</span>
 
-<span class="nc" id="L62">		final BlockUml blockUml = blocks.get(0);</span>
-<span class="nc" id="L63">		final Diagram diagram = blockUml.getDiagram();</span>
-<span class="nc" id="L64">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L65">		final DiagramDescription dr = ss.outputImage(baos, 0, new FileFormatOption(FileFormat.SVG));</span>
+<span class="fc" id="L62">		final BlockUml blockUml = blocks.get(0);</span>
+<span class="fc" id="L63">		final Diagram diagram = blockUml.getDiagram();</span>
+<span class="fc" id="L64">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L65">		final DiagramDescription dr = ss.outputImage(baos, 0, new FileFormatOption(FileFormat.SVG));</span>
 
-<span class="nc" id="L67">		final String svg = new String(baos.toByteArray(), UTF_8);</span>
-<span class="nc" id="L68">		return new McpResult(diagram, svg);</span>
+<span class="fc" id="L67">		final String svg = new String(baos.toByteArray(), UTF_8);</span>
+<span class="fc" id="L68">		return new McpResult(diagram, svg);</span>
 	}
 
 }

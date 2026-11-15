@@ -2625,7 +2625,7 @@ Total Classes: 6
 "net.sourceforge.plantuml.packetdiag.command" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.picoweb" %lighten("red", 100) {
-Total Classes: 3
+Total Classes: 4
 }
 "net.sourceforge.plantuml.picoweb" --> "java.io"
 "net.sourceforge.plantuml.picoweb" --> "java.lang"
