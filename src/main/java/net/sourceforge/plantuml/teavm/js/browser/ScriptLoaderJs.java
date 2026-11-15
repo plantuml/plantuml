@@ -50,7 +50,9 @@ public final class ScriptLoaderJs {
 	 * then skips loading entirely. With neither global set, the behaviour is
 	 * exactly what it always was.
 	 */
-	@JSBody(params = { "url", "onOk", "onErr" }, script = "var w = (typeof globalThis !== 'undefined') ? globalThis"
+	@JSBody(params = { "url", "onOk", "onErr" }, script = "if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(url)) {"
+			+ "  onErr('Refused script name: ' + url); return; }"
+			+ "var w = (typeof globalThis !== 'undefined') ? globalThis"
 			+ " : ((typeof self !== 'undefined') ? self : window);"
 			+ "w.__pl_script_state = w.__pl_script_state || Object.create(null);" + "var st = w.__pl_script_state[url];"
 			+
@@ -213,6 +215,9 @@ public final class ScriptLoaderJs {
 	 *                          failed during the current request
 	 */
 	public static boolean require(String url) {
+		if (isPlainScriptName(url) == false)
+			throw new RuntimeException("Refused script name: " + url);
+
 		// Fast path: already loaded
 		if (isLoaded(url))
 			return true;
@@ -222,6 +227,14 @@ public final class ScriptLoaderJs {
 			throw new RuntimeException(answer.getError());
 
 		return false;
+	}
+
+	/**
+	 * Letters, digits, dot, underscore and hyphen only, starting with a letter or a
+	 * digit.
+	 */
+	static boolean isPlainScriptName(String name) {
+		return name != null && name.matches("[A-Za-z0-9][A-Za-z0-9._-]*");
 	}
 
 	private ScriptLoaderJs() {

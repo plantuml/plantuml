@@ -145,6 +145,15 @@ const server = createMountedServer({
   },
 });
 
+// A second origin standing for "another host": it must never be asked for
+// anything. Every request it receives is recorded.
+const foreign = [];
+const foreignServer = require('http').createServer((req, res) => {
+  foreign.push(req.url);
+  res.writeHead(200, { 'Content-Type': 'application/javascript' });
+  res.end('window.__foreignRan = true;');
+});
+
 const { check, finish } = createCheckReporter();
 
 const includeOf = lib => ['@startuml', '!include <' + lib + '/greeting>', 'FAKEHELLO -> FAKEHELLO : ping', '@enduml'];
@@ -164,6 +173,7 @@ const renderedAs = r => r.thrown || (r.svg ? (isErrorImage(r.svg) ? 'error image
 
 (async () => {
   const port = await startServer(server);
+  const foreignPort = await new Promise(resolve => foreignServer.listen(0, '127.0.0.1', () => resolve(foreignServer.address().port)));
   const browser = await pw.chromium.launch({ headless: true });
 
   async function openPage(name) {
@@ -189,6 +199,30 @@ const renderedAs = r => r.thrown || (r.svg ? (isErrorImage(r.svg) ? 'error image
   r = await renderOn(bare.page, loadJsonOf('fakelink'), { includeLoaderCalls: true, maxTextLength: 120 });
   check('%load_json follows a link-only bundle to its target', rendersJsonOf(r, 'fakelib'), renderedAs(r));
   check('no unhandled page errors on the bare page', bare.errors.length === 0, bare.errors.join(' | '));
+
+  // The library name comes from the diagram text and must stay a plain file
+  // name: a scheme with backslashes (read as an address by browsers) or a
+  // `..\\` walk must produce no request at all, and an ordinary include error.
+  requested.length = 0;
+  const evil = [
+    'http:\\\\127.0.0.1:' + foreignPort + '\\x/y',
+    'HTTP:\\\\127.0.0.1:' + foreignPort + '\\x/y',
+    'https:\\\\127.0.0.1:' + foreignPort + '\\x/y',
+    '..\\..\\fakelib/y',
+  ];
+  for (const lib of evil) {
+    r = await renderOn(bare.page, ['@startuml', '!include <' + lib + '>', 'Alice -> Bob : hello', '@enduml'],
+      { includeLoaderCalls: true, maxTextLength: 120 });
+    check('include of <' + lib + '> fails as a PlantUML error image', failsAsIncludeError(r), renderedAs(r));
+  }
+  const ran = await bare.page.evaluate(() => !!window.__foreignRan);
+  check('no request reached another host, no script from it ran', foreign.length === 0 && ran === false,
+    'foreign requests: ' + foreign.join(', ') + '; ran: ' + ran);
+  check('no .min.js was requested from the page origin for these names', requested.length === 0,
+    'requests seen: ' + requested.join(', '));
+  check('a plain include still works afterwards', rendersGreeting(
+    await renderOn(bare.page, includeOf('fakelib'), { includeLoaderCalls: true, maxTextLength: 120 }), 'fakelib'),
+    'fakelib did not load after the refused names');
 
   // Page 2: PLANTUML_STDLIB_BASE points at /cdn/. The page origin is never
   // asked for the bundle.
@@ -268,5 +302,6 @@ const renderedAs = r => r.thrown || (r.svg ? (isErrorImage(r.svg) ? 'error image
 
   await browser.close();
   server.close();
+  foreignServer.close();
   finish(scriptName, { uppercase: true });
 })().catch(e => { console.error(e); process.exit(2); });
