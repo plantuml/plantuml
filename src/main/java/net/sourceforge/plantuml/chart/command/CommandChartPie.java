@@ -56,6 +56,13 @@ import net.sourceforge.plantuml.utils.LineLocation;
  * <pre>
  * pie "Air" [Nitrogen: 78, Oxygen: 21, Argon: 1] labels percent donut 40%
  * </pre>
+ * Written without data, the pie takes its values from the list items that follow it (see
+ * {@link CommandChartItem}):
+ * <pre>
+ * pie "Air" labels
+ *   * Nitrogen : 78
+ *   * Oxygen : 21
+ * </pre>
  * Options, in any order: "labels" shows the value of each slice, "percent" its share,
  * "donut" (optionally followed by the size of the hole, 50% by default) draws a ring.
  */
@@ -74,9 +81,9 @@ public class CommandChartPie extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "STEREO", "(\\<\\<.+?\\>\\>)")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(ChartSeriesName.regex()), //
+				new RegexOptional(ChartSeriesName.regex("labels", "percent", "donut")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "DATA", ChartDataItems.BRACKETED), //
+				new RegexOptional(new RegexLeaf(1, "DATA", ChartDataItems.BRACKETED)), //
 				new RegexLeaf(1, "OPTIONS", "((?:\\s+(?:labels|percent|donut(?:\\s+[0-9.]+%)?))*)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
@@ -93,7 +100,8 @@ public class CommandChartPie extends SingleLineCommand2<ChartDiagram> {
 			ParserPass currentPass) {
 		final String stereo = arg.get("STEREO", 0);
 		final String name = ChartSeriesName.get(arg);
-		final ChartDataItems data = ChartDataItems.parse(arg.get("DATA", 0),
+		final String rawData = arg.get("DATA", 0);
+		final ChartDataItems data = ChartDataItems.parse(rawData,
 				diagram.getSkinParam().getIHtmlColorSet());
 		if (data.getError() != null)
 			return CommandExecutionResult.error(data.getError());
@@ -128,6 +136,8 @@ public class CommandChartPie extends SingleLineCommand2<ChartDiagram> {
 			}
 		}
 
+		if (rawData == null)
+			return diagram.openSeries(series);
 		return diagram.addSeries(series);
 	}
 

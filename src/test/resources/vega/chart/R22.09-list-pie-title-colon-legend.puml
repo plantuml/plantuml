@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+title Air: composition
+pie
+  * Nitrogen : 78
+  * Oxygen : 21
+legend bottom
+@endchart

@@ -1,0 +1,10 @@
+[From string (line 6) ]
+
+@startchart
+title T
+h-axis [A, B]
+legend left
+bar [1, 2]
+bar [3, oops]
+^^^^^^^^^^^^^
+ Invalid number "oops" (Assumed diagram type: chart)

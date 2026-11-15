@@ -1,0 +1,9 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+bar "Sales" #3366CC labels
+  - Widgets : 150
+  - Gadgets : 230
+  - Gizmos : 180
+@endchart

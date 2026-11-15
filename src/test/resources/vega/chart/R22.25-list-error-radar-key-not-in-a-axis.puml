@@ -1,0 +1,9 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+a-axis [Dev, Ops]
+radar
+  * QA : 3
+@endchart

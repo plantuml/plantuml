@@ -104,6 +104,21 @@ final class ChartDataItems {
 		return result;
 	}
 
+	/**
+	 * A single item, as written on a line of a list (see {@link CommandChartItem}): it is not
+	 * split on commas, so that a key may hold one without quotes, as in "Rare gases, others: 1".
+	 */
+	static ChartDataItems parseSingle(String item, HColorSet colorSet) {
+		final ChartDataItems result = new ChartDataItems();
+		if (split(item, ':') == null)
+			return result.fail("Unbalanced quotes in: " + item);
+		final String error = result.add(item.trim(), colorSet);
+		if (error != null)
+			return result.fail(error);
+		result.keyed = result.keys.get(0) != null;
+		return result;
+	}
+
 	private ChartDataItems fail(String message) {
 		this.error = message;
 		return this;
@@ -226,6 +241,16 @@ final class ChartDataItems {
 		for (String part : parts)
 			result.add(unquote(part.trim()));
 		return result;
+	}
+
+	// The key of the i-th value, or null
+	String getKey(int i) {
+		return keys.get(i);
+	}
+
+	// The color written after the i-th value, or null
+	HColor getColor(int i) {
+		return colors.get(i);
 	}
 
 	String getError() {

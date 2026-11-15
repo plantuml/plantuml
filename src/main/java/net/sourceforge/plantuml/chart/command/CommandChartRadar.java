@@ -74,9 +74,9 @@ public class CommandChartRadar extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "STEREO", "(\\<\\<.+?\\>\\>)")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(ChartSeriesName.regex()), //
+				new RegexOptional(ChartSeriesName.regex("labels")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "DATA", ChartDataItems.BRACKETED), //
+				new RegexOptional(new RegexLeaf(1, "DATA", ChartDataItems.BRACKETED)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "COLOR", "#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)")), //
 				new RegexOptional( //
@@ -99,7 +99,8 @@ public class CommandChartRadar extends SingleLineCommand2<ChartDiagram> {
 		final String stereo = arg.get("STEREO", 0);
 		final String name = ChartSeriesName.get(arg);
 		final String colorStr = arg.get("COLOR", 0);
-		final ChartDataItems data = ChartDataItems.parse(arg.get("DATA", 0),
+		final String rawData = arg.get("DATA", 0);
+		final ChartDataItems data = ChartDataItems.parse(rawData,
 				diagram.getSkinParam().getIHtmlColorSet());
 		if (data.getError() != null)
 			return CommandExecutionResult.error(data.getError());
@@ -114,6 +115,9 @@ public class CommandChartRadar extends SingleLineCommand2<ChartDiagram> {
 		if (arg.get("LABELS", 0) != null)
 			series.setShowLabels(true);
 
+		// Written without data, the radar takes its values from the list items that follow it
+		if (rawData == null)
+			return diagram.openSeries(series);
 		return diagram.addSeries(series);
 	}
 

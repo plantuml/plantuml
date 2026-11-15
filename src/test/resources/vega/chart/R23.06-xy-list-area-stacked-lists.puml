@@ -1,0 +1,16 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [Mon, Tue, Wed, Thu]
+area "North" #3366CC
+  * Mon : 3
+  * Tue : 5
+  * Wed : 4
+  * Thu : 6
+area "South" #DC3912
+  * Mon : 2
+  * Wed : 3
+  * Thu : 1
+legend right
+@endchart

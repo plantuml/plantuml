@@ -209,6 +209,27 @@ public class ChartSeries {
 		this.keys = keys == null ? null : new ArrayList<>(keys);
 	}
 
+	/**
+	 * Adds a value at the end, as written on a line of a list after a pie or a radar given
+	 * without data. The key is null for a value without key: the caller checks that either
+	 * every value has a key, or none has.
+	 */
+	public void addItem(String key, Double value, HColor itemColor) {
+		values.add(value);
+		if (key != null) {
+			if (keys == null)
+				keys = new ArrayList<>();
+			keys.add(key);
+		}
+		if (itemColor != null && itemColors == null) {
+			itemColors = new ArrayList<>();
+			for (int i = 0; i < values.size() - 1; i++)
+				itemColors.add(null);
+		}
+		if (itemColors != null)
+			itemColors.add(itemColor);
+	}
+
 	// The color written after the i-th value, or null
 	public HColor getItemColor(int i) {
 		if (itemColors == null || i >= itemColors.size())

@@ -1,0 +1,16 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+bar "Bar"
+  * Q1 : 10
+  * Q2 : 20
+  * Q3 : 15
+line "Line"
+  - Q1 : 12
+  - Q3 : 22
+area "Area"
+  "Q2": 5
+  "Q3": 8
+legend bottom
+@endchart

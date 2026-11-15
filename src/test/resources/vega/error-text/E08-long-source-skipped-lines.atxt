@@ -1,0 +1,32 @@
+[From string (line 47) ]
+
+@startuml
+A0 -> B0 : m
+A1 -> B1 : m
+A2 -> B2 : m
+A3 -> B3 : m
+...
+... ( skipping 22 lines )
+...
+A26 -> B26 : m
+A27 -> B27 : m
+A28 -> B28 : m
+A29 -> B29 : m
+A30 -> B30 : m
+A31 -> B31 : m
+A32 -> B32 : m
+A33 -> B33 : m
+A34 -> B34 : m
+A35 -> B35 : m
+A36 -> B36 : m
+A37 -> B37 : m
+A38 -> B38 : m
+A39 -> B39 : m
+A40 -> B40 : m
+A41 -> B41 : m
+A42 -> B42 : m
+A43 -> B43 : m
+A44 -> B44 : m
+oops oops
+^^^^^^^^^
+ Syntax Error? (Assumed diagram type: sequence)

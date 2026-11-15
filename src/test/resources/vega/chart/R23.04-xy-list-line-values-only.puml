@@ -1,0 +1,11 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [Q1, Q2, Q3, Q4]
+line "Trend" interpolate
+  * 10
+  * 25
+  * 18
+  * 30
+@endchart

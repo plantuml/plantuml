@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+!$pets = [{"name": "Dogs", "n": 386}, {"name": "Cats", "n": 85}, {"name": "Rats", "n": 15}]
+pie labels
+!foreach $p in $pets
+  - $p.name : $p.n
+!endfor
+@endchart

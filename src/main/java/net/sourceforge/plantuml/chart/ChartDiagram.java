@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.NaturalSpline;
@@ -108,6 +109,8 @@ public class ChartDiagram extends TitledDiagram {
 	private boolean radarCircleGrid;
 	private Kind kind;
 	private String kindKeyword;
+	// The series written without data, which takes the list items that follow it
+	private ChartSeries openSeries;
 
 	public DiagramDescription getDescription() {
 		return new DiagramDescription("Chart Diagram");
@@ -392,6 +395,19 @@ public class ChartDiagram extends TitledDiagram {
 		return result;
 	}
 
+	// The key of a bar, line, area or scatter value written as a list item, checked as the
+	// keys of a series written with its data (see checkCartesianKeys)
+	private CommandExecutionResult checkCartesianKey(String key) {
+		if (orientation == Orientation.VERTICAL && xAxis.isAutoScale() == false)
+			return CommandExecutionResult
+					.error("Keyed values (key: value) need h-axis categories, not an h-axis range");
+		final List<String> labels = getCategoryLabels();
+		if (labels.isEmpty() == false && labels.contains(key) == false)
+			return CommandExecutionResult.error(
+					"\"" + key + "\" is not in " + (orientation == Orientation.HORIZONTAL ? "v-axis" : "h-axis"));
+		return null;
+	}
+
 	// The labels of the category axis: the h-axis, or the v-axis for a horizontal chart
 	private List<String> getCategoryLabels() {
 		return orientation == Orientation.HORIZONTAL ? yAxisLabels : xAxisLabels;
@@ -535,16 +551,9 @@ public class ChartDiagram extends TitledDiagram {
 		if (s.getType() == ChartSeries.SeriesType.PIE) {
 			if (series.isEmpty() == false)
 				return CommandExecutionResult.error("Only one pie is allowed in a chart");
-			boolean positive = false;
-			for (Double value : s.getValues())
-				if (value != null) {
-					if (value < 0)
-						return CommandExecutionResult.error("A pie cannot have a negative value: " + value);
-					if (value > 0)
-						positive = true;
-				}
-			if (positive == false)
-				return CommandExecutionResult.error("A pie needs at least one value greater than 0");
+			final String error = checkPieValues(s);
+			if (error != null)
+				return CommandExecutionResult.error(error);
 		} else {
 			final CommandExecutionResult unknown = checkKeys(s, angularLabels);
 			if (unknown != null)
@@ -552,6 +561,87 @@ public class ChartDiagram extends TitledDiagram {
 		}
 		series.add(s);
 		return CommandExecutionResult.ok();
+	}
+
+	// The values of a pie cannot be negative, and one at least must be greater than 0.
+	// Returns an error message, or null
+	private static String checkPieValues(ChartSeries s) {
+		boolean positive = false;
+		for (Double value : s.getValues())
+			if (value != null) {
+				if (value < 0)
+					return "A pie cannot have a negative value: " + value;
+				if (value > 0)
+					positive = true;
+			}
+		if (positive == false)
+			return "A pie needs at least one value greater than 0";
+		return null;
+	}
+
+	/**
+	 * Adds a series written without data: its values are given by the list items that follow
+	 * it (see {@link #addItem}), until another series is written. A pie is checked once every
+	 * line is read (see {@link #checkFinalError}).
+	 */
+	public CommandExecutionResult openSeries(ChartSeries s) {
+		final Kind seriesKind = s.getType() == ChartSeries.SeriesType.PIE ? Kind.PIE
+				: s.getType() == ChartSeries.SeriesType.RADAR ? Kind.RADAR : Kind.CARTESIAN;
+		final CommandExecutionResult error = checkKind(s.getType().name().toLowerCase(Locale.ROOT), seriesKind);
+		if (error != null)
+			return error;
+		if (s.getType() == ChartSeries.SeriesType.PIE && series.isEmpty() == false)
+			return CommandExecutionResult.error("Only one pie is allowed in a chart");
+		// A list gives values, which cannot be drawn with coordinate pairs
+		if (seriesKind == Kind.CARTESIAN && hasCoordinatePairs())
+			return CommandExecutionResult.error(
+					"All series must use the same data format (either all coordinate pairs or all index-based)");
+		series.add(s);
+		openSeries = s;
+		return CommandExecutionResult.ok();
+	}
+
+	/**
+	 * Adds a value, written on a line of a list such as "* Nitrogen : 78", to the series
+	 * written without data before it.
+	 */
+	public CommandExecutionResult addItem(String key, Double value, HColor color) {
+		if (openSeries == null)
+			return CommandExecutionResult
+					.error("A list item must follow a series written without data, as in: pie \"Air\"");
+		if (openSeries.getValues().isEmpty() == false && openSeries.hasKeys() != (key != null))
+			return CommandExecutionResult.error("Either every value has a key (key: value), or none has");
+		if (openSeries.getType() == ChartSeries.SeriesType.PIE && value != null && value < 0)
+			return CommandExecutionResult.error("A pie cannot have a negative value: " + value);
+		if (openSeries.getType() == ChartSeries.SeriesType.RADAR && key != null && angularLabels.isEmpty() == false
+				&& angularLabels.contains(key) == false)
+			return CommandExecutionResult.error("\"" + key + "\" is not in a-axis");
+		if (openSeries.getType() != ChartSeries.SeriesType.PIE
+				&& openSeries.getType() != ChartSeries.SeriesType.RADAR) {
+			if (color != null)
+				return CommandExecutionResult
+						.error("A value of a " + openSeries.getType().name().toLowerCase(Locale.ROOT)
+								+ " cannot have a color of its own");
+			if (key != null) {
+				final CommandExecutionResult unknown = checkCartesianKey(key);
+				if (unknown != null)
+					return unknown;
+			}
+		}
+		openSeries.addItem(key, value, color);
+		return CommandExecutionResult.ok();
+	}
+
+	// A pie written as a list is checked once all its items are read
+	@Override
+	public String checkFinalError() {
+		for (ChartSeries s : series)
+			if (s.getType() == ChartSeries.SeriesType.PIE) {
+				final String error = checkPieValues(s);
+				if (error != null)
+					return error;
+			}
+		return super.checkFinalError();
 	}
 
 	public CommandExecutionResult setXAxisLabels(List<String> labels) {
@@ -650,6 +740,7 @@ public class ChartDiagram extends TitledDiagram {
 	}
 
 	public CommandExecutionResult addSeries(ChartSeries series) {
+		openSeries = null;
 		final boolean polar = series.getType() == ChartSeries.SeriesType.PIE
 				|| series.getType() == ChartSeries.SeriesType.RADAR;
 		final Kind seriesKind = series.getType() == ChartSeries.SeriesType.PIE ? Kind.PIE

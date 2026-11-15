@@ -1,0 +1,7 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+pie "Air"
+@endchart

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="441px" preserveAspectRatio="none" style="width:404px;height:441px;background:#FFFFFF;" version="1.1" viewBox="0 0 404 441" width="404px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M172.813,53.981 A140,140 0 0 1 263.361,300.757 A140,140 0 0 1 34.694,171.108 L172.813,193.981 L172.813,53.981" fill="#1F77B4" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M34.694,171.108 A140,140 0 0 1 159.703,54.596 L172.813,193.981 L34.694,171.108" fill="#FF7F0E" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M159.703,54.596 A140,140 0 0 1 168.438,54.049 L172.813,193.981 L159.703,54.596" fill="#2CA02C" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M168.438,54.049 A140,140 0 0 1 172.813,53.981 L172.813,193.981 L168.438,54.049" fill="#D62728" style="stroke:#FFF;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="223.882" y="267.274">78</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="102.981" y="131.3">21</text>
+    <text fill="#000" font-size="14" x="163.234" y="107.047">1</text>
+    <text fill="#000" font-size="14" textLength="19.425" x="161.678" y="106.881">0.5</text>
+    <text fill="#000" font-size="14" textLength="52.938" x="260.479" y="317.611">Nitrogen</text>
+    <text fill="#000" font-size="14" textLength="48.212" x="30" y="83.019">Oxygen</text>
+    <text fill="#000" font-size="14" textLength="37.363" x="143.593" y="41.176">Argon</text>
+    <text fill="#000" font-size="14" textLength="33.512" x="153.451" y="40.889">Neon</text>
+  </g>
+</svg>

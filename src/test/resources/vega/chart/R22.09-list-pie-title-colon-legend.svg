@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="456px" preserveAspectRatio="none" style="width:397px;height:456px;background:#FFFFFF;" version="1.1" viewBox="0 0 397 456" width="397px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="95.725" x="121.637" y="30.889">Air: composition</text>
+    </g>
+    <rect fill="#1F77B4" height="12" style="stroke:#1F77B4;stroke-width:1;" width="12" x="94.925" y="366"/>
+    <text fill="#000" font-size="14" textLength="52.938" x="111.925" y="375.889">Nitrogen</text>
+    <rect fill="#FF7F0E" height="12" style="stroke:#FF7F0E;stroke-width:1;" width="12" x="179.863" y="366"/>
+    <text fill="#000" font-size="14" textLength="48.212" x="196.863" y="375.889">Oxygen</text>
+    <path d="M170,65 A140,140 0 0 1 256.542,315.047 A140,140 0 0 1 33.946,171.994 L170,205 L170,65" fill="#1F77B4" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M33.946,171.994 A140,140 0 0 1 170,65 L170,205 L33.946,171.994" fill="#FF7F0E" style="stroke:#FFF;stroke-width:1.5;"/>
+  </g>
+</svg>

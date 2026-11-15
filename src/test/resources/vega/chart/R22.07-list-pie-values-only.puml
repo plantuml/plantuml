@@ -1,0 +1,9 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+pie labels percent
+  * 50
+  * 30
+  * 20
+@endchart

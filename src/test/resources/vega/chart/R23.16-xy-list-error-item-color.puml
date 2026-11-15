@@ -1,0 +1,8 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+bar
+  * Jan : 10 #red
+@endchart

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="510px" preserveAspectRatio="none" style="width:501px;height:510px;background:#FFFFFF;" version="1.1" viewBox="0 0 501 510" width="501px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="70.088" x="214.456" y="30.889">Sales: 2024</text>
+    </g>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="70" y1="95" y2="395"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="395" y2="395"/>
+    <text fill="#000" font-size="14" x="52.213" y="398.889">0</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="335" y2="335"/>
+    <text fill="#000" font-size="14" x="52.213" y="338.889">4</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="275" y2="275"/>
+    <text fill="#000" font-size="14" x="52.213" y="278.889">8</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="215" y2="215"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="218.889">12</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="155" y2="155"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="158.889">16</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="65" y1="95" y2="95"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="44.425" y="98.889">20</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="470" y1="395" y2="395"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="170" x2="170" y1="395" y2="400"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="158.713" y="415.889">Jan</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="370" x2="370" y1="395" y2="400"/>
+    <text fill="#000" font-size="14" textLength="24.15" x="357.925" y="415.889">Feb</text>
+    <rect fill="#F1F1F1" height="150" style="stroke:#181818;stroke-width:0.5;" width="120" x="110" y="245"/>
+    <rect fill="#F1F1F1" height="300" style="stroke:#181818;stroke-width:0.5;" width="120" x="310" y="95"/>
+    <rect fill="#F1F1F1" height="12" style="stroke:#F1F1F1;stroke-width:1;" width="12" x="70" y="445"/>
+    <text fill="#000" font-size="14" textLength="35.088" x="87" y="455.889">Sales</text>
+  </g>
+</svg>

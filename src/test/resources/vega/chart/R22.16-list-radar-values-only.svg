@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="363px" preserveAspectRatio="none" style="width:400px;height:363px;background:#FFFFFF;" version="1.1" viewBox="0 0 400 363" width="400px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <polygon fill="none" points="204.542,164,228.791,206,180.294,206" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="204.542,136,253.04,220,156.045,220" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="204.542,108,277.289,234,131.796,234" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="204.542,80,301.537,248,107.548,248" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <polygon fill="none" points="204.542,52,325.786,262,83.299,262" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="204.542" x2="204.542" y1="192" y2="52"/>
+    <text fill="#000" font-size="14" textLength="40.512" x="184.286" y="40.889">Speed</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="204.542" x2="325.786" y1="192" y2="262"/>
+    <text fill="#000" font-size="14" textLength="39.725" x="330.053" y="273.389">Power</text>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="204.542" x2="83.299" y1="192" y2="262"/>
+    <text fill="#000" font-size="14" textLength="49.7" x="30" y="273.389">Comfort</text>
+    <polygon fill="#36C" fill-opacity="0.251" points="204.542,108,325.786,262,107.548,248" style="stroke:#36C;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <ellipse cx="204.542" cy="108" fill="#36C" rx="3" ry="3" style="stroke:#36C;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="200.649" y="98.889">3</text>
+    <ellipse cx="325.786" cy="262" fill="#36C" rx="3" ry="3" style="stroke:#36C;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="330.461" y="272.389">5</text>
+    <ellipse cx="107.548" cy="248" fill="#36C" rx="3" ry="3" style="stroke:#36C;stroke-width:1;"/>
+    <text fill="#000" font-size="14" x="95.086" y="258.389">4</text>
+    <text fill="#000" font-size="14" x="207.542" y="174.889">1</text>
+    <text fill="#000" font-size="14" x="207.542" y="146.889">2</text>
+    <text fill="#000" font-size="14" x="207.542" y="118.889">3</text>
+    <text fill="#000" font-size="14" x="207.542" y="90.889">4</text>
+    <text fill="#000" font-size="14" x="207.542" y="62.889">5</text>
+  </g>
+</svg>

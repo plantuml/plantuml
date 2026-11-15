@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.chart.command.CommandChartAnnotation;
 import net.sourceforge.plantuml.chart.command.CommandChartArea;
 import net.sourceforge.plantuml.chart.command.CommandChartBar;
 import net.sourceforge.plantuml.chart.command.CommandChartHAxis;
+import net.sourceforge.plantuml.chart.command.CommandChartItem;
 import net.sourceforge.plantuml.chart.command.CommandChartLegend;
 import net.sourceforge.plantuml.chart.command.CommandChartLine;
 import net.sourceforge.plantuml.chart.command.CommandChartOrientation;
@@ -84,6 +85,8 @@ public class ChartDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandChartAnnotation());
 		// Add common commands last so they don't override chart-specific ones
 		CommonCommands.addCommonCommands1(cmds);
+		// A list item, as "* Nitrogen : 78", is so loose that it comes after every other command
+		cmds.add(new CommandChartItem());
 	}
 
 	@Override

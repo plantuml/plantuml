@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+!$sales = {"Jan": 10, "Feb": 20, "Mar": 15, "Apr": 30}
+bar "Sales" labels
+!foreach $m in %get_json_keys($sales)
+  * $m : $sales[$m]
+!endfor
+@endchart

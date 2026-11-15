@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+h-axis [A, B, C, D]
+scatter <<triangle>> "Points"
+  * D : 4
+  * A : 3
+  * C : 5
+@endchart

@@ -1,0 +1,8 @@
+---
+output: utxt, atxt
+expected-status: 400
+---
+@startuml
+!$x = %undefined_fn(3)
+Alice -> Bob
+@enduml

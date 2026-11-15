@@ -1,0 +1,7 @@
+[From string (line 4) ]
+
+@startuml
+  Alice -> Bob : ok
+  this is wrong
+  ^^^^^^^^^^^^^
+ Syntax Error? (Assumed diagram type: sequence)

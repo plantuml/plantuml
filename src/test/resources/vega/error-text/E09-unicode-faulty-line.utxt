@@ -1,0 +1,7 @@
+[From string (line 3) ]
+
+@startuml
+Alice -> Bob : été
+Éléphant ??? → café
+^^^^^^^^^^^^^^^^^^^
+ Syntax Error? (Assumed diagram type: sequence)

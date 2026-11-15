@@ -1,0 +1,11 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+pie labels
+  * Nitrogen : 78
+  * Water : 0
+  * Ice :
+  * Oxygen : "21"
+legend left
+@endchart

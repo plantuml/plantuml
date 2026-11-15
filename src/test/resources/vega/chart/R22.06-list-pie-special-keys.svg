@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="462px" preserveAspectRatio="none" style="width:426px;height:462px;background:#FFFFFF;" version="1.1" viewBox="0 0 426 462" width="426px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M189.144,47.64 A140,140 0 0 1 264.833,69.865 L189.144,187.64 L189.144,47.64" fill="#1F77B4" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M264.833,69.865 A140,140 0 0 1 149.701,321.969 L189.144,187.64 L264.833,69.865" fill="#FF7F0E" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M149.701,321.969 A140,140 0 0 1 50.569,207.564 L189.144,187.64 L149.701,321.969" fill="#2CA02C" style="stroke:#FFF;stroke-width:1.5;"/>
+    <path d="M50.569,207.564 A140,140 0 0 1 189.144,47.64 L189.144,187.64 L50.569,207.564" fill="#D62728" style="stroke:#FFF;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" x="210.888" y="104.215">1</text>
+    <text fill="#000" font-size="14" x="268.026" y="229.332">5</text>
+    <text fill="#000" font-size="14" x="116.477" y="251.122">2</text>
+    <text fill="#000" font-size="14" x="116.477" y="131.937">3</text>
+    <text fill="#000" font-size="14" textLength="110.425" x="191.746" y="40.889">Rare gases, others</text>
+    <text fill="#000" font-size="14" textLength="73.5" x="322.267" y="256.749">Driver's seat</text>
+    <text fill="#000" font-size="14" textLength="17.938" x="60.034" y="294.342">C#</text>
+    <text fill="#000" font-size="14" textLength="52.15" x="30" y="88.716">Ratio 1:2</text>
+  </g>
+</svg>

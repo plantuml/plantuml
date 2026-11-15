@@ -1,0 +1,18 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+a-axis [Dev, Ops, QA, Design]
+r-axis 0 --> 5 spacing 1
+radar "Team 1"
+  * Dev : 4
+  * Ops : 3
+  * QA : 5
+  * Design : 2
+radar "Team 2" #DC3912 labels
+  * QA : 2
+  * Dev : 5
+  * Ops : 3
+  * Design : 4
+legend bottom
+@endchart

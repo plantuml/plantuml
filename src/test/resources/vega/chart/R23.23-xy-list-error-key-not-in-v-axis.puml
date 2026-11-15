@@ -1,0 +1,10 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+orientation horizontal
+v-axis [A, B]
+bar
+  * C : 3
+@endchart

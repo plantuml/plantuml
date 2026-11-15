@@ -1,0 +1,9 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+radar "Team" labels
+  * QA : 2
+  * Dev : 5
+a-axis [Dev, Ops, QA]
+@endchart

@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+line "Adopted" labels
+  "Jan": 38
+  "Feb": 52
+  "Mar": 47
+  "Apr": 61
+@endchart

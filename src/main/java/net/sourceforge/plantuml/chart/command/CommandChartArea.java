@@ -69,9 +69,9 @@ public class CommandChartArea extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "STEREO", "(\\<\\<.+?\\>\\>)")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(ChartSeriesName.regex()), //
+				new RegexOptional(ChartSeriesName.regex("v2", "y2", "labels")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "DATA", ChartDataItems.BRACKETED), //
+				new RegexOptional(new RegexLeaf(1, "DATA", ChartDataItems.BRACKETED)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "COLOR", "#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)")), //
 				new RegexOptional( //
@@ -132,6 +132,9 @@ public class CommandChartArea extends SingleLineCommand2<ChartDiagram> {
 			series.setShowLabels(true);
 		}
 
+		// Written without data, the series takes its values from the list items that follow it
+		if (data == null)
+			return diagram.openSeries(series);
 		return diagram.addSeries(series);
 	}
 

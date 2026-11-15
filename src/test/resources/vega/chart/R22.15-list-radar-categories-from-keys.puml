@@ -1,0 +1,13 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+radar "Day"
+  - North : 3
+  - East : 4
+  - South : 2
+radar "Night"
+  - North : 1
+  - West : 2
+legend right
+@endchart

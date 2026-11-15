@@ -1,0 +1,16 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+stackMode stacked
+h-axis [Q1, Q2, Q3]
+bar "2023" #3366CC
+  * Q1 : 10
+  * Q2 : 20
+  * Q3 : 30
+bar "2024" #DC3912
+  * Q3 : 35
+  * Q1 : 15
+  * Q2 : 25
+legend bottom
+@endchart

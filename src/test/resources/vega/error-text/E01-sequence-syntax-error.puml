@@ -1,0 +1,8 @@
+---
+output: utxt, atxt
+expected-status: 400
+---
+@startuml
+Alice -> Bob : hi
+foo bar baz qux
+@enduml

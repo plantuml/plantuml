@@ -1,0 +1,11 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+a-axis [A, B, C]
+radar "Inline" [1, 2, 3]
+radar "Items"
+  * C : 1
+  * A : 3
+legend bottom
+@endchart

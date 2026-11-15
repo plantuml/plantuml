@@ -1,0 +1,6 @@
+[From string (line 2) ]
+
+@startuml
+!$x = %undefined_fn(3)
+^^^^^^^^^^^^^^^^^^^^^^
+ Unknown built-in function %undefined_fn

@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+a-axis [Speed, Power, Comfort]
+radar "Car" #3366CC labels
+  * 3
+  * 5
+  * 4
+@endchart

@@ -1,0 +1,7 @@
+---
+output: utxt, atxt
+expected-status: 400
+---
+@startchart
+pie {"Dogs": 386, "Cats": 85]
+@endchart

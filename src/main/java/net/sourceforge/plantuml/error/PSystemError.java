@@ -35,6 +35,9 @@
 package net.sourceforge.plantuml.error;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,9 +46,13 @@ import java.util.List;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.FileImageData;
 import net.sourceforge.plantuml.UgDiagram;
+import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
@@ -64,6 +71,7 @@ import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockRaw;
@@ -72,6 +80,7 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -154,12 +163,46 @@ public abstract class PSystemError extends UgDiagram {
 		return result.asList();
 	}
 
+	// Where the error was found, the source up to the faulty line, that line underlined, and
+	// the message
 	public List<String> getPureAsciiFormatted() {
 		final List<String> result = getTextFromStack();
-		result.addAll(getTextFullBody());
-		result.add("^^^^^");
+		final List<String> body = getTextFullBody();
+		result.addAll(body);
+		result.add(underline(body.get(body.size() - 1)));
 		result.addAll(getTextError());
 		return result;
+	}
+
+	// Carets under the text of a line, its indentation kept
+	private static String underline(String line) {
+		final StringBuilder sb = new StringBuilder();
+		int i = 0;
+		while (i < line.length() && Character.isWhitespace(line.charAt(i))) {
+			sb.append(line.charAt(i) == '\t' ? '\t' : ' ');
+			i++;
+		}
+		final int end = line.trim().isEmpty() ? i + 1 : line.length();
+		while (i < end) {
+			sb.append('^');
+			i++;
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * ATXT and UTXT: the error as plain text (see {@link #getPureAsciiFormatted}). The
+	 * graphical image drawn as text would be as wide as its pixels, and would put the message
+	 * at the very end, under the welcome text added to a short source.
+	 */
+	@Override
+	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+		final PrintStream ps = SecurityUtils.createPrintStream(os, true, StandardCharsets.UTF_8);
+		// Without trailing spaces, as the blank line before the source
+		for (String line : getPureAsciiFormatted())
+			ps.println(line.replaceAll("\\s+$", ""));
+		ps.flush();
+		return new ImageDataSimple(new XDimension2D(0, 0), FileImageData.ERROR);
 	}
 
 	private List<String> getTextFromStack() {

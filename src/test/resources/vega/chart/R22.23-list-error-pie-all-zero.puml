@@ -1,0 +1,9 @@
+---
+output: svg
+expected-status: 400
+---
+@startchart
+pie
+  * Nitrogen : 0
+  * Oxygen : 0
+@endchart

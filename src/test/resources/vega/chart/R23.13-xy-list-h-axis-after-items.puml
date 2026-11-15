@@ -1,0 +1,9 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+line labels
+  * Feb : 2
+  * Jan : 1
+h-axis [Jan, Feb, Mar]
+@endchart

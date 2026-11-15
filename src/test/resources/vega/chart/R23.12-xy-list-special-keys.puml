@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+line labels
+  * North, East : 3
+  * Driver's : 5
+  * "C#" : 2
+  * 'Ratio 1:2' : 4
+@endchart

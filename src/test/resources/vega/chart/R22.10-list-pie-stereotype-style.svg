@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHART" height="429px" preserveAspectRatio="none" style="width:455px;height:429px;background:#FFFFFF;" version="1.1" viewBox="0 0 455 429" width="455px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#1F77B4" height="12" style="stroke:#1F77B4;stroke-width:1;" width="12" x="30" y="153.25"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="47" y="163.139">Dogs</text>
+    <rect fill="#FF7F0E" height="12" style="stroke:#FF7F0E;stroke-width:1;" width="12" x="30" y="174.75"/>
+    <text fill="#000" font-size="14" textLength="28.787" x="47" y="184.639">Cats</text>
+    <path d="M239.725,30 A140,140 0 0 1 314.914,288.096 A140,140 0 0 1 112.875,110.763 L239.725,170 L239.725,30" fill="#1F77B4" style="stroke:#444;stroke-width:1.5;"/>
+    <path d="M112.875,110.763 A140,140 0 0 1 239.725,30 L239.725,170 L112.875,110.763" fill="#FF7F0E" style="stroke:#444;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" font-style="italic" textLength="28" x="274.598" y="250.651">82%</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="28" x="176.852" y="97.127">18%</text>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+pie labels
+  * Rare gases, others : 1
+  * Driver's seat : 5
+  * "C#" : 2
+  * 'Ratio 1:2' : 3
+@endchart

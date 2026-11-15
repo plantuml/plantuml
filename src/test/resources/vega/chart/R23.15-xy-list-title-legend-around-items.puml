@@ -1,0 +1,11 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+title Sales: 2024
+h-axis [Jan, Feb]
+bar "Sales"
+  * Jan : 10
+legend bottom
+  * Feb : 20
+@endchart

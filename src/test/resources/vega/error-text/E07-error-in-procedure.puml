@@ -1,0 +1,11 @@
+---
+output: utxt, atxt
+expected-status: 400
+---
+@startuml
+!procedure $p()
+  Alice -> Bob : ok
+  this is wrong
+!endprocedure
+$p()
+@enduml

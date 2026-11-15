@@ -1,0 +1,10 @@
+---
+output: svg, utxt, atxt
+---
+@startchart
+!$pets = {"Dogs": 386, "Cats": 85, "Rats": 15}
+pie "Pets" percent
+!foreach $k in %get_json_keys($pets)
+  * $k : $pets[$k]
+!endfor
+@endchart

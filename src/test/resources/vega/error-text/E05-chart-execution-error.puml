@@ -1,0 +1,11 @@
+---
+output: utxt, atxt
+expected-status: 400
+---
+@startchart
+title T
+h-axis [A, B]
+legend left
+bar [1, 2]
+bar [3, oops]
+@endchart

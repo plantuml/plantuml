@@ -1,0 +1,52 @@
+---
+output: utxt, atxt
+expected-status: 400
+---
+@startuml
+A0 -> B0 : m
+A1 -> B1 : m
+A2 -> B2 : m
+A3 -> B3 : m
+A4 -> B4 : m
+A5 -> B5 : m
+A6 -> B6 : m
+A7 -> B7 : m
+A8 -> B8 : m
+A9 -> B9 : m
+A10 -> B10 : m
+A11 -> B11 : m
+A12 -> B12 : m
+A13 -> B13 : m
+A14 -> B14 : m
+A15 -> B15 : m
+A16 -> B16 : m
+A17 -> B17 : m
+A18 -> B18 : m
+A19 -> B19 : m
+A20 -> B20 : m
+A21 -> B21 : m
+A22 -> B22 : m
+A23 -> B23 : m
+A24 -> B24 : m
+A25 -> B25 : m
+A26 -> B26 : m
+A27 -> B27 : m
+A28 -> B28 : m
+A29 -> B29 : m
+A30 -> B30 : m
+A31 -> B31 : m
+A32 -> B32 : m
+A33 -> B33 : m
+A34 -> B34 : m
+A35 -> B35 : m
+A36 -> B36 : m
+A37 -> B37 : m
+A38 -> B38 : m
+A39 -> B39 : m
+A40 -> B40 : m
+A41 -> B41 : m
+A42 -> B42 : m
+A43 -> B43 : m
+A44 -> B44 : m
+oops oops
+@enduml

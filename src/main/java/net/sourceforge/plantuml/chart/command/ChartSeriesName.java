@@ -58,11 +58,19 @@ final class ChartSeriesName {
 	}
 
 	static IRegex regex() {
+		return regex(new String[0]);
+	}
+
+	// The same, an unquoted name not being one of the given keywords: "pie labels" is a pie
+	// with labels, written without data, not a pie named "labels"
+	static IRegex regex(String... keywords) {
+		final String exclude = keywords.length == 0 ? ""
+				: "(?!(?:" + String.join("|", keywords) + ")(?![\\p{L}0-9_.\\-]))";
 		return new RegexOr(//
 				new RegexLeaf(1, "NAME", "\"([^\"]+)\""), //
 				new RegexConcat(//
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf(1, "NAMEWORD", "([\\p{L}0-9_][\\p{L}0-9_.\\-]*)")));
+						new RegexLeaf(1, "NAMEWORD", exclude + "([\\p{L}0-9_][\\p{L}0-9_.\\-]*)")));
 	}
 
 	static String get(RegexResult arg) {

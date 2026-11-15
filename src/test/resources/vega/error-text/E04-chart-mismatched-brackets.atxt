@@ -1,0 +1,6 @@
+[From string (line 2) ]
+
+@startchart
+pie {"Dogs": 386, "Cats": 85]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ Mismatched '{' and ']' around data (Assumed diagram type: chart)
