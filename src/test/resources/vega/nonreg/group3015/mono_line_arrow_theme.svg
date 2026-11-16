@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="175px" preserveAspectRatio="none" style="width:186px;height:175px;background:#FFFFFF;" version="1.1" viewBox="0 0 186 175" width="186px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="1" id="part1-lifeline">
+      <g>
+        <title>Alice</title>
+        <rect fill="#000" fill-opacity="0" height="74" width="8" x="28.725" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="32.225" x2="32.225" y1="39" y2="113"/>
+      </g>
+    </g>
+    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="1" id="part2-lifeline">
+      <g>
+        <title>Bob</title>
+        <rect fill="#000" fill-opacity="0" height="74" width="8" x="94.725" y="39"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="98.225" x2="98.225" y1="39" y2="113"/>
+      </g>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="1" id="part1-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="10"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="17" y="27.889">Alice</text>
+    </g>
+    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="1" id="part2-head">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="78.756" y="10"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="85.756" y="27.889">Bob</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Alice" data-source-line="1" id="part1-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="113"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="17" y="130.889">Alice</text>
+    </g>
+    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Bob" data-source-line="1" id="part2-tail">
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="78.756" y="113"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="85.756" y="130.889">Bob</text>
+    </g>
+    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="1" id="msg1">
+      <polygon fill="#181818" points="86.225,91,96.225,95,86.225,99,90.225,95" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="32.225" x2="92.225" y1="95" y2="95"/>
+      <image height="123" width="146" x="39.225" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEyMyIgd2lkdGg9IjE0NiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgPjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTQ2IiBoZWlnaHQ9IjEyMyIgZmlsbD0iIzI4MjgyOCIgc3R5bGU9InN0cm9rZTpub25lOyIvPjxnIGNsYXNzPSJwYXJ0aWNpcGFudC1saWZlbGluZSIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iQWxpY2UiIGRhdGEtZW50aXR5LXVpZD0icGFydDEiIGlkPSJwYXJ0MS1saWZlbGluZSIgZGF0YS1zb3VyY2UtbGluZT0iMiI+PGc+PHJlY3QgZmlsbD0iIzI4MjgyOCIgc3R5bGU9IndpZHRoOjE0NnB4O2hlaWdodDoxMjNweDtiYWNrZ3JvdW5kOiMyODI4Mjg7IiB3aWR0aD0iMTQ2IiBoZWlnaHQ9IjEyMyIvPiA8dGl0bGU+QWxpY2U8L3RpdGxlPjxyZWN0IHg9IjM2LjcyNSIgeT0iNDUiIHdpZHRoPSI4IiBoZWlnaHQ9IjMyIiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAiLz48bGluZSB4MT0iNDAuMjI1IiB5MT0iNDUiIHgyPSI0MC4yMjUiIHkyPSI3NyIgc3R5bGU9InN0cm9rZTojRkZCMDAwO3N0cm9rZS13aWR0aDoxO3N0cm9rZS1kYXNoYXJyYXk6NSw1OyIvPjwvZz48L2c+PGcgY2xhc3M9InBhcnRpY2lwYW50LWxpZmVsaW5lIiBkYXRhLXF1YWxpZmllZC1uYW1lPSJCb2IiIGRhdGEtZW50aXR5LXVpZD0icGFydDIiIGlkPSJwYXJ0Mi1saWZlbGluZSIgZGF0YS1zb3VyY2UtbGluZT0iMiI+PGc+PHRpdGxlPkJvYjwvdGl0bGU+PHJlY3QgeD0iMTA0LjQxOSIgeT0iNDUiIHdpZHRoPSI4IiBoZWlnaHQ9IjMyIiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAiLz48bGluZSB4MT0iMTA3LjkxOSIgeTE9IjQ1IiB4Mj0iMTA3LjkxOSIgeTI9Ijc3IiBzdHlsZT0ic3Ryb2tlOiNGRkIwMDA7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWRhc2hhcnJheTo1LDU7Ii8+PC9nPjwvZz48ZyBjbGFzcz0icGFydGljaXBhbnQgcGFydGljaXBhbnQtaGVhZCIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iQWxpY2UiIGRhdGEtZW50aXR5LXVpZD0icGFydDEiIGlkPSJwYXJ0MS1oZWFkIiBkYXRhLXNvdXJjZS1saW5lPSIyIj48cmVjdCB4PSIyMCIgeT0iMTUiIHdpZHRoPSI0MC40NSIgaGVpZ2h0PSIyNCIgZmlsbD0iIzI4MjgyOCIgc3R5bGU9InN0cm9rZTojRkZCMDAwO3N0cm9rZS13aWR0aDoxOyIgcng9IjIuNSIgcnk9IjIuNSIvPjx0ZXh0IHg9IjI1IiB5PSIzMC44ODkiIGZpbGw9IiNGRkIwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjMwLjQ1IiBmb250LWZhbWlseT0iVmVyZGFuYSI+QWxpY2U8L3RleHQ+PC9nPjxnIGNsYXNzPSJwYXJ0aWNpcGFudCBwYXJ0aWNpcGFudC1oZWFkIiBkYXRhLXF1YWxpZmllZC1uYW1lPSJCb2IiIGRhdGEtZW50aXR5LXVpZD0icGFydDIiIGlkPSJwYXJ0Mi1oZWFkIiBkYXRhLXNvdXJjZS1saW5lPSIyIj48cmVjdCB4PSI5MC40NSIgeT0iMTUiIHdpZHRoPSIzNC45MzgiIGhlaWdodD0iMjQiIGZpbGw9IiMyODI4MjgiIHN0eWxlPSJzdHJva2U6I0ZGQjAwMDtzdHJva2Utd2lkdGg6MTsiIHJ4PSIyLjUiIHJ5PSIyLjUiLz48dGV4dCB4PSI5NS40NSIgeT0iMzAuODg5IiBmaWxsPSIjRkZCMDAwIiBmb250LXNpemU9IjE0IiB0ZXh0TGVuZ3RoPSIyNC45MzgiIGZvbnQtZmFtaWx5PSJWZXJkYW5hIj5Cb2I8L3RleHQ+PC9nPjxnIGNsYXNzPSJwYXJ0aWNpcGFudCBwYXJ0aWNpcGFudC10YWlsIiBkYXRhLXF1YWxpZmllZC1uYW1lPSJBbGljZSIgZGF0YS1lbnRpdHktdWlkPSJwYXJ0MSIgaWQ9InBhcnQxLXRhaWwiIGRhdGEtc291cmNlLWxpbmU9IjIiPjxyZWN0IHg9IjIwIiB5PSI4MiIgd2lkdGg9IjQwLjQ1IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMjgyODI4IiBzdHlsZT0ic3Ryb2tlOiNGRkIwMDA7c3Ryb2tlLXdpZHRoOjE7IiByeD0iMi41IiByeT0iMi41Ii8+PHRleHQgeD0iMjUiIHk9Ijk3Ljg4OSIgZmlsbD0iI0ZGQjAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iMzAuNDUiIGZvbnQtZmFtaWx5PSJWZXJkYW5hIj5BbGljZTwvdGV4dD48L2c+PGcgY2xhc3M9InBhcnRpY2lwYW50IHBhcnRpY2lwYW50LXRhaWwiIGRhdGEtcXVhbGlmaWVkLW5hbWU9IkJvYiIgZGF0YS1lbnRpdHktdWlkPSJwYXJ0MiIgaWQ9InBhcnQyLXRhaWwiIGRhdGEtc291cmNlLWxpbmU9IjIiPjxyZWN0IHg9IjkwLjQ1IiB5PSI4MiIgd2lkdGg9IjM0LjkzOCIgaGVpZ2h0PSIyNCIgZmlsbD0iIzI4MjgyOCIgc3R5bGU9InN0cm9rZTojRkZCMDAwO3N0cm9rZS13aWR0aDoxOyIgcng9IjIuNSIgcnk9IjIuNSIvPjx0ZXh0IHg9Ijk1LjQ1IiB5PSI5Ny44ODkiIGZpbGw9IiNGRkIwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjI0LjkzOCIgZm9udC1mYW1pbHk9IlZlcmRhbmEiPkJvYjwvdGV4dD48L2c+PGcgY2xhc3M9Im1lc3NhZ2UiIGRhdGEtZW50aXR5LTE9InBhcnQxIiBkYXRhLWVudGl0eS0yPSJwYXJ0MiIgaWQ9Im1zZzEiIGRhdGEtc291cmNlLWxpbmU9IjIiPjxwb2x5Z29uIHBvaW50cz0iOTUuOTE5LDU1LDEwNS45MTksNTksOTUuOTE5LDYzLDk5LjkxOSw1OSIgZmlsbD0iI0ZGQjAwMCIgc3R5bGU9InN0cm9rZTojRkZCMDAwO3N0cm9rZS13aWR0aDoxO3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiLz48bGluZSB4MT0iNDAuMjI1IiB5MT0iNTkiIHgyPSIxMDEuOTE5IiB5Mj0iNTkiIHN0eWxlPSJzdHJva2U6I0ZGQjAwMDtzdHJva2Utd2lkdGg6MTsiLz48L2c+PC9nPjwvc3ZnPg==" y="51"/>
+    </g>
+  </g>
+</svg>
