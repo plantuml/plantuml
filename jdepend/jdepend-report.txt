@@ -1207,8 +1207,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 37
-    Concrete Classes: 25
+    Total Classes: 38
+    Concrete Classes: 26
     Abstract Classes: 12
 
     Ca: 102
@@ -1216,7 +1216,7 @@ Stats:
 
     A: 0.32
     I: 0.22
-    D: 0.46
+    D: 0.47
 
 Abstract Classes:
     net.sourceforge.plantuml.Annotated
@@ -1235,6 +1235,7 @@ Abstract Classes:
 Concrete Classes:
     net.sourceforge.plantuml.AnimatedGifEncoder
     net.sourceforge.plantuml.BlockUmlBuilder
+    net.sourceforge.plantuml.EmbeddedDiagram$1
     net.sourceforge.plantuml.ErrorUmlType
     net.sourceforge.plantuml.FileFormat$1
     net.sourceforge.plantuml.FileFormat$2
@@ -16077,7 +16078,7 @@ jcckit.renderer,1,0,1,4,0,0.8,0.2,1
 jcckit.transformation,1,1,1,3,1,0.75,0.75,1
 jcckit.util,7,2,5,2,0.29,0.29,0.43,1
 net.atmp,3,0,17,10,0,0.37,0.63,1
-net.sourceforge.plantuml,37,12,102,28,0.32,0.22,0.46,1
+net.sourceforge.plantuml,38,12,102,28,0.32,0.22,0.47,1
 net.sourceforge.plantuml.abel,31,8,32,18,0.26,0.36,0.38,1
 net.sourceforge.plantuml.activitydiagram,2,0,2,12,0,0.86,0.14,1
 net.sourceforge.plantuml.activitydiagram.command,4,0,1,15,0,0.94,0.06,1

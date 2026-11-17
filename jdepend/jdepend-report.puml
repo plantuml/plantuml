@@ -345,8 +345,8 @@ Total Classes: 3
 "net.atmp" --> "net.sourceforge.plantuml.klimt.geom"
 "net.atmp" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml" %lighten("red", 54) {
-Total Classes: 37
+class "net.sourceforge.plantuml" %lighten("red", 53) {
+Total Classes: 38
 }
 "net.sourceforge.plantuml" --> "java.awt"
 "net.sourceforge.plantuml" --> "java.awt.font"

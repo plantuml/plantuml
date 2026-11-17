@@ -146,9 +146,9 @@ public class BlockUml {
 <span class="fc" id="L146">		this.localDefines = defines;</span>
 <span class="fc" id="L147">		this.previous = previous;</span>
 
-<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (definitions == null) {</span>
-<span class="fc" id="L150">			this.data = new ArrayList&lt;&gt;(this.rawSource);</span>
-<span class="fc" id="L151">			this.preprocessingArtifact = new PreprocessingArtifact();</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (definitions == null) {</span>
+<span class="nc" id="L150">			this.data = new ArrayList&lt;&gt;(this.rawSource);</span>
+<span class="nc" id="L151">			this.preprocessingArtifact = new PreprocessingArtifact();</span>
 		} else {
 <span class="fc" id="L153">			final TimLoader timLoader = new TimLoader(pathSystem, defines, charset, definitions, this.rawSource.get(0));</span>
 <span class="fc" id="L154">			timLoader.setYamlHeader(yamlHeader);</span>

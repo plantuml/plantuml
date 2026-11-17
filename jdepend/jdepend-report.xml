@@ -1860,14 +1860,14 @@
 
         <Package name="net.sourceforge.plantuml">
             <Stats>
-                <TotalClasses>37</TotalClasses>
-                <ConcreteClasses>25</ConcreteClasses>
+                <TotalClasses>38</TotalClasses>
+                <ConcreteClasses>26</ConcreteClasses>
                 <AbstractClasses>12</AbstractClasses>
                 <Ca>102</Ca>
                 <Ce>28</Ce>
                 <A>0.32</A>
                 <I>0.22</I>
-                <D>0.46</D>
+                <D>0.47</D>
                 <V>1</V>
             </Stats>
 
@@ -1916,6 +1916,9 @@
                 </Class>
                 <Class sourceFile="BlockUmlBuilder.java">
                     net.sourceforge.plantuml.BlockUmlBuilder
+                </Class>
+                <Class sourceFile="EmbeddedDiagram.java">
+                    net.sourceforge.plantuml.EmbeddedDiagram$1
                 </Class>
                 <Class sourceFile="ErrorUmlType.java">
                     net.sourceforge.plantuml.ErrorUmlType
