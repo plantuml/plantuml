@@ -812,25 +812,10 @@ public class TContext {
 		PathSystem saveImportedFiles = null;
 		try {
 			if (what.startsWith("<") && what.endsWith(">")) {
-				final String stdlibPath = what.substring(1, what.length() - 1);
 				saveImportedFiles = this.pathSystem;
-				if (TeaVM.isTeaVM()) {
-					final InputStream is = this.pathSystem.getTeaVMStdlibInputStream(what);
-					if (is != null)
-						reader = ReadLineReader.create(new InputStreamReader(is), what);
-				} else {
-					InputFile tmp = this.pathSystem.getInputFile(what);
-					this.pathSystem = this.pathSystem.changeCurrentDirectory(tmp.getParentFolder());
-					reader = PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);
-				}
+				reader = openStdlibInclude(what, s);
 			} else if (what.startsWith("http://") || what.startsWith("https://")) {
-				if (!TeaVM.isTeaVM()) {
-					final SURL url = SURL.create(what);
-					if (url == null)
-						throw new EaterException("Cannot open URL", s);
-
-					reader = PreprocessorUtils.getReaderIncludeUrl(url, s, suf, charset);
-				}
+				reader = openUrlInclude(what, suf, s);
 			} else if (what.startsWith("[") && what.endsWith("]")) {
 				throw new IOException("To be finished");
 				// reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1,
@@ -846,15 +831,7 @@ public class TContext {
 						if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(used))
 							throw new EaterException("This file has already been included", s);
 
-						reader = DiagramDetector.extractFromFile(f2, "desc2");
-
-						if (reader == null) {
-							final Reader tmp = f2.getReader(charset);
-							if (tmp == null)
-								throw new EaterException("Cannot include file", s);
-
-							reader = ReadLineReader.create(tmp, what, s.getLocation());
-						}
+						reader = openFileInclude(f2, what, s);
 						saveImportedFiles = this.pathSystem;
 						this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());
 						if (TeaVM.a())
@@ -866,16 +843,9 @@ public class TContext {
 			}
 			if (reader != null)
 				try {
-					final List<StringLocated> body = new ArrayList<>();
 					reader = new ReadLineWithYamlHeader(reader);
-					do {
-						final StringLocated sl = reader.readLine();
-						if (sl == null) {
-							executeLines(memory, body, null, false);
-							return;
-						}
-						body.add(sl);
-					} while (true);
+					executeIncludedLines(memory, reader);
+					return;
 				} finally {
 					if (saveImportedFiles != null)
 						this.pathSystem = saveImportedFiles;
@@ -893,6 +863,58 @@ public class TContext {
 				}
 		}
 		throw new EaterException("cannot include " + what, s);
+	}
+
+	private ReadLine openStdlibInclude(String what, StringLocated s) throws IOException {
+		final String stdlibPath = what.substring(1, what.length() - 1);
+		if (TeaVM.isTeaVM()) {
+			final InputStream is = this.pathSystem.getTeaVMStdlibInputStream(what);
+			if (is != null)
+				return ReadLineReader.create(new InputStreamReader(is), what);
+		} else {
+			InputFile tmp = this.pathSystem.getInputFile(what);
+			this.pathSystem = this.pathSystem.changeCurrentDirectory(tmp.getParentFolder());
+			return PreprocessorUtils.getReaderStdlibInclude(s, stdlibPath);
+		}
+		return null;
+	}
+
+	private ReadLine openUrlInclude(String what, String suffix, StringLocated s)
+			throws IOException, EaterException {
+		if (!TeaVM.isTeaVM()) {
+			final SURL url = SURL.create(what);
+			if (url == null)
+				throw new EaterException("Cannot open URL", s);
+
+			return PreprocessorUtils.getReaderIncludeUrl(url, s, suffix, charset);
+		}
+		return null;
+	}
+
+	private ReadLine openFileInclude(InputFile file, String what, StringLocated s)
+			throws IOException, EaterException {
+		ReadLine reader = DiagramDetector.extractFromFile(file, "desc2");
+
+		if (reader == null) {
+			final Reader tmp = file.getReader(charset);
+			if (tmp == null)
+				throw new EaterException("Cannot include file", s);
+
+			reader = ReadLineReader.create(tmp, what, s.getLocation());
+		}
+		return reader;
+	}
+
+	private void executeIncludedLines(TMemory memory, ReadLine reader) throws IOException, EaterException {
+		final List<StringLocated> body = new ArrayList<>();
+		do {
+			final StringLocated sl = reader.readLine();
+			if (sl == null) {
+				executeLines(memory, body, null, false);
+				return;
+			}
+			body.add(sl);
+		} while (true);
 	}
 
 	public boolean isLegacyDefine(String functionName) {
