@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob
+note over Alice
+{{
+User -> System : test
+}}
+end note
+@enduml

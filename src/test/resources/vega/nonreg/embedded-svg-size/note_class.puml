@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class A
+note right of A
+{{
+User -> System : test
+}}
+end note
+@enduml

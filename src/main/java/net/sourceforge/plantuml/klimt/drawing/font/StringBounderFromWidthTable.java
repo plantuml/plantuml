@@ -61,6 +61,18 @@ public class StringBounderFromWidthTable implements StringBounder {
 		return fileFormat;
 	}
 
+	// SVG_DETERMINISTIC is SVG measured with this table instead of Java's font
+	// metrics. UGraphicSvg says "SVG" whatever the format, so this bounder has to
+	// say it too, as StringBounderSvg does: an EmbeddedDiagram measures itself
+	// through the bounder and draws itself through the UGraphic, and when the two
+	// disagreed it measured a PNG it could not read (42x42) and then drew its SVG
+	// at full size, overflowing the note around it. Not for the LaTeX formats,
+	// which also fall back on this table.
+	@Override
+	public boolean matchesProperty(String propertyName) {
+		return fileFormat == FileFormat.SVG_DETERMINISTIC && "SVG".equalsIgnoreCase(propertyName);
+	}
+
 	private static final double REFERENCE_SIZE = 16.0;
 
 	@Override
