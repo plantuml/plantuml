@@ -250,7 +250,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 <span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (display.size() &gt; 0) {</span>
 <span class="pc bpc" id="L252" title="1 of 2 branches missed.">			final boolean tryMerge = line0.get(&quot;VMERGE&quot;, 0) != null;</span>
-<span class="pc bpc" id="L253" title="1 of 2 branches missed.">			final boolean parallel = line0.get(&quot;PARALLEL&quot;, 0) != null;</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">			final boolean parallel = line0.get(&quot;PARALLEL&quot;, 0) != null;</span>
 <span class="fc" id="L254">			final Note note = new Note(p1, p2, display, diagram.getSkinParam().getCurrentStyleBuilder());</span>
 <span class="fc" id="L255">			Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
 <span class="fc" id="L256">			final String stereotypeString = line0.getLazzy(&quot;STEREO&quot;, 0);</span>
@@ -267,8 +267,8 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="nc" id="L267">				final Url urlLink = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
 <span class="nc" id="L268">				note.setUrl(urlLink);</span>
 			}
-<span class="pc bpc" id="L270" title="1 of 2 branches missed.">			if (parallel)</span>
-<span class="nc" id="L271">				note.goParallel();</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">			if (parallel)</span>
+<span class="fc" id="L271">				note.goParallel();</span>
 
 <span class="fc" id="L273">			diagram.addNote(note, tryMerge);</span>
 		}

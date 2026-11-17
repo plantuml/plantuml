@@ -44,131 +44,134 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LinkAnchor;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.Notes;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public class PlayingSpace implements Bordered {
 
-<span class="fc" id="L58">	private final double startingY = 8;</span>
+<span class="fc" id="L61">	private final double startingY = 8;</span>
 	private final Real min;
 	private final Real max;
 	private final boolean isShowFootbox;
 
-<span class="fc" id="L63">	private final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L66">	private final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
 	private final LivingSpaces livingSpaces;
 	private final List&lt;LinkAnchor&gt; linkAnchors;
 	private final ISkinParam skinParam;
 	private final SequenceDiagram diagram;
 	private final StringBounder stringBounder;
 
-<span class="fc" id="L70">	public PlayingSpace(SequenceDiagram diagram, Dolls dolls, TileArguments tileArguments) {</span>
+<span class="fc" id="L73">	public PlayingSpace(SequenceDiagram diagram, Dolls dolls, TileArguments tileArguments) {</span>
 
-<span class="fc" id="L72">		this.diagram = diagram;</span>
-<span class="fc" id="L73">		this.livingSpaces = tileArguments.getLivingSpaces();</span>
-<span class="fc" id="L74">		this.linkAnchors = diagram.getLinkAnchors();</span>
-<span class="fc" id="L75">		this.skinParam = diagram.getSkinParam();</span>
-<span class="fc" id="L76">		this.stringBounder = tileArguments.getStringBounder();</span>
+<span class="fc" id="L75">		this.diagram = diagram;</span>
+<span class="fc" id="L76">		this.livingSpaces = tileArguments.getLivingSpaces();</span>
+<span class="fc" id="L77">		this.linkAnchors = diagram.getLinkAnchors();</span>
+<span class="fc" id="L78">		this.skinParam = diagram.getSkinParam();</span>
+<span class="fc" id="L79">		this.stringBounder = tileArguments.getStringBounder();</span>
 
-<span class="fc" id="L78">		final List&lt;Real&gt; min2 = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L79">		final List&lt;Real&gt; max2 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L81">		final List&lt;Real&gt; min2 = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L82">		final List&lt;Real&gt; max2 = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L81">		min2.add(tileArguments.getXOrigin());</span>
-<span class="fc" id="L82">		max2.add(tileArguments.getXOrigin());</span>
+<span class="fc" id="L84">		min2.add(tileArguments.getXOrigin());</span>
+<span class="fc" id="L85">		max2.add(tileArguments.getXOrigin());</span>
 
-<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (dolls.size() &gt; 0) {</span>
-<span class="fc" id="L85">			min2.add(dolls.getMinX(tileArguments.getStringBounder()));</span>
-<span class="fc" id="L86">			max2.add(dolls.getMaxX(tileArguments.getStringBounder()));</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (dolls.size() &gt; 0) {</span>
+<span class="fc" id="L88">			min2.add(dolls.getMinX(tileArguments.getStringBounder()));</span>
+<span class="fc" id="L89">			max2.add(dolls.getMaxX(tileArguments.getStringBounder()));</span>
 		}
 
 		// Gauge chain origin: everything chains off this so gauge coordinates line
 		// up with the diagram's own drawing space (startingY of headroom above
 		// the first tile).
-<span class="fc" id="L92">		final YGauge ycurrent = YGauge.create(tileArguments.getYOrigin().addFixed(startingY), 0);</span>
+<span class="fc" id="L95">		final YGauge ycurrent = YGauge.create(tileArguments.getYOrigin().addFixed(startingY), 0);</span>
 
-<span class="fc" id="L94">		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null, ycurrent));</span>
+<span class="fc" id="L97">		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null, ycurrent));</span>
 
-<span class="fc bfc" id="L96" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc" id="L97">			min2.add(tile.getMinX());</span>
-<span class="fc" id="L98">			max2.add(tile.getMaxX());</span>
-<span class="fc" id="L99">		}</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc" id="L100">			min2.add(tile.getMinX());</span>
+<span class="fc" id="L101">			max2.add(tile.getMaxX());</span>
+<span class="fc" id="L102">		}</span>
 
-<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (LivingSpace livingSpace : livingSpaces.values()) {</span>
-<span class="fc" id="L102">			max2.add(livingSpace.getPosD(tileArguments.getStringBounder()));</span>
-<span class="fc" id="L103">			max2.add(livingSpace.getPosC2(tileArguments.getStringBounder()));</span>
-<span class="fc" id="L104">		}</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		for (LivingSpace livingSpace : livingSpaces.values()) {</span>
+<span class="fc" id="L105">			max2.add(livingSpace.getPosD(tileArguments.getStringBounder()));</span>
+<span class="fc" id="L106">			max2.add(livingSpace.getPosC2(tileArguments.getStringBounder()));</span>
+<span class="fc" id="L107">		}</span>
 
-<span class="fc" id="L106">		this.min = RealUtils.min(min2);</span>
-<span class="fc" id="L107">		this.max = RealUtils.max(max2);</span>
+<span class="fc" id="L109">		this.min = RealUtils.min(min2);</span>
+<span class="fc" id="L110">		this.max = RealUtils.max(max2);</span>
 
-<span class="fc" id="L109">		this.isShowFootbox = diagram.isShowFootbox();</span>
-<span class="fc" id="L110">	}</span>
+<span class="fc" id="L112">		this.isShowFootbox = diagram.isShowFootbox();</span>
+<span class="fc" id="L113">	}</span>
 
 	public void drawBackground(UGraphic ug) {
-<span class="fc" id="L113">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, true);</span>
-<span class="fc" id="L114">		drawUInternal(interceptor, false);</span>
-<span class="fc" id="L115">	}</span>
+<span class="fc" id="L116">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, true);</span>
+<span class="fc" id="L117">		drawUInternal(interceptor, false);</span>
+<span class="fc" id="L118">	}</span>
 
 	public void drawForeground(UGraphic ug) {
-<span class="fc" id="L118">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, false);</span>
-<span class="fc" id="L119">		drawUInternal(interceptor, false);</span>
-<span class="fc" id="L120">	}</span>
+<span class="fc" id="L121">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(ug, false);</span>
+<span class="fc" id="L122">		drawUInternal(interceptor, false);</span>
+<span class="fc" id="L123">	}</span>
 
 	private double drawUInternal(UGraphic ug, boolean trace) {
-<span class="fc" id="L123">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L124">		final List&lt;CommonTile&gt; local = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L125">		final List&lt;CommonTile&gt; full = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L126">		GroupingTile.fillPositionelTiles(stringBounder, tiles, local, full);</span>
+<span class="fc" id="L126">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L127">		final List&lt;CommonTile&gt; local = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L128">		final List&lt;CommonTile&gt; full = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L129">		GroupingTile.fillPositionelTiles(stringBounder, tiles, local, full);</span>
 		// Each tile draws itself in ABSOLUTE coordinates, translating itself by its
 		// own gauge min (the &quot;self-translate prologue&quot; every drawU() starts with),
 		// so no external dy() translation is applied here
-<span class="fc bfc" id="L130" title="All 2 branches covered.">		for (CommonTile tile : local)</span>
-<span class="fc" id="L131">			tile.drawU(ug);</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		for (LinkAnchor linkAnchor : linkAnchors) {</span>
-<span class="nc" id="L133">			final CommonTile ytile1 = getFromAnchor(full, linkAnchor.getAnchor1());</span>
-<span class="nc" id="L134">			final CommonTile ytile2 = getFromAnchor(full, linkAnchor.getAnchor2());</span>
-<span class="nc bnc" id="L135" title="All 4 branches missed.">			if (ytile1 != null &amp;&amp; ytile2 != null)</span>
-<span class="nc" id="L136">				linkAnchor.drawAnchor(ug, ytile1, ytile2, skinParam);</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (CommonTile tile : local)</span>
+<span class="fc" id="L134">			tile.drawU(ug);</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		for (LinkAnchor linkAnchor : linkAnchors) {</span>
+<span class="nc" id="L136">			final CommonTile ytile1 = getFromAnchor(full, linkAnchor.getAnchor1());</span>
+<span class="nc" id="L137">			final CommonTile ytile2 = getFromAnchor(full, linkAnchor.getAnchor2());</span>
+<span class="nc bnc" id="L138" title="All 4 branches missed.">			if (ytile1 != null &amp;&amp; ytile2 != null)</span>
+<span class="nc" id="L139">				linkAnchor.drawAnchor(ug, ytile1, ytile2, skinParam);</span>
 
-<span class="nc" id="L138">		}</span>
+<span class="nc" id="L141">		}</span>
 		// Final height of this level: the last top-level tile's gauge already
 		// dominates everything before it (see YGauge.createParallel's
 		// max.ensureBiggerThan(currentY.getMax())), so its max IS the total height.
 		// Falls back to startingY for an empty diagram.
-<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (tiles.isEmpty())</span>
-<span class="fc" id="L144">			return startingY;</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		if (tiles.isEmpty())</span>
+<span class="fc" id="L147">			return startingY;</span>
 
-<span class="fc" id="L146">		return tiles.get(tiles.size() - 1).getYGauge().getMax().getCurrentValue();</span>
+<span class="fc" id="L149">		return tiles.get(tiles.size() - 1).getYGauge().getMax().getCurrentValue();</span>
 	}
 
 	private CommonTile getFromAnchor(List&lt;CommonTile&gt; positionedTiles, String anchor) {
-<span class="nc bnc" id="L150" title="All 2 branches missed.">		for (CommonTile ytile : positionedTiles)</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">			if (ytile.matchAnchor(anchor))</span>
-<span class="nc" id="L152">				return ytile;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (CommonTile ytile : positionedTiles)</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">			if (ytile.matchAnchor(anchor))</span>
+<span class="nc" id="L155">				return ytile;</span>
 
-<span class="nc" id="L154">		return null;</span>
+<span class="nc" id="L157">		return null;</span>
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L158">		final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);</span>
-<span class="fc" id="L159">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(limitFinder, false);</span>
-<span class="fc" id="L160">		final double finalY = drawUInternal(interceptor, false);</span>
-<span class="fc" id="L161">		final double result = Math.max(limitFinder.getMinMax().getDimension().getHeight(), finalY) + 10;</span>
+<span class="fc" id="L161">		final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);</span>
+<span class="fc" id="L162">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(limitFinder, false);</span>
+<span class="fc" id="L163">		final double finalY = drawUInternal(interceptor, false);</span>
+<span class="fc" id="L164">		final double result = Math.max(limitFinder.getMinMax().getDimension().getHeight(), finalY) + 10;</span>
 		// System.err.println(&quot;MainTile::getPreferredHeight=&quot; + result);
-<span class="fc" id="L163">		return result;</span>
+<span class="fc" id="L166">		return result;</span>
 	}
 
 	public void addConstraints() {
-<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
-<span class="fc" id="L168">			tile.addConstraints();</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
+<span class="fc" id="L171">			tile.addConstraints();</span>
 
-<span class="fc" id="L170">		addParallelSiblingDisjointConstraints();</span>
-<span class="fc" id="L171">	}</span>
+<span class="fc" id="L173">		addParallelSiblingDisjointConstraints();</span>
+<span class="fc" id="L174">	}</span>
 
 	// A `&amp;`-parallel sibling shares its YGauge with whichever top-level tile(s)
 	// precede it (see YGauge.createParallel()), so the two can be visible on
@@ -189,19 +192,19 @@ public class PlayingSpace implements Bordered {
 	// grouping (a `&amp;` pulls the whole preceding run into its own cluster) --
 	// same shape, applied to X disjointness instead of Y height.
 	private void addParallelSiblingDisjointConstraints() {
-<span class="fc" id="L192">		final List&lt;Tile&gt; cluster = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">			if (GroupingTile.isParallel(tile)) {</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">				for (Tile other : cluster)</span>
-<span class="fc" id="L196">					ensureDisjoint(other, tile);</span>
+<span class="fc" id="L195">		final List&lt;Tile&gt; cluster = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">			if (GroupingTile.isParallel(tile)) {</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">				for (Tile other : cluster)</span>
+<span class="fc" id="L199">					ensureDisjoint(other, tile);</span>
 
-<span class="fc" id="L198">				cluster.add(tile);</span>
-			} else {
-<span class="fc" id="L200">				cluster.clear();</span>
 <span class="fc" id="L201">				cluster.add(tile);</span>
+			} else {
+<span class="fc" id="L203">				cluster.clear();</span>
+<span class="fc" id="L204">				cluster.add(tile);</span>
 			}
-<span class="fc" id="L203">		}</span>
-<span class="fc" id="L204">	}</span>
+<span class="fc" id="L206">		}</span>
+<span class="fc" id="L207">	}</span>
 
 	// Pushes whichever footprint starts further right so it clears the other
 	// entirely.
@@ -233,17 +236,17 @@ public class PlayingSpace implements Bordered {
 	// too, on any Real: it only registers a PositiveForce, it never triggers a
 	// getCurrentValue() read.
 	private void ensureDisjoint(Tile a, Tile b) {
-<span class="fc" id="L236">		final Real aMin = a.getMinX();</span>
-<span class="fc" id="L237">		final Real aMax = a.getMaxX();</span>
-<span class="fc" id="L238">		final Real bMin = b.getMinX();</span>
-<span class="fc" id="L239">		final Real bMax = b.getMaxX();</span>
-<span class="pc bpc" id="L240" title="4 of 8 branches missed.">		if (aMin == null || aMax == null || bMin == null || bMax == null)</span>
-<span class="nc" id="L241">			return;</span>
+<span class="fc" id="L239">		final Real aMin = a.getMinX();</span>
+<span class="fc" id="L240">		final Real aMax = a.getMaxX();</span>
+<span class="fc" id="L241">		final Real bMin = b.getMinX();</span>
+<span class="fc" id="L242">		final Real bMax = b.getMaxX();</span>
+<span class="pc bpc" id="L243" title="4 of 8 branches missed.">		if (aMin == null || aMax == null || bMin == null || bMax == null)</span>
+<span class="nc" id="L244">			return;</span>
 
-<span class="fc" id="L243">		final LivingSpace aAnchor = findAnchorLivingSpace(a);</span>
-<span class="fc" id="L244">		final LivingSpace bAnchor = findAnchorLivingSpace(b);</span>
-<span class="pc bpc" id="L245" title="1 of 4 branches missed.">		if (aAnchor == null || bAnchor == null)</span>
-<span class="fc" id="L246">			return;</span>
+<span class="fc" id="L246">		final LivingSpace aAnchor = findAnchorLivingSpace(a);</span>
+<span class="fc" id="L247">		final LivingSpace bAnchor = findAnchorLivingSpace(b);</span>
+<span class="pc bpc" id="L248" title="1 of 4 branches missed.">		if (aAnchor == null || bAnchor == null)</span>
+<span class="fc" id="L249">			return;</span>
 
 		// Two &quot;&amp;&quot;-parallel tiles that share a participant (e.g. `alice-&gt;alice`
 		// &amp; `alice-&gt;bob`, both anchored on alice) are NOT two independent
@@ -257,17 +260,102 @@ public class PlayingSpace implements Bordered {
 		// (RealLine.compile()'s fixed-point loop pushes forever and eventually
 		// throws &quot;Infinite Loop?&quot;). Skip whenever the two sides share an
 		// anchor; nothing needs reserving against itself.
-<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (aAnchor == bAnchor)</span>
-<span class="fc" id="L261">			return;</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">		if (aAnchor == bAnchor)</span>
+<span class="fc" id="L264">			return;</span>
 
 		// Declaration order gives every participant's posB a monotonic initial
 		// value (the same property isReverse() relies on), so this reliably
 		// tells which side starts further left even before the RealLine solves.
-<span class="fc bfc" id="L266" title="All 2 branches covered.">		if (aAnchor.getPosB(stringBounder).getCurrentValue() &lt;= bAnchor.getPosB(stringBounder).getCurrentValue())</span>
-<span class="fc" id="L267">			bMin.ensureBiggerThan(aMax);</span>
+<span class="fc" id="L269">		final boolean aIsLeft = aAnchor.getPosB(stringBounder).getCurrentValue() &lt;= bAnchor.getPosB(stringBounder)</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">				.getCurrentValue();</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">		final Tile left = aIsLeft ? a : b;</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">		final Tile right = aIsLeft ? b : a;</span>
+
+		// A message is anchored on its sender, so `B -&gt; A` counts as the
+		// right-hand tile even though it starts at A. If the left tile is a
+		// note on one participant and the right tile starts at that
+		// participant or left of it, pushing the right tile also moves the
+		// note right, and RealLine.compile() gives up with &quot;Infinite Loop?&quot;.
+		// Skip the pair, as for two tiles on the same anchor above.
+<span class="fc bfc" id="L280" title="All 2 branches covered.">		if (cannotPushApart(left, right))</span>
+<span class="fc" id="L281">			return;</span>
+
+<span class="fc bfc" id="L283" title="All 2 branches covered.">		if (aIsLeft)</span>
+<span class="fc" id="L284">			bMin.ensureBiggerThan(aMax);</span>
 		else
-<span class="fc" id="L269">			aMin.ensureBiggerThan(bMax);</span>
-<span class="fc" id="L270">	}</span>
+<span class="fc" id="L286">			aMin.ensureBiggerThan(bMax);</span>
+<span class="fc" id="L287">	}</span>
+
+	// True when `left` is a note on one participant and pushing `right`
+	// would move that participant, or one left of it.
+	private boolean cannotPushApart(Tile left, Tile right) {
+<span class="fc" id="L292">		final Event event = left.getEvent();</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">		if (event instanceof Note == false)</span>
+<span class="fc" id="L294">			return false;</span>
+
+<span class="fc" id="L296">		final Note note = (Note) event;</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL)</span>
+<span class="fc" id="L298">			return false;</span>
+
+<span class="fc" id="L300">		final LivingSpace noteSpace = livingSpaces.get(note.getParticipant());</span>
+<span class="fc" id="L301">		final Double rightStart = leftmostPosB(right);</span>
+<span class="pc bpc" id="L302" title="2 of 4 branches missed.">		if (noteSpace == null || rightStart == null)</span>
+<span class="nc" id="L303">			return false;</span>
+
+<span class="fc bfc" id="L305" title="All 2 branches covered.">		return rightStart &lt;= noteSpace.getPosB(stringBounder).getCurrentValue();</span>
+	}
+
+	// The posB of the leftmost participant that pushing this tile moves, or
+	// null if there is none. A note over several participants counts both
+	// ends: it covers every column between them, so it can never be pushed
+	// clear of a note on one of those participants.
+	private Double leftmostPosB(Tile tile) {
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">		if (tile instanceof GroupingTile) {</span>
+<span class="nc" id="L314">			Double result = null;</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">			for (Tile child : ((GroupingTile) tile).getChildTilesForAnchor())</span>
+<span class="nc" id="L316">				result = leftmost(result, leftmostPosB(child));</span>
+
+<span class="nc" id="L318">			return result;</span>
+		}
+
+<span class="fc" id="L321">		final Event event = tile.getEvent();</span>
+<span class="fc" id="L322">		Double result = null;</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">		if (event instanceof AbstractMessage) {</span>
+<span class="fc" id="L324">			result = leftmost(result, posB(((AbstractMessage) event).getParticipant1()));</span>
+<span class="fc" id="L325">			result = leftmost(result, posB(((AbstractMessage) event).getParticipant2()));</span>
+<span class="pc bpc" id="L326" title="1 of 2 branches missed.">		} else if (event instanceof Note) {</span>
+<span class="fc" id="L327">			result = leftmost(result, posB(((Note) event).getParticipant()));</span>
+<span class="fc" id="L328">			result = leftmost(result, posB(((Note) event).getParticipant2()));</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">		} else if (event instanceof Notes) {</span>
+			// A member over several participants is left out: in a merged
+			// group, that push can settle.
+<span class="nc bnc" id="L332" title="All 2 branches missed.">			for (Note note : (Notes) event)</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">				if (note.getPosition() != NotePosition.OVER_SEVERAL)</span>
+<span class="nc" id="L334">					result = leftmost(result, posB(note.getParticipant()));</span>
+		}
+<span class="fc" id="L336">		return result;</span>
+	}
+
+	private Double posB(Participant participant) {
+<span class="fc bfc" id="L340" title="All 2 branches covered.">		if (participant == null)</span>
+<span class="fc" id="L341">			return null;</span>
+
+<span class="fc" id="L343">		final LivingSpace space = livingSpaces.get(participant);</span>
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (space == null)</span>
+<span class="nc" id="L345">			return null;</span>
+
+<span class="fc" id="L347">		return space.getPosB(stringBounder).getCurrentValue();</span>
+	}
+
+	private static Double leftmost(Double current, Double candidate) {
+<span class="fc bfc" id="L351" title="All 2 branches covered.">		if (candidate == null)</span>
+<span class="fc" id="L352">			return current;</span>
+
+<span class="pc bpc" id="L354" title="1 of 4 branches missed.">		if (current == null || candidate &lt; current)</span>
+<span class="fc" id="L355">			return candidate;</span>
+
+<span class="nc" id="L357">		return current;</span>
+	}
 
 	// Finds ANY LivingSpace this tile (or, for a GroupingTile, one of its
 	// descendants) touches -- just needs to be SOME participant referenced by
@@ -294,88 +382,88 @@ public class PlayingSpace implements Bordered {
 	// two tile kinds join the same disjointness pass every parallel Message
 	// already got.
 	private LivingSpace findAnchorLivingSpace(Tile tile) {
-<span class="fc" id="L297">		final Event event = tile.getEvent();</span>
-<span class="fc bfc" id="L298" title="All 2 branches covered.">		if (event instanceof Message)</span>
-<span class="fc" id="L299">			return livingSpaces.get(((Message) event).getParticipant1());</span>
+<span class="fc" id="L385">		final Event event = tile.getEvent();</span>
+<span class="fc bfc" id="L386" title="All 2 branches covered.">		if (event instanceof Message)</span>
+<span class="fc" id="L387">			return livingSpaces.get(((Message) event).getParticipant1());</span>
 
-<span class="fc bfc" id="L301" title="All 2 branches covered.">		if (event instanceof MessageExo)</span>
-<span class="fc" id="L302">			return livingSpaces.get(((MessageExo) event).getParticipant());</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">		if (event instanceof MessageExo)</span>
+<span class="fc" id="L390">			return livingSpaces.get(((MessageExo) event).getParticipant());</span>
 
-<span class="fc bfc" id="L304" title="All 2 branches covered.">		if (event instanceof Note)</span>
-<span class="fc" id="L305">			return livingSpaces.get(((Note) event).getParticipant());</span>
+<span class="fc bfc" id="L392" title="All 2 branches covered.">		if (event instanceof Note)</span>
+<span class="fc" id="L393">			return livingSpaces.get(((Note) event).getParticipant());</span>
 
-<span class="pc bpc" id="L307" title="1 of 2 branches missed.">		if (event instanceof Notes) {</span>
-<span class="nc" id="L308">			final Iterator&lt;Note&gt; it = ((Notes) event).iterator();</span>
-<span class="nc bnc" id="L309" title="All 2 branches missed.">			if (it.hasNext())</span>
-<span class="nc" id="L310">				return livingSpaces.get(it.next().getParticipant());</span>
+<span class="pc bpc" id="L395" title="1 of 2 branches missed.">		if (event instanceof Notes) {</span>
+<span class="nc" id="L396">			final Iterator&lt;Note&gt; it = ((Notes) event).iterator();</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">			if (it.hasNext())</span>
+<span class="nc" id="L398">				return livingSpaces.get(it.next().getParticipant());</span>
 		}
 
-<span class="fc bfc" id="L313" title="All 2 branches covered.">		if (tile instanceof GroupingTile)</span>
-<span class="pc bpc" id="L314" title="1 of 2 branches missed.">			for (Tile child : ((GroupingTile) tile).getChildTilesForAnchor()) {</span>
-<span class="fc" id="L315">				final LivingSpace found = findAnchorLivingSpace(child);</span>
-<span class="pc bpc" id="L316" title="1 of 2 branches missed.">				if (found != null)</span>
-<span class="fc" id="L317">					return found;</span>
-<span class="nc" id="L318">			}</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">		if (tile instanceof GroupingTile)</span>
+<span class="pc bpc" id="L402" title="1 of 2 branches missed.">			for (Tile child : ((GroupingTile) tile).getChildTilesForAnchor()) {</span>
+<span class="fc" id="L403">				final LivingSpace found = findAnchorLivingSpace(child);</span>
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">				if (found != null)</span>
+<span class="fc" id="L405">					return found;</span>
+<span class="nc" id="L406">			}</span>
 
-<span class="fc" id="L320">		return null;</span>
+<span class="fc" id="L408">		return null;</span>
 	}
 
 	public Real getMinX(StringBounder stringBounder) {
-<span class="fc" id="L324">		return min;</span>
+<span class="fc" id="L412">		return min;</span>
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-<span class="fc" id="L328">		return max;</span>
+<span class="fc" id="L416">		return max;</span>
 	}
 
 	public boolean isShowFootbox() {
-<span class="fc" id="L332">		return isShowFootbox;</span>
+<span class="fc" id="L420">		return isShowFootbox;</span>
 	}
 
 	public LivingSpaces getLivingSpaces() {
-<span class="fc" id="L336">		return livingSpaces;</span>
+<span class="fc" id="L424">		return livingSpaces;</span>
 	}
 
 	public List&lt;Tile&gt; getTiles() {
-<span class="fc" id="L340">		return tiles;</span>
+<span class="fc" id="L428">		return tiles;</span>
 	}
 
 	public SequenceDiagram getDiagram() {
-<span class="nc" id="L344">		return diagram;</span>
+<span class="nc" id="L432">		return diagram;</span>
 	}
 
 	public double getBorder1() {
-<span class="fc" id="L348">		return min.getCurrentValue();</span>
+<span class="fc" id="L436">		return min.getCurrentValue();</span>
 	}
 
 	public double getBorder2() {
-<span class="fc" id="L352">		return max.getCurrentValue();</span>
+<span class="fc" id="L440">		return max.getCurrentValue();</span>
 	}
 
 	public List&lt;NewpageTile&gt; getNewpageTiles() {
-<span class="fc" id="L356">		final List&lt;NewpageTile&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L357" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc bfc" id="L358" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
-<span class="fc" id="L359">				((GroupingTile) tile).addNewpageTiles(result);</span>
+<span class="fc" id="L444">		final List&lt;NewpageTile&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
+<span class="fc" id="L447">				((GroupingTile) tile).addNewpageTiles(result);</span>
 
-<span class="fc bfc" id="L361" title="All 2 branches covered.">			if (tile instanceof NewpageTile)</span>
-<span class="fc" id="L362">				result.add((NewpageTile) tile);</span>
-<span class="fc" id="L363">		}</span>
-<span class="fc" id="L364">		return result;</span>
+<span class="fc bfc" id="L449" title="All 2 branches covered.">			if (tile instanceof NewpageTile)</span>
+<span class="fc" id="L450">				result.add((NewpageTile) tile);</span>
+<span class="fc" id="L451">		}</span>
+<span class="fc" id="L452">		return result;</span>
 	}
 
 	public List&lt;Double&gt; yNewPages() {
-<span class="fc" id="L368">		final List&lt;Double&gt; yNewPages = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L369">		yNewPages.add(0.0);</span>
-<span class="fc bfc" id="L370" title="All 2 branches covered.">		for (NewpageTile newpageTile : getNewpageTiles())</span>
-<span class="fc" id="L371">			yNewPages.add(newpageTile.getYGauge().getMin().getCurrentValue());</span>
+<span class="fc" id="L456">		final List&lt;Double&gt; yNewPages = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L457">		yNewPages.add(0.0);</span>
+<span class="fc bfc" id="L458" title="All 2 branches covered.">		for (NewpageTile newpageTile : getNewpageTiles())</span>
+<span class="fc" id="L459">			yNewPages.add(newpageTile.getYGauge().getMin().getCurrentValue());</span>
 
-<span class="fc" id="L373">		yNewPages.add(Double.MAX_VALUE);</span>
-<span class="fc" id="L374">		return yNewPages;</span>
+<span class="fc" id="L461">		yNewPages.add(Double.MAX_VALUE);</span>
+<span class="fc" id="L462">		return yNewPages;</span>
 	}
 
 	public int getNbPages() {
-<span class="fc" id="L378">		return yNewPages().size() - 1;</span>
+<span class="fc" id="L466">		return yNewPages().size() - 1;</span>
 	}
 
 }

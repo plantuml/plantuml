@@ -114,7 +114,7 @@ public class PicoWebServer implements Runnable {
 
 	public static void serverLoop(final ServerSocket serverConnect) throws IOException {
 		try {
-<span class="fc bfc" id="L117" title="All 2 branches covered.">			while (serverConnect.isClosed() == false) {</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			while (serverConnect.isClosed() == false) {</span>
 <span class="fc" id="L118">				final PicoWebServer myServer = new PicoWebServer(serverConnect.accept());</span>
 <span class="fc" id="L119">				final Thread thread = new Thread(myServer);</span>
 <span class="fc" id="L120">				thread.start();</span>
@@ -123,8 +123,8 @@ public class PicoWebServer implements Runnable {
 <span class="pc bpc" id="L123" title="1 of 2 branches missed.">			if (serverConnect.isClosed())</span>
 <span class="fc" id="L124">				return;</span>
 <span class="nc" id="L125">			throw e;</span>
-<span class="fc" id="L126">		}</span>
-<span class="fc" id="L127">	}</span>
+<span class="nc" id="L126">		}</span>
+<span class="nc" id="L127">	}</span>
 
 	public void run() {
 <span class="fc" id="L130">		BufferedInputStream in = null;</span>

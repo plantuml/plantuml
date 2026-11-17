@@ -219,11 +219,11 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 	}
 
 	private AbstractMessage getLastAbstractMessage() {
-<span class="pc bpc" id="L222" title="1 of 2 branches missed.">		for (int i = events.size() - 1; i &gt;= 0; i--)</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">		for (int i = events.size() - 1; i &gt;= 0; i--)</span>
 <span class="fc bfc" id="L223" title="All 2 branches covered.">			if (events.get(i) instanceof AbstractMessage)</span>
 <span class="fc" id="L224">				return (AbstractMessage) events.get(i);</span>
 
-<span class="nc" id="L226">		return null;</span>
+<span class="fc" id="L226">		return null;</span>
 	}
 
 	public void addNote(Note n, boolean tryMerge) {
