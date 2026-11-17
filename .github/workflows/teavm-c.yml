@@ -31,12 +31,12 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
       - name: Set up java
-        uses: actions/setup-java@v6
+        uses: actions/setup-java@v6.3.0
         with:
           java-version: 21
           distribution: temurin
@@ -75,7 +75,7 @@ jobs:
             plantuml-mcp-js/build/generated/teavm/js/plantuml-mcp-js.js
 
       - name: Upload C sources
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: teavm-c-sources
           path: build/generated/teavm/c
@@ -99,12 +99,12 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
       - name: Download C sources
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v8.0.2
         with:
           name: teavm-c-sources
           path: c-sources
@@ -177,7 +177,7 @@ jobs:
           $global:LASTEXITCODE = 0
 
       - name: Upload the SVG and the PNG
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: mindmap-windows-${{ matrix.arch }}
           path: |
@@ -186,7 +186,7 @@ jobs:
           retention-days: 7
 
       - name: Upload executable
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: plantuml-windows-${{ matrix.arch }}
           path: c-sources/bin/Release/plantuml.exe
@@ -220,12 +220,12 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
 
       - name: Download C sources
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v8.0.2
         with:
           name: teavm-c-sources
           path: c-sources
@@ -334,7 +334,7 @@ jobs:
           fi
 
       - name: Upload the SVG and the PNG
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: mindmap-${{ matrix.os }}-${{ matrix.arch }}
           path: |
@@ -344,7 +344,7 @@ jobs:
 
       # upload-artifact does not keep the executable bit: release-snapshot.sh sets it again
       - name: Upload executable
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: plantuml-${{ matrix.os }}-${{ matrix.arch }}
           path: c-sources/bin/plantuml
