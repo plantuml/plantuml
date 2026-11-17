@@ -11,6 +11,9 @@ on:
   workflow_dispatch:
   # called from ci.yml when a release is being made (do_release == 'true')
   workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        required: true
 
 permissions:
   actions: read
