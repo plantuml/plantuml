@@ -1,0 +1,19 @@
+---
+output: svg
+expected-description: (0 entities)
+---
+@startuml
+<style>
+package {
+   MaximumWidth 100
+}
+</style>
+
+package "Package P2 000 111 222 333 444 555 666 777 888 999" as P2 {
+}
+
+package "Package P3 000 111 222 333 444 555 666 777 888 999" as P3 {
+   package "Package P4 000 111 222 333 444 555 666 777 888 999" as P4 {
+   }
+}
+@enduml
