@@ -47,12 +47,15 @@ jobs:
       # benchmarked with the current harness.
       - name: Checkout harness
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Checkout target
         uses: actions/checkout@v7
         with:
           ref: ${{ inputs.ref || github.sha }}
           path: target
+          persist-credentials: false
 
       - name: Set up JDK 21 (Temurin)
         uses: actions/setup-java@v6

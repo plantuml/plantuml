@@ -30,6 +30,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Set up JDK 8 (Temurin)
         uses: actions/setup-java@v6
@@ -68,6 +70,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Set up java
         uses: actions/setup-java@v6

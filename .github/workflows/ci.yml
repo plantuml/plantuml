@@ -34,6 +34,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Set up JDK 8 (Temurin)
         uses: actions/setup-java@v6
@@ -88,6 +90,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Configure workflow
         id: config
@@ -113,6 +117,8 @@ jobs:
       - name: Checkout the repository
         if: needs.workflow_config.outputs.do_test_linux == 'true'
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Set up java
         if: needs.workflow_config.outputs.do_test_linux == 'true'
@@ -173,6 +179,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Set up java
         uses: actions/setup-java@v6
         with:
@@ -259,6 +267,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Set up java
         uses: actions/setup-java@v6
@@ -314,6 +324,7 @@ jobs:
       # Moves the snapshot tag and creates the GitHub release
       contents: write
     steps:
+      # Keeps the token: release-snapshot.sh pushes the snapshot tag with it
       - name: Checkout the repository
         uses: actions/checkout@v7
 
@@ -476,6 +487,8 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Prepare platform pair
         id: prep

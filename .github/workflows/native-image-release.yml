@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - uses: graalvm/setup-graalvm@v1
         with:
@@ -81,6 +83,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - uses: graalvm/setup-graalvm@v1
         with:
@@ -123,6 +127,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - uses: graalvm/setup-graalvm@v1
         with:
@@ -165,6 +171,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - uses: graalvm/setup-graalvm@v1
         with:

@@ -32,6 +32,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Set up java
         uses: actions/setup-java@v6
@@ -98,6 +100,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Download C sources
         uses: actions/download-artifact@v8
@@ -217,6 +221,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Download C sources
         uses: actions/download-artifact@v8
