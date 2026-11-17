@@ -269,8 +269,8 @@ public abstract class PSystemError extends UgDiagram {
 <span class="pc bpc" id="L269" title="1 of 2 branches missed.">			else if (min == 15)</span>
 <span class="nc" id="L270">				result = addMessageLiberapay(result);</span>
 <span class="pc bpc" id="L271" title="3 of 6 branches missed.">			else if (min == 30 || min == 39 || min == 48)</span>
-<span class="nc" id="L272">				result = addMessageDedication(result);</span>
-<span class="pc bpc" id="L273" title="1 of 2 branches missed.">			else if (getSource().containsIgnoreCase(&quot;arecibo&quot;))</span>
+<span class="fc" id="L272">				result = addMessageDedication(result);</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">			else if (getSource().containsIgnoreCase(&quot;arecibo&quot;))</span>
 <span class="nc" id="L274">				result = addMessageArecibo(result);</span>
 
 		}
@@ -326,12 +326,12 @@ public abstract class PSystemError extends UgDiagram {
 	}
 
 	private TextBlock addMessageDedication(final TextBlock source) throws IOException {
-<span class="nc bnc" id="L329" title="All 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		if (LicenseInfo.retrieveNamedOrDistributorQuickIsValid())</span>
 <span class="nc" id="L330">			return source;</span>
 
-<span class="nc" id="L332">		final TextBlock message = getMessageDedication();</span>
-<span class="nc" id="L333">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
-<span class="nc" id="L334">		return result;</span>
+<span class="fc" id="L332">		final TextBlock message = getMessageDedication();</span>
+<span class="fc" id="L333">		TextBlock result = TextBlockUtils.mergeTB(message, source, HorizontalAlignment.LEFT);</span>
+<span class="fc" id="L334">		return result;</span>
 	}
 
 	private TextBlock addMessageArecibo(final TextBlock source) throws IOException {
@@ -341,25 +341,25 @@ public abstract class PSystemError extends UgDiagram {
 	}
 
 	private TextBlock getMessageDedication() {
-<span class="nc" id="L344">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
+<span class="fc" id="L344">		final HColorSimple backColor = (HColorSimple) HColorSet.instance().getColorOrWhite(&quot;#eae2c9&quot;);</span>
 
-<span class="nc" id="L346">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
-<span class="nc" id="L347">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, XColor.BLACK, backColor.getAwtColor()));</span>
-<span class="nc" id="L348">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
+<span class="fc" id="L346">		final PortableImage qrcode = smaller(FlashCodeFactory.getFlashCodeUtils()</span>
+<span class="fc" id="L347">				.exportFlashcode(&quot;https://plantuml.com/dedication&quot;, XColor.BLACK, backColor.getAwtColor()));</span>
+<span class="fc" id="L348">		final Display disp = Display.create(&quot;&lt;b&gt;Add your own dedication into PlantUML&quot;, &quot; &quot;, &quot;For just $5 per month!&quot;,</span>
 				&quot;Details on &lt;i&gt;[[https://plantuml.com/dedication]]&quot;);
 
-<span class="nc" id="L351">		final UFont font = UFontFactory.sansSerif(14);</span>
-<span class="nc" id="L352">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
-<span class="nc" id="L353">		final TextBlock text = TextBlockUtils</span>
-<span class="nc" id="L354">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
+<span class="fc" id="L351">		final UFont font = UFontFactory.sansSerif(14);</span>
+<span class="fc" id="L352">		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);</span>
+<span class="fc" id="L353">		final TextBlock text = TextBlockUtils</span>
+<span class="fc" id="L354">				.withMargin(disp.create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()), 10, 0);</span>
 		final TextBlock result;
-<span class="nc bnc" id="L356" title="All 2 branches missed.">		if (qrcode == null) {</span>
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">		if (qrcode == null) {</span>
 <span class="nc" id="L357">			result = text;</span>
 		} else {
-<span class="nc" id="L359">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
-<span class="nc" id="L360">			result = TextBlockUtils.mergeLR(text, qr, VerticalAlignment.CENTER);</span>
+<span class="fc" id="L359">			final UImage qr = new UImage(new PixelImage(qrcode, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3);</span>
+<span class="fc" id="L360">			result = TextBlockUtils.mergeLR(text, qr, VerticalAlignment.CENTER);</span>
 		}
-<span class="nc" id="L362">		return TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="fc" id="L362">		return TextBlockUtils.addBackcolor(result, backColor);</span>
 
 	}
 
@@ -406,11 +406,11 @@ public abstract class PSystemError extends UgDiagram {
 	}
 
 	private PortableImage smaller(PortableImage im) {
-<span class="nc bnc" id="L409" title="All 2 branches missed.">		if (im == null)</span>
+<span class="pc bpc" id="L409" title="1 of 2 branches missed.">		if (im == null)</span>
 <span class="nc" id="L410">			return null;</span>
 
-<span class="nc" id="L412">		final int nb = 1;</span>
-<span class="nc" id="L413">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
+<span class="fc" id="L412">		final int nb = 1;</span>
+<span class="fc" id="L413">		return im.getSubimage(nb, nb, im.getWidth() - 2 * nb, im.getHeight() - 2 * nb);</span>
 	}
 
 	public int score() {

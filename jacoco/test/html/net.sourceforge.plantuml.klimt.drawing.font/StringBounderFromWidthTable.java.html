@@ -61,45 +61,57 @@ public class StringBounderFromWidthTable implements StringBounder {
 <span class="fc" id="L61">		return fileFormat;</span>
 	}
 
+	// SVG_DETERMINISTIC is SVG measured with this table instead of Java's font
+	// metrics. UGraphicSvg says &quot;SVG&quot; whatever the format, so this bounder has to
+	// say it too, as StringBounderSvg does: an EmbeddedDiagram measures itself
+	// through the bounder and draws itself through the UGraphic, and when the two
+	// disagreed it measured a PNG it could not read (42x42) and then drew its SVG
+	// at full size, overflowing the note around it. Not for the LaTeX formats,
+	// which also fall back on this table.
+	@Override
+	public boolean matchesProperty(String propertyName) {
+<span class="fc bfc" id="L73" title="All 4 branches covered.">		return fileFormat == FileFormat.SVG_DETERMINISTIC &amp;&amp; &quot;SVG&quot;.equalsIgnoreCase(propertyName);</span>
+	}
+
 	private static final double REFERENCE_SIZE = 16.0;
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
-<span class="fc" id="L68">		final String family = font.getFamily(text, UFontContext.SVG);</span>
-<span class="fc" id="L69">		final double size = font.getSize2D();</span>
-<span class="fc" id="L70">		final double factor = size / REFERENCE_SIZE;</span>
-<span class="fc" id="L71">		final double height = size;</span>
-<span class="fc" id="L72">		double width = 0;</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length();) {</span>
-<span class="fc" id="L74">			final int cp = text.codePointAt(i);</span>
-<span class="fc" id="L75">			width += getCharWidth(font, cp);</span>
-<span class="fc" id="L76">			i += Character.charCount(cp);</span>
-<span class="fc" id="L77">		}</span>
+<span class="fc" id="L80">		final String family = font.getFamily(text, UFontContext.SVG);</span>
+<span class="fc" id="L81">		final double size = font.getSize2D();</span>
+<span class="fc" id="L82">		final double factor = size / REFERENCE_SIZE;</span>
+<span class="fc" id="L83">		final double height = size;</span>
+<span class="fc" id="L84">		double width = 0;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		for (int i = 0; i &lt; text.length();) {</span>
+<span class="fc" id="L86">			final int cp = text.codePointAt(i);</span>
+<span class="fc" id="L87">			width += getCharWidth(font, cp);</span>
+<span class="fc" id="L88">			i += Character.charCount(cp);</span>
+<span class="fc" id="L89">		}</span>
 
-<span class="fc" id="L79">		return new XDimension2D(width * factor, height);</span>
+<span class="fc" id="L91">		return new XDimension2D(width * factor, height);</span>
 	}
 
 	private double getCharWidth(UFont font, int cp) {
-<span class="fc" id="L83">		return getWidth(cp);</span>
+<span class="fc" id="L95">		return getWidth(cp);</span>
 	}
 
 	/**
 	 * Width of a character for a font of size {@code REFERENCE_SIZE} (16).
 	 */
 	static double getWidth(int cp) {
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (cp &gt;= 0xFFFF)</span>
-<span class="fc" id="L91">			return 16;</span>
-<span class="fc" id="L92">		final int block = (cp &gt;&gt; 8) &amp; 0xFF;</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (block &gt;= BLOCKS.length)</span>
-<span class="fc" id="L94">			return 13;</span>
-<span class="fc" id="L95">		return getBlock(block).getWidth((char) cp);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (cp &gt;= 0xFFFF)</span>
+<span class="fc" id="L103">			return 16;</span>
+<span class="fc" id="L104">		final int block = (cp &gt;&gt; 8) &amp; 0xFF;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (block &gt;= BLOCKS.length)</span>
+<span class="fc" id="L106">			return 13;</span>
+<span class="fc" id="L107">		return getBlock(block).getWidth((char) cp);</span>
 	}
 
 	/**
 	 * Width of a character as a fraction of the font size.
 	 */
 	static double getRelativeWidth(int cp) {
-<span class="fc" id="L102">		return getWidth(cp) / REFERENCE_SIZE;</span>
+<span class="fc" id="L114">		return getWidth(cp) / REFERENCE_SIZE;</span>
 	}
 
 }
