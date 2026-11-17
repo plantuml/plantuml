@@ -249,28 +249,28 @@ public class StringUtils {
 
 	public static String manageArrowForCuca(String s) {
 		final Direction dir = getArrowDirection(s);
-		s = StringUtils.replaceChar(s, '=', '-');
-		s = s.replaceAll("\\w*", "");
+		String normalizedArrow = StringUtils.replaceChar(s, '=', '-');
+		normalizedArrow = normalizedArrow.replaceAll("\\w*", "");
 		if (dir == Direction.LEFT || dir == Direction.RIGHT)
-			s = s.replaceAll("-+", "-");
+			normalizedArrow = normalizedArrow.replaceAll("-+", "-");
 
-		if (s.length() == 2 && (dir == Direction.UP || dir == Direction.DOWN))
-			s = s.replaceFirst("-", "--");
+		if (normalizedArrow.length() == 2 && (dir == Direction.UP || dir == Direction.DOWN))
+			normalizedArrow = normalizedArrow.replaceFirst("-", "--");
 
-		return s;
+		return normalizedArrow;
 	}
 
 	public static String manageQueueForCuca(String s) {
 		final Direction dir = getQueueDirection(s);
-		s = StringUtils.replaceChar(s, '=', '-');
-		s = s.replaceAll("\\w*", "");
+		String normalizedQueue = StringUtils.replaceChar(s, '=', '-');
+		normalizedQueue = normalizedQueue.replaceAll("\\w*", "");
 		if (dir == Direction.LEFT || dir == Direction.RIGHT)
-			s = s.replaceAll("-+", "-");
+			normalizedQueue = normalizedQueue.replaceAll("-+", "-");
 
-		if (s.length() == 1 && (dir == Direction.UP || dir == Direction.DOWN))
-			s = s.replaceFirst("-", "--");
+		if (normalizedQueue.length() == 1 && (dir == Direction.UP || dir == Direction.DOWN))
+			normalizedQueue = normalizedQueue.replaceFirst("-", "--");
 
-		return s;
+		return normalizedQueue;
 	}
 
 	public static Direction getArrowDirection(String s) {
