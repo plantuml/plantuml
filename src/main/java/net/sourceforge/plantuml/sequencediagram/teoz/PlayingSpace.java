@@ -306,8 +306,9 @@ public class PlayingSpace implements Bordered {
 	}
 
 	// The posB of the leftmost participant that pushing this tile moves, or
-	// null if there is none. A note over several participants counts only its
-	// first one: pushing it moves both ends only halfway.
+	// null if there is none. A note over several participants counts both
+	// ends: it covers every column between them, so it can never be pushed
+	// clear of a note on one of those participants.
 	private Double leftmostPosB(Tile tile) {
 		if (tile instanceof GroupingTile) {
 			Double result = null;
@@ -324,8 +325,10 @@ public class PlayingSpace implements Bordered {
 			result = leftmost(result, posB(((AbstractMessage) event).getParticipant2()));
 		} else if (event instanceof Note) {
 			result = leftmost(result, posB(((Note) event).getParticipant()));
+			result = leftmost(result, posB(((Note) event).getParticipant2()));
 		} else if (event instanceof Notes) {
-			// A member over several participants moves them only halfway.
+			// A member over several participants is left out: in a merged
+			// group, that push can settle.
 			for (Note note : (Notes) event)
 				if (note.getPosition() != NotePosition.OVER_SEVERAL)
 					result = leftmost(result, posB(note.getParticipant()));
