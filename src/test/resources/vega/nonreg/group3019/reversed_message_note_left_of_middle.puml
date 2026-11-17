@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (3 participants)
+---
+@startuml
+participant A
+participant B
+participant C
+C -> A : x
+& note left of B : y
+@enduml

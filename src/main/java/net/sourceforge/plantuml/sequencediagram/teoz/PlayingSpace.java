@@ -44,12 +44,15 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LinkAnchor;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.Notes;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.style.ISkinParam;
 
@@ -263,10 +266,92 @@ public class PlayingSpace implements Bordered {
 		// Declaration order gives every participant's posB a monotonic initial
 		// value (the same property isReverse() relies on), so this reliably
 		// tells which side starts further left even before the RealLine solves.
-		if (aAnchor.getPosB(stringBounder).getCurrentValue() <= bAnchor.getPosB(stringBounder).getCurrentValue())
+		final boolean aIsLeft = aAnchor.getPosB(stringBounder).getCurrentValue() <= bAnchor.getPosB(stringBounder)
+				.getCurrentValue();
+		final Tile left = aIsLeft ? a : b;
+		final Tile right = aIsLeft ? b : a;
+
+		// A message is anchored on its sender, so `B -> A` counts as the
+		// right-hand tile even though it starts at A. If the left tile is a
+		// note on one participant and the right tile starts at that
+		// participant or left of it, pushing the right tile also moves the
+		// note right, and RealLine.compile() gives up with "Infinite Loop?".
+		// Skip the pair, as for two tiles on the same anchor above.
+		if (cannotPushApart(left, right))
+			return;
+
+		if (aIsLeft)
 			bMin.ensureBiggerThan(aMax);
 		else
 			aMin.ensureBiggerThan(bMax);
+	}
+
+	// True when `left` is a note on one participant and pushing `right`
+	// would move that participant, or one left of it.
+	private boolean cannotPushApart(Tile left, Tile right) {
+		final Event event = left.getEvent();
+		if (event instanceof Note == false)
+			return false;
+
+		final Note note = (Note) event;
+		if (note.getPosition() == NotePosition.OVER_SEVERAL)
+			return false;
+
+		final LivingSpace noteSpace = livingSpaces.get(note.getParticipant());
+		final Double rightStart = leftmostPosB(right);
+		if (noteSpace == null || rightStart == null)
+			return false;
+
+		return rightStart <= noteSpace.getPosB(stringBounder).getCurrentValue();
+	}
+
+	// The posB of the leftmost participant that pushing this tile moves, or
+	// null if there is none. A note over several participants counts only its
+	// first one: pushing it moves both ends only halfway.
+	private Double leftmostPosB(Tile tile) {
+		if (tile instanceof GroupingTile) {
+			Double result = null;
+			for (Tile child : ((GroupingTile) tile).getChildTilesForAnchor())
+				result = leftmost(result, leftmostPosB(child));
+
+			return result;
+		}
+
+		final Event event = tile.getEvent();
+		Double result = null;
+		if (event instanceof AbstractMessage) {
+			result = leftmost(result, posB(((AbstractMessage) event).getParticipant1()));
+			result = leftmost(result, posB(((AbstractMessage) event).getParticipant2()));
+		} else if (event instanceof Note) {
+			result = leftmost(result, posB(((Note) event).getParticipant()));
+		} else if (event instanceof Notes) {
+			// A member over several participants moves them only halfway.
+			for (Note note : (Notes) event)
+				if (note.getPosition() != NotePosition.OVER_SEVERAL)
+					result = leftmost(result, posB(note.getParticipant()));
+		}
+		return result;
+	}
+
+	private Double posB(Participant participant) {
+		if (participant == null)
+			return null;
+
+		final LivingSpace space = livingSpaces.get(participant);
+		if (space == null)
+			return null;
+
+		return space.getPosB(stringBounder).getCurrentValue();
+	}
+
+	private static Double leftmost(Double current, Double candidate) {
+		if (candidate == null)
+			return current;
+
+		if (current == null || candidate < current)
+			return candidate;
+
+		return current;
 	}
 
 	// Finds ANY LivingSpace this tile (or, for a GroupingTile, one of its
