@@ -1027,6 +1027,874 @@
       "diagram_class": "ChartDiagram"
     },
     {
+      "file": "chart/R19.01-lenient-pie-json-braces.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.02-lenient-pie-parentheses.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.03-lenient-pie-single-quotes.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.04-lenient-pie-quoted-values-spaces.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.05-lenient-pie-json-colors-donut.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.06-lenient-pie-apostrophe-and-quoted-comma.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.07-lenient-pie-preprocessor-json.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.08-lenient-pie-json-missing-value.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.09-lenient-pie-name-stereotype-braces.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.10-lenient-pie-json-decimals.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.11-lenient-pie-json-a-axis-order.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.12-lenient-pie-quoted-hash-and-colon.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.13-lenient-pie-positional-braces.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.14-lenient-radar-braces-two-series.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.15-lenient-radar-parentheses-single-quotes.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.16-lenient-radar-preprocessor-json.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.17-lenient-radar-positional-braces-color.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.18-lenient-radar-json-missing-value.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.19-lenient-radar-mixed-brackets-series.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R19.20-lenient-error-mismatched-brackets.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R19.21-lenient-error-unclosed-single-quote.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R19.22-lenient-error-quoted-non-number.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R19.23-lenient-error-braces-mixed-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R19.24-lenient-error-radar-mismatched-parentheses.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R20.01-lenient-xy-line-braces-quoted.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.02-lenient-xy-line-parentheses.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.03-lenient-xy-line-json-pairs-brackets.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.04-lenient-xy-line-pairs-braces-quoted.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.05-lenient-xy-line-pairs-mixed-delimiters.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.06-lenient-xy-line-missing-values-quoted.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.07-lenient-xy-line-preprocessor-json.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.08-lenient-xy-line-preprocessor-json-pairs.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.09-lenient-xy-line-v2-interpolate-braces.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.10-lenient-xy-line-decimals-negative.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.11-lenient-xy-bar-braces-quoted.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.12-lenient-xy-bar-parentheses-stacked.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.13-lenient-xy-bar-horizontal-single-quotes.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.14-lenient-xy-area-braces-quoted.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.15-lenient-xy-area-parentheses-v2.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.16-lenient-xy-scatter-json-pairs.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.17-lenient-xy-scatter-parentheses-values.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.18-lenient-xy-mixed-series-all-delimiters.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R20.19-lenient-xy-error-mismatched-brackets.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R20.20-lenient-xy-error-pairs-in-bar.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R20.21-lenient-xy-error-pair-three-coordinates.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R20.22-lenient-xy-error-mismatched-pair.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R20.23-lenient-xy-error-unclosed-quote.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R20.24-lenient-xy-error-quoted-non-number.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R21.01-keyed-xy-bar-h-axis-order-missing.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.02-keyed-xy-line-categories-from-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.03-keyed-xy-line-union-of-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.04-keyed-xy-line-preprocessor-json-object.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.05-keyed-xy-bar-stacked-different-orders.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.06-keyed-xy-area-missing-category.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.07-keyed-xy-scatter-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.08-keyed-xy-bar-horizontal-v-axis.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.09-keyed-xy-mixed-keyed-and-positional.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.10-keyed-xy-quoted-special-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.11-keyed-xy-line-connect-interpolate.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.12-keyed-xy-line-v2.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.13-keyed-xy-brackets-and-parentheses.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.14-keyed-xy-h-axis-after-series.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.15-keyed-xy-preprocessor-json-series.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R21.16-keyed-xy-error-key-not-in-h-axis.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R21.17-keyed-xy-error-key-not-in-h-axis-after.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R21.18-keyed-xy-error-keys-with-h-axis-range.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R21.19-keyed-xy-error-h-axis-range-after-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R21.20-keyed-xy-error-mixed-keyed-values.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R21.21-keyed-xy-error-keyed-pair.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R21.22-keyed-xy-error-key-not-in-v-axis.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R21.23-keyed-xy-error-empty-key.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R21.24-keyed-xy-area-positional-missing-value.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.01-list-pie-star-items.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.02-list-pie-dash-items.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.03-list-pie-mermaid-quoted-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.04-list-pie-name-options.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.05-list-pie-item-colors.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.06-list-pie-special-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.07-list-pie-values-only.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.08-list-pie-missing-and-zero.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.09-list-pie-title-colon-legend.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.10-list-pie-stereotype-style.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.11-list-pie-mixed-bullets.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.12-list-pie-preprocessor-foreach-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.13-list-pie-preprocessor-foreach-array.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.14-list-radar-a-axis.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.15-list-radar-categories-from-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.16-list-radar-values-only.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.17-list-radar-inline-then-items.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.18-list-radar-a-axis-after-items.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R22.19-list-error-item-without-series.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R22.20-list-error-bare-key-without-series.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R22.21-list-error-mixed-keyed-items.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R22.22-list-error-pie-negative-item.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R22.23-list-error-pie-all-zero.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R22.24-list-error-empty-pie.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R22.25-list-error-radar-key-not-in-a-axis.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R22.26-list-error-a-axis-after-unknown-key.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R22.27-list-error-item-after-inline-pie.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R22.28-list-error-item-after-inline-bar.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R22.29-list-error-unclosed-quote-item.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R23.01-xy-list-bar-keys-h-axis.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.02-xy-list-bar-categories-from-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.03-xy-list-line-mermaid-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.04-xy-list-line-values-only.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.05-xy-list-line-missing-connect.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.06-xy-list-area-stacked-lists.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.07-xy-list-bar-stacked-lists.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.08-xy-list-bar-horizontal.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.09-xy-list-scatter-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.10-xy-list-line-v2-with-inline-bar.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.11-xy-list-mixed-series-lists.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.12-xy-list-special-keys.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.13-xy-list-h-axis-after-items.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.14-xy-list-preprocessor-foreach.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.15-xy-list-title-legend-around-items.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "chart/R23.16-xy-list-error-item-color.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R23.17-xy-list-error-key-not-in-h-axis.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R23.18-xy-list-error-key-not-in-h-axis-after.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R23.19-xy-list-error-keys-with-h-axis-range.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R23.20-xy-list-error-coordinate-pair-item.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R23.21-xy-list-error-list-after-pairs.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R23.22-xy-list-error-mixed-keyed-items.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "chart/R23.23-xy-list-error-key-not-in-v-axis.puml",
+      "folder": "chart",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
       "file": "component/node-style-edge-label-decorations.puml",
       "folder": "component",
       "status": "pass",
@@ -1113,6 +1981,69 @@
         "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java)",
         "test.vega.VegaInputFile.lambda$(VegaInputFile.java)"
       ]
+    },
+    {
+      "file": "error-text/E01-sequence-syntax-error.puml",
+      "folder": "error-text",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "error-text/E02-indented-faulty-line.puml",
+      "folder": "error-text",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "error-text/E03-class-diagram-error.puml",
+      "folder": "error-text",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "error-text/E04-chart-mismatched-brackets.puml",
+      "folder": "error-text",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "error-text/E05-chart-execution-error.puml",
+      "folder": "error-text",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "error-text/E06-preprocessor-unknown-function.puml",
+      "folder": "error-text",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorPreprocessor"
+    },
+    {
+      "file": "error-text/E07-error-in-procedure.puml",
+      "folder": "error-text",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "error-text/E08-long-source-skipped-lines.puml",
+      "folder": "error-text",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "error-text/E09-unicode-faulty-line.puml",
+      "folder": "error-text",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
     },
     {
       "file": "files/annotations.puml",
@@ -3037,6 +3968,41 @@
       "diagram_class": "ActivityDiagram3"
     },
     {
+      "file": "nonreg/embedded-svg-size/activity_box.puml",
+      "folder": "nonreg/embedded-svg-size",
+      "status": "pass",
+      "description": "activity3",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "nonreg/embedded-svg-size/arrow_label.puml",
+      "folder": "nonreg/embedded-svg-size",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/embedded-svg-size/note_class.puml",
+      "folder": "nonreg/embedded-svg-size",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/embedded-svg-size/note_sequence.puml",
+      "folder": "nonreg/embedded-svg-size",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/embedded-svg-size/note_smetana_theme.puml",
+      "folder": "nonreg/embedded-svg-size",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
       "file": "nonreg/group20505/min_width_center.puml",
       "folder": "nonreg/group20505",
       "status": "pass",
@@ -4521,6 +5487,13 @@
       "diagram_class": "ChartDiagram"
     },
     {
+      "file": "nonreg/group2995/empty_package_maximum_width.puml",
+      "folder": "nonreg/group2995",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
       "file": "nonreg/group2995/package_maximum_width.puml",
       "folder": "nonreg/group2995",
       "status": "pass",
@@ -4703,6 +5676,111 @@
       "diagram_class": "MindMapDiagram"
     },
     {
+      "file": "nonreg/group3015/mono_line_arrow_plain.puml",
+      "folder": "nonreg/group3015",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3015/mono_line_arrow_theme.puml",
+      "folder": "nonreg/group3015",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3015/mono_line_arrow_variable.puml",
+      "folder": "nonreg/group3015",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3015/mono_line_note_theme.puml",
+      "folder": "nonreg/group3015",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group3015/multi_line_note_theme.puml",
+      "folder": "nonreg/group3015",
+      "status": "pass",
+      "description": "(2 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/group3019/forward_message_note_over_target.puml",
+      "folder": "nonreg/group3019",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3019/note_first_then_reversed_message.puml",
+      "folder": "nonreg/group3019",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3019/note_left_of_end_of_note_over_two_participants.puml",
+      "folder": "nonreg/group3019",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3019/note_left_of_end_of_wider_note_over_two_participants.puml",
+      "folder": "nonreg/group3019",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3019/note_over_two_participants_then_note_it_covers.puml",
+      "folder": "nonreg/group3019",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3019/note_over_two_participants_written_left_first.puml",
+      "folder": "nonreg/group3019",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3019/note_then_note_over_two_participants_covering_it.puml",
+      "folder": "nonreg/group3019",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3019/reversed_message_note_left_of_middle.puml",
+      "folder": "nonreg/group3019",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3019/reversed_message_note_left_of_target.puml",
+      "folder": "nonreg/group3019",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3019/reversed_message_note_over_target.puml",
+      "folder": "nonreg/group3019",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
       "file": "nonreg/json/style-highlight-with-style-tags.puml",
       "folder": "nonreg/json",
       "status": "pass",
@@ -4757,6 +5835,20 @@
       "status": "pass",
       "description": "(3 participants)",
       "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/object_stereotype_style/skinparam.puml",
+      "folder": "nonreg/object_stereotype_style",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "nonreg/object_stereotype_style/style.puml",
+      "folder": "nonreg/object_stereotype_style",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ClassDiagram"
     },
     {
       "file": "nonreg/simple/A0004.puml",
@@ -7904,6 +8996,13 @@
       "diagram_class": "StateDiagram"
     },
     {
+      "file": "state/node-style-transition-label-arrow-style.puml",
+      "folder": "state",
+      "status": "pass",
+      "description": "(5 entities)",
+      "diagram_class": "StateDiagram"
+    },
+    {
       "file": "state/node-style-transition-label-orphaned-by-hide.puml",
       "folder": "state",
       "status": "pass",
@@ -9390,8 +10489,8 @@
     }
   ],
   "summary": {
-    "total": 1304,
-    "passed": 1299,
+    "total": 1461,
+    "passed": 1456,
     "failed": 0,
     "skipped": 5
   }
