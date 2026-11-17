@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="259px" preserveAspectRatio="none" style="width:301px;height:259px;background:#FFFFFF;" version="1.1" viewBox="0 0 301 259" width="301px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster P3-->
+    <g class="cluster" data-qualified-name="P3" data-source-line="10" id="ent0002">
+      <path d="M140,4 L236.025,4 A3.75,3.75 0 0 1 238.525,6.5 L245.525,66 L283,66 A2.5,2.5 0 0 1 285.5,68.5 L285.5,232.5 A2.5,2.5 0 0 1 283,235 L140,235 A2.5,2.5 0 0 1 137.5,232.5 L137.5,6.5 A2.5,2.5 0 0 1 140,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="137.5" x2="245.525" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="54.512" x="141.5" y="16.889">Package</text>
+      <text fill="#000" font-size="14" font-weight="700" x="196.013" y="16.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="196.013" y="16.889">P3</text>
+      <text fill="#000" font-size="14" font-weight="700" x="213.163" y="16.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="213.163" y="16.889">000</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="142.288" y="30.889">111</text>
+      <text fill="#000" font-size="14" font-weight="700" x="165.65" y="30.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="165.65" y="30.889">222</text>
+      <text fill="#000" font-size="14" font-weight="700" x="189.013" y="30.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="189.013" y="30.889">333</text>
+      <text fill="#000" font-size="14" font-weight="700" x="212.375" y="30.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="212.375" y="30.889">444</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="142.288" y="44.889">555</text>
+      <text fill="#000" font-size="14" font-weight="700" x="165.65" y="44.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="165.65" y="44.889">666</text>
+      <text fill="#000" font-size="14" font-weight="700" x="189.013" y="44.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="189.013" y="44.889">777</text>
+      <text fill="#000" font-size="14" font-weight="700" x="212.375" y="44.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="212.375" y="44.889">888</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="177.331" y="58.889">999</text>
+    </g>
+    <path d="M8.5,87 L104.525,87 A3.75,3.75 0 0 1 107.025,89.5 L114.025,149 L118.525,149 A2.5,2.5 0 0 1 121.025,151.5 L121.025,216.5 A2.5,2.5 0 0 1 118.525,219 L8.5,219 A2.5,2.5 0 0 1 6,216.5 L6,89.5 A2.5,2.5 0 0 1 8.5,87" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="114.025" y1="149" y2="149"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="54.512" x="10" y="99.889">Package</text>
+    <text fill="#000" font-size="14" font-weight="700" x="64.512" y="99.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="64.512" y="99.889">P2</text>
+    <text fill="#000" font-size="14" font-weight="700" x="81.663" y="99.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="81.663" y="99.889">000</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="10.787" y="113.889">111</text>
+    <text fill="#000" font-size="14" font-weight="700" x="34.15" y="113.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="34.15" y="113.889">222</text>
+    <text fill="#000" font-size="14" font-weight="700" x="57.513" y="113.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="57.513" y="113.889">333</text>
+    <text fill="#000" font-size="14" font-weight="700" x="80.875" y="113.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="80.875" y="113.889">444</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="10.787" y="127.889">555</text>
+    <text fill="#000" font-size="14" font-weight="700" x="34.15" y="127.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="34.15" y="127.889">666</text>
+    <text fill="#000" font-size="14" font-weight="700" x="57.513" y="127.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="57.513" y="127.889">777</text>
+    <text fill="#000" font-size="14" font-weight="700" x="80.875" y="127.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="80.875" y="127.889">888</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="45.831" y="141.889">999</text>
+    <path d="M156.5,87 L252.525,87 A3.75,3.75 0 0 1 255.025,89.5 L262.025,149 L266.525,149 A2.5,2.5 0 0 1 269.025,151.5 L269.025,216.5 A2.5,2.5 0 0 1 266.525,219 L156.5,219 A2.5,2.5 0 0 1 154,216.5 L154,89.5 A2.5,2.5 0 0 1 156.5,87" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="154" x2="262.025" y1="149" y2="149"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="54.512" x="158" y="99.889">Package</text>
+    <text fill="#000" font-size="14" font-weight="700" x="212.513" y="99.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="212.513" y="99.889">P4</text>
+    <text fill="#000" font-size="14" font-weight="700" x="229.663" y="99.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="229.663" y="99.889">000</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="158.788" y="113.889">111</text>
+    <text fill="#000" font-size="14" font-weight="700" x="182.15" y="113.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="182.15" y="113.889">222</text>
+    <text fill="#000" font-size="14" font-weight="700" x="205.513" y="113.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="205.513" y="113.889">333</text>
+    <text fill="#000" font-size="14" font-weight="700" x="228.875" y="113.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="228.875" y="113.889">444</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="158.788" y="127.889">555</text>
+    <text fill="#000" font-size="14" font-weight="700" x="182.15" y="127.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="182.15" y="127.889">666</text>
+    <text fill="#000" font-size="14" font-weight="700" x="205.513" y="127.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="205.513" y="127.889">777</text>
+    <text fill="#000" font-size="14" font-weight="700" x="228.875" y="127.889"> </text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="228.875" y="127.889">888</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="193.831" y="141.889">999</text>
+  </g>
+</svg>

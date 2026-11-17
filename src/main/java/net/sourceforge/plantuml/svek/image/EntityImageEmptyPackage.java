@@ -115,7 +115,8 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final FontConfiguration titleFontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final HorizontalAlignment titleHorizontalAlignment = style.getHorizontalAlignment();
 
-		this.desc = entity.getDisplay().create(titleFontConfiguration, titleHorizontalAlignment, getSkinParam());
+		this.desc = entity.getDisplay().create9(titleFontConfiguration, titleHorizontalAlignment, getSkinParam(),
+				style.wrapWidth());
 
 		final DisplayPositioned legend = ((Entity) entity).getLegend();
 		if (legend != null) {
