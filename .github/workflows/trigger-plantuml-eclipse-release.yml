@@ -27,6 +27,9 @@ on:
         required: true
         type: boolean
 
+# The dispatch uses PLANTUML_ECLIPSE_DISPATCH_TOKEN, the job token is not used
+permissions: {}
+
 jobs:
   trigger-workflow:
     runs-on: ubuntu-latest

@@ -8,6 +8,9 @@ jobs:
   close-and-put-in-backlog:
     if: github.event.label.name == 'p:backlog'
     runs-on: ubuntu-latest
+    permissions:
+      # Comments on the issue and closes it (the project step uses its own token)
+      issues: write
     steps:
       - uses: actions/github-script@v9
         with:

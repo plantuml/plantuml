@@ -7,6 +7,9 @@ on:
       - '**.md'
       - 'docs/**'
 
+permissions:
+  contents: read
+
 defaults:
   run:
     shell: bash
