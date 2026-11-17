@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob : {{\n!$who = "Carol"\nAlice -> $who\n}}
+@enduml

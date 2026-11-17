@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+component a {
+}
+note top of a
+==theme don't fail==
+{{
+!theme crt-amber
+User->System: test
+}}
+end note
+@enduml

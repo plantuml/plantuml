@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -88,11 +89,38 @@ public class EmbeddedDiagram extends TextBlockMemoized implements Line, Atom {
 	private EmbeddedDiagram(ISkinSimple skinParam, List<StringLocated> strings) {
 
 		final Previous previous = skinParam == null ? Previous.createEmpty() : Previous.createFrom(skinParam.values());
-		final BlockUml blockUml = new BlockUml(null, PathSystem.fetch(), strings, Defines.createEmpty(), previous,
-				null);
+		// The body of a {{ }} block written on one line ("\n" separated) is
+		// never seen line by line by the outer preprocessor, so a directive such
+		// as !theme would reach the diagram parser as plain text. Preprocess the
+		// body here, as a top-level diagram is: a non-null DefinitionsContainer
+		// makes BlockUml run TimLoader.
+		final PathSystem pathSystem = PathSystem.fetch();
+		final BlockUml blockUml = new BlockUml(noDefinitions(pathSystem), pathSystem, strings, Defines.createEmpty(),
+				previous, StandardCharsets.UTF_8);
 
 		this.diagram = blockUml.getDiagram();
 
+	}
+
+	// An embedded diagram has no @startdef blocks of its own: !includedef finds
+	// nothing, as it does at top level for an unknown name.
+	private static DefinitionsContainer noDefinitions(final PathSystem pathSystem) {
+		return new DefinitionsContainer() {
+			@Override
+			public PathSystem getPathSystem() {
+				return pathSystem;
+			}
+
+			@Override
+			public String getCharset() {
+				return StandardCharsets.UTF_8.name();
+			}
+
+			@Override
+			public List<String> getDefinition(String name) {
+				return Collections.emptyList();
+			}
+		};
 	}
 
 	public static EmbeddedDiagram createAndSkip(String type, Iterator<CharSequence> it, ISkinSimple skinParam) {

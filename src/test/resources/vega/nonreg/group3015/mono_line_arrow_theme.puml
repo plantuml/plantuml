@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+Alice -> Bob : {{\n!theme crt-amber\nAlice -> Bob\n}}
+@enduml
