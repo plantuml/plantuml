@@ -3,6 +3,9 @@ name: Dev - Unit Test
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   job1:
     name: Run Unit Test

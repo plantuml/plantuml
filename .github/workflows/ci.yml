@@ -17,6 +17,10 @@ on:
       - 'docs/**'
   workflow_dispatch:
 
+# Read-only by default, the jobs that write say so below
+permissions:
+  contents: read
+
 defaults:
   run:
     shell: bash
@@ -249,6 +253,9 @@ jobs:
     needs: [ workflow_config, build_artifacts, jdk8 ]
     if: needs.workflow_config.outputs.do_javadoc == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      # Pushes the site to the gh-pages branch
+      contents: write
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
@@ -303,6 +310,9 @@ jobs:
               && needs.create_native_image_release.result == 'success'))
     needs: [ workflow_config, build_artifacts, test_linux, jdk8, create_c_executable, create_native_image_release ]
     runs-on: ubuntu-latest
+    permissions:
+      # Moves the snapshot tag and creates the GitHub release
+      contents: write
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v7
@@ -451,6 +461,10 @@ jobs:
       && needs.workflow_config.outputs.do_release == 'true'
       && needs.upload.result == 'success'
     runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      # Pushes the image to ghcr.io
+      packages: write
     strategy:
       fail-fast: false
       matrix:
@@ -529,6 +543,10 @@ jobs:
       && needs.workflow_config.outputs.do_release == 'true'
       && needs.docker_build.result == 'success'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Pushes the multi-arch manifest to ghcr.io
+      packages: write
     steps:
       - name: Download digests
         uses: actions/download-artifact@v8
@@ -601,6 +619,10 @@ jobs:
   build_for_sonar:
     needs: [ workflow_config ]
     if: needs.workflow_config.outputs.do_release == 'true'
+    # A called workflow cannot get more than its caller: same scopes as build-for-sonar.yml
+    permissions:
+      actions: read
+      contents: read
     uses: ./.github/workflows/build-for-sonar.yml
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
