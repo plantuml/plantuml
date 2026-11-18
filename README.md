@@ -1,3 +1,5 @@
+> [!NOTE]
+> 🛡️ **Security:** is PlantUML affected by a recent CVE? See [CVE.md](CVE.md) for the advisories we have checked and why PlantUML is not impacted.
 
 > [!TIP]
 > 🧩 **New!** Render PlantUML diagrams directly inside GitHub with [our official browser extension](https://github.com/plantuml/plantuml-for-github) &mdash; No server. No tokens. No tracking. Zero permissions but clipboard.
