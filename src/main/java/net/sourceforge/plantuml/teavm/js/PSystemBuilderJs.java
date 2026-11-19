@@ -133,6 +133,33 @@ public class PSystemBuilderJs {
 
 	public Diagram createDiagram(String[] split) {
 		BrowserLog.consoleLog(PSystemBuilderJs.class, "createDiagram start");
+		final TimLoader timLoader = load(split);
+		BrowserLog.consoleLog(PSystemBuilderJs.class, "createDiagram ok");
+		List<StringLocated> tmp = timLoader.getResultList();
+		Jaws.mutateExpands1(tmp);
+
+		final PreprocessingArtifact preprocessing = timLoader.getPreprocessingArtifact();
+
+		if (timLoader.isPreprocessorError())
+			return new PSystemErrorPreprocessor(tmp, timLoader.getDebug(), preprocessing);
+
+		return createDiagramFromPreprocessed(tmp, preprocessing);
+	}
+
+	/**
+	 * The source after the preprocessor ({@code !include}, {@code !define},
+	 * functions...), as the command line prints it with {@code --preproc}: what
+	 * {@code BlockUml.getData()} holds, also when the preprocessor reported an
+	 * error. Nothing is drawn.
+	 */
+	public List<StringLocated> preprocess(String[] split) {
+		final List<StringLocated> tmp = load(split).getResultList();
+		Jaws.mutateExpands1(tmp);
+		return tmp;
+	}
+
+	/** Runs the preprocessor on the lines of a textarea, as BlockUml does. */
+	private TimLoader load(String[] split) {
 		final List<StringLocated> textarea = TextareaSource.create(split, "textarea");
 		// As BlockUml does: the YAML header is not part of the diagram, but Python can read it (puml.metadata)
 		final List<StringLocated> rawSource = ReadLineWithYamlHeader.removeYamlHeader(textarea);
@@ -147,16 +174,7 @@ public class PSystemBuilderJs {
 		BrowserLog.consoleLog(PSystemBuilderJs.class, "wip4");
 		timLoader.setYamlHeader(ReadLineWithYamlHeader.getYamlHeader(textarea));
 		timLoader.load(rawSource);
-		BrowserLog.consoleLog(PSystemBuilderJs.class, "createDiagram ok");
-		List<StringLocated> tmp = timLoader.getResultList();
-		Jaws.mutateExpands1(tmp);
-
-		final PreprocessingArtifact preprocessing = timLoader.getPreprocessingArtifact();
-
-		if (timLoader.isPreprocessorError())
-			return new PSystemErrorPreprocessor(tmp, timLoader.getDebug(), preprocessing);
-
-		return createDiagramFromPreprocessed(tmp, preprocessing);
+		return timLoader;
 	}
 
 	@DuplicateCode(reference = "PSystemBuilder")

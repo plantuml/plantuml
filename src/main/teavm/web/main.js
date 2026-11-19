@@ -6,9 +6,10 @@ const editor = document.getElementById("editor");
 const defaultSource = editor.value;
 const HASH_DEBOUNCE_MS = 300;
 let dark = false;
-// Output format of the preview: "svg", "utxt" (Unicode art) or "atxt" (ASCII art).
+// Output format of the preview: "svg", "utxt" (Unicode art), "atxt" (ASCII art) or "preproc" (the source after
+// the preprocessor).
 // Kept in the ?format= query parameter so that a shared link keeps it.
-const FORMATS = ["svg", "utxt", "atxt"];
+const FORMATS = ["svg", "utxt", "atxt", "preproc"];
 let format = readFormatFromUrl();
 let hashDebounceTimer = null;
 let toastTimer = null;
