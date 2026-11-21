@@ -123,9 +123,17 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="PSystemBuilderJs.html" title="class in net.sourceforge.plantuml.teavm.js">PSystemBuilderJs</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInstance()" class="member-name-link">getInstance</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reset()" class="member-name-link">reset</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#preprocess(java.lang.String%5B%5D)" class="member-name-link">preprocess</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;split)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The source after the preprocessor (<code>!include</code>, <code>!define</code>,
+ functions...), as the command line prints it with <code>--preproc</code>: what
+ <code>BlockUml.getData()</code> holds, also when the preprocessor reported an
+ error.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reset()" class="member-name-link">reset</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -159,6 +167,16 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="createDiagram(java.lang.String[])">
 <h3>createDiagram</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></span>&nbsp;<span class="element-name">createDiagram</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;split)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="preprocess(java.lang.String[])">
+<h3>preprocess</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;</span>&nbsp;<span class="element-name">preprocess</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;split)</span></div>
+<div class="block">The source after the preprocessor (<code>!include</code>, <code>!define</code>,
+ functions...), as the command line prints it with <code>--preproc</code>: what
+ <code>BlockUml.getData()</code> holds, also when the preprocessor reported an
+ error. Nothing is drawn.</div>
 </section>
 </li>
 <li>
