@@ -138,6 +138,28 @@ public final class PythonLine {
 		return dollar || explicitScope;
 	}
 
+	/**
+	 * The name of "!x = 1", a name assigned without "$", or null for any other
+	 * line. Such a line is Python, but in a diagram that has no other Python and
+	 * uses the name in its text, it stays the legacy assignment it was before
+	 * Python existed (see TContext, section 6 of PYTHON_PREPROCESSOR.md).
+	 */
+	public static String nameAssignedWithoutDollar(String s) {
+		final int i = afterBang(s);
+		if (i < 0)
+			return null;
+		final int end = identifierEnd(s, i);
+		if (end == i)
+			return null;
+		final int equal = skipSpaces(s, end);
+		if (equal >= s.length() || s.charAt(equal) != '=')
+			return null;
+		// "!x == 1" is a comparison
+		if (equal + 1 < s.length() && s.charAt(equal + 1) == '=')
+			return null;
+		return s.substring(i, end);
+	}
+
 
 	/**
 	 * The words that are never Python after "!", for {@link #isStatementLine}:

@@ -1,0 +1,8 @@
+@startuml
+
+repeat
+  :read data;
+  :generate diagrams;
+repeat while (x) is (this is t1\nthis is t2\nthis is t3\n)
+stop
+@enduml
