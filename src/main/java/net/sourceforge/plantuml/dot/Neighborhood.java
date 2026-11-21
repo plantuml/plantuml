@@ -92,19 +92,20 @@ public class Neighborhood {
 
 		for (Link link : allButSametails) {
 			final SvekEdge line = bibliotekon.getLine(link);
-			final XPoint2D contact = link.getEntity1() == leaf ? line.getStartContactPoint()
-					: line.getEndContactPoint();
-			if (contact == null) {
-				// assert false;
-				continue;
-			}
-			final XPoint2D inter = intersection(rect, center, contact);
-			if (inter == null) {
-				// assert false;
-				continue;
-			}
-			drawLine(ug, inter, contact);
+			if (link.getEntity1() == leaf)
+				drawContact(ug, rect, center, line.getStartContactPoint());
+			if (link.getEntity2() == leaf)
+				drawContact(ug, rect, center, line.getEndContactPoint());
 		}
+	}
+
+	private void drawContact(UGraphic ug, XRectangle2D rect, XPoint2D center, XPoint2D contact) {
+		if (contact == null)
+			return;
+
+		final XPoint2D inter = intersection(rect, center, contact);
+		if (inter != null)
+			drawLine(ug, inter, contact);
 	}
 
 	private XPoint2D drawExtends(UGraphic ug, XPoint2D contact, double theta) {
