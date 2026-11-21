@@ -395,7 +395,10 @@ The rules are applied in this order:
    `!assert`, `!dump_memory`, `!option`, `!pragma`, `!assume`, `!exit`.
 7. **Anything else that looks like code** is Python: a `!` followed by a letter
    or `_`, a digit, `(` or `[`. So `!x = 1`, `!x == 1`, `!service("Auth")`,
-   `!names.append(n)`, `!1 + 1`, `!(a, b) = c` are Python.
+   `!names.append(n)`, `!1 + 1`, `!(a, b) = c` are Python. Two forms stay what
+   they were before Python when the lines around them are not Python:
+   `!name(...)`, a call of a legacy function, and `!name = value`, a variable
+   assigned without `$` (see the consequences below).
 8. Every other line (`!"text"`, `!$x` alone, `!!text`) is a text line.
 
 Consequences worth knowing:
@@ -430,6 +433,14 @@ Consequences worth knowing:
   a legacy function or procedure declared in the diagram, stays what it was
   before Python existed (the standard library uses this form). This only applies
   when the lines around it are not Python.
+- **A variable assigned without `$`.** A line `!name = value` stays the legacy
+  assignment it was before Python existed when the lines around it are not
+  Python: the diagram has no other Python line, no `!python` block and no
+  `!{expr}`, and `name` is a word of a text line or of such a legacy call, where
+  the legacy preprocessor replaces it (`!t = "a\nb"`, then `A -> B : t`). As any variable declared
+  without `$`, it gives a deprecation warning. Otherwise the line is a Python
+  assignment. Write `!$t = ...` for a legacy variable in a diagram that uses
+  Python.
 
 ## 7. Python and the legacy preprocessor
 
@@ -463,7 +474,9 @@ can `!include` it as before.
 ## 8. Changes for existing diagrams
 
 A diagram without Python is read as before, with the exceptions of this table.
-They apply to every diagram.
+They apply to every diagram. A variable assigned without `$` (`!t = "x"`, then
+`t` in the text) is not one of them: it is still a legacy variable, as long as
+the diagram has no Python ([section 6](#6-python-line-or-directive)).
 
 | Text | Before | Now | To keep the old result |
 |---|---|---|---|

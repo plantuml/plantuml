@@ -1,0 +1,13 @@
+---
+output: preproc, svg
+---
+@startuml
+' As "!global ijk = ..." does, the legacy assignment gives the warning about
+' the missing '$'. "ijk" is replaced, "ijkl" is another word.
+' EXPECT (preproc):
+' Alice -> Bob : foo
+' Alice -> Bob : ijkl
+!ijk = "foo"
+Alice -> Bob : ijk
+Alice -> Bob : ijkl
+@enduml

@@ -1,0 +1,16 @@
+---
+output: preproc
+---
+@startuml
+' A legacy call and a variable assigned without '$', in a diagram without
+' Python: both are legacy, as before Python (see procedure_called_with_bang).
+' EXPECT (preproc):
+' !participant A
+' participant A
+!procedure decl($n)
+participant $n
+!endprocedure
+!name = "A"
+!decl(name)
+participant name
+@enduml
