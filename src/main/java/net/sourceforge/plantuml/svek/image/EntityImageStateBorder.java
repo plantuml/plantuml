@@ -58,6 +58,15 @@ import net.sourceforge.plantuml.svek.SvekNode;
 
 public class EntityImageStateBorder extends AbstractEntityImageBorder {
 
+	/** Space kept between an edge and a label moved beside it. */
+	public static final double LABEL_GAP = 3;
+
+	/**
+	 * Where the label goes across the line the edges leave the circle on: 0
+	 * centred on it, -1 to its left, +1 to its right.
+	 */
+	private int labelSide;
+
 	public EntityImageStateBorder(Entity leaf, Cluster stateParent, final Bibliotekon bibliotekon) {
 		super(leaf, stateParent, bibliotekon, FontParam.STATE);
 	}
@@ -80,7 +89,13 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 		final TextBlock desc = getDesc();
 		double y = 0;
 		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());
-		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;
+		final double x;
+		if (labelSide < 0)
+			x = EntityPosition.RADIUS - LABEL_GAP - dimDesc.getWidth();
+		else if (labelSide > 0)
+			x = EntityPosition.RADIUS + LABEL_GAP;
+		else
+			x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;
 		if (upPosition())
 			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();
 		else
@@ -111,6 +126,23 @@ public class EntityImageStateBorder extends AbstractEntityImageBorder {
 		final TextBlock desc = getDesc();
 		final XDimension2D dimDesc = desc.calculateDimension(stringBounder);
 		return dimDesc.getWidth();
+	}
+
+	/**
+	 * Moves the label to the left ({@code -1}) or right ({@code +1}) of the
+	 * vertical line through the circle's centre, out of the way of an edge
+	 * meeting the circle on that line from the label's side; 0 centres it.
+	 */
+	public void setLabelSide(int labelSide) {
+		this.labelSide = labelSide;
+	}
+
+	/**
+	 * The height of the label, drawn one radius clear of the circle: above it when
+	 * the point is in the upper half of its state, below it otherwise.
+	 */
+	public double getLabelHeightForEntryExit(StringBounder stringBounder) {
+		return getDesc().calculateDimension(stringBounder).getHeight();
 	}
 
 }

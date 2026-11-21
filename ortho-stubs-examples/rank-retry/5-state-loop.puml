@@ -1,0 +1,8 @@
+@startuml
+skinparam stateDiagramEdgeLabelStyle node
+hide empty description
+[*] --> Idle
+Idle --> Busy : start
+Busy --> Done : finish
+Done --> Idle : reset
+@enduml

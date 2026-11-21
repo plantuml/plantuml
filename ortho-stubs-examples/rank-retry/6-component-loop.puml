@@ -1,0 +1,6 @@
+@startuml
+skinparam componentDiagramEdgeLabelStyle node
+[A] --> [B] : call
+[B] --> [C] : forward
+[C] --> [A] : reply
+@enduml

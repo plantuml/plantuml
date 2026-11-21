@@ -1,0 +1,125 @@
+<!--
+Title:    State diagrams with linetype ortho: edges run along states, meet entry/exit points off-centre, and cross label text
+Category: Bug
+Tags:     state-diagram, ortho, layout
+
+Either click CKEditor's "Source" button and paste everything below this
+comment, or open this file in a browser, select all, copy, and paste into
+the editor.
+-->
+<h3>Problem</h3>
+
+<p>With <code>skinparam linetype ortho</code>, Graphviz's ortho router often leaves state diagram edges looking wrong at their ends. This is especially true with <code>skinparam stateDiagramEdgeLabelStyle node</code>:</p>
+
+<ol>
+<li><strong>Edges don't leave or meet states at right angles.</strong> They run along the side of a state, turn a few pixels away from it, or land on a rounded corner.</li>
+<li><strong>Entry and exit points are met off-centre.</strong> Several edges arrive side by side at the edge of the circle, each with its own arrowhead.</li>
+<li><strong>Choice and junction points get crowded.</strong> Edges come in close together, merging only just short of the point.</li>
+<li><strong>Edges run through node-style label text.</strong></li>
+</ol>
+
+<h3>Example 1: entry and exit points</h3>
+
+<pre>
+@startuml
+skinparam linetype ortho
+skinparam stateDiagramEdgeLabelStyle node
+hide empty description
+state Session {
+  state "card" as epCard &lt;&lt;entryPoint&gt;&gt;
+  state "app" as epApp &lt;&lt;entryPoint&gt;&gt;
+  state "done" as xpDone &lt;&lt;exitPoint&gt;&gt;
+  state "aborted" as xpAbort &lt;&lt;exitPoint&gt;&gt;
+  epCard --&gt; Reading
+  epApp --&gt; Validating
+  Reading --&gt; Validating : cardRead
+  Validating --&gt; Charging : accepted
+  Validating --&gt; xpAbort : refused
+  Charging --&gt; xpDone : full
+  Charging --&gt; xpAbort : unplugged
+}
+Idle --&gt; epCard : cardTapped
+Idle --&gt; epApp : appStart
+xpDone --&gt; Receipt
+xpAbort --&gt; Fault : / showError()
+@enduml
+</pre>
+
+<p><img alt="entry/exit points, current output" src="https://raw.githubusercontent.com/davmf/plantuml/assets/state-ortho-stubs/forum-1-entry-exit-points-before.png"></p>
+
+<p><code>refused</code> and <code>unplugged</code> reach <code>aborted</code> side by side, off-centre, with two arrowheads.</p>
+
+<h3>Example 2: choice and junction</h3>
+
+<pre>
+@startuml
+skinparam linetype ortho
+skinparam stateDiagramEdgeLabelStyle node
+hide empty description
+state Measuring
+state PickMode &lt;&lt;choice&gt;&gt;
+state Merge &lt;&lt;junction&gt;&gt;
+Measuring --&gt; PickMode : sampled
+PickMode --&gt; Fast : [kW &gt; 150]
+PickMode --&gt; Normal : [kW &gt; 22]
+PickMode --&gt; Trickle : [else]
+Fast --&gt; Merge : timeout
+Normal --&gt; Merge : timeout
+Trickle --&gt; Merge : timeout
+Merge --&gt; Measuring : / resample()
+@enduml
+</pre>
+
+<p><img alt="choice and junction, current output" src="https://raw.githubusercontent.com/davmf/plantuml/assets/state-ortho-stubs/forum-2-choice-and-junction-before.png"></p>
+
+<p>The <code>Normal</code> and <code>Trickle</code> timeout edges come in side by side and meet only just above the junction. The <code>/ resample()</code> edge runs through its own label text.</p>
+
+<h3>Example 3: stems at states and multi-line labels</h3>
+
+<pre>
+@startuml
+!pragma edge_corner_radius 5
+skinparam linetype ortho
+skinparam stateDiagramEdgeLabelStyle node
+state WaitingForDriver
+WaitingForDriver : entry / showWelcome()
+WaitingForDriver : do / pollReader()
+state Charging
+Charging : do / deliverEnergy()
+state Suspended
+Suspended : entry / openContactors()
+WaitingForDriver --&gt; Charging : plugged [authorised]\n/ closeContactors()
+Charging --&gt; Suspended : gridBrownout\n/ openContactors()
+Suspended --&gt; Charging : gridRestored [insulationOk]\n/ closeContactors()
+Suspended --&gt; WaitingForDriver : holdTimeout(15 min)\n/ endSession()
+Charging --&gt; WaitingForDriver : unplugged\n/ printReceipt()
+WaitingForDriver --&gt; WaitingForDriver : cardPresented [!readable]\n/ beep(2)
+@enduml
+</pre>
+
+<p><img alt="stems and labels, current output" src="https://raw.githubusercontent.com/davmf/plantuml/assets/state-ortho-stubs/3-stems-and-labels-before.png"></p>
+
+<p>The <code>cardPresented</code> self-loop, <code>gridRestored</code>, <code>holdTimeout</code> and <code>unplugged</code> edges all run through label text, and two arrowheads land on the rounded corner of <code>WaitingForDriver</code>.</p>
+
+<h3>Proposed fix</h3>
+
+<p>Once Graphviz has routed the edges, adjust the ends of each ortho edge in a state diagram:</p>
+
+<ul>
+<li>An edge leaves and meets a state at a right angle, on a straight side, clear of the corners.</li>
+<li>An edge meets an entry or exit point on its centre line, at right angles to the frame, and edges into the same point join into one stem with one arrowhead. An edge from outside the state comes in from outside, turning round the point's label if it has to, and the label moves beside the edge.</li>
+<li>Edges into a choice or junction join into one stem, and edges out of one are spread over its points (top, bottom, left, right) instead of crowding one side.</li>
+<li>Edges are kept out of node-style label text.</li>
+</ul>
+
+<p>Only diagrams that use <code>linetype ortho</code> change. Other line types, and diagrams without states or pseudo-states, come out exactly as before.</p>
+
+<p>With the fix (left: current, right: fixed):</p>
+
+<p><img alt="entry/exit points, before and after" src="https://raw.githubusercontent.com/davmf/plantuml/assets/state-ortho-stubs/forum-1-entry-exit-points-side-by-side.png"></p>
+
+<p><img alt="choice and junction, before and after" src="https://raw.githubusercontent.com/davmf/plantuml/assets/state-ortho-stubs/forum-2-choice-and-junction-side-by-side.png"></p>
+
+<p><img alt="stems and labels, before and after" src="https://raw.githubusercontent.com/davmf/plantuml/assets/state-ortho-stubs/3-stems-and-labels-side-by-side.png"></p>
+
+<p>I have a PR ready and will link it here.</p>

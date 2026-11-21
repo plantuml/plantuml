@@ -1,0 +1,17 @@
+@startuml
+!pragma edge_corner_radius 5
+skinparam linetype ortho
+skinparam stateDiagramEdgeLabelStyle node
+hide empty description
+state Measuring
+state PickMode <<choice>>
+state Merge <<junction>>
+Measuring --> PickMode : sampled
+PickMode --> Fast : [kW > 150]
+PickMode --> Normal : [kW > 22]
+PickMode --> Trickle : [else]
+Fast --> Merge : timeout
+Normal --> Merge : timeout
+Trickle --> Merge : timeout
+Merge --> Measuring : / resample()
+@enduml
