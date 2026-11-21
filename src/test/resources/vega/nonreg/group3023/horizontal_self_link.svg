@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="96px" preserveAspectRatio="none" style="width:317px;height:96px;background:#FFFFFF;" version="1.1" viewBox="0 0 317 96" width="317px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Usuario-->
+    <g class="entity" data-qualified-name="Usuario" data-source-line="6" id="ent0001">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54.3" x="16.534" y="35"/>
+      <text fill="#000" font-size="14" textLength="48.3" x="19.534" y="50.889">Usuario</text>
+    </g>
+    <!--class Cliente-->
+    <g class="entity" data-qualified-name="Cliente" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.663" x="240.534" y="14"/>
+      <text fill="#000" font-size="14" textLength="43.663" x="243.534" y="29.889">Cliente</text>
+    </g>
+    <!--class Administrador-->
+    <g class="entity" data-qualified-name="Administrador" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92.363" x="219.534" y="56"/>
+      <text fill="#000" font-size="14" textLength="86.363" x="222.534" y="71.889">Administrador</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="70.635,44.509,89.124,48.771,87.984,36.825,70.635,44.509" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M88.554,42.798 C131.578,38.691 198.842,32.271 240.483,28.296" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="70.617,58.773,85.436,70.622,89.582,59.361,70.617,58.773" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M87.509,64.991 C93.298,67.122 82.59,62.822 88.534,64 C132.305,72.677 183.395,72.758 219.219,71.225" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="109.769" x="90.534" y="59.111">{completa,disjunta}</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="association" id="lnk6">
+      <path d="M27,34.986 C21.226,26.028 26.738,17 43.534,17 C60.331,17 65.843,26.028 60.069,34.986" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="67.925" x="10.034" y="12.111">recomienda</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="40.069" y="31.097">0..*</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="7" y="31.097">0..*</text>
+    </g>
+  </g>
+</svg>

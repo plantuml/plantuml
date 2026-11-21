@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+hide empty members
+hide circle
+
+Usuario <|-- Cliente
+Usuario <|-- Administrador : {completa,disjunta}
+
+Usuario "0..*" -- "0..*" Usuario : recomienda >
+@enduml
