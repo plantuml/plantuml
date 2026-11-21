@@ -139,13 +139,10 @@ public class PicoWebServer implements Runnable {
 					request.getOrigin());
 			if (mcp != null) {
 				final byte[] data = mcp.text.getBytes(UTF_8);
-				write(out, "HTTP/1.1 " + mcp.status);
+				writeStatus(out, "" + mcp.status);
 				write(out, "Cache-Control: no-cache");
 				write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
 				write(out, "Access-Control-Allow-Origin: *");
-				// The connection is closed after each answer: say it, or a client that keeps it alive
-				// may send its next request on a socket we are closing
-				write(out, "Connection: close");
 				write(out, "Content-type: " + mcp.contentType + "; charset=UTF-8");
 				write(out, "Content-length: " + data.length);
 				write(out, "");
@@ -184,7 +181,7 @@ public class PicoWebServer implements Runnable {
 				handleRenderRequest(request, out);
 				return;
 			}
-			write(out, "HTTP/1.1 302 Found");
+			writeStatus(out, "302 Found");
 			write(out, "Location: /plantuml/png/oqbDJyrBuGh8ISmh2VNrKGZ8JCuFJqqAJYqgIotY0aefG5G00000");
 			write(out, "");
 			out.flush();
@@ -207,7 +204,7 @@ public class PicoWebServer implements Runnable {
 	}
 
 	private boolean handleStop(BufferedOutputStream out) throws IOException {
-		write(out, "HTTP/1.1 " + "200");
+		writeStatus(out, "200");
 		write(out, "Cache-Control: no-cache");
 		write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
 		write(out, "Date: " + new Date());
@@ -221,7 +218,7 @@ public class PicoWebServer implements Runnable {
 	}
 
 	private boolean handleInfo(BufferedOutputStream out) throws IOException {
-		write(out, "HTTP/1.1 " + "200");
+		writeStatus(out, "200");
 		write(out, "Cache-Control: no-cache");
 		write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
 		write(out, "Date: " + new Date());
@@ -244,7 +241,7 @@ public class PicoWebServer implements Runnable {
 	}
 
 	private boolean handleLanguage(BufferedOutputStream out) throws IOException {
-		write(out, "HTTP/1.1 " + "200");
+		writeStatus(out, "200");
 		write(out, "Cache-Control: no-cache");
 		write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
 		write(out, "Date: " + new Date());
@@ -344,7 +341,7 @@ public class PicoWebServer implements Runnable {
 			final FileFormatOption fileFormatOption, final String returnCode, final ImageData imageData,
 			final byte[] fileData) throws IOException {
 
-		write(out, "HTTP/1.1 " + returnCode);
+		writeStatus(out, returnCode);
 		write(out, "Cache-Control: no-cache");
 		write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
 		write(out, "Date: " + new Date());
@@ -468,7 +465,7 @@ public class PicoWebServer implements Runnable {
 		report.exportDiagramError(new FileFormatOption(format), 0, os);
 		os.close();
 
-		write(out, "HTTP/1.1 500 Internal Server Error");
+		writeStatus(out, "500 Internal Server Error");
 		write(out, "Cache-Control: no-cache");
 		write(out, "Server: PlantUML PicoWebServer " + Version.versionString());
 		write(out, "Date: " + new Date());
@@ -502,7 +499,7 @@ public class PicoWebServer implements Runnable {
 		}
 		printWriter.close();
 
-		write(out, "HTTP/1.1 " + (e instanceof BadRequest400 ? "400 Bad Request" : "500 Internal Server Error"));
+		writeStatus(out, e instanceof BadRequest400 ? "400 Bad Request" : "500 Internal Server Error");
 		write(out, "Content-type: text/plain");
 		write(out, "Content-length: " + baos.size());
 		write(out, "");
@@ -534,6 +531,16 @@ public class PicoWebServer implements Runnable {
 			return "200 OK";
 		}
 		return "" + status + " ERROR";
+	}
+
+	/**
+	 * The status line of every answer. The connection is closed after each answer: say it, or
+	 * a client that keeps it alive (java.net.http.HttpClient does) may send its next request
+	 * on a socket we are closing, and get "header parser received no bytes" back.
+	 */
+	private void writeStatus(OutputStream os, String status) throws IOException {
+		write(os, "HTTP/1.1 " + status);
+		write(os, "Connection: close");
 	}
 
 	private void write(OutputStream os, String s) throws IOException {
