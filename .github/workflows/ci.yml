@@ -130,7 +130,7 @@ jobs:
 
       # Use of `setup-gradle`, see https://github.com/gradle/actions/
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6.4.0
+        uses: gradle/actions/setup-gradle@v6.4.1
 
       - name: Diagnostic
         run: .github/scripts/diagnostic.sh
@@ -188,7 +188,7 @@ jobs:
           distribution: temurin
           cache: gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6.4.0
+        uses: gradle/actions/setup-gradle@v6.4.1
       - name: Generate artifacts
         run: |
           chmod +x .github/scripts/print-gradle-properties-and-release-version.sh
@@ -277,7 +277,7 @@ jobs:
           distribution: temurin
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6.4.0
+        uses: gradle/actions/setup-gradle@v6.4.1
 
       - name: Download pre-built js-plantuml ZIP
         uses: actions/download-artifact@v8.0.2
@@ -336,7 +336,7 @@ jobs:
           cache: gradle
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6.4.0
+        uses: gradle/actions/setup-gradle@v6.4.1
 
       - name: Download Java 8 JAR (built by Ant)
         uses: actions/download-artifact@v8.0.2
