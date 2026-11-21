@@ -286,23 +286,28 @@ public class PlayingSpace implements Bordered {
 			aMin.ensureBiggerThan(bMax);
 	}
 
-	// True when `left` is a note on one participant and pushing `right`
-	// would move that participant, or one left of it.
+	// True when `left` is a note and pushing `right` would move the note's
+	// participant, or one left of it. For a note over several participants
+	// that is its rightmost one: the note spans every column up to it, so
+	// e.g. `C -> A` beside `& note over B, C` can never clear the note, and
+	// pushing it only shifts every participant right.
 	private boolean cannotPushApart(Tile left, Tile right) {
 		final Event event = left.getEvent();
 		if (event instanceof Note == false)
 			return false;
 
 		final Note note = (Note) event;
-		if (note.getPosition() == NotePosition.OVER_SEVERAL)
-			return false;
-
-		final LivingSpace noteSpace = livingSpaces.get(note.getParticipant());
+		Double noteEnd = posB(note.getParticipant());
+		if (noteEnd != null && note.getPosition() == NotePosition.OVER_SEVERAL) {
+			final Double other = posB(note.getParticipant2());
+			if (other != null && other > noteEnd)
+				noteEnd = other;
+		}
 		final Double rightStart = leftmostPosB(right);
-		if (noteSpace == null || rightStart == null)
+		if (noteEnd == null || rightStart == null)
 			return false;
 
-		return rightStart <= noteSpace.getPosB(stringBounder).getCurrentValue();
+		return rightStart <= noteEnd;
 	}
 
 	// The posB of the leftmost participant that pushing this tile moves, or
