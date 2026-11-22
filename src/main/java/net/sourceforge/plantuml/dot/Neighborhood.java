@@ -66,7 +66,7 @@ public class Neighborhood {
 		allButSametails.removeAll(sametailLinks);
 	}
 
-	public void drawU(UGraphic ug, double minX, double minY, Bibliotekon bibliotekon, XDimension2D shapeDim) {
+	public void drawU(UGraphic ug, double minX, double minY, final Bibliotekon bibliotekon, XDimension2D shapeDim) {
 		final Set<XPoint2D> contactPoints = new HashSet<>();
 		for (Link link : sametailLinks) {
 			final SvekEdge line = bibliotekon.getLine(link);
@@ -90,22 +90,54 @@ public class Neighborhood {
 			drawLine(ug, middle, pt);
 		}
 
-		for (Link link : allButSametails) {
-			final SvekEdge line = bibliotekon.getLine(link);
-			if (link.getEntity1() == leaf)
-				drawContact(ug, rect, center, line.getStartContactPoint());
-			if (link.getEntity2() == leaf)
-				drawContact(ug, rect, center, line.getEndContactPoint());
-		}
+		for (XPoint2D[] connector : linkConnectors(rect, new ContactPoints() {
+			public XPoint2D start(Link link) {
+				return bibliotekon.getLine(link).getStartContactPoint();
+			}
+
+			public XPoint2D end(Link link) {
+				return bibliotekon.getLine(link).getEndContactPoint();
+			}
+		}))
+			drawLine(ug, connector[0], connector[1]);
 	}
 
-	private void drawContact(UGraphic ug, XRectangle2D rect, XPoint2D center, XPoint2D contact) {
+	/**
+	 * Where each end of a non-inheritance link touches the padded node, as seen by
+	 * Graphviz.
+	 */
+	interface ContactPoints {
+		XPoint2D start(Link link);
+
+		XPoint2D end(Link link);
+	}
+
+	/**
+	 * Computes the segments that extend the links which are not grouped
+	 * inheritances from the visible shape {@code rect} to their contact point on the
+	 * padded node. Each segment goes from the border of {@code rect} to the contact
+	 * point. A self link touches the leaf at both ends, so it gets two segments.
+	 */
+	List<XPoint2D[]> linkConnectors(XRectangle2D rect, ContactPoints contacts) {
+		final XPoint2D center = new XPoint2D(rect.getCenterX(), rect.getCenterY());
+		final List<XPoint2D[]> result = new ArrayList<>();
+		for (Link link : allButSametails) {
+			if (link.getEntity1() == leaf)
+				addConnector(result, rect, center, contacts.start(link));
+			if (link.getEntity2() == leaf)
+				addConnector(result, rect, center, contacts.end(link));
+		}
+		return result;
+	}
+
+	private static void addConnector(List<XPoint2D[]> result, XRectangle2D rect, XPoint2D center,
+			XPoint2D contact) {
 		if (contact == null)
 			return;
 
 		final XPoint2D inter = intersection(rect, center, contact);
 		if (inter != null)
-			drawLine(ug, inter, contact);
+			result.add(new XPoint2D[] { inter, contact });
 	}
 
 	private XPoint2D drawExtends(UGraphic ug, XPoint2D contact, double theta) {
