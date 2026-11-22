@@ -1163,7 +1163,7 @@ public class ChartRenderer {
 <span class="fc" id="L1163">			final XDimension2D textDim = textBlock.calculateDimension(ug.getStringBounder());</span>
 
 			// Draw arrow if requested
-<span class="pc bpc" id="L1166" title="1 of 2 branches missed.">			if (annotation.isShowArrow()) {</span>
+<span class="fc bfc" id="L1166" title="All 2 branches covered.">			if (annotation.isShowArrow()) {</span>
 				// Check if there's enough space above the point for text + arrow
 <span class="fc" id="L1168">				final double minSpaceAbove = textDim.getHeight() + 40;</span>
 <span class="pc bpc" id="L1169" title="1 of 2 branches missed.">				final boolean placeAbove = y &gt; minSpaceAbove;</span>
@@ -1227,8 +1227,8 @@ public class ChartRenderer {
 				}
 <span class="fc" id="L1228">			} else {</span>
 				// Draw text near the point without arrow
-<span class="nc" id="L1230">				textBlock.drawU(ug.apply(UTranslate.dx(x - textDim.getWidth() / 2)</span>
-<span class="nc" id="L1231">						.compose(UTranslate.dy(y - textDim.getHeight() - 5))));</span>
+<span class="fc" id="L1230">				textBlock.drawU(ug.apply(UTranslate.dx(x - textDim.getWidth() / 2)</span>
+<span class="fc" id="L1231">						.compose(UTranslate.dy(y - textDim.getHeight() - 5))));</span>
 			}
 <span class="fc" id="L1233">		}</span>
 <span class="fc" id="L1234">	}</span>

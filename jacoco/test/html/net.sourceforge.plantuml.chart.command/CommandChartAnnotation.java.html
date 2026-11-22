@@ -123,7 +123,7 @@ public class CommandChartAnnotation extends SingleLineCommand2&lt;ChartDiagram&g
 <span class="nc" id="L123">			return CommandExecutionResult.error(&quot;Y position must be a numeric value: &quot; + yPosStr);</span>
 <span class="fc" id="L124">		}</span>
 
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		final boolean showArrow = arrowStr != null;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		final boolean showArrow = arrowStr != null;</span>
 <span class="fc" id="L127">		final ChartAnnotation annotation = new ChartAnnotation(text, xPosition, yPosition, showArrow);</span>
 
 <span class="fc" id="L129">		return diagram.addAnnotation(annotation);</span>

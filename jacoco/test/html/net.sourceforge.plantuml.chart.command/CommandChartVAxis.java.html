@@ -150,15 +150,15 @@ public class CommandChartVAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
 		// Parse tick spacing if present
 <span class="fc" id="L152">		Double tickSpacing = null;</span>
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (spacingStr != null) {</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (spacingStr != null) {</span>
 			try {
-<span class="nc" id="L155">				tickSpacing = Double.parseDouble(spacingStr);</span>
-<span class="nc bnc" id="L156" title="All 2 branches missed.">				if (tickSpacing &lt;= 0) {</span>
+<span class="fc" id="L155">				tickSpacing = Double.parseDouble(spacingStr);</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">				if (tickSpacing &lt;= 0) {</span>
 <span class="nc" id="L157">					return CommandExecutionResult.error(&quot;Tick spacing must be greater than 0&quot;);</span>
 				}
 <span class="nc" id="L159">			} catch (NumberFormatException e) {</span>
 <span class="nc" id="L160">				return CommandExecutionResult.error(&quot;Invalid number format in spacing value&quot;);</span>
-<span class="nc" id="L161">			}</span>
+<span class="fc" id="L161">			}</span>
 		}
 
 		// Set axis properties
@@ -180,13 +180,13 @@ public class CommandChartVAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 		}
 
 		// Set tick spacing if parsed successfully
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (tickSpacing != null) {</span>
-<span class="nc bnc" id="L184" title="All 2 branches missed.">			if (isSecondaryAxis(axisType)) {</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">		if (tickSpacing != null) {</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">			if (isSecondaryAxis(axisType)) {</span>
 <span class="nc bnc" id="L185" title="All 2 branches missed.">				if (diagram.getY2Axis() != null) {</span>
 <span class="nc" id="L186">					diagram.getY2Axis().setTickSpacing(tickSpacing);</span>
 				}
 			} else {
-<span class="nc" id="L189">				diagram.getYAxis().setTickSpacing(tickSpacing);</span>
+<span class="fc" id="L189">				diagram.getYAxis().setTickSpacing(tickSpacing);</span>
 			}
 		}
 
