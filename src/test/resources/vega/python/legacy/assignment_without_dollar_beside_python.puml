@@ -1,0 +1,16 @@
+---
+output: preproc, svg
+---
+@startuml
+' In a diagram that uses Python, "!x = value" is a Python assignment, even on
+' a line of its own: "t" is not replaced in the text, and there is no warning.
+' EXPECT (preproc):
+' Alice -> Bob : t
+' title 4
+!def twice(n):
+!    return 2 * n
+
+!t = twice(2)
+Alice -> Bob : t
+title !{t}
+@enduml

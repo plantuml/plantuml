@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.json.ParseException;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.InputFile;
 import net.sourceforge.plantuml.nio.InputFileIo;
@@ -205,17 +206,23 @@ public class TContext {
 		}
 	}
 
-	/** Groups the Python lines of a body in chunks, and notes that the diagram has Python. */
-	private List<StringLocated> collapsePython(List<StringLocated> body) {
+	/**
+	 * Groups the Python lines of a body in chunks, and notes that the diagram has
+	 * Python. The body of the diagram or of an included file is kept, not the body
+	 * of a legacy function or procedure, which is a part of one of them.
+	 */
+	private List<StringLocated> collapsePython(List<StringLocated> body, TFunctionType ftype) {
 		final int before = pythonSources.size();
 		final List<StringLocated> result = PythonChunks.collapse(body, pythonSources);
 		if (pythonSources.size() > before)
 			hasPython = true;
+		if (ftype == null)
+			bodies.add(result);
 		return result;
 	}
 
-	private CodeIterator buildCodeIterator(TMemory memory, List<StringLocated> body) {
-		final CodeIterator it10 = new CodeIteratorImpl(collapsePython(body));
+	private CodeIterator buildCodeIterator(TMemory memory, List<StringLocated> body, TFunctionType ftype) {
+		final CodeIterator it10 = new CodeIteratorImpl(collapsePython(body, ftype));
 		final CodeIterator it20 = new CodeIteratorLongComment(it10, debug);
 		final CodeIterator it30 = new CodeIteratorShortComment(it20, debug);
 		final CodeIterator it40 = new CodeIteratorInnerComment(it30);
@@ -236,7 +243,7 @@ public class TContext {
 			throws EaterException {
 		BrowserLog.consoleLog(TContext.class, "executeLines start (" + body.size() + " lines)");
 		try {
-			final CodeIterator it = buildCodeIterator(memory, body);
+			final CodeIterator it = buildCodeIterator(memory, body, ftype);
 
 			StringLocated s = null;
 			while ((s = it.peek()) != null) {
@@ -268,7 +275,7 @@ public class TContext {
 	private void executeLinesInternal(TMemory memory, List<StringLocated> body, TFunctionType ftype)
 			throws EaterException {
 		try {
-			final CodeIterator it = buildCodeIterator(memory, body);
+			final CodeIterator it = buildCodeIterator(memory, body, ftype);
 
 			StringLocated s = null;
 			while ((s = it.peek()) != null) {
@@ -344,16 +351,19 @@ public class TContext {
 			this.simulatePlain(memory, s);
 			return null;
 		} else if (type == TLineType.PYTHON) {
-			final List<StringLocated> legacyCalls = legacyCalls(s);
-			if (legacyCalls == null) {
+			final List<StringLocated> legacyLines = legacyLines(s);
+			if (legacyLines == null) {
 				this.executePython(s);
 			} else {
-				// as before Python: plain lines in which the legacy preprocessor calls the function
-				for (StringLocated call : legacyCalls)
-					if (ftype == TFunctionType.RETURN_FUNCTION)
-						this.simulatePlain(memory, call);
+				// as before Python: legacy assignments, and plain lines in which the legacy
+				// preprocessor calls the function
+				for (StringLocated line : legacyLines)
+					if (PythonLine.nameAssignedWithoutDollar(line.getString()) != null)
+						this.executeLegacyAffectation(memory, line);
+					else if (ftype == TFunctionType.RETURN_FUNCTION)
+						this.simulatePlain(memory, line);
 					else
-						this.addPlain(memory, call);
+						this.addPlain(memory, line);
 			}
 			return null;
 		} else if (type == TLineType.AFFECTATION_DEFINE) {
@@ -393,6 +403,9 @@ public class TContext {
 
 	/** True once the diagram is known to contain Python code (a chunk was found). */
 	private boolean hasPython;
+
+	/** The bodies read so far, their Python lines collapsed: see legacyLines. */
+	private final List<List<StringLocated>> bodies = new ArrayList<>();
 
 	/** For each Python chunk, the diagram line of each of its code lines. */
 	private final Map<StringLocated, List<StringLocated>> pythonSources = new IdentityHashMap<>();
@@ -441,21 +454,97 @@ public class TContext {
 	}
 
 	/**
-	 * The lines of a Python chunk when every one of them is "!name(...)" where
-	 * name is a legacy function or procedure declared in the diagram, or null.
-	 * The standard library writes such calls ("!__attr_line()" in adaml): before
-	 * Python they were plain lines, and they stay so. The decision is taken
-	 * here, when the chunk runs, because the chunk is built before the legacy
-	 * declarations of the file are read.
+	 * The lines of a Python chunk when they are run as before Python existed, or
+	 * null. Every line must be one of:
+	 * <ul>
+	 * <li>"!name(...)" where name is a legacy function or procedure declared in the
+	 * diagram. The standard library writes such calls ("!__attr_line()" in adaml):
+	 * before Python they were plain lines, and they stay so.</li>
+	 * <li>"!name = value", without '$', when the diagram has no other Python (see
+	 * {@link #isPythonDiagram}) and one of the names so assigned is in a text
+	 * line, where the legacy preprocessor replaces it ("!t = 1" then "A -> B : t").
+	 * Before Python it was a legacy assignment, and it stays so, with the warning
+	 * about the missing '$'. Otherwise the variable can only be read by Python,
+	 * and the line is Python.</li>
+	 * </ul>
+	 * The decision is taken here, when the chunk runs, because the chunk is built
+	 * before the legacy declarations of the file are read.
 	 */
-	private List<StringLocated> legacyCalls(StringLocated chunk) {
+	private List<StringLocated> legacyLines(StringLocated chunk) {
 		final List<StringLocated> lines = pythonSources.get(chunk);
 		if (lines == null || lines.isEmpty())
 			return null;
-		for (StringLocated line : lines)
-			if (isLegacyCall(line.getString()) == false)
+		final List<String> names = new ArrayList<>();
+		for (StringLocated line : lines) {
+			final String name = PythonLine.nameAssignedWithoutDollar(line.getString());
+			if (name != null)
+				names.add(name);
+			else if (isLegacyCall(line.getString()) == false)
 				return null;
+		}
+		if (names.isEmpty())
+			return lines;
+		if (isPythonDiagram() || isInText(names) == false)
+			return null;
 		return lines;
+	}
+
+	/**
+	 * True when the diagram, as far as it is read, uses Python for something else
+	 * than the lines of {@link #legacyLines}: a chunk with any other line (a Python
+	 * statement, a !python block), or a !{expr} in a text line.
+	 */
+	private boolean isPythonDiagram() {
+		for (List<StringLocated> lines : pythonSources.values())
+			for (StringLocated line : lines)
+				if (PythonLine.nameAssignedWithoutDollar(line.getString()) == null
+						&& isLegacyCall(line.getString()) == false)
+					return true;
+		for (List<StringLocated> body : bodies)
+			for (StringLocated line : body)
+				if (line.mayContainInterpolation() && line.getString().contains("!{"))
+					return true;
+		return false;
+	}
+
+	/**
+	 * True when one of the names is a word of a text line of the diagram, as far as
+	 * it is read, or of a legacy call, which is read as a text line too.
+	 */
+	private boolean isInText(List<String> names) {
+		for (List<StringLocated> body : bodies)
+			for (StringLocated line : body)
+				if (line.getType() == TLineType.PLAIN && containsWord(line.getString(), names))
+					return true;
+		for (List<StringLocated> lines : pythonSources.values())
+			for (StringLocated line : lines)
+				if (isLegacyCall(line.getString()) && containsWord(line.getString(), names))
+					return true;
+		return false;
+	}
+
+	private static boolean containsWord(String s, List<String> words) {
+		for (String word : words)
+			if (containsWord(s, word))
+				return true;
+		return false;
+	}
+
+	/**
+	 * "t" is a word of "is (t)" and of "a\\nt", not of "t1" or "AMS_t": where
+	 * VariableManager.getVarnameAt finds a variable.
+	 */
+	private static boolean containsWord(String s, String word) {
+		int i = s.indexOf(word);
+		while (i >= 0) {
+			final int end = i + word.length();
+			if ((i == 0 || TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(i - 1)) == false
+					|| VariableManager.justAfterBackslashN(s, i))
+					&& (end == s.length() || TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(end)) == false))
+				return true;
+			i = s.indexOf(word, i + 1);
+		}
+		return false;
 	}
 
 	private boolean isLegacyCall(String line) {
@@ -468,6 +557,18 @@ public class TContext {
 		if (end == 1 || end >= s.length() || s.charAt(end) != '(')
 			return false;
 		return functionsSet.doesFunctionExist(s.substring(1, end));
+	}
+
+	/**
+	 * A legacy assignment, as CodeIteratorAffectation runs it. A JSON value cannot
+	 * continue on the next lines here: they are not part of the chunk.
+	 */
+	private void executeLegacyAffectation(TMemory memory, StringLocated s) throws EaterException {
+		try {
+			new EaterAffectation(s).analyze(this, memory);
+		} catch (ParseException e) {
+			throw new EaterException("Error in JSON format", s);
+		}
 	}
 
 	private void executePython(StringLocated s) throws EaterException {

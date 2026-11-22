@@ -46,16 +46,19 @@ jobs:
       # The harness always comes from the branch the workflow runs on, so old commits can be
       # benchmarked with the current harness.
       - name: Checkout harness
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Checkout target
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           ref: ${{ inputs.ref || github.sha }}
           path: target
+          persist-credentials: false
 
       - name: Set up JDK 21 (Temurin)
-        uses: actions/setup-java@v6
+        uses: actions/setup-java@v6.3.0
         with:
           distribution: temurin
           java-version: 21
@@ -101,7 +104,7 @@ jobs:
           fi
 
       - name: Set up Node
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v7.1.0
         with:
           node-version: 22
           cache: npm
@@ -142,7 +145,7 @@ jobs:
 
       - name: Upload detailed results
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: perf-bench-results
           path: results/

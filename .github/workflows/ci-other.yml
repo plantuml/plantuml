@@ -7,6 +7,9 @@ on:
       - '**.md'
       - 'docs/**'
 
+permissions:
+  contents: read
+
 defaults:
   run:
     shell: bash
@@ -26,10 +29,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Set up JDK 8 (Temurin)
-        uses: actions/setup-java@v6
+        uses: actions/setup-java@v6.3.0
         with:
           distribution: temurin
           java-version: '8'
@@ -64,10 +69,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Set up java
-        uses: actions/setup-java@v6
+        uses: actions/setup-java@v6.3.0
         with:
           java-version: 21
           distribution: temurin
@@ -90,14 +97,14 @@ jobs:
         run: .github/scripts/test-summary.sh
 
       - name: Upload test reports
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: ${{ github.run_number }}-test-reports
           path: build/reports/tests/
 
       - name: Upload Vega test results
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: vega-results

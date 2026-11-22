@@ -1,0 +1,17 @@
+---
+output: preproc
+---
+@startuml
+' A variable assigned without '$' in a diagram without Python is the legacy
+' assignment it was before Python (issue #3032): "t" is replaced in the text.
+' The warning about the missing '$' is in assignment_without_dollar_warning.
+' EXPECT (preproc):
+' repeat while (x) is (this is t1\nthis is t2\nthis is t3\n)
+!t="this is t1\nthis is t2\nthis is t3\n"
+
+repeat
+  :read data;
+  :generate diagrams;
+repeat while (x) is (t)
+stop
+@enduml

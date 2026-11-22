@@ -10,6 +10,7 @@ import org.teavm.jso.dom.xml.Element;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -32,6 +33,7 @@ import net.sourceforge.plantuml.teavm.js.PSystemBuilderJs;
 import net.sourceforge.plantuml.teavm.js.StringBounderTeaVM;
 import net.sourceforge.plantuml.teavm.js.SvgGraphicsJs;
 import net.sourceforge.plantuml.teavm.js.UGraphicJs;
+import net.sourceforge.plantuml.text.StringLocated;
 
 /**
  * PlantUML rendering engine for browser environments, compiled to a JavaScript
@@ -310,7 +312,8 @@ public class PlantUMLBrowser {
 	 *                  {@code maxSvgSize} overrides {@link #DEFAULT_MAX_SVG_SIZE};
 	 *                  {@code 0} disables the size check. {@code format} selects
 	 *                  the output: {@code "svg"} (default), {@code "atxt"} (ASCII
-	 *                  art) or {@code "utxt"} (Unicode art).
+	 *                  art), {@code "utxt"} (Unicode art) or {@code "preproc"} (the
+	 *                  source after the preprocessor, nothing drawn).
 	 */
 	@JSExport
 	public static void render(String[] lines, String elementId, JSObject options) {
@@ -339,7 +342,8 @@ public class PlantUMLBrowser {
 	 *                  {@code maxSvgSize} overrides {@link #DEFAULT_MAX_SVG_SIZE};
 	 *                  {@code 0} disables the size check. {@code format} selects
 	 *                  the output: {@code "svg"} (default), {@code "atxt"} (ASCII
-	 *                  art) or {@code "utxt"} (Unicode art).
+	 *                  art), {@code "utxt"} (Unicode art) or {@code "preproc"} (the
+	 *                  source after the preprocessor, nothing drawn).
 	 */
 	@JSExport
 	public static void renderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
@@ -377,7 +381,8 @@ public class PlantUMLBrowser {
 
 	/**
 	 * Resolves the {@code format} option: {@code null} for SVG (the default),
-	 * otherwise {@link FileFormat#ATXT} or {@link FileFormat#UTXT}.
+	 * otherwise {@link FileFormat#ATXT}, {@link FileFormat#UTXT} or
+	 * {@link FileFormat#PREPROC}.
 	 */
 	private static FileFormat resolveFormat(JSObject opts) {
 		final String format = extractFormat(opts);
@@ -387,7 +392,9 @@ public class PlantUMLBrowser {
 			return FileFormat.ATXT;
 		if (format.equals("utxt"))
 			return FileFormat.UTXT;
-		throw new IllegalArgumentException("Unknown format: " + format + " (expected svg, atxt or utxt)");
+		if (format.equals("preproc"))
+			return FileFormat.PREPROC;
+		throw new IllegalArgumentException("Unknown format: " + format + " (expected svg, atxt, utxt or preproc)");
 	}
 
 	/**
@@ -472,11 +479,15 @@ public class PlantUMLBrowser {
 	}
 
 	/**
-	 * Parses and renders PlantUML source lines as text (ATXT or UTXT), or returns
-	 * <code>null</code> when the attempt missed a resource and is going to be
-	 * discarded (see {@link RenderQueue}).
+	 * Parses and renders PlantUML source lines as text (ATXT or UTXT), or gives
+	 * the source after the preprocessor (PREPROC), or returns <code>null</code>
+	 * when the attempt missed a resource and is going to be discarded (see
+	 * {@link RenderQueue}).
 	 */
 	private static String buildText(String[] lines, FileFormat textFormat) throws Exception {
+		if (textFormat == FileFormat.PREPROC)
+			return buildPreprocessed(lines);
+
 		final Diagram diagram = PSystemBuilderJs.getInstance().createDiagram(lines);
 		if (PendingResources.hasMissing())
 			return null;
@@ -490,6 +501,23 @@ public class PlantUMLBrowser {
 			return null;
 
 		return new String(os.toByteArray(), StandardCharsets.UTF_8);
+	}
+
+	/**
+	 * The source after the preprocessor, one line each, as the command line
+	 * prints it with {@code --preproc} (see {@code SourceStringReader}), or
+	 * <code>null</code> when an {@code !include} is still being fetched: the
+	 * attempt is then discarded and done again, as for a diagram.
+	 */
+	private static String buildPreprocessed(String[] lines) {
+		final List<StringLocated> preprocessed = PSystemBuilderJs.getInstance().preprocess(lines);
+		if (PendingResources.hasMissing())
+			return null;
+
+		final StringBuilder sb = new StringBuilder();
+		for (StringLocated line : preprocessed)
+			sb.append(line.getString()).append('\n');
+		return sb.toString();
 	}
 
 	/**

@@ -1,0 +1,4 @@
+@startuml
+Alice -> Bob : foo
+Alice -> Bob : ijkl
+@enduml

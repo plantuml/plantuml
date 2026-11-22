@@ -11,6 +11,9 @@ on:
   workflow_dispatch:
   # called from ci.yml when a release is being made (do_release == 'true')
   workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        required: true
 
 permissions:
   actions: read
@@ -65,15 +68,16 @@ jobs:
     if: needs.check_throttle.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          persist-credentials: false
 
       - name: Set environment variable
         run: echo "GPL_ONLY=true" >> "$GITHUB_ENV"
 
       - name: Set up Java JDK
-        uses: actions/setup-java@v6
+        uses: actions/setup-java@v6.3.0
         with:
           java-version: 21
           distribution: temurin
@@ -83,14 +87,14 @@ jobs:
         uses: gradle/actions/setup-gradle@v6.4.0
 
       - name: Cache SonarQube packages
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
       - name: Cache Gradle packages
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}

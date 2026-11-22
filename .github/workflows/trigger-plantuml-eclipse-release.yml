@@ -27,13 +27,16 @@ on:
         required: true
         type: boolean
 
+# The dispatch uses PLANTUML_ECLIPSE_DISPATCH_TOKEN, the job token is not used
+permissions: {}
+
 jobs:
   trigger-workflow:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger release workflow in plantuml-eclipse repo
         # see https://github.com/peter-evans/repository-dispatch
-        uses: peter-evans/repository-dispatch@v4
+        uses: peter-evans/repository-dispatch@v4.0.1
         with:
           token: ${{ secrets.PLANTUML_ECLIPSE_DISPATCH_TOKEN }}
           repository: plantuml/plantuml-eclipse
