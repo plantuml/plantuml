@@ -64,6 +64,8 @@ import net.sourceforge.plantuml.utils.Position;
 public abstract class PanelsState extends Panels {
 
 	private static final int DEFAULT_RIBBON_HEIGHT = 24;
+	// Minimal horizontal space between a state label overflowing its band and its neighbours
+	private static final double LABEL_GAP = 4;
 
 	private final List<ChangeState> changes = new ArrayList<>();
 
@@ -237,25 +239,67 @@ public abstract class PanelsState extends Panels {
 
 	private void drawStatesLabels(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		for (int i = 0; i < changes.size(); i++) {
-			final ChangeState change = changes.get(i);
+		final List<StateLabel> labels = getStatesLabels(stringBounder);
+		for (StateLabel label : labels)
+			if (label.fits || label.overlapsAny(labels) == false)
+				label.text.drawU(ug.apply(new UTranslate(label.x, -label.height / 2)));
+
+		for (ChangeState change : changes) {
 			final double x = ruler.getPosInPixel(change.getWhen());
-			if (change.isBlank() == false && change.isCompletelyHidden() == false && change.isFlat() == false) {
-				final TextBlock state = createTextBlock(change.getState());
-				final XDimension2D dim = state.calculateDimension(stringBounder);
-				final double xtext;
-				if (i == changes.size() - 1) {
-					xtext = x + MARGIN_X;
-				} else {
-					final double x2 = ruler.getPosInPixel(changes.get(i + 1).getWhen());
-					xtext = (x + x2) / 2 - dim.getWidth() / 2;
-				}
-				state.drawU(ug.apply(new UTranslate(xtext, -dim.getHeight() / 2)));
-			}
 			final TextBlock commentTopBlock = getCommentTopBlock(change);
 			final XDimension2D dimComment = commentTopBlock.calculateDimension(stringBounder);
 			commentTopBlock
 					.drawU(ug.apply(new UTranslate(x + MARGIN_X, -getRibbonHeight() / 2 - dimComment.getHeight())));
+		}
+	}
+
+	/**
+	 * The label of a state is centred on its band. When the band is too short for
+	 * it (events close in time, #3028), the label overflows on its neighbours: it is
+	 * then drawn only if it stays at least LABEL_GAP away from the label of another
+	 * state, otherwise both would be unreadable. A label that fits its band is
+	 * always drawn.
+	 */
+	private List<StateLabel> getStatesLabels(StringBounder stringBounder) {
+		final List<StateLabel> result = new ArrayList<>();
+		for (int i = 0; i < changes.size(); i++) {
+			final ChangeState change = changes.get(i);
+			if (change.isBlank() || change.isCompletelyHidden() || change.isFlat())
+				continue;
+			final double x = ruler.getPosInPixel(change.getWhen());
+			final TextBlock state = createTextBlock(change.getState());
+			final XDimension2D dim = state.calculateDimension(stringBounder);
+			if (i == changes.size() - 1) {
+				result.add(new StateLabel(state, x + MARGIN_X, dim, true));
+			} else {
+				final double x2 = ruler.getPosInPixel(changes.get(i + 1).getWhen());
+				result.add(new StateLabel(state, (x + x2) / 2 - dim.getWidth() / 2, dim, dim.getWidth() <= x2 - x));
+			}
+		}
+		return result;
+	}
+
+	static private class StateLabel {
+
+		private final TextBlock text;
+		private final double x;
+		private final double width;
+		private final double height;
+		private final boolean fits;
+
+		private StateLabel(TextBlock text, double x, XDimension2D dim, boolean fits) {
+			this.text = text;
+			this.x = x;
+			this.width = dim.getWidth();
+			this.height = dim.getHeight();
+			this.fits = fits;
+		}
+
+		private boolean overlapsAny(List<StateLabel> others) {
+			for (StateLabel other : others)
+				if (other != this && x < other.x + other.width + LABEL_GAP && other.x < x + width + LABEL_GAP)
+					return true;
+			return false;
 		}
 	}
 

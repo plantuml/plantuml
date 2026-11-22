@@ -782,14 +782,6 @@ TEXT:
   extendedColor: NULL_COLOR
 
 TEXT:
-  text: 300
-  position: [ 287.4392 ; 216.5556 ]
-  orientation: 0
-  font: SansSerif.plain/11 []
-  color: ff333333
-  extendedColor: NULL_COLOR
-
-TEXT:
   text: 400
   position: [ 322.8217 ; 216.5556 ]
   orientation: 0
@@ -800,14 +792,6 @@ TEXT:
 TEXT:
   text: 4900
   position: [ 380.1399 ; 216.5556 ]
-  orientation: 0
-  font: SansSerif.plain/11 []
-  color: ff333333
-  extendedColor: NULL_COLOR
-
-TEXT:
-  text: 5000
-  position: [ 403.6859 ; 216.5556 ]
   orientation: 0
   font: SansSerif.plain/11 []
   color: ff333333

@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (Timing Diagram)
+---
+@startuml
+concise "Sender" as S
+@0
+S is Idle
+@497
+S is VeryLongStateName
+@500
+S is {-}
+@1000
+S is Idle
+@enduml

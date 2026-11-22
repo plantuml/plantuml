@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (Timing Diagram)
+---
+@startuml
+rectangle "Sender" as S
+@0
+S is Idle
+@499
+S is Busy
+@501
+S is Idle
+@1000
+S is Done
+@enduml

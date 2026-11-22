@@ -68,6 +68,8 @@ public class TimingRuler {
 
 	private static final double TICK_HEIGHT = 5;
 	private static final double UNIT_GAP = 6;
+	// Minimal horizontal space between two time labels of the axis
+	private static final double LABEL_GAP = 4;
 
 	private final SortedSet<TimeTick> times = new TreeSet<>();
 
@@ -400,6 +402,24 @@ public class TimingRuler {
 		private double getRight() {
 			return x + width;
 		}
+
+		private boolean overlaps(TimeLabel other) {
+			return x < other.getRight() + LABEL_GAP && other.x < getRight() + LABEL_GAP;
+		}
+	}
+
+	private static boolean overlapsAny(TimeLabel label, List<TimeLabel> others) {
+		for (TimeLabel other : others)
+			if (other.overlaps(label))
+				return true;
+		return false;
+	}
+
+	private boolean isBreakEdge(double time) {
+		for (Break b : breaks)
+			if (time == b.from || time == b.to)
+				return true;
+		return false;
 	}
 
 	private List<TimeLabel> getTimeLabels(StringBounder stringBounder, TimeAxisStategy timeAxisStategy,
@@ -423,12 +443,31 @@ public class TimingRuler {
 			}
 		}
 
-		final List<TimeLabel> result = new ArrayList<>();
+		final List<TimeLabel> all = new ArrayList<>();
+		final List<TimeLabel> breakEdges = new ArrayList<>();
 		for (int i = 0; i < labels.size(); i++) {
 			final TextBlock text = getTimeTextBlock(labels.get(i));
 			final double width = text.calculateDimension(stringBounder).getWidth();
-			result.add(new TimeLabel(text, getLabelX(moments.get(i), width), width));
+			final TimeLabel label = new TimeLabel(text, getLabelX(moments.get(i), width), width);
+			all.add(label);
+			if (isBreakEdge(moments.get(i)))
+				breakEdges.add(label);
 		}
+
+		// Events close in time give labels drawn on top of each other (#3028): going from
+		// left to right, a label that would overlap the previous one is skipped. The labels
+		// of break edges are always kept, the regular ones give way to them.
+		final List<TimeLabel> result = new ArrayList<>();
+		for (TimeLabel label : all) {
+			if (breakEdges.contains(label) == false) {
+				if (result.size() > 0 && result.get(result.size() - 1).overlaps(label))
+					continue;
+				if (overlapsAny(label, breakEdges))
+					continue;
+			}
+			result.add(label);
+		}
+
 		if (unit == null)
 			return result;
 

@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (Timing Diagram)
+---
+@startuml
+concise "Sender" as S
+@0
+S is A
+@10
+S is B
+@20
+S is C
+@30
+S is D
+@enduml

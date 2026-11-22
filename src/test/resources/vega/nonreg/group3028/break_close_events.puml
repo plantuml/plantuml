@@ -1,0 +1,18 @@
+---
+output: svg
+expected-description: (Timing Diagram)
+---
+@startuml
+concise "Web" as W
+@0
+W is Idle
+@100
+W is Busy
+@101
+W is Idle
+break 102 to 900
+@901
+W is Busy
+@1000
+W is Idle
+@enduml
