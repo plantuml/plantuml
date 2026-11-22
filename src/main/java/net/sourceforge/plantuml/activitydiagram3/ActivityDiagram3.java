@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -66,7 +66,7 @@ import net.sourceforge.plantuml.url.Url;
 public class ActivityDiagram3 extends TitledDiagram {
 
 	enum SwimlaneStrategy {
-		SWIMLANE_FORBIDDEN, SWIMLANE_ALLOWED;
+		SWIMLANE_FORBIDDEN, SWIMLANE_ALLOWED, SWIMLANE_HORIZONTAL;
 	}
 
 	private SwimlaneStrategy swimlaneStrategy;
@@ -84,13 +84,23 @@ public class ActivityDiagram3 extends TitledDiagram {
 	}
 
 	public CommandExecutionResult swimlane(String name, HColor color, Display label) {
+		return swimlane(name, color, label, false);
+	}
+
+	public CommandExecutionResult swimlane(String name, HColor color, Display label, boolean isHorizontal) {
 		if (swimlaneStrategy == null)
-			swimlaneStrategy = SwimlaneStrategy.SWIMLANE_ALLOWED;
+			swimlaneStrategy = isHorizontal ? SwimlaneStrategy.SWIMLANE_HORIZONTAL : SwimlaneStrategy.SWIMLANE_ALLOWED;
 
 		if (swimlaneStrategy == SwimlaneStrategy.SWIMLANE_FORBIDDEN)
 			return CommandExecutionResult.error("This swimlane must be defined at the start of the diagram.");
 
-		swimlanes.swimlane(name, color, label);
+		if (isHorizontal && swimlaneStrategy != SwimlaneStrategy.SWIMLANE_HORIZONTAL)
+			return CommandExecutionResult.error("Cannot mix horizontal and vertical swimlanes in the same diagram.");
+
+		if (!isHorizontal && swimlaneStrategy == SwimlaneStrategy.SWIMLANE_HORIZONTAL)
+			return CommandExecutionResult.error("Cannot mix vertical and horizontal swimlanes in the same diagram.");
+
+		swimlanes.swimlane(name, color, label, isHorizontal);
 		return CommandExecutionResult.ok();
 	}
 

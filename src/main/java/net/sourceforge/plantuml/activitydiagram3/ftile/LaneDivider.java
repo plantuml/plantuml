@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -59,13 +59,19 @@ public class LaneDivider implements TextBlock {
 	private final double x1;
 	private final double x2;
 	private final double height;
+	private final boolean horizontal;
 	private Style style;
 
 	public LaneDivider(ISkinParam skinParam, double x1, double x2, double height) {
+		this(skinParam, x1, x2, height, false);
+	}
+
+	public LaneDivider(ISkinParam skinParam, double x1, double x2, double height, boolean horizontal) {
 		this.skinParam = skinParam;
 		this.x1 = x1;
 		this.x2 = x2;
 		this.height = height;
+		this.horizontal = horizontal;
 	}
 
 	public StyleSignatureBasic getDefaultStyleDefinition() {
@@ -82,17 +88,25 @@ public class LaneDivider implements TextBlock {
 	@Override
 	@Fast
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		if(horizontal) return new XDimension2D(height, x1+x2);
+
 		return new XDimension2D(x1 + x2, height);
 	}
 
 	public void drawU(UGraphic ug) {
 //		final UShape back = URectangle.build(x1 + x2, height).ignoreForCompressionOnY();
 //		ug.apply(UChangeColor.nnn(HColorUtils.BLUE)).draw(back);
-		final UShape back = new UEmpty(x1 + x2, 1);
-		ug.draw(back);
-
 		final HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final UStroke thickness = getStyle().getStroke();
+
+		if (horizontal) {
+			final UShape back = new UEmpty(1, x1 + x2);
+			ug.draw(back);
+			ug.apply(UTranslate.dy(x1)).apply(thickness).apply(color).draw(ULine.hline(height));
+			return;
+		}
+		final UShape back = new UEmpty(x1 + x2, 1);
+		ug.draw(back);
 
 		ug.apply(UTranslate.dx(x1)).apply(thickness).apply(color).draw(ULine.vline(height));
 
@@ -101,6 +115,8 @@ public class LaneDivider implements TextBlock {
 	public double getWidth() {
 		return x1 + x2;
 	}
+
+	public double getHeight() { return x1 + x2; }
 
 	public final double getX1() {
 		return x1;

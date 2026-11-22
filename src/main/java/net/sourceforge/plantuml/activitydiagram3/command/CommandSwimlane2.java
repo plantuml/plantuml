@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -63,6 +63,7 @@ public class CommandSwimlane2 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceOneOrMore(), //
 				ColorParser.exp7(), //
 				RegexLeaf.spaceZeroOrMore(), //
+						new RegexLeaf(1, "HORIZONTAL", "(-)?"), //
 				new RegexLeaf(1, "SWIMLANE", "([^|]+?)"), //
 				new RegexOptional( //
 						new RegexConcat( //
@@ -98,9 +99,10 @@ public class CommandSwimlane2 extends SingleLineCommand2<ActivityDiagram3> {
 			ParserPass currentPass) throws NoSuchColorException {
 		final String s = arg.get("COLOR", 0);
 		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+		final boolean isHorizontal = arg.get("HORIZONTAL", 0) != null;
 		final String name = arg.get("SWIMLANE", 0);
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
-		return diagram.swimlane(name, color, label);
+		return diagram.swimlane(name, color, label, isHorizontal);
 	}
 
 }
