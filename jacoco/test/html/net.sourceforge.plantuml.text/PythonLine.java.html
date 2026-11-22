@@ -138,6 +138,28 @@ public final class PythonLine {
 <span class="pc bpc" id="L138" title="1 of 4 branches missed.">		return dollar || explicitScope;</span>
 	}
 
+	/**
+	 * The name of &quot;!x = 1&quot;, a name assigned without &quot;$&quot;, or null for any other
+	 * line. Such a line is Python, but in a diagram that has no other Python and
+	 * uses the name in its text, it stays the legacy assignment it was before
+	 * Python existed (see TContext, section 6 of PYTHON_PREPROCESSOR.md).
+	 */
+	public static String nameAssignedWithoutDollar(String s) {
+<span class="fc" id="L148">		final int i = afterBang(s);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (i &lt; 0)</span>
+<span class="fc" id="L150">			return null;</span>
+<span class="fc" id="L151">		final int end = identifierEnd(s, i);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (end == i)</span>
+<span class="fc" id="L153">			return null;</span>
+<span class="fc" id="L154">		final int equal = skipSpaces(s, end);</span>
+<span class="fc bfc" id="L155" title="All 4 branches covered.">		if (equal &gt;= s.length() || s.charAt(equal) != '=')</span>
+<span class="fc" id="L156">			return null;</span>
+		// &quot;!x == 1&quot; is a comparison
+<span class="pc bpc" id="L158" title="1 of 4 branches missed.">		if (equal + 1 &lt; s.length() &amp;&amp; s.charAt(equal + 1) == '=')</span>
+<span class="fc" id="L159">			return null;</span>
+<span class="fc" id="L160">		return s.substring(i, end);</span>
+	}
+
 
 	/**
 	 * The words that are never Python after &quot;!&quot;, for {@link #isStatementLine}:
@@ -147,7 +169,7 @@ public final class PythonLine {
 	 * instance &quot;!define 4K(...)&quot;, whose name starts with a digit, or
 	 * &quot;!pragma teoz true&quot;, which the diagram reads).
 	 */
-<span class="fc" id="L150">	private static final Set&lt;String&gt; NOT_PYTHON_WORDS = Collections.unmodifiableSet(new HashSet&lt;&gt;(Arrays.asList(</span>
+<span class="fc" id="L172">	private static final Set&lt;String&gt; NOT_PYTHON_WORDS = Collections.unmodifiableSet(new HashSet&lt;&gt;(Arrays.asList(</span>
 			&quot;python&quot;, &quot;endpy&quot;, &quot;define&quot;, &quot;definelong&quot;, &quot;enddefinelong&quot;, &quot;undef&quot;, &quot;ifdef&quot;, &quot;ifndef&quot;, &quot;if&quot;, &quot;elseif&quot;,
 			&quot;else&quot;, &quot;endif&quot;, &quot;while&quot;, &quot;endwhile&quot;, &quot;foreach&quot;, &quot;endfor&quot;, &quot;function&quot;, &quot;procedure&quot;, &quot;unquoted&quot;, &quot;final&quot;,
 			&quot;end&quot;, &quot;endfunction&quot;, &quot;endprocedure&quot;, &quot;return&quot;, &quot;include&quot;, &quot;includeurl&quot;, &quot;include_many&quot;, &quot;include_once&quot;,
@@ -163,49 +185,49 @@ public final class PythonLine {
 	 * are excluded. To be tested after every legacy directive.
 	 */
 	public static boolean isStatementLine(String s) {
-<span class="fc" id="L166">		final int i = afterBang(s);</span>
-<span class="pc bpc" id="L167" title="1 of 4 branches missed.">		if (i &lt; 0 || i &gt;= s.length())</span>
-<span class="fc" id="L168">			return false;</span>
-<span class="fc" id="L169">		final char c = s.charAt(i);</span>
-<span class="fc bfc" id="L170" title="All 8 branches covered.">		if (c == '(' || c == '[' || (c &gt;= '0' &amp;&amp; c &lt;= '9'))</span>
-<span class="fc" id="L171">			return true;</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">		if (isIdentifierStart(c) == false)</span>
-<span class="fc" id="L173">			return false;</span>
-<span class="fc" id="L174">		final String word = s.substring(i, identifierEnd(s, i));</span>
-<span class="fc bfc" id="L175" title="All 2 branches covered.">		return NOT_PYTHON_WORDS.contains(word) == false;</span>
+<span class="fc" id="L188">		final int i = afterBang(s);</span>
+<span class="pc bpc" id="L189" title="1 of 4 branches missed.">		if (i &lt; 0 || i &gt;= s.length())</span>
+<span class="fc" id="L190">			return false;</span>
+<span class="fc" id="L191">		final char c = s.charAt(i);</span>
+<span class="fc bfc" id="L192" title="All 8 branches covered.">		if (c == '(' || c == '[' || (c &gt;= '0' &amp;&amp; c &lt;= '9'))</span>
+<span class="fc" id="L193">			return true;</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (isIdentifierStart(c) == false)</span>
+<span class="fc" id="L195">			return false;</span>
+<span class="fc" id="L196">		final String word = s.substring(i, identifierEnd(s, i));</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		return NOT_PYTHON_WORDS.contains(word) == false;</span>
 	}
 
 	private static boolean endsWithColon(String s) {
-<span class="fc" id="L179">		int e = s.length();</span>
-<span class="pc bpc" id="L180" title="2 of 4 branches missed.">		while (e &gt; 0 &amp;&amp; Character.isWhitespace(s.charAt(e - 1)))</span>
-<span class="nc" id="L181">			e--;</span>
-<span class="pc bpc" id="L182" title="1 of 4 branches missed.">		return e &gt; 0 &amp;&amp; s.charAt(e - 1) == ':';</span>
+<span class="fc" id="L201">		int e = s.length();</span>
+<span class="pc bpc" id="L202" title="2 of 4 branches missed.">		while (e &gt; 0 &amp;&amp; Character.isWhitespace(s.charAt(e - 1)))</span>
+<span class="nc" id="L203">			e--;</span>
+<span class="pc bpc" id="L204" title="1 of 4 branches missed.">		return e &gt; 0 &amp;&amp; s.charAt(e - 1) == ':';</span>
 	}
 
 	/** Index of the first character after &quot;!&quot; (blanks before and after skipped), or -1. */
 	private static int afterBang(String s) {
-<span class="fc" id="L187">		int i = skipSpaces(s, 0);</span>
-<span class="pc bpc" id="L188" title="1 of 4 branches missed.">		if (i &gt;= s.length() || s.charAt(i) != '!')</span>
-<span class="fc" id="L189">			return -1;</span>
-<span class="fc" id="L190">		return skipSpaces(s, i + 1);</span>
+<span class="fc" id="L209">		int i = skipSpaces(s, 0);</span>
+<span class="pc bpc" id="L210" title="1 of 4 branches missed.">		if (i &gt;= s.length() || s.charAt(i) != '!')</span>
+<span class="fc" id="L211">			return -1;</span>
+<span class="fc" id="L212">		return skipSpaces(s, i + 1);</span>
 	}
 
 	private static int skipSpaces(String s, int i) {
-<span class="fc bfc" id="L194" title="All 4 branches covered.">		while (i &lt; s.length() &amp;&amp; Character.isWhitespace(s.charAt(i)))</span>
-<span class="fc" id="L195">			i++;</span>
-<span class="fc" id="L196">		return i;</span>
+<span class="fc bfc" id="L216" title="All 4 branches covered.">		while (i &lt; s.length() &amp;&amp; Character.isWhitespace(s.charAt(i)))</span>
+<span class="fc" id="L217">			i++;</span>
+<span class="fc" id="L218">		return i;</span>
 	}
 
 	private static boolean isIdentifierStart(char ch) {
-<span class="pc bpc" id="L200" title="1 of 6 branches missed.">		return Character.isLetter(ch) || ch == '_' || Character.isSurrogate(ch);</span>
+<span class="pc bpc" id="L222" title="1 of 6 branches missed.">		return Character.isLetter(ch) || ch == '_' || Character.isSurrogate(ch);</span>
 	}
 
 	private static int identifierEnd(String s, int i) {
-<span class="pc bpc" id="L204" title="1 of 4 branches missed.">		if (i &gt;= s.length() || isIdentifierStart(s.charAt(i)) == false)</span>
-<span class="fc" id="L205">			return i;</span>
-<span class="fc bfc" id="L206" title="All 4 branches covered.">		while (i &lt; s.length() &amp;&amp; TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(i)))</span>
-<span class="fc" id="L207">			i++;</span>
-<span class="fc" id="L208">		return i;</span>
+<span class="pc bpc" id="L226" title="1 of 4 branches missed.">		if (i &gt;= s.length() || isIdentifierStart(s.charAt(i)) == false)</span>
+<span class="fc" id="L227">			return i;</span>
+<span class="fc bfc" id="L228" title="All 4 branches covered.">		while (i &lt; s.length() &amp;&amp; TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(i)))</span>
+<span class="fc" id="L229">			i++;</span>
+<span class="fc" id="L230">		return i;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

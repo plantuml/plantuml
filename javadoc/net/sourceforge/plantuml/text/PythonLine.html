@@ -134,21 +134,27 @@ loadScripts(document, 'script');</script>
  after optional blanks, by an identifier, a digit, "(" or "[" is Python:
  "!x = 1", "!x == 1", "!f(1)", "!1 + 1", "!(a, b) = c", "![1, 2]".</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#startsWithEscapedBang(java.lang.String)" class="member-name-link">startsWithEscapedBang</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#nameAssignedWithoutDollar(java.lang.String)" class="member-name-link">nameAssignedWithoutDollar</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">True for a text line that starts with the escape "!!" (see <a href="#unescapeBang(java.lang.String)"><code>unescapeBang(java.lang.String)</code></a>).</div>
+<div class="block">The name of "!x = 1", a name assigned without "$", or null for any other
+ line.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#startsWithInterpolation(java.lang.String)" class="member-name-link">startsWithInterpolation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#startsWithEscapedBang(java.lang.String)" class="member-name-link">startsWithEscapedBang</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">True for a text line that starts with the escape "!!" (see <a href="#unescapeBang(java.lang.String)"><code>unescapeBang(java.lang.String)</code></a>).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#startsWithInterpolation(java.lang.String)" class="member-name-link">startsWithInterpolation</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">"!{a} -&gt; !{b}": a line that starts with an interpolation is PlantUML text,
  never a directive nor a Python line (a Python statement starting with "{"
  would be a dict display thrown away, which has no use).</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#unescapeBang(java.lang.String)" class="member-name-link">unescapeBang</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#unescapeBang(java.lang.String)" class="member-name-link">unescapeBang</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">The escape of a text line that starts with "!" (section 8 of
  PYTHON_PREPROCESSOR.md): "!!important" is the text "!important".</div>
 </div>
@@ -217,6 +223,16 @@ loadScripts(document, 'script');</script>
 <h3>isLegacyAffectation</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isLegacyAffectation</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</span></div>
 <div class="block">"!$x = 1", "!local $x = 1" and "!x ?= 1" are legacy. "!x = 1" is not.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="nameAssignedWithoutDollar(java.lang.String)">
+<h3>nameAssignedWithoutDollar</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">nameAssignedWithoutDollar</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</span></div>
+<div class="block">The name of "!x = 1", a name assigned without "$", or null for any other
+ line. Such a line is Python, but in a diagram that has no other Python and
+ uses the name in its text, it stays the legacy assignment it was before
+ Python existed (see TContext, section 6 of PYTHON_PREPROCESSOR.md).</div>
 </section>
 </li>
 <li>
