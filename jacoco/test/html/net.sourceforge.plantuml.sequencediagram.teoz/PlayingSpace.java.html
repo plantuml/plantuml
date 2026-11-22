@@ -286,23 +286,28 @@ public class PlayingSpace implements Bordered {
 <span class="fc" id="L286">			aMin.ensureBiggerThan(bMax);</span>
 <span class="fc" id="L287">	}</span>
 
-	// True when `left` is a note on one participant and pushing `right`
-	// would move that participant, or one left of it.
+	// True when `left` is a note and pushing `right` would move the note's
+	// participant, or one left of it. For a note over several participants
+	// that is its rightmost one: the note spans every column up to it, so
+	// e.g. `C -&gt; A` beside `&amp; note over B, C` can never clear the note, and
+	// pushing it only shifts every participant right.
 	private boolean cannotPushApart(Tile left, Tile right) {
-<span class="fc" id="L292">		final Event event = left.getEvent();</span>
-<span class="fc bfc" id="L293" title="All 2 branches covered.">		if (event instanceof Note == false)</span>
-<span class="fc" id="L294">			return false;</span>
+<span class="fc" id="L295">		final Event event = left.getEvent();</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">		if (event instanceof Note == false)</span>
+<span class="fc" id="L297">			return false;</span>
 
-<span class="fc" id="L296">		final Note note = (Note) event;</span>
-<span class="fc bfc" id="L297" title="All 2 branches covered.">		if (note.getPosition() == NotePosition.OVER_SEVERAL)</span>
-<span class="fc" id="L298">			return false;</span>
+<span class="fc" id="L299">		final Note note = (Note) event;</span>
+<span class="fc" id="L300">		Double noteEnd = posB(note.getParticipant());</span>
+<span class="pc bpc" id="L301" title="1 of 4 branches missed.">		if (noteEnd != null &amp;&amp; note.getPosition() == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L302">			final Double other = posB(note.getParticipant2());</span>
+<span class="pc bpc" id="L303" title="2 of 4 branches missed.">			if (other != null &amp;&amp; other &gt; noteEnd)</span>
+<span class="fc" id="L304">				noteEnd = other;</span>
+		}
+<span class="fc" id="L306">		final Double rightStart = leftmostPosB(right);</span>
+<span class="pc bpc" id="L307" title="2 of 4 branches missed.">		if (noteEnd == null || rightStart == null)</span>
+<span class="nc" id="L308">			return false;</span>
 
-<span class="fc" id="L300">		final LivingSpace noteSpace = livingSpaces.get(note.getParticipant());</span>
-<span class="fc" id="L301">		final Double rightStart = leftmostPosB(right);</span>
-<span class="pc bpc" id="L302" title="2 of 4 branches missed.">		if (noteSpace == null || rightStart == null)</span>
-<span class="nc" id="L303">			return false;</span>
-
-<span class="fc bfc" id="L305" title="All 2 branches covered.">		return rightStart &lt;= noteSpace.getPosB(stringBounder).getCurrentValue();</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">		return rightStart &lt;= noteEnd;</span>
 	}
 
 	// The posB of the leftmost participant that pushing this tile moves, or
@@ -310,51 +315,51 @@ public class PlayingSpace implements Bordered {
 	// ends: it covers every column between them, so it can never be pushed
 	// clear of a note on one of those participants.
 	private Double leftmostPosB(Tile tile) {
-<span class="pc bpc" id="L313" title="1 of 2 branches missed.">		if (tile instanceof GroupingTile) {</span>
-<span class="nc" id="L314">			Double result = null;</span>
-<span class="nc bnc" id="L315" title="All 2 branches missed.">			for (Tile child : ((GroupingTile) tile).getChildTilesForAnchor())</span>
-<span class="nc" id="L316">				result = leftmost(result, leftmostPosB(child));</span>
+<span class="pc bpc" id="L318" title="1 of 2 branches missed.">		if (tile instanceof GroupingTile) {</span>
+<span class="nc" id="L319">			Double result = null;</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">			for (Tile child : ((GroupingTile) tile).getChildTilesForAnchor())</span>
+<span class="nc" id="L321">				result = leftmost(result, leftmostPosB(child));</span>
 
-<span class="nc" id="L318">			return result;</span>
+<span class="nc" id="L323">			return result;</span>
 		}
 
-<span class="fc" id="L321">		final Event event = tile.getEvent();</span>
-<span class="fc" id="L322">		Double result = null;</span>
-<span class="fc bfc" id="L323" title="All 2 branches covered.">		if (event instanceof AbstractMessage) {</span>
-<span class="fc" id="L324">			result = leftmost(result, posB(((AbstractMessage) event).getParticipant1()));</span>
-<span class="fc" id="L325">			result = leftmost(result, posB(((AbstractMessage) event).getParticipant2()));</span>
-<span class="pc bpc" id="L326" title="1 of 2 branches missed.">		} else if (event instanceof Note) {</span>
-<span class="fc" id="L327">			result = leftmost(result, posB(((Note) event).getParticipant()));</span>
-<span class="fc" id="L328">			result = leftmost(result, posB(((Note) event).getParticipant2()));</span>
-<span class="nc bnc" id="L329" title="All 2 branches missed.">		} else if (event instanceof Notes) {</span>
+<span class="fc" id="L326">		final Event event = tile.getEvent();</span>
+<span class="fc" id="L327">		Double result = null;</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">		if (event instanceof AbstractMessage) {</span>
+<span class="fc" id="L329">			result = leftmost(result, posB(((AbstractMessage) event).getParticipant1()));</span>
+<span class="fc" id="L330">			result = leftmost(result, posB(((AbstractMessage) event).getParticipant2()));</span>
+<span class="pc bpc" id="L331" title="1 of 2 branches missed.">		} else if (event instanceof Note) {</span>
+<span class="fc" id="L332">			result = leftmost(result, posB(((Note) event).getParticipant()));</span>
+<span class="fc" id="L333">			result = leftmost(result, posB(((Note) event).getParticipant2()));</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">		} else if (event instanceof Notes) {</span>
 			// A member over several participants is left out: in a merged
 			// group, that push can settle.
-<span class="nc bnc" id="L332" title="All 2 branches missed.">			for (Note note : (Notes) event)</span>
-<span class="nc bnc" id="L333" title="All 2 branches missed.">				if (note.getPosition() != NotePosition.OVER_SEVERAL)</span>
-<span class="nc" id="L334">					result = leftmost(result, posB(note.getParticipant()));</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">			for (Note note : (Notes) event)</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">				if (note.getPosition() != NotePosition.OVER_SEVERAL)</span>
+<span class="nc" id="L339">					result = leftmost(result, posB(note.getParticipant()));</span>
 		}
-<span class="fc" id="L336">		return result;</span>
+<span class="fc" id="L341">		return result;</span>
 	}
 
 	private Double posB(Participant participant) {
-<span class="fc bfc" id="L340" title="All 2 branches covered.">		if (participant == null)</span>
-<span class="fc" id="L341">			return null;</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">		if (participant == null)</span>
+<span class="fc" id="L346">			return null;</span>
 
-<span class="fc" id="L343">		final LivingSpace space = livingSpaces.get(participant);</span>
-<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (space == null)</span>
-<span class="nc" id="L345">			return null;</span>
+<span class="fc" id="L348">		final LivingSpace space = livingSpaces.get(participant);</span>
+<span class="pc bpc" id="L349" title="1 of 2 branches missed.">		if (space == null)</span>
+<span class="nc" id="L350">			return null;</span>
 
-<span class="fc" id="L347">		return space.getPosB(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L352">		return space.getPosB(stringBounder).getCurrentValue();</span>
 	}
 
 	private static Double leftmost(Double current, Double candidate) {
-<span class="fc bfc" id="L351" title="All 2 branches covered.">		if (candidate == null)</span>
-<span class="fc" id="L352">			return current;</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">		if (candidate == null)</span>
+<span class="fc" id="L357">			return current;</span>
 
-<span class="pc bpc" id="L354" title="1 of 4 branches missed.">		if (current == null || candidate &lt; current)</span>
-<span class="fc" id="L355">			return candidate;</span>
+<span class="pc bpc" id="L359" title="1 of 4 branches missed.">		if (current == null || candidate &lt; current)</span>
+<span class="fc" id="L360">			return candidate;</span>
 
-<span class="nc" id="L357">		return current;</span>
+<span class="nc" id="L362">		return current;</span>
 	}
 
 	// Finds ANY LivingSpace this tile (or, for a GroupingTile, one of its
@@ -382,88 +387,88 @@ public class PlayingSpace implements Bordered {
 	// two tile kinds join the same disjointness pass every parallel Message
 	// already got.
 	private LivingSpace findAnchorLivingSpace(Tile tile) {
-<span class="fc" id="L385">		final Event event = tile.getEvent();</span>
-<span class="fc bfc" id="L386" title="All 2 branches covered.">		if (event instanceof Message)</span>
-<span class="fc" id="L387">			return livingSpaces.get(((Message) event).getParticipant1());</span>
+<span class="fc" id="L390">		final Event event = tile.getEvent();</span>
+<span class="fc bfc" id="L391" title="All 2 branches covered.">		if (event instanceof Message)</span>
+<span class="fc" id="L392">			return livingSpaces.get(((Message) event).getParticipant1());</span>
 
-<span class="fc bfc" id="L389" title="All 2 branches covered.">		if (event instanceof MessageExo)</span>
-<span class="fc" id="L390">			return livingSpaces.get(((MessageExo) event).getParticipant());</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">		if (event instanceof MessageExo)</span>
+<span class="fc" id="L395">			return livingSpaces.get(((MessageExo) event).getParticipant());</span>
 
-<span class="fc bfc" id="L392" title="All 2 branches covered.">		if (event instanceof Note)</span>
-<span class="fc" id="L393">			return livingSpaces.get(((Note) event).getParticipant());</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">		if (event instanceof Note)</span>
+<span class="fc" id="L398">			return livingSpaces.get(((Note) event).getParticipant());</span>
 
-<span class="pc bpc" id="L395" title="1 of 2 branches missed.">		if (event instanceof Notes) {</span>
-<span class="nc" id="L396">			final Iterator&lt;Note&gt; it = ((Notes) event).iterator();</span>
-<span class="nc bnc" id="L397" title="All 2 branches missed.">			if (it.hasNext())</span>
-<span class="nc" id="L398">				return livingSpaces.get(it.next().getParticipant());</span>
+<span class="pc bpc" id="L400" title="1 of 2 branches missed.">		if (event instanceof Notes) {</span>
+<span class="nc" id="L401">			final Iterator&lt;Note&gt; it = ((Notes) event).iterator();</span>
+<span class="nc bnc" id="L402" title="All 2 branches missed.">			if (it.hasNext())</span>
+<span class="nc" id="L403">				return livingSpaces.get(it.next().getParticipant());</span>
 		}
 
-<span class="fc bfc" id="L401" title="All 2 branches covered.">		if (tile instanceof GroupingTile)</span>
-<span class="pc bpc" id="L402" title="1 of 2 branches missed.">			for (Tile child : ((GroupingTile) tile).getChildTilesForAnchor()) {</span>
-<span class="fc" id="L403">				final LivingSpace found = findAnchorLivingSpace(child);</span>
-<span class="pc bpc" id="L404" title="1 of 2 branches missed.">				if (found != null)</span>
-<span class="fc" id="L405">					return found;</span>
-<span class="nc" id="L406">			}</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">		if (tile instanceof GroupingTile)</span>
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">			for (Tile child : ((GroupingTile) tile).getChildTilesForAnchor()) {</span>
+<span class="fc" id="L408">				final LivingSpace found = findAnchorLivingSpace(child);</span>
+<span class="pc bpc" id="L409" title="1 of 2 branches missed.">				if (found != null)</span>
+<span class="fc" id="L410">					return found;</span>
+<span class="nc" id="L411">			}</span>
 
-<span class="fc" id="L408">		return null;</span>
+<span class="fc" id="L413">		return null;</span>
 	}
 
 	public Real getMinX(StringBounder stringBounder) {
-<span class="fc" id="L412">		return min;</span>
+<span class="fc" id="L417">		return min;</span>
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-<span class="fc" id="L416">		return max;</span>
+<span class="fc" id="L421">		return max;</span>
 	}
 
 	public boolean isShowFootbox() {
-<span class="fc" id="L420">		return isShowFootbox;</span>
+<span class="fc" id="L425">		return isShowFootbox;</span>
 	}
 
 	public LivingSpaces getLivingSpaces() {
-<span class="fc" id="L424">		return livingSpaces;</span>
+<span class="fc" id="L429">		return livingSpaces;</span>
 	}
 
 	public List&lt;Tile&gt; getTiles() {
-<span class="fc" id="L428">		return tiles;</span>
+<span class="fc" id="L433">		return tiles;</span>
 	}
 
 	public SequenceDiagram getDiagram() {
-<span class="nc" id="L432">		return diagram;</span>
+<span class="nc" id="L437">		return diagram;</span>
 	}
 
 	public double getBorder1() {
-<span class="fc" id="L436">		return min.getCurrentValue();</span>
+<span class="fc" id="L441">		return min.getCurrentValue();</span>
 	}
 
 	public double getBorder2() {
-<span class="fc" id="L440">		return max.getCurrentValue();</span>
+<span class="fc" id="L445">		return max.getCurrentValue();</span>
 	}
 
 	public List&lt;NewpageTile&gt; getNewpageTiles() {
-<span class="fc" id="L444">		final List&lt;NewpageTile&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L445" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc bfc" id="L446" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
-<span class="fc" id="L447">				((GroupingTile) tile).addNewpageTiles(result);</span>
+<span class="fc" id="L449">		final List&lt;NewpageTile&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L450" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc bfc" id="L451" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
+<span class="fc" id="L452">				((GroupingTile) tile).addNewpageTiles(result);</span>
 
-<span class="fc bfc" id="L449" title="All 2 branches covered.">			if (tile instanceof NewpageTile)</span>
-<span class="fc" id="L450">				result.add((NewpageTile) tile);</span>
-<span class="fc" id="L451">		}</span>
-<span class="fc" id="L452">		return result;</span>
+<span class="fc bfc" id="L454" title="All 2 branches covered.">			if (tile instanceof NewpageTile)</span>
+<span class="fc" id="L455">				result.add((NewpageTile) tile);</span>
+<span class="fc" id="L456">		}</span>
+<span class="fc" id="L457">		return result;</span>
 	}
 
 	public List&lt;Double&gt; yNewPages() {
-<span class="fc" id="L456">		final List&lt;Double&gt; yNewPages = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L457">		yNewPages.add(0.0);</span>
-<span class="fc bfc" id="L458" title="All 2 branches covered.">		for (NewpageTile newpageTile : getNewpageTiles())</span>
-<span class="fc" id="L459">			yNewPages.add(newpageTile.getYGauge().getMin().getCurrentValue());</span>
+<span class="fc" id="L461">		final List&lt;Double&gt; yNewPages = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L462">		yNewPages.add(0.0);</span>
+<span class="fc bfc" id="L463" title="All 2 branches covered.">		for (NewpageTile newpageTile : getNewpageTiles())</span>
+<span class="fc" id="L464">			yNewPages.add(newpageTile.getYGauge().getMin().getCurrentValue());</span>
 
-<span class="fc" id="L461">		yNewPages.add(Double.MAX_VALUE);</span>
-<span class="fc" id="L462">		return yNewPages;</span>
+<span class="fc" id="L466">		yNewPages.add(Double.MAX_VALUE);</span>
+<span class="fc" id="L467">		return yNewPages;</span>
 	}
 
 	public int getNbPages() {
-<span class="fc" id="L466">		return yNewPages().size() - 1;</span>
+<span class="fc" id="L471">		return yNewPages().size() - 1;</span>
 	}
 
 }
