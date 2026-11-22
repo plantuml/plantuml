@@ -111,8 +111,8 @@ public class CommandChartRAxis extends SingleLineCommand2<ChartDiagram> {
 		Double max = null;
 		if (minStr != null && maxStr != null)
 			try {
-				min = Double.parseDouble(minStr);
-				max = Double.parseDouble(maxStr);
+				min = ChartNumber.parse(minStr);
+				max = ChartNumber.parse(maxStr);
 			} catch (NumberFormatException e) {
 				return CommandExecutionResult.error("Invalid number format in axis range");
 			}
@@ -127,7 +127,7 @@ public class CommandChartRAxis extends SingleLineCommand2<ChartDiagram> {
 		Double tickSpacing = null;
 		if (spacingStr != null)
 			try {
-				tickSpacing = Double.parseDouble(spacingStr);
+				tickSpacing = ChartNumber.parse(spacingStr);
 				if (tickSpacing <= 0)
 					return CommandExecutionResult.error("Tick spacing must be greater than 0");
 			} catch (NumberFormatException e) {

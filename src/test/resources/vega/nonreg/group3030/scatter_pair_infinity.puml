@@ -1,0 +1,11 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 2
+expected-error-message: 'Invalid coordinate pair "(3, -Infinity)" (Assumed diagram type: chart)'
+---
+@startchart
+h-axis 0 --> 10
+scatter [(1, 2), (3, -Infinity)]
+@endchart

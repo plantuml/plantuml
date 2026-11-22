@@ -109,7 +109,7 @@ public class CommandChartAnnotation extends SingleLineCommand2<ChartDiagram> {
 		// Parse X position - can be either a string (categorical) or numeric
 		Object xPosition;
 		try {
-			xPosition = Double.parseDouble(xPosStr);
+			xPosition = ChartNumber.parse(xPosStr);
 		} catch (NumberFormatException e) {
 			// Not a number, treat as categorical label
 			xPosition = xPosStr;
@@ -118,7 +118,7 @@ public class CommandChartAnnotation extends SingleLineCommand2<ChartDiagram> {
 		// Parse Y position - must be numeric
 		double yPosition;
 		try {
-			yPosition = Double.parseDouble(yPosStr);
+			yPosition = ChartNumber.parse(yPosStr);
 		} catch (NumberFormatException e) {
 			return CommandExecutionResult.error("Y position must be a numeric value: " + yPosStr);
 		}

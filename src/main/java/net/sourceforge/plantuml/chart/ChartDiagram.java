@@ -534,6 +534,9 @@ public class ChartDiagram extends TitledDiagram {
 	private static CommandExecutionResult checkRange(String axis, Double min, Double max) {
 		if (min != null && max != null && min >= max)
 			return CommandExecutionResult.error(axis + " range must go from a lower to a higher value");
+		// -1.7e308 --> 1.7e308: each bound is a double, the distance between them is not
+		if (min != null && max != null && Double.isInfinite(max - min))
+			return CommandExecutionResult.error(axis + " range is too large to be drawn");
 		return null;
 	}
 
@@ -652,8 +655,58 @@ public class ChartDiagram extends TitledDiagram {
 				if (error != null)
 					return error;
 			}
+		final String range = checkAutomaticRanges();
+		if (range != null)
+			return range;
 		return super.checkFinalError();
 	}
+
+	// An automatic range is fitted to the values (see ChartAxis.withNiceRange). Values
+	// near the limits of a double can make it infinite, a stack of 1e308 + 1e308 or a
+	// spread from -1.7e308 to 1.7e308, and every renderer would then place its values at
+	// NaN. Such a chart is refused here, once every value is known. A range written on
+	// the axis line is checked there (see checkRange), but a stack can still overflow
+	// against it: StackLayout gives the renderers an infinite top, which crashed
+	private String checkAutomaticRanges() {
+		if (kind == Kind.PIE)
+			return null;
+		if (kind == Kind.RADAR)
+			return resolveRadar().getAxis().isDrawable() ? null : TOO_LARGE;
+		if (hasFiniteStacks(false) == false || hasFiniteStacks(true) == false)
+			return TOO_LARGE;
+		final CartesianChart chart = resolveCartesian();
+		if (chart.getNumericAxis().isDrawable() == false || chart.getValueAxis().isDrawable() == false)
+			return TOO_LARGE;
+		if (chart.getValueAxis2() != null && chart.getValueAxis2().isDrawable() == false)
+			return TOO_LARGE;
+		return null;
+	}
+
+	// Whether every stack drawn against the primary (or secondary) value axis has a finite
+	// top. Areas are always stacked, bars only in stacked mode, as in getValueAxis
+	private boolean hasFiniteStacks(boolean secondary) {
+		final List<ChartSeries> bars = new ArrayList<>();
+		final List<ChartSeries> areas = new ArrayList<>();
+		for (ChartSeries s : series)
+			if ((s.isUseSecondaryAxis() && y2Axis != null) == secondary)
+				if (s.getType() == ChartSeries.SeriesType.BAR)
+					bars.add(s);
+				else if (s.getType() == ChartSeries.SeriesType.AREA)
+					areas.add(s);
+		if (stackMode == StackMode.STACKED && hasFiniteTops(StackLayout.bars(bars), bars) == false)
+			return false;
+		return hasFiniteTops(StackLayout.areas(areas), areas);
+	}
+
+	private static boolean hasFiniteTops(StackLayout stack, List<ChartSeries> series) {
+		for (int s = 0; s < series.size(); s++)
+			for (int i = 0; i < series.get(s).getValues().size(); i++)
+				if (stack.has(s, i) && Double.isInfinite(stack.getTop(s, i)))
+					return false;
+		return true;
+	}
+
+	private static final String TOO_LARGE = "The values are too large to be drawn";
 
 	public CommandExecutionResult setXAxisLabels(List<String> labels) {
 		if (labels.isEmpty() == false && xAxis.isAutoScale() && hasCoordinatePairs())

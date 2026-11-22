@@ -124,7 +124,7 @@ public class CommandChartPie extends SingleLineCommand2<ChartDiagram> {
 					if (i + 1 < words.length && words[i + 1].endsWith("%")) {
 						i++;
 						try {
-							hole = Double.parseDouble(words[i].substring(0, words[i].length() - 1));
+							hole = ChartNumber.parse(words[i].substring(0, words[i].length() - 1));
 						} catch (NumberFormatException e) {
 							return CommandExecutionResult.error("Invalid donut size " + words[i]);
 						}

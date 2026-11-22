@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 3
+expected-error-message: 'Y position must be a numeric value: Infinity (Assumed diagram type: chart)'
+---
+@startchart
+h-axis [A, B, C, D]
+bar [1, 2]
+annotation "x" at (A, Infinity)
+@endchart

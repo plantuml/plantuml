@@ -150,7 +150,7 @@ final class ChartCartesianData {
 
 	private static Double parseNumber(String text) {
 		try {
-			return Double.parseDouble(text);
+			return ChartNumber.parse(text);
 		} catch (NumberFormatException e) {
 			return null;
 		}

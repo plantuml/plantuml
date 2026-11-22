@@ -132,8 +132,8 @@ public class CommandChartHAxis extends SingleLineCommand2<ChartDiagram> {
 		// If numeric range is provided, this is for horizontal bar chart mode
 		if (minStr != null && maxStr != null) {
 			try {
-				final double min = Double.parseDouble(minStr);
-				final double max = Double.parseDouble(maxStr);
+				final double min = ChartNumber.parse(minStr);
+				final double max = ChartNumber.parse(maxStr);
 				return diagram.setXAxis(title, min, max);
 			} catch (NumberFormatException e) {
 				return CommandExecutionResult.error("Invalid number format in axis range");

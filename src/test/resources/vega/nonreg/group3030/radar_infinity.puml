@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 1
+expected-error-message: 'Invalid number "Infinity" (Assumed diagram type: chart)'
+---
+@startchart
+radar [Infinity, 1, 2]
+@endchart

@@ -153,7 +153,7 @@ final class ChartDataItems {
 		Double value = null;
 		if (item.isEmpty() == false)
 			try {
-				value = Double.parseDouble(item);
+				value = ChartNumber.parse(item);
 			} catch (NumberFormatException e) {
 				return "Invalid number \"" + item + "\"";
 			}

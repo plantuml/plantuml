@@ -141,24 +141,47 @@ public class ChartAxis {
 	 *
 	 * Examples: values up to 38 give 0 -> 40, up to 138 give 0 -> 150, from -20 to 70
 	 * give -20 -> 80. When there is no value at all, the axis is left as it is (0 -> 100).
+	 *
+	 * Values near the limits of a double may have no round range that is itself a finite
+	 * double: a stack of 1e308 + 1e308, or -1.7e308 and 1 (every multiple of a round step
+	 * below -1.7e308 overflows). The axis then goes from lo to hi as they are, which may be
+	 * infinite: ChartDiagram.checkFinalError reports such a range rather than drawing it.
 	 */
 	public ChartAxis withNiceRange(double dataMin, double dataMax) {
 		final double lo = Math.min(0, dataMin);
 		final double hi = Math.max(0, dataMax);
+		if (Double.isNaN(lo) || Double.isNaN(hi))
+			return withRange(lo, hi);
 		if (lo == hi)
 			return withRange(min, max);
 
 		double magnitude = Math.pow(10, Math.floor(Math.log10((hi - lo) / TICK_INTERVALS)) - 1);
-		// Termination: once step >= hi - lo, any multiple min <= lo gives min + 5 * step > hi
-		while (true) {
+		// Below the smallest normal double, (hi - lo) / 5 can round to 0 (4.9e-324 / 5)
+		if (magnitude == 0)
+			magnitude = Double.MIN_VALUE;
+		// Termination: once step >= hi - lo, any multiple min <= lo gives min + 5 * step > hi.
+		// When that multiple overflows, magnitude keeps growing until it is infinite, which
+		// is also where it starts when hi - lo itself overflows
+		while (Double.isInfinite(magnitude) == false) {
 			for (double nice : NICE_STEPS) {
 				final double step = nice * magnitude;
 				final double start = Math.floor(lo / step) * step;
-				if (start + TICK_INTERVALS * step >= hi)
-					return withRange(start, start + TICK_INTERVALS * step);
+				final double end = start + TICK_INTERVALS * step;
+				if (end >= hi && Double.isInfinite(start) == false && Double.isInfinite(end) == false)
+					return withRange(start, end);
 			}
 			magnitude *= 10;
 		}
+		return withRange(lo, hi);
+	}
+
+	/**
+	 * Whether this range can be drawn: both bounds and the distance between them are
+	 * finite doubles (a distance of 0 is drawn at the start of the axis, see valueToPixel).
+	 */
+	public boolean isDrawable() {
+		final double span = max - min;
+		return span >= 0 && Double.isInfinite(span) == false;
 	}
 
 	/**

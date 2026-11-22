@@ -108,7 +108,7 @@ public final class ChartTicks {
 			}
 		} else {
 			for (int i = 0; i <= TICK_INTERVALS; i++) {
-				final double value = axis.getMin() + range * i / TICK_INTERVALS;
+				final double value = tickValue(axis, range, i);
 				result.add(new Tick(value, (double) i / TICK_INTERVALS, formatValue(value)));
 			}
 		}
@@ -119,11 +119,22 @@ public final class ChartTicks {
 	 * The ticks of the value axis of a horizontal chart, drawn along the bottom: always
 	 * the five automatic intervals, written as integers.
 	 */
+	// The i-th of the automatic ticks. range * i overflows when range is above
+	// Double.MAX_VALUE / 5 (an axis fitted to -1.7e308 and 1), and every tick but the
+	// first was then labelled "Infinity": range / 5 * i is used in that case only, so that
+	// ordinary ticks keep the exact value they always had
+	private static double tickValue(ChartAxis axis, double range, int i) {
+		final double scaled = range * i;
+		if (Double.isInfinite(scaled))
+			return axis.getMin() + range / TICK_INTERVALS * i;
+		return axis.getMin() + scaled / TICK_INTERVALS;
+	}
+
 	public static List<Tick> horizontalValueTicks(ChartAxis axis) {
 		final List<Tick> result = new ArrayList<>();
 		final double range = axis.getMax() - axis.getMin();
 		for (int i = 0; i <= TICK_INTERVALS; i++) {
-			final double value = axis.getMin() + (i * range / TICK_INTERVALS);
+			final double value = tickValue(axis, range, i);
 			result.add(new Tick(value, (double) i / TICK_INTERVALS, String.format(Locale.ROOT, "%.0f", value)));
 		}
 		return result;
