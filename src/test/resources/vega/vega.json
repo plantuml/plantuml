@@ -5781,6 +5781,76 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "nonreg/group3022/reversed_message_note_over_two_participants.puml",
+      "folder": "nonreg/group3022",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "nonreg/group3031/empty_h_axis_horizontal.puml",
+      "folder": "nonreg/group3031",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3031/empty_v2_axis.puml",
+      "folder": "nonreg/group3031",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3031/empty_v_axis_line.puml",
+      "folder": "nonreg/group3031",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3031/empty_v_axis_spacing.puml",
+      "folder": "nonreg/group3031",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3031/reversed_h_axis_horizontal.puml",
+      "folder": "nonreg/group3031",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3031/reversed_h_axis_pairs.puml",
+      "folder": "nonreg/group3031",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3031/reversed_v_axis.puml",
+      "folder": "nonreg/group3031",
+      "status": "pass",
+      "description": "(Error)",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "nonreg/group3031/valid_h_axis_horizontal.puml",
+      "folder": "nonreg/group3031",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
+      "file": "nonreg/group3031/valid_v_axis.puml",
+      "folder": "nonreg/group3031",
+      "status": "pass",
+      "description": "Chart Diagram",
+      "diagram_class": "ChartDiagram"
+    },
+    {
       "file": "nonreg/json/style-highlight-with-style-tags.puml",
       "folder": "nonreg/json",
       "status": "pass",
@@ -7951,6 +8021,34 @@
       "status": "pass",
       "description": "PREPROC",
       "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "python/legacy/assignment_without_dollar_and_legacy_call.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "PSystemErrorV2"
+    },
+    {
+      "file": "python/legacy/assignment_without_dollar_beside_python.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "python/legacy/assignment_without_dollar_stays_legacy.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "python/legacy/assignment_without_dollar_warning.puml",
+      "folder": "python/legacy",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
     },
     {
       "file": "python/legacy/define_untouched.puml",
@@ -10489,8 +10587,8 @@
     }
   ],
   "summary": {
-    "total": 1461,
-    "passed": 1456,
+    "total": 1475,
+    "passed": 1470,
     "failed": 0,
     "skipped": 5
   }

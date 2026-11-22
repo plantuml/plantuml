@@ -1,6 +1,6 @@
 ---
 output: svg
-expected-description: (2 series)
+expected-description: Chart Diagram
 ---
 @startchart
 h-axis [A, B, C, D]

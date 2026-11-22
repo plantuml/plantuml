@@ -1,6 +1,6 @@
 ---
 output: svg
-expected-description: (1 series)
+expected-description: Chart Diagram
 ---
 @startchart
 orientation horizontal
