@@ -108,7 +108,7 @@ public final class ChartTicks {
 			}
 <span class="fc" id="L109">		} else {</span>
 <span class="fc bfc" id="L110" title="All 2 branches covered.">			for (int i = 0; i &lt;= TICK_INTERVALS; i++) {</span>
-<span class="fc" id="L111">				final double value = axis.getMin() + range * i / TICK_INTERVALS;</span>
+<span class="fc" id="L111">				final double value = tickValue(axis, range, i);</span>
 <span class="fc" id="L112">				result.add(new Tick(value, (double) i / TICK_INTERVALS, formatValue(value)));</span>
 			}
 		}
@@ -119,14 +119,25 @@ public final class ChartTicks {
 	 * The ticks of the value axis of a horizontal chart, drawn along the bottom: always
 	 * the five automatic intervals, written as integers.
 	 */
+	// The i-th of the automatic ticks. range * i overflows when range is above
+	// Double.MAX_VALUE / 5 (an axis fitted to -1.7e308 and 1), and every tick but the
+	// first was then labelled &quot;Infinity&quot;: range / 5 * i is used in that case only, so that
+	// ordinary ticks keep the exact value they always had
+	private static double tickValue(ChartAxis axis, double range, int i) {
+<span class="fc" id="L127">		final double scaled = range * i;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (Double.isInfinite(scaled))</span>
+<span class="fc" id="L129">			return axis.getMin() + range / TICK_INTERVALS * i;</span>
+<span class="fc" id="L130">		return axis.getMin() + scaled / TICK_INTERVALS;</span>
+	}
+
 	public static List&lt;Tick&gt; horizontalValueTicks(ChartAxis axis) {
-<span class="fc" id="L123">		final List&lt;Tick&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L124">		final double range = axis.getMax() - axis.getMin();</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">		for (int i = 0; i &lt;= TICK_INTERVALS; i++) {</span>
-<span class="fc" id="L126">			final double value = axis.getMin() + (i * range / TICK_INTERVALS);</span>
-<span class="fc" id="L127">			result.add(new Tick(value, (double) i / TICK_INTERVALS, String.format(Locale.ROOT, &quot;%.0f&quot;, value)));</span>
+<span class="fc" id="L134">		final List&lt;Tick&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L135">		final double range = axis.getMax() - axis.getMin();</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (int i = 0; i &lt;= TICK_INTERVALS; i++) {</span>
+<span class="fc" id="L137">			final double value = tickValue(axis, range, i);</span>
+<span class="fc" id="L138">			result.add(new Tick(value, (double) i / TICK_INTERVALS, String.format(Locale.ROOT, &quot;%.0f&quot;, value)));</span>
 		}
-<span class="fc" id="L129">		return result;</span>
+<span class="fc" id="L140">		return result;</span>
 	}
 
 	/**
@@ -135,21 +146,21 @@ public final class ChartTicks {
 	 * They are placed by their value, as the points of the series.
 	 */
 	public static List&lt;Tick&gt; numericTicks(ChartAxis axis, Integer spacing) {
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (axis == null)</span>
-<span class="nc" id="L139">			return Collections.emptyList();</span>
-<span class="fc" id="L140">		final List&lt;Tick&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L141">		final double range = axis.getMax() - axis.getMin();</span>
-<span class="pc bpc" id="L142" title="3 of 4 branches missed.">		final double tickInterval = spacing != null &amp;&amp; spacing &gt; 0 ? spacing : range / 10.0;</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (axis == null)</span>
+<span class="nc" id="L150">			return Collections.emptyList();</span>
+<span class="fc" id="L151">		final List&lt;Tick&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L152">		final double range = axis.getMax() - axis.getMin();</span>
+<span class="pc bpc" id="L153" title="3 of 4 branches missed.">		final double tickInterval = spacing != null &amp;&amp; spacing &gt; 0 ? spacing : range / 10.0;</span>
 
 		// Find the starting tick value (round down to nearest multiple of tickInterval)
-<span class="fc" id="L145">		final double startValue = Math.floor(axis.getMin() / tickInterval) * tickInterval;</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">		for (double value = startValue; value &lt;= axis.getMax() + tickInterval * 0.01; value += tickInterval) {</span>
+<span class="fc" id="L156">		final double startValue = Math.floor(axis.getMin() / tickInterval) * tickInterval;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		for (double value = startValue; value &lt;= axis.getMax() + tickInterval * 0.01; value += tickInterval) {</span>
 			// Skip if outside axis range
-<span class="pc bpc" id="L148" title="1 of 4 branches missed.">			if (value &lt; axis.getMin() - tickInterval * 0.01 || value &gt; axis.getMax() + tickInterval * 0.01)</span>
-<span class="nc" id="L149">				continue;</span>
-<span class="fc" id="L150">			result.add(new Tick(value, (value - axis.getMin()) / range, formatNumericValue(value)));</span>
+<span class="pc bpc" id="L159" title="1 of 4 branches missed.">			if (value &lt; axis.getMin() - tickInterval * 0.01 || value &gt; axis.getMax() + tickInterval * 0.01)</span>
+<span class="nc" id="L160">				continue;</span>
+<span class="fc" id="L161">			result.add(new Tick(value, (value - axis.getMin()) / range, formatNumericValue(value)));</span>
 		}
-<span class="fc" id="L152">		return result;</span>
+<span class="fc" id="L163">		return result;</span>
 	}
 
 	/**
@@ -157,20 +168,20 @@ public final class ChartTicks {
 	 * automatic range gives ticks like 0, 0.8, 1.6 ...
 	 */
 	public static String formatValue(double value) {
-<span class="pc bpc" id="L160" title="1 of 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
-<span class="nc" id="L161">			return String.format(Locale.ROOT, &quot;%.2e&quot;, value);</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (value == (long) value)</span>
-<span class="fc" id="L163">			return String.format(Locale.ROOT, &quot;%d&quot;, (long) value);</span>
-<span class="fc" id="L164">		return String.format(Locale.ROOT, &quot;%.2f&quot;, value).replaceAll(&quot;0+$&quot;, &quot;&quot;);</span>
+<span class="fc bfc" id="L171" title="All 4 branches covered.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
+<span class="fc" id="L172">			return String.format(Locale.ROOT, &quot;%.2e&quot;, value);</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (value == (long) value)</span>
+<span class="fc" id="L174">			return String.format(Locale.ROOT, &quot;%d&quot;, (long) value);</span>
+<span class="fc" id="L175">		return String.format(Locale.ROOT, &quot;%.2f&quot;, value).replaceAll(&quot;0+$&quot;, &quot;&quot;);</span>
 	}
 
 	// A value on a numeric h-axis: one decimal at most
 	private static String formatNumericValue(double value) {
-<span class="pc bpc" id="L169" title="1 of 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
-<span class="nc" id="L170">			return String.format(Locale.ROOT, &quot;%.2e&quot;, value);</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">		if (value == (long) value)</span>
-<span class="fc" id="L172">			return String.format(Locale.ROOT, &quot;%d&quot;, (long) value);</span>
-<span class="fc" id="L173">		return String.format(Locale.ROOT, &quot;%.1f&quot;, value);</span>
+<span class="pc bpc" id="L180" title="1 of 4 branches missed.">		if (Math.abs(value) &lt; 0.01 &amp;&amp; value != 0)</span>
+<span class="nc" id="L181">			return String.format(Locale.ROOT, &quot;%.2e&quot;, value);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (value == (long) value)</span>
+<span class="fc" id="L183">			return String.format(Locale.ROOT, &quot;%d&quot;, (long) value);</span>
+<span class="fc" id="L184">		return String.format(Locale.ROOT, &quot;%.1f&quot;, value);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

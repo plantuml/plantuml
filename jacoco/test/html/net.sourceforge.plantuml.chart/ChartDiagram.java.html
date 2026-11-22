@@ -302,8 +302,8 @@ public class ChartDiagram extends TitledDiagram {
 <span class="fc" id="L302">						max = Math.max(max, y);</span>
 					}
 <span class="fc" id="L304">		}</span>
-<span class="pc bpc" id="L305" title="1 of 2 branches missed.">		if (min &gt; max)</span>
-<span class="nc" id="L306">			return axis;</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">		if (min &gt; max)</span>
+<span class="fc" id="L306">			return axis;</span>
 
 		// Annotations are placed against the primary value axis. An arrow is drawn
 		// downwards from its text only when it has about 55 px (text + 40) above the
@@ -534,60 +534,63 @@ public class ChartDiagram extends TitledDiagram {
 	private static CommandExecutionResult checkRange(String axis, Double min, Double max) {
 <span class="pc bpc" id="L535" title="1 of 6 branches missed.">		if (min != null &amp;&amp; max != null &amp;&amp; min &gt;= max)</span>
 <span class="fc" id="L536">			return CommandExecutionResult.error(axis + &quot; range must go from a lower to a higher value&quot;);</span>
-<span class="fc" id="L537">		return null;</span>
+		// -1.7e308 --&gt; 1.7e308: each bound is a double, the distance between them is not
+<span class="pc bpc" id="L538" title="2 of 6 branches missed.">		if (min != null &amp;&amp; max != null &amp;&amp; Double.isInfinite(max - min))</span>
+<span class="nc" id="L539">			return CommandExecutionResult.error(axis + &quot; range is too large to be drawn&quot;);</span>
+<span class="fc" id="L540">		return null;</span>
 	}
 
 	public CommandExecutionResult setRadialAxis(Double min, Double max, Map&lt;Double, String&gt; customTicks,
 			Double tickSpacing, Boolean circleGrid) {
-<span class="fc" id="L542">		final CommandExecutionResult error = checkKind(&quot;r-axis&quot;, Kind.RADAR);</span>
-<span class="pc bpc" id="L543" title="1 of 2 branches missed.">		if (error != null)</span>
-<span class="nc" id="L544">			return error;</span>
-<span class="fc" id="L545">		final CommandExecutionResult range = checkRange(&quot;r-axis&quot;, min, max);</span>
-<span class="pc bpc" id="L546" title="1 of 2 branches missed.">		if (range != null)</span>
-<span class="nc" id="L547">			return range;</span>
-<span class="fc bfc" id="L548" title="All 2 branches covered.">		if (min != null)</span>
-<span class="fc" id="L549">			radialAxis.setMin(min);</span>
-<span class="fc bfc" id="L550" title="All 2 branches covered.">		if (max != null)</span>
-<span class="fc" id="L551">			radialAxis.setMax(max);</span>
-<span class="fc bfc" id="L552" title="All 2 branches covered.">		if (customTicks != null)</span>
-<span class="fc" id="L553">			radialAxis.setCustomTicks(customTicks);</span>
-<span class="fc bfc" id="L554" title="All 2 branches covered.">		if (tickSpacing != null)</span>
-<span class="fc" id="L555">			radialAxis.setTickSpacing(tickSpacing);</span>
-<span class="fc bfc" id="L556" title="All 2 branches covered.">		if (circleGrid != null)</span>
-<span class="fc" id="L557">			radarCircleGrid = circleGrid;</span>
-<span class="fc" id="L558">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L545">		final CommandExecutionResult error = checkKind(&quot;r-axis&quot;, Kind.RADAR);</span>
+<span class="pc bpc" id="L546" title="1 of 2 branches missed.">		if (error != null)</span>
+<span class="nc" id="L547">			return error;</span>
+<span class="fc" id="L548">		final CommandExecutionResult range = checkRange(&quot;r-axis&quot;, min, max);</span>
+<span class="pc bpc" id="L549" title="1 of 2 branches missed.">		if (range != null)</span>
+<span class="nc" id="L550">			return range;</span>
+<span class="fc bfc" id="L551" title="All 2 branches covered.">		if (min != null)</span>
+<span class="fc" id="L552">			radialAxis.setMin(min);</span>
+<span class="fc bfc" id="L553" title="All 2 branches covered.">		if (max != null)</span>
+<span class="fc" id="L554">			radialAxis.setMax(max);</span>
+<span class="fc bfc" id="L555" title="All 2 branches covered.">		if (customTicks != null)</span>
+<span class="fc" id="L556">			radialAxis.setCustomTicks(customTicks);</span>
+<span class="fc bfc" id="L557" title="All 2 branches covered.">		if (tickSpacing != null)</span>
+<span class="fc" id="L558">			radialAxis.setTickSpacing(tickSpacing);</span>
+<span class="fc bfc" id="L559" title="All 2 branches covered.">		if (circleGrid != null)</span>
+<span class="fc" id="L560">			radarCircleGrid = circleGrid;</span>
+<span class="fc" id="L561">		return CommandExecutionResult.ok();</span>
 	}
 
 	private CommandExecutionResult addPolarSeries(ChartSeries s) {
-<span class="fc bfc" id="L562" title="All 2 branches covered.">		if (s.getType() == ChartSeries.SeriesType.PIE) {</span>
-<span class="fc bfc" id="L563" title="All 2 branches covered.">			if (series.isEmpty() == false)</span>
-<span class="fc" id="L564">				return CommandExecutionResult.error(&quot;Only one pie is allowed in a chart&quot;);</span>
-<span class="fc" id="L565">			final String error = checkPieValues(s);</span>
-<span class="fc bfc" id="L566" title="All 2 branches covered.">			if (error != null)</span>
-<span class="fc" id="L567">				return CommandExecutionResult.error(error);</span>
-<span class="fc" id="L568">		} else {</span>
-<span class="fc" id="L569">			final CommandExecutionResult unknown = checkKeys(s, angularLabels);</span>
-<span class="fc bfc" id="L570" title="All 2 branches covered.">			if (unknown != null)</span>
-<span class="fc" id="L571">				return unknown;</span>
+<span class="fc bfc" id="L565" title="All 2 branches covered.">		if (s.getType() == ChartSeries.SeriesType.PIE) {</span>
+<span class="fc bfc" id="L566" title="All 2 branches covered.">			if (series.isEmpty() == false)</span>
+<span class="fc" id="L567">				return CommandExecutionResult.error(&quot;Only one pie is allowed in a chart&quot;);</span>
+<span class="fc" id="L568">			final String error = checkPieValues(s);</span>
+<span class="fc bfc" id="L569" title="All 2 branches covered.">			if (error != null)</span>
+<span class="fc" id="L570">				return CommandExecutionResult.error(error);</span>
+<span class="fc" id="L571">		} else {</span>
+<span class="fc" id="L572">			final CommandExecutionResult unknown = checkKeys(s, angularLabels);</span>
+<span class="fc bfc" id="L573" title="All 2 branches covered.">			if (unknown != null)</span>
+<span class="fc" id="L574">				return unknown;</span>
 		}
-<span class="fc" id="L573">		series.add(s);</span>
-<span class="fc" id="L574">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L576">		series.add(s);</span>
+<span class="fc" id="L577">		return CommandExecutionResult.ok();</span>
 	}
 
 	// The values of a pie cannot be negative, and one at least must be greater than 0.
 	// Returns an error message, or null
 	private static String checkPieValues(ChartSeries s) {
-<span class="fc" id="L580">		boolean positive = false;</span>
-<span class="fc bfc" id="L581" title="All 2 branches covered.">		for (Double value : s.getValues())</span>
-<span class="fc bfc" id="L582" title="All 2 branches covered.">			if (value != null) {</span>
-<span class="fc bfc" id="L583" title="All 2 branches covered.">				if (value &lt; 0)</span>
-<span class="fc" id="L584">					return &quot;A pie cannot have a negative value: &quot; + value;</span>
-<span class="fc bfc" id="L585" title="All 2 branches covered.">				if (value &gt; 0)</span>
-<span class="fc" id="L586">					positive = true;</span>
+<span class="fc" id="L583">		boolean positive = false;</span>
+<span class="fc bfc" id="L584" title="All 2 branches covered.">		for (Double value : s.getValues())</span>
+<span class="fc bfc" id="L585" title="All 2 branches covered.">			if (value != null) {</span>
+<span class="fc bfc" id="L586" title="All 2 branches covered.">				if (value &lt; 0)</span>
+<span class="fc" id="L587">					return &quot;A pie cannot have a negative value: &quot; + value;</span>
+<span class="fc bfc" id="L588" title="All 2 branches covered.">				if (value &gt; 0)</span>
+<span class="fc" id="L589">					positive = true;</span>
 			}
-<span class="fc bfc" id="L588" title="All 2 branches covered.">		if (positive == false)</span>
-<span class="fc" id="L589">			return &quot;A pie needs at least one value greater than 0&quot;;</span>
-<span class="fc" id="L590">		return null;</span>
+<span class="fc bfc" id="L591" title="All 2 branches covered.">		if (positive == false)</span>
+<span class="fc" id="L592">			return &quot;A pie needs at least one value greater than 0&quot;;</span>
+<span class="fc" id="L593">		return null;</span>
 	}
 
 	/**
@@ -596,20 +599,20 @@ public class ChartDiagram extends TitledDiagram {
 	 * line is read (see {@link #checkFinalError}).
 	 */
 	public CommandExecutionResult openSeries(ChartSeries s) {
-<span class="fc bfc" id="L599" title="All 2 branches covered.">		final Kind seriesKind = s.getType() == ChartSeries.SeriesType.PIE ? Kind.PIE</span>
-<span class="fc bfc" id="L600" title="All 2 branches covered.">				: s.getType() == ChartSeries.SeriesType.RADAR ? Kind.RADAR : Kind.CARTESIAN;</span>
-<span class="fc" id="L601">		final CommandExecutionResult error = checkKind(s.getType().name().toLowerCase(Locale.ROOT), seriesKind);</span>
-<span class="pc bpc" id="L602" title="1 of 2 branches missed.">		if (error != null)</span>
-<span class="nc" id="L603">			return error;</span>
-<span class="pc bpc" id="L604" title="1 of 4 branches missed.">		if (s.getType() == ChartSeries.SeriesType.PIE &amp;&amp; series.isEmpty() == false)</span>
-<span class="nc" id="L605">			return CommandExecutionResult.error(&quot;Only one pie is allowed in a chart&quot;);</span>
+<span class="fc bfc" id="L602" title="All 2 branches covered.">		final Kind seriesKind = s.getType() == ChartSeries.SeriesType.PIE ? Kind.PIE</span>
+<span class="fc bfc" id="L603" title="All 2 branches covered.">				: s.getType() == ChartSeries.SeriesType.RADAR ? Kind.RADAR : Kind.CARTESIAN;</span>
+<span class="fc" id="L604">		final CommandExecutionResult error = checkKind(s.getType().name().toLowerCase(Locale.ROOT), seriesKind);</span>
+<span class="pc bpc" id="L605" title="1 of 2 branches missed.">		if (error != null)</span>
+<span class="nc" id="L606">			return error;</span>
+<span class="pc bpc" id="L607" title="1 of 4 branches missed.">		if (s.getType() == ChartSeries.SeriesType.PIE &amp;&amp; series.isEmpty() == false)</span>
+<span class="nc" id="L608">			return CommandExecutionResult.error(&quot;Only one pie is allowed in a chart&quot;);</span>
 		// A list gives values, which cannot be drawn with coordinate pairs
-<span class="fc bfc" id="L607" title="All 4 branches covered.">		if (seriesKind == Kind.CARTESIAN &amp;&amp; hasCoordinatePairs())</span>
-<span class="fc" id="L608">			return CommandExecutionResult.error(</span>
+<span class="fc bfc" id="L610" title="All 4 branches covered.">		if (seriesKind == Kind.CARTESIAN &amp;&amp; hasCoordinatePairs())</span>
+<span class="fc" id="L611">			return CommandExecutionResult.error(</span>
 					&quot;All series must use the same data format (either all coordinate pairs or all index-based)&quot;);
-<span class="fc" id="L610">		series.add(s);</span>
-<span class="fc" id="L611">		openSeries = s;</span>
-<span class="fc" id="L612">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L613">		series.add(s);</span>
+<span class="fc" id="L614">		openSeries = s;</span>
+<span class="fc" id="L615">		return CommandExecutionResult.ok();</span>
 	}
 
 	/**
@@ -617,311 +620,361 @@ public class ChartDiagram extends TitledDiagram {
 	 * written without data before it.
 	 */
 	public CommandExecutionResult addItem(String key, Double value, HColor color) {
-<span class="fc bfc" id="L620" title="All 2 branches covered.">		if (openSeries == null)</span>
-<span class="fc" id="L621">			return CommandExecutionResult</span>
-<span class="fc" id="L622">					.error(&quot;A list item must follow a series written without data, as in: pie \&quot;Air\&quot;&quot;);</span>
-<span class="fc bfc" id="L623" title="All 6 branches covered.">		if (openSeries.getValues().isEmpty() == false &amp;&amp; openSeries.hasKeys() != (key != null))</span>
-<span class="fc" id="L624">			return CommandExecutionResult.error(&quot;Either every value has a key (key: value), or none has&quot;);</span>
-<span class="fc bfc" id="L625" title="All 6 branches covered.">		if (openSeries.getType() == ChartSeries.SeriesType.PIE &amp;&amp; value != null &amp;&amp; value &lt; 0)</span>
-<span class="fc" id="L626">			return CommandExecutionResult.error(&quot;A pie cannot have a negative value: &quot; + value);</span>
-<span class="fc bfc" id="L627" title="All 6 branches covered.">		if (openSeries.getType() == ChartSeries.SeriesType.RADAR &amp;&amp; key != null &amp;&amp; angularLabels.isEmpty() == false</span>
-<span class="fc bfc" id="L628" title="All 2 branches covered.">				&amp;&amp; angularLabels.contains(key) == false)</span>
-<span class="fc" id="L629">			return CommandExecutionResult.error(&quot;\&quot;&quot; + key + &quot;\&quot; is not in a-axis&quot;);</span>
-<span class="fc bfc" id="L630" title="All 2 branches covered.">		if (openSeries.getType() != ChartSeries.SeriesType.PIE</span>
-<span class="fc bfc" id="L631" title="All 2 branches covered.">				&amp;&amp; openSeries.getType() != ChartSeries.SeriesType.RADAR) {</span>
-<span class="fc bfc" id="L632" title="All 2 branches covered.">			if (color != null)</span>
-<span class="fc" id="L633">				return CommandExecutionResult</span>
-<span class="fc" id="L634">						.error(&quot;A value of a &quot; + openSeries.getType().name().toLowerCase(Locale.ROOT)</span>
+<span class="fc bfc" id="L623" title="All 2 branches covered.">		if (openSeries == null)</span>
+<span class="fc" id="L624">			return CommandExecutionResult</span>
+<span class="fc" id="L625">					.error(&quot;A list item must follow a series written without data, as in: pie \&quot;Air\&quot;&quot;);</span>
+<span class="fc bfc" id="L626" title="All 6 branches covered.">		if (openSeries.getValues().isEmpty() == false &amp;&amp; openSeries.hasKeys() != (key != null))</span>
+<span class="fc" id="L627">			return CommandExecutionResult.error(&quot;Either every value has a key (key: value), or none has&quot;);</span>
+<span class="fc bfc" id="L628" title="All 6 branches covered.">		if (openSeries.getType() == ChartSeries.SeriesType.PIE &amp;&amp; value != null &amp;&amp; value &lt; 0)</span>
+<span class="fc" id="L629">			return CommandExecutionResult.error(&quot;A pie cannot have a negative value: &quot; + value);</span>
+<span class="fc bfc" id="L630" title="All 6 branches covered.">		if (openSeries.getType() == ChartSeries.SeriesType.RADAR &amp;&amp; key != null &amp;&amp; angularLabels.isEmpty() == false</span>
+<span class="fc bfc" id="L631" title="All 2 branches covered.">				&amp;&amp; angularLabels.contains(key) == false)</span>
+<span class="fc" id="L632">			return CommandExecutionResult.error(&quot;\&quot;&quot; + key + &quot;\&quot; is not in a-axis&quot;);</span>
+<span class="fc bfc" id="L633" title="All 2 branches covered.">		if (openSeries.getType() != ChartSeries.SeriesType.PIE</span>
+<span class="fc bfc" id="L634" title="All 2 branches covered.">				&amp;&amp; openSeries.getType() != ChartSeries.SeriesType.RADAR) {</span>
+<span class="fc bfc" id="L635" title="All 2 branches covered.">			if (color != null)</span>
+<span class="fc" id="L636">				return CommandExecutionResult</span>
+<span class="fc" id="L637">						.error(&quot;A value of a &quot; + openSeries.getType().name().toLowerCase(Locale.ROOT)</span>
 								+ &quot; cannot have a color of its own&quot;);
-<span class="fc bfc" id="L636" title="All 2 branches covered.">			if (key != null) {</span>
-<span class="fc" id="L637">				final CommandExecutionResult unknown = checkCartesianKey(key);</span>
-<span class="fc bfc" id="L638" title="All 2 branches covered.">				if (unknown != null)</span>
-<span class="fc" id="L639">					return unknown;</span>
+<span class="fc bfc" id="L639" title="All 2 branches covered.">			if (key != null) {</span>
+<span class="fc" id="L640">				final CommandExecutionResult unknown = checkCartesianKey(key);</span>
+<span class="fc bfc" id="L641" title="All 2 branches covered.">				if (unknown != null)</span>
+<span class="fc" id="L642">					return unknown;</span>
 			}
 		}
-<span class="fc" id="L642">		openSeries.addItem(key, value, color);</span>
-<span class="fc" id="L643">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L645">		openSeries.addItem(key, value, color);</span>
+<span class="fc" id="L646">		return CommandExecutionResult.ok();</span>
 	}
 
 	// A pie written as a list is checked once all its items are read
 	@Override
 	public String checkFinalError() {
-<span class="fc bfc" id="L649" title="All 2 branches covered.">		for (ChartSeries s : series)</span>
-<span class="fc bfc" id="L650" title="All 2 branches covered.">			if (s.getType() == ChartSeries.SeriesType.PIE) {</span>
-<span class="fc" id="L651">				final String error = checkPieValues(s);</span>
-<span class="fc bfc" id="L652" title="All 2 branches covered.">				if (error != null)</span>
-<span class="fc" id="L653">					return error;</span>
+<span class="fc bfc" id="L652" title="All 2 branches covered.">		for (ChartSeries s : series)</span>
+<span class="fc bfc" id="L653" title="All 2 branches covered.">			if (s.getType() == ChartSeries.SeriesType.PIE) {</span>
+<span class="fc" id="L654">				final String error = checkPieValues(s);</span>
+<span class="fc bfc" id="L655" title="All 2 branches covered.">				if (error != null)</span>
+<span class="fc" id="L656">					return error;</span>
 			}
-<span class="fc" id="L655">		return super.checkFinalError();</span>
+<span class="fc" id="L658">		final String range = checkAutomaticRanges();</span>
+<span class="fc bfc" id="L659" title="All 2 branches covered.">		if (range != null)</span>
+<span class="fc" id="L660">			return range;</span>
+<span class="fc" id="L661">		return super.checkFinalError();</span>
 	}
 
+	// An automatic range is fitted to the values (see ChartAxis.withNiceRange). Values
+	// near the limits of a double can make it infinite, a stack of 1e308 + 1e308 or a
+	// spread from -1.7e308 to 1.7e308, and every renderer would then place its values at
+	// NaN. Such a chart is refused here, once every value is known. A range written on
+	// the axis line is checked there (see checkRange), but a stack can still overflow
+	// against it: StackLayout gives the renderers an infinite top, which crashed
+	private String checkAutomaticRanges() {
+<span class="fc bfc" id="L671" title="All 2 branches covered.">		if (kind == Kind.PIE)</span>
+<span class="fc" id="L672">			return null;</span>
+<span class="fc bfc" id="L673" title="All 2 branches covered.">		if (kind == Kind.RADAR)</span>
+<span class="pc bpc" id="L674" title="1 of 2 branches missed.">			return resolveRadar().getAxis().isDrawable() ? null : TOO_LARGE;</span>
+<span class="pc bpc" id="L675" title="1 of 4 branches missed.">		if (hasFiniteStacks(false) == false || hasFiniteStacks(true) == false)</span>
+<span class="fc" id="L676">			return TOO_LARGE;</span>
+<span class="fc" id="L677">		final CartesianChart chart = resolveCartesian();</span>
+<span class="pc bpc" id="L678" title="1 of 4 branches missed.">		if (chart.getNumericAxis().isDrawable() == false || chart.getValueAxis().isDrawable() == false)</span>
+<span class="fc" id="L679">			return TOO_LARGE;</span>
+<span class="pc bpc" id="L680" title="1 of 4 branches missed.">		if (chart.getValueAxis2() != null &amp;&amp; chart.getValueAxis2().isDrawable() == false)</span>
+<span class="nc" id="L681">			return TOO_LARGE;</span>
+<span class="fc" id="L682">		return null;</span>
+	}
+
+	// Whether every stack drawn against the primary (or secondary) value axis has a finite
+	// top. Areas are always stacked, bars only in stacked mode, as in getValueAxis
+	private boolean hasFiniteStacks(boolean secondary) {
+<span class="fc" id="L688">		final List&lt;ChartSeries&gt; bars = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L689">		final List&lt;ChartSeries&gt; areas = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L690" title="All 2 branches covered.">		for (ChartSeries s : series)</span>
+<span class="fc bfc" id="L691" title="All 6 branches covered.">			if ((s.isUseSecondaryAxis() &amp;&amp; y2Axis != null) == secondary)</span>
+<span class="fc bfc" id="L692" title="All 2 branches covered.">				if (s.getType() == ChartSeries.SeriesType.BAR)</span>
+<span class="fc" id="L693">					bars.add(s);</span>
+<span class="fc bfc" id="L694" title="All 2 branches covered.">				else if (s.getType() == ChartSeries.SeriesType.AREA)</span>
+<span class="fc" id="L695">					areas.add(s);</span>
+<span class="fc bfc" id="L696" title="All 4 branches covered.">		if (stackMode == StackMode.STACKED &amp;&amp; hasFiniteTops(StackLayout.bars(bars), bars) == false)</span>
+<span class="fc" id="L697">			return false;</span>
+<span class="fc" id="L698">		return hasFiniteTops(StackLayout.areas(areas), areas);</span>
+	}
+
+	private static boolean hasFiniteTops(StackLayout stack, List&lt;ChartSeries&gt; series) {
+<span class="fc bfc" id="L702" title="All 2 branches covered.">		for (int s = 0; s &lt; series.size(); s++)</span>
+<span class="fc bfc" id="L703" title="All 2 branches covered.">			for (int i = 0; i &lt; series.get(s).getValues().size(); i++)</span>
+<span class="fc bfc" id="L704" title="All 4 branches covered.">				if (stack.has(s, i) &amp;&amp; Double.isInfinite(stack.getTop(s, i)))</span>
+<span class="fc" id="L705">					return false;</span>
+<span class="fc" id="L706">		return true;</span>
+	}
+
+	private static final String TOO_LARGE = &quot;The values are too large to be drawn&quot;;
+
 	public CommandExecutionResult setXAxisLabels(List&lt;String&gt; labels) {
-<span class="fc bfc" id="L659" title="All 6 branches covered.">		if (labels.isEmpty() == false &amp;&amp; xAxis.isAutoScale() &amp;&amp; hasCoordinatePairs())</span>
-<span class="fc" id="L660">			return CommandExecutionResult.error(</span>
+<span class="fc bfc" id="L712" title="All 6 branches covered.">		if (labels.isEmpty() == false &amp;&amp; xAxis.isAutoScale() &amp;&amp; hasCoordinatePairs())</span>
+<span class="fc" id="L713">			return CommandExecutionResult.error(</span>
 					&quot;Coordinate pair notation requires numeric h-axis (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5), not categorical labels&quot;);
 
-<span class="pc bpc" id="L663" title="1 of 2 branches missed.">		if (orientation == Orientation.VERTICAL)</span>
-<span class="fc bfc" id="L664" title="All 2 branches covered.">			for (ChartSeries s : series) {</span>
-<span class="fc" id="L665">				final CommandExecutionResult unknown = checkCartesianKeys(s, labels);</span>
-<span class="fc bfc" id="L666" title="All 2 branches covered.">				if (unknown != null)</span>
-<span class="fc" id="L667">					return unknown;</span>
-<span class="fc" id="L668">			}</span>
+<span class="pc bpc" id="L716" title="1 of 2 branches missed.">		if (orientation == Orientation.VERTICAL)</span>
+<span class="fc bfc" id="L717" title="All 2 branches covered.">			for (ChartSeries s : series) {</span>
+<span class="fc" id="L718">				final CommandExecutionResult unknown = checkCartesianKeys(s, labels);</span>
+<span class="fc bfc" id="L719" title="All 2 branches covered.">				if (unknown != null)</span>
+<span class="fc" id="L720">					return unknown;</span>
+<span class="fc" id="L721">			}</span>
 
-<span class="fc" id="L670">		this.xAxisLabels.clear();</span>
-<span class="fc" id="L671">		this.xAxisLabels.addAll(labels);</span>
-<span class="fc" id="L672">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L723">		this.xAxisLabels.clear();</span>
+<span class="fc" id="L724">		this.xAxisLabels.addAll(labels);</span>
+<span class="fc" id="L725">		return CommandExecutionResult.ok();</span>
 	}
 
 	public void setXAxisTitle(String title) {
-<span class="fc" id="L676">		this.xAxisTitle = title;</span>
-<span class="fc" id="L677">	}</span>
+<span class="fc" id="L729">		this.xAxisTitle = title;</span>
+<span class="fc" id="L730">	}</span>
 
 	public void setXAxisLabelPosition(ChartAxis.LabelPosition position) {
-<span class="fc" id="L680">		this.xAxisLabelPosition = position;</span>
-<span class="fc" id="L681">	}</span>
+<span class="fc" id="L733">		this.xAxisLabelPosition = position;</span>
+<span class="fc" id="L734">	}</span>
 
 	public ChartAxis.LabelPosition getXAxisLabelPosition() {
-<span class="nc" id="L684">		return xAxisLabelPosition;</span>
+<span class="nc" id="L737">		return xAxisLabelPosition;</span>
 	}
 
 	public void setXAxisTickSpacing(Integer spacing) {
-<span class="fc" id="L688">		this.xAxisTickSpacing = spacing;</span>
-<span class="fc" id="L689">	}</span>
+<span class="fc" id="L741">		this.xAxisTickSpacing = spacing;</span>
+<span class="fc" id="L742">	}</span>
 
 	public Integer getXAxisTickSpacing() {
-<span class="nc" id="L692">		return xAxisTickSpacing;</span>
+<span class="nc" id="L745">		return xAxisTickSpacing;</span>
 	}
 
 	public CommandExecutionResult setXAxis(String title, Double min, Double max) {
-<span class="fc" id="L696">		final CommandExecutionResult range = checkRange(&quot;h-axis&quot;, min, max);</span>
-<span class="fc bfc" id="L697" title="All 2 branches covered.">		if (range != null)</span>
-<span class="fc" id="L698">			return range;</span>
+<span class="fc" id="L749">		final CommandExecutionResult range = checkRange(&quot;h-axis&quot;, min, max);</span>
+<span class="fc bfc" id="L750" title="All 2 branches covered.">		if (range != null)</span>
+<span class="fc" id="L751">			return range;</span>
 		// Coordinate pairs given without a range have not been checked against one
-<span class="pc bpc" id="L700" title="4 of 8 branches missed.">		if ((min != null || max != null) &amp;&amp; xAxis.isAutoScale() &amp;&amp; hasCoordinatePairs())</span>
-<span class="fc" id="L701">			return CommandExecutionResult.error(&quot;h-axis range must be given before coordinate pair data&quot;);</span>
-<span class="pc bpc" id="L702" title="3 of 6 branches missed.">		if ((min != null || max != null) &amp;&amp; orientation == Orientation.VERTICAL)</span>
-<span class="fc bfc" id="L703" title="All 2 branches covered.">			for (ChartSeries s : series)</span>
-<span class="pc bpc" id="L704" title="1 of 4 branches missed.">				if (s.hasKeys() &amp;&amp; s.getType() != ChartSeries.SeriesType.PIE</span>
-<span class="pc bpc" id="L705" title="1 of 2 branches missed.">						&amp;&amp; s.getType() != ChartSeries.SeriesType.RADAR)</span>
-<span class="fc" id="L706">					return CommandExecutionResult</span>
-<span class="fc" id="L707">							.error(&quot;Keyed values (key: value) need h-axis categories, not an h-axis range&quot;);</span>
+<span class="pc bpc" id="L753" title="4 of 8 branches missed.">		if ((min != null || max != null) &amp;&amp; xAxis.isAutoScale() &amp;&amp; hasCoordinatePairs())</span>
+<span class="fc" id="L754">			return CommandExecutionResult.error(&quot;h-axis range must be given before coordinate pair data&quot;);</span>
+<span class="pc bpc" id="L755" title="3 of 6 branches missed.">		if ((min != null || max != null) &amp;&amp; orientation == Orientation.VERTICAL)</span>
+<span class="fc bfc" id="L756" title="All 2 branches covered.">			for (ChartSeries s : series)</span>
+<span class="pc bpc" id="L757" title="1 of 4 branches missed.">				if (s.hasKeys() &amp;&amp; s.getType() != ChartSeries.SeriesType.PIE</span>
+<span class="pc bpc" id="L758" title="1 of 2 branches missed.">						&amp;&amp; s.getType() != ChartSeries.SeriesType.RADAR)</span>
+<span class="fc" id="L759">					return CommandExecutionResult</span>
+<span class="fc" id="L760">							.error(&quot;Keyed values (key: value) need h-axis categories, not an h-axis range&quot;);</span>
 
-<span class="fc bfc" id="L709" title="All 2 branches covered.">		if (title != null)</span>
-<span class="fc" id="L710">			xAxis.setTitle(title);</span>
-<span class="pc bpc" id="L711" title="1 of 2 branches missed.">		if (min != null)</span>
-<span class="fc" id="L712">			xAxis.setMin(min);</span>
-<span class="pc bpc" id="L713" title="1 of 2 branches missed.">		if (max != null)</span>
-<span class="fc" id="L714">			xAxis.setMax(max);</span>
-<span class="fc" id="L715">		return CommandExecutionResult.ok();</span>
+<span class="fc bfc" id="L762" title="All 2 branches covered.">		if (title != null)</span>
+<span class="fc" id="L763">			xAxis.setTitle(title);</span>
+<span class="pc bpc" id="L764" title="1 of 2 branches missed.">		if (min != null)</span>
+<span class="fc" id="L765">			xAxis.setMin(min);</span>
+<span class="pc bpc" id="L766" title="1 of 2 branches missed.">		if (max != null)</span>
+<span class="fc" id="L767">			xAxis.setMax(max);</span>
+<span class="fc" id="L768">		return CommandExecutionResult.ok();</span>
 	}
 
 	public ChartAxis getXAxis() {
-<span class="nc" id="L719">		return xAxis;</span>
+<span class="nc" id="L772">		return xAxis;</span>
 	}
 
 	public CommandExecutionResult setYAxis(String title, Double min, Double max) {
-<span class="fc" id="L723">		final CommandExecutionResult range = checkRange(&quot;v-axis&quot;, min, max);</span>
-<span class="fc bfc" id="L724" title="All 2 branches covered.">		if (range != null)</span>
-<span class="fc" id="L725">			return range;</span>
-<span class="fc bfc" id="L726" title="All 2 branches covered.">		if (title != null)</span>
-<span class="fc" id="L727">			yAxis.setTitle(title);</span>
-<span class="fc bfc" id="L728" title="All 2 branches covered.">		if (min != null)</span>
-<span class="fc" id="L729">			yAxis.setMin(min);</span>
-<span class="fc bfc" id="L730" title="All 2 branches covered.">		if (max != null)</span>
-<span class="fc" id="L731">			yAxis.setMax(max);</span>
-<span class="fc" id="L732">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L776">		final CommandExecutionResult range = checkRange(&quot;v-axis&quot;, min, max);</span>
+<span class="fc bfc" id="L777" title="All 2 branches covered.">		if (range != null)</span>
+<span class="fc" id="L778">			return range;</span>
+<span class="fc bfc" id="L779" title="All 2 branches covered.">		if (title != null)</span>
+<span class="fc" id="L780">			yAxis.setTitle(title);</span>
+<span class="fc bfc" id="L781" title="All 2 branches covered.">		if (min != null)</span>
+<span class="fc" id="L782">			yAxis.setMin(min);</span>
+<span class="fc bfc" id="L783" title="All 2 branches covered.">		if (max != null)</span>
+<span class="fc" id="L784">			yAxis.setMax(max);</span>
+<span class="fc" id="L785">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setYAxisLabels(List&lt;String&gt; labels) {
-<span class="pc bpc" id="L736" title="1 of 2 branches missed.">		if (orientation == Orientation.HORIZONTAL)</span>
-<span class="pc bpc" id="L737" title="1 of 2 branches missed.">			for (ChartSeries s : series) {</span>
-<span class="nc" id="L738">				final CommandExecutionResult unknown = checkCartesianKeys(s, labels);</span>
-<span class="nc bnc" id="L739" title="All 2 branches missed.">				if (unknown != null)</span>
-<span class="nc" id="L740">					return unknown;</span>
-<span class="nc" id="L741">			}</span>
-<span class="fc" id="L742">		this.yAxisLabels.clear();</span>
-<span class="fc" id="L743">		this.yAxisLabels.addAll(labels);</span>
-<span class="fc" id="L744">		return CommandExecutionResult.ok();</span>
+<span class="pc bpc" id="L789" title="1 of 2 branches missed.">		if (orientation == Orientation.HORIZONTAL)</span>
+<span class="pc bpc" id="L790" title="1 of 2 branches missed.">			for (ChartSeries s : series) {</span>
+<span class="nc" id="L791">				final CommandExecutionResult unknown = checkCartesianKeys(s, labels);</span>
+<span class="nc bnc" id="L792" title="All 2 branches missed.">				if (unknown != null)</span>
+<span class="nc" id="L793">					return unknown;</span>
+<span class="nc" id="L794">			}</span>
+<span class="fc" id="L795">		this.yAxisLabels.clear();</span>
+<span class="fc" id="L796">		this.yAxisLabels.addAll(labels);</span>
+<span class="fc" id="L797">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setY2Axis(String title, Double min, Double max) {
-<span class="fc" id="L748">		final CommandExecutionResult range = checkRange(&quot;v2-axis&quot;, min, max);</span>
-<span class="fc bfc" id="L749" title="All 2 branches covered.">		if (range != null)</span>
-<span class="fc" id="L750">			return range;</span>
-<span class="pc bpc" id="L751" title="1 of 2 branches missed.">		if (y2Axis == null)</span>
-<span class="fc" id="L752">			y2Axis = new ChartAxis();</span>
-<span class="fc bfc" id="L753" title="All 2 branches covered.">		if (title != null)</span>
-<span class="fc" id="L754">			y2Axis.setTitle(title);</span>
-<span class="fc bfc" id="L755" title="All 2 branches covered.">		if (min != null)</span>
-<span class="fc" id="L756">			y2Axis.setMin(min);</span>
-<span class="fc bfc" id="L757" title="All 2 branches covered.">		if (max != null)</span>
-<span class="fc" id="L758">			y2Axis.setMax(max);</span>
-<span class="fc" id="L759">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L801">		final CommandExecutionResult range = checkRange(&quot;v2-axis&quot;, min, max);</span>
+<span class="fc bfc" id="L802" title="All 2 branches covered.">		if (range != null)</span>
+<span class="fc" id="L803">			return range;</span>
+<span class="pc bpc" id="L804" title="1 of 2 branches missed.">		if (y2Axis == null)</span>
+<span class="fc" id="L805">			y2Axis = new ChartAxis();</span>
+<span class="fc bfc" id="L806" title="All 2 branches covered.">		if (title != null)</span>
+<span class="fc" id="L807">			y2Axis.setTitle(title);</span>
+<span class="fc bfc" id="L808" title="All 2 branches covered.">		if (min != null)</span>
+<span class="fc" id="L809">			y2Axis.setMin(min);</span>
+<span class="fc bfc" id="L810" title="All 2 branches covered.">		if (max != null)</span>
+<span class="fc" id="L811">			y2Axis.setMax(max);</span>
+<span class="fc" id="L812">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult addSeries(ChartSeries series) {
-<span class="fc" id="L763">		openSeries = null;</span>
-<span class="fc bfc" id="L764" title="All 2 branches covered.">		final boolean polar = series.getType() == ChartSeries.SeriesType.PIE</span>
-<span class="fc bfc" id="L765" title="All 2 branches covered.">				|| series.getType() == ChartSeries.SeriesType.RADAR;</span>
-<span class="fc bfc" id="L766" title="All 2 branches covered.">		final Kind seriesKind = series.getType() == ChartSeries.SeriesType.PIE ? Kind.PIE</span>
-<span class="fc bfc" id="L767" title="All 2 branches covered.">				: series.getType() == ChartSeries.SeriesType.RADAR ? Kind.RADAR : Kind.CARTESIAN;</span>
-<span class="fc" id="L768">		final CommandExecutionResult error = checkKind(series.getType().name().toLowerCase(Locale.ROOT), seriesKind);</span>
-<span class="fc bfc" id="L769" title="All 2 branches covered.">		if (error != null)</span>
-<span class="fc" id="L770">			return error;</span>
-<span class="fc bfc" id="L771" title="All 2 branches covered.">		if (polar)</span>
-<span class="fc" id="L772">			return addPolarSeries(series);</span>
+<span class="fc" id="L816">		openSeries = null;</span>
+<span class="fc bfc" id="L817" title="All 2 branches covered.">		final boolean polar = series.getType() == ChartSeries.SeriesType.PIE</span>
+<span class="fc bfc" id="L818" title="All 2 branches covered.">				|| series.getType() == ChartSeries.SeriesType.RADAR;</span>
+<span class="fc bfc" id="L819" title="All 2 branches covered.">		final Kind seriesKind = series.getType() == ChartSeries.SeriesType.PIE ? Kind.PIE</span>
+<span class="fc bfc" id="L820" title="All 2 branches covered.">				: series.getType() == ChartSeries.SeriesType.RADAR ? Kind.RADAR : Kind.CARTESIAN;</span>
+<span class="fc" id="L821">		final CommandExecutionResult error = checkKind(series.getType().name().toLowerCase(Locale.ROOT), seriesKind);</span>
+<span class="fc bfc" id="L822" title="All 2 branches covered.">		if (error != null)</span>
+<span class="fc" id="L823">			return error;</span>
+<span class="fc bfc" id="L824" title="All 2 branches covered.">		if (polar)</span>
+<span class="fc" id="L825">			return addPolarSeries(series);</span>
 
 		// Validation for coordinate-pair notation
-<span class="fc bfc" id="L775" title="All 2 branches covered.">		if (series.hasExplicitXValues()) {</span>
+<span class="fc bfc" id="L828" title="All 2 branches covered.">		if (series.hasExplicitXValues()) {</span>
 			// Coordinate pairs only allowed for line and scatter charts
-<span class="pc bpc" id="L777" title="1 of 4 branches missed.">			if (series.getType() != ChartSeries.SeriesType.LINE &amp;&amp; series.getType() != ChartSeries.SeriesType.SCATTER) {</span>
-<span class="nc" id="L778">				return CommandExecutionResult</span>
-<span class="nc" id="L779">						.error(&quot;Coordinate pair notation (x:y) is only supported for line and scatter charts&quot;);</span>
+<span class="pc bpc" id="L830" title="1 of 4 branches missed.">			if (series.getType() != ChartSeries.SeriesType.LINE &amp;&amp; series.getType() != ChartSeries.SeriesType.SCATTER) {</span>
+<span class="nc" id="L831">				return CommandExecutionResult</span>
+<span class="nc" id="L832">						.error(&quot;Coordinate pair notation (x:y) is only supported for line and scatter charts&quot;);</span>
 			}
 
 			// Coordinate pairs require numeric h-axis (not categorical labels)
-<span class="fc bfc" id="L783" title="All 2 branches covered.">			if (!xAxisLabels.isEmpty()) {</span>
-<span class="fc" id="L784">				return CommandExecutionResult.error(</span>
+<span class="fc bfc" id="L836" title="All 2 branches covered.">			if (!xAxisLabels.isEmpty()) {</span>
+<span class="fc" id="L837">				return CommandExecutionResult.error(</span>
 						&quot;Coordinate pair notation requires numeric h-axis (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5), not categorical labels&quot;);
 			}
 
 			// Without an h-axis range, the h-axis spans the x values (see getHAxis())
-<span class="pc bpc" id="L789" title="1 of 4 branches missed.">			if (xAxis.isAutoScale() == false &amp;&amp; xAxis.getMax() == xAxis.getMin()) {</span>
-<span class="nc" id="L790">				return CommandExecutionResult</span>
-<span class="nc" id="L791">						.error(&quot;Coordinate pair notation requires explicit h-axis range (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5)&quot;);</span>
+<span class="pc bpc" id="L842" title="1 of 4 branches missed.">			if (xAxis.isAutoScale() == false &amp;&amp; xAxis.getMax() == xAxis.getMin()) {</span>
+<span class="nc" id="L843">				return CommandExecutionResult</span>
+<span class="nc" id="L844">						.error(&quot;Coordinate pair notation requires explicit h-axis range (e.g., h-axis \&quot;x\&quot; -5 --&gt; 5)&quot;);</span>
 			}
 
 			// All series must use the same format
-<span class="fc bfc" id="L795" title="All 2 branches covered.">			if (!this.series.isEmpty()) {</span>
-<span class="fc" id="L796">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
-<span class="pc bpc" id="L797" title="1 of 2 branches missed.">				if (firstHasX != series.hasExplicitXValues()) {</span>
-<span class="nc" id="L798">					return CommandExecutionResult.error(</span>
+<span class="fc bfc" id="L848" title="All 2 branches covered.">			if (!this.series.isEmpty()) {</span>
+<span class="fc" id="L849">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
+<span class="pc bpc" id="L850" title="1 of 2 branches missed.">				if (firstHasX != series.hasExplicitXValues()) {</span>
+<span class="nc" id="L851">					return CommandExecutionResult.error(</span>
 							&quot;All series must use the same data format (either all coordinate pairs or all index-based)&quot;);
 				}
 			}
 
 			// Validate x-coordinates fall within axis range
-<span class="fc bfc" id="L804" title="All 2 branches covered.">			for (double x : series.getXValues()) {</span>
-<span class="pc bpc" id="L805" title="1 of 6 branches missed.">				if (xAxis.isAutoScale() == false &amp;&amp; (x &lt; xAxis.getMin() || x &gt; xAxis.getMax())) {</span>
-<span class="fc" id="L806">					return CommandExecutionResult.error(&quot;X-coordinate &quot; + x + &quot; is outside h-axis range [&quot;</span>
-<span class="fc" id="L807">							+ xAxis.getMin() + &quot;, &quot; + xAxis.getMax() + &quot;]&quot;);</span>
+<span class="fc bfc" id="L857" title="All 2 branches covered.">			for (double x : series.getXValues()) {</span>
+<span class="pc bpc" id="L858" title="1 of 6 branches missed.">				if (xAxis.isAutoScale() == false &amp;&amp; (x &lt; xAxis.getMin() || x &gt; xAxis.getMax())) {</span>
+<span class="fc" id="L859">					return CommandExecutionResult.error(&quot;X-coordinate &quot; + x + &quot; is outside h-axis range [&quot;</span>
+<span class="fc" id="L860">							+ xAxis.getMin() + &quot;, &quot; + xAxis.getMax() + &quot;]&quot;);</span>
 				}
-<span class="fc" id="L809">			}</span>
+<span class="fc" id="L862">			}</span>
 		} else {
-<span class="fc" id="L811">			final CommandExecutionResult unknown = checkCartesianKeys(series, getCategoryLabels());</span>
-<span class="fc bfc" id="L812" title="All 2 branches covered.">			if (unknown != null)</span>
-<span class="fc" id="L813">				return unknown;</span>
+<span class="fc" id="L864">			final CommandExecutionResult unknown = checkCartesianKeys(series, getCategoryLabels());</span>
+<span class="fc bfc" id="L865" title="All 2 branches covered.">			if (unknown != null)</span>
+<span class="fc" id="L866">				return unknown;</span>
 			// Index-based mode: ensure consistency
-<span class="fc bfc" id="L815" title="All 2 branches covered.">			if (!this.series.isEmpty()) {</span>
-<span class="fc" id="L816">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
-<span class="fc bfc" id="L817" title="All 2 branches covered.">				if (firstHasX != series.hasExplicitXValues()) {</span>
-<span class="fc" id="L818">					return CommandExecutionResult.error(</span>
+<span class="fc bfc" id="L868" title="All 2 branches covered.">			if (!this.series.isEmpty()) {</span>
+<span class="fc" id="L869">				final boolean firstHasX = this.series.get(0).hasExplicitXValues();</span>
+<span class="fc bfc" id="L870" title="All 2 branches covered.">				if (firstHasX != series.hasExplicitXValues()) {</span>
+<span class="fc" id="L871">					return CommandExecutionResult.error(</span>
 							&quot;All series must use the same data format (either all coordinate pairs or all index-based)&quot;);
 				}
 			}
 		}
 
-<span class="fc" id="L824">		this.series.add(series);</span>
+<span class="fc" id="L877">		this.series.add(series);</span>
 
-<span class="fc" id="L826">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L879">		return CommandExecutionResult.ok();</span>
 	}
 
 	public List&lt;String&gt; getXAxisLabels() {
-<span class="nc" id="L830">		return xAxisLabels;</span>
+<span class="nc" id="L883">		return xAxisLabels;</span>
 	}
 
 	public List&lt;ChartSeries&gt; getSeries() {
-<span class="fc" id="L834">		return series;</span>
+<span class="fc" id="L887">		return series;</span>
 	}
 
 	public ChartAxis getYAxis() {
-<span class="fc" id="L838">		return yAxis;</span>
+<span class="fc" id="L891">		return yAxis;</span>
 	}
 
 	public ChartAxis getY2Axis() {
-<span class="nc" id="L842">		return y2Axis;</span>
+<span class="nc" id="L895">		return y2Axis;</span>
 	}
 
 	public CommandExecutionResult setLegendPosition(LegendPosition position) {
-<span class="fc" id="L846">		this.legendPosition = position;</span>
-<span class="fc" id="L847">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L899">		this.legendPosition = position;</span>
+<span class="fc" id="L900">		return CommandExecutionResult.ok();</span>
 	}
 
 	public LegendPosition getLegendPosition() {
-<span class="nc" id="L851">		return legendPosition;</span>
+<span class="nc" id="L904">		return legendPosition;</span>
 	}
 
 	public CommandExecutionResult setGridMode(GridMode mode) {
-<span class="nc" id="L855">		this.xGridMode = mode;</span>
-<span class="nc" id="L856">		this.yGridMode = mode;</span>
-<span class="nc" id="L857">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L908">		this.xGridMode = mode;</span>
+<span class="nc" id="L909">		this.yGridMode = mode;</span>
+<span class="nc" id="L910">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setXGridMode(GridMode mode) {
-<span class="fc" id="L861">		this.xGridMode = mode;</span>
-<span class="fc" id="L862">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L914">		this.xGridMode = mode;</span>
+<span class="fc" id="L915">		return CommandExecutionResult.ok();</span>
 	}
 
 	public CommandExecutionResult setYGridMode(GridMode mode) {
-<span class="fc" id="L866">		this.yGridMode = mode;</span>
-<span class="fc" id="L867">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L919">		this.yGridMode = mode;</span>
+<span class="fc" id="L920">		return CommandExecutionResult.ok();</span>
 	}
 
 	public GridMode getXGridMode() {
-<span class="nc" id="L871">		return xGridMode;</span>
+<span class="nc" id="L924">		return xGridMode;</span>
 	}
 
 	public GridMode getYGridMode() {
-<span class="nc" id="L875">		return yGridMode;</span>
+<span class="nc" id="L928">		return yGridMode;</span>
 	}
 
 	public CommandExecutionResult setStackMode(StackMode mode) {
-<span class="fc" id="L879">		this.stackMode = mode;</span>
-<span class="fc" id="L880">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L932">		this.stackMode = mode;</span>
+<span class="fc" id="L933">		return CommandExecutionResult.ok();</span>
 	}
 
 	public StackMode getStackMode() {
-<span class="nc" id="L884">		return stackMode;</span>
+<span class="nc" id="L937">		return stackMode;</span>
 	}
 
 	public CommandExecutionResult setOrientation(Orientation orientation) {
-<span class="fc" id="L888">		this.orientation = orientation;</span>
-<span class="fc" id="L889">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L941">		this.orientation = orientation;</span>
+<span class="fc" id="L942">		return CommandExecutionResult.ok();</span>
 	}
 
 	public Orientation getOrientation() {
-<span class="nc" id="L893">		return orientation;</span>
+<span class="nc" id="L946">		return orientation;</span>
 	}
 
 	public CommandExecutionResult addAnnotation(ChartAnnotation annotation) {
-<span class="fc" id="L897">		this.annotations.add(annotation);</span>
-<span class="fc" id="L898">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L950">		this.annotations.add(annotation);</span>
+<span class="fc" id="L951">		return CommandExecutionResult.ok();</span>
 	}
 
 	public List&lt;ChartAnnotation&gt; getAnnotations() {
-<span class="nc" id="L902">		return annotations;</span>
+<span class="nc" id="L955">		return annotations;</span>
 	}
 
 	// ATXT and UTXT: see ChartTxt
 	@Override
 	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
-<span class="fc" id="L908">		final PrintStream ps = SecurityUtils.createPrintStream(os, true, StandardCharsets.UTF_8);</span>
-<span class="fc bfc" id="L909" title="All 4 branches covered.">		for (String line : ChartTxt.getLines(this, fileFormat == FileFormat.UTXT))</span>
-<span class="fc" id="L910">			ps.println(line);</span>
-<span class="fc" id="L911">		ps.flush();</span>
-<span class="fc" id="L912">		return ImageDataSimple.ok();</span>
+<span class="fc" id="L961">		final PrintStream ps = SecurityUtils.createPrintStream(os, true, StandardCharsets.UTF_8);</span>
+<span class="fc bfc" id="L962" title="All 4 branches covered.">		for (String line : ChartTxt.getLines(this, fileFormat == FileFormat.UTXT))</span>
+<span class="fc" id="L963">			ps.println(line);</span>
+<span class="fc" id="L964">		ps.flush();</span>
+<span class="fc" id="L965">		return ImageDataSimple.ok();</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
-<span class="fc" id="L917">		return new TextBlock() {</span>
+<span class="fc" id="L970">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L920">				drawMe(ug);</span>
-<span class="fc" id="L921">			}</span>
+<span class="fc" id="L973">				drawMe(ug);</span>
+<span class="fc" id="L974">			}</span>
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L924">				return ChartDiagram.this.calculateDimension(stringBounder);</span>
+<span class="fc" id="L977">				return ChartDiagram.this.calculateDimension(stringBounder);</span>
 			}
 		};
 	}

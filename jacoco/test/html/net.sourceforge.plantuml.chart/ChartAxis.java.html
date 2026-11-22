@@ -141,80 +141,103 @@ public class ChartAxis {
 	 *
 	 * Examples: values up to 38 give 0 -&gt; 40, up to 138 give 0 -&gt; 150, from -20 to 70
 	 * give -20 -&gt; 80. When there is no value at all, the axis is left as it is (0 -&gt; 100).
+	 *
+	 * Values near the limits of a double may have no round range that is itself a finite
+	 * double: a stack of 1e308 + 1e308, or -1.7e308 and 1 (every multiple of a round step
+	 * below -1.7e308 overflows). The axis then goes from lo to hi as they are, which may be
+	 * infinite: ChartDiagram.checkFinalError reports such a range rather than drawing it.
 	 */
 	public ChartAxis withNiceRange(double dataMin, double dataMax) {
-<span class="fc" id="L146">		final double lo = Math.min(0, dataMin);</span>
-<span class="fc" id="L147">		final double hi = Math.max(0, dataMax);</span>
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (lo == hi)</span>
-<span class="nc" id="L149">			return withRange(min, max);</span>
+<span class="fc" id="L151">		final double lo = Math.min(0, dataMin);</span>
+<span class="fc" id="L152">		final double hi = Math.max(0, dataMax);</span>
+<span class="pc bpc" id="L153" title="2 of 4 branches missed.">		if (Double.isNaN(lo) || Double.isNaN(hi))</span>
+<span class="nc" id="L154">			return withRange(lo, hi);</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (lo == hi)</span>
+<span class="nc" id="L156">			return withRange(min, max);</span>
 
-<span class="fc" id="L151">		double magnitude = Math.pow(10, Math.floor(Math.log10((hi - lo) / TICK_INTERVALS)) - 1);</span>
-		// Termination: once step &gt;= hi - lo, any multiple min &lt;= lo gives min + 5 * step &gt; hi
-		while (true) {
-<span class="fc bfc" id="L154" title="All 2 branches covered.">			for (double nice : NICE_STEPS) {</span>
-<span class="fc" id="L155">				final double step = nice * magnitude;</span>
-<span class="fc" id="L156">				final double start = Math.floor(lo / step) * step;</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">				if (start + TICK_INTERVALS * step &gt;= hi)</span>
-<span class="fc" id="L158">					return withRange(start, start + TICK_INTERVALS * step);</span>
+<span class="fc" id="L158">		double magnitude = Math.pow(10, Math.floor(Math.log10((hi - lo) / TICK_INTERVALS)) - 1);</span>
+		// Below the smallest normal double, (hi - lo) / 5 can round to 0 (4.9e-324 / 5)
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (magnitude == 0)</span>
+<span class="fc" id="L161">			magnitude = Double.MIN_VALUE;</span>
+		// Termination: once step &gt;= hi - lo, any multiple min &lt;= lo gives min + 5 * step &gt; hi.
+		// When that multiple overflows, magnitude keeps growing until it is infinite, which
+		// is also where it starts when hi - lo itself overflows
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		while (Double.isInfinite(magnitude) == false) {</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">			for (double nice : NICE_STEPS) {</span>
+<span class="fc" id="L167">				final double step = nice * magnitude;</span>
+<span class="fc" id="L168">				final double start = Math.floor(lo / step) * step;</span>
+<span class="fc" id="L169">				final double end = start + TICK_INTERVALS * step;</span>
+<span class="pc bpc" id="L170" title="2 of 6 branches missed.">				if (end &gt;= hi &amp;&amp; Double.isInfinite(start) == false &amp;&amp; Double.isInfinite(end) == false)</span>
+<span class="fc" id="L171">					return withRange(start, end);</span>
 			}
-<span class="fc" id="L160">			magnitude *= 10;</span>
+<span class="fc" id="L173">			magnitude *= 10;</span>
 		}
+<span class="fc" id="L175">		return withRange(lo, hi);</span>
+	}
+
+	/**
+	 * Whether this range can be drawn: both bounds and the distance between them are
+	 * finite doubles (a distance of 0 is drawn at the start of the axis, see valueToPixel).
+	 */
+	public boolean isDrawable() {
+<span class="fc" id="L183">		final double span = max - min;</span>
+<span class="pc bpc" id="L184" title="1 of 4 branches missed.">		return span &gt;= 0 &amp;&amp; Double.isInfinite(span) == false;</span>
 	}
 
 	/**
 	 * Get custom tick labels map
 	 */
 	public Map&lt;Double, String&gt; getCustomTicks() {
-<span class="fc" id="L168">		return customTicks;</span>
+<span class="fc" id="L191">		return customTicks;</span>
 	}
 
 	/**
 	 * Set custom tick labels. The map keys are tick values and values are labels.
 	 */
 	public void setCustomTicks(Map&lt;Double, String&gt; customTicks) {
-<span class="fc" id="L175">		this.customTicks = customTicks;</span>
-<span class="fc" id="L176">	}</span>
+<span class="fc" id="L198">		this.customTicks = customTicks;</span>
+<span class="fc" id="L199">	}</span>
 
 	/**
 	 * Check if custom ticks are defined
 	 */
 	public boolean hasCustomTicks() {
-<span class="pc bpc" id="L182" title="1 of 4 branches missed.">		return customTicks != null &amp;&amp; !customTicks.isEmpty();</span>
+<span class="pc bpc" id="L205" title="1 of 4 branches missed.">		return customTicks != null &amp;&amp; !customTicks.isEmpty();</span>
 	}
 
 	/**
 	 * Get tick spacing value
 	 */
 	public Double getTickSpacing() {
-<span class="fc" id="L189">		return tickSpacing;</span>
+<span class="fc" id="L212">		return tickSpacing;</span>
 	}
 
 	/**
 	 * Set tick spacing. The value represents the interval between ticks.
 	 */
 	public void setTickSpacing(Double tickSpacing) {
-<span class="fc" id="L196">		this.tickSpacing = tickSpacing;</span>
-<span class="fc" id="L197">	}</span>
+<span class="fc" id="L219">		this.tickSpacing = tickSpacing;</span>
+<span class="fc" id="L220">	}</span>
 
 	/**
 	 * Check if custom tick spacing is defined
 	 */
 	public boolean hasTickSpacing() {
-<span class="pc bpc" id="L203" title="1 of 4 branches missed.">		return tickSpacing != null &amp;&amp; tickSpacing &gt; 0;</span>
+<span class="pc bpc" id="L226" title="1 of 4 branches missed.">		return tickSpacing != null &amp;&amp; tickSpacing &gt; 0;</span>
 	}
 
 	/**
 	 * Get label position
 	 */
 	public LabelPosition getLabelPosition() {
-<span class="fc" id="L210">		return labelPosition;</span>
+<span class="fc" id="L233">		return labelPosition;</span>
 	}
 
 	/**
 	 * Set label position
 	 */
 	public void setLabelPosition(LabelPosition labelPosition) {
-<span class="fc" id="L217">		this.labelPosition = labelPosition;</span>
-<span class="fc" id="L218">	}</span>
+<span class="fc" id="L240">		this.labelPosition = labelPosition;</span>
+<span class="fc" id="L241">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

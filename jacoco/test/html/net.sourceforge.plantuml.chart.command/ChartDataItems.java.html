@@ -153,7 +153,7 @@ final class ChartDataItems {
 <span class="fc" id="L153">		Double value = null;</span>
 <span class="fc bfc" id="L154" title="All 2 branches covered.">		if (item.isEmpty() == false)</span>
 			try {
-<span class="fc" id="L156">				value = Double.parseDouble(item);</span>
+<span class="fc" id="L156">				value = ChartNumber.parse(item);</span>
 <span class="fc" id="L157">			} catch (NumberFormatException e) {</span>
 <span class="fc" id="L158">				return &quot;Invalid number \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
 <span class="fc" id="L159">			}</span>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChartNumber.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.chart.command</a> &gt; <span class="el_source">ChartNumber.java</span></div><h1>ChartNumber.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ */
+package net.sourceforge.plantuml.chart.command;
+
+/**
+ * Reads the numbers written in a chart.
+ *
+ * Double.parseDouble alone is not enough: it accepts &quot;NaN&quot;, &quot;Infinity&quot; and
+ * &quot;-Infinity&quot;, and it reads a literal too large for a double (&quot;1e999&quot;, a 400-digit
+ * integer) as Infinity, all without throwing. Such a value has no place on an axis:
+ * fitting an automatic range to it never ended (issue #3030), and drawing it crashed
+ * or left NaN in the output. They are rejected here, as any other invalid number, so
+ * that the caller reports the line with its usual message.
+ */
+final class ChartNumber {
+
+	private ChartNumber() {
+	}
+
+	/**
+	 * The finite value of text.
+	 *
+	 * @throws NumberFormatException when text is not a number, or is not a finite one
+	 */
+	static double parse(String text) {
+<span class="fc" id="L58">		final double value = Double.parseDouble(text);</span>
+<span class="fc bfc" id="L59" title="All 4 branches covered.">		if (Double.isNaN(value) || Double.isInfinite(value))</span>
+<span class="fc" id="L60">			throw new NumberFormatException(&quot;Not a finite number: &quot; + text);</span>
+<span class="fc" id="L61">		return value;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -24,7 +24,7 @@
 </ul>
 <div class="tab">
 <h2>Gradle Test Run :test</h2>
-<h1>python/metadata</h1>
+<h1>python/macro</h1>
 <div class="tab-container">
 <ul class="tabLinks">
 <li>
@@ -43,7 +43,7 @@
 <tr>
 <td>
 <div class="infoBox">
-<div class="counter">11</div>
+<div class="counter">33</div>
 <p>tests</p>
 </div>
 </td>
@@ -61,7 +61,7 @@
 </td>
 <td>
 <div class="infoBox duration">
-<div class="counter">0.046s</div>
+<div class="counter">0.086s</div>
 <p>duration</p>
 </div>
 </td>
@@ -92,7 +92,7 @@
 </thead>
 <tbody>
 <tr>
-<td class="success">no_header_is_empty_dict.puml</td>
+<td class="success">emits_then_returns.puml</td>
 <td class="path">testAllPumlFiles()[87][10]</td>
 <td>1</td>
 <td>0</td>
@@ -101,8 +101,26 @@
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">values_are_str.puml</td>
+<td class="success">error_inside_a_macro.puml</td>
 <td class="path">testAllPumlFiles()[87][11]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">explicit_dollar_name.puml</td>
+<td class="path">testAllPumlFiles()[87][12]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">explicit_legacy_name.puml</td>
+<td class="path">testAllPumlFiles()[87][13]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
@@ -110,16 +128,160 @@
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">basic.puml</td>
+<td class="success">function_still_callable.puml</td>
+<td class="path">testAllPumlFiles()[87][14]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">inline_value.puml</td>
+<td class="path">testAllPumlFiles()[87][15]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="3">0.003s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">interpolation_first.puml</td>
+<td class="path">testAllPumlFiles()[87][16]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">invalid_explicit_name.puml</td>
+<td class="path">testAllPumlFiles()[87][17]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">keyword_arguments_and_defaults.puml</td>
+<td class="path">testAllPumlFiles()[87][18]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="6">0.006s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">legacy_define_after_macro.puml</td>
+<td class="path">testAllPumlFiles()[87][19]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="1">0.001s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">arguments_are_strings.puml</td>
 <td class="path">testAllPumlFiles()[87][1]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="4">0.004s</td>
+<td data-sort-value="3">0.003s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">block_text_keeps_indentation.puml</td>
+<td class="success">macro_calls_macro_as_python.puml</td>
+<td class="path">testAllPumlFiles()[87][20]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">name_followed_directly_by_parenthesis.puml</td>
+<td class="path">testAllPumlFiles()[87][21]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">no_arguments.puml</td>
+<td class="path">testAllPumlFiles()[87][22]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">no_macro_no_change.puml</td>
+<td class="path">testAllPumlFiles()[87][23]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">parentheses_inside_arguments.puml</td>
+<td class="path">testAllPumlFiles()[87][24]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">procedure_emits_lines.puml</td>
+<td class="path">testAllPumlFiles()[87][25]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="3">0.003s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">procedure_with_text_lines.puml</td>
+<td class="path">testAllPumlFiles()[87][26]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="3">0.003s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">puml_macro_alias.puml</td>
+<td class="path">testAllPumlFiles()[87][27]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">quoted_and_bare_arguments.puml</td>
+<td class="path">testAllPumlFiles()[87][28]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="5">0.005s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">replaced_inside_quotes.puml</td>
+<td class="path">testAllPumlFiles()[87][29]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="3">0.003s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">arguments_are_strings2.puml</td>
 <td class="path">testAllPumlFiles()[87][2]</td>
 <td>1</td>
 <td>0</td>
@@ -128,17 +290,35 @@
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">chart_pie_from_header.puml</td>
-<td class="path">testAllPumlFiles()[87][3]</td>
+<td class="success">result_not_rescanned.puml</td>
+<td class="path">testAllPumlFiles()[87][30]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="3">0.003s</td>
+<td data-sort-value="2">0.002s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">duplicate_key_is_an_error.puml</td>
-<td class="path">testAllPumlFiles()[87][4]</td>
+<td class="success">returns_none_and_emits_nothing.puml</td>
+<td class="path">testAllPumlFiles()[87][31]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">several_calls_per_line.puml</td>
+<td class="path">testAllPumlFiles()[87][32]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">too_many_arguments.puml</td>
+<td class="path">testAllPumlFiles()[87][33]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
@@ -146,48 +326,66 @@
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">get_with_default.puml</td>
+<td class="success">arguments_are_strings3.puml</td>
+<td class="path">testAllPumlFiles()[87][3]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">called_from_a_legacy_procedure.puml</td>
+<td class="path">testAllPumlFiles()[87][4]</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td data-sort-value="2">0.002s</td>
+<td class="success" data-sort-value="100">100%</td>
+</tr>
+<tr>
+<td class="success">called_inside_a_python_block.puml</td>
 <td class="path">testAllPumlFiles()[87][5]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="14">0.014s</td>
+<td data-sort-value="3">0.003s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">header_must_be_a_map.puml</td>
+<td class="success">conflict_with_legacy_define.puml</td>
 <td class="path">testAllPumlFiles()[87][6]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="3">0.003s</td>
+<td data-sort-value="2">0.002s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">header_without_python_is_ignored.puml</td>
+<td class="success">declared_before_use.puml</td>
 <td class="path">testAllPumlFiles()[87][7]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="5">0.005s</td>
+<td data-sort-value="3">0.003s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">keys_in_document_order.puml</td>
+<td class="success">declared_on_a_bang_line.puml</td>
 <td class="path">testAllPumlFiles()[87][8]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="4">0.004s</td>
+<td data-sort-value="2">0.002s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 <tr>
-<td class="success">nested_map_and_list.puml</td>
+<td class="success">duplicate_declaration.puml</td>
 <td class="path">testAllPumlFiles()[87][9]</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td data-sort-value="3">0.003s</td>
+<td data-sort-value="2">0.002s</td>
 <td class="success" data-sort-value="100">100%</td>
 </tr>
 </tbody>
@@ -204,7 +402,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.9.1</a> at Nov 22, 2026, 9:23:06 PM</p>
+<a href="https://www.gradle.org">Gradle 9.9.1</a> at Nov 22, 2026, 9:56:51 PM</p>
 </div>
 </div>
 </body>

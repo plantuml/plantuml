@@ -124,7 +124,7 @@ public class CommandChartPie extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="pc bpc" id="L124" title="1 of 4 branches missed.">					if (i + 1 &lt; words.length &amp;&amp; words[i + 1].endsWith(&quot;%&quot;)) {</span>
 <span class="fc" id="L125">						i++;</span>
 						try {
-<span class="fc" id="L127">							hole = Double.parseDouble(words[i].substring(0, words[i].length() - 1));</span>
+<span class="fc" id="L127">							hole = ChartNumber.parse(words[i].substring(0, words[i].length() - 1));</span>
 <span class="nc" id="L128">						} catch (NumberFormatException e) {</span>
 <span class="nc" id="L129">							return CommandExecutionResult.error(&quot;Invalid donut size &quot; + words[i]);</span>
 <span class="fc" id="L130">						}</span>

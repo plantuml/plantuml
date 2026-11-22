@@ -141,8 +141,8 @@ final class ChartCartesianData {
 <span class="fc" id="L141">			return &quot;Invalid coordinate pair \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
 <span class="fc" id="L142">		final Double x = parseNumber(ChartDataItems.unquote(coords.get(0).trim()).trim());</span>
 <span class="fc" id="L143">		final Double y = parseNumber(ChartDataItems.unquote(coords.get(1).trim()).trim());</span>
-<span class="pc bpc" id="L144" title="2 of 4 branches missed.">		if (x == null || y == null)</span>
-<span class="nc" id="L145">			return &quot;Invalid coordinate pair \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
+<span class="pc bpc" id="L144" title="1 of 4 branches missed.">		if (x == null || y == null)</span>
+<span class="fc" id="L145">			return &quot;Invalid coordinate pair \&quot;&quot; + item + &quot;\&quot;&quot;;</span>
 <span class="fc" id="L146">		xValues.add(x);</span>
 <span class="fc" id="L147">		values.add(y);</span>
 <span class="fc" id="L148">		return null;</span>
@@ -150,7 +150,7 @@ final class ChartCartesianData {
 
 	private static Double parseNumber(String text) {
 		try {
-<span class="fc" id="L153">			return Double.parseDouble(text);</span>
+<span class="fc" id="L153">			return ChartNumber.parse(text);</span>
 <span class="fc" id="L154">		} catch (NumberFormatException e) {</span>
 <span class="fc" id="L155">			return null;</span>
 		}

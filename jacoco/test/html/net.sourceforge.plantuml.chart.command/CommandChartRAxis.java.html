@@ -111,8 +111,8 @@ public class CommandChartRAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc" id="L111">		Double max = null;</span>
 <span class="pc bpc" id="L112" title="1 of 4 branches missed.">		if (minStr != null &amp;&amp; maxStr != null)</span>
 			try {
-<span class="fc" id="L114">				min = Double.parseDouble(minStr);</span>
-<span class="fc" id="L115">				max = Double.parseDouble(maxStr);</span>
+<span class="fc" id="L114">				min = ChartNumber.parse(minStr);</span>
+<span class="fc" id="L115">				max = ChartNumber.parse(maxStr);</span>
 <span class="nc" id="L116">			} catch (NumberFormatException e) {</span>
 <span class="nc" id="L117">				return CommandExecutionResult.error(&quot;Invalid number format in axis range&quot;);</span>
 <span class="fc" id="L118">			}</span>
@@ -127,7 +127,7 @@ public class CommandChartRAxis extends SingleLineCommand2&lt;ChartDiagram&gt; {
 <span class="fc" id="L127">		Double tickSpacing = null;</span>
 <span class="fc bfc" id="L128" title="All 2 branches covered.">		if (spacingStr != null)</span>
 			try {
-<span class="fc" id="L130">				tickSpacing = Double.parseDouble(spacingStr);</span>
+<span class="fc" id="L130">				tickSpacing = ChartNumber.parse(spacingStr);</span>
 <span class="pc bpc" id="L131" title="1 of 2 branches missed.">				if (tickSpacing &lt;= 0)</span>
 <span class="nc" id="L132">					return CommandExecutionResult.error(&quot;Tick spacing must be greater than 0&quot;);</span>
 <span class="nc" id="L133">			} catch (NumberFormatException e) {</span>

@@ -109,8 +109,8 @@ public class CommandChartScatter extends SingleLineCommand2&lt;ChartDiagram&gt; 
 <span class="fc bfc" id="L109" title="All 2 branches covered.">		final String seriesName = name != null ? name : &quot;scatter&quot; + diagram.getSeries().size();</span>
 
 <span class="fc" id="L111">		final ChartCartesianData parsed = ChartCartesianData.parse(data, true);</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (parsed.getError() != null)</span>
-<span class="nc" id="L113">			return CommandExecutionResult.error(parsed.getError());</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (parsed.getError() != null)</span>
+<span class="fc" id="L113">			return CommandExecutionResult.error(parsed.getError());</span>
 <span class="fc bfc" id="L114" title="All 2 branches covered.">		if (parsed.isPairs())</span>
 <span class="fc" id="L115">			series = new ChartSeries(seriesName, ChartSeries.SeriesType.SCATTER, parsed.getXValues(),</span>
 <span class="fc" id="L116">					parsed.getValues());</span>

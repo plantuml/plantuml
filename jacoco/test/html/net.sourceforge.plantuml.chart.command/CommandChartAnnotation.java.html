@@ -109,7 +109,7 @@ public class CommandChartAnnotation extends SingleLineCommand2&lt;ChartDiagram&g
 		// Parse X position - can be either a string (categorical) or numeric
 		Object xPosition;
 		try {
-<span class="nc" id="L112">			xPosition = Double.parseDouble(xPosStr);</span>
+<span class="nc" id="L112">			xPosition = ChartNumber.parse(xPosStr);</span>
 <span class="fc" id="L113">		} catch (NumberFormatException e) {</span>
 			// Not a number, treat as categorical label
 <span class="fc" id="L115">			xPosition = xPosStr;</span>
@@ -118,9 +118,9 @@ public class CommandChartAnnotation extends SingleLineCommand2&lt;ChartDiagram&g
 		// Parse Y position - must be numeric
 		double yPosition;
 		try {
-<span class="fc" id="L121">			yPosition = Double.parseDouble(yPosStr);</span>
-<span class="nc" id="L122">		} catch (NumberFormatException e) {</span>
-<span class="nc" id="L123">			return CommandExecutionResult.error(&quot;Y position must be a numeric value: &quot; + yPosStr);</span>
+<span class="fc" id="L121">			yPosition = ChartNumber.parse(yPosStr);</span>
+<span class="fc" id="L122">		} catch (NumberFormatException e) {</span>
+<span class="fc" id="L123">			return CommandExecutionResult.error(&quot;Y position must be a numeric value: &quot; + yPosStr);</span>
 <span class="fc" id="L124">		}</span>
 
 <span class="fc bfc" id="L126" title="All 2 branches covered.">		final boolean showArrow = arrowStr != null;</span>
