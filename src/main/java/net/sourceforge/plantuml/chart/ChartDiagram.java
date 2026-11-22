@@ -527,13 +527,24 @@ public class ChartDiagram extends TitledDiagram {
 		return null;
 	}
 
+	// Every renderer places a value at (value - min) / (max - min): an empty range
+	// (min == max) gives NaN coordinates and crashes, and a reversed one (min > max)
+	// is drawn inconsistently (upside-down lines, missing bars and grid, mirrored
+	// horizontal bars). Both are refused on the axis line itself. See #3031.
+	private static CommandExecutionResult checkRange(String axis, Double min, Double max) {
+		if (min != null && max != null && min >= max)
+			return CommandExecutionResult.error(axis + " range must go from a lower to a higher value");
+		return null;
+	}
+
 	public CommandExecutionResult setRadialAxis(Double min, Double max, Map<Double, String> customTicks,
 			Double tickSpacing, Boolean circleGrid) {
 		final CommandExecutionResult error = checkKind("r-axis", Kind.RADAR);
 		if (error != null)
 			return error;
-		if (min != null && max != null && min >= max)
-			return CommandExecutionResult.error("r-axis range must go from a lower to a higher value");
+		final CommandExecutionResult range = checkRange("r-axis", min, max);
+		if (range != null)
+			return range;
 		if (min != null)
 			radialAxis.setMin(min);
 		if (max != null)
@@ -682,6 +693,9 @@ public class ChartDiagram extends TitledDiagram {
 	}
 
 	public CommandExecutionResult setXAxis(String title, Double min, Double max) {
+		final CommandExecutionResult range = checkRange("h-axis", min, max);
+		if (range != null)
+			return range;
 		// Coordinate pairs given without a range have not been checked against one
 		if ((min != null || max != null) && xAxis.isAutoScale() && hasCoordinatePairs())
 			return CommandExecutionResult.error("h-axis range must be given before coordinate pair data");
@@ -706,6 +720,9 @@ public class ChartDiagram extends TitledDiagram {
 	}
 
 	public CommandExecutionResult setYAxis(String title, Double min, Double max) {
+		final CommandExecutionResult range = checkRange("v-axis", min, max);
+		if (range != null)
+			return range;
 		if (title != null)
 			yAxis.setTitle(title);
 		if (min != null)
@@ -728,6 +745,9 @@ public class ChartDiagram extends TitledDiagram {
 	}
 
 	public CommandExecutionResult setY2Axis(String title, Double min, Double max) {
+		final CommandExecutionResult range = checkRange("v2-axis", min, max);
+		if (range != null)
+			return range;
 		if (y2Axis == null)
 			y2Axis = new ChartAxis();
 		if (title != null)

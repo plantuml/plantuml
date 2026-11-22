@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (2 series)
+---
+@startchart
+h-axis [A, B, C, D]
+v-axis 0 --> 10 spacing 2 grid
+v2-axis 0 --> 100
+bar [2, 4, 6, 8]
+line [50, 60, 70, 80] v2
+annotation "a" at (A, 5)
+@endchart

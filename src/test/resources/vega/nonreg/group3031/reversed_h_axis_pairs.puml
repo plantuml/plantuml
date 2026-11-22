@@ -1,0 +1,12 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 1
+expected-error-message: 'h-axis range must go from a lower to a higher value (Assumed diagram type: chart)'
+---
+@startchart
+h-axis 10 --> 0
+v-axis 0 --> 10
+line [5:5, 6:6]
+@endchart

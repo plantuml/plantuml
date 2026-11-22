@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Error)
+expected-status: 400
+expected-error-line: 3
+expected-error-message: 'h-axis range must go from a lower to a higher value (Assumed diagram type: chart)'
+---
+@startchart
+orientation horizontal
+v-axis [A, B]
+h-axis 5 --> 5
+bar [2, 4]
+@endchart

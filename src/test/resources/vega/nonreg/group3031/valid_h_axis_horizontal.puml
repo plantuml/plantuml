@@ -1,0 +1,10 @@
+---
+output: svg
+expected-description: (1 series)
+---
+@startchart
+orientation horizontal
+v-axis [A, B]
+h-axis 0 --> 10
+bar [2, 4]
+@endchart
