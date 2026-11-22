@@ -12545,16 +12545,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 19
-    Concrete Classes: 15
+    Total Classes: 20
+    Concrete Classes: 16
     Abstract Classes: 4
 
     Ca: 1
     Ce: 16
 
-    A: 0.21
+    A: 0.2
     I: 0.94
-    D: 0.15
+    D: 0.14
 
 Abstract Classes:
     net.sourceforge.plantuml.timingdiagram.graphic.Panels
@@ -12572,6 +12572,7 @@ Concrete Classes:
     net.sourceforge.plantuml.timingdiagram.graphic.PanelsDigital
     net.sourceforge.plantuml.timingdiagram.graphic.PanelsRectangle
     net.sourceforge.plantuml.timingdiagram.graphic.PanelsRobust
+    net.sourceforge.plantuml.timingdiagram.graphic.PanelsState$StateLabel
     net.sourceforge.plantuml.timingdiagram.graphic.PentaAShape
     net.sourceforge.plantuml.timingdiagram.graphic.PentaAShapeRectangle
     net.sourceforge.plantuml.timingdiagram.graphic.PentaBShape
@@ -16130,7 +16131,7 @@ net.sourceforge.plantuml.tim.expression,17,3,3,3,0.18,0.5,0.32,1
 net.sourceforge.plantuml.tim.iterator,16,3,1,9,0.19,0.9,0.09,1
 net.sourceforge.plantuml.timingdiagram,29,5,3,26,0.17,0.9,0.07,1
 net.sourceforge.plantuml.timingdiagram.command,13,0,1,12,0,0.92,0.08,1
-net.sourceforge.plantuml.timingdiagram.graphic,19,4,1,16,0.21,0.94,0.15,1
+net.sourceforge.plantuml.timingdiagram.graphic,20,4,1,16,0.2,0.94,0.14,1
 net.sourceforge.plantuml.url,4,0,28,4,0,0.12,0.88,1
 net.sourceforge.plantuml.utils,21,5,90,21,0.24,0.19,0.57,1
 net.sourceforge.plantuml.version,7,1,6,15,0.14,0.71,0.14,1

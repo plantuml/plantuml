@@ -45,18 +45,18 @@ public final class PlayerRectangle extends AbstractStatePlayer {
 
 	public PlayerRectangle(String full, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
 			HColor generalBackgroundColor) {
-<span class="nc" id="L48">		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor, SName.rectangle, 1);</span>
-<span class="nc" id="L49">	}</span>
+<span class="fc" id="L48">		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor, SName.rectangle, 1);</span>
+<span class="fc" id="L49">	}</span>
 
 	@Override
 	protected Panels buildPlayerPanels() {
-<span class="nc" id="L53">		final PanelsRectangle result = new PanelsRectangle(getRuler(), getSkinParam(), getNotes(), getSuggestedHeight(),</span>
-<span class="nc" id="L54">				getStyle(), getConstraints());</span>
-<span class="nc" id="L55">		result.setInitialState(getInitialState(), getInitialColors());</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		for (ChangeState change : getChanges())</span>
-<span class="nc" id="L57">			result.addChange(change);</span>
+<span class="fc" id="L53">		final PanelsRectangle result = new PanelsRectangle(getRuler(), getSkinParam(), getNotes(), getSuggestedHeight(),</span>
+<span class="fc" id="L54">				getStyle(), getConstraints());</span>
+<span class="fc" id="L55">		result.setInitialState(getInitialState(), getInitialColors());</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		for (ChangeState change : getChanges())</span>
+<span class="fc" id="L57">			result.addChange(change);</span>
 
-<span class="nc" id="L59">		return result;</span>
+<span class="fc" id="L59">		return result;</span>
 	}
 
 }

@@ -68,19 +68,21 @@ public class TimingRuler {
 
 	private static final double TICK_HEIGHT = 5;
 	private static final double UNIT_GAP = 6;
+	// Minimal horizontal space between two time labels of the axis
+	private static final double LABEL_GAP = 4;
 
-<span class="fc" id="L72">	private final SortedSet&lt;TimeTick&gt; times = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L74">	private final SortedSet&lt;TimeTick&gt; times = new TreeSet&lt;&gt;();</span>
 
 	private final ISkinParam skinParam;
 
-<span class="fc" id="L76">	private long tickIntervalInPixels = 50;</span>
+<span class="fc" id="L78">	private long tickIntervalInPixels = 50;</span>
 	private long forcedTickUnitary;
 
-<span class="fc" id="L79">	private TimingFormat format = TimingFormat.DECIMAL;</span>
+<span class="fc" id="L81">	private TimingFormat format = TimingFormat.DECIMAL;</span>
 
 	private String unit;
 
-<span class="fc" id="L83">	private final List&lt;Break&gt; breaks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L85">	private final List&lt;Break&gt; breaks = new ArrayList&lt;&gt;();</span>
 
 	private static final double BREAK_IN_TICKS = 0.5;
 
@@ -93,57 +95,57 @@ public class TimingRuler {
 		private final double from;
 		private final double to;
 
-<span class="fc" id="L96">		private Break(double from, double to) {</span>
-<span class="fc" id="L97">			this.from = from;</span>
-<span class="fc" id="L98">			this.to = to;</span>
-<span class="fc" id="L99">		}</span>
+<span class="fc" id="L98">		private Break(double from, double to) {</span>
+<span class="fc" id="L99">			this.from = from;</span>
+<span class="fc" id="L100">			this.to = to;</span>
+<span class="fc" id="L101">		}</span>
 
 		private boolean isStrictlyInside(double time) {
-<span class="fc bfc" id="L102" title="All 4 branches covered.">			return time &gt; from &amp;&amp; time &lt; to;</span>
+<span class="fc bfc" id="L104" title="All 4 branches covered.">			return time &gt; from &amp;&amp; time &lt; to;</span>
 		}
 
 		private boolean overlaps(Break other) {
-<span class="nc bnc" id="L106" title="All 4 branches missed.">			return from &lt; other.to &amp;&amp; other.from &lt; to;</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">			return from &lt; other.to &amp;&amp; other.from &lt; to;</span>
 		}
 
 	}
 
 	static public UGraphic applyForVLines(UGraphic ug, Style style, ISkinParam skinParam) {
-<span class="fc" id="L112">		final UStroke stroke = new UStroke(3, 5, 0.5);</span>
-<span class="fc" id="L113">		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L114">		final UStroke stroke = new UStroke(3, 5, 0.5);</span>
+<span class="fc" id="L115">		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="fc" id="L115">		return ug.apply(stroke).apply(color);</span>
+<span class="fc" id="L117">		return ug.apply(stroke).apply(color);</span>
 	}
 
 	public void ensureNotEmpty() {
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (times.size() == 0)</span>
-<span class="nc" id="L120">			this.times.add(new TimeTick(BigDecimal.ZERO, TimingFormat.DECIMAL));</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (times.size() == 0)</span>
+<span class="nc" id="L122">			this.times.add(new TimeTick(BigDecimal.ZERO, TimingFormat.DECIMAL));</span>
 
-<span class="pc bpc" id="L122" title="2 of 4 branches missed.">		if (getMax().getTime().signum() &gt; 0 &amp;&amp; getMin().getTime().signum() &lt; 0)</span>
-<span class="nc" id="L123">			this.times.add(new TimeTick(BigDecimal.ZERO, TimingFormat.DECIMAL));</span>
+<span class="pc bpc" id="L124" title="2 of 4 branches missed.">		if (getMax().getTime().signum() &gt; 0 &amp;&amp; getMin().getTime().signum() &lt; 0)</span>
+<span class="nc" id="L125">			this.times.add(new TimeTick(BigDecimal.ZERO, TimingFormat.DECIMAL));</span>
 
-<span class="fc" id="L125">	}</span>
+<span class="fc" id="L127">	}</span>
 
-<span class="fc" id="L127">	public TimingRuler(ISkinParam skinParam) {</span>
-<span class="fc" id="L128">		this.skinParam = skinParam;</span>
-<span class="fc" id="L129">	}</span>
+<span class="fc" id="L129">	public TimingRuler(ISkinParam skinParam) {</span>
+<span class="fc" id="L130">		this.skinParam = skinParam;</span>
+<span class="fc" id="L131">	}</span>
 
 	public void setUnit(String unit) {
-<span class="fc" id="L132">		this.unit = unit;</span>
-<span class="fc" id="L133">	}</span>
+<span class="fc" id="L134">		this.unit = unit;</span>
+<span class="fc" id="L135">	}</span>
 
 	public void scaleInPixels(long tick, long pixel) {
-<span class="pc bpc" id="L136" title="2 of 4 branches missed.">		if (pixel &lt;= 0 || tick &lt;= 0)</span>
-<span class="nc" id="L137">			throw new IllegalArgumentException();</span>
-<span class="fc" id="L138">		this.tickIntervalInPixels = pixel;</span>
-<span class="fc" id="L139">		this.forcedTickUnitary = tick;</span>
-<span class="fc" id="L140">	}</span>
+<span class="pc bpc" id="L138" title="2 of 4 branches missed.">		if (pixel &lt;= 0 || tick &lt;= 0)</span>
+<span class="nc" id="L139">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L140">		this.tickIntervalInPixels = pixel;</span>
+<span class="fc" id="L141">		this.forcedTickUnitary = tick;</span>
+<span class="fc" id="L142">	}</span>
 
 	private long getOptimalTickUnit() {
-<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (forcedTickUnitary == 0) {</span>
-<span class="fc" id="L144">			final long hcfTickUnit = calculateHighestCommonFactor();</span>
-<span class="fc" id="L145">			final double maxDiagramWidth = 4000.0;</span>
-<span class="pc bpc" id="L146" title="3 of 4 branches missed.">			if (hcfTickUnit == 1 &amp;&amp; calculateDiagramWidth(hcfTickUnit) &gt; maxDiagramWidth) {</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (forcedTickUnitary == 0) {</span>
+<span class="fc" id="L146">			final long hcfTickUnit = calculateHighestCommonFactor();</span>
+<span class="fc" id="L147">			final double maxDiagramWidth = 4000.0;</span>
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">			if (hcfTickUnit == 1 &amp;&amp; calculateDiagramWidth(hcfTickUnit) &gt; maxDiagramWidth) {</span>
 				/*
 				 * Typically, we determine the optimal tick unit using the highest common factor
 				 * (HCF) of all significant timing values. However, when the HCF is too small
@@ -152,23 +154,23 @@ public class TimingRuler {
 				 * diagram's pixel width and the total time range, ensuring the diagram remains
 				 * clear and readable.
 				 */
-<span class="nc" id="L155">				final double totalTimeRange = getMax().getTime().doubleValue() - getMin().getTime().doubleValue()</span>
-<span class="nc" id="L156">						- getBreaksDuration();</span>
-<span class="nc" id="L157">				return Math.round(1 + (tickIntervalInPixels * totalTimeRange / maxDiagramWidth));</span>
+<span class="fc" id="L157">				final double totalTimeRange = getMax().getTime().doubleValue() - getMin().getTime().doubleValue()</span>
+<span class="fc" id="L158">						- getBreaksDuration();</span>
+<span class="fc" id="L159">				return Math.round(1 + (tickIntervalInPixels * totalTimeRange / maxDiagramWidth));</span>
 			}
-<span class="fc" id="L159">			return hcfTickUnit;</span>
+<span class="fc" id="L161">			return hcfTickUnit;</span>
 		}
-<span class="fc" id="L161">		return forcedTickUnitary;</span>
+<span class="fc" id="L163">		return forcedTickUnitary;</span>
 	}
 
 	public double getWidth() {
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (times.size() == 0)</span>
-<span class="nc" id="L166">			return 100;</span>
-<span class="fc" id="L167">		return calculateDiagramWidth(getOptimalTickUnit());</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (times.size() == 0)</span>
+<span class="nc" id="L168">			return 100;</span>
+<span class="fc" id="L169">		return calculateDiagramWidth(getOptimalTickUnit());</span>
 	}
 
 	private double calculateDiagramWidth(final long tickUnitary) {
-<span class="fc" id="L171">		return (getPosInTicks(getMax().getTime().doubleValue(), tickUnitary) + 1) * tickIntervalInPixels;</span>
+<span class="fc" id="L173">		return (getPosInTicks(getMax().getTime().doubleValue(), tickUnitary) + 1) * tickIntervalInPixels;</span>
 	}
 
 	/**
@@ -177,47 +179,47 @@ public class TimingRuler {
 	 * whatever its duration.
 	 */
 	private double getPosInTicks(double time, long tickUnitary) {
-<span class="fc" id="L180">		final double min = getMin().getTime().doubleValue();</span>
-<span class="fc" id="L181">		double shift = 0;</span>
-<span class="fc bfc" id="L182" title="All 2 branches covered.">		for (Break b : breaks) {</span>
-<span class="fc bfc" id="L183" title="All 2 branches covered.">			if (time &lt;= b.from)</span>
-<span class="fc" id="L184">				break;</span>
-<span class="fc bfc" id="L185" title="All 2 branches covered.">			if (time &lt; b.to)</span>
-<span class="fc" id="L186">				return (b.from - min) / tickUnitary + shift + BREAK_IN_TICKS * (time - b.from) / (b.to - b.from);</span>
-<span class="fc" id="L187">			shift += BREAK_IN_TICKS - (b.to - b.from) / tickUnitary;</span>
-<span class="fc" id="L188">		}</span>
-<span class="fc" id="L189">		return (time - min) / tickUnitary + shift;</span>
+<span class="fc" id="L182">		final double min = getMin().getTime().doubleValue();</span>
+<span class="fc" id="L183">		double shift = 0;</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		for (Break b : breaks) {</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">			if (time &lt;= b.from)</span>
+<span class="fc" id="L186">				break;</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">			if (time &lt; b.to)</span>
+<span class="fc" id="L188">				return (b.from - min) / tickUnitary + shift + BREAK_IN_TICKS * (time - b.from) / (b.to - b.from);</span>
+<span class="fc" id="L189">			shift += BREAK_IN_TICKS - (b.to - b.from) / tickUnitary;</span>
+<span class="fc" id="L190">		}</span>
+<span class="fc" id="L191">		return (time - min) / tickUnitary + shift;</span>
 	}
 
 	private double getBreaksDuration() {
-<span class="nc" id="L193">		double result = 0;</span>
-<span class="nc bnc" id="L194" title="All 2 branches missed.">		for (Break b : breaks)</span>
-<span class="nc" id="L195">			result += b.to - b.from;</span>
-<span class="nc" id="L196">		return result;</span>
+<span class="fc" id="L195">		double result = 0;</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		for (Break b : breaks)</span>
+<span class="fc" id="L197">			result += b.to - b.from;</span>
+<span class="fc" id="L198">		return result;</span>
 	}
 
 	public boolean addBreak(TimeTick from, TimeTick to) {
-<span class="fc" id="L200">		final Break added = new Break(from.getTime().doubleValue(), to.getTime().doubleValue());</span>
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		for (Break other : breaks)</span>
-<span class="nc bnc" id="L202" title="All 2 branches missed.">			if (added.overlaps(other))</span>
-<span class="nc" id="L203">				return false;</span>
+<span class="fc" id="L202">		final Break added = new Break(from.getTime().doubleValue(), to.getTime().doubleValue());</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">		for (Break other : breaks)</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">			if (added.overlaps(other))</span>
+<span class="nc" id="L205">				return false;</span>
 
-<span class="fc" id="L205">		breaks.add(added);</span>
-<span class="fc" id="L206">		Collections.sort(breaks, new Comparator&lt;Break&gt;() {</span>
+<span class="fc" id="L207">		breaks.add(added);</span>
+<span class="fc" id="L208">		Collections.sort(breaks, new Comparator&lt;Break&gt;() {</span>
 			public int compare(Break b1, Break b2) {
-<span class="nc" id="L208">				return Double.compare(b1.from, b2.from);</span>
+<span class="nc" id="L210">				return Double.compare(b1.from, b2.from);</span>
 			}
 		});
-<span class="fc" id="L211">		addTime(from);</span>
-<span class="fc" id="L212">		addTime(to);</span>
-<span class="fc" id="L213">		return true;</span>
+<span class="fc" id="L213">		addTime(from);</span>
+<span class="fc" id="L214">		addTime(to);</span>
+<span class="fc" id="L215">		return true;</span>
 	}
 
 	private Break getBreakContaining(double time) {
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		for (Break b : breaks)</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">			if (b.isStrictlyInside(time))</span>
-<span class="fc" id="L219">				return b;</span>
-<span class="fc" id="L220">		return null;</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">		for (Break b : breaks)</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">			if (b.isStrictlyInside(time))</span>
+<span class="fc" id="L221">				return b;</span>
+<span class="fc" id="L222">		return null;</span>
 	}
 
 	/**
@@ -225,165 +227,165 @@ public class TimingRuler {
 	 * the end of the axis.
 	 */
 	private List&lt;Double&gt; getRegularTimes(double first) {
-<span class="fc" id="L228">		final long tickUnitary = getOptimalTickUnit();</span>
-<span class="fc" id="L229">		final double width = getWidth();</span>
-<span class="fc" id="L230">		final List&lt;Double&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L231">		long i = 0;</span>
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		while (result.size() &lt;= 1000) {</span>
-<span class="fc" id="L233">			final double time = first + i * tickUnitary;</span>
-<span class="fc bfc" id="L234" title="All 2 branches covered.">			if (getPosInPixelInternal(time) &gt; width)</span>
-<span class="fc" id="L235">				break;</span>
-<span class="fc" id="L236">			final Break inside = getBreakContaining(time);</span>
-<span class="fc bfc" id="L237" title="All 2 branches covered.">			if (inside == null) {</span>
-<span class="fc" id="L238">				result.add(time);</span>
-<span class="fc" id="L239">				i++;</span>
+<span class="fc" id="L230">		final long tickUnitary = getOptimalTickUnit();</span>
+<span class="fc" id="L231">		final double width = getWidth();</span>
+<span class="fc" id="L232">		final List&lt;Double&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L233">		long i = 0;</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		while (result.size() &lt;= 1000) {</span>
+<span class="fc" id="L235">			final double time = first + i * tickUnitary;</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">			if (getPosInPixelInternal(time) &gt; width)</span>
+<span class="fc" id="L237">				break;</span>
+<span class="fc" id="L238">			final Break inside = getBreakContaining(time);</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">			if (inside == null) {</span>
+<span class="fc" id="L240">				result.add(time);</span>
+<span class="fc" id="L241">				i++;</span>
 			} else {
-<span class="fc" id="L241">				i = Math.max(i + 1, (long) Math.ceil((inside.to - first) / tickUnitary));</span>
+<span class="fc" id="L243">				i = Math.max(i + 1, (long) Math.ceil((inside.to - first) / tickUnitary));</span>
 			}
-<span class="fc" id="L243">		}</span>
-<span class="fc" id="L244">		return result;</span>
+<span class="fc" id="L245">		}</span>
+<span class="fc" id="L246">		return result;</span>
 	}
 
-<span class="fc" id="L247">	private long highestCommonFactorInternal = -1;</span>
+<span class="fc" id="L249">	private long highestCommonFactorInternal = -1;</span>
 
 	private long calculateHighestCommonFactor() {
-<span class="fc bfc" id="L250" title="All 2 branches covered.">		if (highestCommonFactorInternal == -1)</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">			for (long tick : getAbsolutesTicks())</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">				if (highestCommonFactorInternal == -1)</span>
-<span class="fc" id="L253">					highestCommonFactorInternal = tick;</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">		if (highestCommonFactorInternal == -1)</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">			for (long tick : getAbsolutesTicks())</span>
+<span class="fc bfc" id="L254" title="All 2 branches covered.">				if (highestCommonFactorInternal == -1)</span>
+<span class="fc" id="L255">					highestCommonFactorInternal = tick;</span>
 				else
-<span class="fc" id="L255">					highestCommonFactorInternal = computeHighestCommonFactor(highestCommonFactorInternal, tick);</span>
+<span class="fc" id="L257">					highestCommonFactorInternal = computeHighestCommonFactor(highestCommonFactorInternal, tick);</span>
 
-<span class="fc" id="L257">		return highestCommonFactorInternal;</span>
+<span class="fc" id="L259">		return highestCommonFactorInternal;</span>
 	}
 
 	private Set&lt;Long&gt; getAbsolutesTicks() {
-<span class="fc" id="L261">		final Set&lt;Long&gt; result = new TreeSet&lt;&gt;(new Comparator&lt;Long&gt;() {</span>
+<span class="fc" id="L263">		final Set&lt;Long&gt; result = new TreeSet&lt;&gt;(new Comparator&lt;Long&gt;() {</span>
 			public int compare(Long o1, Long o2) {
-<span class="fc" id="L263">				return o2.compareTo(o1);</span>
+<span class="fc" id="L265">				return o2.compareTo(o1);</span>
 			}
 		});
-<span class="fc bfc" id="L266" title="All 2 branches covered.">		for (TimeTick time : times) {</span>
-<span class="fc" id="L267">			final long value = Math.abs(time.getTime().longValue());</span>
-<span class="fc bfc" id="L268" title="All 2 branches covered.">			if (value &gt; 0)</span>
-<span class="fc" id="L269">				result.add(value);</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">		for (TimeTick time : times) {</span>
+<span class="fc" id="L269">			final long value = Math.abs(time.getTime().longValue());</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">			if (value &gt; 0)</span>
+<span class="fc" id="L271">				result.add(value);</span>
 
-<span class="fc" id="L271">		}</span>
-<span class="fc" id="L272">		return result;</span>
+<span class="fc" id="L273">		}</span>
+<span class="fc" id="L274">		return result;</span>
 	}
 
 	private int getNbTick() {
-<span class="pc bpc" id="L276" title="1 of 2 branches missed.">		if (times.size() == 0)</span>
-<span class="nc" id="L277">			return 1;</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		if (times.size() == 0)</span>
+<span class="nc" id="L279">			return 1;</span>
 
-<span class="fc" id="L279">		final long delta = getMax().getTime().longValue() - getMin().getTime().longValue();</span>
-<span class="fc" id="L280">		return Math.min(1000, (int) (1 + delta / getOptimalTickUnit()));</span>
+<span class="fc" id="L281">		final long delta = getMax().getTime().longValue() - getMin().getTime().longValue();</span>
+<span class="fc" id="L282">		return Math.min(1000, (int) (1 + delta / getOptimalTickUnit()));</span>
 	}
 
 	public final double getPosInPixel(TimeTick when) {
-<span class="fc" id="L284">		return getPosInPixelInternal(when.getTime().doubleValue());</span>
+<span class="fc" id="L286">		return getPosInPixelInternal(when.getTime().doubleValue());</span>
 	}
 
 	private double getPosInPixelInternal(double time) {
-<span class="fc" id="L288">		return getPosInTicks(time, getOptimalTickUnit()) * tickIntervalInPixels;</span>
+<span class="fc" id="L290">		return getPosInTicks(time, getOptimalTickUnit()) * tickIntervalInPixels;</span>
 	}
 
 	public void addTime(TimeTick time) {
-<span class="fc" id="L292">		this.highestCommonFactorInternal = -1;</span>
-<span class="fc" id="L293">		times.add(time);</span>
-<span class="pc bpc" id="L294" title="1 of 2 branches missed.">		if (time.getFormat() != TimingFormat.DECIMAL)</span>
-<span class="nc" id="L295">			this.format = time.getFormat();</span>
+<span class="fc" id="L294">		this.highestCommonFactorInternal = -1;</span>
+<span class="fc" id="L295">		times.add(time);</span>
+<span class="pc bpc" id="L296" title="1 of 2 branches missed.">		if (time.getFormat() != TimingFormat.DECIMAL)</span>
+<span class="nc" id="L297">			this.format = time.getFormat();</span>
 
-<span class="fc" id="L297">	}</span>
+<span class="fc" id="L299">	}</span>
 
 	private Style getStyleTimegrid() {
-<span class="fc" id="L300">		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.TIMINGDIAG_TIMEGRID);</span>
+<span class="fc" id="L302">		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.TIMINGDIAG_TIMEGRID);</span>
 	}
 
 	private Style getStyleTimeline() {
-<span class="fc" id="L304">		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.TIMINGDIAG_TIMELINE);</span>
+<span class="fc" id="L306">		return skinParam.getCurrentStyleBuilder().getMergedStyle(StyleQueries.TIMINGDIAG_TIMELINE);</span>
 	}
 
 	private TextBlock getTimeTextBlock(long time) {
-<span class="fc" id="L308">		return getTimeTextBlock(format.formatTime(time));</span>
+<span class="fc" id="L310">		return getTimeTextBlock(format.formatTime(time));</span>
 	}
 
 	private TextBlock getTimeTextBlock(String string) {
-<span class="fc" id="L312">		final Display display = Display.getWithNewlines(skinParam.getPragma(), string);</span>
-<span class="fc" id="L313">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, getStyleTimeline());</span>
-<span class="fc" id="L314">		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
+<span class="fc" id="L314">		final Display display = Display.getWithNewlines(skinParam.getPragma(), string);</span>
+<span class="fc" id="L315">		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, getStyleTimeline());</span>
+<span class="fc" id="L316">		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);</span>
 	}
 
 	public void drawTimeAxis(UGraphic ug, TimeAxisStategy timeAxisStategy, Map&lt;String, TimeTick&gt; codes) {
-<span class="pc bpc" id="L318" title="1 of 2 branches missed.">		if (timeAxisStategy == TimeAxisStategy.HIDDEN)</span>
-<span class="nc" id="L319">			return;</span>
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">		if (timeAxisStategy == TimeAxisStategy.HIDDEN)</span>
+<span class="nc" id="L321">			return;</span>
 
-<span class="fc" id="L321">		final Style styleTimeline = getStyleTimeline();</span>
+<span class="fc" id="L323">		final Style styleTimeline = getStyleTimeline();</span>
 
-<span class="fc" id="L323">		final HColor color = styleTimeline.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L324">		final UStroke stroke = styleTimeline.getStroke();</span>
+<span class="fc" id="L325">		final HColor color = styleTimeline.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L326">		final UStroke stroke = styleTimeline.getStroke();</span>
 
-<span class="fc" id="L326">		ug = ug.apply(stroke).apply(color);</span>
+<span class="fc" id="L328">		ug = ug.apply(stroke).apply(color);</span>
 
-<span class="fc bfc" id="L328" title="All 2 branches covered.">		if (timeAxisStategy == TimeAxisStategy.AUTOMATIC)</span>
-<span class="fc" id="L329">			drawTicksAutomatic(ug);</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">		if (timeAxisStategy == TimeAxisStategy.AUTOMATIC)</span>
+<span class="fc" id="L331">			drawTicksAutomatic(ug);</span>
 		else
-<span class="fc" id="L331">			drawTicksManual(ug);</span>
+<span class="fc" id="L333">			drawTicksManual(ug);</span>
 
-<span class="fc bfc" id="L333" title="All 2 branches covered.">		for (TimeLabel label : getTimeLabels(ug.getStringBounder(), timeAxisStategy, codes))</span>
-<span class="fc" id="L334">			label.text.drawU(ug.apply(new UTranslate(label.x, TICK_HEIGHT + 1)));</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">		for (TimeLabel label : getTimeLabels(ug.getStringBounder(), timeAxisStategy, codes))</span>
+<span class="fc" id="L336">			label.text.drawU(ug.apply(new UTranslate(label.x, TICK_HEIGHT + 1)));</span>
 
-<span class="fc" id="L336">	}</span>
+<span class="fc" id="L338">	}</span>
 
 	private void drawTicksManual(UGraphic ug) {
-<span class="fc" id="L339">		final ULine line = ULine.vline(TICK_HEIGHT);</span>
-<span class="fc" id="L340">		final double firstTickPosition = getFirstTickPosition();</span>
+<span class="fc" id="L341">		final ULine line = ULine.vline(TICK_HEIGHT);</span>
+<span class="fc" id="L342">		final double firstTickPosition = getFirstTickPosition();</span>
 
-<span class="fc" id="L342">		drawAxisLine(ug, firstTickPosition, getAxisEnd(TimeAxisStategy.MANUAL) - firstTickPosition);</span>
+<span class="fc" id="L344">		drawAxisLine(ug, firstTickPosition, getAxisEnd(TimeAxisStategy.MANUAL) - firstTickPosition);</span>
 
-<span class="fc bfc" id="L344" title="All 2 branches covered.">		for (TimeTick tick : times) {</span>
-<span class="pc bpc" id="L345" title="1 of 2 branches missed.">			if (getBreakContaining(tick.getTime().doubleValue()) != null)</span>
-<span class="nc" id="L346">				continue;</span>
-<span class="fc" id="L347">			ug.apply(UTranslate.dx(getPosInPixel(tick))).draw(line);</span>
-<span class="fc" id="L348">		}</span>
-<span class="fc" id="L349">	}</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">		for (TimeTick tick : times) {</span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">			if (getBreakContaining(tick.getTime().doubleValue()) != null)</span>
+<span class="nc" id="L348">				continue;</span>
+<span class="fc" id="L349">			ug.apply(UTranslate.dx(getPosInPixel(tick))).draw(line);</span>
+<span class="fc" id="L350">		}</span>
+<span class="fc" id="L351">	}</span>
 
 	private void drawTicksAutomatic(UGraphic ug) {
-<span class="fc" id="L352">		final ULine line = ULine.vline(TICK_HEIGHT);</span>
-<span class="fc" id="L353">		final double firstTickPosition = getFirstTickPosition();</span>
-<span class="fc bfc" id="L354" title="All 2 branches covered.">		if (breaks.isEmpty()) {</span>
-<span class="fc" id="L355">			final double axisEnd = getAxisEnd(TimeAxisStategy.AUTOMATIC);</span>
-<span class="fc bfc" id="L356" title="All 2 branches covered.">			for (int i = 0; firstTickPosition + i * tickIntervalInPixels &lt;= axisEnd; i++)</span>
-<span class="fc" id="L357">				ug.apply(UTranslate.dx(firstTickPosition + i * tickIntervalInPixels)).draw(line);</span>
-<span class="fc" id="L358">			ug.apply(UTranslate.dx(firstTickPosition)).draw(ULine.hline(axisEnd - firstTickPosition));</span>
-<span class="fc" id="L359">		} else {</span>
-<span class="fc" id="L360">			final List&lt;Double&gt; ticks = getRegularTimes(getFirstPositiveOrZeroValue().doubleValue());</span>
-<span class="fc bfc" id="L361" title="All 2 branches covered.">			for (double time : ticks)</span>
-<span class="fc" id="L362">				ug.apply(UTranslate.dx(getPosInPixelInternal(time))).draw(line);</span>
-<span class="fc bfc" id="L363" title="All 2 branches covered.">			for (Break b : breaks) {</span>
-<span class="fc" id="L364">				ug.apply(UTranslate.dx(getPosInPixelInternal(b.from))).draw(line);</span>
-<span class="fc" id="L365">				ug.apply(UTranslate.dx(getPosInPixelInternal(b.to))).draw(line);</span>
-<span class="fc" id="L366">			}</span>
-<span class="fc" id="L367">			final double firstPosition = getPosInPixelInternal(ticks.get(0));</span>
-<span class="fc" id="L368">			drawAxisLine(ug, firstPosition, getAxisEnd(TimeAxisStategy.AUTOMATIC) - firstPosition);</span>
+<span class="fc" id="L354">		final ULine line = ULine.vline(TICK_HEIGHT);</span>
+<span class="fc" id="L355">		final double firstTickPosition = getFirstTickPosition();</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">		if (breaks.isEmpty()) {</span>
+<span class="fc" id="L357">			final double axisEnd = getAxisEnd(TimeAxisStategy.AUTOMATIC);</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">			for (int i = 0; firstTickPosition + i * tickIntervalInPixels &lt;= axisEnd; i++)</span>
+<span class="fc" id="L359">				ug.apply(UTranslate.dx(firstTickPosition + i * tickIntervalInPixels)).draw(line);</span>
+<span class="fc" id="L360">			ug.apply(UTranslate.dx(firstTickPosition)).draw(ULine.hline(axisEnd - firstTickPosition));</span>
+<span class="fc" id="L361">		} else {</span>
+<span class="fc" id="L362">			final List&lt;Double&gt; ticks = getRegularTimes(getFirstPositiveOrZeroValue().doubleValue());</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">			for (double time : ticks)</span>
+<span class="fc" id="L364">				ug.apply(UTranslate.dx(getPosInPixelInternal(time))).draw(line);</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">			for (Break b : breaks) {</span>
+<span class="fc" id="L366">				ug.apply(UTranslate.dx(getPosInPixelInternal(b.from))).draw(line);</span>
+<span class="fc" id="L367">				ug.apply(UTranslate.dx(getPosInPixelInternal(b.to))).draw(line);</span>
+<span class="fc" id="L368">			}</span>
+<span class="fc" id="L369">			final double firstPosition = getPosInPixelInternal(ticks.get(0));</span>
+<span class="fc" id="L370">			drawAxisLine(ug, firstPosition, getAxisEnd(TimeAxisStategy.AUTOMATIC) - firstPosition);</span>
 		}
-<span class="fc" id="L370">	}</span>
+<span class="fc" id="L372">	}</span>
 
 	private double getFirstTickPosition() {
-<span class="fc" id="L373">		return getPosInPixelInternal(getFirstPositiveOrZeroValue().doubleValue());</span>
+<span class="fc" id="L375">		return getPosInPixelInternal(getFirstPositiveOrZeroValue().doubleValue());</span>
 	}
 
 	private double getAxisEnd(TimeAxisStategy timeAxisStategy) {
-<span class="fc bfc" id="L377" title="All 4 branches covered.">		if (timeAxisStategy == TimeAxisStategy.AUTOMATIC &amp;&amp; breaks.isEmpty() == false) {</span>
-<span class="fc" id="L378">			final List&lt;Double&gt; ticks = getRegularTimes(getFirstPositiveOrZeroValue().doubleValue());</span>
-<span class="fc" id="L379">			return getPosInPixelInternal(ticks.get(ticks.size() - 1));</span>
+<span class="fc bfc" id="L379" title="All 4 branches covered.">		if (timeAxisStategy == TimeAxisStategy.AUTOMATIC &amp;&amp; breaks.isEmpty() == false) {</span>
+<span class="fc" id="L380">			final List&lt;Double&gt; ticks = getRegularTimes(getFirstPositiveOrZeroValue().doubleValue());</span>
+<span class="fc" id="L381">			return getPosInPixelInternal(ticks.get(ticks.size() - 1));</span>
 		}
-<span class="fc" id="L381">		final double firstTickPosition = getFirstTickPosition();</span>
-<span class="fc" id="L382">		int nb = 0;</span>
-<span class="fc bfc" id="L383" title="All 2 branches covered.">		while (firstTickPosition + nb * tickIntervalInPixels &lt;= getWidth())</span>
-<span class="fc" id="L384">			nb++;</span>
+<span class="fc" id="L383">		final double firstTickPosition = getFirstTickPosition();</span>
+<span class="fc" id="L384">		int nb = 0;</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">		while (firstTickPosition + nb * tickIntervalInPixels &lt;= getWidth())</span>
+<span class="fc" id="L386">			nb++;</span>
 
-<span class="fc" id="L386">		return firstTickPosition + (nb - 1) * tickIntervalInPixels;</span>
+<span class="fc" id="L388">		return firstTickPosition + (nb - 1) * tickIntervalInPixels;</span>
 	}
 
 	static class TimeLabel {
@@ -391,133 +393,170 @@ public class TimingRuler {
 		private final double x;
 		private final double width;
 
-<span class="fc" id="L394">		private TimeLabel(TextBlock text, double x, double width) {</span>
-<span class="fc" id="L395">			this.text = text;</span>
-<span class="fc" id="L396">			this.x = x;</span>
-<span class="fc" id="L397">			this.width = width;</span>
-<span class="fc" id="L398">		}</span>
+<span class="fc" id="L396">		private TimeLabel(TextBlock text, double x, double width) {</span>
+<span class="fc" id="L397">			this.text = text;</span>
+<span class="fc" id="L398">			this.x = x;</span>
+<span class="fc" id="L399">			this.width = width;</span>
+<span class="fc" id="L400">		}</span>
 
 		private double getRight() {
-<span class="fc" id="L401">			return x + width;</span>
+<span class="fc" id="L403">			return x + width;</span>
 		}
+
+		private boolean overlaps(TimeLabel other) {
+<span class="fc bfc" id="L407" title="All 4 branches covered.">			return x &lt; other.getRight() + LABEL_GAP &amp;&amp; other.x &lt; getRight() + LABEL_GAP;</span>
+		}
+	}
+
+	private static boolean overlapsAny(TimeLabel label, List&lt;TimeLabel&gt; others) {
+<span class="fc bfc" id="L412" title="All 2 branches covered.">		for (TimeLabel other : others)</span>
+<span class="fc bfc" id="L413" title="All 2 branches covered.">			if (other.overlaps(label))</span>
+<span class="fc" id="L414">				return true;</span>
+<span class="fc" id="L415">		return false;</span>
+	}
+
+	private boolean isBreakEdge(double time) {
+<span class="fc bfc" id="L419" title="All 2 branches covered.">		for (Break b : breaks)</span>
+<span class="fc bfc" id="L420" title="All 4 branches covered.">			if (time == b.from || time == b.to)</span>
+<span class="fc" id="L421">				return true;</span>
+<span class="fc" id="L422">		return false;</span>
 	}
 
 	private List&lt;TimeLabel&gt; getTimeLabels(StringBounder stringBounder, TimeAxisStategy timeAxisStategy,
 			Map&lt;String, TimeTick&gt; codes) {
-<span class="fc" id="L407">		final List&lt;Double&gt; moments = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L408">		final List&lt;String&gt; labels = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L409" title="All 2 branches covered.">		if (timeAxisStategy == TimeAxisStategy.AUTOMATIC) {</span>
-<span class="fc bfc" id="L410" title="All 2 branches covered.">			for (long round : roundValues()) {</span>
-<span class="fc" id="L411">				moments.add((double) round);</span>
-<span class="fc" id="L412">				labels.add(format.formatTime(round));</span>
-<span class="fc" id="L413">			}</span>
+<span class="fc" id="L427">		final List&lt;Double&gt; moments = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L428">		final List&lt;String&gt; labels = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L429" title="All 2 branches covered.">		if (timeAxisStategy == TimeAxisStategy.AUTOMATIC) {</span>
+<span class="fc bfc" id="L430" title="All 2 branches covered.">			for (long round : roundValues()) {</span>
+<span class="fc" id="L431">				moments.add((double) round);</span>
+<span class="fc" id="L432">				labels.add(format.formatTime(round));</span>
+<span class="fc" id="L433">			}</span>
 		} else {
-<span class="fc bfc" id="L415" title="All 2 branches covered.">			for (TimeTick tick : times) {</span>
-<span class="pc bpc" id="L416" title="1 of 2 branches missed.">				if (getBreakContaining(tick.getTime().doubleValue()) != null)</span>
-<span class="nc" id="L417">					continue;</span>
-<span class="fc" id="L418">				final String label = getLabel(tick, codes);</span>
-<span class="pc bpc" id="L419" title="1 of 2 branches missed.">				if (label.length() == 0)</span>
-<span class="nc" id="L420">					continue;</span>
-<span class="fc" id="L421">				moments.add(tick.getTime().doubleValue());</span>
-<span class="fc" id="L422">				labels.add(label);</span>
-<span class="fc" id="L423">			}</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">			for (TimeTick tick : times) {</span>
+<span class="pc bpc" id="L436" title="1 of 2 branches missed.">				if (getBreakContaining(tick.getTime().doubleValue()) != null)</span>
+<span class="nc" id="L437">					continue;</span>
+<span class="fc" id="L438">				final String label = getLabel(tick, codes);</span>
+<span class="pc bpc" id="L439" title="1 of 2 branches missed.">				if (label.length() == 0)</span>
+<span class="nc" id="L440">					continue;</span>
+<span class="fc" id="L441">				moments.add(tick.getTime().doubleValue());</span>
+<span class="fc" id="L442">				labels.add(label);</span>
+<span class="fc" id="L443">			}</span>
 		}
 
-<span class="fc" id="L426">		final List&lt;TimeLabel&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L427" title="All 2 branches covered.">		for (int i = 0; i &lt; labels.size(); i++) {</span>
-<span class="fc" id="L428">			final TextBlock text = getTimeTextBlock(labels.get(i));</span>
-<span class="fc" id="L429">			final double width = text.calculateDimension(stringBounder).getWidth();</span>
-<span class="fc" id="L430">			result.add(new TimeLabel(text, getLabelX(moments.get(i), width), width));</span>
+<span class="fc" id="L446">		final List&lt;TimeLabel&gt; all = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L447">		final List&lt;TimeLabel&gt; breakEdges = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L448" title="All 2 branches covered.">		for (int i = 0; i &lt; labels.size(); i++) {</span>
+<span class="fc" id="L449">			final TextBlock text = getTimeTextBlock(labels.get(i));</span>
+<span class="fc" id="L450">			final double width = text.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L451">			final TimeLabel label = new TimeLabel(text, getLabelX(moments.get(i), width), width);</span>
+<span class="fc" id="L452">			all.add(label);</span>
+<span class="fc bfc" id="L453" title="All 2 branches covered.">			if (isBreakEdge(moments.get(i)))</span>
+<span class="fc" id="L454">				breakEdges.add(label);</span>
 		}
-<span class="fc bfc" id="L432" title="All 2 branches covered.">		if (unit == null)</span>
-<span class="fc" id="L433">			return result;</span>
+
+		// Events close in time give labels drawn on top of each other (#3028): going from
+		// left to right, a label that would overlap the previous one is skipped. The labels
+		// of break edges are always kept, the regular ones give way to them.
+<span class="fc" id="L460">		final List&lt;TimeLabel&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L461" title="All 2 branches covered.">		for (TimeLabel label : all) {</span>
+<span class="fc bfc" id="L462" title="All 2 branches covered.">			if (breakEdges.contains(label) == false) {</span>
+<span class="fc bfc" id="L463" title="All 4 branches covered.">				if (result.size() &gt; 0 &amp;&amp; result.get(result.size() - 1).overlaps(label))</span>
+<span class="fc" id="L464">					continue;</span>
+<span class="fc bfc" id="L465" title="All 2 branches covered.">				if (overlapsAny(label, breakEdges))</span>
+<span class="fc" id="L466">					continue;</span>
+			}
+<span class="fc" id="L468">			result.add(label);</span>
+<span class="fc" id="L469">		}</span>
+
+<span class="fc bfc" id="L471" title="All 2 branches covered.">		if (unit == null)</span>
+<span class="fc" id="L472">			return result;</span>
 
 		// The unit is right-aligned on the last tick of the axis, so that it never makes the
 		// diagram wider: the time values it would overlap are removed instead
-<span class="fc" id="L437">		final TextBlock unitText = getTimeTextBlock(unit);</span>
-<span class="fc" id="L438">		final double unitWidth = unitText.calculateDimension(stringBounder).getWidth();</span>
-<span class="fc" id="L439">		final double unitX = getAxisEnd(timeAxisStategy) - unitWidth;</span>
-<span class="pc bpc" id="L440" title="1 of 4 branches missed.">		while (result.size() &gt; 0 &amp;&amp; result.get(result.size() - 1).getRight() + UNIT_GAP &gt; unitX)</span>
-<span class="fc" id="L441">			result.remove(result.size() - 1);</span>
+<span class="fc" id="L476">		final TextBlock unitText = getTimeTextBlock(unit);</span>
+<span class="fc" id="L477">		final double unitWidth = unitText.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L478">		final double unitX = getAxisEnd(timeAxisStategy) - unitWidth;</span>
+<span class="pc bpc" id="L479" title="1 of 4 branches missed.">		while (result.size() &gt; 0 &amp;&amp; result.get(result.size() - 1).getRight() + UNIT_GAP &gt; unitX)</span>
+<span class="fc" id="L480">			result.remove(result.size() - 1);</span>
 
-<span class="fc" id="L443">		result.add(new TimeLabel(unitText, unitX, unitWidth));</span>
-<span class="fc" id="L444">		return result;</span>
+<span class="fc" id="L482">		result.add(new TimeLabel(unitText, unitX, unitWidth));</span>
+<span class="fc" id="L483">		return result;</span>
 	}
 
 	private String getLabel(TimeTick tick, Map&lt;String, TimeTick&gt; codes) {
-<span class="pc bpc" id="L448" title="1 of 2 branches missed.">		for (Entry&lt;String, TimeTick&gt; ent : codes.entrySet())</span>
-<span class="nc bnc" id="L449" title="All 2 branches missed.">			if (tick.equals(ent.getValue()))</span>
-<span class="nc" id="L450">				return ent.getKey();</span>
+<span class="fc bfc" id="L487" title="All 2 branches covered.">		for (Entry&lt;String, TimeTick&gt; ent : codes.entrySet())</span>
+<span class="fc bfc" id="L488" title="All 2 branches covered.">			if (tick.equals(ent.getValue()))</span>
+<span class="fc" id="L489">				return ent.getKey();</span>
 
-<span class="fc" id="L452">		return format.formatTime(tick.getTime());</span>
+<span class="fc" id="L491">		return format.formatTime(tick.getTime());</span>
 	}
 
 	private BigDecimal getFirstPositiveOrZeroValue() {
-<span class="pc bpc" id="L456" title="1 of 2 branches missed.">		for (TimeTick time : times)</span>
-<span class="pc bpc" id="L457" title="1 of 2 branches missed.">			if (time.getTime().signum() &gt;= 0)</span>
-<span class="fc" id="L458">				return time.getTime();</span>
+<span class="pc bpc" id="L495" title="1 of 2 branches missed.">		for (TimeTick time : times)</span>
+<span class="pc bpc" id="L496" title="1 of 2 branches missed.">			if (time.getTime().signum() &gt;= 0)</span>
+<span class="fc" id="L497">				return time.getTime();</span>
 
-<span class="nc" id="L460">		throw new IllegalStateException();</span>
+<span class="nc" id="L499">		throw new IllegalStateException();</span>
 	}
 
 	private Collection&lt;Long&gt; roundValues() {
-<span class="fc" id="L464">		final SortedSet&lt;Long&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="fc bfc" id="L465" title="All 2 branches covered.">		if (forcedTickUnitary == 0) {</span>
-<span class="fc bfc" id="L466" title="All 2 branches covered.">			for (TimeTick tick : times) {</span>
-<span class="fc" id="L467">				final long round = tick.getTime().longValue();</span>
-<span class="fc" id="L468">				result.add(round);</span>
-<span class="fc" id="L469">			}</span>
-<span class="pc bpc" id="L470" title="1 of 2 branches missed.">		} else if (breaks.isEmpty()) {</span>
-<span class="fc" id="L471">			final int nb = getNbTick();</span>
-<span class="fc bfc" id="L472" title="All 2 branches covered.">			for (int i = 0; i &lt;= nb; i++) {</span>
-<span class="fc" id="L473">				final long round = tickToTime(i);</span>
-<span class="fc" id="L474">				result.add(round);</span>
+<span class="fc" id="L503">		final SortedSet&lt;Long&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="fc bfc" id="L504" title="All 2 branches covered.">		if (forcedTickUnitary == 0) {</span>
+<span class="fc bfc" id="L505" title="All 2 branches covered.">			for (TimeTick tick : times) {</span>
+<span class="fc" id="L506">				final long round = tick.getTime().longValue();</span>
+<span class="fc" id="L507">				result.add(round);</span>
+<span class="fc" id="L508">			}</span>
+<span class="pc bpc" id="L509" title="1 of 2 branches missed.">		} else if (breaks.isEmpty()) {</span>
+<span class="fc" id="L510">			final int nb = getNbTick();</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">			for (int i = 0; i &lt;= nb; i++) {</span>
+<span class="fc" id="L512">				final long round = tickToTime(i);</span>
+<span class="fc" id="L513">				result.add(round);</span>
 			}
-<span class="fc" id="L476">		} else {</span>
-<span class="nc bnc" id="L477" title="All 2 branches missed.">			for (double time : getRegularTimes(getMin().getTime().doubleValue()))</span>
-<span class="nc bnc" id="L478" title="All 2 branches missed.">				if (isTooCloseToBreak(time) == false)</span>
-<span class="nc" id="L479">					result.add((long) time);</span>
+<span class="fc" id="L515">		} else {</span>
+<span class="nc bnc" id="L516" title="All 2 branches missed.">			for (double time : getRegularTimes(getMin().getTime().doubleValue()))</span>
+<span class="nc bnc" id="L517" title="All 2 branches missed.">				if (isTooCloseToBreak(time) == false)</span>
+<span class="nc" id="L518">					result.add((long) time);</span>
 		}
-<span class="pc bpc" id="L481" title="3 of 4 branches missed.">		if (result.first() &lt; 0 &amp;&amp; result.last() &gt; 0)</span>
-<span class="nc" id="L482">			result.add(0L);</span>
+<span class="pc bpc" id="L520" title="3 of 4 branches missed.">		if (result.first() &lt; 0 &amp;&amp; result.last() &gt; 0)</span>
+<span class="nc" id="L521">			result.add(0L);</span>
 
-<span class="fc bfc" id="L484" title="All 2 branches covered.">		for (Break b : breaks) {</span>
-<span class="fc" id="L485">			result.add((long) b.from);</span>
-<span class="fc" id="L486">			result.add((long) b.to);</span>
-<span class="fc" id="L487">		}</span>
-<span class="fc bfc" id="L488" title="All 2 branches covered.">		for (Iterator&lt;Long&gt; it = result.iterator(); it.hasNext();)</span>
-<span class="pc bpc" id="L489" title="1 of 2 branches missed.">			if (getBreakContaining(it.next()) != null)</span>
-<span class="nc" id="L490">				it.remove();</span>
+<span class="fc bfc" id="L523" title="All 2 branches covered.">		for (Break b : breaks) {</span>
+<span class="fc" id="L524">			result.add((long) b.from);</span>
+<span class="fc" id="L525">			result.add((long) b.to);</span>
+<span class="fc" id="L526">		}</span>
+<span class="fc bfc" id="L527" title="All 2 branches covered.">		for (Iterator&lt;Long&gt; it = result.iterator(); it.hasNext();)</span>
+<span class="pc bpc" id="L528" title="1 of 2 branches missed.">			if (getBreakContaining(it.next()) != null)</span>
+<span class="nc" id="L529">				it.remove();</span>
 
-<span class="fc" id="L492">		return result;</span>
+<span class="fc" id="L531">		return result;</span>
 	}
 
 	private long tickToTime(int i) {
-<span class="fc" id="L496">		return forcedTickUnitary * i + getMin().getTime().longValue();</span>
+<span class="fc" id="L535">		return forcedTickUnitary * i + getMin().getTime().longValue();</span>
 	}
 
 	public void drawVlines(UGraphic ug, double height) {
-<span class="fc" id="L500">		ug = applyForVLines(ug, getStyleTimegrid(), skinParam);</span>
-<span class="fc" id="L501">		final ULine line = ULine.vline(height);</span>
-<span class="fc bfc" id="L502" title="All 2 branches covered.">		if (breaks.isEmpty()) {</span>
-<span class="fc" id="L503">			final int nb = getNbTick();</span>
-<span class="fc bfc" id="L504" title="All 2 branches covered.">			for (int i = 0; i &lt;= nb; i++)</span>
-<span class="fc" id="L505">				ug.apply(UTranslate.dx(tickIntervalInPixels * i)).draw(line);</span>
-<span class="fc" id="L506">		} else {</span>
-<span class="fc bfc" id="L507" title="All 2 branches covered.">			for (double time : getRegularTimes(getMin().getTime().doubleValue()))</span>
-<span class="fc" id="L508">				ug.apply(UTranslate.dx(getPosInPixelInternal(time))).draw(line);</span>
+<span class="fc" id="L539">		ug = applyForVLines(ug, getStyleTimegrid(), skinParam);</span>
+<span class="fc" id="L540">		final ULine line = ULine.vline(height);</span>
+<span class="fc bfc" id="L541" title="All 2 branches covered.">		if (breaks.isEmpty()) {</span>
+<span class="fc" id="L542">			final int nb = getNbTick();</span>
+<span class="fc bfc" id="L543" title="All 2 branches covered.">			for (int i = 0; i &lt;= nb; i++)</span>
+<span class="fc" id="L544">				ug.apply(UTranslate.dx(tickIntervalInPixels * i)).draw(line);</span>
+<span class="fc" id="L545">		} else {</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">			for (double time : getRegularTimes(getMin().getTime().doubleValue()))</span>
+<span class="fc" id="L547">				ug.apply(UTranslate.dx(getPosInPixelInternal(time))).draw(line);</span>
 		}
-<span class="fc" id="L510">	}</span>
+<span class="fc" id="L549">	}</span>
 
 	// Amplitude of the zigzag edges of a break
 	private static final double BREAK_MARK = 3;
 
 	private double getBreakStart(Break b) {
-<span class="fc" id="L516">		return getPosInPixelInternal(b.from);</span>
+<span class="fc" id="L555">		return getPosInPixelInternal(b.from);</span>
 	}
 
 	private double getBreakEnd(Break b) {
-<span class="fc" id="L520">		return getPosInPixelInternal(b.to);</span>
+<span class="fc" id="L559">		return getPosInPixelInternal(b.to);</span>
 	}
 
 	/**
@@ -525,123 +564,123 @@ public class TimingRuler {
 	 * are pushed away from it, so that both edges stay readable.
 	 */
 	private double getLabelX(double time, double labelWidth) {
-<span class="fc" id="L528">		final double x = getPosInPixelInternal(time);</span>
-<span class="fc bfc" id="L529" title="All 2 branches covered.">		for (Break b : breaks)</span>
-<span class="fc bfc" id="L530" title="All 2 branches covered.">			if (time == b.to)</span>
-<span class="fc" id="L531">				return x;</span>
-<span class="fc bfc" id="L532" title="All 2 branches covered.">		for (Break b : breaks)</span>
-<span class="fc bfc" id="L533" title="All 2 branches covered.">			if (time == b.from)</span>
-<span class="fc" id="L534">				return x - labelWidth;</span>
-<span class="fc" id="L535">		return x - labelWidth / 2;</span>
+<span class="fc" id="L567">		final double x = getPosInPixelInternal(time);</span>
+<span class="fc bfc" id="L568" title="All 2 branches covered.">		for (Break b : breaks)</span>
+<span class="fc bfc" id="L569" title="All 2 branches covered.">			if (time == b.to)</span>
+<span class="fc" id="L570">				return x;</span>
+<span class="fc bfc" id="L571" title="All 2 branches covered.">		for (Break b : breaks)</span>
+<span class="fc bfc" id="L572" title="All 2 branches covered.">			if (time == b.from)</span>
+<span class="fc" id="L573">				return x - labelWidth;</span>
+<span class="fc" id="L574">		return x - labelWidth / 2;</span>
 	}
 
 	// A regular label that would collide with the label of a break edge
 	private boolean isTooCloseToBreak(double time) {
-<span class="nc" id="L540">		final long tickUnitary = getOptimalTickUnit();</span>
-<span class="nc bnc" id="L541" title="All 2 branches missed.">		for (Break b : breaks) {</span>
-<span class="nc bnc" id="L542" title="All 4 branches missed.">			if (time != b.from &amp;&amp; Math.abs(time - b.from) &lt; tickUnitary)</span>
-<span class="nc" id="L543">				return true;</span>
-<span class="nc bnc" id="L544" title="All 4 branches missed.">			if (time != b.to &amp;&amp; Math.abs(time - b.to) &lt; tickUnitary)</span>
-<span class="nc" id="L545">				return true;</span>
-<span class="nc" id="L546">		}</span>
-<span class="nc" id="L547">		return false;</span>
+<span class="nc" id="L579">		final long tickUnitary = getOptimalTickUnit();</span>
+<span class="nc bnc" id="L580" title="All 2 branches missed.">		for (Break b : breaks) {</span>
+<span class="nc bnc" id="L581" title="All 4 branches missed.">			if (time != b.from &amp;&amp; Math.abs(time - b.from) &lt; tickUnitary)</span>
+<span class="nc" id="L582">				return true;</span>
+<span class="nc bnc" id="L583" title="All 4 branches missed.">			if (time != b.to &amp;&amp; Math.abs(time - b.to) &lt; tickUnitary)</span>
+<span class="nc" id="L584">				return true;</span>
+<span class="nc" id="L585">		}</span>
+<span class="nc" id="L586">		return false;</span>
 	}
 
 	private void drawAxisLine(UGraphic ug, double x, double length) {
-<span class="fc" id="L551">		final double end = x + length;</span>
-<span class="fc" id="L552">		double current = x;</span>
-<span class="fc bfc" id="L553" title="All 2 branches covered.">		for (Break b : breaks) {</span>
-<span class="fc" id="L554">			final double start = getBreakStart(b);</span>
-<span class="fc" id="L555">			final double stop = getBreakEnd(b);</span>
-<span class="pc bpc" id="L556" title="2 of 4 branches missed.">			if (stop &lt;= current || start &gt;= end)</span>
-<span class="nc" id="L557">				continue;</span>
-<span class="pc bpc" id="L558" title="1 of 2 branches missed.">			if (start &gt; current)</span>
-<span class="fc" id="L559">				ug.apply(UTranslate.dx(current)).draw(ULine.hline(start - current));</span>
-<span class="fc" id="L560">			current = stop;</span>
-<span class="fc" id="L561">		}</span>
-<span class="fc bfc" id="L562" title="All 2 branches covered.">		if (current == x)</span>
-<span class="fc" id="L563">			ug.apply(UTranslate.dx(x)).draw(ULine.hline(length));</span>
-<span class="pc bpc" id="L564" title="1 of 2 branches missed.">		else if (end &gt; current)</span>
-<span class="fc" id="L565">			ug.apply(UTranslate.dx(current)).draw(ULine.hline(end - current));</span>
-<span class="fc" id="L566">	}</span>
+<span class="fc" id="L590">		final double end = x + length;</span>
+<span class="fc" id="L591">		double current = x;</span>
+<span class="fc bfc" id="L592" title="All 2 branches covered.">		for (Break b : breaks) {</span>
+<span class="fc" id="L593">			final double start = getBreakStart(b);</span>
+<span class="fc" id="L594">			final double stop = getBreakEnd(b);</span>
+<span class="pc bpc" id="L595" title="2 of 4 branches missed.">			if (stop &lt;= current || start &gt;= end)</span>
+<span class="nc" id="L596">				continue;</span>
+<span class="pc bpc" id="L597" title="1 of 2 branches missed.">			if (start &gt; current)</span>
+<span class="fc" id="L598">				ug.apply(UTranslate.dx(current)).draw(ULine.hline(start - current));</span>
+<span class="fc" id="L599">			current = stop;</span>
+<span class="fc" id="L600">		}</span>
+<span class="fc bfc" id="L601" title="All 2 branches covered.">		if (current == x)</span>
+<span class="fc" id="L602">			ug.apply(UTranslate.dx(x)).draw(ULine.hline(length));</span>
+<span class="pc bpc" id="L603" title="1 of 2 branches missed.">		else if (end &gt; current)</span>
+<span class="fc" id="L604">			ug.apply(UTranslate.dx(current)).draw(ULine.hline(end - current));</span>
+<span class="fc" id="L605">	}</span>
 
 	/**
 	 * Masks the squeezed part of each break over a player area, and draws its two
 	 * zigzag edges.
 	 */
 	public void drawBreaks(UGraphic ug, double height, HColor back) {
-<span class="fc" id="L573">		final Style styleTimeline = getStyleTimeline();</span>
-<span class="fc" id="L574">		final HColor color = styleTimeline.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="fc bfc" id="L575" title="All 2 branches covered.">		for (Break b : breaks) {</span>
-<span class="fc" id="L576">			final List&lt;XPoint2D&gt; left = getZigzag(getBreakStart(b), height);</span>
-<span class="fc" id="L577">			final List&lt;XPoint2D&gt; right = getZigzag(getBreakEnd(b), height);</span>
+<span class="fc" id="L612">		final Style styleTimeline = getStyleTimeline();</span>
+<span class="fc" id="L613">		final HColor color = styleTimeline.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc bfc" id="L614" title="All 2 branches covered.">		for (Break b : breaks) {</span>
+<span class="fc" id="L615">			final List&lt;XPoint2D&gt; left = getZigzag(getBreakStart(b), height);</span>
+<span class="fc" id="L616">			final List&lt;XPoint2D&gt; right = getZigzag(getBreakEnd(b), height);</span>
 
-<span class="fc" id="L579">			final UPath mask = UPath.none();</span>
-<span class="fc bfc" id="L580" title="All 2 branches covered.">			for (XPoint2D pt : left)</span>
-<span class="fc bfc" id="L581" title="All 2 branches covered.">				if (mask.isEmpty())</span>
-<span class="fc" id="L582">					mask.moveTo(pt);</span>
+<span class="fc" id="L618">			final UPath mask = UPath.none();</span>
+<span class="fc bfc" id="L619" title="All 2 branches covered.">			for (XPoint2D pt : left)</span>
+<span class="fc bfc" id="L620" title="All 2 branches covered.">				if (mask.isEmpty())</span>
+<span class="fc" id="L621">					mask.moveTo(pt);</span>
 				else
-<span class="fc" id="L584">					mask.lineTo(pt);</span>
-<span class="fc bfc" id="L585" title="All 2 branches covered.">			for (int i = right.size() - 1; i &gt;= 0; i--)</span>
-<span class="fc" id="L586">				mask.lineTo(right.get(i));</span>
-<span class="fc" id="L587">			mask.closePath();</span>
-<span class="fc" id="L588">			ug.apply(back).apply(back.bg()).draw(mask);</span>
+<span class="fc" id="L623">					mask.lineTo(pt);</span>
+<span class="fc bfc" id="L624" title="All 2 branches covered.">			for (int i = right.size() - 1; i &gt;= 0; i--)</span>
+<span class="fc" id="L625">				mask.lineTo(right.get(i));</span>
+<span class="fc" id="L626">			mask.closePath();</span>
+<span class="fc" id="L627">			ug.apply(back).apply(back.bg()).draw(mask);</span>
 
-<span class="fc" id="L590">			final UGraphic ugEdge = ug.apply(styleTimeline.getStroke()).apply(color);</span>
-<span class="fc" id="L591">			ugEdge.draw(toPath(left));</span>
-<span class="fc" id="L592">			ugEdge.draw(toPath(right));</span>
-<span class="fc" id="L593">		}</span>
-<span class="fc" id="L594">	}</span>
+<span class="fc" id="L629">			final UGraphic ugEdge = ug.apply(styleTimeline.getStroke()).apply(color);</span>
+<span class="fc" id="L630">			ugEdge.draw(toPath(left));</span>
+<span class="fc" id="L631">			ugEdge.draw(toPath(right));</span>
+<span class="fc" id="L632">		}</span>
+<span class="fc" id="L633">	}</span>
 
 	private static List&lt;XPoint2D&gt; getZigzag(double x, double height) {
-<span class="fc" id="L597">		final List&lt;XPoint2D&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L598">		final int nb = Math.max(1, (int) Math.round(height / (2 * BREAK_MARK)));</span>
-<span class="fc bfc" id="L599" title="All 2 branches covered.">		for (int i = 0; i &lt;= nb; i++) {</span>
+<span class="fc" id="L636">		final List&lt;XPoint2D&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L637">		final int nb = Math.max(1, (int) Math.round(height / (2 * BREAK_MARK)));</span>
+<span class="fc bfc" id="L638" title="All 2 branches covered.">		for (int i = 0; i &lt;= nb; i++) {</span>
 			final double dx;
-<span class="fc bfc" id="L601" title="All 4 branches covered.">			if (i == 0 || i == nb)</span>
-<span class="fc" id="L602">				dx = 0;</span>
+<span class="fc bfc" id="L640" title="All 4 branches covered.">			if (i == 0 || i == nb)</span>
+<span class="fc" id="L641">				dx = 0;</span>
 			else
-<span class="fc bfc" id="L604" title="All 2 branches covered.">				dx = i % 2 == 0 ? -BREAK_MARK / 2 : BREAK_MARK / 2;</span>
-<span class="fc" id="L605">			result.add(new XPoint2D(x + dx, height * i / nb));</span>
+<span class="fc bfc" id="L643" title="All 2 branches covered.">				dx = i % 2 == 0 ? -BREAK_MARK / 2 : BREAK_MARK / 2;</span>
+<span class="fc" id="L644">			result.add(new XPoint2D(x + dx, height * i / nb));</span>
 		}
-<span class="fc" id="L607">		return result;</span>
+<span class="fc" id="L646">		return result;</span>
 	}
 
 	private static UPath toPath(List&lt;XPoint2D&gt; points) {
-<span class="fc" id="L611">		final UPath result = UPath.none();</span>
-<span class="fc" id="L612">		result.moveTo(points.get(0));</span>
-<span class="fc bfc" id="L613" title="All 2 branches covered.">		for (int i = 1; i &lt; points.size(); i++)</span>
-<span class="fc" id="L614">			result.lineTo(points.get(i));</span>
-<span class="fc" id="L615">		return result;</span>
+<span class="fc" id="L650">		final UPath result = UPath.none();</span>
+<span class="fc" id="L651">		result.moveTo(points.get(0));</span>
+<span class="fc bfc" id="L652" title="All 2 branches covered.">		for (int i = 1; i &lt; points.size(); i++)</span>
+<span class="fc" id="L653">			result.lineTo(points.get(i));</span>
+<span class="fc" id="L654">		return result;</span>
 	}
 
 	public double getHeight(StringBounder stringBounder) {
-<span class="fc" id="L619">		return getTimeTextBlock(0).calculateDimension(stringBounder).getHeight();</span>
+<span class="fc" id="L658">		return getTimeTextBlock(0).calculateDimension(stringBounder).getHeight();</span>
 	}
 
 	private TimeTick getMax() {
-<span class="fc" id="L623">		return times.last();</span>
+<span class="fc" id="L662">		return times.last();</span>
 	}
 
 	private TimeTick getMin() {
-<span class="fc" id="L627">		return times.first();</span>
+<span class="fc" id="L666">		return times.first();</span>
 	}
 
 	private static long computeHighestCommonFactor(long a, long b) {
-<span class="fc" id="L631">		long r = a;</span>
-<span class="fc bfc" id="L632" title="All 2 branches covered.">		while (r != 0) {</span>
-<span class="fc" id="L633">			r = a % b;</span>
-<span class="fc" id="L634">			a = b;</span>
-<span class="fc" id="L635">			b = r;</span>
+<span class="fc" id="L670">		long r = a;</span>
+<span class="fc bfc" id="L671" title="All 2 branches covered.">		while (r != 0) {</span>
+<span class="fc" id="L672">			r = a % b;</span>
+<span class="fc" id="L673">			a = b;</span>
+<span class="fc" id="L674">			b = r;</span>
 		}
-<span class="fc" id="L637">		return (Math.abs(a));</span>
+<span class="fc" id="L676">		return (Math.abs(a));</span>
 	}
 
 
 	public void setStopAt(TimeTick timeTick) {
 		// WIP
 		
-<span class="nc" id="L644">	}</span>
+<span class="nc" id="L683">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

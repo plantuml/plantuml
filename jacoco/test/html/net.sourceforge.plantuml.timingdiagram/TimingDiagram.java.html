@@ -320,11 +320,11 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 
 	public Player createPlayerRectangle(String code, String full, boolean compact, Stereotype stereotype,
 			HColor backColor) {
-<span class="nc bnc" id="L323" title="All 4 branches missed.">		final Player player = new PlayerRectangle(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
+<span class="pc bpc" id="L323" title="2 of 4 branches missed.">		final Player player = new PlayerRectangle(full, getSkinParam(), ruler, compactByDefault || compact, stereotype,</span>
 				backColor);
-<span class="nc" id="L325">		players.put(code, player);</span>
-<span class="nc" id="L326">		lastPlayer = player;</span>
-<span class="nc" id="L327">		return player;</span>
+<span class="fc" id="L325">		players.put(code, player);</span>
+<span class="fc" id="L326">		lastPlayer = player;</span>
+<span class="fc" id="L327">		return player;</span>
 	}
 
 	public PlayerClock createPlayerClock(String code, String full, BigDecimal period, BigDecimal pulse,

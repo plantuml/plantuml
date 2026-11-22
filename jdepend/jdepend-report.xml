@@ -18516,14 +18516,14 @@
 
         <Package name="net.sourceforge.plantuml.timingdiagram.graphic">
             <Stats>
-                <TotalClasses>19</TotalClasses>
-                <ConcreteClasses>15</ConcreteClasses>
+                <TotalClasses>20</TotalClasses>
+                <ConcreteClasses>16</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>16</Ce>
-                <A>0.21</A>
+                <A>0.2</A>
                 <I>0.94</I>
-                <D>0.15</D>
+                <D>0.14</D>
                 <V>1</V>
             </Stats>
 
@@ -18569,6 +18569,9 @@
                 </Class>
                 <Class sourceFile="PanelsRobust.java">
                     net.sourceforge.plantuml.timingdiagram.graphic.PanelsRobust
+                </Class>
+                <Class sourceFile="PanelsState.java">
+                    net.sourceforge.plantuml.timingdiagram.graphic.PanelsState$StateLabel
                 </Class>
                 <Class sourceFile="PentaAShape.java">
                     net.sourceforge.plantuml.timingdiagram.graphic.PentaAShape

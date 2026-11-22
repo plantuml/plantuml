@@ -46,28 +46,28 @@ public class PentaBShapeRectangle implements UDrawable {
 	private final double height;
 	private final Fashion context;
 
-<span class="nc" id="L49">	private PentaBShapeRectangle(double width, double height, Fashion context) {</span>
-<span class="nc" id="L50">		this.width = width;</span>
-<span class="nc" id="L51">		this.height = height;</span>
-<span class="nc" id="L52">		this.context = context;</span>
-<span class="nc" id="L53">	}</span>
+<span class="fc" id="L49">	private PentaBShapeRectangle(double width, double height, Fashion context) {</span>
+<span class="fc" id="L50">		this.width = width;</span>
+<span class="fc" id="L51">		this.height = height;</span>
+<span class="fc" id="L52">		this.context = context;</span>
+<span class="fc" id="L53">	}</span>
 
 	public static PentaBShapeRectangle create(double width, double height, Fashion context) {
-<span class="nc" id="L56">		return new PentaBShapeRectangle(width, height, context);</span>
+<span class="fc" id="L56">		return new PentaBShapeRectangle(width, height, context);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L60">		final URectangle polygon = URectangle.build(width, height);</span>
-<span class="nc" id="L61">		context.withForeColor(context.getBackColor()).apply(ug).draw(polygon);</span>
+<span class="fc" id="L60">		final URectangle polygon = URectangle.build(width, height);</span>
+<span class="fc" id="L61">		context.withForeColor(context.getBackColor()).apply(ug).draw(polygon);</span>
 
-<span class="nc" id="L63">		final UPath path = UPath.none();</span>
-<span class="nc" id="L64">		path.moveTo(width, 0);</span>
-<span class="nc" id="L65">		path.lineTo(0, 0);</span>
-<span class="nc" id="L66">		path.lineTo(0, height);</span>
-<span class="nc" id="L67">		path.lineTo(width, height);</span>
-<span class="nc" id="L68">		context.apply(ug).draw(path);</span>
+<span class="fc" id="L63">		final UPath path = UPath.none();</span>
+<span class="fc" id="L64">		path.moveTo(width, 0);</span>
+<span class="fc" id="L65">		path.lineTo(0, 0);</span>
+<span class="fc" id="L66">		path.lineTo(0, height);</span>
+<span class="fc" id="L67">		path.lineTo(width, height);</span>
+<span class="fc" id="L68">		context.apply(ug).draw(path);</span>
 
-<span class="nc" id="L70">	}</span>
+<span class="fc" id="L70">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -3521,8 +3521,8 @@ Total Classes: 13
 "net.sourceforge.plantuml.timingdiagram.command" --> "net.sourceforge.plantuml.timingdiagram"
 "net.sourceforge.plantuml.timingdiagram.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.timingdiagram.graphic" %lighten("red", 85) {
-Total Classes: 19
+class "net.sourceforge.plantuml.timingdiagram.graphic" %lighten("red", 86) {
+Total Classes: 20
 }
 "net.sourceforge.plantuml.timingdiagram.graphic" --> "java.lang"
 "net.sourceforge.plantuml.timingdiagram.graphic" --> "java.math"
