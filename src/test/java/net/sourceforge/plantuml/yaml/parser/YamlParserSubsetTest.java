@@ -71,6 +71,39 @@ class YamlParserSubsetTest {
 	}
 
 	@Test
+	void dashWithNothingUnderItIsAnEmptyItem() {
+		final Monomorph result = parse("l:", "  - a", "  -", "  - b", "  -", "z: 1");
+		final Monomorph list = result.getMapValue("l");
+		assertEquals(4, list.size());
+		assertEquals("", list.getElementAt(1).getValue());
+		assertEquals("b", list.getElementAt(2).getValue());
+		assertEquals("", list.getElementAt(3).getValue());
+		assertEquals("1", result.getMapValue("z").getValue());
+	}
+
+	@Test
+	void dashWithNothingUnderItAtTheTop() {
+		final Monomorph result = parse("-", "- a", "-");
+		assertEquals(3, result.size());
+		assertEquals("", result.getElementAt(0).getValue());
+		assertEquals("a", result.getElementAt(1).getValue());
+		assertEquals("", result.getElementAt(2).getValue());
+	}
+
+	@Test
+	void listItemKeyWithNothingUnderItHasAnEmptyValue() {
+		final Monomorph result = parse("l:", "  - a:", "  - b", "  - c:", "    d: 1", "  - e:", "z: 1");
+		final Monomorph list = result.getMapValue("l");
+		assertEquals(4, list.size());
+		assertEquals("", list.getElementAt(0).getMapValue("a").getValue());
+		assertEquals("b", list.getElementAt(1).getValue());
+		assertEquals("", list.getElementAt(2).getMapValue("c").getValue());
+		assertEquals("1", list.getElementAt(2).getMapValue("d").getValue());
+		assertEquals("", list.getElementAt(3).getMapValue("e").getValue());
+		assertEquals("1", result.getMapValue("z").getValue());
+	}
+
+	@Test
 	void duplicateKeyIsAnErrorOnItsLine() {
 		final YamlSyntaxException e = error("a: 1", "b: 2", "a: 3");
 		assertEquals(3, e.getLine());
@@ -81,6 +114,7 @@ class YamlParserSubsetTest {
 	void unexpectedIndentationIsAnErrorOnItsLine() {
 		final YamlSyntaxException e = error("a: 1", "  b: 2");
 		assertEquals(2, e.getLine());
+		assertEquals(3, error("l:", "  - a", "    -", "  - b").getLine());
 	}
 
 	@Test

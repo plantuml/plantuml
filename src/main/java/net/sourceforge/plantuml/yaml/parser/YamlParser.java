@@ -105,6 +105,16 @@ public class YamlParser {
 					final YamlLine next = peekNext(lines);
 					if (next != null && next.isListItem() && next.getIndent() - 2 > yamlLine.getIndent() - 1)
 						throw new YamlSyntaxException(LIST_IN_LIST);
+					if (next == null || next.isListItem() || next.getIndent() <= yamlLine.getIndent() - 1) {
+						// Nothing under the dash: an empty item, as "key:" alone is an empty value
+						final int indent = yamlLine.getIndent() + 1;
+						if (indent > yamlBuilder.currentIndent() && yamlBuilder.currentIndent() != -1 && opened == false)
+							throw new YamlSyntaxException("unexpected indentation");
+						yamlBuilder.adjustIndentation(indent);
+						yamlBuilder.onListItemOnlyValue("");
+						opened = false;
+						continue;
+					}
 					yamlBuilder.onListItemPlainDash();
 					opened = true;
 					continue;
@@ -134,6 +144,11 @@ public class YamlParser {
 	private boolean onLine(YamlBuilder yamlBuilder, YamlLine yamlLine, Lines lines) {
 		if (yamlLine.isListItem()) {
 			if (yamlLine.getType() == YamlLineType.KEY_ONLY) {
+				final YamlLine next = peekNext(lines);
+				if (next == null || next.getIndent() <= yamlLine.getIndent()) {
+					yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), "");
+					return false;
+				}
 				yamlBuilder.onListItemOnlyKey(yamlLine.getKey());
 				return true;
 			}
