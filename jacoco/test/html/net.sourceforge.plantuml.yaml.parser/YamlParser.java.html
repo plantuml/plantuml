@@ -103,85 +103,100 @@ import java.util.List;
 
 <span class="fc bfc" id="L104" title="All 2 branches covered.">				if (yamlLine.getType() == YamlLineType.PLAIN_DASH) {</span>
 <span class="fc" id="L105">					final YamlLine next = peekNext(lines);</span>
-<span class="pc bpc" id="L106" title="2 of 6 branches missed.">					if (next != null &amp;&amp; next.isListItem() &amp;&amp; next.getIndent() - 2 &gt; yamlLine.getIndent() - 1)</span>
+<span class="fc bfc" id="L106" title="All 6 branches covered.">					if (next != null &amp;&amp; next.isListItem() &amp;&amp; next.getIndent() - 2 &gt; yamlLine.getIndent() - 1)</span>
 <span class="fc" id="L107">						throw new YamlSyntaxException(LIST_IN_LIST);</span>
-<span class="fc" id="L108">					yamlBuilder.onListItemPlainDash();</span>
-<span class="fc" id="L109">					opened = true;</span>
-<span class="fc" id="L110">					continue;</span>
+<span class="fc bfc" id="L108" title="All 6 branches covered.">					if (next == null || next.isListItem() || next.getIndent() &lt;= yamlLine.getIndent() - 1) {</span>
+						// Nothing under the dash: an empty item, as &quot;key:&quot; alone is an empty value
+<span class="fc" id="L110">						final int indent = yamlLine.getIndent() + 1;</span>
+<span class="pc bpc" id="L111" title="1 of 6 branches missed.">						if (indent &gt; yamlBuilder.currentIndent() &amp;&amp; yamlBuilder.currentIndent() != -1 &amp;&amp; opened == false)</span>
+<span class="fc" id="L112">							throw new YamlSyntaxException(&quot;unexpected indentation&quot;);</span>
+<span class="fc" id="L113">						yamlBuilder.adjustIndentation(indent);</span>
+<span class="fc" id="L114">						yamlBuilder.onListItemOnlyValue(&quot;&quot;);</span>
+<span class="fc" id="L115">						opened = false;</span>
+<span class="fc" id="L116">						continue;</span>
+					}
+<span class="fc" id="L118">					yamlBuilder.onListItemPlainDash();</span>
+<span class="fc" id="L119">					opened = true;</span>
+<span class="fc" id="L120">					continue;</span>
 				}
 
-<span class="fc bfc" id="L113" title="All 6 branches covered.">				if (yamlLine.getIndent() &gt; yamlBuilder.currentIndent() &amp;&amp; yamlBuilder.currentIndent() != -1</span>
+<span class="fc bfc" id="L123" title="All 6 branches covered.">				if (yamlLine.getIndent() &gt; yamlBuilder.currentIndent() &amp;&amp; yamlBuilder.currentIndent() != -1</span>
 						&amp;&amp; opened == false)
-<span class="fc" id="L115">					throw new YamlSyntaxException(&quot;unexpected indentation&quot;);</span>
+<span class="fc" id="L125">					throw new YamlSyntaxException(&quot;unexpected indentation&quot;);</span>
 
-<span class="fc" id="L117">				yamlBuilder.adjustIndentation(yamlLine.getIndent());</span>
-<span class="fc" id="L118">				opened = onLine(yamlBuilder, yamlLine, lines);</span>
-<span class="fc" id="L119">			} catch (YamlSyntaxException e) {</span>
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">				if (e.getLine() != 0)</span>
-<span class="nc" id="L121">					throw e;</span>
-<span class="fc" id="L122">				throw new YamlSyntaxException(e.getMessage(), lineNumber);</span>
-<span class="fc" id="L123">			} catch (RuntimeException e) {</span>
+<span class="fc" id="L127">				yamlBuilder.adjustIndentation(yamlLine.getIndent());</span>
+<span class="fc" id="L128">				opened = onLine(yamlBuilder, yamlLine, lines);</span>
+<span class="fc" id="L129">			} catch (YamlSyntaxException e) {</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">				if (e.getLine() != 0)</span>
+<span class="nc" id="L131">					throw e;</span>
+<span class="fc" id="L132">				throw new YamlSyntaxException(e.getMessage(), lineNumber);</span>
+<span class="fc" id="L133">			} catch (RuntimeException e) {</span>
 				// the builder was given a structure that makes no sense (a list among the keys of a map...)
-<span class="fc" id="L125">				throw new YamlSyntaxException(&quot;inconsistent structure&quot;, lineNumber);</span>
-<span class="fc" id="L126">			}</span>
+<span class="fc" id="L135">				throw new YamlSyntaxException(&quot;inconsistent structure&quot;, lineNumber);</span>
+<span class="fc" id="L136">			}</span>
 		}
 
-<span class="fc" id="L129">		return yamlBuilder.getResult();</span>
+<span class="fc" id="L139">		return yamlBuilder.getResult();</span>
 
 	}
 
 	/** Handles a line that is not empty, nor a plain dash. True if it opens a deeper level. */
 	private boolean onLine(YamlBuilder yamlBuilder, YamlLine yamlLine, Lines lines) {
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (yamlLine.isListItem()) {</span>
-<span class="fc bfc" id="L136" title="All 2 branches covered.">			if (yamlLine.getType() == YamlLineType.KEY_ONLY) {</span>
-<span class="fc" id="L137">				yamlBuilder.onListItemOnlyKey(yamlLine.getKey());</span>
-<span class="fc" id="L138">				return true;</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">		if (yamlLine.isListItem()) {</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">			if (yamlLine.getType() == YamlLineType.KEY_ONLY) {</span>
+<span class="fc" id="L147">				final YamlLine next = peekNext(lines);</span>
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">				if (next == null || next.getIndent() &lt;= yamlLine.getIndent()) {</span>
+<span class="fc" id="L149">					yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), &quot;&quot;);</span>
+<span class="fc" id="L150">					return false;</span>
+				}
+<span class="fc" id="L152">				yamlBuilder.onListItemOnlyKey(yamlLine.getKey());</span>
+<span class="fc" id="L153">				return true;</span>
 			}
-<span class="fc bfc" id="L140" title="All 2 branches covered.">			if (yamlLine.getType() == YamlLineType.PLAIN_ELEMENT_LIST)</span>
-<span class="fc" id="L141">				yamlBuilder.onListItemOnlyValue(yamlLine.getValue());</span>
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">			else if (yamlLine.getType() == YamlLineType.KEY_AND_VALUE)</span>
-<span class="fc" id="L143">				yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), plainScalar(yamlLine, lines));</span>
-<span class="nc bnc" id="L144" title="All 2 branches missed.">			else if (yamlLine.getType() == YamlLineType.KEY_AND_BLOCK_STYLE)</span>
-<span class="nc" id="L145">				yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), getBlockStyleString(yamlLine.getIndent(), lines));</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">			else if (yamlLine.getType() == YamlLineType.KEY_AND_FOLDED_STYLE)</span>
-<span class="nc" id="L147">				yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), fold(getBlockStyleString(yamlLine.getIndent(), lines)));</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">			else if (yamlLine.getType() == YamlLineType.KEY_AND_FLOW_SEQUENCE)</span>
-<span class="nc" id="L149">				yamlBuilder.onListItemKeyAndFlowSequence(yamlLine.getKey(), yamlLine.getValues());</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">			if (yamlLine.getType() == YamlLineType.PLAIN_ELEMENT_LIST)</span>
+<span class="fc" id="L156">				yamlBuilder.onListItemOnlyValue(yamlLine.getValue());</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">			else if (yamlLine.getType() == YamlLineType.KEY_AND_VALUE)</span>
+<span class="fc" id="L158">				yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), plainScalar(yamlLine, lines));</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			else if (yamlLine.getType() == YamlLineType.KEY_AND_BLOCK_STYLE)</span>
+<span class="nc" id="L160">				yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), getBlockStyleString(yamlLine.getIndent(), lines));</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			else if (yamlLine.getType() == YamlLineType.KEY_AND_FOLDED_STYLE)</span>
+<span class="nc" id="L162">				yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), fold(getBlockStyleString(yamlLine.getIndent(), lines)));</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			else if (yamlLine.getType() == YamlLineType.KEY_AND_FLOW_SEQUENCE)</span>
+<span class="nc" id="L164">				yamlBuilder.onListItemKeyAndFlowSequence(yamlLine.getKey(), yamlLine.getValues());</span>
 			else
-<span class="nc" id="L151">				throw new YamlSyntaxException(&quot;unsupported list item&quot;);</span>
-<span class="fc" id="L152">			return false;</span>
+<span class="nc" id="L166">				throw new YamlSyntaxException(&quot;unsupported list item&quot;);</span>
+<span class="fc" id="L167">			return false;</span>
 		}
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (yamlLine.getType() == YamlLineType.KEY_ONLY) {</span>
-<span class="fc" id="L155">			final YamlLine next = peekNext(lines);</span>
-<span class="fc bfc" id="L156" title="All 4 branches covered.">			if (next == null || next.getIndent() &lt;= yamlLine.getIndent()) {</span>
-<span class="fc" id="L157">				yamlBuilder.onKeyAndValue(yamlLine.getKey(), &quot;&quot;);</span>
-<span class="fc" id="L158">				return false;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (yamlLine.getType() == YamlLineType.KEY_ONLY) {</span>
+<span class="fc" id="L170">			final YamlLine next = peekNext(lines);</span>
+<span class="fc bfc" id="L171" title="All 4 branches covered.">			if (next == null || next.getIndent() &lt;= yamlLine.getIndent()) {</span>
+<span class="fc" id="L172">				yamlBuilder.onKeyAndValue(yamlLine.getKey(), &quot;&quot;);</span>
+<span class="fc" id="L173">				return false;</span>
 			}
-<span class="fc bfc" id="L160" title="All 2 branches covered.">			if (next.getType() == YamlLineType.NO_KEY_ONLY_TEXT) {</span>
-<span class="fc" id="L161">				yamlBuilder.onKeyAndValue(yamlLine.getKey(), peekNextOnlyText(lines));</span>
-<span class="fc" id="L162">				return false;</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			if (next.getType() == YamlLineType.NO_KEY_ONLY_TEXT) {</span>
+<span class="fc" id="L176">				yamlBuilder.onKeyAndValue(yamlLine.getKey(), peekNextOnlyText(lines));</span>
+<span class="fc" id="L177">				return false;</span>
 			}
-<span class="fc" id="L164">			yamlBuilder.onOnlyKey(yamlLine.getKey());</span>
-<span class="fc" id="L165">			return true;</span>
+<span class="fc" id="L179">			yamlBuilder.onOnlyKey(yamlLine.getKey());</span>
+<span class="fc" id="L180">			return true;</span>
 		}
-<span class="fc bfc" id="L167" title="All 2 branches covered.">		if (yamlLine.getType() == YamlLineType.KEY_AND_VALUE)</span>
-<span class="fc" id="L168">			yamlBuilder.onKeyAndValue(yamlLine.getKey(), plainScalar(yamlLine, lines));</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">		else if (yamlLine.getType() == YamlLineType.KEY_AND_BLOCK_STYLE)</span>
-<span class="fc" id="L170">			yamlBuilder.onKeyAndValue(yamlLine.getKey(), getBlockStyleString(yamlLine.getIndent(), lines));</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">		else if (yamlLine.getType() == YamlLineType.KEY_AND_FOLDED_STYLE)</span>
-<span class="fc" id="L172">			yamlBuilder.onKeyAndValue(yamlLine.getKey(), fold(getBlockStyleString(yamlLine.getIndent(), lines)));</span>
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		else if (yamlLine.getType() == YamlLineType.KEY_AND_FLOW_SEQUENCE)</span>
-<span class="fc" id="L174">			yamlBuilder.onKeyAndFlowSequence(yamlLine.getKey(), yamlLine.getValues());</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		if (yamlLine.getType() == YamlLineType.KEY_AND_VALUE)</span>
+<span class="fc" id="L183">			yamlBuilder.onKeyAndValue(yamlLine.getKey(), plainScalar(yamlLine, lines));</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">		else if (yamlLine.getType() == YamlLineType.KEY_AND_BLOCK_STYLE)</span>
+<span class="fc" id="L185">			yamlBuilder.onKeyAndValue(yamlLine.getKey(), getBlockStyleString(yamlLine.getIndent(), lines));</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		else if (yamlLine.getType() == YamlLineType.KEY_AND_FOLDED_STYLE)</span>
+<span class="fc" id="L187">			yamlBuilder.onKeyAndValue(yamlLine.getKey(), fold(getBlockStyleString(yamlLine.getIndent(), lines)));</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		else if (yamlLine.getType() == YamlLineType.KEY_AND_FLOW_SEQUENCE)</span>
+<span class="fc" id="L189">			yamlBuilder.onKeyAndFlowSequence(yamlLine.getKey(), yamlLine.getValues());</span>
 		else
-<span class="nc" id="L176">			throw new YamlSyntaxException(&quot;unsupported line&quot;);</span>
-<span class="fc" id="L177">		return false;</span>
+<span class="nc" id="L191">			throw new YamlSyntaxException(&quot;unsupported line&quot;);</span>
+<span class="fc" id="L192">		return false;</span>
 	}
 
 	private static int leadingSpaces(String s) {
-<span class="fc" id="L181">		int count = 0;</span>
-<span class="pc bpc" id="L182" title="1 of 4 branches missed.">		while (count &lt; s.length() &amp;&amp; s.charAt(count) == ' ')</span>
-<span class="fc" id="L183">			count++;</span>
-<span class="fc" id="L184">		return count;</span>
+<span class="fc" id="L196">		int count = 0;</span>
+<span class="pc bpc" id="L197" title="1 of 4 branches missed.">		while (count &lt; s.length() &amp;&amp; s.charAt(count) == ' ')</span>
+<span class="fc" id="L198">			count++;</span>
+<span class="fc" id="L199">		return count;</span>
 	}
 
 	/**
@@ -189,50 +204,50 @@ import java.util.List;
 	 * key): in a plain scalar on several lines, the line breaks are spaces.
 	 */
 	private String plainScalar(YamlLine yamlLine, Lines lines) {
-<span class="fc" id="L192">		final StringBuilder result = new StringBuilder(yamlLine.getValue());</span>
+<span class="fc" id="L207">		final StringBuilder result = new StringBuilder(yamlLine.getValue());</span>
 		while (true) {
-<span class="fc" id="L194">			final YamlLine next = peekNext(lines);</span>
-<span class="fc bfc" id="L195" title="All 4 branches covered.">			if (next == null || next.getType() != YamlLineType.NO_KEY_ONLY_TEXT</span>
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">					|| next.getIndent() &lt;= yamlLine.getIndent())</span>
-<span class="fc" id="L197">				return result.toString();</span>
-<span class="fc" id="L198">			result.append(&quot; &quot;).append(peekNextOnlyText(lines));</span>
-<span class="fc" id="L199">		}</span>
+<span class="fc" id="L209">			final YamlLine next = peekNext(lines);</span>
+<span class="fc bfc" id="L210" title="All 4 branches covered.">			if (next == null || next.getType() != YamlLineType.NO_KEY_ONLY_TEXT</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">					|| next.getIndent() &lt;= yamlLine.getIndent())</span>
+<span class="fc" id="L212">				return result.toString();</span>
+<span class="fc" id="L213">			result.append(&quot; &quot;).append(peekNextOnlyText(lines));</span>
+<span class="fc" id="L214">		}</span>
 	}
 
 	private String peekNextOnlyText(Lines lines) {
-<span class="fc" id="L203">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L218">		final StringBuilder result = new StringBuilder();</span>
 		do {
-<span class="fc" id="L205">			final String peek = lines.peek(1);</span>
-<span class="pc bpc" id="L206" title="1 of 2 branches missed.">			if (peek == null)</span>
-<span class="nc" id="L207">				return result.toString();</span>
-<span class="fc" id="L208">			final YamlLine next = YamlLine.build(peek);</span>
-<span class="pc bpc" id="L209" title="1 of 4 branches missed.">			if (next != null &amp;&amp; next.getType() == YamlLineType.EMPTY_LINE) {</span>
-<span class="fc" id="L210">				lines.jump();</span>
-<span class="fc" id="L211">				continue;</span>
+<span class="fc" id="L220">			final String peek = lines.peek(1);</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">			if (peek == null)</span>
+<span class="nc" id="L222">				return result.toString();</span>
+<span class="fc" id="L223">			final YamlLine next = YamlLine.build(peek);</span>
+<span class="pc bpc" id="L224" title="1 of 4 branches missed.">			if (next != null &amp;&amp; next.getType() == YamlLineType.EMPTY_LINE) {</span>
+<span class="fc" id="L225">				lines.jump();</span>
+<span class="fc" id="L226">				continue;</span>
 			}
-<span class="fc bfc" id="L213" title="All 2 branches covered.">			if (next.getType() == YamlLineType.NO_KEY_ONLY_TEXT) {</span>
-<span class="fc bfc" id="L214" title="All 2 branches covered.">				if (result.length() &gt; 0)</span>
-<span class="fc" id="L215">					result.append(&quot; &quot;);</span>
-<span class="fc" id="L216">				result.append(next.getValue());</span>
-<span class="fc" id="L217">				lines.jump();</span>
-<span class="fc" id="L218">				continue;</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">			if (next.getType() == YamlLineType.NO_KEY_ONLY_TEXT) {</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">				if (result.length() &gt; 0)</span>
+<span class="fc" id="L230">					result.append(&quot; &quot;);</span>
+<span class="fc" id="L231">				result.append(next.getValue());</span>
+<span class="fc" id="L232">				lines.jump();</span>
+<span class="fc" id="L233">				continue;</span>
 			}
-<span class="fc" id="L220">			return result.toString();</span>
+<span class="fc" id="L235">			return result.toString();</span>
 		} while (true);
 	}
 
 	private YamlLine peekNext(Lines lines) {
-<span class="fc" id="L225">		int i = 1;</span>
+<span class="fc" id="L240">		int i = 1;</span>
 		do {
-<span class="fc" id="L227">			final String peek = lines.peek(i);</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">			if (peek == null)</span>
-<span class="fc" id="L229">				return null;</span>
-<span class="fc" id="L230">			final YamlLine next = YamlLine.build(peek);</span>
-<span class="pc bpc" id="L231" title="1 of 4 branches missed.">			if (next != null &amp;&amp; next.getType() == YamlLineType.EMPTY_LINE)</span>
-<span class="fc" id="L232">				i++;</span>
+<span class="fc" id="L242">			final String peek = lines.peek(i);</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">			if (peek == null)</span>
+<span class="fc" id="L244">				return null;</span>
+<span class="fc" id="L245">			final YamlLine next = YamlLine.build(peek);</span>
+<span class="pc bpc" id="L246" title="1 of 4 branches missed.">			if (next != null &amp;&amp; next.getType() == YamlLineType.EMPTY_LINE)</span>
+<span class="fc" id="L247">				i++;</span>
 			else
-<span class="fc" id="L234">				return next;</span>
-<span class="fc" id="L235">		} while (true);</span>
+<span class="fc" id="L249">				return next;</span>
+<span class="fc" id="L250">		} while (true);</span>
 	}
 
 	/**
@@ -241,30 +256,30 @@ import java.util.List;
 	 * kept, and so are the comments), and one line break at the end.
 	 */
 	private String getBlockStyleString(int indent, Lines lines) {
-<span class="fc" id="L244">		final List&lt;String&gt; block = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L245">		int blockIndent = -1;</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">		while (lines.peek(1) != null) {</span>
-<span class="fc" id="L247">			final String line = lines.peek(1);</span>
-<span class="fc bfc" id="L248" title="All 2 branches covered.">			if (line.trim().isEmpty()) {</span>
-<span class="fc" id="L249">				block.add(&quot;&quot;);</span>
-<span class="fc" id="L250">				lines.jump();</span>
-<span class="fc" id="L251">				continue;</span>
+<span class="fc" id="L259">		final List&lt;String&gt; block = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L260">		int blockIndent = -1;</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">		while (lines.peek(1) != null) {</span>
+<span class="fc" id="L262">			final String line = lines.peek(1);</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">			if (line.trim().isEmpty()) {</span>
+<span class="fc" id="L264">				block.add(&quot;&quot;);</span>
+<span class="fc" id="L265">				lines.jump();</span>
+<span class="fc" id="L266">				continue;</span>
 			}
-<span class="fc" id="L253">			final int lineIndent = leadingSpaces(line.replace(&quot;\t&quot;, &quot;    &quot;));</span>
-<span class="fc bfc" id="L254" title="All 2 branches covered.">			if (lineIndent &lt;= indent)</span>
-<span class="fc" id="L255">				break;</span>
-<span class="fc bfc" id="L256" title="All 2 branches covered.">			if (blockIndent == -1)</span>
-<span class="fc" id="L257">				blockIndent = lineIndent;</span>
-<span class="fc" id="L258">			block.add(line.replace(&quot;\t&quot;, &quot;    &quot;).substring(Math.min(blockIndent, lineIndent)).replaceAll(&quot;\\s+$&quot;, &quot;&quot;));</span>
-<span class="fc" id="L259">			lines.jump();</span>
-<span class="fc" id="L260">		}</span>
+<span class="fc" id="L268">			final int lineIndent = leadingSpaces(line.replace(&quot;\t&quot;, &quot;    &quot;));</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">			if (lineIndent &lt;= indent)</span>
+<span class="fc" id="L270">				break;</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">			if (blockIndent == -1)</span>
+<span class="fc" id="L272">				blockIndent = lineIndent;</span>
+<span class="fc" id="L273">			block.add(line.replace(&quot;\t&quot;, &quot;    &quot;).substring(Math.min(blockIndent, lineIndent)).replaceAll(&quot;\\s+$&quot;, &quot;&quot;));</span>
+<span class="fc" id="L274">			lines.jump();</span>
+<span class="fc" id="L275">		}</span>
 		// The empty lines at the end are not part of the text.
-<span class="pc bpc" id="L262" title="1 of 4 branches missed.">		while (block.size() &gt; 0 &amp;&amp; block.get(block.size() - 1).isEmpty())</span>
-<span class="fc" id="L263">			block.remove(block.size() - 1);</span>
-<span class="fc" id="L264">		final StringBuilder result = new StringBuilder();</span>
-<span class="fc bfc" id="L265" title="All 2 branches covered.">		for (String line : block)</span>
-<span class="fc" id="L266">			result.append(line).append(&quot;\n&quot;);</span>
-<span class="fc" id="L267">		return result.toString();</span>
+<span class="pc bpc" id="L277" title="1 of 4 branches missed.">		while (block.size() &gt; 0 &amp;&amp; block.get(block.size() - 1).isEmpty())</span>
+<span class="fc" id="L278">			block.remove(block.size() - 1);</span>
+<span class="fc" id="L279">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">		for (String line : block)</span>
+<span class="fc" id="L281">			result.append(line).append(&quot;\n&quot;);</span>
+<span class="fc" id="L282">		return result.toString();</span>
 	}
 
 	/**
@@ -273,26 +288,26 @@ import java.util.List;
 	 * others: YAML keeps its line breaks, which is not done here.)
 	 */
 	private static String fold(String block) {
-<span class="pc bpc" id="L276" title="1 of 2 branches missed.">		if (block.isEmpty())</span>
-<span class="nc" id="L277">			return block;</span>
-<span class="fc" id="L278">		final StringBuilder result = new StringBuilder();</span>
-<span class="fc" id="L279">		boolean previousIsText = false;</span>
-<span class="fc" id="L280">		int empty = 0;</span>
-<span class="fc bfc" id="L281" title="All 2 branches covered.">		for (String line : block.split(&quot;\n&quot;, -1)) {</span>
-<span class="fc bfc" id="L282" title="All 2 branches covered.">			if (line.isEmpty()) {</span>
-<span class="fc" id="L283">				empty++;</span>
-<span class="fc" id="L284">				continue;</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">		if (block.isEmpty())</span>
+<span class="nc" id="L292">			return block;</span>
+<span class="fc" id="L293">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L294">		boolean previousIsText = false;</span>
+<span class="fc" id="L295">		int empty = 0;</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">		for (String line : block.split(&quot;\n&quot;, -1)) {</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">			if (line.isEmpty()) {</span>
+<span class="fc" id="L298">				empty++;</span>
+<span class="fc" id="L299">				continue;</span>
 			}
-<span class="fc bfc" id="L286" title="All 4 branches covered.">			if (previousIsText &amp;&amp; empty == 0)</span>
-<span class="fc" id="L287">				result.append(' ');</span>
+<span class="fc bfc" id="L301" title="All 4 branches covered.">			if (previousIsText &amp;&amp; empty == 0)</span>
+<span class="fc" id="L302">				result.append(' ');</span>
 			else
-<span class="fc bfc" id="L289" title="All 2 branches covered.">				for (int i = 0; i &lt; empty; i++)</span>
-<span class="fc" id="L290">					result.append('\n');</span>
-<span class="fc" id="L291">			empty = 0;</span>
-<span class="fc" id="L292">			result.append(line);</span>
-<span class="fc" id="L293">			previousIsText = true;</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">				for (int i = 0; i &lt; empty; i++)</span>
+<span class="fc" id="L305">					result.append('\n');</span>
+<span class="fc" id="L306">			empty = 0;</span>
+<span class="fc" id="L307">			result.append(line);</span>
+<span class="fc" id="L308">			previousIsText = true;</span>
 		}
-<span class="fc" id="L295">		return result.append('\n').toString();</span>
+<span class="fc" id="L310">		return result.append('\n').toString();</span>
 	}
 
 }

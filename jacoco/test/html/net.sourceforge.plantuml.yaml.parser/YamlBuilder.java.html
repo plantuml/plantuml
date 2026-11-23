@@ -91,8 +91,8 @@ public class YamlBuilder {
 <span class="pc bpc" id="L91" title="1 of 4 branches missed.">			while (indents.size() &gt; 0 &amp;&amp; indent &lt; indents.get(indents.size() - 1)) {</span>
 <span class="fc" id="L92">				indents.remove(indents.size() - 1);</span>
 <span class="fc" id="L93">				nodes.remove(nodes.size() - 1);</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">				if (getLast().getType() == MonomorphType.LIST)</span>
-<span class="nc" id="L95">					nodes.remove(nodes.size() - 1);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">				if (getLast().getType() == MonomorphType.LIST)</span>
+<span class="fc" id="L95">					nodes.remove(nodes.size() - 1);</span>
 			}
 		}
 <span class="fc" id="L98">	}</span>
@@ -159,8 +159,8 @@ public class YamlBuilder {
 <span class="fc" id="L159">	}</span>
 
 	public void onListItemOnlyValue(String value) {
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (isArrayAlreadyThere())</span>
-<span class="nc" id="L163">			nodes.remove(nodes.size() - 1);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (isArrayAlreadyThere())</span>
+<span class="fc" id="L163">			nodes.remove(nodes.size() - 1);</span>
 <span class="fc" id="L164">		getLast().addInList(Monomorph.scalar(value));</span>
 
 <span class="fc" id="L166">	}</span>
