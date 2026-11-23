@@ -184,13 +184,15 @@ public class WBSDiagram extends TitledDiagram implements TextBlock {
 	}
 
 	public int getSmartLevel(String type) {
+		// Replace tabs before keeping the first marker too, or a tab indented first
+		// item never matches the markers compared with it below
+		type = type.replace('\t', ' ');
 		if (root == null) {
 			if (TeaVM.a())
 				assert first == null;
 			first = type;
 			return 0;
 		}
-		type = type.replace('\t', ' ');
 		if (type.contains(" ") == false)
 			return type.length() - 1;
 
