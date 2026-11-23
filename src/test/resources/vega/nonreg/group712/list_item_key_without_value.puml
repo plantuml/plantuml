@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startyaml
+list:
+  - a:
+  - b
+  - c:
+    d: 1
+  - e:
+other: 1
+@endyaml
