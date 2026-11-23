@@ -46,6 +46,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -63,6 +65,7 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 	private Set<File> usedFiles = new HashSet<>();
 	private final PathSystem pathSystem;
 	private final Charset charset;
+	private String unclosedDiagramType;
 
 //	/**
 //	 * @deprecated being kept for backwards compatibility, perhaps other projects
@@ -133,6 +136,11 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 					reader.setPaused(false);
 				}
 			}
+			if (current != null && !current.isEmpty()) {
+				final Matcher start = Pattern.compile("^[@\\\\]start(\\w+)").matcher(current.get(0).getString().trim());
+				if (start.find())
+					unclosedDiagramType = start.group(1);
+			}
 		} finally {
 			readerInit.close();
 		}
@@ -140,6 +148,10 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 
 	public List<BlockUml> getBlockUmls() {
 		return MyCollections.unmodifiableList(blocks);
+	}
+
+	String getUnclosedDiagramType() {
+		return unclosedDiagramType;
 	}
 
 	public final Set<File> getIncludedFiles() {
