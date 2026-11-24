@@ -44,6 +44,8 @@ import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.security.SecurityProfile;
+import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class ProcessRunner {
 	
@@ -64,6 +66,10 @@ public class ProcessRunner {
 		Process process = null;
 		try {
 			final ProcessBuilder builder = new ProcessBuilder(cmd);
+			final SecurityProfile profile = SecurityUtils.getSecurityProfile();
+			if (profile == SecurityProfile.SANDBOX || profile == SecurityProfile.INTERNET
+					|| profile == SecurityProfile.INTERNET_WITH_DOTSVG)
+				builder.environment().put("SERVER_NAME", "plantuml");
 			if (dir != null)
 				builder.directory(dir.conv());
 			builder.redirectErrorStream(true);
