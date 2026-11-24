@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="130px" preserveAspectRatio="none" style="width:209px;height:130px;background:#FFFFFF;" version="1.1" viewBox="0 0 209 130" width="209px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="59.637" x="10" y="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="15" y="58.889">list</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="56.85" y="58.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="51.85" x2="51.85" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="69.637" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.85" x="15" y="76.889">other</text>
+    <text fill="#000" font-size="14" x="56.85" y="76.889">1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="51.85" x2="51.85" y1="64" y2="82"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="59.637" x="10" y="46"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="17.788" x="107" y="19"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="112" y="31.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="107" x2="124.788" y1="37" y2="37"/>
+    <text fill="#000" font-size="14" x="112" y="49.889">b</text>
+    <line style="stroke:#000;stroke-width:1;" x1="107" x2="124.788" y1="55" y2="55"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="112" y="67.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="107" x2="124.788" y1="73" y2="73"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="112" y="85.889">   </text>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="17.788" x="107" y="19"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="27.788" x="166" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" x="171" y="22.889">a</text>
+    <text fill="#000" font-size="14" x="188.788" y="22.889"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="183.788" x2="183.788" y1="10" y2="28"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="27.788" x="166" y="10"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="35.575" x="162" y="46"/>
+    <text fill="#000" font-size="14" font-weight="700" x="167" y="58.889">c</text>
+    <text fill="#000" font-size="14" x="184.788" y="58.889"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="179.788" x2="179.788" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="162" x2="197.575" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" x="167" y="76.889">d</text>
+    <text fill="#000" font-size="14" x="184.788" y="76.889">1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="179.788" x2="179.788" y1="64" y2="82"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="35.575" x="162" y="46"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="27.788" x="166" y="100"/>
+    <text fill="#000" font-size="14" font-weight="700" x="171" y="112.889">e</text>
+    <text fill="#000" font-size="14" x="188.788" y="112.889"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="183.788" x2="183.788" y1="100" y2="118"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="27.788" x="166" y="100"/>
+    <path d="M113,28 L126,28 C136.999,28 149.097,26.127 159.001,24.09" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M159.656,27.054 L161.224,23.599 L158.347,21.126 L166.411,22.454 L159.656,27.054" fill="#000"/>
+    <ellipse cx="113" cy="28" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M113,64 L126,64 C135.339,64 145.595,64 154.607,64" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M154.607,67.018 L156.871,64 L154.607,60.982 L162.152,64 L154.607,67.018" fill="#000"/>
+    <ellipse cx="113" cy="64" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M113,82 L126,82 C139.187,82 152.431,88.619 162.443,95.302" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M160.62,97.852 L164.355,96.669 L164.265,92.753 L168.817,99.859 L160.62,97.852" fill="#000"/>
+    <ellipse cx="113" cy="82" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M58,55 L71,55 C80.503,55 91.147,55 99.642,55" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M99.642,58.063 L101.939,55 L99.642,51.937 L107.298,55 L99.642,58.063" fill="#000"/>
+    <ellipse cx="58" cy="55" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

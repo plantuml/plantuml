@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startyaml
+sparse:
+  - ~
+  - blue
+  -
+  - Null
+  - NULL
+  - orange
+  -
+other: 1
+@endyaml
