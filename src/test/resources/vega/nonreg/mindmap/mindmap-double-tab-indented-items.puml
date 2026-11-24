@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startmindmap
+		# Business Process
+		## Launch
+		### Complete
+		## Design
+@endmindmap
