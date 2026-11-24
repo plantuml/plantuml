@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+' The icons of edgy2 are SVG sprites declared by procedures, with the name and
+' the colors of each call: each one is drawn, in its own colors
+!include <edgy/edgy2>
+rectangle "<$bActivityIcon> <$bOutcomeIcon> <$bObjectIcon>\n<$bJourneyIcon> <$bTaskIcon> <$bChannelIcon>\n<$bPeopleIcon> people" as r
+@enduml
