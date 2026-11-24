@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (2 entities)
+---
+@startuml
+!pragma layout smetana
+skinparam linetype ortho
+
+[Outside]
+' The cluster title starts with a 32-pixel red circle, on the direct route.
+rectangle "<img:data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTUiIGZpbGw9InJlZCIvPjwvc3ZnPg==> X" as Container {
+	[Inside]
+}
+[Outside] --> [Inside]
+@enduml
