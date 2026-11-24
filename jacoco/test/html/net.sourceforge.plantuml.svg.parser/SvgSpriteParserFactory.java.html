@@ -106,7 +106,7 @@ public final class SvgSpriteParserFactory {
 	 * {@code nano}.
 	 */
 	private static String getParserSelector(Pragma pragma) {
-<span class="pc bpc" id="L109" title="1 of 4 branches missed.">		if (pragma != null &amp;&amp; pragma.isDefine(PragmaKey.SVG_PARSER)) {</span>
+<span class="fc bfc" id="L109" title="All 4 branches covered.">		if (pragma != null &amp;&amp; pragma.isDefine(PragmaKey.SVG_PARSER)) {</span>
 <span class="fc" id="L110">			String value = pragma.getValue(PragmaKey.SVG_PARSER);</span>
 <span class="pc bpc" id="L111" title="1 of 2 branches missed.">			if (value == null)</span>
 <span class="nc" id="L112">				return &quot;nano&quot;;</span>

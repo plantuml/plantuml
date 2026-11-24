@@ -149,7 +149,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Stdlib.html" title="class in net.sourceforge.plantuml.preproc">Stdlib</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#retrieve(java.lang.String)" class="member-name-link">retrieve</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">A library whose info has a <code>link=</code> (awslib, bootstrap, gcp,
+ material...) is the library it links to.</div>
+</div>
 </div>
 </div>
 </div>
@@ -184,6 +187,16 @@ loadScripts(document, 'script');</script>
 <h3>retrieve</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Stdlib.html" title="class in net.sourceforge.plantuml.preproc">Stdlib</a></span>&nbsp;<span class="element-name">retrieve</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span>
                        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">A library whose info has a <code>link=</code> (awslib, bootstrap, gcp,
+ material...) is the library it links to. The link must not be followed
+ inside <code>all.computeIfAbsent</code>: a ConcurrentHashMap may not be
+ modified by its own mapping function, and when the nested insertion makes
+ the table grow, it throws "IllegalStateException: Recursive update". That
+ depends only on how many libraries are already cached, so a diagram or a
+ test could fail or not depending on what came before it.
+ <p>
+ Two threads may build the same library at the same time: putIfAbsent keeps
+ the first one, and both get it.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
